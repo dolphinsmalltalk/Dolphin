@@ -81,6 +81,12 @@ copyFrom: startInteger to: stopInteger
 		with: self
 		startingAt: startInteger!
 
+decodeAt: anInteger
+	"Private - Answer the encoded object beginning at the specified position in the receiver."
+
+	<primitive: 60>
+	^self _primitiveError: _failureCode at: anInteger!
+
 decodeNextFrom: aReadStream
 	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -220,6 +226,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
 !ArrayedCollection categoriesFor: #copyFrom:to:!public! !
+!ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
 !ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !

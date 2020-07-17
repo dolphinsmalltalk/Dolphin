@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultiByteStringTest subclass: #Utf16StringTest
+UtfEncodedStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -26,35 +26,31 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
-testDecodeNextFrom
-	| subject |
-	subject := self collectionClass new.
-	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
-			[:each |
-			| stream actual |
-			stream := each asUtf16String readStream.
-			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: each].
+decodeIncompleteContinuations
+	^#(#(16rD800))!
 
-	"Invalid continuations"
-	#(#(#(16rD800 16rD83D 16rDC2C) $\x1F42C) #(#(16rD800 16rA1) ##(Character value: 16rA1)) #(#(16rD800 16rD800) $\xFFFD))
-		do: 
-			[:each |
-			| stream actual |
-			stream := each first readStream.
-			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: Character replacement.
-			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: each last.
-			self assert: stream atEnd].
-	"Incomplete continuations"
-	#(#(16rD800)) do: 
-			[:each |
-			| stream actual |
-			stream := each readStream.
-			actual := subject decodeNextFrom: stream.
-			self assert: actual equals: Character replacement.
-			self assert: stream atEnd]!
+decodeInvalidContinuations
+	^#(#(#(16rD800 16rD83D 16rDC2C) $\x1F42C) #(#(16rD800 16rA1) ##(Character value: 16rA1)) #(#(16rD800 16rD800) $\xFFFD))!
+
+decodeTestCases
+	^#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD)!
+
+testAssociations
+	| subject actual |
+	subject := self assimilateString: 'a£文🐬1🍺'.
+	self assert: subject associations
+		equals: {1 -> $a. 2 -> $£. 3 -> $\x6587. 4 -> $\x1F42C. 6 -> $1. 7 -> $\x1F37A}!
+
+testCopyWithAtIndex
+	| string |
+	string := self assimilateString: 'a£🍺文1'.
+	self assert: (string copyWith: Character dolphin atIndex: 5) equals: 'a£🍺🐬文1'.
+	self should: [string copyWith: Character dolphin atIndex: 4] raise: Error!
+
+testKeys
+	| subject |
+	subject := self assimilateString: 'a£文🐬1🍺'.
+	self assert: subject keys equals: #(1 2 3 4 6 7)!
 
 testMixedConcatenation
 	| subjects |
@@ -105,7 +101,12 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #testDecodeNextFrom!public! !
+!Utf16StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
+!Utf16StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
+!Utf16StringTest categoriesFor: #decodeTestCases!constants!private! !
+!Utf16StringTest categoriesFor: #testAssociations!public!unit tests! !
+!Utf16StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!Utf16StringTest categoriesFor: #testKeys!public!unit tests! !
 !Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

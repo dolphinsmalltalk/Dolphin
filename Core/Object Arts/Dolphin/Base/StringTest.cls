@@ -11,20 +11,38 @@ StringTest comment: ''!
 !StringTest categoriesForClass!Unclassified! !
 !StringTest methodsFor!
 
+afterTestCases
+	^#(#('ab' $a $b) #('ca£d' $a $£) #('ca£d' $£ $d))!
+
 assimilate: each 
 	^Character codePoint: each asInteger!
 
 assimilateString: aString
 	^self subclassResponsibility!
 
+beforeTestCases
+	^#(#('ab' $b $a) #('ca£d' $£ $a) #('ca£d' $d $£))!
+
 caseConversionCases
-	^{{'abc £12' asAnsiString. 'ABC £12' asAnsiString}.
-		{'oña' asAnsiString. 'OÑA' asAnsiString}.
-		{'árvízturo tükörfúrógép' asAnsiString. 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP' asAnsiString}.
-		{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
+	^#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
+		, {{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
 
 equalityTestCases
 	^#('' 'a' 'abc' '' 'tükörfúrógép' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'a🐬' 'a £=1.2€')!
+
+findActualIndicesOf: aCharacter in: aString
+	| i found stream |
+	found := OrderedCollection new.
+	stream := aString readStream.
+	i := 0.
+	stream do: 
+			[:ch |
+			ch = aCharacter ifTrue: [found add: i + 1].
+			i := stream position].
+	^found asArray!
+
+indexOfTestCases
+	^#('' $a 'a' $a 'aa' $a 'b' $a '£' $£ '££' $£ 'a££b£' $£)!
 
 lengthTestCases
 	^#(#('' 0) #('a' 1) #('ab' 2) #('oña' 3) #('£€' 2))!
@@ -34,6 +52,22 @@ newNumericArray: anInteger
 
 reverseTestCases
 	^#(#('' '') #('a' 'a') #('ab' 'ba') #('abc' 'cba') #('oña' 'año'))!
+
+testAfter
+	self afterTestCases do: 
+			[:each |
+			| subject char expected actual |
+			subject := self assimilateString: each first.
+			char := each second.
+			expected := each third.
+			actual := subject after: char.
+			self assert: actual equals: expected].
+	self
+		should: [(self assimilateString: 'ab') after: $b]
+		raise: Error
+		matching: [:ex | ex description equals: '$b is my last object'].
+	self should: [(self assimilateString: '') after: $a] raise: NotFoundError.
+	self should: [(self assimilateString: 'a') after: $b] raise: NotFoundError!
 
 testAsByteArray
 	super testAsByteArray.
@@ -47,6 +81,22 @@ testAsByteArray
 
 testAt
 	self assert: ((self newCollection: 'Hello') at: 1) equals: $H!
+
+testBefore
+	self beforeTestCases do: 
+			[:each |
+			| subject char expected actual |
+			subject := self assimilateString: each first.
+			char := each second.
+			expected := each third.
+			actual := subject before: char.
+			self assert: actual equals: expected].
+	self
+		should: [(self assimilateString: 'ab') before: $a]
+		raise: Error
+		matching: [:ex | ex description equals: '$a is my first object'].
+	self should: [(self assimilateString: '') before: $a] raise: NotFoundError.
+	self should: [(self assimilateString: 'a') before: $b] raise: NotFoundError!
 
 testCapitalized
 	| string cap |
@@ -147,14 +197,13 @@ testEquals
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
-	searchee := self newCollection: 'abcdefgabcdef'.
-	abc := self newCollection: 'abc'.
+	searchee := self newCollection: 'a£cdefga£cdef'.
+	abc := self newCollection: 'a£c'.
 	self assert: (searchee findString: abc startingAt: 1) equals: 1.
-	self assert: (searchee findString: abc startingAt: 2) equals: 8.
-	self assert: (searchee findString: abc startingAt: 9) equals: 0.
+	self assert: (searchee findString: abc startingAt: 2) equals: (searchee lastIndexOf: $£) - 1.
+	self assert: (searchee findString: abc startingAt: searchee size) equals: 0.
 	self assert: (searchee findString: abc startingAt: 11) equals: 0.
 	self assert: (searchee findString: abc startingAt: 1) equals: 1.
-	self assert: (searchee findString: abc startingAt: 9) equals: 0.
 	searchee := self newCollection: 'aabcabc'.
 	self assert: (searchee findString: abc startingAt: 6) equals: 0.
 	a := self newCollection: 'a'.
@@ -364,6 +413,20 @@ testHash
 	abc := self assimilateString: 'abc'.
 	self assert: #abc hash equals: abc hash!
 
+testIndexOfStartingAt
+	self indexOfTestCases pairsDo: 
+			[:each :char |
+			| subject expectedIndices i actualIndices |
+			subject := self assimilateString: each.
+			expectedIndices := self findActualIndicesOf: char in: subject.
+			actualIndices := OrderedCollection new.
+			i := 0.
+			
+			[i := subject indexOf: char startingAt: i + 1.
+			i == 0] whileFalse: [actualIndices add: i].
+			actualIndices := actualIndices asArray.
+			self assert: actualIndices equals: expectedIndices]!
+
 testInvalidComparisons
 	| str literals |
 	str := self newCollection: 'blah'.
@@ -378,6 +441,16 @@ testInvalidComparisons
 	literals do: [:each | self should: [each <= str] raise: Error].
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
+
+testLastIndexOf
+	self indexOfTestCases pairsDo: 
+			[:each :char |
+			| subject expectedIndices expected actual |
+			subject := self assimilateString: each.
+			expectedIndices := self findActualIndicesOf: char in: subject.
+			expected := expectedIndices isEmpty ifTrue: [0] ifFalse: [expectedIndices last].
+			actual := subject lastIndexOf: char.
+			self assert: actual equals: expected]!
 
 testLength
 	self lengthTestCases do: 
@@ -427,10 +500,21 @@ testReverse
 			subject := self assimilateString: each first.
 			expected := self assimilateString: each last.
 			actual := subject reverse.
-			self assert: actual equals: expected mutableCopy.
+			self assert: actual equals: expected.
 			"Reverse it back"
 			actual := actual reverse.
-			self assert: actual equals: subject mutableCopy]!
+			self assert: actual equals: subject]!
+
+testReverseDo
+	self reverseTestCases do: 
+			[:each |
+			| subject expected actual |
+			subject := self assimilateString: each first.
+			expected := each last asArray.
+			actual := Array writeStream.
+			subject reverseDo: [:ch | actual nextPut: ch].
+			actual := actual contents.
+			self assert: actual equals: expected]!
 
 testSplitByString
 	"Test String>>split:, which tokenizes the argument string into sequences that are separated by the receiver string."
@@ -811,15 +895,21 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 
 withAllTestCases
 	^#('' 'a' 'abc' '£€')! !
+!StringTest categoriesFor: #afterTestCases!constants!private! !
 !StringTest categoriesFor: #assimilate:!helpers!private! !
 !StringTest categoriesFor: #assimilateString:!helpers!private! !
+!StringTest categoriesFor: #beforeTestCases!constants!private! !
 !StringTest categoriesFor: #caseConversionCases!constants!private! !
 !StringTest categoriesFor: #equalityTestCases!constants!private! !
+!StringTest categoriesFor: #findActualIndicesOf:in:!helpers!private! !
+!StringTest categoriesFor: #indexOfTestCases!constants!private! !
 !StringTest categoriesFor: #lengthTestCases!constants!private! !
 !StringTest categoriesFor: #newNumericArray:!helpers!private! !
 !StringTest categoriesFor: #reverseTestCases!constants!private! !
+!StringTest categoriesFor: #testAfter!public!unit tests! !
 !StringTest categoriesFor: #testAsByteArray!public!unit tests! !
 !StringTest categoriesFor: #testAt!public!unit tests! !
+!StringTest categoriesFor: #testBefore!public!unit tests! !
 !StringTest categoriesFor: #testCapitalized!public!unit tests! !
 !StringTest categoriesFor: #testCaseConversions!public!unit tests! !
 !StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
@@ -829,12 +919,15 @@ withAllTestCases
 !StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !StringTest categoriesFor: #testHash!public!unit tests! !
+!StringTest categoriesFor: #testIndexOfStartingAt!public!unit tests! !
 !StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!StringTest categoriesFor: #testLastIndexOf!public!unit tests! !
 !StringTest categoriesFor: #testLength!public!unit tests! !
 !StringTest categoriesFor: #testLines!public!unit tests! !
 !StringTest categoriesFor: #testMutableCopy!public!unit tests! !
 !StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !StringTest categoriesFor: #testReverse!public!unit tests! !
+!StringTest categoriesFor: #testReverseDo!public!unit tests! !
 !StringTest categoriesFor: #testSplitByString!public!unit tests! !
 !StringTest categoriesFor: #testSplitSingle!public!unit tests! !
 !StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !

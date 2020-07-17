@@ -74,6 +74,12 @@ copyToBuffer: anAddress ofSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
 
+decodeAt: anInteger
+	"Private - Answer the <Character> with code point beginning at the specified position in the receiver."
+
+	<primitive: 63>
+	^self _primitiveError: _failureCode at: anInteger!
+
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -124,9 +130,7 @@ skipEncodingMarkerFrom: aGettableStream
 	!
 
 strlen
-	"Answer the length of the receiver (in characters) up to the first null terminator. This may
-	be less than its size if it contains embedded nulls. It can never be greater than the
-	receiver's size."
+	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
 	^CRTLibrary default strlen: self!
 
@@ -173,6 +177,7 @@ urlDecoded
 !AnsiString categoriesFor: #asUppercase!converting!public! !
 !AnsiString categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
 !AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
 !AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
 !AnsiString categoriesFor: #first:!copying!public! !

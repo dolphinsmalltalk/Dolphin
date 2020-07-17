@@ -55,6 +55,19 @@ asUtf8String
 
 	^self!
 
+before: aCharacter ifAbsent: aNiladicValuable
+	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
+
+	| index |
+	index := self indexOf: aCharacter.
+	index == 0 ifTrue: [^aNiladicValuable value].
+	index == 1 ifTrue: [^self errorFirstObject: aCharacter].
+	
+	[index := index - 1.
+	((self basicAt: index) bitAnd: Character.Utf8SurrogateMask) == 16r80]
+			whileTrue.
+	^self decodeAt: index!
+
 bom 
 	^Bom!
 
@@ -64,6 +77,75 @@ copyToBuffer: anAddress ofSize: anInteger
 		bufferSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
+
+countElements
+	| length |
+	length := 0.
+	"Count the code-units that are not trailing bytes"
+	1 to: self size
+		do: [:i | ((self basicAt: i) bitAnd: Character.Utf8SurrogateMask) == 16r80 ifFalse: [length := length + 1]].
+	^length!
+
+decodeAt: anInteger
+	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. Raise an error if the indexed code unit is not the first in a character. If the character encoding is invalid or incomplete, return the replacement character. Intolerance of indexing errors is intended to help detect logic errors in algorithms working with multi-byte strings, although this may also occur in incorrectly encoded data which is otherwise tolerated by returning the replacement character."
+
+	| c c2 size codePoint min |
+	c := self basicAt: anInteger.
+	c < 16r80
+		ifTrue: 
+			["Ascii char"
+			^Character asciiValue: c].
+	"Lead byte?"
+	c >= 16rC0
+		ifFalse: 
+			["On a continution byte so in the middle of a character, which is invalid"
+			^self errorIntraCharacterIndex: anInteger].
+	"At least 2 byte character"
+	size := self size.
+	anInteger < size ifFalse: [^Character.Utf8Default].
+	c2 := self basicAt: anInteger + 1.
+	(c2 bitAnd: 16rC0) == 16r80
+		ifTrue: 
+			[codePoint := (c bitAnd: 16r1F) << 6 bitOr: (c2 bitAnd: 16r3F).
+			min := 16r80]
+		ifFalse: 
+			["Invalid1st continuation"
+			^Character.Utf8Default].
+	c >= 16rE0
+		ifTrue: 
+			[| c3 |
+			"At least a 3-byte character"
+			anInteger + 2 > size ifTrue: [^Character.Utf8Default].
+			c3 := self basicAt: anInteger + 2.
+			(c3 bitAnd: 16rC0) == 16r80
+				ifTrue: 
+					[codePoint := (codePoint bitAnd: 16r3FF) << 6 bitOr: (c3 bitAnd: 16r3F).
+					min := 16r800]
+				ifFalse: 
+					["Invalid 2nd continuation"
+					^Character.Utf8Default].
+			c >= 16rF0
+				ifTrue: 
+					[| c4 |
+					"4-byte character"
+					anInteger + 3 > size ifTrue: [^Character.Utf8Default].
+					c4 := self basicAt: anInteger + 3.
+					(c4 bitAnd: 16rC0) == 16r80
+						ifTrue: 
+							[codePoint := (codePoint bitAnd: 16r7FFF) << 6 bitOr: (c4 bitAnd: 16r3F).
+							min := 16r10000]
+						ifFalse: 
+							["Invalid 3rd continuation"
+							^Character.Utf8Default].
+					c >= 16rF8
+						ifTrue: 
+							["5 or 6-byte character (not currently possible - only 4 bytes required for max Unicode char"
+							^Character.Utf8Default]]].
+	codePoint < min
+		ifTrue: 
+			["Overlong encoding"
+			^Character.Utf8Default].
+	^Character codePoint: codePoint ifInvalid: [Character.Utf8Default]!
 
 decodeNextFrom: aReadStream
 	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
@@ -208,8 +290,24 @@ encodedAt: anInteger put: aCharacter
 									anInteger + 3]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
+encodedSizeAt: anInteger
+	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+
+	| c |
+	c := self basicAt: anInteger.
+	^c >= 16rC0
+		ifTrue: [c >= 16rE0 ifTrue: [c >= 16rF0 ifTrue: [4] ifFalse: [3]] ifFalse: [2]]
+		ifFalse: 
+			[c < 16r80
+				ifTrue: 
+					["Ascii char"
+					1]
+				ifFalse: 
+					["On a continution byte so in the middle of a character, which is invalid"
+					self errorIntraCharacterIndex: anInteger]]!
+
 encodedSizeOf: aCharacter
-	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the UTF-8 encoding."
 
 	^aCharacter isUtf8
 		ifTrue: [1]
@@ -268,15 +366,8 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
-length
-	"Answer the number of Unicode code-points in the receiver."
-
-	| length |
-	length := 0.
-	"Count the code-units that are not trailing bytes"
-	1 to: self size
-		do: [:i | ((self basicAt: i) bitAnd: Character.Utf8SurrogateMask) == 16r80 ifFalse: [length := length + 1]].
-	^length!
+isLeadCodeUnit: anInteger
+	^anInteger < 16r80 or: [anInteger >= 16rC0]!
 
 maxEncoding
 	^4!
@@ -361,7 +452,7 @@ urlEncoded
 
 	| encodedStream |
 	encodedStream := AnsiString writeStream: self size.
-	self do: 
+	self codeUnitsDo: 
 			[:each |
 			"Unreserved characters from RFC3986, section 2.3: Ascii letters and digits, hyphen, underscore, period and tilde"
 			('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~' includes: each)
@@ -377,13 +468,17 @@ urlEncoded
 !Utf8String categoriesFor: #asLowercase!converting!public! !
 !Utf8String categoriesFor: #asUppercase!converting!public! !
 !Utf8String categoriesFor: #asUtf8String!converting!public! !
+!Utf8String categoriesFor: #before:ifAbsent:!public!searching! !
 !Utf8String categoriesFor: #bom!constants!encode/decode!private! !
 !Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!Utf8String categoriesFor: #countElements!accessing!public! !
+!Utf8String categoriesFor: #decodeAt:!encode/decode!private! !
 !Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Utf8String categoriesFor: #encodedSizeAt:!encode/decode!private! !
 !Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
 !Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Utf8String categoriesFor: #length!accessing!public! !
+!Utf8String categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
 !Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !
