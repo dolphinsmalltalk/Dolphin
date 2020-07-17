@@ -75,7 +75,6 @@ package classNames
 	add: #MergesortAlgorithmTest;
 	add: #MetaclassTest;
 	add: #MethodDictionaryTest;
-	add: #MultiByteStringTest;
 	add: #MustBeBooleanTestClasses;
 	add: #NeverSearchPolicyTest;
 	add: #NumberTest;
@@ -121,6 +120,7 @@ package classNames
 	add: #UndefinedObjectTest;
 	add: #Utf16StringTest;
 	add: #Utf8StringTest;
+	add: #UtfEncodedStringTest;
 	add: #WCHARFieldTest;
 	add: #WindowsLocaleTest;
 	add: #WORDArrayTest;
@@ -528,22 +528,22 @@ StringTest subclass: #AnsiStringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest subclass: #MultiByteStringTest
+StringTest subclass: #UtfEncodedStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest subclass: #SymbolTest
+UtfEncodedStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultiByteStringTest subclass: #Utf16StringTest
+UtfEncodedStringTest subclass: #Utf8StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MultiByteStringTest subclass: #Utf8StringTest
+Utf8StringTest subclass: #SymbolTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

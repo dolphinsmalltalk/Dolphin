@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StringTest subclass: #SymbolTest
+Utf8StringTest subclass: #SymbolTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -45,26 +45,8 @@ testAtPut
 	1 to: literal size + 1
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
-testEquals
-	self equalityTestCases do: 
-			[:each |
-			| subject ansi |
-			subject := self assimilateString: each.
-			"Identical must be equal"
-			self assert: subject equals: subject.
-			"Same characters must be equal"
-			self assert: subject equals: (self assimilateString: each).
-			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
-			ansi := each asAnsiString.
-			self assert: (ansi ~= each or: [subject = ansi]).
-			self assert: subject equals: each asUtf8String.
-			self assert: subject equals: each asUtf16String.
-			"Not equal to ByteArrays"
-			self deny: each asByteArray equals: each.
-			self deny: each equals: each asByteArray.
-			"Nor Arrays of characters"
-			self deny: each asArray equals: each.
-			self deny: each equals: each asArray]!
+testEncodeOnPut
+	self should: [super testEncodeOnPut] raise: Error matching: [:ex | ex description = 'Symbol class should not implement #new:']!
 
 testInstVarAtPut
 	| literal |
@@ -144,7 +126,7 @@ testSymbolTable
 !SymbolTest categoriesFor: #newEmptyCollection:!public! !
 !SymbolTest categoriesFor: #testAsString!helpers!public! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
-!SymbolTest categoriesFor: #testEquals!public!unit tests! !
+!SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testKeywords!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !

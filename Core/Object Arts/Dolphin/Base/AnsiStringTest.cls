@@ -14,7 +14,7 @@ assimilate: each
 	^Character ansiValue: each asInteger!
 
 assimilateString: aString
-	^aString!
+	^aString asAnsiString!
 
 collectionClass
 	^AnsiString!
@@ -48,6 +48,17 @@ testClassWith
 	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
 	self assert: (AnsiString with: Character replacement)
 		equals: (AnsiString with: (Character value: 63))!
+
+testCopyReplaceAllWith
+	| subject actual |
+	super testCopyReplaceAllWith.
+	subject := self assimilateString: 'a£aa£'.
+	actual := subject copyReplaceAll: 'a£' asUtf8String with: 'a€' asUtf8String.
+	self assert: actual equals: 'a€aa€'.
+	actual := subject copyReplaceAll: 'a£' asUtf16String with: 'a€' asUtf16String.
+	self assert: actual equals: 'a€aa€'.
+	actual := subject copyReplaceAll: 'a£' asArray with: 'a€' asArray.
+	self assert: actual equals: 'a€aa€'!
 
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |
@@ -99,6 +110,7 @@ testMatch
 !AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
 !AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
 !AnsiStringTest categoriesFor: #testClassWith!public! !
+!AnsiStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
 !AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
 

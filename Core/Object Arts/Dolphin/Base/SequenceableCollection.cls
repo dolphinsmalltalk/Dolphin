@@ -71,12 +71,10 @@ _sameAsString: comparand
 			ifFalse: [^false]].
 	^true!
 
-after: target
-	"Answer the element after the <Object> argument, target.  
-	Report an error if target is not in the receiver, or if there 
-	are no elements after it."
+after: anObject
+	"Answer the element after the argument, anObject. Report an error if target is not in the receiver, or if there are no elements after it."
 
-	^self after: target ifAbsent: [self errorNotFound: target]!
+	^self after: anObject ifAbsent: [self errorNotFound: anObject]!
 
 after: target ifAbsent: exceptionHandler
 	"Answer the element after target, or if not present the result of evaluating the
@@ -173,6 +171,14 @@ associations
 	self keysAndValuesDo: [:i :each | answer at: i put: i -> each].
 	^answer!
 
+asString
+	"Answer a <String> containing the same <Character>s as the receiver. This can be expected to fail if any of the elements of the receiver are not <Character>s."
+
+	| stream |
+	stream := String writeStream: self copySize.
+	self do: [:each | stream nextPut: each].
+	^stream grabContents!
+
 at: index
 	"Answer an <Object> which is the element of the receiver 
 	at the specified index. If the index is out of bounds, raise an exception."
@@ -229,6 +235,30 @@ basicBeginsWith: aCollection
 			i := i + 1].
 	^true!
 
+basicIndexOfSubCollection: targetSequence startingAt: start
+	| firstElement subSize size |
+	subSize := targetSequence size.
+	subSize == 0 ifTrue: [^0].
+	firstElement := targetSequence at: 1.
+	size := self size.
+	subSize == 1
+		ifTrue: 
+			[^self
+				nextIndexOf: firstElement
+				from: start
+				to: size].
+	start to: size - subSize + 1
+		do: 
+			[:i |
+			(self at: i) = firstElement
+				ifTrue: 
+					[| j |
+					j := 2.
+					[(self at: i + j - 1) = (targetSequence at: j)] whileTrue: 
+							[j = subSize ifTrue: [^i].
+							j := j + 1]]].
+	^0!
+
 before: target
 	"Answer the receiver's element immediately before the argument, target. 
 	Raise an exception if target is not an element of the receiver, or if 
@@ -236,18 +266,14 @@ before: target
 
 	^self before: target ifAbsent: [self errorNotFound: target]!
 
-before: target ifAbsent: exceptionHandler
-	"Answer the element before the argument, target, or if not present the 
-	result of evaluating the niladic valuable, exceptionHandler."
+before: anObject ifAbsent: exceptionHandler
+	"Answer the element before the argument, anObject, or if not present the result of evaluating the niladic valuable, exceptionHandler."
 
 	| index |
-	index := self indexOf: target.
+	index := self indexOf: anObject.
 	^index == 0
 		ifTrue: [exceptionHandler value]
-		ifFalse: [
-			index == 1 
-				ifTrue: [self errorFirstObject: target]
-				ifFalse: [self at: index - 1]].!
+		ifFalse: [index == 1 ifTrue: [self errorFirstObject: anObject] ifFalse: [self at: index - 1]]!
 
 beginsWith: aCollection
 	"Answer whether the receiver begins with the sequence
@@ -310,19 +336,20 @@ copyLikeOfSize: anInteger
 
 	^self species ofSize: anInteger!
 
-copyReplaceAll: oldElements with: newElements
-	"Answer a new <sequencedReadableCollection> which is a copy of the receiver but in which all
-	occurrences of the sequence, oldElements, have been replaced by the sequence, newElements."
+copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollection
+	"Answer a new <sequencedReadableCollection> which is a copy of the receiver but in which all occurrences of an old element sequence have been replaced by a new element sequence."
 
 	| target matchSize replaceSize index sourcePos targetPos indices occurrences |
-	(index := self indexOfSubCollection: oldElements startingAt: 1) == 0 ifTrue: [^self mutableCopy].
-	matchSize := oldElements size.
+	(index := self indexOfSubCollection: oldSequencedReadableCollection startingAt: 1) == 0
+		ifTrue: [^self mutableCopy].
+	matchSize := oldSequencedReadableCollection size.
 	indices := OrderedCollection new: 5.
 	
 	[indices addLast: index.
-	(index := self indexOfSubCollection: oldElements startingAt: index + matchSize) == 0]
+	(index := self indexOfSubCollection: oldSequencedReadableCollection startingAt: index + matchSize)
+		== 0]
 			whileFalse.
-	replaceSize := newElements size.
+	replaceSize := newSequencedReadableCollection size.
 	occurrences := indices size.
 	target := self copyLikeOfSize: self size + ((replaceSize - matchSize) * occurrences).
 	sourcePos := 1.
@@ -345,7 +372,7 @@ copyReplaceAll: oldElements with: newElements
 			target
 				replaceFrom: next
 				to: targetPos - 1
-				with: newElements
+				with: newSequencedReadableCollection
 				startingAt: 1].
 
 	"Copy any remaining elements"
@@ -518,6 +545,11 @@ copyWithoutIndex: anInteger
 			startingAt: anInteger + 1;
 		yourself!
 
+decodeAt: anInteger
+	"Private - Answer the encoded object beginning at the specified position in the receiver."
+
+	^self at: anInteger!
+
 decodeFrom: aReadStream upTo: anObject
 	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
 	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
@@ -561,7 +593,7 @@ encodedAt: anInteger put: anObject
 	^anInteger!
 
 encodedSizeOf: anObject
-	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver's encoding."
 
 	^1!
 
@@ -590,6 +622,9 @@ endsWith: aCollection
 			(self at: i) = each ifFalse: [^false].
 			i := i + 1].
 	^true!
+
+errorCollectionsOfDifferentSizes
+	^self error: 'collections are of different sizes'!
 
 errorFirstObject: target
 	"Private - Report an error to the effect that an attempt was made to access the object
@@ -797,34 +832,10 @@ indexOfSubCollection: aSequenceableCollection
 
 	^self indexOfSubCollection: aSequenceableCollection startingAt: 1!
 
-indexOfSubCollection: targetSequence startingAt: start 
-	"Answer the <integer> index of the next occurrence within the 
-	receiver of the <sequencedReadableCollection> targetSequence,
-	starting at the <integer> index start.
-	If there are no such occurrences, answer 0."
+indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
+	"Answer the <integer> index of the next occurrence within the receiver of the <sequencedReadableCollection> sub-sequence, starting at the specified <integer> index. If there are no such occurrences (or the search sequence is empty), answer 0."
 
-	| size subSize firstElement |
-	subSize := targetSequence size.
-	subSize == 0 ifTrue: [^0].
-	firstElement := targetSequence at: 1.
-	size := self size.
-	subSize == 1 
-		ifTrue: 
-			[^self 
-				nextIndexOf: firstElement
-				from: start
-				to: size].
-	start to: size - subSize + 1
-		do: 
-			[:i | 
-			(self at: i) = firstElement 
-				ifTrue: 
-					[| j |
-					j := 2.
-					[(self at: i + j - 1) = (targetSequence at: j)] whileTrue: 
-							[j = subSize ifTrue: [^i].
-							j := j + 1]]].
-	^0!
+	^self basicIndexOfSubCollection: aSequencedReadableCollection startingAt: startInteger!
 
 indexOfSubCollection: targetSequence startingAt: start ifAbsent: exceptionHandler
 	"Answer the <integer> index of the next occurrence within the 
@@ -1261,12 +1272,8 @@ with: otherCollection do: operation
 	<sequencedReadableCollection> argument, otherCollection. 
 	Raise an exception if otherCollection is not the same size as the receiver."
 
-	self size = otherCollection size
-		ifFalse: [^self error: 'collections are of different sizes'].
-	self keysAndValuesDo: [:i :elem |
-		operation
-			value: elem
-			value: (otherCollection at: i)]!
+	self size = otherCollection size ifFalse: [^self errorCollectionsOfDifferentSizes].
+	self keysAndValuesDo: [:i :elem | operation value: elem value: (otherCollection at: i)]!
 
 writeStream
 	"Answer a WriteStream on the receiver."
@@ -1287,6 +1294,7 @@ writeStream
 !SequenceableCollection categoriesFor: #asArray!converting!public! !
 !SequenceableCollection categoriesFor: #asRunArray!converting!public! !
 !SequenceableCollection categoriesFor: #associations!accessing!public! !
+!SequenceableCollection categoriesFor: #asString!public! !
 !SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
 !SequenceableCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:ifPresent:!accessing!public! !
@@ -1294,6 +1302,7 @@ writeStream
 !SequenceableCollection categoriesFor: #atAll:put:!accessing!public! !
 !SequenceableCollection categoriesFor: #atAllPut:!accessing!public! !
 !SequenceableCollection categoriesFor: #basicBeginsWith:!comparing!public! !
+!SequenceableCollection categoriesFor: #basicIndexOfSubCollection:startingAt:!private!searching! !
 !SequenceableCollection categoriesFor: #before:!public!searching! !
 !SequenceableCollection categoriesFor: #before:ifAbsent:!public!searching! !
 !SequenceableCollection categoriesFor: #beginsWith:!comparing!public! !
@@ -1311,6 +1320,7 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutIndex:!copying!public! !
+!SequenceableCollection categoriesFor: #decodeAt:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
@@ -1323,6 +1333,7 @@ writeStream
 !SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encoding!constants!encode/decode!private! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
+!SequenceableCollection categoriesFor: #errorCollectionsOfDifferentSizes!enumerating!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorValueNotFound:!exceptions!private! !

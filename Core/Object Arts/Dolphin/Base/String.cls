@@ -227,14 +227,14 @@ asPhrase
 
 	| stream last |
 	stream := self species writeStream: self size + 10.
-	self readStream do: 
-			[:each | 
-			last isNil 
+	self do: 
+			[:each |
+			last isNil
 				ifTrue: [each == $: ifFalse: [last := stream nextPut: each asUppercase]]
 				ifFalse: 
-					[each == $: 
+					[each == $:
 						ifFalse: 
-							[last == $: 
+							[last == $:
 								ifTrue: 
 									[stream
 										space;
@@ -250,6 +250,16 @@ asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."
 
 	^self asUtf16String!
+
+associations
+	"Answer a <sequencedReadableCollection> containing the receiver's associations, representing the keys (indices) and values (Characters) in the receiver."
+
+	"Strings don't actually contains Associations so the result is built afresh each time and modifying its contents will not affect the original collection. However this is no different to the implementation for LookupTable/IdentityDictionary."
+
+	| stream |
+	stream := Array writeStream: self size.
+	self keysAndValuesDo: [:eachKey :eachValue | stream nextPut: eachKey -> eachValue].
+	^stream grabContents!
 
 asString
 	"Answer a <readableString> containing the same characters as the receiver,
@@ -292,7 +302,7 @@ asUtf8String
 	^self asUtf16String asByteString: Utf8String!
 
 at: index
-	"Answer the <Character> at the <integer> index, in the receiver."
+	"Answer the <Character> with the code unit at the <integer> index, in the receiver."
 
 	"Primitive Failure Reasons:
 		InvalidParameter1	- aSmallInteger is not a SmallInteger
@@ -403,7 +413,16 @@ contains: aString
 
 	^(self findString: aString startingAt: 1) ~~ 0!
 
+copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollection
+	^super copyReplaceAll: (self class coerceString: oldSequencedReadableCollection asString)
+		with: (self class coerceString: newSequencedReadableCollection asString)!
+
 copyToBuffer: anAddress ofSize: anInteger
+	^self subclassResponsibility!
+
+decodeAt: anInteger
+	"Private - Answer the encoded object beginning at the specified position in the receiver."
+
 	^self subclassResponsibility!
 
 decodeNextAvailable: anInteger from: aReadStream
@@ -411,7 +430,7 @@ decodeNextAvailable: anInteger from: aReadStream
 	many as are available before the end of stream."
 
 	| newStream count next |
-	newStream := self class writeStream: (count := anInteger).
+	newStream := self species writeStream: (count := anInteger).
 	[count == 0 or: [(next := aReadStream nextAvailable) isNil]] whileFalse: 
 			[newStream nextPut: next.
 			count := count - 1].
@@ -539,7 +558,7 @@ findString: aString
 
 	^self findString: aString startingAt: 1!
 
-findString: aString startingAt: anInteger 
+findString: aString startingAt: anInteger
 	"Answer the index of the <String> argument within the receiver, starting at the <integer> argument. If the receiver does not contain aString, answer 0.
 
 	Primitive Failure Reasons:
@@ -550,7 +569,7 @@ findString: aString startingAt: anInteger
 	Implementation Note: The string search primitive is implemented using the Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which case it isn't worth initializing the skip array in most cases, so a simple brute force search (much like that of the superclass) is used."
 
 	<primitive: 149>
-	^super indexOfSubCollection: aString startingAt: anInteger!
+	^self basicIndexOfSubCollection: (self class coerceString: aString) startingAt: anInteger!
 
 findString: aString startingAt: anInteger ignoreCase: aBoolean 
 	"Answer the index of the <String> argument within the receiver, ignoring case differences, starting at the <integer>
@@ -650,14 +669,17 @@ indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger
 
 	^aCollectionOfCharacters _indexOfAnyInString: self startingAt: anInteger!
 
-indexOfSubCollection: targetSequence startingAt: start
-	"Answer the <integer> index of the next occurrence within the 
-	receiver of the <sequencedReadableCollection> targetSequence,
-	starting at the <integer> index start. If there are no such occurrences
-	(or the search sequence is empty), answer 0."
+indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
+	"Answer the <integer> index of the next occurrence within the receiver of the <sequencedReadableCollection> sub-sequence, starting at the specified <integer> index. If there are no such occurrences (or the search sequence is empty), answer 0."
 
 	<primitive: 149>
-	^super indexOfSubCollection: targetSequence startingAt: start!
+	aSequencedReadableCollection isString
+		ifTrue: 
+			[| encoded |
+			encoded := self class coerceString: aSequencedReadableCollection.
+			encoded ~~ aSequencedReadableCollection
+				ifTrue: [^self indexOfSubCollection: encoded startingAt: startInteger]].
+	^self basicIndexOfSubCollection: aSequencedReadableCollection startingAt: startInteger!
 
 isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
@@ -671,12 +693,10 @@ isString
 	^true!
 
 leftString: anInteger
-	"Answer a new string comprising up to the leftmost anInteger characters of the receiver. 
-	If the receiver has less than anInteger characters, then copy only those characters in the 
-	receiver."
+	"Answer a new string comprising up to the leftmost anInteger <Characters> of the receiver. 
+	If the receiver has less than anInteger characters, then copy only those characters in the receiver."
 
-	^self first:( anInteger min: self size).
-!
+	^self first: (anInteger min: self length)!
 
 length
 	"Answer the number of Unicode code-points in the receiver. Note that:
@@ -777,8 +797,7 @@ max: operand
 		ifFalse: [self]!
 
 midString: anIntegerLength from: anIntegerStart
-	"Answer a new string comprising the anIntegerLength characters starting
-	at anIntegerStart in the receiver."
+	"Answer a new string comprising the anIntegerLength <Characters> starting at anIntegerStart in the receiver."
 
 	^self copyFrom: anIntegerStart to: anIntegerStart + anIntegerLength - 1!
 
@@ -861,6 +880,23 @@ occurrencesOf: anObject from: startInteger to: endInteger
 			occurrences := occurrences + 1.
 			current := next + 1].
 	^occurrences!
+
+prevIndexOf: anObject from: hiInteger to: loInteger
+	"Answer the <integer> index of the first occurrence of anElement in the receiver that is before index, hiInteger, but after index, loInteger. The range is inclusive. If there are no such occurrences, answer 0."
+
+	| last next |
+	last := 0.
+	next := self
+				nextIndexOf: anObject
+				from: loInteger
+				to: hiInteger.
+	[next == 0 or: [next > hiInteger]] whileFalse: 
+			[last := next.
+			next := self
+						nextIndexOf: anObject
+						from: last + 1
+						to: hiInteger].
+	^last!
 
 printOn: aStream
 	"Append the receiver as a quoted string to aStream. The stream is expected to be over a
@@ -1055,9 +1091,7 @@ strcspn: aString start: anInteger
 	^CRTLibrary default strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
 
 strlen
-	"Answer the length of the receiver (in characters) up to the first null terminator. This may
-	be less than its size if it contains embedded nulls. It can never be greater than the
-	receiver's size."
+	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
 	^self subclassResponsibility!
 
@@ -1218,6 +1252,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asNumber!converting!public! !
 !String categoriesFor: #asPhrase!converting!public! !
 !String categoriesFor: #asResourceId!converting!public! !
+!String categoriesFor: #associations!accessing!public! !
 !String categoriesFor: #asString!converting!public! !
 !String categoriesFor: #asSymbol!converting!public! !
 !String categoriesFor: #asUIntPtr!converting!public! !
@@ -1236,7 +1271,9 @@ withNormalizedLineDelimiters
 !String categoriesFor: #capitalized!converting!public! !
 !String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public!searching! !
+!String categoriesFor: #copyReplaceAll:with:!public! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
+!String categoriesFor: #decodeAt:!encode/decode!private! !
 !String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !String categoriesFor: #displayOn:!printing!public! !
@@ -1279,6 +1316,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !String categoriesFor: #occurrencesOf:!public!searching! !
 !String categoriesFor: #occurrencesOf:from:to:!public!searching! !
+!String categoriesFor: #prevIndexOf:from:to:!public!searching! !
 !String categoriesFor: #printOn:!printing!public! !
 !String categoriesFor: #refersToLiteral:!private!testing! !
 !String categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !

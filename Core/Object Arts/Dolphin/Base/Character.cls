@@ -2,14 +2,16 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf16SurrogateMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Character addClassConstant: 'EncodingMask' value: 16r3F000000!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
+Character addClassConstant: 'Utf16LeadMask' value: 16rD800!
 Character addClassConstant: 'Utf16Mask' value: 16r2000000!
 Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
+Character addClassConstant: 'Utf16TrailMask' value: 16rDC00!
 Character addClassConstant: 'Utf32Mask' value: 16r3000000!
 Character addClassConstant: 'Utf8Mask' value: 16r1000000!
 Character addClassConstant: 'Utf8SurrogateMask' value: 16rC0!
@@ -355,17 +357,17 @@ isUpperCase
 isUtf16Lead
 	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rD800)!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | Utf16LeadMask)!
 
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
 
-	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | 16rD800)!
+	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | Utf16LeadMask)!
 
 isUtf16Trail
 	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
 
-	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rDC00)!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | Utf16TrailMask)!
 
 isUtf8
 	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
@@ -677,7 +679,7 @@ isValidCodePoint: anInteger
 	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
 
 	^anInteger >= 0 and: 
-			[anInteger < 16rD800 or: 
+			[anInteger < Character.Utf16LeadMask or: 
 					[anInteger > 16rDFFF and: 
 							[anInteger <= Win32Constants.MAX_UCSCHAR and: 
 									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not]]]]!
@@ -686,8 +688,8 @@ isValidUtf16CodeUnit: anInteger
 	"Answer whether the <integer> argument is a valid as a code unit in the UTF-16 encoding."
 
 	^anInteger >= 0 and: 
-			[anInteger < 16rD800 or: 
-					[(anInteger bitAnd: 16rF800) == 16rD800 or: 
+			[anInteger < Character.Utf16LeadMask or: 
+					[(anInteger bitAnd: 16rF800) == Character.Utf16LeadMask or: 
 							[anInteger < 16rFDD0 or: 
 									[anInteger > 16rFDEF
 										and: [anInteger <= Win32Constants.MAX_UCSCHAR and: [(anInteger allMask: 16rFFFE) not]]]]]]!
@@ -777,7 +779,7 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(anInteger bitAnd: 16rF800) == 16rD800
+					[(anInteger bitAnd: 16rF800) == Character.Utf16LeadMask
 						ifTrue: 
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]
