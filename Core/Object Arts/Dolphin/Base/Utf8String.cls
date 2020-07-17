@@ -94,7 +94,7 @@ decodeAt: anInteger
 	c < 16r80
 		ifTrue: 
 			["Ascii char"
-			^Character asciiValue: c].
+			^Character.CharacterSet at: c + 1].
 	"Lead byte?"
 	c >= 16rC0
 		ifFalse: 
