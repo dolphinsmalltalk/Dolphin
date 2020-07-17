@@ -70,6 +70,11 @@ allButFirst: anInteger
 	anInteger timesRepeat: [stream next].
 	^stream upToEnd!
 
+allButLast: anInteger
+	"Answer a copy of the receiver containing all but the last anInteger elements. Raise an error if there are not enough elements."
+
+	^self copyFrom: 1 to: (self indexOfLast: anInteger) - 1!
+
 allSatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for every code point in the receiver."
 
@@ -443,6 +448,7 @@ with: otherCollection do: aDyadicValuable
 	stream atEnd ifFalse: [^self errorCollectionsOfDifferentSizes]! !
 !UtfEncodedString categoriesFor: #after:ifAbsent:!public!searching! !
 !UtfEncodedString categoriesFor: #allButFirst:!copying!public! !
+!UtfEncodedString categoriesFor: #allButLast:!copying!public! !
 !UtfEncodedString categoriesFor: #allSatisfy:!enumerating!public! !
 !UtfEncodedString categoriesFor: #anySatisfy:!enumerating!public! !
 !UtfEncodedString categoriesFor: #asArray!converting!public! !

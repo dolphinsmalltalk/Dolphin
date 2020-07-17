@@ -15,15 +15,17 @@ testReadFrom
 	struct := DWORD new.
 	dolphinString := Character dolphin asUtf16String.
 	struct bytes
-		wordAtOffset: 0 put: dolphinString first codeUnit;
-		wordAtOffset: 2 put: dolphinString last codeUnit.
-	subject := WCHARField new offset: 0; yourself.
-	char := (subject readFrom: struct).
+		wordAtOffset: 0 put: (dolphinString at: 1) codeUnit;
+		wordAtOffset: 2 put: (dolphinString at: 2) codeUnit.
+	subject := WCHARField new
+				offset: 0;
+				yourself.
+	char := subject readFrom: struct.
 	self assert: char isUtf16Lead.
-	self assert: char equals: dolphinString first.
+	self assert: char equals: (dolphinString at: 1).
 	subject offset: 2.
-	char := (subject readFrom: struct).
-	self assert: char isUtf16Trail .
-	self assert: char equals: dolphinString last! !
+	char := subject readFrom: struct.
+	self assert: char isUtf16Trail.
+	self assert: char equals: (dolphinString at: 2)! !
 !WCHARFieldTest categoriesFor: #testReadFrom!public! !
 
