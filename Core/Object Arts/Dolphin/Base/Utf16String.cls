@@ -96,7 +96,7 @@ bom
 byteSize
 	"Private - Answer the size in bytes of this object. For historical reasons this includes the null terminator (which is actually part of the memory allocated for the String by the Dolphin VM)."
 
-	^(self basicSize + 1) << 1!
+	^self basicSize + 1 bitShift: 1!
 
 copyToBuffer: anAddress ofSize: anInteger
 	CRTLibrary default
@@ -131,7 +131,8 @@ decodeAt: anInteger
 					(trailing bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask])
 				ifTrue: 
 					["Valid surrogate pair"
-					Character codePoint: (leading << 10) + trailing - SurrogateOffset ifInvalid: [Character.Utf8Default]]
+					Character codePoint: (leading bitShift: 10) + trailing - SurrogateOffset
+						ifInvalid: [Character.Utf8Default]]
 				ifFalse: 
 					["No trailing surrogate, answer the replacement character"
 					Character.Utf8Default]]
@@ -159,7 +160,7 @@ decodeNextFrom: aReadStream
 							(c2 bitAnd: Character.Utf16SurrogateMask) == Character.Utf16TrailMask
 								ifTrue: 
 									["Valid surrogate pair"
-									Character codePoint: (c << 10) + c2 - SurrogateOffset ifInvalid: [Character.Utf8Default]]
+									Character codePoint: (c bitShift: 10) + c2 - SurrogateOffset ifInvalid: [Character.Utf8Default]]
 								ifFalse: 
 									["No trailing surrogate, answer the replacement character"
 									aReadStream pop.
@@ -486,7 +487,7 @@ initialize
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: Character.Utf16LeadMask - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset'
-		value: (Character.Utf16LeadMask << 10) + Character.Utf16TrailMask - 16r10000.
+		value: (Character.Utf16LeadMask bitShift: 10) + Character.Utf16TrailMask - 16r10000.
 	self addClassConstant: 'Bom' value: #[255 254]!
 
 with: aCharacter
