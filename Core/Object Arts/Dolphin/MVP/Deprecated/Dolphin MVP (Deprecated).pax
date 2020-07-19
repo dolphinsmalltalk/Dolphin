@@ -641,7 +641,7 @@ isKeyboardInputUnicode
 	^this
 		ifNil: [false]
 		ifNotNil: 
-			[(ScintillaLibrary default
+			[(Library
 				directFunction: this
 				msg: SCI_GETKEYSUNICODE
 				wParam: 0
@@ -653,7 +653,7 @@ isKeyboardInputUnicode: keysUnicodeBoolean
 	#deprecated.
 	this
 		ifNotNil: 
-			[ScintillaLibrary default
+			[Library
 				directFunction: this
 				msg: SCI_SETKEYSUNICODE
 				wParam: keysUnicodeBoolean asParameter

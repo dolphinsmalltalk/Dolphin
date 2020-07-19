@@ -20,6 +20,9 @@ ScintillaConstants at: 'EDGE_BACKGROUND' put: 16r2!
 ScintillaConstants at: 'EDGE_LINE' put: 16r1!
 ScintillaConstants at: 'EDGE_MULTILINE' put: 16r3!
 ScintillaConstants at: 'EDGE_NONE' put: 16r0!
+ScintillaConstants at: 'EOLANNOTATION_BOXED' put: 16r2!
+ScintillaConstants at: 'EOLANNOTATION_HIDDEN' put: 16r0!
+ScintillaConstants at: 'EOLANNOTATION_STANDARD' put: 16r1!
 ScintillaConstants at: 'INDIC_BOX' put: 16r6!
 ScintillaConstants at: 'INDIC_COMPOSITIONTHICK' put: 16rE!
 ScintillaConstants at: 'INDIC_COMPOSITIONTHIN' put: 16rF!
@@ -214,6 +217,7 @@ ScintillaConstants at: 'SC_MAX_MARGIN' put: 16r4!
 ScintillaConstants at: 'SC_MOD_BEFOREDELETE' put: 16r800!
 ScintillaConstants at: 'SC_MOD_BEFOREINSERT' put: 16r400!
 ScintillaConstants at: 'SC_MOD_CHANGEANNOTATION' put: 16r20000!
+ScintillaConstants at: 'SC_MOD_CHANGEEOLANNOTATION' put: 16r400000!
 ScintillaConstants at: 'SC_MOD_CHANGEFOLD' put: 16r8!
 ScintillaConstants at: 'SC_MOD_CHANGEINDICATOR' put: 16r4000!
 ScintillaConstants at: 'SC_MOD_CHANGELINESTATE' put: 16r8000!
@@ -227,7 +231,7 @@ ScintillaConstants at: 'SC_MOD_INSERTCHECK' put: 16r100000!
 ScintillaConstants at: 'SC_MOD_INSERTTEXT' put: 16r1!
 ScintillaConstants at: 'SC_MOD_LEXERSTATE' put: 16r80000!
 ScintillaConstants at: 'SC_MOD_NONE' put: 16r0!
-ScintillaConstants at: 'SC_MODEVENTMASKALL' put: 16r3FFFFF!
+ScintillaConstants at: 'SC_MODEVENTMASKALL' put: 16r7FFFFF!
 ScintillaConstants at: 'SC_MULTIAUTOC_EACH' put: 16r1!
 ScintillaConstants at: 'SC_MULTIAUTOC_ONCE' put: 16r0!
 ScintillaConstants at: 'SC_MULTILINEUNDOREDO' put: 16r1000!
@@ -367,6 +371,7 @@ ScintillaConstants at: 'SCI_BRACEBADLIGHTINDICATOR' put: 16r9C3!
 ScintillaConstants at: 'SCI_BRACEHIGHLIGHT' put: 16r92F!
 ScintillaConstants at: 'SCI_BRACEHIGHLIGHTINDICATOR' put: 16r9C2!
 ScintillaConstants at: 'SCI_BRACEMATCH' put: 16r931!
+ScintillaConstants at: 'SCI_BRACEMATCHNEXT' put: 16r941!
 ScintillaConstants at: 'SCI_CALLTIPACTIVE' put: 16r89A!
 ScintillaConstants at: 'SCI_CALLTIPCANCEL' put: 16r899!
 ScintillaConstants at: 'SCI_CALLTIPPOSSTART' put: 16r89B!
@@ -438,6 +443,15 @@ ScintillaConstants at: 'SCI_ENCODEDFROMUTF8' put: 16r991!
 ScintillaConstants at: 'SCI_ENDUNDOACTION' put: 16r81F!
 ScintillaConstants at: 'SCI_ENSUREVISIBLE' put: 16r8B8!
 ScintillaConstants at: 'SCI_ENSUREVISIBLEENFORCEPOLICY' put: 16r8BA!
+ScintillaConstants at: 'SCI_EOLANNOTATIONCLEARALL' put: 16rAB8!
+ScintillaConstants at: 'SCI_EOLANNOTATIONGETSTYLE' put: 16rAB7!
+ScintillaConstants at: 'SCI_EOLANNOTATIONGETSTYLEOFFSET' put: 16rABC!
+ScintillaConstants at: 'SCI_EOLANNOTATIONGETTEXT' put: 16rAB5!
+ScintillaConstants at: 'SCI_EOLANNOTATIONGETVISIBLE' put: 16rABA!
+ScintillaConstants at: 'SCI_EOLANNOTATIONSETSTYLE' put: 16rAB6!
+ScintillaConstants at: 'SCI_EOLANNOTATIONSETSTYLEOFFSET' put: 16rABB!
+ScintillaConstants at: 'SCI_EOLANNOTATIONSETTEXT' put: 16rAB4!
+ScintillaConstants at: 'SCI_EOLANNOTATIONSETVISIBLE' put: 16rAB9!
 ScintillaConstants at: 'SCI_EXPANDCHILDREN' put: 16r8BF!
 ScintillaConstants at: 'SCI_FINDCOLUMN' put: 16r998!
 ScintillaConstants at: 'SCI_FINDINDICATORFLASH' put: 16rA51!

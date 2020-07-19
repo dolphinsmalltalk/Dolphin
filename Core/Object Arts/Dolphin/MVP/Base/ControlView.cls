@@ -37,9 +37,8 @@ ccmSetVersion: anInteger
 	^self sendMessage: CCM_SETVERSION wParam: anInteger lParam: 0!
 
 clearHandle
-	super clearHandle.
-	oldWndProc := nil
-	!
+	oldWndProc := nil.
+	super clearHandle!
 
 commonNotificationMap
 	"Private - Answer a 'map' between notification codes and the selector of the corresponding event handlers in the receiver. 

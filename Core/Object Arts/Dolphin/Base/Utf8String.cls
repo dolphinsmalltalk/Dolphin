@@ -488,6 +488,9 @@ urlEncoded
 
 !Utf8String class methodsFor!
 
+characterForCodeUnit: anInteger
+	^Character utf8Value: anInteger!
+
 codePage
 	"Answer the Windows code page constants for the receiver's encoding."
 
@@ -514,6 +517,7 @@ initialize
 	self addClassConstant: 'LeadByteMask4' value: 16rF0.
 	self addClassConstant: 'TrailByteMask' value: 16r80.
 	self addClassConstant: 'Bom' value: #[16rEF 16rBB 16rBF]! !
+!Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
 !Utf8String class categoriesFor: #elementSize!constants!public! !
 !Utf8String class categoriesFor: #fromAddress:!instance creation!public! !

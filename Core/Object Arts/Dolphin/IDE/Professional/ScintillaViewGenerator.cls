@@ -94,6 +94,9 @@ defineConstantsPool
 		at: 'EDGE_LINE' put: 1;
 		at: 'EDGE_MULTILINE' put: 3;
 		at: 'EDGE_NONE' put: 0;
+		at: 'EOLANNOTATION_BOXED' put: 2;
+		at: 'EOLANNOTATION_HIDDEN' put: 0;
+		at: 'EOLANNOTATION_STANDARD' put: 1;
 		at: 'INDIC_BOX' put: 6;
 		at: 'INDIC_COMPOSITIONTHICK' put: 14;
 		at: 'INDIC_COMPOSITIONTHIN' put: 15;
@@ -288,6 +291,7 @@ defineConstantsPool
 		at: 'SC_MOD_BEFOREDELETE' put: 2048;
 		at: 'SC_MOD_BEFOREINSERT' put: 1024;
 		at: 'SC_MOD_CHANGEANNOTATION' put: 131072;
+		at: 'SC_MOD_CHANGEEOLANNOTATION' put: 4194304;
 		at: 'SC_MOD_CHANGEFOLD' put: 8;
 		at: 'SC_MOD_CHANGEINDICATOR' put: 16384;
 		at: 'SC_MOD_CHANGELINESTATE' put: 32768;
@@ -301,7 +305,7 @@ defineConstantsPool
 		at: 'SC_MOD_INSERTTEXT' put: 1;
 		at: 'SC_MOD_LEXERSTATE' put: 524288;
 		at: 'SC_MOD_NONE' put: 0;
-		at: 'SC_MODEVENTMASKALL' put: 4194303;
+		at: 'SC_MODEVENTMASKALL' put: 8388607;
 		at: 'SC_MULTIAUTOC_EACH' put: 1;
 		at: 'SC_MULTIAUTOC_ONCE' put: 0;
 		at: 'SC_MULTILINEUNDOREDO' put: 4096;
@@ -441,6 +445,7 @@ defineConstantsPool
 		at: 'SCI_BRACEHIGHLIGHT' put: 2351;
 		at: 'SCI_BRACEHIGHLIGHTINDICATOR' put: 2498;
 		at: 'SCI_BRACEMATCH' put: 2353;
+		at: 'SCI_BRACEMATCHNEXT' put: 2369;
 		at: 'SCI_CALLTIPACTIVE' put: 2202;
 		at: 'SCI_CALLTIPCANCEL' put: 2201;
 		at: 'SCI_CALLTIPPOSSTART' put: 2203;
@@ -512,6 +517,15 @@ defineConstantsPool
 		at: 'SCI_ENDUNDOACTION' put: 2079;
 		at: 'SCI_ENSUREVISIBLE' put: 2232;
 		at: 'SCI_ENSUREVISIBLEENFORCEPOLICY' put: 2234;
+		at: 'SCI_EOLANNOTATIONCLEARALL' put: 2744;
+		at: 'SCI_EOLANNOTATIONGETSTYLE' put: 2743;
+		at: 'SCI_EOLANNOTATIONGETSTYLEOFFSET' put: 2748;
+		at: 'SCI_EOLANNOTATIONGETTEXT' put: 2741;
+		at: 'SCI_EOLANNOTATIONGETVISIBLE' put: 2746;
+		at: 'SCI_EOLANNOTATIONSETSTYLE' put: 2742;
+		at: 'SCI_EOLANNOTATIONSETSTYLEOFFSET' put: 2747;
+		at: 'SCI_EOLANNOTATIONSETTEXT' put: 2740;
+		at: 'SCI_EOLANNOTATIONSETVISIBLE' put: 2745;
 		at: 'SCI_EXPANDCHILDREN' put: 2239;
 		at: 'SCI_FINDCOLUMN' put: 2456;
 		at: 'SCI_FINDINDICATORFLASH' put: 2641;
@@ -1594,9 +1608,6 @@ ignoredMessages
 
 	"Some position functions that we want to keep zero-based"
 	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
-
-	"sciGetCodePage is customised"
-	ignoredMessages add: 'SCI_SETCODEPAGE'.
 
 	"4.1.3: SCI_GET/SETCOMMANDEVENTS are not generated because we don't allow this to be changed (it must be false)"
 	ignoredMessages addAll: #('SCI_GETCOMMANDEVENTS' 'SCI_SETCOMMANDEVENTS').

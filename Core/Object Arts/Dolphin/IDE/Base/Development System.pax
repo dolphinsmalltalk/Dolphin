@@ -5587,6 +5587,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		add: (Aspect choice: #endOfLineMode from: self lineEndings);
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Aspect choice: #endOfLineAnnotationMode from: self annotationModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
@@ -5598,7 +5599,7 @@ publishedAspectsOfInstances
 		do: [:each | answer add: (Aspect integer: each)].
 	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
+	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 

@@ -1356,6 +1356,9 @@ ansiClass
 basicEncoding
 	^self extraInstanceSpec!
 
+characterForCodeUnit: anInteger
+	^self subclassResponsibility!
+
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
 
@@ -1736,6 +1739,7 @@ withAll: aCollectionOfCharacters
 	^stream contents! !
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
+!String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #coerceString:!instance creation!public! !
 !String class categoriesFor: #cr!constants!public! !
