@@ -402,6 +402,9 @@ wordAtOffset: anInteger put: anObject
 
 !Utf16String class methodsFor!
 
+characterForCodeUnit: anInteger
+	^Character utf16Value: anInteger!
+
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
 
@@ -504,6 +507,7 @@ with: aCharacter
 			[(self new: 2)
 				encodedAt: 1 put: aCharacter;
 				yourself]! !
+!Utf16String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Utf16String class categoriesFor: #codePage!constants!public! !
 !Utf16String class categoriesFor: #coerceString:!instance creation!public! !
 !Utf16String class categoriesFor: #elementSize!constants!public! !

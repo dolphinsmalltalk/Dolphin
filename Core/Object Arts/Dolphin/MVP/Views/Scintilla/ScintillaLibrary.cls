@@ -45,27 +45,15 @@ versionFormatString
 
 !ScintillaLibrary class methodsFor!
 
-default
-	"Answer the default instance of the receiver."
-
-	"Implementation Note: Override for optimum performance (assume always open like a permanent library)."
-
-	^default!
-
 fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'SciLexer'!
 
-realize
-	super default!
-
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'4.3.3'! !
-!ScintillaLibrary class categoriesFor: #default!accessing!public!realizing/unrealizing! !
+	^'4.4.4'! !
 !ScintillaLibrary class categoriesFor: #fileName!constants!public! !
-!ScintillaLibrary class categoriesFor: #realize!public!realizing/unrealizing! !
 !ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
 

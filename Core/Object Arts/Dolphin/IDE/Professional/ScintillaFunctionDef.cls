@@ -14,7 +14,7 @@ constPrefix
 	^'SCI_'!
 
 defaultReturnValue
-	^self hasReturnValue ifTrue: [self returnType default printString] ifFalse: ['self']!
+	^self hasReturnValue ifTrue: [self returnType default]!
 
 displayOn: aStream
 	aStream nextPutAll: returnTypeName;
@@ -74,10 +74,17 @@ emitMethodBodyOn: aPuttableStream
 	self emitMethodPreambleOn: aPuttableStream.
 	self hasReturnValue
 		ifTrue: 
-			[aPuttableStream
-				nextPutAll: '^(this ifNil: [';
-				nextPutAll: self defaultReturnValue;
-				nextPutAll: '] ifNotNil: ['.
+			[| default |
+			aPuttableStream nextPutAll: '^(this '.
+			default := self defaultReturnValue.
+			default isNil
+				ifTrue: []
+				ifFalse: 
+					[aPuttableStream
+						nextPutAll: 'ifNil: [';
+						print: default;
+						nextPutAll: '] '].
+			aPuttableStream nextPutAll: 'ifNotNil: ['.
 			self returnType emitReturnConversionAround: [self emitScintillaCallOn: aPuttableStream]
 				on: aPuttableStream]
 		ifFalse: 
@@ -118,7 +125,7 @@ emitNullNullFunctionOn: aWriteStream
 
 emitScintillaCallOn: aPuttableStream
 	aPuttableStream
-		nextPutAll: 'ScintillaLibrary default directFunction: this msg: ';
+		nextPutAll: 'Library directFunction: this msg: ';
 		nextPutAll: constName.
 	wParam emitOutParam: $w on: aPuttableStream.
 	lParam emitOutParam: $l on: aPuttableStream!
@@ -129,9 +136,9 @@ emitStringResultFunctionOn: aPuttableStream
 		nextPutAll: self selector;
 		crtab.
 	self emitMethodPreambleOn: aPuttableStream.
-	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
+	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['stringClass'].
 	aPuttableStream
-		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [ScintillaLibrary default directFunction: this msg: ';
+		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [Library directFunction: this msg: ';
 		nextPutAll: self constName;
 		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: [';
 		display: resultClassExpression;
@@ -140,7 +147,7 @@ emitStringResultFunctionOn: aPuttableStream
 		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: self constName) ifTrue: [aPuttableStream nextPutAll: '-1'].
 	aPuttableStream
-		nextPutAll: '. ScintillaLibrary default directFunction: this msg: ';
+		nextPutAll: '. Library directFunction: this msg: ';
 		nextPutAll: self constName;
 		nextPutAll: ' wParam: 0 lpParam: result. result]'!
 
@@ -166,9 +173,9 @@ emitWParamStringResultFunctionOn: aWriteStream
 	ignoreWParam ifFalse: [aWriteStream nextPutAll: wParam parameterName].
 	aWriteStream crtab.
 	self emitMethodPreambleOn: aWriteStream.
-	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
+	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['stringClass'].
 	aWriteStream
-		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [ScintillaLibrary default directFunction: this msg: ';
+		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [Library directFunction: this msg: ';
 		nextPutAll: self constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: 0']
@@ -181,7 +188,7 @@ emitWParamStringResultFunctionOn: aWriteStream
 		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: constName) ifTrue: [aWriteStream display: -1].
 	aWriteStream
-		nextPutAll: '. ScintillaLibrary default directFunction: this msg: ';
+		nextPutAll: '. Library directFunction: this msg: ';
 		nextPutAll: constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: len']
@@ -265,7 +272,7 @@ remappedReturnTypes
 renamedFunctions
 	^##(| renamedMessages |
 	renamedMessages := LookupTable new.
-"Indicators"
+	"Indicators"
 	renamedMessages
 		at: 'SCI_GETINDICATORCURRENT' put: #currentIndicatorId;
 		at: 'SCI_SETINDICATORCURRENT' put: #currentIndicatorId:;
@@ -635,8 +642,6 @@ renamedFunctions
 	"Annotations"
 	renamedMessages
 		at: 'SCI_ANNOTATIONCLEARALL' put: #basicRemoveAllAnnotations;
-		at: 'SCI_ANNOTATIONGETSTYLEOFFSET' put: #annotationStylesOffset;
-		at: 'SCI_ANNOTATIONSETSTYLEOFFSET' put: #annotationStylesOffset:;
 		yourself.
 
 	"2.01"
@@ -651,8 +656,6 @@ renamedFunctions
 		at: 'SCI_ROTATESELECTION' put: #rotateSelection;
 		at: 'SCI_GETADDITIONALCARETFORE' put: #secondaryCaretForecolor;
 		at: 'SCI_GETSELECTIONS' put: #selectionCount;
-		at: 'SCI_MARGINGETSTYLEOFFSET' put: #marginStylesOffset;
-		at: 'SCI_MARGINSETSTYLEOFFSET' put: #marginStylesOffset:;
 		at: 'SCI_SWAPMAINANCHORCARET' put: #swapPrimarySelectionAnchorAndCaret;
 		at: 'SCI_VERTICALCENTRECARET' put: #centerCurrentLine;
 		yourself.
@@ -721,16 +724,247 @@ renamedFunctions
 		at: 'SCI_SETLINESTATE' put: #setLine:state:;
 		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
 		yourself.
-	
+
 	"4.2.1"
 	renamedMessages
 		at: 'SCI_GETTABMINIMUMWIDTH' put: #tabMinimumWidth;
 		at: 'SCI_SETTABMINIMUMWIDTH' put: #tabMinimumWidth:;
 		yourself.
-		
 	renamedMessages
 		shrink;
-		yourself)!
+		yourself)
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+
+	"4.2.1"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+
+	"4.2.1"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+
+	"4.2.1"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+
+	"4.2.1"!
 
 retType: aString
 	returnTypeName := self remappedReturnTypes at: constName ifAbsent: [aString]!
