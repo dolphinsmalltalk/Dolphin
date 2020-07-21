@@ -758,11 +758,12 @@ public:
 private:
 
 	static BOOL __stdcall callExternalFunction(FARPROC pProc, argcount_t argCount, DolphinX::CallDescriptor* argTypes, BOOL isVirtual);
-	
+	static FARPROC GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver);
+
 	// Pushs object on stack instantiated from address, and returns size of object pushed
 	static void pushArgsAt(CallbackDescriptor* descriptor, argcount_t argCount, uint8_t* lpParms);
 	static argcount_t pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms);
-	
+
 	static void failTrace();
 
 public:

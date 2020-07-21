@@ -218,6 +218,22 @@ BytesOTE* __fastcall NewGUID(GUID* rguid)
 	return ObjectMemory::newByteObject(Pointers.ClassGUID, sizeof(GUID), rguid);
 }
 
+FARPROC Interpreter::GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver)
+{
+	HMODULE hModule = static_cast<HMODULE>(oteReceiver->m_location->m_handle->m_location->m_handle);
+	LPCSTR procName = reinterpret_cast<LPCSTR>(descriptor->m_descriptor.m_args + descriptor->m_descriptor.m_argsLen);
+	int ordinal = atoi(procName);
+	if (ordinal != 0)
+	{
+		procName = reinterpret_cast<LPCSTR>(ordinal);
+	}
+
+	FARPROC proc = ::GetProcAddress(hModule, procName);
+	descriptor->m_proc = proc;
+
+	return proc;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)

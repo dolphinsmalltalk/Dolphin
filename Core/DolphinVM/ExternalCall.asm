@@ -54,6 +54,9 @@ extern CharacterGetCodePoint:near32
 ; We need to test the structure type specially
 ArgSTRUCT	EQU		50
 
+getDllCallAddress EQU ?GetDllCallProcAddress@Interpreter@@CIP6GHXZPAUExternalMethodDescriptor@DolphinX@@PAV?$TOTE@VExternalLibrary@ST@@@@@Z
+extern getDllCallAddress:near32
+
 atoi PROTO C :DWORD
 GetProcAddress  PROTO STDCALL :HINSTANCE, :LPCSTR
 
@@ -255,7 +258,9 @@ performCall:
 	ret														; eax will be non-zero as otherwise we'd not be here
 
 procAddressNotCached:
-	call	getProcAddress									; Cache value 0, so lookup the proc address
+	neg		edx
+	mov		edx, [_SP+edx*OOPSIZE]
+	call	getDllCallAddress								; Cache value 0, so lookup the proc address
 	test	eax, eax										; Returns null if not a valid proc name
 	jnz		performCall
 
@@ -266,46 +271,6 @@ procAddressNotCached:
 	PrimitiveFailureCode PrimitiveFailureProcNotFound
 
 asyncDLL32Call ENDP
-
-getProcAddress PROC
-	ASSUME	ecx:PTR CallDescriptor							; ecx points at descriptor bytes
-
-	push	ebx												; Save EBX
-	mov		ebx, ecx										; Save for later in safe register
-	ASSUME	ebx:PTR CallDescriptor							; ebx now points at descriptor bytes
-	ASSUME	ecx:NOTHING										; Now free to re-use ECX
-
-	; Get receiver from under args and extract the handle
-	mov		eax, _SP
-	lea		ecx, [edx*OOPSIZE]								; Offset of receiver down stack
-	sub		eax, ecx										; eax now points at receiver in stack
-
-	; Get address of proc name in the descriptor into eax
-	; N.B. Arg Count cannot be greater than 255
-	mov		dl, [ebx].m_argsLen
-	lea		edx, DWORD PTR [ebx].m_args[edx]
-
-	mov		eax, [eax]										; Load receiver Oop from stack
-	mov		eax, (OTE PTR[eax]).m_location
-	mov		eax, (ExternalLibrary PTR[eax]).m_handle		; Get handle Oop from receiver
-	mov		eax, (OTE PTR[eax]).m_location
-
-	; Prepare for call to GetProcAddress
-	push	edx												; Push address of proc name
-	push	(ExternalHandle PTR[eax]).m_handle				; Push DLL handle for call to GetProcAddress
-	
-	INVOKE	atoi, edx
-	
-	test	eax, eax										; atoi() returned 0?
-	jz		@F												; Yes, not an ordinal
-	mov		[esp+4], eax									; Store down ordinal value instead
-
-@@:
-	call	GetProcAddress
-	mov		[ebx].m_proc, eax								; Save down into cache
-	pop		ebx												; restore EBX
-	ret														; Proc address in EAX
-getProcAddress ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A fastcall function (ecx is pMethod, edx is argCount)
@@ -341,7 +306,9 @@ performCall:
 	ret
 
 procAddressNotCached:
-	call	getProcAddress									; Cache value 0, so lookup the proc address
+	neg		edx
+	mov		edx, [_SP+edx*OOPSIZE]
+	call	getDllCallAddress								; Cache value 0, so lookup the proc address
 	test	eax, eax										; Returns null if not a valid proc name
 	jnz		performCall
 
