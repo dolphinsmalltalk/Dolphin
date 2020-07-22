@@ -697,13 +697,15 @@ multilineString: aStringAspectSymbol
 
 	^self name: aStringAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| presenter |
-			presenter := TextPresenter 
+			presenter := TextPresenter
 						create: 'Multiline text'
 						in: p
 						on: m.
-			presenter view updatePerChar: true.
+			presenter view
+				updatePerChar: true;
+				tabWidth: 4.
 			presenter]!
 
 name: aSymbol
