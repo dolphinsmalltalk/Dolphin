@@ -19,12 +19,20 @@ When tests fail, a list of the defects is retained by the plugin. Using the drop
 
 Instance Variables:
 	result			<TestResult> indicating the results of the last run tests
-	testSuite			<TestSuite> indicating which tests (if any) should be run according to the browser selection
 	icon				<Icon> used to provide a traffic light representation of the current state of the plugin 
 	autoSwitchProcess	<Process> started when tests are running to automatically switch to the plugin pane to show progress if the tests take a long time to complete.
 	defectsPresenter	<ListPresenter> showing a list of defects when some tests have failed
 	modePresenter		<TextPresenter> describing the current running state
-	detailsPresenter	<TextPresenter> providing further details about t ... etc ...'!
+	detailsPresenter	<TextPresenter> providing further details about the current running state
+
+Class Variables:
+	AutoSwitchDelayMs	<Integer> count of milliseconds after which the <autoSwitchProcess> will bring the plugin pane to the foreground
+	ErrorColor			<color> which will be used as a background colour when some tests throw errors
+	FailColor			<color> which will be used as a background colour when some tests fail
+	PassColor			<color> which will be used as a background colour when all tests pass
+	RunningColor		<color> which will be used as a background colour when tests are running
+	NoTestsColor		<color> which will be used as a background colour when no tests are available for the browser selection
+'!
 !UnitTestPlugin categoriesForClass!Browser-Plugins! !
 !UnitTestPlugin methodsFor!
 
