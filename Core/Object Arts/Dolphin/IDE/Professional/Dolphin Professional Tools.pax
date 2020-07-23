@@ -136,7 +136,7 @@ ClassBrowserPlugin subclass: #ResourceListPlugin
 	classInstanceVariableNames: ''!
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
-	classVariableNames: 'AutoSwitchDelayMs FailColor NoTestsColor PassColor RunningColor'
+	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassSelector subclass: #PackagedClassSelector

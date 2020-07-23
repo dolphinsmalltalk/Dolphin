@@ -12,7 +12,7 @@ TestCaseResult comment: 'Represents the results of executing an individual <Test
 
 captureDiagnostics: anException
 	| frame stackStream |
-	stackStream := String smalltalkWriteStream: 512.
+	stackStream := String writeStream: 512.
 	frame := anException raisingFrame.
 	ip := nil.
 	
@@ -47,6 +47,21 @@ diagnostic
 	self printSourceOn: stream.
 	stream nextPutAll: self stacktrace.
 	^stream contents!
+
+displayOn: aPuttableStream
+	aPuttableStream
+		print: self case;
+		nextPutAll: ' (';
+		nextPutAll: self outcome;
+		nextPutAll: ' in '.
+	self outcome == #passed
+		ifTrue: 
+			[self duration printHumanReadableOn: aPuttableStream.
+			aPuttableStream nextPut: $)]
+		ifFalse: 
+			[aPuttableStream nextPutAll: ' in '.
+			self printSourceOn: aPuttableStream.
+			aPuttableStream nextPut: $)]!
 
 duration
 	"Answer the <Duration> of the test execution. If the test didn't pass, the value is undefined."
@@ -102,6 +117,7 @@ stacktrace
 !TestCaseResult categoriesFor: #captureDiagnostics:!initializing!private! !
 !TestCaseResult categoriesFor: #case!accessing!public! !
 !TestCaseResult categoriesFor: #diagnostic!accessing!public! !
+!TestCaseResult categoriesFor: #displayOn:!displaying!public! !
 !TestCaseResult categoriesFor: #duration!accessing!public! !
 !TestCaseResult categoriesFor: #outcome!accessing!public! !
 !TestCaseResult categoriesFor: #printSourceOn:!printing!private! !

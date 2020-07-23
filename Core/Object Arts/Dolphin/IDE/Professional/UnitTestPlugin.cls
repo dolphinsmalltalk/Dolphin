@@ -2,7 +2,7 @@
 
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
-	classVariableNames: 'AutoSwitchDelayMs FailColor NoTestsColor PassColor RunningColor'
+	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 UnitTestPlugin guid: (GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
@@ -23,17 +23,7 @@ Instance Variables:
 	autoSwitchProcess	<Process> started when tests are running to automatically switch to the plugin pane to show progress if the tests take a long time to complete.
 	defectsPresenter	<ListPresenter> showing a list of defects when some tests have failed
 	modePresenter		<TextPresenter> describing the current running state
-	detailsPresenter	<TextPresenter> providing further details about the current running state
-
-Class Variables:
-	AutoSwitchDelayMs	<Integer> count of milliseconds after which the <autoSwitchProcess> will bring the plugin pane to the foreground
-	FailColor			<color> which will be used as a background colour when some tests fail
-	PassColor			<color> which will be used as a background colour when all tests pass
-	RunningColor		<color> which will be used as a background colour when tests are running
-	NoTestsColor		<color> which will be used as a background colour when no tests are available for the browser selection
-
-
-'!
+	detailsPresenter	<TextPresenter> providing further details about t ... etc ...'!
 !UnitTestPlugin categoriesForClass!Browser-Plugins! !
 !UnitTestPlugin methodsFor!
 
@@ -95,9 +85,9 @@ debugTest
 	defectsPresenter hasSelection ifFalse: [defectsPresenter selectionByIndex: 1].
 	self debugTest: defectsPresenter selection!
 
-debugTest: aTestCase 
+debugTest: aTestCaseResult
 	self displayMode: 'Debugging'.
-	aTestCase debug!
+	aTestCaseResult case debug!
 
 defaultHelpId
 	^10994!
@@ -107,13 +97,22 @@ displayColor: aColor
 	detailsPresenter view backcolor: aColor!
 
 displayDefects: aCollection
-	defectsPresenter list: aCollection asSortedCollection.
+	defectsPresenter list: (aCollection asSortedCollection: [:a :b | a case <= b case]).
 	defectsPresenter view isEnabled: aCollection notEmpty!
 
 displayDetails: aString 
 	"Display aString to indicate additional details about the current mode of operation"
 
 	detailsPresenter value: aString!
+
+displayErrors
+	"Indicate that some tests have failed and we have defects"
+
+	self icon: (Icon fromId: 'UnitTestPluginFail.ico').
+	self displayColor: self class errorColor.
+	self displayMode: 'Error'.
+	self displayDetails: result displayString.
+	self ensureVisible!
 
 displayFail
 	"Indicate that some tests have failed and we have defects"
@@ -363,12 +362,12 @@ update: anObject
 		ifFalse: [super update: anObject]!
 
 updateDefects
-	self displayDefects: result defects!
+	self displayDefects: (result defects collect: [:each | result resultFor: each])!
 
 updateWindow
-	result hasPassed
-		ifTrue: [self displayPass]
-		ifFalse: [self displayFail].
+	result hasErrors
+		ifTrue: [self displayErrors]
+		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
 !UnitTestPlugin categoriesFor: #allContextMenus!helpers!private! !
 !UnitTestPlugin categoriesFor: #allMenuBarMenus!helpers!private! !
@@ -382,6 +381,7 @@ updateWindow
 !UnitTestPlugin categoriesFor: #displayColor:!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayDefects:!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayDetails:!private!Updating! !
+!UnitTestPlugin categoriesFor: #displayErrors!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayFail!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayMode:!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayOn:!displaying!private! !
@@ -435,11 +435,14 @@ defaultAutoSwitchDelay
 
 	^1 seconds!
 
-defaultFailColor
+defaultErrorColor
 	^Color
 		r: 243
 		g: 27
 		b: 65!
+
+defaultFailColor
+	^Color darkOrange!
 
 defaultNoTestsColor
 	^Color 
@@ -458,6 +461,12 @@ defaultRunningColor
 		r: 235
 		g: 201
 		b: 65!
+
+errorColor
+	^ErrorColor!
+
+errorColor: aColor
+	ErrorColor := aColor = Color default ifTrue: [self defaultErrorColor] ifFalse: [aColor]!
 
 failColor
 	^FailColor!
@@ -478,6 +487,7 @@ initialize
 	AutoSwitchDelayMs := self defaultAutoSwitchDelay.
 	PassColor := self defaultPassColor.
 	FailColor := self defaultFailColor.
+	ErrorColor := self defaultErrorColor.
 	RunningColor := self defaultRunningColor.
 	NoTestsColor := self defaultNoTestsColor!
 
@@ -522,10 +532,13 @@ runningColor: aColor
 !UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
 !UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
+!UnitTestPlugin class categoriesFor: #defaultErrorColor!constants!private! !
 !UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
 !UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
 !UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
 !UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
+!UnitTestPlugin class categoriesFor: #errorColor!accessing!public! !
+!UnitTestPlugin class categoriesFor: #errorColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #icon!constants!public! !
