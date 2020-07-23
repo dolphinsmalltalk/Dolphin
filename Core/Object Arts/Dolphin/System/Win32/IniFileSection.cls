@@ -86,13 +86,19 @@ keysDo: operation
 name
 	^name!
 
-printPrefixOn: aStream
-	super printPrefixOn: aStream.
+printOn: aStream
+	"Print a string representation of self on aStream. This method suffices for 
+	most collections, and is able to handle cyclic references."
+
 	aStream
+		basicPrint: self;
+		nextPut: $(;
 		nextPut: $[;
 		nextPutAll: name;
 		nextPut: $];
-		space!
+		space.
+	self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+	aStream nextPut: $)!
 
 removeKey: aString ifAbsent: aNiladicValuable
 	"Remove the <String> key (and its associated value), from the receiver. If key is
@@ -124,7 +130,7 @@ setFilename: filenameString section: sectionNameString
 !IniFileSection categoriesFor: #keysClass!constants!private! !
 !IniFileSection categoriesFor: #keysDo:!enumerating!public! !
 !IniFileSection categoriesFor: #name!accessing!public! !
-!IniFileSection categoriesFor: #printPrefixOn:!printing!private! !
+!IniFileSection categoriesFor: #printOn:!printing!public! !
 !IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
 

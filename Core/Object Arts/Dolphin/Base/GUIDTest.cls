@@ -83,6 +83,10 @@ testFromString
 testFromStringNull
 	self assertNull: (self subjectClass fromString: self subjectClass null asString)!
 
+testIsSelfEvaluating
+	self assert: GUID null isSelfEvaluating.
+	self assert: GUID newUnique isSelfEvaluating!
+
 testNewUnique
 	| uuid |
 	uuid := self subjectClass newUnique.
@@ -126,6 +130,7 @@ testUniqueness
 !GUIDTest categoriesFor: #testDisplayString!public!unit tests! !
 !GUIDTest categoriesFor: #testFromString!public!unit tests! !
 !GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
+!GUIDTest categoriesFor: #testIsSelfEvaluating!public!testing! !
 !GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
 !GUIDTest categoriesFor: #testNull!public!unit tests! !
 !GUIDTest categoriesFor: #testOrder!public!unit tests! !

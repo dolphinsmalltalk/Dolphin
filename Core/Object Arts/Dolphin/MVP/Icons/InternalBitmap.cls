@@ -141,7 +141,7 @@ isShared: aBoolean
 
 	!
 
-printOn: aStream 
+printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
 
 	aStream
@@ -149,7 +149,13 @@ printOn: aStream
 		space;
 		nextPutAll: #fromBytes:;
 		space.
-	self asByteArray printOn: aStream upTo: 100000!
+	self asByteArray printOn: (LimitedWriteStream
+				over: aStream
+				limit: 100000
+				limitBlock: 
+					[:s |
+					aStream nextPutAll: ' ...etc... ]'.
+					^self])!
 
 setBitmap: aGdiplusBitmap 
 	gdiplusBitmap := aGdiplusBitmap! !

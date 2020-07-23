@@ -289,10 +289,9 @@ parseObject
 			"If the object has internal references then it must be a new object, and so should be safe to #become:. If it is a class that has overridden toSton: and fromSton: to materialize as some pre-existing instance, then it cannot contain internal references, and so the pre-created reference will have a zero ref-count. The check for #stonContainsSubObjects is, strictly speaking, unnecessary. If it were safe, we could use just that, but it is too easy to forget to implement it. It would be safer if the Object implementation returned false."
 			(reference refCount > 0 and: [object stonContainSubObjects])
 				ifTrue: 
-					[Transcript nextPutAll: 'STON reader swapping reference '; print: reference; nextPutAll: ' for object '; print: object; cr.
-					reference become: object.
+					[reference become: object.
 					^reference]
-			ifFalse: [self setReference: reference to: object]]
+				ifFalse: [self setReference: reference to: object]]
 		ifTrue: 
 			[acceptUnknownClasses
 				ifTrue: 

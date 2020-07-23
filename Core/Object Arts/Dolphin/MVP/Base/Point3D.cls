@@ -142,6 +142,11 @@ hash
 
 	^((x hash bitShift: 2) bitXor: (y hash bitShift: 1)) bitXor: (z hash)!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 max: aPoint3D
 	"Answer a new Point3D with the maximum of the x coordinates,
 	 y coordinates and z coordinates of the receiver and aPoint3D"
@@ -168,11 +173,13 @@ printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
 	aStream 
+		nextPut: $(;
 		print: x;
 		nextPut: $@;
 		print: y;
 		nextPut: $@;
-		print: z
+		print: z;
+		nextPut: $)
 !
 
 r
@@ -266,6 +273,7 @@ z: aNumber
 !Point3D categoriesFor: #floor!public!truncation and round off! !
 !Point3D categoriesFor: #generality!coercing!private! !
 !Point3D categoriesFor: #hash!comparing!public! !
+!Point3D categoriesFor: #isSelfEvaluating!public!testing! !
 !Point3D categoriesFor: #max:!comparing!public! !
 !Point3D categoriesFor: #min:!comparing!public! !
 !Point3D categoriesFor: #multiplyByPoint3D:!double dispatch!private! !

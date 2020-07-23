@@ -96,13 +96,7 @@ certificate := Object fromBinaryStoreBytes: '
 				formatWith: serial
 				with: owner).
 	bytes := cert binaryStoreBytes.
-	bytes printPrefixOn: stream.
-	bytes do: 
-			[:each | 
-			stream
-				display: each;
-				display: ' '].
-	bytes printSuffixOn: stream.
+	bytes printOn: stream.
 	stream 
 		display: ('.
 

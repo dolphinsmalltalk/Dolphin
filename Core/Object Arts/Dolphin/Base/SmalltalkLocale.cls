@@ -302,6 +302,12 @@ printFloat: aFloat on: aStream format: aNUMBERFMTW
 		base: 10
 		decimalPlaces: aNUMBERFMTW decimalPlaces!
 
+printOn: target
+	target
+		print: Locale;
+		space;
+		display: #smalltalk!
+
 shortAmDesignator
 	"Answer the short <String> used in the receiver locale to designate AM (morning)."
 
@@ -375,6 +381,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
 !SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
 !SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
+!SmalltalkLocale categoriesFor: #printOn:!printing!public! !
 !SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
 !SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !

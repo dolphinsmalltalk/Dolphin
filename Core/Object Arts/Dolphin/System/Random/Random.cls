@@ -68,15 +68,7 @@ seed
 seed: aNumber
 	"Set the seed of the Random stream to aNumber (or 1 if zero)."
 
-	seed := aNumber max: 1!
-
-skip: anInteger
-	"Set the receiver's position reference to be the current position plus
-	the argument, anInteger, possibly adjusting the result so as to remain
-	within the bounds of the collection."
-
-	anInteger < 0 ifTrue: [self error: 'Cannot move backwards in Random number stream'].
-	anInteger timesRepeat: [self next]! !
+	seed := aNumber max: 1! !
 !Random categoriesFor: #atEnd!public!testing! !
 !Random categoriesFor: #chiSquareTest:max:!examples!private! !
 !Random categoriesFor: #isReadable!public!testing! !
@@ -84,7 +76,6 @@ skip: anInteger
 !Random categoriesFor: #peek!accessing!public! !
 !Random categoriesFor: #seed!accessing!public! !
 !Random categoriesFor: #seed:!accessing!public! !
-!Random categoriesFor: #skip:!positioning!public! !
 
 !Random class methodsFor!
 

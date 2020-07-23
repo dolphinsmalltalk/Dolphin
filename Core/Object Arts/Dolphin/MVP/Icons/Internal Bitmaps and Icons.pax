@@ -46,8 +46,6 @@ package setMethodNames: #(
 	#(#{ClassDescription} #createIconMethod:fromIcon:)
 	#(#{ClassDescription} #createIconMethod:OfSize:)
 	#(#{ClassDescription} #createIconMethod:ofSize:fromFile:)
-	#(#{Collection} #printOn:upTo:)
-	#(#{Collection} #printStringUpTo:)
 	#(#{GdiplusImage} #addToImageList:mask:)
 	#(#{GdiplusImage} #internalize)
 ).
@@ -150,42 +148,6 @@ to convert to PNG format first?'.
 !ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
 !ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
 !ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
-
-!Collection methodsFor!
-
-printOn: aStream upTo: maxPrintCharacters 
-	"Print a string representation of self on aStream. This method suffices for 
-	most collections, and is able to handle cyclic references."
-
-	| printed |
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := aStream position + maxPrintCharacters.
-	self printPrefixOn: aStream.
-	self do: 
-			[:each | 
-			aStream position > tooMany 
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
-			each printOn: aStream]
-		separatedBy: [aStream space].
-	self printSuffixOn: aStream] 
-			ensure: [printed remove: self ifAbsent: []]!
-
-printStringUpTo: maxPrintCharacters 
-	"Answer a <readableString> whose characters are a description of the receiver 
-	as a developer would want to see it."
-
-	| stream |
-	stream := String writeStream: 32.
-	self printOn: stream upTo: maxPrintCharacters.
-	^stream contents! !
-!Collection categoriesFor: #printOn:upTo:!printing!public! !
-!Collection categoriesFor: #printStringUpTo:!printing!public! !
 
 !GdiplusImage methodsFor!
 

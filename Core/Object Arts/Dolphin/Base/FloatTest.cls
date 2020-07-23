@@ -863,6 +863,15 @@ testIsNan
 	self assert: Float nan isNaN.
 	self normals do: [:each | self deny: each isNaN]!
 
+testIsSelfEvaluating
+	"All values apart from the exception values for infinity and Not-a-Number have literal representations."
+
+	self normals do: [:each | self assert: each isSelfEvaluating].
+	Float denormalized ifTrue: [self assert: Float fminDenormalized isSelfEvaluating].
+	self deny: Float nan isSelfEvaluating.
+	self deny: Float infinity isSelfEvaluating.
+	self deny: Float negativeInfinity isSelfEvaluating!
+
 testIsZero
 	self assert: 0.0 isZero.
 	self assert: -0.0 isZero.
@@ -1521,6 +1530,7 @@ zeroes
 !FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsLiteral!public!unit tests! !
 !FloatTest categoriesFor: #testIsNan!public!unit tests! !
+!FloatTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
 !FloatTest categoriesFor: #testIsZero!public!unit tests! !
 !FloatTest categoriesFor: #testLessThanFraction!public!unit tests! !
 !FloatTest categoriesFor: #testLessThanInteger!public!unit tests! !

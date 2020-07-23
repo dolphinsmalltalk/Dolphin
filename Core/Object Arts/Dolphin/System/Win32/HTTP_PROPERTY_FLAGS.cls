@@ -37,7 +37,7 @@ Present: aBoolean
 
 	bytes dwordAtOffset: _OffsetOf_Present put: aBoolean asParameter!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	| sep template getField |
 	sep := [sep := [aStream space]].
 	template := self template.
@@ -48,10 +48,6 @@ printFields: aCollection on: aStream limit: anInteger
 	aCollection do: 
 			[:each |
 			| field |
-			aStream position > anInteger
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
 			field := template at: each.
 			field isBrowsable
 				ifTrue: 
@@ -65,7 +61,7 @@ propertyId
 	^self class propertyId! !
 !HTTP_PROPERTY_FLAGS categoriesFor: #Present!**compiled accessors**!private! !
 !HTTP_PROPERTY_FLAGS categoriesFor: #Present:!**compiled accessors**!private! !
-!HTTP_PROPERTY_FLAGS categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_PROPERTY_FLAGS categoriesFor: #printFields:on:!development!printing!private! !
 !HTTP_PROPERTY_FLAGS categoriesFor: #propertyId!constants!public! !
 
 !HTTP_PROPERTY_FLAGS class methodsFor!

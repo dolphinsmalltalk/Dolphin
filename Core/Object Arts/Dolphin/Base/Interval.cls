@@ -130,6 +130,11 @@ isEmpty
 
 	^step < 0 ifTrue: [start < stop] ifFalse: [stop < start]!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 last
 	"Answer the last <number> element of the receiver.
 	This is not necessarily the same as the value of 'stop' 
@@ -241,6 +246,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !Interval categoriesFor: #includes:!public!testing! !
 !Interval categoriesFor: #inject:into:!enumerating!public! !
 !Interval categoriesFor: #isEmpty!public!testing! !
+!Interval categoriesFor: #isSelfEvaluating!public!testing! !
 !Interval categoriesFor: #last!accessing!public! !
 !Interval categoriesFor: #printOn:!printing!public! !
 !Interval categoriesFor: #setFrom:to:by:!accessing!private! !

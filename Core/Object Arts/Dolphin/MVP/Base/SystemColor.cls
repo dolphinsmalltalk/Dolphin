@@ -118,10 +118,10 @@ initialize
 					self addNamed: (namesById at: each) color: syscolor.
 					syscolor].
 	self addClassConstant: 'NamesById' value: namesById.
-	self addClassConstant: 'ColorsById' value: colorsById.
-	Color addClassConstant: 'Face3d' value: (self named: #face3d).
-	Color addClassConstant: 'Window' value: (self named: #window).
-	Color addClassConstant: 'WindowText' value: (self named: #windowText)!
+	self addClassVariable: 'ColorsById' value: colorsById.
+	Color addClassVariable: 'Face3d' value: (self named: #face3d).
+	Color addClassVariable: 'Window' value: (self named: #window).
+	Color addClassVariable: 'WindowText' value: (self named: #windowText)!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."

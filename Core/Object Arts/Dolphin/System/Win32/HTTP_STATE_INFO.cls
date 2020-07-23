@@ -36,7 +36,7 @@ isActive
 isActive: aBooleanOrNil
 	self value: (aBooleanOrNil ifNotNil: [aBooleanOrNil not asInteger])!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	self Present ifTrue: [aStream nextPutAll: (self isActive ifTrue: ['Active'] ifFalse: ['Inactive'])]!
 
 State
@@ -64,7 +64,7 @@ value: anInteger
 				State: anInteger]! !
 !HTTP_STATE_INFO categoriesFor: #isActive!accessing!public! !
 !HTTP_STATE_INFO categoriesFor: #isActive:!accessing!public! !
-!HTTP_STATE_INFO categoriesFor: #printFields:on:limit:!printing!private! !
+!HTTP_STATE_INFO categoriesFor: #printFields:on:!printing!private! !
 !HTTP_STATE_INFO categoriesFor: #State!**compiled accessors**!public! !
 !HTTP_STATE_INFO categoriesFor: #State:!**compiled accessors**!public! !
 !HTTP_STATE_INFO categoriesFor: #value!public! !

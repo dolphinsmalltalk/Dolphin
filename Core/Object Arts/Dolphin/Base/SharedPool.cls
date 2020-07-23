@@ -11,8 +11,9 @@ SharedPool comment: ''!
 !SharedPool categoriesForClass!Kernel-Objects! !
 !SharedPool class methodsFor!
 
-add: aVariableBinding 
-	self classPool add: aVariableBinding!
+add: anAssociation
+	self at: anAssociation key put: anAssociation value.
+	^anAssociation!
 
 associationAt: key
 	"Answer the association named by the argument, key.  If key is not found,
@@ -27,22 +28,18 @@ associationsDo: aMonadicValuable
 	self classPool associationsDo: aMonadicValuable!
 
 at: aString
-	^self classPool at: aString!
+	^self classPool at: (self keyString: aString)!
 
 at: aString ifAbsent: aNiladicValuable
-	"Answer the value of the receiver's binding named by the <String> 1st argument.  If the identifier is not found, answer the result of evaluating the <niladicValuable> 2nd argument."
+	^self classPool at: (self keyString: aString) ifAbsent: aNiladicValuable!
 
-	^classPool at: aString ifAbsent: aNiladicValuable!
-
-at: key ifAbsentPut: operation
-	"Answer the value of the receiver keyed by the <Object> argument, key.
-	If key is not one of the receiver's keys, then add the result of evaluating 
-	the <niladicValuable>, operation, at key, and answer that result."
+at: aString ifAbsentPut: operation
+	"Answer the value of the receiver's named binding. If aString does not name one of the receiver's bindings, then a new constant binding of that name with the value that is the result of evaluating the <niladicValuable>, operation, and answer the value."
 
 	| keyString |
-	keyString := self keyString: key.
-	^(self classPool includesKey: keyString)
-		ifFalse: [self addClassVariable: keyString value: operation value]!
+	keyString := self keyString: aString.
+	^self classPool at: keyString
+		ifAbsent: [(self addClassConstant: keyString value: operation value) value]!
 
 at: aString put: anObject
 	"Add or update a constant binding in the receiver with the specified name and value."
@@ -56,12 +53,8 @@ bindingsDo: aMonadicValuable
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
 
-includesKey: anObject
-	"Answer whether the receiver has a key equal to the <Object> argument."
-
-	"In the context of a Namespace, this will only be true if the argument is a <String> identifier with an associated binding in this namespace."
-
-	^classPool includesKey: anObject!
+includesKey: aString 
+	^self classPool includesKey: (self keyString: aString)!
 
 isValidKey: aString
 	^aString notEmpty and: 
@@ -70,8 +63,8 @@ isValidKey: aString
 			(initial == $_ or: [initial isLetter])
 				and: [aString allSatisfy: [:each | each == $_ or: [each isAlphaNumeric]]]]!
 
-keyAtValue: anInteger 
-	^self classPool keyAtValue: anInteger!
+keyAtValue: anObject
+	^self classPool keyAtValue: anObject!
 
 keys
 	^self classPool keys!
@@ -82,24 +75,19 @@ keyString: anObject
 	(self isValidKey: answer) ifFalse: [^self error: ('Invalid key: <1p>' expandMacrosWith: answer)].
 	^answer!
 
+localEnvironment
+	"Answer the nearest Namespace scope."
+
+	^self!
+
 newAssociation: aString value: anObject
 	^self classPool newAssociation: aString value: anObject!
 
-recompileReferencesToVarNamed: keyString
-	"Private - Recompile any methods which references the named key, assumed to
-	be a variable name from the receiver."
-
-	| var |
-	Notification
-		signal: ('Recompiling references to <1p> in <2s>' expandMacrosWith: keyString with: self name).
-	var := self associationAt: keyString.
-	self classesReferencing do: 
-			[:c |
-			c recompileReferencesToLiteral: var.
-			c class recompileReferencesToLiteral: var]!
-
 removeKey: aString 
 	^self classPool removeKey: aString!
+
+size
+	^self classPool size!
 
 subclass: aSymbol
 	^self
@@ -118,12 +106,13 @@ subclass: aSymbol
 !SharedPool class categoriesFor: #bindingsDo:!enumerating!public! !
 !SharedPool class categoriesFor: #classesReferencing!development!private! !
 !SharedPool class categoriesFor: #includesKey:!accessing!public! !
-!SharedPool class categoriesFor: #isValidKey:!adding!development!private! !
+!SharedPool class categoriesFor: #isValidKey:!adding!private! !
 !SharedPool class categoriesFor: #keyAtValue:!accessing!public! !
 !SharedPool class categoriesFor: #keys!accessing!public! !
-!SharedPool class categoriesFor: #keyString:!adding!development!private! !
+!SharedPool class categoriesFor: #keyString:!adding!private! !
+!SharedPool class categoriesFor: #localEnvironment!accessing!public! !
 !SharedPool class categoriesFor: #newAssociation:value:!public! !
-!SharedPool class categoriesFor: #recompileReferencesToVarNamed:!development!private! !
 !SharedPool class categoriesFor: #removeKey:!public!removing! !
+!SharedPool class categoriesFor: #size!accessing!public! !
 !SharedPool class categoriesFor: #subclass:!class hierarchy-adding!public! !
 

@@ -41,6 +41,16 @@ hash
 	^key hash
 !
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self isSelfEvaluating: IdentitySet new!
+
+isSelfEvaluating: visitedSet
+	^(visitedSet addNewElement: self) and: 
+			[self class == ##(self)
+				and: [(key isSelfEvaluating: visitedSet) and: [value isSelfEvaluating: visitedSet]]]!
+
 key
 	"Answer the lookup key of the receiver."
 
@@ -68,10 +78,12 @@ owningPackage: aPackage
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
-	aStream 
-		print: key;
-		nextPutAll: ' -> ';
-		print: value!
+	aStream print: self
+		with: 
+			[aStream
+				print: key;
+				nextPutAll: ' -> ';
+				print: value]!
 
 setKey: aKey
 	<mutable>
@@ -97,6 +109,8 @@ value: aValue
 !Association categoriesFor: #=!comparing!public! !
 !Association categoriesFor: #displayOn:!printing!public! !
 !Association categoriesFor: #hash!comparing!public! !
+!Association categoriesFor: #isSelfEvaluating!public!testing! !
+!Association categoriesFor: #isSelfEvaluating:!private!testing! !
 !Association categoriesFor: #key!accessing!public! !
 !Association categoriesFor: #key:!initializing!public! !
 !Association categoriesFor: #key:value:!initializing!public! !

@@ -28,8 +28,8 @@ struct tagHTTP_QOS_SETTING_INFO {
 !HTTP_QOS_SETTING_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_QOS_SETTING_INFO methodsFor!
 
-printFields: aCollection on: aStream limit: anInteger
-	self value ifNotNil: [:val | val printFieldsOn: aStream limit: anInteger]!
+printFields: aCollection on: aStream
+	self value ifNotNil: [:val | val printFieldsOn: aStream]!
 
 propertyId
 	^self class propertyId!
@@ -65,7 +65,7 @@ value: aHttpQosPropertyInfo
 	self
 		QosType: aHttpQosPropertyInfo qosType;
 		QosSetting: aHttpQosPropertyInfo yourAddress! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_QOS_SETTING_INFO categoriesFor: #printFields:on:!development!printing!private! !
 !HTTP_QOS_SETTING_INFO categoriesFor: #propertyId!constants!public! !
 !HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting!**compiled accessors**!public! !
 !HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting:!**compiled accessors**!public! !

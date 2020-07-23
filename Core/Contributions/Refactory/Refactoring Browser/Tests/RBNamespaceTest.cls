@@ -107,7 +107,7 @@ testReferencesPrintOn
 		do: 
 			[:each | 
 			hasFoundObject := hasFoundObject or: 
-							[each selector = #printString 
+							[each selector = #printStringLimitedTo: 
 								and: [each modelClass = (st classNamed: #Object)]].
 			hasFoundSelf := hasFoundSelf or: 
 							[each selector = #testReferencesPrintOn 

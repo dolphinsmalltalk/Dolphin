@@ -133,7 +133,6 @@ testAtIfAbsentPutValue
 testCyclicRefPrinting
 	| dictionary |
 	dictionary := self newDictionary.
-	dictionary class == PoolConstantsDictionary ifTrue: [^self].
 	dictionary at: dictionary put: dictionary.
 	self
 		assert: 0 < (dictionary debugPrintString indexOfSubCollection: '... a cyclic ref to ' startingAt: 1)!

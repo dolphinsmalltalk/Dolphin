@@ -21,6 +21,12 @@ streamOn: aString
 		reset;
 		yourself!
 
+string
+	^'testing'!
+
+stringSize
+	^self string size!
+
 testBasicNext
 	| stream |
 	stream := self streamWith: 'abc'.
@@ -72,6 +78,16 @@ testNextColon
 	| stream |
 	stream := self streamOn: 'abc'.
 	self readOperationNotImplemented: [stream next: 5]!
+
+testNextColonPutColon
+	| stream |
+	stream := self newStream.
+	stream next: 0 put: $a.
+	self assert: stream contents equals: ''.
+	stream next: 1 put: $a.
+	self assert: stream contents equals: 'a'.
+	stream next: 2 put: $b.
+	self assert: stream contents equals: 'abb'!
 
 testNextInto
 	| stream |
@@ -133,6 +149,8 @@ testUpToUtf
 	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
 !WriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
+!WriteStreamTest categoriesFor: #string!constants!private! !
+!WriteStreamTest categoriesFor: #stringSize!constants!private! !
 !WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
@@ -140,6 +158,7 @@ testUpToUtf
 !WriteStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextColonPutColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextPutAllArray!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !

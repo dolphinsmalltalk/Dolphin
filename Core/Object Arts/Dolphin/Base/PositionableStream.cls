@@ -179,6 +179,9 @@ on: aCollection
 	position := 0.
 !
 
+originalContents
+	^collection!
+
 position
 	"Answer the current <integer> position in the stream of  values."
 
@@ -251,6 +254,7 @@ upToEnd
 !PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextWORD!binary filing!public! !
 !PositionableStream categoriesFor: #on:!initializing!private! !
+!PositionableStream categoriesFor: #originalContents!accessing!public! !
 !PositionableStream categoriesFor: #position!positioning!public! !
 !PositionableStream categoriesFor: #position:!positioning!public! !
 !PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !

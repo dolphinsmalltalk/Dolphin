@@ -255,7 +255,7 @@ emitCommentOfClass: aClass
 		display: #comment:;
 		space.
 	self
-		nextChunkPut: aClass comment printString;
+		nextChunkPut: (String streamContents: [:strm | aClass comment printOn: strm]);
 		cr!
 
 emitDeclarationForClass: aClass variable: anAssociation
@@ -351,7 +351,7 @@ fileOutPoolDictionary: aPoolDictionary
 				print: a key;
 				nextPutAll: ' put: '.
 			value := a value.
-			value isLiteral
+			value isSelfEvaluating
 				ifTrue: 
 					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
 				ifFalse: 

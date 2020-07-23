@@ -34,7 +34,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{AbstractELEMDESC} #printFieldsOn:limit:)
+	#(#{AbstractELEMDESC} #printFieldsOn:)
 	#(#{ArrayField class} #printVariable:type:indirections:on:)
 	#(#{ArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{AXAPIInfoAnalyzer} #areWrappersRequired)
@@ -401,7 +401,7 @@ package setMethodNames: #(
 	#(#{HRESULT class} #fieldType)
 	#(#{IDispatch} #alternateInspectorClass)
 	#(#{IDispatch} #aspectDisplayOn:)
-	#(#{IDispatch} #debugPrintString)
+	#(#{IDispatch} #debugPrintOn:)
 	#(#{IDispatch} #printOn:)
 	#(#{IDispatch} #publishedAspects)
 	#(#{IDispatch class} #example1)
@@ -633,7 +633,7 @@ BasicInspector subclass: #AXInspector
 
 !AbstractELEMDESC methodsFor!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull
 		ifFalse: 
 			[aStream
@@ -641,8 +641,8 @@ printFieldsOn: aStream limit: anInteger
 				nextPutAll: '=';
 				print: self tdesc;
 				space].
-	^super printFieldsOn: aStream limit: anInteger! !
-!AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!printing!private! !
+	^super printFieldsOn: aStream! !
+!AbstractELEMDESC categoriesFor: #printFieldsOn:!printing!private! !
 
 !ArrayField class methodsFor!
 
@@ -5169,16 +5169,17 @@ aspectDisplayOn: aStream
 				display: self class name]
 		ifFalse: [self basicPrintOn: aStream]!
 
-debugPrintString
-	"Answer a <readableString> whose characters are a description of the receiver 
-	as the debugger would want to see it.
-	Implementation Note: Since #value is used by #printOn:, we implement this to 
+debugPrintOn: aStream
+	"Implementation Note: Since #value is used by #printOn:, we implement this to 
 	allow us to debug #value, otherwise setting a breakpoint in #value results in a
 	meltdown."
 
-	^self isNull 
-		ifTrue: ['a null ' , self class name]
-		ifFalse: [self basicPrintString]!
+	self isNull
+		ifTrue: 
+			[aStream
+				nextPutAll: 'a null ';
+				print: self class]
+		ifFalse: [aStream basicPrint: self]!
 
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -5200,7 +5201,7 @@ publishedAspects
 	^aspects! !
 !IDispatch categoriesFor: #alternateInspectorClass!constants!public! !
 !IDispatch categoriesFor: #aspectDisplayOn:!private! !
-!IDispatch categoriesFor: #debugPrintString!printing!public! !
+!IDispatch categoriesFor: #debugPrintOn:!printing!public! !
 !IDispatch categoriesFor: #printOn:!printing!public! !
 !IDispatch categoriesFor: #publishedAspects!constants!public! !
 

@@ -42,7 +42,7 @@ knownHeaderName: anInteger
 KnownHeaders
 	^self subclassResponsibility!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	| first |
 	self isNull
 		ifTrue: 
@@ -52,10 +52,6 @@ printFieldsOn: aStream limit: anInteger
 	self KnownHeaders keysAndValuesDo: 
 			[:i :each |
 			| value |
-			aStream position > anInteger
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
 			value := each pRawValue.
 			value isNil
 				ifFalse: 
@@ -66,10 +62,6 @@ printFieldsOn: aStream limit: anInteger
 						print: value]].
 	self pUnknownHeaders do: 
 			[:each |
-			aStream position > anInteger
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
 			first ifTrue: [first := false] ifFalse: [aStream nextPutAll: ', '].
 			aStream
 				display: each pName;
@@ -102,7 +94,7 @@ UnknownHeaderCount: anInteger
 !HTTP_HEADERS categoriesFor: #knownHeaderIndex:!constants!public! !
 !HTTP_HEADERS categoriesFor: #knownHeaderName:!constants!public! !
 !HTTP_HEADERS categoriesFor: #KnownHeaders!accessing!public! !
-!HTTP_HEADERS categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!HTTP_HEADERS categoriesFor: #printFieldsOn:!development!printing!private! !
 !HTTP_HEADERS categoriesFor: #pUnknownHeaders!**compiled accessors**!public! !
 !HTTP_HEADERS categoriesFor: #pUnknownHeaders:!**compiled accessors**!public! !
 !HTTP_HEADERS categoriesFor: #UnknownHeaderCount!**compiled accessors**!private! !

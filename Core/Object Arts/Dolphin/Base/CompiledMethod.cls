@@ -53,7 +53,7 @@ displayOn: aStream
 	aStream
 		print: self methodClass;
 		nextPutAll: '>>';
-		nextPutAll: self selector!
+		print: self selector!
 
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
@@ -125,6 +125,11 @@ isOverride
 	methodSuper := self methodClass superclass.
 	^methodSuper notNil and: [methodSuper canUnderstand: self selector]
 !
+
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
 
 isUnbound
 	"Answer whether the receiver is unbound (i.e. not linked into a class' method dictionary)."
@@ -206,6 +211,7 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #isLoose!development!public!testing! !
 !CompiledMethod categoriesFor: #isOverridden!public!testing! !
 !CompiledMethod categoriesFor: #isOverride!public!testing! !
+!CompiledMethod categoriesFor: #isSelfEvaluating!public!testing! !
 !CompiledMethod categoriesFor: #isUnbound!public!testing! !
 !CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
 !CompiledMethod categoriesFor: #name!accessing!public! !

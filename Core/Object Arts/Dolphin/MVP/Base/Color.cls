@@ -215,6 +215,11 @@ isNone
 
 	^false!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 isTransparent
 	"Answer whether this <Color> is completely transparent."
 
@@ -390,6 +395,7 @@ stbSaveOn: anSTBOutFiler
 !Color categoriesFor: #isDefault!public!testing! !
 !Color categoriesFor: #isGrayscale!public!testing! !
 !Color categoriesFor: #isNone!public!testing! !
+!Color categoriesFor: #isSelfEvaluating!public!testing! !
 !Color categoriesFor: #isTransparent!public!testing! !
 !Color categoriesFor: #lighter!public! !
 !Color categoriesFor: #lightness!public! !
@@ -993,14 +999,14 @@ initialize
 				yourself.
 	self
 		addNamed: #default color: default;
-		addClassConstant: 'Default' value: default.
-	self addClassConstant: 'None'
+		addClassVariable: 'Default' value: default.
+	self addClassVariable: 'None'
 		value: (ColorNone basicNew
 				setCode: Win32Constants.CLR_NONE;
 				isImmutable: true;
 				yourself).
 	self initializeCommonColors.
-	#(#black #white) do: [:each | self addClassConstant: each capitalized value: (self named: each)]!
+	#(#black #white) do: [:each | self addClassVariable: each capitalized value: (self named: each)]!
 
 initializeCommonColors
 	"Private - Initialize the common colours, as defined in several Windows SDK header files, e.g. gdipluscolor.h.
@@ -1022,7 +1028,7 @@ initializeCommonColors
 						yourself.
 			self addNamed: n color: color.
 			color isTransparent ifFalse: [commonColors add: color]].
-	self addClassConstant: 'CommonColors'
+	self addClassVariable: 'CommonColors'
 		value: (commonColors asSortedCollection: 
 					[:c1 :c2 |
 					| a b |

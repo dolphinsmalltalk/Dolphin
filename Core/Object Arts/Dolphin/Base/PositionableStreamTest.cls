@@ -27,6 +27,9 @@ collections
 intervals
 	^{{1 to: 0. #()}. {2 to: 2. #(2)}. {1 to: 5. #(1 2 3 4 5)}. {3 to: 1 by: -1. #(3 2 1)}}!
 
+newStream
+	^self streamOn: String new!
+
 orderedCollections
 	^{{OrderedCollection new. #()}.
 		{OrderedCollection with: #x. #(x)}.
@@ -854,12 +857,13 @@ writeOperationNotImplemented: aBlock
 	self 
 		should: aBlock
 		raise: Error
-		matching: [:ex | ex description beginsWith: self streamClass name , ' does not understand']! !
+		matching: [:ex | ex description = 'The stream is not writeable']! !
 !PositionableStreamTest categoriesFor: #arrayedCollections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #arrays!private!unit tests! !
 !PositionableStreamTest categoriesFor: #byteArrays!private!unit tests! !
 !PositionableStreamTest categoriesFor: #collections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #intervals!private!unit tests! !
+!PositionableStreamTest categoriesFor: #newStream!helpers!private! !
 !PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
 !PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !

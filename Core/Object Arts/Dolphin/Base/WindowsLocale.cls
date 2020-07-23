@@ -357,8 +357,10 @@ printOn: aStream
 	"Append a debug representation of the receiver to aStream."
 
 	aStream
-		basicPrint: self;
-		nextPut: $(; print: self code; nextPut: $)!
+		print: Locale; space;
+		display: #lcid:;
+		space;
+		print: self lcid!
 
 shortAmDesignator
 	"Answer the short <String> used in the receiver locale to designate AM (morning)."

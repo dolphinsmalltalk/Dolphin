@@ -54,8 +54,8 @@ p_proto
 
 	^bytes swordAtOffset: _OffsetOf_p_proto!
 
-printFieldsOn: aStream limit: anInteger
-	super printFieldsOn: aStream limit: anInteger.
+printFieldsOn: aStream
+	super printFieldsOn: aStream.
 	aStream
 		nextPutAll: ', aliases=';
 		print: self aliases!
@@ -69,7 +69,7 @@ protocol
 !PROTOENT categoriesFor: #aliases!public! !
 !PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
 !PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
-!PROTOENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!PROTOENT categoriesFor: #printFieldsOn:!development!printing!private! !
 !PROTOENT categoriesFor: #protocol!public! !
 
 !PROTOENT class methodsFor!

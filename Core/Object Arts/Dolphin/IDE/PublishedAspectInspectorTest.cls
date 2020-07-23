@@ -363,7 +363,7 @@ testImmutableAspect
 	accessor := self aspectAccessorNamed: #extent.
 	self assert: (self getAccessorKeyText: accessor) equals: 'extent'.
 	self assert: (self getAccessorValueText: accessor)
-		equals: ('<1d>@150' expandMacrosWith: originalExtent x).
+		equals: ('(<1d>@150)' expandMacrosWith: originalExtent x).
 
 	"Note that the original extent object should not have changed"
 	self assert: extent equals: originalExtent.

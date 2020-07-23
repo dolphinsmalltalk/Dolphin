@@ -51,8 +51,8 @@ port
 
 	^WS2_32Library default ntohs: self s_port!
 
-printFieldsOn: aStream limit: anInteger
-	super printFieldsOn: aStream limit: anInteger.
+printFieldsOn: aStream
+	super printFieldsOn: aStream.
 	aStream
 		nextPutAll: ', aliases=';
 		print: self aliases!
@@ -73,7 +73,7 @@ s_proto
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
 !SERVENT categoriesFor: #aliases!public! !
 !SERVENT categoriesFor: #port!accessing!public! !
-!SERVENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!SERVENT categoriesFor: #printFieldsOn:!development!printing!private! !
 !SERVENT categoriesFor: #s_name!**compiled accessors**!public! !
 !SERVENT categoriesFor: #s_port!**compiled accessors**!public! !
 !SERVENT categoriesFor: #s_proto!**compiled accessors**!public! !

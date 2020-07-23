@@ -411,21 +411,6 @@ skip: anInteger
 
 	self seek: SEEK_CUR offset: anInteger!
 
-space
-	"Store a space character as the next element of the receiver."
-
-	self nextPut: $\x20!
-
-tab
-	"Store a tab character as the next element of the receiver."
-
-	self nextPut: $\t!
-
-tab: anInteger 
-	"Append the specified number of tabs to the receiver."
-
-	anInteger timesRepeat: [self tab]!
-
 translationMode
 	^CRTConstants._O_TEXT!
 
@@ -484,9 +469,6 @@ upTo: anObject
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
 !StdioFileStream categoriesFor: #size!accessing!public! !
 !StdioFileStream categoriesFor: #skip:!positioning!public! !
-!StdioFileStream categoriesFor: #space!constants!public! !
-!StdioFileStream categoriesFor: #tab!accessing!public! !
-!StdioFileStream categoriesFor: #tab:!accessing!public! !
 !StdioFileStream categoriesFor: #translationMode!constants!private! !
 !StdioFileStream categoriesFor: #upTo:!accessing!public! !
 

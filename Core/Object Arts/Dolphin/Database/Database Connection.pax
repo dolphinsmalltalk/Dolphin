@@ -21,7 +21,7 @@ ODBCLibrary initialize.'.
 
 package setMethodNames: #(
 	#(#{DBAbstractRow} #publishedAspects)
-	#(#{DBResultSet} #debugPrintString)
+	#(#{DBResultSet} #debugPrintOn:)
 	#(#{DBResultSet} #publishedKeyedAspectsBatchSize)
 	#(#{DBResultSet class} #newInstanceAspect:class:)
 	#(#{DBResultSet class} #publishedAspectsOfInstances)
@@ -50,15 +50,15 @@ publishedAspects
 
 !DBResultSet methodsFor!
 
-debugPrintString
-	^self printString!
+debugPrintOn: aStream
+	self printOn: aStream!
 
 publishedKeyedAspectsBatchSize
 	"Private - Answers the number of keyed aspects to display in the PAI return at a time"
 
 	^10
 ! !
-!DBResultSet categoriesFor: #debugPrintString!development!printing!public! !
+!DBResultSet categoriesFor: #debugPrintOn:!development!printing!public! !
 !DBResultSet categoriesFor: #publishedKeyedAspectsBatchSize!constants!development!private! !
 
 !DBResultSet class methodsFor!

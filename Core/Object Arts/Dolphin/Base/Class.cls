@@ -48,6 +48,11 @@ addClassConstant: aString value: anObject
 							oldValue := binding value.
 							oldValue ~~ anObject and: 
 									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
+	requiresRecompile
+		ifTrue: 
+			[requiresRecompile := self canModifyBinding: binding newValue: anObject.
+			"If aborted by user, don't set the value."
+			requiresRecompile isNil ifTrue: [^binding]].
 	binding
 		setValue: anObject;
 		isImmutable: true.
@@ -131,6 +136,9 @@ bindingOrNil
 
 	^self fullyQualifiedReference bindingOrNil!
 
+canModifyBinding: aVariableBinding newValue: anObject
+	^true!
+
 categories
 	"Answer a <Array> of <ClassCategory>s in which the receiver is included.
 	This will always contains at least one entry ('Unclassified' if there are no others)."
@@ -197,7 +205,7 @@ classCategories: categoryCollection
 classConstants
 	"Answer a <Set> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
 
-	^self classPool associations select: [:each | each isImmutable and: [each value isLiteral]]!
+	^self classPool associations select: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 classPool
 	"Answer the Dictionary of class variables belonging to the receiver.
@@ -213,7 +221,7 @@ classPool
 classVariables
 	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
 
-	^self classPool associations reject: [:each | each isImmutable and: [each value isLiteral]]!
+	^self classPool associations reject: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 classVarNames
 	"Answer a Set of the class variable names of the receiver."
@@ -344,8 +352,10 @@ newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariable
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned by any package."
 
-	"We use an indirect reference to Package to avoid referencing this development class in a runtime image. The answer should always be nil in a runtime application."
+	"Anonymous classes cannot be packaged"
+	name isNil ifTrue: [^nil].
 
+	"We use an indirect reference to Package to avoid referencing this development class in a runtime image. The answer should always be nil in a runtime application."
 	^#{Package} valueOrNil ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
 
 owningPackage: aPackageOrNil
@@ -377,7 +387,7 @@ printDefinitionOn: puttableStream
 	classVariables := OrderedCollection new.
 	self classPool associations asSortedCollection do: 
 			[:each |
-			((each isImmutable and: [each value isLiteral]) ifTrue: [classConstants] ifFalse: [classVariables])
+			((each isImmutable and: [each value isSelfEvaluating]) ifTrue: [classConstants] ifFalse: [classVariables])
 				addLast: each].
 	classVariables do: [:var | puttableStream nextPutAll: var key] separatedBy: [puttableStream space].
 	puttableStream
@@ -406,7 +416,7 @@ printDefinitionOn: puttableStream
 								printOn: puttableStream
 								base: 16
 								showRadix: true]
-						ifFalse: [value storeOn: puttableStream]]
+						ifFalse: [value printOn: puttableStream]]
 				separatedBy: [puttableStream nextPut: $.].
 			puttableStream crtab].
 	puttableStream nextPut: $}!
@@ -783,6 +793,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #binding!public! !
 !Class categoriesFor: #bindingFor:!binding!public! !
 !Class categoriesFor: #bindingOrNil!public! !
+!Class categoriesFor: #canModifyBinding:newValue:!private! !
 !Class categoriesFor: #categories!categories-accessing!public! !
 !Class categoriesFor: #categories:!categories-accessing!public! !
 !Class categoriesFor: #categoriesForClass!private!source filing-class definition! !

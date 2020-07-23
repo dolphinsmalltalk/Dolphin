@@ -151,17 +151,6 @@ position: offset
 	(offset == 0 or: [self skip: offset]) 
 		ifFalse: [self errorSubscriptBounds: offset]!
 
-printContentsOn: aStream
-	| tooMany |
-	tooMany := aStream position + #() maxPrint.
-	self do: 
-			[:each | 
-			aStream position > tooMany 
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
-			aStream print: each]!
-
 reset
 	"Reset the receiver to the beginning of the 'stream'. Answer the receiver."
 
@@ -244,7 +233,6 @@ upToEndDo: operation
 !IEnumXXXX categoriesFor: #nextAvailable!accessing!public! !
 !IEnumXXXX categoriesFor: #nextAvailable:!accessing!public! !
 !IEnumXXXX categoriesFor: #position:!positioning!public! !
-!IEnumXXXX categoriesFor: #printContentsOn:!printing!private! !
 !IEnumXXXX categoriesFor: #reset!positioning!public! !
 !IEnumXXXX categoriesFor: #Reset!COM Interfaces-IEnumXXXX!primitives!private! !
 !IEnumXXXX categoriesFor: #select:!enumerating!public! !

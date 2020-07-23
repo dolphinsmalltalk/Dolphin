@@ -208,14 +208,11 @@ printableFields
 		removeAll: #(#Verb #pUnknownVerb);
 		yourself!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	aStream
 		nextPutAll: self verb;
 		nextPutAll: ': '.
-	^super
-		printFields: aCollection
-		on: aStream
-		limit: anInteger!
+	^super printFields: aCollection on: aStream!
 
 pSslInfo
 	"Answer the <HTTP_SSL_INFO> value of the receiver's 'pSslInfo' field."
@@ -337,7 +334,7 @@ Version: aHTTP_VERSION
 !HTTP_REQUEST_V1 categoriesFor: #pRawUrl!**compiled accessors**!private! !
 !HTTP_REQUEST_V1 categoriesFor: #pRawUrl:!**compiled accessors**!private! !
 !HTTP_REQUEST_V1 categoriesFor: #printableFields!development!printing!private! !
-!HTTP_REQUEST_V1 categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_REQUEST_V1 categoriesFor: #printFields:on:!development!printing!private! !
 !HTTP_REQUEST_V1 categoriesFor: #pSslInfo!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #pSslInfo:!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb!**compiled accessors**!public! !

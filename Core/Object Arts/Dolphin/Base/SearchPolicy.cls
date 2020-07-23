@@ -47,6 +47,11 @@ hash: operand max: maximum
 
 	^(self hash: operand) \\ maximum + 1!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self name notNil!
+
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed
 	collection, collection, using the receiver's search policy. If there is no such 
@@ -92,6 +97,7 @@ printOn: aPuttableStream
 !SearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !SearchPolicy categoriesFor: #hash:!comparing!public! !
 !SearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!SearchPolicy categoriesFor: #isSelfEvaluating!public!testing! !
 !SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !SearchPolicy categoriesFor: #name!accessing!public! !
 !SearchPolicy categoriesFor: #newLookupTable!operations!public! !

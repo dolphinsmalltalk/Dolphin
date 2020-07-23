@@ -52,7 +52,7 @@ displayOn: aStream
 initialize
 	self sa_family: self class addressFamily!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream]!
 
 sa_family
@@ -66,7 +66,7 @@ sa_family: anInteger
 	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
 !SOCKADDR categoriesFor: #displayOn:!displaying!public! !
 !SOCKADDR categoriesFor: #initialize!initializing!private! !
-!SOCKADDR categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!SOCKADDR categoriesFor: #printFieldsOn:!development!printing!private! !
 !SOCKADDR categoriesFor: #sa_family!**compiled accessors**!public! !
 !SOCKADDR categoriesFor: #sa_family:!**compiled accessors**!public! !
 

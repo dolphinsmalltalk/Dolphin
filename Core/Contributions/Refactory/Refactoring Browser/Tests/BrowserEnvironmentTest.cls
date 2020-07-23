@@ -83,7 +83,7 @@ testAllClassesDo
 testAndEnvironment
 	| originalEnvironment objectPrintStringEnvironment andEnvironment |
 	originalEnvironment := universalEnvironment referencesTo: #printOn:.
-	objectPrintStringEnvironment := universalEnvironment forClass: Object selectors: #(#printString).
+	objectPrintStringEnvironment := universalEnvironment forClass: Object selectors: #(#printStringLimitedTo:).
 	andEnvironment := objectPrintStringEnvironment & originalEnvironment.
 	self universalTestFor: andEnvironment.
 	self assert: andEnvironment numberSelectors equals: 1.

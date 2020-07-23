@@ -34,12 +34,53 @@ isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
 
-	^self class == ##(self) and: [self allSatisfy: [:element | element isLiteral]]!
+	^self isLiteral: IdentitySet new!
 
-printPrefixOn: aStream
-	"Private - Print a prefix string for the debug representation of the receiver on aStream."
+isLiteral: visitedSet
+	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
 
-	aStream nextPutAll: '#('!
+	^(visitedSet addNewElement: self)
+		and: [self class == ##(self) and: [self allSatisfy: [:element | element isLiteral: visitedSet]]]!
+
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self isSelfEvaluating: IdentitySet new!
+
+isSelfEvaluating: visitedSet
+	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^(visitedSet addNewElement: self)
+		and: [self class == ##(self) and: [self allSatisfy: [:element | element isSelfEvaluating: visitedSet]]]!
+
+printOn: aStream
+	"Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
+
+	| visited |
+	visited := IdentitySet new.
+	(self allSatisfy: [:element | element isLiteral: visited])
+		ifTrue: 
+			["Has literal form"
+			aStream nextPutAll: '#('.
+			self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]
+		ifFalse: 
+			[((visited includes: self) not and: [self allSatisfy: [:element | element isSelfEvaluating]])
+				ifTrue: 
+					["Can use brace array form"
+					aStream nextPut: ${.
+					self do: [:each | each printOn: aStream] separatedBy: [aStream nextPutAll: '. '].
+					aStream nextPut: $}]
+				ifFalse: 
+					[aStream print: self
+						with: 
+							[aStream
+								basicPrint: self;
+								nextPut: $(.
+							self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+							aStream nextPut: $)]]]!
 
 refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument."
@@ -102,7 +143,10 @@ storeOn: aStream
 !Array categoriesFor: #addAnsweringIndex:!adding!public! !
 !Array categoriesFor: #asArray!converting!public! !
 !Array categoriesFor: #isLiteral!public!testing! !
-!Array categoriesFor: #printPrefixOn:!printing!private! !
+!Array categoriesFor: #isLiteral:!public!testing! !
+!Array categoriesFor: #isSelfEvaluating!public!testing! !
+!Array categoriesFor: #isSelfEvaluating:!public!testing! !
+!Array categoriesFor: #printOn:!printing!public! !
 !Array categoriesFor: #refersToLiteral:!private!testing! !
 !Array categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !Array categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !

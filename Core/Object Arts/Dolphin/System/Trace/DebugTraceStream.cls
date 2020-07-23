@@ -18,12 +18,6 @@ Class Variables:
 !DebugTraceStream categoriesForClass!Collections-Streams! !
 !DebugTraceStream methodsFor!
 
-<< anObject
-	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
-
-	anObject appendToStream: self.
-	^self!
-
 atEnd
 	"Answer whether the receiver cannot access any more objects"
 
@@ -41,18 +35,8 @@ close
 cr
 	"Append a line delimiter to the receiver (N.B. For Windows this is a CR-LF sequence)."
 
-	self nextPutAll: String lineDelimiter; flush!
-
-crtab
-	"Append a new line to the receiver followed by a tab"
-
-	self crtab: 1!
-
-crtab: count
-	"Append a new line to the receiver followed by <integer>, count, tabs."
-
-	self cr.
-	self tab: count!
+	super cr.
+	self flush!
 
 display: anObject
 	"Ask anObject to append its end-user textual description to the receiver."
@@ -93,13 +77,6 @@ next: anInteger put: anObject
 	self nextPutAll: (Utf8String new: anInteger withAll: anObject).
 	^anObject!
 
-next: size putAll: aSequenceableCollection startingAt: start
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	self nextPutAll: (aSequenceableCollection copyFrom: start to: start+size-1).
-	^aSequenceableCollection!
-
 nextPut: newElem
 	"Append the <character>, newElem, to the receiver."
 
@@ -115,42 +92,27 @@ nextPutAll: insertString
 print: anObject
 	"Prints anObject at the end of the receiver."
 
+	"To avoid locking the buffer for longer than necessary, do the printing first"
 	self nextPutAll: anObject printString!
-
-space
-	"Append a space to the receiver."
-
-	self nextPutAll: $\x20!
-
-tab
-	"Store a tab character as the next element of the receiver."
-
-	self nextPut: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	self next: tabCount put: $\t
 ! !
-!DebugTraceStream categoriesFor: #<<!accessing!public! !
 !DebugTraceStream categoriesFor: #atEnd!public!testing! !
 !DebugTraceStream categoriesFor: #basicPrint:!printing!private! !
 !DebugTraceStream categoriesFor: #close!operations!public! !
 !DebugTraceStream categoriesFor: #cr!adding!public! !
-!DebugTraceStream categoriesFor: #crtab!adding!public! !
-!DebugTraceStream categoriesFor: #crtab:!adding!public! !
 !DebugTraceStream categoriesFor: #display:!printing!public! !
 !DebugTraceStream categoriesFor: #flush!accessing!public! !
 !DebugTraceStream categoriesFor: #initialize!initializing!private! !
 !DebugTraceStream categoriesFor: #isEmpty!public! !
 !DebugTraceStream categoriesFor: #isWriteable!public!testing! !
 !DebugTraceStream categoriesFor: #next:put:!operations!public! !
-!DebugTraceStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !DebugTraceStream categoriesFor: #nextPut:!adding!public! !
 !DebugTraceStream categoriesFor: #nextPutAll:!adding!public! !
 !DebugTraceStream categoriesFor: #print:!printing!public! !
-!DebugTraceStream categoriesFor: #space!adding!public! !
-!DebugTraceStream categoriesFor: #tab!accessing!public! !
 !DebugTraceStream categoriesFor: #tab:!accessing!public! !
 
 DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!

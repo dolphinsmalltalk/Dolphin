@@ -41,7 +41,7 @@ Policy: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_Policy put: anInteger!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	| policy |
 	policy := self policy.
 	aStream nextPutAll: policy.
@@ -63,7 +63,7 @@ SecondsToLive: anInteger
 !HTTP_CACHE_POLICY categoriesFor: #policy!accessing!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy!**compiled accessors**!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy:!**compiled accessors**!public! !
-!HTTP_CACHE_POLICY categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_CACHE_POLICY categoriesFor: #printFields:on:!development!printing!private! !
 !HTTP_CACHE_POLICY categoriesFor: #SecondsToLive!**compiled accessors**!public! !
 !HTTP_CACHE_POLICY categoriesFor: #SecondsToLive:!**compiled accessors**!public! !
 

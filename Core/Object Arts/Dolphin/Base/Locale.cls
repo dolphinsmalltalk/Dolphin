@@ -7,6 +7,7 @@ Object subclass: #Locale
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Locale isAbstract: true!
 Locale comment: ''!
 !Locale categoriesForClass!System-Support! !
 !Locale methodsFor!
@@ -339,6 +340,11 @@ infinity
 	"Answer the <String> representation for positive infinity in this locale (e.g the '∞' symbol)"
 
 	^self subclassResponsibility!
+
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
 
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
@@ -685,6 +691,7 @@ yearMonthFormat
 !Locale categoriesFor: #hasLeadingZero!constants!public! !
 !Locale categoriesFor: #indexOfMonth:!enquiries!public! !
 !Locale categoriesFor: #infinity!constants!public! !
+!Locale categoriesFor: #isSelfEvaluating!public!testing! !
 !Locale categoriesFor: #lastTwoDigitYear!constants!public! !
 !Locale categoriesFor: #lcid!accessing!public! !
 !Locale categoriesFor: #listSeparator!constants!public! !

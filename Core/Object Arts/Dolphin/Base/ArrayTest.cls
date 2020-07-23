@@ -18,16 +18,42 @@ testCyclicRefPrinting
 	| array |
 	array := Array new: 1.
 	array at: 1 put: array.
-	self assert: array debugPrintString equals: '#(... a cyclic ref to an Array...)'!
+	self assert: array debugPrintString equals: 'an Array(... a cyclic ref to an Array...)'!
 
 testIsLiteral
-	| example1 |
-	example1 := #(1 2 3 4 5) copy.
-	self assert: example1 isLiteral.
-	example1 at: 1 put: self.
-	self deny: example1 isLiteral!
+	| subject |
+	subject := #(1 2 2 4 5) copy.
+	self assert: subject isLiteral.
+	subject at: 1 put: self.
+	self deny: subject isLiteral.
+	subject at: 1 put: subject.
+	self deny: subject isLiteral.
+!
+
+testIsSelfEvaluating
+	| subject |
+	subject := {1 to: 5. 123. 'abc'. #(1 2). 123. #a -> 'A'}.
+	self assert: subject isSelfEvaluating.
+	subject at: 1 put: self.
+	self deny: subject isSelfEvaluating.
+	subject at: 1 put: subject.
+	self deny: subject isSelfEvaluating!
 
 testLiteralStoreOn
+	| stream subject storeString rehydrated stlArray |
+	stream := Array writeStream.
+	subject := {Object. 1. 's'. {ArrayTest}}.
+	subject literalStoreOn: stream.
+	stlArray := stream contents.
+	stream := String writeStream.
+	stlArray literalPrintOn: stream.
+	storeString := stream contents.
+	rehydrated := Compiler evaluate: storeString.
+	self assert: rehydrated equals: stlArray.
+	rehydrated := Object fromLiteralStoreArray: stlArray.
+	self assert: rehydrated equals: subject!
+
+testLiteralStoreString
 	| stream storeString rehydrated |
 	stream := String writeStream.
 	#(1 2) storeOn: stream.
@@ -77,7 +103,7 @@ testMixedConcatenation
 						self deny: eachArray identicalTo: result.
 						self assert: result class identicalTo: Array]]!
 
-testNonLiteralStoreOn
+testNonLiteralStoreString
 	| stream storeString rehydrated array |
 	stream := String writeStream.
 	array := Array with: 1 -> '1' with: 2 -> '2'.
@@ -168,7 +194,9 @@ testWithWithWithWithWith
 !ArrayTest categoriesFor: #collectionClass!helpers!private! !
 !ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
 !ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
+!ArrayTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
 !ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
+!ArrayTest categoriesFor: #testLiteralStoreString!public!unit tests! !
 !ArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ArrayTest categoriesFor: #testNonLiteralStoreOn!public!unit tests! !
 !ArrayTest categoriesFor: #testWith!public!unit tests! !

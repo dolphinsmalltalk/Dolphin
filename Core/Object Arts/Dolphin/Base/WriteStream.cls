@@ -14,24 +14,17 @@ Instance Variables:
 !WriteStream categoriesForClass!Collections-Streams! !
 !WriteStream methodsFor!
 
-<< anObject
-	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
-
-	anObject appendToStream: self.
-	^self!
-
-basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Private - Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
 
 	| stop |
-	stop := position + sizeInteger.
-	stop <= writeLimit 
+	stop := position + countInteger.
+	stop <= writeLimit
 		ifTrue: 
 			["The block fits into the current collection and can be
 			written directly"
-
-			collection 
+			collection
 				replaceFrom: position + 1
 				to: stop
 				with: aSequenceableCollection
@@ -40,8 +33,7 @@ basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 		ifFalse: 
 			["The block will not fit within the current collection, so
 			fall back on the slow way"
-
-			startInteger to: startInteger + sizeInteger - 1
+			startInteger to: startInteger + countInteger - 1
 				do: [:i | self basicNextPut: (aSequenceableCollection at: i)]].
 	^aSequenceableCollection!
 
@@ -67,19 +59,6 @@ basicNextPutAll: aCollection
 	<primitive: 173>
 	aCollection do: [:each | self nextPut: each]!
 
-basicPrint: printee
-	"Private - Ask the <Object>, printee, to append its basic textual description
-	to the receiver."
-
-	printee basicPrintOn: self!
-
-binaryStore: anObject
-	"Ask anObject to append to the receiver binary byte which when
-	read will result in an Object equivalent to anObject"
-
-	anObject binaryStoreOn: self
-!
-
 contents
 	"Answer the contents of the streamed over collection up to
 	the current position. At the same time adjust the readLimit
@@ -89,22 +68,6 @@ contents
 
 	readLimit := readLimit max: position.
 	^collection copyFrom: 1 to: position!
-
-cr
-	"Store the line delimiter character sequence (as required by
-	the environment) as the next element(s) of the receiver."
-
-	self nextPutAll: String lineDelimiter!
-
-crtab
-	"Append a line-delimiter and a tab to the receiver."
-
-	self cr; tab!
-
-crtab: tabCount
-	"Append a line-delimiter and the specified number of tabs to the receiver."
-
-	self cr; tab: tabCount!
 
 grabContents
 	"Destructively answer the contents of the streamed over collection up to the current position. This may be the actual collection, or a copy of it up to the current position.
@@ -149,14 +112,7 @@ next
 
 	^self errorNotReadable!
 
-next: anInteger put: anObject
-	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
-	Answer anObject."
-
-	anInteger timesRepeat: [self nextPut: anObject].
-	^anObject!
-
-next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver.
 	Answer aSequenceableCollection.
 
@@ -166,17 +122,9 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 
 	^collection
 		encodeOn: self
-		next: sizeInteger
+		next: countInteger
 		putAll: aSequenceableCollection
 		startingAt: startInteger!
-
-nextDWORDPut: anInteger 
-	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
-
-	self nextPutAll: ((ByteArray new: 4)
-				dwordAtOffset: 0 put: anInteger;
-				yourself).
-	^anInteger!
 
 nextPut: anObject
 	"Store anObject as the next element of the receiver.  If the receiver is not stream 
@@ -197,16 +145,6 @@ nextPutAll: aCollection
 
 	<primitive: 173>
 	^aCollection appendToStream: self!
-
-nextSDWORDPut: anInteger
-	"Append a 32-bit signed integer in 2's complement representation 
-	as the next 4 bytes on the receiver."
-
-	self nextPutAll: 
-		((ByteArray new: 4)
-			sdwordAtOffset: 0 put: anInteger;
-			yourself).
-	^anInteger!
 
 on: aCollection
 	collection := aCollection.
@@ -247,44 +185,20 @@ setToEnd
 	"Set the receivers position reference to the end of the collection,
 	updating the readLimit if necessary."
 
-	position := self size!
-
-space
-	"Store a space character as the next element of the receiver"
-
-	self nextPut: $\x20!
-
-tab
-	"Store a tab character as the next element of the receiver"
-
-	self nextPut: $\t!
-
-tab: tabCount
-	"Append the specified number of tabs to the receiver."
-
-	tabCount timesRepeat: [self tab]! !
-!WriteStream categoriesFor: #<<!accessing!public! !
+	position := self size! !
 !WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
 !WriteStream categoriesFor: #basicNextPut:!accessing!private! !
 !WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
-!WriteStream categoriesFor: #basicPrint:!printing!private! !
-!WriteStream categoriesFor: #binaryStore:!binary filing!public!storing! !
 !WriteStream categoriesFor: #contents!accessing!public! !
-!WriteStream categoriesFor: #cr!accessing!public! !
-!WriteStream categoriesFor: #crtab!accessing!public! !
-!WriteStream categoriesFor: #crtab:!accessing!public! !
 !WriteStream categoriesFor: #grabContents!accessing!public! !
 !WriteStream categoriesFor: #growCollection!operations!private! !
 !WriteStream categoriesFor: #initialize!initializing!private! !
 !WriteStream categoriesFor: #isWriteable!public!testing! !
 !WriteStream categoriesFor: #moveToEnd!positioning!private! !
 !WriteStream categoriesFor: #next!accessing!public! !
-!WriteStream categoriesFor: #next:put:!accessing!public! !
 !WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!WriteStream categoriesFor: #nextDWORDPut:!binary filing!public! !
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
 !WriteStream categoriesFor: #on:!initializing!private! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
@@ -292,9 +206,6 @@ tab: tabCount
 !WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !WriteStream categoriesFor: #reset!positioning!public! !
 !WriteStream categoriesFor: #setToEnd!positioning!public! !
-!WriteStream categoriesFor: #space!constants!public! !
-!WriteStream categoriesFor: #tab!accessing!public! !
-!WriteStream categoriesFor: #tab:!accessing!public! !
 
 WriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 WriteStream methodProtocol: #WriteStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #flush #isEmpty #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!

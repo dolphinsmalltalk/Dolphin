@@ -36,9 +36,7 @@ testIncludesKey
 	dictionary := self newDictionary.
 	self assert: (dictionary includesKey: #key).
 	self assert: (dictionary includesKey: 'key').
-	self deny: (dictionary includesKey: #value)
-
-!
+	self deny: (dictionary includesKey: #value)!
 
 testRemoveKeyString
 	| dictionary |

@@ -28,11 +28,11 @@ displayOn: aStream
 						pStringBuf: buf
 						stringBufSize: buf size)]!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream].
 	self displayOn: aStream! !
 !AbstractIN_ADDR categoriesFor: #displayOn:!displaying!public! !
-!AbstractIN_ADDR categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!AbstractIN_ADDR categoriesFor: #printFieldsOn:!development!printing!private! !
 
 !AbstractIN_ADDR class methodsFor!
 

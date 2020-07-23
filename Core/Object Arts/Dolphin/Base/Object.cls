@@ -862,6 +862,11 @@ isLiteral
 
 	^false!
 
+isLiteral: visitedSet
+	"Private - Answer whether or not the receiver has a literal representation. The visitedSet argument may be used to detect where answering the enquiry may involve visiting other objects."
+
+	^self isLiteral!
+
 isMemberOf: candidateClass
 	"Answer whether the receiver is an instance of the argument, 
 	candidateClass."
@@ -880,6 +885,17 @@ isNumber
 
 	^false!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^self isLiteral!
+
+isSelfEvaluating: visitedSet
+	"Private - Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object.
+	The visitedSet argument may be used to detect recursion."
+
+	^self isSelfEvaluating!
+
 isString
 	"Answer whether the receiver is a <readableString>."
 
@@ -896,6 +912,13 @@ isWeak
 	to their contents."
 
 	^self getSpecialBehavior allMask: Behavior._IsWeakMask!
+
+maxPrint
+	"Private - Answer the maximum number of characters to be printed onto a stream as 
+	the string representation of the receiver."
+
+	^3000
+!
 
 mustBeBoolean
 	"Private - Sent to the receiver by the VM when an attempt was made to test it for its
@@ -1083,8 +1106,16 @@ printString
 	"Answer a <readableString> whose characters are a description of the receiver 
 	as a developer would want to see it."
 
+	^self printStringLimitedTo: self maxPrint!
+
+printStringLimitedTo: anInteger
+	"Answer a <readableString> whose characters are a description of the receiver as a developer would want to see it, ellipsising if more than anInteger characters would be required."
+
 	| stream |
-	stream := String writeStream: 32.
+	stream := LimitedWriteStream
+				on: (String new: 32)
+				limit: anInteger
+				limitBlock: [:s | ^s contents , ' ... etc ...'].
 	self printOn: stream.
 	^stream contents!
 
@@ -1575,12 +1606,16 @@ yourself
 !Object categoriesFor: #isInteger!public!testing! !
 !Object categoriesFor: #isKindOf:!public!testing! !
 !Object categoriesFor: #isLiteral!public!testing! !
+!Object categoriesFor: #isLiteral:!private!testing! !
 !Object categoriesFor: #isMemberOf:!public!testing! !
 !Object categoriesFor: #isNil!public!testing! !
 !Object categoriesFor: #isNumber!public!testing! !
+!Object categoriesFor: #isSelfEvaluating!public!testing! !
+!Object categoriesFor: #isSelfEvaluating:!private!testing! !
 !Object categoriesFor: #isString!public!testing! !
 !Object categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Object categoriesFor: #isWeak!public!testing! !
+!Object categoriesFor: #maxPrint!constants!private! !
 !Object categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
 !Object categoriesFor: #noEventsDo:!debugger-step through!events!public! !
 !Object categoriesFor: #notNil!public!testing! !
@@ -1596,6 +1631,7 @@ yourself
 !Object categoriesFor: #primitiveFailed:!exceptions!public! !
 !Object categoriesFor: #printOn:!printing!public! !
 !Object categoriesFor: #printString!printing!public! !
+!Object categoriesFor: #printStringLimitedTo:!printing!public! !
 !Object categoriesFor: #propertyAt:!properties!public! !
 !Object categoriesFor: #propertyAt:ifAbsent:!properties!public! !
 !Object categoriesFor: #propertyAt:put:!properties!public! !

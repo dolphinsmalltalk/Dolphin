@@ -425,14 +425,9 @@ printHexString
 	stream nextPut: $'.
 	^stream contents!
 
-printPrefixOn: aStream
-	"Private - Print a prefix string for the debug representation of the receiver on aStream."
-
-	aStream nextPutAll: '#['!
-
-printSuffixOn: aStream
-	"Private - Print a suffix string for the debug representation of the receiver on aStream."
-
+printOn: aStream
+	aStream nextPutAll: '#['.
+	self do: [:each | each printOn: aStream] separatedBy: [aStream space].
 	aStream nextPut: $]!
 
 qwordAtOffset: anInteger
@@ -758,8 +753,7 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #notNull!public!testing! !
 !ByteArray categoriesFor: #printHexOn:!printing!public! !
 !ByteArray categoriesFor: #printHexString!printing!public! !
-!ByteArray categoriesFor: #printPrefixOn:!printing!private! !
-!ByteArray categoriesFor: #printSuffixOn:!printing!private! !
+!ByteArray categoriesFor: #printOn:!printing!public! !
 !ByteArray categoriesFor: #qwordAtOffset:!accessing!public! !
 !ByteArray categoriesFor: #qwordAtOffset:put:!accessing!public! !
 !ByteArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !

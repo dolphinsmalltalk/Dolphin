@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultMaxStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -52,9 +52,6 @@ Class Variables:
 	DefaultStack			<Integer> initial stack depth (initial virtual memory committed).'!
 !Process categoriesForClass!Kernel-Processes! !
 !Process methodsFor!
-
-_alreadyPrinted
-	^_alreadyPrinted!
 
 at: anInteger ifAbsent: exceptionBlock 
 	"Answer an <Object> which is the element of the receiver 
@@ -461,7 +458,6 @@ setLaunchBlock: aBlockClosure
 	to start running a process."
 
 	| baseFrame |
-	_alreadyPrinted := IdentitySet new.
 	callbackDepth := priority := 0.
 	fpControl := Processor activeProcess fpControl ?? DefaultFpControl.
 	self beFinalizable.
@@ -638,7 +634,6 @@ topFrame
 	^self isActive 
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
-!Process categoriesFor: #_alreadyPrinted!accessing!private! !
 !Process categoriesFor: #at:ifAbsent:!accessing!public! !
 !Process categoriesFor: #at:put:!accessing!public! !
 !Process categoriesFor: #basicAt:put:!accessing!private! !

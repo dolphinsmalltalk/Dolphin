@@ -71,7 +71,7 @@ pInfo: anExternalArray
 	bytes uintPtrAtOffset: _OffsetOf_pInfo put: anExternalArray yourAddress.
 	self InfoLength: anExternalArray size!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	aStream print: self info! !
 !HTTP_REQUEST_INFO categoriesFor: #info!accessing!public! !
 !HTTP_REQUEST_INFO categoriesFor: #InfoLength!**compiled accessors**!private! !
@@ -80,7 +80,7 @@ printFields: aCollection on: aStream limit: anInteger
 !HTTP_REQUEST_INFO categoriesFor: #InfoType:!**compiled accessors**!private! !
 !HTTP_REQUEST_INFO categoriesFor: #pInfo!**compiled accessors**!private! !
 !HTTP_REQUEST_INFO categoriesFor: #pInfo:!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_REQUEST_INFO categoriesFor: #printFields:on:!development!printing!private! !
 
 !HTTP_REQUEST_INFO class methodsFor!
 

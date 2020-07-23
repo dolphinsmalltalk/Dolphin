@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{ArrayFieldTest}
 	#{ArrayPointerFieldTest}
 	#{ArrayTest}
+	#{AssociationTest}
 	#{BagTest}
 	#{BehaviorTest}
 	#{BehaviorTestClasses}
@@ -75,6 +76,7 @@ package setClassNames: #(
 	#{IntrosortAlgorithmTest}
 	#{KeyboardTest}
 	#{LargeIntegerTest}
+	#{LimitedWriteStreamTest}
 	#{LinkTest}
 	#{LocaleTest}
 	#{LookupTableTest}
@@ -220,6 +222,12 @@ DolphinTest subclass: #AbstractKeyboardTest
 	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''
+	classConstants: {}!
+DolphinTest subclass: #AssociationTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DolphinTest subclass: #BagTest
@@ -925,6 +933,12 @@ AbstractFileStreamTest subclass: #FileStreamTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractFileStreamTest subclass: #StdioFileStreamTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WriteStreamTest subclass: #LimitedWriteStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

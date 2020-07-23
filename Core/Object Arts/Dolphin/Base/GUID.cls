@@ -120,6 +120,11 @@ isNull
 
 	^self = self class null!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 notNull
 	"Answer whether the receiver is a null external data item (that is, a null pointer, or a
 	nilled out structure)."
@@ -129,11 +134,21 @@ notNull
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: self;
-		nextPut: $)!
+	self isNull
+		ifTrue: 
+			[aStream
+				print: self class;
+				space;
+				display: #null]
+		ifFalse: 
+			[aStream
+				nextPut: $(;
+				print: self class;
+				space;
+				display: #fromString:;
+				space;
+				print: self asString;
+				nextPut: $)]!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
@@ -162,18 +177,6 @@ species
 
 	^GUID!
 
-storeOn: aStream
-	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <GUID> equivalent to the receiver."
-
-	aStream
-		nextPut: $(;
-		print: self class;
-		space;
-		nextPutAll: #fromString:;
-		space;
-		print: self asString;
-		nextPut: $)!
-
 stringSize
 	"Answer the number of characters in a GUID string."
 
@@ -193,11 +196,11 @@ value: guidBytes
 !GUID categoriesFor: #hash!comparing!public! !
 !GUID categoriesFor: #idlString!converting!public! !
 !GUID categoriesFor: #isNull!public!testing! !
+!GUID categoriesFor: #isSelfEvaluating!public!testing! !
 !GUID categoriesFor: #notNull!public!testing! !
 !GUID categoriesFor: #printOn:!development!printing!public! !
 !GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 !GUID categoriesFor: #species!accessing!public! !
-!GUID categoriesFor: #storeOn:!printing!public! !
 !GUID categoriesFor: #stringSize!constants!public! !
 !GUID categoriesFor: #value:!accessing!public! !
 

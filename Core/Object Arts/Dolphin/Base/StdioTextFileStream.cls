@@ -12,9 +12,6 @@ StdioTextFileStream comment: ''!
 !StdioTextFileStream categoriesForClass!Collections-Streams! !
 !StdioTextFileStream methodsFor!
 
-basicPrint: anObject 
-	anObject basicPrintOn: self!
-
 cr
 	"Store the line delimiter character sequence (as required by
 	the environment) as the next element(s) of the receiver."
@@ -23,18 +20,6 @@ cr
 	will translate the single LF character to a CR/LF pair on output."
 
 	self nextPut: $\n!
-
-crtab
-	"Append a line-delimiter and a tab to the receiver."
-
-	self cr; tab!
-
-crtab: anInteger 
-	"Append a line-delimiter and the specified number of tabs to the receiver."
-
-	self
-		cr;
-		tab: anInteger!
 
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
@@ -140,10 +125,7 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
-!StdioTextFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioTextFileStream categoriesFor: #cr!accessing!public! !
-!StdioTextFileStream categoriesFor: #crtab!accessing!public! !
-!StdioTextFileStream categoriesFor: #crtab:!accessing!public! !
 !StdioTextFileStream categoriesFor: #externalType!accessing!public! !
 !StdioTextFileStream categoriesFor: #getString:!accessing!private! !
 !StdioTextFileStream categoriesFor: #isText!public!testing! !

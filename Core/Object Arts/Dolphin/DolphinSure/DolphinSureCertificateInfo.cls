@@ -127,7 +127,7 @@ binaryReadFrom: aStream context: anObject
 	| inFiler validClasses |
 	validClasses := (Set new)
 				add: #Date;
-				add: #String;
+				add: #Utf8String;
 				add: #LargeInteger;
 				add: #SmallInteger;
 				add: self name;

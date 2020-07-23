@@ -201,6 +201,11 @@ hash
 
 	^(x hash bitShift: 2) bitXor: y hash!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 max: aPoint
 	"Answer a new Point with the maximum of the x coordinates
 	and the maximum of the y coordinates of the receiver and aPoint"
@@ -220,14 +225,15 @@ multiplyByPoint: aPoint
 
 	^(x * aPoint x) @ (y * aPoint y)!
 
-printOn: target
-	"Append a short textual description of the receiver to the
-	<puttableStream>, target."
+printOn: aStream
+	"Append a short textual description of the receiver to the <puttableStream> argument."
 
-	target 
+	aStream
+		nextPut: $(;
 		print: x;
 		nextPut: $@;
-		print: y!
+		print: y;
+		nextPut: $)!
 
 r
 	"Answer the receiver's radius (magnitude) in a polar coordinate 
@@ -324,6 +330,7 @@ y: aNumber
 !Point categoriesFor: #floor!public!truncation and round off! !
 !Point categoriesFor: #generality!coercing!private! !
 !Point categoriesFor: #hash!comparing!public! !
+!Point categoriesFor: #isSelfEvaluating!public!testing! !
 !Point categoriesFor: #max:!comparing!public! !
 !Point categoriesFor: #min:!comparing!public! !
 !Point categoriesFor: #multiplyByPoint:!double dispatch!private! !
@@ -344,7 +351,9 @@ y: aNumber
 !Point class methodsFor!
 
 initialize
-	self addClassConstant: 'Zero' value: ((self x: 0 y: 0) isImmutable: true; yourself)!
+	Zero := (self x: 0 y: 0)
+				isImmutable: true;
+				yourself!
 
 new
 	"Answer a new instance of the receiver equal to zero."

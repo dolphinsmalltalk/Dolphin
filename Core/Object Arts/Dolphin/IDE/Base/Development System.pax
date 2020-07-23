@@ -132,8 +132,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{_FPIEEE_RECORD} #printFieldsOn:limit:)
-	#(#{_FPIEEE_VALUE} #printFieldsOn:limit:)
+	#(#{_FPIEEE_RECORD} #printFieldsOn:)
+	#(#{_FPIEEE_VALUE} #printFieldsOn:)
 	#(#{AbstractCardContainer class} #publishedAspectsOfInstances)
 	#(#{AbstractCardContainer class} #publishedEventsOfInstances)
 	#(#{AbstractCHARField} #characterCreationMessage)
@@ -141,12 +141,13 @@ package setMethodNames: #(
 	#(#{AbstractDocumentShell} #saveStateOn:)
 	#(#{AndEnvironment} #includesResource:)
 	#(#{Array} #assignToResourceIdentifier:)
+	#(#{Array} #debugPrintOn:)
 	#(#{ArrayedCollection} #newBatchAccessor)
 	#(#{ArrayField} #printAccessorExpressionSuffixOn:)
 	#(#{ArrayField} #printMutatorBody:on:)
 	#(#{ArrayPointerField} #printAccessorExpressionSuffixOn:)
 	#(#{ArrayPointerField} #printMutatorBody:on:)
-	#(#{Association} #debugPrintString)
+	#(#{Association} #debugPrintOn:)
 	#(#{AXControlSite class} #publishedAspectsOfInstances)
 	#(#{AXValueConvertingControlSite class} #publishedAspectsOfInstances)
 	#(#{Bag class} #publishedAspectsOfInstances)
@@ -231,8 +232,7 @@ package setMethodNames: #(
 	#(#{ClassEnvironment} #includesResource:)
 	#(#{ClassEnvironment} #openEditor)
 	#(#{Collection} #aspectDisplayOn:)
-	#(#{Collection} #debugPrintString)
-	#(#{Collection} #maxDebugPrint)
+	#(#{Collection} #debugPrintOn:)
 	#(#{Collection} #newBatchAccessor)
 	#(#{Collection} #publishedAspects)
 	#(#{Collection} #publishedKeyedAspects)
@@ -278,7 +278,7 @@ package setMethodNames: #(
 	#(#{DateTimePicker class} #publishedAspectsOfInstances)
 	#(#{DateToText class} #publishedAspectsOfInstances)
 	#(#{Dictionary} #alternateInspectorClass)
-	#(#{Dictionary} #debugPrintString)
+	#(#{Dictionary} #debugPrintOn:)
 	#(#{Dictionary} #newBatchAccessor)
 	#(#{Dictionary} #publishedAspects)
 	#(#{Dictionary class} #newInstanceAspect:class:)
@@ -306,7 +306,7 @@ package setMethodNames: #(
 	#(#{ExternalInteger} #printOn:)
 	#(#{ExternalInteger class} #decompileDefinition)
 	#(#{ExternalInteger class} #newInstanceAspect:class:)
-	#(#{ExternalIntegerBytes} #debugPrintString)
+	#(#{ExternalIntegerBytes} #debugPrintOn:)
 	#(#{ExternalIntegerBytes} #publishedKeyedAspects)
 	#(#{ExternalIntegerBytes class} #newInstanceAspect:class:)
 	#(#{ExternalMethod class} #publishedAspectsOfInstances)
@@ -314,9 +314,8 @@ package setMethodNames: #(
 	#(#{ExternalScalar class} #shouldOverrideGetFieldNames)
 	#(#{ExternalStructure} #alternateInspectorClass)
 	#(#{ExternalStructure} #printableFields)
-	#(#{ExternalStructure} #printCyclicRefOn:)
-	#(#{ExternalStructure} #printFields:on:limit:)
-	#(#{ExternalStructure} #printFieldsOn:limit:)
+	#(#{ExternalStructure} #printFields:on:)
+	#(#{ExternalStructure} #printFieldsOn:)
 	#(#{ExternalStructure} #printOn:)
 	#(#{ExternalStructure} #publishedAspects)
 	#(#{ExternalStructure class} #autoGenCategory)
@@ -359,10 +358,10 @@ package setMethodNames: #(
 	#(#{ImageViewAbstract class} #publishedAspectsOfInstances)
 	#(#{InputState class} #publishedEventsOfInstances)
 	#(#{InternalIcon class} #choose)
-	#(#{Interval} #debugPrintString)
+	#(#{Interval} #debugPrintOn:)
 	#(#{Interval} #newBatchAccessor)
 	#(#{KernelLibrary} #queryThreadCycleTime:cycleTime:)
-	#(#{LargeInteger} #debugPrintString)
+	#(#{LargeInteger} #debugPrintOn:)
 	#(#{LayoutManager} #arrangementAspect)
 	#(#{ListBox class} #publishedAspectsOfInstances)
 	#(#{ListControlView} #visualObjectAtPoint:)
@@ -374,8 +373,8 @@ package setMethodNames: #(
 	#(#{ListView class} #publishedAspectsOfInstances)
 	#(#{ListView class} #publishedEventsOfInstances)
 	#(#{ListViewColumn class} #publishedAspectsOfInstances)
-	#(#{LOGBRUSH} #printFieldsOn:limit:)
-	#(#{LOGPEN} #printFieldsOn:limit:)
+	#(#{LOGBRUSH} #printFieldsOn:)
+	#(#{LOGPEN} #printFieldsOn:)
 	#(#{LPVOIDField} #newAspect:class:)
 	#(#{LPVOIDField} #printAccessorExpressionSuffixOn:)
 	#(#{LVITEMW} #printableFields)
@@ -407,6 +406,7 @@ package setMethodNames: #(
 	#(#{Object} #basicInspect)
 	#(#{Object} #browse)
 	#(#{Object} #currentPublishedAspectsAsLiteralsMap)
+	#(#{Object} #debugPrintOn:)
 	#(#{Object} #debugPrintString)
 	#(#{Object} #halt)
 	#(#{Object} #inspect)
@@ -474,7 +474,7 @@ package setMethodNames: #(
 	#(#{RefactoryChange} #displayOn:)
 	#(#{ReferenceView} #visualObjectAtPoint:)
 	#(#{ReferenceView class} #publishedAspectsOfInstances)
-	#(#{RegKeyAbstract} #debugPrintString)
+	#(#{RegKeyAbstract} #debugPrintOn:)
 	#(#{ResourceIdentifier} #assign:)
 	#(#{ResourceIdentifier} #assignLiteralResourceData:)
 	#(#{ResourceIdentifier} #browse)
@@ -507,7 +507,7 @@ package setMethodNames: #(
 	#(#{ScrollingDecoratorLayout class} #publishedAspectsOfInstances)
 	#(#{SearchPolicy class} #method)
 	#(#{SelectorEnvironment} #addMethods:)
-	#(#{Semaphore} #debugPrintString)
+	#(#{Semaphore} #debugPrintOn:)
 	#(#{SequenceableCollection} #alternateInspectorClass)
 	#(#{SequenceableCollection} #newBatchAccessor)
 	#(#{SequenceableCollection class} #newInstanceAspect:class:)
@@ -554,13 +554,14 @@ package setMethodNames: #(
 	#(#{StOptimizedNode} #displayOn:)
 	#(#{StParameterNode} #displayOn:)
 	#(#{StPrimitiveNode} #displayOn:)
-	#(#{StProgramNode} #debugPrintString)
+	#(#{StProgramNode} #debugPrintOn:)
 	#(#{StProgramNode} #postComments)
 	#(#{StProgramNode} #preComments)
 	#(#{StProgramNode} #publishedAspects)
+	#(#{Stream} #debugPrint:)
 	#(#{StReturnNode} #displayOn:)
 	#(#{String} #aspectDisplayOn:)
-	#(#{String} #debugPrintString)
+	#(#{String} #debugPrintOn:)
 	#(#{String} #literalTextStyle)
 	#(#{String} #newAspect:class:)
 	#(#{String} #publishedAspects)
@@ -634,7 +635,7 @@ package setMethodNames: #(
 	#(#{ValueConvertingControlView class} #applicableTypeConverterCategories)
 	#(#{ValueConvertingControlView class} #publishedAspectsOfInstances)
 	#(#{ValueDialog class} #publishedEventsOfInstances)
-	#(#{ValueModel} #debugPrintString)
+	#(#{ValueModel} #debugPrintOn:)
 	#(#{ValueModel class} #publishedAspectsOfInstances)
 	#(#{ValueModel class} #publishedEventsOfInstances)
 	#(#{ValuePresenter class} #publishedEventsOfInstances)
@@ -1495,7 +1496,7 @@ Inspector := BasicInspector!
 
 !_FPIEEE_RECORD methodsFor!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
@@ -1531,11 +1532,11 @@ printFieldsOn: aStream limit: anInteger
 						display: each;
 						nextPut: $=;
 						print: value]]! !
-!_FPIEEE_RECORD categoriesFor: #printFieldsOn:limit:!printing!private! !
+!_FPIEEE_RECORD categoriesFor: #printFieldsOn:!printing!private! !
 
 !_FPIEEE_VALUE methodsFor!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
@@ -1548,7 +1549,7 @@ printFieldsOn: aStream limit: anInteger
 				print: self formatName
 			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
 		ifFalse: [aStream nextPutAll: '<invalid>']! !
-!_FPIEEE_VALUE categoriesFor: #printFieldsOn:limit:!printing!private! !
+!_FPIEEE_VALUE categoriesFor: #printFieldsOn:!printing!private! !
 
 !AbstractCardContainer class methodsFor!
 
@@ -1619,8 +1620,36 @@ includesResource: aResourceIdentifier
 assignToResourceIdentifier: aResourceIdentifier
 	"Private - Assign the receiver, as a literal resource array, to aResourceIdentifier"
 
-	aResourceIdentifier assignLiteralResourceData: self! !
+	aResourceIdentifier assignLiteralResourceData: self!
+
+debugPrintOn: aStream
+	"Copy of printOn:, but printing elements with debugPrintOn:"
+
+	| visited |
+	visited := IdentitySet new.
+	(self allSatisfy: [:element | element isLiteral: visited])
+		ifTrue: 
+			["Has literal form"
+			aStream nextPutAll: '#('.
+			self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]
+		ifFalse: 
+			[((visited includes: self) not and: [self allSatisfy: [:element | element isSelfEvaluating]])
+				ifTrue: 
+					["Can use brace array form"
+					aStream nextPut: ${.
+					self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream nextPutAll: '. '].
+					aStream nextPut: $}]
+				ifFalse: 
+					[aStream print: self
+						with: 
+							[aStream
+								basicPrint: self;
+								nextPut: $(.
+							self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
+							aStream nextPut: $)]]]! !
 !Array categoriesFor: #assignToResourceIdentifier:!private! !
+!Array categoriesFor: #debugPrintOn:!printing!public! !
 
 !ArrayedCollection methodsFor!
 
@@ -1724,9 +1753,14 @@ printMutatorBody: aSymbol on: aWriteStream
 
 !Association methodsFor!
 
-debugPrintString
-	^key debugPrintString , ' -> ' , value debugPrintString! !
-!Association categoriesFor: #debugPrintString!public! !
+debugPrintOn: aStream
+	aStream print: self
+		with: 
+			[aStream
+				debugPrint: key;
+				nextPutAll: ' -> ';
+				debugPrint: value]! !
+!Association categoriesFor: #debugPrintOn:!public! !
 
 !AXControlSite class methodsFor!
 
@@ -2508,32 +2542,16 @@ aspectDisplayOn: aStream
 	
 	self basicPrintOn: aStream!
 
-debugPrintString
-	"Copy of printOn: logic, except using #debugPrintString to print the elements"
+debugPrintOn: aStream
+	"Copy of printOn: logic, except using #debugPrintOn: to print the elements"
 
-	| stream printed |
-	stream := String writeStream: 32.
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [self printCyclicRefOn: stream. ^stream contents].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := stream position + self maxDebugPrint.
-	self printPrefixOn: stream.
-	self do: 
-			[:each | 
-			stream position > tooMany 
-				ifTrue: 
-					[stream nextPutAll: '... etc ...'.
-					^stream contents].
-			stream nextPutAll: each debugPrintString]
-		separatedBy: [stream space].
-	self printSuffixOn: stream] 
-			ensure: [printed remove: self ifAbsent: []].
-	^stream contents!
-
-maxDebugPrint
-	^80!
+	aStream print: self
+		with: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]!
 
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize!
@@ -2562,8 +2580,7 @@ publishedKeyedAspectsBatchSize
     	^200
     ! !
 !Collection categoriesFor: #aspectDisplayOn:!private! !
-!Collection categoriesFor: #debugPrintString!printing!public! !
-!Collection categoriesFor: #maxDebugPrint!printing!public! !
+!Collection categoriesFor: #debugPrintOn:!printing!public! !
 !Collection categoriesFor: #newBatchAccessor!public! !
 !Collection categoriesFor: #publishedAspects!constants!public! !
 !Collection categoriesFor: #publishedKeyedAspects!public! !
@@ -2997,31 +3014,16 @@ alternateInspectorClass
 
 	^DictionaryInspector!
 
-debugPrintString
+debugPrintOn: aStream
 	"Copy of the printOn: logic, except using #debugPrintString to print the elements"
 
-	| stream printed |
-	stream := String writeStream: 32.
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [self printCyclicRefOn: stream. ^stream contents].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := stream position + self maxDebugPrint.
-	stream
-		basicPrint: self;
-		nextPut: $(.
-	self associationsDo: 
-			[:each | 
-			stream position > tooMany 
-				ifTrue: 
-					[stream nextPutAll: '... etc ...'.
-					^stream contents].
-			stream nextPutAll: each debugPrintString]
-		separatedBy: [stream space].
-	stream nextPut: $)] 
-			ensure: [printed remove: self ifAbsent: []].
-	^stream contents!
+	aStream print: self
+		with: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self associationsDo: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]!
 
 newBatchAccessor
 	| keys |
@@ -3042,7 +3044,7 @@ publishedAspects
 		addAll: self class publishedAspectsOfInstances;
 		yourself! !
 !Dictionary categoriesFor: #alternateInspectorClass!constants!public! !
-!Dictionary categoriesFor: #debugPrintString!printing!public! !
+!Dictionary categoriesFor: #debugPrintOn:!printing!public! !
 !Dictionary categoriesFor: #newBatchAccessor!public! !
 !Dictionary categoriesFor: #publishedAspects!constants!public! !
 
@@ -3107,22 +3109,12 @@ printAccessorExpression: aSymbol on: aWriteStream
 printOn: aStream
 	"Print a string representation of self on aStream."
 
-	| tooMany |
-	tooMany := aStream position + #() maxPrint.
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	self isNull 
+	self isNull
 		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: 
-			[self do: 
-					[:each | 
-					aStream position > tooMany 
-						ifTrue: 
-							[aStream nextPutAll: '... etc ...'.
-							^self].
-					each printOn: aStream]
-				separatedBy: [aStream space]].
+		ifFalse: [self do: [:each | each printOn: aStream] separatedBy: [aStream space]].
 	aStream nextPut: $)!
 
 publishedAspects
@@ -3344,15 +3336,15 @@ newInstanceAspect: aSymbol class: aspectClass
 
 !ExternalIntegerBytes methodsFor!
 
-debugPrintString
-	^self printString!
+debugPrintOn: aStream
+	self printOn: aStream!
 
 publishedKeyedAspects
     	"Answers a LookupTable of the published aspects of the receiver's keyed contents"
     
     	^LookupTable new
     		! !
-!ExternalIntegerBytes categoriesFor: #debugPrintString!printing!public! !
+!ExternalIntegerBytes categoriesFor: #debugPrintOn:!printing!public! !
 !ExternalIntegerBytes categoriesFor: #publishedKeyedAspects!constants!public! !
 
 !ExternalIntegerBytes class methodsFor!
@@ -3407,24 +3399,11 @@ alternateInspectorClass
 printableFields
 	^self getValidFields!
 
-printCyclicRefOn: aStream
-	"Private - Append to the argument, aStream, a String whose characters describe
-	a cyclic (or recursive) reference to the receiver. Used by some
-	printOn: methods (e.g. see Collection) to prevent an infinite recursion."
-
-	aStream nextPutAll: '... a cyclic ref to '.
-	self basicPrintOn: aStream.
-	aStream nextPutAll: '...'!
-
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	| sep |
 	sep := [sep := [aStream space]].
 	aCollection do: 
 			[:each |
-			aStream position > anInteger
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
 			(self isFieldBrowsable: each)
 				ifTrue: 
 					[sep value.
@@ -3433,33 +3412,24 @@ printFields: aCollection on: aStream limit: anInteger
 						nextPut: $=;
 						print: (self getField: each)]]!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
-	self
-		printFields: self printableFields
-		on: aStream
-		limit: anInteger!
+	self printFields: self printableFields on: aStream!
 
 printOn: aStream
 	"Append a textual representation of the receiver to aStream.
 	We use the template definition to do this in a generic way for all correctly 
 	defined subclasses. Fields are printed in the order of their offset"
 
-	| printed |
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := aStream position + self maxPrint.
-	self basicPrintOn: aStream.
-	aStream nextPut: $(.
-	self printFieldsOn: aStream limit: tooMany.
-	aStream nextPut: $)]
-			ensure: [printed remove: self ifAbsent: []]!
+	aStream print: self
+		with: 
+			[self basicPrintOn: aStream.
+			aStream nextPut: $(.
+			self printFieldsOn: aStream.
+			aStream nextPut: $)]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -3476,9 +3446,8 @@ publishedAspects
 	^aspects! !
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!public! !
 !ExternalStructure categoriesFor: #printableFields!printing!private! !
-!ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
-!ExternalStructure categoriesFor: #printFields:on:limit:!printing!private! !
-!ExternalStructure categoriesFor: #printFieldsOn:limit:!printing!private! !
+!ExternalStructure categoriesFor: #printFields:on:!printing!private! !
+!ExternalStructure categoriesFor: #printFieldsOn:!printing!private! !
 !ExternalStructure categoriesFor: #printOn:!printing!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!public! !
 
@@ -3976,12 +3945,12 @@ choose
 
 !Interval methodsFor!
 
-debugPrintString
-	^self printString!
+debugPrintOn: aStream
+	self printOn: aStream!
 
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
-!Interval categoriesFor: #debugPrintString!printing!public! !
+!Interval categoriesFor: #debugPrintOn:!printing!public! !
 !Interval categoriesFor: #newBatchAccessor!public! !
 
 !KernelLibrary methodsFor!
@@ -3993,20 +3962,18 @@ queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
 
 !LargeInteger methodsFor!
 
-debugPrintString
+debugPrintOn: aStream
 	| size |
 	size := self basicSize.
-	^size > 1024
+	size > 1024
 		ifTrue: 
-			[String streamContents: 
-					[:strm |
-					strm
-						nextPutAll: 'a ';
-						print: size * 8;
-						nextPutAll: '-bit ';
-						print: self class]]
-		ifFalse: [self printString]! !
-!LargeInteger categoriesFor: #debugPrintString!printing!public! !
+			[aStream
+				nextPutAll: 'a ';
+				print: size * 8;
+				nextPutAll: '-bit ';
+				print: self class]
+		ifFalse: [self printOn: aStream]! !
+!LargeInteger categoriesFor: #debugPrintOn:!printing!public! !
 
 !LayoutManager methodsFor!
 
@@ -4184,7 +4151,7 @@ publishedAspectsOfInstances
 
 !LOGBRUSH methodsFor!
 
-printFieldsOn: aStream limit: anInteger
+printFieldsOn: aStream
 	aStream
 		display: 'style=';
 		print: self style;
@@ -4198,11 +4165,11 @@ printFieldsOn: aStream limit: anInteger
 				space;
 				display: 'hatch=';
 				print: symbol]! !
-!LOGBRUSH categoriesFor: #printFieldsOn:limit:!printing!private! !
+!LOGBRUSH categoriesFor: #printFieldsOn:!printing!private! !
 
 !LOGPEN methodsFor!
 
-printFieldsOn: aStream limit: anInteger 
+printFieldsOn: aStream
 	aStream
 		display: 'style=';
 		print: self style;
@@ -4212,7 +4179,7 @@ printFieldsOn: aStream limit: anInteger
 		space;
 		display: 'color=';
 		print: self color! !
-!LOGPEN categoriesFor: #printFieldsOn:limit:!printing!private! !
+!LOGPEN categoriesFor: #printFieldsOn:!printing!private! !
 
 !LPVOIDField methodsFor!
 
@@ -4535,12 +4502,21 @@ currentPublishedAspectsAsLiteralsMap
 
 	^self publishedAspects collect: [:each | (each accessorFor: self) value literalStoreArray]!
 
+debugPrintOn: aStream
+	"Append, to the <puttableStream>, argument a string whose characters are a description of the receiver appropriate for display in the debugger."
+
+	self printOn: aStream!
+
 debugPrintString
-    	"Answer a <readableString> whose characters are a description of the receiver 
-    	as the debugger would want to see it."
-    
-    	^self printString
-    !
+	"Answer a <readableString> whose characters are a description of the receiver as the debugger would want to see it."
+
+	| stream |
+	stream := LimitedWriteStream
+				on: (String new: 32)
+				limit: 200
+				limitBlock: [:s | ^s contents , ' ... etc ...'].
+	self debugPrintOn: stream.
+	^stream contents!
 
 halt
 	"Bring up the Smalltalk debugger (suspending the active process) ..."
@@ -4611,6 +4587,7 @@ searchForInTool: aSmalltalkToolShell
 !Object categoriesFor: #basicInspect!public! !
 !Object categoriesFor: #browse!public! !
 !Object categoriesFor: #currentPublishedAspectsAsLiteralsMap!constants!public! !
+!Object categoriesFor: #debugPrintOn:!printing!public! !
 !Object categoriesFor: #debugPrintString!printing!public! !
 !Object categoriesFor: #halt!public! !
 !Object categoriesFor: #inspect!public! !
@@ -5364,9 +5341,9 @@ publishedAspectsOfInstances
 
 !RegKeyAbstract methodsFor!
 
-debugPrintString
-	^self printString! !
-!RegKeyAbstract categoriesFor: #debugPrintString!printing!public! !
+debugPrintOn: aStream
+	self printOn: aStream! !
+!RegKeyAbstract categoriesFor: #debugPrintOn:!printing!public! !
 
 !ResourceIdentifier methodsFor!
 
@@ -5789,9 +5766,9 @@ addMethods: methodCollection
 
 !Semaphore methodsFor!
 
-debugPrintString
-	^self printString! !
-!Semaphore categoriesFor: #debugPrintString!printing!public! !
+debugPrintOn: aStream
+	self printOn: aStream! !
+!Semaphore categoriesFor: #debugPrintOn:!printing!public! !
 
 !SequenceableCollection methodsFor!
 
@@ -6321,15 +6298,12 @@ displayOn: aStream
 
 !StProgramNode methodsFor!
 
-debugPrintString
-	"Answer a <readableString> whose characters are a description of the receiver 
-	as the debugger would want to see it.
-	Implementation Note: Debugging the parser can be difficult if we use #printOn:
+debugPrintOn: aStream
+	"Implementation Note: Debugging the parser can be difficult if we use #printOn:
 	because it attempts to output formatted text for the method, which can fail when it
 	is only partially constructed."
 
-	^self basicPrintString
-!
+	self basicPrintOn: aStream!
 
 postComments
 	"Answer the set of comments associated with the receiver that are after the token"
@@ -6368,10 +6342,18 @@ publishedAspects
 					tree view expandAll.
 					tree]).
 	^aspects! !
-!StProgramNode categoriesFor: #debugPrintString!printing!public! !
+!StProgramNode categoriesFor: #debugPrintOn:!printing!public! !
 !StProgramNode categoriesFor: #postComments!accessing!public! !
 !StProgramNode categoriesFor: #preComments!accessing!public! !
 !StProgramNode categoriesFor: #publishedAspects!constants!public! !
+
+!Stream methodsFor!
+
+debugPrint: anObject
+	"Ask anObject to append its textual description to the receiver"
+
+	anObject debugPrintOn: self! !
+!Stream categoriesFor: #debugPrint:!printing!public! !
 
 !StReturnNode methodsFor!
 
@@ -6405,8 +6387,8 @@ aspectDisplayOn: aStream
 	charStream atEnd ifFalse: [aStream nextPutAll: ' ...'].
 	aStream nextPut: $'!
 
-debugPrintString
-	^self printString!
+debugPrintOn: aStream
+	self printOn: aStream!
 
 literalTextStyle
 	^#literalString!
@@ -6427,7 +6409,7 @@ publishedAspects
 
 	^LookupTable with: (self newAspect: #yourself class: Aspect)! !
 !String categoriesFor: #aspectDisplayOn:!private! !
-!String categoriesFor: #debugPrintString!printing!public! !
+!String categoriesFor: #debugPrintOn:!printing!public! !
 !String categoriesFor: #literalTextStyle!constants!private! !
 !String categoriesFor: #newAspect:class:!adapters!private! !
 !String categoriesFor: #publishedAspects!constants!public! !
@@ -7259,16 +7241,13 @@ publishedEventsOfInstances
 
 !ValueModel methodsFor!
 
-debugPrintString
-	"Answer a <readableString> whose characters are a description of the receiver 
-	as the debugger would want to see it.
-	Implementation Note: Since #value is used by #printOn:, we implement this to 
+debugPrintOn: aStream
+	"Implementation Note: Since #value is used by #printOn:, we implement this to 
 	allow us to debug #value, otherwise setting a breakpoint in #value results in a
 	meltdown."
 
-	^self basicPrintString
-! !
-!ValueModel categoriesFor: #debugPrintString!printing!public! !
+	self basicPrintOn: aStream! !
+!ValueModel categoriesFor: #debugPrintOn:!printing!public! !
 
 !ValueModel class methodsFor!
 

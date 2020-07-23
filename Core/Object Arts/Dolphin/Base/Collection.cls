@@ -386,13 +386,6 @@ isEmpty
 	^self size == 0
 !
 
-maxPrint
-	"Private - Answer the maximum number of characters to be printed onto a stream as 
-	the string representation of the receiver."
-
-	^3000
-!
-
 newSelection
 	"Private - Answer a new empty collection like the receiver to 
 	contain a selection of the receiver's elements."
@@ -422,48 +415,17 @@ occurrencesOf: target
 	self do: [:each | target = each ifTrue: [count := count + 1]].
 	^count!
 
-printCyclicRefOn: aStream
-	"Private - Append to the argument, aStream, a String whose characters describe
-	a cyclic (or recursive) reference to the receiver. Used by some
-	printOn: methods (e.g. see Collection) to prevent an infinite recursion."
-
-	aStream nextPutAll: '... a cyclic ref to '.
-	self basicPrintOn: aStream.
-	aStream nextPutAll: '...'!
-
 printOn: aStream
 	"Print a string representation of self on aStream. This method suffices for 
 	most collections, and is able to handle cyclic references."
 
-	| printed |
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed addNewElement: self) ifFalse: [^self printCyclicRefOn: aStream].
-	
-	[| tooMany |
-	tooMany := aStream position + self maxPrint.
-	self printPrefixOn: aStream.
-	self do: 
-			[:each |
-			aStream position > tooMany
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
-			each printOn: aStream]
-		separatedBy: [aStream space].
-	self printSuffixOn: aStream]
-			ensure: [printed remove: self ifAbsent: []]!
-
-printPrefixOn: aStream
-	"Private - Print a prefix string for the debug representation of the receiver on aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(!
-
-printSuffixOn: aStream
-	"Private - Print a suffix string for the debug representation of the receiver on aStream."
-
-	aStream nextPut: $)!
+	aStream print: self
+		with: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]!
 
 rehash
 	"Rehash the receiver to re-establish hash invariants, if any.
@@ -637,15 +599,11 @@ union: comperand
 !Collection categoriesFor: #inject:into:!enumerating!public! !
 !Collection categoriesFor: #intersection:!public!set operations! !
 !Collection categoriesFor: #isEmpty!public!testing! !
-!Collection categoriesFor: #maxPrint!constants!private! !
 !Collection categoriesFor: #newSelection!enumerating!private! !
 !Collection categoriesFor: #noDifference:!public!set operations! !
 !Collection categoriesFor: #notEmpty!public!testing! !
 !Collection categoriesFor: #occurrencesOf:!public!searching! !
-!Collection categoriesFor: #printCyclicRefOn:!printing!private! !
 !Collection categoriesFor: #printOn:!printing!public! !
-!Collection categoriesFor: #printPrefixOn:!printing!private! !
-!Collection categoriesFor: #printSuffixOn:!printing!private! !
 !Collection categoriesFor: #rehash!operations!public! !
 !Collection categoriesFor: #reject:!enumerating!public! !
 !Collection categoriesFor: #remove:!public!removing! !

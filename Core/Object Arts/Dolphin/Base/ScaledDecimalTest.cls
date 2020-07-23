@@ -11,6 +11,17 @@ ScaledDecimalTest comment: ''!
 !ScaledDecimalTest categoriesForClass!Unclassified! !
 !ScaledDecimalTest methodsFor!
 
+literalInstances
+	^{1.00s2}!
+
+nonLiteralInstances
+	^{1 / 3.00s2}
+	"Note that (1 / 3.00s2) is not a well behaved literal,
+	because it does not re-evaluate to self...
+	Every literal should be evaluated as self (see isSelfEvaluating).
+	There is currently no way to print it as a literal.
+	So i propose it shall not answer true."!
+
 testAsNumber
 	"Ensure no loss of precision"
 
@@ -158,15 +169,17 @@ testInexactSqrt
 
 testIsLiteral
 	"This test is related to http://bugs.squeak.org/view.php?id=6796"
-	
-	self assert: 1.00s2 isLiteral description: 'every literal obviously isLiteral'.
-	
-	"Note that (1 / 3.00s2) is not a well behaved literal,
-	because it does not re-evaluate to self...
-	Every literal should be evaluated as self (see isSelfEvaluating).
-	There is currently no way to print it as a literal.
-	So i propose it shall not answer true."
-	self deny: (1/3.00s2) isLiteral description: 'this number cannot represent itself as a literal'.!
+
+	self literalInstances
+		do: [:each | self assert: each isLiteral description: 'every literal obviously isLiteral'].
+	self nonLiteralInstances
+		do: [:each | self deny: each isLiteral description: 'this number cannot represent itself as a literal']!
+
+testIsSelfEvaluating
+	self literalInstances
+		do: [:each | self assert: each isSelfEvaluating description: 'every literal obviously isLiteral'].
+	self nonLiteralInstances
+		do: [:each | self deny: each isSelfEvaluating description: 'this number cannot represent itself as a literal']!
 
 testLiteral
 	| sd |
@@ -261,6 +274,8 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
+!ScaledDecimalTest categoriesFor: #literalInstances!helpers!private! !
+!ScaledDecimalTest categoriesFor: #nonLiteralInstances!helpers!private! !
 !ScaledDecimalTest categoriesFor: #testAsNumber!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
@@ -278,6 +293,7 @@ testZeroRaisedToInteger
 !ScaledDecimalTest categoriesFor: #testInexactNthRoot!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testInexactSqrt!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testIsLiteral!public!unit tests! !
+!ScaledDecimalTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testLiteral!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testOneRaisedToInteger!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testPrintString!public!unit tests! !

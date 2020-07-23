@@ -408,26 +408,13 @@ printOn: aStream
 	We must override because we'd like to print out the associations as this
 	is more useful, otherwise this is the same as the superclass implementation."
 
-	| printed |
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := aStream position + self maxPrint.
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self associationsDo: 
-			[:each | 
-			aStream position > tooMany 
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
-			each printOn: aStream]
-		separatedBy: [aStream space].
-	aStream nextPut: $)] 
-			ensure: [printed remove: self ifAbsent: []]!
+	aStream print: self
+		with: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self associationsDo: [:each | each printOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]!
 
 remove: anObject ifAbsent: aBlock
 	"Elements of Dictionaries must be removed by key."

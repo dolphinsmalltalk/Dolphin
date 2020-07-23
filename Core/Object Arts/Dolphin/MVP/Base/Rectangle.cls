@@ -278,6 +278,11 @@ intersects: aRectangle
 	^origin < aRectangle corner 
 		and: [aRectangle origin < corner and: [origin < corner and: [aRectangle origin < aRectangle corner]]]!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 left
 	"Answer the position of the receiver's left edge."
 
@@ -380,9 +385,11 @@ printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
 	aStream 
+		nextPut: $(;
 		print: origin; 
 		nextPutAll: ' corner: '; 
-		print: corner!
+		print: corner;
+		nextPut: $)!
 
 right
 	"Answer the position of the receiver's right edge."
@@ -564,6 +571,7 @@ width: aNumber
 !Rectangle categoriesFor: #insetOriginBy:cornerBy:!public!rectangle functions! !
 !Rectangle categoriesFor: #intersect:!public!rectangle functions! !
 !Rectangle categoriesFor: #intersects:!public!testing! !
+!Rectangle categoriesFor: #isSelfEvaluating!public!testing! !
 !Rectangle categoriesFor: #left!accessing!public! !
 !Rectangle categoriesFor: #left:!accessing!public! !
 !Rectangle categoriesFor: #leftAlign!accessing!public! !
@@ -616,10 +624,11 @@ center: centrePoint extent: extentPoint
 	^self origin: centrePoint - (extentPoint // 2) extent: extentPoint!
 
 initialize
-	self addClassConstant: 'Empty'
-		value: (self new
+	"Empty can't be a class constant or it creates a load order problem in that the Number>>@ method is not defined when the class is declared in the .pax file"
+
+	Empty := self new
 				isImmutable: true;
-				yourself)!
+				yourself!
 
 left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber 
 	"Answer an instance of the receiver with the specified coodinates."

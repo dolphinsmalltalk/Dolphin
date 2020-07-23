@@ -38,14 +38,14 @@ MinorVersion
 
 	^bytes wordAtOffset: _OffsetOf_MinorVersion!
 
-printFields: aCollection on: aStream limit: anInteger
+printFields: aCollection on: aStream
 	aStream
 		print: self MajorVersion;
 		nextPut: $.;
 		print: self MinorVersion! !
 !HTTP_VERSION categoriesFor: #MajorVersion!**compiled accessors**!public! !
 !HTTP_VERSION categoriesFor: #MinorVersion!**compiled accessors**!public! !
-!HTTP_VERSION categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_VERSION categoriesFor: #printFields:on:!development!printing!private! !
 
 !HTTP_VERSION class methodsFor!
 

@@ -14,8 +14,9 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{ArrayedCollection} #literalPrintOn:)
+	#(#{Array} #literalPrintOn:)
 	#(#{Boolean} #literalPrintOn:)
+	#(#{ByteArray} #literalPrintOn:)
 	#(#{Character} #literalPrintOn:)
 	#(#{Class} #literalPrintOn:)
 	#(#{Number} #literalPrintOn:)
@@ -63,19 +64,25 @@ STBOutFiler subclass: #STLOutFiler
 
 "Loose Methods"!
 
-!ArrayedCollection methodsFor!
+!Array methodsFor!
 
-literalPrintOn: aWriteStream 
-	self printPrefixOn: aWriteStream.
+literalPrintOn: aWriteStream
+	aWriteStream nextPutAll: '#('.
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
-	self printSuffixOn: aWriteStream! !
-!ArrayedCollection categoriesFor: #literalPrintOn:!public! !
+	aWriteStream nextPut: $)! !
+!Array categoriesFor: #literalPrintOn:!public! !
 
 !Boolean methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
 !Boolean categoriesFor: #literalPrintOn:!public! !
+
+!ByteArray methodsFor!
+
+literalPrintOn: aWriteStream
+	self printOn: aWriteStream! !
+!ByteArray categoriesFor: #literalPrintOn:!public! !
 
 !Character methodsFor!
 

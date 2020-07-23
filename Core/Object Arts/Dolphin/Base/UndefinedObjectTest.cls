@@ -38,6 +38,9 @@ testIsLiteral
 testIsNil
 	self assertIsNil: nil!
 
+testIsSelfEvaluating
+	self assert: nil isSelfEvaluating!
+
 testNew
 	self assert: UndefinedObject new identicalTo: nil!
 
@@ -68,6 +71,7 @@ testStoreOn
 !UndefinedObjectTest categoriesFor: #testIfNotNilIfNil!public!testing / testing! !
 !UndefinedObjectTest categoriesFor: #testIsLiteral!public!testing / testing! !
 !UndefinedObjectTest categoriesFor: #testIsNil!public!testing / testing! !
+!UndefinedObjectTest categoriesFor: #testIsSelfEvaluating!public!testing / testing! !
 !UndefinedObjectTest categoriesFor: #testNew!public!unit tests! !
 !UndefinedObjectTest categoriesFor: #testNotNil!public!testing / testing! !
 !UndefinedObjectTest categoriesFor: #testPrintOn!public!testing / printing! !

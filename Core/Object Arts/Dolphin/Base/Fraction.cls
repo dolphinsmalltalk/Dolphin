@@ -244,6 +244,11 @@ isLiteral
 
 	^false!
 
+isSelfEvaluating
+	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+
+	^true!
+
 isZero
 	"Answer whether the receiver is equal to its class' zero"
 
@@ -393,6 +398,7 @@ truncated
 !Fraction categoriesFor: #hash!comparing!public! !
 !Fraction categoriesFor: #isFraction!public!testing! !
 !Fraction categoriesFor: #isLiteral!public!testing! !
+!Fraction categoriesFor: #isSelfEvaluating!public!testing! !
 !Fraction categoriesFor: #isZero!public!testing! !
 !Fraction categoriesFor: #multiplyByFloat:!double dispatch!private! !
 !Fraction categoriesFor: #multiplyByFraction:!double dispatch!private! !
