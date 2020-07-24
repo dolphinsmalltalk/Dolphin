@@ -47,8 +47,8 @@ targetVariable
 !VariableBinding categoriesFor: #=!comparing!public! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
-!VariableBinding categoriesFor: #environment!public! !
-!VariableBinding categoriesFor: #environment:!public! !
+!VariableBinding categoriesFor: #environment!accessing!public! !
+!VariableBinding categoriesFor: #environment:!accessing!public! !
 !VariableBinding categoriesFor: #fullName!accessing!public! !
 !VariableBinding categoriesFor: #fullyQualifiedReference!accessing!public! !
 !VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
@@ -73,6 +73,6 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!VariableBinding class categoriesFor: #stbConvertFrom:!public! !
-!VariableBinding class categoriesFor: #stbVersion!public! !
+!VariableBinding class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!VariableBinding class categoriesFor: #stbVersion!binary filing!public! !
 

@@ -12,6 +12,12 @@ provides associative access to all global objects in the system.'!
 !SystemDictionary categoriesForClass!Collections-Unordered! !
 !SystemDictionary methodsFor!
 
+_deepCopy: anIdentityDictionary 
+	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
+	in the <IdentityDictionary> argument."
+
+	^self!
+
 add: aVariableBinding
 	"Add the <VariableBinding> argument to the receiver. Answer aVariableBinding.
 	Although very similar to at:put:, we store the actual <VariableBinding> passed
@@ -227,6 +233,12 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
+shallowCopy
+	"Answer a copy of the receiver which shares the receiver's instance variables. 
+	Implementation Note: The system dictionary is unique and should not be copied."
+
+	^self!
+
 triggerVariableRenamed: aVariableBinding from: oldSymbol
 	"Private - Inform observers that a  system global object has been renamed."
 
@@ -234,6 +246,7 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 		trigger: #variableRenamed:from:
 		with: aVariableBinding
 		with: oldSymbol asQualifiedReference! !
+!SystemDictionary categoriesFor: #_deepCopy:!copying!private! !
 !SystemDictionary categoriesFor: #add:!adding!public! !
 !SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
@@ -261,5 +274,6 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !
 !SystemDictionary categoriesFor: #setEvents:!events!private! !
+!SystemDictionary categoriesFor: #shallowCopy!copying!public! !
 !SystemDictionary categoriesFor: #triggerVariableRenamed:from:!events!private! !
 
