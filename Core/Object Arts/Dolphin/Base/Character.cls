@@ -53,7 +53,7 @@ At present only byte characters (that are not control characters) have a printab
 !Character methodsFor!
 
 _beginsString: aString
-	^aString readStream peek = self!
+	^aString first = self!
 
 _separateSubStringsIn: tokens
 	| start answer size end codeUnits |

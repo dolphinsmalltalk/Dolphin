@@ -534,7 +534,10 @@ testWithDo
 	self should: [subject with: (1 to: 4) do: [:a :b | ]] raise: Error!
 
 withAllTestCases
-	^super withAllTestCases , #('a 🐬 test' 'Приве́т नमस्ते שָׁלוֹם' 'áèȋöû')! !
+	^super withAllTestCases , {{'a 🐬 è' asUtf16String}.
+				{'a 🐬 è' asUtf8String}.
+				#('Приве́т नमस्ते שָׁלוֹם').
+				#('áèȋöû')}! !
 !UtfEncodedStringTest categoriesFor: #afterTestCases!constants!private! !
 !UtfEncodedStringTest categoriesFor: #beforeTestCases!constants!private! !
 !UtfEncodedStringTest categoriesFor: #caseConversionCases!constants!private! !

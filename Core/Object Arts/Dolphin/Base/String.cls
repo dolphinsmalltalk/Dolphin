@@ -1734,9 +1734,9 @@ withAll: aCollectionOfCharacters
 	"Answer a new instance of the receiver containing all of the <Character> elements of the <collection>, aCollectionOfCharacters."
 
 	| stream |
-	stream := self writeStream: 10.
-	aCollectionOfCharacters readStream do: [:each | stream nextPut: each].
-	^stream contents! !
+	stream := self writeStream: aCollectionOfCharacters size.
+	aCollectionOfCharacters do: [:each | stream nextPut: each].
+	^stream grabContents! !
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #characterForCodeUnit:!enquiries!public! !

@@ -11,15 +11,10 @@ DolphinSTONWriter comment: ''!
 !DolphinSTONWriter methodsFor!
 
 encodeString: aString
-
 	writeStream nextPut: stringQuote.
 	keepNewLines
 		ifTrue: [self encodeStringKeepingNewLines: aString]
-		ifFalse: 
-			[| stream ch |
-			"Superclass implementation does not work correctly for Dolphin's UTF-encoded Strings, as these enumerate code units, not code points. We must stream over the string instead."
-			stream := aString readStream.
-			[(ch := stream nextAvailable) isNil] whileFalse: [self encodeCharacter: ch]].
+		ifFalse: [aString do: [:ch | self encodeCharacter: ch]].
 	writeStream nextPut: stringQuote!
 
 escape: char with: anObject
