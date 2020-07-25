@@ -105,13 +105,6 @@ try: niladicBlock
 initialize
 	"Initialize the receiver's class instance variable."
 
-	RetryCookie := Object new!
-
-on: selector do: action
-	"Private - Answer a new instance of the receiver with the <exceptionSelector>, 
-	selector, and <monadicBlock> exception handler, action."
-
-	^self new on: selector do: action! !
+	RetryCookie := Object new! !
 !ExceptionHandlerAbstract class categoriesFor: #initialize!development!initializing!public! !
-!ExceptionHandlerAbstract class categoriesFor: #on:do:!debugger-step through!instance creation!private! !
 

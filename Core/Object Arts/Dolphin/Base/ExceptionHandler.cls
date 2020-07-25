@@ -17,13 +17,26 @@ actionFor: exception
 
 	^(selector handles: exception) ifTrue: [handler]!
 
-on: exceptionSelector do: monadicBlock
-	"Private - Record the <exceptionSelector> and <monadicBlock> to be
-	used as the receivers exception selector and handler block respectively."
-
-	selector := exceptionSelector.
+handler: monadicBlock
 	handler := monadicBlock
+!
+
+selector: exceptionSelector
+	selector := exceptionSelector
 ! !
 !ExceptionHandler categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!ExceptionHandler categoriesFor: #on:do:!debugger-step over!initializing!private! !
+!ExceptionHandler categoriesFor: #handler:!debugger-step over!initializing!private! !
+!ExceptionHandler categoriesFor: #selector:!debugger-step over!initializing!private! !
+
+!ExceptionHandler class methodsFor!
+
+on: selector do: action
+	"Private - Answer a new instance of the receiver with the <exceptionSelector>, 
+	selector, and <monadicBlock> exception handler, action."
+
+	^self new
+		selector: selector;
+		handler: action;
+		yourself! !
+!ExceptionHandler class categoriesFor: #on:do:!debugger-step through!instance creation!private! !
 
