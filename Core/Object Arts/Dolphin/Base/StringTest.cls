@@ -66,7 +66,7 @@ testAfter
 		should: [(self assimilateString: 'ab') after: $b]
 		raise: Error
 		matching: [:ex | ex description = '$b is my last object'].
-	self should: [(self assimilateString: '') after: $a] raise: NotFoundError.
+	self should: [self collectionClass empty after: $a] raise: NotFoundError.
 	self should: [(self assimilateString: 'a') after: $b] raise: NotFoundError!
 
 testAsByteArray
@@ -80,7 +80,7 @@ testAsByteArray
 				= (self newCopy: each)]!
 
 testAt
-	self assert: ((self newCollection: 'Hello') at: 1) equals: $H!
+	self assert: ((self assimilateString: 'Hello') at: 1) equals: $H!
 
 testBefore
 	self beforeTestCases do: 
@@ -95,29 +95,29 @@ testBefore
 		should: [(self assimilateString: 'ab') before: $a]
 		raise: Error
 		matching: [:ex | ex description = '$a is my first object'].
-	self should: [(self assimilateString: '') before: $a] raise: NotFoundError.
+	self should: [self collectionClass empty before: $a] raise: NotFoundError.
 	self should: [(self assimilateString: 'a') before: $b] raise: NotFoundError!
 
 testCapitalized
 	| string cap |
-	string := self assimilateString: ''.
+	string := self collectionClass empty.
 	self assert: string capitalized equals: string.
-	string := self newCollection: 'a'.
+	string := self assimilateString: 'a'.
 	cap := string capitalized.
-	self assert: cap equals: (self newCollection: 'A').
-	self assert: string equals: (self newCollection: 'a').
-	string := self newCollection: 'A'.
+	self assert: cap equals: (self assimilateString: 'A').
+	self assert: string equals: (self assimilateString: 'a').
+	string := self assimilateString: 'A'.
 	cap := string capitalized.
-	self assert: cap equals: (self newCollection: 'A').
-	self assert: string equals: (self newCollection: 'A').
-	string := self newCollection: 'ab'.
+	self assert: cap equals: (self assimilateString: 'A').
+	self assert: string equals: (self assimilateString: 'A').
+	string := self assimilateString: 'ab'.
 	cap := string capitalized.
-	self assert: cap equals: (self newCollection: 'Ab').
-	self assert: string equals: (self newCollection: 'ab').
-	string := self newCollection: 'Ab'.
+	self assert: cap equals: (self assimilateString: 'Ab').
+	self assert: string equals: (self assimilateString: 'ab').
+	string := self assimilateString: 'Ab'.
 	cap := string capitalized.
-	self assert: cap equals: (self newCollection: 'Ab').
-	self assert: string equals: (self newCollection: 'Ab')!
+	self assert: cap equals: (self assimilateString: 'Ab').
+	self assert: string equals: (self assimilateString: 'Ab')!
 
 testCaseConversions
 	| subject actual expected |
@@ -205,47 +205,47 @@ testEquals
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
-	searchee := self newCollection: 'a£cdefga£cdef'.
-	abc := self newCollection: 'a£c'.
+	searchee := self assimilateString: 'a£cdefga£cdef'.
+	abc := self assimilateString: 'a£c'.
 	self assert: (searchee findString: abc startingAt: 1) equals: 1.
 	self assert: (searchee findString: abc startingAt: 2) equals: (searchee lastIndexOf: $£) - 1.
 	self assert: (searchee findString: abc startingAt: searchee size) equals: 0.
 	self assert: (searchee findString: abc startingAt: 11) equals: 0.
 	self assert: (searchee findString: abc startingAt: 1) equals: 1.
-	searchee := self newCollection: 'aabcabc'.
+	searchee := self assimilateString: 'aabcabc'.
 	self assert: (searchee findString: abc startingAt: 6) equals: 0.
-	a := self newCollection: 'a'.
-	empty := self newCollection: ''.
+	a := self assimilateString: 'a'.
+	empty := self collectionClass empty.
 	self assert: (empty findString: a startingAt: 1) equals: 0.
 	self assert: ('b' findString: a startingAt: 1) equals: 0.
 	self assert: (a findString: a startingAt: 1) equals: 1.
 
 	"Search for empty string, should return zero"
 	self assert: (a findString: empty startingAt: 1) equals: 0.
-	ba := self newCollection: 'ba'.
+	ba := self assimilateString: 'ba'.
 	self assert: (ba findString: a startingAt: 1) equals: 2.
-	ab := self newCollection: 'ab'.
+	ab := self assimilateString: 'ab'.
 	self assert: (ab findString: a startingAt: 1) equals: 1.
-	bb := self newCollection: 'bb'.
+	bb := self assimilateString: 'bb'.
 	self assert: (bb findString: a startingAt: 1) equals: 0.
-	bba := self newCollection: 'bba'.
+	bba := self assimilateString: 'bba'.
 	self assert: (bba findString: a startingAt: 1) equals: 3.
 	self assert: (bba findString: a startingAt: 2) equals: 3.
 	self assert: (bba findString: a startingAt: 3) equals: 3.
-	abba := self newCollection: 'abba'.
+	abba := self assimilateString: 'abba'.
 	self assert: (abba findString: ab startingAt: 3) equals: 0.
 	self assert: (abba findString: ab startingAt: 4) equals: 0.
 	self assert: (abba findString: ab startingAt: 2) equals: 0.
 	self assert: (abba findString: ab startingAt: 1) equals: 1.
 	searchee := self
-				newCollection: 'Now''s the time for all good men to come to the aid of their country.'.
-	self assert: (searchee findString: (self newCollection: 'time') startingAt: 1) equals: 11.
-	self assert: (searchee findString: (self newCollection: 'timid') startingAt: 1) equals: 0.
-	self assert: (searchee findString: (self newCollection: 'try') startingAt: 1) equals: 65.
-	searchee := self newCollection: 'babcbabcabcaabcabcabcacabc'.
+				assimilateString: 'Now''s the time for all good men to come to the aid of their country.'.
+	self assert: (searchee findString: (self assimilateString: 'time') startingAt: 1) equals: 11.
+	self assert: (searchee findString: (self assimilateString: 'timid') startingAt: 1) equals: 0.
+	self assert: (searchee findString: (self assimilateString: 'try') startingAt: 1) equals: 65.
+	searchee := self assimilateString: 'babcbabcabcaabcabcabcacabc'.
 	self assert: (searchee findString: 'abcabcacab' startingAt: 1) equals: 16.
-	searchee := self newCollection: 'aaaaaaabcabcadefg'.
-	self assert: (searchee findString: (self newCollection: 'abcad') startingAt: 1) equals: 10.
+	searchee := self assimilateString: 'aaaaaaabcabcadefg'.
+	self assert: (searchee findString: (self assimilateString: 'abcad') startingAt: 1) equals: 10.
 	self assert: (searchee findString: ab startingAt: 1) equals: 7!
 
 testFindStringStartingAtIgnoreCase
@@ -437,7 +437,7 @@ testIndexOfStartingAt
 
 testInvalidComparisons
 	| str literals |
-	str := self newCollection: 'blah'.
+	str := self assimilateString: 'blah'.
 	literals := #(1.0 1 16rFFFFFFFF 1s2 $a #()).
 	literals do: [:each | self deny: str equals: each].
 	literals do: [:each | self deny: str equals: each].
@@ -470,11 +470,15 @@ testLength
 testLines
 	| subject crlf actual empty |
 	crlf := String lineDelimiter.
-	subject := self newCollection: 'A' , crlf , crlf , 'bc' , crlf , ' ' , crlf.
+	subject := self assimilateString: 'A' , crlf , crlf , 'bc' , crlf , ' ' , crlf.
 	actual := subject lines.
-	empty := self newCollection: ''.
+	empty := self collectionClass empty.
 	self assert: actual
-		equals: {self newCollection: 'A'. empty. self newCollection: 'bc'. self newCollection: ' '. empty}!
+		equals: {self assimilateString: 'A'.
+				empty.
+				self assimilateString: 'bc'.
+				self assimilateString: ' '.
+				empty}!
 
 testMutableCopy
 	self caseConversionCases do: 
@@ -528,47 +532,47 @@ testSplitByString
 	"Test String>>split:, which tokenizes the argument string into sequences that are separated by the receiver string."
 
 	| sep empty |
-	empty := self newCollection: ''.
+	empty := self collectionClass empty.
 	"The separator but must not be empty"
-	self should: [empty split: (self newCollection: 'abc')] raise: Error.
+	self should: [empty split: (self assimilateString: 'abc')] raise: Error.
 
 	"And again but using a string argument of more than one character"
-	sep := self newCollection: String lineDelimiter.
-	self assert: (sep split: empty) equals: (#() collect: [:e | self newCollection: e]).
-	self assert: (sep split: (self newCollection: 'a'))
-		equals: (#('a') collect: [:e | self newCollection: e]).
-	self assert: (sep split: (self newCollection: sep , 'a'))
+	sep := self assimilateString: String lineDelimiter.
+	self assert: (sep split: empty) equals: (#() collect: [:e | self assimilateString: e]).
+	self assert: (sep split: (self assimilateString: 'a'))
+		equals: (#('a') collect: [:e | self assimilateString: e]).
+	self assert: (sep split: (self assimilateString: sep , 'a'))
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'a' , sep))
+	self assert: (sep split: (self assimilateString: 'a' , sep))
 		equals: (#('a' '') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: sep , sep , 'a'))
+	self assert: (sep split: (self assimilateString: sep , sep , 'a'))
 		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'a' , sep , sep))
+	self assert: (sep split: (self assimilateString: 'a' , sep , sep))
 		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'ab'))
-		equals: (#('ab') collect: [:e | self newCollection: e]).
-	self assert: (sep split: (self newCollection: sep , 'ab'))
+	self assert: (sep split: (self assimilateString: 'ab'))
+		equals: (#('ab') collect: [:e | self assimilateString: e]).
+	self assert: (sep split: (self assimilateString: sep , 'ab'))
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'ab' , sep))
+	self assert: (sep split: (self assimilateString: 'ab' , sep))
 		equals: (#('ab' '') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'ab' , sep , sep , sep))
+	self assert: (sep split: (self assimilateString: 'ab' , sep , sep , sep))
 		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: sep , sep , 'ab'))
+	self assert: (sep split: (self assimilateString: sep , sep , 'ab'))
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'a' , sep , 'b'))
+	self assert: (sep split: (self assimilateString: 'a' , sep , 'b'))
 		equals: (#('a' 'b') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'a' , sep , sep , 'b'))
+	self assert: (sep split: (self assimilateString: 'a' , sep , sep , 'b'))
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'ab' , sep , 'c' , sep))
+	self assert: (sep split: (self assimilateString: 'ab' , sep , 'c' , sep))
 		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
-	self assert: (sep split: (self newCollection: 'a' , sep , 'b' , sep , sep , 'c'))
+	self assert: (sep split: (self assimilateString: 'a' , sep , 'b' , sep , sep , 'c'))
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 	1 to: 3
 		do: 
 			[:i |
 			| subject |
 			subject := self
-						newCollection: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
+						assimilateString: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
 			self assert: ('ab' split: subject) equals: (Array new: i + 1 withAll: empty)]!
 
 testSplitSingle
@@ -753,7 +757,7 @@ testTrimNulls
 	string := self newCollection: #($a $\0 $\0).
 	trimmed := string trimNulls.
 	self assert: trimmed size equals: 1.
-	self assert: (self newCollection: trimmed) equals: (self newCollection: 'a')!
+	self assert: (self assimilateString: trimmed) equals: (self assimilateString: 'a')!
 
 testUrlDecoded
 	"Test URI decoding per RFC3986"
@@ -846,20 +850,20 @@ testWithAll
 	self withAllTestCases do: 
 			[:each |
 			| actual |
-			actual := self collectionClass withAll: each.
-			self assert: actual equals: each]!
+			actual := self collectionClass withAll: each first.
+			self assert: actual equals: each last]!
 
 testWithNormalizedLineDelimiters
 	"Empty"
 
 	| cr lf crlf char |
-	char := self newCollection: '+'.
-	cr := self newCollection: (self collectionClass with: Character cr).
-	crlf := self newCollection: self collectionClass lineDelimiter.
-	lf := self newCollection: (self collectionClass with: Character lf).
-	self assert: (self newCollection: '') withNormalizedLineDelimiters equals: (self newCopy: '').
+	char := self assimilateString: '+'.
+	cr := self collectionClass with: Character cr.
+	crlf := self assimilateString: self collectionClass lineDelimiter.
+	lf := self collectionClass with: Character lf.
+	self assert: self collectionClass empty withNormalizedLineDelimiters equals: (self newCopy: '').
 	"Not empty, but no delims"
-	self assert: (self newCollection: '') withNormalizedLineDelimiters equals: (self newCopy: '').
+	self assert: self collectionClass empty withNormalizedLineDelimiters equals: (self newCopy: '').
 	"Single CR"
 	self assert: cr withNormalizedLineDelimiters equals: (self newCopy: crlf).
 	self assert: (char , cr) withNormalizedLineDelimiters equals: char , crlf.
@@ -902,7 +906,7 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 	self assert: resultString equals: expected!
 
 withAllTestCases
-	^#('' 'a' 'abc' '£€')! !
+	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
 !StringTest categoriesFor: #afterTestCases!constants!private! !
 !StringTest categoriesFor: #assimilate:!helpers!private! !
 !StringTest categoriesFor: #assimilateString:!helpers!private! !
