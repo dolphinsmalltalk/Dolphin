@@ -488,6 +488,7 @@ onPackageChanged: aPackage
 	"Private - The development system has marked aPackage as being changed,
 	update the package list to show any change in the appearance of the package."
 
+	self packagesPresenter beSorted: self packagesPresenter sortBlock.
 	self packagesPresenter view updateAll!
 
 onPackageChosen
