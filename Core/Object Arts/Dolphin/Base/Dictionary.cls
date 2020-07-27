@@ -509,23 +509,24 @@ stbSaveOn: anSTBOutFiler
 			array: self associations asArray)!
 
 storeOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
+	"Append to the <puttableStream> argument, aStream, an expression which when 
+	evaluated will answer a collection similar to the receiver.
 
-	| first |
+	N.B. Attempt to store our keys in sorted order for consistency, falling back to hash order if sorting fails."
+
+	| keys |
 	aStream nextPutAll: '(('.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' new)'.
-	first := true.
-	self keysAndValuesDo: [:key :value |
-		first
-			ifTrue: [first := false]
-			ifFalse: [aStream nextPut: $;].
-		aStream nextPutAll: ' at: '.
-		key storeOn: aStream.
-		aStream nextPutAll: ' put: '.
-		value storeOn: aStream].
-	first ifFalse: [aStream nextPutAll: '; yourself'].
+	keys := [self keys asSortedCollection] on: Error do: [:ex | self keys].
+	keys do:
+			[:key |
+			aStream nextPutAll: ' at: '.
+			key storeOn: aStream.
+			aStream nextPutAll: ' put: '.
+			(self at: key) storeOn: aStream]
+		separatedBy: [aStream nextPut: $;].
+	self isEmpty ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)!
 
 values

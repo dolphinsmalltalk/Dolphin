@@ -390,6 +390,26 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)!
 
+storeOn: aStream
+	"Append to the <puttableStream> argument, aStream, an expression which when 
+	evaluated will answer a collection similar to the receiver.
+
+	N.B. Attempt to store our values in sorted order for consistency, falling back to hash order if sorting fails."
+
+	| first sorted |
+	aStream nextPutAll: '(('.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' new)'.
+	sorted := [self asSortedCollection] on: Error do: [:ex | self].
+	first := true.
+	sorted do: 
+			[:value |
+			first ifTrue: [first := false] ifFalse: [aStream nextPut: $;].
+			aStream nextPutAll: ' add: '.
+			value storeOn: aStream].
+	first ifFalse: [aStream nextPutAll: '; yourself'].
+	aStream nextPut: $)!
+
 uncheckedAdd: newObject
 	"Private - Add newObject to the receiver, without checking to see if it is already present.
 	We also assume the receiver is large enough to accommodate the new element, and so do not
@@ -441,6 +461,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #shrink!mutating!public! !
 !Set categoriesFor: #size!accessing!public! !
 !Set categoriesFor: #stbSaveOn:!binary filing!public! !
+!Set categoriesFor: #storeOn:!printing!public! !
 !Set categoriesFor: #uncheckedAdd:!adding!private! !
 
 Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
