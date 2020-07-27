@@ -258,27 +258,27 @@ testNesting
 			self assertIsNil: c outer]!
 
 testNoArguments
-	self 
+	self
 		should: [:arg | arg]
 		raise: Error
-		matching: [:err | err description = 'Block expects 1 argument(s)'].
-	self 
+		matching: [:err | err description = 'Block expects 1 argument(s), 0 given'].
+	self
 		should: [:arg1 :arg2 | arg1 + arg2]
 		raise: Error
-		matching: [:err | err description = 'Block expects 2 argument(s)']!
+		matching: [:err | err description = 'Block expects 2 argument(s), 0 given']!
 
 testOneArgument
 	| c |
 	c := OrderedCollection new.
 	c add: 'hello'.
-	self 
+	self
 		should: [c do: [1 + 2]]
 		raise: Error
-		matching: [:err | err description = 'Block expects 0 argument(s)'].
-	self 
+		matching: [:err | err description = 'Block expects 0 argument(s), 1 given'].
+	self
 		should: [c do: [:arg1 :arg2 | 1 + 2]]
 		raise: Error
-		matching: [:err | err description = 'Block expects 2 argument(s)']!
+		matching: [:err | err description = 'Block expects 2 argument(s), 1 given']!
 
 testRecursiveBlock
 	| factorial |
@@ -327,11 +327,11 @@ testValueWithArguments
 	self
 		should: [[3 + 4] valueWithArguments: #(1)]
 		raise: Error
-		matching: [:err | err description = 'Block expects 0 argument(s)'].
+		matching: [:err | err description = 'Block expects 0 argument(s), 1 given'].
 	self
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
-		matching: [:err | err description = 'Block expects 1 argument(s)']! !
+		matching: [:err | err description = 'Block expects 1 argument(s), 2 given']! !
 !BlockClosureTest categoriesFor: #blockWithCopiedValue:!helpers!private! !
 !BlockClosureTest categoriesFor: #nestedReturn!helpers!private! !
 !BlockClosureTest categoriesFor: #nestedReturn1!helpers!private! !
