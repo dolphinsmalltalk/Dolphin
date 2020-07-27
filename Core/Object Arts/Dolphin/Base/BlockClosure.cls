@@ -664,7 +664,9 @@ valueFailed: failureCode argumentCount: anInteger
 	"Private - A primitive value call failed, generate an appropriate error"
 
 	^failureCode == _PrimitiveFailureCode.WrongNumberOfArgs
-		ifTrue: [self error: ('Block expects <1p> argument(s)' expandMacrosWith: self argumentCount)]
+		ifTrue: 
+			[self error: ('Block expects <1p> argument(s), <2p> given' expandMacrosWith: self argumentCount
+						with: anInteger)]
 		ifFalse: [self primitiveFailed: failureCode]!
 
 valueOnUnwind: aTwoArgBlock
