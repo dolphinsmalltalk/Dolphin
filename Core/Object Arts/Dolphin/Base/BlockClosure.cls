@@ -113,12 +113,13 @@ Info word usage:
 !BlockClosure categoriesForClass!Kernel-Methods! !
 !BlockClosure methodsFor!
 
-= aBlockClosure 
+= aBlockClosure
 	^aBlockClosure class == self class and: 
 			[method = aBlockClosure method and: 
-					[outer = aBlockClosure outer and: 
-							[self size = aBlockClosure size 
-								and: [(1 to: self size) allSatisfy: [:i | (self at: i) = (aBlockClosure at: i)]]]]]!
+					[initialIP = aBlockClosure initialIP and: 
+							[outer = aBlockClosure outer and: 
+									[self size = aBlockClosure size
+										and: [(1 to: self size) allSatisfy: [:i | (self at: i) = (aBlockClosure at: i)]]]]]].!
 
 argumentCount
 	"Answer the <integer> number of arguments expected by the receiver."
