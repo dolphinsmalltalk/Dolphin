@@ -798,7 +798,7 @@ invalidCall
 	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
 
 	Notification deprecated. 
-	^self invalidCall: 0! !
+	^self invalidCall: _PrimitiveFailureCode.Failed! !
 !ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
 
 !ExternalStructure methodsFor!
