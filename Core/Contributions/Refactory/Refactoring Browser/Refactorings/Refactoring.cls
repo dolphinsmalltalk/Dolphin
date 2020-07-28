@@ -163,7 +163,7 @@ getOptionVariableTypes: types selected: selected
 	selected.
 	classSelected := ChoicePrompter choices: types asOrderedCollection
 				caption: 'Select class of new method...'.
-	^classSelected notNil ifTrue: [Array with: classSelected] ifFalse: [nil]!
+	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
 model
 	#rbFix. "Use #displayString instead of #printString for the name"
@@ -200,10 +200,10 @@ performComponentRefactoring: aRefactoring
 poolVariableNamesFor: aClass
 	| pools |
 	pools := Set new.
-	aClass withAllSuperclasses do: 
+	aClass withAllSuperclassesDo: 
 			[:each |
 			each allPoolDictionaryNames
-				do: [:pool | pools addAll: (pool asQualifiedReference value keys collect: [:name | name asString])]].
+				do: [:pool | pool asQualifiedReference value keys do: [:name | pools add: name asString]]].
 	^pools!
 
 preconditions
@@ -260,16 +260,11 @@ safeMethodNameFor: aClass basedOn: aString
 	^newString asSymbol!
 
 selectVariableToMoveMethodTo: aSelector class: aClass
-	^(self options at: #selectVariableToMoveTo) valueWithArguments: (Array 
-				with: self
-				with: aClass
-				with: aSelector)!
+	^(self options at: #selectVariableToMoveTo) valueWithArguments: {self. aClass. aSelector}!
 
 selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection
-	^(self options at: #variableTypes) valueWithArguments: (Array 
-				with: self
-				with: initialTypeCollection
-				with: selectedTypeCollection)!
+	^(self options at: #variableTypes)
+		valueWithArguments: {self. initialTypeCollection. selectedTypeCollection}!
 
 setOption: aSymbol toUse: aBlock 
 	| dict |
@@ -285,10 +280,7 @@ shouldInlineExpression: aString
 	^(self options at: #inlineExpression) value: self value: aString!
 
 shouldOverride: aSelector in: aClass
-	^(self options at: #alreadyDefined) valueWithArguments: (Array 
-				with: self
-				with: aClass
-				with: aSelector)!
+	^(self options at: #alreadyDefined) valueWithArguments: {self. aClass. aSelector}!
 
 shouldUseExistingMethod: aSelector 
 	^(self options at: #useExistingMethod) value: self value: aSelector!

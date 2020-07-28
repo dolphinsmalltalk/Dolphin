@@ -11,9 +11,8 @@ RBNamespace comment: ''!
 !RBNamespace categoriesForClass!Refactory-Model! !
 !RBNamespace methodsFor!
 
-addChangeToClass: aRBClass 
-	^changedClasses at: aRBClass name
-		put: (Array with: aRBClass nonMetaclass with: aRBClass metaclass)!
+addChangeToClass: aRBClass
+	^changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}!
 
 addClassVariable: aString to: aRBClass 
 	^changes addClassVariable: aString to: aRBClass!
@@ -24,11 +23,11 @@ addInstanceVariable: aString to: aRBClass
 addPool: aString to: aRBClass 
 	^changes addPool: aString to: aRBClass!
 
-allClassesDo: aBlock 
+allClassesDo: aBlock
 	| seen evalBlock |
 	seen := IdentitySet new.
 	evalBlock := 
-			[:each | 
+			[:each |
 			seen add: each first name.
 			aBlock
 				value: each first;
@@ -36,10 +35,10 @@ allClassesDo: aBlock
 	newClasses do: evalBlock.
 	changedClasses do: evalBlock.
 	environment classesDo: 
-			[:each | 
-			each isMeta 
+			[:each |
+			each isMeta
 				ifFalse: 
-					[((seen includes: each name) or: [self hasRemoved: (self classNameFor: each)]) 
+					[((seen includes: each name) or: [self hasRemoved: each instanceClass name])
 						ifFalse: 
 							[| class |
 							class := self classFor: each.
@@ -70,9 +69,8 @@ allReferencesToClass: aRBClass do: aBlock
 			(each whichSelectorsReferToClass: aRBClass) 
 				do: [:sel | aBlock value: (each methodFor: sel)]]!
 
-changeClass: aRBClass 
-	changedClasses at: aRBClass name
-		put: (Array with: aRBClass nonMetaclass with: aRBClass metaclass).
+changeClass: aRBClass
+	changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}.
 	self flushCaches!
 
 changes
@@ -81,13 +79,11 @@ changes
 changes: aCompositeRefactoryChange 
 	changes := aCompositeRefactoryChange!
 
-classFor: aBehavior 
+classFor: aBehavior
 	| nonMetaclass |
 	aBehavior isNil ifTrue: [^nil].
-	nonMetaclass := aBehavior isMeta 
-				ifTrue: [aBehavior soleInstance]
-				ifFalse: [aBehavior].
-	^aBehavior isMeta 
+	nonMetaclass := aBehavior instanceClass.
+	^aBehavior isMeta
 		ifTrue: [self metaclassNamed: nonMetaclass name]
 		ifFalse: [self classNamed: nonMetaclass name]!
 
@@ -103,18 +99,15 @@ classNamed: aSymbol
 			[(self classNamed: (aSymbol copyFrom: 1 to: index - 1) asSymbol)
 				ifNotNil: [:class | class metaclass]]
 		ifFalse: 
-			[(environment at: aSymbol ifAbsent: [])
+			[(environment lookup: aSymbol)
 				ifNotNil: 
 					[:class |
+					"The environment could be the SystemDictionary, and may return non-Class objects, or a BrowserEnvironment, which won't, so we need to check it is a class"
 					class isBehavior
 						ifTrue: 
-							[| classes |
-							classes := self createNewClassFor: class.
-							class isMeta ifTrue: [classes last] ifFalse: [classes first]]]]!
-
-classNameFor: aBehavior 
-	^(aBehavior isMeta ifTrue: [aBehavior soleInstance] ifFalse: [aBehavior]) 
-		name!
+							[| behaviors |
+							behaviors := self createNewClassFor: class.
+							class isMeta ifTrue: [behaviors last] ifFalse: [behaviors first]]]]!
 
 compile: aString in: aRBClass classified: aSymbol 
 	| change |
@@ -125,25 +118,22 @@ compile: aString in: aRBClass classified: aSymbol
 	self flushCaches.
 	^change!
 
-createNewClassFor: aBehavior 
-	| nonMeta meta className |
-	className := (aBehavior isMeta 
-				ifTrue: [aBehavior soleInstance]
-				ifFalse: [aBehavior]) name.
-	nonMeta := (RBClass existingNamed: className)
+createNewClassFor: aBehavior
+	| nonMeta meta |
+	nonMeta := (RBClass existing: aBehavior)
 				model: self;
 				yourself.
-	meta := (RBMetaclass existingNamed: className)
+	meta := (RBMetaclass existing: aBehavior)
 				model: self;
 				yourself.
-	^changedClasses at: className put: (Array with: nonMeta with: meta)!
+	^changedClasses at: aBehavior instanceClass name put: {nonMeta. meta}!
 
-defineClass: aString 
+defineClass: aString
 	| change newClass newClassName |
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
-	newClass isNil 
+	newClass isNil
 		ifTrue: 
 			[| newMetaclass |
 			removedClasses
@@ -153,9 +143,9 @@ defineClass: aString
 			newMetaclass := RBMetaclass named: newClassName.
 			newClass model: self.
 			newMetaclass model: self.
-			newClasses at: newClassName put: (Array with: newClass with: newMetaclass)].
+			newClasses at: newClassName put: {newClass. newMetaclass}].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass isNil 
+	newClass superclass isNil
 		ifTrue: 
 			[self rootClasses add: newClass.
 			newClass metaclass superclass: (self classFor: Object class superclass)]
@@ -176,11 +166,10 @@ flushCaches
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new!
 
-hasCreatedClassFor: aBehavior 
+hasCreatedClassFor: aBehavior
 	| className |
-	className := self classNameFor: aBehavior.
-	^(newClasses includesKey: className) 
-		or: [changedClasses includesKey: className]!
+	className := aBehavior instanceClass name.
+	^(newClasses includesKey: className) or: [changedClasses includesKey: className]!
 
 hasRemoved: aSymbol 
 	^removedClasses includes: aSymbol!
@@ -203,15 +192,13 @@ initialize
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new!
 
-metaclassNamed: aSymbol 
-	| class |
+metaclassNamed: aSymbol
 	aSymbol isNil ifTrue: [^nil].
 	(self hasRemoved: aSymbol) ifTrue: [^nil].
-	(newClasses includesKey: aSymbol) ifTrue: [^(newClasses at: aSymbol) last].
-	(changedClasses includesKey: aSymbol) 
-		ifTrue: [^(changedClasses at: aSymbol) last].
-	(class := environment at: aSymbol ifAbsent: [nil]) isBehavior 
-		ifTrue: [^(self createNewClassFor: class) last].
+	(newClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors last].
+	(changedClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors last].
+	(environment lookup: aSymbol)
+		ifNotNil: [:class | class isBehavior ifTrue: [^(self createNewClassFor: class) last]].
 	^nil!
 
 name
@@ -337,7 +324,6 @@ whichCategoryIncludes: aSymbol
 !RBNamespace categoriesFor: #changes:!accessing!public! !
 !RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
 !RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
-!RBNamespace categoriesFor: #classNameFor:!helpers!private! !
 !RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
 !RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
 !RBNamespace categoriesFor: #defineClass:!changes!public! !

@@ -266,19 +266,19 @@ replaceLiteral: literal with: newLiteral
 		withTree: (RBLiteralNode value: newLiteral).
 	^rewriteRule!
 
-replaceStatements: code with: newCode in: aParseTree onInterval: anInterval 
+replaceStatements: code with: newCode in: aParseTree onInterval: anInterval
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
-	tree isSequence ifFalse: [tree := RBSequenceNode statements: (Array with: tree)].
-	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
+	tree isSequence ifFalse: [tree := RBSequenceNode statements: {tree}].
+	tree temporaries: {RBPatternVariableNode named: '`@temps'}.
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
-	tree lastIsReturn 
+	tree lastIsReturn
 		ifTrue: [replaceStmt := '| `@temps | `@.S1. ^' , newCode]
 		ifFalse: 
 			[tree addNode: (RBPatternVariableNode named: '`@.S2').
 			replaceStmt := '| `@temps | `@.S1. ' , newCode , '.
 `@.S2'].
-	^self 
+	^self
 		replace: tree formattedCode
 		with: replaceStmt
 		in: aParseTree

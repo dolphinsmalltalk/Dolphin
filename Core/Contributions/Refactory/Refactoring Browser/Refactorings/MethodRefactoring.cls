@@ -27,7 +27,7 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 			stream
 				nextPutAll: each;
 				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
+				print: i;
 				nextPut: $ ].
 	^stream contents! !
 !MethodRefactoring categoriesFor: #buildSelectorString:!private! !

@@ -110,11 +110,7 @@ testAtIfAbsentPutModifyingCollection
 				at: key1 put: 10].
 	keys := OrderedCollection new.
 	dictionary keysDo: [:each | keys addLast: each].
-	self assert: keys asSortedCollection asArray
-		equals: (Array
-				with: key1
-				with: key2
-				with: key3)!
+	self assert: keys asSortedCollection asArray equals: {key1. key2. key3}!
 
 testAtIfAbsentPutValue
 	| initialSize x dictionary |

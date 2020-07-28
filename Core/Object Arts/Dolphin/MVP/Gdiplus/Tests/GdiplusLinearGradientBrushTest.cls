@@ -57,7 +57,7 @@ testFillingHorizontal
 testGetBlend
 	| args answer |
 	self setSample1.
-	args := Array with: #(0.0 0.5 1.0) with: #(0.0 0.8 1.0).
+	args := {#(0.0 0.5 1.0). #(0.0 0.8 1.0)}.
 	"Test the roundtrip; setting then getting"
 	model blendFactors: args first positions: args second.
 	answer := model blendFactors.

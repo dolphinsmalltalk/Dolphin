@@ -27,7 +27,7 @@ runTestForPairs: pairs
 
 setUp
 	settings := Dictionary new.
-	(Array with: RBConfigurableFormatter with: RBSourceFormatter) 
+	{RBConfigurableFormatter. RBSourceFormatter}
 		do: [:each | each classPool keysAndValuesDo: [:key :value | settings at: key put: value]].
 	RBConfigurableFormatter indentString: ''.
 	RBConfigurableFormatter newLinesAfterMethodPattern: 1.

@@ -35,9 +35,7 @@ constructLookupNodeFor: aString in: aRBBlockNode
 	^RBMessageNode
 		receiver: (RBVariableNode named: 'self')
 		selector: #lookupMatchFor:in:
-		arguments: (Array with: argumentNode with: aRBBlockNode arguments last)
-
-!
+		arguments: {argumentNode. aRBBlockNode arguments last}!
 
 copyInContext: aDictionary 
 	^self replacingBlock value: aDictionary!

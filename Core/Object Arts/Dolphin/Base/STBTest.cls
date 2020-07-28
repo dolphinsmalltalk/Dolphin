@@ -18,12 +18,7 @@ testByteArray
 			[:each |
 			| a dessicated rehydrated s |
 			s := 'abc'.
-			a := Array
-						with: each
-						with: s
-						with: each
-						with: s
-						with: 'def'.
+			a := {each. s. each. s. 'def'}.
 			dessicated := a binaryStoreBytes.
 			rehydrated := Object fromBinaryStoreBytes: dessicated.
 			self assert: rehydrated equals: a.
@@ -100,7 +95,7 @@ testStrings
 				[:each |
 				| a dessicated rehydrated s |
 				s := each asUtf16String.
-				a := Array with: each with: s.
+				a := {each. s}.
 				dessicated := a binaryStoreBytes.
 				rehydrated := Object fromBinaryStoreBytes: dessicated.
 				self assert: rehydrated equals: a.

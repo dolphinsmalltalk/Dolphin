@@ -34,12 +34,11 @@ testCharNearestPosition
 	#'1551'.
 	text := (FileStream read: SourceManager default sourcesFileName) next: 100000.
 	presenter text: text.
-	(Array
-		with: 1
-		with: (presenter view positionAtLine: 2)
-		with: (presenter view positionAtLine: 1000)
-		with: (presenter view positionAtLine: (presenter view lineFromPosition: text size // 2))
-		with: (presenter view positionAtLine: (presenter view lineFromPosition: text size))) do: 
+	{1.
+		presenter view positionAtLine: 2.
+		presenter view positionAtLine: 1000.
+		presenter view positionAtLine: (presenter view lineFromPosition: text size // 2).
+		presenter view positionAtLine: (presenter view lineFromPosition: text size)} do: 
 				[:each |
 				point := presenter view positionOfChar: each.
 				char := presenter view charNearestPosition: point.

@@ -13,7 +13,7 @@ RewriteTestCase comment: ''!
 
 setUp
 	env := BrowserEnvironment new.
-	env := env forClasses: (Array with: Animal with: Animal class).
+	env := env forClasses: {Animal. Animal class}.
 	env := env referencesTo: #notify:caption:!
 
 testEnvironment
@@ -26,8 +26,8 @@ testFindReplace
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := ParseTreeLintRule 
-				createParseTreeRule: (Array with: find with: replace)
+	rule := ParseTreeLintRule
+				createParseTreeRule: {find. replace}
 				method: false
 				name: 'Find'.
 	SmalllintChecker runRule: rule onEnvironment: env.
@@ -37,8 +37,8 @@ testTransformationRule
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := TransformationRule 
-				rewrite: (Array with: (Array with: find with: replace))
+	rule := TransformationRule
+				rewrite: {{find. replace}}
 				methods: false
 				name: 'Transform'.
 	SmalllintChecker runRule: rule onEnvironment: env.

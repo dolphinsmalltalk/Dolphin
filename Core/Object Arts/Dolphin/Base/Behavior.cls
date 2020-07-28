@@ -154,15 +154,15 @@ allSubclasses
 	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
 	^answer!
 
-allSubclassesBreadthFirstDo: aMonadicValuable 
-	"Evaluate the monadic valuable argument with each of the receiver's 
-	subclasses in breadth-first order. The standard #allSubclassesDo: method 
-	performs a depth-first traversal (which is quicker)."
+allSubclassesBreadthFirstDo: aMonadicValuable
+	"Evaluate the monadic valuable argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice)."
 
-	subclasses ifNotNil: 
-			[:classes | 
-			classes do: [:each | aMonadicValuable value: each].
-			classes do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
+	subclasses
+		ifNotNil: 
+			[:classes |
+			classes
+				do: aMonadicValuable;
+				do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
 
 allSubclassesDo: aMonadicValuable
 	"Evaluate the monadic valuable argument for each of the 
@@ -780,7 +780,8 @@ recompileAll
 recompileReferencesToLiteral: aVariableBinding
 	"Private - Recompile any of the receiver's methods that reference the specified object from their literal frame."
 
-	self methodDictionary do: 
+	methodDictionary ifNil: [^self].
+	methodDictionary do: 
 			[:each |
 			(each refersToLiteral: aVariableBinding)
 				ifTrue: 
@@ -796,7 +797,14 @@ referenceFilterFor: anObject
 			[| index |
 			index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [].
 			index notNil
-				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]].
+				ifTrue: 
+					[| dispatcher |
+					dispatcher := ByteCodeDispatcher new.
+					^
+					[:each |
+					(each refersToLiteral: anObject) or: 
+							[dispatcher method: each.
+							dispatcher sendsSpecialSelector: index]]]].
 	^[:each | each refersToLiteral: anObject]!
 
 removeFromSuper

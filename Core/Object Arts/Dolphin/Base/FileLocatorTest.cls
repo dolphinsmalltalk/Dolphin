@@ -98,10 +98,7 @@ literalStoreArray
 "
 
 	| singletons array bytes |
-	singletons := Array 
-				with: FileLocator absolute
-				with: FileLocator imageRelative
-				with: FileLocator installRelative.
+	singletons := {FileLocator absolute. FileLocator imageRelative. FileLocator installRelative}.
 	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.AbsoluteFileLocator) 8 #current 426 8 ##(Smalltalk.ImageRelativeFileLocator) 464 426 8 ##(Smalltalk.InstallRelativeFileLocator) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.

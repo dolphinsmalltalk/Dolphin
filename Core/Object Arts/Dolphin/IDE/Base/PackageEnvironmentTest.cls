@@ -31,7 +31,7 @@ classNamesFor: aPackageEnvironment
 testPackageEnvironment
 	| env selectors |
 	env := universalEnvironment
-				forPackages: (Array with: (Package manager packageNamed: 'Dolphin Common Dialogs')).
+				forPackages: {Package manager packageNamed: 'Dolphin Common Dialogs'}.
 	self universalTestFor: env.
 	self assert: (env includesClass: Font).
 	self deny: (env definesClass: Font).
@@ -42,7 +42,7 @@ testPackageEnvironment
 	self deny: (env definesClass: Font class).
 	env selectorsForClass: Font class do: [:each | selectors add: each].
 	self assert: selectors size equals: 1.
-	(Array with: FontDialog with: FontDialog class) do: 
+	{FontDialog. FontDialog class} do: 
 			[:each |
 			self assert: (env includesClass: each).
 			self assert: (env definesClass: each)].

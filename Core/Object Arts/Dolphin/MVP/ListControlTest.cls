@@ -205,8 +205,7 @@ testLastSelectionCacheUpdatedOnRemove
 	presenter selectionsByIndex: #(2 4).
 	self assert: presenter lastSelIndices equals: #(2 4).
 	self
-		shouldnt: 
-			[presenter model removeAll: (Array with: presenter model first with: (presenter model at: 3))]
+		shouldnt: [presenter model removeAll: {presenter model first. presenter model at: 3}]
 		triggerAnyOf: #(#selectionChanging: #selectionChanged)
 		against: presenter.
 	self assert: presenter lastSelIndices equals: #(1 2).
@@ -390,7 +389,7 @@ verifyMultiSelectionsByIndex
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	"Select a single object"
-	sel := Array with: objects size.
+	sel := {objects size}.
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
@@ -403,7 +402,7 @@ verifyMultiSelectionsByIndex
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting a pair including the existing selection"
-	sel := Array with: 1 with: objects size.
+	sel := {1. objects size}.
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged
@@ -423,7 +422,7 @@ verifyMultiSelectionsByIndex
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: sel.
 	"Selecting a different pair not including the existing single selection"
-	sel := Array with: 2 with: objects size - 1.
+	sel := {2. objects size - 1}.
 	self
 		should: [presenter selectionsByIndex: sel]
 		trigger: #selectionChanged

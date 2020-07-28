@@ -250,7 +250,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	self fileTypes: (Array with: self allFilesType).
+	self fileTypes: {self allFilesType}.
 	style := self defaultStyle.
 	validationBlock := [:path | true]!
 

@@ -21,13 +21,13 @@ foundMatchFor: aProgramNode
 methodReplaceString: replaceString 
 	replaceTree := RBParser parseRewriteMethod: replaceString!
 
-replaceString: replaceString 
+replaceString: replaceString
 	replaceTree := RBParser parseRewriteExpression: replaceString.
-	searchTree isSequence = replaceTree isSequence 
+	searchTree isSequence = replaceTree isSequence
 		ifFalse: 
-			[searchTree isSequence 
-				ifTrue: [replaceTree := RBSequenceNode statements: (Array with: replaceTree)]
-				ifFalse: [searchTree := RBSequenceNode statements: (Array with: searchTree)]]!
+			[searchTree isSequence
+				ifTrue: [replaceTree := RBSequenceNode statements: {replaceTree}]
+				ifFalse: [searchTree := RBSequenceNode statements: {searchTree}]]!
 
 searchFor: searchString replaceWith: replaceString 
 	self searchString: searchString.

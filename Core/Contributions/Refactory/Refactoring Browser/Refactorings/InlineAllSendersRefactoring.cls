@@ -64,9 +64,9 @@ preconditions
 
 removeMethod
 	self onError: 
-			[self performComponentRefactoring: (RemoveMethodRefactoring 
+			[self performComponentRefactoring: (RemoveMethodRefactoring
 						model: self model
-						removeMethods: (Array with: selector)
+						removeMethods: {selector}
 						from: class)]
 		do: []!
 

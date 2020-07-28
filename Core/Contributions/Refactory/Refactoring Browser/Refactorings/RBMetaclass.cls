@@ -52,15 +52,12 @@ storeOn: aStream
 
 !RBMetaclass class methodsFor!
 
-existingNamed: aSymbol 
-	^(self named: aSymbol)
-		realName: aSymbol;
-		yourself!
-
-named: aSymbol 
-	^(self new)
-		name: aSymbol;
+existing: aBehavior
+	| meta class |
+	class := aBehavior instanceClass.
+	meta := class class.
+	^(self named: class name)
+		realClass: meta;
 		yourself! !
-!RBMetaclass class categoriesFor: #existingNamed:!instance creation!public! !
-!RBMetaclass class categoriesFor: #named:!instance creation!public! !
+!RBMetaclass class categoriesFor: #existing:!instance creation!public! !
 

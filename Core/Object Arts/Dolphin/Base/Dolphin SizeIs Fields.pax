@@ -72,8 +72,8 @@ solveFor: aString
 			["Single variable to the right - whether it is the right one or not, we are finished with this solution."
 			^rhs name = aString
 				ifTrue: 
-					["The rhs of the assignment is the variable we are solving for; we just need to swap rhs and lhs, and we are done"
-					| solution expr |
+					[| solution expr |
+					"The rhs of the assignment is the variable we are solving for; we just need to swap rhs and lhs, and we are done"
 					solution := self copy.
 					expr := solution variable.
 					solution
@@ -92,14 +92,14 @@ solveFor: aString
 	term := StMessageNode
 				receiver: sub variable
 				selector: op inverseArithmeticOperator
-				arguments: (Array with: op arguments first).
+				arguments: {op arguments first}.
 	^(sub
 		variable: term;
 		value: op receiver;
 		solveFor: aString)
 			ifNil: 
-				["Recursion 2: Cancel the left term"
-				| selector |
+				[| selector |
+				"Recursion 2: Cancel the left term"
 				sub := self copy.
 				op := sub value.
 				selector := rhs selector.
@@ -109,13 +109,13 @@ solveFor: aString
 						term := StMessageNode
 									receiver: sub variable
 									selector: op inverseArithmeticOperator
-									arguments: (Array with: op receiver)]
+									arguments: {op receiver}]
 					ifFalse: 
 						["Non-commutative operation"
 						term := StMessageNode
 									receiver: op receiver
 									selector: selector
-									arguments: (Array with: sub variable)].
+									arguments: {sub variable}].
 				sub
 					variable: term;
 					value: op argument;

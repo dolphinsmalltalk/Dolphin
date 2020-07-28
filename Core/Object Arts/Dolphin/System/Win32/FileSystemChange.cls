@@ -40,10 +40,10 @@ printOn: aStream
 		print: self fileNames;
 		nextPut: $)!
 
-setCode: anInteger fileName: aString 
+setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
-	fileNames := Array with: aString! !
+	fileNames := {aString}! !
 !FileSystemChange categoriesFor: #=!comparing!public! !
 !FileSystemChange categoriesFor: #action!public! !
 !FileSystemChange categoriesFor: #code!accessing!private! !

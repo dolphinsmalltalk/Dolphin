@@ -911,14 +911,13 @@ initialize
 	replacements := SortedCollection sortBlock: 
 					[:a :b | 
 					a startPosition < b startPosition 
-						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]].
-	nodeReplacements := IdentityDictionary new!
+						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]]!
 
-map: oldNode to: newNode 
-	nodeReplacements at: oldNode put: newNode!
+map: oldNode to: newNode
+	(nodeReplacements ifNil: [nodeReplacements := IdentityDictionary new]) at: oldNode put: newNode!
 
-mappingFor: oldNode 
-	^nodeReplacements at: oldNode ifAbsent: [oldNode]!
+mappingFor: oldNode
+	^nodeReplacements ifNil: [oldNode] ifNotNil: [nodeReplacements at: oldNode ifAbsent: [oldNode]]!
 
 match: aNode inContext: aDictionary 
 	self class == aNode class ifFalse: [^false].

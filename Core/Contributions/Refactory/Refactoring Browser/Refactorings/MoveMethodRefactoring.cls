@@ -68,17 +68,13 @@ checkTemporaryVariableNames
 
 compileDelagatorMethod
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode 
+	delegatorNode := RBMessageNode
 				receiver: (RBVariableNode named: variable)
 				selectorParts: parseTree selectorParts
-				arguments: (parseTree argumentNames collect: 
-							[:each | 
-							RBVariableNode 
-								named: (each = selfVariableName ifTrue: ['self'] ifFalse: [each])]).
-	self hasOnlySelfReturns 
-		ifFalse: [delegatorNode := RBReturnNode value: delegatorNode].
-	statementNode := RBSequenceNode temporaries: #()
-				statements: (Array with: delegatorNode).
+				arguments: (parseTree argumentNames
+						collect: [:each | RBVariableNode named: (each = selfVariableName ifTrue: ['self'] ifFalse: [each])]).
+	self hasOnlySelfReturns ifFalse: [delegatorNode := RBReturnNode value: delegatorNode].
+	statementNode := RBSequenceNode temporaries: #() statements: {delegatorNode}.
 	(tree := class parseTreeFor: selector) body: statementNode.
 	class compileTree: tree!
 
@@ -154,13 +150,13 @@ getClassForGlobalOrClassVariable
 
 	| definingClass type |
 	definingClass := class whoDefinesClassVariable: variable.
-	definingClass isNil 
+	definingClass isNil
 		ifTrue: 
 			[type := self model classNamed: variable asSymbol.
 			type isNil ifTrue: [type := self model classNamed: #Object]]
 		ifFalse: [type := definingClass typeOfClassVariable: variable].
 	moveToClasses := self selectVariableTypesFrom: self getAllClassesForGlobalOrClassVariable
-				selected: (Array with: type).
+				selected: {type}.
 	#rbFix.	"Use the abort signal rather than an error to avoid annoying message box"
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
 

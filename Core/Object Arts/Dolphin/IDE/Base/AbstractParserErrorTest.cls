@@ -1247,13 +1247,13 @@ testErrorsSupersendFromObject
 	| source mark |
 	source := 'blah ^super blah'.
 	mark := source indexOf: $^.
-	(Array with: Object with: ProtoObject) do: 
+	{Object. ProtoObject} do: 
 			[:each |
 			self
 				parseMethodError: source
 				in: each
 				range: (mark + 1 to: mark + 5)
-				code: CErrUndeclared"
+				code: CErrUndeclared	"
 				format: 'undeclared ''super'''"]!
 
 testErrorsTempsNotClosed

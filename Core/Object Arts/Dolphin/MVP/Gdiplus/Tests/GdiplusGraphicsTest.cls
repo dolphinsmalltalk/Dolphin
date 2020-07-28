@@ -117,24 +117,19 @@ testInterpolationMode
 
 	self assert: graphics interpolationMode equals: InterpolationModeBilinear.
 	self should: [graphics interpolationMode: InterpolationModeInvalid] raise: GdiplusError.
-	(Array with: InterpolationModeHighQuality with: InterpolationModeHighQualityBicubic) do: 
+	{InterpolationModeHighQuality. InterpolationModeHighQualityBicubic} do: 
 			[:each |
 			graphics interpolationMode: each.
 			self assert: graphics interpolationMode equals: InterpolationModeHighQualityBicubic].
-	(Array
-		with: InterpolationModeBicubic
-		with: InterpolationModeNearestNeighbor
-		with: InterpolationModeHighQualityBilinear) do: 
-				[:each |
-				graphics interpolationMode: each.
-				self assert: graphics interpolationMode equals: each].
-	(Array
-		with: InterpolationModeBilinear
-		with: InterpolationModeDefault
-		with: InterpolationModeLowQuality) do: 
-				[:each |
-				graphics interpolationMode: each.
-				self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
+	{InterpolationModeBicubic. InterpolationModeNearestNeighbor. InterpolationModeHighQualityBilinear}
+		do: 
+			[:each |
+			graphics interpolationMode: each.
+			self assert: graphics interpolationMode equals: each].
+	{InterpolationModeBilinear. InterpolationModeDefault. InterpolationModeLowQuality} do: 
+			[:each |
+			graphics interpolationMode: each.
+			self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
 !GdiplusGraphicsTest categoriesFor: #setUp!public!setup! !
 !GdiplusGraphicsTest categoriesFor: #tearDown!public!setup! !
 !GdiplusGraphicsTest categoriesFor: #testCompositingMode!public!unit tests! !

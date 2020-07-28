@@ -26,52 +26,49 @@ create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	^newClass!
 
 createClassesABC
-	dolphinTestA := self 
+	dolphinTestA := self
 				create: 'DolphinTestA' asSymbol
 				subclassOf: Object
 				inPackage: packageA.
-	dolphinTestB := self 
+	dolphinTestB := self
 				create: 'DolphinTestB' asSymbol
 				subclassOf: dolphinTestA
 				inPackage: packageA.
-	dolphinTestC := self 
+	dolphinTestC := self
 				create: 'DolphinTestC' asSymbol
 				subclassOf: dolphinTestB
 				inPackage: packageA.
-	^Array 
-		with: dolphinTestA
-		with: dolphinTestB
-		with: dolphinTestC!
+	^{dolphinTestA. dolphinTestB. dolphinTestC}!
 
 createClassesDEF
-	dolphinTestD := self 
+	dolphinTestD := self
 				create: #DolphinTestD
 				subclassOf: Object
 				inPackage: packageB.
-	dolphinTestE := self 
+	dolphinTestE := self
 				create: #DolphinTestE
 				subclassOf: dolphinTestD
 				inPackage: packageB.
-	dolphinTestF := self 
+	dolphinTestF := self
 				create: #DolphinTestF
 				subclassOf: dolphinTestD
 				inPackage: packageB.
-	^Array with: dolphinTestD with: dolphinTestE with: dolphinTestF!
+	^{dolphinTestD. dolphinTestE. dolphinTestF}!
 
 createClassesGHI
-	dolphinTestG := self 
+	dolphinTestG := self
 				create: #DolphinTestG
 				subclassOf: nil
 				inPackage: packageA.
-	dolphinTestH := self 
+	dolphinTestH := self
 				create: #DolphinTestH
 				subclassOf: nil
 				inPackage: packageB.
-	dolphinTestI := self 
+	dolphinTestI := self
 				create: #DolphinTestI
 				subclassOf: nil
 				inPackage: packageC.
-	^Array with: dolphinTestG with: dolphinTestH with: dolphinTestI!
+	^{dolphinTestG. dolphinTestH. dolphinTestI}!
 
 removalOfSelectionLeaves: aClass
 	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
@@ -272,25 +269,22 @@ testSelection
 		createClassesABC.
 
 	"remove of selected object should trigger #selectionChanged and leave no selection"
-	(Array
-		with: dolphinTestC
-		with: dolphinTestB
-		with: dolphinTestA) do: 
-				[:each |
-				| selAfterRemoval |
-				presenter selection: each.
-				"Because the PCS is using a TreeListPresenter connected to the model
+	{dolphinTestC. dolphinTestB. dolphinTestA} do: 
+			[:each |
+			| selAfterRemoval |
+			presenter selection: each.
+			"Because the PCS is using a TreeListPresenter connected to the model
 				 of a ListPresenter, the list sees the remove event first, and so the the PCS 
 				then syncs the selection of the tree to nil before it sees the remove event,
 				which means we get list style selection change behaviour on removal (i.e.
 				selection is lost) rather than tree style (where selection is moved to the
 				previous sibling or parent). "
-				selAfterRemoval := self removalOfSelectionLeaves: each.
-				self
-					should: [each removeFromSystem]
-					trigger: #selectionChanged
-					against: presenter.
-				self assert: presenter selectionOrNil identicalTo: selAfterRemoval].
+			selAfterRemoval := self removalOfSelectionLeaves: each.
+			self
+				should: [each removeFromSystem]
+				trigger: #selectionChanged
+				against: presenter.
+			self assert: presenter selectionOrNil identicalTo: selAfterRemoval].
 
 	"No selection tests"
 	self createClassesABC do: 
@@ -324,6 +318,6 @@ testSelection
 !ClassSelectorTest class methodsFor!
 
 resources
-	^Array with: DolphinTestPackages! !
+	^{DolphinTestPackages}! !
 !ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
 

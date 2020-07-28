@@ -95,22 +95,19 @@ create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	^newClass!
 
 createClassesABC
-	dolphinTestA := self 
+	dolphinTestA := self
 				create: 'DolphinTestA' asSymbol
 				subclassOf: ProtoObject
 				inPackage: packageA.
-	dolphinTestB := self 
+	dolphinTestB := self
 				create: 'DolphinTestB' asSymbol
 				subclassOf: dolphinTestA
 				inPackage: packageB.
-	dolphinTestC := self 
+	dolphinTestC := self
 				create: 'DolphinTestC' asSymbol
 				subclassOf: dolphinTestB
 				inPackage: packageC.
-	^Array 
-		with: dolphinTestA
-		with: dolphinTestB
-		with: dolphinTestC!
+	^{dolphinTestA. dolphinTestB. dolphinTestC}!
 
 createGlobals
 	#(#TestGlobalA #TestGlobalB #TestGlobalC) do: [:each | Smalltalk at: each put: each last]!
@@ -165,10 +162,7 @@ removeClass: aClass
 	self assertCurrentCardInSync!
 
 removeClasses
-	(Array 
-		with: dolphinTestA
-		with: dolphinTestB
-		with: dolphinTestC) do: [:each | each notNil ifTrue: [each removeFromSystem]].
+	{dolphinTestA. dolphinTestB. dolphinTestC} do: [:each | each notNil ifTrue: [each removeFromSystem]].
 	dolphinTestA := dolphinTestB := dolphinTestC := nil!
 
 removeGlobals
@@ -232,10 +226,7 @@ setUp
 	packageA := DolphinTestPackages current a.
 	packageB := DolphinTestPackages current b.
 	packageC := DolphinTestPackages current c.
-	(Array
-		with: packageA
-		with: packageB
-		with: packageC) do: [:each | self assert: each variableNames isEmpty].
+	{packageA. packageB. packageC} do: [:each | self assert: each variableNames isEmpty].
 	shell := PackageBrowserShell create showShell.
 	cardsPresenter := shell instVarAt: (shell class indexOfInstVar: 'cardsPresenter').
 	classesPresenter := shell instVarAt: (shell class indexOfInstVar: 'classesPresenter').
@@ -264,7 +255,7 @@ tearDown
 testAddRemoveClasses
 	"Test adding and removing classes"
 
-	shell packages: (Array with: packageA with: packageC).
+	shell packages: {packageA. packageC}.
 	classesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #classes.
 	self addRemoveRenameClasses.
@@ -281,7 +272,7 @@ testAddRemoveClasses
 testAddRemoveMethods
 	| methodA methodB methodC |
 	self createClassesABC.
-	shell packages: (Array with: packageA with: packageC).
+	shell packages: {packageA. packageC}.
 	methodsPresenter ensureVisible.
 	dolphinTestA
 		compile: 'testNotLoose ^1'
@@ -298,7 +289,7 @@ testAddRemoveMethods
 				compile: 'testLooseInC ^1'
 				categories: #()
 				package: packageC.
-	self assert: methodsPresenter model list asArray equals: (Array with: methodC).
+	self assert: methodsPresenter model list asArray equals: {methodC}.
 	"Now switch away from methods pane and check that it is (or will be) updated"
 	classesPresenter ensureVisible.
 	methodA := dolphinTestB
@@ -330,7 +321,7 @@ testAddRemoveMethods
 testGlobals
 	"Test adding, removing, renaming and repackaging globals"
 
-	shell packages: (Array with: packageA with: packageC).
+	shell packages: {packageA. packageC}.
 	variablesPresenter ensureVisible.
 
 	"Add to displayed package"
@@ -339,11 +330,13 @@ testGlobals
 
 	"Add to displayed package"
 	packageC addVariableNamed: #TestGlobalC.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
+	self assert: (variablesPresenter model asArray
+				noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Add to non-displayed package"
 	packageB addVariableNamed: #TestGlobalB.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
+	self assert: (variablesPresenter model asArray
+				noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Move to non-displayed package"
 	packageB addVariableNamed: #TestGlobalA.
@@ -351,11 +344,13 @@ testGlobals
 
 	"Move from non-displayed package"
 	packageA addVariableNamed: #TestGlobalB.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference }).
+	self assert: (variablesPresenter model asArray
+				noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Move between displayed packages"
 	packageA addVariableNamed: #TestGlobalC.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
+	self assert: (variablesPresenter model asArray
+				noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Remove from displayed package"
 	Smalltalk removeKey: #TestGlobalB.
@@ -378,7 +373,7 @@ testGlobals
 	self assert: variablesPresenter model isEmpty!
 
 testRepackageClasses
-	shell packages: (Array with: packageA with: packageC).
+	shell packages: {packageA. packageC}.
 	classesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #classes.
 	self repackageClasses.
@@ -394,7 +389,7 @@ testRepackageClasses
 
 testRepackageMethods
 	self createClassesABC.
-	shell packages: (Array with: packageA with: packageC).
+	shell packages: {packageA. packageC}.
 	methodsPresenter ensureVisible.
 	self createMethods.
 	self assertMethodsInSync.
@@ -458,7 +453,7 @@ testRepackageMethods
 	self assertMethodsInSync.
 
 	"Remove selection from A so no longer displayed"
-	shell packages: (Array with: packageC).
+	shell packages: {packageC}.
 	self assertMethodsInSync.
 
 	"Move AA back to B"
@@ -483,7 +478,7 @@ testRepackageMethods
 	self assertMethodsInSync.
 
 	"Now just verify that the other panes are not updating incorrectly"
-	shell packages: (Array with: packageB).
+	shell packages: {packageB}.
 	self assertMethodsInSync.
 	self showClassesPane.
 	packageB addMethod: methodAC.

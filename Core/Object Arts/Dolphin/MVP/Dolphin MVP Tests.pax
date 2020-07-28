@@ -627,7 +627,7 @@ testRectangleReadWrite
 	self assert: (contents includes: Point).
 
 	"Check that muliple references are identical"
-	answer := self simpleReadWriteOf: (Array with: myRectangle with: myRectangle).
+	answer := self simpleReadWriteOf: {myRectangle. myRectangle}.
 	self assert: answer first equals: myRectangle.
 	self assert: answer first identicalTo: answer last!
 

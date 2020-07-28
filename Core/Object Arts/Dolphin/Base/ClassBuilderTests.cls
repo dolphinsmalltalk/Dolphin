@@ -404,6 +404,6 @@ testReshapeSubClass
 !ClassBuilderTests class methodsFor!
 
 resources
-	^Array with: ClassBuilderTestClasses! !
+	^{ClassBuilderTestClasses}! !
 !ClassBuilderTests class categoriesFor: #resources!Accessing!public! !
 

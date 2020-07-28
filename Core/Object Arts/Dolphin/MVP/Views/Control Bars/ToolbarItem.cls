@@ -123,15 +123,7 @@ editTools
 
 	| bc |
 	bc := self buttonClass.
-	^(OrderedCollection new) 
-		add: bc cutSelection;
-		add: bc copySelection;
-		add: bc pasteClipboard;
-		add: bc clearSelection;
-		add: bc undo;
-		yourself.
-
-	#todo "Is it necessary to create a new ToolbarButton each time, or can we share them?"!
+	^{bc cutSelection. bc copySelection. bc pasteClipboard. bc clearSelection. bc undo}!
 
 fileTools
 	"Answer a collection of items which are the standard file tools (e.g. new, open, save)
@@ -139,8 +131,7 @@ fileTools
 
 	| bc |
 	bc := self buttonClass.
-	^{bc fileNew. bc fileOpen. bc fileSave}.
-	#todo	"Is it necessary to create a new ToolbarButton each time, or can we share them?"!
+	^{bc fileNew. bc fileOpen. bc fileSave}!
 
 findTools
 	"Answer a collection of items which are the standard file tools (e.g. new, open, save)

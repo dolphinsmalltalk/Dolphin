@@ -74,14 +74,14 @@ styleNamed: aSymbol
 
 	^currentTextStyles lookup: aSymbol!
 
-styleNext: anInteger mask: anInteger2 
+styleNext: anInteger mask: anInteger2
 	| range |
 	range := lastStyled + 1 to: lastStyled + anInteger.
 	range isEmpty ifTrue: [^self].
 	range stop > text size ifTrue: [^BoundsError signal: range stop].
-	(tokens notEmpty and: [(tokens last at: 2) == anInteger2]) 
+	(tokens notEmpty and: [(tokens last at: 2) == anInteger2])
 		ifTrue: [(tokens last at: 1) stop: range stop]
-		ifFalse: [tokens addLast: (Array with: range with: anInteger2)].
+		ifFalse: [tokens addLast: {range. anInteger2}].
 	lastStyled := range stop!
 
 styleWithId: anInteger 
@@ -110,11 +110,11 @@ tokens
 	answer := OrderedCollection new.
 	lastStyle := nil.
 	tokens do: 
-			[:each | 
+			[:each |
 			| id style |
 			id := each last bitAnd: self maxStyle.
 			style := id == 0 ifTrue: [#whitespace] ifFalse: [(self styleWithId: id) name].
-			lastStyle == style 
+			lastStyle == style
 				ifTrue: 
 					[| last |
 					last := answer last.
@@ -122,10 +122,7 @@ tokens
 					last at: 3 put: (self plainTextRange: last first)]
 				ifFalse: 
 					[lastStyle := style.
-					answer addLast: (Array 
-								with: each first
-								with: style
-								with: (self plainTextRange: each first))]].
+					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
 !MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
 !MockScintillaView categoriesFor: #characterAt:!public!unit tests! !

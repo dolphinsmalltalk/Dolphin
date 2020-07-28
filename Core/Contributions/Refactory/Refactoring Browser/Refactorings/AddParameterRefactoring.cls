@@ -42,12 +42,12 @@ checkVariableReferencesIn: aParseTree
 			(aNode whoDefines: name) isNil ifTrue: [self checkSendersAccessTo: name]].
 	searcher executeTree: aParseTree!
 
-modifyImplementorParseTree: parseTree in: aClass 
+modifyImplementorParseTree: parseTree in: aClass
 	| name newArg allTempVars |
 	allTempVars := parseTree allDefinedVariables.
 	name := self safeVariableNameFor: aClass temporaries: allTempVars.
 	newArg := RBVariableNode named: name.
-	parseTree arguments: parseTree arguments , (Array with: newArg).
+	parseTree arguments: parseTree arguments , {newArg}.
 	super modifyImplementorParseTree: parseTree in: aClass!
 
 myConditions
@@ -76,7 +76,7 @@ newSelectorString
 				ifFalse: 
 					[stream
 						nextPutAll: ' ``@arg';
-						nextPutAll: i printString].
+						print: i].
 			stream nextPut: $ ].
 	^stream contents!
 

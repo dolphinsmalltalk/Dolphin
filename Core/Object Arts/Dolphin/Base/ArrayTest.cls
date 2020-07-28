@@ -106,7 +106,7 @@ testMixedConcatenation
 testNonLiteralStoreString
 	| stream storeString rehydrated array |
 	stream := String writeStream.
-	array := Array with: 1 -> '1' with: 2 -> '2'.
+	array := {1 -> '1'. 2 -> '2'}.
 	self deny: array isLiteral.
 	array storeOn: stream.
 	storeString := stream contents.

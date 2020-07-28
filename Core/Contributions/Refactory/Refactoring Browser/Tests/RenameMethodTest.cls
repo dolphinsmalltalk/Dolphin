@@ -13,12 +13,8 @@ RenameMethodTest comment: ''!
 
 setUp
 	super setUp.
-	model := RBNamespace
-				onEnvironment: (BrowserEnvironment new forClasses: (Array
-								with: Object
-								with: SmallInteger
-								with: OrderedCollection
-								with: DefaultSortAlgorithm))!
+	model := RBNamespace onEnvironment: (BrowserEnvironment new
+						forClasses: {Object. SmallInteger. OrderedCollection. DefaultSortAlgorithm})!
 
 testExistingSelector
 	self shouldFail: (RenameMethodRefactoring 

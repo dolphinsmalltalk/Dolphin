@@ -34,7 +34,7 @@ changeForMetaclass: aSymbol selector: aSelector
 	^nil!
 
 changes
-	^Array with: self!
+	^{self}!
 
 changesSize
 	^1!

@@ -38,7 +38,7 @@ testClassReadWrite
 	self assert: (contents includes: STLFilerTest).
 
 	"Check multiple references "
-	data := Array with: STLFilerTest with: STLFilerTest.
+	data := {STLFilerTest. STLFilerTest}.
 	answer := self simpleReadWriteOf: data.
 	self assert: answer equals: data.
 	self assert: answer first identicalTo: STLFilerTest.
@@ -72,10 +72,7 @@ testSymbolReadWrite
 	self assert: (contents identityIncludes: testSymbol).
 
 	"Now test that multiple references only occur once"
-	data := Array
-				with: testSymbol
-				with: testSymbol
-				with: 'otherSymbol' asSymbol.
+	data := {testSymbol. testSymbol. 'otherSymbol' asSymbol}.
 	deserialized := self simpleReadWriteOf: data.
 	self assert: deserialized equals: data.
 
@@ -87,7 +84,7 @@ testSystemDictionaryReadWrite
 	| sysdict array array2 |
 	sysdict := self simpleReadWriteOf: Smalltalk.
 	self assert: sysdict identicalTo: Smalltalk.
-	array := Array with: Smalltalk.
+	array := {Smalltalk}.
 	array2 := self simpleReadWriteOf: array.
 	self assert: array2 equals: array.
 	self assert: array first identicalTo: Smalltalk!

@@ -17,7 +17,7 @@ testBadName
 
 testRemoveClass
 	| refactoring |
-	refactoring := RemoveClassRefactoring classNames: (Array with: ('Foo' , 'LintRuleTest') asSymbol).
+	refactoring := RemoveClassRefactoring classNames: {('Foo' , 'LintRuleTest') asSymbol}.
 	self executeRefactoring: refactoring.
 	self assertIsNil: (refactoring model classNamed: ('Foo' , 'LintRuleTest') asSymbol).
 	self assert: (refactoring model classNamed: #TransformationRuleTest) superclass

@@ -162,19 +162,19 @@ preconditions
 						self checkSuperMessages.
 						true])!
 
-pushUp: aSelector 
+pushUp: aSelector
 	| source refactoring change |
 	source := class sourceCodeFor: aSelector.
 	source isNil ifTrue: [self refactoringError: 'Source for method not available'].
-	refactoring := ExpandReferencedPoolsRefactoring 
+	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
-				toClasses: (Array with: class superclass).
+				toClasses: {class superclass}.
 	self performComponentRefactoring: refactoring.
 	change := class superclass compile: source classified: (class protocolsFor: aSelector).
 	#rbFix.	"Bodge change object to maintain package relationship"
-	class realClass 
+	class realClass
 		ifNotNil: [:c | change package: (c compiledMethodAt: aSelector) owningPackageIfLoose]!
 
 pushUp: selectorCollection from: aClass 

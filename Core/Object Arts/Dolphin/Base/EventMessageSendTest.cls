@@ -27,10 +27,10 @@ testOneArgument
 
 testOneArgumentWithGC
 	| m |
-	m := EventMessageSend 
+	m := EventMessageSend
 				receiver: OrderedCollection new
 				selector: #addAll:
-				arguments: (Array with: Object new).
+				arguments: {Object new}.
 	MemoryManager current collectGarbage.
 	self should: [m value] raise: MessageNotUnderstood!
 

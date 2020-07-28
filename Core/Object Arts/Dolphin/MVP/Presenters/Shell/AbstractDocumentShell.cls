@@ -375,8 +375,7 @@ fileTypes
 	class of document. Overidden by documents that have their own file
 	types"
 
-	^Array with: FileDialog allFilesType
-!
+	^{FileDialog allFilesType}!
 
 getFilename
 	| openFilename |

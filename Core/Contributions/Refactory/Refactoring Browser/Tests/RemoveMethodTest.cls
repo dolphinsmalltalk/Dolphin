@@ -29,14 +29,13 @@ testModelRecursiveMethodThatIsNotReferencedFromOtherMethods
 
 testRemoveMethod
 	| refactoring selectors |
-	selectors := Array with: ('selectorNot' , 'Referenced') asSymbol.
-	refactoring := RemoveMethodRefactoring removeMethods: selectors
-				from: RefactoryTestDataApp.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				directlyDefinesMethod: selectors first).
+	selectors := {('selectorNot' , 'Referenced') asSymbol}.
+	refactoring := RemoveMethodRefactoring removeMethods: selectors from: RefactoryTestDataApp.
+	self
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) directlyDefinesMethod: selectors first).
 	self executeRefactoring: refactoring.
-	self deny: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				directlyDefinesMethod: selectors first)!
+	self
+		deny: ((refactoring model classNamed: #RefactoryTestDataApp) directlyDefinesMethod: selectors first)!
 
 testRemoveReferenced
 	self shouldFail: (RemoveMethodRefactoring removeMethods: #(#checkClass:)

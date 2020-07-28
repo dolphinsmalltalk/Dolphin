@@ -3328,7 +3328,7 @@ verifyPrimitiveAtPut: opAtPut performBlock: performAtPut
 								value: nil]
 						raise: Error
 						matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]]].
-	arrays := {Array with: 0. ByteArray with: 0. MourningWeakArray with: 0}.
+	arrays := {{0}. ByteArray with: 0. MourningWeakArray with: 0}.
 	arrays do: 
 			[:array |
 			{opAtPut. performAtPut} do: 

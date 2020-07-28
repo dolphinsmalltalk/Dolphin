@@ -48,17 +48,16 @@ buildMethodTitleSearch
 buildSimpleLiteralSearch
 	| search |
 	search := ParseTreeSearcher new.
-	search 
-		matchesAnyTreeOf: (Array with: (RBParser 
-						parseExpression: '#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
+	search
+		matchesAnyTreeOf: {RBParser
+					parseExpression: '#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'}
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [self error: 'failed'];
 				yourself].
 	search answer: #(#lintProtocols) asBag.
-	(classSearches at: BasicLintRuleTest class ifAbsentPut: [Set new]) 
-		add: search!
+	(classSearches at: BasicLintRuleTest class ifAbsentPut: [Set new]) add: search!
 
 buildSimpleVariableSearch
 	self 
@@ -78,24 +77,24 @@ compare: anObject to: anotherObject
 	self assert: anObject hash equals: anotherObject hash.
 	self assert: anObject equals: anotherObject!
 
-createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass 
+createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass
 	| search |
 	search := ParseTreeSearcher new.
-	search matchesAnyArgumentOf: (Array with: aCodeString)
+	search matchesAnyArgumentOf: {aCodeString}
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [self error: 'failed'];
 				yourself].
 	search answer: selectorCollection asBag.
 	(classSearches at: aClass ifAbsentPut: [Set new]) add: search!
 
-createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass 
+createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass
 	| search |
 	search := ParseTreeSearcher new.
-	search matchesAnyMethodOf: (Array with: aCodeString)
+	search matchesAnyMethodOf: {aCodeString}
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [self error: 'failed'];
 				yourself].
@@ -256,16 +255,14 @@ testCopy
 
 testCreationProtocol
 	| messageNode |
-	self compare: (RBMessageNode 
+	self compare: (RBMessageNode
 				receiver: (RBVariableNode named: 'self')
 				selector: #+
-				arguments: (Array with: (RBLiteralNode value: 0)))
+				arguments: {RBLiteralNode value: 0})
 		to: (RBParser parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self')
-				selector: #foo.
+	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self') selector: #foo.
 	self compare: (RBMethodNode selector: #bar
-				body: (RBSequenceNode statements: (Array 
-								with: (RBCascadeNode messages: (Array with: messageNode with: messageNode)))))
+				body: (RBSequenceNode statements: {RBCascadeNode messages: {messageNode. messageNode}}))
 		to: (RBParser parseMethod: 'bar self foo; foo')!
 
 testEquality
@@ -383,8 +380,8 @@ testLiteralMessages
 <1s>' expandMacrosWith: string))
 				equals: (RBMethodNode selector: string asSymbol
 						body: (RBSequenceNode
-								statements: (Array with: (RBReturnNode
-												value: (RBMessageNode receiver: (RBLiteralNode value: literal) selector: string asSymbol)))))]!
+								statements: {RBReturnNode
+											value: (RBMessageNode receiver: (RBLiteralNode value: literal) selector: string asSymbol)}))]!
 
 testLiterals
 	self assert: (RBLiteralNode value: #(1 2 #(#asdf))) formattedCode equals: '#(1 2 #(#asdf))'!

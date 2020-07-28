@@ -118,7 +118,7 @@ testCategoryEnvironment
 
 testClassEnvironment
 	| aClassEnvironment classes |
-	classes := Array with: Object with: Object class.
+	classes := {Object. Object class}.
 	aClassEnvironment := ClassEnvironment onEnvironment: universalEnvironment classes: classes.
 	self universalTestFor: aClassEnvironment.
 	self assert: (aClassEnvironment implementorsOf: #printString) numberSelectors equals: 1.
@@ -134,10 +134,7 @@ testConstructedClassEnvironment
 	| environment classes |
 	environment := ClassEnvironment new.
 	#rbFix.	"Also test #definesClass:"
-	classes := Array
-				with: Object
-				with: OrderedCollection
-				with: Collection.
+	classes := {Object. OrderedCollection. Collection}.
 	classes do: [:each | environment addClass: each].
 	classes do: 
 			[:each |

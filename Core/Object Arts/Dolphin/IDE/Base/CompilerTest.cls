@@ -180,11 +180,7 @@ testBraceArrays
 		equals: #(#(#(#() #(#() 1) #(2 #())))).
 	self assert: (self
 				evaluateExpression: '| stringConst | stringConst := ''12345''. {SmallInteger maximum. stringConst.1.2345.{2 log. Object}}')
-		equals: (Array
-				with: SmallInteger maximum
-				with: '12345'
-				with: 1.2345
-				with: (Array with: 2 log with: Object)).
+		equals: {SmallInteger maximum. '12345'. 1.2345. {2 log. Object}}.
 	text := String writeStream.
 	array := Array writeStream.
 	text nextPut: ${.
@@ -205,17 +201,13 @@ testByteArraysInLiteralArrays
 	| compiled text |
 	text := '#(#[])'.
 	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil) equals: (Array with: #[]).
+	self assert: (compiled method value: nil) equals: {#[]}.
 	text := '#(1 #[0])'.
 	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil) equals: (Array with: 1 with: #[0]).
+	self assert: (compiled method value: nil) equals: {1. #[0]}.
 	text := '#(1 #[0 255] 2)'.
 	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil)
-		equals: (Array
-				with: 1
-				with: #[0 255]
-				with: 2)!
+	self assert: (compiled method value: nil) equals: {1. #[0 255]. 2}!
 
 testCharacterScanning
 	| result |
@@ -228,7 +220,9 @@ testCharacterScanning
 			self assert: result identicalTo: ch.
 			result := self evaluateExpression: '$\x' , (i printStringBase: 16).
 			self assert: result identicalTo: ch].
-	128 to: 255
+	self assert: (self evaluateExpression: '$\x80') equals: (Character value: 128).
+	self assert: (self evaluateExpression: '$\xA0') equals: (Character value: 160).
+	161 to: 255
 		do: 
 			[:i |
 			| ch |
@@ -242,6 +236,27 @@ testCharacterScanning
 	self assert: result codePoint equals: 16r4E2D.
 	result := self evaluateExpression: '$\.'.
 	self assert: result identicalTo: (Character value: 92).
+	{'$\0'.
+		Character null.
+		'$\t'.
+		Character tab.
+		'$\n'.
+		Character lf.
+		'$\r'.
+		Character cr.
+		'$\a'.
+		Character value: 7.
+		'$\b'.
+		Character value: 8.
+		'$\v'.
+		Character value: 11.
+		'$\f'.
+		Character value: 12} pairsDo: 
+				[:each :char |
+				result := self evaluateExpression: each.
+				self assert: result identicalTo: char].
+	result := self evaluateExpression: '$\t'.
+	self assert: result identicalTo: Character tab.
 	result := self evaluateExpression: '$\codePoint'.
 	self assert: result identicalTo: 92.
 	self
@@ -260,7 +275,7 @@ testCompileTimeExpressions
 			self shouldnt: [result := self evaluateExpression: '##(' , each , ')']
 				raise: self compilationErrorClass.
 			self assert: result equals: expected].
-	(Array with: self with: self class) do: 
+	{self. self class} do: 
 			[:each |
 			result := (self compileExpression: '##(self)' in: each class) method value: each.
 			self assert: result equals: each class instanceClass]!
@@ -838,10 +853,10 @@ testIntegerScanningBoundaries
 						do: [:eachRadix | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]]]!
 
 testLiteralArray
-	self assert: (Compiler evaluate: '#(-)') equals: (Array with: #-).
-	self assert: (Compiler evaluate: '#(-1)') equals: (Array with: -1).
-	self assert: (Compiler evaluate: '#(-a)') equals: (Array with: #- with: #a).
-	self assert: (Compiler evaluate: '#(- 1)') equals: (Array with: #- with: 1)!
+	self assert: (Compiler evaluate: '#(-)') equals: {#-}.
+	self assert: (Compiler evaluate: '#(-1)') equals: {-1}.
+	self assert: (Compiler evaluate: '#(-a)') equals: {#-. #a}.
+	self assert: (Compiler evaluate: '#(- 1)') equals: {#-. 1}!
 
 testLiteralStringEncoding
 	"The compiler should now always produce Utf8String instances for literals, whether they are entirely Ascii or not."
@@ -1149,7 +1164,7 @@ testTempMaps
 	specials add: ContinuationTest >> #testBlockVars.
 	"Clean block in otherwise empty clean block"
 	specials add: EventsCollection >> #triggerEvent:with:with:.
-	(env forClasses: (Array with: DolphinCompilerTestMethods)) | (env forMethods: specials)
+	(env forClasses: {DolphinCompilerTestMethods}) | (env forMethods: specials)
 		methodsDo: [:each | self verifyTempsMapOf: each]!
 
 testTempPairing
@@ -1344,7 +1359,7 @@ testToByDo
 				and: [(src copyFrom: ex range start to: ex range stop) = 'aBlock']]!
 
 testToByDoWithFloatSteps
-	(Array with: (1 to: 2 by: 0.5) with: (1 to: 0 by: -0.5)) do: 
+	{1 to: 2 by: 0.5. 1 to: 0 by: -0.5} do: 
 			[:each |
 			| result method text |
 			text := String writeStream.
@@ -1609,7 +1624,7 @@ initialize
 		yourself!
 
 resources
-	^Array with: CompilerTestClasses! !
+	^{CompilerTestClasses}! !
 !CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
 !CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
 !CompilerTest class categoriesFor: #resources!Accessing!public! !

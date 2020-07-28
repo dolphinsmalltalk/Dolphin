@@ -115,7 +115,7 @@ describeCol: anInteger
 	"Answer a DBColAttr object which describes the column with the specified
 	<integer> index in the receiver's result set."
 
-	^(self describeCols: (Array with: anInteger)) first!
+	^(self describeCols: {anInteger}) first!
 
 describeCols: columnNumbers 
 	"Answer an array of <DBColAttr>s describing each of the columns of the receiver's results with indices in the <sequencedReadableCollection> argument."

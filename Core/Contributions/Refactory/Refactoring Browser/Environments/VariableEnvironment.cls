@@ -105,9 +105,7 @@ classVariables: anObject
 
 classVariableSelectorsFor: aClass 
 	| selectors classVars nonMetaClass |
-	nonMetaClass := aClass isMeta 
-				ifTrue: [aClass soleInstance]
-				ifFalse: [aClass].
+	nonMetaClass := aClass instanceClass.
 	selectors := Set new.
 	classVars := Set new.
 	classVariables keysDo: 
@@ -183,9 +181,7 @@ environmentForInstanceVariable: aString in: aClass
 flushCachesFor: aClass 
 	| nonMetaClass |
 	selectorCache isNil ifTrue: [^self].
-	nonMetaClass := aClass isMeta 
-				ifTrue: [aClass soleInstance]
-				ifFalse: [aClass].
+	nonMetaClass := aClass instanceClass.
 	nonMetaClass withAllSubclasses do: 
 			[:each | 
 			selectorCache

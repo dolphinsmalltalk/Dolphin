@@ -52,8 +52,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
-	self setupVariableTypesFor: refactoring
-		toReturn: (Array with: (refactoring model classNamed: #Collection)).
+	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #Collection}.
 	class := refactoring model classNamed: #LintRuleTest.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
@@ -81,8 +80,7 @@ testMoveWithoutSelfReference
 				in: RBReadBeforeWrittenTester.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
-	self setupVariableTypesFor: refactoring
-		toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
+	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #Dictionary}.
 	class := refactoring model classNamed: #RBReadBeforeWrittenTester.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.

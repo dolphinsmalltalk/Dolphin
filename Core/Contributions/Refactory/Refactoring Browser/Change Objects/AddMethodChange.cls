@@ -88,10 +88,8 @@ protocol
 protocols
 	^protocols!
 
-protocols: aCollection 
-	protocols := aCollection isString 
-				ifTrue: [Array with: aCollection]
-				ifFalse: [aCollection asArray].
+protocols: aCollection
+	protocols := aCollection isString ifTrue: [{aCollection}] ifFalse: [aCollection asArray].
 	protocols isNil ifTrue: [protocols := #(#accessing)]!
 
 selector

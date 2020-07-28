@@ -63,17 +63,13 @@ checkPoints: aPointsArray inBitmap: bitmap color: color
 	aPointsArray
 		do: [:each | self assert: (foundColorValue := bitmapCanvas pixelAt: each) equals: requiredColor]!
 
-checkRectangle: rect inBitmap: bitmap color: color 
+checkRectangle: rect inBitmap: bitmap color: color
 	"
 	ImagePresenter showOn: bitmap
 	"
 
-	self 
-		checkPoints: (Array 
-				with: rect topLeft
-				with: rect topRight
-				with: rect bottomLeft
-				with: rect bottomRight)
+	self
+		checkPoints: {rect topLeft. rect topRight. rect bottomLeft. rect bottomRight}
 		inBitmap: bitmap
 		color: color!
 

@@ -20,7 +20,7 @@ testAddClass
 	refactoring := AddClassRefactoring
 				addClass: #FooTest
 				superclass: RefactoringTest
-				subclasses: (Array with: self class)
+				subclasses: {self class}
 				category: #'Refactory-Testing'.
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: #FooTest.
@@ -43,10 +43,10 @@ testExistingName
 				category: #'Refactory-Testing')!
 
 testInvalidSubclass
-	self shouldFail: (AddClassRefactoring 
+	self shouldFail: (AddClassRefactoring
 				addClass: #Foo
 				superclass: CompositeLintRuleTest
-				subclasses: (Array with: BasicLintRuleTest)
+				subclasses: {BasicLintRuleTest}
 				category: #'Refactory-Tesing')!
 
 testMetaClassFailure
@@ -64,7 +64,7 @@ testModelAddClass
 				model: model
 				addClass: #FooTest
 				superclass: superClass
-				subclasses: (Array with: subclass)
+				subclasses: {subclass}
 				category: #'Refactory-Testing'.
 	self executeRefactoring: refactoring.
 	newClass := model classNamed: #FooTest.
@@ -89,11 +89,11 @@ testModelExistingName
 
 testModelInvalidSubclass
 	| refactoring |
-	refactoring := AddClassRefactoring 
+	refactoring := AddClassRefactoring
 				model: model
 				addClass: #Foo2
 				superclass: Object
-				subclasses: (Array with: (model classNamed: #Bar))
+				subclasses: {model classNamed: #Bar}
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring! !
 !AddClassTest categoriesFor: #setUp!public!set up! !

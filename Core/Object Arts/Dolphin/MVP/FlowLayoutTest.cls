@@ -61,14 +61,14 @@ testWrap
 	1 to: 4 do: [:i | self assert: (children at: i) position equals: ((i - 1) * (cx + hGap)) @ 0].
 	"Shrink down by one pel will be enough to force last color onto new line, But shrinking to
 	just enough space to 3 should make no difference)"
-	(Array with: 1 with: cx + hGap - 1) do: 
+	{1. cx + hGap - 1} do: 
 			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.
 			1 to: 3 do: [:i | self assert: (children at: i) position equals: ((i - 1) * (cx + hGap)) @ 0].
 			self assert: (children at: 4) position equals: 0 @ (cy + vGap)].
 	"Repeat for 2 blocks"
-	(Array with: 1 with: cx + hGap - 1) do: 
+	{1. cx + hGap - 1} do: 
 			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.
@@ -76,7 +76,7 @@ testWrap
 			3 to: 4
 				do: [:i | self assert: (children at: i) position equals: ((i - 3) * (cx + hGap)) @ (cy + vGap)]].
 	"And 1 block"
-	(Array with: 1 with: cx + hGap) do: 
+	{1. cx + hGap} do: 
 			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.

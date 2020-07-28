@@ -435,14 +435,14 @@ modifiesCollection
 	detector matcher: matcher.
 	^detector!
 
-modifiesTree: aCollectionTree in: aParseTree 
+modifiesTree: aCollectionTree in: aParseTree
 	| notifier args |
 	notifier := ParseTreeSearcher new.
-	args := Array with: (RBPatternVariableNode named: '`@object').
-	notifier 
+	args := {RBPatternVariableNode named: '`@object'}.
+	notifier
 		matchesAnyTreeOf: (#(#add: #addAll: #remove: #removeAll:) collect: 
-					[:each | 
-					RBMessageNode 
+					[:each |
+					RBMessageNode
 						receiver: aCollectionTree
 						selector: each
 						arguments: args])

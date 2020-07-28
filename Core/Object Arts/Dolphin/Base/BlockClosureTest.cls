@@ -206,16 +206,13 @@ testCullCullCullCull
 		equals: 4!
 
 testEmptyBlock
-	(Array
-		with: []
-		with: [:a | ]
-		with: [:a :b | ]) do: 
-				[:each |
-				self assertIsNil: (each valueWithArguments: (1 to: each argumentCount) asArray).
-				true
-					ifTrue: 
-						[self assertIsNil: each outer.
-						self assertIsNil: each receiver]]!
+	{[]. [:a | ]. [:a :b | ]} do: 
+			[:each |
+			self assertIsNil: (each valueWithArguments: (1 to: each argumentCount) asArray).
+			true
+				ifTrue: 
+					[self assertIsNil: each outer.
+					self assertIsNil: each receiver]]!
 
 testEnsure
 	self assert: self nestedReturn equals: 1.

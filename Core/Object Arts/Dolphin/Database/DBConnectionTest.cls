@@ -217,7 +217,7 @@ testPackagesCorrectlySetUp
 testPreparedQuery
 	| statement results |
 	statement := connection prepare: 'select * from Suppliers where SupplierID=?'.
-	statement paramCols: (Array with: ((connection columns: 'Suppliers') at: 1)).
+	statement paramCols: {(connection columns: 'Suppliers') at: 1}.
 	statement values: #(3).
 	statement exec.
 	results := statement results.

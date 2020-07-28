@@ -198,15 +198,11 @@ sharedPools
 
 !RBClass class methodsFor!
 
-existingNamed: aSymbol 
-	^(self named: aSymbol)
-		realName: aSymbol;
-		yourself!
-
-named: aSymbol 
-	^(self new)
-		name: aSymbol;
+existing: aBehavior
+	| class |
+	class := aBehavior instanceClass.
+	^(self named: class name)
+		realClass: class;
 		yourself! !
-!RBClass class categoriesFor: #existingNamed:!instance creation!public! !
-!RBClass class categoriesFor: #named:!instance creation!public! !
+!RBClass class categoriesFor: #existing:!instance creation!public! !
 

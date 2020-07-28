@@ -157,7 +157,7 @@ should: aBlock raise: anException matching: discriminator
 			exception exit: nil].
 	self assert: raised!
 
-should: aZeroArgBlock trigger: aSymbol against: anObject 
+should: aZeroArgBlock trigger: aSymbol against: anObject
 	"Example Usage:
 		self 
 			should: [Object trigger: #testNoArgs]
@@ -165,12 +165,12 @@ should: aZeroArgBlock trigger: aSymbol against: anObject
 			against: Object.
 	"
 
-	self 
+	self
 		should: aZeroArgBlock
-		triggerAllOf: (Array with: aSymbol)
+		triggerAllOf: {aSymbol}
 		against: anObject!
 
-should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject 
+should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
 	"Example usage:
 		self 
 			should: [presenter selection: each]
@@ -179,11 +179,11 @@ should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
 			against: presenter.
 	"
 
-	self 
+	self
 		should: aBlock
-		triggerAllOf: (Array with: eventSymbol1)
+		triggerAllOf: {eventSymbol1}
 		matching: [:message | true]
-		butNoneOf: (Array with: eventSymbol2)
+		butNoneOf: {eventSymbol2}
 		against: anObject!
 
 should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anObject
@@ -198,7 +198,7 @@ should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anO
 	self assert: aSymbol argumentCount equals: discriminatorBlock argumentCount.
 	self
 		should: aZeroArgBlock
-		triggerAllOf: (Array with: aSymbol)
+		triggerAllOf: {aSymbol}
 		matching: [:message | discriminatorBlock valueWithArguments: message arguments]
 		against: anObject!
 
@@ -243,7 +243,7 @@ should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock 
 	"If this assertion fails, then the object triggered one or more events that it should not have"
 	self assert: (aCollectionOfSymbols2 intersection: fired) isEmpty!
 
-shouldnt: aBlock trigger: aSymbol against: anObject 
+shouldnt: aBlock trigger: aSymbol against: anObject
 	"Example usage:
 		self 
 			shouldnt: [presenter selection: each]
@@ -251,9 +251,9 @@ shouldnt: aBlock trigger: aSymbol against: anObject
 			against: presenter.
 	"
 
-	self 
+	self
 		shouldnt: aBlock
-		triggerAnyOf: (Array with: aSymbol)
+		triggerAnyOf: {aSymbol}
 		against: anObject!
 
 shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject 

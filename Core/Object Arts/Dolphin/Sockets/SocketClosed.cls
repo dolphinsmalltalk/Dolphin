@@ -15,10 +15,7 @@ errorCode
 	^WSAECONNRESET!
 
 errorCodes
-	^Array 
-		with: self errorCode
-		with: WSAECONNABORTED
-		with: WSAEDISCON!
+	^{self errorCode. WSAECONNABORTED. WSAEDISCON}!
 
 initialize
 	self errorCodes do: [:each | ErrorClasses at: each put: self]!

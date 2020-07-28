@@ -65,13 +65,16 @@ computeSignatureForMessageHash: hash privateKey: privateKey
 dsaSign: p q: q g: g k: k x: x h: h
 	"Private - Answer the digital signature of the given message hash using the given private key parameters"
 
-	|  r s tmp |
+	| r s tmp |
 	r := s := 0.
-	r := self remainder: (self raise: g to: k mod: p) mod: q.
-	tmp := self remainder: (h + (x * r)) mod: q.
-	s := self remainder: ((self inverseOf: k mod: q) * tmp) mod: q.
-	^ Array with: r with: s
-!
+	r := self remainder: (self
+						raise: g
+						to: k
+						mod: p)
+				mod: q.
+	tmp := self remainder: h + (x * r) mod: q.
+	s := self remainder: (self inverseOf: k mod: q) * tmp mod: q.
+	^{r. s}!
 
 elgamalDecrypt: m privateKey: privateKey
 	"Answer the Elgamal decryption of the given message using the given private key. "
@@ -96,7 +99,7 @@ elgamalDecrypt: m privateKey: privateKey
 	
 !
 
-elgamalEncrypt: m publicKey: publicKey 
+elgamalEncrypt: m publicKey: publicKey
 	"Answer the Elgamal encryption of the given message using the given private key. 
 	The private key is an array of four large integers: (p, q, g, x)."
 
@@ -106,7 +109,7 @@ elgamalEncrypt: m publicKey: publicKey
 	g := publicKey third.
 	y := publicKey fourth.
 	k := self remainder: self nextRandom160 mod: q.
-	rs := self 
+	rs := self
 				dsaSign: p
 				q: p
 				g: g
@@ -114,7 +117,7 @@ elgamalEncrypt: m publicKey: publicKey
 				x: 0
 				h: 0.
 	a := rs at: 1.
-	rs := self 
+	rs := self
 				dsaSign: p
 				q: p
 				g: y
@@ -122,7 +125,7 @@ elgamalEncrypt: m publicKey: publicKey
 				x: 0
 				h: 0.
 	u := rs at: 1.
-	rs := self 
+	rs := self
 				dsaSign: p
 				q: p
 				g: m
@@ -130,7 +133,7 @@ elgamalEncrypt: m publicKey: publicKey
 				x: u
 				h: 0.
 	b := rs at: 2.
-	^Array with: a with: b!
+	^{a. b}!
 
 generateFullKeySet
 	"Generate and answer a key set for DSA. The result is a pair (<private key><public key>). 
@@ -145,16 +148,10 @@ generateFullKeySet
 	p := group first.
 	q := group second.
 	g := group third.
-
 	ks := self generateKeySetForGroup: group.
 	x := ks first.
 	y := ks second.
-
-	^ Array
-		with: (Array with: p with: q with: g with: x)
-		with: (Array with: p with: q with: g with: y)
-
-!
+	^{{p. q. g. x}. {p. q. g. y}}!
 
 generateKeyGroup
 	"Generate and answer a partial key set for DSA. The result is an array of three large integers
@@ -164,30 +161,31 @@ generateKeyGroup
 
 	| qAndPandS q p exp g h |
 	qAndPandS := self generateQandP.
-
 	q := qAndPandS first.
 	p := qAndPandS at: 2.
 	exp := (p - 1) / q.
 	h := 2.
-	[g := self raise: h to: exp mod: p. g = 1] whileTrue: [h := h + 1].
-
-	^ Array with: p with: q with: g
-!
+	
+	[g := self
+				raise: h
+				to: exp
+				mod: p.
+	g = 1] whileTrue: [h := h + 1].
+	^{p. q. g}!
 
 generateKeySetForGroup: aGroupArray
 	"Generate and answer a key set for DSA. The result is an array (<private key><public key>). "
 
 	| q p g x y |
-
 	p := aGroupArray first.
 	q := aGroupArray second.
 	g := aGroupArray third.
-
 	x := self nextRandom160.
-	y := self raise: g to: x mod: p.
-
-	^Array with: x with: y
-!
+	y := self
+				raise: g
+				to: x
+				mod: p.
+	^{x. y}!
 
 generateQandP
 	"Private - Generate the two industrial-grade primes, q (160-bits) and p (>512-bit) needed 
@@ -209,20 +207,13 @@ generateQandP
 			c := 0.
 			[c < 4096] whileTrue: 
 					[| w x p |
-					w := self 
+					w := self
 								generateRandomLength: pBits
 								s: s
 								n: n.
 					x := w + halfTwoToTheP.
 					p := x - (self remainder: x mod: twoQ) + 1.
-					p highBit = pBits 
-						ifTrue: 
-							[(self isProbablyPrime: p) 
-								ifTrue: 
-									[^Array 
-										with: q
-										with: p
-										with: s]].
+					p highBit = pBits ifTrue: [(self isProbablyPrime: p) ifTrue: [^{q. p. s}]].
 					n := n + chunkCount + 1.
 					c := c + 1]]!
 
@@ -255,7 +246,7 @@ generateSandQ
 			sPlusOne highBit > 160 ifTrue: [self remainder: sPlusOne mod: (2 raisedTo: 160)].
 			u := (hasher hashInteger: s) bitXor: (hasher hashInteger: sPlusOne).
 			q := u bitOr: ((1 bitShift: 159) bitOr: 1).
-			(self isProbablyPrime: q) ifTrue: [^Array with: s with: q]]!
+			(self isProbablyPrime: q) ifTrue: [^{s. q}]]!
 
 initRandom: randomInteger
 	"Private - Initialize the the secure random number generator with the given value. 
@@ -480,8 +471,7 @@ stringToSignature: aString
 	r := Integer readFrom: stream radix: 16.
 	stream next.
 	s := Integer readFrom: stream radix: 16.
-	^ Array with: r with: s
-!
+	^{r. s}!
 
 verifySignature: aSignature ofMessageHash: hash publicKey: publicKey
 	"Answer true if the given signature is the authentic signature of the given message hash. 

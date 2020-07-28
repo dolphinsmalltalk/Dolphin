@@ -36,9 +36,13 @@ isValidMessageName: aMessageNode
 	^(#(#subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants: 
 		#variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants: 
 		#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
-			includes: aMessageNode selector) or: [super isValidMessageName: aMessageNode]! !
+			includes: aMessageNode selector) or: [super isValidMessageName: aMessageNode]!
+
+namesIn: aString 
+	^aString subStrings! !
 !DolphinAddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
 !DolphinAddClassChange categoriesFor: #classConstants!accessing!public! !
 !DolphinAddClassChange categoriesFor: #fillOutDefinitionArguments:!helpers!private! !
 !DolphinAddClassChange categoriesFor: #isValidMessageName:!public!testing! !
+!DolphinAddClassChange categoriesFor: #namesIn:!helpers!private! !
 

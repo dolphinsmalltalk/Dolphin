@@ -239,39 +239,35 @@ implementorsMatching: aString in: anEnvironment
 		label: ('Definitions matching <1p> in <2p>' expandMacrosWith: aString with: anEnvironment);
 		yourself!
 
-implementorsOf: aSelector in: anEnvironment 
+implementorsOf: aSelector in: anEnvironment
 	| classDict metaDict selectors |
 	classDict := IdentityDictionary new.
 	metaDict := IdentityDictionary new.
-	selectors := Array with: aSelector.
+	selectors := {aSelector}.
 	anEnvironment classesDo: 
-			[:class | 
-			((class includesSelector: aSelector) 
-				and: [anEnvironment includesSelector: aSelector in: class]) 
-					ifTrue: 
-						[class isMeta 
-							ifTrue: [metaDict at: class soleInstance name put: selectors]
-							ifFalse: [classDict at: class name put: selectors]]].
+			[:class |
+			((class includesSelector: aSelector) and: [anEnvironment includesSelector: aSelector in: class])
+				ifTrue: 
+					[class isMeta
+						ifTrue: [metaDict at: class soleInstance name put: selectors]
+						ifFalse: [classDict at: class name put: selectors]]].
 	^(self onEnvironment: anEnvironment)
 		classSelectors: classDict metaClassSelectors: metaDict;
-		label: ('Definitions of <1p> in <2p>' expandMacrosWith:  aSelector with: anEnvironment);
+		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aSelector with: anEnvironment);
 		yourself!
 
-matches: aString in: anEnvironment 
+matches: aString in: anEnvironment
 	| newEnvironment |
 	newEnvironment := (self onEnvironment: anEnvironment)
 				label: 'Matching: ' , aString;
-				searchStrings: (Array with: aString);
+				searchStrings: {aString};
 				yourself.
 	anEnvironment classesAndSelectorsDo: 
-			[:each :sel | 
+			[:each :sel |
 			| method |
 			method := each compiledMethodAt: sel.
-			method allLiterals do: 
-					[:lit | 
-					lit isString 
-						ifTrue: 
-							[(aString match: lit) ifTrue: [newEnvironment addClass: each selector: sel]]]].
+			method allLiterals
+				do: [:lit | lit isString ifTrue: [(aString match: lit) ifTrue: [newEnvironment addClass: each selector: sel]]]].
 	^newEnvironment!
 
 onMethods: selectorCollection forClass: aClass in: anEnvironment 
@@ -285,21 +281,21 @@ onMethods: methodCollection in: anEnvironment
 		addMethods: methodCollection;
 		yourself!
 
-referencesTo: aLiteral in: aBrowserEnvironment 
+referencesTo: aLiteral in: aBrowserEnvironment
 	| classDict label |
 	#rbFix.	"Change the label"
 	label := 'References to <1p> in <2d>' expandMacrosWith: aLiteral with: aBrowserEnvironment.
 	classDict := LookupTable new.
 	aBrowserEnvironment classesDo: 
-			[:class | 
+			[:class |
 			| selectors |
-			selectors := (class whichSelectorsReferTo: aLiteral) 
+			selectors := (class whichSelectorsReferTo: aLiteral)
 						select: [:aSelector | aBrowserEnvironment includesSelector: aSelector in: class].
 			selectors notEmpty ifTrue: [classDict at: class put: selectors]].
 	^(self onEnvironment: aBrowserEnvironment)
 		on: classDict;
 		label: label;
-		searchStrings: (Array with: aLiteral printString);
+		searchStrings: {aLiteral printString};
 		yourself! !
 !SelectorEnvironment class categoriesFor: #implementorsMatching:in:!instance creation!public! !
 !SelectorEnvironment class categoriesFor: #implementorsOf:in:!instance creation!public! !

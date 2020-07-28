@@ -144,7 +144,7 @@ testExternalCalls
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
 	self assert: ffiCall argumentTypes size equals: 1.
-	ffiCall argumentTypes with: (Array with: ExtCallArgSDWORD)
+	ffiCall argumentTypes with: {ExtCallArgSDWORD}
 		do: 
 			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal equals: eachType.

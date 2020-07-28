@@ -101,9 +101,9 @@ copyMethodArgs: aCompiledMethod
 doubleByte
 	| byte2 |
 	byte2 := self fetch.
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: bytecode
-				arguments: (Array with: byte2)
+				arguments: {byte2}
 				ip: ip - 2)!
 
 emitInstruction: aBytecode 

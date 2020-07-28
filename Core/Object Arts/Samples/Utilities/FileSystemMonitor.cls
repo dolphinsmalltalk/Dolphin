@@ -98,29 +98,17 @@ model: aFileSystemWatcher
 	notifySize model: (aFileSystemWatcher aspectValue: #notifySize).
 	includeSubDirs model: (aFileSystemWatcher aspectValue: #watchSubDirs)!
 
-onFileAdded: aString 
-	self addChange: (Array 
-				with: 'Added'
-				with: DateAndTime now
-				with: aString)!
+onFileAdded: aString
+	self addChange: {'Added'. DateAndTime now. aString}!
 
-onFileModified: aString 
-	self addChange: (Array 
-				with: 'Modified'
-				with: DateAndTime now
-				with: aString)!
+onFileModified: aString
+	self addChange: {'Modified'. DateAndTime now. aString}!
 
-onFileRemoved: aString 
-	self addChange: (Array 
-				with: 'Removed'
-				with: DateAndTime now
-				with: aString)!
+onFileRemoved: aString
+	self addChange: {'Removed'. DateAndTime now. aString}!
 
-onFileRenamedFrom: aString to: aString2 
-	self addChange: (Array 
-				with: 'Renamed'
-				with: DateAndTime now
-				with: aString -> aString2)!
+onFileRenamedFrom: aString to: aString2
+	self addChange: {'Renamed'. DateAndTime now. aString -> aString2}!
 
 queryCommand: aCommandQuery 
 	| cmd |

@@ -106,10 +106,7 @@ defaultAdditionalAccelerators
 fileTypes
 	"Answer an Array of file types that can be associated with this class of document."
 
-	^Array 
-		with: #('Rich Text Files (*.rtf)' '*.rtf')
-		with: #('Text Files (*.txt)' '*.txt')
-		with: FileDialog allFilesType!
+	^{#('Rich Text Files (*.rtf)' '*.rtf'). #('Text Files (*.txt)' '*.txt'). FileDialog allFilesType}!
 
 icon
 	"Answers an Icon that can be used to represent this class."

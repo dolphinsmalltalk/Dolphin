@@ -45,22 +45,21 @@ inheritedMethodAddRemoveTests
 	"Add a new method to Object never seen before, to a non-immediate superclass, to an immediate superclass, and finally to the class itself"
 
 	| myMethod method |
-	(Array 
-		with: Object -> 'blah'
-		with: TestCase -> 'blah2'
-		with: DolphinTest -> 'blah3'
-		with: ClassBrowserAbstractTest -> 'blah4') do: 
-				[:each | 
-				method := each key 
+	{Object -> 'blah'.
+		TestCase -> 'blah2'.
+		DolphinTest -> 'blah3'.
+		ClassBrowserAbstractTest -> 'blah4'} do: 
+				[:each |
+				method := each key
 							compile: each value
 							categories: #()
 							package: packageA.
 				self assertIsOnlyMethodVisible: method].
 
 	"Add a couple of methods to an unrelated hierarchy, but with the same selector as something in the hierarchy"
-	(Array with: ProtoObject -> 'blah' with: BooleanTest -> 'blah') do: 
-			[:each | 
-			method := each key 
+	{ProtoObject -> 'blah'. BooleanTest -> 'blah'} do: 
+			[:each |
+			method := each key
 						compile: each value
 						categories: #()
 						package: packageA.
@@ -69,117 +68,101 @@ inheritedMethodAddRemoveTests
 	"Add a method to Object that is already in this class, repeat in non-immediate superclass, and again in immediate superclass"
 	myMethod := ClassBrowserAbstractTest compiledMethodAt: #visibilityTestPlaceHolder.
 	self assert: (browser isMethodVisible: myMethod).
-	(Array 
-		with: Object
-		with: TestCase
-		with: DolphinTest) do: 
-				[:each | 
-				method := each 
-							compile: 'visibilityTestPlaceHolder'
-							categories: #()
-							package: packageA.
-				self deny: (browser isMethodVisible: method).
-				self assertIsOnlyMethodVisible: myMethod].
+	{Object. TestCase. DolphinTest} do: 
+			[:each |
+			method := each
+						compile: 'visibilityTestPlaceHolder'
+						categories: #()
+						package: packageA.
+			self deny: (browser isMethodVisible: method).
+			self assertIsOnlyMethodVisible: myMethod].
 
 	"Override a method inherited from an immediate superclass, from a non-immediate superclass, and a method inherited from Object"
-	(Array 
-		with: 'blah3'
-		with: 'blah2'
-		with: 'blah') do: 
-				[:each | 
-				method := ClassBrowserAbstractTest 
-							compile: each
-							categories: #()
-							package: packageA.
-				self assertIsOnlyMethodVisible: method].
+	{'blah3'. 'blah2'. 'blah'} do: 
+			[:each |
+			method := ClassBrowserAbstractTest
+						compile: each
+						categories: #()
+						package: packageA.
+			self assertIsOnlyMethodVisible: method].
 
 	"Add a method to super that is already overridden in class (from Object)"
-	method := DolphinTest 
+	method := DolphinTest
 				compile: 'blah'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Add a method to super that is already overridden in class (from super super)"
-	method := DolphinTest 
+	method := DolphinTest
 				compile: 'blah2'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Add a method to super-super that is already overridden in class (from Object)"
-	method := TestCase 
+	method := TestCase
 				compile: 'blah'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Now overriding a superclass once removed but adding to our superclass"
-	method := DolphinTest 
+	method := DolphinTest
 				compile: 'addDependentToHierachy: anObject'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: method.
 
 	"Overriding object adding to non-immediate superclass"
-	method := TestCase 
+	method := TestCase
 				compile: 'addDependent: anObject'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: method.
 
 	"Overriding object adding to immediate superclass"
-	method := DolphinTest 
+	method := DolphinTest
 				compile: 'removeDependent: anObject'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: method.
 
 	"Some invisible removes of inherited methods"
-	(Array 
-		with: TestCase -> 'blah' asSymbol
-		with: DolphinTest -> 'blah' asSymbol
-		with: DolphinTest -> 'blah2' asSymbol) do: 
-				[:each | 
-				method := each key removeSelector: each value.
-				self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: each value)].
+	{TestCase -> 'blah' asSymbol. DolphinTest -> 'blah' asSymbol. DolphinTest -> 'blah2' asSymbol} do: 
+			[:each |
+			method := each key removeSelector: each value.
+			self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: each value)].
 
 	"Remove methods not in the hierarchy, but which has an implementation in this hierarchy"
-	(Array with: ProtoObject with: BooleanTest) do: 
-			[:each | 
+	{ProtoObject. BooleanTest} do: 
+			[:each |
 			method := each removeSelector: 'blah' asSymbol.
 			self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector)].
 
 	"Remove override of a method inherited from an immediate superclass, of a method inherited from a non-immediate superclass, 
 	and of a method inherited from Object"
-	(Array 
-		with: DolphinTest -> 'blah3'
-		with: TestCase -> 'blah2'
-		with: Object -> 'blah') do: 
-				[:each | 
-				method := ClassBrowserAbstractTest removeSelector: each value asSymbol.
-				self assertIsOnlyMethodVisible: (each key compiledMethodAt: method selector)].
+	{DolphinTest -> 'blah3'. TestCase -> 'blah2'. Object -> 'blah'} do: 
+			[:each |
+			method := ClassBrowserAbstractTest removeSelector: each value asSymbol.
+			self assertIsOnlyMethodVisible: (each key compiledMethodAt: method selector)].
 
 
 	"Remove some visible non-overridden methods"
-	(Array 
-		with: Object -> 'blah' asSymbol
-		with: DolphinTest -> 'blah3' asSymbol
-		with: TestCase -> 'blah2' asSymbol
-		with: ClassBrowserAbstractTest -> 'blah4' asSymbol) do: 
-				[:each | 
+	{Object -> 'blah' asSymbol.
+		DolphinTest -> 'blah3' asSymbol.
+		TestCase -> 'blah2' asSymbol.
+		ClassBrowserAbstractTest -> 'blah4' asSymbol} do: 
+				[:each |
 				method := each key removeSelector: each value.
-				self assert: (methodsPresenter list 
-							allSatisfy: [:eachMethod | eachMethod selector ~~ method selector])].
+				self
+					assert: (methodsPresenter list allSatisfy: [:eachMethod | eachMethod selector ~~ method selector])].
 
 	"Remove methods that would be inherited if not for the implementation in this class"
-	(Array 
-		with: DolphinTest
-		with: TestCase
-		with: Object) do: 
-				[:each | 
-				method := each removeSelector: myMethod selector.
-				self assertIsOnlyMethodVisible: myMethod].
+	{DolphinTest. TestCase. Object} do: 
+			[:each |
+			method := each removeSelector: myMethod selector.
+			self assertIsOnlyMethodVisible: myMethod].
 
 	"Remove method overridding object in immediate super"
 	method := DolphinTest removeSelector: #removeDependent:.
@@ -231,7 +214,7 @@ testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
 	method := Object compiledMethodAt: #asValue.
 	self assert: method isLoose.
 	browser := method browse.
-	self assert: browser packages equals: (Array with: method owningPackage)]
+	self assert: browser packages equals: {method owningPackage}]
 			ensure: [Smalltalk developmentSystem defaultBrowserClass: default]!
 
 testEvaluationContext

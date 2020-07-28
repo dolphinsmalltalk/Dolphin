@@ -16,34 +16,33 @@ setUp
 	model := Compiler evaluate: (self readFile: 'ChildrenToSiblingTest.st')!
 
 testBadName
-	self shouldFail: (ChildrenToSiblingsRefactoring 
+	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #'Obje ct'
 				class: LintRuleTest
-				subclasses: (Array with: BasicLintRuleTest with: CompositeLintRuleTest))!
+				subclasses: {BasicLintRuleTest. CompositeLintRuleTest})!
 
 testExistingName
 	self
-		shouldFail: (ChildrenToSiblingsRefactoring 
+		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #Object
 					class: LintRuleTest
-					subclasses: (Array with: BasicLintRuleTest with: CompositeLintRuleTest));
-		shouldFail: (ChildrenToSiblingsRefactoring 
+					subclasses: {BasicLintRuleTest. CompositeLintRuleTest});
+		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #Processor
 					class: LintRuleTest
-					subclasses: (Array with: BasicLintRuleTest with: CompositeLintRuleTest))!
+					subclasses: {BasicLintRuleTest. CompositeLintRuleTest})!
 
 testInvalidSubclass
-	self shouldFail: (ChildrenToSiblingsRefactoring 
+	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
 				class: LintRuleTest
-				subclasses: (Array with: BasicLintRule with: CompositeLintRule))!
+				subclasses: {BasicLintRule. CompositeLintRule})!
 
 testMetaClassFailure
-	self shouldFail: (ChildrenToSiblingsRefactoring 
+	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
 				class: LintRuleTest class
-				subclasses: (Array with: BasicLintRuleTest class
-						with: CompositeLintRuleTest class))!
+				subclasses: {BasicLintRuleTest class. CompositeLintRuleTest class})!
 
 testModelChildrenToSibling
 	| refactoring class subclass superclass |
@@ -53,7 +52,7 @@ testModelChildrenToSibling
 				model: model
 				name: #AbstractSuperclass
 				class: class
-				subclasses: (Array with: subclass).
+				subclasses: {subclass}.
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #AbstractSuperclass.
 	self assert: class superclass equals: superclass.

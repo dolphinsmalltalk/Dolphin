@@ -198,7 +198,7 @@ getCLIPFORMATAndUserType
 		readFmtUserTypeStg: self
 		pcf: cf
 		lplpszUserType: pszUserType.
-	answer := Array with: cf asInteger with: (Utf16String fromAddress: pszUserType).
+	answer := {cf asInteger. Utf16String fromAddress: pszUserType}.
 	pszUserType free.
 	^answer!
 
@@ -547,10 +547,7 @@ create: fileName mode: stgMode
 		grfMode: stgMode
 		reserved: 0
 		ppstgOpen: answer.
-	^answer.
-	#todo	"Unify the open/create methods into a single one for consistency with File - may need to switch 
-		on presence of the STGM_CREATE flag in the request mode, and act accordingly. Need to consider
-		check/nocheck modes too. Might need to catch error on Open and try a create. Baah humbug!!"
+	^answer
 
 	"STGM_FAILIFTHERE is 0, and therefore has no effect!! STGM_CREATE must be specified in order to overwrite
 	an existing file. If not, creation will only complete if the file does not exist."!
@@ -720,10 +717,7 @@ open: pathName mode: stgMode
 		snbExclude: nil
 		reserved: 0
 		ppstgOpen: answer.
-	^answer.
-	#todo	"Implement ANSI standard modes for opening storages (see File/FileStream classes). 
-		This is a bit tricky because file opening is separated from file creation (the API
-		is based on OpenFile(), not CreateFile())."!
+	^answer!
 
 openOnILockBytes: anILockBytes 
 	"Answer a new instance of the receiver opened on the existing storage whose data resides in the

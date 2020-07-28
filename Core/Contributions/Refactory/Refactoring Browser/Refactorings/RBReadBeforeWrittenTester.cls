@@ -153,9 +153,8 @@ visitVariableNode: aVariableNode
 isVariable: aString readBeforeWrittenIn: aBRProgramNode 
 	^(self isVariable: aString writtenBeforeReadIn: aBRProgramNode) not!
 
-isVariable: aString writtenBeforeReadIn: aBRProgramNode 
-	^(self readBeforeWritten: (Array with: aString) in: aBRProgramNode) 
-		isEmpty!
+isVariable: aString writtenBeforeReadIn: aBRProgramNode
+	^(self readBeforeWritten: {aString} in: aBRProgramNode) isEmpty!
 
 readBeforeWritten: varNames in: aParseTree 
 	^(self new)

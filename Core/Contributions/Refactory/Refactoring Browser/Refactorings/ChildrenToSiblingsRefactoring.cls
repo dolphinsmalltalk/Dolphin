@@ -15,11 +15,11 @@ abstractSuperclass
 	^self model classNamed: className asSymbol!
 
 addSuperclass
-	self performComponentRefactoring: (AddClassRefactoring 
+	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
 				addClass: className
 				superclass: parent superclass
-				subclasses: (Array with: parent)
+				subclasses: {parent}
 				category: parent category)!
 
 changeIsKindOfReferences

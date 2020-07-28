@@ -13,11 +13,11 @@ InlineMethodFromComponentRefactoring comment: ''!
 
 abstractVariableReferences
 	| refactoring |
-	refactoring := AbstractVariablesRefactoring 
+	refactoring := AbstractVariablesRefactoring
 				model: self model
 				abstractVariablesIn: inlineParseTree
 				from: inlineClass
-				toAll: (Array with: class).
+				toAll: {class}.
 	self performComponentRefactoring: refactoring.
 	inlineParseTree := refactoring parseTree!
 

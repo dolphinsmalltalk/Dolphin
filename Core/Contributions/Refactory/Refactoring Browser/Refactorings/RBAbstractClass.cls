@@ -76,14 +76,19 @@ allSelectors
 	^selectors!
 
 allSubclasses
-	| allSubclasses index |
-	index := 1.
-	#rbFix. "asOrderedCollection non-copying in Dolphin"
-	allSubclasses := OrderedCollection withAll: self subclasses.
-	[index <= allSubclasses size] whileTrue: 
-			[allSubclasses addAllLast: (allSubclasses at: index) subclasses.
-			index := index + 1].
-	^allSubclasses!
+	"Answer a <collection> of the receiver's subclasses in breadth-first order, with the immediate subclasses first. "
+
+	| answer |
+	answer := OrderedCollection new.
+	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
+	^answer!
+
+allSubclassesBreadthFirstDo: aMonadicValuable
+	"Evaluate the monadic valuable argument with each of the receiver's subclasses in breadth-first order."
+
+	self subclasses
+		do: aMonadicValuable;
+		do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]!
 
 allSuperclasses
 	| supers sprClass |
@@ -93,6 +98,18 @@ allSuperclasses
 			[supers add: sprClass.
 			sprClass := sprClass superclass].
 	^supers!
+
+allSuperclassesDo: aMonadicValuable
+	"Private - Evaluate the monadic valuable argument for each of the receiver's 
+	superclasses."
+
+	| class current |
+	class := self.
+	
+	[current := class superclass.
+	class := current.
+	current isNil] 
+			whileFalse: [aMonadicValuable value: current]!
 
 bindingFor: aString 
 	^self realClass classPool associationAt: aString asSymbol
@@ -219,9 +236,6 @@ includesClass: aRBClass
 inheritsPoolDictionaries
 	#rbFix.	"Dolphin inherits pool dictionaries"
 	^true!
-
-initialize
-	name := #'Unknown Class'!
 
 instanceClass
 	#rbFix.	"Added because Dolphin uses this message rather than #soleInstance"
@@ -507,7 +521,14 @@ withAllSuperclasses
 	#rbFix.	"Ensure in reverse hierarchy order"
 	^(self allSuperclasses)
 		addFirst: self;
-		yourself! !
+		yourself!
+
+withAllSuperclassesDo: aMonadicValuable
+	"Evaluate the monadic valuable argument for the receiver and each 
+	of its superclasses in reverse order of hierarchy."
+
+	aMonadicValuable value: self.
+	self allSuperclassesDo: aMonadicValuable! !
 !RBAbstractClass categoriesFor: #=!comparing!public! !
 !RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
 !RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
@@ -517,7 +538,9 @@ withAllSuperclasses
 !RBAbstractClass categoriesFor: #allPoolDictionaryNames!accessing!public! !
 !RBAbstractClass categoriesFor: #allSelectors!method accessing!public! !
 !RBAbstractClass categoriesFor: #allSubclasses!accessing!public! !
+!RBAbstractClass categoriesFor: #allSubclassesBreadthFirstDo:!accessing!public! !
 !RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
+!RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
 !RBAbstractClass categoriesFor: #bindingFor:!method accessing!public! !
 !RBAbstractClass categoriesFor: #classBinding!accessing!public! !
 !RBAbstractClass categoriesFor: #classVarNames!public! !
@@ -545,7 +568,6 @@ withAllSuperclasses
 !RBAbstractClass categoriesFor: #hierarchyDefinesVariable:!public!testing! !
 !RBAbstractClass categoriesFor: #includesClass:!public!testing! !
 !RBAbstractClass categoriesFor: #inheritsPoolDictionaries!public!testing! !
-!RBAbstractClass categoriesFor: #initialize!initialize/release!public! !
 !RBAbstractClass categoriesFor: #instanceClass!accessing!public! !
 !RBAbstractClass categoriesFor: #instanceVariableNames!accessing!public! !
 !RBAbstractClass categoriesFor: #instanceVariableNames:!accessing!public! !
@@ -594,16 +616,33 @@ withAllSuperclasses
 !RBAbstractClass categoriesFor: #whoDefinesMethod:!method accessing!public! !
 !RBAbstractClass categoriesFor: #withAllSubclasses!accessing!public! !
 !RBAbstractClass categoriesFor: #withAllSuperclasses!accessing!public! !
+!RBAbstractClass categoriesFor: #withAllSuperclassesDo:!accessing!public! !
 
 !RBAbstractClass class methodsFor!
+
+existing: aBehavior
+	^self subclassResponsibility!
+
+existingNamed: aSymbol 
+	^(self named: aSymbol)
+		realName: aSymbol;
+		yourself!
 
 initialize
 	LookupSuperclass := Object new!
 
+named: aSymbol
+	^self basicNew
+		name: aSymbol;
+		yourself!
+
 new
-	^(super new)
-		initialize;
-		yourself! !
+	"RBClasses must always be #named:"
+
+	^self shouldNotImplement! !
+!RBAbstractClass class categoriesFor: #existing:!instance creation!public! !
+!RBAbstractClass class categoriesFor: #existingNamed:!instance creation!public! !
 !RBAbstractClass class categoriesFor: #initialize!class initialization!public! !
+!RBAbstractClass class categoriesFor: #named:!instance creation!public! !
 !RBAbstractClass class categoriesFor: #new!instance creation!public! !
 

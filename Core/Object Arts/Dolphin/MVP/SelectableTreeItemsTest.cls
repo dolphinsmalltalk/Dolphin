@@ -148,24 +148,20 @@ testSelection
 		against: presenter.
 	self assert: presenter selection identicalTo: objects first.
 	"remove of selected object should trigger #selectionChanged and leave the parent of the selection selected"
-	(Array
-		with: Number
-		with: Point3D
-		with: Point
-		with: ArithmeticValue) do: 
-				[:each |
-				presenter selection: each.
-				self
-					should: [self treeModel remove: each]
-					trigger: #selectionChanged
-					butNot: #selectionChanging:
-					against: presenter.
-				"If the selected object has siblings, the next of those should be selected, if not the parent"
-				presenter selection = each superclass
-					ifTrue: 
-						["Parent selected, should be no remaining siblings"
-						self assert: (self treeModel childrenOf: presenter selection) isEmpty]
-					ifFalse: [self assert: presenter selection superclass equals: each superclass]].
+	{Number. Point3D. Point. ArithmeticValue} do: 
+			[:each |
+			presenter selection: each.
+			self
+				should: [self treeModel remove: each]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter.
+			"If the selected object has siblings, the next of those should be selected, if not the parent"
+			presenter selection = each superclass
+				ifTrue: 
+					["Parent selected, should be no remaining siblings"
+					self assert: (self treeModel childrenOf: presenter selection) isEmpty]
+				ifFalse: [self assert: presenter selection superclass equals: each superclass]].
 
 	"No selection tests"
 	objects do: [:each | self treeModel add: each asChildOf: each superclass].

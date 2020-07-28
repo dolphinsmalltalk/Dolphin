@@ -27,12 +27,7 @@ setUp
 	| shellView filer |
 	super setUp.
 	shellView := ShellView show.
-	shellView model: (Array
-				with: $a
-				with: 'abc'
-				with: 1
-				with: 16rFFFFFFFF
-				with: #($a #abc true nil 1.2)).
+	shellView model: {$a. 'abc'. 1. 16rFFFFFFFF. #($a #abc true nil 1.2)}.
 	filer := STLOutFiler on: Array writeStream.
 	filer nextPut: shellView.
 	shellView destroy.

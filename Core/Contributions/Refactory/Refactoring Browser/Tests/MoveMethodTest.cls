@@ -19,8 +19,7 @@ testMoveMethodIntoArgument
 						class: TransformationRuleTest
 						variable: 'aSmalllintContext'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring
-				toReturn: (Array with: (refactoring model classNamed: #SmalllintContext)).
+			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #SmalllintContext}.
 			self setupMethodNameFor: refactoring toReturn: #foo:.
 			self executeRefactoring: refactoring].
 	class := refactoring model classNamed: #TransformationRuleTest.
@@ -59,8 +58,7 @@ testMoveMethodIntoClassVariable
 						class: TransformationRuleTest
 						variable: 'RecursiveSelfRule'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring
-				toReturn: (Array with: (refactoring model classNamed: #ParseTreeSearcher)).
+			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #ParseTreeSearcher}.
 			self
 				setupMethodNameFor: refactoring
 				toReturn: #foo:foo:
@@ -99,8 +97,7 @@ testMoveMethodIntoInstanceVariable
 						class: TransformationRuleTest
 						variable: 'rewriteRule'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring
-				toReturn: (Array with: (refactoring model classNamed: #ParseTreeRewriter)).
+			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #ParseTreeRewriter}.
 			self
 				setupMethodNameFor: refactoring
 				toReturn: #foo:foo:
@@ -141,7 +138,7 @@ testMoveMethodThatReferencesPoolDictionary
 						variable: 'RefactoryTestDataApp'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
 			refactoringTestDataClass := refactoring model metaclassNamed: #RefactoryTestDataApp.
-			self setupVariableTypesFor: refactoring toReturn: (Array with: refactoringTestDataClass).
+			self setupVariableTypesFor: refactoring toReturn: {refactoringTestDataClass}.
 			self setupMethodNameFor: refactoring toReturn: #junk1.
 			self executeRefactoring: refactoring].
 	class := refactoring model classNamed: #LintRuleTest.

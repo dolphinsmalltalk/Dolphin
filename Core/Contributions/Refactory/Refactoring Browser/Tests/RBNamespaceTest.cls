@@ -55,10 +55,9 @@ testImplementors
 testIncludesClass
 	self assert: (RBNamespace new includesClassNamed: #Object).
 	self deny: (RBNamespace new includesClassNamed: #Object1).
-	self 
-		deny: ((RBNamespace 
-				onEnvironment: (ClassEnvironment onEnvironment: BrowserEnvironment new
-						classes: (Array with: Object))) 
+	self
+		deny: ((RBNamespace
+				onEnvironment: (ClassEnvironment onEnvironment: BrowserEnvironment new classes: {Object}))
 					includesClassNamed: #OrderedCollection)!
 
 testModelImplementorsSenders

@@ -336,13 +336,7 @@ testMakePath
 	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: filename.
 	filename := filename contents.
 	split := filename subStrings: $..
-	self
-		assert: (File makePath: (Array
-						with: nil
-						with: nil
-						with: split first
-						with: split second))
-		equals: filename!
+	self assert: (File makePath: {nil. nil. split first. split second}) equals: filename!
 
 testPathName
 	| expected actual |

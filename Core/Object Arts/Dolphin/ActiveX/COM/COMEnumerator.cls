@@ -96,7 +96,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver.
 	This will vary on a per-instance basis."
 
-	^Array with: enumClass! !
+	^{enumClass}! !
 !COMEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
 !COMEnumerator categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
 !COMEnumerator categoriesFor: #copyElements:length:!COM Interfaces-IEnumXXXX!private! !

@@ -94,7 +94,7 @@ Skip: cSkip
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^Array with: IEnumRECT! !
+	^{IEnumRECT}! !
 !EnumRECT categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
 !EnumRECT categoriesFor: #initialize!initializing!public! !
 !EnumRECT categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !

@@ -78,6 +78,6 @@ tearDown
 !GdiplusTests class methodsFor!
 
 resources
-	^Array with: GdiplusFileResource! !
+	^{GdiplusFileResource}! !
 !GdiplusTests class categoriesFor: #resources!accessing!public! !
 
