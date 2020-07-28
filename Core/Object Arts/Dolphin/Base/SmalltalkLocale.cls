@@ -91,19 +91,42 @@ displayDuration: aDuration on: aPuttableStream
 			ifNone: [aPuttableStream nextPutAll: '0 s']!
 
 displayFloat: aFloat on: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver in the base, anInteger, as a user in the <Locale>, aLocale, would want to see it."
+	"Append, to aStream, a String whose characters are a representation of the receiver in the base, anInteger, as a Smalltalk developer would want to see it.
+	The representation used is a valid literal representation for floating point numbers, recognised by the Smalltalk compiler. Inifinity, negative infinity,
+	and not-a-number (NaN) are printed as the names of the corresponding Float constants, so will also evaluate back to the same value."
 
-	aFloat printOn: aStream base: 10!
+	| classification |
+	classification := aFloat fpClass.
+	(classification anyMask: Float.FpClassNaN)
+		ifTrue: [aStream nextPutAll: self nan]
+		ifFalse: 
+			[(classification anyMask: Float.FpClassInfinite)
+				ifTrue: 
+					[aStream nextPutAll: ((classification anyMask: Float.FpClassNegative)
+								ifTrue: [self negativeInfinity]
+								ifFalse: [self infinity])]
+				ifFalse: 
+					[(classification anyMask: Float.FpClassZero)
+						ifTrue: 
+							[(classification anyMask: Float.FpClassNegative)
+								ifTrue: [aStream nextPutAll: '-0.0']
+								ifFalse: [aStream nextPutAll: '0.0']]
+						ifFalse: 
+							[((classification anyMask: Float.FpClassNegative)
+								ifTrue: 
+									[aStream nextPut: $-.
+									aFloat abs]
+								ifFalse: [aFloat]) absPrintExactlyOn: aStream base: 10]]]!
 
 displayName
 	"The name of the locale in its native language."
 
 	^'Smalltalk'!
 
-displayOn: aStream
-	"Append a displayable representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: self displayName!
+	aPuttableStream nextPutAll: self displayName!
 
 durationFormat
 	"Answer the format <String> used in this Locale (by default) for printing a <Duration>.
@@ -165,6 +188,21 @@ infinity
 
 	^'Float.Infinity'!
 
+isInstalled
+	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
+
+	^true!
+
+iso639LanguageName
+	"The two-charater <String> name of the language of the primary language of the locale as defined in ISO-369."
+
+	^'en'!
+
+isValid
+	"Answer whether the receiver is a recognised (valid) Locale."
+
+	^true!
+
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
 	For example if this is 2049, then 49 is interpreter as 2049, and 50 as 1950."
@@ -181,6 +219,11 @@ listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
 
 	^','!
+
+localizedDisplayName
+	"Answer the <String> name of the Locale in the current UI language of the host system."
+
+	^self name!
 
 longDateFormat
 	"Answer the long date format for the receiver locale. See #dateFormat for a description of the format tokens."
@@ -231,7 +274,7 @@ monthNames
 				'dec' -> 12})!
 
 name
-	"Answer the <String> name of the Locale in the current UI language of the host system."
+	"Answer the <String> unique name of the Locale."
 
 	^'smalltalk'!
 
@@ -241,7 +284,7 @@ nameOfDay: anInteger
 	^#('Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday' 'Sunday') at: anInteger!
 
 nan
-	"Answer the <String> used to represen <Float> not-a-number values in this locale."
+	"Answer the <String> used to represent <Float> not-a-number values in this locale."
 
 	^'Float.NaN'!
 
@@ -286,6 +329,11 @@ pmDesignator
 	"Answer the character used in the receiver locale to designate PM (afternoon)."
 
 	^'pm'!
+
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	^Locale named: 'en'!
 
 printFloat: aFloat
 	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
@@ -361,9 +409,13 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
 !SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
 !SmalltalkLocale categoriesFor: #infinity!constants!public! !
+!SmalltalkLocale categoriesFor: #isInstalled!public!testing! !
+!SmalltalkLocale categoriesFor: #iso639LanguageName!constants!public! !
+!SmalltalkLocale categoriesFor: #isValid!public!testing! !
 !SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
 !SmalltalkLocale categoriesFor: #lcid!accessing!public! !
 !SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
+!SmalltalkLocale categoriesFor: #localizedDisplayName!constants!public! !
 !SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
@@ -379,6 +431,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
 !SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
 !SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
+!SmalltalkLocale categoriesFor: #primary!accessing!public! !
 !SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
 !SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
 !SmalltalkLocale categoriesFor: #printOn:!printing!public! !

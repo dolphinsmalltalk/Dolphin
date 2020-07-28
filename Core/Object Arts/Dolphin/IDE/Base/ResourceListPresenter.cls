@@ -222,18 +222,18 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-queryMoveResource: aResourceIdentifier toPackage: aPackage 
+queryMoveResource: aResourceIdentifier toPackage: aPackage
 	"Private - Move aResourceIdentifier from its existing package to the specified
 	<Package> if the user confirms."
 
 	| resourcePackage |
 	resourcePackage := aResourceIdentifier owningPackage.
-	(MessageBox 
-		confirm: ('The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?' 
+	(MessageBox
+		confirm: ('The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?'
 				expandMacrosWith: aResourceIdentifier
 				with: resourcePackage name
 				with: aPackage name)
-		caption: 'Move resource to new package...') 
+		caption: 'Move resource to new package...')
 			ifTrue: [aPackage addResourceIdentifier: aResourceIdentifier]!
 
 refresh
@@ -257,7 +257,7 @@ resourcePackage
 	| pkg newPkg rid |
 	rid := self resourceIdentifier.
 	pkg := rid owningPackage.
-	newPkg := PackagePrompter 
+	newPkg := PackagePrompter
 				showModalOn: pkg asValue
 				caption: ('Package of <1d>...' expandMacrosWith: rid)
 				default: rid owningClass owningPackage.
@@ -367,7 +367,7 @@ resource_Package_view
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 544 nil nil nil 5 nil nil nil 544 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 640 nil nil nil 5 nil nil nil 640 nil 8 1883797456 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 866 393 39 640 818 #text: 34 1 8 '   Preview' 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 8 #() 866 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ImageView) 34 21 nil 544 34 2 8 1140850944 262209 1040 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1170 #hash 8 #() nil 327686 ##(Smalltalk.Color) #applicationWorkspace nil 5 nil nil nil 1040 nil nil 722 nil nil nil nil #scaleBestFit 1 590342 ##(Smalltalk.Rectangle) 866 21 21 866 21 21 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 1 39 866 393 609 1040 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 8 #() 1024 nil 27 170 192 34 2 1040 8 'preview' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 785 1 866 397 651 544 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 34 2 640 1040 1024 nil 27 524806 ##(Smalltalk.Fraction) 105 155 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854857 1025 1760 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 1250 #default nil 13 nil nil nil 1760 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 2 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 389 #left nil 1170 #<= 8 #() nil nil 1760 ##(Smalltalk.IconicListAbstract) 3 nil nil 2018 8 'Package' 387 #left ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2144 7 513 nil 1170 #owningPackage 8 #() nil 1760 nil 3 nil nil #report 1872 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 754 138 144 34 2 818 #createAt:extent: 34 2 866 1 1 866 775 651 1760 818 #text: 34 1 8 'View Name' 1760 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 8 #() 1024 nil 35 1730 205 155 false 170 192 34 2 1760 8 'resources' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 7039 21 866 1181 651 416 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 13 16 0 0 79 1 0 0] 34 3 1760 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2704 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2704 nil 1 #left nil nil nil 866 1 1 866 9 9 nil 2800 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 775 1 866 11 651 2704 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 8 #() 1024 nil 27 544 1024 nil 27 )!
 
-showResourcesReferencingView: aResourceIdentifier 
+showResourcesReferencingView: aResourceIdentifier
 	| browser |
 	browser := self show.
 	browser showResourcesReferencingView: aResourceIdentifier.

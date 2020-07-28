@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #PositionableStream
-	instanceVariableNames: 'collection position readLimit'
+	instanceVariableNames: 'collection position readLimit locale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -100,11 +100,26 @@ contentsSpecies
 	^collection species
 !
 
+encodedSizeOf: anObject
+	"Answer the number of units that would be occupied by anObject if it were present in this stream."
+
+	^collection encodedSizeOf: anObject!
+
 lastPosition
 	"Private - Answer the last position in the receiver (for the purposes of determining
 	attempts to read off the end, etc)."
 
 	^readLimit!
+
+locale
+"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	^locale ?? Locale.UserDefault!
+
+locale: aLocale
+"Set the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	locale := aLocale!
 
 nextAvailable: anInteger
 	"Answer up to anInteger elements of the receiver's collection. The answer will be a
@@ -245,7 +260,10 @@ upToEnd
 !PositionableStream categoriesFor: #collection!accessing!private! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
+!PositionableStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
 !PositionableStream categoriesFor: #lastPosition!accessing!private! !
+!PositionableStream categoriesFor: #locale!accessing!public! !
+!PositionableStream categoriesFor: #locale:!accessing!public! !
 !PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
 !PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
 !PositionableStream categoriesFor: #nextDWORD!binary filing!public! !

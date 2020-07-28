@@ -31,11 +31,13 @@ namespace ST
 		OTE* m_array;
 		Oop m_index;
 		Oop m_readLimit;
+		Oop m_locale;
 
 		static constexpr size_t StreamArrayIndex = Stream::FixedSize;
 		static constexpr size_t StreamIndexIndex = StreamArrayIndex + 1;
 		static constexpr size_t StreamReadLimitIndex = StreamIndexIndex + 1;
-		static constexpr size_t FixedSize = StreamReadLimitIndex + 1;
+		static constexpr size_t StreamLocaleIndex = StreamReadLimitIndex + 1;
+		static constexpr size_t FixedSize = StreamLocaleIndex + 1;
 	};
 
 	typedef TOTE<PositionableStream> PosStreamOTE;

@@ -30,6 +30,12 @@ asArray
 
 	^self!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
+
+	self printOn: aPuttableStream do: [:each | each displayOn: aPuttableStream]!
+
 isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
 	representation which can be directly understood by the compiler)."
@@ -58,28 +64,33 @@ isSelfEvaluating: visitedSet
 printOn: aStream
 	"Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
 
+	self printOn: aStream do: [:each | each printOn: aStream]!
+
+printOn: aStream do: aMonadicValuable
+	"Private - Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
+
 	| visited |
 	visited := IdentitySet new.
 	(self allSatisfy: [:element | element isLiteral: visited])
 		ifTrue: 
 			["Has literal form"
 			aStream nextPutAll: '#('.
-			self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+			self do: aMonadicValuable separatedBy: [aStream space].
 			aStream nextPut: $)]
 		ifFalse: 
 			[((visited includes: self) not and: [self allSatisfy: [:element | element isSelfEvaluating]])
 				ifTrue: 
 					["Can use brace array form"
 					aStream nextPut: ${.
-					self do: [:each | each printOn: aStream] separatedBy: [aStream nextPutAll: '. '].
+					self do: aMonadicValuable separatedBy: [aStream nextPutAll: '. '].
 					aStream nextPut: $}]
 				ifFalse: 
-					[aStream print: self
-						with: 
+					[aStream visit: self
+						do: 
 							[aStream
 								basicPrint: self;
 								nextPut: $(.
-							self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+							self do: aMonadicValuable separatedBy: [aStream space].
 							aStream nextPut: $)]]]!
 
 refersToLiteral: anObject
@@ -142,11 +153,13 @@ storeOn: aStream
 			aStream nextPut: $}]! !
 !Array categoriesFor: #addAnsweringIndex:!adding!public! !
 !Array categoriesFor: #asArray!converting!public! !
+!Array categoriesFor: #displayOn:!printing!public! !
 !Array categoriesFor: #isLiteral!public!testing! !
 !Array categoriesFor: #isLiteral:!public!testing! !
 !Array categoriesFor: #isSelfEvaluating!public!testing! !
 !Array categoriesFor: #isSelfEvaluating:!public!testing! !
 !Array categoriesFor: #printOn:!printing!public! !
+!Array categoriesFor: #printOn:do:!printing!private! !
 !Array categoriesFor: #refersToLiteral:!private!testing! !
 !Array categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !Array categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !

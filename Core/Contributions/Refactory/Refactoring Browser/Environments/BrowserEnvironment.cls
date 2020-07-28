@@ -156,7 +156,7 @@ forClass: aClass selectors: selectorCollection
 forClasses: classCollection 
 	^ClassEnvironment onEnvironment: self classes: classCollection!
 
-forClassHierarchyOf: aClass 
+forClassHierarchyOf: aClass
 	"Answers a <BrowserEnvironment> that includes aClass, its superclasses and subclasses, and the corresponding
 	metaclasses. See also #forClassHierarchyFrom:."
 
@@ -168,12 +168,12 @@ forClassHierarchyOf: aClass
 		addAll: aClass class withAllSuperclasses;
 		addAll: aClass class allSubclasses.
 	^(self forClasses: classes)
-		label: ('Local hierarchy of <1p> in <2d>' expandMacrosWith: aClass with: self);
+		label: ('Local hierarchy of <1p> in <2p>' expandMacrosWith: aClass with: self);
 		yourself!
 
-forMethods: methodCollection 
+forMethods: methodCollection
 	^(SelectorEnvironment onMethods: methodCollection in: self)
-		label: ('Some methods in <1d>' expandMacrosWith: self);
+		label: ('Some methods in <1p>' expandMacrosWith: self);
 		yourself!
 
 forMethodsIn: aBrowserEnvironment

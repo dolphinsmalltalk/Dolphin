@@ -11,16 +11,14 @@ RenameMethodReferencesRefactoring comment: 'RenameMethodReferencesRefactoring is
 !RenameMethodReferencesRefactoring categoriesForClass!Refactory-Refactorings! !
 !RenameMethodReferencesRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Replace References to ';
 		print: oldSelector;
 		nextPutAll: ' with ';
-		print: newSelector
-!
+		print: newSelector!
 
 initialize
 	implementors := #()!

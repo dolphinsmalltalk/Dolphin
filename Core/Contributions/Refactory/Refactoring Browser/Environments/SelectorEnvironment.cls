@@ -219,19 +219,19 @@ storeOn: aStream
 
 !SelectorEnvironment class methodsFor!
 
-implementorsMatching: aString in: anEnvironment 
+implementorsMatching: aString in: anEnvironment
 	| classDict metaDict |
 	classDict := IdentityDictionary new.
 	metaDict := IdentityDictionary new.
 	anEnvironment classesDo: 
-			[:class | 
+			[:class |
 			| selectors |
 			selectors := Set new.
 			anEnvironment selectorsForClass: class
 				do: [:each | (aString match: each) ifTrue: [selectors add: each]].
-			selectors notEmpty 
+			selectors notEmpty
 				ifTrue: 
-					[class isMeta 
+					[class isMeta
 						ifTrue: [metaDict at: class soleInstance name put: selectors]
 						ifFalse: [classDict at: class name put: selectors]]].
 	^(self onEnvironment: anEnvironment)
@@ -284,7 +284,7 @@ onMethods: methodCollection in: anEnvironment
 referencesTo: aLiteral in: aBrowserEnvironment
 	| classDict label |
 	#rbFix.	"Change the label"
-	label := 'References to <1p> in <2d>' expandMacrosWith: aLiteral with: aBrowserEnvironment.
+	label := 'References to <1p> in <2p>' expandMacrosWith: aLiteral with: aBrowserEnvironment.
 	classDict := LookupTable new.
 	aBrowserEnvironment classesDo: 
 			[:class |

@@ -144,7 +144,12 @@ nextPutAll: aCollection
 	Answer aCollection"
 
 	<primitive: 173>
-	^aCollection appendToStream: self!
+	^_failureCode == _PrimitiveFailureCode.OutOfBounds
+		ifTrue: 
+			[self
+				growCollection;
+				primitiveNextPutAll: aCollection]
+		ifFalse: [aCollection appendToStream: self]!
 
 on: aCollection
 	collection := aCollection.
@@ -177,6 +182,10 @@ primitiveNextPut: anObject
 	<primitive: 66>
 	position := collection encodedAt: position + 1 put: anObject!
 
+primitiveNextPutAll: aCollection
+	<primitive: 173>
+	^aCollection appendToStream: self!
+
 reset
 	readLimit := readLimit max: position.
 	position := 0!
@@ -194,6 +203,9 @@ setToEnd
 !WriteStream categoriesFor: #growCollection!operations!private! !
 !WriteStream categoriesFor: #initialize!initializing!private! !
 !WriteStream categoriesFor: #isWriteable!public!testing! !
+!WriteStream categoriesFor: #locale!accessing!public! !
+!WriteStream categoriesFor: #locale:!accessing!public! !
+!WriteStream categoriesFor: #locale1!accessing!private! !
 !WriteStream categoriesFor: #moveToEnd!positioning!private! !
 !WriteStream categoriesFor: #next!accessing!public! !
 !WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
@@ -204,6 +216,7 @@ setToEnd
 !WriteStream categoriesFor: #position:!positioning!public! !
 !WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
 !WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
+!WriteStream categoriesFor: #primitiveNextPutAll:!accessing!private! !
 !WriteStream categoriesFor: #reset!positioning!public! !
 !WriteStream categoriesFor: #setToEnd!positioning!public! !
 

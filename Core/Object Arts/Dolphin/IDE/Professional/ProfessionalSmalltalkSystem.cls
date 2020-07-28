@@ -91,16 +91,17 @@ publishedAspects
 		add: (Aspect choice: #defaultBrowserClass from: {self hierarchyBrowserClass. self systemBrowserClass});
 		yourself!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
-	#browseSystem == cmd 
+	#browseSystem == cmd
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'System').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'System'}
+							locale: Locale smalltalk).
 			^true].
 	^super queryCommand: aCommandQuery!
 

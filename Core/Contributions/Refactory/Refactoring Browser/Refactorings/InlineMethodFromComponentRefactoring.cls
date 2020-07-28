@@ -69,10 +69,11 @@ inlineClass
 	inlineClass notNil ifTrue: [^inlineClass].
 	imps := (self model allImplementorsOf: self inlineSelector) asOrderedCollection.
 	imps size = 1 ifTrue: [^inlineClass := imps first].
-	imps isEmpty 
-		ifTrue: [self refactoringError: ('There are no definitions of <1p>' expandMacrosWith: self inlineSelector)].
+	imps isEmpty
+		ifTrue: 
+			[self refactoringError: ('There are no definitions of <1p>' expandMacrosWith: self inlineSelector)].
 	inlineClass := self requestImplementorToInline: imps.
-	inlineClass isNil 
+	inlineClass isNil
 		ifTrue: 
 			[#rbFix.	"Use abort signal rather than error"
 			self refactoringAborted: 'No implementor selected'].

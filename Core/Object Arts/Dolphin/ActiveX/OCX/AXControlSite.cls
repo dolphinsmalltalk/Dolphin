@@ -554,22 +554,20 @@ OnRequestEdit: dispid
 
 	| permissionGranted property |
 	property := self propertyNameFromDispid: dispid.
-	self isTracingEvents ifTrue: [
-		Notification 
-			signal: ((String writeStream: 80) 
-					nextPutAll: 'IPropertyNotifySink::OnRequestEdit('; 
-					print: property; 
-					nextPut: $); 
-					contents)
-			with: self].
+	self isTracingEvents
+		ifTrue: 
+			[Notification signal: ((String smalltalkWriteStream: 80)
+						nextPutAll: 'IPropertyNotifySink::OnRequestEdit(';
+						print: property;
+						nextPut: $);
+						contents)
+				with: self].
 	permissionGranted := true asValue.
-	self presenter 
-		trigger: #controlPropertyChanging:accept: 
+	self presenter
+		trigger: #controlPropertyChanging:accept:
 		with: property
 		with: permissionGranted.
-	^permissionGranted value
-		ifTrue: [S_OK]
-		ifFalse: [S_FALSE]!
+	^permissionGranted value ifTrue: [S_OK] ifFalse: [S_FALSE]!
 
 optionKeyPath
 	"Answer the option key path (whatever that is).
@@ -622,7 +620,7 @@ progId: aString
 propertyChanged: aSymbol
 	self isTracingEvents
 		ifTrue: 
-			[Notification signal: ((String writeStream: 80)
+			[Notification signal: ((String smalltalkWriteStream: 80)
 						nextPutAll: 'IPropertyNotifySink::OnChanged(';
 						print: aSymbol;
 						nextPut: $);

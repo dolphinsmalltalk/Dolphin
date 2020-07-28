@@ -12,10 +12,20 @@ Locale comment: ''!
 !Locale categoriesForClass!System-Support! !
 !Locale methodsFor!
 
+= anObject
+	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
+
+	^self == anObject or: [anObject species == self species and: [anObject name = self name]]!
+
 amDesignator
 	"Answer the String used in the receiver locale to designate AM (morning)."
 
 	^self subclassResponsibility!
+
+boolFormat
+	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
+
+	^#('false' 'true')!
 
 dateAndTimeFormatters
 	^##(| formatters yyyyFormater |
@@ -325,6 +335,11 @@ getNumberFormat
 		negativeNumberMode: self negativeNumberMode;
 		yourself!
 
+hash
+	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
+
+	^self name hash!
+
 hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
 	So for example if this is true then 0.5 is displayed as '0.5', but if false as '.5'."
@@ -341,10 +356,30 @@ infinity
 
 	^self subclassResponsibility!
 
+isInstalled
+	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
+
+	^self subclassResponsibility!
+
+iso639LanguageName
+	"The two-character <String> name of the language of the primary language of the locale as defined in ISO-369."
+
+	^self subclassResponsibility!
+
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
 
-	^true!
+	^self lcid ~~ LOCALE_CUSTOM_UNSPECIFIED!
+
+isValid
+	"Answer whether the receiver is a recognised (valid) Locale."
+
+	^self subclassResponsibility!
+
+languageId
+	"Answer the <integer> Windows primary language id (the 10 low-order bits of the LCID)."
+
+	^self lcid bitAnd: 16r3FF!
 
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
@@ -359,6 +394,11 @@ lcid
 
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
+
+	^self subclassResponsibility!
+
+localizedDisplayName
+	"Answer the <String> name of the Locale in the current UI language of the host system."
 
 	^self subclassResponsibility!
 
@@ -383,7 +423,7 @@ monthName: anInteger
 	^self subclassResponsibility!
 
 name
-	"Answer the <String> name of the Locale in the current UI language of the host system."
+	"Answer the <String> unique name of the Locale."
 
 	^self subclassResponsibility!
 
@@ -443,6 +483,11 @@ pmDesignator
 	"Answer the character used in the receiver locale to designate PM (afternoon)."
 
 	^self subclassResponsibility!
+
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	^Locale named: (self name copyFrom: 1 to: 2)!
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
 	
@@ -638,6 +683,11 @@ shortTimeFormat
 
 	^self subclassResponsibility!
 
+subLanguageId
+	"Answer the <integer> Windows sub-language id (the 6 high-order bits of the LCID)."
+
+	^self lcid bitShift: -10!
+
 tag
 	"Answer the RFC4646 language tag for this locale."
 
@@ -667,7 +717,9 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
+!Locale categoriesFor: #=!comparing!public! !
 !Locale categoriesFor: #amDesignator!constants!public! !
+!Locale categoriesFor: #boolFormat!constants!public! !
 !Locale categoriesFor: #dateAndTimeFormatters!printing!private! !
 !Locale categoriesFor: #dateFormat!constants!public! !
 !Locale categoriesFor: #dayOfWeek:!mapping!public! !
@@ -688,13 +740,19 @@ yearMonthFormat
 !Locale categoriesFor: #englishLanguageName!constants!public! !
 !Locale categoriesFor: #firstDayOfWeek!constants!public! !
 !Locale categoriesFor: #getNumberFormat!helpers!private! !
+!Locale categoriesFor: #hash!comparing!public! !
 !Locale categoriesFor: #hasLeadingZero!constants!public! !
 !Locale categoriesFor: #indexOfMonth:!enquiries!public! !
 !Locale categoriesFor: #infinity!constants!public! !
+!Locale categoriesFor: #isInstalled!public!testing! !
+!Locale categoriesFor: #iso639LanguageName!constants!public! !
 !Locale categoriesFor: #isSelfEvaluating!public!testing! !
+!Locale categoriesFor: #isValid!public!testing! !
+!Locale categoriesFor: #languageId!accessing!public! !
 !Locale categoriesFor: #lastTwoDigitYear!constants!public! !
 !Locale categoriesFor: #lcid!accessing!public! !
 !Locale categoriesFor: #listSeparator!constants!public! !
+!Locale categoriesFor: #localizedDisplayName!constants!public! !
 !Locale categoriesFor: #longDateFormat!constants!public! !
 !Locale categoriesFor: #longTimeFormat!constants!public! !
 !Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
@@ -710,6 +768,7 @@ yearMonthFormat
 !Locale categoriesFor: #numberGrouping!constants!public! !
 !Locale categoriesFor: #percentSymbol!constants!public! !
 !Locale categoriesFor: #pmDesignator!constants!public! !
+!Locale categoriesFor: #primary!printing!public! !
 !Locale categoriesFor: #print:on:format:alphabet:formatters:!printing!private! !
 !Locale categoriesFor: #printDate:on:format:!printing!public! !
 !Locale categoriesFor: #printDateTime:on:format:!printing!public! !
@@ -724,6 +783,7 @@ yearMonthFormat
 !Locale categoriesFor: #shortDateFormat!constants!public! !
 !Locale categoriesFor: #shortPmDesignator!constants!public! !
 !Locale categoriesFor: #shortTimeFormat!constants!public! !
+!Locale categoriesFor: #subLanguageId!accessing!public! !
 !Locale categoriesFor: #tag!constants!public! !
 !Locale categoriesFor: #thousandSeparator!constants!public! !
 !Locale categoriesFor: #timeFormat!constants!public! !
@@ -757,7 +817,7 @@ installedSystemLocales
 		Locale installedSystemLocales
 	"
 
-	^WindowsLocale systemLocales: 1!
+	^WindowsLocale systemLocales: LCID_INSTALLED!
 
 invariant
 	"Answer the instance of the receiver which represents the invariant locale."
@@ -784,10 +844,16 @@ makeLcId: langIdWord sortId: sortIdBits
 	^(sortIdBits bitAnd: 16rF) << 16 
 		bitOr: (langIdWord bitAnd: 16rFFFF)!
 
+named: aString
+	"Answer a sub-instance of the receiver to represent the Locale with the specified name."
+
+	^(aString sameAs: 'smalltalk') ifTrue: [self smalltalk] ifFalse: [WindowsLocale named: aString]!
+
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
 
-	TimeZoneInfo := Invariant := SystemDefault := UserDefault := nil!
+	Invariant := nil.
+	self reset!
 
 onSettingChanged: anArray
 	"Private - A system setting has been changed. If it is anything to do with localisation, then clear the cached values."
@@ -801,7 +867,7 @@ onSettingChanged: anArray
 			^self].
 	anArray first = 'intl' ifFalse: [^self].
 	"International settings have been changed"
-	UserDefault := SystemDefault := nil!
+	self onStartup!
 
 onStartup
 	"Private - The system has just started. Adjust any locale specific
@@ -823,25 +889,28 @@ supportedSystemLocales
 		Locale supportedSystemLocales
 	"
 
-	^WindowsLocale systemLocales: 2!
+	^WindowsLocale systemLocales: LCID_SUPPORTED!
 
 systemDefault
-	"Answer the instance of the receiver which represents the default user locale."
+	"Answer the instance of the receiver which represents the default system locale."
 
 	^SystemDefault ifNil: [SystemDefault := self lcid: KernelLibrary default getSystemDefaultLCID]!
 
 timeZoneInformation
 	^TimeZoneInfo ifNil: [TimeZoneInfo := self getTimeZoneInfo]!
 
+uiDefault
+	^self lcid: KernelLibrary default getThreadUILanguage!
+
 userDefault
 	"Answer the instance of the receiver which represents the default user locale."
 
-	^UserDefault ifNil: [UserDefault := self lcid: KernelLibrary default getUserDefaultLCID]!
+	^UserDefault!
 
 userDefault: aLocale
 	| oldDefault |
 	oldDefault := UserDefault.
-	UserDefault := aLocale.
+	UserDefault := aLocale ifNil: [self uiDefault].
 	^oldDefault! !
 !Locale class categoriesFor: #default!accessing!public! !
 !Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
@@ -851,6 +920,7 @@ userDefault: aLocale
 !Locale class categoriesFor: #lcid:!instance creation!public! !
 !Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !
 !Locale class categoriesFor: #makeLcId:sortId:!enquiries!private! !
+!Locale class categoriesFor: #named:!instance creation!public! !
 !Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Locale class categoriesFor: #onSettingChanged:!event handling!private! !
 !Locale class categoriesFor: #onStartup!event handling!private! !
@@ -859,6 +929,7 @@ userDefault: aLocale
 !Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
 !Locale class categoriesFor: #systemDefault!instance creation!public! !
 !Locale class categoriesFor: #timeZoneInformation!enquiries!public! !
+!Locale class categoriesFor: #uiDefault!instance creation!public! !
 !Locale class categoriesFor: #userDefault!instance creation!public! !
 !Locale class categoriesFor: #userDefault:!instance creation!public! !
 

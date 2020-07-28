@@ -139,6 +139,7 @@ package setMethodNames: #(
 	#(#{AbstractCHARField} #characterCreationMessage)
 	#(#{AbstractCHARField} #printAccessorExpression:on:)
 	#(#{AbstractDocumentShell} #saveStateOn:)
+	#(#{AbstractToTextConverter class} #publishedAspectsOfInstances)
 	#(#{AndEnvironment} #includesResource:)
 	#(#{Array} #assignToResourceIdentifier:)
 	#(#{Array} #debugPrintOn:)
@@ -514,6 +515,7 @@ package setMethodNames: #(
 	#(#{SessionManager class} #publishedEventsOfInstances)
 	#(#{Set} #newBatchAccessor)
 	#(#{Set class} #newInstanceAspect:class:)
+	#(#{SharedPool class} #canModifyBinding:newValue:)
 	#(#{SharedPool class} #newInstanceAspect:class:)
 	#(#{SharedPool class} #publishedAspects)
 	#(#{SharedPool class} #publishedKeyedAspects)
@@ -626,6 +628,7 @@ package setMethodNames: #(
 	#(#{Tooltip class} #publishedAspectsOfInstances)
 	#(#{TranscriptShell} #help)
 	#(#{TranscriptShell class} #publishedAspects)
+	#(#{TranscriptShell class} #resource_Scintilla_view)
 	#(#{TreeModelAbstract class} #publishedEventsOfInstances)
 	#(#{TreeView class} #publishedAspectsOfInstances)
 	#(#{TypeConverter class} #publishedAspectsOfInstances)
@@ -732,6 +735,7 @@ package setPrerequisites: #(
 ).
 
 package setManualPrerequisites: #(
+	'Debug Trace Stream'
 	'Dolphin Source Fileout'
 ).
 
@@ -1596,7 +1600,7 @@ printAccessorExpression: aSymbol on: aWriteStream
 
 !AbstractDocumentShell methodsFor!
 
-saveStateOn: aWriteStream 
+saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
 	the receiver's class as it's parameter"
@@ -1604,9 +1608,19 @@ saveStateOn: aWriteStream
 	aWriteStream nextPutAll: '[:aDocumentShell | 
 	aDocumentShell setDocumentData: '.
 	self getDocumentData literalStoreEvaluationOn: aWriteStream.
-	aWriteStream nextPutAll: (';
-		filename: <1p>]' expandMacrosWith: self filename)! !
+	';
+		filename: <1p>]' expandMacrosWithArguments: {self filename} on: aWriteStream! !
 !AbstractDocumentShell categoriesFor: #saveStateOn:!private!saved state! !
+
+!AbstractToTextConverter class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect name: #locale);
+		yourself! !
+!AbstractToTextConverter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !AndEnvironment methodsFor!
 
@@ -1623,31 +1637,7 @@ assignToResourceIdentifier: aResourceIdentifier
 	aResourceIdentifier assignLiteralResourceData: self!
 
 debugPrintOn: aStream
-	"Copy of printOn:, but printing elements with debugPrintOn:"
-
-	| visited |
-	visited := IdentitySet new.
-	(self allSatisfy: [:element | element isLiteral: visited])
-		ifTrue: 
-			["Has literal form"
-			aStream nextPutAll: '#('.
-			self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
-			aStream nextPut: $)]
-		ifFalse: 
-			[((visited includes: self) not and: [self allSatisfy: [:element | element isSelfEvaluating]])
-				ifTrue: 
-					["Can use brace array form"
-					aStream nextPut: ${.
-					self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream nextPutAll: '. '].
-					aStream nextPut: $}]
-				ifFalse: 
-					[aStream print: self
-						with: 
-							[aStream
-								basicPrint: self;
-								nextPut: $(.
-							self do: [:each | each debugPrintOn: aStream] separatedBy: [aStream space].
-							aStream nextPut: $)]]]! !
+	self printOn: aStream do: [:each | each debugPrintOn: aStream]! !
 !Array categoriesFor: #assignToResourceIdentifier:!private! !
 !Array categoriesFor: #debugPrintOn:!printing!public! !
 
@@ -1754,8 +1744,8 @@ printMutatorBody: aSymbol on: aWriteStream
 !Association methodsFor!
 
 debugPrintOn: aStream
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				debugPrint: key;
 				nextPutAll: ' -> ';
@@ -2545,8 +2535,8 @@ aspectDisplayOn: aStream
 debugPrintOn: aStream
 	"Copy of printOn: logic, except using #debugPrintOn: to print the elements"
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				basicPrint: self;
 				nextPut: $(.
@@ -2820,12 +2810,12 @@ infoTip
 	"Private - Answer a suitable 'info tip' for the receiver."
 
 	| stream |
-	stream := String writeStream: 32.
+	stream := String smalltalkWriteStream.
 	stream
 		display: self;
 		nextPutAll: ' ('.
-	self realCategories asSortedCollection asArray 
-		, (self protocols asSortedCollection: [:a :b | a asSymbol < b asSymbol]) 
+	self realCategories asSortedCollection asArray
+		, (self protocols asSortedCollection: [:a :b | a asSymbol < b asSymbol])
 			do: [:each | stream display: each]
 			separatedBy: [stream nextPutAll: ', '].
 	stream nextPut: $).
@@ -2879,12 +2869,12 @@ okToContinue
 
 	| mb severity |
 	severity := self severityClass.
-	mb := (MessageBox new)
+	mb := MessageBox new
 				caption: 'Compilation ' , self severityName;
-				text: ('line <1d>: <2s>' expandMacrosWith: self line with: self errorMessage);
+				text: ('line <1p>: <2s>' expandMacrosWith: self line with: self errorMessage);
 				iconStyleFlag: severity mbIconId;
 				yourself.
-	^severity == Error 
+	^severity == Error
 		ifTrue: 
 			[mb
 				ok;
@@ -2998,12 +2988,11 @@ publishedAspectsOfInstances
 !DateToText class methodsFor!
 
 publishedAspectsOfInstances
-    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-    
-    	^(super publishedAspectsOfInstances)
-    		add: (Aspect string: #format);
-    		add: (Aspect name: #locale);
-    		yourself! !
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect string: #format);
+		yourself! !
 !DateToText class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !Dictionary methodsFor!
@@ -3017,8 +3006,8 @@ alternateInspectorClass
 debugPrintOn: aStream
 	"Copy of the printOn: logic, except using #debugPrintString to print the elements"
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				basicPrint: self;
 				nextPut: $(.
@@ -3424,8 +3413,8 @@ printOn: aStream
 	We use the template definition to do this in a generic way for all correctly 
 	defined subclasses. Fields are printed in the order of their offset"
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[self basicPrintOn: aStream.
 			aStream nextPut: $(.
 			self printFieldsOn: aStream.
@@ -3481,7 +3470,7 @@ compileGetFieldNames
 
 	| methodText |
 	self shouldOverrideGetFieldNames ifFalse: [^self].
-	methodText := String writeStream: 256.
+	methodText := String smalltalkWriteStream: 256.
 	methodText
 		nextPutAll: #getFieldNames;
 		crtab;
@@ -3496,7 +3485,7 @@ compileGetMethod: aSymbol forField: anExternalField
 
 	| methodText |
 	anExternalField canGenerateAccessor ifFalse: [^self].
-	methodText := String writeStream: 256.
+	methodText := String smalltalkWriteStream: 256.
 	anExternalField printAccessor: aSymbol on: methodText.
 	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
@@ -3521,7 +3510,7 @@ compileSetMethod: aSelector forField: anExternalField
 
 	| methodText |
 	anExternalField canGenerateMutator ifFalse: [^self].
-	methodText := String writeStream: 256.
+	methodText := String smalltalkWriteStream: 256.
 	anExternalField printMutator: aSelector on: methodText.
 	^self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
@@ -4477,13 +4466,11 @@ alternateInspectorClass
     	^BasicInspector!
 
 aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
-  	argument in a form that a user viewing the receiver as the value of a published aspect would 
-  	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats.
+	"Private - Append a single-line textual representatin of the receiver to the <puttableStream> argument in a form that a user viewing the receiver as the value of a published aspect would like to see it.
+	Typically we use #displayOn:locale: with the Smalltalk locale, but some classes of object can use alternate display formats.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	self displayOn: aStream!
+
+	self displayOn: aStream!
 
 basicInspect
     	"Open and answer an inspector window on the receiver.
@@ -4513,7 +4500,7 @@ debugPrintString
 	| stream |
 	stream := LimitedWriteStream
 				on: (String new: 32)
-				limit: 200
+				limit: 500
 				limitBlock: [:s | ^s contents , ' ... etc ...'].
 	self debugPrintOn: stream.
 	^stream contents!
@@ -4883,13 +4870,13 @@ printMutatorBody: aSymbol on: aWriteStream
 !PoolDictionary methodsFor!
 
 aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
+	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
   	argument in a form that a user viewing the receiver as the value of a published aspect would 
   	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
   	formats. In this case we override back to the Object implementation.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	self displayOn: aStream! !
+
+	self displayOn: aStream! !
 !PoolDictionary categoriesFor: #aspectDisplayOn:!private! !
 
 !Presenter class methodsFor!
@@ -4903,15 +4890,15 @@ editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
 	| resourceIdentifier vc resName |
-	resName := Prompter 
+	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'
 				caption: 'Create a view for class ' , self name.
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier exists not or: 
-			[MessageBox 
-				confirm: ('<1d> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)]) 
+			[MessageBox
+				confirm: ('<1p> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
 		ifFalse: [^self].
 	vc := Smalltalk developmentSystem openViewComposerEmpty.
 	vc
@@ -5044,7 +5031,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 				onWalkback: titleString
 				topFrame: aStackFrame
 				resumable: aBoolean].
-	traceStream := String writeStream: 512.
+	traceStream := String smalltalkWriteStream: 512.
 	
 	[aStackFrame callstackDo: 
 			[:frame |
@@ -5307,8 +5294,10 @@ publishedAspectsOfInstances
 
 !RefactoryChange methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: self displayString! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: self displayString! !
 !RefactoryChange categoriesFor: #displayOn:!printing!public! !
 
 !ReferenceView methodsFor!
@@ -5356,7 +5345,7 @@ assignLiteralResourceData: aLiteralArray
 	"Private - Assign aResource as the resource data represented by the receiver."
 
 	| stream source sel methodClass categories |
-	stream := String writeStream.
+	stream := String smalltalkWriteStream.
 	sel := self selector.
 	self emitMethodHeaderFor: sel on: stream.
 	stream
@@ -5825,6 +5814,14 @@ newInstanceAspect: aSymbol class: aspectClass
 
 !SharedPool class methodsFor!
 
+canModifyBinding: aVariableBinding newValue: anObject
+	^ConfirmationRequiredWarning
+		signal: ('Would you like to recompile references to <1p>.<2s> to reflect the new value <3p> (currently <4p>)?'
+				expandMacrosWith: self
+				with: aVariableBinding key
+				with: anObject
+				with: aVariableBinding value)!
+
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
@@ -5856,8 +5853,9 @@ referencesTo: keyString
 	classes := self classesReferencing.
 	env := BrowserEnvironment new forClasses: classes , (classes collect: [:each | each class]).
 	^(env referencesTo: var)
-		label: ('Methods referencing <1d>.<2s>' expandMacrosWith: self with: keyString);
+		label: ('Methods referencing <1p>.<2s>' expandMacrosWith: self with: keyString);
 		yourself! !
+!SharedPool class categoriesFor: #canModifyBinding:newValue:!private! !
 !SharedPool class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 !SharedPool class categoriesFor: #publishedAspects!constants!public! !
 !SharedPool class categoriesFor: #publishedKeyedAspects!public! !
@@ -6022,8 +6020,10 @@ publishedAspectsOfInstances
 
 !StAbstractVariableNode methodsFor!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream
 		nextPutAll: 'Var ';
 		print: self name! !
 !StAbstractVariableNode categoriesFor: #displayOn:!printing!public! !
@@ -6122,8 +6122,10 @@ publishedAspectsOfInstances
 
 !StAssignmentNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: ':='! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: ':='! !
 !StAssignmentNode categoriesFor: #displayOn:!printing!public! !
 
 !StaticBitmap class methodsFor!
@@ -6196,7 +6198,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #hasSizeGrip);
 		add: (Aspect boolean: #hasToolTips);
 		add: (Aspect sequenceableCollection: #items
-					addEvaluationFrom: {'<1p> <2d>' expandMacrosWith: StatusBarItem with: #new}) beImmutable;
+					addEvaluationFrom: {'<1p> <2s>' expandMacrosWith: StatusBarItem with: #new}) beImmutable;
 		yourself! !
 !StatusBar class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6225,21 +6227,26 @@ publishedAspectsOfInstances
 
 !StBlockNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: '[]'! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: '[]'! !
 !StBlockNode categoriesFor: #displayOn:!printing!public! !
 
 !StCascadeNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: 'Cascade'
-! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: 'Cascade'! !
 !StCascadeNode categoriesFor: #displayOn:!printing!public! !
 
 !StLiteralArrayNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: '#()'! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: '#()'! !
 !StLiteralArrayNode categoriesFor: #displayOn:!printing!public! !
 
 !StLiteralToken methodsFor!
@@ -6250,14 +6257,18 @@ textStyle
 
 !StLiteralValueNode methodsFor!
 
-displayOn: aStream
-	self value printOn: aStream! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	self value printOn: aPuttableStream! !
 !StLiteralValueNode categoriesFor: #displayOn:!printing!public! !
 
 !StMessageNode methodsFor!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream
 		nextPutAll: 'Msg ';
 		print: self selector! !
 !StMessageNode categoriesFor: #displayOn:!printing!public! !
@@ -6270,30 +6281,36 @@ textStyle
 
 !StOptimizedNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: '##()'! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: '##()'! !
 !StOptimizedNode categoriesFor: #displayOn:!printing!public! !
 
 !StParameterNode methodsFor!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream
 		nextPut: $:;
 		display: self name! !
 !StParameterNode categoriesFor: #displayOn:!printing!public! !
 
 !StPrimitiveNode methodsFor!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream
 		nextPutAll: '<Primitive: ';
 		display: self primitiveIndex.
 	errorTemp
 		ifNotNil: 
-			[aStream
+			[aPuttableStream
 				nextPutAll: ' error: ';
-				display: errorTemp name].
-	aStream nextPut: $>! !
+				nextPutAll: errorTemp name].
+	aPuttableStream nextPut: $>! !
 !StPrimitiveNode categoriesFor: #displayOn:!printing!public! !
 
 !StProgramNode methodsFor!
@@ -6357,8 +6374,10 @@ debugPrint: anObject
 
 !StReturnNode methodsFor!
 
-displayOn: aStream
-	aStream nextPut: $^! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPut: $^! !
 !StReturnNode categoriesFor: #displayOn:!printing!public! !
 
 !String methodsFor!
@@ -6562,14 +6581,18 @@ valueClassIn: aClass
 
 !StSequenceNode methodsFor!
 
-displayOn: aStream
-	aStream nextPutAll: '...'! !
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: '...'! !
 !StSequenceNode categoriesFor: #displayOn:!printing!public! !
 
 !StSpecialVariableNode methodsFor!
 
-displayOn: aStream
-	aStream display: self name!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: self name!
 
 valueClassIn: aClass
 	^self subclassResponsibility! !
@@ -6607,10 +6630,12 @@ valueClassIn: aClass
 
 !StTempDeclNode methodsFor!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream
 		nextPut: $|;
-		display: name;
+		nextPutAll: name;
 		nextPut: $|! !
 !StTempDeclNode categoriesFor: #displayOn:!printing!public! !
 
@@ -7130,8 +7155,19 @@ publishedAspects
     	^super publishedAspects
     		add: (Aspect name: #defaultExtent);
     		add: (Aspect boolean: #flashOnOutput);
-    		yourself! !
+    		yourself!
+
+resource_Scintilla_view
+	"Answer the literal data from which the 'Scintilla view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scintilla_view)
+	"
+
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ScintillaView) 34 50 nil 416 34 2 8 1174470916 262145 560 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 23 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 738 1 770 #selectAll 8 'Select &All' 8323 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 1 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 738 1 770 #find 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 1074 4097 690 nil true 34 5 738 1 770 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 738 1 770 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 738 1 770 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 738 1 770 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 738 1 770 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 818 nil true 864 8 'Preferences.ico' 912 nil nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 560 nil 8 1870544360 852486 ##(Smalltalk.NullConverter) nil 8 '' 3 1686439121 170 192 34 10 #indentGuide 1182790 1 ##(Smalltalk.ScintillaTextStyle) 75 466 #gray nil 1 nil nil nil nil #indentGuide 8 'Indentation guides, when visible' nil nil #whitespace 1762 53 466 #silver nil 1 nil nil nil nil #whitespace 8 'Whitespace, when visible' nil nil #lineNumber 1762 67 nil nil 1 nil 1601 nil nil #lineNumber nil nil nil #callTip 1762 77 1792 466 #white 1 nil nil nil nil #callTip nil nil nil #normal 1762 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) nil nil nil nil 560 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 2048 nil nil nil nil 466 #mediumSlateBlue 1840 nil nil nil nil nil nil nil 1 170 192 34 4 #null 1728 #text 170 192 34 10 #indentGuide 1776 #whitespace 1824 #lineNumber 1872 #callTip 1888 #normal 1920 nil nil nil nil 208 nil nil nil nil 170 192 34 6 #Warning 1762 5 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 1762 7 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 1762 3 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 14 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 560 2386 #contextMenu: 34 1 704 560 2386 #caretForecolor: 34 1 466 #gray 560 2386 #caretPeriod: 8 #(0) 560 2386 #wordWrap: 8 #(true) 560 2386 #margins: 34 1 34 5 985158 3 ##(Smalltalk.ScintillaMargin) 1 560 1 3 nil nil nil nil 2658 3 560 1 nil nil 67108863 nil nil 2658 5 560 1 nil nil nil nil nil 2658 7 560 1 nil nil nil nil nil 2658 9 560 1 nil nil nil nil nil 560 2386 #canHScroll: 8 #(false) 560 2386 #tabWidth: 8 #(4) 560 2386 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 560 2386 #maxCompletionListHeight: 8 #(9) 560 2386 #edgeColumn: 8 #(1) 560 2386 #setLexerLanguage: 8 #(#null) 560 2386 #sciSetFontQuality: 8 #(3) 560 2386 #whitespaceMarkerSize: 8 #(2) 560 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 31 170 192 34 2 560 8 'workspace' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 5 690 nil true 34 9 738 1 770 #fileNew 8 '&New Workspace' 9373 1 818 nil true 864 8 'NewWorkspace.ico' 912 nil nil 738 1 770 #fileOpen 8 '&Open Workspace...' 9375 1 818 nil true 864 8 'OpenWorkspace.ico' 912 nil nil 738 1 770 #fileFileIn 8 '&File In...' 1 1 nil nil nil 1074 4097 738 1 770 #saveImage 8 'Sa&ve Image' 1 1 818 nil true 864 8 'Snapshot.ico' 912 nil nil 738 1 770 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 738 1 770 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 1074 4097 738 1 770 #smalltalkExit 8 'E&xit Dolphin' 1 1 818 nil true 864 8 'PowerSwitch.ico' 912 nil nil 8 '&File' nil 134217729 nil nil 55293 nil nil 690 nil true 34 8 738 1 770 #cr 8 'New&line' 1 1 nil nil nil 1074 4097 738 1 770 #copySelection 8 '&Copy' 9351 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 738 1 770 #selectAll 8 'Select &All' 9347 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 9393 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 1074 4097 738 1 770 #editFind 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 8 '&Edit' nil 134217729 nil nil 55307 nil nil 690 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 55309 nil nil 690 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 55311 nil nil 690 nil true 34 6 738 1 770 #help 8 '&Help on this tool' 1249 1 818 nil true 864 8 'Help.ico' 912 nil nil 1074 4097 738 1 770 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 738 1 770 #educationCenter 8 '&Education centre' 1 1 nil nil nil 1074 4097 738 1 770 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 55321 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2322 138 144 34 2 2386 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 2386 #text: 34 1 8 'System Transcript' 416 3042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 560 3104 nil 27 )! !
 !TranscriptShell class categoriesFor: #publishedAspects!public! !
+!TranscriptShell class categoriesFor: #resource_Scintilla_view!public!resources-views! !
 
 !TreeModelAbstract class methodsFor!
 
@@ -7351,15 +7387,15 @@ editNewDefaultView
 
 	| resourceIdentifier view resName |
 	view := self desktop addSubView: self new.
-	resName := Prompter 
+	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'
 				caption: 'Create a view for class ' , self name.
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier resourceOrNil isNil or: 
-			[MessageBox 
-				confirm: ('<1d> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)]) 
+			[MessageBox
+				confirm: ('<1p> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
 		ifFalse: [^self].
 	resourceIdentifier assign: view literalStoreArray.
 	view destroy.

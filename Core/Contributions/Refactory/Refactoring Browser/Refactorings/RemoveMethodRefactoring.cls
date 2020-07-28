@@ -11,25 +11,25 @@ RemoveMethodRefactoring comment: ''!
 !RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !RemoveMethodRefactoring methodsFor!
 
-checkReferencesToAnyOf: aSelectorCollection 
+checkReferencesToAnyOf: aSelectorCollection
 	aSelectorCollection do: 
-			[:each | 
+			[:each |
 			self model allReferencesTo: each
 				do: 
-					[:aRBMethod | 
-					(aSelectorCollection includes: aRBMethod selector) 
+					[:aRBMethod |
+					(aSelectorCollection includes: aRBMethod selector)
 						ifFalse: 
-							[self refactoringError: ('Possible call to <2p> in <1p>.<n><n>Would you like to browse references?' 
+							[self refactoringError: ('Possible call to <2p> in <1p>.<n><n>Would you like to browse references?'
 										expandMacrosWith: aRBMethod modelClass
 										with: each)
 								with: 
 									[#rbFix.	"Should use model's BrowserEnvironment to perform the reference search"
 									self openBrowserOn: (self model environment referencesTo: each)]]]]!
 
-checkReferencesToSuperSendsToAnyOf: superMessages 
+checkReferencesToSuperSendsToAnyOf: superMessages
 	[superMessages isEmpty] whileFalse: 
-			[self 
-				refactoringWarning: ('Although <1s> is equivalent to a superclass method,<n>it contains a super send so it might modify behavior.' 
+			[self
+				refactoringWarning: ('Although <1s> is equivalent to a superclass method,<n>it contains a super send so it might modify behavior.'
 						expandMacrosWith: superMessages first).
 			superMessages remove: superMessages first]!
 

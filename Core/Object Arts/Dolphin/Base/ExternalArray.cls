@@ -162,17 +162,20 @@ detect: discriminator ifNone: exceptionHandler
 	self do: [:each | (discriminator value: each) ifTrue: [^each]].
 	^exceptionHandler value!
 
-displayOn: target
-	"Append a textual representation of the receiver onto the <puttableStream> argument,
-	target, in the format that an end-user might want to see it."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	target
-		nextPut: $(.
-	self isNull ifFalse: [
-		self 
-			do: [:element | target display: element]
-			separatedBy: [target nextPut: $,; space]].
-	target  nextPut: $).!
+	aPuttableStream nextPut: $(.
+	self isNull
+		ifFalse: 
+			[| listSep |
+			listSep := aPuttableStream locale listSeparator.
+			self do: [:element | element displayOn: aPuttableStream]
+				separatedBy: 
+					[aPuttableStream
+						nextPutAll: listSep;
+						space]].
+	aPuttableStream nextPut: $)!
 
 do: operation
 	"Evaluate monadic value argument, operation, for each of the elements of the 

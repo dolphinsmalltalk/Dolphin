@@ -185,7 +185,7 @@ description
 	"Private - Answer the descriptor string for the external function described by the receiver."
 
 	| stream |
-	stream := String writeStream: 60.
+	stream := String smalltalkWriteStream: 60.
 	self printDescriptionOn: stream.
 	^stream contents!
 

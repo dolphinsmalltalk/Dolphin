@@ -4,7 +4,8 @@ ScintillaDef subclass: #ScintillaFunctionDef
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaFunctionDef guid: (GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
 ScintillaFunctionDef comment: ''!
 !ScintillaFunctionDef categoriesForClass!Development! !
@@ -420,7 +421,7 @@ renamedFunctions
 		at: 'SCI_SETPRINTCOLOURMODE' put: #printColourMode:;
 		at: 'SCI_GETPRINTMAGNIFICATION' put: #printMagnification;
 		at: 'SCI_SETPRINTMAGNIFICATION' put: #printMagnification:;
-		at: 'SCI_CLEARALL' put: #clearAll;
+		at: 'SCI_CLEARALL' put: #basicClearAll;
 		at: 'SCI_EDITTOGGLEOVERTYPE' put: #toggleOvertype;
 		at: 'SCI_GETTWOPHASEDRAW' put: #isDrawingTwoPhase;
 		at: 'SCI_SETTWOPHASEDRAW' put: #isDrawingTwoPhase:;

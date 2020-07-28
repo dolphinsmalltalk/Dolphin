@@ -75,12 +75,11 @@ currentClassUpdated
 defaultHelpId
 	^self subclassResponsibility!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	as a plugin within the Class Browser"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed as a plugin within the Class Browser."
 
-	aStream nextPutAll: self caption!
+	aPuttableStream nextPutAll: self caption!
 
 foregroundUpdate
 	| buffer |
@@ -146,8 +145,8 @@ promptToOverwrite
 	| currentText |
 	currentText := self browser selectedClass perform: self aspect.
 	^currentText = originalText or: 
-			[MessageBox 
-				confirm: ('The <1s> has been changed outside this browser. Are you sure you want to overwrite it?' 
+			[MessageBox
+				confirm: ('The <1s> has been changed outside this browser. Are you sure you want to overwrite it?'
 						expandMacrosWith: self caption asLowercase)]!
 
 promptToSaveClassChanges: aSelectionChangingEvent 

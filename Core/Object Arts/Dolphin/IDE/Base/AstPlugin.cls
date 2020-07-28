@@ -58,8 +58,10 @@ displayMethod
 	treeModel := VirtualTreeModel withRoots: (OrderedCollection with: self browser parseTree).
 	astPresenter model: treeModel!
 
-displayOn: aWriteStream 
-	^aWriteStream nextPutAll: 'Syntax Tree'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	^aPuttableStream nextPutAll: 'Syntax Tree'!
 
 onBrowserClassSelected
 	self isCurrentCard ifTrue: [self browser ensureDefinitionVisible]!

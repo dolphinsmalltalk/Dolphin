@@ -35,7 +35,7 @@ allVisibleSubViewsOf: aView do: aMonadicValuable
 			(each hasVisibleStyle or: [isShell not]) 
 				ifTrue: [self allVisibleSubViewsOf: each do: aMonadicValuable]]!
 
-baseProtocolFor: anObject named: aStringName 
+baseProtocolFor: anObject named: aStringName
 	"Private - Answers a <readableString> that best describes the base protocol
 	or class of anObject. A descriptive name is passed in aStringName."
 
@@ -44,10 +44,10 @@ baseProtocolFor: anObject named: aStringName
 	classProtocol := '%<<1p>>' expandMacrosWith: anObject class.
 	default := (protos detect: [:each | each = classProtocol] ifNone: [classProtocol]) asValue.
 	protos add: anObject class name.
-	^(ChoicePrompter 
+	^(ChoicePrompter
 		on: default
 		choices: protos asSortedCollection
-		caption: ('Protocol for <1s>=<2p>' expandMacrosWith: aStringName with: anObject)) isNil 
+		caption: ('Protocol for <1s>=<2p>' expandMacrosWith: aStringName with: anObject)) isNil
 		ifTrue: [OperationAborted signal]
 		ifFalse: [default value]!
 
@@ -77,8 +77,10 @@ browseKeyBindingsOfShell: aShellView
 classBrowserClasses
 	^ClassBrowserAbstract allSubclasses!
 
-displayOn: aStream
-	aStream nextPutAll: 'Object Arts IDE Extensions'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: 'Object Arts IDE Extensions'!
 
 enableClassCommentTemplate
 	^flags allMask: ClassCommentTemplateMask!
@@ -198,7 +200,7 @@ printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 		ifTrue: 
 			[| stream path |
 			stream := String writeStream.
-			(Array with: aView) , aView allParents reverseDo: 
+			{aView} , aView allParents reverseDo: 
 					[:each |
 					each name
 						ifNotNil: 

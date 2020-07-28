@@ -175,6 +175,11 @@ dayOfYear
 
 	^self class day: self asDays inYear: self year!
 
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream locale displayDate: self on: aPuttableStream!
+
 firstDayOfMonth
 	"Answer the julian day number of the first day of the receiver's month in the receiver's year."
 
@@ -237,9 +242,9 @@ printOn: aStream
 	self printOn: aStream longPicture: DefaultLongPicture!
 
 printOn: aStream format: aString
-	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>dateFormat method comment, e.g. 'dd/MM/yyyy', formats to, for example, 27/11/2001). If the format argument is nil then the receiver is printed to the stream in the currently configured default format of the host OS, which can be seen by evaluating `Locale default dateFormat`. See also: https://docs.microsoft.com/en-gb/windows/desktop/Intl/day--month--year--and-era-format-pictures"
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>dateFormat method comment, e.g. 'dd/MM/yyyy', formats to, for example, 27/11/2001). If the format argument is nil then the receiver is printed to the stream in the currently configured format of the stream's <Locale> (see Locale>>#dateFormat). See also: https://docs.microsoft.com/en-gb/windows/desktop/Intl/day--month--year--and-era-format-pictures"
 
-	Locale default
+	aStream locale
 		printDate: self
 		on: aStream
 		format: aString!
@@ -328,10 +333,8 @@ yyyymmdd
 
 	| stream |
 	stream := String writeStream: 10.
-	Locale invariant
-		printDate: self
-		on: stream
-		format: 'yyyy-MM-dd'.
+	stream locale: Locale invariant.
+	self printOn: stream format: 'yyyy-MM-dd'.
 	^stream grabContents! !
 !Date categoriesFor: #<!comparing!public! !
 !Date categoriesFor: #=!comparing!public! !
@@ -352,6 +355,7 @@ yyyymmdd
 !Date categoriesFor: #dayOfMonth!accessing!public! !
 !Date categoriesFor: #dayOfWeek!accessing!public! !
 !Date categoriesFor: #dayOfYear!accessing!public! !
+!Date categoriesFor: #displayOn:!printing!public! !
 !Date categoriesFor: #firstDayOfMonth!operations!public! !
 !Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
 !Date categoriesFor: #hash!comparing!public! !

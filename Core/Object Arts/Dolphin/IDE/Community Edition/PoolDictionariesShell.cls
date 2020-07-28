@@ -76,7 +76,7 @@ poolPackage
 	oldPkg := pool owningPackage.
 	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
-				caption: ('Package of <1d>...' expandMacrosWith: pool)
+				caption: ('Package of <1p>...' expandMacrosWith: pool)
 				default: nil
 				validationBlock: [:package | package notNil and: [pool environment includesKey: pool name]].
 	(newPkg isNil or: [newPkg = oldPkg]) ifTrue: [^self].
@@ -153,8 +153,10 @@ defaultModel
 	^ListModel 
 		on: (SmalltalkSystem current availablePools asSortedCollection: [:x :y | x name <= y name])!
 
-displayOn: aStream 
-	aStream nextPutAll: 'Pool Dictionaries'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: 'Pool Dictionaries'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

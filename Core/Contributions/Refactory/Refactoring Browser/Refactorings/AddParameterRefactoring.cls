@@ -19,16 +19,14 @@ addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init
 		permutation: (1 to: newSel argumentCount).
 	initializer := init!
 
-checkSendersAccessTo: name 
+checkSendersAccessTo: name
 	| violatorClass |
 	(#('self' 'super') includes: name) ifTrue: [^self].
-	violatorClass := self senders 
-				detect: [:each | (self canReferenceVariable: name in: each) not]
+	violatorClass := self senders detect: [:each | (self canReferenceVariable: name in: each) not]
 				ifNone: [nil].
-	violatorClass notNil 
+	violatorClass notNil
 		ifTrue: 
-			[self refactoringError: ('<1s> doesn''t appear to be defined in <2p>' 
-						expandMacrosWith: name
+			[self refactoringError: ('<1s> doesn''t appear to be defined in <2p>' expandMacrosWith: name
 						with: violatorClass)]!
 
 checkVariableReferencesIn: aParseTree 

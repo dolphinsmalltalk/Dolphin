@@ -34,10 +34,10 @@ It is possible to override more of the class-side methods in the ''constants'' c
 !ProtectedProductSerialNumber categoriesForClass!Cryptography-Support! !
 !ProtectedProductSerialNumber methodsFor!
 
-displayOn: aStream 
-	"Display the receiver in the format that a user would wish to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self stringValue!
+	aPuttableStream nextPutAll: self stringValue!
 
 expiry
 	"Answer the expiry of the receiver in months (from 1st Oct 2000)."

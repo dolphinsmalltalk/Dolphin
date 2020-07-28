@@ -164,16 +164,17 @@ defaultButton
 
 	^((styleFlags bitAnd: MB_DEFMASK) >> 8) + 1!
 
-defaultButton: anInteger 
+defaultButton: anInteger
 	"Set the one-based index of the default push button to be used when the receiver is opened.
 	By default the first push button is the default button."
 
-	(anInteger between: 1 and: 4) 
-		ifFalse: [^self error: ('Invalid default button index: <1d>' expandMacrosWith: anInteger)].
+	(anInteger between: 1 and: 4)
+		ifFalse: [^self error: ('Invalid default button index: <1p>' expandMacrosWith: anInteger)].
 	self setStyle: anInteger - 1 << 8 maskedBy: MB_DEFMASK!
 
 globallyUniqueId
-	^'<1d>:<2d>' expandMacrosWith: SessionManager current appIdString with: self uniqueId!
+	^'<1d>:<2d>' expandMacrosWithArguments: {SessionManager current appIdString. self uniqueId}
+		locale: Locale invariant!
 
 hasOwner
 	^self owner notNil and: [self owner ~= 0]!
@@ -302,7 +303,7 @@ uniqueId
 	^uniqueId!
 
 uniqueId: anObject 
-	uniqueId := anObject displayString! !
+	uniqueId := anObject displayString: Locale invariant! !
 !MessageBox categoriesFor: #assertStylesValid!helpers!private! !
 !MessageBox categoriesFor: #basicOpen!displaying!private! !
 !MessageBox categoriesFor: #beFatalError!accessing-styles!public! !

@@ -15,8 +15,8 @@ categories
 	^protocols collect: [:each | each asMethodCategory]!
 
 changeString
-	^'<1s> <2s>>><3s>' 
-		expandMacrosWith: ((self changeClass includesSelector: self selector) 
+	^'<1s> <2s>>><3s>'
+		expandMacrosWith: ((self changeClass includesSelector: self selector)
 				ifTrue: ['Modify']
 				ifFalse: ['Add'])
 		with: self displayClassName

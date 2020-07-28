@@ -25,14 +25,14 @@ rename: aVarName to: aName in: aClass
 
 renameReferences
 	| replacer |
-	replacer := ParseTreeRewriter 
+	replacer := ParseTreeRewriter
 				rename: variableName
 				to: newName
 				handler: 
-					[self 
-						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses' 
+					[self
+						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses'
 								expandMacrosWith: newName)].
-	self 
+	self
 		convertClasses: class withAllSubclasses
 		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: variableName]
 		using: replacer!

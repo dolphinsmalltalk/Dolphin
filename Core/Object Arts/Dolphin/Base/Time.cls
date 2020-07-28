@@ -62,10 +62,10 @@ asSYSTEMTIME
 asTimeStamp
 	^self asDateAndTime asTimeStamp!
 
-displayOn: aStream
-	"Append to the <puttableStream> argument, aStream, a String whose characters are a representation of this<Time> that a user in the current<Locale> might expect to see."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	Locale default displayTime: self on: aStream!
+	aPuttableStream locale displayTime: self on: aPuttableStream!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -105,9 +105,9 @@ printOn: aStream
 printOn: aStream format: aString
 	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. 
 	The format is defined by the <readableString> argument, aString, the format characters of which are as described in Locale>>#timeFormat method.
-	If the format argument is nil then the receiver is printed to the stream in the currently configured default format of the host OS."
+	If the format argument is nil then the receiver is printed to the stream in the currently configured default format of the stream's <Locale>."
 
-	Locale default 
+	aStream locale
 		printTime: self
 		on: aStream
 		format: aString!

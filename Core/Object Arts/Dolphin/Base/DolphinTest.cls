@@ -69,10 +69,9 @@ isOnline
 methodContextClass
 	^Context!
 
-runKnownBug: aString test: aSymbol 
-	Notification 
-		signal: ('Warning: Known bug <1s> tested by <2p> not run' expandMacrosWith: aString
-				with: aSymbol).
+runKnownBug: aString test: aSymbol
+	Notification
+		signal: ('Warning: Known bug <1s> tested by <2p> not run' expandMacrosWith: aString with: aSymbol).
 	#todo.	"Make this controllable by an option or class var"
 	^false!
 

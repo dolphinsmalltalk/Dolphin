@@ -284,7 +284,8 @@ queryCommand: aCommandQuery
 			message := self selectedMessage.
 			aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: message ?? '...').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {message ?? '...'}
+							locale: Locale smalltalk).
 			^true].
 	#browseMessage == selector
 		ifTrue: 
@@ -298,7 +299,8 @@ queryCommand: aCommandQuery
 					[aCommandQuery isEnabled: false.
 					text := 'Message']
 				ifFalse: [aCommandQuery isEnabled: true].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: text).
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {text}
+						locale: Locale smalltalk).
 			^true].
 	^super queryCommand: aCommandQuery!
 

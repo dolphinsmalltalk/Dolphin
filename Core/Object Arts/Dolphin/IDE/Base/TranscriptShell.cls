@@ -125,9 +125,9 @@ fileFileIn
 	(containing chunks) and file it in."
 
 	| filename |
-	filename := (FileOpenDialog new)
+	filename := FileOpenDialog new
 				caption: 'File in...';
-				fileTypes: (Array with: self smalltalkFilesType with: FileDialog allFilesType);
+				fileTypes: {self smalltalkFilesType. FileDialog allFilesType};
 				defaultExtension: '';
 				showModal.
 	filename notNil
@@ -154,13 +154,16 @@ initialize
 	"Private - Initialize the receiver."
 
 	super initialize.
-	buffer := String writeStream: 128.
-	bufferProtect := Mutex new.!
+	buffer := String smalltalkWriteStream: 128.
+	bufferProtect := Mutex new!
 
 isEmpty
 	"Answer whether the Stream is accessing an empty collection"
 
 	^self contents isEmpty!
+
+locale
+	^Locale smalltalk!
 
 next: anInteger put: anObject 
 	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
@@ -319,7 +322,10 @@ updateWindow
 	outputWindow
 		caretPosition: length + 1;
 		replaceSelection: newText.
-	^buffer reset! !
+	^buffer reset!
+
+visit: anObject do: aNiladicValuable
+	aNiladicValuable value! !
 !TranscriptShell categoriesFor: #<<!public! !
 !TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
 !TranscriptShell categoriesFor: #alertUser!operations!private! !
@@ -341,6 +347,7 @@ updateWindow
 !TranscriptShell categoriesFor: #hasOutputWindow!accessing!private! !
 !TranscriptShell categoriesFor: #initialize!initializing!private! !
 !TranscriptShell categoriesFor: #isEmpty!public!testing! !
+!TranscriptShell categoriesFor: #locale!accessing!public! !
 !TranscriptShell categoriesFor: #next:put:!operations!public! !
 !TranscriptShell categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !TranscriptShell categoriesFor: #nextPut:!adding!public! !
@@ -364,6 +371,7 @@ updateWindow
 !TranscriptShell categoriesFor: #tab!accessing!public! !
 !TranscriptShell categoriesFor: #tab:!accessing!public! !
 !TranscriptShell categoriesFor: #updateWindow!private!updating! !
+!TranscriptShell categoriesFor: #visit:do:!public! !
 
 TranscriptShell methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 TranscriptShell methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
@@ -407,11 +415,16 @@ defaultExtent: aPoint
 
 	DefaultExtent := aPoint!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+defaultView
+	"Answer the resource name of the default view for the receiver.
+	Scintilla is preferred when available, not least because it is much more performant as a scrolling output window than the simple Multiline Edit control."
 
-	aStream nextPutAll: 'System Transcript'!
+	^'Scintilla view'!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: 'System Transcript'!
 
 flashOnOutput
 	"Answer whether the Transcript should alert the user to output when it might not
@@ -468,7 +481,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 416 34 2 8 1143013700 262145 560 nil 466 #window nil 23 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 690 1 722 #selectAll 8 'Select &All' 8323 1 nil nil nil 690 1 722 #clearAll 8 'Clea&r' 1 1 770 nil true 816 8 'ClearDocument.ico' 864 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 690 1 722 #find 8 '&Find...' 9357 1 770 nil true 816 47 858 8 'shell32.dll' nil nil nil 690 1 722 #findNext 8 'Find &Next' 1253 1 770 nil true 816 8 'FindNext.ico' 864 nil nil 1026 4097 690 1 722 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 560 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil 8 '' 3 983302 ##(Smalltalk.MessageSequence) 138 144 34 4 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 560 1442 #contextMenu: 34 1 656 560 1442 #setMarginWidths: 34 1 8 #(3 3) 560 1442 #textLimit: 34 1 8 4294967295 560 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 27 170 192 34 2 560 8 'workspace' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 5 642 nil true 34 9 690 1 722 #fileNew 8 '&New Workspace' 9373 1 770 nil true 816 8 'NewWorkspace.ico' 864 nil nil 690 1 722 #fileOpen 8 '&Open Workspace...' 9375 1 770 nil true 816 8 'OpenWorkspace.ico' 864 nil nil 690 1 722 #fileFileIn 8 '&File In...' 1 1 nil nil nil 1026 4097 690 1 722 #saveImage 8 'Sa&ve Image' 1 1 770 nil true 816 8 'Snapshot.ico' 864 nil nil 690 1 722 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 690 1 722 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 1026 4097 690 1 722 #smalltalkExit 8 'E&xit Dolphin' 1 1 770 nil true 816 8 'PowerSwitch.ico' 864 nil nil 8 '&File' nil 134217729 nil nil 11677 nil nil 642 nil true 34 8 690 1 722 #cr 8 'New&line' 1 1 nil nil nil 1026 4097 690 1 722 #copySelection 8 '&Copy' 9351 1 770 nil true 816 8 'EditCopy.ico' 864 nil nil 690 1 722 #selectAll 8 'Select &All' 9347 1 nil nil nil 690 1 722 #clearAll 8 'Clea&r' 9393 1 770 nil true 816 8 'ClearDocument.ico' 864 nil nil 1026 4097 690 1 722 #editFind 8 '&Find...' 9357 1 770 nil true 816 47 1120 nil nil 690 1 722 #findNext 8 'Find &Next' 1253 1 770 nil true 816 8 'FindNext.ico' 864 nil nil 8 '&Edit' nil 134217729 nil nil 11691 nil nil 642 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 11693 nil nil 642 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 11695 nil nil 642 nil true 34 6 690 1 722 #help 8 '&Help on this tool' 1249 1 770 nil true 816 8 'Help.ico' 864 nil nil 1026 4097 690 1 722 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 690 1 722 #educationCenter 8 '&Education centre' 1 1 nil nil nil 1026 4097 690 1 722 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 11705 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1378 138 144 34 3 1442 #createAt:extent: 34 2 498 3839 21 498 1079 655 416 1442 #text: 34 1 8 'System Transcript' 416 1442 #updateMenuBar 8 #() 416 1650 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 154 9 0 0 81 1 0 0] 34 1 560 1712 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 578 1 610 #selectAll 8 'Select &All' 8323 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 1 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 578 1 610 #find 8 '&Find...' 9357 1 658 nil true 704 47 746 8 'shell32.dll' nil nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 914 4097 578 1 610 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 416 34 2 8 1143013700 262145 1232 nil 466 #window nil 23 nil nil nil 1232 nil 8 1892929408 852486 ##(Smalltalk.NullConverter) nil 8 '' 3 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 1232 1442 #setMarginWidths: 34 1 8 #(3 3) 1232 1442 #textLimit: 34 1 8 4294967295 1232 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 27 170 192 34 2 1232 8 'workspace' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 5 530 nil true 34 9 578 1 610 #fileNew 8 '&New Workspace' 9373 1 658 nil true 704 8 'NewWorkspace.ico' 752 nil nil 578 1 610 #fileOpen 8 '&Open Workspace...' 9375 1 658 nil true 704 8 'OpenWorkspace.ico' 752 nil nil 578 1 610 #fileFileIn 8 '&File In...' 1 1 nil nil nil 914 4097 578 1 610 #saveImage 8 'Sa&ve Image' 1 1 658 nil true 704 8 'Snapshot.ico' 752 nil nil 578 1 610 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 578 1 610 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 914 4097 578 1 610 #smalltalkExit 8 'E&xit Dolphin' 1 1 658 nil true 704 8 'PowerSwitch.ico' 752 nil nil 8 '&File' nil 134217729 nil nil 36919 nil nil 530 nil true 34 8 578 1 610 #cr 8 'New&line' 1 1 nil nil nil 914 4097 578 1 610 #copySelection 8 '&Copy' 9351 1 658 nil true 704 8 'EditCopy.ico' 752 nil nil 578 1 610 #selectAll 8 'Select &All' 9347 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 9393 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 914 4097 578 1 610 #editFind 8 '&Find...' 9357 1 658 nil true 704 47 1008 nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 8 '&Edit' nil 134217729 nil nil 36933 nil nil 530 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 36935 nil nil 530 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 36937 nil nil 530 nil true 34 6 578 1 610 #help 8 '&Help on this tool' 1249 1 658 nil true 704 8 'Help.ico' 752 nil nil 914 4097 578 1 610 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 578 1 610 #educationCenter 8 '&Education centre' 1 1 nil nil nil 914 4097 578 1 610 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 36947 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1378 138 144 34 3 1442 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 1442 #contextMenu: 34 1 544 416 1442 #text: 34 1 8 'System Transcript' 416 1618 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 1232 1680 nil 27 )!
 
 uninitialize
 	"Private - This is a singleton class so free the single instance to
@@ -480,6 +493,7 @@ uninitialize
 !TranscriptShell class categoriesFor: #default!instance creation!public! !
 !TranscriptShell class categoriesFor: #defaultExtent!options!public! !
 !TranscriptShell class categoriesFor: #defaultExtent:!options!public! !
+!TranscriptShell class categoriesFor: #defaultView!constants!public! !
 !TranscriptShell class categoriesFor: #displayOn:!displaying!public! !
 !TranscriptShell class categoriesFor: #flashOnOutput!options!public! !
 !TranscriptShell class categoriesFor: #flashOnOutput:!options!public! !

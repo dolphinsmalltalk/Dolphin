@@ -61,8 +61,8 @@ displayValue
 	value := self value.
 	^[value printString] on: Error
 		do: 
-			[:ex | 
-			self unableToDisplayVariableErrorFormatString 
+			[:ex |
+			self unableToDisplayVariableErrorFormatString
 				expandMacrosWith: 'self'
 				with: value class
 				with: ex description]!

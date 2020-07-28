@@ -13,7 +13,7 @@ TestCaseResult comment: 'Represents the results of executing an individual <Test
 
 captureDiagnostics: anException
 	| frame stackStream |
-	stackStream := String writeStream: 512.
+	stackStream := String smalltalkWriteStream: 512.
 	frame := anException raisingFrame.
 	ip := nil.
 	

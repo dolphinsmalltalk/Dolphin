@@ -101,9 +101,8 @@ denominator
 	^fraction denominator
 !
 
-displayOn: target
-	"Append, to the <puttableStream, aStream, a String whose characters are a 
-	representation of the receiver as a user would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| scaler quo num denom scaled |
 	scaler := scale exp10.
@@ -112,19 +111,19 @@ displayOn: target
 	scaled := (num * scaler + (denom bitShift: -1)) // denom.
 	num negative
 		ifTrue: 
-			[target nextPut: $-.
+			[aPuttableStream nextPut: $-.
 			scaled := scaled negated].
 	quo := scaled quo: scaler.
-	quo printOn: target.
+	quo printOn: aPuttableStream.
 	scale > 0
 		ifTrue: 
 			[| rem |
-			target nextPut: $..
+			aPuttableStream nextPut: $..
 			rem := scaled.
 			scale timesRepeat: 
 					[rem := (rem - (quo * scaler)) * 10.
 					quo := rem quo: scaler.
-					target nextPut: (Character digitValue: quo)]]!
+					aPuttableStream nextPut: (Character digitValue: quo)]]!
 
 divideIntoScaledDecimal: operand
 	"Private - Answer the result of dividing the known <ScaledDecimal>, operand, by the receiver."

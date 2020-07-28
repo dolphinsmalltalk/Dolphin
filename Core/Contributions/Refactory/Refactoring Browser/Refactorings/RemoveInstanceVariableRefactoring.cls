@@ -14,7 +14,7 @@ RemoveInstanceVariableRefactoring comment: ''!
 preconditions
 	| references |
 	references := RBCondition hierarchyOf: class referencesInstanceVariable: variableName.
-	class realClass isNil 
+	class realClass isNil
 		ifTrue: [references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName)]
 		ifFalse: 
 			[references

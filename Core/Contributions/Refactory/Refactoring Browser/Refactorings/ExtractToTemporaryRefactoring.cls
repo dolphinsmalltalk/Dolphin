@@ -12,20 +12,18 @@ ExtractToTemporaryRefactoring comment: ''!
 !ExtractToTemporaryRefactoring methodsFor!
 
 checkVariableName
-	(class whoDefinesInstanceVariable: newVariableName) notNil 
+	(class whoDefinesInstanceVariable: newVariableName) notNil
 		ifTrue: 
-			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
-						expandMacrosWith: class
+			[self refactoringError: ('<1p> defines an instance variable named <2s>' expandMacrosWith: class
 						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) notNil 
+	(class whoDefinesClassVariable: newVariableName) notNil
 		ifTrue: 
-			[self refactoringError: ('<1p> defines a class variabled named <2s>' 
-						expandMacrosWith: class
+			[self refactoringError: ('<1p> defines a class variabled named <2s>' expandMacrosWith: class
 						with: newVariableName)].
-	(self parseTree allDefinedVariables includes: newVariableName) 
+	(self parseTree allDefinedVariables includes: newVariableName)
 		ifTrue: 
-			[self refactoringError: ('<1s> is already a temporary variable name' 
-						expandMacrosWith: newVariableName)]!
+			[self
+				refactoringError: ('<1s> is already a temporary variable name' expandMacrosWith: newVariableName)]!
 
 compileNewMethod
 	class compileTree: self parseTree!

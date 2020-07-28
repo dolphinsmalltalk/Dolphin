@@ -1729,7 +1729,7 @@ getPerAdapterInfo: ifIndex
 				pOutBufLen: dwSize.
 	error == 0 
 		ifFalse: 
-			[Win32Error signal: 'Error retrieving per-adapter info for ' , ifIndex displayString with: error].
+			[Win32Error signal: 'Error retrieving per-adapter info for ' , ifIndex printString with: error].
 	^struct!
 
 GetPerAdapterInfo: ifIndex pPerAdapterInfo: pPerAdapterInfo pOutBufLen: pOutBufLen

@@ -705,10 +705,8 @@ printStringBase: anInteger
 	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix, without a radix prefix."
 
 	| aStream |
-	aStream := String writeStream: 16.
-	self
-		printOn: aStream
-		base: anInteger.
+	aStream := String smalltalkWriteStream: 16.
+	self printOn: aStream base: anInteger.
 	^aStream contents!
 
 printStringBase: baseInteger nDigits: lengthInteger
@@ -724,7 +722,7 @@ printStringRadix: anInteger
 	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix."
 
 	| aStream |
-	aStream := String writeStream: 16.
+	aStream := String smalltalkWriteStream: 16.
 	self
 		printOn: aStream
 		base: anInteger

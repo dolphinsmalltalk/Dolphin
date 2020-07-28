@@ -15,19 +15,16 @@ connectString
 	"Private - APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!!'"
 
 	^'DRIVER=SQL Server;Server=<1d>;Database=master;uid=<2d>;pwd=<3d>;Language=us_english'
-		expandMacrosWith: self serverName
-		with: self uid
-		with: self pwd!
+		expandMacrosWithArguments: {self serverName. self uid. self pwd}
+		locale: Locale invariant!
 
 createDatabase
 	| sql cmd process |
 	sql := (PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'Northwind.sql'.
 	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
-				expandMacrosWith: self serverName
-				with: self uid
-				with: self pwd
-				with: sql.
+				expandMacrosWithArguments: {self serverName. self uid. self pwd. sql}
+				locale: Locale invariant.
 	process := ExternalProcess new.
 	process commandLine: cmd.
 	^

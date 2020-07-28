@@ -126,24 +126,24 @@ onViewAvailable
 		styler: SmalltalkMethodStyler new;
 		textStyles: MethodWorkspace textStyles!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	(#(#browseIt #acceptClassChanges #acceptPackageChanges #removeClassChanges #removePackageChanges #inspectIt) 
-		includes: selector) 
+	(#(#browseIt #acceptClassChanges #acceptPackageChanges #removeClassChanges #removePackageChanges #inspectIt)
+		includes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: self change notNil.
 				^true].
-	(#(#acceptChanges #removeChanges) includes: selector) 
+	(#(#acceptChanges #removeChanges) includes: selector)
 		ifTrue: 
 			[| selected |
 			selected := self changes size.
 			aCommandQuery
 				isEnabled: selected > 0;
-				text: (aCommandQuery description expandMacrosWith: selected = 1).
+				text: (aCommandQuery description expandMacrosWithArguments: {selected = 1} locale: Locale smalltalk).
 			^true].
 	^super queryCommand: aCommandQuery!
 

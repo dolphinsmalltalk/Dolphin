@@ -179,7 +179,7 @@ infoTipForVariable: variableName
 	^idx isNil 
 		ifTrue: ['']
 		ifFalse: [
-			[(self variableAtIndex: idx) printString]
+			[(self variableAtIndex: idx) printStringLimitedTo: 200]
 				on: Error do: [:e | 'Value unavailable: ', e description]]!
 
 inspectIt
@@ -193,13 +193,13 @@ inspectReferences
 	"Open a new Inspector on all the objects which references the variable
 	selected in variablesModel."
 
-	variableNamesPresenter hasSelection 
+	variableNamesPresenter hasSelection
 		ifTrue: 
 			[| refs |
 			refs := self variable allReferences copyWithout: self.
-			refs isEmpty 
+			refs isEmpty
 				ifTrue: 
-					[MessageBox 
+					[MessageBox
 						notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: self variable)]
 				ifFalse: [refs inspect]]!
 
@@ -253,14 +253,14 @@ onVariableNameSelected
 			[var := self variable.
 			var debugPrintString] on: Error
 					do: 
-						[:e | 
+						[:e |
 						| name |
 						name := self variableName.
-						self unableToDisplayVariableErrorFormatString 
+						self unableToDisplayVariableErrorFormatString
 							expandMacrosWith: self variableName
 							with: var class
 							with: e description
-							with: (name isInteger 
+							with: (name isInteger
 									ifTrue: ['self at: ' , name displayString]
 									ifFalse: [self variableName , ' printString'])])!
 
@@ -273,7 +273,7 @@ onViewOpened
 		getInfoTipBlock: [:v | self infoTipForVariable: v];
 		selectionByIndex: 1!
 
-queryCommand: query 
+queryCommand: query
 	"Private - Enter details about a potential command for the receiver into the 
 	<CommandQuery>, query."
 
@@ -281,25 +281,25 @@ queryCommand: query
 	super queryCommand: query.
 	cmd := query commandSymbol.
 	hasSel := variableNamesPresenter hasSelection.
-	(#(#inspectReferences #basicInspectIt) includes: cmd) 
+	(#(#inspectReferences #basicInspectIt) includes: cmd)
 		ifTrue: 
 			[query isEnabled: hasSel.
 			^true].
-	#inspectIt == cmd 
+	#inspectIt == cmd
 		ifTrue: 
 			[query
 				isEnabled: hasSel;
 				isDefault: hasSel.
 			^true].
-	(#(#accept #nilVariable) includes: cmd) 
+	(#(#accept #nilVariable) includes: cmd)
 		ifTrue: 
 			[query isEnabled: (hasSel and: [self variableIndex > self headerSize]).
 			^true].
-	(#(#browseHierarchy #browseSystem #browseClass) identityIncludes: query command) 
+	(#(#browseHierarchy #browseSystem #browseClass) identityIncludes: query command)
 		ifTrue: 
 			[| class |
 			[hasSel ifTrue: [class := self browseObject class]] on: Error do: [:e | ].
-			class isNil 
+			class isNil
 				ifFalse: 
 					[query
 						isEnabled: (self respondsTo: #browseSystem);
@@ -309,11 +309,11 @@ queryCommand: query
 					[query
 						isEnabled: false;
 						text: query commandDescription menuText]].
-	cmd == #undo 
+	cmd == #undo
 		ifTrue: 
 			[query
 				beDisabled;
-				text: (query commandDescription menuText expandMacrosWith: '').
+				text: (query commandDescription menuText expandMacrosWithArguments: {''} locale: Locale smalltalk).
 			^true].
 	^false!
 

@@ -14,9 +14,9 @@ TestRunConsoleLogger comment: ''!
 finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
-		nextPutAll: ' in '.
-	aTestCaseResult duration printHumanReadableOn: stream.
-	stream cr!
+		nextPutAll: ' in ';
+		display: aTestCaseResult duration;
+		cr!
 
 finishedRun: aTestResult knownSlowTests: aCollection
 	| passed |
@@ -92,7 +92,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
-	aDuration printHumanReadableOn: stream.
+	aDuration displayOn: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
 		print: aCollection size;
@@ -101,7 +101,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 	newLaggards do: 
 			[:each |
 			stream tab.
-			each duration printHumanReadableOn: stream.
+			each duration displayOn: stream.
 			stream
 				tab;
 				print: each case;

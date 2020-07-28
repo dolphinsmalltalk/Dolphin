@@ -37,10 +37,10 @@ canSet
 
 	^self subject respondsTo: self putSelector!
 
-displayOn: aStream 
-	"Append a short textual description of the receiver to, aStream"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		display: subject;
 		nextPut: $[;
 		print: self key;

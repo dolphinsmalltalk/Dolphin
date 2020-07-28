@@ -80,11 +80,10 @@ declare: anObject
 
 	self declare value: anObject!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it (the qualified name)."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: self pathString!
+	aPuttableStream nextPutAll: self pathString!
 
 hash
 	"Answer the <integer> hash value for the receiver."

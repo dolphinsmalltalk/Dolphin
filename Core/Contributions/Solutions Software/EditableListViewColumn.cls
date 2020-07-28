@@ -103,9 +103,12 @@ displayForecolor
 		[Color grayText]!
 
 displayOn: aStream
-
 	super displayOn: aStream.
-	self hasEditor ifTrue: [aStream space; nextPutAll: self editor class name]!
+	self hasEditor
+		ifTrue: 
+			[aStream
+				space;
+				nextPutAll: self editor class name]!
 
 dropDownMenu: aMenu
 

@@ -127,10 +127,10 @@ pushDownMethods
 
 	^self pushMethods: false!
 
-pushMethods: aBoolean 
+pushMethods: aBoolean
 	"Pushes up or down the selected methods, depending on the <boolean> argument."
 
-	^presenter 
+	^presenter
 		performMethodsRefactoring: [:methods | self systemModel pushMethods: methods up: aBoolean]
 		name: ('Push Methods <1?Up:Down>' expandMacrosWith: aBoolean)!
 

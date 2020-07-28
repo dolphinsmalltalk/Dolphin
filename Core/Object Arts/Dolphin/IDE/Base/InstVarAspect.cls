@@ -24,8 +24,8 @@ displayAspectNameOf: anObject on: aStream
 		ifTrue: [aStream nextPutAll: 'self']
 		ifFalse: [aStream display: (self instVarName: anObject)]!
 
-displayAspectText: anObject on: aStream 
-	self key == 0 
+displayAspectText: anObject on: aStream
+	self key == 0
 		ifFalse: 
 			[aStream
 				display: (self instVarName: anObject);

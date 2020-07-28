@@ -84,11 +84,10 @@ description: aString
 
 	^self commandDescription description: aString!
 
-displayOn: aStream
-	"Appends the receiver to aStream as a representation that a 
-	user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: self description!
+	self description displayOn: aPuttableStream!
 
 id
 	"Answers the menu item identifier for the receiver. This is the command

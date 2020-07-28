@@ -12,9 +12,8 @@ AccessNorthwindDB comment: ''!
 !AccessNorthwindDB methodsFor!
 
 connectString
-	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWith: filename
-
-!
+	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWithArguments: {filename}
+		locale: Locale invariant!
 
 createDatabase
 	| source |

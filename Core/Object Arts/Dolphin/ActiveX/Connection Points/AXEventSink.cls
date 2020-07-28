@@ -149,12 +149,11 @@ traceEvent: aSymbol withArguments: anArray
 	"Private - Signal a notification (which if unhandled will be written to the current session's 
 	trace device, e.g. the Transcript) with details of the specified event."
 
-	Notification 
-		signal: ((String writeStream: 80)
-				nextPutAll: 'Event: '; 
-				print: aSymbol; 
-				nextPutAll: ' args: '; 
-				print: anArray; 
+	Notification signal: ((String smalltalkWriteStream: 80)
+				nextPutAll: 'Event: ';
+				print: aSymbol;
+				nextPutAll: ' args: ';
+				print: anArray;
 				contents)
 		with: self target!
 

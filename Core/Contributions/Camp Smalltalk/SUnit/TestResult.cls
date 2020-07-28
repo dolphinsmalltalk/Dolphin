@@ -50,21 +50,24 @@ displayAttributes: aCollection on: aStream
 						space;
 						display: each last]]!
 
-displayOn: aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
 	| runCount passedCount |
 	runCount := self runCount.
-	aStream
+	aPuttableStream
 		print: runCount;
 		nextPutAll: ' run in '.
-	duration printHumanReadableOn: aStream.
+	duration displayOn: aPuttableStream.
 	passedCount := self passedCount.
 	passedCount = runCount
 		ifFalse: 
-			[aStream
+			[aPuttableStream
 				nextPutAll: '; ';
 				print: passedCount;
 				nextPutAll: ' passed'.
-			self displayAttributes: #(#(#skipped) #(#failures 'failed') #(#errors 'error(s)')) on: aStream]!
+			self displayAttributes: #(#(#skipped) #(#failures 'failed') #(#errors 'error(s)'))
+				on: aPuttableStream]!
 
 duration
 	^duration!

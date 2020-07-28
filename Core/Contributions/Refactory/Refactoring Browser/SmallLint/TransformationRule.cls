@@ -32,13 +32,14 @@ checkMethod: aSmalllintContext
 			[(self class recursiveSelfRule executeTree: rewriteRule tree initialAnswer: false) 
 				ifFalse: 
 					[changes 
-						compile: rewriteRule tree printString
+						compile: rewriteRule tree fullPrintString
 						in: class
 						classified: aSmalllintContext protocols]]!
 
-displayOn: aStream 
-	#rbFix. "Added"
-	aStream nextPutAll: self name!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: self name!
 
 hasConflicts
 	^true!

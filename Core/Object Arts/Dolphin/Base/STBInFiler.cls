@@ -231,7 +231,9 @@ reset
 
 resetAndValidateStream
 	((self class peekForSignatureIn: stream) and: [self readVersion])
-		ifFalse: [STBError signal: ('Input stream not in <1s> format' expandMacrosWith: self class signature asAnsiString)].
+		ifFalse: 
+			[STBError
+				signal: ('Input stream not in <1s> format' expandMacrosWith: self class signature asAnsiString)].
 	version > self class version
 		ifTrue: 
 			[STBError

@@ -42,12 +42,10 @@ createSchematicWiring
 defaultHelpId
 	^10749!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	as a plugin within the Class Browser"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: 'Views'!
+	aPuttableStream nextPutAll: 'Views'!
 
 initialize
 	"Private - Initialize the receiver."

@@ -100,10 +100,19 @@ displayName
 
 	^self getStringInfo: LOCALE_SNATIVEDISPLAYNAME!
 
-displayOn: aStream
-	"Append a displayable representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: self name!
+	"If displaying the Locale in its own language, we can used its native name, or in the default UI language (most likely) we can use the localized name. Failing that we have to display it in English."
+
+	| targetLangId |
+	targetLangId := aPuttableStream locale languageId.
+	targetLangId == self languageId
+		ifTrue: [aPuttableStream nextPutAll: self displayName]
+		ifFalse: 
+			[targetLangId == self class uiDefault languageId
+				ifTrue: [aPuttableStream nextPutAll: self localizedDisplayName]
+				ifFalse: [aPuttableStream nextPutAll: self englishDisplayName]]!
 
 durationFormat
 	"Answer the format <String> used in this Locale (by default) for displaying a <Duration>.
@@ -245,6 +254,21 @@ infinity
 
 	^self getStringInfo: LOCALE_SPOSINFINITY!
 
+isInstalled
+	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
+
+	^self nlsLib isValidLocale: self lcid dwFlags: LCID_INSTALLED!
+
+iso639LanguageName
+	"The abbreviated (two-character) <String> name of the language of the primary language of the locale as defined in ISO-369."
+
+	^self getStringInfo: Win32Constants.LOCALE_SISO639LANGNAME!
+
+isValid
+	"Answer whether the receiver is a recognised (valid) Locale."
+
+	^self nlsLib isValidLocale: self lcid dwFlags: LCID_SUPPORTED!
+
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
 	For example if this is 2049, then 49 is interpreter as 2049, and 50 as 1950."
@@ -267,6 +291,11 @@ listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
 
 	^self getStringInfo: LOCALE_SLIST!
+
+localizedDisplayName
+	"Answer the <String> name of the Locale in the current UI language of the host system."
+
+	^self getStringInfo: LOCALE_SLOCALIZEDDISPLAYNAME!
 
 longDateFormat
 	"Answer the long date format for the receiver locale."
@@ -295,9 +324,10 @@ monthName: anInteger
 	^self getStringInfo: LOCALE_SMONTHNAME1 + anInteger - 1!
 
 name
-	"Answer the <String> name of the Locale in the current UI language of the host system."
+	"Answer the <String> unique name of the Locale, e.g. 'fr-FR'"
 
-	^self getStringInfo: LOCALE_SLOCALIZEDDISPLAYNAME!
+	lcid == LOCALE_CUSTOM_DEFAULT ifTrue: [^'default'].
+	^self tag!
 
 nameOfDay: anInteger
 	"Answer a String that is the localised full name of the day whose index is the argument, anInteger, where Monday is always 1 and Sunday is always 7."
@@ -343,6 +373,11 @@ numberGrouping
 
 	^self getStringInfo: LOCALE_SGROUPING!
 
+parentName
+	"The name of the parent Locale that should be used as a fallback for resource lookup."
+
+	^self getStringInfo: Win32Constants.LOCALE_SPARENT!
+
 percentSymbol
 	"Answer a <String> containing the percent symbol for this local."
 
@@ -353,14 +388,42 @@ pmDesignator
 
 	^self getStringInfo: LOCALE_SPM!
 
+primary
+	"Answer the primary language locale for this Locale. For example fr-Fr is the primary locale for all the various French locales such as fr-CA."
+
+	lcid == LOCALE_INVARIANT ifTrue: [^self].
+	lcid == LOCALE_CUSTOM_DEFAULT ifTrue: [^self class userDefault].
+	^Locale named: self parentName!
+
 printOn: aStream
 	"Append a debug representation of the receiver to aStream."
 
+	lcid == LOCALE_INVARIANT
+		ifTrue: 
+			[aStream
+				print: Locale;
+				space;
+				display: #invariant.
+			^self].
+	lcid == LOCALE_CUSTOM_DEFAULT
+		ifTrue: 
+			[aStream
+				print: Locale;
+				space;
+				display: #userDefault.
+			^self].
+	lcid == LOCALE_CUSTOM_UNSPECIFIED
+		ifTrue: 
+			[aStream basicPrint: self.
+			^self].
 	aStream
-		print: Locale; space;
-		display: #lcid:;
+		nextPut: $(;
+		print: Locale;
 		space;
-		print: self lcid!
+		display: #named:;
+		space;
+		print: self name;
+		nextPut: $)!
 
 shortAmDesignator
 	"Answer the short <String> used in the receiver locale to designate AM (morning)."
@@ -444,10 +507,14 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #hasLeadingZero!constants!public! !
 !WindowsLocale categoriesFor: #indexOfMonth:!enquiries!public! !
 !WindowsLocale categoriesFor: #infinity!constants!public! !
+!WindowsLocale categoriesFor: #isInstalled!public!testing! !
+!WindowsLocale categoriesFor: #iso639LanguageName!constants!public! !
+!WindowsLocale categoriesFor: #isValid!public!testing! !
 !WindowsLocale categoriesFor: #lastTwoDigitYear!constants!public! !
 !WindowsLocale categoriesFor: #lcid!accessing!public! !
 !WindowsLocale categoriesFor: #lcid:!initializing!private! !
 !WindowsLocale categoriesFor: #listSeparator!constants!public! !
+!WindowsLocale categoriesFor: #localizedDisplayName!constants!public! !
 !WindowsLocale categoriesFor: #longDateFormat!constants!public! !
 !WindowsLocale categoriesFor: #longDateFormats!constants!public! !
 !WindowsLocale categoriesFor: #longTimeFormat!constants!public! !
@@ -462,8 +529,10 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #negativeSign!constants!public! !
 !WindowsLocale categoriesFor: #nlsLib!constants!private! !
 !WindowsLocale categoriesFor: #numberGrouping!constants!public! !
+!WindowsLocale categoriesFor: #parentName!constants!public! !
 !WindowsLocale categoriesFor: #percentSymbol!constants!public! !
 !WindowsLocale categoriesFor: #pmDesignator!constants!public! !
+!WindowsLocale categoriesFor: #primary!printing!public! !
 !WindowsLocale categoriesFor: #printOn:!development!printing!public! !
 !WindowsLocale categoriesFor: #shortAmDesignator!constants!public! !
 !WindowsLocale categoriesFor: #shortDateFormat!constants!public! !
@@ -477,8 +546,18 @@ yearMonthFormat
 
 !WindowsLocale class methodsFor!
 
+named: aString
+	"Answer an instance of the receiver to represent the Locale with the specified name."
+
+	| kernel lcid |
+	kernel := KernelLibrary default.
+	lcid := kernel localeNameToLCID: aString asUtf16String dwFlags: 0.
+	lcid == 0 ifTrue: [kernel systemError].
+	^self lcid: lcid!
+
 reset
-	UserDefault := SystemDefault := nil!
+	SystemDefault := nil.
+	self userDefault: nil!
 
 systemLocales: anInteger 
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."
@@ -493,6 +572,7 @@ systemLocales: anInteger
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+!WindowsLocale class categoriesFor: #named:!instance creation!public! !
 !WindowsLocale class categoriesFor: #reset!initializing!private! !
 !WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
 

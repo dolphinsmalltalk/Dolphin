@@ -63,14 +63,14 @@ canPerformCodeRefactoring
 canRenameNode
 	^presenter canRefactor and: [presenter isModified not and: [self selectedNode notNil]]!
 
-changeSignature: aSymbol in: methodClass operation: aMonadicValuable title: titleString 
+changeSignature: aSymbol in: methodClass operation: aMonadicValuable title: titleString
 	presenter performMethodRenameRefactoring: 
-			[:method | 
-			(methodClass lookupMethod: aSymbol) 
+			[:method |
+			(methodClass lookupMethod: aSymbol)
 				ifNotNil: [:renamedMethod | presenter executeRefactoring: aMonadicValuable with: renamedMethod]
 				ifNil: 
-					[MessageBox errorMsg: ('<2p> is not defined in <1d>' expandMacrosWith: methodClass with: aSymbol)
-						caption: ('<3s> send of <2p> in <1p>...' 
+					[MessageBox errorMsg: ('<2p> is not defined in <1p>' expandMacrosWith: methodClass with: aSymbol)
+						caption: ('<3s> send of <2p> in <1p>...'
 								expandMacrosWith: methodClass
 								with: aSymbol
 								with: titleString).
@@ -127,27 +127,27 @@ declareAllUndeclaredVariablesAsTemps
 			var := ast whichNodeIsContainedBy: each range.
 			(var notNil and: [var isVariable]) ifTrue: [self declareTemporary: var]]!
 
-declareTemporary: aStVariableNode 
+declareTemporary: aStVariableNode
 	| tree body target insert |
 	#todo.	"Add the temp in the innermost scope?"
 	tree := self parseTree.
 	body := tree body.
-	body temporaries isEmpty 
+	body temporaries isEmpty
 		ifTrue: 
-			[body leftBar 
+			[body leftBar
 				ifNil: 
 					[| start |
 					start := body start.
 					target := start to: body start - 1.
 					insert := '| <1d> |<n><t>' expandMacrosWith: aStVariableNode name]
 				ifNotNil: 
-					[:value | 
+					[:value |
 					target := value + 1 to: body rightBar - 1.
 					insert := ' <1s> ' expandMacrosWith: aStVariableNode name]]
 		ifFalse: 
 			[target := body temporaries last stop + 1 to: body rightBar - 1.
 			insert := ' <1s> ' expandMacrosWith: aStVariableNode name].
-	(presenter view)
+	presenter view
 		targetRange: target;
 		replaceTarget: insert!
 
@@ -165,7 +165,7 @@ emitKeywordSignatureFor: aStMessageNode in: aClass on: aPuttableStream
 				space.
 			argName := argNameStem := self nameForArgument: arg.
 			x := 1.
-			[argNames includes: argName] whileTrue: [argName := argNameStem , (x := x + 1) displayString].
+			[argNames includes: argName] whileTrue: [argName := argNameStem , (x := x + 1) printString].
 			argNames add: argName.
 			aPuttableStream
 				nextPutAll: argName;
@@ -297,22 +297,22 @@ inlineTemporary
 
 	presenter performCodeRefactoring: [:method :node | self inlineTemporary: method in: node]!
 
-inlineTemporary: aCompiledMethod in: anStProgramNode 
+inlineTemporary: aCompiledMethod in: anStProgramNode
 	| assignment line result |
-	assignment := anStProgramNode isAssignment 
+	assignment := anStProgramNode isAssignment
 				ifTrue: [anStProgramNode]
 				ifFalse: 
 					[| assignments |
 					assignments := self findAssignmentsToTemp: anStProgramNode.
 					assignments isEmpty ifFalse: [assignments first]].
-	assignment isNil 
+	assignment isNil
 		ifTrue: 
 			[Sound warningBeep.
-			Notification 
+			Notification
 				signal: ('There are no assignments to <1p> to inline' expandMacrosWith: anStProgramNode name).
 			^nil].
 	line := presenter lineFromPosition: anStProgramNode sourceInterval start.
-	result := self systemModel 
+	result := self systemModel
 				inlineTemporary: assignment sourceInterval
 				from: aCompiledMethod selector
 				in: aCompiledMethod methodClass.
@@ -386,7 +386,7 @@ populateAutoCorrectMenu: aMenu
 	aMenu addCommand: (MessageSend receiver: self selector: #declareAllUndeclaredVariablesAsTemps)
 		description: 'Declare &All Undeclared Temps'!
 
-populateAutoCorrectMenu: aMenu forMessage: aStMessageNode 
+populateAutoCorrectMenu: aMenu forMessage: aStMessageNode
 	| implementMenu |
 	implementMenu := aMenu addSubmenu: ('&Implement <1p> In' expandMacrosWith: aStMessageNode selector).
 	self populateImplementMenu: implementMenu forMessage: aStMessageNode!
@@ -545,68 +545,74 @@ queryCommand: aCommandQuery command: aCommand
 			^true].
 	^self queryRenameCommand: aCommandQuery command: aCommand!
 
-queryRenameCommand: aCommandQuery command: aCommand 
+queryRenameCommand: aCommandQuery command: aCommand
 	| selector cmd |
 	selector := aCommand asSymbol.
 	cmd := aCommand.
-	#renameNode == selector 
+	#renameNode == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: false;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'Node').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Node'}
+							locale: Locale smalltalk).
 			cmd := self renameItCommand.
 			cmd isNil ifTrue: [^false].
 			selector := cmd asSymbol].
-	#renameVariable == selector 
+	#renameVariable == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: false;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'Variable').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Variable'}
+							locale: Locale smalltalk).
 			cmd := self renameVariableCommand: self selectedNode.
 			cmd isNil ifTrue: [^false].
 			selector := cmd asSymbol].
-	#renameMessage == selector 
+	#renameMessage == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: false;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'Message').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Message'}
+							locale: Locale smalltalk).
 			cmd := self renameMessageCommand.
 			cmd isNil ifTrue: [^false].
 			selector := cmd asSymbol].
-	#addParameterToMessage == selector 
+	#addParameterToMessage == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: false;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'Message').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Message'}
+							locale: Locale smalltalk).
 			cmd := self addParameterCommand.
 			cmd isNil ifTrue: [^false].
 			selector := cmd asSymbol].
 
 	"Handle the context sensitve rename node operation that has been identified."
-	#changeSignature:in:operation:title: == selector 
+	#changeSignature:in:operation:title: == selector
 		ifTrue: 
 			[| enable |
 			enable := self canRenameNode.
 			aCommandQuery isEnabled: enable.
-			enable 
+			enable
 				ifTrue: 
-					[(cmd arguments second lookupMethod: cmd arguments first) 
+					[(cmd arguments second lookupMethod: cmd arguments first)
 						ifNotNil: 
-							[:method | 
+							[:method |
 							aCommandQuery
 								isEnabled: true;
-								text: (aCommandQuery commandDescription menuText expandMacrosWith: method)]].
+								text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {method}
+											locale: Locale smalltalk)]].
 			^true].
-	(#(#renameInstanceVariable: #renameClassVariable: #renameTemporary: #renameClass:) 
-		identityIncludes: selector) 
+	(#(#renameInstanceVariable: #renameClassVariable: #renameTemporary: #renameClass:)
+		identityIncludes: selector)
 			ifTrue: 
 				[| enable |
 				enable := self canRenameNode.
 				aCommandQuery isEnabled: enable.
-				enable 
+				enable
 					ifTrue: 
-						[aCommandQuery text: (aCommandQuery commandDescription menuText 
-									expandMacrosWith: self selectedNode name printString)].
+						[aCommandQuery text: (aCommandQuery commandDescription menuText
+									expandMacrosWithArguments: {self selectedNode name printString}
+									locale: Locale smalltalk)].
 				^true].
 	^false!
 
@@ -748,20 +754,20 @@ selectedMethod
 selectedNode
 	^presenter selectedNode!
 
-stubTextFor: aStMessageNode inClass: aClass 
+stubTextFor: aStMessageNode inClass: aClass
 	| source body argc |
-	source := String writeStream: 128.
+	source := String smalltalkWriteStream: 128.
 	body := '^Error notYetImplemented'.
 	argc := aStMessageNode argumentCount.
-	argc == 0 
+	argc == 0
 		ifTrue: 
 			[source nextPutAll: aStMessageNode selector.
-			(aClass allInstVarNames includes: aStMessageNode selector asString) 
+			(aClass allInstVarNames includes: aStMessageNode selector asString)
 				ifTrue: [body := '^<1s>' expandMacrosWith: aStMessageNode selector]]
 		ifFalse: 
-			[argc == 1 
+			[argc == 1
 				ifTrue: 
-					[aStMessageNode selector isInfix 
+					[aStMessageNode selector isInfix
 						ifTrue: 
 							[source
 								nextPutAll: aStMessageNode selector;
@@ -769,15 +775,15 @@ stubTextFor: aStMessageNode inClass: aClass
 								nextPutAll: aStMessageNode arguments first name]
 						ifFalse: 
 							[| name argNames |
-							argNames := self 
+							argNames := self
 										emitKeywordSignatureFor: aStMessageNode
 										in: aClass
 										on: source.
 							name := aStMessageNode selector allButLast.
-							(aClass allInstVarNames includes: name) 
+							(aClass allInstVarNames includes: name)
 								ifTrue: [body := '<1s> := <2s>' expandMacrosWith: name with: argNames first]]]
 				ifFalse: 
-					[self 
+					[self
 						emitKeywordSignatureFor: aStMessageNode
 						in: aClass
 						on: source]].

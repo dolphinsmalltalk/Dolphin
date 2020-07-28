@@ -176,7 +176,7 @@ beRunning
 	process debugger: self.
 	flags := flags maskSet: RunMask!
 
-blockedRestartWarning: message 
+blockedRestartWarning: message
 	"Private - There seems to be a later callback from the outside world which needs to return
 	before the debugged process can unwind an earlier callback. Refresh the display to show
 	where it is blocked, and then warn the user, giving them the opportunity to bang out."
@@ -188,7 +188,7 @@ blockedRestartWarning: message
 	mb buttonStyle: #okCancel.
 	mb caption: ('Restarting <1p>>><2s>...' expandMacrosWith: message receiver class name
 				with: message selector).
-	resp := mb 
+	resp := mb
 				warning: 'The stack unwind required to restart this frame is currently blocked, probably due to a Debugger or dialog opened after this one.
 
 To allow the restart to complete, you will need to find and close any such windows, in the meantime this debugger will be disabled.
@@ -524,7 +524,7 @@ emitKeywordSignatureFor: aMessage in: aClass on: aPuttableStream
 				space.
 			argName := argNameStem := self nameForArgument: arg.
 			x := 1.
-			[argNames includes: argName] whileTrue: [argName := argNameStem , (x := x + 1) displayString].
+			[argNames includes: argName] whileTrue: [argName := argNameStem , (x := x + 1) printString].
 			argNames add: argName.
 			aPuttableStream
 				nextPutAll: argName;
@@ -604,10 +604,10 @@ inspectReferences
 
 	| refs |
 	refs := temp allReferences copyWithout: self.
-	refs isEmpty 
+	refs isEmpty
 		ifTrue: 
-			[MessageBox 
-				notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: tempsPresenter selection first)]
+			[MessageBox notify: ('There are no additional references to:<n><t><1p>'
+						expandMacrosWith: tempsPresenter selection first)]
 		ifFalse: [refs inspect]!
 
 isAnimating
@@ -1638,19 +1638,19 @@ stepOver
 	self makeDebugFrame: frame sender.
 	self resume!
 
-stubTextFor: aMessage inClass: aClass 
+stubTextFor: aMessage inClass: aClass
 	| source body |
-	source := String writeStream: 128.
+	source := String smalltalkWriteStream: 128.
 	body := '^Error notYetImplemented'.
-	aMessage argumentCount == 0 
+	aMessage argumentCount == 0
 		ifTrue: 
 			[source nextPutAll: aMessage selector.
-			(aClass allInstVarNames includes: aMessage selector asString) 
+			(aClass allInstVarNames includes: aMessage selector asString)
 				ifTrue: [body := '^<1s>' expandMacrosWith: aMessage selector]]
 		ifFalse: 
-			[aMessage argumentCount == 1 
+			[aMessage argumentCount == 1
 				ifTrue: 
-					[aMessage selector isInfix 
+					[aMessage selector isInfix
 						ifTrue: 
 							[source
 								nextPutAll: aMessage selector;
@@ -1658,15 +1658,15 @@ stubTextFor: aMessage inClass: aClass
 								nextPutAll: (self nameForArgument: aMessage arguments first)]
 						ifFalse: 
 							[| name argNames |
-							argNames := self 
+							argNames := self
 										emitKeywordSignatureFor: aMessage
 										in: aClass
 										on: source.
 							name := aMessage selector allButLast.
-							(aClass allInstVarNames includes: name) 
+							(aClass allInstVarNames includes: name)
 								ifTrue: [body := '<1s> := <2s>' expandMacrosWith: name with: argNames first]]]
 				ifFalse: 
-					[self 
+					[self
 						emitKeywordSignatureFor: aMessage
 						in: aClass
 						on: source]].
@@ -1811,7 +1811,7 @@ updateTemporaries
 
 	"Add any extra used stack slots onto the variables list"
 	base := frame index + frame frameSize.
-	0 to: extra - 1 do: [:i | varList addLast: {'_stack' , i displayString. process at: base + i}].
+	0 to: extra - 1 do: [:i | varList addLast: {'_stack' , i printString. process at: base + i}].
 	frame method evaluationPools
 		ifNotNil: 
 			[:evalPools |
@@ -2037,12 +2037,10 @@ defaultStackDepth
 defaultStackDepth: anInteger
 	DefaultStackDepth := anInteger!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Debugger'
-!
+	aPuttableStream nextPutAll: 'Debugger'!
 
 enableDynamicMenus
 	"Answer whether dynamic menus can be used in instances of the receiver. These can be

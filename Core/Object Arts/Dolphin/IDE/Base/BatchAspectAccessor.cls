@@ -18,12 +18,12 @@ aspectClass
 batchSize
 	^self aspectDescriptor batchSize!
 
-displayOn: aStream 
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	self batchSize > 1 
-		ifTrue: [aStream display: ('next <1d> items' expandMacrosWith: self batchSize)]
-		ifFalse: [aStream display: 'next item']!
+	self batchSize > 1
+		ifTrue: ['next <1d> items' expandMacrosWithArguments: {self batchSize} on: aPuttableStream]
+		ifFalse: [aPuttableStream nextPutAll: 'next item']!
 
 keys
 	^self aspectDescriptor keys!

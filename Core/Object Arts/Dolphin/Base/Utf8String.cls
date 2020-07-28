@@ -298,7 +298,7 @@ encodedAt: anInteger put: aCharacter
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
 
 	| c |
 	c := self basicAt: anInteger.

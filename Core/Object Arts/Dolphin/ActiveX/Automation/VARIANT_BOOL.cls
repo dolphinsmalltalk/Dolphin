@@ -18,6 +18,11 @@ asBoolean
 
 	^self value!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	(self isNull ifFalse: [aPuttableStream locale variantBool: self value]) displayOn: aPuttableStream!
+
 value
 	"Answer the receiver's value field as a Smalltalk <Boolean>."
 
@@ -29,6 +34,7 @@ value: anObject
 
 	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
 !VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
+!VARIANT_BOOL categoriesFor: #displayOn:!printing!public! !
 !VARIANT_BOOL categoriesFor: #value!accessing!public! !
 !VARIANT_BOOL categoriesFor: #value:!accessing!public! !
 

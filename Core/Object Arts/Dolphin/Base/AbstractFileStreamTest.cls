@@ -67,6 +67,9 @@ readWriteStreamOnString: aString
 setUp
 	tempFileName := File temporaryFilename!
 
+streamClassSupportsPointers
+	^false!
+
 streamOnBytes: aByteArray type: aSymbol
 	filestream notNil ifTrue: [filestream close].
 	(File
@@ -410,6 +413,7 @@ writeableCollections
 !AbstractFileStreamTest categoriesFor: #randomData2!constants!private! !
 !AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #setUp!public!running! !
+!AbstractFileStreamTest categoriesFor: #streamClassSupportsPointers!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #strings!constants!private! !

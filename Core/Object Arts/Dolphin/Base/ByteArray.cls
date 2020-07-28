@@ -269,9 +269,6 @@ encodedAt: anInteger put: anObject
 	self at: anInteger put: anObject.
 	^anInteger!
 
-encoding
-	^#binary!
-
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision).
 	N.B. To access a double precision value (e.g. a C double) use #doubleAtOffset:"
@@ -427,7 +424,11 @@ printHexString
 
 printOn: aStream
 	aStream nextPutAll: '#['.
-	self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+	self do: 
+			[:each |
+			"Use the optimized SmallInteger>>printString"
+			aStream nextPutAll: each printString]
+		separatedBy: [aStream space].
 	aStream nextPut: $]!
 
 qwordAtOffset: anInteger
@@ -738,7 +739,6 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!ByteArray categoriesFor: #encoding!constants!encode/decode!private! !
 !ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #hash!comparing!primitives!public! !
@@ -791,6 +791,9 @@ empty
 	"Answer an empty (zero length) instance of the receiver."
 
 	^#[]!
+
+encoding
+	^#binary!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger
@@ -845,6 +848,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	^answer! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
 !ByteArray class categoriesFor: #empty!instance creation!public! !
+!ByteArray class categoriesFor: #encoding!constants!public! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
 !ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !

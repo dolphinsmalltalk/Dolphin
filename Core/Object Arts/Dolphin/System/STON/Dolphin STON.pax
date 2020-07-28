@@ -263,18 +263,10 @@ stonOn: stonWriter
 
 	| stream offset |
 	stream := String writeStream: 15.
-	Locale invariant
-		printDate: self
-		on: stream
-		format: 'yyyy-MM-dd'.
+	stream locale: Locale invariant.
+	self printOn: stream format: 'yyyy-MM-dd'.
 	offset := Locale timeZoneInformation offsetSeconds.
-	offset = 0
-		ifTrue: [stream nextPut: $Z]
-		ifFalse: 
-			[Locale invariant
-				printDuration: offset seconds
-				on: stream
-				format: '+hh:mm'].
+	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].
 	stonWriter writeObject: self listSingleton: stream grabContents! !
 !Date categoriesFor: #stonOn:!public!ston! !
 

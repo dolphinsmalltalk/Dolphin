@@ -173,7 +173,7 @@ errorIntegerMoreThan32Bits: anInteger
 	as a 32-bit two's complement integer (it's too 'large')."
 
 	^self
-		error: ('<1d> is too large for 32-bit two''s complement representation.' expandMacrosWith: anInteger)!
+		error: ('<1p> is too large for 32-bit two''s complement representation.' expandMacrosWith: anInteger)!
 
 fullVersion
 	"Answer a String which describes the full name and version number of the VM."

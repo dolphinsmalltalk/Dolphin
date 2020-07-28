@@ -43,6 +43,11 @@ maxSize
 streamClass
 	^FileStream!
 
+streamClassSupportsUtf16
+	"Streaming strings to/from FileStreams in UTF-16 encoding is not currently implemented."
+
+	^false!
+
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -50,7 +55,7 @@ streamOn: aString
 	stream := self streamWith: aString.
 	name := stream name.
 	stream close.
-	^self streamClass read: name text: aString isString!
+	^self streamClass read: name type: aString encoding!
 
 streamOnFile: pathString type: aSymbol
 	^FileStream read: pathString type: aSymbol!
@@ -189,6 +194,7 @@ testWritePastEnd
 !FileStreamTest categoriesFor: #maxPosition!constants!private! !
 !FileStreamTest categoriesFor: #maxSize!constants!private! !
 !FileStreamTest categoriesFor: #streamClass!helpers!private! !
+!FileStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
 !FileStreamTest categoriesFor: #streamOn:!helpers!private! !
 !FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !

@@ -20,14 +20,13 @@ addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
 definitionMessage
 	| classType |
 	#rbFix.	"Factored out from #transform, and allow for indexed/byte superclasses and for nil superclass."
-	classType := superclass isNil 
+	classType := superclass isNil
 				ifTrue: ['subclass']
 				ifFalse: 
-					[superclass isPointers 
-						ifTrue: 
-							[superclass isVariable ifTrue: ['variableSubclass'] ifFalse: ['subclass']]
+					[superclass isPointers
+						ifTrue: [superclass isVariable ifTrue: ['variableSubclass'] ifFalse: ['subclass']]
 						ifFalse: ['variableByteSubclass']].
-	^'<1p> <2s>: #<3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>' 
+	^'<1p> <2s>: #<3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
 		expandMacrosWith: superclass
 		with: classType
 		with: className

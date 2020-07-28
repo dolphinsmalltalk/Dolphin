@@ -39,12 +39,11 @@ defaultBatchSize
 	^500
 !
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	within the Flipper Inspector"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed within the Flipper Inspector"
 
-	aStream nextPutAll: 'Instance Variables'!
+	aPuttableStream nextPutAll: 'Instance Variables'!
 
 getInstVarAccessorsOf: anInstVarAccessor 
 	"Private - Answers an <Array> of  <InstVarAccessors> to show as children of anInstVarAccessor"
@@ -120,20 +119,20 @@ refresh
 		expand: accessor;
 		selectionOrNil: accessor!
 
-selectAspect: anAspectAccessor 
+selectAspect: anAspectAccessor
 	| var |
 	var := [anAspectAccessor value] on: Error do: [:ex | ex].
 	sourcePresenter evaluationContext: var.
 	sourcePresenter text: ([var printString] on: Error
 				do: 
-					[:e | 
+					[:e |
 					| name |
 					name := anAspectAccessor name.
-					self unableToDisplayVariableErrorFormatString 
+					self unableToDisplayVariableErrorFormatString
 						expandMacrosWith: name
 						with: var class
 						with: e description
-						with: (name isInteger ifTrue: ['self basicAt: ' , name displayString] ifFalse: [name])])!
+						with: (name isInteger ifTrue: ['self basicAt: ' , name printString] ifFalse: [name])])!
 
 setAspectValue: anObject
 	"Private - Set the value associated with the currently selected

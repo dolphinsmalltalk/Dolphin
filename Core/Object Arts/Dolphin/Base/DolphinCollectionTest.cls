@@ -24,13 +24,13 @@ collectionClass
 newCollection: aCollection
 	^self collectionClass withAll: (self assimilateElements: aCollection)!
 
-shouldnt: aNiladicBlock implement: aSymbol 
-	self 
+shouldnt: aNiladicBlock implement: aSymbol
+	self
 		should: aNiladicBlock
 		raise: Error
 		matching: 
-			[:ex | 
-			ex description 
+			[:ex |
+			ex description
 				= ('<1p> should not implement <2p>' expandMacrosWith: self collectionClass with: aSymbol)]!
 
 testAllSatisfy

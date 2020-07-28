@@ -20,9 +20,8 @@ Instance Variables:
 leftToRight: aNumber
 	"Answers the result of converting aNumber to a String"
 
-	#todo "Number>>displayString should use GetNumberFormat() to produce locale specific output (add to Locale class)".
-
-	^aNumber displayString.!
+	#todo.	"Numbers should be displayed through the Locale, but at present the rightToLeft operation is only implemented for Smalltalk format."
+	^aNumber displayString!
 
 rightToLeft: aString
 	"Answers the result of converting aString to a Number."

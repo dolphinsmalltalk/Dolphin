@@ -44,12 +44,10 @@ description
 	^self getUserType: 1 "USERCLASSTYPE_FULL"
 !
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self name displayOn: aStream
-!
+	self name displayOn: aPuttableStream!
 
 getUserType: form
 	"Private - Answer <readableString> user class type information of the type

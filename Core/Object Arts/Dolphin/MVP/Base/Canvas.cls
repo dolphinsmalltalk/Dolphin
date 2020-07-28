@@ -429,9 +429,7 @@ getPixel: aPoint
 handle
 	"Answer the receiver's handle."
 
-	^self asParameter.
-
-	#todo "Remove this"!
+	^self asParameter!
 
 height
 	^self getDeviceCaps: VERTRES!

@@ -48,6 +48,22 @@ testAXRecords
 			self assert: elem x equals: i.
 			self assert: elem y equals: i]!
 
+testBoolDisplayString
+	| subject actual |
+	subject := self arrayClass length: 2 elementClass: VARIANT_BOOL.
+	subject at: 1 put: false.
+	subject at: 2 put: true.
+	actual := String streamContents: 
+					[:stream |
+					stream locale: (Locale named: 'en').
+					subject displayOn: stream].
+	self assert: actual equals: '(False, True)'.
+	actual := String streamContents: 
+					[:stream |
+					stream locale: (Locale named: 'es').
+					subject displayOn: stream].
+	self assert: actual equals: '(Falso; Verdadero)'!
+
 testBounds
 	| subject |
 	subject := SAFEARRAY length: 3 elementClass: SDWORD.
@@ -163,6 +179,7 @@ threePoints: recordClass
 !SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
 !SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
 !SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
+!SAFEARRAYTest categoriesFor: #testBoolDisplayString!public! !
 !SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
 !SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
 !SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !

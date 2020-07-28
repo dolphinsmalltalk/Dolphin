@@ -27,10 +27,10 @@ a key and a value. It is used for the elements of Dictionaries.'!
 			[self species == anAssociation species
 				and: [key = anAssociation key and: [value = anAssociation value]]]!
 
-displayOn: aStream
-	"Append a short textual description of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		display: key;
 		nextPutAll: ' -> ';
 		display: value!
@@ -78,12 +78,19 @@ owningPackage: aPackage
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				print: key;
 				nextPutAll: ' -> ';
 				print: value]!
+
+printString
+	"Answer a <readableString> whose characters are a description of the receiver as a developer would want to see it."
+
+	"Implementation Note: Override back to implementation that limits possible output, as Associations can go recursive and/or contain large strings, etc."
+
+	^self printStringLimitedTo: 2000!
 
 setKey: aKey
 	<mutable>
@@ -116,6 +123,7 @@ value: aValue
 !Association categoriesFor: #key:value:!initializing!public! !
 !Association categoriesFor: #owningPackage:!accessing!development!public! !
 !Association categoriesFor: #printOn:!printing!public! !
+!Association categoriesFor: #printString!printing!public! !
 !Association categoriesFor: #setKey:!accessing!private! !
 !Association categoriesFor: #setValue:!accessing!private! !
 !Association categoriesFor: #value!accessing!public! !

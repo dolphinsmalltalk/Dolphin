@@ -52,11 +52,11 @@ addClassVariable: aString to: aClass
 		variables: {aClass -> aString}
 		within: self systemEnvironment!
 
-addClassVariableTo: aClass 
+addClassVariableTo: aClass
 	"Implements the Add Class Variable class refactoring."
 
 	| varName |
-	varName := self 
+	varName := self
 				promptForClassVarName: ''
 				in: aClass
 				prompt: 'Please enter a name for the new variable:'
@@ -78,11 +78,11 @@ addInstanceVariable: aString to: aClass
 		variables: {aClass -> aString}
 		within: self systemEnvironment!
 
-addInstanceVariableTo: aClass 
+addInstanceVariableTo: aClass
 	"Implements the Add Instance Variable class refactoring."
 
 	| varName |
-	varName := self 
+	varName := self
 				promptForInstVarName: ''
 				in: aClass
 				prompt: 'Please enter a name for the new variable:'
@@ -110,7 +110,7 @@ addParameterToMethod: aCompiledMethod
 		inPackages: #()
 		caption: 'Add Parameter to <1p>>><2d>...'!
 
-addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString 
+addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString
 	| args argc newName caption suffix newArg selector initializer model refactoring |
 	newName := RBScopedMethodName fromMethod: aCompiledMethod.
 	args := newName arguments.
@@ -123,11 +123,11 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	selector := aCompiledMethod selector.
 	newName selector: (argc == 0 ifTrue: [selector , ':'] ifFalse: [selector]).
 	caption := aString expandMacrosWith: aCompiledMethod methodClass name with: selector.
-	newName := ((aCollectionOfPackages isEmpty 
+	newName := ((aCollectionOfPackages isEmpty
 				ifTrue: [RenameMethodDialog]
 				ifFalse: 
 					[newName addScope: (BrowserEnvironment new forPackages: aCollectionOfPackages) name: #'Package(s)'.
-					MethodNameDialog]) 
+					MethodNameDialog])
 					createOn: newName)
 				allowParameterReordering: false;
 				allowParameterRename: false;
@@ -139,12 +139,12 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 
 	"Prompt for an initializer until it either passes muster or the user cancels"
 	
-	[initializer := self 
+	[initializer := self
 				promptForInitializationExpression: initializer
 				in: aCompiledMethod methodClass
 				caption: caption.
 	(initializer isNil or: [initializer isEmpty]) ifTrue: [^nil].
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: newName originalSelector
 				in: newName methodClass
@@ -154,11 +154,11 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	[refactoring verifyInitializationExpression.
 	true] on: self refactoringError
 			do: 
-				[:ex | 
+				[:ex |
 				| errorString |
 				errorString := 'Error in proposed initializer:<n><n><t><1d>' expandMacrosWith: ex.
 				MessageBox errorMsg: errorString caption: caption.
-				false]] 
+				false]]
 			whileFalse.
 	^self handleRefactoringException: 
 			[model name: refactoring displayString.
@@ -431,18 +431,18 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				from: aSelector
 				in: aClass) execute]!
 
-handleRefactoringError: ex 
+handleRefactoringError: ex
 	| text caption |
 	text := ex messageText.
 	caption := '<1d>...' expandMacrosWith: ex refactoring.
-	ex isResumable 
+	ex isResumable
 		ifTrue: 
-			[(MessageBox confirm: (text last == $? 
+			[(MessageBox confirm: (text last == $?
 						ifTrue: [ex messageText]
 						ifFalse: ['<1s><n><n>Do you want to proceed?' expandMacrosWith: ex messageText])
 				caption: caption) ifTrue: [ex resume]]
 		ifFalse: 
-			[ex hasTag 
+			[ex hasTag
 				ifTrue: [(MessageBox confirm: text caption: caption) ifTrue: [ex tag value]]
 				ifFalse: [MessageBox warning: text caption: caption]].
 	^ex return!
@@ -547,25 +547,25 @@ isValidInstanceVariableName: aString for: aClass
 		& (RBCondition hierarchyOf: aClass definesVariable: aString) not 
 			& (RBCondition isGlobal: aString in: (RBNamespace onEnvironment: self systemEnvironment)) not) check!
 
-moveAllTempsToInnerScope: aBrowserEnvironment 
+moveAllTempsToInnerScope: aBrowserEnvironment
 	| model errorCount |
 	model := RBNamespace onEnvironment: aBrowserEnvironment.
 	errorCount := 0.
 	
-	[model 
-		allClassesDo: [:eachClass | errorCount := errorCount + (self moveAllTempsToInnerScopeIn: eachClass)]] 
+	[model
+		allClassesDo: [:eachClass | errorCount := errorCount + (self moveAllTempsToInnerScopeIn: eachClass)]]
 			on: self refactoringAborted
 			do: [:ex | ^self].
 	model name: 'Move All Temps To Inner Scope'.
-	errorCount > 0 
+	errorCount > 0
 		ifTrue: 
 			[| mb |
 			mb := MessageBox new.
 			mb buttonStyle: #okCancel.
 			mb caption: model name.
-			(mb 
-				warning: ('<1d> non-fatal errors occured while constructing the refactoring. Please see Transcript for further details.<n><n>If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.<n><n>Press OK to proceed, or Cancel to abort.' 
-						expandMacrosWith: errorCount)) 
+			(mb
+				warning: ('<1p> non-fatal errors occured while constructing the refactoring. Please see Transcript for further details.<n><n>If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.<n><n>Press OK to proceed, or Cancel to abort.'
+						expandMacrosWith: errorCount))
 					== #cancel ifTrue: [^self]].
 	self changeManager performChange: model changes!
 
@@ -589,46 +589,46 @@ moveAllTempsToInnerScopeIn: anRBClass
 	change changes: allChanges.
 	^errorCount!
 
-moveAllTempsToInnerScopeIn: anRBClass selector: aSelector 
+moveAllTempsToInnerScopeIn: anRBClass selector: aSelector
 	| i errorCount notifyError |
 	i := 1.
 	errorCount := 0.
 	notifyError := 
-			[:action :description | 
-			Notification signal: ('Error <1d> <2p>>><3d>: <4s>' 
+			[:action :description |
+			Notification signal: ('Error <1d> <2p>>><3p>: <4s>'
 						expandMacrosWith: action
 						with: anRBClass
 						with: aSelector
 						with: description)].
 	
 	[| nextTemp parseTree temps |
-	parseTree := SmalltalkParser 
+	parseTree := SmalltalkParser
 				parseMethod: (anRBClass sourceCodeFor: aSelector)
 				in: anRBClass realClass
 				onError: 
-					[:message :pos | 
+					[:message :pos |
 					notifyError value: 'parsing' value: message.
 					^errorCount + 1].
 	temps := parseTree allTemporaryVariableNodes.
 	nextTemp := temps at: i ifAbsent: [^errorCount].
 	
-	[(MoveVariableDefinitionRefactoring 
+	[(MoveVariableDefinitionRefactoring
 		model: anRBClass model
 		bindTight: nextTemp sourceInterval
 		in: anRBClass
-		selector: aSelector) primitiveExecute] 
+		selector: aSelector) primitiveExecute]
 			on: self refactoringError
 			do: 
-				[:ex | 
+				[:ex |
 				errorCount := errorCount + 1.
 				i := i + 1.
 				notifyError value: 'refactoring' value: ex description.
 				ex return]
 			on: self refactoringAborted
 			do: 
-				[:ex | 
+				[:ex |
 				"Most likely temp already bound as tightly as possible - ignore it"
-				i := i + 1]] 
+				i := i + 1]]
 			repeat!
 
 moveTempToInnerScope: anInterval in: aClass selector: aSelector 
@@ -914,7 +914,7 @@ removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
-removeMethodsDuplicatedInSuperclassOf: aClass 
+removeMethodsDuplicatedInSuperclassOf: aClass
 	"Private - Identify all methods of the <Behavior>, aClass, that have an equivalent definition in a superclass,
 	list them for the user, and remove them depending on the response. Answers whether there were
 	actually any duplicate methods, regardless of whether they were removed."
@@ -922,36 +922,36 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 	| duplicated msg |
 	duplicated := self duplicateSuperclassMethodsOf: aClass.
 	duplicated isEmpty ifTrue: [^false].
-	msg := String writeStream.
-	msg
-		nextPutAll: ('<1p> duplicates the following methods of its superclass(es):' expandMacrosWith: aClass);
-		cr.
+	msg := String smalltalkWriteStream.
+	'<1p> duplicates the following methods of its superclass(es):' expandMacrosWithArguments: {aClass}
+		on: msg.
+	msg cr.
 	duplicated := duplicated asSortedCollection: [:a :b | a printString < b printString].
 	duplicated do: 
-			[:each | 
+			[:each |
 			msg
 				crtab;
 				print: each].
 	msg
 		cr;
-		cr;
-		nextPutAll: ('Would you like to remove the duplicates from <1p>?' expandMacrosWith: aClass).
-	(MessageBox confirm: msg contents caption: 'Remove Duplicate Methods...') 
+		cr.
+	'Would you like to remove the duplicates from <1p>?' expandMacrosWithArguments: {aClass} on: msg.
+	(MessageBox confirm: msg contents caption: 'Remove Duplicate Methods...')
 		ifTrue: 
 			[self handleRefactoringException: 
-					[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass) 
+					[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass)
 						execute]].
 	^true!
 
-removeMethodsIn: methodsEnvironment within: searchEnvironment 
-	(MessageBox new)
+removeMethodsIn: methodsEnvironment within: searchEnvironment
+	MessageBox new
 		caption: 'Remove Methods...';
 		defaultButton: 2;
-		confirm: ('Are you sure you would like to remove <1d>?
+		confirm: ('Are you sure you would like to remove <1p>?
 
 Press Yes to remove all methods regardless of whether they are referenced.
 Press No to remove only those methods that are unreferenced.
-Press Cancel to abort the operation.' 
+Press Cancel to abort the operation.'
 					expandMacrosWith: methodsEnvironment)
 			onYes: [self removeMethodsIn: methodsEnvironment]
 			onNo: [self safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment]
@@ -998,14 +998,14 @@ renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironme
 		classVariable: false
 		within: aBrowserEnvironment!
 
-renameMethod: aCompiledMethod 
+renameMethod: aCompiledMethod
 	"Implement the 'Rename' method refactoring: 'Renames all implementors of a method, all senders, 
 	and all symbols references. In addition to strict renaming, it also allows you to rearrange the parameters. 
 	However, when rearranging the parameters, it cannot permute any symbols that are performed.'
 	Answer the new selector, or nil if no rename actually took place."
 
 	| newName |
-	newName := self 
+	newName := self
 				promptForMethodRename: aCompiledMethod
 				caption: ('Rename <1p> ...' expandMacrosWith: aCompiledMethod)
 				allowExisting: false.
@@ -1026,14 +1026,14 @@ renameMethod: aCompiledMethod to: anRBMethodName
 				execute;
 				yourself]!
 
-renameMethodReferences: aCompiledMethod 
+renameMethodReferences: aCompiledMethod
 	"Implement the 'Rename' method refactoring: 'Renames all implementors of a method, all senders, 
 	and all symbols references. In addition to strict renaming, it also allows you to rearrange the parameters. 
 	However, when rearranging the parameters, it cannot permute any symbols that are performed.'
 	Answer the new selector, or nil if no rename actually took place."
 
 	| newName |
-	newName := self 
+	newName := self
 				promptForMethodRename: aCompiledMethod
 				caption: ('Rename References to <1p> ...' expandMacrosWith: aCompiledMethod)
 				allowExisting: true.
@@ -1061,7 +1061,8 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 
 	| oldName |
 	oldName := aStVariableNode name.
-	(aString ifNil: 
+	(aString
+		ifNil: 
 			[| newName |
 			newName := (Prompter
 						createOn: oldName
@@ -1079,14 +1080,14 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 										do: [:ex | ex return: false]];
 						showModal.
 			newName])
-		ifNotNil: 
-			[:newName |
-			self handleRefactoringException: 
-					[(RenameTemporaryRefactoring
-						renameTemporaryFrom: aStVariableNode sourceInterval
-						to: newName
-						in: aClass
-						selector: aSelector) execute]].!
+			ifNotNil: 
+				[:newName |
+				self handleRefactoringException: 
+						[(RenameTemporaryRefactoring
+							renameTemporaryFrom: aStVariableNode sourceInterval
+							to: newName
+							in: aClass
+							selector: aSelector) execute]]!
 
 renameVariable: aString to: newName in: aClass classVariable: aBoolean within: aBrowserEnvironment 
 	^self handleRefactoringException: 
@@ -1205,16 +1206,16 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 	anArrayOfSelectors size = 1
 		ifTrue: 
 			[mb caption: 'Safe Remove Method...'.
-			prompt := 'Remove <1d>>><2d> (if it has no references or is equivalent to the superclass implementation)?'
+			prompt := 'Remove <1p>>><2p> (if it has no references or is equivalent to the superclass implementation)?'
 						expandMacrosWith: aClass
 						with: anArrayOfSelectors first]
 		ifFalse: 
 			[mb caption: 'Safe Remove Methods...'.
-			prompt := String writeStream.
-			prompt
-				nextPutAll: ('The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
-							expandMacrosWith: aClass);
-				cr.
+			prompt := String smalltalkWriteStream.
+			'The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
+				expandMacrosWithArguments: {aClass}
+				on: prompt.
+			prompt cr.
 			anArrayOfSelectors do: 
 					[:each |
 					prompt
@@ -1300,13 +1301,13 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass name , '.' , each value]];
 		showModal) ifNotNil: [:choice | choice value]!
 
-validateRenameClass: aClass to: aString 
+validateRenameClass: aClass to: aString
 	| refactoring |
 	refactoring := RenameClassRefactoring rename: aClass to: aString.
 	refactoring checkPreconditions.
-	(aClass hierarchyDefinesVariable: aString) 
+	(aClass hierarchyDefinesVariable: aString)
 		ifTrue: 
-			[refactoring 
+			[refactoring
 				refactoringError: ('<1p> is already defined in hierarchy of <2p>' expandMacrosWith: aString
 						with: aClass)]!
 

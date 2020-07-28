@@ -47,7 +47,7 @@ onAboutToDisplayMenu: aMenu
 parseTree
 	^presenter parseTree!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the
 	<CommandQuery>."
 
@@ -55,10 +55,10 @@ queryCommand: aCommandQuery
 	cmd := aCommandQuery command.
 	cmd isNil ifTrue: [^false].
 	selector := cmd asSymbol.
-	selector == #renameIt 
+	selector == #renameIt
 		ifTrue: 
 			[cmd := self renameItCommand.
-			cmd isNil 
+			cmd isNil
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: false;

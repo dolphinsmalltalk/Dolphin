@@ -115,11 +115,10 @@ deepCopy
 
 	^OLEAutLibrary default sysAllocString: self!
 
-displayOn: aStream
-	"Append a developer friendly textual representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream 
-		nextPutAll: self asString!
+	aPuttableStream nextPutAll: self asString!
 
 free
 	"Private - Frees the receiver's external resources by releasing the interface."

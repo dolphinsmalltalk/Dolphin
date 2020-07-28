@@ -316,8 +316,8 @@ cursorFileTypes
 defaultModel
 	^ILLibrary new!
 
-displayOn: aStream
-	aStream nextPutAll: 'Image Library'!
+displayOn: aPuttableStream
+	aPuttableStream nextPutAll: 'Image Library'!
 
 exeFileTypes
 	^#(#('Application files (*.exe)' '*.exe') #('All files (*.*)' '*.*'))!

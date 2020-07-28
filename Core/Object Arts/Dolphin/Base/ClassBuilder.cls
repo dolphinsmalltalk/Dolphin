@@ -772,7 +772,7 @@ validateClassForRename
 
 	self validateClass.
 	((FixedLayout includes: currentClass) or: [FixedInitialLayout includes: currentClass])
-		ifTrue: [self error: ('<1p> must not be renamed.' expandMacrosWith: currentClass) ].!
+		ifTrue: [self error: ('<1p> must not be renamed.' expandMacrosWith: currentClass)]!
 
 validateClassInstanceVars
 	"Private - Ensure that the proposed changes do not result in a duplicate name
@@ -870,8 +870,7 @@ validateInstanceSpecForModify
 
 	self validateInstanceSpec.
 	(self fundamentalTypeIsBeingChanged and: [currentClass isMeta not and: [self isFixedType]])
-		ifTrue: [self error: ('You may not change the subclass type of <1p>' expandMacrosWith: currentClass)]
-	!
+		ifTrue: [self error: ('You may not change the subclass type of <1p>' expandMacrosWith: currentClass)]!
 
 validateInstanceVarsForCreate
 	"Private - Ensure that the proposed instance variable name list does not
@@ -1306,14 +1305,28 @@ validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSupercl
 	spec := anInstanceSpec bitAnd: Behavior._SizeMask bitInvert.
 	fundamentalType := self fundamentalTypeOf: spec.
 	fundamentalType = Behavior._VariableMask
-		ifTrue: [spec := self validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass].
+		ifTrue: 
+			[spec := self
+						validateSpecAsVariableBytes: spec
+						size: anInteger
+						superclass: proposedSuperclass].
 	fundamentalType = Behavior._PointersMask
-		ifTrue: [spec := self validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass].
+		ifTrue: 
+			[spec := self
+						validateSpecAsFixedPointers: spec
+						size: anInteger
+						superclass: proposedSuperclass].
 	fundamentalType = (Behavior._VariableMask + Behavior._PointersMask)
-		ifTrue: [spec := self validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass].
+		ifTrue: 
+			[spec := self
+						validateSpecAsVariablePointers: spec
+						size: anInteger
+						superclass: proposedSuperclass].
 	fixedSize := anInteger + (self instSizeOf: proposedSuperclass).
 	fixedSize > Behavior._SizeMask
-		ifTrue: [self error: ('Classes are allowed a maximum of <1d> instance variables.' expandMacrosWith: Behavior._SizeMask)].
+		ifTrue: 
+			[self error: ('Classes are allowed a maximum of <1p> instance variables.'
+						expandMacrosWith: Behavior._SizeMask)].
 	^spec bitOr: fixedSize!
 
 validateInstanceVars: instVarsArray againstSuperclass: aClass

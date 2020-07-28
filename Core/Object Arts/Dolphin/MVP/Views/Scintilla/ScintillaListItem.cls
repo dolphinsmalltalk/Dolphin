@@ -16,8 +16,10 @@ Instance Variables:
 !ScintillaListItem categoriesForClass!Kernel-Objects! !
 !ScintillaListItem methodsFor!
 
-displayOn: aStream
-	^aStream nextPutAll: text!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: text!
 
 displayString
 	^text!

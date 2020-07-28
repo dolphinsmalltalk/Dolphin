@@ -22,7 +22,7 @@ streamOn: aString
 		yourself!
 
 string
-	^'testing'!
+	^'a 🐬 test'!
 
 stringSize
 	^self string size!

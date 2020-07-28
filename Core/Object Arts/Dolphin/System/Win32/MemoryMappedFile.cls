@@ -77,19 +77,19 @@ mapView
 
 	^self mapViewFrom: 1 to: 0!
 
-mapViewFrom: startInteger to: stopInteger 
+mapViewFrom: startInteger to: stopInteger
 	"Answer a <MemoryMappedFileView> addressing the specified interval in the file."
 
 	| count allocationGranularity offset view |
 	#todo.	"Use GetSystemInfo to get the allocation granularity"
 	allocationGranularity := 64 * 1024.
 	offset := startInteger - 1.
-	offset \\ allocationGranularity ~= 0 
+	offset \\ allocationGranularity ~= 0
 		ifTrue: 
-			[self error: ('Start offset must be a multiple of the system''s allocation granularity (<1d>)' 
+			[self error: ('Start offset must be a multiple of the system''s allocation granularity (<1p>)'
 						expandMacrosWith: allocationGranularity)].
 	count := stopInteger - offset.
-	view := KernelLibrary default 
+	view := KernelLibrary default
 				mapViewOfFile: self asParameter
 				dwDesiredAccess: (self isReadOnly ifTrue: [FILE_MAP_READ] ifFalse: [FILE_MAP_ALL_ACCESS])
 				dwFileOffsetHigh: (offset bitShift: -32)

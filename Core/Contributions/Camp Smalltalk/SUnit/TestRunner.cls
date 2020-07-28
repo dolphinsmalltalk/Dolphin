@@ -135,12 +135,13 @@ script
 	^scriptModel selection!
 
 timeSinceLastPassAsString
+	| stream |
 	lastPass isNil ifTrue: [^''].
-	^String streamContents: 
-			[:s |
-			s nextPutAll: ', '.
-			DateAndTime now - lastPass printHumanReadableOn: s.
-			s nextPutAll: ' since last Pass']!
+	stream := String smalltalkWriteStream.
+	stream nextPutAll: ', '.
+	DateAndTime now - lastPass displayOn: stream.
+	stream nextPutAll: ' since last Pass'.
+	^stream contents!
 
 update: anObject 
 	(anObject isKindOf: TestCase)

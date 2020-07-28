@@ -357,8 +357,8 @@ updateFilesKeepingSelection
 defaultFolder
 	^SessionManager current imageBase!
 
-displayOn: aStream 
-	aStream nextPutAll: 'File Browser'!
+displayOn: aPuttableStream
+	aPuttableStream nextPutAll: 'File Browser'!
 
 hexEnabled
 	"Answer whether the hex display is enabled"

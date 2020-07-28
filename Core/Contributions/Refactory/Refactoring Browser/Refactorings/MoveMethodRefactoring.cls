@@ -35,10 +35,10 @@ checkAssignmentsToVariable
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: variable , ' := `@object' do: [:aNode :answer | true].
-	(searcher executeTree: parseTree initialAnswer: false) 
+	(searcher executeTree: parseTree initialAnswer: false)
 		ifTrue: 
-			[self refactoringError: ('Cannot move the method into <1s> since it is assigned' 
-						expandMacrosWith: variable)]!
+			[self
+				refactoringError: ('Cannot move the method into <1s> since it is assigned' expandMacrosWith: variable)]!
 
 checkForPrimitiveMethod
 	parseTree isPrimitive 
@@ -57,14 +57,13 @@ checkTemporaryVariableNames
 	varNames := parseTree allDefinedVariables.
 	selfVariableName notNil ifTrue: [varNames add: selfVariableName].
 	varNames do: 
-			[:name | 
+			[:name |
 			moveToClasses do: 
-					[:each | 
-					(self canReferenceVariable: name in: each) 
+					[:each |
+					(self canReferenceVariable: name in: each)
 						ifTrue: 
-							[self refactoringError: ('<1p> already defines a variable called <2s>' 
-										expandMacrosWith: each
-										with: name)]]]!
+							[self
+								refactoringError: ('<1p> already defines a variable called <2s>' expandMacrosWith: each with: name)]]]!
 
 compileDelagatorMethod
 	| statementNode delegatorNode tree |
@@ -94,20 +93,20 @@ getArgumentNameForSelf
 	self needsToReplaceSelfReferences ifFalse: [^self].
 	
 	[selfVariableName := self requestSelfArgumentName.
-	(self checkInstanceVariableName: selfVariableName in: class) 
+	(self checkInstanceVariableName: selfVariableName in: class)
 		ifTrue: 
-			[self verifyTemporaryVariableDoesNotOverride 
+			[self verifyTemporaryVariableDoesNotOverride
 				ifFalse: 
-					[self 
-						refactoringWarning: ('The variable <1p> is already defined in one of the classes you''re moving the method to.<n>Try another?' 
+					[self
+						refactoringWarning: ('The variable <1p> is already defined in one of the classes you''re moving the method to.<n>Try another?'
 								expandMacrosWith: selfVariableName).
 					selfVariableName := nil]]
 		ifFalse: 
-			[self 
-				refactoringWarning: ('The variable name <1p> is not a valid Smalltalk temporary variable name<n>Try again?' 
+			[self
+				refactoringWarning: ('The variable name <1p> is not a valid Smalltalk temporary variable name<n>Try again?'
 						expandMacrosWith: selfVariableName).
 			selfVariableName := nil].
-	selfVariableName isNil] 
+	selfVariableName isNil]
 			whileTrue: []!
 
 getClassesForInstanceVariable
@@ -169,25 +168,23 @@ getNewMethodName
 	
 	[newMethodName := self requestMethodNameFor: methodName.
 	newMethodName isNil ifTrue: [self refactoringAborted: 'Did not move method'].
-	newMethodName isValid 
+	newMethodName isValid
 		ifTrue: [newSelector := newMethodName selector]
 		ifFalse: [self refactoringWarning: 'Invalid method name'].
 	parameters := newMethodName arguments.
-	(self checkMethodName: newSelector in: class) 
+	(self checkMethodName: newSelector in: class)
 		ifFalse: 
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].
-	alreadyDefined := moveToClasses 
-				detect: [:each | each hierarchyDefinesMethod: newSelector]
+	alreadyDefined := moveToClasses detect: [:each | each hierarchyDefinesMethod: newSelector]
 				ifNone: [nil].
-	alreadyDefined notNil 
+	alreadyDefined notNil
 		ifTrue: 
-			[self 
-				refactoringWarning: ('<1p> is already defined by <2p> or a super/subclass<n>Try another?' 
+			[self refactoringWarning: ('<1p> is already defined by <2p> or a super/subclass<n>Try another?'
 						expandMacrosWith: newSelector
 						with: alreadyDefined).
 			newSelector := nil].
-	newSelector isNil] 
+	newSelector isNil]
 			whileTrue: [].
 	parseTree renameSelector: newSelector
 		andArguments: (parameters collect: [:each | RBVariableNode named: each]) asArray!

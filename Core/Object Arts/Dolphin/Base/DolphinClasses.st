@@ -952,6 +952,8 @@ SharedPool subclass: #Win32Constants
 		'KLF_SETFORPROCESS' -> 16r100.
 		'KLF_SHIFTLOCK' -> 16r10000.
 		'KLF_SUBSTITUTE_OK' -> 16r2.
+		'LCID_INSTALLED' -> 16r1.
+		'LCID_SUPPORTED' -> 16r2.
 		'LCMAP_TITLECASE' -> 16r300.
 		'LF_FACESIZE' -> 16r20.
 		'LF_FULLFACESIZE' -> 16r40.
@@ -961,6 +963,9 @@ SharedPool subclass: #Win32Constants
 		'LINGUISTIC_IGNOREDIACRITIC' -> 16r20.
 		'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
 		'LOCALE_ALLOW_NEUTRAL_NAMES' -> 16r8000000.
+		'LOCALE_CUSTOM_DEFAULT' -> 16rC00.
+		'LOCALE_CUSTOM_UI_DEFAULT' -> 16r1400.
+		'LOCALE_CUSTOM_UNSPECIFIED' -> 16r1000.
 		'LOCALE_FONTSIGNATURE' -> 16r58.
 		'LOCALE_ICALENDARTYPE' -> 16r1009.
 		'LOCALE_ICURRDIGITS' -> 16r19.
@@ -3813,7 +3818,7 @@ InstructionInterpreter subclass: #MessageSendCollector
 		'SendInstructions' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: nil nil #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: nil nil nil nil nil nil nil nil nil nil nil nil #send: #supersend: #specialSend: nil nil nil nil nil nil nil #sendTempZeroArgs: nil nil nil nil #sendSelfZeroArgs: nil nil nil nil nil nil nil #longSend:with: #longSupersend:with: nil nil nil nil nil nil nil nil nil nil nil nil #exLongSend:with:with: #exLongSupersend:with:with: nil)
 	}!
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -4170,20 +4175,20 @@ Stream subclass: #SequencedStream
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedStream subclass: #LimitedWriteStream
-	instanceVariableNames: 'stream limit limitBlock start printed'
+	instanceVariableNames: 'stream limit limitBlock start visited visitedBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedStream subclass: #PositionableStream
-	instanceVariableNames: 'collection position readLimit'
+	instanceVariableNames: 'collection position readLimit locale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'ClassForEncoding Codecs'
+	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
+	classVariableNames: 'ClassForEncoding'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''
 	classConstants: {

@@ -148,8 +148,10 @@ defines: aName
 directlyUses: aNode
 	^true!
 
-displayOn: aStream
-	self basicPrintOn: aStream!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	self basicPrintOn: aPuttableStream!
 
 do: aBlock 
 	"Hacked to fit collection protocols"

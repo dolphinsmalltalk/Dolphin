@@ -107,10 +107,10 @@ onEnvironment: anEnvironment categories: aCollection
 		categoryNames: aCollection;
 		yourself!
 
-referencesTo: aLiteral in: anEnvironment 
+referencesTo: aLiteral in: anEnvironment
 	| literalName label refs |
-	literalName := (aLiteral isVariableBinding ifTrue: [aLiteral key] ifFalse: [aLiteral]) 
-				displayString.
+	literalName := (aLiteral isVariableBinding ifTrue: [aLiteral key] ifFalse: [aLiteral])
+				displayString: Locale smalltalk.
 	label := 'References to: ' , literalName.
 	refs := ReferencesCategory newNamed: label literal: aLiteral.
 	^(self onEnvironment: anEnvironment categories: {refs})

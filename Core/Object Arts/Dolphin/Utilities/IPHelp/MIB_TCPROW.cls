@@ -33,8 +33,10 @@ struct tagMIB_TCPROW {
 !MIB_TCPROW categoriesForClass!Win32-Structs! !
 !MIB_TCPROW methodsFor!
 
-displayOn: aStream 
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
 		display: self port;
 		nextPut: $:;
 		display: self portName!

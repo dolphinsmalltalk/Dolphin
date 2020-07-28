@@ -88,10 +88,9 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 		-The receiver converts itself to a Gdiplus object which draws itself.
 		-The receiver asks the graphics for a canvas"
 
-	"For the moment, signal a warning, not an error if not implement"
+	"For the moment, signal a warning, not an error if not implemented"
 
-	Notification 
-		signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name displayString! !
+	Notification signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name! !
 !Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
 !ImagePresenter class methodsFor!

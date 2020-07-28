@@ -16,8 +16,10 @@ Instance Variables:
 !CardLabel categoriesForClass!Kernel-Objects! !
 !CardLabel methodsFor!
 
-displayOn: aStream
-	aStream display: self text!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: self text!
 
 helpId
 	^helpId!

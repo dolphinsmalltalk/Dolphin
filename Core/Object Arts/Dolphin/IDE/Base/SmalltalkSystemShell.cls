@@ -373,11 +373,10 @@ defaultBackImage
 defaultTextcolor
 	^Color brightness: 243/255!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'System Folder'!
+	aPuttableStream nextPutAll: 'System Folder'!
 
 firstReset
 	"Private - Reset the class for first use. 

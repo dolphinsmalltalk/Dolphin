@@ -21,10 +21,14 @@ setUp
 	super setUp.
 	savedLocale := Locale userDefault.
 	"The tests of month and day names, etc, are expecting US English names and abbreviations"
-	Locale userDefault: (Locale lcid: 1033).
+	Locale userDefault: (Locale named: 'en-US').
 	d19970426t8 := DateAndTime
-		year: 1997 month: 4 day: 26
-		hour: 8 minute: 0 second: 0.!
+				year: 1997
+				month: 4
+				day: 26
+				hour: 8
+				minute: 0
+				second: 0!
 
 tearDown
 	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].

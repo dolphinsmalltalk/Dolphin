@@ -12,14 +12,14 @@ RemoveClassVariableRefactoring comment: ''!
 !RemoveClassVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isMetaclass: class) not & (RBCondition definesClassVariable: variableName in: class) 
+	^(RBCondition isMetaclass: class) not & (RBCondition definesClassVariable: variableName in: class)
 		& (RBCondition withBlock: 
 					[| block |
 					block := 
-							[:each | 
-							(each whichSelectorsReferToClassVariable: variableName) notEmpty 
+							[:each |
+							(each whichSelectorsReferToClassVariable: variableName) notEmpty
 								ifTrue: 
-									[class realClass isNil 
+									[class realClass isNil
 										ifTrue: [self refactoringError: ('<1s> is referenced.' expandMacrosWith: variableName)]
 										ifFalse: 
 											[self refactoringError: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)

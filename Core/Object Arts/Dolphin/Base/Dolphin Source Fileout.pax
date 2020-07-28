@@ -149,7 +149,7 @@ package!
 
 !BootSessionManager methodsFor!
 
-saveImageTo: aString 
+saveImageTo: aString
 	"Private - Snapshot to filePath.img, marking the log with a timestamp and copying sources
 	files. N.B. Use the public entry point #saveImage: to save an image to a new path.
 
@@ -165,20 +165,20 @@ saveImageTo: aString
 	"Now save image and swap over sources. Take care to end up with a good sources and imagePath"
 	
 	[self imagePath: aString.
-	self createSentinel 
+	self createSentinel
 		ifTrue: 
 			[| mb |
 			mb := MessageBox new.
 			mb beTaskModal.
-			mb 
-				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!' 
+			mb
+				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'
 						expandMacrosWith: self imageFileName).
 			^self].
 	self class sourceManager copyAndReopenSources: self imagePath.
 	self
 		snapshot: self imageFileName;
 		logComment: ('Image saved to <1p>' expandMacrosWith: aString).
-	KernelLibrary default closeHandle: oldSentry] 
+	KernelLibrary default closeHandle: oldSentry]
 			ifCurtailed: 
 				["Attempt to return to the old state so sources & stuff are intact
 				 before showing the user the problem."
@@ -187,7 +187,7 @@ saveImageTo: aString
 				sentry := oldSentry.
 				self
 					imagePath: oldImagePath;
-					openSources] 
+					openSources]
 						on: Error
 						do: [:anError | anError resignalAsWarning]]! !
 !BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
@@ -255,7 +255,7 @@ emitCommentOfClass: aClass
 		display: #comment:;
 		space.
 	self
-		nextChunkPut: (String streamContents: [:strm | aClass comment printOn: strm]);
+		nextChunkPut: aClass comment fullPrintString;
 		cr!
 
 emitDeclarationForClass: aClass variable: anAssociation
@@ -400,7 +400,7 @@ storeCommentString: aString forClass: aClass
 	index into the class' source descriptor so that the comment may be retrieved later."
 
 	stream nextPutAll: aClass name; nextPutAll: ' comment:'; cr.
-	self storeSource: aString printString for: aClass.
+	self storeSource: aString fullPrintString for: aClass.
 	stream cr!
 
 storeCommentString: aString forPackage: aPackage 
@@ -420,7 +420,7 @@ storeCommentString: aString forPackage: aPackage
 		nextPutAll: ') ';
 		nextPutAll: #comment:;
 		cr.
-	self storeSource: aString printString for: aPackage.
+	self storeSource: aString fullPrintString for: aPackage.
 	stream cr!
 
 storeSource: aString for: aSourceObject 
@@ -464,7 +464,7 @@ definitionChunk
 	"Answer a chunk string for the definition of the receiver"
 
 	| stream |
-	stream := String writeStream: 256.
+	stream := String smalltalkWriteStream: 256.
 	(self sourceManager sourceFilerOn: stream) fileOutDefinitionOfClass: self.
 	^stream contents!
 
@@ -526,7 +526,7 @@ beNotUsingPAX
 	| msg names |
 	self isUsingPAX ifFalse: [^self].
 	names := self allFileOutNames.
-	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
+	msg := 'Placing this package into PAC mode will delete <2p> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self name
 				with: names size
 				with: self path.
@@ -541,10 +541,10 @@ beUsingPAX
 
 	| msg |
 	self isUsingPAX ifTrue: [^self].
-	msg := 'Placing this package into PAX source mode will create <1d> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?' 
+	msg := 'Placing this package into PAX source mode will create <1p> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self allSourceObjects size
 				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name)) 
+	(MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name))
 		ifTrue: [self fileOutAll]!
 
 canFileOut
@@ -564,21 +564,20 @@ checkTimestamps
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
-	warning := ('The package <1s> has been modified outside this image since it was loaded or last saved.
+	warning := 'The package <1s> has been modified outside this image since it was loaded or last saved.
 
-	Package timestamp:	 <2s>
-	File modification time: <3s>
+	Package timestamp:	 <2d>
+	File modification time: <3d>
 
 If you proceed and save it from this image then you may lose changes that have been written from another session. If you are not sure it is recommended that you cancel this operation and check whether there are unstaged changes in your workspace with your preferred git tooling. 
 
 Alternatively you can proceed and overwrite any changes on disk. You can also choose to suppress this warning so it is not shown again, however if you do so then in future modified files will be overwritten regardless of the choice that you make now.'
-				expandMacrosWith: self name
-				with: self timestamp displayString
-				with: (FILETIME fromInteger: self fileModificationTime) displayString).
+				expandMacrosWithArguments: {self name.
+						self timestamp.
+						(FILETIME fromInteger: self fileModificationTime)}
+				locale: Locale smalltalk.
 	mb okCancel.
-	(mb warning: warning) == #cancel
-		ifTrue: [OperationAborted signal]
-!
+	(mb warning: warning) == #cancel ifTrue: [OperationAborted signal]!
 
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"
@@ -900,7 +899,7 @@ savePAXChunkOn: aSourceFiler
 	is included. None of the code, including the package scripts, is evaluated."
 
 	| stream |
-	stream := String writeStream: 1024.
+	stream := String smalltalkWriteStream: 1024.
 	self
 		savePAXPackageOn: stream;
 		savePAXPackageVersionOn: stream;
@@ -1591,8 +1590,9 @@ logComment: aString to: aSourceFiler
 	| timestamp stampedComment |
 	timestamp := DateAndTime now.
 	stampedComment := String writeStream: 25 + aString size.
+	stampedComment locale: Locale invariant.
 	#todo. "Use the standard form for a DateAndTime here - Ian's chunk browser relies on the original format, so that needs to be fixed."
-	Locale invariant printDateTime: timestamp on: stampedComment format: 'HH:mm:ss, dd MMMM yyyy'.
+	timestamp printOn: stampedComment format: 'HH:mm:ss, dd MMMM yyyy'.
 	stampedComment nextPutAll: ': '; nextPutAll: aString.
 	stampedComment := stampedComment contents.
 	mutex critical: 

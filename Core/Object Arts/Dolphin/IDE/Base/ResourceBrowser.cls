@@ -96,7 +96,7 @@ setInitialFocus
 shortCaption
 	^'Views'!
 
-showResourcesReferencingView: aResourceIdentifier 
+showResourcesReferencingView: aResourceIdentifier
 	resourceToolboxPresenter showResourcesReferencingView: aResourceIdentifier.
 	self caption: ('Views referencing <1p>' expandMacrosWith: aResourceIdentifier)! !
 !ResourceBrowser categoriesFor: #canSaveState!private!saved state! !
@@ -115,12 +115,10 @@ showResourcesReferencingView: aResourceIdentifier
 
 !ResourceBrowser class methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'View Browser'
-!
+	aPuttableStream nextPutAll: 'View Browser'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

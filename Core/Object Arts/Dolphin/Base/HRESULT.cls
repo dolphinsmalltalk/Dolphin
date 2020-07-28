@@ -23,12 +23,12 @@ asUnsignedInteger
 
 	^bytes dwordAtOffset: 0!
 
-displayOn: aStream
-	"Append a textual representation of the receiver to aStream.
-		(HRESULT fromInteger: Win32Errors.E_ABORT) displayString.
-	"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	| buf len flags hModule code |
+	"Implementation note: We have to reduce the provided Locale to its primary because the system message text is only available in a limited range of languages, and for most locale's the FormatMessage from system operation will fail."
+
+	| buf len flags hModule code lcid |
 	buf := Utf16String newFixed: 255.
 	flags := ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS).
 	code := self asInteger.
@@ -37,17 +37,23 @@ displayOn: aStream
 					[flags := flags bitOr: FORMAT_MESSAGE_FROM_HMODULE.
 					code := code bitAnd: ##(FACILITY_NT_BIT bitInvert).
 					NTLibrary default asParameter asInteger].
-	len := KernelLibrary default
+	lcid := aPuttableStream locale primary lcid.
+	
+	[len := KernelLibrary default
 				formatMessage: flags
 				lpSource: hModule
 				dwMessageId: code
-				dwLanguageId: 0
+				dwLanguageId: lcid
 				lpBuffer: buf
 				nSize: buf size + 1
 				arguments: 0.
+	len == 0 and: [lcid ~~ 0]]
+			whileTrue: 
+				["If it fails for the primary of the supplied Locale, try with default"
+				lcid := 0].
 	len == 0
 		ifTrue: 
-			[aStream
+			[aPuttableStream
 				nextPutAll: 'Unrecognised ';
 				nextPutAll: (self isNtStatus ifTrue: ['NTSTATUS'] ifFalse: ['HRESULT']);
 				nextPutAll: ' - ';
@@ -55,7 +61,9 @@ displayOn: aStream
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
 			so we remove them."
-			(buf resize: len) lines do: [:each | aStream nextPutAll: each] separatedBy: [aStream space]]!
+			((buf resize: len) lines reject: [:each | each isEmpty])
+				do: [:each | aPuttableStream nextPutAll: each]
+				separatedBy: [aPuttableStream space]]!
 
 errorCode
 	"Answer the Win32 status code extracted from the receiver's code."

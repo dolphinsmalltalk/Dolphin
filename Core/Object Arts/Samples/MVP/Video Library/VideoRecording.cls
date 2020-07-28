@@ -47,11 +47,10 @@ defaultTitle
 
 	^'<Untitled Recording>'!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		display: self title;
 		nextPutAll: ' on ';
 		display: self date;
@@ -59,9 +58,7 @@ displayOn: aStream
 		display: self time;
 		nextPutAll: ' duration ';
 		display: self length;
-		nextPutAll: 'min'
-
-!
+		nextPutAll: 'min'!
 
 initialize
 	"Private - Initialize the receiver to contain default values.

@@ -229,7 +229,7 @@ browseDeployed
 
 	[self systemModel browseDeployedPackage: self singlePackage] on: Error
 		do: 
-			[:ex | 
+			[:ex |
 			MessageBox errorMsg: 'Invalid Manifest'
 				caption: ('Error browsing <1d>' expandMacrosWith: self singlePackage)]!
 

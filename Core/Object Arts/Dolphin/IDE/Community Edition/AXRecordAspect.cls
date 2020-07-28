@@ -19,14 +19,15 @@ readFrom: anObject
 
 	^[anObject getField: self name] on: Error do: [:ex | ex]!
 
-writeInto: subjectObject value: valueObject 
+writeInto: subjectObject value: valueObject
 	"Private - Set the attribute of subjectObject described by the receiver 
 	to valueObject."
 
 	[subjectObject setField: self name value: valueObject] on: Error
 		do: 
-			[:ex | 
-			MessageBox errorMsg: ex description caption: ('Error setting field <1p>' expandMacrosWith: self name)]! !
+			[:ex |
+			MessageBox errorMsg: ex description
+				caption: ('Error setting field <1p>' expandMacrosWith: self name)]! !
 !AXRecordAspect categoriesFor: #defaultFlags!initializing!private! !
 !AXRecordAspect categoriesFor: #readFrom:!indirect accessing!public! !
 !AXRecordAspect categoriesFor: #writeInto:value:!indirect accessing!public! !

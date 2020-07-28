@@ -155,8 +155,7 @@ fileTypes
 
 	| strings |
 	strings := #('Registration Files (*.reg)' '*.reg' 'Registry Hive Files (*.*)' '*.*' 'All Files' '*.*').
-	^(1 to: strings size by: 2) 
-		collect: [:i | Array with: (strings at: i) with: (strings at: i + 1)]!
+	^(1 to: strings size by: 2) collect: [:i | {strings at: i. strings at: i + 1}]!
 
 importRegistryFile
 	"Private - Import a .reg file selected by the user into the registry."
@@ -437,13 +436,12 @@ binaryIcon
 
 	^Icon fromId: 'RegValueBin.ico'!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Registry Editor'!
+	aPuttableStream nextPutAll: 'Registry Editor'!
 
-displayStringForValue: anObject 
+displayStringForValue: anObject
 	"Private - Answer an appropriate registry editor display string for the argument, anObject.
 	Not clean, but we don't want to add these as polymorphic operations into the types
 	of object in the registry.
@@ -451,18 +449,15 @@ displayStringForValue: anObject
 	fast string formatting."
 
 	| s n max |
-	anObject isNil 
-		ifTrue: 
-			[^'(value not set)'].
+	anObject isNil ifTrue: [^'(value not set)'].
 	anObject isInteger ifTrue: [^'0x%08x (%u)' sprintfWith: anObject with: anObject].
-	(anObject isKindOf: String) ifTrue: [^anObject].
+	anObject isString ifTrue: [^anObject].
 	"Assume its a byte array"
-	anObject isEmpty 
-		ifTrue: 
-			[^'(zero-length binary value)'].
+	anObject isEmpty ifTrue: [^'(zero-length binary value)'].
 	n := anObject size.
 	max := 64 min: n.
 	s := String writeStream: (max + 1) * 3.
+	s locale: Locale invariant.
 	(1 to: max) do: [:i | s nextPutAll: ('%02x' sprintfWith: (anObject basicAt: i))]
 		separatedBy: [s space].
 	max < n ifTrue: [s nextPutAll: '...'].

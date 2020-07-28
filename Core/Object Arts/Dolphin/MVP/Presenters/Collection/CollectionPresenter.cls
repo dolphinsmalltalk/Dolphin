@@ -124,13 +124,13 @@ onValueChanged
 	listPresenter list: self value asOrderedCollection] 
 			ensure: [changing := false]!
 
-promptForExpression: promptString caption: captionString 
+promptForExpression: promptString caption: captionString
 	| result text |
 	result := nil.
 	text := '' asValue.
 	
 	[| expression |
-	expression := Prompter 
+	expression := Prompter
 				on: text
 				prompt: promptString
 				caption: captionString.
@@ -138,10 +138,9 @@ promptForExpression: promptString caption: captionString
 			[| error |
 			
 			[result := Compiler evaluate: expression.
-			error := nil] 
-					on: Compiler errorClass , Error
+			error := nil] on: Compiler errorClass , Error
 					do: 
-						[:ex | 
+						[:ex |
 						error := ex.
 						ex return: nil].
 			error notNil and: 
@@ -149,7 +148,8 @@ promptForExpression: promptString caption: captionString
 					mb := MessageBox new.
 					mb buttonStyle: #yesNo.
 					mb caption: 'Error evaluating expression...'.
-					(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWith: error)) == #yes]]] 
+					(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWithArguments: {error} locale: Locale smalltalk))
+						== #yes]]]
 			whileTrue.
 	^result!
 

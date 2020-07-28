@@ -389,11 +389,8 @@ imageVersion
 	| ms ls |
 	ms := self imageVersionMajor.
 	ls := self imageVersionMinor.
-	^'<1d>.<2d>.<3d>.<4d>' 
-		expandMacrosWith: ms highWord
-		with: ms lowWord
-		with: ls highWord
-		with: ls lowWord!
+	^'<1d>.<2d>.<3d>.<4d>' expandMacrosWithArguments: {ms highWord. ms lowWord. ls highWord. ls lowWord}
+		locale: Locale invariant!
 
 imageVersionMajor
 	"Answer the major component of the images version Integer."
@@ -1099,7 +1096,7 @@ traceLine: aString
 traceStream
 	"Answer a <puttableStream> onto the session's trace output device."
 
-	^#{Trace} valueOrNil ?? DeafObject current!
+	^Processor activeProcess debugStream!
 
 triggerSettingsChanged
 	| pending |

@@ -56,12 +56,11 @@ createSchematicWiring
 defaultHelpId
 	^10748!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	as a plugin within the Class Browser"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed as a plugin within the Class Browser."
 
-	aStream nextPutAll: 'Class Diagram'!
+	aPuttableStream nextPutAll: 'Class Diagram'!
 
 onBrowserClassSelected
 	"Event handler for a class being selected within the receiver's associated browser. "

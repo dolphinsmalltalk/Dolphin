@@ -57,14 +57,14 @@ addSelector
 	"Prompts for a new selector to be added to the currently selected protocol"
 
 	| chosenSelector |
-	(chosenSelector := Prompter prompt: 'Add Selector:') notNil 
+	(chosenSelector := Prompter prompt: 'Add Selector:') notNil
 		ifTrue: 
 			[chosenSelector := chosenSelector asSymbol.
-			(Compiler isValidSelector: chosenSelector) 
+			(Compiler isValidSelector: chosenSelector)
 				ifFalse: 
 					[MessageBox errorMsg: ('Sorry, but <1p> is not a valid selector' expandMacrosWith: chosenSelector).
 					^self].
-			self model addSelectors: (Array with: chosenSelector asSymbol) toProtocol: self protocol]!
+			self model addSelectors: {chosenSelector asSymbol} toProtocol: self protocol]!
 
 addSelectors
 	"Prompts for a collection of selector to be added to the currently selected protocol."
@@ -84,7 +84,7 @@ addSelectors
 browseMethods
 	"Browse all the methods which are in the currently selected protocols."
 
-	self model browseMethodProtocols: (Array with: self protocol)!
+	self model browseMethodProtocols: {self protocol}!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -213,17 +213,17 @@ onSelectorSelected
 	classesPresenter model: conformingClasses.
 	(view viewNamed: 'classesCaption') text: header!
 
-onTipTextRequired: tool 
+onTipTextRequired: tool
 	"Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd prot |
 	cmd := tool command asSymbol.
 	prot := self protocol.
-	cmd == #toggleANSI 
+	cmd == #toggleANSI
 		ifTrue: 
 			[^'Make <1d> a<2s>ANSI protocol' expandMacrosWith: prot
 				with: (prot isANSI ifTrue: [' non-'] ifFalse: ['n '])].
-	cmd == #toggleReadOnly 
+	cmd == #toggleReadOnly
 		ifTrue: 
 			[^'<1s> <2d>' expandMacrosWith: (prot isReadOnly ifTrue: ['Unlock'] ifFalse: ['Lock']) with: prot].
 	^super onTipTextRequired: tool!
@@ -407,11 +407,10 @@ updateCaption
 
 !ProtocolBrowserShell class methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Protocol Browser'!
+	aPuttableStream nextPutAll: 'Protocol Browser'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

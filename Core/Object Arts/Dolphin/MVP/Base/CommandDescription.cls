@@ -111,11 +111,10 @@ description: aString
 
 	description := (aString isNil or: [aString isEmpty]) ifFalse: [aString]!
 
-displayOn: aStream
-	"Append a representation of the receiver to the <puttableStream> target that an 
-	end-user would want to see."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self description displayOn: aStream!
+	self description displayOn: aPuttableStream!
 
 hasAcceleratorKey
 	"Answer whether the receiver defines an accelerator key."

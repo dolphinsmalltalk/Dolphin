@@ -33,7 +33,7 @@ Object subclass: #TypeConverter
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TypeConverter subclass: #AbstractToTextConverter
-	instanceVariableNames: ''
+	instanceVariableNames: 'locale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

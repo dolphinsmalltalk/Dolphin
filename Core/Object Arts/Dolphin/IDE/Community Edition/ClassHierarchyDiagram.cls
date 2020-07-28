@@ -74,11 +74,10 @@ defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators 
 		, #(#(#findClass 'Ctrl+Shift+F') #(#browseClassReferences 'Shift+F12') #(#browseIt 'Ctrl+B') #(#inspectIt 'Ctrl+I'))!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: 'Class Diagram'!
+	aPuttableStream nextPutAll: 'Class Diagram'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

@@ -292,7 +292,7 @@ identifierFrom: aString
 	letters are made lowercase."
 
 	| identifier startNewWord first |
-	identifier := String writeStream: aString size.
+	identifier := String smalltalkWriteStream: aString size.
 	startNewWord := false.
 	first := true.
 	aString do: 

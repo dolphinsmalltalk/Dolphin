@@ -720,6 +720,18 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 	<stdcall: sdword GetLocaleInfoW dword dword lpvoid sdword>
 	^self invalidCall: _failureCode!
 
+getLocaleInfoEx: lpLocalName lCType: lcType lpLCData: outputStringOutput cchData: anInteger
+	"Answer information about a locale. 
+		int GetLocaleInfoEx(
+	  		LPCWSTR lpLocaleName,
+			LCTYPE  LCType,
+			LPWSTR  lpLCData,
+			int  cchData
+		);"
+
+	<stdcall: sdword GetLocaleInfoExW lpwstr dword lpvoid sdword>
+	^self invalidCall: _failureCode!
+
 getLocalTime: aWinSYSTEMTIME
 	"Retrieve the current local date and time.
 		VOID GetLocalTime(
@@ -894,6 +906,13 @@ getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIM
 	"
 
 	<stdcall: bool GetThreadTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
+	^self invalidCall: _failureCode!
+
+getThreadUILanguage 
+	"Returns the language identifier of the first user interface language for the current thread.
+		LANGID GetThreadUILanguage();"
+
+	<stdcall: word GetThreadUILanguage>
 	^self invalidCall: _failureCode!
 
 getTickCount
@@ -1078,6 +1097,10 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 	<stdcall: bool HeapValidate handle dword lpvoid>
 	^self invalidCall: _failureCode!
 
+isValidLocale: locale dwFlags: dwFlags
+	<stdcall: bool IsValidLocale dword dword>
+	^self invalidCall: _failureCode!
+
 isWow64
 	"Answers whether this Dolphin process is running on 64-bit Windows on the WOW64 subsystem. The answer will be false if the host is 32-bit Windows."
 
@@ -1118,6 +1141,17 @@ loadResource: anInstanceHandle hResInfo: aResourceHandle
 		);"
 
 	<stdcall: handle LoadResource handle handle>
+	^self invalidCall: _failureCode!
+
+localeNameToLCID: lpName dwFlags: dwFlags
+	"Converts a locale name to a locale identifier.
+
+	LCID LocaleNameToLCID(
+		LPCWSTR lpName,
+		DWORD   dwFlags
+	)"
+
+	<stdcall: dword LocaleNameToLCID lpwstr dword>
 	^self invalidCall: _failureCode!
 
 localFileTimeToFileTime: lpLocalFileTime lpFileTime: lpFileTime
@@ -1706,6 +1740,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #getLocaleInfoEx:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
@@ -1724,6 +1759,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #getThreadUILanguage!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-national language support! !
@@ -1739,11 +1775,13 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #isValidLocale:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #isWow64!enquiries!public! !
 !KernelLibrary categoriesFor: #isWow64Process:wow64Process:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
+!KernelLibrary categoriesFor: #localeNameToLCID:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #localFree:!**auto generated**!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !

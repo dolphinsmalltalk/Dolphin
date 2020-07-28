@@ -48,7 +48,7 @@ validationBlock: aMonadicValuable
 
 !STBValidatingInFiler class methodsFor!
 
-errorInvalidClass: aClassName 
+errorInvalidClass: aClassName
 	"Private - Signal an exception to warn that an input stream contains an invalid class."
 
 	STBError signal: ('Input stream contains an invalid class (<1s>)' expandMacrosWith: aClassName)! !

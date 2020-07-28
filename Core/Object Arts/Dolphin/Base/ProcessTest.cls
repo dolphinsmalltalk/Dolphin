@@ -348,14 +348,15 @@ testCopyExceptionHandlers
 			HRESULTError signalWith: -1]
 					on: HRESULTError
 					do: [:ex | ex return: Processor activeProcess identityHash]).
-	Trace
-		display: Processor activeProcess id;
-		display: ': 1,  copyProcess = ';
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 1,  copyProcess = ';
 		print: (shared at: #copyProcess);
 		cr.
-	Trace
-		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
-		flush.
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 2';
+		cr.
 	self assert: (shared at: #state) identicalTo: Processor activeProcess identityHash.
 	"N.B. Don't terminate the copy process, as this will run the unwind handlers, one of which
 	disconnects the TestRunner from update events so it stops refreshing and showing progress.
@@ -364,26 +365,32 @@ testCopyExceptionHandlers
 		ifTrue: 
 			[waitForCopy signal.
 			Processor activeProcess beUnfinalizable.
+			"The copied process will not progress to step 3"
 			Processor suspendActive].
-	Trace
-		display: Processor activeProcess id printString , ': 3' , String lineDelimiter;
-		flush.
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 3';
+		cr.
 	self assert: (shared at: #copyProcess) isSuspended.
-	Trace
-		display: Processor activeProcess id printString , ': 4 ' , String lineDelimiter;
-		flush.
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 4';
+		cr.
 	(shared at: #copyProcess) resume.
-	Trace
-		display: Processor activeProcess id printString , ': 5 ' , String lineDelimiter;
-		flush.
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 5';
+		cr.
 	waitForCopy wait.
-	Trace
-		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
-		flush.
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 6';
+		cr.
 	self assert: (shared at: #state) identicalTo: (shared at: #copyProcess) identityHash.
-	Trace
-		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
-		flush!
+	Processor activeProcess debugStream
+		print: Processor activeProcess id;
+		nextPutAll: ': 7';
+		cr!
 
 testCopyNestedBlocks
 	| sem sourceProcess copyProcess |

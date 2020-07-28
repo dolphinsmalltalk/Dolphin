@@ -130,12 +130,10 @@ dispinterfaces
 
 	^self selectTypeKind: TKIND_DISPATCH!
 
-displayOn: aStream
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self globalName
-
-!
+	aPuttableStream nextPutAll: self globalName!
 
 documentation
 	"Answer an <AXTypeLibDocumentation> containing the documentation for the library.

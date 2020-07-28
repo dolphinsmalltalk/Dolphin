@@ -344,7 +344,7 @@ selector
 		ifFalse: 
 			[| answer keywords |
 			keywords := self names.
-			answer := String writeStream: argc * 10.
+			answer := String smalltalkWriteStream: argc * 10.
 			answer
 				nextPutAll: keywords first;
 				nextPut: $:.

@@ -115,10 +115,12 @@ printOn: aStream
 	Locale smalltalk printDateTime: self on: aStream format: 'HH:mm:ss, dd MMMM yyyy'!
 
 printOn: aStream format: aString
-	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>dateFormat and Locale>>timeFormat methods. If the format argument is nil then the receiver is printed to the stream in the currently configured default date and time formats of the host OS."
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>dateFormat and Locale>>timeFormat methods. If the format argument is nil then the receiver is printed to the stream in the currently configured default date and time formats of the stream's <Locale>."
 
-	Locale default printDateTime: self on: aStream format: aString
-!
+	aStream locale
+		printDateTime: self
+		on: aStream
+		format: aString!
 
 printStringFormat: aString 
 	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the comments of the Locale>>#dateFormat and Locale>>#timeFormat methods. Settings from the default locale are used."

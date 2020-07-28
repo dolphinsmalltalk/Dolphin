@@ -167,17 +167,17 @@ buildTestSuite
 	parentEnvironment := classSelections environment.
 	testEnvironment := classSelections.
 	classSelections classesDo: 
-			[:eachClass | 
+			[:eachClass |
 			| hierarchyEnvironment |
 			hierarchyEnvironment := parentEnvironment forClassHierarchyFrom: eachClass.
 			testEnvironment := testEnvironment | hierarchyEnvironment].
 	testEnvironment := testEnvironment selectMethods: [:each | each methodClass isMeta not].
 	testEnvironment classesDo: 
-			[:eachClass | 
+			[:eachClass |
 			| classSuite |
 			classSuite := eachClass buildSuite.
-			suite addTests: (classSuite allTests 
-						select: [:eachTest | eachClass canUnderstand: eachTest selector])].
+			suite
+				addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])].
 	^suite! !
 !ClassSelector categoriesFor: #browseTests!commands!public! !
 !ClassSelector categoriesFor: #buildTestSuite!commands!public! !
@@ -193,21 +193,21 @@ buildTestSuite
 	| packages suite parentEnvironment testEnvironment classSelections |
 	packages := self selectionEnvironment.
 	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: packages).
-	classSelections := TestCase allSubclasses 
+	classSelections := TestCase allSubclasses
 				select: [:eachClass | eachClass isAbstract not and: [packages includesClass: eachClass]].
 	parentEnvironment := ClassEnvironment new classes: classSelections.
 	testEnvironment := ClassEnvironment new classes: classSelections.
 	classSelections do: 
-			[:eachClass | 
+			[:eachClass |
 			| hierarchyEnvironment |
 			hierarchyEnvironment := parentEnvironment forClassHierarchyFrom: eachClass.
 			testEnvironment := testEnvironment | hierarchyEnvironment].
 	testEnvironment := testEnvironment selectMethods: [:each | each methodClass isMeta not].
 	testEnvironment classesDo: 
-			[:eachClass | 
+			[:eachClass |
 			| classSuite |
 			classSuite := eachClass buildSuite.
-			suite 
+			suite
 				addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])].
 	^suite! !
 !PackageSelector categoriesFor: #browseTests!commands!public! !

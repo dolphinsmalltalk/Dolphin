@@ -193,8 +193,7 @@ byteAt: index
 					[| answer |
 					answer := self basicAt: index.
 					answer > 127 ifTrue: [answer - 256] ifFalse: [answer]]
-				ifFalse: [self signBit * -1]].
-	#todo	"Either remove or implement more efficiently (may be useful for Smalltalk LI algorithms"!
+				ifFalse: [self signBit * -1]]!
 
 byteSize
 	"Private - Answer the number of bytes in the receiver's 2's complement

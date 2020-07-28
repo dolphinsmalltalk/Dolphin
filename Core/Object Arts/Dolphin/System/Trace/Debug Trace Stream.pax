@@ -2,30 +2,34 @@
 package := Package name: 'Debug Trace Stream'.
 package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
-	basicComment: 'Dolphin Smalltalk Debug Trace Stream.
-Copyright (c) Object Arts Ltd, 2002.
+	basicComment: '# Dolphin Smalltalk Debug Trace Stream.
+Copyright © Object Arts Ltd, 2002-2020.
 
-This package implements the <puttableStream> protocol on top of the Win32 OutputDebugString() API. Like the Transcript the output is thread safe, and buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the trace stream is assigned to the global named ''Trace''.
+This package implements the `<puttableStream>` protocol on top of the Win32 OutputDebugString() API. Output to the stream is buffered until either an end of line is emitted (i.e. `cr` is sent) or the the stream is explicitly flushed (i.e. `flush` is sent). Any output to the DebugTraceStream will always be displayed using Smalltalk locale settings, e.g. numbers are displayed in Smalltalk''s literal format.
 
-To view trace output you will need a debug output monitor such as the Sysinternals tool ''DebugView'', downloadable from http://www.sysinternals.com
+The DebugTraceStream is just one of the standard options available for diagnostic logging/debugging purposes. Other alternatives are:
+1. Transcript
+2. Stdio streams (e.g. `SessionManager current stdout`)
 
-Example usage:
+The DebugTraceStream has a couple advantages over these alternatives:
+- It is much faster; about 5x faster than the Transcript, and 20x faster than writing to stdout (at least in a GUI app).
+- It is only visible when either running under a native debugger, or when using a tool such as DebugView, so it can be left in place in an application without too much impact. This avoids the undesirable behaviour of having output open a console window, in a GUI app, or of needing to include the TranscriptShell as part of the application.
 
-	Trace nextPutAll: ''Hello world''; cr'.
+To view trace output you will need a debug output monitor such as the [Sysinternals](http://www.sysinternals.com) tool ''DebugView''.
+
+### Example usage:
+
+```
+	stream := DebugTraceStream current.
+	stream display: ([1 to: 1000 do: [:i | stream display: i; nextPutAll: '': Hello world ''; cr]] timeToRun); cr
+```
+'.
 
 package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
 	#{DebugTraceStream}
-).
-
-package setVariableNames: #(
-	#{Trace}
-).
-
-package setBinaryVariableNames: #(
-	#{Trace}
 ).
 
 package setPrerequisites: #(
@@ -37,8 +41,8 @@ package!
 "Class Definitions"!
 
 Stream subclass: #DebugTraceStream
-	instanceVariableNames: 'buffer bufferProtect'
-	classVariableNames: 'Current'
+	instanceVariableNames: 'buffer'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!

@@ -13,7 +13,7 @@ GUIDTest comment: ''!
 
 assertNull: guid
 	self assert: guid size equals: 16.
-	self assert: guid equals: GUID null.
+	self assert: guid equals: self subjectClass null.
 	self assert: guid isNull.
 	self assert: guid asString size equals: 38.
 	self assert: (guid asByteArray allSatisfy: [:each | each = 0])!
@@ -84,8 +84,8 @@ testFromStringNull
 	self assertNull: (self subjectClass fromString: self subjectClass null asString)!
 
 testIsSelfEvaluating
-	self assert: GUID null isSelfEvaluating.
-	self assert: GUID newUnique isSelfEvaluating!
+	self assert: self subjectClass null isSelfEvaluating.
+	self assert: self subjectClass newUnique isSelfEvaluating!
 
 testNewUnique
 	| uuid |
@@ -122,15 +122,15 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
-!GUIDTest categoriesFor: #assertNull:!private!unit tests! !
+!GUIDTest categoriesFor: #assertNull:!helpers!private! !
 !GUIDTest categoriesFor: #subjectClass!constants!private! !
 !GUIDTest categoriesFor: #testAsByteArray!public!unit tests! !
 !GUIDTest categoriesFor: #testAsInteger!public!unit tests! !
 !GUIDTest categoriesFor: #testComparison!public!unit tests! !
-!GUIDTest categoriesFor: #testDisplayString!public!unit tests! !
+!GUIDTest categoriesFor: #testDisplayString!constants!public! !
 !GUIDTest categoriesFor: #testFromString!public!unit tests! !
 !GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
-!GUIDTest categoriesFor: #testIsSelfEvaluating!public!testing! !
+!GUIDTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
 !GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
 !GUIDTest categoriesFor: #testNull!public!unit tests! !
 !GUIDTest categoriesFor: #testOrder!public!unit tests! !

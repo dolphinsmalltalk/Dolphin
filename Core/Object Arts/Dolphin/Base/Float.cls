@@ -525,12 +525,10 @@ cos
 	"If we get here, it must be because a FloatPointException occured and was resumed, so return the appropriate continuation value."
 	^NaN!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	#todo. "Should be using Locale>>displayFloat:on:, but work is needed to be able to parse from the locale specific formats."
-	"Locale default displayFloat: self on: aStream"
-	self printOn: aStream!
+	aPuttableStream locale displayFloat: self on: aPuttableStream!
 
 divideIntoFloat: aFloat
 	"Private - Answer the result of dividing the receiver by the known Float, aFloat. 
@@ -774,12 +772,9 @@ negative
 	^self fpClass anyMask: FpClassNegative!
 
 printOn: aPuttableStream
-	"Append the exact string representation of the receiver to the <puttableStream>, target. The
-	representation used is a valid literal representation for floating point numbers, recognised
-	by the Smalltalk compiler, except for the 3 special cases of inifinity, negative infinity,
-	and not-a-number (NaN)."
+	"Append the exact Smalltalk literal representation of the receiver to the <puttableStream> argument."
 
-	self printOn: aPuttableStream base: 10!
+	Locale smalltalk displayFloat: self on: aPuttableStream!
 
 printOn: aStream base: anInteger
 	"Print the receiver with the minimal number of digits that describes it unambiguously in the specified base. This way, every two different Float will have a different printed representation. More over, every Float can be reconstructed from its printed representation with #readFrom:."

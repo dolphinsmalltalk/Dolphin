@@ -1267,13 +1267,13 @@ new
 notificationClass
 	^CompilerNotification!
 
-parseExistingMethodNoError: aCompiledMethod 
-	^self 
+parseExistingMethodNoError: aCompiledMethod
+	^self
 		parseMethod: aCompiledMethod getSource
 		in: aCompiledMethod methodClass
 		onError: 
-			[:err | 
-			Notification signal: ('Error <1p> on line <2p> of <3p> -> <4s>' 
+			[:err |
+			Notification signal: ('Error <1p> on line <2p> of <3p> -> <4s>'
 						expandMacrosWith: err errorCode
 						with: err line
 						with: aCompiledMethod

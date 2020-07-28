@@ -125,9 +125,9 @@ inspectReferences
 
 	| refs |
 	refs := self aspectValue allReferences copyWithout: self.
-	refs isEmpty 
+	refs isEmpty
 		ifTrue: 
-			[MessageBox 
+			[MessageBox
 				notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: self aspectValue)]
 		ifFalse: [refs inspect]!
 
@@ -182,32 +182,33 @@ pasteAspect
 	objectCopy := Clipboard current getObject.
 	self setAspectValue: objectCopy!
 
-queryCommand: query 
+queryCommand: query
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery>,  query."
 
 	| command accessor |
 	command := query commandSymbol.
 	accessor := self aspectAccessor.
-	(#(#copyAspect #inspectAspect #inspectIt #browseIt #inspectReferences) identityIncludes: command) 
+	(#(#copyAspect #inspectAspect #inspectIt #browseIt #inspectReferences) identityIncludes: command)
 		ifTrue: 
 			[query isEnabled: accessor notNil.
 			^true].
-	#nilAspect == command 
+	#nilAspect == command
 		ifTrue: 
 			[query isEnabled: (accessor notNil and: [accessor canNil]).
 			^true].
-	#pasteAspect == command 
+	#pasteAspect == command
 		ifTrue: 
 			[| text |
 			text := 'nil'.
-			Clipboard current isObjectAvailable 
+			Clipboard current isObjectAvailable
 				ifTrue: 
 					[| class |
 					class := Clipboard current getObjectClass.
 					text := class printString.
 					query isEnabled: accessor notNil].
-			query text: (query commandDescription description expandMacrosWith: text).
+			query text: (query commandDescription description expandMacrosWithArguments: {text}
+						locale: Locale smalltalk).
 			^true].
 	^super queryCommand: query!
 

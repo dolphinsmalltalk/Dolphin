@@ -324,6 +324,13 @@ errorNotKeyed
 
 	^self error: ('<1p>s do not respond to keyed accessing messages' expandMacrosWith: self class)!
 
+errorValueNotFound: aValue
+	"Private - Report that an attempt was made to look up the key for a value which was not
+	in receiver"
+
+	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
+!
+
 fold: aDyadicValuable 
 	"Evaluate the <dyadicValuable> argument, operation, across the elements of the receiver
 	starting with the first two elements. For subsequent evaluations the first argument to the
@@ -419,8 +426,8 @@ printOn: aStream
 	"Print a string representation of self on aStream. This method suffices for 
 	most collections, and is able to handle cyclic references."
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				basicPrint: self;
 				nextPut: $(.
@@ -592,6 +599,7 @@ union: comperand
 !Collection categoriesFor: #do:separatedBy:!enumerating!public! !
 !Collection categoriesFor: #errorEmptyCollection!exceptions!private! !
 !Collection categoriesFor: #errorNotKeyed!exceptions!private! !
+!Collection categoriesFor: #errorValueNotFound:!exceptions!private! !
 !Collection categoriesFor: #fold:!enumerating!public! !
 !Collection categoriesFor: #growSize!accessing!private! !
 !Collection categoriesFor: #identityIncludes:!public!searching! !

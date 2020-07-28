@@ -126,10 +126,10 @@ displayAspectText: anObject on: aStream
 displayAspectValueOf: anObject on: aStream
 	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
 
-displayOn: aStream
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: self name!
+	aPuttableStream display: self name!
 
 editablePresenterBlock
 	"Answer the presenter block that can definitely be used to display AND edit the receiver's aspect"

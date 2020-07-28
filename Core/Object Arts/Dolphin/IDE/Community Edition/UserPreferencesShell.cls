@@ -32,8 +32,10 @@ selectionOrNil: aClass
 defaultModel
 	^ListModel on: SmalltalkSystem current systemOptions !
 
-displayOn: aStream 
-	aStream nextPutAll: 'User Preferences'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'User Preferences'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

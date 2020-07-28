@@ -120,26 +120,22 @@ dispatchImplementor: anObject
 
 	dispatchImplementor := anObject!
 
-displayOn: aStream
-	"Append a user-friendly textual representation of the receiver to the 
-	<puttableStream>, target."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self isNull ifTrue: [aStream print: nil] ifFalse: [self displayValueOn: aStream]!
+	self isNull ifTrue: [aPuttableStream print: nil] ifFalse: [self displayValueOn: aPuttableStream]!
 
 displayValueOn: aStream
-	"Private - Append a user-friendly textual representation of the receiver's
-	'value' to aStream.
-	Implementation Note: Follow the VB convention of representing an object by
-	its DISPID_VALUE property, if it has one, but extend that to also try and print
-	its contents if a collection and has no value."
+	"Private - Append a user-friendly textual representation of the receiver's 'value' to aStream.
+	Implementation Note: Follow the VB convention of representing an object by its DISPID_VALUE property, if it has one, but extend that to also try and print its contents if a collection and has no value."
 
 	| value |
 	[value := self value] on: HRESULTError
 		do: 
-			[:ex | 
+			[:ex |
 			[self contents displayOn: aStream] on: HRESULTError
 				do: 
-					[:ex2 | 
+					[:ex2 |
 					| name |
 					name := (self coclassTypeInfoIfNone: [self class]) name.
 					aStream

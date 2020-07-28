@@ -12,17 +12,16 @@ AbstractIN_ADDR comment: '<AbstractIN_ADDR> is an abstract <ExternalStructure> c
 !AbstractIN_ADDR categoriesForClass!Win32-Structs! !
 !AbstractIN_ADDR methodsFor!
 
-displayOn: aStream
-	"Append to the <puttableStream>, aStream, a <String> whose characters are a representation
-	of the receiver as a user would want to see it. In this case we print the address in the
-	standard IPv4 or IPv6 format."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see..
+	In this case we print the address in the standard IPv4 or IPv6 format."
 
 	self isNull
-		ifTrue: [aStream display: nil]
+		ifTrue: [aPuttableStream display: nil]
 		ifFalse: 
 			[| buf |
 			buf := String newFixed: WinSocketConstants.INET6_ADDRSTRLEN.
-			aStream nextPutAll: (WS2_32Library default
+			aPuttableStream nextPutAll: (WS2_32Library default
 						inet_ntop: self class addressFamily
 						pAddr: self
 						pStringBuf: buf

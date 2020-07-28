@@ -50,9 +50,6 @@ Magnitude subclass: #TimeStamp
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !BlockClosure methodsFor!

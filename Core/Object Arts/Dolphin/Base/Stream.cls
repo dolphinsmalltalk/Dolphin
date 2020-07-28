@@ -152,6 +152,11 @@ elementSize
 
 	^self contentsSpecies elementSize!
 
+encodedSizeOf: anObject
+	"Answer the number of units that would be occupied by anObject if it were present in this stream."
+
+	^self contentsSpecies empty encodedSizeOf: anObject!
+
 encoding
 	"Answer the encoding of the stream, one of:
 	- #binary, e.g. a stream over a ByteArray
@@ -198,6 +203,11 @@ isWriteable
 	protocol)."
 
 	^false!
+
+locale
+	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	^Locale.UserDefault!
 
 next
 	"Answer the next object accessible by the receiver."
@@ -307,9 +317,6 @@ print: anObject
 
 	anObject printOn: self!
 
-print: anObject with: aNiladicValue
-	aNiladicValue value!
-
 skip: anInteger
 	"Set the receiver's position reference to be the current position plus
 	the argument, anInteger, possibly adjusting the result so as to remain
@@ -373,7 +380,10 @@ upToEnd
 	| remainder |
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
-	^remainder contents! !
+	^remainder contents!
+
+visit: anObject do: aNiladicValue
+	aNiladicValue value! !
 !Stream categoriesFor: #<<!accessing!public! !
 !Stream categoriesFor: #atEnd!public!testing! !
 !Stream categoriesFor: #basicContentsSpecies!accessing!private! !
@@ -394,7 +404,8 @@ upToEnd
 !Stream categoriesFor: #display:!printing!public! !
 !Stream categoriesFor: #do:!enumerating!public! !
 !Stream categoriesFor: #elementSize!constants!public! !
-!Stream categoriesFor: #encoding!constants!public! !
+!Stream categoriesFor: #encodedSizeOf:!encode/decode!public! !
+!Stream categoriesFor: #encoding!constants!encode/decode!public! !
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
 !Stream categoriesFor: #errorNotPositionable!exceptions!private! !
 !Stream categoriesFor: #errorNotReadable!exceptions!private! !
@@ -402,6 +413,7 @@ upToEnd
 !Stream categoriesFor: #isPositionable!public!testing! !
 !Stream categoriesFor: #isReadable!public!testing! !
 !Stream categoriesFor: #isWriteable!public!testing! !
+!Stream categoriesFor: #locale!accessing!public! !
 !Stream categoriesFor: #next!accessing!public! !
 !Stream categoriesFor: #next:!accessing!public! !
 !Stream categoriesFor: #next:into:startingAt:!accessing!public! !
@@ -416,7 +428,6 @@ upToEnd
 !Stream categoriesFor: #nextPutAll:!accessing!public! !
 !Stream categoriesFor: #nextSDWORDPut:!binary filing!public! !
 !Stream categoriesFor: #print:!printing!public! !
-!Stream categoriesFor: #print:with:!printing!public! !
 !Stream categoriesFor: #skip:!positioning!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !
@@ -426,6 +437,7 @@ upToEnd
 !Stream categoriesFor: #tab:!accessing!public! !
 !Stream categoriesFor: #upTo:!accessing!public! !
 !Stream categoriesFor: #upToEnd!accessing!public! !
+!Stream categoriesFor: #visit:do:!public! !
 
 !Stream class methodsFor!
 

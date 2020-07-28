@@ -23,9 +23,8 @@ add: aCollection sortBlock: block
 			[Transcript
 				nextPutAll: 'Added ';
 				print: sorted size;
-				nextPutAll: ' objects to a SortedCollection taking '.
-			duration printHumanReadableOn: Transcript.
-			Transcript
+				nextPutAll: ' objects to a SortedCollection taking ';
+				display: duration;
 				cr;
 				flush].
 	self assertSorted: sorted!
@@ -45,9 +44,8 @@ sort: aCollection sortBlock: block
 			[Transcript
 				nextPutAll: 'Sorted collection of ';
 				print: aCollection size;
-				nextPutAll: ' objects taking '.
-			duration printHumanReadableOn: Transcript.
-			Transcript
+				nextPutAll: ' objects taking ';
+				display: duration;
 				cr;
 				flush].
 	self assertSorted: sorted.

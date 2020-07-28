@@ -26,7 +26,7 @@ formatOn: aStream source: aString
 
 formattedFrom: aString
 	| stream |
-	stream := String writeStream: 32.
+	stream := String smalltalkWriteStream: 32.
 	self formatOn: stream source: aString.
 	^stream contents!
 

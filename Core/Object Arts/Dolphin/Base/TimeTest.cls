@@ -36,7 +36,7 @@ secondsShould: expectedSeconds for: seconds
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
-	Locale userDefault: (Locale lcid: 1033)!
+	Locale userDefault: (Locale named: 'en-US')!
 
 tearDown
 	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
@@ -219,17 +219,15 @@ testPrintNegativeTime
 		expected: '21:00.00'!
 
 testPrintOnFormat
-	| locale |
-	locale := Locale userDefault.
-	
-	[Locale userDefault: Locale invariant.
 	#(#(45000 'h:mm tt' '12:30 PM')) do: 
 			[:each |
 			| time actual |
 			time := Time fromSeconds: each first.
-			actual := String streamContents: [:s | time printOn: s format: each second].
-			self assert: actual equals: each last]]
-			ensure: [Locale userDefault: locale]!
+			actual := String streamContents: 
+							[:s |
+							s locale: Locale invariant.
+							time printOn: s format: each second].
+			self assert: actual equals: each last]!
 
 testPrintPositiveTime
 	| time1 |

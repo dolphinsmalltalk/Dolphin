@@ -79,18 +79,16 @@ details
 	^self info details
 	 !
 
-displayOn: aStream
-	"Append a textual representation of the receiver to the <puttableStream> argument
-	as a user might want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| info |
 	info := self info.
-	aStream 
+	aPuttableStream
 		display: info owner;
 		nextPutAll: ' (';
 		display: info serial;
-		nextPut: $)
-!
+		nextPut: $)!
 
 gap	
 	"Private - Answers a string to leave a gap"

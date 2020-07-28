@@ -352,7 +352,7 @@ basicPrintString
 	Should not be overridden by subclasses"
 
 	| aStream |
-	aStream := String writeStream: 16.
+	aStream := String smalltalkWriteStream: 16.
 	self basicPrintOn: aStream.
 	^aStream contents!
 
@@ -565,28 +565,25 @@ dependents
 		ifTrue: [WeakArray new]
 		ifFalse: [dependents]!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	self printOn: aStream
-!
+	self printOn: aPuttableStream!
 
 displayString
-	"Answer a String whose characters are a representation of the receiver as a user
-	would want to see it.
-	N.B. Subclasses should override #displayOn: to provide suitable implementations. 
-	You may also want to override #displayString for performance reasons in certain 
-	situations, because using a Stream can be a significant overhead where one 
-	simply wants the display string of a single object. However, if you override
-	#displayString you should also override #displayOn: to provide the same
-	representation."
+	"Answer a String whose characters are a representation of the receiver as a user in the default locale would want to see it.
+	N.B. Subclasses should override #displayOn: to provide suitable implementations. You may also want to override #displayString for performance reasons in certain situations, because using a Stream can be a significant overhead where one  simply wants the display string of a single object. However, if you override 	#displayString you should also override #displayOn: to provide the same representation."
+
+	^self displayString: Locale userDefault!
+
+displayString: aLocale
+	"Answer a String whose characters are a representation of the receiver as a user in the specified <Locale> would want to see it."
 
 	| stream |
 	stream := String writeStream: 32.
+	stream locale: aLocale.
 	self displayOn: stream.
-	^stream contents
-!
+	^stream contents!
 
 doesNotUnderstand: failedMessage
 	"Sent to the receiver by the VM when a message sent to the receiver was not implemented
@@ -626,10 +623,7 @@ errorSubscriptBounds: anInteger
 events
 	"Answer a Collection of the receiver's events"
 
-	| events |
-	^(events := self getEvents) isNil
-		ifTrue: [NullEventsCollection current]
-		ifFalse: [events]!
+	^self getEvents ?? NullEventsCollection.Current!
 
 expandMacrosIn: aString
 
@@ -666,6 +660,14 @@ free
 	Object Liberation Strategy pattern for further details."
 
 	!
+
+fullPrintString
+	"Answer a <readableString> whose characters are a description of the receiver as a developer would want to see it. The length of the string is not limited, and there is no protection against infinite recursion."
+
+	| stream |
+	stream := String smalltalkWriteStream.
+	self printOn: stream.
+	^stream contents!
 
 getDependents
 	"Private - Answer the DependentsCollection belonging to the receiver, or nil if the receiver
@@ -913,13 +915,6 @@ isWeak
 
 	^self getSpecialBehavior allMask: Behavior._IsWeakMask!
 
-maxPrint
-	"Private - Answer the maximum number of characters to be printed onto a stream as 
-	the string representation of the receiver."
-
-	^3000
-!
-
 mustBeBoolean
 	"Private - Sent to the receiver by the VM when an attempt was made to test it for its
 	boolean status by a CompiledMethod, e.g:
@@ -1106,14 +1101,14 @@ printString
 	"Answer a <readableString> whose characters are a description of the receiver 
 	as a developer would want to see it."
 
-	^self printStringLimitedTo: self maxPrint!
+	^self printStringLimitedTo: 2000!
 
 printStringLimitedTo: anInteger
 	"Answer a <readableString> whose characters are a description of the receiver as a developer would want to see it, ellipsising if more than anInteger characters would be required."
 
 	| stream |
 	stream := LimitedWriteStream
-				on: (String new: 32)
+				over: String smalltalkWriteStream
 				limit: anInteger
 				limitBlock: [:s | ^s contents , ' ... etc ...'].
 	self printOn: stream.
@@ -1280,8 +1275,7 @@ shouldNotImplement
 
 	| method |
 	method := Processor activeProcess topFrame sender method.
-	^self
-		error: ('<1p> should not implement <2p>' expandMacrosWithArguments: {self class. method selector})!
+	^self error: ('<1p> should not implement <2p>' expandMacrosWith: self class with: method selector)!
 
 size
 	"Answer the number of indexed variables in the receiver (0 for non-indexable objects,
@@ -1337,7 +1331,7 @@ storeString
 	an object similar to the receiver."
 
 	| stream |
-	stream := String writeStream: 32.
+	stream := String smalltalkWriteStream.
 	self storeOn: stream.
 	^stream contents!
 
@@ -1574,6 +1568,7 @@ yourself
 !Object categoriesFor: #dependents!dependency!public! !
 !Object categoriesFor: #displayOn:!displaying!public! !
 !Object categoriesFor: #displayString!displaying!public! !
+!Object categoriesFor: #displayString:!displaying!public! !
 !Object categoriesFor: #doesNotUnderstand:!exceptions!public!vm entry points! !
 !Object categoriesFor: #error:!exceptions!public! !
 !Object categoriesFor: #errorCantHold:!exceptions!public! !
@@ -1583,6 +1578,7 @@ yourself
 !Object categoriesFor: #expandMacrosIn:!double dispatch!private! !
 !Object categoriesFor: #finalize!finalizing!public! !
 !Object categoriesFor: #free!finalizing!public! !
+!Object categoriesFor: #fullPrintString!printing!public! !
 !Object categoriesFor: #getDependents!dependency!private! !
 !Object categoriesFor: #getEvents!events!private! !
 !Object categoriesFor: #getSpecialBehavior!accessing!private! !
@@ -1615,7 +1611,6 @@ yourself
 !Object categoriesFor: #isString!public!testing! !
 !Object categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Object categoriesFor: #isWeak!public!testing! !
-!Object categoriesFor: #maxPrint!constants!private! !
 !Object categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
 !Object categoriesFor: #noEventsDo:!debugger-step through!events!public! !
 !Object categoriesFor: #notNil!public!testing! !

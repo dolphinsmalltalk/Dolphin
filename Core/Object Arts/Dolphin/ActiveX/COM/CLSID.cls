@@ -13,27 +13,22 @@ The CLSIDs of all coclasses registered on your machine can be found under the HK
 !CLSID categoriesForClass!External-Data-Structured-COM! !
 !CLSID methodsFor!
 
-displayOn: aStream
-	"Append an 'end-user suitable' textual representation of the receiver to aStream.
-	GUIDs are a fairly technical concept, but they do appear in the registry in a
-	certain format, which we use here."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	[aStream nextPutAll: self progID] on: HRESULTError do: [:e |
-		aStream 
-"			nextPutAll: ' (Unregistered) ';"
-			nextPutAll: self asString]!
+	[aPuttableStream nextPutAll: self progID] on: HRESULTError
+		do: [:e | aPuttableStream nextPutAll: self asString]!
 
 progID
-	"Answer the ProgID associated with the receiver (if any). The result
-	is a String, but is not really appropriate for end-user display.
-	If the registry contains no relevant entry, then an appropriate
-	HRESULTError will be raised.
-	Note that a ProgID has a maximum of 39 characters."
+	"Answer the ProgID associated with the receiver (if any). The result is a String and is the least technical way we have to refer to a component, although still not really intended for end-user display.
+	If the registry contains no relevant entry, then an appropriate HRESULTError will be raised. Note that a ProgID has a maximum of 39 characters."
 
-	| pProgId |
+	| pProgId answer |
 	pProgId := COMTaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
-	^(Utf16String fromAddress: pProgId) asString! !
+	answer := String fromUtf16String: pProgId.
+	pProgId free.
+	^answer! !
 !CLSID categoriesFor: #displayOn:!displaying!public! !
 !CLSID categoriesFor: #progID!displaying!public! !
 

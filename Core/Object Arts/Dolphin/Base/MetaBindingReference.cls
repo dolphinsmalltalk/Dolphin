@@ -26,14 +26,13 @@ context
 
 	^nil!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it (the qualified name)."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self pathString;
 		space;
-		display: #class!
+		nextPutAll: #class!
 
 hash
 	"Answer the <integer> hash value for the receiver."

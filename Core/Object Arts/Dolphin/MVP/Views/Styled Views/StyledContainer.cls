@@ -234,9 +234,9 @@ onPaintRequired: aPaintEvent
 			Transcript
 				show: 'Exit ';
 				display: self handle;
-				space.
-			elapsed printHumanReadableOn: Transcript.
-			Transcript cr.
+				space;
+				display: elapsed;
+				cr.
 			Nest := Nest - 1].
 	_spare4 := _spare4 - 1.
 	^true!

@@ -56,11 +56,11 @@ filerProxy
 
 loadReferee
 	referee := resourceIdentifier loadWithContext: self.
-	referee isNil 
+	referee isNil
 		ifTrue: 
 			["Referee resource not found so substitute a dummy static text."
 			referee := StaticText new.
-			Notification 
+			Notification
 				signal: ('<1p> can''t load ''<2d>''' expandMacrosWith: self class with: resourceIdentifier).
 			(self addSubView: referee) text: resourceIdentifier displayString].
 	self configureReferee.

@@ -252,17 +252,18 @@ buildApplication
 	SessionManager inputState queueDeferredAction: saveBlock.
 	self finishedWithAll: #(#shrinkSymbolTable #buildApplication)!
 
-buildManifest: assemblyNameString description: assemblyDescriptionString version: aVersionResource 
+buildManifest: assemblyNameString description: assemblyDescriptionString version: aVersionResource
 	"GUI apps need common controls, console apps do not."
 
 	| manifest |
 	manifest := String writeStream.
+	manifest locale: Locale invariant.
 	manifest nextPutAll: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'.
-	manifest 
-		nextPutAll: ('%<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">%<assemblyIdentity name="<1s>" version="<3s>" processorArchitecture="X86" type="win32" />%<description><2s>%</description>' 
-				expandMacrosWith: assemblyNameString
-				with: assemblyDescriptionString
-				with: aVersionResource fileVersion).
+	'%<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">%<assemblyIdentity name="<1s>" version="<3s>" processorArchitecture="X86" type="win32" />%<description><2s>%</description>'
+		expandMacrosWithArguments: {assemblyNameString.
+				assemblyDescriptionString.
+				aVersionResource fileVersion}
+		on: manifest.
 	self appendManifestContent: manifest.
 	manifest nextPutAll: '</assembly>'.
 	^manifest contents!
@@ -1605,8 +1606,8 @@ runPreStripScript
 	[filer fileIn] on: Compiler errorClass
 		do: 
 			[:x |
-			self logComment: ('Error in pre-strip script at line <1d>: <2d>' expandMacrosWith: x line
-						with: (x _descriptionArguments at: 5)).
+			self logComment: ('Error in pre-strip script at line <1p>: <2s>' expandMacrosWith: x line
+						with: x errorMessage).
 			x resume]!
 
 runtimeSessionManagerClass

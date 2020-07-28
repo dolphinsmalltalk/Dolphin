@@ -38,11 +38,10 @@ preconditions
 					true])!
 
 signalMultipleReferenceError
-	self signalReferenceError: ('Multiple subclasses reference <1s>' 
-				expandMacrosWith: variableName)!
+	self signalReferenceError: ('Multiple subclasses reference <1s>' expandMacrosWith: variableName)!
 
-signalReferenceError: errorString 
-	class realClass isNil 
+signalReferenceError: errorString
+	class realClass isNil
 		ifTrue: [self refactoringError: errorString]
 		ifFalse: 
 			[| classVarName error |
@@ -54,9 +53,8 @@ signalReferenceError: errorString
 					self openBrowserOn: (self model environment classVarRefsTo: classVarName in: class realClass)]]!
 
 signalStillReferencedError
-	self signalReferenceError: ('<1p> has references to <2s>' 
-				expandMacrosWith: class
-				with: variableName)!
+	self
+		signalReferenceError: ('<1p> has references to <2s>' expandMacrosWith: class with: variableName)!
 
 transform
 	class removeClassVariable: variableName.

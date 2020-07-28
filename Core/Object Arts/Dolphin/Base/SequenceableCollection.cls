@@ -636,13 +636,6 @@ errorLastObject: target
 
 	^self error: ('<1p> is my last object' expandMacrosWith: target)!
 
-errorValueNotFound: aValue
-	"Private - Report that an attempt was made to look up the key for a value which was not
-	in receiver"
-
-	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
-!
-
 expandMacrosIn: aString
 	"Private - Expand aString with the collection of replaceable arguments represented by the receiver."
 
@@ -1341,7 +1334,6 @@ writeStream
 !SequenceableCollection categoriesFor: #errorCollectionsOfDifferentSizes!enumerating!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
-!SequenceableCollection categoriesFor: #errorValueNotFound:!exceptions!private! !
 !SequenceableCollection categoriesFor: #expandMacrosIn:!double dispatch!private! !
 !SequenceableCollection categoriesFor: #fifth!accessing!public! !
 !SequenceableCollection categoriesFor: #findFirst:!public!searching! !

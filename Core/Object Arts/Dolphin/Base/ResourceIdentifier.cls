@@ -38,13 +38,15 @@ copy
 editExpression
 	"Private - Answer a String that can be evaluated to edit an emitted resource"
 
-	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)' expandMacrosWith: self selector!
+	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)'
+		expandMacrosWith: self selector!
 
-emitMethodHeaderFor: aSymbol on: stream 
+emitMethodHeaderFor: aSymbol on: stream
 	stream
 		nextPutAll: aSymbol;
-		cr;
-		nextPutAll: (self resourceMethodComment expandMacrosWith: self name with: self editExpression);
+		cr.
+	self resourceMethodComment expandMacrosWithArguments: {self name. self editExpression} on: stream.
+	stream
 		cr;
 		cr!
 
@@ -122,7 +124,7 @@ owningPackage: aPackage
 
 	self compiledMethod owningPackage: aPackage!
 
-printOn: aStream 
+printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
 	would want to see it."
 

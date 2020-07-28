@@ -24,15 +24,15 @@ prepareToStrip
 	This is invoked before even the development tools have been closed.
 	Answer whether to proceed with the application deployment."
 
-	(self typeLibPath isNil or: [(File exists: self typeLibPath) not]) 
+	(self typeLibPath isNil or: [(File exists: self typeLibPath) not])
 		ifTrue: 
 			[| mb |
 			mb := MessageBox new.
 			mb buttonStyle: #okCancel.
 			mb caption: ('Deploying <1p>...' expandMacrosWith: self executableName).
 			mb defaultButton: 2.
-			(mb 
-				warning: 'There is no type library associated with this component or the type library cannot be found. You may deploy this component, but it may then be necessary to distribute and register the type library separately in order for the component to function. If this component only implements interfaces defined by other components (which themselves supply a type library), or the component is not intended for use with Automation clients (and a separate marshalling DLL is available), then you may not need a type library.<n><n>Are you sure that you want to continue?') 
+			(mb
+				warning: 'There is no type library associated with this component or the type library cannot be found. You may deploy this component, but it may then be necessary to distribute and register the type library separately in order for the component to function. If this component only implements interfaces defined by other components (which themselves supply a type library), or the component is not intended for use with Automation clients (and a separate marshalling DLL is available), then you may not need a type library.<n><n>Are you sure that you want to continue?')
 					== #ok ifFalse: [^false]].
 	^super prepareToStrip!
 

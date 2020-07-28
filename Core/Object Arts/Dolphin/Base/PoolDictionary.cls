@@ -48,12 +48,10 @@ convertToSharedPool
 	poolClass setName: name.
 	poolClass owningPackage: package!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	self name displayOn: aStream
-!
+	self name displayOn: aPuttableStream!
 
 environment
 	"Answer the receiver's <Namespace> scope."

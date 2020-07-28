@@ -19,11 +19,10 @@ ExternalScalar comment: ''!
 
 	^anObject = self value!
 
-displayOn: target
-	"Append a textual representation of the receiver onto the <puttableStream> argument,
-	target, in the format that an end-user might want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	target display: (self isNull ifFalse: [self value])!
+	(self isNull ifFalse: [self value]) displayOn: aPuttableStream!
 
 value
 	"Answer the receiver's value as a Smalltalk object of the appropriate scalar type for the subclass."
@@ -35,7 +34,7 @@ value: anObject
 
 	^self subclassResponsibility! !
 !ExternalScalar categoriesFor: #=!comparing!public! !
-!ExternalScalar categoriesFor: #displayOn:!printing!private! !
+!ExternalScalar categoriesFor: #displayOn:!printing!public! !
 !ExternalScalar categoriesFor: #value!converting!public! !
 !ExternalScalar categoriesFor: #value:!public! !
 

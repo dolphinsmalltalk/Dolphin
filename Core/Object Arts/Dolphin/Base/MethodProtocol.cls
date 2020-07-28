@@ -188,37 +188,50 @@ compileStub: selector into: behavior
 	selector, into the <ClassDescription>, behavior."
 
 	| target args sig |
-	target  := String writeStream: 128.
+	target := String smalltalkWriteStream: 128.
 	args := selector argumentCount.
 	args == 0
 		ifTrue: [target nextPutAll: selector]
-		ifFalse: [ 
-			(args == 1 and: [selector isInfix])
-				ifTrue: [target nextPutAll: selector; nextPutAll: ' operand']
-				ifFalse: [ | keywords |
+		ifFalse: 
+			[(args == 1 and: [selector isInfix])
+				ifTrue: 
+					[target
+						nextPutAll: selector;
+						nextPutAll: ' operand']
+				ifFalse: 
+					[| keywords |
 					keywords := selector keywords.
-					(1 to: keywords size)
-						do: [:i | target nextPutAll: (keywords at: i); space; 
-								nextPutAll: 'arg'; display: i]
+					(1 to: keywords size) do: 
+							[:i |
+							target
+								nextPutAll: (keywords at: i);
+								space;
+								nextPutAll: 'arg';
+								display: i]
 						separatedBy: [target space]]].
-	target crtab; nextPutAll: '"This is an auto-generated target implementation for the protocol <';
-		nextPutAll: self asSymbol; nextPut: $>; crtab; 
-		nextPutAll: 'and remains to be correctly implemented."'; cr; crtab;
+	target
+		crtab;
+		nextPutAll: '"This is an auto-generated target implementation for the protocol <';
+		nextPutAll: self asSymbol;
+		nextPut: $>;
+		crtab;
+		nextPutAll: 'and remains to be correctly implemented."';
+		cr;
+		crtab;
 		nextPutAll: '^Error notYetImplemented'.
 	behavior compile: target contents.
 	sig := self class stubAddedSignal.
-	sig notNil ifTrue: [
-		target reset;
-			nextPutAll: 'Protocol ';
-			display: self;
-			nextPutAll: ' added stub implementation of new message ';
-			print: behavior;
-			nextPutAll: '>>';
-			print: selector.
-		sig
-			signal: target contents
-			with: behavior]
-!
+	sig notNil
+		ifTrue: 
+			[target
+				reset;
+				nextPutAll: 'Protocol ';
+				display: self;
+				nextPutAll: ' added stub implementation of new message ';
+				print: behavior;
+				nextPutAll: '>>';
+				print: selector.
+			sig signal: target contents with: behavior]!
 
 contents
 	"Answer a <collection> of all methods classified under the receiver."
@@ -229,10 +242,13 @@ contents
 		foundMethods addAll: (self methodsInBehavior: aBehavior)].
 	^foundMethods!
 
-displayOn: aStream
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPut: $<; nextPutAll: name; nextPut: $>!
+	aPuttableStream
+		nextPut: $<;
+		nextPutAll: name;
+		nextPut: $>!
 
 hash
 	"Answer the <integer> hash value for the receiver."

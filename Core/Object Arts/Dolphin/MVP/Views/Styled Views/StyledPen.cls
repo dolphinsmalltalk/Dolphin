@@ -28,7 +28,7 @@ dashPattern
 dashPattern: anArrayOfNumbers 
 	dashPattern := anArrayOfNumbers!
 
-printOn: aStream 
+printOn: aStream
 	"Render the receiver to aStream as a developer would wish to see it"
 
 	aStream

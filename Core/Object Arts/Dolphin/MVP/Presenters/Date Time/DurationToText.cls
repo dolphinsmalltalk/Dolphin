@@ -15,6 +15,11 @@ Public Domain Freeware'!
 !DurationToText categoriesForClass!IDB Goodies!MVP-Type Converters-Text! !
 !DurationToText methodsFor!
 
+actualFormat
+	"Private - Answers the actual <Duration> format to use for the conversion"
+
+	^self format ifNil: [self actualLocale durationFormat]!
+
 format
 	^format!
 
@@ -23,12 +28,10 @@ format: aStringOrNil
 
 leftToRight: aDuration
 	| fmt stream |
-	fmt := self format ?? 'd:hh:mm:ssfff'.
+	fmt := self actualFormat.
 	stream := String writeStream: fmt size.
-	Locale default
-		printDuration: aDuration
-		on: stream
-		format: fmt.
+	stream locale: self actualLocale.
+	aDuration printOn: stream format: fmt.
 	^stream grabContents!
 
 rightToLeft: aString
@@ -50,6 +53,7 @@ rightToLeft: aString
 		hours: (values at: 3) truncated
 		minutes: (values at: 2) truncated
 		seconds: (values at: 1)! !
+!DurationToText categoriesFor: #actualFormat!accessing!private! !
 !DurationToText categoriesFor: #format!accessing!public! !
 !DurationToText categoriesFor: #format:!accessing!public! !
 !DurationToText categoriesFor: #leftToRight:!operations!public! !

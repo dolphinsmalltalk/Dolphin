@@ -167,6 +167,21 @@ changeType: newVT
 	OLEAutLibrary default variantChangeType: answer  pvarSrc: self wFlags: 0 vt: newVT.
 	^answer!
 
+changeType: newVT locale: aLocale
+	"Answer a <VARIANT> containing the receiver's value coerced to a new type as specified by the argument, newVT, an <integer> member of the VARTYPE enumeration. The conversion is that appropriate for the specified target <Locale>.
+	If the coercion is not possible, then raise an HRESULTError."
+
+	| answer |
+	newVT == self vt ifTrue: [^self].	"Already requested type"
+	answer := self class new.
+	OLEAutLibrary default
+		variantChangeTypeEx: answer
+		pvarSrc: self
+		lcid: aLocale lcid
+		wFlags: VARIANT_LOCALBOOL
+		vt: newVT.
+	^answer!
+
 char
 	"Answer the ANSI (8-bit) character from the receiver.
 	N.B. Assumes that the receiver is of type VT_UI1."
@@ -313,11 +328,20 @@ dispatch: newValue
 	self vt: VT_DISPATCH.
 	self ulVal: newValue yourAddress.!
 
-displayOn: target
-	"Append an 'end-user suitable' textual representation of the receiver to 
-	the <puttableStream>, target."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	target display: self value!
+	self isArray
+		ifTrue: 
+			[| array |
+			array := self array.
+			array displayOn: aPuttableStream.
+			array free]
+		ifFalse: 
+			[| asBstr |
+			asBstr := self changeType: VT_BSTR locale: aPuttableStream locale.
+			aPuttableStream nextPutAll: asBstr value.
+			asBstr == self ifFalse: [asBstr free]]!
 
 double
 	"Answer the double precision floating point value from the receiver.
@@ -729,6 +753,7 @@ word: newValue
 !VARIANT categoriesFor: #byte!accessing!public! !
 !VARIANT categoriesFor: #byte:!accessing!public! !
 !VARIANT categoriesFor: #changeType:!converting!public! !
+!VARIANT categoriesFor: #changeType:locale:!converting!public! !
 !VARIANT categoriesFor: #char!accessing!public! !
 !VARIANT categoriesFor: #cmp:!comparing!private! !
 !VARIANT categoriesFor: #copy!copying!public! !

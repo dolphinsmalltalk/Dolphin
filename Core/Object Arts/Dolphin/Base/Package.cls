@@ -440,10 +440,10 @@ depthOfClass: aClass
 		depth := depth + 1].
 	^depth!
 
-displayOn: aStream
-	"Append a representation of the receiver to aStream which is suitable for display to the end user."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: self name!
+	aPuttableStream nextPutAll: self name!
 
 environment
 	"Private - Answer the global name associated with the receiver."
@@ -461,7 +461,7 @@ fileInClasses
 
 	self classesInHierarchyOrder do: [:each | self sourceManager fileIn: each fileOutName]!
 
-fileInScript: aSymbol 
+fileInScript: aSymbol
 	"Private - 'File in' the named script."
 
 	| filer |
@@ -469,12 +469,12 @@ fileInScript: aSymbol
 	filer evaluationContext: self.
 	[filer fileIn] on: Compiler errorClass
 		do: 
-			[:x | 
+			[:x |
 			| msg |
-			msg := 'Error: Script for <1p> at line <2d>: <3d>' 
+			msg := 'Error: Script for <1p> at line <2p>: <3s>'
 						expandMacrosWith: aSymbol
 						with: x line
-						with: (x _descriptionArguments at: 5).
+						with: x errorMessage.
 			Notification signal: msg.
 			x
 				beep;
@@ -916,32 +916,34 @@ okToSaveOrDeploy
 	receiver should be saved. Raise Errors that describe any problems."
 
 	self isSystemPackage ifTrue: [^Smalltalk developmentSystem isOAD].
-	self hasCyclicPrerequisites ifTrue: 
+	self hasCyclicPrerequisites
+		ifTrue: 
 			[self class unsaveableSignal
 				signal: ('The package <1p> has cyclic prerequisites.' expandMacrosWith: self name).
 			^false].
 
 	"N.B. This must be done after the above, as it will go infinitely recursive if there are cycles."
-	self hasUncommittedPrerequisites ifTrue: 
+	self hasUncommittedPrerequisites
+		ifTrue: 
 			[self class unsaveableSignal
 				signal: ('The package <1p> has prerequisites which are not currently assigned to any other package, or it is dependent on other packages which in turn have uncommitted prerequisites.'
 						expandMacrosWith: self name).
 			^false].
 	self validate.
-	^true.!
+	^true!
 
 okToUninstall
 	"Private - Validate that the receiver can be uninstalled. 
 	Raise Errors that describe any problems. Answer whether
 	OK to proceed."
 
-	self isSystemPackage 
+	self isSystemPackage
 		ifTrue: 
 			[Error signal: 'The base system package cannot be uninstalled'.
 			^false].
-	self hasCyclicPrerequisites 
+	self hasCyclicPrerequisites
 		ifTrue: 
-			[Error signal: ('The package <1p> has cyclic prerequisites and cannot be uninstalled.' 
+			[Error signal: ('The package <1p> has cyclic prerequisites and cannot be uninstalled.'
 						expandMacrosWith: self name).
 			^false].
 	^true!
@@ -1665,7 +1667,7 @@ variables
 versionIfRequired
 	Package manager versionPackageIfRequired: self!
 
-vmVersionCheck: verWhenSaved 
+vmVersionCheck: verWhenSaved
 	"Private - Raise a warning to the effect that the package being loaded
 	was saved with an older, and incompatible, version of the VM, and so
 	it may need to be modified (e.g. by recompiling blocks in version resources)
@@ -1674,13 +1676,13 @@ vmVersionCheck: verWhenSaved
 	| versionString verOnLoad |
 	verOnLoad := VMLibrary default bytecodeVersion.
 	verWhenSaved = verOnLoad ifTrue: [^self].
-	versionString := verWhenSaved > 0 
+	versionString := verWhenSaved > 0
 				ifTrue: [verWhenSaved highWord displayString , '.' , verWhenSaved lowWord displayString]
 				ifFalse: ['unknown'].
-	Notification 
+	Notification
 		signal: ('The package <1p> was saved with a different version of the Dolphin VM (<2s>). 
 It will probably load, but it may not operate correctly. 
-If you experience subsequent problems please contact the package supplier for an updated version.' 
+If you experience subsequent problems please contact the package supplier for an updated version.'
 				expandMacrosWith: self name
 				with: versionString)! !
 !Package categoriesFor: #about!commands!public! !
@@ -1899,7 +1901,7 @@ clashSignal
 defaultSortBlock
 	^[:a :b | a name < b name]!
 
-errorInvalidPACFile: pathString 
+errorInvalidPACFile: pathString
 	"Private - Raise an <Error> to the effect that the file with the specified path is
 	not a valid .PAC file."
 

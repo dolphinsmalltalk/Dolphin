@@ -86,8 +86,10 @@ createSchematicWiring
 		to: self systemModel
 		withArguments: {nil. self}!
 
-displayOn: aStream
-	aStream display: self shortCaption!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: self shortCaption!
 
 fontSize
 	^self view actualFont pointSize!
@@ -231,12 +233,12 @@ rememberThisSize
 		defaultExtent: self view extent;
 		defaultSlideyPinsMap: self slideyPinMap!
 
-saveStateAspects: aSymbolArray for: aStringName on: aWriteStream 
+saveStateAspects: aSymbolArray for: aStringName on: aWriteStream
 	"Private - Helper method for saving aSymbolArray of aspects of aStringName variable to aWriteStream"
 
 	aSymbolArray do: 
-			[:eachSymbol | 
-			aWriteStream nextPutAll: ('<1d> <2d>: ' expandMacrosWith: aStringName with: eachSymbol).
+			[:eachSymbol |
+			'<1d> <2d>: ' expandMacrosWithArguments: {aStringName. eachSymbol} on: aWriteStream.
 			(self perform: eachSymbol) literalStoreEvaluationOn: aWriteStream.
 			eachSymbol == aSymbolArray last ifFalse: [aWriteStream nextPut: $.]]!
 
@@ -258,7 +260,7 @@ saveStateString
 	receiver's class as it's parameter"
 
 	| stream |
-	stream := String writeStream: 512.
+	stream := String smalltalkWriteStream: 512.
 	self saveStateOn: stream.
 	^stream contents!
 

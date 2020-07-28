@@ -34,7 +34,7 @@ createSchematicWiring
 		send: #toggleSetPackage
 		to: self!
 
-defaultPackage: aPackageOrNil 
+defaultPackage: aPackageOrNil
 	defaultPackage := aPackageOrNil ifNil: [Package uncommitted].
 	notPackagedPresenter view text: ('<1p>?' expandMacrosWith: defaultPackage name)!
 

@@ -11,39 +11,37 @@ PushUpMethodRefactoring comment: ''!
 !PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
 !PushUpMethodRefactoring methodsFor!
 
-checkBackReferencesTo: aSelector 
+checkBackReferencesTo: aSelector
 	| definingClass pushUpParseTree |
 	definingClass := class superclass whoDefinesMethod: aSelector.
 	definingClass isNil ifTrue: [^self].
 	pushUpParseTree := class parseTreeFor: aSelector.
 	class superclass allSubclasses do: 
-			[:each | 
+			[:each |
 			each selectors do: 
-					[:sel | 
+					[:sel |
 					| parseTree |
 					parseTree := each parseTreeFor: sel.
 					(parseTree notNil and: 
-							[(parseTree superMessages includes: aSelector) 
-								and: [definingClass == (each whoDefinesMethod: aSelector)]]) 
+							[(parseTree superMessages includes: aSelector)
+								and: [definingClass == (each whoDefinesMethod: aSelector)]])
 						ifTrue: 
 							[removeDuplicates := true.
-							(aSelector == sel 
-								and: [parseTree equalTo: pushUpParseTree exceptForVariables: #()]) 
-									ifFalse: 
-										[self 
-											refactoringError: ('Cannot push up <1p> since it would override the method defined in <2p>' 
-													expandMacrosWith: aSelector
-													with: definingClass)]]]]!
+							(aSelector == sel and: [parseTree equalTo: pushUpParseTree exceptForVariables: #()])
+								ifFalse: 
+									[self refactoringError: ('Cannot push up <1p> since it would override the method defined in <2p>'
+												expandMacrosWith: aSelector
+												with: definingClass)]]]]!
 
 checkClassVars
 	selectors do: [:each | self checkClassVarsFor: each]!
 
-checkClassVarsFor: aSelector 
+checkClassVarsFor: aSelector
 	class nonMetaclass classVariableNames do: 
-			[:each | 
-			((class whichSelectorsReferToClassVariable: each) includes: aSelector) 
+			[:each |
+			((class whichSelectorsReferToClassVariable: each) includes: aSelector)
 				ifTrue: 
-					[self refactoringError: ('<1p> refers to <2s> which is defined in <3p>' 
+					[self refactoringError: ('<1p> refers to <2s> which is defined in <3p>'
 								expandMacrosWith: aSelector
 								with: each
 								with: class)]]!
@@ -51,31 +49,32 @@ checkClassVarsFor: aSelector
 checkInstVars
 	selectors do: [:each | self checkInstVarsFor: each]!
 
-checkInstVarsFor: aSelector 
+checkInstVarsFor: aSelector
 	class instanceVariableNames do: 
-			[:each | 
-			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue: 
-					[self
-						refactoringError: ('<1p> refers to <2s> which is defined in <3p>' expandMacrosWith: aSelector
+			[:each |
+			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector)
+				ifTrue: 
+					[self refactoringError: ('<1p> refers to <2s> which is defined in <3p>'
+								expandMacrosWith: aSelector
 								with: each
 								with: class)]]!
 
-checkSiblingSuperSendsFrom: aRBClass 
+checkSiblingSuperSendsFrom: aRBClass
 	selectors do: 
-			[:aSelector | 
+			[:aSelector |
 			(aRBClass whichMethodsReferToSymbol: aSelector) do: 
-					[:each | 
+					[:each |
 					| tree |
 					tree := each parseTree.
-					tree notNil 
+					tree notNil
 						ifTrue: 
-							[(tree superMessages includes: aSelector) 
+							[(tree superMessages includes: aSelector)
 								ifTrue: 
 									[| definer |
 									definer := aRBClass superclass whoDefinesMethod: aSelector.
-									(definer notNil and: [class includesClass: definer]) 
+									(definer notNil and: [class includesClass: definer])
 										ifTrue: 
-											[self refactoringError: ('Cannot push up <1p> since <2p>>><3s> sends a super message to it.' 
+											[self refactoringError: ('Cannot push up <1p> since <2p>>><3s> sends a super message to it.'
 														expandMacrosWith: aSelector
 														with: aRBClass
 														with: each selector)]]]]].
@@ -85,16 +84,15 @@ checkSuperclass
 	| overrideSelectors |
 	overrideSelectors := selectors select: [:each | class superclass definesMethod: each].
 	overrideSelectors := overrideSelectors reject: 
-					[:each | 
+					[:each |
 					| myTree superTree |
 					myTree := class parseTreeFor: each.
 					superTree := class superclass parseTreeFor: each.
 					superTree equalTo: myTree exceptForVariables: #()].
 	overrideSelectors isEmpty ifTrue: [^self].
-	class superclass isAbstract 
+	class superclass isAbstract
 		ifFalse: 
-			[self 
-				refactoringError: ('Non-abstract class <2p> or one of its superclasses already define <1p>' 
+			[self refactoringError: ('Non-abstract class <2p> or one of its superclasses already define <1p>'
 						expandMacrosWith: overrideSelectors asArray first
 						with: class superclass)].
 	overrideSelectors do: [:each | self checkBackReferencesTo: each]!
@@ -105,13 +103,13 @@ checkSuperMessages
 
 checkSuperSendsFromPushedUpMethods
 	selectors do: 
-			[:each | 
+			[:each |
 			| parseTree |
 			parseTree := class parseTreeFor: each.
-			(parseTree superMessages anySatisfy: [:sup | class superclass directlyDefinesMethod: sup]) 
+			(parseTree superMessages anySatisfy: [:sup | class superclass directlyDefinesMethod: sup])
 				ifTrue: 
-					[self 
-						refactoringError: ('Cannot push up <1p> since it sends a super message that is defined in the superclass.' 
+					[self
+						refactoringError: ('Cannot push up <1p> since it sends a super message that is defined in the superclass.'
 								expandMacrosWith: each)]]!
 
 checkSuperSendsFromSiblings
@@ -119,29 +117,29 @@ checkSuperSendsFromSiblings
 	siblings := class superclass subclasses reject: [:each | each = class].
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]!
 
-copyDownMethod: aSelector 
+copyDownMethod: aSelector
 	| oldProtocol oldSource superclassDefiner subclasses refactoring |
 	superclassDefiner := class superclass whoDefinesMethod: aSelector.
 	superclassDefiner isNil ifTrue: [^self].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
-	oldSource isNil 
+	oldSource isNil
 		ifTrue: 
-			[self refactoringError: ('Source code for <1s> superclass method not available' 
-						expandMacrosWith: aSelector)].
+			[self
+				refactoringError: ('Source code for <1s> superclass method not available' expandMacrosWith: aSelector)].
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
 	subclasses := class superclass subclasses reject: [:each | each directlyDefinesMethod: aSelector].
 	subclasses isEmpty ifTrue: [^self].
-	((superclassDefiner parseTreeFor: aSelector) superMessages 
-		anySatisfy: [:each | superclassDefiner directlyDefinesMethod: each]) 
+	((superclassDefiner parseTreeFor: aSelector) superMessages
+		anySatisfy: [:each | superclassDefiner directlyDefinesMethod: each])
 			ifTrue: 
-				[self 
-					refactoringError: ('Cannot push up <1p> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overridden.' 
+				[self
+					refactoringError: ('Cannot push up <1p> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overridden.'
 							expandMacrosWith: aSelector
 							with: superclassDefiner)].
-	self 
-		refactoringWarning: ('Do you want to copy down the superclass method to the classes that don''t define <1p>?' 
+	self
+		refactoringWarning: ('Do you want to copy down the superclass method to the classes that don''t define <1p>?'
 				expandMacrosWith: aSelector).
-	refactoring := ExpandReferencedPoolsRefactoring 
+	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
 				fromClass: superclassDefiner

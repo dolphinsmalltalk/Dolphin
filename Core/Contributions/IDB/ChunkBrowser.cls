@@ -88,8 +88,7 @@ fileOpen
 		defaultExtension: (File splitExtensionFrom: pathname);
 		showModal.
 	dialog answer ifNil: [^self] ifNotNil: [:arg | pathname := arg].
-	Cursor wait
-		showWhile:
+	Cursor wait showWhile: 
 			[model loadFromFile: pathname.
 			chunkList selectionOrNil: nil.
 			self updateChunkList].
@@ -102,8 +101,7 @@ fileOpenPatch
 		defaultExtension: 'st';
 		showModal.
 	dialog answer ifNil: [^self] ifNotNil: [:arg | pathname := arg].
-	Cursor wait
-		showWhile:
+	Cursor wait showWhile: 
 			[model loadFromPatchFile: pathname.
 			chunkList selectionOrNil: nil.
 			self updateChunkList].
@@ -245,15 +243,15 @@ restore: aCollection
 	| failures stream |
 	failures := OrderedCollection new.
 	aCollection do: [:each | each restore ifNotNil: [:arg | failures add: arg]].
-	stream := String writeStream.
+	stream := String smalltalkWriteStream.
 	(self presenterNamed: 'statusReport')
 		value: (failures isEmpty ifTrue: ['  Restore suceeded'] ifFalse: ['  Restore may have failed']).
 	failures isEmpty ifTrue: [^self].
-	stream nextPutAll: 'The following chunks may have failed to restore:<n><n>' expandMacros.
+	'The following chunks may have failed to restore:<n><n>' expandMacrosWithArguments: #() on: stream.
 	(failures copyFrom: 1 to: (10 min: failures size))
-		do: [:each | stream nextPutAll: ('<1p> <2p><n>' expandMacrosWith: each key with: each value)].
+		do: [:each | '<1p> <2p><n>' expandMacrosWithArguments: {each key. each value} on: stream].
 	failures size > 10
-		ifTrue: [stream nextPutAll: ('... and <1d> more' expandMacrosWith: failures size - 10)].
+		ifTrue: ['... and <1d> more' expandMacrosWithArguments: {failures size - 10} on: stream].
 	MessageBox notify: stream contents caption: 'Restore may have failed'!
 
 restorePicked
@@ -291,20 +289,17 @@ showDifferences
 	| differencesPresenter |
 	differencesPresenter := DifferencesPresenter show.
 	chunkList selections size = 1
-		ifTrue:
-			[differencesPresenter topShell
-				caption:
-					('Differences between chunk #<1d> and the current image' expandMacrosWith: chunkList selection index).
+		ifTrue: 
+			[differencesPresenter topShell caption: ('Differences between chunk #<1d> and the current image'
+						expandMacrosWith: chunkList selection index).
 			differencesPresenter
 				beforeText: chunkList selection rawText;
 				beforeTitle: ('Chunk #<1d>' expandMacrosWith: chunkList selection index);
 				afterText: chunkList selection sourceFromImage;
 				afterTitle: 'Current image';
 				refresh]
-		ifFalse:
-			[differencesPresenter topShell
-				caption:
-					('Differences between chunk #<1d> and chunk #<2d>'
+		ifFalse: 
+			[differencesPresenter topShell caption: ('Differences between chunk #<1d> and chunk #<2d>'
 						expandMacrosWith: chunkList selections first index
 						with: chunkList selections last index).
 			differencesPresenter
@@ -349,21 +344,13 @@ updateChunkList
 
 updateStatus
 	(self presenterNamed: 'statusCount')
-		value:
-			('  Showing: <1d> of <2d>'
-				expandMacrosWith: chunkList list size
-				with:
-					(filter isRestrictingRange ifTrue: [filter restrictionRangeSize] ifFalse: [model chunkCount])).
-	(self presenterNamed: 'statusRange')
-		value:
-			(filter isRestrictingRange
-				ifTrue:
-					['  Range: <1d> to <2d>'
-						expandMacrosWith: filter restrictionRangeFirst
+		value: ('  Showing: <1d> of <2d>' expandMacrosWith: chunkList list size
+				with: (filter isRestrictingRange ifTrue: [filter restrictionRangeSize] ifFalse: [model chunkCount])).
+	(self presenterNamed: 'statusRange') value: (filter isRestrictingRange
+				ifTrue: 
+					['  Range: <1d> to <2d>' expandMacrosWith: filter restrictionRangeFirst
 						with: filter restrictionRangeLast]).
-	(self presenterNamed: 'statusRestrict')
-		value:
-			('<1s><2s><3s>'
+	(self presenterNamed: 'statusRestrict') value: ('<1s><2s><3s>'
 				expandMacrosWith: (filter isRestrictingClass ifTrue: [' Cl'] ifFalse: [String new])
 				with: (filter isRestrictingMostRecent ifTrue: [' Re'] ifFalse: [String new])
 				with: (filter isRestrictingPicked ifTrue: [' Pi'] ifFalse: [String new])).
@@ -455,8 +442,10 @@ defaultCompareMethodsUsingParser
 defaultModel
 	^ChunkBrowserModel new!
 
-displayOn: aStream
-	aStream nextPutAll: 'Chunk Browser'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttableStream nextPutAll: 'Chunk Browser'!
 
 fileTypes
 	"Answer an Array of file types that can be associated with this

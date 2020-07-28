@@ -354,14 +354,14 @@ duplicatePackageSignal
 
 	^DuplicatePackageSignal!
 
-errorFileInCompatibilityCheck: aPackage overlap: overlappingObjects 
+errorFileInCompatibilityCheck: aPackage overlap: overlappingObjects
 	"Private - Raise an error that the receiver can not be filed in
 	because some objects which it expects to own are already owned
 	by existing Packages."
 
 	Notification signal: aPackage name , ': ' , overlappingObjects asArray printString.
-	Package clashSignal 
-		signal: ('The package <1p> contains objects that are already installed in the image.' 
+	Package clashSignal
+		signal: ('The package <1p> contains objects that are already installed in the image.'
 				expandMacrosWith: aPackage name)
 		with: overlappingObjects asArray!
 
@@ -1114,7 +1114,7 @@ systemPackage
 
 	^self class systemPackage!
 
-uninstall: aPackage 
+uninstall: aPackage
 	"Uninstall aPackage and (recursively) any packages dependent upon it, with no questions 	
 	asked, deleting all its owned objects from the system. Run its preuninstall and postuninstall 
 	scripts as well."
@@ -1128,7 +1128,7 @@ uninstall: aPackage
 	aPackage dependentPackages do: [:each | self uninstall: each].
 	Notification signal: ('Uninstalling package <1p>' expandMacrosWith: aPackage name).
 	aPackage fileInScript: #preuninstall.
-	self basicUninstall: aPackage] 
+	self basicUninstall: aPackage]
 			ensure: 
 				[self
 					beProcessingEvents;

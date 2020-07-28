@@ -71,12 +71,13 @@ conformsToProtocolNames
 
 	^ProtocolSpec defaultConformsToCollection!
 
-displayOn: targetStream 
-	"Append the receiver to targetStream in a format that a user would want to see."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	targetStream nextPut: $<;
-	 nextPutAll: self protocolName;
-	 nextPut: $>!
+	aPuttableStream
+		nextPut: $<;
+		nextPutAll: self protocolName;
+		nextPut: $>!
 
 fileOutOnSIFFiler: programFiler 
 	"Do nothing as the receiver is created by protocol initialization."

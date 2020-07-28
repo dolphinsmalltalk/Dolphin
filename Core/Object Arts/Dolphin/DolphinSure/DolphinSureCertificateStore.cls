@@ -54,12 +54,10 @@ default
 
 	^Object fromBinaryStoreBytes: (self regKey subValues associations first value)!
 
-displayOn: aStream
-	"Append a textual representation of the receiver to the <puttableStream> argument
-	as a user might want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: self name.
-!
+	aPuttableStream display: self name!
 
 includesCertificate: aDolphinSureCertificate
 	"Answers true if the receiver includes aDolphinSureCertificate"

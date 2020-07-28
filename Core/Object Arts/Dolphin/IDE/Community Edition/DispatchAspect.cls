@@ -28,13 +28,13 @@ readFrom: anObject
 
 	^[anObject getPropertyId: self dispid] on: Error do: [:ex | ex]!
 
-writeInto: subjectObject value: valueObject 
+writeInto: subjectObject value: valueObject
 	"Private - Set the attribute of subjectObject described by the receiver 
 	to valueObject."
 
 	[subjectObject setPropertyId: self dispid value: valueObject] on: HRESULTError
 		do: 
-			[:ex | 
+			[:ex |
 			MessageBox errorMsg: ex description
 				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
 !DispatchAspect categoriesFor: #dispid!accessing!public! !

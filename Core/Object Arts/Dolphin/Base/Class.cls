@@ -82,7 +82,10 @@ addClassVarNamed: aString
 	classPool := self classPool.
 	(classPool bindingFor: varName) ifNotNil: [:existingVar | ^existingVar].
 	(self allSubclasses detect: [:each | (each classPool bindingFor: varName) notNil] ifNone: [])
-		ifNotNil: [:existingClass | ^self error: ('<1p> is already used as a variable name in class <2p>' expandMacrosWithArguments: {aString. existingClass})].
+		ifNotNil: 
+			[:existingClass |
+			^self error: ('<1p> is already used as a variable name in class <2p>' expandMacrosWith: aString
+						with: existingClass)].
 	var := classPool newAssociation: varName value: nil.
 	classPool add: var.
 	self logDefinition.

@@ -187,6 +187,7 @@ package setMethodNames: #(
 	#(#{LARGE_INTEGER class} #typeName)
 	#(#{LARGE_INTEGER class} #vt)
 	#(#{LargeInteger} #asVariant)
+	#(#{Locale} #variantBool:)
 	#(#{LPVOID class} #typeName)
 	#(#{LPVOID class} #vt)
 	#(#{OLEAutLibrary} #clearCustData:)
@@ -221,9 +222,11 @@ package setMethodNames: #(
 	#(#{OLEAutLibrary} #setErrorInfo:perrinfo:)
 	#(#{OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
 	#(#{OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
+	#(#{OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
 	#(#{OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
 	#(#{OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
 	#(#{OLEAutLibrary} #variantChangeType:pvarSrc:wFlags:vt:)
+	#(#{OLEAutLibrary} #variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:)
 	#(#{OLEAutLibrary} #variantClear:)
 	#(#{OLEAutLibrary} #variantCopy:pvargSrc:)
 	#(#{OLEAutLibrary} #variantCopyInd:pvargSrc:)
@@ -236,6 +239,7 @@ package setMethodNames: #(
 	#(#{SDWORD class} #typeName)
 	#(#{SDWORD class} #vt)
 	#(#{SmallInteger} #asVariant)
+	#(#{SmalltalkLocale} #variantBool:)
 	#(#{String} #asVariant)
 	#(#{String class} #pointerType)
 	#(#{String class} #typeName)
@@ -256,6 +260,9 @@ package setMethodNames: #(
 	#(#{Utf16String class} #vt)
 	#(#{VOID class} #typeName)
 	#(#{VOID class} #vt)
+	#(#{WindowsLocale} #boolFormat)
+	#(#{WindowsLocale} #getVariantBoolString:)
+	#(#{WindowsLocale} #variantBool:)
 	#(#{WORD class} #typeName)
 	#(#{WORD class} #vt)
 ).
@@ -407,9 +414,16 @@ SharedPool subclass: #AXAutomationConstants
 		'VARFLAG_FRESTRICTED' -> 16r80.
 		'VARFLAG_FSOURCE' -> 16r2.
 		'VARFLAG_FUIDEFAULT' -> 16r200.
+		'VARIANT_ALPHABOOL' -> 16r2.
+		'VARIANT_CALENDAR_GREGORIAN' -> 16r40.
+		'VARIANT_CALENDAR_HIJRI' -> 16r8.
+		'VARIANT_CALENDAR_THAI' -> 16r20.
 		'VARIANT_FALSE' -> 16r0.
+		'VARIANT_LOCALBOOL' -> 16r10.
+		'VARIANT_NOUSEROVERRIDE' -> 16r4.
 		'VARIANT_NOVALUEPROP' -> 16r1.
 		'VARIANT_TRUE' -> -16r1.
+		'VARIANT_USE_NLS' -> 16r80.
 		'VT_ARRAY' -> 16r2000.
 		'VT_BLOB' -> 16r41.
 		'VT_BLOB_OBJECT' -> 16r46.
@@ -1963,6 +1977,12 @@ asVariant
 	^VARIANT fromLargeInteger: self! !
 !LargeInteger categoriesFor: #asVariant!converting!public! !
 
+!Locale methodsFor!
+
+variantBool: aBoolean
+	^self subclassResponsibility! !
+!Locale categoriesFor: #variantBool:!constants!public! !
+
 !LPVOID class methodsFor!
 
 typeName
@@ -2323,6 +2343,18 @@ unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid sy
 	<stdcall: hresult UnRegisterTypeLib guid* word word dword sdword>
 	^self invalidCall: _failureCode!
 
+varBstrFromBool: boolIn lcid: lcid dwFlags: dwFlags pbstrOut: pbstrOut
+	"HRESULT VarBstrFromBool(
+		  VARIANT_BOOL boolIn,
+		  LCID         lcid,
+		  ULONG        dwFlags,
+		  BSTR         *pbstrOut
+		);
+	"
+
+	<stdcall: hresult VarBstrFromBool sword dword dword bstr*>
+	^self invalidCall: _failureCode!
+
 varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 	"Answer a comparison result between the two VARIANT arguments.
 
@@ -2352,6 +2384,20 @@ variantChangeType: pvargDest pvarSrc: pvarSrc wFlags: wFlags vt: vt
 		);"
 
 	<stdcall: hresult VariantChangeType variant* variant* word sword>
+	^self invalidCall: _failureCode!
+
+variantChangeTypeEx: pvargDest pvarSrc: pvarSrc lcid: lcid wFlags: wFlags vt: vt
+	"Converts a variant from one type to another, using an LCID.
+
+		HRESULT VariantChangeTypeEx(
+			VARIANTARG       	*pvargDest,
+			const VARIANTARG *pvarSrc,
+			LCID             		lcid,
+			USHORT           	wFlags,
+			VARTYPE          	vt
+		);"
+
+	<stdcall: hresult VariantChangeTypeEx variant* variant* dword word sword>
 	^self invalidCall: _failureCode!
 
 variantClear: pvarg
@@ -2441,9 +2487,11 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 !OLEAutLibrary categoriesFor: #setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
 !OLEAutLibrary categoriesFor: #systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
+!OLEAutLibrary categoriesFor: #varBstrFromBool:lcid:dwFlags:pbstrOut:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantChangeType:pvarSrc:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
+!OLEAutLibrary categoriesFor: #variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantClear:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantCopy:pvargSrc:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantCopyInd:pvargSrc:!Automation Functions-Variant Manipulation!public! !
@@ -2512,6 +2560,12 @@ asVariant
 
 	^VARIANT fromSmallInteger: self! !
 !SmallInteger categoriesFor: #asVariant!converting!public! !
+
+!SmalltalkLocale methodsFor!
+
+variantBool: aBoolean
+	^aBoolean class name! !
+!SmalltalkLocale categoriesFor: #variantBool:!constants!public! !
 
 !String methodsFor!
 
@@ -2678,6 +2732,35 @@ vt
 	^AXAutomationConstants.VT_VOID! !
 !VOID class categoriesFor: #typeName!constants!private! !
 !VOID class categoriesFor: #vt!constants!public! !
+
+!WindowsLocale methodsFor!
+
+boolFormat
+	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
+
+	^{self variantBool: false. self variantBool: true}!
+
+getVariantBoolString: anInteger
+	| bstr str |
+	bstr := BSTR new.
+	OLEAutLibrary default
+		varBstrFromBool: anInteger
+		lcid: self lcid
+		dwFlags: AXAutomationConstants.VARIANT_LOCALBOOL
+		pbstrOut: bstr.
+	str := bstr asUtf8String.
+	bstr free.
+	^str!
+
+variantBool: aBoolean
+	^info at: aBoolean class name
+		ifAbsentPut: 
+			[self getVariantBoolString: (aBoolean
+						ifTrue: [AXAutomationConstants.VARIANT_TRUE]
+						ifFalse: [AXAutomationConstants.VARIANT_FALSE])]! !
+!WindowsLocale categoriesFor: #boolFormat!constants!public! !
+!WindowsLocale categoriesFor: #getVariantBoolString:!constants!public! !
+!WindowsLocale categoriesFor: #variantBool:!constants!public! !
 
 !WORD class methodsFor!
 

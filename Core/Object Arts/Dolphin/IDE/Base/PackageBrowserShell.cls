@@ -962,7 +962,8 @@ queryCommand: aCommandQuery
 			methods := self selectedMethods.
 			aCommandQuery isEnabled: methods notEmpty.
 			aCommandQuery text: (aCommandQuery description
-						expandMacrosWith: (methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods'])).
+						expandMacrosWithArguments: {methods size = 1 ifTrue: [methods first] ifFalse: ['&Methods']}
+						locale: Locale smalltalk).
 			^true].
 	#browseVariableReferences == selector
 		ifTrue: 
@@ -1127,7 +1128,7 @@ updateCaption
 	| pkgs count text |
 	pkgs := self packages.
 	count := pkgs size.
-	text := String writeStream: 64.
+	text := String smalltalkWriteStream: 64.
 	count == 0
 		ifTrue: [text display: self class]
 		ifFalse: 
@@ -1410,12 +1411,10 @@ variableNames
 
 !PackageBrowserShell class methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Package Browser'
-!
+	aPuttableStream nextPutAll: 'Package Browser'!
 
 icon
 	"Answers an Icon that can be used to represent this class"

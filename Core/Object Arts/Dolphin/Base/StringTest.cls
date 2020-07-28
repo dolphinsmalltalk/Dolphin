@@ -597,7 +597,7 @@ testMutableCopy
 			actual := subject mutableCopy.
 			self deny: actual identicalTo: subject.
 			self assert: actual isKindOf: subject species.
-			self assert: (actual _cmp: subject) equals: 0]!
+			self assert: actual <===> subject equals: 0]!
 
 testRefersToLiteral
 	"Test that string literals in a method do not count as referring to a Symbol with the same contents,

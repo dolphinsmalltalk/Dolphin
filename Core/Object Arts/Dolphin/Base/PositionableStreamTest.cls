@@ -53,6 +53,12 @@ runArrays
 		{RunArray with: #x with: #y. #(#x #y)}.
 		{(1 to: 5) asRunArray. #(1 2 3 4 5)}}!
 
+streamClassSupportsPointers
+	^true!
+
+streamClassSupportsUtf16
+	^true!
+
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -115,6 +121,49 @@ testContents
 			stream := self streamWith: each.
 			self assert: stream contents equals: each.
 			self closeTempStream: stream]!
+
+testEncodedSizeOf
+	| subject |
+	subject := self streamOn: AnsiString new.
+	self assert: (subject encodedSizeOf: $a) equals: 1.
+	self assert: (subject encodedSizeOf: $£) equals: 1.
+	"Multi-byte characters will be substituted with the replacement character in ANSI streams"
+	self assert: (subject encodedSizeOf: Character dolphin) equals: 1.
+	self closeTempStream: subject.
+	subject := self streamOn: Utf8String new.
+	self assert: (subject encodedSizeOf: $a) equals: 1.
+	self assert: (subject encodedSizeOf: $£) equals: 2.
+	self assert: (subject encodedSizeOf: Character dolphin) equals: 4.
+	self closeTempStream: subject.
+	self streamClassSupportsUtf16
+		ifTrue: 
+			[subject := self streamOn: Utf16String new.
+			self assert: (subject encodedSizeOf: $a) equals: 1.
+			self assert: (subject encodedSizeOf: $£) equals: 1.
+			self assert: (subject encodedSizeOf: Character dolphin) equals: 2.
+			self closeTempStream: subject]!
+
+testEncoding
+	| subject |
+	subject := self streamOn: AnsiString empty.
+	self assert: subject encoding equals: #ansi.
+	self closeTempStream: subject.
+	subject := self streamOn: Utf8String empty.
+	self assert: subject encoding equals: #utf8.
+	self closeTempStream: subject.
+	self streamClassSupportsUtf16
+		ifTrue: 
+			[subject := self streamOn: Utf16String empty.
+			self assert: subject encoding equals: #utf16le.
+			self closeTempStream: subject].
+	subject := self streamOn: #[1].
+	self assert: subject encoding equals: #binary.
+	self closeTempStream: subject.
+	self streamClassSupportsPointers
+		ifTrue: 
+			[subject := self streamOn: #('abc').
+			self assert: subject encoding equals: #pointers.
+			self closeTempStream: subject]!
 
 testMarkusKuhnUtf8
 	"A kick-the-tyres test that various read operations will not fail on UTF-8 with many
@@ -290,7 +339,7 @@ testNextLine
 			self closeTempStream: stream].
 
 	"Empty but for a single line delimiter"
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+	{String with: Character lf. String lineDelimiter} do: 
 			[:each |
 			| stream |
 			stream := self streamOn: each.
@@ -298,7 +347,7 @@ testNextLine
 			self assert: stream atEnd.
 			self closeTempStream: stream].
 	"Finishes with line delimiter"
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
 			#('a' 'ab' 'abc') do: 
 					[:each |
@@ -308,7 +357,7 @@ testNextLine
 					self assert: stream atEnd.
 					self closeTempStream: stream]].
 	"Finishes with pair of line delimiters"
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
 			#('' 'a' 'ab' 'abc') do: 
 					[:each |
@@ -321,7 +370,7 @@ testNextLine
 					self assert: stream atEnd.
 					self closeTempStream: stream]].
 	"Starts with line delimiter, delimiter between lines, two delimiters between lines"
-	(Array with: (String with: Character lf) with: String lineDelimiter) do: 
+	{String with: Character lf. String lineDelimiter} do: 
 			[:eachDelim |
 			#('a' 'ab' 'abc') do: 
 					[:each |
@@ -384,7 +433,8 @@ testNextLongUtf8Encodings
 	self assert: subject next equals: Character replacement.
 	self assert: subject next equals: $\x20AC.
 	self assert: subject next equals: Character replacement.
-	self assert: subject next equals: $\x4F60!
+	self assert: subject next equals: $\x4F60.
+	self closeTempStream: subject!
 
 testNextOtherNonCharactersUtf8
 	"Other 'noncharacters' from Kuhn"
@@ -416,6 +466,7 @@ testNextOverlongUtf8
 			[self assert: subject next equals: Character replacement.
 			self assert: subject next equals: $_].
 	self assert: subject atEnd.
+	self closeTempStream: subject.
 
 	"4.2 Maximum overlong sequences"
 	subject := self
@@ -424,13 +475,16 @@ testNextOverlongUtf8
 	5 timesRepeat: 
 			[self assert: subject next equals: Character replacement.
 			self assert: subject next equals: Character lf].
+	self closeTempStream: subject.
 	"4.3 Overlong representations of NUL"
 	subject := self
 				streamOnBytes: #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
 				type: #utf8.
 	5 timesRepeat: 
 			[self assert: subject next equals: Character replacement.
-			self assert: subject next equals: Character lf]!
+			self assert: subject next equals: Character lf].
+	self closeTempStream: subject.
+!
 
 testNextPut
 	self writeableCollections do: 
@@ -461,10 +515,7 @@ testNextWord
 			self assertIsNil: stream nextWord.
 			self closeTempStream: stream].
 	"Empty of just separators (i.e. no words)"
-	#('' ' ' '	' '  ') , (Array
-				with: (String with: Character lf)
-				with: (String with: Character cr)
-				with: String lineDelimiter)
+	#('' ' ' '	' '  ') , {String with: Character lf. String with: Character cr. String lineDelimiter}
 		do: 
 			[:each |
 			| stream |
@@ -867,6 +918,8 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
 !PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
+!PositionableStreamTest categoriesFor: #streamClassSupportsPointers!helpers!private! !
+!PositionableStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
@@ -875,6 +928,8 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #subjectCollection:!public! !
 !PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testEncodedSizeOf!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testEncoding!gettableStream only!public!strict utf8!unit tests! !
 !PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !

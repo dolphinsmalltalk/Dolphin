@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'ClassForEncoding Codecs'
+	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
+	classVariableNames: 'ClassForEncoding'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -267,8 +267,18 @@ isWriteable
 
 	^(flags anyMask: ReadOnlyMask) not!
 
+locale
+	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	^locale ?? Locale.UserDefault!
+
+locale: aLocale
+	"Set the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	locale := aLocale!
+
 name
-	^name ifNil: ['%<<1d>%>' expandMacrosWith: self fileno]!
+	^name ifNil: ['%<<1d>%>' expandMacrosWithArguments: {self fileno} locale: Locale invariant]!
 
 next
 	"Answer a <Character> or <integer> in the range 0..255, being the next of the 
@@ -450,6 +460,8 @@ upTo: anObject
 !StdioFileStream categoriesFor: #isReadable!public!testing! !
 !StdioFileStream categoriesFor: #isText!public!testing! !
 !StdioFileStream categoriesFor: #isWriteable!public!testing! !
+!StdioFileStream categoriesFor: #locale!accessing!public! !
+!StdioFileStream categoriesFor: #locale:!accessing!public! !
 !StdioFileStream categoriesFor: #name!accessing!public! !
 !StdioFileStream categoriesFor: #next!accessing!public! !
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !

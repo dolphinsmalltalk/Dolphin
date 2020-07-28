@@ -91,10 +91,10 @@ performFailed: anInteger of: selector for: receiver withArgs: arguments
 	anInteger == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: 
 			[^receiver
-				error: ('Incorrect number of arguments: <1d>, expected <2d>' expandMacrosWith: arguments size
+				error: ('Incorrect number of arguments: <1p>, expected <2p>' expandMacrosWith: arguments size
 						with: selector argumentCount)].
 	receiver
-		error: ('Primitive perform of <1p> failed (<2d>)' expandMacrosWith: selector with: anInteger)!
+		error: ('Primitive perform of <1p> failed (<2p>)' expandMacrosWith: selector with: anInteger)!
 
 severityClass
 	"Answer an exception class describing the severity of the notification."

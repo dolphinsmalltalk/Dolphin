@@ -112,19 +112,17 @@ execute
 !
 
 getOptionAlreadyDefined: aClass selector: aSelection
-	^self 
-		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting it to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?' 
+	^self
+		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting it to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?'
 				expandMacrosWith: aSelection
 				with: aClass)!
 
 getOptionExtractAssignment: aString
-	^self 
-		confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?' 
+	^self confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?'
 				expandMacrosWith: aString)!
 
 getOptionInlineExpression: aString
-	^self 
-		confirm: ('Do you want to inline "<1s>"? If not, it will be assigned as a temporary.' 
+	^self confirm: ('Do you want to inline "<1s>"? If not, it will be assigned as a temporary.'
 				expandMacrosWith: aString)!
 
 getOptionMethodName: anRBMethodName
@@ -142,8 +140,8 @@ getOptionSelfArgumentName
 	^Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
 
 getOptionUseExistingMethod: aSelector
-	^self confirm: ('Use existing method <1p> instead of creating a new method?' 
-				expandMacrosWith: aSelector)!
+	^self
+		confirm: ('Use existing method <1p> instead of creating a new method?' expandMacrosWith: aSelector)!
 
 getOptionVariableToMoveToOf: aClass in: aSelector 
 	| parseTree nameList |

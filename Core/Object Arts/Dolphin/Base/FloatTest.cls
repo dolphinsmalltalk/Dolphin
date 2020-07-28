@@ -943,14 +943,8 @@ testNaNComparisons
 	| comparisons subject comparand |
 	comparisons := #(#< #<= #> #>= #=).
 	subject := Float nan.
-	comparand := self normals, {0.
-				1.
-				2.3.
-				Float infinity.
-				Float nan copy.
-				2 / 3.
-				1.25s2.
-				2 raisedTo: 50}.
+	comparand := self normals
+				, {0. 1. 2.3. Float infinity. Float nan copy. 2 / 3. 1.25s2. 2 raisedTo: 50}.
 	Float denormalized ifTrue: [comparand := comparand copyWith: Float fminDenormalized].
 	comparand := comparand , (comparand collect: [:e | e negated]).
 	comparand := comparand , {0 @ 0. -1 @ -1 @ -1}.
@@ -959,9 +953,9 @@ testNaNComparisons
 			comparisons do: 
 					[:op2 |
 					self deny: (subject perform: op2 with: comp2)
-						description: ['NaN should not be <1s> <2p>' expandMacrosWithArguments: {op2. comp2}].
+						description: ['NaN should not be <1s> <2p>' expandMacrosWith: op2 with: comp2].
 					self deny: (comp2 perform: op2 with: subject)
-						description: ['<2p> should not be <1s> a NaN' expandMacrosWithArguments: {op2. comp2}]].
+						description: ['<2p> should not be <1s> a NaN' expandMacrosWith: op2 with: comp2]].
 			self assert: subject ~= comp2 description: 'NaNs should always be unequal to any value'.
 			self assert: comp2 ~= subject description: 'Another value should always be unequal to a NaN']!
 
@@ -1277,7 +1271,7 @@ testReadFrom
 	308 to: -316
 		do: 
 			[:each |
-			self assert: (Float readFrom: ('1.0e-<d>' expandMacrosWith: each) readStream) equals: 10.0 ** each].
+			self assert: (Float readFrom: ('1.0e-<p>' expandMacrosWith: each) readStream) equals: 10.0 ** each].
 	self normals , (Float denormalized ifTrue: [{Float fminDenormalized}] ifFalse: [#()])
 		do: [:each | self assert: (Float readFrom: each printString readStream) equals: each]!
 

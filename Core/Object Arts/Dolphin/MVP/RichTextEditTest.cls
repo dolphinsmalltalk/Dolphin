@@ -23,7 +23,7 @@ nonProportionalFont
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
-	Locale userDefault: (Locale lcid: 1033)!
+	Locale userDefault: (Locale named: 'en-US')!
 
 tearDown
 	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
@@ -72,8 +72,8 @@ testStreamInAnsiText
 	rtf := '{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
 \uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
 '
-				expandMacrosWith: Character.AnsiCodePage
-				with: Locale systemDefault lcid.
+				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
+				locale: Locale invariant.
 	self assert: actual equals: rtf.
 
 	"Now stream in the ANSI RTF"
@@ -82,7 +82,7 @@ testStreamInAnsiText
 	presenter rtfText: rtf.
 	actual := presenter ansiText.
 	self assert: actual equals: ansi.
-	presenter rtfText: rtf.!
+	presenter rtfText: rtf!
 
 testStreamInUtfText
 	| text rtf actual |
@@ -124,8 +124,8 @@ testStreamInUtfText
 	rtf := '{\urtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset238 Segoe UI;}}
 \uc1\pard\lang<2d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
 '
-				expandMacrosWith: Character.AnsiCodePage
-				with: Locale systemDefault lcid.
+				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
+				locale: Locale invariant.
 	self assert: actual equals: rtf.
 
 	"Check round-trip as ANSI RTF (which has an escape syntax to preserve international characters)"

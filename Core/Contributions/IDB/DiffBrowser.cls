@@ -149,8 +149,8 @@ compareSmalltalkMethod: aSmalltalkMethod1 with: aSmalltalkMethod2
 		compare: aSmalltalkMethod1 id: 'A' and: aSmalltalkMethod2 id: 'B';
 		yourself!
 
-displayOn: aStream
-	aStream nextPutAll: 'Difference Browser'!
+displayOn: aPuttable
+	aPuttable nextPutAll: 'Difference Browser'!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

@@ -30,15 +30,13 @@ calcDiskSpace
 		totalBytes := self freeClusters * bytesPerCluster.
 		totalFreeBytes := freeBytes := self totalClusters * bytesPerCluster].!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self explorerName;
 		nextPutAll: ', Serial No. '.
-	self displaySerialNumberOn: aStream.
-!
+	self displaySerialNumberOn: aPuttableStream!
 
 displaySerialNumberOn: aStream
 	"Private - Display the volume serial number on aStream as a <readableString>"

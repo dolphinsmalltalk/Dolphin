@@ -36,18 +36,18 @@ isCompilationFailure
 
 !CompileFailedMethod class methodsFor!
 
-buildSourceForSelector: aSymbol class: aBehavior 
+buildSourceForSelector: aSymbol class: aBehavior
 	"Private - Construct a method with a correct message pattern for the <Symbol>, aSelector, in the
 	class, aBehavior, but which, when invoked, raises an exception to the effect that the original 
 	method source failed to compile."
 
 	| argc stream |
-	stream := String writeStream: 128.
+	stream := String smalltalkWriteStream: 128.
 	argc := aSymbol argumentCount.
-	argc == 0 
+	argc == 0
 		ifTrue: [stream nextPutAll: aSymbol]
 		ifFalse: 
-			[(argc == 1 and: [aSymbol isInfix]) 
+			[(argc == 1 and: [aSymbol isInfix])
 				ifTrue: 
 					["Assume a binary selector"
 					stream
@@ -57,7 +57,7 @@ buildSourceForSelector: aSymbol class: aBehavior
 					[| inUse |
 					inUse := Set withAll: aBehavior allInstVarNames.
 					aSymbol keywords do: 
-							[:keyword | 
+							[:keyword |
 							| x argName |
 							stream
 								nextPutAll: keyword;

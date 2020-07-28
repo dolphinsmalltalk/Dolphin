@@ -34,12 +34,15 @@ ask
 	(MessageBox confirm: 'Do you wish to play again?'
 		caption: 'I''m, getting better all the time...') ifTrue: [Animal playGame]!
 
-displayOn: aStream
-	"Answer the name of the receiver prepended by 'a' or 'an' as appropriate"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	We use the name of the receiver prepended by 'a' or 'an' as appropriate."
 
 	| aOrAn |
 	aOrAn := name first isVowel ifTrue: ['an '] ifFalse: ['a '].
-	aStream nextPutAll: aOrAn; nextPutAll: self name.!
+	aPuttableStream
+		nextPutAll: aOrAn;
+		nextPutAll: self name!
 
 knowledgeBase
 	"Answer the Animal game knowledge base."
@@ -64,7 +67,7 @@ printOn: aStream
 	super printOn: aStream.
 	aStream nextPut: $(.
 	self displayOn: aStream.
-	aStream nextPut: $).! !
+	aStream nextPut: $)! !
 !Animal categoriesFor: #ask!operations!public! !
 !Animal categoriesFor: #displayOn:!displaying!public! !
 !Animal categoriesFor: #knowledgeBase!accessing!public! !

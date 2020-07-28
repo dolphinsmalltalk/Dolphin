@@ -75,10 +75,7 @@ _evaluateHandler: handlerBlock in: anExceptionHandler
 	without specifying a particular action, then we default to continuing execution
 	immediately after the try block, even if the exception is resumable. This change
 	for compatibility with latest X3J20 proposal, Sept. 96, BSM."
-	^anExceptionHandler return: answer.
-	#todo	"I am increasingly of the view that the continueBlock should be held in the handler
-		since it would not then be necessary to save and restore it, and it relates to the
-		handling of an Exception, not the Exception itself. Move it."!
+	^anExceptionHandler return: answer!
 
 _propagate
 	"Private - Propagate the receiver up through the originating process' stack of
@@ -120,10 +117,7 @@ _propagateFrom: anExceptionEnvironmentOrNil
 	activeProc exceptionEnvironment: _environmentWhenRaised.
 	answer := self defaultAction.
 	activeProc exceptionEnvironment: oldEnv.
-	^answer.
-	#todo	"Wouldn't it be neater if the invocation of #defaultAction was performed within a handler block so that
-		the handler responses could be used from within #defaultAction (they cannot at the moment). We could
-		also have a bit less special case code."!
+	^answer!
 
 abort
 	"Terminate the process in which the receiver was raised."
@@ -195,15 +189,13 @@ description
 				ifFalse: [format formatWithArguments: self _descriptionArguments].
 	^desc isEmpty ifTrue: ['An unknown <1p> has occurred' expandMacrosWith: self class] ifFalse: [desc]!
 
-displayOn: aStream
-	"Append a user-friendly textual representation of the receiver to the 
-	<puttableStream>, target."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
 	| signallerText |
-	aStream nextPutAll: (
-		(signallerText := self messageText) notNil
-			ifTrue: [signallerText]
-			ifFalse: [self description])!
+	aPuttableStream nextPutAll: ((signallerText := self messageText) notNil
+				ifTrue: [signallerText]
+				ifFalse: [self description])!
 
 exit: anObject
 	"Answer the argument as the value of the handler block, as if it were the value of the last 

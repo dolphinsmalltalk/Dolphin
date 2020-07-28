@@ -21,10 +21,10 @@ aspectValue: aSymbol
 			to: self;
 		yourself!
 
-displayOn: aStream 
-	"Append a short textual description of the receiver to, aStream, such as would be appropriate for display to an end-user."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	subject displayOn: aStream!
+	subject displayOn: aPuttableStream!
 
 onAspectChanged
 	"Private - An individual aspect of the receiver's subject has been changed through one of

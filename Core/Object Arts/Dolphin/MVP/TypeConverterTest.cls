@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #TypeConverterTest
-	instanceVariableNames: 'edit savedLocale'
+	instanceVariableNames: 'edit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -12,14 +12,9 @@ TypeConverterTest comment: ''!
 !TypeConverterTest methodsFor!
 
 setUp
-	savedLocale := Locale userDefault.
-	"Many formatting tests are Locale sensitive, so use a known Locale"
-	Locale userDefault: (Locale lcid: 1033).
-	edit := TextEdit show.
-!
+	edit := TextEdit show!
 
 tearDown
-	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
 	edit topShell destroy!
 
 testInvalidBooleanFormat
@@ -37,12 +32,13 @@ testInvalidBooleanFormat
 testInvalidDateFormat
 	"Test for a couple of locales with different default date orders"
 
-	#(1033 2057) do: 
-			[:lcid |
-			Locale userDefault: (Locale lcid: lcid).
+	{Locale named: 'en-US'. Locale named: 'en-GB'} do: 
+			[:locale |
 			#('99' 'abcd') do: 
 					[:each |
-					edit typeconverter: DateToText new.
+					edit typeconverter: (DateToText new
+								locale: locale;
+								yourself).
 					edit value: (Date fromString: '1/1/03').
 					self shouldnt: 
 							[edit
@@ -53,7 +49,9 @@ testInvalidDateFormat
 					self assertIsNil: edit model value]]!
 
 testInvalidDurationFormat
-	edit typeconverter: DurationToText new.
+	edit typeconverter: (DurationToText new
+				locale: Locale smalltalk;
+				yourself).
 	edit value: 42.123456789 days.
 	self assert: edit text equals: '42:02:57:46.667'.
 	self shouldnt: 

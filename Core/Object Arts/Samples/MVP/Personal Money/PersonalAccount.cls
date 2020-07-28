@@ -59,14 +59,12 @@ currentBalance: aNumber
 	currentBalance := aNumber.
 	self trigger: #currentBalanceChanged!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self name displayOn: aStream.
-	aStream nextPut: $-.
-	self accountNumber displayOn: aStream.
-!
+	self name displayOn: aPuttableStream.
+	aPuttableStream nextPut: $-.
+	self accountNumber displayOn: aPuttableStream!
 
 initialBalance
 	"Answer the account initial balance of the receiver"

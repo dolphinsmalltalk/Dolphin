@@ -63,9 +63,12 @@ commandSymbol: aSymbol
 
 	message := Commands keyAtValue: aSymbol!
 
-displayOn: target 
-	target
-		display: self acceleratorKeyDisplayString;
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	#todo.	"Take account of Locale in printing accelerator key - need to convert to some default keyboard layout for the Locale."
+	aPuttableStream
+		nextPutAll: self acceleratorKeyDisplayString;
 		nextPutAll: ' -> ';
 		print: self commandSymbol!
 
@@ -133,7 +136,7 @@ initializeCommands
 				at: SCI_CHARRIGHTEXTEND put: #extendRight;
 				at: SCI_CHARRIGHTRECTEXTEND put: #extendRectangleRight;
 				at: SCI_CLEAR put: #basicClearSelection;
-				at: SCI_CLEARALL put: #clearAll;
+				at: SCI_CLEARALL put: #basicClearAll;
 				at: SCI_COPY put: #copySelection;
 				at: SCI_CUT put: #cutSelection;
 				at: SCI_DELETEBACK put: #backspace;

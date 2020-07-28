@@ -49,11 +49,13 @@ changePosition
 
 	^self changeManager changePositionOf: self!
 
-displayOn: aStream 
-	aStream
-		print: self methodClass;
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
+		display: self methodClass;
 		nextPutAll: '>>';
-		print: self selector!
+		display: self selector!
 
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
@@ -165,10 +167,11 @@ owningPackageIfLoose
 
 	^Package manager packageOfMethod: self!
 
-printOn: aStream 
-	"Append a textual description of the receiver to aStream."
-
-	self displayOn: aStream!
+printOn: aPuttableStream
+	aPuttableStream
+		print: self methodClass;
+		nextPutAll: '>>';
+		print: self selector!
 
 privacyCategory
 	^(self isPrivate ifTrue: ['private'] ifFalse: ['public']) asMethodCategory!

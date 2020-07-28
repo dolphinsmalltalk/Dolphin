@@ -26,13 +26,12 @@ checkSuperMessages
 	self inlineClass = class ifTrue: [^self].
 	self inlineClass superclass isNil ifTrue: [^self].
 	inlineParseTree superMessages do: 
-			[:each | 
-			(self inlineClass superclass whoDefinesMethod: each) 
-				= (class superclass whoDefinesMethod: each) 
-					ifFalse: 
-						[self 
-							refactoringError: ('Cannot inline method since it sends a super message <1s> that is overridden' 
-									expandMacrosWith: each)]]!
+			[:each |
+			(self inlineClass superclass whoDefinesMethod: each) = (class superclass whoDefinesMethod: each)
+				ifFalse: 
+					[self
+						refactoringError: ('Cannot inline method since it sends a super message <1s> that is overridden'
+								expandMacrosWith: each)]]!
 
 compileMethod
 	class compileTree: sourceParseTree!
@@ -49,9 +48,9 @@ findSelectedMessage
 	(sourceMessage receiver isSelfVariable or: [sourceMessage receiver isSuperVariable])
 		ifFalse: [self refactoringError: 'Cannot inline non-self messages']!
 
-getOptionImplementorToInline: anOrderedCollection 
-	^ChoicePrompter choices: (anOrderedCollection 
-				asSortedCollection: [:a :b | a displayString <= b displayString])
+getOptionImplementorToInline: anOrderedCollection
+	^ChoicePrompter
+		choices: (anOrderedCollection asSortedCollection: [:a :b | a displayString <= b displayString])
 		caption: ('Inline <1p> from...' expandMacrosWith: sourceMessage selector)!
 
 hasMultipleReturns
@@ -181,37 +180,33 @@ normalizeReturns
 		whileTrue: [inlineParseTree := rewriter tree]!
 
 parseInlineMethod
-	self inlineClass isNil 
+	self inlineClass isNil
 		ifTrue: 
-			[self 
-				refactoringError: ('<1p> or its superclasses don''t contain method <2s>' 
-						expandMacrosWith: class
+			[self
+				refactoringError: ('<1p> or its superclasses don''t contain method <2s>' expandMacrosWith: class
 						with: self inlineSelector)].
 	inlineParseTree := self inlineClass parseTreeFor: self inlineSelector.
-	inlineParseTree isNil 
-		ifTrue: [self refactoringError: 'Could not parse sources'].
+	inlineParseTree isNil ifTrue: [self refactoringError: 'Could not parse sources'].
 	inlineParseTree lastIsReturn ifFalse: [inlineParseTree addSelfReturn]!
 
 preconditions
-	^(RBCondition definesSelector: sourceSelector in: class) 
+	^(RBCondition definesSelector: sourceSelector in: class)
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
 					#rbFix.	"Re-order parseInlineMethod and isOverridden check, since want to first check if 
 							the method to be inlined is actually defined in the class into which it is to be inlined."
 					self parseInlineMethod.
-					self isOverridden 
+					self isOverridden
 						ifTrue: 
-							[
-							self 
-								refactoringWarning: ('<1p>>><2s> is overridden. Do you want to inline it anyway?' 
+							[self refactoringWarning: ('<1p>>><2s> is overridden. Do you want to inline it anyway?'
 										expandMacrosWith: self inlineClass
 										with: self inlineSelector)].
 					self isPrimitive ifTrue: [self refactoringError: 'Cannot inline primitives'].
 					self checkSuperMessages.
 					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not]) 
+					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
 						ifFalse: 
-							[self 
+							[self
 								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
 					true])!
 

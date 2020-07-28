@@ -21,7 +21,7 @@ testLintRulesXml
 	rules allRules do: 
 			[:each |
 			name := each name copyReplaceAll: '"' with: '\"'.
-			xpath := './/LintRule[name="<1s>"]' expandMacrosWith: name.
+			xpath := './/LintRule[name="<1s>"]' expandMacrosWithArguments: {name} locale: Locale invariant.
 			node := xml selectSingleNode: xpath.
 			self deny: node isNil]! !
 !CodeMentorTest categoriesFor: #testLintRulesXml!public!unit tests! !

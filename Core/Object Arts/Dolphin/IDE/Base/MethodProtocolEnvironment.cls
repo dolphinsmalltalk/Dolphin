@@ -19,9 +19,9 @@ Instance Variables:
 
 defaultLabel
 	| stream |
-	stream := String writeStream: 40.
+	stream := String smalltalkWriteStream: 40.
 	stream nextPutAll: 'Methods in '.
-	protocols size == 1 
+	protocols size == 1
 		ifTrue: 
 			[stream
 				nextPutAll: 'the ';

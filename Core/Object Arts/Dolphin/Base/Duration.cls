@@ -106,11 +106,10 @@ days
 
 	^seconds quo: SecondsPerDay!
 
-displayOn: aWriteStream
-	"Append,to the <puttableStream> argument, a <String> whose characters are a representation of the receiver as a user would want to see it.
-	The format used is that defined by Windows for the current user locale."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	Locale default displayDuration: self on: aWriteStream!
+	aPuttableStream locale displayDuration: self on: aPuttableStream!
 
 divideIntoDuration: aDuration 
 	"Private - Part of a double dispatch for <Duration> division.  Answers a <number>"
@@ -128,9 +127,10 @@ hours
 	^(seconds rem: SecondsPerDay) quo: SecondsPerHour!
 
 humanReadablePrintString
-	"Answer an <readableString> English language description of the receiver. This is for compatibility with Pharo, although the actual printed form is different."
+	"Answer an <readableString> English language description of the receiver. This is for compatibility with Pharo, although the actual printed form is different. 
+	In Dolphin a <Duration> will display in the human readable form onto a <WriteStream> if it is configured for the Smalltalk <Locale>."
 
-	^String streamContents: [:strm | self printHumanReadableOn: strm]!
+	^self displayString: Locale smalltalk!
 
 isZero
 	"Answer whether the receiver represents an empty interval of time."
@@ -195,7 +195,7 @@ printOn: aStream
 printOn: aStream format: aString
 	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>durationFormat method comment."
 
-	Locale default
+	aStream locale
 		printDuration: self
 		on: aStream
 		format: aString!

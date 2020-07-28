@@ -72,11 +72,11 @@ collect: transformer
 		do: [:each | answer at: each put: (transformer value: start + (step * (each - 1)))].
 	^answer!
 
-displayOn: target 
-	"Append, to the <puttableStream> argument, target, a string whose characters 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
 	are a description of the receiver as an end user would want to see it."
 
-	target
+	aPuttableStream
 		display: self start;
 		nextPutAll: ' .. ';
 		display: self stop!

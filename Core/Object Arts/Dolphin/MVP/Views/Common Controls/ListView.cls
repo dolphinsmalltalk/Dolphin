@@ -55,7 +55,7 @@ addColumn
 	Answers the new column"
 
 	| title |
-	title := 'Column ', (self columnCount+1) displayString.
+	title := 'Column ', (self columnCount+1) printString.
 	^self addColumn: (self columnClass text: title)
  !
 

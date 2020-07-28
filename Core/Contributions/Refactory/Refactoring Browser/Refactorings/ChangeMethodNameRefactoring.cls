@@ -100,21 +100,18 @@ removeRenamedImplementors
 
 renameImplementors
 	self implementors do: 
-			[:each | 
+			[:each |
 			| parseTree change |
 			parseTree := each parseTreeFor: oldSelector.
-			parseTree isNil 
-				ifTrue: [self refactoringError: 'Could not parse source code.'].
-			self implementorsCanBePrimitives 
+			parseTree isNil ifTrue: [self refactoringError: 'Could not parse source code.'].
+			self implementorsCanBePrimitives
 				ifFalse: 
-					[parseTree isPrimitive 
+					[parseTree isPrimitive
 						ifTrue: 
-							[self refactoringError: ('<1p>''s implementation of #<2s> is a primitive' 
-										expandMacrosWith: each
+							[self refactoringError: ('<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each
 										with: oldSelector)]].
 			self modifyImplementorParseTree: parseTree in: each.
-			change := each compileTree: parseTree
-						classified: (each protocolsFor: oldSelector).
+			change := each compileTree: parseTree classified: (each protocolsFor: oldSelector).
 			#rbFix.	"Bodge change object to maintain package relationship"
 			each realClass ifNotNil: [:c | change package: (c compiledMethodAt: oldSelector) owningPackage]]!
 

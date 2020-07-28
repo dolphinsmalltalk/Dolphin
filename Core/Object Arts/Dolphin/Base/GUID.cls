@@ -80,13 +80,11 @@ asString
 		at: sz put: $};
 		yourself!
 
-displayOn: target
-	"Append an 'end-user suitable' textual representation of the receiver to the
-	<puttableStream> argument, target.
-	GUIDs are a fairly technical concept, but they do appear in the registry in a
-	certain format, which we use here."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	GUIDs are a fairly technical concept, but they do appear in the registry in a certain format, which we use here."
 
-	target nextPutAll: self asString!
+	aPuttableStream nextPutAll: self asString!
 
 hash
 	"Hash the bytes of the object using the standard byte hashing

@@ -78,8 +78,10 @@ childrenDo: aMonadicValuable
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
 
-displayOn: aStream
-	aStream nextPutAll: 'Method'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'Method'!
 
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!

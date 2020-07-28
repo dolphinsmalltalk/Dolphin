@@ -46,10 +46,13 @@ clear
 
 	self value: 0!
 
-displayOn: aStream
-	"Append a textual representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	self asInteger printOn: aStream base: 16 showRadix: true!
+	self asInteger
+		printOn: aPuttableStream
+		base: 16
+		showRadix: true!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."

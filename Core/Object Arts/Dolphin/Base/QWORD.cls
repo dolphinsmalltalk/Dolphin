@@ -27,10 +27,10 @@ asUnsignedInteger
 
 	^bytes qwordAtOffset: 0!
 
-displayOn: aStream
-	"Append a text representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self asString!
+	self value displayOn: aPuttableStream!
 
 highPart
 	"Answer the <Integer> value of the receiver's 'highPart' field."

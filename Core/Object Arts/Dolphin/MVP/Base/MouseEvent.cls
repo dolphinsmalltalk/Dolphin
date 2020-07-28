@@ -68,7 +68,7 @@ isXButtonDown: anInteger
 	"Answer whether the specified X button (numbered either 1 or 2) is down."
 
 	(anInteger between: 1 and: 2)
-		ifFalse: [self error: 'Invalid X button number: ' , anInteger displayString].
+		ifFalse: [self error: 'Invalid X button number: ' , anInteger printString].
 	^wParam anyMask: (MK_XBUTTON1 bitShift: anInteger - 1)!
 
 printWParamOn: aStream

@@ -53,14 +53,14 @@ desktopResolution
 
 	^Canvas desktopResolution!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self name displayOn: aStream.
-	aStream nextPut: $\x20.
-	self pointSize displayOn: aStream.
-	aStream nextPutAll: 'pt'!
+	aPuttableStream
+		display: self name;
+		nextPut: $\x20;
+		display: self pointSize;
+		nextPutAll: 'pt'!
 
 handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."

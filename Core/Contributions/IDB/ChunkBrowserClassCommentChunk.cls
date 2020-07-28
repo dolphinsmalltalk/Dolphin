@@ -28,7 +28,7 @@ initialize: aString
 		to: (rawText findLast: [:each | each = $'])!
 
 isMatch
-	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment printString = comment]! !
+	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment fullPrintString = comment]! !
 !ChunkBrowserClassCommentChunk categoriesFor: #browseTarget!operations!public! !
 !ChunkBrowserClassCommentChunk categoriesFor: #initialize:!initializing!public! !
 !ChunkBrowserClassCommentChunk categoriesFor: #isMatch!public!testing! !

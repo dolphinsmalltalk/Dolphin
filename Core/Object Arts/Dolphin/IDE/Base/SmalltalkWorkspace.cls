@@ -459,11 +459,7 @@ displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
-	self evaluateAndDisplay: 
-			[:obj |
-			| locale |
-			locale := Locale userDefault: Locale smalltalk.
-			[obj displayString] ensure: [Locale userDefault: locale]]!
+	self evaluateAndDisplay: [:obj | obj displayString: self systemModel displayItLocale]!
 
 dragOver: aDragDropSession 
 	"The drag operation described by the <DragDropSession> argument has moved to a new position
@@ -685,21 +681,21 @@ hasSelection
 hasSmalltalkStyler
 	^self view styler isKindOf: SmalltalkStyler!
 
-highlightCompilationErrors: anInteger 
+highlightCompilationErrors: anInteger
 	| indicators annotations |
 	indicators := OrderedCollection new.
 	annotations := OrderedCollection new.
 	compilationErrors do: 
-			[:each | 
-			indicators add: (ScintillaIndicator 
+			[:each |
+			indicators add: (ScintillaIndicator
 						styleName: each severityClass name
 						range: each range + anInteger
 						tag: each).
-			annotations add: (ScintillaAnnotation 
+			annotations add: (ScintillaAnnotation
 						line: each line
 						text: ('<1s>: <2s>' expandMacrosWith: each severityName with: each errorMessage)
 						style: each severityClass name)].
-	(self view)
+	self view
 		indicators: indicators;
 		annotations: annotations!
 
@@ -1017,22 +1013,22 @@ printIt
 
 	self evaluateAndDisplay: [:obj | obj printString]!
 
-prompt: aString toSaveChanges: aSelectionChangingEvent 
-	self isModified == true 
+prompt: aString toSaveChanges: aSelectionChangingEvent
+	self isModified == true
 		ifTrue: 
 			[| response prompt mb |
 			self ensureVisible.
-			prompt := aSelectionChangingEvent canIntercept 
+			prompt := aSelectionChangingEvent canIntercept
 						ifTrue: ['Do you wish to retain them']
 						ifFalse: ['Would you like them copied to the clipboard'].
 			mb := MessageBox new.
 			mb owner: self view.
 			"mb beTaskModal."
-			response := mb 
+			response := mb
 						confirm: ('There are unsaved <1s> changes.<n><n><2s>?' expandMacrosWith: aString with: prompt).
-			aSelectionChangingEvent canIntercept 
+			aSelectionChangingEvent canIntercept
 				ifTrue: 
-					[response 
+					[response
 						ifTrue: 
 							[self ensureVisible.
 							aSelectionChangingEvent value: false]
@@ -1042,23 +1038,23 @@ prompt: aString toSaveChanges: aSelectionChangingEvent
 					response ifTrue: [self text copyToClipboard]]].
 	^aSelectionChangingEvent value!
 
-promptForVariableName: anObjectRef 
+promptForVariableName: anObjectRef
 	"Prompt for a variable name to represent anObjectRef in the receiver's workspace pool"
 
 	| nameValue |
 	nameValue := anObjectRef key asValue.
 	
 	[| name |
-	name := Prompter 
+	name := Prompter
 				on: nameValue
 				prompt: 'Enter a variable name:'
 				caption: ('Drop of <1s> onto workspace' expandMacrosWith: anObjectRef value basicPrintString).
 	name isNil ifTrue: [^nil].
-	(SmalltalkScanner isVariable: name) 
+	(SmalltalkScanner isVariable: name)
 		ifTrue: [true]
 		ifFalse: 
 			[MessageBox errorMsg: ('<1p> is not a valid variable name.' expandMacrosWith: name).
-			false]] 
+			false]]
 			whileFalse: [].
 	^nameValue value!
 

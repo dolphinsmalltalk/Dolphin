@@ -49,7 +49,7 @@ endPoint: aPoint
 isPartlyTransparent
 	^self startColorARGB alpha < 255 or: [self endColorARGB alpha < 255]!
 
-printOn: aStream 
+printOn: aStream
 	"Render the receiver to aStream as a developer would wish to see it"
 
 	aStream

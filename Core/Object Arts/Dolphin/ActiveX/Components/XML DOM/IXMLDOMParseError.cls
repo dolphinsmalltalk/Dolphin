@@ -13,16 +13,18 @@ The underlying COM object which exposes this interface is effectively a simple d
 !IXMLDOMParseError categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMParseError methodsFor!
 
-displayOn: aStream 
-	aStream nextPutAll: 'Error'.
-	self line = 0 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'Error'.
+	self line = 0
 		ifFalse: 
-			[aStream
+			[aPuttableStream
 				nextPutAll: ' at ';
 				display: self line;
 				nextPut: $,;
 				display: self linepos].
-	aStream
+	aPuttableStream
 		nextPutAll: ': ';
 		display: (self reason ifNil: ['<unknown>'] ifNotNil: [:reason | reason lines first])!
 

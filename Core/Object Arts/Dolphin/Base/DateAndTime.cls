@@ -153,11 +153,10 @@ dayOfYear
 
 	^self dayMonthYearDo: [:d :m :y | (self class daysToMonth: m forYear: y) + d]!
 
-displayOn: aWriteStream 
-	"Append,to the <puttableStream> argument, a <String> whose characters are a representation of the receiver as a user would want to see it.
-	The format used is that defined by Windows for the current user locale (the same as used in the Windows file exporer)."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	Locale default displayDateTime: self on: aWriteStream!
+	aPuttableStream locale displayDateTime: self on: aPuttableStream!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -285,10 +284,12 @@ printOn: aStream
 	self printOn: aStream withLeadingSpace: true!
 
 printOn: aStream format: aString
-	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>#dateFormat and Locale>>#timeFormat methods. If the format argument is nil then the receiver is printed to the stream in the currently configured default date and time formats of the host OS."
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>#dateFormat and Locale>>#timeFormat methods. If the format argument is nil then the receiver is printed to the stream in the currently configured default date and time formats of the stream's <Locale>."
 
-	Locale default printDateTime: self on: aStream format: aString
-!
+	aStream locale
+		printDateTime: self
+		on: aStream
+		format: aString!
 
 printOn: aWriteStream withLeadingSpace: aBoolean
 	"Append a default string representation of the receiver to the <puttableStream>, aWriteStream.

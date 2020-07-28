@@ -121,13 +121,6 @@ errorKeyNotFound: aKey
 	^self errorNotFound: aKey
 !
 
-errorValueNotFound: aValue
-	"Private - Report that an attempt was made to look up the key for a value which was not
-	in receiver"
-
-	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
-!
-
 filename
 	"Answer the filename of the initialization file."
 
@@ -268,7 +261,6 @@ values
 !IniFileAbstract categoriesFor: #countElements!accessing!private! !
 !IniFileAbstract categoriesFor: #do:!enumerating!public! !
 !IniFileAbstract categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!IniFileAbstract categoriesFor: #errorValueNotFound:!exceptions!private! !
 !IniFileAbstract categoriesFor: #filename!accessing!public! !
 !IniFileAbstract categoriesFor: #filename:!initializing!private! !
 !IniFileAbstract categoriesFor: #getValue:!accessing!private! !

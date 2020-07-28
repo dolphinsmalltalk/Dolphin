@@ -165,11 +165,10 @@ diskBasedPackages
 	paths := self contents reject: [:each | (each at: 3) == #imageBased].
 	^paths collect: [:each | File splitStemFrom: (each at: 1)]!
 
-displayOn: aStream
-	"Append a textual representation of the receiver to the <puttableStream> argument
-	as a user might want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream
+	aPuttableStream
 		display: self fullName;
 		space;
 		display: self version!
@@ -530,19 +529,18 @@ ofSerialNumber: serialNo
 
 	^self ofImageLevel: serialNo imageLevel!
 
-packages: wildcard under: directory encrypted: aBoolean 
+packages: wildcard under: directory encrypted: aBoolean
 	| base answer |
 	answer := OrderedCollection new.
 	base := SessionManager current imageBase.
-	File 
+	File
 		forAll: wildcard
 		in: (File composePath: base subPath: directory)
 		do: 
-			[:each | 
-			answer add: (Array 
-						with: (File relativePathOf: each path to: base)
-						with: (aBoolean ifTrue: [#encrypted] ifFalse: [#plain])
-						with: #imageBased)].
+			[:each |
+			answer add: {File relativePathOf: each path to: base.
+						aBoolean ifTrue: [#encrypted] ifFalse: [#plain].
+						#imageBased}].
 	^answer!
 
 pacsUnder: directory encrypted: aBoolean 

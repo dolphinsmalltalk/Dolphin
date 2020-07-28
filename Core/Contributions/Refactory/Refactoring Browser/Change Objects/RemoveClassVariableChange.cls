@@ -15,8 +15,7 @@ asUndoOperation
 	^AddClassVariableChange add: variable to: self changeClass!
 
 changeString
-	^'Remove class variable named, <1s>, from <2s>' 
-		expandMacrosWith: variable
+	^'Remove class variable named, <1s>, from <2s>' expandMacrosWith: variable
 		with: self displayClassName!
 
 changeSymbol

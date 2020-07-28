@@ -219,9 +219,9 @@ isCurrentCardLast
 isIdeaSpaceCard
 	^false!
 
-loadErrorDescriptionFrom: anException 
-	(anException isKindOf: CompilerNotification) 
-		ifTrue: [^'<1d> in line <2d>' expandMacrosWith: anException errorMessage with: anException line].
+loadErrorDescriptionFrom: anException
+	(anException isKindOf: CompilerNotification)
+		ifTrue: [^'<1s> in line <2p>' expandMacrosWith: anException errorMessage with: anException line].
 	^anException description!
 
 loadIdeaSpace
@@ -236,9 +236,9 @@ loadIdeaSpace
 					[:x |
 					self view enableRedraw.
 					MessageBox
-						errorMsg: ('There was a problem loading the IdeaSpace template: "<1d>". 
+						errorMsg: ('There was a problem loading the IdeaSpace template: "<1s>". 
 
-The error reported was: "<2d>". 
+The error reported was: "<2s>". 
 
 As as result the new IdeaSpace may only be partially complete. Please bear in mind that you
 can only reload an IdeaSpace into an equivalent image to the one that was used to save the
@@ -428,6 +428,7 @@ saveIdeaSpace
 		ifTrue: 
 			[| stream |
 			stream := FileStream write: self filename text: true.
+			stream locale: Locale smalltalk.
 			[self saveStateOn: stream] ensure: [stream close].
 			saved := true]
 		ifFalse: [saved := self saveIdeaSpaceAs]] 
@@ -447,10 +448,9 @@ saveIdeaSpaceAs
 				showModal.
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 
-							[MessageBox 
-								confirm: ('<1s><n>This file already exists, are you sure you would like to overwrite it?' 
+							[MessageBox confirm: ('<1s><n>This file already exists, are you sure you would like to overwrite it?'
 										expandMacrosWith: newFilename)
-								caption: SessionManager current applicationName]]) 
+								caption: SessionManager current applicationName]])
 		ifTrue: 
 			["Install the new filename"
 			self
@@ -458,7 +458,7 @@ saveIdeaSpaceAs
 				saveIdeaSpace].
 	^proceed!
 
-saveStateOn: aWriteStream 
+saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
 	the receiver's class as it's parameter"
@@ -467,7 +467,7 @@ saveStateOn: aWriteStream
 	aWriteStream nextPutAll: '[:anIdeaSpace | | '.
 	cardsToSave := self cards select: [:each | each canSaveState].
 	(cardsToSave collect: [:each | each class name]) asSet do: 
-			[:each | 
+			[:each |
 			aWriteStream
 				space;
 				nextPut: $a;
@@ -477,9 +477,9 @@ saveStateOn: aWriteStream
 		nextPut: $|;
 		cr.
 	cardsToSave do: 
-			[:each | 
+			[:each |
+			'"Create and configure a <1s>"' expandMacrosWithArguments: {each class name} on: aWriteStream.
 			aWriteStream
-				nextPutAll: ('"Create and configure a <1s>"' expandMacrosWith: each class name);
 				cr;
 				nextPut: $a;
 				nextPutAll: each class name;
@@ -498,9 +498,9 @@ saveStateOn: aWriteStream
 				cr;
 				cr].
 	currentCardIndexInCardsToSave := cardsToSave indexOf: self currentCard.
-	aWriteStream
-		nextPutAll: ('anIdeaSpace currentCardIndex: <1d>' expandMacrosWith: currentCardIndexInCardsToSave);
-		cr.
+	'anIdeaSpace currentCardIndex: <1d>' expandMacrosWithArguments: {currentCardIndexInCardsToSave}
+		on: aWriteStream.
+	aWriteStream cr.
 	aWriteStream nextPut: $]!
 
 setWatermark
@@ -592,11 +592,10 @@ defaultFileExtension
 
 	^'st'!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Idea Space'!
+	aPuttableStream nextPutAll: 'Idea Space'!
 
 fileTypes
 	"Private - Answer an Array of file types that can be associated with this

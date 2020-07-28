@@ -19,9 +19,7 @@ Instance Variables:
 actualFormat
 	"Private - Answers the actual date format to use for the conversion"
 
-	^self format notNil
-		ifTrue: [ self format ]
-		ifFalse: [ self locale timeFormat ]!
+	^self format ifNil: [self actualLocale timeFormat]!
 
 format
 	"Answers the format for the conversion. This is either a String identifying
@@ -44,23 +42,18 @@ leftToRight: aTime
 	| stream fmt |
 	fmt := self actualFormat.
 	stream := String writeStream: fmt size.
+	stream locale: self actualLocale.
 	aTime printOn: stream format: fmt.
 	^stream grabContents!
-
-locale
-	"Private - Answer the locale to use for the receiver's conversions"
-
-	^Locale default!
 
 rightToLeft: aString
 	"Private - Answers the result of converting aString to a Time."
 
-	^Time fromString: aString
-! !
+	#todo.	"Parse correctly using format and/or locale."
+	^Time fromString: aString! !
 !TimeToText categoriesFor: #actualFormat!accessing!private! !
 !TimeToText categoriesFor: #format!accessing!public! !
 !TimeToText categoriesFor: #format:!accessing!public! !
 !TimeToText categoriesFor: #leftToRight:!operations!private! !
-!TimeToText categoriesFor: #locale!accessing!private! !
 !TimeToText categoriesFor: #rightToLeft:!operations!private! !
 

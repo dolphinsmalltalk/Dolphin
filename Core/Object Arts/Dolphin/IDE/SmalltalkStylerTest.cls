@@ -11,17 +11,17 @@ SmalltalkStylerTest comment: ''!
 !SmalltalkStylerTest categoriesForClass!Unclassified! !
 !SmalltalkStylerTest methodsFor!
 
-restyleFromEachPosition: anObject resumeable: aBoolean 
+restyleFromEachPosition: anObject resumeable: aBoolean
 	| t1 size |
 	size := scintilla textLength.
 	t1 := scintilla styledTextFrom: 1 to: size.
 	2 to: size
 		do: 
-			[:i | 
+			[:i |
 			| t2 |
 			scintilla restyleFrom: i to: 0.
 			t2 := scintilla styledTextFrom: 1 to: size.
-			self 
+			self
 				assert: t1 = t2
 				description: ('<1d> mismatch styling from <2d>' expandMacrosWith: anObject with: i)
 				resumable: aBoolean]

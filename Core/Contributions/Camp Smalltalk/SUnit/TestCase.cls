@@ -115,9 +115,9 @@ performTest
 
 printOn: aStream
 	aStream
-		nextPutAll: self class printString;
+		print: self class;
 		nextPutAll: '>>';
-		nextPutAll: testSelector!
+		print: testSelector!
 
 removeDependentFromHierachy: anObject 
 	"an empty method. for Composite compability with TestSuite"

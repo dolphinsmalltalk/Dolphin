@@ -96,9 +96,9 @@ removeField
 	command := Command current.
 	selected := self variableName.
 	value := self selfField at: selected.
-	self variableIndex > self headerSize 
+	self variableIndex > self headerSize
 		ifTrue: 
-			[(MessageBox confirm: ('Remove <1p> field?' expandMacrosWith: selected)) 
+			[(MessageBox confirm: ('Remove <1p> field?' expandMacrosWith: selected))
 				ifTrue: 
 					[command undoWith: [self addKey: selected put: value].
 					self removeKey: selected]]!

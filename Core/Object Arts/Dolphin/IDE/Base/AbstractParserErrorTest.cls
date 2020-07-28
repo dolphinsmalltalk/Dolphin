@@ -61,7 +61,8 @@ checkCompileError: ex range: anInterval code: anInteger line: lineInteger source
 					[(lineInteger < 0 or: [ex line < 0 or: [ex line = lineInteger]]) and: 
 							[| msgString |
 							msgString := (self errorFormats at: anInteger)
-										expandMacrosWithArguments: {aString copyFrom: ex range start to: ex range stop} , ex extras.
+										expandMacrosWithArguments: {aString copyFrom: ex range start to: ex range stop} , ex extras
+										locale: Locale smalltalk.
 							ex errorMessage = msgString]]]!
 
 compilationErrorClass
@@ -673,22 +674,22 @@ testErrorsExtArgCountMismatch
 		range: (mark to: (source lastIndexOf: $>) - 1)!
 
 testErrorsExtTypeIndirections
-	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** ExternalAddress* <1s>%>' 'ExternalAddress**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**')) 
+	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** ExternalAddress* <1s>%>' 'ExternalAddress**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**'))
 		do: 
-			[:each | 
+			[:each |
 			| mark source |
 			source := each first expandMacrosWith: each second.
 			mark := source indexOfSubCollection: each second.
-			self 
+			self
 				parseMethodError: source
 				code: CErrNotIndirectable
 				range: (mark to: mark + each second size - 1)].
 	#(#('blah %<cdecl: dword<1s> blah%>' '***') #('blah %<cdecl: DWORD<1s> blah%>' '***')) do: 
-			[:each | 
+			[:each |
 			| mark source |
 			source := each first expandMacrosWith: each second.
 			mark := source indexOfSubCollection: each second.
-			self 
+			self
 				parseMethodError: source
 				code: CErrBadExtTypeQualifier
 				range: (mark to: mark + each second size - 1)]!
@@ -1190,21 +1191,21 @@ testErrorsQualifierReferenceEmpty
 
 testErrorsRedefiningPseudo
 	#('self' 'super' 'thisContext') do: 
-			[:each | 
+			[:each |
 			| source |
 			source := '|<1s> | ' expandMacrosWith: each.
-			self 
+			self
 				parseExprError: source
 				range: (2 to: 2 + each size - 1)
 				line: 1
 				code: CErrRedefiningPseudoVar.
 			"#2201."
 			#('[:<1s> | ]' '1 ifNotNil: [:<1s> | ]' '1 to: 2 do: [:<1s> |]' '1 to: 2 by: 1 do: [:<1s> |]') do: 
-					[:eachExpr | 
+					[:eachExpr |
 					| start |
 					source := eachExpr expandMacrosWith: each.
 					start := source lastIndexOf: $:.
-					self 
+					self
 						parseExprError: source
 						range: (start + 1 to: start + each size)
 						line: 1
@@ -1212,21 +1213,21 @@ testErrorsRedefiningPseudo
 
 testErrorsRedefiningSpecialLiterals
 	#('nil' 'true' 'false') do: 
-			[:each | 
+			[:each |
 			| source |
 			source := '|<1s> | ' expandMacrosWith: each.
-			self 
+			self
 				parseExprError: source
 				range: (1 to: 1)
 				line: 1
 				code: CErrTempListNotClosed.
 			"#2201."
 			#('[:<1s> | ]' '1 ifNotNil: [:<1s> | ]' '1 to: 2 do: [:<1s> |]' '1 to: 2 by: 1 do: [:<1s> |]') do: 
-					[:eachExpr | 
+					[:eachExpr |
 					| start |
 					source := eachExpr expandMacrosWith: each.
 					start := source lastIndexOf: $:.
-					self 
+					self
 						parseExprError: source
 						range: (start + 1 to: start + each size)
 						line: 1
@@ -1573,24 +1574,24 @@ testUnoptimizedLoopsNonMonadicArg
 	generation were a separate pass, then it could produce unomptimized code and a warning."
 
 	#('1 to: 2' '1 to: 2 by: 1') do: 
-			[:each | 
-			"Non-block literal - in this case a SmallInteger"
+			[:each |
 			| source mark |
+			"Non-block literal - in this case a SmallInteger"
 			source := 'x <1s> do: [1]' expandMacrosWith: each.
 			mark := source indexOf: $[.
-			self 
+			self
 				parseMethodError: source
 				code: CErrIncorrectBlockArgCount
 				range: (mark to: mark + 2).
 			source := 'x | tmp | tmp := [:e | e]. <1s> do: tmp ' expandMacrosWith: each.
-			self 
+			self
 				parseMethodWarning: source
 				range: (source size - 3 to: source size - 1)
 				code: CWarnExpectMonadicBlockArg.
 
 			"Too many args"
 			source := 'x <1s> do: [:x :y | x + y]' expandMacrosWith: each.
-			self 
+			self
 				parseMethodError: source
 				code: CErrIncorrectBlockArgCount
 				range: ((source indexOf: $[) to: (source indexOf: $|)).
@@ -1746,13 +1747,13 @@ testWarningUnoptimizedConditionNonEmptyBlock
 testWarningUnoptimizedConditionNonNiladicArg
 	| source |
 	#(#and: #or: #ifTrue: #ifFalse: #ifNil:) do: 
-			[:each | 
-			"Non-block literal - in this case a SmallInteger"
+			[:each |
 			| stem format |
+			"Non-block literal - in this case a SmallInteger"
 			stem := 'x [1] '.
 			format := stem , '<1s> 1 '.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodWarning: source
 				range: (source size - 1 to: source size - 1)
 				code: CWarnExpectNiladicBlockArg.
@@ -1760,7 +1761,7 @@ testWarningUnoptimizedConditionNonNiladicArg
 			stem := 'x | a | a := [false]. [1] '.
 			format := stem , '<1s> a'.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodWarning: source
 				range: (source size to: source size)
 				code: CWarnExpectNiladicBlockArg.
@@ -1770,7 +1771,7 @@ testWarningUnoptimizedConditionNonNiladicArg
 			stem := 'x [1] '.
 			format := stem , '<1s> [:a|]'.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodError: source
 				code: CErrIncorrectBlockArgCount
 				range: ((source lastIndexOf: $[) to: (source lastIndexOf: $|)).
@@ -1844,13 +1845,13 @@ testWarningUnoptimizedIfNotNilNonMonadicArg
 testWarningUnoptimizedLoopsNonNiladicArg
 	| source |
 	#(#whileTrue: #whileFalse:) do: 
-			[:each | 
-			"Non-block literal - in this case a SmallInteger"
+			[:each |
 			| stem format |
+			"Non-block literal - in this case a SmallInteger"
 			stem := 'x [1] '.
 			format := stem , '<1s> 1 '.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodWarning: source
 				range: (source size - 1 to: source size - 1)
 				code: CWarnExpectNiladicBlockArg.
@@ -1858,7 +1859,7 @@ testWarningUnoptimizedLoopsNonNiladicArg
 			stem := 'x | a | a := [false]. [1] '.
 			format := stem , '<1s> a'.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodWarning: source
 				range: (source size to: source size)
 				code: CWarnExpectNiladicBlockArg.
@@ -1867,7 +1868,7 @@ testWarningUnoptimizedLoopsNonNiladicArg
 			It could more easily be made a warning if the code generation phase was separate."
 			format := stem , '<1s> [:a|]'.
 			source := format expandMacrosWith: each.
-			self 
+			self
 				parseMethodError: source
 				code: CErrIncorrectBlockArgCount
 				range: ((source lastIndexOf: $[) to: (source lastIndexOf: $|)).

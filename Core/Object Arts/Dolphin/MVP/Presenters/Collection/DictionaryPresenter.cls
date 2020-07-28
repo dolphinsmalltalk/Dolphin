@@ -17,10 +17,10 @@ defaultAddItem
 	| pair result |
 	pair := Association new.
 	
-	[(KeyValuePrompter 
+	[(KeyValuePrompter
 		createOn: pair
 		prompt: 'Enter key and value expressions:'
-		caption: 'Add Field...') showModal 
+		caption: 'Add Field...') showModal
 		notNil and: 
 				[| error |
 				error := nil.
@@ -28,10 +28,10 @@ defaultAddItem
 						[| key value |
 						key := Compiler evaluate: pair key.
 						value := Compiler evaluate: pair value.
-						self value newAssociation: key value: value] 
+						self value newAssociation: key value: value]
 								on: Compiler errorClass , Error
 								do: 
-									[:ex | 
+									[:ex |
 									error := ex.
 									ex return: nil].
 				error notNil and: 
@@ -39,7 +39,7 @@ defaultAddItem
 						mb := MessageBox new.
 						mb buttonStyle: #yesNo.
 						mb caption: 'Error evaluating expression...'.
-						(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWith: error)) == #yes]]] 
+						(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWith: {error})) == #yes]]]
 			whileTrue.
 	^result!
 

@@ -77,7 +77,7 @@ assert: actualObject identicalTo: expectedObject
 assert: actualObject isKindOf: expectedType
 	(actualObject isKindOf: expectedType)
 		ifFalse: 
-			[self fail: ((String writeStream: 100)
+			[self fail: ((String smalltalkWriteStream: 100)
 						nextPutAll: 'Expected a ';
 						print: expectedType;
 						nextPutAll: ' Actual: ';

@@ -975,18 +975,17 @@ dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
 				with: wParam
 				with: lParam]!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| description |
 	self displayOnFormats detect: 
-			[:each | 
-			description := (self perform: each) displayString.
+			[:each |
+			description := String streamContents: [:strm | (self perform: each) displayOn: strm].
 			description notNil and: [description notEmpty]].
-	description size > self displayOnMaxCharacters 
+	description size > self displayOnMaxCharacters
 		ifTrue: [description := (description leftString: self displayOnMaxCharacters) , '...'].
-	aStream nextPutAll: description!
+	aPuttableStream nextPutAll: description!
 
 displayOnFormats
 	"Private - Answers an array of selectors that can be used to determine how the receiver is

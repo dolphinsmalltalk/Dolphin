@@ -28,10 +28,9 @@ struct tagSOCKADDR {
 !SOCKADDR categoriesForClass!Win32-Structs! !
 !SOCKADDR methodsFor!
 
-displayOn: aStream
-	"Append to the <puttableStream>, aStream, a <String> whose characters are a representation
-	of the receiver as a user would want to see it. In this case we print the address in the
-	standard IPv4 or IPv6 format."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	In this case we print the address in the standard IPv4 or IPv6 format."
 
 	| buf len |
 	(self isNull or: [self sa_family == 0]) ifTrue: [^self].
@@ -44,7 +43,7 @@ displayOn: aStream
 		lpszAddressString: buf
 		lpdwAddressStringLength: len) == 0
 		ifFalse: [SocketError signal].
-	aStream
+	aPuttableStream
 		next: len value - 1
 		putAll: buf
 		startingAt: 1!

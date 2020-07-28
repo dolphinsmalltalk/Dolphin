@@ -438,11 +438,10 @@ defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators 
 		, #(#(#help 'F1') #(#refresh 'F5') #(#selectAll 'Ctrl+A') #(#inspectIt 'Ctrl+I'))!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'COM Component Wizard'!
+	aPuttableStream nextPutAll: 'COM Component Wizard'!
 
 icon
 	"Answers an Icon that can be used to represent this class."
@@ -466,7 +465,7 @@ registerServer
 	"
 
 	| dllpath entrypoint |
-	dllpath := (FileOpenDialog new)
+	dllpath := FileOpenDialog new
 				fileTypes: #(#('Components (*.dll,*.ocx)' '*.dll;*.ocx') #('All Files (*.*)' '*.*'));
 				defaultExtension: 'dll';
 				showModal.
@@ -479,18 +478,18 @@ registerServer
 	[| method proc |
 	proc := lib getProcAddress: entrypoint
 				ifAbsent: 
-					[self 
-						error: ('<1s> was loaded but the <2s> entry point could not be found.<n><n>This file cannot be registered' 
+					[self
+						error: ('<1s> was loaded but the <2s> entry point could not be found.<n><n>This file cannot be registered'
 								expandMacrosWith: dllpath
 								with: entrypoint)].
 	method := (lib class compiledMethodAt: #DllRegisterServer) copy.
 	method literalAt: 1
-		put: (((method literalAt: 1) copy)
+		put: ((method literalAt: 1) copy
 				dwordAtOffset: 0 put: proc;
 				yourself).
-	method value: lib withArguments: #()] 
+	method value: lib withArguments: #()]
 			ensure: [lib close].
-	MessageBox new notify: ('<1s> in <2s> succeeded.' expandMacrosWith: entrypoint with: dllpath)] 
+	MessageBox new notify: ('<1s> in <2s> succeeded.' expandMacrosWith: entrypoint with: dllpath)]
 			on: Error
 			do: [:each | MessageBox errorMsg: each description]!
 

@@ -220,7 +220,7 @@ emitSecureChunk: aString description: description publisherCertificate: certific
 	filer := self chunkFilerOn: aStream.
 	filer emitChunk: trusted description; cr.
 	filer emitChunk: trusted signature; cr.
-	filer emitChunk: trusted publisherCertificate binaryStoreBytes printString; cr.
+	filer emitChunk: trusted publisherCertificate binaryStoreBytes fullPrintString; cr.
 	filer emitChunk: trusted data.
 	filer endChunk!
 

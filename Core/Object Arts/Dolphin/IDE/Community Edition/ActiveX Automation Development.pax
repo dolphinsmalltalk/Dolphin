@@ -709,8 +709,8 @@ generateMethod: aFUNCDESC wrapping: anAXMethodName
 	to an HRESULT code."
 
 	| stream wrapperName |
-	stream := String writeStream: 128.
-	wrapperName := self 
+	stream := String smalltalkWriteStream: 128.
+	wrapperName := self
 				printMethod: aFUNCDESC
 				wrapping: anAXMethodName
 				on: stream.
@@ -740,7 +740,7 @@ generateRawMethod: aFUNCDESC categories: aCollection
 	(self canGenerateMethodNamed: methodName)
 		ifTrue: 
 			[| target |
-			target := String writeStream: 512.
+			target := String smalltalkWriteStream: 512.
 			methodName printSignatureOn: target.
 			target cr.
 			self
@@ -813,16 +813,16 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 			params := aFUNCDESC argumentNames.
 			types := aFUNCDESC arguments.
 			(1 to: params size) do: 
-					[:each |
+					[:i |
 					| name type |
-					type := types at: each.
+					type := types at: i.
 					target crtab: tabs + 1.
 					self
 						printIDLAttributes: type idlAttributes
 						on: target
 						indent: -1.
-					name := params at: each.
-					name isEmpty ifTrue: [name := 'arg' , each displayString].
+					name := params at: i.
+					name isEmpty ifTrue: [name := 'arg' , i printString].
 					self
 						printIDLDecl: name
 						type: type tdesc
@@ -830,10 +830,10 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 				separatedBy: [target nextPut: $,]].
 	target nextPutAll: ');'!
 
-printFunctionPrototypeComment: aFUNCDESC on: aPuttableStream 
+printFunctionPrototypeComment: aFUNCDESC on: aPuttableStream
 	| comment |
-	comment := String writeStream: 128.
-	self 
+	comment := String smalltalkWriteStream: 128.
+	self
 		printFunctionPrototype: aFUNCDESC
 		on: comment
 		indent: 2.
@@ -1145,9 +1145,9 @@ determineNewBase: baseClass forExistingWrapper: existingClass
 				ifFalse: 
 					[(baseClass includesBehavior: IDispatch) ifTrue: [baseClass] ifFalse: [currentSuper]]]!
 
-generateClassCLSIDForCoclass: aTKindCoclassAnalyzer 
+generateClassCLSIDForCoclass: aTKindCoclassAnalyzer
 	| target |
-	target := String writeStream: 256.
+	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: 'clsid';
 		crtab;
@@ -1203,22 +1203,22 @@ generateCollectionTest
 	self isDispatchable ifFalse: [^self	"Not applicable"].
 	isCollection := self isVBCollection.
 	dunno := isCollection not and: [self isExtensible].
-	expr := dunno 
+	expr := dunno
 				ifTrue: 
 					["Might add _NewEnum at run-time"
 					self baseClass == IDispatch ifTrue: [^self	"Inherited method OK"].
 					'self has_NewEnum']
 				ifFalse: [isCollection printString].
-	text := String writeStream: 256.
+	text := String smalltalkWriteStream: 256.
 	text
 		nextPutAll: 'isVBCollection';
 		crtab;
 		nextPutAll: '"Answer whether the receiver is a VB style collection.'.
-	dunno 
+	dunno
 		ifTrue: 
 			[text
 				crtab;
-				nextPutAll: (self 
+				nextPutAll: (self
 							wrapMethodComment: 'The receiver is dynamically extensible, so we cannot determine this from the type library, and must perform a run-time check for the _NewEnum property.')].
 	text
 		nextPut: $";
@@ -1235,8 +1235,8 @@ generateDefaultMethod: aFUNCDESC wrapping: anAXMethodName
 	default values for all optional arguments."
 
 	| stream wrapperName |
-	stream := String writeStream: 128.
-	wrapperName := self 
+	stream := String smalltalkWriteStream: 128.
+	wrapperName := self
 				printDefaultMethod: aFUNCDESC
 				wrapping: anAXMethodName
 				on: stream.
@@ -1312,7 +1312,7 @@ generateMethodWrappers: aFUNCDESC
 
 generateNewForCoclass: aTKindCoclassAnalyzer
 	| target |
-	target := String writeStream: 256.
+	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: 'new';
 		nextPutAll: aTKindCoclassAnalyzer name;
@@ -1333,7 +1333,7 @@ generatePropertyAccessors
 
 	^self subclassResponsibility!
 
-generatePropGet: aFUNCDESC wrapping: anAXMethodName defaultOptionals: aBoolean 
+generatePropGet: aFUNCDESC wrapping: anAXMethodName defaultOptionals: aBoolean
 	"Private - Generate a high-level wrapper for the propget method described 
 	by the <FUNCDESC> argument. If the argument describes the DISPID_VALUE
 	propget, then generate a #value wrapper as well. Both wrappers return the correct 
@@ -1344,15 +1344,15 @@ generatePropGet: aFUNCDESC wrapping: anAXMethodName defaultOptionals: aBoolean
 	self assert: [aFUNCDESC isPropGet].
 	methodName := self buildMethodName: aFUNCDESC defaultOptionals: aBoolean.
 	(self canGenerateMethodNamed: methodName) ifFalse: [^methodName].
-	target := String writeStream: 512.
+	target := String smalltalkWriteStream: 512.
 	methodName printSignatureOn: target.
 	target cr.
 	self printPropGetComment: aFUNCDESC on: target.
-	(self 
+	(self
 		printPropGet: aFUNCDESC
 		wrapping: anAXMethodName
 		on: target
-		defaultOptionals: aBoolean) notNil 
+		defaultOptionals: aBoolean) notNil
 		ifTrue: [self compilePropertyAccessor: target contents].
 	^methodName!
 
@@ -1385,17 +1385,17 @@ generatePropPut: aFUNCDESC wrapping: anAXMethodName
 	| methodName |
 	self assert: [aFUNCDESC isPropSet].
 	methodName := self buildMethodName: aFUNCDESC defaultOptionals: false.
-	(self canGenerateMethodNamed: methodName) 
+	(self canGenerateMethodNamed: methodName)
 		ifTrue: 
 			[| target |
-			target := String writeStream: 512.
+			target := String smalltalkWriteStream: 512.
 			methodName printSignatureOn: target.
 			target cr.
 			self printPropPutComment: aFUNCDESC on: target.
-			(self 
+			(self
 				printPropPut: aFUNCDESC
 				wrapping: anAXMethodName
-				on: target) notNil 
+				on: target) notNil
 				ifTrue: [self compilePropertyAccessor: target contents]].
 	^methodName!
 
@@ -1441,9 +1441,8 @@ generateRuntimeExtensibilityTest
 
 	| isDynamic target |
 	isDynamic := self isExtensible.
-	(self isDispatchable and: [isDynamic not or: [self baseClass ~~ IDispatch]]) 
-		ifFalse: [^self].
-	target := String writeStream: 256.
+	(self isDispatchable and: [isDynamic not or: [self baseClass ~~ IDispatch]]) ifFalse: [^self].
+	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: #isExtensible;
 		crtab;
@@ -1469,7 +1468,7 @@ generateValueAccessor: anAXMemberDesc wrapping: anAXMethodName
 	| target |
 	self assert: [anAXMemberDesc isValueProperty].
 	(self canGenerateMessage: #value) ifFalse: [^self].
-	target := String writeStream: 256.
+	target := String smalltalkWriteStream: 256.
 	target
 		display: #value;
 		cr.
@@ -1489,14 +1488,13 @@ generateValueMutator: anAXMemberDesc wrapping: anAXMethodName
 	| target argumentName |
 	self assert: [anAXMemberDesc isValueProperty and: [anAXMethodName argumentCount = 1]].
 	(self canGenerateMessage: #value:) ifFalse: [^self].
-	target := String writeStream: 256.
 	argumentName := anAXMethodName argumentNames first.
+	target := String smalltalkWriteStream: 256.
 	target
 		display: #value:;
 		space;
 		nextPutAll: argumentName;
-		cr.
-	target
+		cr;
 		tab;
 		nextPutAll: '"Set the ''';
 		nextPutAll: anAXMemberDesc name;
@@ -2336,15 +2334,15 @@ canGenerateMessage: selector
 
 	^self isTraceOnly or: [self canGenerateMessage: selector into: self global]!
 
-canGenerateMessage: selector into: class 
+canGenerateMessage: selector into: class
 	"Private - Answer whether an auto-generated method implementing the message with
 	the specified symbolic selector can be safely generated into the <ClassDescription>, class.
 	The purpose of this test is to avoid overwriting hand written methods of the same
 	name, or perhaps to avoid overriding certain critical selectors."
 
-	^(class includesSelector: selector asSymbol) 
+	^(class includesSelector: selector asSymbol)
 		ifTrue: 
-			[Notification signal: ('Warning: Wrapper method <1p>>><2s> not generated due to selector clash.' 
+			[Notification signal: ('Warning: Wrapper method <1p>>><2s> not generated due to selector clash.'
 						expandMacrosWith: class
 						with: selector).
 			false]
@@ -2374,7 +2372,7 @@ classCategories
 
 	| catName |
 	catName := self idlKeyword.
-	catName := (String writeStream: 30)
+	catName := String smalltalkWriteStream
 				nextPutAll: self typeLib name;
 				nextPut: $-;
 				nextPutAll: catName capitalized;
@@ -2526,7 +2524,7 @@ generateClassComment
 			[(flags allMask: Verbose)
 				ifTrue: [Notification signal: 'Existing class comment for ' , self name , ' not overwritten']]!
 
-generateClassDefinition: suggestedName 
+generateClassDefinition: suggestedName
 	"Private - Generate and answer a new class to wrap the type described by the receiver."
 
 	| pools classVars instVars class baseClass var sharedVars actualName existingClass binding stream |
@@ -2539,21 +2537,21 @@ generateClassDefinition: suggestedName
 	"Record any name that differs from suggestion in the alias map so that we can regenerate later to the same name
 	 without prompting the user again, and without having to keep the cached analyzers hanging around."
 	actualName ~= suggestedName ifTrue: [self typeLib addAlias: actualName forType: self].
-	existingClass isNil 
+	existingClass isNil
 		ifTrue: 
-			[(self generationFlags allMask: Verbose) 
+			[(self generationFlags allMask: Verbose)
 				ifTrue: 
 					[Notification signal: 'Generating new class ' , actualName , ' to wrap ' , self fullyQualifiedName]]
 		ifFalse: 
 			["It may we be that this is already perfect"
-			((pools difference: existingClass sharedPoolNames) isEmpty 
-				and: [existingClass superclass == baseClass]) 
+			((pools difference: existingClass sharedPoolNames) isEmpty
+				and: [existingClass superclass == baseClass])
 					ifTrue: 
 						[self globalBinding: var.
 						^existingClass].
-			(self generationFlags allMask: Verbose) 
+			(self generationFlags allMask: Verbose)
 				ifTrue: 
-					[Notification 
+					[Notification
 						signal: 'Modifying existing class ' , existingClass name , ' to wrap ' , self fullyQualifiedName].
 
 			"Need to re-generate, but try and preserved existing details"
@@ -2561,10 +2559,10 @@ generateClassDefinition: suggestedName
 			classVars := existingClass classVariableString.
 			instVars := existingClass instanceVariableString.
 			baseClass := self determineNewBase: baseClass forExistingWrapper: existingClass].
-	stream := String writeStream: 32.
+	stream := String smalltalkWriteStream: 32.
 	pools asSortedCollection do: [:s | stream nextPutAll: s] separatedBy: [stream space].
 	sharedVars := stream contents.
-	class := baseClass 
+	class := baseClass
 				subclass: actualName asSymbol
 				instanceVariableNames: instVars
 				classVariableNames: classVars
@@ -2589,10 +2587,10 @@ generateConstants
 	pool := self constantsPool.
 	self generateConstantsIntoPool: pool!
 
-generateConstantsIntoPool: aPoolConstantsDictionary 
-	(self generationFlags anyMask: Verbose) 
+generateConstantsIntoPool: aPoolConstantsDictionary
+	(self generationFlags anyMask: Verbose)
 		ifTrue: 
-			[Notification signal: ('Generating constants for <1s> <2s> into pool <3s>' 
+			[Notification signal: ('Generating constants for <1s> <2s> into pool <3s>'
 						expandMacrosWith: self idlKeyword
 						with: self name
 						with: aPoolConstantsDictionary name)].
@@ -2647,27 +2645,27 @@ guidCheck: binding
 			global guid: myId].
 	^true!
 
-guidClashPrompt: binding 
+guidClashPrompt: binding
 	"Private - Prompt the user as to how they wish to resolve a guid clash."
 
 	| type mb |
 	type := self idlKeyword.
 	mb := MessageBox new.
 	mb iconStyle: #warning.
-	mb 
+	mb
 		text: ('The proposed class name <1p> clashes with an existing class in the <2p> package which has a different GUID.
 This may be due to a name clash, or because, for example, an interface has been updated
 
 Are you sure that you would like to overwrite it?
 
-Press Retry to suggest an alternative name for the <3s>, Ignore to overwrite, or Abort to quit.' 
+Press Retry to suggest an alternative name for the <3s>, Ignore to overwrite, or Abort to quit.'
 				expandMacrosWith: binding key
 				with: binding value owningPackage name
 				with: type).
 	mb
 		buttonStyle: #abortRetryIgnore;
 		defaultButton: 2.
-	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>' 
+	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>'
 				expandMacrosWith: type
 				with: self typeLib name
 				with: self).
@@ -2716,7 +2714,7 @@ idlTypeOfVT: vt
 
 	^VTtoIDLTypeMap at: vt!
 
-isClassCheck: binding 
+isClassCheck: binding
 	"Private - The receiver's global is already present, check to make sure it is actually a class."
 
 	| global resp mb |
@@ -2724,14 +2722,14 @@ isClassCheck: binding
 	(global isKindOf: Class) ifTrue: [^true].
 	mb := MessageBox new.
 	mb iconStyle: #warning.
-	mb 
+	mb
 		text: ('Class name <1p> clashes with an existing global which is not a class (a <2p>).
 
-Press OK to suggest an alternative name for the <3s>, or Cancel to abort.' 
+Press OK to suggest an alternative name for the <3s>, or Cancel to abort.'
 				expandMacrosWith: binding key
 				with: binding value class
 				with: self idlKeyword).
-	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3s>' 
+	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3s>'
 				expandMacrosWith: self idlKeyword
 				with: self typeLib name
 				with: self name).
@@ -2924,7 +2922,7 @@ reservedSelectors
 
 	^IdentitySet new!
 
-resolveExistingClass: className 
+resolveExistingClass: className
 	"Private - Attempt to locate an existing class which matches the receiver's type, starting
 	with the <readableString> class name, className, but prompting the user for further
 	global names if necessary. Answer an <Association> which is either an existing global
@@ -2936,19 +2934,19 @@ resolveExistingClass: className
 	
 	[newName := newName asSymbol.
 	binding := env associationAt: newName ifAbsent: [^newName -> nil].
-	self checkConformanceOfExistingClass: binding] 
+	self checkConformanceOfExistingClass: binding]
 			whileFalse: 
-				[prompt isNil 
+				[prompt isNil
 					ifTrue: 
 						[| typeName |
 						typeName := self idlKeyword.
 						prompt := 'Please enter a unique global name for the <1s> <2p>' expandMacrosWith: typeName
 									with: self name.
-						caption := 'Generating <1s> <2s>.<3s>' 
+						caption := 'Generating <1s> <2s>.<3s>'
 									expandMacrosWith: typeName
 									with: self typeLib name
 									with: self name].
-				newName := Prompter 
+				newName := Prompter
 							on: newName , '_'
 							prompt: prompt
 							caption: caption.
@@ -2976,7 +2974,7 @@ appear to implement the required protocols.
 Please press Retry to suggest an alternative name for the <4s>, or Abort to abort.
 
 You can Ignore this warning, but it is suggested that you check the location of <1s> in the hierarchy to be sure that it is correct.'
-				expandMacrosWithArguments: {binding key.
+				expandMacrosWith: {binding key.
 						binding value owningPackage name.
 						self baseClass.
 						self idlKeyword.
@@ -3671,7 +3669,7 @@ globalName
 			(glob respondsTo: #guid) not or: [glob guid ~= libid]] 
 		whileTrue: [
 			suffix := suffix + 1.
-			globalName := (stem, suffix displayString) asSymbol]].
+			globalName := (stem, suffix printString) asSymbol]].
 	^globalName!
 
 idlAttributes
@@ -3728,7 +3726,7 @@ package: parcel
 	
 	self packageName: parcel name!
 
-packageCheck: anAssociation 
+packageCheck: anAssociation
 	"Private - The receiver's global is already present, check to make sure it it in the same package,
 	and if not ask the user whether or not to relocate it. Note that this method never answers false,
 	so the user never gets a chance to try a different name."
@@ -3737,24 +3735,24 @@ packageCheck: anAssociation
 	global := anAssociation value.
 	myPackage := self packageName.
 	hisPackage := global owningPackage name.
-	myPackage = hisPackage 
+	myPackage = hisPackage
 		ifFalse: 
 			[| resp mb |
 			mb := MessageBox new.
 			mb
 				iconStyle: #warning;
 				buttonStyle: #yesNoCancel.
-			mb 
+			mb
 				text: ('The shared pool <1s> already exists in the <2p> package.
 
 Would you like to move it to the <3p> package?
 
-Press Yes to move the class, No to leave it where it is, or Cancel to abort' 
+Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 						expandMacrosWith: anAssociation key
 						with: hisPackage
 						with: myPackage).
-			mb caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' 
-						expandMacrosWith: self name).
+			mb
+				caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' expandMacrosWith: self name).
 			resp := mb open.
 			resp == #cancel ifTrue: [self abortGeneration].
 			resp == #yes ifTrue: [self addGlobalToPackage: anAssociation]].
@@ -4185,18 +4183,18 @@ publishedAspectsOfInstances
 
 registerTypeLib
 	
-	[self open 
+	[self open
 		ifNotNil: 
-			[:lib | 
-			MessageBox new 
-				notify: ('The type library ''<1s> - <2s>'' was successfully loaded and registered from:<n><n><t><3s>' 
+			[:lib |
+			MessageBox new
+				notify: ('The type library ''<1s> - <2s>'' was successfully loaded and registered from:<n><n><t><3s>'
 						expandMacrosWith: lib name
 						with: lib helpstring
-						with: lib path)]] 
+						with: lib path)]]
 			on: Error
 			do: 
-				[:each | 
-				(MessageBox new)
+				[:each |
+				MessageBox new
 					caption: 'Unable to register type library...';
 					errorMsg: each description]!
 
@@ -4440,7 +4438,7 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^aspectClass date: aSymbol!
 
-printDefaultValue: aVARIANT on: aPuttableStream 
+printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vt == VT_DATE or: [aVARIANT vt == VT_R8]].
 	aVARIANT dblVal displayOn: aPuttableStream! !
 !DATE class categoriesFor: #newInstanceAspect:class:!adapters!private! !
@@ -4777,7 +4775,7 @@ fieldType: aVARDESC indirections: anInteger
 mustWrapOptionalArgument: anELEMDESC 
 	^anELEMDESC indirections > 0 and: [anELEMDESC isOut not]!
 
-printDefaultValue: aVARIANT on: aPuttableStream 
+printDefaultValue: aVARIANT on: aPuttableStream
 	aVARIANT value displayOn: aPuttableStream!
 
 printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
@@ -4938,7 +4936,7 @@ buildMethodName
 					each isEmpty
 						ifTrue: 
 							[keywords at: j put: '_:'.
-							argumentNames at: j put: 'arg' , j displayString]
+							argumentNames at: j put: 'arg' , j printString]
 						ifFalse: 
 							[| param |
 							param := self argumentNameFor: each.
@@ -4951,16 +4949,18 @@ buildMethodName
 		argumentNames: argumentNames
 		indices: indices!
 
-displayOn: aStream 
-	aStream
+displayOn: aPuttable
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+
+	aPuttable
 		nextPutAll: self name;
 		nextPut: $(.
-	self argumentNames do: [:n | aStream nextPutAll: n]
+	self argumentNames do: [:n | aPuttable nextPutAll: n]
 		separatedBy: 
-			[aStream
+			[aPuttable
 				nextPut: $,;
 				space].
-	aStream nextPut: $)!
+	aPuttable nextPut: $)!
 
 generate
 	self analyzer generateMethodWrappers: self!
@@ -5033,7 +5033,7 @@ reinventBadVarNames: anOrderedCollection
 			[badNames includes: arg] whileTrue: 
 					["Invent a suitable non-clashing name by just adding a digit on the end"
 					suffix := suffix + 1.
-					arg := each , suffix displayString].
+					arg := each , suffix printString].
 			anOrderedCollection at: i put: arg.
 			"We obviously can't use a duplicate argument name"
 			badNames add: arg].
@@ -5633,7 +5633,7 @@ elementType: indirs
 		ifTrue: [self]
 		ifFalse: [self pointerType]!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
+printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
 	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
 
@@ -5643,15 +5643,15 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 	high-level wrapper method (which calls the low-level wrapper which will have been emitted 
 	correctly regardless) following the documentation for the interface."
 
-	elemdesc isOut 
+	elemdesc isOut
 		ifFalse: 
 			["Input only, or singly indirected in-out argument - assume argument in correct form already"
 			target nextPutAll: argName]
 		ifTrue: 
-			["Out or in,out"
-			| isIn |
+			[| isIn |
+			"Out or in,out"
 			isIn := elemdesc isIn.
-			indirs > 0 
+			indirs > 0
 				ifTrue: 
 					["As we already have one level of indirection, and form of out parameter must be
 					 through COM task memory, so we'll need to use a StructurePointer ot ease the
@@ -5660,7 +5660,7 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 					target
 						nextPut: $(;
 						print: StructurePointer.
-					isIn 
+					isIn
 						ifTrue: 
 							["If an in-out argument, need to call with value in the buffer"
 							target
@@ -5680,14 +5680,14 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 						print: self;
 						nextPut: $)]
 				ifFalse: 
-					[isIn 
+					[isIn
 						ifTrue: 
 							["Drop through and pass input argument as a buffer"
 							]
 						ifFalse: 
 							[#todo.	"Treat these as in-out parameters (at ELEMDESC level) so wrapper includes an argument"
-							Notification 
-								signal: ('Warning: Parameter <1p> of <2s>() is () is [out]char*, which means it is a caller allocated buffer of unspecified size. The function will require a hand coded wrapper method.' 
+							Notification
+								signal: ('Warning: Parameter <1p> of <2s>() is () is [out]char*, which means it is a caller allocated buffer of unspecified size. The function will require a hand coded wrapper method.'
 										expandMacrosWith: argName
 										with: elemdesc owner fullName).
 							target
@@ -5950,12 +5950,12 @@ generatePropertyAccessor: aVARDESC
 
 	| target methodName |
 	methodName := self buildPropertyAccessorName: aVARDESC.
-	target := String writeStream: 256.
+	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: methodName keywords first;
 		cr.
 	self printPropGetComment: aVARDESC on: target.
-	self 
+	self
 		printRawPropGetBody: aVARDESC
 		name: methodName
 		on: target.
@@ -5974,13 +5974,13 @@ generatePropertyMutator: aVARDESC
 
 	| target methodName |
 	methodName := self buildPropertyMutatorName: aVARDESC.
-	target := String writeStream: 256.
+	target := String smalltalkWriteStream: 256.
 	target
 		nextPutAll: methodName keywords first;
 		nextPutAll: ' newVal';
 		cr.
 	self printPropPutComment: aVARDESC on: target.
-	self 
+	self
 		printRawPropPutBody: aVARDESC
 		name: methodName
 		on: target.
@@ -6570,7 +6570,7 @@ generateDefineFunctions
 	(self canGenerateClassMessage: #defineFunctions) ifFalse: [^nil].
 	methods := self methods.
 	methods isEmpty ifTrue: [^self].
-	target := String writeStream: 512.
+	target := String smalltalkWriteStream: 512.
 	target
 		nextPutAll: 'defineFunctions';
 		crtab;
@@ -6582,7 +6582,7 @@ generateDefineFunctions
 	self printAutoGenMethodPostambleOn: target.
 	target nextPutAll: 'self'.
 	methods do: 
-			[:each | 
+			[:each |
 			| retType params |
 			self assert: [each callconv = CC_STDCALL].
 			target
@@ -6590,7 +6590,7 @@ generateDefineFunctions
 				nextPutAll: 'defineFunction: #'.
 			(self rawMethodNameForFunction: each) printSelectorOn: target.
 			retType := each retTypeName.
-			retType = #hresult 
+			retType = #hresult
 				ifFalse: 
 					[target
 						crtab: 3;
@@ -6598,7 +6598,7 @@ generateDefineFunctions
 						nextPutAll: retType;
 						nextPut: $'].
 			params := each argumentTypeNames.
-			params notEmpty 
+			params notEmpty
 				ifTrue: 
 					[target
 						crtab: 3;
@@ -6622,7 +6622,7 @@ generateRawPropGet: aFUNCDESC
 	methodName := self rawMethodNameForFunction: aFUNCDESC.
 	(self canGenerateMethodNamed: methodName) ifFalse: [^nil].
 	cats := self rawPropCategories.
-	target := String writeStream: 512.
+	target := String smalltalkWriteStream: 512.
 	methodName printSignatureOn: target.
 	target cr.
 	self
@@ -6649,7 +6649,7 @@ generateRawPropPut: aFUNCDESC
 			[| cats target |
 			"Now emit the method body"
 			cats := self rawPropCategories.
-			target := String writeStream: 512.
+			target := String smalltalkWriteStream: 512.
 			methodName printSignatureOn: target.
 			target cr.
 			self
@@ -7030,13 +7030,16 @@ generateClassFilename
 	| name target |
 	(self canGenerateClassMessage: #fileName) ifFalse: [^nil].
 	name := File splitStemFrom: (self dllNameIfNone: [^nil]).
-	target := String writeStream: 256.
-	target nextPutAll: 'fileName'; crtab;
+	target := String smalltalkWriteStream: 256.
+	target
+		nextPutAll: 'fileName';
+		crtab;
 		nextPutAll: '"Answer the host system file name for the library.'.
 	self printAutoGenMethodPostambleOn: target.
 	target
 		nextPut: $^;
-		print: name; cr.
+		print: name;
+		cr.
 	self compileClassMethod: target contents categories: self classConstantsCategories!
 
 generateClassSide: aClass
@@ -7311,24 +7314,24 @@ printOn: aStream
 
 !VARIANT methodsFor!
 
-printIDLOn: aPuttableStream 
+printIDLOn: aPuttableStream
 	"Append, to the <puttableStream>, target, a string whose characters are a 
 	the same as those which would be needed to represent the receiver as a literal
 	in an IDL file."
 
 	| vt |
 	vt := self vartype.
-	vt == VT_BSTR 
+	vt == VT_BSTR
 		ifTrue: 
 			[aPuttableStream
 				nextPut: $";
 				display: self bstr;
 				nextPut: $"]
 		ifFalse: 
-			[vt == VT_DATE 
+			[vt == VT_DATE
 				ifTrue: [self date asFloat printOn: aPuttableStream]
 				ifFalse: 
-					[vt == VT_R4 
+					[vt == VT_R4
 						ifTrue: [FLOAT printDefaultValue: self on: aPuttableStream]
 						ifFalse: [self value displayOn: aPuttableStream]]]!
 

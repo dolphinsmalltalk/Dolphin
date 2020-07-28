@@ -23,8 +23,10 @@ calculateEdge: anInteger context: aFramingContext
 calculateOffset: anInteger context: aFramingContext 
 	^offsetBlock value: anInteger value: aFramingContext!
 
-displayOn: aStream
-	aStream display: self name!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	self name displayOn: aPuttableStream!
 
 isIndependent
 	"Answer whether this framing calculation can be successfuly performed without

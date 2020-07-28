@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -129,6 +129,13 @@ debugger: anObject
 	existing debugger is disconnected."
 
 	debugger := anObject!
+
+debugStream
+	"Answer a <DebugTraceStream> for this Process. Note that although the stream itself is unique to the process, and so output to its buffer will not intermingle with trace output from other processes, the OS debug output stream is a shared resource. To avoid output becoming intermingled, it is advisable not to flush data between newlines."
+
+	^debugStream
+		ifNil: 
+			[debugStream := #{DebugTraceStream} ifDefined: [:dts | dts new] ifNotDefined: [DeafObject current]]!
 
 errno
 	"Answer the value of the C runtime 'errno' global variable saved on completion of the last
@@ -642,6 +649,7 @@ topFrame
 !Process categoriesFor: #canDebug!development!public!testing! !
 !Process categoriesFor: #debugger!accessing!development!private! !
 !Process categoriesFor: #debugger:!accessing!development!private! !
+!Process categoriesFor: #debugStream!accessing!public! !
 !Process categoriesFor: #errno!accessing!public! !
 !Process categoriesFor: #exceptionEnvironment!accessing!debugger-step over!public! !
 !Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !

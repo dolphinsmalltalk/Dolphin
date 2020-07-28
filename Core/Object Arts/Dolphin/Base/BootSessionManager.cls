@@ -28,11 +28,13 @@ bootFinished
 	| endTime duration |
 	endTime := DateAndTime now.
 	duration := endTime - startTime.
-	self stdout nextPutAll: 'Boot completed at'; print: endTime; nextPutAll: ', duration '.
-	duration printHumanReadableOn: self stdout.
-	self stdout cr; flush
-	
-!
+	self stdout
+		nextPutAll: 'Boot completed at';
+		print: endTime;
+		nextPutAll: ', duration ';
+		display: duration;
+		cr;
+		flush!
 
 bootStarted
 	startTime := DateAndTime now.
@@ -111,6 +113,11 @@ openConsole
 	self
 		allocConsole;
 		openConsoleStreams!
+
+openFd: anInteger mode: aSymbol
+	^(super openFd: anInteger mode: aSymbol)
+		locale: Locale smalltalk;
+		yourself!
 
 openSources
 	"Private - Open the source files with names derived from the current image path."
@@ -326,6 +333,7 @@ updateBootImage
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
 !BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
 !BootSessionManager categoriesFor: #openConsole!operations!public! !
+!BootSessionManager categoriesFor: #openFd:mode:!operations!private! !
 !BootSessionManager categoriesFor: #openSources!operations-source files!private! !
 !BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !

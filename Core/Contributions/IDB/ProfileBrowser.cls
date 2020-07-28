@@ -273,8 +273,10 @@ updateIndicatorLimit
 defaultShowCounts
 	^false!
 
-displayOn: aStream 
-	aStream nextPutAll: 'Profile Browser'!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'Profile Browser'!
 
 icon
 	^Profiler icon!

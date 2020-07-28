@@ -378,19 +378,18 @@ stats
 	corpses := 0.
 	1 to: Table basicSize
 		do: 
-			[:i | 
+			[:i |
 			| l |
-			(l := Table basicAt: i) isNil 
+			(l := Table basicAt: i) isNil
 				ifTrue: [empty := empty + 1]
 				ifFalse: 
 					[| len |
 					full := full + 1.
 					len := 0.
-					l 
-						do: [:s | s == DeadObject current ifTrue: [corpses := corpses + 1] ifFalse: [len := len + 1]].
+					l do: [:s | s == DeadObject current ifTrue: [corpses := corpses + 1] ifFalse: [len := len + 1]].
 					count := count + len.
 					maxLen := maxLen max: len]].
-	aStream := String writeStream: 80.
+	aStream := String smalltalkWriteStream: 80.
 	^aStream
 		nextPutAll: 'Empty buckets:	';
 		print: empty;

@@ -22,12 +22,11 @@ block
 	context := self environment.
 	^context class == BlockClosure ifTrue: [context] ifFalse: [context block]!
 
-displayOn: aStream
-	"Append a short textual description of the receiver to aStream appropriate
-	for displaying in a stack trace."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: '[] in '.
-	super displayOn: aStream!
+	aPuttableStream nextPutAll: '[] in '.
+	super displayOn: aPuttableStream!
 
 isBlockFrame
 	^true!

@@ -35,7 +35,7 @@ testLimit
 				assert: (stream limit: i) identicalTo: stream;
 				assert: stream limit equals: i;
 				assert: stream position equals: i;
-				assert: stream contents equals: (self string first: i);
+				assert: stream contents equals: (self string copyFrom: 1 to: i);
 				assert: overLimit]!
 
 testLimitBlock
@@ -49,6 +49,19 @@ testLimitBlock
 		assert: stream limitBlock identicalTo: limitBlock;
 		deny: overLimit!
 
+testNextColonPut
+	| underlying stream overLimit |
+	underlying := String writeStream.
+	underlying nextPutAll: 'Initial'.
+	stream := self streamClass
+				over: underlying
+				limit: 5
+				limitBlock: [overLimit := true].
+	overLimit := false.
+	stream next: 10 put: $a.
+	self assert: overLimit.
+	self assert: stream contents equals: 'Initialaaaaa'!
+
 testNextPut
 	| stream overLimit |
 	super testNextPut.
@@ -59,10 +72,12 @@ testNextPut
 	overLimit := false.
 	self string keysAndValuesDo: 
 			[:i :each |
+			| end |
+			end := i + (self string encodedSizeOf: each) - 1.
 			self
 				assert: (stream nextPut: each) equals: each;
-				assert: stream position equals: i;
-				assert: stream contents equals: (self string first: i);
+				assert: stream position equals: end;
+				assert: stream contents equals: (self string copyFrom: 1 to: end);
 				deny: overLimit].
 	self string do: 
 			[:each |
@@ -74,21 +89,35 @@ testNextPut
 				assert: overLimit]!
 
 testNextPutAll
-	| stream overLimit |
+	| stream overLimit str |
 	stream := self streamClass
 				on: String new
 				limit: self stringSize
 				limitBlock: [overLimit := true].
 	overLimit := false.
+	str := self string.
 	self
-		assert: (stream nextPutAll: self string) equals: self string;
+		assert: (stream nextPutAll: str) equals: str;
 		assert: stream position equals: self stringSize;
-		assert: stream contents equals: self string;
+		assert: stream contents equals: str;
 		deny: overLimit.
 	self
-		assert: (stream nextPutAll: self string) equals: self string;
+		assert: (stream nextPutAll: str) equals: str;
 		assert: stream position equals: self stringSize;
-		assert: stream contents equals: self string;
+		assert: stream contents equals: str;
+		assert: overLimit!
+
+testNextPutAllThroughLimit
+	| stream overLimit |
+	stream := self streamClass
+				on: String new
+				limit: self stringSize - 1
+				limitBlock: [overLimit := true].
+	overLimit := false.
+	self
+		assert: (stream nextPutAll: self string) equals: self string;
+		assert: stream position equals: self stringSize - 1;
+		assert: stream contents equals: self string allButLast;
 		assert: overLimit!
 
 testOn
@@ -124,6 +153,24 @@ testOnLimitLimitBlock
 		assert: stream limitBlock equals: limitBlock;
 		deny: overLimit!
 
+testOverFileStream
+	"Test limiting output to a FileStream actually does limit the output"
+
+	| temp fs stream actual |
+	temp := File temporaryFilename.
+	fs := FileStream write: temp.
+	"Test limiting the output beyond some initial content that is not counted as part of the limit"
+	fs nextPutAll: 'Initial: '.
+	stream := self streamClass
+				over: fs
+				limit: 5
+				limitBlock: [fs nextPut: $\x1F6D1].
+	stream nextPutAll: '🐬 past limit'.
+	fs close.
+	actual := File readAllText: temp.
+	self assert: actual equals: 'Initial: 🐬 🛑'.
+	File delete: temp!
+
 testRecursionDetection
 	| stream array |
 	stream := self newStream.
@@ -137,26 +184,29 @@ testWith
 	and the initial position is the collection size and the initial contents
 	is the collection"
 
-	| stream overLimit |
-	stream := self streamClass with: self string copy.
+	| stream overLimit str |
+	str := self string.
+	stream := self streamClass with: str copy.
 	overLimit := false.
 	stream
 		limit: self stringSize * 2;
 		limitBlock: [overLimit := true].
-	self string keysAndValuesDo: 
+	str keysAndValuesDo: 
 			[:i :each |
+			| end |
+			end := i + (str encodedSizeOf: each) - 1.
 			self
 				assert: (stream nextPut: each) equals: each;
-				assert: stream position equals: self stringSize + i;
-				assert: stream contents equals: self string , (self string first: i);
+				assert: stream position equals: self stringSize + end;
+				assert: stream contents equals: str , (str copyFrom: 1 to: end);
 				deny: overLimit].
-	self string do: 
+	str do: 
 			[:each |
 			overLimit := false.
 			self
 				assert: (stream nextPut: each) equals: each;
 				assert: stream position equals: self stringSize * 2;
-				assert: stream contents equals: self string , self string;
+				assert: stream contents equals: str , str;
 				assert: overLimit]!
 
 testWithFromTo
@@ -174,10 +224,12 @@ testWithFromTo
 		limitBlock: [overLimit := true].
 	self string keysAndValuesDo: 
 			[:i :each |
+			| end |
+			end := i + (self string encodedSizeOf: each) - 1.
 			self
 				assert: (stream nextPut: each) equals: each;
-				assert: stream position equals: self stringSize + i;
-				assert: stream contents equals: self string , (self string first: i);
+				assert: stream position equals: self stringSize + end;
+				assert: stream contents equals: self string , (self string copyFrom: 1 to: end);
 				deny: overLimit].
 	self string do: 
 			[:each |
@@ -190,11 +242,14 @@ testWithFromTo
 !LimitedWriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !LimitedWriteStreamTest categoriesFor: #testLimit!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testLimitBlock!public!unit tests! !
+!LimitedWriteStreamTest categoriesFor: #testNextColonPut!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testNextPutAll!public!unit tests! !
+!LimitedWriteStreamTest categoriesFor: #testNextPutAllThroughLimit!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testOn!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testOnFromTo!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testOnLimitLimitBlock!public!unit tests! !
+!LimitedWriteStreamTest categoriesFor: #testOverFileStream!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testRecursionDetection!public!unit tests! !
 !LimitedWriteStreamTest categoriesFor: #testWith!public! !
 !LimitedWriteStreamTest categoriesFor: #testWithFromTo!public! !

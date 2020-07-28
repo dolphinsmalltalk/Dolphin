@@ -350,6 +350,12 @@ pointerClass
 
 	^ExternalAddress!
 
+printString
+	"Answer a <readableString> whose characters are a description of the receiver 
+	as a developer would want to see it."
+
+	^self printStringLimitedTo: self maxPrint!
+
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
 	byte object to another, normally double dispatched."
@@ -438,6 +444,7 @@ yourAddress
 !ExternalStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
 !ExternalStructure categoriesFor: #notNull!public!testing! !
 !ExternalStructure categoriesFor: #pointerClass!constants!private! !
+!ExternalStructure categoriesFor: #printString!printing!public! !
 !ExternalStructure categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 !ExternalStructure categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !ExternalStructure categoriesFor: #setField:value:!accessing!public! !
@@ -494,11 +501,11 @@ byteSize
 	self ensureDefined.	"ensure the byte size has been calculated by lazy template accessor"
 	^self basicByteSize!
 
-byteSize: anInteger 
+byteSize: anInteger
 	"Private - Set the size (in bytes) of the structure the receiver represents"
 
-	(anInteger between: 0 and: 2 ** 15 - 1) 
-		ifFalse: [self error: ('Invalid structure size <1d>' expandMacrosWith: anInteger)].
+	(anInteger between: 0 and: 2 ** 15 - 1)
+		ifFalse: [self error: ('Invalid structure size <1p>' expandMacrosWith: anInteger)].
 	self extraInstanceSpec: anInteger!
 
 canUnderstand: aSymbol
@@ -829,8 +836,11 @@ recompileReferences
 
 	| pred binding |
 	binding := self classBinding.
-	binding isNil ifTrue: ["Not installed, so can't be any references." ^self].
-	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
+	binding isNil
+		ifTrue: 
+			["Not installed, so can't be any references."
+			^self].
+	Notification signal: ('Recompiling references to <1p> (size <2p>)...' expandMacrosWith: self
 				with: self basicByteSize).
 	pred := self referenceFilterFor: binding.
 	ExternalLibrary

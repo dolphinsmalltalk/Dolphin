@@ -30,15 +30,15 @@ addClass
 	| classes pacman package |
 	pacman := self packageManager.
 	classes := pacman unpackagedClasses asSortedCollection.
-	classes isEmpty 
+	classes isEmpty
 		ifTrue: 
 			[MessageBox notify: 'All Classes are currently owned by packages'.
 			^self].
 	package := self singlePackage.
-	(ChoicePrompter 
+	(ChoicePrompter
 		on: classes
 		multipleChoices: classes
-		caption: ('Add Classes to package ''<1d>''...' expandMacrosWith: package)) 
+		caption: ('Add Classes to package ''<1d>''...' expandMacrosWith: package))
 			ifNotNil: [:chosen | chosen do: [:each | pacman addClass: each to: package]]!
 
 addGlobal
@@ -82,7 +82,9 @@ browseFolder
 	| folder |
 	folder := self selectedFolder.
 	[self systemModel browseFolder: folder] on: Win32Error
-		do: [:ex | MessageBox errorMsg: ex messageText caption: ('Unable to browse <1p>...' expandMacrosWith: folder)]!
+		do: 
+			[:ex |
+			MessageBox errorMsg: ex messageText caption: ('Unable to browse <1p>...' expandMacrosWith: folder)]!
 
 browseIt
 	"Browse the selected item in the pane with focus."
@@ -109,9 +111,9 @@ browseUnimplemented
 	sendingEnvironment := self selectionEnvironment.
 	implementingEnvironment := self applicationEnvironment.
 	unimplemented := self systemModel unimplementedSelectorsIn: implementingEnvironment.
-	self systemModel 
+	self systemModel
 		browseSelectors: unimplemented asSortedCollection
-		caption: ('Unimplemented Selectors in <1d> (and prerequisites)' expandMacrosWith: sendingEnvironment)
+		caption: ('Unimplemented Selectors in <1p> (and prerequisites)' expandMacrosWith: sendingEnvironment)
 		environment: implementingEnvironment!
 
 checkCanUninstall: package
@@ -142,7 +144,7 @@ commonFolder: aCollectionOfPackages
 		ifTrue: [self folderClass root]
 		ifFalse: [self folderClass pathname: (File appendPathDelimiter: commonPrefix)]!
 
-confirmUninstall: aPackage 
+confirmUninstall: aPackage
 	"Private - If the <Package> argument has any dependents, then prompt the user to confirm
 	that they should also be uninstalled, if not then double check that the package should be
 	uninstalled anyway. If this method returns then all dependent packages were successfully
@@ -152,9 +154,9 @@ confirmUninstall: aPackage
 	self promptToSavePackageChanges: aPackage.
 	Cursor wait showWhile: [deps := aPackage allDependentPackages].
 	prompt := 'Uninstalling <1p> package...' expandMacrosWith: aPackage name.
-	deps isEmpty 
+	deps isEmpty
 		ifTrue: 
-			[msg := 'Do you really want to uninstall the <1p> package and remove all its owned objects from the system?' 
+			[msg := 'Do you really want to uninstall the <1p> package and remove all its owned objects from the system?'
 						expandMacrosWith: aPackage name.
 			mb := MessageBox new.
 			mb
@@ -170,16 +172,16 @@ confirmUninstall: aPackage
 		cr;
 		cr.
 	max := 30.
-	(deps collect: [:e | e name]) asSortedCollection 
+	(deps collect: [:e | e name]) asSortedCollection
 		from: 1
 		to: (deps size min: max)
 		do: 
-			[:each | 
+			[:each |
 			msg
 				tab;
 				nextPutAll: each;
 				cr].
-	deps size > max 
+	deps size > max
 		ifTrue: 
 			[msg
 				tab;
@@ -517,7 +519,7 @@ onSelectionChanged
 onSelectionChanging: aSelectionChangingEvent 
 	self trigger: #selectionChanging: with: aSelectionChangingEvent!
 
-onTipTextRequired: tool 
+onTipTextRequired: tool
 	"Private - Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd |
@@ -739,14 +741,14 @@ removePackage
 	"Prompt for confirmation and, if given, uninstall the selected packages."
 
 	self packages do: 
-			[:each | 
+			[:each |
 			[self uninstall: each] on: self operationAbortedSignal
 				do: 
-					[:e | 
-					e tag ~~ each 
+					[:e |
+					e tag ~~ each
 						ifTrue: 
-							[MessageBox 
-								warning: ('Uninstallation of <1p> was aborted, but some dependent packages may have been removed' 
+							[MessageBox
+								warning: ('Uninstallation of <1p> was aborted, but some dependent packages may have been removed'
 										expandMacrosWith: each name)]]]!
 
 resetChangeFlags
@@ -915,7 +917,7 @@ toggleUsingPAX
 
 	^self packages do: [:each | each toggleUsingPAX]!
 
-uninstall: package 
+uninstall: package
 	"Private - Uninstall the <Package>, package, prompting the user to first save changes (if any),
 	and to remove dependent packages (if any)."
 
@@ -926,23 +928,23 @@ uninstall: package
 	currentFolder := self filterPresenter selectionOrNil.
 	"Remove selection first to avoid losing objects required to maintain display"
 	self packages: (self packages copyWithout: package).
-	[self packageManager uninstall: package] 
+	[self packageManager uninstall: package]
 		on: ClassBuilder invalidRemoveError
 		do: 
-			[:e | 
+			[:e |
 			| mb |
 			mb := MessageBox new.
 			mb beTaskModal.
-			e resume: (mb 
+			e resume: (mb
 						confirm: ('<1s><n><n>Would you like to remove the class anyway?' expandMacrosWith: e description))]
 		on: Notification
 		do: 
-			[:ex | 
+			[:ex |
 			self systemModel sourceManager logComment: ex description.
 			ex resume].
 
 	"Select nearest available folder in filter hierarchy"
-	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]] 
+	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]]
 		whileTrue: [currentFolder := currentFolder parent]! !
 !PackageSelector categoriesFor: #aboutPackage!commands!public! !
 !PackageSelector categoriesFor: #addClass!commands!public! !

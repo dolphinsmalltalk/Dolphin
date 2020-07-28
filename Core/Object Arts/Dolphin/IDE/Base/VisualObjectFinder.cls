@@ -60,12 +60,11 @@ createSchematicWiring
 		send: #onValueChanged
 		to: self!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	within the Flipper Inspector"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed within the Flipper Inspector"
 
-	aStream nextPutAll: 'Visual Object Finder'!
+	aPuttableStream nextPutAll: 'Visual Object Finder'!
 
 endTrackingAt: aPoint
 	| foundObject |

@@ -17,18 +17,9 @@ Instance Variables:
 !BooleanToText methodsFor!
 
 actualFormat
-	"Private - Answers the actual format to use for this conversion. Interprets a nil
-	format as the defaultFormat"
+	"Private - Answers the actual format to use for this conversion. If unspecified, use the default format for the <Locale>."
 
-	^self format notNil 
-		ifTrue: [ self format ] 
-		ifFalse: [ self defaultFormat ]!
-
-defaultFormat
-	"Private - Answers a two element array of Strings that contains the default 
-	text to be used to represent true/false values as text"
-
-	^#('false' 'true')!
+	^self format ifNil: [self actualLocale boolFormat]!
 
 errorInvalidFormat
 	"Private - Raise an error that some conversion attempt failed
@@ -55,16 +46,14 @@ leftToRight: aBoolean
 rightToLeft: aString
 	"Private - Answers the result of converting aString to a Boolean."
 
-	(aString sameAs: (self actualFormat at: 1)) ifTrue: [ ^false ].
-	(aString sameAs: (self actualFormat at: 2)) ifTrue: [ ^true ].
+	| strings |
+	strings := self actualFormat.
+	(aString sameAs: (strings at: 1)) ifTrue: [^false].
+	(aString sameAs: (strings at: 2)) ifTrue: [^true].
 
 	"Raise an error for no match"
-	^self errorInvalidFormat
-
-
-	! !
+	^self errorInvalidFormat! !
 !BooleanToText categoriesFor: #actualFormat!accessing!private! !
-!BooleanToText categoriesFor: #defaultFormat!constants!private! !
 !BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
 !BooleanToText categoriesFor: #format!accessing!public! !
 !BooleanToText categoriesFor: #format:!accessing!public! !

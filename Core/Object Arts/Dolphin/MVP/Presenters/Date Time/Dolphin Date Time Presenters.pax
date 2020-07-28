@@ -44,7 +44,7 @@ ValuePresenter subclass: #TimePresenter
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractToTextConverter subclass: #DateToText
-	instanceVariableNames: 'locale format'
+	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

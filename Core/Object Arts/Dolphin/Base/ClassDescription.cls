@@ -192,7 +192,7 @@ classVariableString
 	"Answer a space separated string of the names of the receiver's class variables. Note for legacy reasons this will include class constant names too."
 
 	| aStream |
-	aStream := String writeStream: 40.
+	aStream := String smalltalkWriteStream: 40.
 	self classPool keys asSortedCollection do: [:key | aStream nextPutAll: key]
 		separatedBy: [aStream space].
 	^aStream contents!
@@ -328,16 +328,14 @@ definition
 	receiver."
 
 	| strm |
-	strm := String writeStream: 256.
+	strm := String smalltalkWriteStream: 256.
 	self printDefinitionOn: strm.
 	^strm contents!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: self name
-!
+	aPuttableStream nextPutAll: self name!
 
 fullName
 	"Placeholder for answering fully qualified name (relative to Smalltalk)."
@@ -403,10 +401,8 @@ instanceVariableString
 	| aStream |
 	instanceVariables isNil ifTrue: [^''].
 	instanceVariables isString ifTrue: [^instanceVariables].
-	aStream := String writeStream: 64.
-	instanceVariables 
-		do: [:instVarName | aStream nextPutAll: instVarName]
-		separatedBy: [aStream space].
+	aStream := String smalltalkWriteStream: 64.
+	instanceVariables do: [:instVarName | aStream nextPutAll: instVarName] separatedBy: [aStream space].
 	^aStream contents!
 
 instanceVariableString: aString
@@ -440,11 +436,11 @@ logDefinition
 
 logRemoveSelector: aSymbol 
 	self sourceManager 
-		logEvaluate: self name , ' removeSelector: ' , aSymbol printString , ' ifAbsent: []'!
+		logEvaluate: self name , ' removeSelector: ' , aSymbol fullPrintString , ' ifAbsent: []'!
 
-logRemoveSelectors: aCollection 
+logRemoveSelectors: aCollection
 	| stream |
-	stream := String writeStream: 128.
+	stream := String smalltalkWriteStream: 128.
 	stream
 		print: self;
 		space;
@@ -765,9 +761,8 @@ sharedVariableString
 	by spaces."
 
 	| aStream |
-	aStream := String writeStream: 32.
-	self sharedPoolNames asSortedCollection
-		do: [:s | aStream nextPutAll: s]
+	aStream := String smalltalkWriteStream: 32.
+	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
 		separatedBy: [aStream space].
 	^aStream contents!
 

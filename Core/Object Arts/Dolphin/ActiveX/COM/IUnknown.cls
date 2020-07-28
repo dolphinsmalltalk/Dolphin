@@ -58,11 +58,10 @@ asObject
 
 	^self notNull ifTrue: [self]!
 
-displayOn: aStream 
-	"Append a user-friendly textual representation of the receiver to the 
-	<puttableStream>, target."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self isNull ifTrue: [aStream print: nil] ifFalse: [self printOn: aStream]!
+	self isNull ifTrue: [aPuttableStream print: nil] ifFalse: [self printOn: aPuttableStream]!
 
 QueryInterface: riid ppvObject: ppvObject
 	"Private - Invoke the QueryInterface() method of the COM object.

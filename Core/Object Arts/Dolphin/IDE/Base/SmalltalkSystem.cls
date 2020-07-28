@@ -57,7 +57,7 @@ actualFont
 
 	^View desktop actualFont!
 
-add: selectors toProtocolWarning: targetProtocol 
+add: selectors toProtocolWarning: targetProtocol
 	"Private - Warn about the generation of stub methods if a protocol is being extended
 	and doing so would require new stubs."
 
@@ -65,14 +65,14 @@ add: selectors toProtocolWarning: targetProtocol
 
 	| msg newSelectors stubs mb |
 	newSelectors := selectors difference: targetProtocol selectors.
-	newSelectors isEmpty 
+	newSelectors isEmpty
 		ifTrue: 
 			["No change in protocol"
 			^true].
-	stubs := (targetProtocol baseBehaviors 
-				collect: [:c | c -> (newSelectors reject: [:s | c canUnderstand: s])]) 
+	stubs := (targetProtocol baseBehaviors
+				collect: [:c | c -> (newSelectors reject: [:s | c canUnderstand: s])])
 					select: [:a | a value notEmpty].
-	stubs isEmpty 
+	stubs isEmpty
 		ifTrue: 
 			["All classes still conform"
 			^true].
@@ -89,7 +89,7 @@ add: selectors toProtocolWarning: targetProtocol
 		nextPutAll: 'will cause the following stub methods to be automatically generated:';
 		crtab.
 	stubs do: 
-			[:a | 
+			[:a |
 			msg
 				nextPutAll: a key name;
 				space;
@@ -128,7 +128,7 @@ addAdditionalToolsFolderIconFor: anInstallableSystemTool description: titleStrin
 
 	^self addAdditionalToolsFolderIcon: (SmalltalkSystemIcon show: anInstallableSystemTool description: titleString)!
 
-addClass: class toProtocol: newProtocol 
+addClass: class toProtocol: newProtocol
 	"Private - Add the <MethodProtocol>, newProtocol, to the <ClassDescription>, class, if
 	either the class already implements all of the methods, or alternatively if the user 
 	agrees to the generation of stub methods. Answer whether the protocol was actually	
@@ -139,10 +139,10 @@ addClass: class toProtocol: newProtocol
 	| missing |
 	(class conformsToProtocol: newProtocol) ifTrue: [^false].
 	missing := newProtocol selectors reject: [:s | class canUnderstand: s].
-	missing notEmpty 
+	missing notEmpty
 		ifTrue: 
 			[| stm |
-			stm := String writeStream: 256.
+			stm := String smalltalkWriteStream: 256.
 			stm
 				nextPutAll: class name;
 				nextPutAll: ' does not currently implement or inherit the following selectors from';
@@ -385,29 +385,29 @@ backupOnImageSave
 backupOnImageSave: aBoolean 
 	self sessionManager backupOnImageSave: aBoolean!
 
-basicCreateSubclass: aSymbol of: aClass subclasses: aCollection 
+basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
 	Note that the operation is undoable."
 
 	| addClass |
-	aCollection notEmpty 
+	aCollection notEmpty
 		ifTrue: 
-			[^self 
+			[^self
 				error: 'Unable to reparent subclasses in this version of the system (requires Dolphin Professional)'].
-	addClass := self addClassChangeClass 
-				definition: ('<1p> <2s> <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: ''''' 
+	addClass := self addClassChangeClass
+				definition: ('<1p> <2s> <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''
 						expandMacrosWith: aClass
 						with: aClass kindOfSubclass
 						with: aSymbol).
 	self changeManager performChange: addClass.
 	^aSymbol asQualifiedReference value!
 
-basicRemoveMethods: aCollection 
+basicRemoveMethods: aCollection
 	| changes |
-	changes := CompositeRefactoryChange 
-				named: ('Remove <1d> Methods' expandMacrosWith: aCollection size).
+	changes := CompositeRefactoryChange
+				named: ('Remove <1p> Methods' expandMacrosWith: aCollection size).
 	aCollection do: [:each | self removeMethod: each changes: changes].
-	self changeManager 
+	self changeManager
 		performChange: (aCollection size = 1 ifTrue: [changes changes first] ifFalse: [changes])!
 
 beginDrag: aDragDropSession methods: aCollection 
@@ -707,16 +707,16 @@ browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 
 	self browseMethodsIn: (self messagesMatching: aMethodSearch in: aBrowserEnvironment)!
 
-browseMessagesSentBy: aCompiledMethod in: aBrowserEnvironment 
+browseMessagesSentBy: aCompiledMethod in: aBrowserEnvironment
 	"Private - Prompt the user with a list of messages sent from the specified <CompiledMethod>,
 	and then open a method browser on the definitions of that message that can be found in the
 	specified <BrowserEnvironment>."
 
 	| selectors |
 	selectors := aCompiledMethod messages asSortedCollection.
-	selectors isEmpty 
+	selectors isEmpty
 		ifTrue: [^MessageBox notify: ('<1p> does not send any messages.' expandMacrosWith: aCompiledMethod)].
-	(ChoicePrompter choices: selectors caption: 'Browse Definitions of...') 
+	(ChoicePrompter choices: selectors caption: 'Browse Definitions of...')
 		ifNotNil: [:selector | self browseDefinitionsOfSelector: selector in: aBrowserEnvironment]!
 
 browseMethod: aCompiledMethod 
@@ -894,10 +894,10 @@ browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvi
 	definingBehavior := aBehavior whichClassDefinesInstVar: aString.
 	env := definingBehavior == aBehavior
 				ifTrue: 
-					[label := 'All methods that %<1s> <1p>.<2s> in <4d>'.
+					[label := 'All methods that %<1s> <1p>.<2s> in <4p>'.
 					aBrowserEnvironment]
 				ifFalse: 
-					[label := 'Methods that %<1s> <1p>.<2s> in the hierarchy of <3d> within <4d>'.
+					[label := 'Methods that %<1s> <1p>.<2s> in the hierarchy of <3p> within <4p>'.
 					aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
 	label := label
 				expandMacrosWith: definingBehavior
@@ -1125,7 +1125,7 @@ changedMethodCategory
 
 changedMethodsIn: aBrowserEnvironment
 	^(aBrowserEnvironment forMethodCategories: {self changedMethodCategory})
-		label: ('Changed methods in <1d>' expandMacrosWith: aBrowserEnvironment);
+		label: ('Changed methods in <1p>' expandMacrosWith: aBrowserEnvironment);
 		yourself!
 
 changedMethodsOfClasses: aCollection 
@@ -1179,7 +1179,7 @@ chooseDefaultPackage
 	package notNil 
 		ifTrue: [self defaultPackage: (package = Package uncommitted ifFalse: [package])]!
 
-chooseSelectorsInProtocol: protocol forClass: class 
+chooseSelectorsInProtocol: protocol forClass: class
 	"Private - Pop-up a multi-select <ChoicePrompter> displaying the selectors 
 	implemented in the <Class> class  and its superclasses, with all those which are
 	part of the <MethodProtocol> protocol selected. If class is nil then only those
@@ -1190,13 +1190,13 @@ chooseSelectorsInProtocol: protocol forClass: class
 	| selectors newSelectors oldSelectors |
 	selectors := class isNil ifTrue: [#()] ifFalse: [class allSelectors].
 	oldSelectors := protocol selectors.
-	selectors := oldSelectors asSortedCollection asArray 
+	selectors := oldSelectors asSortedCollection asArray
 				, (selectors difference: oldSelectors) asSortedCollection asArray.
 	newSelectors := protocol selectors asArray asValue.
-	(ChoicePrompter 
+	(ChoicePrompter
 		on: newSelectors
 		multipleChoices: selectors
-		caption: ('Method Protocol <1d>' expandMacrosWith: protocol)) isNil 
+		caption: ('Method Protocol <1d>' expandMacrosWith: protocol)) isNil
 		ifTrue: [^nil].
 	^newSelectors value!
 
@@ -1298,7 +1298,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 			names do: [:each | definition display: each] separatedBy: [definition space].
 			definition nextPut: $'].
 	changes := CompositeRefactoryChange
-				named: ('Clone class <1d> as <1d>' expandMacrosWith: aClass with: newClassName).
+				named: ('Clone class <1p> as <1s>' expandMacrosWith: aClass with: newClassName).
 	definition
 		print: superclass;
 		space;
@@ -1645,14 +1645,14 @@ defaultPublishedAspectsLiteralsMapOf: aTool
 	^aTool propertyAt: #_defaultPublishedAspectsLiteralsMap
 		ifAbsent: [self saveDefaultPublishedAspectsOf: aTool]!
 
-definitionsMatching: aMethodSearch in: aBrowserEnvironment 
+definitionsMatching: aMethodSearch in: aBrowserEnvironment
 	^(self selectMethods: aMethodSearch methodDefinitionFilter in: aBrowserEnvironment)
-		label: ('Definitions of <1p> in <2d>' expandMacrosWith: aMethodSearch pattern
+		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
 					with: aBrowserEnvironment);
 		search: aMethodSearch;
 		yourself!
 
-definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvironment 
+definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvironment
 	| class hierarchy |
 	class := aBehavior instanceClass.
 	hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
@@ -1664,7 +1664,7 @@ definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvi
 definitionsOf: aSymbol 
 	^self definitionsMatching: (MethodSearch newSelector: aSymbol) in: self systemEnvironment!
 
-deleteClassHierarchy: aClass 
+deleteClassHierarchy: aClass
 	"Removes aClass from the system, and any subclasses, regardless of whether they
 	are still referenced. Answer whether the class was removed."
 
@@ -1676,7 +1676,7 @@ deleteClassHierarchy: aClass
 	mb defaultButton: 1.
 	scope := self systemEnvironment.
 	changes := CompositeRefactoryChange new.
-	subclasses isEmpty 
+	subclasses isEmpty
 		ifTrue: 
 			[mb caption: 'Delete Class ...'.
 			"mb isSuppressible: (self referencesTo: aClass in: scope) isEmpty."
@@ -1684,28 +1684,27 @@ deleteClassHierarchy: aClass
 			changes name: ('Delete <1s>' expandMacrosWith: oldClassName)]
 		ifFalse: 
 			[mb caption: 'Delete Class Hierarchy...'.
-			prompt := 'Are you sure you want to delete <1s> and its <2d> subclass(es)?' 
+			prompt := 'Are you sure you want to delete <1s> and its <2p> subclass(es)?'
 						expandMacrosWith: oldClassName
 						with: subclasses size.
 			changes name: ('Delete <1s> and subclasses' expandMacrosWith: oldClassName)].
-	(mb confirm: ('<1s><n><n>The change is undoable, but beware of deleting essential classes.' 
-				expandMacrosWith: prompt)) 
+	(mb confirm: ('<1s><n><n>The change is undoable, but beware of deleting essential classes.'
+				expandMacrosWith: prompt))
 		ifFalse: [^false].
 	removedGlobals := OrderedCollection new.
 	references := self referencesToVariable: (self globalVariableNamed: aClass name) in: scope.
 	aClass allSubclassesEndOrderDo: 
-			[:each | 
+			[:each |
 			removedGlobals add: (self globalVariableNamed: each name).
 			changes removeClass: each].
 	changes removeClass: aClass.
 	[self changeManager performChange: changes] on: ClassBuilder invalidRemoveError
 		do: 
-			[:e | 
+			[:e |
 			MessageBox errorMsg: e description.
 			^false].
-	removedGlobals 
-		do: [:g | references addMethods: (self referencesToVariable: g in: scope) allMethods].
-	references notEmpty 
+	removedGlobals do: [:g | references addMethods: (self referencesToVariable: g in: scope) allMethods].
+	references notEmpty
 		ifTrue: 
 			[references
 				label: ('Class <1s> deleted' expandMacrosWith: oldClassName);
@@ -1743,11 +1742,10 @@ displayItLocale: aLocale
 
 	displayItLocale := aLocale!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will appear, for example, in the Tools/Options inspector."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Development System'!
+	aPuttableStream nextPutAll: 'Development System'!
 
 dolphinNewsgroup
 	self openUrl: self dolphinNewsgroupUrl!
@@ -1762,14 +1760,17 @@ dolphinWikiWeb
 	self openUrl: self dolphinWikiUrl!
 
 dropClassFile: aString
+	| defaultPackage |
+	defaultPackage := self packageManager defaultPackage.
 	(MessageBox
-		confirm: ('File in <1p>?<n><n>If the class is new it will be <2s>.' expandMacrosWith: aString
-				with: (self packageManager defaultPackage
-						ifNil: ['unpackaged']
-						ifNotNil: [:pkg | 'added to the default package (<1d>)' expandMacrosWith: pkg])))
+		confirm: ((defaultPackage
+				ifNil: ['File in <1p>?<n><n>If the class is new it will be unpackaged.']
+				ifNotNil: [:pkg | 'File in <1p>?<n><n>If the class is new it will be added to the default package (<2d>)'])
+					expandMacrosWith: aString
+					with: defaultPackage))
 			ifTrue: [self sourceManager fileIn: aString normalizeLineEndings: true]!
 
-dropFile: aString 
+dropFile: aString
 	[ShellLibrary default shellOpen: aString] on: Win32Error
 		do: [:ex | MessageBox warning: ex description caption: ('Drop <1p>' expandMacrosWith: aString)]!
 
@@ -2067,13 +2068,13 @@ inspectVisualObject
 	Cursor help showWhile: [tracker startTracking: finder].
 	finder value ifNotNil: [:object | object inspect]!
 
-installPackage: aString 
+installPackage: aString
 	| manager |
 	manager := self packageManager.
-	^[manager install: aString] 
+	^[manager install: aString]
 		on: manager duplicatePackageSignal
 		do: 
-			[:ex | 
+			[:ex |
 			| mb |
 			mb := MessageBox new.
 			mb beTaskModal.
@@ -2088,12 +2089,12 @@ installPackage: aString
 		do: [:ex | (self packageInstallWarning: ex) ifTrue: [ex resume] ifFalse: [#()]]
 		on: Compiler notificationClass
 		do: 
-			[:ex | 
+			[:ex |
 			ex toTrace.
 			ex resume]
 		on: Notification
 		do: 
-			[:ex | 
+			[:ex |
 			self sourceManager logComment: ex description.
 			ex resume]!
 
@@ -2213,7 +2214,7 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 			ifNotNil: 
 				[:env |
 				env
-					label: ('Methods containing <1s>: <2p> in <3d>'
+					label: ('Methods containing <1s>: <2p> in <3p>'
 								expandMacrosWith: search searchMode asPhrase asLowercase
 								with: search pattern
 								with: aBrowserEnvironment);
@@ -2222,7 +2223,7 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 methodsThatFailedToCompileIn: aBrowserEnvironment
 	| failed |
 	failed := aBrowserEnvironment forMethodCategories: {self compilationFailuresCategory}.
-	failed label: ('Compilation failures in <1d>' expandMacrosWith: aBrowserEnvironment).
+	failed label: ('Compilation failures in <1p>' expandMacrosWith: aBrowserEnvironment).
 	^failed!
 
 methodStylerClass
@@ -2243,15 +2244,15 @@ methodsWithBytecode: anInteger in: aBrowserEnvironment
 		label: ('Methods with bytecode <1p>' expandMacrosWith: anInteger);
 		yourself!
 
-methodsWithCompilationIssuesIn: aBrowserEnvironment 
+methodsWithCompilationIssuesIn: aBrowserEnvironment
 	| caption filter env |
-	caption := 'Finding methods with compilation issues in <1d>' expandMacrosWith: aBrowserEnvironment.
+	caption := 'Finding methods with compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment.
 	filter := [:each | each hasCompilationIssues].
-	env := self 
+	env := self
 				selectMethods: filter
 				in: aBrowserEnvironment
 				withProgress: caption.
-	env label: ('Compilation issues in <1d>' expandMacrosWith: aBrowserEnvironment).
+	env label: ('Compilation issues in <1p>' expandMacrosWith: aBrowserEnvironment).
 	^env!
 
 methodsWithNewBytecodes
@@ -2503,11 +2504,10 @@ onDropOverProtocol: session
 			session operation: #copy].
 	^true!
 
-onFileDropped: aString over: aPresenter 
+onFileDropped: aString over: aPresenter
 	| selector |
 	selector := FileDrops at: (File splitExtensionFrom: aString) ifAbsent: [#dropFile:].
-	aPresenter 
-		routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
+	aPresenter routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
 onMethodAdded: aCompilationResult 
@@ -2555,12 +2555,12 @@ onSessionStopped
 
 !
 
-onTipTextRequired: tool 
+onTipTextRequired: tool
 	"Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd |
 	cmd := tool command asSymbol.
-	cmd == #saveImage 
+	cmd == #saveImage
 		ifTrue: [^'Save image to <1p>' expandMacrosWith: self sessionManager imageFileName].
 	^tool toolTipText!
 
@@ -2711,7 +2711,7 @@ packageFilesType
 
 	^#('Package Files (*.pac,*.pax)' '*.pac;*.pax')!
 
-packageInstallWarning: aWarning 
+packageInstallWarning: aWarning
 	| mb |
 	aWarning toTrace.	"#2142"
 	mb := MessageBox new.
@@ -2719,9 +2719,9 @@ packageInstallWarning: aWarning
 		buttonStyle: #okCancel;
 		defaultButton: 2;
 		beTaskModal.
-	^(mb 
-		warning: ('<1s><n><n>Click OK to bypass this warning and continue with the installation, or Cancel to abort.' 
-				expandMacrosWith: aWarning description)) 
+	^(mb
+		warning: ('<1s><n><n>Click OK to bypass this warning and continue with the installation, or Cancel to abort.'
+				expandMacrosWith: aWarning description))
 			== #ok!
 
 packageManager
@@ -2733,9 +2733,10 @@ packageOpenFileDialogTypes
 	"Private - Answer a file types array for use with a FileDialog to save/load packages."
 
 	| filter |
-	filter := '*.<1s>;*.<2s>' expandMacrosWith: Package packageExtension
-				with: Package sourcePackageExtension.
-	^{{'Packages (<1s>)' expandMacrosWith: filter. filter}.
+	filter := '*.<1s>;*.<2s>'
+				expandMacrosWithArguments: {Package packageExtension. Package sourcePackageExtension}
+				locale: Locale invariant.
+	^{{'Packages (<1s>)' expandMacrosWithArguments: {filter} locale: Locale invariant. filter}.
 		self pacFileDialogType.
 		self paxFileDialogType.
 		FileDialog allFilesType}!
@@ -3113,47 +3114,47 @@ privatePrefix
 
 	^'Private - '!
 
-privatizeMethod: aCompiledMethod 
+privatizeMethod: aCompiledMethod
 	"Private - Make the <CompiledMethod> argument private. This involves placing it in the
 	private pseudo-category, and ensuring that its first comment (if any) starts with 'Private -
 	'."
 
-	| parseTree class  |
+	| parseTree class |
 	parseTree := aCompiledMethod parseTreeNoError.
 	parseTree isNil ifTrue: [^self].
 	class := aCompiledMethod methodClass.
-	parseTree comments notEmpty 
+	parseTree comments notEmpty
 		ifTrue: 
 			[| source commentStart start |
 			source := aCompiledMethod getSource.
 			start := parseTree comments first start.
 			commentStart := source findString: '"' , self privatePrefix startingAt: start.
-			commentStart == 0 
+			commentStart == 0
 				ifTrue: 
-					[commentStart := source 
+					[commentStart := source
 								nextIndexOf: $"
 								from: start
 								to: source size.
-					commentStart == 0 
+					commentStart == 0
 						ifFalse: 
 							[| change |
-							change := self 
-										compile: (source 
+							change := self
+										compile: (source
 												copyReplaceFrom: commentStart + 1
 												to: commentStart
 												with: self privatePrefix)
 										in: class
-										categories: ((aCompiledMethod categories)
+										categories: (aCompiledMethod categories
 												remove: MethodCategory public ifAbsent: [];
 												add: MethodCategory private;
 												yourself)
 										package: nil
 										extraFlags: 0.
-							change name: ('Privatize <1d>' expandMacrosWith: aCompiledMethod).
+							change name: ('Privatize <1p>' expandMacrosWith: aCompiledMethod).
 							^self]]].
 
 	"Doesn't contain a comment, or comment is already suitably endowed"
-	aCompiledMethod isPrivate 
+	aCompiledMethod isPrivate
 		ifFalse: 
 			[MethodCategory private addMethod: aCompiledMethod.
 			aCompiledMethod storeCategories]!
@@ -3289,7 +3290,7 @@ publicizeMethod: aCompiledMethod
 										yourself)
 								package: nil
 								extraFlags: 0.
-					change name: ('Publicize <1d>' expandMacrosWith: aCompiledMethod).
+					change name: ('Publicize <1p>' expandMacrosWith: aCompiledMethod).
 					^self]].
 	"Comment is absent or doesn't start with the private prefix."
 	aCompiledMethod isPrivate
@@ -3304,58 +3305,63 @@ publicMethodIcon
 		textcolor: Color limeGreen;
 		yourself!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
-	cmd == #myDolphinAccount 
+	cmd == #myDolphinAccount
 		ifTrue: 
 			[aCommandQuery isEnabled: self sessionManager registeredSerialNumber notNil.
 			^true].
-	cmd == #toolsMenu 
+	cmd == #toolsMenu
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
-	cmd == #windowMenu 
+	cmd == #windowMenu
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
-	cmd == #undoChange 
+	cmd == #undoChange
 		ifTrue: 
 			[| description |
-			self hasUndoableOperations 
+			self hasUndoableOperations
 				ifTrue: 
 					[description := self changeManager undoChange.
 					aCommandQuery isEnabled: true]
 				ifFalse: 
 					[description := 'Change'.
 					aCommandQuery isEnabled: false].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description).
+			aCommandQuery
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {description}
+						locale: Locale smalltalk).
 			^true].
-	cmd == #redoChange 
+	cmd == #redoChange
 		ifTrue: 
 			[| description |
-			self hasRedoableOperations 
+			self hasRedoableOperations
 				ifTrue: 
 					[description := self changeManager redoChange.
 					aCommandQuery isEnabled: true]
 				ifFalse: 
 					[description := 'Change'.
 					aCommandQuery isEnabled: false].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description).
+			aCommandQuery
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {description}
+						locale: Locale smalltalk).
 			^true].
-	cmd == #clearChangeHistory 
+	cmd == #clearChangeHistory
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasUndoableOperations or: [self hasRedoableOperations]).
 			^true].
-	#browseHierarchy == cmd 
+	#browseHierarchy == cmd
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: 'Classes').
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Classes'}
+							locale: Locale smalltalk).
 			^true].
-	#browseTests == cmd 
+	#browseTests == cmd
 		ifTrue: 
 			[aCommandQuery isEnabled: self testBrowserClass notNil.
 			^true].
@@ -3367,9 +3373,9 @@ redoChange
 
 	self changeManager redoOperation!
 
-referencesMatching: aMethodSearch in: aBrowserEnvironment 
+referencesMatching: aMethodSearch in: aBrowserEnvironment
 	^(self selectMethods: aMethodSearch methodReferenceFilter in: aBrowserEnvironment)
-		label: ('References to <1p> in <2d>' expandMacrosWith: aMethodSearch pattern
+		label: ('References to <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
 					with: aBrowserEnvironment);
 		search: aMethodSearch;
 		yourself!
@@ -3380,7 +3386,7 @@ referencesTo: anObject
 
 	^self referencesTo: anObject in: self systemEnvironment!
 
-referencesTo: anObject in: aBrowserEnvironment 
+referencesTo: anObject in: aBrowserEnvironment
 	"Answer a <BrowserEnvironment> that includes all methods defined in the <BrowserEnvironment>
 	argument that reference the <Object> argument from their literal frame."
 
@@ -3392,21 +3398,21 @@ referencesTo: anObject in: aBrowserEnvironment
 	| search |
 	search := MethodSearch newLiteral: anObject.
 	^(self selectMethods: search simpleReferenceFilter in: aBrowserEnvironment)
-		label: ('References to <1p> in <2d>' expandMacrosWith: anObject with: aBrowserEnvironment);
+		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
 		addSearchString: search pattern;
 		yourself!
 
 referencesToBinding: aBindingReference in: aBrowserEnvironment
 	self halt.
 	^(self selectMethods: [:each | each refersToLiteral: aBindingReference] in: aBrowserEnvironment)
-		label: ('References to <1p> in <2d>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
+		label: ('References to <1p> in <2p>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
 		addSearchString: aBindingReference printString;
 		yourself!
 
-referencesToClassVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment 
+referencesToClassVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
 	| references caption definingBehavior env |
 	definingBehavior := aBehavior whichClassDefinesClassVar: aString.
-	env := definingBehavior == aBehavior 
+	env := definingBehavior == aBehavior
 				ifTrue: 
 					[caption := 'All methods that reference <1p>.<2s>'.
 					aBrowserEnvironment]
@@ -3415,18 +3421,18 @@ referencesToClassVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironme
 					aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
 	references := env classVarRefsTo: aString in: definingBehavior.
 	references
-		label: (caption 
+		label: (caption
 					expandMacrosWith: definingBehavior
 					with: aString
 					with: aBehavior);
 		addSearchString: aString.
 	^references!
 
-referencesToLiteral: anObject in: aBrowserEnvironment 
+referencesToLiteral: anObject in: aBrowserEnvironment
 	| search |
 	search := MethodSearch newLiteral: anObject.
 	^(self selectMethods: search simpleReferenceFilter in: aBrowserEnvironment)
-		label: ('References to <1p> in <2d>' expandMacrosWith: anObject with: aBrowserEnvironment);
+		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
 		search: search;
 		yourself!
 
@@ -3437,18 +3443,18 @@ referencesToVariable: aVariableBinding in: aBrowserEnvironment
 					(each refersToLiteral: aVariableBinding value) or: [each refersToLiteral: aVariableBinding]]
 				in: aBrowserEnvironment.
 	matched
-		label: ('Direct and indirect references to <1s> in <2d>' expandMacrosWith: aVariableBinding key
+		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
 					with: aBrowserEnvironment);
 		addSearchString: aVariableBinding key.
 	^matched!
 
-reformatAllMethodsIn: aBrowserEnvironment 
+reformatAllMethodsIn: aBrowserEnvironment
 	| changes |
 	changes := CompositeRefactoryChange new.
-	changes name: ('Reformat <1d>' expandMacrosWith: aBrowserEnvironment).
+	changes name: ('Reformat <1p>' expandMacrosWith: aBrowserEnvironment).
 	aBrowserEnvironment methodsDo: 
-			[:each | 
-			(SmalltalkParser parseExistingMethodNoError: each) 
+			[:each |
+			(SmalltalkParser parseExistingMethodNoError: each)
 				ifNotNil: [:tree | changes compile: tree formattedCode in: each methodClass]].
 	self changeManager performChange: changes!
 
@@ -3508,13 +3514,13 @@ registerTool: aToolClass
 
 	self class registerTool: aToolClass!
 
-removeClass: class fromProtocol: protocol 
+removeClass: class fromProtocol: protocol
 	"Private - Remove the <Class> class from the <MethodProtocol> protocol."
 
-	(MessageBox 
-		confirm: ('Are you sure you would like to remove the class <1d> from method protocol <2d>?<n><n>(The class will not be deleted, but it and any subclasses will no longer conform to <2d>)' 
+	(MessageBox
+		confirm: ('Are you sure you would like to remove the class <1p> from method protocol <2d>?<n><n>(The class will not be deleted, but it and any subclasses will no longer conform to <2d>)'
 				expandMacrosWith: class
-				with: protocol)) 
+				with: protocol))
 			ifTrue: [protocol removeClass: class]!
 
 removeGlobalNamed: aSymbol
@@ -3560,7 +3566,7 @@ removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 					[stream nextPutAll: 's '.
 					prots asSortedCollection do: [:p | p displayOn: stream] separatedBy: [stream nextPutAll: ', ']].
 			desc := stream contents.
-			response := (MessageBox new)
+			response := MessageBox new
 						defaultButton: 3;
 						confirmOrCancel: ('<1p> is part of the implementation of the protocol<2s> in <3p> and/or its subclasses.<n>
 Are you sure that you would like to remove <1p> from the protocol<4s> as well as from the class?<n>
@@ -3612,9 +3618,9 @@ removeMethods: aCollectionOfMethods
 removeMethodsIn: aBrowserEnvironment 
 	self basicRemoveMethods: aBrowserEnvironment allMethods!
 
-removeMethodsIn: methodsEnvironment within: searchEnvironment 
-	(MessageBox 
-		confirm: ('Are you sure you would like to remove <1d>?' expandMacrosWith: methodsEnvironment)
+removeMethodsIn: methodsEnvironment within: searchEnvironment
+	(MessageBox
+		confirm: ('Are you sure you would like to remove <1p>?' expandMacrosWith: methodsEnvironment)
 		caption: 'Remove Methods...') ifTrue: [self removeMethodsIn: methodsEnvironment]!
 
 removeSelector: sel fromProtocol: target
@@ -3622,7 +3628,7 @@ removeSelector: sel fromProtocol: target
 
 	self removeSelectors: {sel} fromProtocol: target!
 
-removeSelectors: sels fromProtocol: target 
+removeSelectors: sels fromProtocol: target
 	"Remove the <collection> of selectors, sels, from the <MethodProtocol>,
 	target.
 	Implementation Note: This is an important operation so we need to warn 
@@ -3634,7 +3640,7 @@ removeSelectors: sels fromProtocol: target
 	stream := WriteStream on: String new.
 	stream tab nextPutAll: list first printString.
 	(list copyWithout: list first) do: 
-			[:each | 
+			[:each |
 			stream
 				nextPutAll: ', ';
 				nextPutAll: each printString].
@@ -3642,18 +3648,18 @@ removeSelectors: sels fromProtocol: target
 	mb defaultButton: 2.
 	mb buttonStyle: #okCancel.
 	mb iconStyle: #prompt.
-	mb 
+	mb
 		text: ('Are you sure that you would like to remove the following selectors
 from the protocol <1p>?<n><n><2s>
 
 Removing selectors from a protocol may affect other conforming
 classes or the users of those classes. 
 
-It is recommended that you cancel this operation unless you are sure.' 
+It is recommended that you cancel this operation unless you are sure.'
 				expandMacrosWith: target
 				with: stream contents).
 	response := mb open.
-	response == #ok 
+	response == #ok
 		ifTrue: 
 			[Cursor wait showWhile: 
 					[target removeAllSelectors: sels.
@@ -3696,7 +3702,7 @@ renameClass: aClass
 		caption: 'Rename Class') 
 			ifNotNil: [:newClassName | self renameClass: aClass to: newClassName]!
 
-renameClass: aClass to: newClassName 
+renameClass: aClass to: newClassName
 	"Rename aClass to newClassName. Also list all of the methods which reference
 	the class. Their source must be modified to include the newClassName."
 
@@ -3705,7 +3711,7 @@ renameClass: aClass to: newClassName
 	global := self globalVariableNamed: aClass name.
 	references := self referencesToVariable: global in: self systemEnvironment.
 	ClassBuilder renameClass: aClass to: newClassName.
-	references isEmpty 
+	references isEmpty
 		ifTrue: [MessageBox notify: 'No methods referenced ' , oldClassName]
 		ifFalse: 
 			[references
@@ -3721,18 +3727,18 @@ renameClassVariable: aString in: aClass
 		in: aClass
 		within: self systemEnvironment!
 
-renameClassVariable: aString in: aClass within: aBrowserEnvironment 
+renameClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implements the Rename Class Variable refactoring."
 
 	| newName |
-	newName := self 
+	newName := self
 				promptForClassVarName: aString
 				in: aClass
 				prompt: 'Please enter a new name for the variable:'
 				caption: ('Rename Class Variable <1p>...' expandMacrosWith: aString).
-	newName notNil 
+	newName notNil
 		ifTrue: 
-			[self 
+			[self
 				renameClassVariable: aString
 				to: newName
 				in: aClass
@@ -3758,16 +3764,16 @@ renameInstanceVariable: aString in: aClass
 		in: aClass
 		within: self systemEnvironment!
 
-renameInstanceVariable: aString in: aClass within: aBrowserEnvironment 
+renameInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	| newName |
-	newName := self 
+	newName := self
 				promptForInstVarName: aString
 				in: aClass
 				prompt: 'Please enter a new name for the variable:'
 				caption: ('Rename Instance Variable <1p>...' expandMacrosWith: aString).
-	newName notNil 
+	newName notNil
 		ifTrue: 
-			[self 
+			[self
 				renameInstanceVariable: aString
 				to: newName
 				in: aClass
@@ -3781,22 +3787,22 @@ renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironme
 		within: aBrowserEnvironment .
 	^newName!
 
-requestPackageFileName: aString 
+requestPackageFileName: aString
 	"Private - Answer a <readableString> being a revised the path for the package,
 	or nil if no suggestions are available (e.g. this is not an interactive session and so
 	user input is not available)."
 
 	| stem |
 	stem := File splitStemFrom: aString.
-	^(FileOpenDialog new)
+	^FileOpenDialog new
 		fileTypes: self packageOpenFileDialogTypes;
 		defaultExtension: (File splitExtensionFrom: aString);
 		value: stem;
 		caption: ('Open prerequisite Package: <1p>' expandMacrosWith: stem);
 		showModal!
 
-requiresDolphinPro: aString 
-	MessageBox warning: ('<1d> is only available in Dolphin Professional' expandMacrosWith: aString)!
+requiresDolphinPro: aString
+	MessageBox warning: ('<1s> is only available in Dolphin Professional' expandMacrosWith: aString)!
 
 resaveViewResourcesMatching: matchBlock do: doBlock
 	"Evaluate matchBlock for all <ResourceIdentifier>s, and when true open the corresponding
@@ -4074,11 +4080,11 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 userPreferencesIcon
 	^Icon fromId: 'SMALLTALKOPTIONSFOLDER.ICO'!
 
-validateRenameInstVar: oldString to: newString in: aClass 
-	(self isValidInstanceVariableName: newString for: aClass) 
+validateRenameInstVar: oldString to: newString in: aClass
+	(self isValidInstanceVariableName: newString for: aClass)
 		ifFalse: 
-			[self 
-				error: ('<1d> is not a valid instance variable name in <2d>' expandMacrosWith: newString with: aClass)]!
+			[self
+				error: ('<1s> is not a valid instance variable name in <2p>' expandMacrosWith: newString with: aClass)]!
 
 viewComposerClass
 	"Answer the class of ViewComposer to be used for editing view resources in the

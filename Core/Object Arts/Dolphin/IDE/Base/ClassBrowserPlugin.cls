@@ -30,10 +30,9 @@ destroy
 	self isOpen ifTrue: [self model removePlugin: self].
 	^super destroy!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a
-	user would want to see it. This will be used as the label for the tab when the receiver is
-	being displayed as a plugin within the Class Browser"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed as a plugin within the Class Browser."
 
 	^self subclassResponsibility!
 

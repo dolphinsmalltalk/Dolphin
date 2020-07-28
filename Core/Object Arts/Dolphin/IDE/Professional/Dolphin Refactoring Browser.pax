@@ -393,21 +393,19 @@ displayPrefix
 
 !AbstractVariablesRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
 	#todo.	"Implement more informative display string"
-	aStream nextPutAll: 'Abstract Variables'! !
+	aPuttableStream nextPutAll: 'Abstract Variables'! !
 !AbstractVariablesRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !AddClassRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Add class ';
 		display: className! !
 !AddClassRefactoring categoriesFor: #displayOn:!displaying!public! !
@@ -426,22 +424,20 @@ displayPrefix
 
 !AddMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Add method to ';
 		print: class! !
 !AddMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !AddParameterRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Add parameter to ';
 		print: oldSelector! !
 !AddParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
@@ -490,11 +486,10 @@ searchStrings
 
 !ChildrenToSiblingsRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Convert ';
 		display: parent;
 		nextPutAll: ' to sibling'! !
@@ -600,43 +595,45 @@ pushMethods: aBoolean
 pushUpMethods
 	self pushMethods: true!
 
-queryRefactoringCommand: aCommandQuery 
+queryRefactoringCommand: aCommandQuery
 	"Private - Enter details about a potential refactoring command for the receiver 
 	into the <CommandQuery>."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	(#(#protectInstanceVariables #abstractInstanceVariables #removeInstanceVariables) 
-		identityIncludes: selector) 
+	(#(#protectInstanceVariables #abstractInstanceVariables #removeInstanceVariables)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: self variables notEmpty.
 				^true].
-	#pushDownInstanceVariables == selector 
+	#pushDownInstanceVariables == selector
 		ifTrue: 
 			[| class |
-			aCommandQuery isEnabled: ((class := self actualClass) notNil 
+			aCommandQuery isEnabled: ((class := self actualClass) notNil
 						and: [class subclasses notEmpty and: [self variables notEmpty]]).
 			^true].
-	#pushDownMethods == selector 
+	#pushDownMethods == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (self methodRefactoringTool canPushDownMethods 
+			[aCommandQuery isEnabled: (self methodRefactoringTool canPushDownMethods
 						and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1]).
 			^true].
-	#pushUpMethods == selector 
+	#pushUpMethods == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (self methodRefactoringTool canPushUpMethods 
+			[aCommandQuery isEnabled: (self methodRefactoringTool canPushUpMethods
 						and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1]).
 			^true].
-	#overrideMethods == selector 
+	#overrideMethods == selector
 		ifTrue: 
 			[| class methods |
 			methods := self selectedOverridableMethods.
 			class := self actualClass.
 			aCommandQuery
 				isEnabled: class superclass notNil;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: (methods isEmpty 
-									ifTrue: ['...']
-									ifFalse: [methods size == 1 ifTrue: [methods first] ifFalse: ['Methods']])).
+				text: (aCommandQuery commandDescription menuText
+							expandMacrosWithArguments: {methods isEmpty
+										ifTrue: ['...']
+										ifFalse: [methods size == 1 ifTrue: [methods first] ifFalse: ['Methods']]}
+							locale: Locale smalltalk).
 			^true].
 	^false!
 
@@ -999,76 +996,77 @@ pushDownInstanceVariables
 	(self chooseVariables: false caption: 'Push Down Instance Variables...') 
 		ifNotNil: [:varNames | self systemModel pushDownInstanceVariables: varNames]!
 
-queryRefactoringCommand: aCommandQuery 
+queryRefactoringCommand: aCommandQuery
 	"Private - Enter details about a potential refactoring command for the receiver 
 	into the <CommandQuery> argument."
 
 	| selector class |
 	selector := aCommandQuery commandSymbol.
 	class := self actualClass.
-	(#(#classRefactoringsMenu #safeRemoveClass #addClassVariable) identityIncludes: selector) 
+	(#(#classRefactoringsMenu #safeRemoveClass #addClassVariable) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: class notNil.
 			^true].
-	#addInstanceVariable == selector 
+	#addInstanceVariable == selector
 		ifTrue: 
 			[| prefix |
 			prefix := (class notNil and: [class isMeta]) ifTrue: ['Class '] ifFalse: [''].
 			aCommandQuery
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: prefix);
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {prefix}
+							locale: Locale smalltalk);
 				isEnabled: (class notNil and: [class isPointers]).
 			^true].
-	(#(#removeInstanceVariables #protectInstanceVariables #abstractInstanceVariables #renameInstanceVariable) 
-		identityIncludes: selector) 
+	(#(#removeInstanceVariables #protectInstanceVariables #abstractInstanceVariables #renameInstanceVariable)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: (class notNil and: [class instVarNames notEmpty]).
 				^true].
-	#pushDownInstanceVariables == selector 
+	#pushDownInstanceVariables == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (class notNil and: [class subclasses notEmpty and: [class instVarNames notEmpty]]).
 			^true].
-	#pushDownVariables == selector 
+	#pushDownVariables == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil 
+			[aCommandQuery isEnabled: (class notNil
 						and: [class subclasses notEmpty and: [class instVarNames notEmpty or: [class classPool notEmpty]]]).
 			^true].
-	#pullUpInstanceVariables == selector 
+	#pullUpInstanceVariables == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (class notNil and: [class allSubclasses anySatisfy: [:each | each instVarNames notEmpty]]).
 			^true].
-	#pullUpClassVariables == selector 
+	#pullUpClassVariables == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil 
+			[aCommandQuery isEnabled: (class notNil
 						and: [class instanceClass allSubclasses anySatisfy: [:each | each classVarNames notEmpty]]).
 			^true].
-	(#(#renameClassVariable #removeClassVariables #pushDownClassVariables #createClassVariableAccessors #abstractClassVariables) 
-		identityIncludes: selector) 
+	(#(#renameClassVariable #removeClassVariables #pushDownClassVariables #createClassVariableAccessors #abstractClassVariables)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: (class notNil and: [class instanceClass classVarNames notEmpty]).
 				^true].
-	(#(#renameVariables #removeVariables #pushDownVariables #protectVariables #abstractVariables #createVariableAccessors) 
-		identityIncludes: selector) 
+	(#(#renameVariables #removeVariables #pushDownVariables #protectVariables #abstractVariables #createVariableAccessors)
+		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (class notNil 
+				[aCommandQuery isEnabled: (class notNil
 							and: [class instVarNames notEmpty or: [class instanceClass classVarNames notEmpty]]).
 				^true].
-	#pushDownVariables == selector 
+	#pushDownVariables == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (class notNil and: 
-							[class subclasses notEmpty 
+							[class subclasses notEmpty
 								and: [class instVarNames notEmpty or: [class instanceClass classVarNames notEmpty]]]).
 			^true].
-	#pullUpVariables == selector 
+	#pullUpVariables == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (class notNil and: 
 							[| isFixed |
 							isFixed := ClassBuilder isFixedLayout: class.
 							class allSubclasses anySatisfy: 
-									[:each | 
+									[:each |
 									(isFixed not and: [each instVarNames notEmpty]) or: [each instanceClass classVarNames notEmpty]]]).
 			^true].
 
@@ -1087,9 +1085,9 @@ removeClassVariables
 removeDuplicateMethods
 	| class |
 	class := self actualClass.
-	(self systemModel removeMethodsDuplicatedInSuperclassOf: class) 
+	(self systemModel removeMethodsDuplicatedInSuperclassOf: class)
 		ifFalse: 
-			[MessageBox 
+			[MessageBox
 				notify: ('<1p> does not duplicate any of its superclass'' methods' expandMacrosWith: class)
 				caption: 'Remove Duplicate Methods...']!
 
@@ -1175,37 +1173,31 @@ performMethodRenameRefactoring: aMonadicValuable
 
 !ExpandReferencedPoolsRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Add pool'.
-	pools size = 1 
+	aPuttableStream nextPutAll: 'Add pool'.
+	pools size = 1
 		ifTrue: 
-			[aStream
-				space;
-				display: pools asArray first]
+			[aPuttableStream space.
+			pools asArray first displayOn: aPuttableStream]
 		ifFalse: 
-			[aStream nextPutAll: 's '.
-			pools do: [:each | aStream display: each]
-				separatedBy: [aStream nextPutAll: ', ']].
-	aStream nextPutAll: ' to '.
-	toClasses size = 1 
-		ifTrue: 
-			[aStream
-				display: toClasses asArray first]
+			[aPuttableStream nextPutAll: 's '.
+			pools do: [:each | each displayOn: aPuttableStream] separatedBy: [aPuttableStream nextPutAll: ', ']].
+	aPuttableStream nextPutAll: ' to '.
+	toClasses size = 1
+		ifTrue: [toClasses asArray first displayOn: aPuttableStream]
 		ifFalse: 
-			[toClasses do: [:each | aStream display: each name]
-				separatedBy: [aStream nextPutAll: ', ']]! !
+			[toClasses do: [:each | each name displayOn: aPuttableStream]
+				separatedBy: [aPuttableStream nextPutAll: ', ']]! !
 !ExpandReferencedPoolsRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !ExtractMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Extract method from ';
 		print: class;
 		nextPutAll: '>>';
@@ -1214,11 +1206,10 @@ displayOn: aStream
 
 !ExtractMethodToComponentRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Extract to component from ';
 		print: class;
 		nextPutAll: '>>';
@@ -1232,22 +1223,20 @@ getOptionVariableToMoveToOf: aClass in: aSelector
 
 !ExtractToTemporaryRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Extract to temporary ';
 		print: newVariableName! !
 !ExtractToTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !InlineAllSendersRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Inline sends of ';
 		print: selector;
 		nextPutAll: ' in ';
@@ -1256,11 +1245,10 @@ displayOn: aStream
 
 !InlineMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Inline message in ';
 		print: class;
 		nextPutAll: '>>';
@@ -1269,32 +1257,30 @@ displayOn: aStream
 
 !InlineParameterRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Inline parameter ';
 		print: argument;
 		nextPutAll: ' in ';
 		print: class;
 		nextPutAll: '>>';
-		display: oldSelector! !
+		print: oldSelector! !
 !InlineParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !InlineTemporaryRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Inline temp ';
-"		print: oldName;"
 		nextPutAll: ' in ';
 		print: class;
 		nextPutAll: '>>';
-		display: selector! !
+		print: selector
+	"		print: oldName;"! !
 !InlineTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !LintRule methodsFor!
@@ -1459,15 +1445,14 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 
 !MoveMethodRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: 'Move ';
 		display: class;
 		nextPutAll: '>>';
-		display: selector;
+		print: selector;
 		nextPutAll: '  to ';
 		print: variable!
 
@@ -1515,17 +1500,16 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 
 !MoveVariableDefinitionRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: 'Move ';
 		display: 'variable';
 		nextPutAll: ' to inner scope in ';
 		print: class;
 		nextPutAll: '>>';
-		display: selector! !
+		print: selector! !
 !MoveVariableDefinitionRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !PackageBrowserShell methodsFor!
@@ -1552,7 +1536,7 @@ addParameterToMethod
 
 	self addParameterTo: self selectedMethod!
 
-chooseMethodsForRefactoring: aString 
+chooseMethodsForRefactoring: aString
 	| selector methods definitions searchEnv |
 	searchEnv := self searchEnvironment.
 	methods := self selectedMethods.
@@ -1560,9 +1544,9 @@ chooseMethodsForRefactoring: aString
 	selector := self model chooseSelectorInEnvironment: searchEnv caption: aString.
 	selector isNil ifTrue: [^searchEnv forMethods: #()].
 	definitions := searchEnv definitionsOf: selector.
-	definitions isEmpty 
+	definitions isEmpty
 		ifTrue: 
-			[MessageBox 
+			[MessageBox
 				errorMsg: ('There are no definitions of <1p> in the selected package(s).' expandMacrosWith: selector)].
 	^definitions!
 
@@ -1578,13 +1562,13 @@ performMethodRenameRefactoring: aMonadicValuable
 
 	^aMonadicValuable value: self selectedMethod!
 
-performMethodsRefactoring: aMonadicValuable name: aString 
+performMethodsRefactoring: aMonadicValuable name: aString
 	| methods |
 	methods := self chooseMethodsForRefactoring: ('<1s> from Package(s)...' expandMacrosWith: aString).
 	methods isEmpty ifTrue: [^nil].
 	^[aMonadicValuable value: methods allMethods] on: Notification
 		do: 
-			[:ex | 
+			[:ex |
 			statusModel value: ex.
 			ex resume]!
 
@@ -1662,9 +1646,9 @@ renameMethod
 	(self chooseMethodForRefactoring: 'Rename Method in Package(s)...') 
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
-renameMethodReferences: aCompiledMethod 
+renameMethodReferences: aCompiledMethod
 	| methodName |
-	methodName := self 
+	methodName := self
 				promptForMethodName: aCompiledMethod
 				caption: ('Rename References to <1p> in Package(s)...' expandMacrosWith: aCompiledMethod selector)
 				allowExisting: true.
@@ -1765,11 +1749,10 @@ displayPrefix
 
 !PullUpClassVariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self displayPrefix;
 		print: variableName;
 		nextPutAll: ' into ';
@@ -1784,11 +1767,10 @@ displayPrefix
 
 !PullUpInstanceVariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self displayPrefix;
 		print: variableName;
 		nextPutAll: ' into ';
@@ -1815,11 +1797,10 @@ displayPrefix
 
 !PushDownMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Push down ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
@@ -1828,11 +1809,10 @@ displayOn: aStream
 
 !PushUpMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Push up ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
@@ -1883,17 +1863,19 @@ renameIcon
 
 !RemoveClassRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
-		nextPutAll: 'Remove '.
-	classNames size == 1 
-		ifTrue: [aStream nextPutAll: 'class '; display: classNames first]
-		ifFalse: [
-			aStream nextPutAll: 'classes: '.
-			classNames do: [:each | aStream display: each] separatedBy: [aStream nextPutAll: ', ']]! !
+	aPuttableStream nextPutAll: 'Remove '.
+	classNames size == 1
+		ifTrue: 
+			[aPuttableStream
+				nextPutAll: 'class ';
+				display: classNames first]
+		ifFalse: 
+			[aPuttableStream nextPutAll: 'classes: '.
+			classNames do: [:each | aPuttableStream display: each]
+				separatedBy: [aPuttableStream nextPutAll: ', ']]! !
 !RemoveClassRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RemoveClassVariableRefactoring class methodsFor!
@@ -1910,11 +1892,10 @@ displayPrefix
 
 !RemoveMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Remove ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
@@ -1923,27 +1904,25 @@ displayOn: aStream
 
 !RemoveParameterRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Remove parameter ';
 		print: argument;
 		nextPutAll: ' from ';
 		print: class;
 		nextPutAll: '>>';
-		display: oldSelector! !
+		print: oldSelector! !
 !RemoveParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RenameAccessorsForVariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	super displayOn: aStream.
-	aStream
+	super displayOn: aPuttableStream.
+	aPuttableStream
 		nextPutAll: ' to ';
 		print: newName! !
 !RenameAccessorsForVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
@@ -1960,25 +1939,23 @@ icon
 
 !RenameClassRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Rename class ';
-		display: className;
+		nextPutAll: className;
 		nextPutAll: ' to ';
-		display: newName! !
+		nextPutAll: newName! !
 !RenameClassRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RenameClassVariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	super displayOn: aStream.
-	aStream
+	super displayOn: aPuttableStream.
+	aPuttableStream
 		nextPutAll: ' to ';
 		print: newName! !
 !RenameClassVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
@@ -1995,28 +1972,26 @@ icon
 
 !RenameInstanceVariableAndAccessorsRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self displayPrefix;
 		space;
 		print: class;
 		nextPut: $.;
-		display: variableName;
+		nextPutAll: variableName;
 		nextPutAll: ' (and accessors) to ';
 		print: newName! !
 !RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RenameInstanceVariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	super displayOn: aStream.
-	aStream
+	super displayOn: aPuttableStream.
+	aPuttableStream
 		nextPutAll: ' to ';
 		print: newName! !
 !RenameInstanceVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
@@ -2033,16 +2008,14 @@ icon
 
 !RenameMethodRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Rename ';
 		print: oldSelector;
 		nextPutAll: ' to ';
-		print: newSelector
-! !
+		print: newSelector! !
 !RenameMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RenameMethodRefactoring class methodsFor!
@@ -2053,19 +2026,18 @@ icon
 
 !RenameTemporaryRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Rename temp ';
 		print: oldName;
 		nextPutAll: ' to ';
-		print: newName; 
+		print: newName;
 		nextPutAll: ' in ';
 		print: class;
 		nextPutAll: '>>';
-		display: selector! !
+		print: selector! !
 !RenameTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !RenameTemporaryRefactoring class methodsFor!
@@ -2097,11 +2069,10 @@ queryRefactoringCommand: aCommandQuery
 
 !TemporaryToInstanceVariableRefactoring methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream 
+	aPuttableStream
 		nextPutAll: 'Convert temp ';
 		print: temporaryVariableName;
 		nextPutAll: ' to inst var of ';
@@ -2189,10 +2160,10 @@ true ifFalse: [`@.stmts].
 		methods: false
 		name: 'Eliminate unnecessary ifTrue:[ifFalse:] conditions'!
 
-renameArgument: beforeString to: afterString 
-	^(TransformationRule new)
+renameArgument: beforeString to: afterString
+	^TransformationRule new
 		name: ('Rename argument <1p> to <2p>' expandMacrosWith: beforeString with: afterString);
-		rewriteUsing: ((ParseTreeRewriter new)
+		rewriteUsing: (ParseTreeRewriter new
 					replaceArgument: beforeString with: afterString;
 					replace: beforeString with: afterString;
 					yourself);
@@ -2204,16 +2175,15 @@ renameArgument: beforeString to: afterString
 
 !VariableRefactoring methodsFor!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self displayPrefix;
 		space;
 		print: class;
 		nextPut: $.;
-		display: variableName!
+		nextPutAll: variableName!
 
 displayPrefix
 	^self class displayPrefix! !

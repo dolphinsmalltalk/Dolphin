@@ -66,7 +66,7 @@ basicPrintString
 	Should not be overridden by subclasses"
 
 	| aStream |
-	aStream := String writeStream: 16.
+	aStream := String smalltalkWriteStream: 16.
 	self basicPrintOn: aStream.
 	^aStream contents!
 

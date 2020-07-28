@@ -14,9 +14,9 @@ SmalltalkLocaleTest comment: ''!
 defaultSubject
 	^Locale smalltalk!
 
-testPrintFloat
+testDisplayFloatOn
 	| subject |
-	subject := Locale smalltalk.
+	subject := self defaultSubject.
 	{{Float infinity. 'Float.Infinity'}.
 		{Float negativeInfinity. 'Float.NegativeInfinity'}.
 		{Float nan. 'Float.NaN'}.
@@ -39,7 +39,7 @@ testPrintFloat
 		{50000000000001.25. '5.000000000000125e13'}} do: 
 				[:each |
 				| actual |
-				actual := subject printFloat: each first.
+				actual := each first displayString: subject.
 				self assert: actual equals: each second]!
 
 testPrintFloatGrouping
@@ -67,7 +67,7 @@ testPrintFloatSeparators
 		thousandSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
 !SmalltalkLocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!SmalltalkLocaleTest categoriesFor: #testPrintFloat!public! !
+!SmalltalkLocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
 !SmalltalkLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
 !SmalltalkLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
 

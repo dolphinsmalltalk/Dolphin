@@ -43,18 +43,20 @@ displayName
 	self displayOn: nameStream.
 	^nameStream contents!
 
-displayOn: aStream 
-	aStream
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
 		nextPutAll: self name;
 		nextPutAll: ' ['.
-	self problemCount printOn: aStream.
-	aStream nextPut: $]!
+	self problemCount displayOn: aPuttableStream.
+	aPuttableStream nextPut: $]!
 
 failedMethodsSorted
 	^self failedMethods asSortedCollection: CompiledMethod defaultSortBlock!
 
 failedRules
-	^self isEmpty ifTrue: [#()] ifFalse: [Array with: self]!
+	^self isEmpty ifTrue: [#()] ifFalse: [{self}]!
 
 hasConflicts
 	^false!

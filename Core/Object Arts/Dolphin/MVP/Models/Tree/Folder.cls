@@ -26,11 +26,10 @@ Folder comment: ''!
 canonicalPath
 	^canonicalPath!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self name!
+	aPuttableStream nextPutAll: self name!
 
 folderName
 	"Answer the folder name of the receiver"

@@ -173,12 +173,6 @@ decodeNextFrom: aReadStream
 									Character.Utf8Default]]]
 				ifFalse: [Character utf16Value: c ifInvalid: [Character.Utf8Default]]]!
 
-displayOn: aStream
-	"Append the receiver in end-user form to aStream.
-	We must convert to mbcs for display."
-
-	aStream nextPutAll: self asString!
-
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
 	Answer the <integer> index of the last code unit updated."
@@ -200,7 +194,7 @@ encodedAt: anInteger put: aCharacter
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
 
 	| surrogateBits |
 	surrogateBits := (self basicAt: anInteger) bitAnd: Character.Utf16SurrogateMask.
@@ -386,7 +380,6 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #countElements!accessing!public! !
 !Utf16String categoriesFor: #decodeAt:!encode/decode!private! !
 !Utf16String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Utf16String categoriesFor: #displayOn:!printing!public! !
 !Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !Utf16String categoriesFor: #encodedSizeAt:!encode/decode!private! !
 !Utf16String categoriesFor: #encodedSizeOf:!encode/decode!private! !

@@ -142,7 +142,7 @@ hasFuture
 hasPast
 	^historyList hasPast!
 
-historySkip: anInteger 
+historySkip: anInteger
 	"Private - Move around in the history list by the specified <integer> delta (negative for
 	backwards)."
 
@@ -155,7 +155,7 @@ historySkip: anInteger
 	self noEventsDo: [historyTree selection: node].
 	method := visit value.
 	browserPresenter clearErrors.
-	(method notNil and: [(method methodClass includesSelector: method selector) not]) 
+	(method notNil and: [(method methodClass includesSelector: method selector) not])
 		ifTrue: 
 			[self statusText: ('<1p> has been deleted' expandMacrosWith: method).
 			Sound warningBeep.
@@ -197,14 +197,14 @@ onTimerTick: anInteger
 	self killVisitTimer.
 	self recordMethodVisit!
 
-onTipTextRequired: tool 
+onTipTextRequired: tool
 	"Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd |
 	cmd := tool command asSymbol.
-	(cmd == #historyBack and: [historyList hasPast]) 
+	(cmd == #historyBack and: [historyList hasPast])
 		ifTrue: [^'Back to <1p>' expandMacrosWith: historyList previous].
-	(cmd == #historyForward and: [historyList hasFuture]) 
+	(cmd == #historyForward and: [historyList hasFuture])
 		ifTrue: [^'Forward to <1p>' expandMacrosWith: historyList next].
 	^super onTipTextRequired: tool!
 
@@ -232,50 +232,52 @@ onViewOpened
 		to: self.
 !
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	#clearSelection == selector 
+	#clearSelection == selector
 		ifTrue: 
 			[selector := self deleteItCommand.
-			selector isNil 
+			selector isNil
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	#historyBack: == selector 
+	#historyBack: == selector
 		ifTrue: 
 			[| dist |
 			dist := aCommandQuery command arguments first.
 			aCommandQuery isEnabled: historyList pastSize >= dist.
 			^true].
-	#historyForward: == selector 
+	#historyForward: == selector
 		ifTrue: 
 			[| dist |
 			dist := aCommandQuery command arguments first.
 			aCommandQuery isEnabled: historyList futureSize >= dist.
 			^true].
-	selector == #historyForward 
+	selector == #historyForward
 		ifTrue: 
-			[self hasFuture 
+			[self hasFuture
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWith: historyList next)]
+						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {historyList next}
+									locale: Locale smalltalk)]
 				ifFalse: 
 					[aCommandQuery
 						isEnabled: false;
 						text: 'Forward'].
 			^true].
-	selector == #historyBack 
+	selector == #historyBack
 		ifTrue: 
-			[self hasPast 
+			[self hasPast
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWith: historyList previous)]
+						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {historyList previous}
+									locale: Locale smalltalk)]
 				ifFalse: 
 					[aCommandQuery
 						isEnabled: false;
@@ -374,11 +376,10 @@ browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
 	browser browseMethodsInEnvironments: aCollectionOfBrowserEnvironment.
 	^browser!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Method Explorer'!
+	aPuttableStream nextPutAll: 'Method Explorer'!
 
 historyListSize
 	^HistoryListSize ifNil: [self defaultHistoryListSize]!

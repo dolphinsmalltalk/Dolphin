@@ -88,8 +88,9 @@ registryKey
 registryKeyName
 	"Private - Answers the <readableString> registry key for the previously viewed notes"
 
-	^'<1s>\<2s>\OneOffNotes' expandMacrosWith: SessionManager current productRegistryKey
-		with: SessionManager current applicationShortName!
+	^'<1s>\<2s>\OneOffNotes' expandMacrosWithArguments: {SessionManager current productRegistryKey.
+				SessionManager current applicationShortName}
+		locale: Locale invariant!
 
 removePreviouslyViewedNote: aSymbol
 	self registryKey removeSubValue: aSymbol ifAbsent: []!

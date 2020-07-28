@@ -46,6 +46,9 @@ isPositionable
 
 	^true!
 
+locale: aLocale
+	self subclassResponsibility!
+
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the next
 	line delimiter. If there are no further line delimiters in the receiver, then the rest of
@@ -233,6 +236,7 @@ upToAll: aCollection
 !SequencedStream categoriesFor: #flush!accessing!public! !
 !SequencedStream categoriesFor: #isEmpty!public!testing! !
 !SequencedStream categoriesFor: #isPositionable!public!testing! !
+!SequencedStream categoriesFor: #locale:!accessing!public! !
 !SequencedStream categoriesFor: #nextLine!accessing!public! !
 !SequencedStream categoriesFor: #nextWord!accessing!public! !
 !SequencedStream categoriesFor: #notEmpty!public!testing! !

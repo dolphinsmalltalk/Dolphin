@@ -56,7 +56,7 @@ printSignatureOn: aPuttableStream
 
 selector
 	| stream |
-	stream := String writeStream: 80.
+	stream := String smalltalkWriteStream: 80.
 	self printSelectorOn: stream.
 	^stream contents asSymbol!
 

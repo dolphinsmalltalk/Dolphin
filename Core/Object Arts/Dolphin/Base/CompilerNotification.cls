@@ -46,11 +46,10 @@ code: anInteger in: aString for: aClass selector: aSymbol position: posInteger l
 	extras := anArray.
 	offset := 0!
 
-displayOn: aStream 
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream
+	aPuttableStream
 		nextPutAll: self severityName;
 		nextPutAll: ': ';
 		nextPutAll: self errorMessage!
@@ -62,12 +61,13 @@ errorMessage
 	"Answer a <String> describing the nature of the notification."
 
 	^(self class errorFormats lookup: self errorCode)
-		ifNil: ['Unknown Compiler <1d>: <2d>' expandMacrosWith: self severityName with: self errorCode]
+		ifNil: ['Unknown Compiler <1s>: <2p>' expandMacrosWith: self severityName with: self errorCode]
 		ifNotNil: 
 			[:format |
 			| r |
 			r := self range.
-			format expandMacrosWithArguments: {self source copyFrom: r start to: r stop} , extras]!
+			format expandMacrosWithArguments: {self source copyFrom: r start to: r stop} , extras
+				locale: Locale smalltalk]!
 
 extras
 	^extras!

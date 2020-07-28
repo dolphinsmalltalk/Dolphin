@@ -150,68 +150,68 @@ onViewOpened
 	statusItem := self view viewNamed: 'status' ifNone: [].
 	statusItem notNil ifTrue: [statusItem model: statusModel]!
 
-queryCommand: query 
+queryCommand: query
 	"Private - Enters details about a potential command for the receiver into 
 	the <CommandQuery>, query"
 
 	| command |
 	command := query commandSymbol.
-	(#(#checkOut #checkIn) identityIncludes: command) 
+	(#(#checkOut #checkIn) identityIncludes: command)
 		ifTrue: 
 			[query isEnabled: ((self respondsTo: command) and: [listPresenter hasSelection]).
 			^true].
-	#fileSaveAll == command 
+	#fileSaveAll == command
 		ifTrue: 
 			[query isEnabled: listPresenter list notEmpty.
 			^true].
-	#fileSaveAs == command 
+	#fileSaveAs == command
 		ifTrue: 
 			[query isEnabled: ((self respondsTo: #fileSaveAs) and: [self selectedSourceObjects size == 1]).
 			^true].
-	(#(#browseIt #browseSourceObject) identityIncludes: command) 
+	(#(#browseIt #browseSourceObject) identityIncludes: command)
 		ifTrue: 
 			[| selected enable fmt |
 			selected := self selectedSourceObjects.
 			enable := selected size == 1.
 			fmt := query commandDescription menuText.
 			query
-				text: (fmt 
-							expandMacrosWith: (enable ifTrue: [selected first] ifFalse: ['Source Object']));
+				text: (fmt expandMacrosWithArguments: {enable ifTrue: [selected first] ifFalse: ['Source Object']}
+							locale: Locale smalltalk);
 				isEnabled: enable.
 			^true].
-	#fileSave == command 
+	#fileSave == command
 		ifTrue: 
 			[query isEnabled: self selectedWriteableSourceObjects notEmpty.
 			^true].
-	#toggleWriteable == command 
+	#toggleWriteable == command
 		ifTrue: 
 			[| selected writeable |
 			selected := self selectedSourceObjects.
 			writeable := false.
-			query 
+			query
 				isEnabled: (selected notEmpty and: 
 							[writeable := selected first canFileOut.
 							selected allSatisfy: [:each | each canFileOut == writeable]]).
 			query isChecked: writeable.
 			^true].
-	#toggleChanged == command 
+	#toggleChanged == command
 		ifTrue: 
 			[| selected changed |
 			selected := self selectedSourceObjects.
 			changed := false.
-			query 
+			query
 				isEnabled: (selected notEmpty and: 
 							[changed := selected first isChanged.
 							selected allSatisfy: [:each | each isChanged == changed]]).
 			query isChecked: changed.
 			^true].
-	#viewChangedOnly == command 
+	#viewChangedOnly == command
 		ifTrue: 
 			[query
 				isEnabled: true;
 				isChecked: changedOnly value.
 			^true].
-	#browseChangedMethods == command 
+	#browseChangedMethods == command
 		ifTrue: 
 			[query isEnabled: (self selectedSourceClasses select: [:c | c isChanged]) notEmpty.
 			^true].
@@ -351,11 +351,10 @@ viewRefresh
 
 !SourceBrowser class methodsFor!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	aStream nextPutAll: 'Source Browser'!
+	aPuttableStream nextPutAll: 'Source Browser'!
 
 forSourcesOfPackages: aPackageCollection 
 	"Answer an instance of the receiver showing all the sources in aPackage"

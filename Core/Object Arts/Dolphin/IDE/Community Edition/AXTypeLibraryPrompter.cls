@@ -61,20 +61,20 @@ onTypeLibrarySelected
 	| reg |
 	path clear.
 	guidPresenter clear.
-	(reg := typeLibs selectionOrNil) notNil 
+	(reg := typeLibs selectionOrNil) notNil
 		ifTrue: 
 			[
 			[| guid |
 			guid := reg libid.
-			path value: (ITypeLib 
+			path value: (ITypeLib
 						queryPath: guid
 						major: reg majorVersion
 						minor: reg minorVersion
 						locale: 0).
-			guidPresenter value: guid] 
+			guidPresenter value: guid]
 					on: HRESULTError
 					do: 
-						[:e | 
+						[:e |
 						e beep.
 						path value: ('Unable to load type library <1p>:<n><2s>' expandMacrosWith: reg description
 									with: e messageText)]]!

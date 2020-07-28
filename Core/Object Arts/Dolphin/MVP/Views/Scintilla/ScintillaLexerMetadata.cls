@@ -15,8 +15,10 @@ ScintillaLexerMetadata comment: ''!
 description
 	^self getDescription!
 
-displayOn: target
-	target display: self name!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: self name!
 
 getDescription
 	^self subclassResponsibility!

@@ -104,11 +104,11 @@ version: anInteger
 
 !STBFiler class methodsFor!
 
-errorInconsistentSTB: anObject 
+errorInconsistentSTB: anObject
 	"Private - Signal an STBError indicating that the stream being
 	read contains inconsistent STB data."
 
-	STBError signal: ('<2s> input stream is inconsistent (object <1p> referenced but not yet defined)' 
+	STBError signal: ('<2s> input stream is inconsistent (object <1p> referenced but not yet defined)'
 				expandMacrosWith: anObject
 				with: self signature)!
 

@@ -246,13 +246,6 @@ errorModify: key value: value
 
 	self error: 'Cannot modify read-only value associated with key ', key printString!
 
-errorValueNotFound: aValue
-	"Private - Report that an attempt was made to look up the key for a value which was not
-	in receiver"
-
-	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
-!
-
 findElementOrNil: anAssociation
 	"Private - Answer the index of the element with the a key equivalent to that
 	of anAssociation. The elements of the receiver are Associations, so we look up
@@ -408,8 +401,8 @@ printOn: aStream
 	We must override because we'd like to print out the associations as this
 	is more useful, otherwise this is the same as the superclass implementation."
 
-	aStream print: self
-		with: 
+	aStream visit: self
+		do: 
 			[aStream
 				basicPrint: self;
 				nextPut: $(.
@@ -562,7 +555,6 @@ values
 !Dictionary categoriesFor: #do:!enumerating!public! !
 !Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
 !Dictionary categoriesFor: #errorModify:value:!exceptions!private! !
-!Dictionary categoriesFor: #errorValueNotFound:!exceptions!private! !
 !Dictionary categoriesFor: #findElementOrNil:!private!searching! !
 !Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !Dictionary categoriesFor: #fullBindingFor:!binding!public! !

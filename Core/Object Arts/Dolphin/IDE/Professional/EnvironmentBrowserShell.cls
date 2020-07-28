@@ -45,9 +45,9 @@ browseUnimplemented
 	| environment unimplemented |
 	environment := self searchEnvironment.
 	unimplemented := self systemModel unimplementedSelectorsIn: environment.
-	self systemModel 
+	self systemModel
 		browseSelectors: unimplemented asSortedCollection
-		caption: ('Unimplemented Selectors in <1d>' expandMacrosWith: environment)
+		caption: ('Unimplemented Selectors in <1p>' expandMacrosWith: environment)
 		environment: environment!
 
 createComponents
@@ -101,7 +101,7 @@ printCaptionForClass: aClass on: aWriteStream
 
 	^aWriteStream display: self browserEnvironment!
 
-printCaptionForMethod: aCompiledMethod on: aWriteStream 
+printCaptionForMethod: aCompiledMethod on: aWriteStream
 	self browserEnvironment displayOn: aWriteStream!
 
 queryCommand: aCommandQuery 

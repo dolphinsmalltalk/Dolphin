@@ -67,10 +67,10 @@ basicAsSYSTEMTIME
 	(lib fileTimeToSystemTime: self lpSystemTime: answer) ifFalse: [lib systemError].
 	^answer!
 
-displayOn: aStream 
-	"Append a textual representation of the receiver to aStream, suitable for an end user."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: self asSYSTEMTIME!
+	self asSYSTEMTIME displayOn: aPuttableStream!
 
 integerValue: anInteger 
 	"Set the number of 100-nanosecond intervals the receiver represents since the

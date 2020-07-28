@@ -55,18 +55,14 @@ description: aString
 
 	description := aString!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a user
-	would want to see it."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	self date displayOn: aStream.
-	aStream nextPutAll: ': '.
-	aStream nextPutAll: self description.
-	aStream nextPutAll: (self isDebit 
-		ifTrue: [' - debit ']
-		ifFalse: [ ' - credit ']).
-	self amount displayOn: aStream.
-!
+	self date displayOn: aPuttableStream.
+	aPuttableStream nextPutAll: ': '.
+	aPuttableStream nextPutAll: self description.
+	aPuttableStream nextPutAll: (self isDebit ifTrue: [' - debit '] ifFalse: [' - credit ']).
+	self amount displayOn: aPuttableStream!
 
 initialize
 	"Private - Initialize the receiver"

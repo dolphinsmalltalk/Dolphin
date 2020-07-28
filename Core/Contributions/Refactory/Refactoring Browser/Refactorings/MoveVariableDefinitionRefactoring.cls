@@ -26,23 +26,20 @@ checkParseTree
 	| node |
 	#rbFix.	"If already at innermost possible scope raise this as an abort to avoid an annoying message box, and include the variable name in the messages"
 	blockNodes := OrderedCollection new.
-	node := self 
+	node := self
 				whichVariableNode: parseTree
 				inInterval: interval
 				name: name.
 	node isNil ifTrue: [self refactoringError: 'Unable to locate node in parse tree'].
 	definingNode := node whoDefines: name.
 	definingNode isNil ifTrue: [self refactoringError: 'Cannot locate variable definition'].
-	definingNode isSequence 
+	definingNode isSequence
 		ifFalse: [self refactoringError: ('''<1s>'' is an argument' expandMacrosWith: name)].
-	(self usesDirectly: definingNode) 
+	(self usesDirectly: definingNode)
 		ifTrue: 
-			[self refactoringAborted: ('''<1s>'' is already bound tightly as possible' 
-						expandMacrosWith: name)].
-	(self checkNodes: (self subblocksIn: definingNode)) 
-		ifFalse: 
-			[self 
-				refactoringError: ('''<1s>'' is possibly read before written' expandMacrosWith: name)]!
+			[self refactoringAborted: ('''<1s>'' is already bound tightly as possible' expandMacrosWith: name)].
+	(self checkNodes: (self subblocksIn: definingNode))
+		ifFalse: [self refactoringError: ('''<1s>'' is possibly read before written' expandMacrosWith: name)]!
 
 class: aClass selector: aSelector interval: anInterval 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."

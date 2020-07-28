@@ -39,10 +39,10 @@ dayOfMonth
 dayOfWeek
 	^self wDayOfWeek + 1!
 
-displayOn: aStream
-	"Append a displayable representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	Locale default displayDateTime: self on: aStream!
+	aPuttableStream locale displayDateTime: self on: aPuttableStream!
 
 hour
 	^self wHour!

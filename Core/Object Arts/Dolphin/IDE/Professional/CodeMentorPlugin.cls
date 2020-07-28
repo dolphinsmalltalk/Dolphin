@@ -148,12 +148,11 @@ createSchematicWiring
 defaultHelpId
 	^10750!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	as a plugin within the Class Browser"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	This will be used as the label for the tab when the receiver is being displayed as a plugin within the Class Browser."
 
-	aStream nextPutAll: 'Code Mentor'!
+	aPuttableStream nextPutAll: 'Code Mentor'!
 
 exportIgnoredRules
 	"Export the Smalllint rules filters used by the receiver to ignore rule failures"
@@ -509,28 +508,28 @@ printTransformationRuleHtmlFor: anIXMLDOMElement on: aStream
 				print: node innerXML;
 				nextPutAll: '"> automatic transformation</a> available to address this issue.</i></p>']!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery> argument."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	#filterOutRule == selector 
+	#filterOutRule == selector
 		ifTrue: 
 			[| failedRule text |
 			failedRule := self failedRule.
-			text := (failedRule notNil and: [failedRule problemCount > 1]) 
-						ifTrue: ['Ignore these <1d> rule failures' expandMacrosWith: failedRule problemCount]
+			text := (failedRule notNil and: [failedRule problemCount > 1])
+						ifTrue: ['Ignore these <1p> rule failures' expandMacrosWith: failedRule problemCount]
 						ifFalse: ['Ignore this rule failure'].
 			aCommandQuery
 				isEnabled: (failedRule notNil and: [failedRule notEmpty]);
 				text: text.
 			^true].
-	#selectIgnoredRules == selector 
+	#selectIgnoredRules == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: self isFilterActive.
 			^true].
-	#refresh == selector 
+	#refresh == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (isRefreshPending or: [self refreshMode == #manual]).
 			^true].

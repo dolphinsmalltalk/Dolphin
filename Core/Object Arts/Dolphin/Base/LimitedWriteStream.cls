@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #LimitedWriteStream
-	instanceVariableNames: 'stream limit limitBlock start printed'
+	instanceVariableNames: 'stream limit limitBlock start visited visitedBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -10,6 +10,14 @@ LimitedWriteStream guid: (GUID fromString: '{559e9343-8db5-45dd-bf26-68644d392dc
 LimitedWriteStream comment: ''!
 !LimitedWriteStream categoriesForClass!Collections-Streams! !
 !LimitedWriteStream methodsFor!
+
+alreadyVisited: aCompositeObject
+	self visitedBlock
+		ifNil: 
+			[self nextPutAll: '... a cyclic ref to '.
+			aCompositeObject basicPrintOn: self.
+			self nextPutAll: '...']
+		ifNotNil: [:block | block value: aCompositeObject]!
 
 atEnd
 	"Answer whether the receiver is at the end of its values."
@@ -24,6 +32,16 @@ contents
 
 	stream position > limit ifTrue: [stream position: limit].
 	^stream contents!
+
+contentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of elements from the receiver."
+
+	^stream contentsSpecies!
+
+encodedSizeOf: anObject
+	"Answer the number of units that would be occupied by anObject if it were present in this stream."
+
+	^stream encodedSizeOf: anObject!
 
 isWriteable
 	"Answer whether the receiver can be written to (i.e. it implements the 
@@ -44,27 +62,49 @@ limitBlock
 limitBlock: aMonadicValuable
 	limitBlock := aMonadicValuable!
 
+locale
+	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+
+	^stream locale!
+
+locale: aLocale
+	stream locale: aLocale!
+
 moveToEnd
 	stream moveToEnd!
 
 next: anInteger put: aCharacter
-	stream position >= limit
-		ifTrue: [limitBlock cull: self]
+	| pos |
+	pos := stream position.
+	stream position + anInteger > limit
+		ifTrue: 
+			[stream next: (limit - pos max: 0) put: aCharacter.
+			limitBlock cull: self]
 		ifFalse: [stream next: anInteger put: aCharacter].
 	^aCharacter!
 
 nextPut: anObject
-	"Store anObject as the next element of the receiver, evaluating the limit block if the limit is reached or exceeded."
+	"Store anObject as the next element of the receiver, evaluating the limit block if the limit is reached or would be exceeded."
 
-	stream position >= limit ifTrue: [limitBlock cull: self] ifFalse: [stream nextPut: anObject].
+	stream position + (stream encodedSizeOf: anObject) > limit
+		ifTrue: [limitBlock cull: self]
+		ifFalse: [stream nextPut: anObject].
 	^anObject!
 
-nextPutAll: aCollection
-	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
-	Answer aCollection"
+nextPutAll: aSequencedReadableCollection
+	"Store the elements in the argument as the next elements accessible by the receiver. If the stream would exceed the limit then only those elements of aCollection up to the limit will be written and the limit block will be evaluated. Answer the argument."
 
-	stream position >= limit ifTrue: [limitBlock cull: self] ifFalse: [stream nextPutAll: aCollection].
-	^aCollection!
+	| pos |
+	pos := stream position.
+	pos + aSequencedReadableCollection size > limit
+		ifTrue: 
+			[stream
+				next: (limit - pos max: 0)
+				putAll: aSequencedReadableCollection
+				startingAt: 1.
+			limitBlock cull: self]
+		ifFalse: [stream nextPutAll: aSequencedReadableCollection].
+	^aSequencedReadableCollection!
 
 originalContents
 	^stream originalContents!
@@ -79,16 +119,6 @@ peekFor: anObject
 position
 	^stream position min: limit!
 
-print: aCompositeObject with: aNiladicValuable
-	(printed includes: aCompositeObject)
-		ifTrue: 
-			[self nextPutAll: '... a cyclic ref to '.
-			aCompositeObject basicPrintOn: self.
-			self nextPutAll: '...'.
-			^self].
-	printed add: aCompositeObject.
-	aNiladicValuable ensure: [printed remove: aCompositeObject ifAbsent: []]!
-
 reset
 	stream reset!
 
@@ -96,16 +126,37 @@ setStream: aCollection limit: anInteger limitBlock: aLimitBlock
 	stream := aCollection.
 	start := stream position.
 	limit := start + anInteger.
-	limitBlock := aLimitBlock.
-	printed := IdentitySet new! !
+	limitBlock := aLimitBlock!
+
+visit: aCompositeObject do: aNiladicValuable
+	visited
+		ifNil: [visited := IdentitySet with: aCompositeObject]
+		ifNotNil: 
+			[(visited includes: aCompositeObject)
+				ifTrue: 
+					[self alreadyVisited: aCompositeObject.
+					^self].
+			visited add: aCompositeObject].
+	aNiladicValuable ensure: [visited remove: aCompositeObject ifAbsent: []]!
+
+visitedBlock
+	^visitedBlock!
+
+visitedBlock: anObject
+	visitedBlock := anObject! !
+!LimitedWriteStream categoriesFor: #alreadyVisited:!private! !
 !LimitedWriteStream categoriesFor: #atEnd!public!testing! !
 !LimitedWriteStream categoriesFor: #checkLimit!helpers!private! !
 !LimitedWriteStream categoriesFor: #contents!accessing!public! !
+!LimitedWriteStream categoriesFor: #contentsSpecies!constants!private! !
+!LimitedWriteStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
 !LimitedWriteStream categoriesFor: #isWriteable!public!testing! !
 !LimitedWriteStream categoriesFor: #limit!accessing!public! !
 !LimitedWriteStream categoriesFor: #limit:!public! !
 !LimitedWriteStream categoriesFor: #limitBlock!accessing!public! !
 !LimitedWriteStream categoriesFor: #limitBlock:!accessing!public! !
+!LimitedWriteStream categoriesFor: #locale!accessing!public! !
+!LimitedWriteStream categoriesFor: #locale:!accessing!public! !
 !LimitedWriteStream categoriesFor: #moveToEnd!public! !
 !LimitedWriteStream categoriesFor: #next:put:!public! !
 !LimitedWriteStream categoriesFor: #nextPut:!accessing!public! !
@@ -113,9 +164,11 @@ setStream: aCollection limit: anInteger limitBlock: aLimitBlock
 !LimitedWriteStream categoriesFor: #originalContents!accessing!public! !
 !LimitedWriteStream categoriesFor: #peekFor:!accessing!public! !
 !LimitedWriteStream categoriesFor: #position!public! !
-!LimitedWriteStream categoriesFor: #print:with:!public! !
 !LimitedWriteStream categoriesFor: #reset!public! !
 !LimitedWriteStream categoriesFor: #setStream:limit:limitBlock:!initializing!private! !
+!LimitedWriteStream categoriesFor: #visit:do:!public! !
+!LimitedWriteStream categoriesFor: #visitedBlock!public! !
+!LimitedWriteStream categoriesFor: #visitedBlock:!public! !
 
 !LimitedWriteStream class methodsFor!
 

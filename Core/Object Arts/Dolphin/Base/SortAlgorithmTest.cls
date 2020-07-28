@@ -28,9 +28,8 @@ add: aCollection sortBlock: block
 				print: comp;
 				nextPutAll: ' comparisons required to add ';
 				print: sorted size;
-				nextPutAll: ' objects to a SortedCollection taking '.
-			duration printHumanReadableOn: Transcript.
-			Transcript
+				nextPutAll: ' objects to a SortedCollection taking ';
+				display: duration;
 				cr;
 				flush].
 	self assertSorted: sorted!

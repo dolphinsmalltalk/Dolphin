@@ -26,8 +26,8 @@ defaultColor
 
 	^Color red!
 
-displayOn: aStream
-	aStream
+displayOn: aPuttableStream
+	aPuttableStream
 		space;
 		print: (colorSelectorView indexOfRGB: selectedRGB);
 		nextPutAll: '  (';

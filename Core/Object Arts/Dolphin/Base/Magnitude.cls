@@ -86,7 +86,17 @@ min: operand
 
 	^self < operand
 		ifTrue:  [self]
-		ifFalse: [operand]! !
+		ifFalse: [operand]!
+
+printString
+	"Answer a <readableString> whose characters are a description of the receiver as a Smalltalk developer would want to see it."
+
+	"Implementation Note: Avoid the cost of using a LimitedWriteStream for most cases."
+
+	| stream |
+	stream := String smalltalkWriteStream: 32.
+	self printOn: stream.
+	^stream contents! !
 !Magnitude categoriesFor: #<!comparing!public! !
 !Magnitude categoriesFor: #<=!comparing!public! !
 !Magnitude categoriesFor: #=!comparing!public! !
@@ -98,6 +108,7 @@ min: operand
 !Magnitude categoriesFor: #isNaN!public!testing! !
 !Magnitude categoriesFor: #max:!comparing!public! !
 !Magnitude categoriesFor: #min:!comparing!public! !
+!Magnitude categoriesFor: #printString!public! !
 
 Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!
 

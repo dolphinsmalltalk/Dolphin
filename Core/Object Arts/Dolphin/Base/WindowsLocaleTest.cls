@@ -12,7 +12,7 @@ WindowsLocaleTest comment: ''!
 !WindowsLocaleTest methodsFor!
 
 defaultSubject
-	^Locale lcid: 2057!
+	^Locale named: 'en-GB'!
 
 testDisplayFloatOnNegativeModes
 	| info subject format |
@@ -54,9 +54,9 @@ testEnglishName
 	#(1033 'English' 2057 'English' 1034 'Spanish' 1106 'Welsh' 11274 'Spanish') pairsDo: [:lcid :language |
 		self assert: (Locale lcid: lcid) englishLanguageName equals: language]!
 
-testPrintFloat
+testDisplayFloatOn
 	| subject |
-	{{Locale lcid: 2057.
+	{{Locale named: 'en-GB'.
 			{{Float infinity. '∞'}.
 				{Float negativeInfinity. '-∞'}.
 				{Float nan. 'NaN'}.
@@ -78,7 +78,7 @@ testPrintFloat
 				{1234567.89. '1,234,567.89'}.
 				{-1234567.89. '-1,234,567.89'}.
 				{1.25e22. '12,500,000,000,000,000,000,000.00'}}}.
-		{Locale lcid: 1034.
+		{Locale named: 'es-ES_tradnl'.
 			{{Float infinity. 'Infinito'}.
 				{Float negativeInfinity. '-Infinito'}.
 				{Float nan. 'NeuN'}.
@@ -107,7 +107,7 @@ testPrintFloat
 				subject := each first.
 				each second do: 
 						[:pair |
-						actual := subject printFloat: pair first.
+						actual := pair first displayString: subject.
 						self assert: actual equals: pair second]]!
 
 testPrintFloatGrouping

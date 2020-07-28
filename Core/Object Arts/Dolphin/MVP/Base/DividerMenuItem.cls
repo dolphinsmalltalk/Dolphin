@@ -41,11 +41,10 @@ commandDescription
 
 	^CommandDescription command: nil description: '|'!
 
-displayOn: aStream
-	"Appends the receiver to aStream as a representation that a 
-	user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: '|'!
+	aPuttableStream nextPut: $|!
 
 id
 	"Answers the menu item identifier for the receiver"

@@ -417,7 +417,7 @@ sp: anIntegerIndex
 
 stackTrace: anInteger
 	| stackStream |
-	stackStream := String writeStream: 25 * ((anInteger max: 0) min: 20).
+	stackStream := String smalltalkWriteStream: 25 * ((anInteger max: 0) min: 20).
 	[self printStackOn: stackStream depth: anInteger] on: Error do: [:e | e notify].
 	^stackStream contents!
 

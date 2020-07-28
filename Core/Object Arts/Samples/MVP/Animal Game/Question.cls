@@ -19,11 +19,12 @@ ask
 		ifTrue: [ self yes ask ]
 		ifFalse: [ self no ask ].!
 
-displayOn: aStream
-	"Answer the name of the receiver as a user should see it. For this
-	we append a question mark."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self text; nextPutAll: ' ?'.!
+	aPuttableStream
+		nextPutAll: self text;
+		nextPutAll: ' ?'!
 
 no
 	"Answer the branch in the knowledge tree to take as the result of a 'no' answer
@@ -38,7 +39,7 @@ printOn: aStream
 	super printOn: aStream.
 	aStream nextPut: $(.
 	self displayOn: aStream.
-	aStream nextPut: $).!
+	aStream nextPut: $)!
 
 text
 	"Answer the receiver's question as a text String"

@@ -562,7 +562,7 @@ methodPackage
 
 	| methods oldPkg newPkg captionPostscript default |
 	methods := self selections.
-	methods size = 1 
+	methods size = 1
 		ifTrue: 
 			[captionPostscript := methods first.
 			oldPkg := methods first owningPackage.
@@ -574,7 +574,7 @@ methodPackage
 			classes := methods collect: [:each | each methodClass].
 			default := classes size = 1 ifTrue: [classes first].
 			captionPostscript := 'methods'].
-	newPkg := PackagePrompter 
+	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
 				caption: ('Package of <1d> ...' expandMacrosWith: captionPostscript)
 				default: default
@@ -776,19 +776,19 @@ onPromptToSaveChanges: aSelectionChangingEvent
 
 	^sourcePresenter prompt: 'source' toSaveChanges: aSelectionChangingEvent!
 
-onTipTextRequired: tool 
+onTipTextRequired: tool
 	"Private - Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd |
 	cmd := tool command.
-	cmd == #browseHierarchy 
+	cmd == #browseHierarchy
 		ifTrue: [^'Open Hierarchy Browser on <1p>' expandMacrosWith: self selection].
 	cmd == #browseSystem ifTrue: [^'Open System Browser on <1p>' expandMacrosWith: self selection].
-	#clearSelection == cmd 
+	#clearSelection == cmd
 		ifTrue: 
 			[| methods |
 			methods := self selectedMethods.
-			^'Delete <1d>' 
+			^'Delete <1d>'
 				expandMacrosWith: (methods size = 1 ifTrue: [methods first] ifFalse: ['Selected Methods'])].
 	^super onTipTextRequired: tool!
 
@@ -881,7 +881,8 @@ queryCommand: aCommandQuery
 						ifFalse: 
 							[aCommandQuery isEnabled: true.
 							method methodClass name].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: text).
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {text}
+						locale: Locale smalltalk).
 			^true].
 	#browseMethodPackages == selector
 		ifTrue: 
@@ -889,7 +890,10 @@ queryCommand: aCommandQuery
 			packages := (methods collect: [:each | each owningPackage]) asSet.
 			aCommandQuery isEnabled: packages notEmpty.
 			aCommandQuery text: (packages size = 1
-						ifTrue: [aCommandQuery commandDescription menuText expandMacrosWith: packages anyOne name printString]
+						ifTrue: 
+							[aCommandQuery commandDescription menuText
+								expandMacrosWithArguments: {packages anyOne name printString}
+								locale: Locale smalltalk]
 						ifFalse: ['Packages']).
 			^true].
 	"We want find next to work, even when the source pane does not have focus"
@@ -949,22 +953,21 @@ saveMethod: aString in: aClass categories: aCollection package: aPackageOrNil
 		ifFalse: [sourcePresenter view selectionRange: originalSelection].
 	^newMethod!
 
-saveNewMethod: aString 
+saveNewMethod: aString
 	| editedMethod |
 	editedMethod := self selectedMethod.
-	(editedMethod notNil and: [self parseTree selector == editedMethod selector]) 
+	(editedMethod notNil and: [self parseTree selector == editedMethod selector])
 		ifFalse: 
 			["Saving a method other than that which was being edited."
-			self parseContext 
+			self parseContext
 				ifNotNil: 
-					[:class | 
-					(class includesSelector: self parseTree selector) 
-				ifTrue: 
-					[(MessageBox 
-						confirm: ('<1d> already defines <2p><n><n>Are you sure you would like to overwrite it?' 
-								expandMacrosWith: self parseContext
-								with: self parseTree selector)) 
-									ifFalse: [^nil]]]].
+					[:class |
+					(class includesSelector: self parseTree selector)
+						ifTrue: 
+							[(MessageBox confirm: ('<1p> already defines <2p><n><n>Are you sure you would like to overwrite it?'
+										expandMacrosWith: self parseContext
+										with: self parseTree selector))
+								ifFalse: [^nil]]]].
 	parentPresenter saveNewMethod: aString!
 
 searchEnvironment

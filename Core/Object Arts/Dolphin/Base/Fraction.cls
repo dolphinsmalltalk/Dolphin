@@ -147,11 +147,10 @@ denominator
 
 	^denominator!
 
-displayOn: aStream
-	"Append to the <puttableStream>, aStream, a <readableString> whose characters are 
-	a representation of the receiver as a user would want to see it (in this case sans parenthesis)."
-	
-	aStream 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
 		print: numerator;
 		nextPut: $/;
 		print: denominator!

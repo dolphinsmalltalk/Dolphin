@@ -188,13 +188,13 @@ mutateIntoCommand
 	"Private - Mutate the selected item into a <CommandMenuItem>."
 
 	self mutateSelection: 
-			[:item | 
+			[:item |
 			| proceed |
 			proceed := true.
-			(item items select: [:e | e command notNil and: [e command ~~ #noCommand]]) notEmpty 
+			(item items select: [:e | e command notNil and: [e command ~~ #noCommand]]) notEmpty
 				ifTrue: 
-					[(MessageBox 
-						confirm: ('The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?' 
+					[(MessageBox
+						confirm: ('The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
 								expandMacrosWith: item description)
 						caption: 'Mutate Menu into Command...') ifFalse: [proceed := false]].
 			proceed ifTrue: [self commandItemClass commandDescription: item commandDescription]]!

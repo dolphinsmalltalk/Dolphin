@@ -45,7 +45,7 @@ dictionaryKeyedAspectsTest: dictClass
 	| subject batchSize |
 	subject := dictClass new.
 	batchSize := subject publishedKeyedAspectsBatchSize.
-	1 to: batchSize * 2 + 1 do: [:i | subject at: i put: i displayString].
+	1 to: batchSize * 2 + 1 do: [:i | subject at: i put: i printString].
 	self collectionKeyedAspectsTest: subject!
 
 sequenceableCollectionKeyedAspectsTest: seqCollClass

@@ -158,7 +158,7 @@ incTemp: suffix temp: offset
 	self printTempSuffix: offset!
 
 initialize
-	stream := String writeStream: 256!
+	stream := String smalltalkWriteStream: 256!
 
 isZero
 	"Private - Interpret an IsZero instruction (compares for identity with SmallInteger zero)."

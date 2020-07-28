@@ -252,9 +252,9 @@ classPackage
 	| class newPkg oldPkg |
 	class := self selection.
 	oldPkg := class owningPackage.
-	newPkg := PackagePrompter 
+	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
-				caption: ('Package of <1d>...' expandMacrosWith: class)
+				caption: ('Package of <1p>...' expandMacrosWith: class)
 				default: nil
 				validationBlock: [:package | package notNil and: [class environment includesKey: class name]].
 	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self queryMoveClass: class toPackage: newPkg]!
@@ -327,30 +327,30 @@ deleteItCommand
 	classesPresenter hasFocus ifTrue: [^#deleteClassHierarchy].
 	^nil!
 
-dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange 
+dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 	"Private - Handle the drop of aSourceClass on aTargetClass in the receiver"
 
 	(aSourceClass == aTargetClass or: 
 			[aSourceClass superclass == aTargetClass or: 
-					[(MessageBox 
-						confirm: ('Move class <1d> to be subclass of <2d>?' expandMacrosWith: aSourceClass with: aTargetClass)) 
-							not]]) 
+					[(MessageBox
+						confirm: ('Move class <1p> to be subclass of <2p>?' expandMacrosWith: aSourceClass with: aTargetClass))
+							not]])
 		ifTrue: [^self].
-	aCompositeRefactoryChange 
+	aCompositeRefactoryChange
 		addChange: (DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
-dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange 
+dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 	"Don't copy the method over itself, or over an existing method in the class only at user behest. Answer whether the method
 	will be compiled in the new class."
 
 	(aClass == aCompiledMethod methodClass or: 
 			[(aClass includesSelector: aCompiledMethod selector) and: 
-					[(MessageBox confirm: ('The selector <1p> already exists in <2p><n><n>Do you wish to overwrite it?' 
+					[(MessageBox confirm: ('The selector <1p> already exists in <2p><n><n>Do you wish to overwrite it?'
 								expandMacrosWith: aCompiledMethod selector
-								with: aClass)) 
-						not]]) 
+								with: aClass))
+						not]])
 		ifTrue: [^false].
-	aCompositeRefactoryChange addChange: (aCompositeRefactoryChange addMethodChangeClass 
+	aCompositeRefactoryChange addChange: (aCompositeRefactoryChange addMethodChangeClass
 				compile: aCompiledMethod getSource
 				in: aClass
 				categories: aCompiledMethod categories
@@ -455,7 +455,7 @@ onClass: aClass renamedTo: text
 		on: Error
 		do: [:e | e okCancel]!
 
-onClass: aClass renameTo: text accept: booleanValue 
+onClass: aClass renameTo: text accept: booleanValue
 	"The user has initiated a rename of the class, aClass, by editing the label in the class
 	tree. Ask the user to confirm the action, and if so queue a deferred action to perform the
 	actual rename."
@@ -463,13 +463,13 @@ onClass: aClass renameTo: text accept: booleanValue
 	"Implementation Notes: We don't set the booleanValue holder to true, because the rename may
 	not work."
 
-	text isEmpty 
+	text isEmpty
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	(MessageBox 
+	(MessageBox
 		confirm: ('Are you sure you would like to rename <1p> to <2s>?' expandMacrosWith: aClass name
-				with: text)) 
+				with: text))
 			ifTrue: 
 				["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
 				[self onClass: aClass renamedTo: text] postToMessageQueue]!
@@ -595,28 +595,28 @@ packages: aPackageCollection
 
 !
 
-performDropChanges: aCompositeRefactoryChange target: aClass 
+performDropChanges: aCompositeRefactoryChange target: aClass
 	| errors change changeCount |
 	changeCount := aCompositeRefactoryChange changes size.
 	changeCount = 0 ifTrue: [^self].
-	change := changeCount = 1 
+	change := changeCount = 1
 				ifFalse: [aCompositeRefactoryChange]
 				ifTrue: [aCompositeRefactoryChange changes first].
 	errors := 0.
-	[self systemModel changeManager performChange: change] 
+	[self systemModel changeManager performChange: change]
 		on: Error
 		do: [:ex | ex okToContinue]
 		on: MethodCompileFailed
 		do: 
-			[:ex | 
+			[:ex |
 			errors := errors + 1.
 			ex resumeWithStubMethod].
-	errors > 0 
+	errors > 0
 		ifTrue: 
-			[(MessageBox new)
-				uniqueId: [self] method displayString;
+			[MessageBox new
+				uniqueId: [self] method;
 				isSuppressible: true;
-				warning: ('<1d> dropped method(s) failed to compile in <2d>.<n><n>Check Transcript for details.' 
+				warning: ('<1p> dropped method(s) failed to compile in <2p>.<n><n>Check Transcript for details.'
 							expandMacrosWith: errors
 							with: aClass)]!
 
@@ -639,34 +639,35 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 						receiver: self systemModel
 						selector: cmdSelector
 						arguments: {each value. class. self searchEnvironment}.
-			(aMenu addCommand: msg description: (aString expandMacrosWith: each key name with: each value))
-				isModalCommand: true]!
+			(aMenu addCommand: msg
+				description: (aString expandMacrosWithArguments: {each key name. each value} locale: Locale smalltalk))
+					isModalCommand: true]!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery> argument."
 
 	| selector class |
 	selector := aCommandQuery commandSymbol.
 	class := self selectionOrNil.
-	#browseIt == selector 
+	#browseIt == selector
 		ifTrue: 
 			[selector := self browseItCommand.
-			selector isNil 
+			selector isNil
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	#clearSelection == selector 
+	#clearSelection == selector
 		ifTrue: 
 			[selector := self deleteItCommand.
-			selector isNil 
+			selector isNil
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	selector == #browseHierarchy 
+	selector == #browseHierarchy
 		ifTrue: 
 			[| name |
-			class notNil 
+			class notNil
 				ifTrue: 
 					[name := class name.
 					aCommandQuery
@@ -675,54 +676,56 @@ queryCommand: aCommandQuery
 				ifFalse: 
 					[name := 'Class'.
 					aCommandQuery isEnabled: false].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: name).
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
+						locale: Locale smalltalk).
 			^true].
-	#browseSystem == selector 
+	#browseSystem == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: class notNil.
 			^true].
-	#browseClassPackage == selector 
+	#browseClassPackage == selector
 		ifTrue: 
 			[| name pkg |
-			(class isNil or: [(pkg := class owningPackage) isNil]) 
+			(class isNil or: [(pkg := class owningPackage) isNil])
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					name := '']
 				ifFalse: 
 					[aCommandQuery isEnabled: true.
 					name := pkg name printString].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: name).
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
+						locale: Locale smalltalk).
 			^true].
-	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #deleteClassHierarchy #renameClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu) 
-		identityIncludes: selector) 
+	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #deleteClassHierarchy #renameClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: class notNil.
 				^true].
-	#browsePublishedEvents == selector 
+	#browsePublishedEvents == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).
 			^true].
-	#browsePublishedAspects == selector 
+	#browsePublishedAspects == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedAspectsOfInstances]).
 			^true].
-	#viewsMenu == selector 
+	#viewsMenu == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil 
+			[aCommandQuery isEnabled: (class notNil
 						and: [(class includesBehavior: Presenter) or: [class includesBehavior: View]]).
 			^true].
-	(#(#viewsEditMenu #viewsShowMenu) identityIncludes: selector) 
+	(#(#viewsEditMenu #viewsShowMenu) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [class resourceIdentifiers notEmpty]).
 			#viewsShowMenu == selector ifTrue: [aCommandQuery isDefault: true].
 			^true].
-	(#(#browseInstanceVariables #createInstanceVariableAccessors) identityIncludes: selector) 
+	(#(#browseInstanceVariables #createInstanceVariableAccessors) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [self actualClass instVarNames notEmpty]).
 			^true].
-	#browseTests == selector 
+	#browseTests == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (self testBrowserClass notNil and: 
 							[class notNil and: 
 									["This odd way of testing if the selected class is a kind of TestCase is 
@@ -739,13 +742,13 @@ queryMoveClass: aClass toPackage: aPackage
 	| classPackage response packMan subclasses |
 	packMan := self systemModel packageManager.
 	classPackage := packMan packageOfClass: aClass.
-	subclasses := (aClass allSubclasses collect: [:s | { s. packMan packageOfClass: s}])
+	subclasses := (aClass allSubclasses collect: [:s | {s. packMan packageOfClass: s}])
 				select: [:a | a second isNil or: [a second == classPackage]].
 	classPackage isNil
 		ifTrue: [response := #yes	"Move all subclasses without package too"]
 		ifFalse: 
 			[| prompt |
-			prompt := 'The class <1d> is currently owned by the <2p> package' expandMacrosWith: aClass
+			prompt := 'The class <1p> is currently owned by the <2p> package' expandMacrosWith: aClass
 						with: classPackage name.
 			subclasses isEmpty
 				ifTrue: 

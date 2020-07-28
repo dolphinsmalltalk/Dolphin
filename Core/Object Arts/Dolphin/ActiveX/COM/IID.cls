@@ -13,15 +13,14 @@ Many interfaces are not recorded in the registry, but if they have marshalling s
 !IID categoriesForClass!External-Data-Structured-COM! !
 !IID methodsFor!
 
-displayOn: aStream
-	"Append an 'end-user suitable' textual representation of the receiver to aStream.
-	The interface name is rather more helpful, if available!!"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| ifName |
 	ifName := self interfaceName.
-	ifName isNil 
-		ifTrue: [super displayOn: aStream]
-		ifFalse: [aStream nextPutAll: ifName]!
+	ifName isNil
+		ifTrue: [super displayOn: aPuttableStream]
+		ifFalse: [aPuttableStream nextPutAll: ifName]!
 
 interfaceName
 	"Answer the name of the interface associated with the receiver, or nil if it is

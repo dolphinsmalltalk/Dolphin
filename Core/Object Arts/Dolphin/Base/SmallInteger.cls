@@ -288,10 +288,10 @@ decimalDigitLength
 					ifFalse: [self < 1000000000000 ifTrue: [12] ifFalse: [13]]].
 	self < 100000000000000000 
 			ifTrue: [
-				^self < 1000000000000000 printString 
+				^self < 1000000000000000 
 					ifTrue: [self < 100000000000000 ifTrue: [14] ifFalse: [15]]
 					ifFalse: [self < 10000000000000000 ifTrue: [16] ifFalse: [17]]].
-	^self < 1000000000000000000 printString size ifTrue: [18] ifFalse: [19]
+	^self < 1000000000000000000 ifTrue: [18] ifFalse: [19]
 !
 
 deepCopy

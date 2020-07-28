@@ -53,10 +53,10 @@ contents
 	#deprecated.
 	^self subclassResponsibility!
 
-displayOn: aStream
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self name!
+	aPuttableStream nextPutAll: self name!
 
 hash
 	"Answer the <integer> hash value for the receiver."

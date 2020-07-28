@@ -49,15 +49,15 @@ checkSelfReturns
 	(searcher executeTree: extractedParseTree initialAnswer: false) 
 		ifTrue: [self placeholderNode asReturn]!
 
-checkSingleAssignment: varName 
-	((RBReadBeforeWrittenTester isVariable: varName readBeforeWrittenIn: extractedParseTree) 
-		or: [extractedParseTree containsReturn]) 
+checkSingleAssignment: varName
+	((RBReadBeforeWrittenTester isVariable: varName readBeforeWrittenIn: extractedParseTree)
+		or: [extractedParseTree containsReturn])
 			ifTrue: 
-				[self 
-					refactoringError: ('Cannot extract assignments to temporaries without all references (check ''<1s>'')' 
+				[self
+					refactoringError: ('Cannot extract assignments to temporaries without all references (check ''<1s>'')'
 							expandMacrosWith: varName)].
 	extractedParseTree addNode: (RBReturnNode value: (RBVariableNode named: varName)).
-	modifiedParseTree := ParseTreeRewriter 
+	modifiedParseTree := ParseTreeRewriter
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
 				in: modifiedParseTree!

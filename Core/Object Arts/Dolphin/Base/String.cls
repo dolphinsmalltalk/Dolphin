@@ -55,14 +55,6 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
 				nextPutAll: aSequencedReadableCollection;
 				contents]!
 
-_cmp: aString
-	"Private - Answer the receiver's <integer> ordinal collation order with respect to the <readableString> argument.
-	The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
-	This comparison is fast and locale insensitive."
-
-	<primitive: 220>
-	^self primitiveFailed: _failureCode!
-
 _indexOfAnyInString: aString startingAt: anInteger
 	| span |
 	#todo.	"Doesn't work for mixed encodings, only both ANSI or both UTF-8"
@@ -82,27 +74,6 @@ _sameAsString: aString
 	"Implementation Note: Double dispatched from String>>sameAs:. Works for any mix of encodings because <=> does."
 
 	^self == aString or: [aString <=> self == 0]!
-
-_separateSubStringsIn: aReadableString
-	| start size answer subSize |
-	(subSize := self size) == 0
-		ifTrue: [^self error: 'separator must consist of at least one character'].
-	subSize == 1 ifTrue: [^(self at: 1) _separateSubStringsIn: aReadableString].
-	start := 1.
-	size := aReadableString size.
-	answer := Array writeStream: 10.
-	
-	[| stop |
-	stop := aReadableString findString: self startingAt: start.
-	stop == 0
-		ifTrue: 
-			[^answer
-				nextPut: (aReadableString copyFrom: start to: size);
-				contents].
-	answer nextPut: (aReadableString copyFrom: start to: stop - 1).
-	(start := stop + subSize) > size]
-			whileFalse.
-	^answer contents!
 
 < aString
 	"Answer whether the receiver is lexically less than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
@@ -128,6 +99,14 @@ _separateSubStringsIn: aReadableString
 	since String>>= is case sensitive."
 
 	^self <=> aString <= 0!
+
+<===> aString
+	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> argument.
+	The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
+	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values, and takes no account of character classifications."
+
+	<primitive: 220>
+	^self primitiveFailed: _failureCode!
 
 <==> comparand
 	"Answer the receiver's <integer> collation order with respect to the <readableString> argument, comparand. 
@@ -177,7 +156,7 @@ _separateSubStringsIn: aReadableString
 		AssertionFailure		- anObject and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == anObject or: [anObject isString and: [(self _cmp: anObject) == 0]]!
+	^self == anObject or: [anObject isString and: [self <===> anObject == 0]]!
 
 > aString
 	"Answer whether the receiver is lexically greater than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
@@ -422,6 +401,11 @@ codePage
 
 	^self class codePage!
 
+codePointsDo: operation
+	"Evaluate the <monadicValuable> argument, operation, for each of the full code point <Character> elements of the receiver. Answers the receiver. The elements are evaluated in sequence."
+
+	self subclassResponsibility!
+
 contains: aString
 	"Answer whether the receiver contains the specified sub-string."
 
@@ -455,11 +439,11 @@ decodeNextFrom: aReadStream
 
 	^self subclassResponsibility!
 
-displayOn: aStream
-	"Append the receiver in end-user form to aStream. Since this message is intended
-	for producing end-user text, the receiver is appended to the stream as-is."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	Since this message is intended for producing end-user text, the receiver is appended to the stream as-is."
 
-	aStream nextPutAll: self!
+	aPuttableStream nextPutAll: self!
 
 displayString
 	"Answer a String representation of the receiver in a form suitable for
@@ -536,8 +520,47 @@ expandMacrosWithArguments: anArray
 	If n is omitted the default of 1 is used.	
 	"
 
-	| newStream readStream index char |
-	newStream := String writeStream: self size.
+	^self expandMacrosWithArguments: anArray locale: Locale userDefault!
+
+expandMacrosWithArguments: anArray locale: aLocale
+	"Expand the receiver with replaceable arguments.
+	e.g.
+		'Hello <D><N><1P> <D>' expandMacrosWithArguments: #('World' 1).
+		'Hello <2?Good:Bad> <1S>' expandMacrosWithArguments: #('World' false)
+
+	<nD> expands the nth parameter using it's #displayString for the <Locale>
+	<nP> expands the nth parameter using it's #printString
+	<nS> expands the nth parameter treating it as a <String>
+	<N> expands as a newline combination
+	<T> expands as a TAB
+	<n?xxxx:yyyy> if the nth parameter is true expands to 'xxxx' else 'expands to yyyy'
+
+	If n is omitted the default of 1 is used.	
+	"
+
+	| stream |
+	stream := String writeStream: self size.
+	stream locale: aLocale.
+	self expandMacrosWithArguments: anArray on: stream.
+	^stream contents!
+
+expandMacrosWithArguments: anArray on: aPuttableStream
+	"Expand the receiver with replaceable arguments from the <Array> argument onto the <puttableStream> argument.
+	e.g.
+		'Hello <D><N><1P> <D>' expandMacrosWithArguments: #('World' 1).
+		'Hello <2?Good:Bad> <1S>' expandMacrosWithArguments: #('World' false)
+
+	<nD> expands the nth parameter using it's #displayOn:
+	<nP> expands the nth parameter using it's #printOn:
+	<nS> expands the nth parameter treating it as a <String>
+	<N> expands as a newline combination
+	<T> expands as a TAB
+	<n?xxxx:yyyy> if the nth parameter is true expands to 'xxxx' else 'expands to yyyy'
+
+	If n is omitted the default of 1 is used.	
+	"
+
+	| readStream index char |
 	readStream := ReadStream on: self.
 	index := 1.
 	[(char := readStream nextAvailable) isNil] whileFalse: 
@@ -545,8 +568,8 @@ expandMacrosWithArguments: anArray
 				ifTrue: 
 					[| nextChar |
 					nextChar := readStream next asUppercase.
-					nextChar == $N ifTrue: [newStream cr].
-					nextChar == $T ifTrue: [newStream tab].
+					nextChar == $N ifTrue: [aPuttableStream cr].
+					nextChar == $T ifTrue: [aPuttableStream tab].
 					nextChar isDigit
 						ifTrue: 
 							[index := nextChar digitValue.
@@ -558,23 +581,22 @@ expandMacrosWithArguments: anArray
 							trueString := readStream upTo: $:.
 							falseString := readStream upTo: $>.
 							readStream position: readStream position - 1.
-							newStream nextPutAll: ((anArray at: index) ifTrue: [trueString] ifFalse: [falseString]).
+							aPuttableStream nextPutAll: ((anArray at: index) ifTrue: [trueString] ifFalse: [falseString]).
 							index := index + 1].
 					nextChar == $P
 						ifTrue: 
-							[(anArray at: index) printOn: newStream.
+							[(anArray at: index) printOn: aPuttableStream.
 							index := index + 1].
 					nextChar == $D
 						ifTrue: 
-							[(anArray at: index) displayOn: newStream.
+							[(anArray at: index) displayOn: aPuttableStream.
 							index := index + 1].
 					nextChar == $S
 						ifTrue: 
-							[newStream nextPutAll: (anArray at: index).
+							[aPuttableStream nextPutAll: (anArray at: index).
 							index := index + 1].
 					readStream skipTo: $>]
-				ifFalse: [newStream nextPut: (char == $% ifTrue: [readStream next] ifFalse: [char])]].
-	^newStream contents!
+				ifFalse: [aPuttableStream nextPut: (char == $% ifTrue: [readStream next] ifFalse: [char])]]!
 
 findString: aString 
 	"Answer the index of the <String> argument within the receiver. If the receiver does not
@@ -719,7 +741,7 @@ lines
 	separated by line delimiters. Blank lines are included.
 	N.B. It is assumed that a line delimiter consists of two characters."
 
-	^self subStrings: String lineDelimiter!
+	^String lineDelimiter split: self!
 
 lookup: keyInteger
 	"Answer the <Character> value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
@@ -912,12 +934,10 @@ printOn: aStream
 	Internal quotes are doubled to produce a literal String. Null characters are printed as
 	the Unicode Null symbol to avoid them being treated as null terminators by C api's."
 
-	| chars |
 	aStream nextPut: $'.
-	chars := ReadStream on: self.
-	[chars atEnd] whileFalse: 
-			[| ch |
-			(ch := chars next) == $\0
+	self codePointsDo: 
+			[:ch |
+			ch == $\0
 				ifTrue: [aStream nextPut: $\x2400]
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
@@ -926,7 +946,7 @@ refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
-	^anObject isSymbol not and: [self = anObject].!
+	^self = anObject and: [anObject isSymbol not]!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
@@ -1235,13 +1255,12 @@ withNormalizedLineDelimiters
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
 !String categoriesFor: #,!copying!public! !
-!String categoriesFor: #_cmp:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
-!String categoriesFor: #_separateSubStringsIn:!private!tokenizing! !
 !String categoriesFor: #<!comparing!public! !
 !String categoriesFor: #<<!printing!public! !
 !String categoriesFor: #<=!comparing!public! !
+!String categoriesFor: #<===>!public! !
 !String categoriesFor: #<==>!comparing!public! !
 !String categoriesFor: #<=>!comparing!public! !
 !String categoriesFor: #=!comparing!public! !
@@ -1274,6 +1293,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #byteSize!accessing!private! !
 !String categoriesFor: #capitalized!converting!public! !
 !String categoriesFor: #codePage!constants!public! !
+!String categoriesFor: #codePointsDo:!public! !
 !String categoriesFor: #contains:!public!searching! !
 !String categoriesFor: #copyReplaceAll:with:!public! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
@@ -1291,6 +1311,8 @@ withNormalizedLineDelimiters
 !String categoriesFor: #expandMacrosWith:with:with:!printing!public! !
 !String categoriesFor: #expandMacrosWith:with:with:with:!printing!public! !
 !String categoriesFor: #expandMacrosWithArguments:!printing!public! !
+!String categoriesFor: #expandMacrosWithArguments:locale:!printing!public! !
+!String categoriesFor: #expandMacrosWithArguments:on:!printing!public! !
 !String categoriesFor: #findString:!public!searching! !
 !String categoriesFor: #findString:startingAt:!public!searching! !
 !String categoriesFor: #findString:startingAt:ignoreCase:!public!searching! !
@@ -1538,11 +1560,10 @@ fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified
 	address."
 
-	| answer size lib cp |
+	| answer size lib |
 	lib := KernelLibrary default.
-	cp := self codePage.
 	(size := lib
-				wideCharToMultiByte: cp
+				wideCharToMultiByte: Win32Constants.CP_UTF8
 				dwFlags: 0
 				lpWideCharStr: anAddressOrUtf16String
 				cchWideChar: -1
@@ -1553,7 +1574,7 @@ fromUtf16String: anAddressOrUtf16String
 		ifTrue: [lib systemError].
 	answer := self new: size - 1.
 	lib
-		wideCharToMultiByte: cp
+		wideCharToMultiByte: Win32Constants.CP_UTF8
 		dwFlags: 0
 		lpWideCharStr: anAddressOrUtf16String
 		cchWideChar: -1
@@ -1629,6 +1650,18 @@ readFrom: aStream
 							^answer contents]].
 			answer nextPut: ch].
 	^answer contents!
+
+smalltalkWriteStream
+	"Answer a WriteStream on the a new sub-instance of the receiver."
+
+	^self smalltalkWriteStream: 32!
+
+smalltalkWriteStream: anInteger
+	"Answer a <WriteStream> on the a new sub-instance of the receiver with initialize size, anInteger, configured to display objects using <SmalltalkLocale> settings."
+
+	^(WriteStream on: (Utf8String new: anInteger))
+		locale: Locale smalltalk;
+		yourself!
 
 stbConvertFrom: aSTBClassConversion
 	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead.
@@ -1767,6 +1800,8 @@ withAll: aCollectionOfCharacters
 !String class categoriesFor: #new:!instance creation!public! !
 !String class categoriesFor: #newFixed:!instance creation!public! !
 !String class categoriesFor: #readFrom:!instance creation!public! !
+!String class categoriesFor: #smalltalkWriteStream!instance creation!public!streaming! !
+!String class categoriesFor: #smalltalkWriteStream:!instance creation!public!streaming! !
 !String class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !String class categoriesFor: #stbVersion!binary filing!constants!public! !
 !String class categoriesFor: #supportedCodePages!enquiries!public! !

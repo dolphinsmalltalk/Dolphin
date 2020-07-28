@@ -1675,7 +1675,9 @@ fileTypes
 			all
 				nextPut: $;;
 				nextPutAll: extensions.
-			types addLast: {'<1s> (<2s>)' expandMacrosWith: each FormatDescription asString with: extensions.
+			types
+				addLast: {'<1s> (<2s>)' expandMacrosWithArguments: {each FormatDescription asString. extensions}
+							locale: Locale invariant.
 						extensions}].
 	types
 		addLast: {'All Images'. all contents};

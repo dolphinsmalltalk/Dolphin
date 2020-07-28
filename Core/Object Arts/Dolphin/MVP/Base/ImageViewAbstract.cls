@@ -74,7 +74,7 @@ displayValue: anImage
 		invalidate;
 		invalidateLayout!
 
-drawBorderOn: aCanvas imageRect: imageRect displayRect: displayRect 
+drawBorderOn: aCanvas imageRect: imageRect displayRect: displayRect
 	"Draw the border on the canvas
 		- If the imageBorder <Symbol> is a recognized edgeStyle, use the Win32 function
 		  to draw the border.
@@ -86,13 +86,13 @@ drawBorderOn: aCanvas imageRect: imageRect displayRect: displayRect
 	borderStyle := self imageBorder.
 	borderStyle == #none ifTrue: [^imageRect].
 	edgeStyle := self class edgeStyleTable at: borderStyle
-				ifAbsent: [^Notification signal: self class name displayString , 'unknown edge style'].
+				ifAbsent: [^Notification signal: self class name , 'unknown edge style'].
 	"- Using the intersect of the two rectangles takes care of
 		 both scaling and clipping types of viewModes.
 	- Expand by the padding. NOTE: if insets>0, and viewMode clips (ie #normal #centered) 
 		you need to draw the border the width of the padding. (or it will look strange)"
 	edgeRect := (imageRect intersect: displayRect) expandBy: self insets.
-	aCanvas 
+	aCanvas
 		drawEdge: edgeRect
 		edge: edgeStyle
 		grfFlags: 15.	"15 = BF_RECT "

@@ -78,10 +78,10 @@ defaultComparisonPolicy
 
 	^SearchPolicy never!
 
-displayOn: aStream 
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
 
-	self aspectDescriptor displayAspectText: self subject on: aStream!
+	self aspectDescriptor displayAspectText: self subject on: aPuttableStream!
 
 editedValue: anObject
 	"Private - For immutable aspects we must ensure that the value we are editing is not the same as 
@@ -169,39 +169,37 @@ valueImage
 valueNameInfo
 	"Answer a string that can be used in an info tip to describe the receiver"
 
-	| aStream |
-	aStream := String writeStream: 40.
+	| stream |
+	stream := String smalltalkWriteStream: 40.
 	
-	[self aspectDescriptor displayAspectInfoOf: self subject on: aStream.
+	[self aspectDescriptor displayAspectInfoOf: self subject on: stream.
 	self] on: Error
-			do: [:ex | aStream basicPrint: ex].
-	^aStream contents!
+			do: [:ex | stream basicPrint: ex].
+	^stream contents!
 
 valueNameOnly
-	| aStream |
-	aStream := String writeStream: 40.
+	| stream |
+	stream := String smalltalkWriteStream: 40.
 	
-	[self aspectDescriptor displayAspectNameOf: self subject on: aStream.
+	[self aspectDescriptor displayAspectNameOf: self subject on: stream.
 	self] on: Error
-			do: [:ex | aStream basicPrint: ex].
-	^aStream contents!
+			do: [:ex | stream basicPrint: ex].
+	^stream contents!
 
 valueText
-	| aStream |
-	aStream := String writeStream: 40.
-	[self displayOn: aStream] on: Error do: [:ex | aStream basicPrint: ex].
-	^aStream contents!
+	| stream |
+	stream := String smalltalkWriteStream: 40.
+	[self displayOn: stream] on: Error do: [:ex | stream basicPrint: ex].
+	^stream contents!
 
 valueTextOnly
-	"Answer a String that represents the value of the receiver. One might have though this
-	should be called #valueText but this selector has previously been used to answer a String
-	containing name=value. We retain the latter for compatibility and introduce this method."
+	"Answer a <String> that represents the value of the receiver. One might have thought this should be called #valueText but this selector has previously been used to answer a String containing name=value. We retain the latter for compatibility and introduce this method."
 
-	| aStream |
-	aStream := String writeStream: 40.
-	[self aspectDescriptor displayAspectValueOf: self subject on: aStream] on: Error
-		do: [:ex | aStream basicPrint: ex].
-	^aStream contents!
+	| stream |
+	stream := String smalltalkWriteStream: 40.
+	[self aspectDescriptor displayAspectValueOf: self subject on: stream] on: Error
+		do: [:ex | stream basicPrint: ex].
+	^stream contents!
 
 yourselfAspect
 	"Answers the AspectAccessor for the #yourself published aspect of the 

@@ -104,12 +104,11 @@ createValueHolderFor: anAspectAccessor
 		with: anAspectAccessor.
 	^self setMutableValueOf: anAspectAccessor into: aspectValueHolder!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it. This will be used as the label for the tab when the receiver is being displayed
-	within the Flipper Inspector"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see. 
+	This will be used as the label for the tab when the receiver is being displayed within the Flipper Inspector"
 
-	aStream nextPutAll: 'Published Aspects'!
+	aPuttableStream nextPutAll: 'Published Aspects'!
 
 editAspect
 	"Edit the currently selected aspect using the current aspect presenter"
@@ -167,16 +166,16 @@ onAspectActioned
 
 	self subclassResponsibility!
 
-onAspectValueChanged: anAspectAccessor 
+onAspectValueChanged: anAspectAccessor
 	"Private - The currently inspected aspect value has been updated."
 
-	anAspectAccessor name == #yourself 
+	anAspectAccessor name == #yourself
 		ifFalse: 
 			["If the accessor cannot be set, warn the user and restore the original value"
-			anAspectAccessor canSet 
+			anAspectAccessor canSet
 				ifFalse: 
-					[MessageBox 
-						errorMsg: ('The <1p> aspect of the <2p> is read-only, or the object does not understand the setter message.' 
+					[MessageBox
+						errorMsg: ('The <1p> aspect of the <2p> is read-only, or the object does not understand the setter message.'
 								expandMacrosWith: anAspectAccessor name
 								with: anAspectAccessor subject class)
 						caption: 'Inspector cannot set this value'.

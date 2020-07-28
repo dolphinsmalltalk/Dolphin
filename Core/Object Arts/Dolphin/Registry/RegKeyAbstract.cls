@@ -109,10 +109,10 @@ decodeMultiSz: aByteArray size: anInteger
 	[multisz atEnd] whileFalse: [strings nextPut: (multisz upTo: $\0)].
 	^strings contents!
 
-displayOn: aStream
-	"Append a short textual description of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: name!
+	name displayOn: aPuttableStream!
 
 do: operation
 	"Evaluate monadic value argument, operation, for each of the element of the 
@@ -505,17 +505,17 @@ species
 
 	^Dictionary!
 
-splitPath: path 
+splitPath: path
 	| stem lastSlash superPath |
 	lastSlash := path lastIndexOf: $\.
-	lastSlash == 0 
+	lastSlash == 0
 		ifTrue: 
 			[superPath := ''.
 			stem := path]
 		ifFalse: 
 			[superPath := path leftString: lastSlash - 1.
 			stem := path rightString: path size - lastSlash].
-	^Array with: superPath with: stem!
+	^{superPath. stem}!
 
 subKeyClass
 	"Private - Answer the class of association to be used for holding
@@ -938,12 +938,7 @@ new
 roots
 	"Answer an array of the predefined registry roots."
 
-	^Array 
-		with: self classesRoot
-		with: self userRoot
-		with: self localMachineRoot
-		with: self usersRoot
-		with: self configRoot!
+	^{self classesRoot. self userRoot. self localMachineRoot. self usersRoot. self configRoot}!
 
 userRoot
 	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_USER.

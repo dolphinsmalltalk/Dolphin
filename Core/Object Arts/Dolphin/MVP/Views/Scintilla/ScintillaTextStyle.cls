@@ -78,8 +78,8 @@ backcolor
 
 	^backcolor!
 
-backcolor: aColorOrNil 
-	backcolor := aColorOrNil!
+backcolor: aColorOrNil
+	backcolor := aColorOrNil == Color default ifFalse: [aColorOrNil]!
 
 basicId
 	^id ifNil: [name ifNotNil: [self setPredefinedId]]!
@@ -125,8 +125,12 @@ description: aString
 
 	description := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
-displayOn: aStream 
-	aStream nextPutAll: self name displayString asPhrase!
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	| displayName |
+	displayName := String streamContents: [:strm | self name displayOn: strm].
+	aPuttableStream nextPutAll: displayName asPhrase!
 
 flags
 	^flags!
@@ -156,7 +160,7 @@ forecolor
 	^forecolor!
 
 forecolor: aColorOrNil 
-	forecolor := aColorOrNil!
+	forecolor := aColorOrNil == Color default ifFalse: [aColorOrNil]!
 
 getThreeStateFlag: anInteger
 	^#(nil true false) at: ((flags bitAnd: anInteger) bitShift: 1 - anInteger lowBit) + 1!

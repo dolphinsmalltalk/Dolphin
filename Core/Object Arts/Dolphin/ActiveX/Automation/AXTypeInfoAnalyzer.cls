@@ -83,10 +83,10 @@ constants
 
 	^self variables select: [:each | each isSymbolicConstant]!
 
-displayOn: aStream
-	"Append the receiver to aStream in a format that a user would want to see"
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPutAll: self name!
+	aPuttableStream nextPutAll: self name!
 
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
