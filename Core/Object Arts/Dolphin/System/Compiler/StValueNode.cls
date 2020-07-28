@@ -17,9 +17,8 @@ Instance Variables:
 !StValueNode categoriesForClass!System-Compiler! !
 !StValueNode methodsFor!
 
-addParenthesis: anInterval 
-	parentheses isNil ifTrue: [parentheses := OrderedCollection new: 1].
-	parentheses add: anInterval!
+addParenthesis: anInterval
+	(parentheses ifNil: [parentheses := OrderedCollection new: 1]) addLast: anInterval!
 
 containedBy: anInterval 
 	^anInterval first <= self startWithoutParentheses 

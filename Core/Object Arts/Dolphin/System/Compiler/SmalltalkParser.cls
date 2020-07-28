@@ -201,44 +201,41 @@ parseBlock
 	^node!
 
 parseBlockArgsInto: node
-	| verticalBar args colons |
+	| args |
+	(currentToken isSpecial: $:)
+		ifFalse: 
+			[node arguments: #().
+			^node].
 	args := OrderedCollection new: 2.
-	colons := OrderedCollection new: 2.
-	verticalBar := false.
-	[currentToken isSpecial: $:] whileTrue: 
-			[| arg |
-			colons add: currentToken start.
-			self step.	":"
-			verticalBar := true.
-			arg := self parseBlockParameter.
-			self validateArg: arg args: args.
-			args add: arg].
-	verticalBar
+	
+	[| arg |
+	self step.	":"
+	arg := self parseBlockParameter.
+	self validateArg: arg args: args.
+	args addLast: arg.
+	currentToken isSpecial: $:]
+			whileTrue.
+	currentToken isBinary
 		ifTrue: 
-			[currentToken isBinary
-				ifTrue: 
-					[node bar: currentToken start.
-					currentToken value == #|
-						ifTrue: [self step]
-						ifFalse: 
-							[currentToken value == #'||'
-								ifTrue: 
-									["Hack the current token to be the start 
-									of temps bar"
-									currentToken
-										value: #|;
-										start: currentToken start + 1]
-								ifFalse: 
-									[self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]]
+			[node bar: currentToken start.
+			currentToken value == #|
+				ifTrue: [self step]
 				ifFalse: 
-					["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
-					(st80Syntax and: [currentToken isSpecial: $]])
+					[currentToken value == #'||'
+						ifTrue: 
+							["Hack the current token to be the start of temps bar"
+							currentToken
+								value: #|;
+								start: currentToken start + 1]
 						ifFalse: 
-							["Error ignored, no recovery needed"
-							self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]].
-	node
-		arguments: args;
-		colons: colons.
+							[self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]]]
+		ifFalse: 
+			["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
+			(st80Syntax and: [currentToken isSpecial: $]])
+				ifFalse: 
+					["Error ignored, no recovery needed"
+					self parserError: CErrBlockArgListNotClosed range: (node start to: args last sourceInterval stop)]].
+	node arguments: args.
 	^node!
 
 parseBlockParameter
@@ -283,10 +280,10 @@ parseCascadeMessage
 				[| receiver messages semicolons |
 				receiver := node receiver.
 				messages := OrderedCollection new: 3.
-				semicolons := OrderedCollection new: 3.
 				messages addLast: node.
+				semicolons := OrderedCollection new: 3.
 				[currentToken isSpecial: $;] whileTrue: 
-						[semicolons add: currentToken start.
+						[semicolons addLast: currentToken start.
 						self step.
 						(self parseCascadedMessageFor: receiver) ifNotNil: [:msg | messages addLast: msg]].
 				node := self cascadeNodeClass messages: messages semicolons: semicolons].
@@ -489,25 +486,24 @@ parseExternalCallName
 parseKeywordMessage
 	^self parseKeywordMessageWith: self parseBinaryMessage!
 
-parseKeywordMessageWith: node 
-	| args isKeyword keywords |
-	args := OrderedCollection new: 3.
-	keywords := OrderedCollection new: 3.
-	isKeyword := false.
-	[currentToken isKeyword] whileTrue: 
-			[keywords add: currentToken.
-			self step.
-			args add: self parseBinaryMessage.
-			isKeyword := true].
-	^isKeyword 
-		ifTrue: 
-			[self messageNodeClass 
-				receiver: node
-				selectorParts: keywords
-				arguments: args]
+parseKeywordMessageWith: node
+	| args keywords |
+	currentToken isKeyword
 		ifFalse: 
 			[node isSuperVariable ifTrue: [self parserError: CErrExpectMessage].
-			node]!
+			^node].
+	args := OrderedCollection new: 3.
+	keywords := OrderedCollection new: 3.
+	
+	[keywords addLast: currentToken.
+	self step.
+	args addLast: self parseBinaryMessage.
+	currentToken isKeyword]
+			whileTrue.
+	^self messageNodeClass
+		receiver: node
+		selectorParts: keywords
+		arguments: args!
 
 parseKeywordPattern
 	"...It is erroneous if the same identifier is used for more than one <method argument> in an
@@ -813,7 +809,7 @@ parseStatementList: sequenceNode
 	AllowEmptyStatements
 		ifTrue: 
 			[[currentToken isSpecial: $.] whileTrue: 
-					[periods add: currentToken start.
+					[periods addLast: currentToken start.
 					self step]].
 	[self atEnd or: [currentToken isSpecial and: ['])}' identityIncludes: currentToken value]]]
 		whileFalse: 
@@ -828,15 +824,15 @@ parseStatementList: sequenceNode
 					returnPosition := currentToken start.
 					self step.
 					node := self returnNodeClass return: returnPosition value: self parseAssignment.
-					statements add: node.
+					statements addLast: node.
 					firstReturn ifNil: [firstReturn := statements size].
 					end := self canHaveStatementsAfterReturn not]
 				ifFalse: 
 					[node := self parseAssignment.
-					statements add: node].
+					statements addLast: node].
 			(currentToken isSpecial: $.)
 				ifTrue: 
-					[periods add: currentToken start.
+					[periods addLast: currentToken start.
 					self step.
 					self addCommentsTo: node]
 				ifFalse: 
@@ -845,7 +841,7 @@ parseStatementList: sequenceNode
 			AllowEmptyStatements
 				ifTrue: 
 					[[currentToken isSpecial: $.] whileTrue: 
-							[periods add: currentToken start.
+							[periods addLast: currentToken start.
 							self step]]].
 	(firstReturn notNil and: [firstReturn < statements size])
 		ifTrue: 
@@ -940,14 +936,17 @@ parseTempDecl
 
 parseTempsOf: aNode
 	| temps |
-	temps := OrderedCollection new.
-	[currentToken isIdentifier] whileTrue: 
-			[| temp |
-			temp := self parseTempDecl.
-			(self
-				validateTemp: temp
-				of: aNode
-				temps: temps) ifTrue: [temps add: temp]].
+	currentToken isIdentifier ifFalse: [^#()].
+	temps := OrderedCollection new: 2.
+	
+	[| temp |
+	temp := self parseTempDecl.
+	(self
+		validateTemp: temp
+		of: aNode
+		temps: temps) ifTrue: [temps addLast: temp].
+	currentToken isIdentifier]
+			whileTrue.
 	^temps!
 
 parseUnaryMessage

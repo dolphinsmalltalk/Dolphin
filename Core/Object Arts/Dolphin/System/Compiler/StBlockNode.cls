@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StBlockNode
-	instanceVariableNames: 'left right colons body arguments bar'
+	instanceVariableNames: 'left right body arguments bar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -72,11 +72,7 @@ barOrStop
 	^self bar ifNil: [self stopWithoutParentheses]!
 
 blockVariables
-	| vars |
-	#rbFix. "asOrderedCollection"
-	vars := OrderedCollection withAll: super blockVariables.
-	vars addAll: self argumentNames.
-	^vars!
+	^super blockVariables , self argumentNames!
 
 body
 	^body!
@@ -88,9 +84,6 @@ body: stmtsNode
 childrenDo: aMonadicValuable 
 	self arguments do: aMonadicValuable.
 	aMonadicValuable value: self body!
-
-colons: aCollection 
-	colons := aCollection!
 
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
@@ -173,7 +166,6 @@ uses: aNode
 !StBlockNode categoriesFor: #body!accessing!public! !
 !StBlockNode categoriesFor: #body:!accessing!public! !
 !StBlockNode categoriesFor: #childrenDo:!accessing!public! !
-!StBlockNode categoriesFor: #colons:!accessing!public! !
 !StBlockNode categoriesFor: #defines:!public!testing! !
 !StBlockNode categoriesFor: #directlyUses:!public!testing! !
 !StBlockNode categoriesFor: #hash!comparing!public! !

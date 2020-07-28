@@ -65,7 +65,7 @@ bestNodeFor: anInterval
 
 buildSelector
 	| selectorStream |
-	selectorStream := WriteStream on: (Utf8String new: 50).
+	selectorStream := WriteStream on: (Utf8String new: selectorParts size * 10).
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 

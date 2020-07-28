@@ -35,10 +35,8 @@ Class Instance Variables:
 !SmalltalkScanner categoriesForClass!System-Compiler! !
 !SmalltalkScanner methodsFor!
 
-addComment: anInterval 
-	comments isNil 
-		ifTrue: [comments := OrderedCollection with: anInterval]
-		ifFalse: [comments add: anInterval]!
+addComment: anInterval
+	(comments ifNil: [comments := OrderedCollection new: 1]) addLast: anInterval!
 
 atEnd
 	^characterType == #eof!

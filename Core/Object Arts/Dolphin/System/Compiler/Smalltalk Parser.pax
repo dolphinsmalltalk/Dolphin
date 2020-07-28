@@ -194,7 +194,7 @@ StValueNode subclass: #StAssignmentNode
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StValueNode subclass: #StBlockNode
-	instanceVariableNames: 'left right colons body arguments bar'
+	instanceVariableNames: 'left right body arguments bar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

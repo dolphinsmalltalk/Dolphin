@@ -104,8 +104,8 @@ outer
 
 	^self parent!
 
-periods: anObject
-	periods := anObject!
+periods: anOrderedCollection
+	periods := anOrderedCollection!
 
 postCopy
 	super postCopy.
@@ -141,10 +141,7 @@ temporaryNames
 	^temporaries collect: [:each | each name]!
 
 temporaryVariables
-	#rbFix. "asOrderedCollection non-copying on Dolphin"
-	^(OrderedCollection withAll: super temporaryVariables) 
-		addAll: self temporaryNames;
-		yourself!
+	^super temporaryVariables , self temporaryNames!
 
 uses: aNode 
 	statements isEmpty ifTrue: [^false].
