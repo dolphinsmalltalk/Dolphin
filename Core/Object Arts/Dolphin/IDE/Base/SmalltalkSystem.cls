@@ -506,21 +506,21 @@ browseClassReferences: aClass in: aBrowserEnvironment
 
 	self browseGlobalReferences: aClass binding in: aBrowserEnvironment!
 
-browseClassVariables: aClass 
+browseClassVariables: aClass
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
 	Then a MethodBrowser is opened on all methods that refer to the chosen variable."
 
 	| aVariable classVars |
 	classVars := OrderedCollection new.
 	aClass withAllSuperclassesDo: 
-			[:each | 
+			[:each |
 			each classVarNames asSortedCollection asArray reverseDo: [:eachName | classVars addFirst: eachName]].
 	aVariable := ChoicePrompter choices: classVars caption: 'Class Variables'.
-	aVariable notNil 
+	aVariable notNil
 		ifTrue: 
-			[self 
+			[self
 				browseReferencesToClassVar: aVariable
-				inHierarchyOf: aClass
+				of: aClass
 				within: self systemEnvironment]!
 
 browseCompilationFailures
@@ -863,21 +863,29 @@ browseReferencesTo: anObject
 
 	^self browseReferencesToLiteral: anObject in: self systemEnvironment!
 
-browseReferencesToClassVar: aString inHierarchyOf: browseClass within: aBrowserEnvironment
+browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods that reference the class variable named,
 	aString, in the hierarchy of the <Behavior>, browseClass."
 
-	| var refs writers readers |
-	var := (browseClass whichClassDefinesClassVar: aString) classPool associationAt: aString.
-	refs := self
-				referencesToClassVar: aString
-				inHierarchyOf: browseClass
-				within: aBrowserEnvironment.
-	writers := self selectMethods: [:each | each byteCodeDispatcher writesStatic: var] in: refs.
-	writers label: (refs label copyReplaceAll: 'reference' with: 'assign to').
-	readers := self selectMethods: [:each | each byteCodeDispatcher readsStatic: var] in: refs.
-	readers label: (refs label copyReplaceAll: 'reference' with: 'read').
-	self browseMethodsInEnvironments: {refs. readers. writers}!
+	| binding refs definingClass |
+	definingClass := browseClass whichClassDefinesClassVar: aString.
+	binding := definingClass classPool associationAt: aString.
+	refs := self directReferencesToVariable: binding in: aBrowserEnvironment.
+	binding isImmutable
+		ifTrue: [self browseMethodsIn: refs]
+		ifFalse: 
+			[| writers readers |
+			writers := self selectMethods: [:each | each byteCodeDispatcher writesStatic: binding] in: refs.
+			writers label: ('Assigners of <1p>.<2s> in <3p>'
+						expandMacrosWith: definingClass
+						with: aString
+						with: aBrowserEnvironment).
+			readers := self selectMethods: [:each | each byteCodeDispatcher readsStatic: binding] in: refs.
+			readers label: ('Readers of <1p>.<2s> in <3p>'
+						expandMacrosWith: definingClass
+						with: aString
+						with: aBrowserEnvironment).
+			self browseMethodsInEnvironments: {refs. readers. writers}]!
 
 browseReferencesToGlobal: aString 
 	self browseReferencesToGlobal: aString in: self systemEnvironment!
@@ -1725,6 +1733,18 @@ deprecatedIcon
 	"Private - Answers an Icon that can be used to represent a deprecated method"
 
 	^Icon warning!
+
+directReferencesToVariable: aVariableBinding in: aBrowserEnvironment
+	| matched |
+	matched := self selectMethods: [:each | each refersToLiteral: aVariableBinding]
+				in: aBrowserEnvironment.
+	matched
+		label: ('References to <1p>.<2s> in <3p>'
+					expandMacrosWith: aVariableBinding environment
+					with: aVariableBinding key
+					with: aBrowserEnvironment);
+		addSearchString: aVariableBinding key.
+	^matched!
 
 disassembleMethod: aCompiledCode 
 	^'Disassembly is only available in Dolphin Professional'!
@@ -3403,30 +3423,10 @@ referencesTo: anObject in: aBrowserEnvironment
 		yourself!
 
 referencesToBinding: aBindingReference in: aBrowserEnvironment
-	self halt.
 	^(self selectMethods: [:each | each refersToLiteral: aBindingReference] in: aBrowserEnvironment)
 		label: ('References to <1p> in <2p>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
 		addSearchString: aBindingReference printString;
 		yourself!
-
-referencesToClassVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
-	| references caption definingBehavior env |
-	definingBehavior := aBehavior whichClassDefinesClassVar: aString.
-	env := definingBehavior == aBehavior
-				ifTrue: 
-					[caption := 'All methods that reference <1p>.<2s>'.
-					aBrowserEnvironment]
-				ifFalse: 
-					[caption := 'Methods that reference <1p>.<2s> in the hierarchy of <3p>'.
-					aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
-	references := env classVarRefsTo: aString in: definingBehavior.
-	references
-		label: (caption
-					expandMacrosWith: definingBehavior
-					with: aString
-					with: aBehavior);
-		addSearchString: aString.
-	^references!
 
 referencesToLiteral: anObject in: aBrowserEnvironment
 	| search |
@@ -3744,11 +3744,11 @@ renameClassVariable: aString in: aClass within: aBrowserEnvironment
 				in: aClass
 				within: aBrowserEnvironment]!
 
-renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment 
+renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameClassVar: aString to: newName.
-	self 
+	self
 		browseReferencesToClassVar: newName
-		inHierarchyOf: aClass
+		of: aClass
 		within: aBrowserEnvironment!
 
 renameGlobal: oldSymbol to: newSymbol
@@ -4313,7 +4313,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseProtocols!browsing!commands!protocols!public! !
 !SmalltalkSystem categoriesFor: #browseReferencesMatching:in:!browsing!private! !
 !SmalltalkSystem categoriesFor: #browseReferencesTo:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesToClassVar:inHierarchyOf:within:!browsing!private! !
+!SmalltalkSystem categoriesFor: #browseReferencesToClassVar:of:within:!browsing!private! !
 !SmalltalkSystem categoriesFor: #browseReferencesToGlobal:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseReferencesToGlobal:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
@@ -4397,6 +4397,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #deleteClassHierarchy:!operations!public! !
 !SmalltalkSystem categoriesFor: #deleteResource:!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #deprecatedIcon!constants!private! !
+!SmalltalkSystem categoriesFor: #directReferencesToVariable:in:!enquiries!private! !
 !SmalltalkSystem categoriesFor: #disassembleMethod:!public! !
 !SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #displayItLocale!options!public! !
@@ -4565,7 +4566,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #referencesTo:!enquiries!public! !
 !SmalltalkSystem categoriesFor: #referencesTo:in:!enquiries!public! !
 !SmalltalkSystem categoriesFor: #referencesToBinding:in:!enquiries!private! !
-!SmalltalkSystem categoriesFor: #referencesToClassVar:inHierarchyOf:within:!browsing!private! !
 !SmalltalkSystem categoriesFor: #referencesToLiteral:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #referencesToVariable:in:!enquiries!private! !
 !SmalltalkSystem categoriesFor: #reformatAllMethodsIn:!commands!private! !

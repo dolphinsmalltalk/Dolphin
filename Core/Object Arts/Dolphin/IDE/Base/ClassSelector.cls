@@ -148,10 +148,7 @@ browseSystem
 	self systemModel browseSystem: self actualClass
 !
 
-browseVariablesMenu
-	!
-
-buildAllVariablesMenu: aMenu 
+buildAllVariablesMenu: aMenu
 	"Private - Build a dynamic pull-out menu which lists all of a class' existing 
 	instance and class variable names so that one or other can be removed, renamed, 
 	etc."
@@ -160,14 +157,12 @@ buildAllVariablesMenu: aMenu
 	aMenu clear.
 	class := self actualClass.
 	instVars := OrderedCollection new.
-	class 
+	class
 		withAllSuperclassesDo: [:eachClass | eachClass instVarNames do: [:each | instVars add: eachClass -> each]].
-	instVars size > self maximumVariableMenuEntries 
-		ifTrue: 
-			[aMenu addCommand: #browseInstanceVariables
-				description: '&Instance Variable...']
+	instVars size > self maximumVariableMenuEntries
+		ifTrue: [aMenu addCommand: #browseInstanceVariables description: '&Instance Variable...']
 		ifFalse: 
-			[self 
+			[self
 				populateVarMenu: aMenu
 				class: class
 				command: #browseReferencesToInstVar:inHierarchyOf:within:
@@ -175,18 +170,16 @@ buildAllVariablesMenu: aMenu
 				format: '<1s>.<2s>'].
 	class := class instanceClass.
 	classVars := OrderedCollection new.
-	class 
+	class
 		withAllSuperclassesDo: [:eachClass | eachClass classVarNames do: [:each | classVars add: eachClass -> each]].
 	(aMenu notEmpty and: [classVars notEmpty]) ifTrue: [aMenu addSeparator].
-	classVars size > self maximumVariableMenuEntries 
-		ifTrue: 
-			[aMenu addCommand: #browseClassVariables
-				description: '&Class Variable...']
+	classVars size > self maximumVariableMenuEntries
+		ifTrue: [aMenu addCommand: #browseClassVariables description: '&Class Variable...']
 		ifFalse: 
-			[self 
+			[self
 				populateVarMenu: aMenu
 				class: class
-				command: #browseReferencesToClassVar:inHierarchyOf:within:
+				command: #browseReferencesToClassVar:of:within:
 				variables: classVars
 				format: '<1s>.<2s>']!
 
@@ -857,7 +850,6 @@ testBrowserClass
 !ClassSelector categoriesFor: #browseReferences!commands!public! !
 !ClassSelector categoriesFor: #browserEnvironment!public! !
 !ClassSelector categoriesFor: #browseSystem!commands!public! !
-!ClassSelector categoriesFor: #browseVariablesMenu!public! !
 !ClassSelector categoriesFor: #buildAllVariablesMenu:!menus!private! !
 !ClassSelector categoriesFor: #buildViewsMenu:command:!menus!private! !
 !ClassSelector categoriesFor: #canRefactor!public!testing! !
