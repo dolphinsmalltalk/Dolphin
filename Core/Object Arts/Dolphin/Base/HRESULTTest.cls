@@ -16,7 +16,7 @@ testDisplayString
 	subject := HRESULT fromInteger: Win32Errors.E_ABORT.
 	installedLangIds := Locale installedUILanguages collect: [:each | each languageId].
 	({{Locale smalltalk. 'Operation aborted'}.
-		{Locale lcid: Win32Constants.LOCALE_CUSTOM_UNSPECIFIED. 'Operation aborted'}}
+		{Locale lcid: WinNlsConstants.LOCALE_CUSTOM_UNSPECIFIED. 'Operation aborted'}}
 			, {{Locale named: 'fr-CA'. 'Opération abandonnée'}.
 					{Locale named: 'es-AR'. 'Operación anulada'}.
 					{Locale named: 'en-GB'. 'Operation aborted'}.

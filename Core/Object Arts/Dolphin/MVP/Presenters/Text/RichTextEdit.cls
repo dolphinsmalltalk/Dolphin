@@ -301,7 +301,7 @@ getWindowText: flagsInteger length: lengthInteger
 	struct := GETTEXTEX newBuffer
 				cb: lengthInteger + 1 << 1;
 				flags: GT_USECRLF | flagsInteger;
-				codepage: CP_UNICODE;
+				codepage: WinNlsConstants.CP_UNICODE;
 				yourself.
 	"The docs say the return value is the number of chars (not byte) copied including the null, but actually it is
 	the number of chars excluding the null. We ignore it anyway."
@@ -687,7 +687,7 @@ selectionRichText: aRichText
 
 	| aStream |
 	aStream := Utf8String writeStream: 512.
-	self streamOutOn: aStream format: ##(SFF_SELECTION | (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
+	self streamOutOn: aStream format: ##(SFF_SELECTION | (WinNlsConstants.CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 selectionRtf
@@ -703,7 +703,7 @@ selectionUrtf
 
 	| s |
 	s := Utf8String writeStream: 512.
-	self streamOutOn: s format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
+	self streamOutOn: s format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
 	^s contents!
 
 setAutoUrlDetection: aBoolean 
@@ -840,7 +840,7 @@ textLength
 	gtlex := ByteArray newFixed: 8.
 	gtlex
 		dwordAtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
-		dwordAtOffset: 4 put: CP_UNICODE.
+		dwordAtOffset: 4 put: WinNlsConstants.CP_UNICODE.
 	^self sendMessage: EM_GETTEXTLENGTHEX wParam: gtlex yourAddress!
 
 textLimit: anInteger
@@ -856,7 +856,7 @@ urtfText
 
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
-	self streamOutOn: aStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
+	self streamOutOn: aStream format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 utfText
@@ -865,7 +865,7 @@ utfText
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
 	"Contrary to the documentation we can get the text directly in UTF-8, so we don't need to stream out as UTF-16"
-	self streamOutOn: aStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
+	self streamOutOn: aStream format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
 	^aStream contents!
 
 utfText: aUtfEncodedString

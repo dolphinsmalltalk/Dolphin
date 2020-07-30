@@ -410,7 +410,7 @@ codePage
 	"Note: This is not a real code page, and cannot be used with most APIs expecting a code page
 	identifier. It's main purpose is to distinguish UTF-16 in some circumstances."
 
-	^Win32Constants.CP_UNICODE!
+	^WinNlsConstants.CP_UNICODE!
 
 coerceString: aString
 	"Answer an instance of the receiver containing the same characters as the <String> argument."

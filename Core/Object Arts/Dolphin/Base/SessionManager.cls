@@ -47,8 +47,8 @@ allocConsole
 	KernelLibrary default
 		allocConsole;
 		setConsoleTitle: self applicationName;
-		setConsoleOutputCP: CP_UTF8;
-		setConsoleCP: CP_UTF8!
+		setConsoleOutputCP: WinNlsConstants.CP_UTF8;
+		setConsoleCP: WinNlsConstants.CP_UTF8!
 
 allowDuplicate
 	"It would appear that the image associated with this session is already open. Take action

@@ -12558,7 +12558,7 @@ initialize
 	| defaultKeyBindings |
 	self addClassConstant: 'CodePages'
 		value: (IdentityDictionary new
-				at: CP_ACP put: #ansi;
+				at: WinNlsConstants.CP_ACP put: #ansi;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;

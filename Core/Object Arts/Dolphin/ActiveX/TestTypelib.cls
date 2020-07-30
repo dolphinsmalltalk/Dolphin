@@ -4,7 +4,8 @@ TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestTypelib guid: (GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
 TestTypelib comment: ''!
 !TestTypelib categoriesForClass!Unclassified! !
@@ -23,7 +24,7 @@ setUp
 				load: self libid
 				major: 1
 				minor: 0
-				locale: LOCALE_USER_DEFAULT]
+				locale: WinNlsConstants.LOCALE_USER_DEFAULT]
 			on: HRESULTError
 			do: [:ex | ex hresult asInteger = AXAutomationErrors.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
 

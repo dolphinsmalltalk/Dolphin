@@ -120,7 +120,7 @@ _sameAsString: aString
 	string1 := self asUtf16String.
 	string2 := comparand asUtf16String.
 	^(KernelLibrary default
-		compareString: Win32Constants.LOCALE_USER_DEFAULT
+		compareString: WinNlsConstants.LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		lpString1: string1
 		cchCount1: string1 size
@@ -140,8 +140,8 @@ _sameAsString: aString
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
 	^(KernelLibrary default
-		compareString: Win32Constants.LOCALE_USER_DEFAULT
-		dwCmpFlags: Win32Constants.NORM_IGNORECASE
+		compareString: WinNlsConstants.LOCALE_USER_DEFAULT
+		dwCmpFlags: WinNlsConstants.NORM_IGNORECASE
 		lpString1: string1
 		cchCount1: string1 size
 		lpString2: string2
@@ -343,12 +343,12 @@ beginsWith: aString ignoreCase: aBoolean
 	cch := string2 size.
 	^cch <= string1 size and: 
 			[(KernelLibrary default
-				compareString: Win32Constants.LOCALE_USER_DEFAULT
-				dwCmpFlags: (aBoolean ifTrue: [Win32Constants.NORM_IGNORECASE] ifFalse: [0])
+				compareString: WinNlsConstants.LOCALE_USER_DEFAULT
+				dwCmpFlags: (aBoolean ifTrue: [WinNlsConstants.NORM_IGNORECASE] ifFalse: [0])
 				lpString1: string1
 				cchCount1: cch
 				lpString2: string2
-				cchCount2: cch) == Win32Constants.CSTR_EQUAL]!
+				cchCount2: cch) == WinNlsConstants.CSTR_EQUAL]!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -1172,8 +1172,8 @@ titleCased
 	kernel := KernelLibrary default.
 	src := self asUtf16String.
 	len := kernel
-				lcMapString: Win32Constants.LOCALE_USER_DEFAULT
-				dwMapFlags: Win32Constants.LCMAP_TITLECASE
+				lcMapString: WinNlsConstants.LOCALE_USER_DEFAULT
+				dwMapFlags: WinNlsConstants.LCMAP_TITLECASE
 				lpScrStr: src
 				cchSrc: src size
 				lpDestStr: nil
@@ -1181,8 +1181,8 @@ titleCased
 	len == 0 ifTrue: [kernel systemError].
 	dest := Utf16String newFixed: len.
 	kernel
-		lcMapString: Win32Constants.LOCALE_USER_DEFAULT
-		dwMapFlags: Win32Constants.LCMAP_TITLECASE
+		lcMapString: WinNlsConstants.LOCALE_USER_DEFAULT
+		dwMapFlags: WinNlsConstants.LCMAP_TITLECASE
 		lpScrStr: src
 		cchSrc: src size
 		lpDestStr: dest
@@ -1563,7 +1563,7 @@ fromUtf16String: anAddressOrUtf16String
 	| answer size lib |
 	lib := KernelLibrary default.
 	(size := lib
-				wideCharToMultiByte: Win32Constants.CP_UTF8
+				wideCharToMultiByte: WinNlsConstants.CP_UTF8
 				dwFlags: 0
 				lpWideCharStr: anAddressOrUtf16String
 				cchWideChar: -1
@@ -1574,7 +1574,7 @@ fromUtf16String: anAddressOrUtf16String
 		ifTrue: [lib systemError].
 	answer := self new: size - 1.
 	lib
-		wideCharToMultiByte: Win32Constants.CP_UTF8
+		wideCharToMultiByte: WinNlsConstants.CP_UTF8
 		dwFlags: 0
 		lpWideCharStr: anAddressOrUtf16String
 		cchWideChar: -1
@@ -1590,7 +1590,7 @@ initialize
 installedCodePages
 	"Answer the names of all code pages installed on the host system."
 
-	^self systemCodePages: Win32Constants.CP_INSTALLED!
+	^self systemCodePages: WinNlsConstants.CP_INSTALLED!
 
 lf
 	^AnsiString with: $\n!
@@ -1678,7 +1678,7 @@ supportedCodePages
 		self supportedCodePages
 	"
 
-	^self systemCodePages: Win32Constants.CP_SUPPORTED!
+	^self systemCodePages: WinNlsConstants.CP_SUPPORTED!
 
 systemCodePages: anInteger
 	"Private - Answer a collection of system locales, depending on the flags argument,

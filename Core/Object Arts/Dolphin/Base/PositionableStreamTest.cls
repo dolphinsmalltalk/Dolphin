@@ -178,7 +178,7 @@ testMarkusKuhnUtf8
 	"Should be able to read every character, even if invalid"
 	[stream atEnd] whileFalse: [stream next].
 	bytes := File readAllBytes: testFilePath.
-	text := Utf16String fromBytes: bytes codePage: Win32Constants.CP_UTF8.
+	text := Utf16String fromBytes: bytes codePage: WinNlsConstants.CP_UTF8.
 	self assert: stream contents equals: text.
 	stream reset.
 	self assert: stream upToEnd equals: text.

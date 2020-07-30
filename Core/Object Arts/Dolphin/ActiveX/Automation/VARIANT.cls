@@ -196,7 +196,7 @@ cmp: comperand
 
 	| cmp varRight |
 	varRight := comperand asVariant.
-	cmp := OLEAutLibrary default varCmp: self pvarRight: varRight lcid: LOCALE_USER_DEFAULT dwFlags: 0.
+	cmp := OLEAutLibrary default varCmp: self pvarRight: varRight lcid: WinNlsConstants.LOCALE_USER_DEFAULT dwFlags: 0.
 	^(cmp == 3"VARCMP_NULL" and: [self vt == varRight vt])
 		ifTrue: ["Both null, therefore equal" 0]
 		ifFalse: [cmp - 1]!

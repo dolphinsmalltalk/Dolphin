@@ -34,7 +34,7 @@ testPrimary
 	self assert: (Locale named: 'en-GB') primary equals: (Locale named: 'en-US').
 	self assert: (Locale named: 'fr-CA') primary equals: (Locale named: 'fr-FR').
 	self assert: Locale invariant primary equals: Locale invariant.
-	self assert: (Locale lcid: Win32Constants.LOCALE_CUSTOM_DEFAULT) primary
+	self assert: (Locale lcid: WinNlsConstants.LOCALE_CUSTOM_DEFAULT) primary
 		equals: Locale userDefault primary.
 	self assert: Locale smalltalk primary equals: (Locale named: 'en-US')!
 

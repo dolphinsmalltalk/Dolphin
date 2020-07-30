@@ -262,7 +262,7 @@ isInstalled
 iso639LanguageName
 	"The abbreviated (two-character) <String> name of the language of the primary language of the locale as defined in ISO-369."
 
-	^self getStringInfo: Win32Constants.LOCALE_SISO639LANGNAME!
+	^self getStringInfo: LOCALE_SISO639LANGNAME!
 
 isValid
 	"Answer whether the receiver is a recognised (valid) Locale."
@@ -376,7 +376,7 @@ numberGrouping
 parentName
 	"The name of the parent Locale that should be used as a fallback for resource lookup."
 
-	^self getStringInfo: Win32Constants.LOCALE_SPARENT!
+	^self getStringInfo: LOCALE_SPARENT!
 
 percentSymbol
 	"Answer a <String> containing the percent symbol for this local."
