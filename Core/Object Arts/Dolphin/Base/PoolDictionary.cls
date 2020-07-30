@@ -23,7 +23,7 @@ bindingEnvironment
 	^bindingEnvironment!
 
 bindingEnvironment: aNamespace
-	"Set the environment to be used for new bindings in the receiver. This should be set on initialization, and not changed subsequently."
+	"Private - Set the environment to be used for new bindings in the receiver. This should be set on initialization, and not changed subsequently."
 
 	bindingEnvironment := aNamespace!
 
@@ -80,8 +80,7 @@ fullyQualifiedReference
 
 initialize
 	super initialize.
-	bindingEnvironment := self.
-!
+	bindingEnvironment := self!
 
 initializerFor: aString
 	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
@@ -158,10 +157,15 @@ owningPackage
 owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
-	Package manager addVariableNamed: self fullyQualifiedReference to: aPackage! !
+	Package manager addVariableNamed: self fullyQualifiedReference to: aPackage!
+
+preResize: newMe
+	"Private - This message is sent by the receiver when resizing, before the receiver's elements are added to newMe. We must assign across any fixed fields."
+
+	newMe bindingEnvironment: bindingEnvironment! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
 !PoolDictionary categoriesFor: #bindingEnvironment!accessing!public! !
-!PoolDictionary categoriesFor: #bindingEnvironment:!initializing!public! !
+!PoolDictionary categoriesFor: #bindingEnvironment:!initializing!private! !
 !PoolDictionary categoriesFor: #bindingsDo:!enumerating!public! !
 !PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
 !PoolDictionary categoriesFor: #displayOn:!public! !
@@ -179,12 +183,19 @@ owningPackage: aPackage
 !PoolDictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !
 !PoolDictionary categoriesFor: #owningPackage:!accessing!development!public! !
+!PoolDictionary categoriesFor: #preResize:!adding!private! !
 
 !PoolDictionary class methodsFor!
+
+forClass: aClass
+	^self new
+		bindingEnvironment: aClass;
+		yourself!
 
 named: aSymbol 
 	^(self new)
 		name: aSymbol;
 		yourself! !
+!PoolDictionary class categoriesFor: #forClass:!instance creation!public! !
 !PoolDictionary class categoriesFor: #named:!instance creation!public! !
 

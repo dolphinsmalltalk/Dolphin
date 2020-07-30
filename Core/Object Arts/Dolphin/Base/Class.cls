@@ -215,11 +215,7 @@ classPool
 	N.B. This should not be modified as it may not be the actual class pool
 	(though it is guaranteed to have identical contents)."
 
-	^classPool
-		ifNil: 
-			[PoolDictionary new
-				bindingEnvironment: self;
-				yourself]!
+	^classPool ifNil: [PoolDictionary forClass: self]!
 
 classVariables
 	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."

@@ -26,8 +26,12 @@ testClassPoolsWellFormed
 	| badPools |
 	badPools := Smalltalk allClasses reject: 
 					[:each |
-					each classPool class == PoolDictionary
-						and: [each classPool associations allSatisfy: [:v | v class == VariableBinding]]].
+					| classVars |
+					classVars := each classPool.
+					classVars class == PoolDictionary and: 
+							[classVars bindingEnvironment == each and: 
+									[each classPool associations
+										allSatisfy: [:v | v class == VariableBinding and: [v environment == each]]]]].
 	self assert: badPools asArray equals: #()!
 
 testLessOrEqual
