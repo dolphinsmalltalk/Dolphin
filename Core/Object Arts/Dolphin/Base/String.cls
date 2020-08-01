@@ -1384,7 +1384,7 @@ cr
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
-	^self subclassResponsibility!
+	^1!
 
 empty
 	"Answer an empty String instance. It is shared and should not be modified.

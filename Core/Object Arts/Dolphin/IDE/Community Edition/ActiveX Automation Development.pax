@@ -573,6 +573,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\Registry\Dolphin Registry Access'
+	'..\..\Base\Dolphin SizeIs Fields'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
@@ -4582,13 +4583,8 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 		ifTrue: 
 			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
 			aPuttableStream
-				nextPutAll: ' arrayLength: (';
-				display: #ConformantArrayFieldLength;
-				space;
-				display: #lengthField;
-				space;
-				nextPutAll: sizeIs name;
-				nextPut: $)]
+				nextPutAll: ' lengthField: ';
+				print: sizeIs name asSymbol]
 		ifFalse: 
 			[(sizeIs isLiteralNode and: [sizeIs value isInteger])
 				ifTrue: 
@@ -4600,7 +4596,7 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 					["Complex size_is expression, e.g. size_is(cbBytes >> 1 - 1)"
 					aPuttableStream
 						nextPutAll: ' arrayLength: (';
-						display: #SizeIsArrayFieldLength;
+						print: SizeIsArrayFieldLength;
 						space;
 						display: #sizeIs:;
 						space;

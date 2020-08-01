@@ -199,11 +199,6 @@ coerceString: aString
 
 	^aString asAnsiString!
 
-elementSize
-	"Answer the size of the elements of the receiver in bytes."
-
-	^1!
-
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress.
 	Implementation note: We can use the external library call primitive to do the 
@@ -253,7 +248,6 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 		yourself! !
 !AnsiString class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !AnsiString class categoriesFor: #coerceString:!instance creation!public! !
-!AnsiString class categoriesFor: #elementSize!constants!public! !
 !AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
 !AnsiString class categoriesFor: #initialize!class initialization!development!public! !
 !AnsiString class categoriesFor: #with:!instance creation!public! !

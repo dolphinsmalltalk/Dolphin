@@ -496,11 +496,6 @@ codePage
 
 	^Win32Constants.CP_UTF8!
 
-elementSize
-	"Answer the size of the elements of the receiver in bytes."
-
-	^1!
-
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
@@ -519,7 +514,6 @@ initialize
 	self addClassConstant: 'Bom' value: #[16rEF 16rBB 16rBF]! !
 !Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
-!Utf8String class categoriesFor: #elementSize!constants!public! !
 !Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
 !Utf8String class categoriesFor: #initialize!development!initializing!public! !
 

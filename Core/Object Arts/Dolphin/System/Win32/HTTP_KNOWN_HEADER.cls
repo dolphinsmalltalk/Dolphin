@@ -8,20 +8,21 @@ HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 HTTP_KNOWN_HEADER guid: (GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
 HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r4!
 HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r0!
-HTTP_KNOWN_HEADER comment: '<HTTP_KNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
+HTTP_KNOWN_HEADER comment: '`HTTP_KNOWN_HEADER` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(787c501e-95b2-4a23-9f7c-2dd856b8d51d), helpstring("Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID.")]
 struct tagHTTP_KNOWN_HEADER {
 	[nonbrowsable, helpstring("Size in bytes of RawValue not including terminating null")] USHORT RawValueLength;
 	[size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_KNOWN_HEADER;
+```
 '!
 !HTTP_KNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
 !HTTP_KNOWN_HEADER methodsFor!

@@ -12,6 +12,7 @@ package classNames
 	add: #AlwaysSearchPolicyTest;
 	add: #AnsiStringTest;
 	add: #ArrayedCollectionTest;
+	add: #ArrayPointerFieldTest;
 	add: #ArrayTest;
 	add: #BagTest;
 	add: #BehaviorTest;
@@ -594,6 +595,11 @@ ExternalArrayTest subclass: #WORDArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GenericExternalArrayTest subclass: #StructureArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalFieldTest subclass: #ArrayPointerFieldTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
