@@ -84,11 +84,12 @@ printSetSizeFor: anExternalField on: aWriteStream
 		on: aWriteStream!
 
 printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString on: aWriteStream
-	| expr setter structClass |
+	| expr setter structClass sizeFieldName |
 	expr := self invertSizeIsExpression: anStProgramNode paramName: anExternalField valueParameterName.
-	setter := (expr variable name copyWith: $:) asSymbol.
+	sizeFieldName := expr variable name.
+	setter := (sizeFieldName copyWith: $:) asSymbol.
 	structClass := anExternalField structClass.
-	((structClass template includesKey: setter) or: [structClass canUnderstand: setter])
+	((structClass template includesKey: sizeFieldName) or: [structClass canUnderstand: setter])
 		ifTrue: 
 			[aWriteStream
 				nextPutAll: aString;

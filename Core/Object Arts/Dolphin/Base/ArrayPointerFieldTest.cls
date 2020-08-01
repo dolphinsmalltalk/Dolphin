@@ -39,6 +39,38 @@ testGenerateAccessorsForSizedString
 	string := '🐬' copyWith: $\0.
 	struct Test: string.
 	self assert: struct Size equals: string size.
+	self assert: struct Test equals: string!
+
+testGenerateAccessorsForSizeIsExpression
+	| structClass actual expected string struct |
+	structClass := ExternalStructure newAnonymousSubclass.
+	structClass class
+		compile: 'defineFields
+		self defineField: #Test
+			type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: ''Size >> 1''))
+			offset: 4;
+		defineField: #Size
+			type: DWORDField new
+			offset: 0'.
+	structClass recompileDefinition.
+	actual := (structClass compiledMethodAt: #Test:) parseTree.
+	expected := SmalltalkParser
+				parseMethod: 'Test: anUtf16String bytes uintPtrAtOffset: _OffsetOf_Test put: anUtf16String yourAddress. self Size: anUtf16String size << 1'.
+	self assert: actual equals: expected.
+	"Write a string with embedded null terminator so we can check it reads back using the size."
+	string := ('Foo0🐬' copyReplacing: $0 withObject: $\0) asUtf16String.
+	struct := structClass new.
+	struct Test: string.
+	self assert: struct Size equals: string size * 2.
+	actual := struct Test.
+	self assert: (actual includes: $\0).
+	self assert: actual equals: string.
+	"Test uncompiled write/read while we are here."
+	structClass methodDictionary: nil.
+	string := ('🐬' copyWith: $\0) asUtf16String.
+	struct Test: string.
+	self assert: struct Size equals: string size * 2.
 	self assert: struct Test equals: string! !
 !ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedString!public! !
+!ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizeIsExpression!public! !
 

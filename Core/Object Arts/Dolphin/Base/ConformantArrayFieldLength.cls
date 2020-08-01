@@ -48,12 +48,15 @@ printElementCountExpressionFor: anExternalField on: aWriteStream
 printSetSizeFor: anExternalField on: aWriteStream
 	"Private - Print a statement to set the length field corresponding to this field."
 
-	(anExternalField structClass template includesKey: lengthField)
+	| structClass setter |
+	structClass := anExternalField structClass.
+	setter := self setLengthSelector.
+	((structClass template includesKey: lengthField) or: [structClass canUnderstand: setter])
 		ifTrue: 
 			[aWriteStream
 				nextPutAll: 'self ';
-				display: lengthField;
-				nextPutAll: ': ';
+				display: setter;
+				space;
 				nextPutAll: anExternalField valueParameterName;
 				space;
 				display: #size;
@@ -64,12 +67,16 @@ setElementCount: anInteger of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	(anExternalStructure template lookup: lengthField)
-		ifNotNil: [:sizeField | sizeField isWriteable ifTrue: [sizeField writeInto: anExternalStructure value: anInteger]]! !
+		ifNotNil: [:sizeField | sizeField isWriteable ifTrue: [sizeField writeInto: anExternalStructure value: anInteger]]!
+
+setLengthSelector
+	^(lengthField copyWith: $:) asSymbol! !
 !ConformantArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
 !ConformantArrayFieldLength categoriesFor: #lengthField:!accessing!private! !
 !ConformantArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
 !ConformantArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
 !ConformantArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!ConformantArrayFieldLength categoriesFor: #setLengthSelector!private! !
 
 !ConformantArrayFieldLength class methodsFor!
 

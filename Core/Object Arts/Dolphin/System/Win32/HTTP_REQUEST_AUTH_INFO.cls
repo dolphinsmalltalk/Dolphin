@@ -19,15 +19,15 @@ HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextType' value: 16
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pMutualAuthData' value: 16r28!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pPackageName' value: 16r30!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_SecStatus' value: 16r4!
-HTTP_REQUEST_AUTH_INFO comment: '<HTTP_REQUEST_AUTH_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
+HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Authentication request info structure"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(e0696c2e-1353-45e2-bdcc-a52b6142b827), helpstring("Authentication request info structure")]
 struct tagHTTP_REQUEST_AUTH_INFO {
 	[helpstring("A member of the HTTP_AUTH_STATUS enumeration that indicates the final authentication status of the request.")] HTTP_AUTH_STATUS AuthStatus;
@@ -44,6 +44,7 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 	[nonbrowsable, helpstring("For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.")] USHORT PackageNameLength;
 	[size_is("PackageNameLength>>1"), string] LPWSTR pPackageName;
 } HTTP_REQUEST_AUTH_INFO;
+```
 '!
 !HTTP_REQUEST_AUTH_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_REQUEST_AUTH_INFO methodsFor!
