@@ -3399,7 +3399,7 @@ compileSetMethod: aSelector forField: anExternalField
 	anExternalField canGenerateMutator ifFalse: [^self].
 	methodText := String writeStream: 256.
 	anExternalField printMutator: aSelector on: methodText.
-	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
+	^self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
 decompileDefinition
 	"Remove generated accessor methods from the receiver. The template will be lazily rebuilt."
