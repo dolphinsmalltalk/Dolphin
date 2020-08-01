@@ -580,7 +580,10 @@ descriptorClass
 dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
 
-	self template keysDo: aMonadicValuable!
+	self template keysAndValuesDo: 
+			[:fieldName :field |
+			field isReadable ifTrue: [aMonadicValuable value: fieldName].
+			field isWriteable ifTrue: [aMonadicValuable value: (fieldName copyWith: $:) asSymbol]]!
 
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents

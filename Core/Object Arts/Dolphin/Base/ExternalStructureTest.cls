@@ -30,6 +30,18 @@ testCompileDefinition
 	self assert: subject selectors asArray sort equals: #(#a #b: #c #c:).
 	self assert: subject byteSize equals: 12!
 
+testDynamicSelectors
+	| subject expected |
+	subject := ExternalStructure newAnonymousSubclass.
+	subject initializeTemplate.
+	subject
+		defineField: #writeOnly type: DWORDField writeOnly;
+		defineField: #readOnly type: DWORDField readOnly;
+		defineField: #readWrite type: DWORDField new;
+		defineField: #fillter type: INT_PTRField filler.
+	expected := #(#readOnly #readWrite #readWrite: #writeOnly:).
+	self assert: subject dynamicSelectors asArray sort equals: expected!
+
 testEquals
 	| s1 s2 s3 s4 |
 	s1 := FILETIME newPointer.
@@ -92,6 +104,7 @@ testIsNull
 	struct bytes: ExternalAddress new.
 	self assert: struct isNull.! !
 !ExternalStructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
+!ExternalStructureTest categoriesFor: #testDynamicSelectors!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testEquals!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testExtendedErrorInfo!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testIsNull!public!unit tests! !
