@@ -12,9 +12,9 @@ IpHlpApiTableStruct comment: ''!
 !IpHlpApiTableStruct methodsFor!
 
 dwNumEntries
-	"Answer the receiver's dwNumEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumEntries' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumEntries!
 
 table
 	^self subclassResponsibility! !
@@ -28,6 +28,10 @@ defineFields
 	self compileDefinition
 	"
 
-	self defineField: #dwNumEntries type: DWORDField readOnly! !
+	self defineField: #dwNumEntries type: DWORDField readOnly!
+
+getFieldNames
+	^#(#dwNumEntries)! !
 !IpHlpApiTableStruct class categoriesFor: #defineFields!initializing!public! !
+!IpHlpApiTableStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
