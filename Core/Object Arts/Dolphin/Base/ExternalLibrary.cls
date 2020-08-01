@@ -428,7 +428,7 @@ onStartup2
 	We open the permanent libraries first to make the startup more robust in case of
 	errors opening other libraries."
 
-	self subclasses do: [:c | c == PermanentLibrary ifFalse: [c onStartup2]]!
+	self subclassesDo: [:c | c == PermanentLibrary ifFalse: [c onStartup2]]!
 
 open
 	"Answer a new instance of the receiver to represent the receiver's ExternalLibrary. The 

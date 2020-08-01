@@ -1961,7 +1961,7 @@ Object subclass: #AttributeDescriptor
 		'WriteableMask' -> 16r2
 	}!
 Object subclass: #Behavior
-	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
+	instanceVariableNames: 'superclass methodDictionary instanceSpec'
 	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -2648,7 +2648,7 @@ Behavior subclass: #ClassDescription
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassDescription subclass: #Class
-	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
+	instanceVariableNames: 'subclasses name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Behavior
-	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
+	instanceVariableNames: 'superclass methodDictionary instanceSpec'
 	classVariableNames: '_NullMethodDictionary'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -28,7 +28,6 @@ Behavior comment: 'Class `Behavior` is the abstract class which defines the mini
 Instance Variables:
 
   `superclass`		`Behavior` object of the instance''''s superclass
-  `subclasses`		`Array` of `Behavior`''s which are the subclasses of the instance
   `methodDictionary`	`MethodDictionary` mapping selector Symbols to CompiledMethods
   `instanceSpec`		`<integer>` containg flags which describe the "shape" of the instance (e.g. oops vs bytes)
 
@@ -65,140 +64,10 @@ Behavior implements the ANSI protocols `<Object>`, `<classDescription>`, `<insta
 !Behavior categoriesForClass!Kernel-Classes! !
 !Behavior methodsFor!
 
-addSelector: aSymbol withMethod: aCompiledMethod
-	"Private - Add the message selector, aSymbol, with the corresponding
-	CompiledMethod, to the receiver's method dictionary.
-	Implementation Note: Clears down the VM method cache in case a previous 
-	version of the method is cached, or it overrides a superclass method."
-
-	| selector |
-	selector := aSymbol asSymbol.
-	aCompiledMethod
-		methodClass: self;
-		selector: selector.
-	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
-		put: aCompiledMethod.
-
-	"One might expect to be able to trigger a #methodAdded: event here,
-	 to be symetrical with Behavior>>removeSelector:. However, the 
-	 method source is not yet set up (logged) so in fact we have to do
-	 this later."
-	self flushMethodCache!
-
-addSubclass: aClass
-	"Private - Include the argument, aClass, as a subclass of the receiver."
-
-	| subs count index |
-	aClass superclass == self
-		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
-	subs := self subclasses.
-	count := subs size.
-	count == 0
-		ifTrue: 
-			[subclasses := {aClass}.
-			^self].
-	"Maintain the array in sorted order as saves sorting on access - speed is important to minimize class creation time"
-	index := subs binarySearchFor: aClass using: [:a :b | a name <=> b name <= 0].
-	(index > 1 and: [(subs at: index - 1) == aClass]) ifTrue: [^self].
-	subclasses := subs copyWith: aClass atIndex: index!
-
 addToSuper
 	"Private - Add the receiver to its superclasses' subclass collection."
 
-	superclass addSubclass: self!
-
-allInstances
-	"Answer an <Array> of all direct instances of the receiver."
-
-	MemoryManager current collectGarbage.
-	^self primAllInstances!
-
-allInstVarNames
-	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
-	those specified in the receiver and in all of its superclasses. The array ordering is the order 
-	in which the variables are stored and accessed by the interpreter."
-
-	^superclass isNil
-		ifTrue: [self instVarNames]
-		ifFalse: [superclass allInstVarNames , self instVarNames]!
-
-allMethodsDo: operation
-	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
-
-	self withAllSubclassesDo: [:behavior | behavior methodDictionary do: operation]!
-
-allSelectors
-	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
-	is able to respond (this includes messages understood by superclasses)."
-
-	| answer accumulate |
-	answer := IdentitySet new.
-	accumulate := [:s | answer add: s].
-	self withAllSuperclassesDo: [:each | each understoodSelectorsDo: accumulate].
-	^answer!
-
-allSubclasses
-	"Answer a <collection> of the receiver's subclasses in 
-	breadth-first order, with the immediate subclasses first. 
-	Breadth-first traversal is slightly less efficient, but results 
-	in a more useful ordering (the standard does not specify the order). 
-
-	N.B. The original Smalltalk-80 definition specified that this 
-	method should answer a Set, and the draft ANSI standard specifies
-	only <collection>. The defacto standard (e.g. See IBM 
-	Common Base) is now an OrderedCollection, and we follow suit as this
-	maintains the ordering, which is often useful."
-
-	| answer |
-	answer := OrderedCollection new.
-	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
-	^answer!
-
-allSubclassesBreadthFirstDo: aMonadicValuable
-	"Evaluate the monadic valuable argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice)."
-
-	subclasses
-		ifNotNil: 
-			[:classes |
-			classes
-				do: aMonadicValuable;
-				do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
-
-allSubclassesDo: aMonadicValuable
-	"Evaluate the monadic valuable argument for each of the 
-	receiver's subclasses using a pre-order depth first traversal."
-
-	self allSubclassesPreOrderDo: aMonadicValuable!
-
-allSubclassesEndOrderDo: aMonadicValuable
-	"Private - Evaluate the monadic valuable argument for each 
-	of the receiver's subclasses, visiting the receiver AFTER its
-	subclasses (i.e. an end-order traversal)."
-
-	subclasses isNil 
-		ifFalse: 
-			[subclasses do: 
-					[:each | 
-					each allSubclassesEndOrderDo: aMonadicValuable.
-					aMonadicValuable value: each]]!
-
-allSubclassesPreOrderDo: aMonadicValuable
-	"Private - Evaluate the monadic valuable argument for each 
-	of the receiver's subclasses, visiting the receiver before its
-	subclasses (i.e. a pre-order traversal)."
-
-	subclasses isNil 
-		ifFalse: 
-			[subclasses do: 
-					[:each | 
-					aMonadicValuable value: each.
-					each allSubclassesPreOrderDo: aMonadicValuable]]!
-
-allSubinstances
-	"Answer an <Array> containing all instances of the receiver and its subclasses."
-
-	MemoryManager current collectGarbage.
-	^self primAllSubinstances!
+	"Nothing to do at this level"!
 
 allSuperclasses
 	"Answer a <collection> of the receiver's superclass and the receiver's ancestor's 
@@ -339,11 +208,6 @@ compileAll
 				beep;
 				resumeWithStubMethod]!
 
-compileAllSubclasses
-	"Compile all the methods in the receiver's subclasses' method dictionaries."
-
-	self allSubclassesDo: [:each | each compileAll]!
-
 compiledMethodAt: aSymbol
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary. Report an error if the selector cannot be found."
@@ -440,12 +304,6 @@ fullBindingFor: aString
 	^(BindingReference isQualifiedName: aString)
 		ifTrue: [self environment resolveBindingPath: ($. split: aString)]
 		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
-
-hasCompilationFailures
-	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
-
-	^(self methodDictionary anySatisfy: [:each | each isCompilationFailure])
-		or: [self subclasses anySatisfy: [:each | each hasCompilationFailures]]!
 
 hasImmediateInstances
 	"Answer whether the receiver's instances are immutable objects encoded entirely 
@@ -764,19 +622,6 @@ recompile: aSelector
 				isImmutable: true;
 				yourself]!
 
-recompileAll
-	"Recompile this class and all its subclasses. The methods are not logged to the change log,
-	but the sources are re-used from the originals. N.B. In order to recompile all methods in
-	the system it is necessary to avoid the process being interrupted or the system may crash.
-	To achieve this evaluate an expression such as:
-
-	[Object recompileAll] forkAt: Processor userInterruptPriority "
-
-	self withAllSubclassesDo: 
-			[:each | 
-			each class compileAll.
-			each compileAll]!
-
 recompileReferencesToLiteral: aVariableBinding
 	"Private - Recompile any of the receiver's methods that reference the specified object from their literal frame."
 
@@ -808,11 +653,10 @@ referenceFilterFor: anObject
 	^[:each | each refersToLiteral: anObject]!
 
 removeFromSuper
-	"Private - Remove the receiver from its superclasses' subclass collection.
-	Root classes will have a superclass of nil - we do not put such
-	classes into any subclass collection."
+	"Private - Remove the receiver from its superclasses' subclass collection and answer the old superclass.
+	Root classes will have a superclass of nil - we do not put such classes into any subclass collection."
 
-	superclass notNil ifTrue: [superclass removeSubclass: self]!
+	"Nothing to do at this level"!
 
 removeFromSystem
 	"Private - Remove the receiver from the system (completely remove a class)."
@@ -855,14 +699,6 @@ removeSelectors: aCollection
 	self flushMethodCache.
 	methods do: [:each | Smalltalk trigger: #methodRemoved: with: each].
 	^methods!
-
-removeSubclass: aClass
-	"Private - Remove the argument, aClass, from the subclasses of the receiver.
-	WARNING: This method does not completely remove a class from the system."
-
-	subclasses isNil ifFalse: [
-		(subclasses := subclasses copyWithout: aClass) isEmpty
-			ifTrue: [ subclasses := nil ]]!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -939,30 +775,6 @@ sourceCodeAt: aSymbol
 	Report an error if the selector cannot be found."
 
 	^(self compiledMethodAt: aSymbol) getSource!
-
-subclasses
-	"Answer a <collection> containing the receiver's immediate subclasses.
-
-	Note that the answer is actually a <sequencedReadableCollection>, but that
-	sequenceability should not be relied upon in portable code because the draft ANSI
-	standard specifies only <collection>."
-
-	^subclasses ifNil: [{}]!
-
-subclasses: aCollection
-	"Set the receivers subclasses to the specified collection.
-	The subclasses are maintained as a sorted array, but leaf classes store nil to save space."
-
-	subclasses := (aCollection notNil and: [aCollection notEmpty]) 
-				ifTrue: [aCollection asSortedCollection asArray]!
-
-subclassInstVarNames
-	"Answer a <Set> of the instance variable names specified in the receiver's subclasses"
-
-	| answer |
-	answer := Set new.
-	self allSubclassesDo: [:each | answer addAll: each instVarNames].
-	^answer!
 
 superclass
 	"Answer a <classDescription> which is the receiver's immediate 
@@ -1073,21 +885,6 @@ whichSelectorsWrite: aString
 	^(self selectMethods: [:each | each writesInstVar: aString at: index]) 
 		collect: [:each | each selector]!
 
-withAllSubclasses
-	"Answer an <OrderedCollection> containing the receiver, and all of the receiver''s 
-	subclasses in breadth-first order, with the immediate subclasses first."
-
-	^(self allSubclasses)
-		addFirst: self;
-		yourself!
-
-withAllSubclassesDo: aMonadicValuable
-	"Evaluate the monadic valuable argument for the receiver and each 
-	of its subclasses using a depth-first traversal."
-
-	aMonadicValuable value: self.
-	self allSubclassesDo: aMonadicValuable!
-
 withAllSuperclasses
 	"Answer an <OrderedCollection> containing the receiver, and all of the receiver''s 
 	superclasses in breadth-first order."
@@ -1102,19 +899,7 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
-!Behavior categoriesFor: #addSelector:withMethod:!methods-accessing!private! !
-!Behavior categoriesFor: #addSubclass:!class hierarchy-adding!private! !
 !Behavior categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Behavior categoriesFor: #allInstances!instances!public! !
-!Behavior categoriesFor: #allInstVarNames!instance variables!public! !
-!Behavior categoriesFor: #allMethodsDo:!enumerating!public! !
-!Behavior categoriesFor: #allSelectors!methods-accessing!public! !
-!Behavior categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
-!Behavior categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
-!Behavior categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
-!Behavior categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
-!Behavior categoriesFor: #allSubinstances!instances!public! !
 !Behavior categoriesFor: #allSuperclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
 !Behavior categoriesFor: #basicCompile:!compiling!private! !
@@ -1126,7 +911,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Behavior categoriesFor: #compile:!compiling!public! !
 !Behavior categoriesFor: #compileAll!compiling!development!public! !
-!Behavior categoriesFor: #compileAllSubclasses!compiling!development!public! !
 !Behavior categoriesFor: #compiledMethodAt:!methods-accessing!public! !
 !Behavior categoriesFor: #compiledMethodAt:ifAbsent:!methods-accessing!public! !
 !Behavior categoriesFor: #compilerClass!constants!public! !
@@ -1142,7 +926,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
 !Behavior categoriesFor: #fullBindingFor:!binding!public! !
-!Behavior categoriesFor: #hasCompilationFailures!public!testing! !
 !Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Behavior categoriesFor: #hasMethods!methods-testing!public! !
 !Behavior categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
@@ -1181,7 +964,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #primAllInstances!instances!private! !
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
-!Behavior categoriesFor: #recompileAll!compiling!development!public! !
 !Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
 !Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
@@ -1189,7 +971,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !
 !Behavior categoriesFor: #removeSelector:ifAbsent:!methods-removing!public! !
 !Behavior categoriesFor: #removeSelectors:!methods-removing!public! !
-!Behavior categoriesFor: #removeSubclass:!class hierarchy-removing!private! !
 !Behavior categoriesFor: #requiresInstallation!public!testing! !
 !Behavior categoriesFor: #scopeHas:ifTrue:!class hierarchy-testing!public! !
 !Behavior categoriesFor: #selectMethods:!methods-testing!private! !
@@ -1201,9 +982,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-mutating!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
-!Behavior categoriesFor: #subclasses!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #subclasses:!class hierarchy-mutating!public! !
-!Behavior categoriesFor: #subclassInstVarNames!instance variables!public! !
 !Behavior categoriesFor: #superclass!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #superclass:!class hierarchy-mutating!public! !
 !Behavior categoriesFor: #understoodSelectors!methods-accessing!public! !
@@ -1220,8 +998,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #whichSelectorsAssign:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsRead:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsWrite:!development!methods-testing!public! !
-!Behavior categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #withAllSubclassesDo:!enumerating!public! !
 !Behavior categoriesFor: #withAllSuperclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #withAllSuperclassesDo:!enumerating!public! !
 

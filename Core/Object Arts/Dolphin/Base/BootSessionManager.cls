@@ -182,7 +182,7 @@ reloadBootPackages
 	classesBefore := (Package manager allPackagedClasses collect: [:each | each name]) asSet.
 	Notification signal: 'Reloading BCL class definitions...'.
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
-	Class subclasses: nil.
+	Class subclasses: #().
 	"Ensure all base classes (including any defined after the boot image was created) are packaged"
 	Object withAllSubclassesDo: 
 			[:each |

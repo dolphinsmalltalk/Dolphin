@@ -85,26 +85,26 @@ typedef struct STBehavior
 	POTE		superclass;
 	POTE		methodDictionary;
 	STInstSpec	instSpec;
-	POTE		subclasses;
 } STBehavior;
 
 typedef struct STClassDescription
 {
-	STBehavior		behavior;
-	POTE			instanceVariables;
-	POTE			methodsCatalogue;
-	POTE			protocols;
+	STBehavior	behavior;
+	POTE		instanceVariables;
+	POTE		methodsCatalogue;
+	POTE		protocols;
 } STClassDescription;
 
 typedef struct STClass
 {
 	STClassDescription	classdesc;
-	POTE				name;
-	POTE				classPool;
-	POTE				sharedPools;
-	POTE				comment;
-	POTE				classCategories;
-	POTE				guid;
+	POTE		subclasses;
+	POTE		name;
+	POTE		classPool;
+	POTE		sharedPools;
+	POTE		comment;
+	POTE		classCategories;
+	POTE		guid;
 } STClass;
 
 typedef struct STMetaclass

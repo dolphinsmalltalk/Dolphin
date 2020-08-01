@@ -13,7 +13,6 @@ AnonymousClassBuilder comment: ''!
 
 installInSuperclass: aClass
 	"Anonymous classes are not included among their superclass' subclasses"
-
 	!
 
 installNewClass

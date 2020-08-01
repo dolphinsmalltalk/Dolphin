@@ -48,6 +48,26 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
 
+addSelector: aSymbol withMethod: aCompiledMethod
+	"Private - Add the message selector, aSymbol, with the corresponding
+	CompiledMethod, to the receiver's method dictionary.
+	Implementation Note: Clears down the VM method cache in case a previous 
+	version of the method is cached, or it overrides a superclass method."
+
+	| selector |
+	selector := aSymbol asSymbol.
+	aCompiledMethod
+		methodClass: self;
+		selector: selector.
+	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
+		put: aCompiledMethod.
+
+	"One might expect to be able to trigger a #methodAdded: event here,
+	 to be symetrical with Behavior>>removeSelector:. However, the 
+	 method source is not yet set up (logged) so in fact we have to do
+	 this later."
+	self flushMethodCache!
+
 addSharedPool: aPoolDictionary
 	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
 	receiver, but lower in precedence than any previously added pools. It is an error if the
@@ -80,6 +100,26 @@ allGetters
 			eachClass methodDictionary do: [:eachMethod | eachMethod isGetter ifTrue: [getters add: eachMethod]]].
 	^getters!
 
+allInstances
+	"Answer an <Array> of all direct instances of the receiver."
+
+	MemoryManager current collectGarbage.
+	^self primAllInstances!
+
+allInstVarNames
+	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
+	those specified in the receiver and in all of its superclasses. The array ordering is the order 
+	in which the variables are stored and accessed by the interpreter."
+
+	^superclass isNil
+		ifTrue: [self instVarNames]
+		ifFalse: [superclass allInstVarNames , self instVarNames]!
+
+allMethodsDo: operation
+	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
+
+	self withAllSubclassesDo: [:behavior | behavior methodDictionary do: operation]!
+
 allProtocols
 	"Answer a <collection> of all the <MethodProtocol>s implemented by the receiver's
 	instances, including those inherited from superclasses."
@@ -87,6 +127,16 @@ allProtocols
 	| answer |
 	answer := IdentitySet new.
 	self withAllSuperclassesDo: [ :c | answer addAll: c protocols].
+	^answer!
+
+allSelectors
+	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
+	is able to respond (this includes messages understood by superclasses)."
+
+	| answer accumulate |
+	answer := IdentitySet new.
+	accumulate := [:s | answer add: s].
+	self withAllSuperclassesDo: [:each | each understoodSelectorsDo: accumulate].
 	^answer!
 
 allSharedPoolNames
@@ -109,6 +159,50 @@ allSharedPools
 			[:c |
 			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
 	^pools contents!
+
+allSubclasses
+	"Answer a <collection> of the receiver's subclasses in breadth-first order, with the immediate subclasses first. 
+	Breadth-first traversal is slightly less efficient, but results in a more useful ordering (the standard does not specify the order). 
+
+	N.B. The original Smalltalk-80 definition specified that this method should answer a Set, and the draft ANSI standard specifiesonly <collection>. The defacto standard (e.g. See IBM Common Base) is now an OrderedCollection, and we follow suit as this maintains the ordering, which is often useful."
+
+	| answer |
+	answer := OrderedCollection new.
+	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
+	^answer!
+
+allSubclassesBreadthFirstDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice)."
+
+	self subclassesDo: aMonadicValuable.
+	self subclassesDo: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]!
+
+allSubclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses using a pre-order depth first traversal."
+
+	self allSubclassesPreOrderDo: aMonadicValuable!
+
+allSubclassesEndOrderDo: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each  of the receiver's subclasses, visiting the receiver AFTER its subclasses (i.e. an end-order traversal)."
+
+	self subclassesDo: 
+			[:each |
+			each allSubclassesEndOrderDo: aMonadicValuable.
+			aMonadicValuable value: each]!
+
+allSubclassesPreOrderDo: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each of the receiver's subclasses, visiting the receiver before its subclasses (i.e. a pre-order traversal)."
+
+	self subclassesDo: 
+			[:each |
+			aMonadicValuable value: each.
+			each allSubclassesPreOrderDo: aMonadicValuable]!
+
+allSubinstances
+	"Answer an <Array> containing all instances of the receiver and its subclasses."
+
+	MemoryManager current collectGarbage.
+	^self primAllSubinstances!
 
 asQualifiedReference
 	"Answer a <BindingReference> to this class."
@@ -298,6 +392,11 @@ compile: codeString classified: categoryString
 			result fireSystemUpdateEvent].
 	^method!
 
+compileAllSubclasses
+	"Compile all the methods in the receiver's subclasses' method dictionaries."
+
+	self allSubclassesDo: [:each | each compileAll]!
+
 conformsToProtocol: protocol
 	"Answer whether the receiver conforms to the named <MethodProtocol>."
 
@@ -348,6 +447,12 @@ fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
 
 	^self subclassResponsibility!
+
+hasCompilationFailures
+	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
+
+	^(self methodDictionary anySatisfy: [:each | each isCompilationFailure])
+		or: [self subclasses anySatisfy: [:each | each hasCompilationFailures]]!
 
 includesCategory: category
 	"Answer whether the receiver includes the named category."
@@ -564,6 +669,17 @@ realMethodCategories
 		add: 'private' asMethodCategory;
 		yourself!
 
+recompileAll
+	"Recompile this class and all its subclasses. The methods are not logged to the change log, but the sources are re-used from the originals. N.B. In order to recompile all methods in the system it is necessary to avoid the process being interrupted or the system may crash.
+	To achieve this evaluate an expression such as:
+		[Object recompileAll] forkAt: Processor userInterruptPriority
+	"
+
+	self withAllSubclassesDo: 
+			[:each |
+			each class compileAll.
+			each compileAll]!
+
 recompileAllReferencesToLiteral: anObject
 	"Private - Recompile any methods in the receiver's hierarchy that reference the specified object from their literal frame."
 
@@ -660,20 +776,18 @@ removeSharedPool: aPoolDictionary
 	self setSharedPoolNames: (self sharedPoolNames copyWithout: aPoolDictionary name)!
 
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
-	"Private - Remove any protocols that are no longer supported after the removal
-	of the <selector>, removedSelector, from the receiver. Any removed protocols still 
-	supported by subclasses are migrated down."
+	"Private - Remove any protocols that are no longer supported after the removal of the <selector>, removedSelector, from the receiver. Any removed protocols still  supported by subclasses are migrated down."
 
 	| unsupported |
 	unsupported := self protocols select: [:p | p includesSelector: removedSelector].
 	unsupported do: [:p | p removeClass: self].
 	unsupported addAll: superUnsupported.
-	self subclasses do: [:s |
-		"If the subclass has its own implementation for the selector, then it can still
-		 support the protocol, otherwise it might need to remove further protocols"
-		(s canUnderstand: removedSelector)
-			ifTrue: [unsupported do: [:p | p addClass: s]]
-			ifFalse: [s removeUnsupportedProtocols: unsupported selector: removedSelector]]!
+	self subclassesDo: 
+			[:s |
+			"If the subclass has its own implementation for the selector, then it can still support the protocol, otherwise it might need to remove further protocols"
+			(s canUnderstand: removedSelector)
+				ifTrue: [unsupported do: [:p | p addClass: s]]
+				ifFalse: [s removeUnsupportedProtocols: unsupported selector: removedSelector]]!
 
 resourceIdentifiers
 	| identifiers |
@@ -786,6 +900,27 @@ storeClassCategories
 
 	"Ignored in the absence of the development system"!
 
+subclasses
+	"Answer a <collection> containing the receiver's immediate subclasses."
+
+	| stream |
+	stream := Array writeStream.
+	self subclassesDo: [:each | stream nextPut: each].
+	^stream contents!
+
+subclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
+
+	self subclassResponsibility!
+
+subclassInstVarNames
+	"Answer a <Set> of the instance variable names specified in the receiver's subclasses"
+
+	| answer |
+	answer := Set new.
+	self allSubclassesDo: [:each | answer addAll: each instVarNames].
+	^answer!
+
 suggestedPrivacyFor: aCompiledMethod
 	| policy |
 	policy := Smalltalk lookup: #MethodCategorizationPolicy.
@@ -814,17 +949,41 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 	self methodsCatalogue keysAndValuesDo: 
 			[:eachCategory :eachSelectors | 
 			(eachSelectors identityIncludes: aSelector) ifTrue: [answer add: eachCategory]].
-	^answer! !
+	^answer!
+
+withAllSubclasses
+	"Answer an <OrderedCollection> containing the receiver, and all of the receiver''s subclasses in breadth-first order, with the immediate subclasses first."
+
+	^self allSubclasses
+		addFirst: self;
+		yourself!
+
+withAllSubclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for the receiver and each of its subclasses using a depth-first traversal."
+
+	aMonadicValuable value: self.
+	self allSubclassesDo: aMonadicValuable! !
 !ClassDescription categoriesFor: #<=!comparing!public! !
 !ClassDescription categoriesFor: #>>!accessing!public! !
 !ClassDescription categoriesFor: #addInstVarName:!class hierarchy-mutating!instance variables!public! !
 !ClassDescription categoriesFor: #addProtocol:!private!protocols! !
+!ClassDescription categoriesFor: #addSelector:withMethod:!methods-accessing!private! !
 !ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
 !ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
 !ClassDescription categoriesFor: #allGetters!accessing!private! !
+!ClassDescription categoriesFor: #allInstances!instances!public! !
+!ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
+!ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #allProtocols!protocols!public! !
+!ClassDescription categoriesFor: #allSelectors!methods-accessing!public! !
 !ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
 !ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
+!ClassDescription categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
+!ClassDescription categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
+!ClassDescription categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
+!ClassDescription categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
+!ClassDescription categoriesFor: #allSubinstances!instances!public! !
 !ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
 !ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
 !ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
@@ -842,6 +1001,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #compile:categories:package:!compiling!development!public! !
 !ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
 !ClassDescription categoriesFor: #compile:classified:!compiling!public! !
+!ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
 !ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
 !ClassDescription categoriesFor: #defaultIconName!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
@@ -850,6 +1010,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
 !ClassDescription categoriesFor: #fullName!accessing!public! !
 !ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
+!ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
@@ -879,6 +1040,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #protocols!private!protocols! !
 !ClassDescription categoriesFor: #protocols:!private!protocols! !
 !ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
+!ClassDescription categoriesFor: #recompileAll!compiling!development!public! !
 !ClassDescription categoriesFor: #recompileAllReferencesToLiteral:!development!private! !
 !ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
 !ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
@@ -906,10 +1068,15 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !
+!ClassDescription categoriesFor: #subclasses!class hierarchy-accessing!public! !
+!ClassDescription categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
+!ClassDescription categoriesFor: #subclassInstVarNames!instance variables!public! !
 !ClassDescription categoriesFor: #suggestedPrivacyFor:!compiling!private! !
 !ClassDescription categoriesFor: #whichCategoriesIncludeSelector:!categories-accessing!private! !
 !ClassDescription categoriesFor: #whichClassDefinesClassVar:!class variables!public! !
 !ClassDescription categoriesFor: #whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
+!ClassDescription categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
+!ClassDescription categoriesFor: #withAllSubclassesDo:!enumerating!public! !
 
 ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
 ClassDescription methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!

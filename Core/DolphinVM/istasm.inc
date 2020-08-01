@@ -267,7 +267,6 @@ Behavior		STRUCT 2t
 	m_superclass		Oop		?
 	m_methodDictionary	Oop		?
 	m_instanceSpec		InstanceSpec		<>
-	m_subclasses		Oop		?
 Behavior		ENDS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

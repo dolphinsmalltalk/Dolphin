@@ -27,16 +27,6 @@ Metaclass has the following instance variables:
 !Metaclass categoriesForClass!Kernel-Classes! !
 !Metaclass methodsFor!
 
-addToSuper
-	"Private - Add the receiver as a subclass of its superclass, but not
-	if a root class."
-
-	"Implementation Note: Identify Class as the superclass by name, as if the ClassBuilder is
-	currently mutating Class, the Class variable may temporarily be pointing at the old Class
-	object."
-
-	superclass name ~~ #Class ifTrue: [super addToSuper]!
-
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
@@ -148,15 +138,19 @@ removeFromSuper
 	Root Metaclasses will have a superclass of Class - we do not put such
 	classes into Class's subclass collection."
 
-	superclass ~~ Class
+	^superclass ~~ Class
 		ifTrue: [super removeFromSuper]
 !
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
-!Metaclass categoriesFor: #addToSuper!class hierarchy-adding!private! !
+	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)!
+
+subclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
+
+	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
 !Metaclass categoriesFor: #bindingFor:!binding!public! !
 !Metaclass categoriesFor: #classPool!class variables!public! !
 !Metaclass categoriesFor: #classVariables!class variables!public! !
@@ -175,4 +169,5 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
+!Metaclass categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
 

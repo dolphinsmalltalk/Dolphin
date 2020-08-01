@@ -166,7 +166,8 @@ createProper
 	(currentClass := newMetaclass new)
 		instanceSpec: instanceSpec;
 		setName: className;
-		superclass: superclass.
+		superclass: superclass;
+		subclasses: #().
 
 	"In order to sort the metaclass subclasses, we need the instance class name, so we
 	leave addition to the superclass subclasses list until the instance class has been created."
@@ -278,7 +279,6 @@ initializeCopy: aClassDescriptionCopy fromClass: aClass superclass: aSuperclass
 	aClassDescriptionCopy
 		methodDictionary: aClass methodDictionary copy;
 		instanceSpec: instSpec;
-		subclasses: nil;
 		superclass: aSuperclass;
 		addToSuper.
 	aClass == currentClass
@@ -503,7 +503,7 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 		ifTrue: 
 			["In Dolphin Object class et al are not in the subclasses collection of Class, so need special case handling"
 			Smalltalk allRoots do: [:each | self mutateClass: each class toBeASubclassOf: newClass]]
-		ifFalse: [oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
+		ifFalse: [oldClass subclassesDo: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
 	oldClass class removeFromSuper.
 	oldClass removeFromSuper.
 	oldClass become: newClass.
@@ -554,7 +554,7 @@ mutateMetaclass: oldMetaclass toBeASubclassOf: newSuperclass
 		of: oldMetaclass
 		toBeInstancesOf: newMetaclass.	"Mutate the instance class."
 	self updateVMRegistryWith: newMetaclass instanceClass.
-	oldMetaclass subclasses do: [:metaclass | self mutateMetaclass: metaclass toBeASubclassOf: newMetaclass].
+	oldMetaclass subclassesDo: [:metaclass | self mutateMetaclass: metaclass toBeASubclassOf: newMetaclass].
 	oldMetaclass removeFromSuper.
 	oldMetaclass become: newMetaclass.
 	newMetaclass oneWayBecome: oldMetaclass!
@@ -585,6 +585,7 @@ newClassLike: aClass superclass: aSuperclass
 		via: mappingArray.
 	newMeta instanceClass: newInstanceClass.
 
+	newInstanceClass subclasses: #().
 	^self
 		initializeCopy: newInstanceClass
 		fromClass: aClass
@@ -612,7 +613,7 @@ notifyClassUpdated
 	out to record the change in their source definition."
 
 	Smalltalk classUpdated: self currentClass.
-	self currentClass subclasses do: [:each | each isChanged: true]!
+	self currentClass subclassesDo: [:each | each isChanged: true]!
 
 recompilationRequired
 	"Private - Answer whether recompilation of a modified class is required."
@@ -927,7 +928,7 @@ validateSubclassesOf: aClass againstInstanceSpec: instSpec
 
 	| dummyClass |
 	(dummyClass := Behavior new) instanceSpec: instSpec.
-	aClass subclasses do: 
+	aClass subclassesDo: 
 			[:cls | 
 			| validatedInstSpec |
 			validatedInstSpec := self class 

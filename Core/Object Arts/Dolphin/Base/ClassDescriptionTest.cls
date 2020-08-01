@@ -22,7 +22,7 @@ testSubclasses
 	self allClassHierarchyInstancesDo: 
 			[:each |
 			each subclasses do: [:subclass | self assert: subclass superclass identicalTo: each].
-			self assert: each subclasses asSet size equals: each subclasses size.
+			self assert: each subclasses equals: each subclasses distinct.
 			"Dolphin's Class subclasses collections have historically been sorted arrays. This gives repeatable results when enumerating classes.
 			It does impose a cost when building classes, but I'm loathe to change it now for fear of what it will break."
 			self assert: each subclasses

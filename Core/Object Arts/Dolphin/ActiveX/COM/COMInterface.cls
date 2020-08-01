@@ -502,8 +502,8 @@ compileFunctions
 
 	self removeCompiledFunctions.
 	self defineVTable.
-	superclass functions size+1 to: functions size do: [:i | self compileFunction: i].
-	self subclasses do: [:s | s compileFunctions]!
+	superclass functions size + 1 to: functions size do: [:i | self compileFunction: i].
+	self subclassesDo: [:s | s compileFunctions]!
 
 compileFunctionsIntoImplementor: aClass
 	"Helper to compile a set of method templates for the receiver's interface

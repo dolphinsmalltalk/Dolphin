@@ -273,7 +273,7 @@ onStartup
 onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
-	self subclasses do: [:c | c onStartup2]! !
+	self subclassesDo: [:c | c onStartup2]! !
 !GraphicsTool class categoriesFor: #fromHandle:!instance creation!public! !
 !GraphicsTool class categoriesFor: #fromOwnedHandle:!instance creation!public! !
 !GraphicsTool class categoriesFor: #icon!constants!public! !

@@ -147,7 +147,7 @@ public:
 		return pointerFromIndex(index);
 	}
 
-	#ifdef _DEBUG
+	#if defined(_DEBUG) && !defined(BOOT)
 	
 	#define FREEFLAG 0x80000000
 

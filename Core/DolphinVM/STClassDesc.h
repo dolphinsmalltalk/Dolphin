@@ -43,6 +43,7 @@ namespace ST
 	{
 	public:
 		// TODO: Use Utf8String
+		ArrayOTE* m_subclasses;
 		AnsiStringOTE*	m_name;
 		POTE		m_classPool;	/* dictionary of varName, storage */
 		POTE		m_sharedPools;
@@ -50,7 +51,8 @@ namespace ST
 		POTE		m_classCategories;
 		POTE		m_guid;
 
-		static constexpr size_t NameIndex = ClassDescription::FixedSize;
+		static constexpr size_t SubClassesIndex = ClassDescription::FixedSize;
+		static constexpr size_t NameIndex = SubClassesIndex + 1;
 		static constexpr size_t ClassPoolIndex = NameIndex + 1;
 		static constexpr size_t SharedPoolsIndex = ClassPoolIndex + 1;
 		static constexpr size_t CommentIndex = SharedPoolsIndex + 1;

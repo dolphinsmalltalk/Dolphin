@@ -1,25 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
-	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
+	instanceVariableNames: 'subclasses name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Class guid: (GUID fromString: '{87b4c4fb-026e-11d3-9fd7-00a0cc3e4a32}')!
-Class comment: '"Instances" of Class describe the representation and behavior of objects. Class adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass Behavior and more descriptive facilities to the ones provided in the abstract superclass ClassDescription. In particular Class adds the representation for class variable names and shared (pool) variables.
+Class comment: '"Instances" of `Class` describe the representation and behavior of objects. `Class` adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass `Behavior` and more descriptive facilities to the ones provided in the abstract superclass `ClassDescription`. In particular `Class` adds the representation for class variable names and shared (pool) variables.
 
-In reality, Class has no instances. All classes in the system are actually instances of a parallel hierarchy of Metaclass instances, but they do have the same shape as Class and are logically, if not physically, instances of it.
+In reality, `Class` has no instances. All classes in the system are actually instances of a parallel hierarchy of `Metaclass` instances, but they do have the same shape as `Class` and are logically, if not physically, instances of it.
 
-Instance Variables:
+## Instance Variables:
 
-	name		<Symbol> which is the name of the class
-	classPool		<PoolDictionary> mapping class variable name <String>s to values
-	sharedPools	<Array> of <Symbol> names of shared variable pools
-	comment		<String> comment about the class (like this one), or nil if none.
-	classCategories	<Array> of <ClassCategory>. The categories of the class, if any.
-	_guid		<GUID>. Unique identifier for the class.
-	'!
+  `subclasses`		`Array` of `Behavior`''s which are the subclasses of the instance
+ `name`			`Symbol` which is the name of the class
+ `classPool`		`PoolDictionary` mapping class variable name <String>s to values
+ `sharedPools`		`Array` of `Symbol` names of shared variable pools
+ `comment`		`String` comment about the class (like this one), or nil if none.
+ `classCategories`	`Array` of `ClassCategory`. The categories of the class, if any.
+ `_guid`			`GUID`. Unique identifier for the class.
+'!
 !Class categoriesForClass!Kernel-Classes! !
 !Class methodsFor!
 
@@ -92,14 +93,27 @@ addClassVarNamed: aString
 	Smalltalk classUpdated: self.
 	^var!
 
-addToSuper
-	"Private - Add the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy, but not
-	if a root class."
+addSubclass: aClass
+	"Private - Include the argument, aClass, as a subclass of the receiver."
 
-	superclass notNil ifTrue: [
-		super addToSuper.
-		self class addToSuper]!
+	| subs count index |
+	aClass superclass == self
+		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
+	subs := self subclasses.
+	count := subs size.
+	count == 0
+		ifTrue: 
+			[subclasses := {aClass}.
+			^self].
+	"Maintain the array in sorted order as saves sorting on access - speed is important to minimize class creation time"
+	index := subs binarySearchFor: aClass using: [:a :b | a name <=> b name <= 0].
+	(index > 1 and: [(subs at: index - 1) == aClass]) ifTrue: [^self].
+	subclasses := subs copyWith: aClass atIndex: index!
+
+addToSuper
+	"Private - Add the receiver as a subclass of its superclass."
+
+	superclass ifNotNil: [superclass addSubclass: self]!
 
 basicClassPool
 	"Private - Answer the receiver's class pool (dictionary of class variables)."
@@ -441,23 +455,24 @@ removeFromCategory: category
 	self categories: (self categories asSet remove: classCat; yourself)!
 
 removeFromSuper
-	"Private - Remove the receiver as a subclass of its superclass
-	and do the same for the receiver's metaclass buddy."
+	"Private - Remove the receiver as a subclass of its superclass and do the same for the receiver's metaclass buddy."
 
-	super removeFromSuper.
-	self class removeFromSuper!
+	superclass ifNotNil: [superclass removeSubclass: self].
+	^superclass!
 
 removeFromSystem
-	"Private - Remove the receiver from the system. This method will fail if the class has instances
-	or subclasses so these must be removed first where ever  possible, which should be done in
-	an #uninitialize method. #unitialize is sent immediately before the class is removed, but (like
-	#initialize) only if directly implemented by the class - i.e. it will not be sent if the implementation
-	is inherited. N.B. Do not supersend #uninitialize from an override, as you may damage a
-	superclass which is not being removed."
+	"Private - Remove the receiver from the system. This method will fail if the class has instances or subclasses so these must be removed first where ever  possible, which should be done in an #uninitialize method. #unitialize is sent immediately before the class is removed, but (like #initialize) only if directly implemented by the class - i.e. it will not be sent if the implementation
+	is inherited. N.B. Do not supersend #uninitialize from an override, as you may damage a superclass which is not being removed."
 
-	self subclasses do: [:each | each removeFromSystem].
-	self sourceManager logEvaluate: self name, ' removeFromSystem'.
+	self subclassesDo: [:each | each removeFromSystem].
+	self sourceManager logEvaluate: self name , ' removeFromSystem'.
 	ClassBuilder removeClass: self!
+
+removeSubclass: aClass
+	"Private - Remove the argument, aClass, from the subclasses of the receiver.
+	WARNING: This method does not completely remove a class from the system."
+
+	subclasses isEmpty ifFalse: [subclasses := subclasses copyWithout: aClass]!
 
 rename: aString
 	"Private - Change the name of the receiver to aString.
@@ -646,6 +661,23 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
+subclasses
+	"Answer a <collection> containing the receiver's immediate subclasses.
+
+	Note that the answer is actually a <sequencedReadableCollection>, but that sequenceability should not be relied upon in portable code because the ANSI standard specifies only <collection>."
+
+	^subclasses!
+
+subclasses: aCollection
+	"Set the receivers subclasses to the specified collection. The subclasses are maintained as a sorted array."
+
+	subclasses := aCollection asArray sort!
+
+subclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
+
+	subclasses do: aMonadicValuable!
+
 uninitialize
 	"Private - Perform any uninitialisation for the class - typically clearing down class variables - in
 	preparation for removal from the system. You should override this method if, for example,
@@ -785,6 +817,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
 !Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
 !Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
+!Class categoriesFor: #addSubclass:!class hierarchy-adding!private! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
@@ -829,6 +862,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
+!Class categoriesFor: #removeSubclass:!class hierarchy-removing!private! !
 !Class categoriesFor: #rename:!class hierarchy-mutating!private! !
 !Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
 !Class categoriesFor: #requiresInstallation!public!testing! !
@@ -848,6 +882,9 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!Class categoriesFor: #subclasses!class hierarchy-accessing!public! !
+!Class categoriesFor: #subclasses:!class hierarchy-mutating!public! !
+!Class categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
 !Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
 !Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !

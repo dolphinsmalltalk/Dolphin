@@ -26,13 +26,13 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Association} #binding)
 	#(#{Association} #isVariableBinding)
-	#(#{Behavior} #allSubBehaviorsDo:)
-	#(#{Behavior} #allSubBehaviorsPreOrderDo:)
 	#(#{Behavior} #isBehavior)
 	#(#{Behavior} #numberSelectors)
 	#(#{Behavior} #selectorsAndMethodsDo:)
-	#(#{Behavior} #subBehaviors)
-	#(#{Behavior} #withAllSubBehaviorsDo:)
+	#(#{ClassDescription} #allSubBehaviorsDo:)
+	#(#{ClassDescription} #allSubBehaviorsPreOrderDo:)
+	#(#{ClassDescription} #subBehaviors)
+	#(#{ClassDescription} #withAllSubBehaviorsDo:)
 	#(#{CompiledCode} #allLiterals)
 	#(#{Metaclass} #soleInstance)
 	#(#{Object} #isBehavior)
@@ -125,25 +125,6 @@ isVariableBinding
 
 !Behavior methodsFor!
 
-allSubBehaviorsDo: operation
-	"Private - Evaluate the monadic valuable argument, operation, for each 
-	of the receiver's sub-behaviours using a pre-order depth first traversal."
-
-	self allSubBehaviorsPreOrderDo: operation!
-
-allSubBehaviorsPreOrderDo: operation
-	"Private - Evaluate the monadic valuable, operation, for each 
-	of the receiver's subclasses, visiting the receiver before its
-	subclasses (i.e. a pre-order traversal)."
-
-	| subBehaviors |
-	subBehaviors := self subBehaviors.
-	subBehaviors isNil ifFalse: [
-		subBehaviors do: [:subclass |
-			operation value: subclass.
-			subclass allSubBehaviorsPreOrderDo: operation]]
-!
-
 isBehavior
 	"Answer whether the receiver is a <Behavior>."
 
@@ -159,7 +140,26 @@ selectorsAndMethodsDo: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument for each of the selector/method pairs in 
 	the receiver's method dictionary."
 
-	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]!
+	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]! !
+!Behavior categoriesFor: #isBehavior!public!testing! !
+!Behavior categoriesFor: #numberSelectors!enumerating!public! !
+!Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
+
+!ClassDescription methodsFor!
+
+allSubBehaviorsDo: operation
+	"Private - Evaluate the monadic valuable argument, operation, for each 
+	of the receiver's sub-behaviours using a pre-order depth first traversal."
+
+	self allSubBehaviorsPreOrderDo: operation!
+
+allSubBehaviorsPreOrderDo: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each of the receiver's subclasses, visiting the receiver before its subclasses (i.e. a pre-order traversal)."
+
+	self subBehaviors do: 
+			[:subclass |
+			aMonadicValuable value: subclass.
+			subclass allSubBehaviorsPreOrderDo: aMonadicValuable]!
 
 subBehaviors
 	"Answer a <collection> containing the receiver's immediate subclasses."
@@ -172,13 +172,10 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
-!Behavior categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
-!Behavior categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
-!Behavior categoriesFor: #isBehavior!public!testing! !
-!Behavior categoriesFor: #numberSelectors!enumerating!public! !
-!Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
-!Behavior categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
+!ClassDescription categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
+!ClassDescription categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
+!ClassDescription categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
+!ClassDescription categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
 
 !CompiledCode methodsFor!
 
