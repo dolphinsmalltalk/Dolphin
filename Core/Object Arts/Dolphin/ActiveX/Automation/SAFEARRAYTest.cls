@@ -116,13 +116,13 @@ testElementClasses
 testRecordInfo
 	| sa recinfo fieldNames ordered |
 	sa := self threePoints: POINTL.
+	self assert: sa elementClass equals: POINTL.
 	self assert: sa asObject equals: ((1 to: 3) collect: [:each | each @ each]).
 	recinfo := sa recordInfo.
 	self assert: recinfo name equals: sa elementClass name asString.
 	self assert: recinfo byteSize equals: sa elementClass byteSize.
-	fieldNames := sa elementClass template keys asArray select: [:each | each argumentCount = 0]
-				thenCollect: [:each | each asString].
-	self assert: recinfo getFieldNames equals: fieldNames.
+	fieldNames := sa elementClass template keys collect: [:each | each asString].
+	self assert: recinfo getFieldNames asSet equals: fieldNames.
 	self assert: recinfo guid equals: sa elementClass guid.
 	"Make sure enumeration of records is working"
 	ordered := OrderedCollection new.

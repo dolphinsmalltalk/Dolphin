@@ -80,7 +80,7 @@ fullyCompileDefinition
 
 	self newTemplate; defineTemplate.
 	self template do: [:each | each beCompiled].
-	self recompileDefinition; shrink.!
+	self recompileDefinition!
 
 removeTemplate
 	template := nil! !
