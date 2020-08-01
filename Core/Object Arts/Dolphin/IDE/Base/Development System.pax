@@ -3349,8 +3349,7 @@ compileDefinition
 	self
 		newTemplate;
 		defineTemplate;
-		recompileDefinition;
-		shrink!
+		recompileDefinition!
 
 compileGetFieldNames
 	"Private - Define a #getFieldList method for the structure class so that the field names are available even if the template is removed."
