@@ -58,17 +58,6 @@ evalTestMethod: aCompiledMethod withArgs: anArray
 evaluateExpression: aString 
 	^Compiler evaluate: aString!
 
-findIP: anInteger inTextMap: aTextMap 
-    	"Private - Answer the index of the source map entry corresponding to the
-    	specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
-	of source which is held as the <interval> value."
-    
-    	| i size |
-    	i := 1.
-    	size := aTextMap size.
-	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
-	^i!
-
 getTestMethod: aSymbol 
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
@@ -681,11 +670,11 @@ testIncrementDecrementOptimisation
 	debugMethod := method asDebugMethod.
 	debugMap := debugMethod debugInfo textMap.
 	self assert: map size equals: debugMap size.
-	i := self findIP: 5 inTextMap: map.
+	i := StackFrame findIP: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := self findIP: 6 inTextMap: map.
+	i := StackFrame findIP: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortPopTemp + 1!
@@ -716,7 +705,7 @@ testIncrementPushTempOptimisation
 	self assert: (method byteCodes at: 5) equals: IncPushTemp.
 	self assert: (method byteCodes at: 6) equals: StoreTemp.
 	self assert: (method byteCodes at: 7) equals: 0.	"temp 0"
-	i := self findIP: 5 inTextMap: map.
+	i := StackFrame findIP: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (method getSource copyFrom: (map at: i) value start to: (map at: i) value stop)
 		equals: 'i + 1'.
@@ -724,7 +713,7 @@ testIncrementPushTempOptimisation
 	debugMap := debugMethod debugInfo textMap.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := self findIP: 6 inTextMap: map.
+	i := StackFrame findIP: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortStoreTemp + 0.
@@ -794,11 +783,11 @@ testIncrementTempOptimisation
 	map := method debugInfo textMap.
 	debugMethod := method asDebugMethod.
 	debugMap := debugMethod debugInfo textMap.
-	i := self findIP: 5 inTextMap: map.
+	i := StackFrame findIP: 5 inTextMap: map.
 	self assert: (map at: i) key equals: 5.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: Increment.
-	i := self findIP: 6 inTextMap: map.
+	i := StackFrame findIP: 6 inTextMap: map.
 	self assert: (map at: i) key equals: 6.
 	self assert: (map at: i) value equals: (debugMap at: i) value.
 	self assert: (debugMethod byteCodes at: (debugMap at: i) key) equals: ShortPopTemp + 0!
@@ -1233,7 +1222,7 @@ testTextMapOfEmptyBlock
 		do: 
 			[:ip |
 			| debugIp |
-			debugIp := self findIP: ip inTextMap: method textMap.
+			debugIp := StackFrame findIP: ip inTextMap: method textMap.
 			self assert: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)
 				equals: (method byteCodes at: ip)]!
 
@@ -1488,7 +1477,6 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
 !CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
 !CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
-!CompilerTest categoriesFor: #findIP:inTextMap:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !
