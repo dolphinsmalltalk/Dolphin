@@ -176,7 +176,7 @@ dayOfYear
 	^self class day: self asDays inYear: self year!
 
 displayOn: aPuttableStream
-	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream locale displayDate: self on: aPuttableStream!
 

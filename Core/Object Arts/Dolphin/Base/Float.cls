@@ -526,7 +526,8 @@ cos
 	^NaN!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	This will be the Smalltalk literal format for floating point numbers if the stream is configured for the Smalltalk locale, but it could be in a <WindowsLocale> specific format."
 
 	aPuttableStream locale displayFloat: self on: aPuttableStream!
 

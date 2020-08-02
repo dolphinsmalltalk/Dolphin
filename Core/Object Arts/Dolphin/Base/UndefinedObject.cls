@@ -41,10 +41,8 @@ deepCopy
 	^self!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
-	The default is to do nothing, since, from the end-user perspective, the receiver is a null."
-
-	!
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
 ifNil: nilBlock 
 	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,

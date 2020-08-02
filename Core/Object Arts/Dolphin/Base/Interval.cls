@@ -73,8 +73,7 @@ collect: transformer
 	^answer!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
-	are a description of the receiver as an end user would want to see it."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		display: self start;

@@ -47,7 +47,7 @@ code: anInteger in: aString for: aClass selector: aSymbol position: posInteger l
 	offset := 0!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: self severityName;

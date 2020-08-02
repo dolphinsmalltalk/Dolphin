@@ -25,8 +25,8 @@ byteSize
 	^self recordInfo byteSize!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
-	We use the name of the record as supplied by its IRecordInfo implementation. This does not provide localised names, to the <Locale> argument is ignored."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	We use the name of the record as supplied by its IRecordInfo implementation."
 
 	| name |
 	name := self recordInfo name.

@@ -7,7 +7,19 @@ AbstractBindingReference subclass: #BindingReference
 	classInstanceVariableNames: ''
 	classConstants: {}!
 BindingReference guid: (GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
-BindingReference comment: 'Generic binding reference.'!
+BindingReference comment: 'BindingReference''s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
+
+## Instance Variables:
+  `pathString`		`<string>`. The qualified name.
+  `path`			`<sequencedReadableCollection>`. The components of the qualified name.
+  `context`		`<Class>`. The namespace from which binding resolution should start, or nil if unspecified.
+  `binding`		`<VariableBinding>`. The resolved binding, or `Undeclared` if there is no binding for the name path in context.
+  `generation`		`<integer>`. Value of Generation when the binding was resolved.
+
+## Class Variables:
+  `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class.
+
+'!
 !BindingReference categoriesForClass!System-Namespaces! !
 !BindingReference methodsFor!
 

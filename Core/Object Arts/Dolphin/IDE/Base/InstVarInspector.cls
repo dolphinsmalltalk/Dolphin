@@ -40,7 +40,7 @@ defaultBatchSize
 !
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	This will be used as the label for the tab when the receiver is being displayed within the Flipper Inspector"
 
 	aPuttableStream nextPutAll: 'Instance Variables'!

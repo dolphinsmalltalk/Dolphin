@@ -35,7 +35,7 @@ ask
 		caption: 'I''m, getting better all the time...') ifTrue: [Animal playGame]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	We use the name of the receiver prepended by 'a' or 'an' as appropriate."
 
 	| aOrAn |

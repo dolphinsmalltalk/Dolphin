@@ -23,7 +23,7 @@ displayIPOn: aStream
 	self ipAddress do: [:each | aStream display: each] separatedBy: [aStream nextPut: $.]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	We don't resolve the host or IP address by default, as this can take a long time, and may give an error."
 
 	host isNil

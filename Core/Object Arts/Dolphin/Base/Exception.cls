@@ -190,7 +190,7 @@ description
 	^desc isEmpty ifTrue: ['An unknown <1p> has occurred' expandMacrosWith: self class] ifFalse: [desc]!
 
 displayOn: aPuttableStream
-	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| signallerText |
 	aPuttableStream nextPutAll: ((signallerText := self messageText) notNil

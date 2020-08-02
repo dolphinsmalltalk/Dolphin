@@ -440,7 +440,7 @@ decodeNextFrom: aReadStream
 	^self subclassResponsibility!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	Since this message is intended for producing end-user text, the receiver is appended to the stream as-is."
 
 	aPuttableStream nextPutAll: self!
@@ -1652,7 +1652,7 @@ readFrom: aStream
 	^answer contents!
 
 smalltalkWriteStream
-	"Answer a WriteStream on the a new sub-instance of the receiver."
+	"Answer a <WriteStream> on the a new empty sub-instance of the receiver, configured to display objects using <SmalltalkLocale> settings."
 
 	^self smalltalkWriteStream: 32!
 

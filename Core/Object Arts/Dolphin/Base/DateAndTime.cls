@@ -154,7 +154,7 @@ dayOfYear
 	^self dayMonthYearDo: [:d :m :y | (self class daysToMonth: m forYear: y) + d]!
 
 displayOn: aPuttableStream
-	"Append,to the <puttableStream> first argument, a <String> whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream locale displayDateTime: self on: aPuttableStream!
 

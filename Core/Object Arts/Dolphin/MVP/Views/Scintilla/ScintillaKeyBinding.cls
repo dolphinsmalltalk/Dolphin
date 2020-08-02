@@ -66,7 +66,7 @@ commandSymbol: aSymbol
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	#todo.	"Take account of Locale in printing accelerator key - need to convert to some default keyboard layout for the Locale."
+	#todo.	"Take account of Locale in printing accelerator key - need to convert to some default keyboard layout for the Locale of the stream."
 	aPuttableStream
 		nextPutAll: self acceleratorKeyDisplayString;
 		nextPutAll: ' -> ';

@@ -2038,7 +2038,7 @@ defaultStackDepth: anInteger
 	DefaultStackDepth := anInteger!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Debugger'!
 

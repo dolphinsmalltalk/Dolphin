@@ -5295,7 +5295,7 @@ publishedAspectsOfInstances
 !RefactoryChange methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self displayString! !
 !RefactoryChange categoriesFor: #displayOn:!printing!public! !
@@ -6021,7 +6021,7 @@ publishedAspectsOfInstances
 !StAbstractVariableNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: 'Var ';
@@ -6123,7 +6123,7 @@ publishedAspectsOfInstances
 !StAssignmentNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: ':='! !
 !StAssignmentNode categoriesFor: #displayOn:!printing!public! !
@@ -6228,7 +6228,7 @@ publishedAspectsOfInstances
 !StBlockNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: '[]'! !
 !StBlockNode categoriesFor: #displayOn:!printing!public! !
@@ -6236,7 +6236,7 @@ displayOn: aPuttableStream
 !StCascadeNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Cascade'! !
 !StCascadeNode categoriesFor: #displayOn:!printing!public! !
@@ -6244,7 +6244,7 @@ displayOn: aPuttableStream
 !StLiteralArrayNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: '#()'! !
 !StLiteralArrayNode categoriesFor: #displayOn:!printing!public! !
@@ -6258,7 +6258,7 @@ textStyle
 !StLiteralValueNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	self value printOn: aPuttableStream! !
 !StLiteralValueNode categoriesFor: #displayOn:!printing!public! !
@@ -6266,7 +6266,7 @@ displayOn: aPuttableStream
 !StMessageNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: 'Msg ';
@@ -6282,7 +6282,7 @@ textStyle
 !StOptimizedNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: '##()'! !
 !StOptimizedNode categoriesFor: #displayOn:!printing!public! !
@@ -6290,7 +6290,7 @@ displayOn: aPuttableStream
 !StParameterNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPut: $:;
@@ -6300,7 +6300,7 @@ displayOn: aPuttableStream
 !StPrimitiveNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: '<Primitive: ';
@@ -6375,7 +6375,7 @@ debugPrint: anObject
 !StReturnNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPut: $^! !
 !StReturnNode categoriesFor: #displayOn:!printing!public! !
@@ -6582,7 +6582,7 @@ valueClassIn: aClass
 !StSequenceNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: '...'! !
 !StSequenceNode categoriesFor: #displayOn:!printing!public! !
@@ -6590,7 +6590,7 @@ displayOn: aPuttableStream
 !StSpecialVariableNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self name!
 
@@ -6631,7 +6631,7 @@ valueClassIn: aClass
 !StTempDeclNode methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see."
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPut: $|;

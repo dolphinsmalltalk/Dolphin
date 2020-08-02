@@ -31,7 +31,7 @@ asArray
 	^self!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that a user in the specified <Locale> would want to see.
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
 
 	self printOn: aPuttableStream do: [:each | each displayOn: aPuttableStream]!
