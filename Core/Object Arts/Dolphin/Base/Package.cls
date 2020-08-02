@@ -14,8 +14,7 @@ Package comment: ''!
 about
 	"Displays an about screen for the receiver using the aboutBlock if any has been set."
 
-	self aboutBlock notNil ifTrue: [
-		self aboutBlock value: self ]!
+	self aboutBlock notNil ifTrue: [self aboutBlock value: self]!
 
 aboutBlock
 	"Answer the <monadicValuable> that will display an About screen
@@ -263,13 +262,13 @@ bindingRefToLiteral: anObject
 	^(anObject isKindOf: VariableBinding)
 		ifTrue: 
 			[| key |
-			#todo.	"This is attempting to references to SystemDictionary variables. It won't be correct with namespaces."
 			key := anObject key.
 			"Avoid interning symbols for all the string Pool variable names by checking first if the var name is a symbol"
 			(key isKindOf: Symbol)
 				ifTrue: 
-					[(self environment associationAt: key ifAbsent: [])
-						ifNotNil: [:v | v == anObject ifTrue: [v fullyQualifiedReference]]]]
+					[| ref |
+					ref := anObject fullyQualifiedReference.
+					ref bindingOrNil == anObject ifTrue: [ref]]]
 		ifFalse: 
 			[(anObject isKindOf: Class)
 				ifTrue: 
@@ -444,11 +443,6 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self name!
-
-environment
-	"Private - Answer the global name associated with the receiver."
-
-	^Smalltalk!
 
 errorFileCorrupt
 	"Private - Filing in the receivers owned objects has failed because the
@@ -1732,16 +1726,15 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #classNames!accessing!public! !
 !Package categoriesFor: #comment!accessing!public! !
 !Package categoriesFor: #comment:!accessing!public! !
-!Package categoriesFor: #convertOldMethodNames!helpers!private! !
-!Package categoriesFor: #convertOldNames:!helpers!private! !
-!Package categoriesFor: #convertOldNamesProperty:!helpers!private! !
-!Package categoriesFor: #convertPoolDictionariesToSharedPools!accessing!public! !
+!Package categoriesFor: #convertOldMethodNames!legacy package loading!private! !
+!Package categoriesFor: #convertOldNames:!legacy package loading!private! !
+!Package categoriesFor: #convertOldNamesProperty:!legacy package loading!private! !
+!Package categoriesFor: #convertPoolDictionariesToSharedPools!legacy package loading!private! !
 !Package categoriesFor: #declareClasses!helpers!private! !
 !Package categoriesFor: #declareVariables!helpers!private! !
 !Package categoriesFor: #dependentPackages!accessing!public! !
 !Package categoriesFor: #depthOfClass:!helpers!public! !
 !Package categoriesFor: #displayOn:!displaying!public! !
-!Package categoriesFor: #environment!accessing!private! !
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
 !Package categoriesFor: #fileInClasses!private!source filing! !
 !Package categoriesFor: #fileInScript:!private!source filing! !

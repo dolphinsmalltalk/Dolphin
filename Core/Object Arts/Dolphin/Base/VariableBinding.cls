@@ -37,10 +37,16 @@ fullName
 	^key!
 
 fullyQualifiedReference
-	^self fullName asQualifiedReference!
+	#todo.	"Temporary definition while SystemDictionary is not a proper Namespace."
+	^self environment == Smalltalk
+		ifTrue: [BindingReference pathString: self key home: Smalltalk]
+		ifFalse: [self environment fullyQualifiedReference append: self key]!
 
 refersToLiteral: anObject
-	^anObject == environment or: [self = anObject]!
+	^(anObject == environment and: 
+			["Not useful to show ever variable in Smalltalk as an implicit reference to it. Probably true of all Namespaces except pools and classes."
+			environment ~~ Smalltalk])
+		or: [self = anObject]!
 
 targetVariable
 	^self! !

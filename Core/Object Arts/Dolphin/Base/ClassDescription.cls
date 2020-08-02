@@ -436,6 +436,19 @@ displayOn: aPuttableStream
 
 	aPuttableStream nextPutAll: self name!
 
+environment
+	"Answer the receiver's name space."
+
+	^self subclassResponsibility!
+
+fullBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	#todo.	"Temporary definition."
+	^(BindingReference isQualifiedName: aString)
+		ifTrue: [self environment resolveBindingPath: ($. split: aString)]
+		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
+
 fullName
 	"Placeholder for answering fully qualified name (relative to Smalltalk)."
 
@@ -535,6 +548,12 @@ isChanged: aBoolean
 	of the <Boolean> argument."
 
 	"When not running in a development system, changes are not tracked"!
+
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self environment
+!
 
 logDefinition
 	self sourceManager logEvaluate: self definition!
@@ -883,7 +902,7 @@ sharedVariableString
 sourceManager
 	"Answer the receiver's source manager. Answer a DeafObject if none is available."
 
-	^(Smalltalk lookup: #SourceManager) ifNil: [DeafObject current] ifNotNil: [:sm | sm default]!
+	^#{SourceManager} valueOrNil ifNil: [DeafObject current] ifNotNil: [:sm | sm default]!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can
@@ -922,9 +941,8 @@ subclassInstVarNames
 	^answer!
 
 suggestedPrivacyFor: aCompiledMethod
-	| policy |
-	policy := Smalltalk lookup: #MethodCategorizationPolicy.
-	^policy notNil ifTrue: [policy default suggestedPrivacyFor: aCompiledMethod]!
+	^#{MethodCategorizationPolicy}
+		ifDefined: [:policy | policy default suggestedPrivacyFor: aCompiledMethod]!
 
 whichCategoriesIncludeSelector: aSelector
 	"Private - Answer a <collection> of the 'real' (i.e. non-pseudo or virtual) categories in the 
@@ -1008,6 +1026,8 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
+!ClassDescription categoriesFor: #environment!accessing!public! !
+!ClassDescription categoriesFor: #fullBindingFor:!binding!public! !
 !ClassDescription categoriesFor: #fullName!accessing!public! !
 !ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
@@ -1021,6 +1041,7 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
 !ClassDescription categoriesFor: #isChanged:!public!source filing! !
+!ClassDescription categoriesFor: #localEnvironment!accessing!private! !
 !ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
 !ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
 !ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !

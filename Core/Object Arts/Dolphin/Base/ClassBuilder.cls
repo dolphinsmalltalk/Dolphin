@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants'
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants environment'
 	classVariableNames: 'FixedInitialLayout FixedLayout Unsubclassable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -167,7 +167,8 @@ createProper
 		instanceSpec: instanceSpec;
 		setName: className;
 		superclass: superclass;
-		subclasses: #().
+		subclasses: #();
+		environment: self environment.
 
 	"In order to sort the metaclass subclasses, we need the instance class name, so we
 	leave addition to the superclass subclasses list until the instance class has been created."
@@ -197,7 +198,7 @@ declareClassVariablesOf: aClass
 environment
 	"Private - Answer the namespace environment for the class being modified."
 
-	^self class environment!
+	^environment!
 
 errorInvalidRemove: messageText
 	"Private - An error has occurred removing the receiver's current class. Raise an 
@@ -262,7 +263,8 @@ initialize
 	instanceSpec := 0.
 	self beFixed.
 	flags := 0.
-	classVariables := #()
+	classVariables := #().
+	environment := Smalltalk
 	!
 
 initializeCopy: aClassDescriptionCopy fromClass: aClass superclass: aSuperclass

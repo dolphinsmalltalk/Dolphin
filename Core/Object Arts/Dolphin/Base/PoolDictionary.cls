@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #PoolDictionary
-	instanceVariableNames: 'bindingEnvironment'
+	instanceVariableNames: 'environment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -11,21 +11,14 @@ PoolDictionary comment: ''!
 !PoolDictionary categoriesForClass!Collections-Unordered!System-Support! !
 !PoolDictionary methodsFor!
 
+anonymousName
+	^'Anon'!
+
 associationClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
 	
 	^VariableBinding!
-
-bindingEnvironment
-	"Answer the environment of the receiver's bindings."
-
-	^bindingEnvironment!
-
-bindingEnvironment: aNamespace
-	"Private - Set the environment to be used for new bindings in the receiver. This should be set on initialization, and not changed subsequently."
-
-	bindingEnvironment := aNamespace!
 
 bindingsDo: aMonadicValuable
 	self associationsDo: aMonadicValuable!
@@ -56,31 +49,16 @@ displayOn: aPuttableStream
 environment
 	"Answer the receiver's <Namespace> scope."
 
-	^Smalltalk
-!
+	^environment!
 
-fileOutName
-	"Answer the receiver's default file name for file outs (<name>.st)."
+environment: aNamespace
+	"Private - Set the environment to be used for new bindings in the receiver. This should be set on initialization, and not changed subsequently."
 
-	| path package |
-	path := File composeStem: self name extension: Package sourceGlobalExtension.
-	package := Package manager packageOfVariableNamed: self fullyQualifiedReference.
-	package notNil ifTrue: [
-		path := File replacePath:  path with: package path ].
-	^path!
-
-fullName
-	"Placeholder for answering fully qualified name (relative to Smalltalk)."
-
-	^self name
-!
-
-fullyQualifiedReference
-	^self fullName asQualifiedReference!
+	environment := aNamespace!
 
 initialize
 	super initialize.
-	bindingEnvironment := self!
+	environment := self!
 
 initializerFor: aString
 	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
@@ -139,40 +117,44 @@ localEnvironment
 name
 	"Answer the receiver's name."
 
-	^self environment keyAtValue: self ifAbsent: ['Anon']!
+	^self environment keyAtValue: self ifAbsent: [self anonymousName]!
 
 name: aSymbol 
 	!
 
 newAssociation: keyObject value: valueObject
 	^(super newAssociation: keyObject value: valueObject)
-		environment: self bindingEnvironment;
+		environment: self environment;
 		yourself!
 
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned by any package"
 
-	^self name = 'Anon' ifFalse: [Package manager packageOfVariableNamed: self fullyQualifiedReference]!
+	| identifier |
+	identifier := self name.
+	^identifier = self anonymousName
+		ifFalse: [Package manager packageOfVariableNamed: identifier asQualifiedReference]!
 
 owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
-	Package manager addVariableNamed: self fullyQualifiedReference to: aPackage!
+	| identifier |
+	identifier := self name.
+	identifier = self anonymousName
+		ifTrue: [self error: 'Anonymous pools cannot be packaged independently'].
+	Package manager addVariableNamed: identifier asQualifiedReference to: aPackage!
 
 preResize: newMe
 	"Private - This message is sent by the receiver when resizing, before the receiver's elements are added to newMe. We must assign across any fixed fields."
 
-	newMe bindingEnvironment: bindingEnvironment! !
+	newMe environment: environment! !
+!PoolDictionary categoriesFor: #anonymousName!accessing!public! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
-!PoolDictionary categoriesFor: #bindingEnvironment!accessing!public! !
-!PoolDictionary categoriesFor: #bindingEnvironment:!initializing!private! !
 !PoolDictionary categoriesFor: #bindingsDo:!enumerating!public! !
 !PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
 !PoolDictionary categoriesFor: #displayOn:!public! !
 !PoolDictionary categoriesFor: #environment!accessing!public! !
-!PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolDictionary categoriesFor: #fullName!accessing!public! !
-!PoolDictionary categoriesFor: #fullyQualifiedReference!accessing!public! !
+!PoolDictionary categoriesFor: #environment:!initializing!private! !
 !PoolDictionary categoriesFor: #initialize!initializing!private! !
 !PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
@@ -189,7 +171,7 @@ preResize: newMe
 
 forClass: aClass
 	^self new
-		bindingEnvironment: aClass;
+		environment: aClass;
 		yourself!
 
 named: aSymbol 

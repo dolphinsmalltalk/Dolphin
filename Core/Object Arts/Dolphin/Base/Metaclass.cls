@@ -60,6 +60,11 @@ comment: aString
 	self instanceClass comment: aString
 !
 
+environment
+	"Answer the receiver's name space."
+
+	^self instanceClass environment!
+
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
 
@@ -157,6 +162,7 @@ subclassesDo: aMonadicValuable
 !Metaclass categoriesFor: #classVarNames!class variables!public! !
 !Metaclass categoriesFor: #comment!accessing!public! !
 !Metaclass categoriesFor: #comment:!accessing!public! !
+!Metaclass categoriesFor: #environment!accessing!public! !
 !Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Metaclass categoriesFor: #instanceClass!accessing!public! !
 !Metaclass categoriesFor: #instanceClass:!accessing!private! !

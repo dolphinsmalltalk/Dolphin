@@ -36,11 +36,11 @@ assert: actualObject equals: expectedObject
 		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
 
 comparingStringBetween: expectedObject and: actualObject
-	^(String writeStream: 100)
+	^(String writeStream: 128)
 		nextPutAll: 'Expected: ';
-		print: expectedObject;
+		nextPutAll: (expectedObject printStringLimitedTo: 256);
 		nextPutAll: ' Actual: ';
-		print: actualObject;
+		nextPutAll: (actualObject printStringLimitedTo: 256);
 		nextPutAll: '.';
 		contents!
 

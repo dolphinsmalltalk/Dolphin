@@ -30,6 +30,11 @@ AbstractBindingReference comment: 'Abstract superclass of binding references.'!
 			[self class == anObject class
 				and: [self pathString = anObject pathString and: [self context == anObject context]]]!
 
+append: aString
+	"Answer a new <BindingReference> that refers to the nested name identified by the <readableString> argument within the receiver's scope."
+
+	^self class path: (self path copyWith: aString) context: self context!
+
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
 
@@ -215,6 +220,7 @@ valueOrNil
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
 !AbstractBindingReference categoriesFor: #<=!comparing!public! !
 !AbstractBindingReference categoriesFor: #=!comparing!public! !
+!AbstractBindingReference categoriesFor: #append:!copying!public! !
 !AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
 !AbstractBindingReference categoriesFor: #asString!converting!public! !
 !AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
@@ -258,23 +264,6 @@ errorInvalidIdentifier: aString
 initialize
 	Undeclared := UndeclaredVariable new!
 
-internQualifiers: aSequencedReadableCollection
-	"Private - Convert the argument to an <Array> of <Symbol>, validating that each qualifier (i.e. not including the last part) is valid as part of a static variable name."
-
-	| size path |
-	size := aSequencedReadableCollection size.
-	size == 0 ifTrue: [^#()].
-	path := Array writeStream: size.
-	aSequencedReadableCollection
-		from: 1
-		to: size - 1
-		do: 
-			[:each |
-			(self isValidUnqualifiedName: each) ifFalse: [^self errorInvalidIdentifier: each].
-			path nextPut: each].
-	path nextPut: (aSequencedReadableCollection at: size).
-	^path collection!
-
 isQualifiedName: aString
 	"Answer whether the argument is probably a qualified name (as opposed to an unqualified, or simple, name)."
 
@@ -314,17 +303,7 @@ path: aSequencedReadableCollection
 path: aSequencedReadableCollection context: anObject
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
 
-	| path depth |
-	path := self internQualifiers: aSequencedReadableCollection.
-	depth := path size.
-	^depth == 0
-		ifTrue: [self new]
-		ifFalse: 
-			[| last |
-			last := path last.
-			(self isValidUnqualifiedName: last)
-				ifTrue: [self newPath: path context: anObject]
-				ifFalse: [self errorInvalidIdentifier: last]]!
+	^self newPath: aSequencedReadableCollection context: anObject!
 
 path: aSequencedReadableCollection home: aNamespaceOrNil
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
@@ -365,7 +344,6 @@ splitQualifiedName: aString
 	^$. split: aString! !
 !AbstractBindingReference class categoriesFor: #errorInvalidIdentifier:!exceptions!private! !
 !AbstractBindingReference class categoriesFor: #initialize!class initialization!public! !
-!AbstractBindingReference class categoriesFor: #internQualifiers:!helpers!private! !
 !AbstractBindingReference class categoriesFor: #isQualifiedName:!enquiries!public! !
 !AbstractBindingReference class categoriesFor: #isValidQualifiedName:!enquiries!public! !
 !AbstractBindingReference class categoriesFor: #isValidUnqualifiedName:!enquiries!public! !

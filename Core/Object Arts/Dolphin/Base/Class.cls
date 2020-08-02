@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
-	instanceVariableNames: 'subclasses name classPool sharedPools comment classCategories _guid'
+	instanceVariableNames: 'subclasses name classPool sharedPools environment comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -17,6 +17,7 @@ In reality, `Class` has no instances. All classes in the system are actually ins
  `name`			`Symbol` which is the name of the class
  `classPool`		`PoolDictionary` mapping class variable name <String>s to values
  `sharedPools`		`Array` of `Symbol` names of shared variable pools
+ `environment`		`Namespace` in which the class is defined.
  `comment`		`String` comment about the class (like this one), or nil if none.
  `classCategories`	`Array` of `ClassCategory`. The categories of the class, if any.
  `_guid`			`GUID`. Unique identifier for the class.
@@ -260,6 +261,16 @@ comment: blahBlah
 	"No need to clear the class caches in this case"
 	Smalltalk trigger: #classCommented: with: self!
 
+environment
+	"Answer the receiver's <Namespace>."
+
+	^environment!
+
+environment: aNamespace
+	"Set the receiver's <Namespace>."
+
+	environment := aNamespace!
+
 fileIn
 	"File in the receiver's definition from a class file in the receiver's
 	package directory."
@@ -284,7 +295,16 @@ fileOutStem
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
 
-	^BindingReference pathString: self fullName!
+	^self fullyQualifiedReferenceFrom: Smalltalk!
+
+fullyQualifiedReferenceFrom: aNamespace
+	"Answer a <BindingReference> that represents the path from the specified <Namespace>, assumed to be a parent namespace, to the receiver."
+
+	| outer |
+	outer := self environment.
+	^(self == aNamespace or: [outer isNil or: [outer == aNamespace]])
+		ifTrue: [BindingReference pathString: self name home: aNamespace]
+		ifFalse: [(outer fullyQualifiedReferenceFrom: aNamespace) append: self name]!
 
 guid
 	"Answer the receiver's globally unique id (a 128-bit number allocated/set 
@@ -841,10 +861,13 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #clearGuid!accessing!private! !
 !Class categoriesFor: #comment!accessing!development!public! !
 !Class categoriesFor: #comment:!accessing!development!public! !
+!Class categoriesFor: #environment!accessing!public! !
+!Class categoriesFor: #environment:!accessing!public! !
 !Class categoriesFor: #fileIn!development!public!source filing! !
 !Class categoriesFor: #fileOutName!development!private!source filing! !
 !Class categoriesFor: #fileOutStem!development!private!source filing! !
 !Class categoriesFor: #fullyQualifiedReference!accessing!public! !
+!Class categoriesFor: #fullyQualifiedReferenceFrom:!public! !
 !Class categoriesFor: #guid!constants!public! !
 !Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Class categoriesFor: #includeInCategory:!categories-adding!public! !

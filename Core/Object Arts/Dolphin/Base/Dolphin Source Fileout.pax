@@ -82,9 +82,6 @@ package setMethodNames: #(
 	#(#{Package} #saveSingleFilePackage)
 	#(#{Package} #toggleUsingPAX)
 	#(#{Package} #updateTimestamp)
-	#(#{PoolDictionary} #canFileOut)
-	#(#{PoolDictionary} #fileOut)
-	#(#{PoolDictionary} #fileOutOn:)
 	#(#{SourceFiler} #emitCategoriesOfClass:)
 	#(#{SourceFiler} #emitCategoriesOfMethod:)
 	#(#{SourceFiler} #emitCategoriesOfMethods:)
@@ -1136,26 +1133,6 @@ updateTimestamp
 !Package categoriesFor: #saveSingleFilePackage!public!source filing! !
 !Package categoriesFor: #toggleUsingPAX!commands!public! !
 !Package categoriesFor: #updateTimestamp!helpers!private! !
-
-!PoolDictionary methodsFor!
-
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
-fileOut
-	"File out the receiver to <name>.st"
-
-	self class sourceManager fileOut: self.
-	self isChanged: false!
-
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutPoolDictionary: self! !
-!PoolDictionary categoriesFor: #canFileOut!development!public!source filing! !
-!PoolDictionary categoriesFor: #fileOut!development!public!source filing! !
-!PoolDictionary categoriesFor: #fileOutOn:!development!public! !
 
 !SourceFiler methodsFor!
 

@@ -266,11 +266,6 @@ dynamicSelectorsDo: aMonadicValuable
 
 	"To be overridden by subclasses that handle #doesNotUnderstand: to process additional messages."!
 
-environment
-	"Answer the receiver's name space."
-
-	^Smalltalk!
-
 errorNonInstantiable
 	"Private - Report an error that an attempt was made to instantiate an abstract class."
 
@@ -296,14 +291,6 @@ flushMethodCache
 
 	<primitive: 89>
 	^self primitiveFailed: _failureCode!
-
-fullBindingFor: aString
-	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
-
-	#todo.	"Temporary definition."
-	^(BindingReference isQualifiedName: aString)
-		ifTrue: [self environment resolveBindingPath: ($. split: aString)]
-		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
 
 hasImmediateInstances
 	"Answer whether the receiver's instances are immutable objects encoded entirely 
@@ -463,12 +450,6 @@ kindOfSubclass
 	^self isVariable 
 		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
 		ifFalse: ['subclass:']!
-
-localEnvironment
-	"Private - Answer the nearest <Namespace> scope."
-
-	^self environment
-!
 
 lookupMethod: aSymbol
 	"Answer the method of the receiver, or inherited by the receiver, corresponding
@@ -919,13 +900,11 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
-!Behavior categoriesFor: #environment!accessing!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
-!Behavior categoriesFor: #fullBindingFor:!binding!public! !
 !Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Behavior categoriesFor: #hasMethods!methods-testing!public! !
 !Behavior categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
@@ -952,7 +931,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #isVariable!instance specification-testing!public! !
 !Behavior categoriesFor: #isWords!instance specification-testing!public! !
 !Behavior categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!Behavior categoriesFor: #localEnvironment!accessing!private! !
 !Behavior categoriesFor: #lookupMethod:!methods-accessing!public! !
 !Behavior categoriesFor: #makeMourner!instance specification-accessing!private! !
 !Behavior categoriesFor: #methodDictionary!methods-accessing!private! !

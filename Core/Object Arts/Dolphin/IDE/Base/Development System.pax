@@ -443,7 +443,6 @@ package setMethodNames: #(
 	#(#{Point3D class} #publishedAspectsOfInstances)
 	#(#{PointerField} #printAccessorExpression:on:)
 	#(#{PointerField} #printMutatorBody:on:)
-	#(#{PoolDictionary} #aspectDisplayOn:)
 	#(#{Presenter class} #addView:asResource:)
 	#(#{Presenter class} #editNewDefaultView)
 	#(#{Process} #attachDebugger:topFrame:resumable:)
@@ -4866,18 +4865,6 @@ printMutatorBody: aSymbol on: aWriteStream
 		display: #yourAddress! !
 !PointerField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
 !PointerField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
-
-!PoolDictionary methodsFor!
-
-aspectDisplayOn: aStream
-	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
-  	argument in a form that a user viewing the receiver as the value of a published aspect would 
-  	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats. In this case we override back to the Object implementation.
-  	N.B. This is a development time only method that supports the PublishedAspectInspector."
-
-	self displayOn: aStream! !
-!PoolDictionary categoriesFor: #aspectDisplayOn:!private! !
 
 !Presenter class methodsFor!
 

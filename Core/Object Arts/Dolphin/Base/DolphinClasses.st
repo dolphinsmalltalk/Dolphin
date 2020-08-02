@@ -2023,7 +2023,7 @@ Object subclass: #ChunkReader
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants'
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants environment'
 	classVariableNames: 'FixedInitialLayout FixedLayout Unsubclassable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -2648,7 +2648,7 @@ Behavior subclass: #ClassDescription
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassDescription subclass: #Class
-	instanceVariableNames: 'subclasses name classPool sharedPools comment classCategories _guid'
+	instanceVariableNames: 'subclasses name classPool sharedPools environment comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -2906,7 +2906,7 @@ Dictionary variableSubclass: #LookupTable
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Dictionary variableSubclass: #PoolDictionary
-	instanceVariableNames: 'bindingEnvironment'
+	instanceVariableNames: 'environment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

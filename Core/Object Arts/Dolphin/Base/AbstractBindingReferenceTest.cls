@@ -32,10 +32,17 @@ newTestSubjectWithPathString: aString
 	^self subjectClass pathString: aString!
 
 printStringTestCases
-	^self subclassResponsibility!
+	^#(#(#(#Object) '#{Object}') #(#(#OpcodePool #Nop) '#{OpcodePool.Nop}') #(#('A' 'B' 'C') '#{A.B.C}'))!
 
 subjectClass
 	self subclassResponsibility!
+
+testAppend
+	| subject nested |
+	subject := self subjectClass path: #(#Object).
+	"Class variables can be bound on both sides, so this should work for meta binding refs too."
+	nested := subject append: '_EventsRegister'.
+	self assert: nested binding identicalTo: (Object bindingFor: #_EventsRegister)!
 
 testAsQualifiedReference
 	| subject |
@@ -138,7 +145,9 @@ testIfDefinedIfNotDefined
 				ifNotDefined: [self assertIsNil: each last]]!
 
 testInstance
-	self subclassResponsibility!
+	| subject |
+	subject := self newTestSubjectWithPathString: 'Object'.
+	self assert: subject instance identicalTo: subject!
 
 testIsDefined
 	self bindingTestCases do: 
@@ -168,7 +177,11 @@ testLessOrEqual
 	self deny: a <= b!
 
 testMeta
-	self subclassResponsibility!
+	| subject meta |
+	subject := self newTestSubjectWithPathString: 'Object'.
+	meta := subject meta.
+	self assert: subject meta isMeta.
+	self assert: meta value identicalTo: Object class!
 
 testPath
 	self bindingTestCases do: 
@@ -203,7 +216,26 @@ testPrintString
 			self assert: subject printString equals: each last]!
 
 testRefersToLiteral
-	self subclassResponsibility!
+	"A BindingReference matches literals for the same path..."
+
+	| objectRef poolConstRef poolConst |
+	objectRef := self subjectClass pathString: 'Object'.
+	self assert: (objectRef refersToLiteral: (self subjectClass path: #(#Object))).
+	".. and the binding to which it would resolve ..."
+	self assert: (objectRef refersToLiteral: Object binding).
+	"... but not the target value."
+	self deny: (objectRef refersToLiteral: Object).
+	"BindingRef to a pool variable."
+	poolConstRef := self subjectClass pathString: '_PrimitiveFailureCode.AccessViolation'.
+	poolConst := _PrimitiveFailureCode bindingFor: 'AccessViolation'.
+	self assert: (poolConstRef
+				refersToLiteral: (self subjectClass path: #('_PrimitiveFailureCode' 'AccessViolation'))).
+	self assert: (poolConstRef refersToLiteral: poolConst).
+	"Should a BindingRef implicitly refers to refs along its path? Not sure."
+	false
+		ifTrue: [self assert: (poolConstRef refersToLiteral: _PrimitiveFailureCode asQualifiedReference)].
+	#todo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
+	false ifTrue: [self assert: (poolConstRef refersToLiteral: _PrimitiveFailureCode binding)]!
 
 testSimpleName
 	self bindingTestCases do: 
@@ -245,12 +277,13 @@ testValueOrNil
 			self assert: actual identicalTo: expected]!
 
 valueOfBinding: aVariableBinding
-	^self subclassResponsibility! !
+	^aVariableBinding value! !
 !AbstractBindingReferenceTest categoriesFor: #bindingTestCases!constants!private! !
 !AbstractBindingReferenceTest categoriesFor: #newTestSubjectWithPath:!helpers!private! !
 !AbstractBindingReferenceTest categoriesFor: #newTestSubjectWithPathString:!helpers!private! !
 !AbstractBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
 !AbstractBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
+!AbstractBindingReferenceTest categoriesFor: #testAppend!public! !
 !AbstractBindingReferenceTest categoriesFor: #testAsQualifiedReference!public! !
 !AbstractBindingReferenceTest categoriesFor: #testAsString!public!unit tests! !
 !AbstractBindingReferenceTest categoriesFor: #testAsSymbol!public!unit tests! !
