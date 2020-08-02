@@ -373,7 +373,6 @@ package methodNames
 	add: #SpinButton -> #publishedAspects;
 	add: #StAbstractVariableNode -> #displayOn:;
 	add: #StackFrame -> #debugIpFor:;
-	add: #StackFrame -> #findIP:inTextMap:;
 	add: #StackFrame -> #makeDebug;
 	add: #StackFrame -> #stackWorkspace;
 	add: #StAssignmentNode -> #displayOn:;
@@ -1784,7 +1783,7 @@ mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod
 	debugMap := debugCompiledMethod debugInfo textMap.
 	self assert: [map size == debugMap size].
 	ip := self block initialIP.
-	i := self findIP: ip inTextMap: map.
+	i := self class findIP: ip inTextMap: map.
 	self assert: [(map at: i) key = ip].
 	^(debugMap at: i) key! !
 !BlockFrame categoriesFor: #debugIpFor:!private! !
@@ -5908,7 +5907,7 @@ debugIpFor: debugMethod
 	map := method debugInfo textMap.
 	debugMap := debugMethod debugInfo textMap.
 	self assert: [map size == debugMap size].
-	i := self findIP: ip inTextMap: map.
+	i := self class findIP: ip inTextMap: map.
 	(map at: i) key = ip 
 		ifTrue: 
 			["Directly corresponding entry"
@@ -5917,7 +5916,7 @@ debugIpFor: debugMethod
 	previous instructions IP and then step to the next instruction in the debug method"
 	interp := method byteCodeDispatcher.
 	prev := interp prevIP: ip.
-	i := self findIP: prev inTextMap: map.
+	i := self class findIP: prev inTextMap: map.
 	offset := prev - (map at: i) key.
 	debugPrev := offset = 0 
 				ifTrue: [(debugMap at: i) key]
@@ -5942,16 +5941,8 @@ debugIpFor: debugMethod
 	interp next.
 	^interp ip!
 
-findIP: anInteger inTextMap: aTextMap
-	"Private - Answer the index of the source map entry corresponding to the
-    	specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
-	of source which is held as the <interval> value."
-
-	| i size |
-	i := 1.
-	size := aTextMap size.
-	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
-	^i!
+debugPrintOn: aStream
+	self basicPrintOn: aStream!
 
 makeDebug
 	"Private - Convert the receiver to a debug frame. This is for the use of the debugger."
@@ -5975,7 +5966,7 @@ stackWorkspace
 
 	^self sender isNil ifTrue: [0] ifFalse: [self sp - index - self frameSize + 1]! !
 !StackFrame categoriesFor: #debugIpFor:!private! !
-!StackFrame categoriesFor: #findIP:inTextMap:!private! !
+!StackFrame categoriesFor: #debugPrintOn:!public! !
 !StackFrame categoriesFor: #makeDebug!private! !
 !StackFrame categoriesFor: #stackWorkspace!accessing!private! !
 
