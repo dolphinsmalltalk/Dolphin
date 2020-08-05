@@ -3,7 +3,7 @@
 SharedPool subclass: #ListViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LV_MAX_WORKAREAS' -> 16r10.

@@ -3,7 +3,7 @@
 SharedPool subclass: #DBColFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DeleteCascade' -> 16r10.

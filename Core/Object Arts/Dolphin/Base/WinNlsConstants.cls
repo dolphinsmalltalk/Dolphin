@@ -3,7 +3,7 @@
 SharedPool subclass: #WinNlsConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'C1_ALPHA' -> 16r100.

@@ -3,7 +3,7 @@
 SharedPool subclass: #FacilityCodes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FACILITY_CERT' -> 16rB.

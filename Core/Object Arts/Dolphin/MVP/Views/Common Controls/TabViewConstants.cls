@@ -3,7 +3,7 @@
 SharedPool subclass: #TabViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ODT_TAB' -> 16r65.

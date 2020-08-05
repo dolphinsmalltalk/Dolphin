@@ -3,7 +3,7 @@
 SharedPool subclass: #EnhancedMetafileRecordTypes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EMR_ABORTPATH' -> 16r44.

@@ -3,7 +3,7 @@
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ConfirmationRequiredWarning guid: (GUID fromString: '{6cbf0500-f796-4979-8f8d-3285e012aa94}')!

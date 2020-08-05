@@ -3,7 +3,7 @@
 SharedPool subclass: #OLEConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CLSCTX_INPROC_HANDLER' -> 16r2.

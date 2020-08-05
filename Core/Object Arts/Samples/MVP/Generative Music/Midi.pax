@@ -29,7 +29,7 @@ package!
 SharedPool subclass: #MidiConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MidiChannelNoteOff' -> 16r8.
@@ -40,13 +40,13 @@ SharedPool subclass: #MidiConstants
 Object subclass: #MIDIOut
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	poolDictionaries: 'MidiConstants'
+	imports: #(#{MidiConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

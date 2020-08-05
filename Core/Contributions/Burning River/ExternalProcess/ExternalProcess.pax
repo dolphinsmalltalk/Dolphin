@@ -49,31 +49,31 @@ package!
 Object subclass: #ExternalProcess
 	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr processExitCode threadExitCode'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Error subclass: #ExternalProcessExecuteError
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Error subclass: #ExternalProcessWaitFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Notification subclass: #ExternalProcessWaitTimeout
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r8.
@@ -84,7 +84,7 @@ Win32Structure subclass: #PROCESS_INFORMATION
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbReserved2' -> 16r32.

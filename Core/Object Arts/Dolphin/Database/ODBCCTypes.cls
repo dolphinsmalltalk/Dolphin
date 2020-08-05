@@ -3,7 +3,7 @@
 SharedPool subclass: #ODBCCTypes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SQL_C_BINARY' -> -16r2.

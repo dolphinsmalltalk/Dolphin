@@ -3,7 +3,7 @@
 SharedPool subclass: #GdiplusGUIDs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EncoderChrominanceTable' -> (GUID fromString: '{f2e455dc-09b3-4316-8260-676ada32481c}').

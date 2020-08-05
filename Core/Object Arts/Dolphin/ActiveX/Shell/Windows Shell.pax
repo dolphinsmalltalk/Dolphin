@@ -40,7 +40,7 @@ package!
 SharedPool subclass: #ShellConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BFFM_ENABLEOK' -> 16r465.
@@ -145,13 +145,13 @@ SharedPool subclass: #ShellConstants
 SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ShellConstants Win32Constants'
+	imports: #(#{ShellConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

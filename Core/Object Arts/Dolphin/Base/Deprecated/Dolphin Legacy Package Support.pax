@@ -17,6 +17,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Package} #allResourceNames)
 	#(#{Package} #allResourceNames:)
 	#(#{Package} #basicLoadVersion4:filer:)
@@ -37,6 +39,7 @@ package setMethodNames: #(
 	#(#{Package} #script:put:)
 	#(#{Package} #versionLookup)
 	#(#{Package class} #name:comment:)
+	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 ).
 
 package setPrerequisites: #(
@@ -50,11 +53,41 @@ package!
 Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Class methodsFor!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages."
+
+	| subclass |
+	#deprecated.
+	subclass := self
+				subclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString).
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages"
+
+	| subclass |
+	#deprecated.
+	subclass := self
+				variableSubclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString).
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass! !
+!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 
 !Package methodsFor!
 
@@ -291,6 +324,22 @@ name: nameString comment: commentString
 		basicComment: commentString;
 		yourself! !
 !Package class categoriesFor: #name:comment:!instance creation!public! !
+
+!UndefinedObject methodsFor!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages"
+
+	| subclass |
+	Notification deprecated.
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString)) modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 
 "End of package definition"!
 

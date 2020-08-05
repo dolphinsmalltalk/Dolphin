@@ -3,7 +3,7 @@
 SharedPool subclass: #WinSocketConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AF_12844' -> 16r19.

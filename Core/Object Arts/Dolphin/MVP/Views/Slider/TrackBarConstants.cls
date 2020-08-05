@@ -3,7 +3,7 @@
 SharedPool subclass: #TrackBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TBM_CLEARSEL' -> 16r413.

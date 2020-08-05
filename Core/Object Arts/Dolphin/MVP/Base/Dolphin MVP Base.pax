@@ -414,7 +414,7 @@ package!
 SharedPool subclass: #AlignmentFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignBottom' -> 16r8.
@@ -428,7 +428,7 @@ SharedPool subclass: #AlignmentFlags
 SharedPool subclass: #ButtonConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BCM_GETNOTE' -> 16r160A.
@@ -479,7 +479,7 @@ SharedPool subclass: #ButtonConstants
 SharedPool subclass: #CommCtrlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ACM_OPEN' -> 16r464.
@@ -597,7 +597,7 @@ SharedPool subclass: #CommCtrlConstants
 SharedPool subclass: #HTMLHelpConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HH_CLOSE_ALL' -> 16r12.
@@ -616,7 +616,7 @@ SharedPool subclass: #HTMLHelpConstants
 SharedPool subclass: #ThemeConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ABS_DOWNDISABLED' -> 16r8.
@@ -1370,31 +1370,31 @@ SharedPool subclass: #ThemeConstants
 Object subclass: #Canvas
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
 	classVariableNames: 'DesktopResolution'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Clipboard
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Color
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultMask' -> 16r1.
@@ -1403,13 +1403,13 @@ Object subclass: #CommandDescription
 Object subclass: #CommandPolicy
 	instanceVariableNames: 'source path'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CheckedMask' -> 16r2.
@@ -1419,31 +1419,31 @@ Object subclass: #CommandQuery
 Object subclass: #DragDropObject
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #DragDropSession
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Event
 	instanceVariableNames: 'window'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IndependentMask' -> 16r4.
@@ -1453,61 +1453,61 @@ Object subclass: #FramingCalculation
 Object subclass: #FramingConstraints
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #FramingContext
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #GraphicsTool
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Grid
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #HistoryList
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #ImageManager
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #Interactor
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #LayoutContext
 	instanceVariableNames: 'container positions'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #LayoutManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'StringSeparator' -> $/.
@@ -1516,19 +1516,19 @@ Object subclass: #MenuItem
 Object subclass: #Presenter
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
 	classVariableNames: 'Current'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
-	poolDictionaries: 'Win32Constants Win32Errors'
+	imports: #(#{Win32Constants} #{Win32Errors})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
 		'CreateCenteredMask' -> 16r40.
@@ -1545,169 +1545,169 @@ Object subclass: #View
 Object subclass: #ViewState
 	instanceVariableNames: 'view state placement subViewStates'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Canvas subclass: #PrinterCanvas
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Color subclass: #AbstractRGB
 	instanceVariableNames: 'code'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Color subclass: #SystemColor
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById NamesById'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Color subclass: #VirtualColor
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractRGB subclass: #ARGB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractRGB subclass: #ColorRef
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ColorRef subclass: #ColorDefault
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ColorRef subclass: #ColorNone
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 VirtualColor subclass: #PluggableColor
 	instanceVariableNames: 'valuable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 VirtualColor subclass: #ThemeColor
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommandDescription subclass: #ClosedCommandDescription
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommandPolicy subclass: #DelegatingCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DragDropObject subclass: #InternalDragDropObject
 	instanceVariableNames: 'availableFormats'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Event subclass: #SelectionChangeEvent
 	instanceVariableNames: 'newSelections oldSelections cause'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SelectionChangeEvent subclass: #SelectionChangedEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #ColorEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #KeyEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #PaintEvent
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #PointEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #ScrollEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WindowsEvent subclass: #SettingsChangeEvent
@@ -1719,67 +1719,67 @@ WindowsEvent subclass: #SettingsChangeEvent
 WindowsEvent subclass: #SizeEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 PointEvent subclass: #MouseEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MouseEvent subclass: #MouseWheelEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #CommCtrlLibrary
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #DwmApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
-	poolDictionaries: 'HTMLHelpConstants'
+	imports: #(#{HTMLHelpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: 'IsAppThemed'
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 PermanentLibrary subclass: #GDILibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ThemeLibrary subclass: #MockThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #DEVMODE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dmBitsPerPel' -> 16r68.
@@ -1818,13 +1818,13 @@ ExternalStructure subclass: #DEVMODE
 ExternalStructure subclass: #ExternalSize
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lppos' -> 16r30.
@@ -1833,7 +1833,7 @@ ExternalStructure subclass: #NCCALCSIZE_PARAMS
 ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
@@ -1842,7 +1842,7 @@ ExternalPoint subclass: #POINTF
 ExternalSize subclass: #SIZE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cx' -> 16r0.
@@ -1851,7 +1851,7 @@ ExternalSize subclass: #SIZE
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfCharSet' -> 16r17.
@@ -1871,7 +1871,7 @@ Win32Structure subclass: #AbstractLOGFONT
 Win32Structure subclass: #ACCEL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cmd' -> 16r4.
@@ -1881,7 +1881,7 @@ Win32Structure subclass: #ACCEL
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bmBits' -> 16r14.
@@ -1895,7 +1895,7 @@ Win32Structure subclass: #BITMAP
 Win32Structure subclass: #BITMAPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bmiColors' -> 16r28.
@@ -1904,7 +1904,7 @@ Win32Structure subclass: #BITMAPINFO
 Win32Structure subclass: #BITMAPINFOHEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_biBitCount' -> 16rE.
@@ -1922,7 +1922,7 @@ Win32Structure subclass: #BITMAPINFOHEADER
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AlphaFormat' -> 16r3.
@@ -1933,7 +1933,7 @@ Win32Structure subclass: #BLENDFUNCTION
 Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDuration' -> 16rC.
@@ -1944,7 +1944,7 @@ Win32Structure subclass: #BP_ANIMATIONPARAMS
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r4.
@@ -1955,7 +1955,7 @@ Win32Structure subclass: #BP_PAINTPARAMS
 Win32Structure subclass: #CHARRANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cpMax' -> 16r4.
@@ -1964,7 +1964,7 @@ Win32Structure subclass: #CHARRANGE
 Win32Structure subclass: #DIBSECTION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dsBitfields' -> 16r40.
@@ -1976,7 +1976,7 @@ Win32Structure subclass: #DIBSECTION
 Win32Structure subclass: #DOCINFOW
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -1988,7 +1988,7 @@ Win32Structure subclass: #DOCINFOW
 Win32Structure subclass: #DRAWITEMSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CtlID' -> 16r4.
@@ -2004,7 +2004,7 @@ Win32Structure subclass: #DRAWITEMSTRUCT
 Win32Structure subclass: #DTBGOPTS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r4.
@@ -2014,7 +2014,7 @@ Win32Structure subclass: #DTBGOPTS
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r8.
@@ -2026,7 +2026,7 @@ Win32Structure subclass: #FLASHWINFO
 Win32Structure subclass: #GRADIENT_RECT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lowerRight' -> 16r4.
@@ -2035,7 +2035,7 @@ Win32Structure subclass: #GRADIENT_RECT
 Win32Structure subclass: #GRADIENT_TRIANGLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Vertex1' -> 16r0.
@@ -2045,7 +2045,7 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fIcon' -> 16r0.
@@ -2057,7 +2057,7 @@ Win32Structure subclass: #ICONINFO
 Win32Structure subclass: #LASTINPUTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2066,7 +2066,7 @@ Win32Structure subclass: #LASTINPUTINFO
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lbColor' -> 16r4.
@@ -2076,7 +2076,7 @@ Win32Structure subclass: #LOGBRUSH
 Win32Structure subclass: #LOGPALETTE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_palNumEntries' -> 16r2.
@@ -2086,7 +2086,7 @@ Win32Structure subclass: #LOGPALETTE
 Win32Structure subclass: #LOGPEN
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lopnColor' -> 16rC.
@@ -2096,7 +2096,7 @@ Win32Structure subclass: #LOGPEN
 Win32Structure subclass: #MARGINS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cxLeftWidth' -> 16r0.
@@ -2107,7 +2107,7 @@ Win32Structure subclass: #MARGINS
 Win32Structure subclass: #MEASUREITEMSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CtlID' -> 16r4.
@@ -2120,7 +2120,7 @@ Win32Structure subclass: #MEASUREITEMSTRUCT
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cyMax' -> 16rC.
@@ -2134,7 +2134,7 @@ Win32Structure subclass: #MENUINFO
 Win32Structure subclass: #MENUITEMINFOW
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cch' -> 16r28.
@@ -2153,7 +2153,7 @@ Win32Structure subclass: #MENUITEMINFOW
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptMaxPosition' -> 16r10.
@@ -2165,7 +2165,7 @@ Win32Structure subclass: #MINMAXINFO
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_code' -> 16r8.
@@ -2175,7 +2175,7 @@ Win32Structure subclass: #NMHDR
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2198,7 +2198,7 @@ Win32Structure subclass: #NONCLIENTMETRICSW
 Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2212,7 +2212,7 @@ Win32Structure subclass: #NOTIFYICONDATAW
 Win32Structure subclass: #OUTLINETEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2251,7 +2251,7 @@ Win32Structure subclass: #OUTLINETEXTMETRICW
 Win32Structure subclass: #PAINTSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fErase' -> 16r4.
@@ -2264,7 +2264,7 @@ Win32Structure subclass: #PAINTSTRUCT
 Win32Structure subclass: #PALETTEENTRY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_peBlue' -> 16r2.
@@ -2275,7 +2275,7 @@ Win32Structure subclass: #PALETTEENTRY
 Win32Structure subclass: #PANOSE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bArmStyle' -> 16r6.
@@ -2292,7 +2292,7 @@ Win32Structure subclass: #PANOSE
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rgbBlue' -> 16r0.
@@ -2303,7 +2303,7 @@ Win32Structure subclass: #RGBQUAD
 Win32Structure subclass: #RGNDATA
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2315,7 +2315,7 @@ Win32Structure subclass: #RGNDATA
 Win32Structure subclass: #SCROLLINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2329,7 +2329,7 @@ Win32Structure subclass: #SCROLLINFO
 Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tmAscent' -> 16r4.
@@ -2356,7 +2356,7 @@ Win32Structure subclass: #TEXTMETRICW
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r4.
@@ -2367,7 +2367,7 @@ Win32Structure subclass: #TRACKMOUSEEVENT
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_alpha' -> 16rE.
@@ -2380,7 +2380,7 @@ Win32Structure subclass: #TRIVERTEX
 Win32Structure subclass: #WINDOWPLACEMENT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -2393,7 +2393,7 @@ Win32Structure subclass: #WINDOWPLACEMENT
 Win32Structure subclass: #WINDOWPOS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cx' -> 16r10.
@@ -2407,7 +2407,7 @@ Win32Structure subclass: #WINDOWPOS
 Win32Structure subclass: #WNDCLASS
 	instanceVariableNames: 'menuName className'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbClsExtra' -> 16r8.
@@ -2424,7 +2424,7 @@ Win32Structure subclass: #WNDCLASS
 AbstractLOGFONT subclass: #LOGFONT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
@@ -2432,7 +2432,7 @@ AbstractLOGFONT subclass: #LOGFONT
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
@@ -2440,7 +2440,7 @@ AbstractLOGFONT subclass: #LOGFONTW
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hinst' -> 16rB0.
@@ -2452,7 +2452,7 @@ NMHDR subclass: #NMTTDISPINFOW
 TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ntmAvgWidth' -> 16r48.
@@ -2463,79 +2463,79 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Brush
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont resolution'
 	classVariableNames: 'System'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #Region
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Brush subclass: #HatchBrush
 	instanceVariableNames: 'id color'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StockBrush subclass: #SysColorBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
 	classVariableNames: 'SharedBitmaps'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IsSharedMask' -> 16r2.
@@ -2544,55 +2544,55 @@ Image subclass: #Bitmap
 Image subclass: #Icon
 	instanceVariableNames: ''
 	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Icon subclass: #Cursor
 	instanceVariableNames: ''
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Icon subclass: #NullIcon
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Menu subclass: #MenuBar
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Pen subclass: #StockPen
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ImageManager subclass: #IconImageManager
 	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 InputState subclass: #GuiInputState
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Interactor subclass: #CapturingInteractor
 	instanceVariableNames: 'oldInteractor stateFlags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HotMask' -> 16r1.
@@ -2603,7 +2603,7 @@ Interactor subclass: #CapturingInteractor
 CapturingInteractor subclass: #MouseTracker
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TrackingMask' -> 16r400
@@ -2611,49 +2611,49 @@ CapturingInteractor subclass: #MouseTracker
 MouseTracker subclass: #DraggableViewInteractor
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LayoutManager subclass: #FlowLayout
 	instanceVariableNames: 'horizontalGap verticalGap flags'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'AlignmentFlags'
+	imports: #(#{AlignmentFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LayoutManager subclass: #FramingLayout
 	instanceVariableNames: 'framings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LayoutManager subclass: #GridLayout
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LayoutManager subclass: #LinearLayout
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IsDefaultMask' -> 16r100000
@@ -2661,43 +2661,43 @@ MenuItem subclass: #CommandMenuItem
 MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Presenter subclass: #SelectableItemsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Presenter subclass: #Shell
 	instanceVariableNames: 'caption commandHistory'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Presenter subclass: #ValuePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Shell subclass: #Dialog
 	instanceVariableNames: 'confirmed ownerView'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Dialog subclass: #ValueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NoSplashMask' -> 16r2.
@@ -2706,19 +2706,19 @@ SessionManager subclass: #GUISessionManager
 GUISessionManager subclass: #RuntimeSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 RuntimeSessionManager subclass: #DefaultShellSessionManager
 	instanceVariableNames: 'mainShellClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CreationParentIndex' -> 16r2.
@@ -2729,37 +2729,37 @@ STBProxy subclass: #STBViewProxy
 View subclass: #AbstractDelegatingView
 	instanceVariableNames: 'resourceIdentifier referee'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 View subclass: #ContainerView
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: 'CommonControlCallError'
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 View subclass: #DoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 View subclass: #Splitter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FlatMask' -> 16r100000
@@ -2767,19 +2767,19 @@ View subclass: #Splitter
 AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractDelegatingView subclass: #ReferenceView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
 	classVariableNames: 'CreateHookBlock DefaultExtentBlock DialogMessageMap'
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultButtonIndex' -> 16r14.
@@ -2788,7 +2788,7 @@ ContainerView subclass: #ShellView
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'InProcLoopMask' -> 16r100000
@@ -2796,61 +2796,61 @@ ShellView subclass: #DialogView
 ShellView subclass: #Splash
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #CommandButton
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: 'StandardCommands'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #GroupBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #StaticRectangle
 	instanceVariableNames: ''
 	classVariableNames: 'StyleMap'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #ValueConvertingControlView
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: 'ButtonStyleMap'
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ValueConvertingControlView subclass: #CheckButton
 	instanceVariableNames: 'image'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ValueConvertingControlView subclass: #StaticView
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CheckButton subclass: #CheckBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StaticView subclass: #ImageViewAbstract
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: 'EdgeStyles'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DoubleBufferMask' -> 16r2.
@@ -2859,13 +2859,13 @@ StaticView subclass: #ImageViewAbstract
 StaticView subclass: #StaticText
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StaticText subclass: #StaticPath
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

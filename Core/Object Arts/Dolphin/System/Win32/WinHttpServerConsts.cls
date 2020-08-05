@@ -3,7 +3,7 @@
 SharedPool subclass: #WinHttpServerConsts
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HTTP_AUTH_ENABLE_ALL' -> 16r1F.

@@ -38,7 +38,7 @@ package!
 SharedPool subclass: #PrintDialogConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'PD_ALLPAGES' -> 16r0.
@@ -69,7 +69,7 @@ SharedPool subclass: #PrintDialogConstants
 Win32Structure subclass: #PRINTPAGERANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nFromPage' -> 16r0.
@@ -78,7 +78,7 @@ Win32Structure subclass: #PRINTPAGERANGE
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwResultAction' -> 16r50.
@@ -106,7 +106,7 @@ CommonDialogStructure subclass: #PRINTDLGEXW
 CommonDialogStructure subclass: #PRINTDLGW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'PrintDialogConstants'
+	imports: #(#{PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -132,7 +132,7 @@ CommonDialogStructure subclass: #PRINTDLGW
 CommonDialog subclass: #PrintDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'PrintDialogConstants'
+	imports: #(#{PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

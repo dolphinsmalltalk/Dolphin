@@ -54,7 +54,7 @@ package!
 SharedPool subclass: #WinSocketConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AF_12844' -> 16r19.
@@ -169,7 +169,7 @@ SharedPool subclass: #WinSocketConstants
 SharedPool subclass: #WinSocketErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'WSA_E_CANCELLED' -> 16r277F.
@@ -238,55 +238,55 @@ SharedPool subclass: #WinSocketErrors
 Object subclass: #InternetAddress
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #SocketAbstract2
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Error subclass: #SocketError
 	instanceVariableNames: ''
 	classVariableNames: 'ErrorClasses'
-	poolDictionaries: 'WinSocketConstants WinSocketErrors'
+	imports: #(#{WinSocketConstants} #{WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SocketError subclass: #SocketClosed
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SocketError subclass: #SocketWaitCancelled
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #IPHlpApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #AbstractIN_ADDR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fd_array' -> 16r4.
@@ -295,7 +295,7 @@ ExternalStructure subclass: #FD_SET
 ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Format' -> 16r0.
@@ -308,7 +308,7 @@ ExternalStructure subclass: #NET_ADDRESS_INFO
 ExternalStructure subclass: #SOCKADDR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sa_data' -> 16r2.
@@ -317,7 +317,7 @@ ExternalStructure subclass: #SOCKADDR
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tv_sec' -> 16r0.
@@ -326,7 +326,7 @@ ExternalStructure subclass: #TIMEVAL
 AbstractIN_ADDR subclass: #IN_ADDR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_s_addr' -> 16r0.
@@ -340,7 +340,7 @@ AbstractIN_ADDR subclass: #IN_ADDR
 AbstractIN_ADDR subclass: #IN6_ADDR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Bytes' -> 16r0.
@@ -349,7 +349,7 @@ AbstractIN_ADDR subclass: #IN6_ADDR
 SOCKADDR subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sin_addr' -> 16r4.
@@ -360,7 +360,7 @@ SOCKADDR subclass: #SOCKADDR_IN
 SOCKADDR subclass: #SOCKADDR_IN6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sin6_addr' -> 16r8.
@@ -373,7 +373,7 @@ SOCKADDR subclass: #SOCKADDR_IN6
 SOCKADDR subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf___ss_align' -> 16r8.
@@ -384,7 +384,7 @@ SOCKADDR subclass: #SOCKADDR_STORAGE
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_h_addr_list' -> 16rC.
@@ -396,7 +396,7 @@ Win32Structure subclass: #HOSTENT
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_p_aliases' -> 16r4.
@@ -406,7 +406,7 @@ Win32Structure subclass: #PROTOENT
 Win32Structure subclass: #SERVENT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_s_aliases' -> 16r4.
@@ -417,7 +417,7 @@ Win32Structure subclass: #SERVENT
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMaxSockets' -> 16r186.
@@ -431,25 +431,25 @@ Win32Structure subclass: #WSADATA
 SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

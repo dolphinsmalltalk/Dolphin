@@ -11,7 +11,6 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Class} #isAnonymous)
 	#(#{Class} #newAnonymousSubclass)
 	#(#{ClassBuilder class} #forAnonymousSubclassOf:)
 	#(#{ClassDescription} #isAnonymous)
@@ -29,7 +28,7 @@ package!
 ClassBuilder subclass: #AnonymousClassBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -37,16 +36,10 @@ ClassBuilder subclass: #AnonymousClassBuilder
 
 !Class methodsFor!
 
-isAnonymous
-	"Answer whether this is an anonymous (unbound) class."
-
-	^name isNil!
-
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self)
 		createNewClass! !
-!Class categoriesFor: #isAnonymous!public!testing! !
-!Class categoriesFor: #newAnonymousSubclass!public! !
+!Class categoriesFor: #newAnonymousSubclass!class hierarchy-adding!public! !
 
 !ClassBuilder class methodsFor!
 

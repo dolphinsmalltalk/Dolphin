@@ -60,7 +60,7 @@ package!
 SharedPool subclass: #MSScriptControlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Connected' -> 16r1.
@@ -69,49 +69,49 @@ SharedPool subclass: #MSScriptControlConstants
 Object subclass: #ActiveXScriptlet
 	instanceVariableNames: 'language expression procedures description globalBindings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptControl
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptError
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptModule
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptModuleCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptProcedure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IScriptProcedureCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #(#{MSScriptControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Dialog subclass: #SimpleAXScriptEditor
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

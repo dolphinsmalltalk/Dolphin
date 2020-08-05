@@ -3,7 +3,7 @@
 SharedPool subclass: #CommonDialogConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CC_ANYCOLOR' -> 16r100.

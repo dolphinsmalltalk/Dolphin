@@ -3,7 +3,7 @@
 SharedPool subclass: #WinHttpConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoLogonPolicy_Always' -> 16r0.

@@ -3,7 +3,7 @@
 SharedPool subclass: #DateTimeCommCtrlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DTM_GETMCCOLOR' -> 16r1007.

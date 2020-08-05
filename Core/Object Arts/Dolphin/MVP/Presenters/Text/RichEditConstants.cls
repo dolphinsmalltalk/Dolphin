@@ -3,7 +3,7 @@
 SharedPool subclass: #RichEditConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'cchTextLimitDefault' -> 16r7FFF.

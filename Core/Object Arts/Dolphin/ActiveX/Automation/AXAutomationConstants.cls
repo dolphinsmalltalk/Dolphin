@@ -3,7 +3,7 @@
 SharedPool subclass: #AXAutomationConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ACTIVEOBJECT_STRONG' -> 16r0.

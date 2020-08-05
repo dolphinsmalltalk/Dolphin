@@ -43,8 +43,9 @@ package!
 Presenter subclass: #ScribbleTest
 	instanceVariableNames: 'scribblePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Variable Aliases"!
 

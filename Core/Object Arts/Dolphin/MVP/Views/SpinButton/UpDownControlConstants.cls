@@ -3,7 +3,7 @@
 SharedPool subclass: #UpDownControlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'UD_MAXVAL' -> 16r7FFF.

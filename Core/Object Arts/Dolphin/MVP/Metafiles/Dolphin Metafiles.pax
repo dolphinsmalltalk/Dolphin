@@ -46,7 +46,7 @@ package!
 SharedPool subclass: #EnhancedMetafileRecordTypes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EMR_ABORTPATH' -> 16r44.
@@ -176,7 +176,7 @@ SharedPool subclass: #EnhancedMetafileRecordTypes
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
 	classVariableNames: 'RecordTypes'
-	poolDictionaries: 'EnhancedMetafileRecordTypes'
+	imports: #(#{EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iType' -> 16r0.
@@ -185,7 +185,7 @@ ExternalStructure subclass: #ENHMETARECORD
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bOpenGL' -> 16r60.
@@ -209,7 +209,7 @@ ENHMETARECORD subclass: #ENHMETAHEADER
 Image subclass: #Metafile
 	instanceVariableNames: 'header'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

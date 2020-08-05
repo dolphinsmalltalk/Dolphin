@@ -3,7 +3,7 @@
 Object subclass: #Exception
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
-	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
+	imports: #(#{MessageBoxConstants} #{Win32Constants} #{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Exception guid: (GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -142,12 +142,7 @@ abortRetryOrIgnore
 	"Throw up an Abort/Retry/Ignore Warning message box with the receiver's message and answer
 	the symbolic name of the user's response."
 
-	self beep.
-	^#(#abort #retry #ignore) 
-		at: (self showMessage: self description
-				style: ##(MB_ICONWARNING | MB_ABORTRETRYIGNORE | MB_DEFBUTTON3)) - IDABORT 
-				+ 1
-		ifAbsent: [#abort]!
+	^self showMessage: self description style: ##(MB_ICONWARNING | MB_ABORTRETRYIGNORE | MB_DEFBUTTON3)!
 
 beep
 	"Sound an appropriate beep to draw the users attention."
@@ -241,6 +236,9 @@ isResumable
 
 	^false!
 
+isSuppressible
+	^false!
+
 isUserResumable
 	"Answer whether the user should be given the option of resuming when
 	prompted with regard to this exception."
@@ -276,10 +274,10 @@ okToContinue
 	it is ok to continue (the user pressed OK and the receiver is resumable)."
 
 	^(self showMessage: self description
-		style: (self isUserResumable 
+		style: (self isUserResumable
 				ifTrue: [##(MB_OKCANCEL | MB_ICONWARNING)]
-				ifFalse: [##(MB_OK | MB_ICONERROR)])) 
-			== IDOK and: [self isUserResumable]!
+				ifFalse: [##(MB_OK | MB_ICONERROR)]))
+			== #ok and: [self isUserResumable]!
 
 outer
 	"Answer the result of evaluating the next outermost exception handler for the 
@@ -420,19 +418,20 @@ severityClass
 
 	^self class severityClass!
 
-showMessage: aString style: anInteger 
-	"Implementation Note: Avoid creating a dependency on MessageBox, as this class will always
-	be required in an application even if MessageBox is not."
+showMessage: aString style: anInteger
+	"Implementation Note: Avoid creating a dependency on MessageBox, as this class will always be required in an application even if MessageBox is not."
 
-	^UserLibrary default 
-		messageBox: nil
-		text: aString
-		caption: SessionManager current applicationName
-		style: (Processor isActiveMain 
-				ifTrue: [anInteger maskSet: ##(MB_TASKMODAL | MB_SETFOREGROUND)]
-				ifFalse: [anInteger])
-		icon: nil
-		instance: nil!
+	^#(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore)
+		at: (UserLibrary default
+				messageBox: nil
+				text: aString
+				caption: SessionManager current applicationName
+				style: (Processor isActiveMain
+						ifTrue: [anInteger maskSet: ##(MB_TASKMODAL | MB_SETFOREGROUND)]
+						ifFalse: [anInteger])
+				icon: nil
+				instance: nil)
+		ifAbsent: [#abort]!
 
 signal
 	"Raise (or re-raise) the receiver in the context of the current active process, causing its propagation 
@@ -536,6 +535,7 @@ toTrace: anInteger
 !Exception categoriesFor: #ignore!handler responses!public! !
 !Exception categoriesFor: #isNested!public!testing! !
 !Exception categoriesFor: #isResumable!public!testing! !
+!Exception categoriesFor: #isSuppressible!accessing!public! !
 !Exception categoriesFor: #isUserResumable!public!testing! !
 !Exception categoriesFor: #messageText!accessing!public! !
 !Exception categoriesFor: #messageText:!accessing!debugger-step over!public! !

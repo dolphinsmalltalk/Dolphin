@@ -3,7 +3,7 @@
 SharedPool subclass: #ODBCConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ODBC_VS_FLAG_RETCODE' -> 16r4.

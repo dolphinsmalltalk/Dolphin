@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SharedPool
+Namespace subclass: #SharedPool
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SharedPool guid: (GUID fromString: '{bcc094b0-f447-4e0c-a96b-884f8324757d}')!
-SharedPool comment: ''!
+SharedPool comment: '`Namespace` for shared pool variables.
+
+Functionality here will be pushed up. It may disappear.'!
 !SharedPool categoriesForClass!Kernel-Objects! !
 !SharedPool class methodsFor!
 
@@ -51,10 +53,15 @@ bindingsDo: aMonadicValuable
 	self classPool associationsDo: aMonadicValuable!
 
 classesReferencing
-	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
+	| ref |
+	ref := self instanceClass asQualifiedReference.
+	^Smalltalk allClasses select: [:c | c allImports includes: ref]!
 
 includesKey: aString 
 	^self classPool includesKey: (self keyString: aString)!
+
+isEmpty
+	^self classPool isEmpty!
 
 isValidKey: aString
 	^aString notEmpty and: 
@@ -94,7 +101,7 @@ subclass: aSymbol
 		subclass: aSymbol
 		instanceVariableNames: ''
 		classVariableNames: ''
-		poolDictionaries: ''! !
+		imports: #()! !
 !SharedPool class categoriesFor: #add:!adding!public! !
 !SharedPool class categoriesFor: #associationAt:!accessing!public! !
 !SharedPool class categoriesFor: #associationAt:ifAbsent:!accessing!public! !
@@ -105,7 +112,8 @@ subclass: aSymbol
 !SharedPool class categoriesFor: #at:put:!adding!development!public! !
 !SharedPool class categoriesFor: #bindingsDo:!enumerating!public! !
 !SharedPool class categoriesFor: #classesReferencing!development!private! !
-!SharedPool class categoriesFor: #includesKey:!accessing!public! !
+!SharedPool class categoriesFor: #includesKey:!testing!public! !
+!SharedPool class categoriesFor: #isEmpty!testing|public! !
 !SharedPool class categoriesFor: #isValidKey:!adding!private! !
 !SharedPool class categoriesFor: #keyAtValue:!accessing!public! !
 !SharedPool class categoriesFor: #keys!accessing!public! !

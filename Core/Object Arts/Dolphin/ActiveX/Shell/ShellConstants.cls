@@ -3,7 +3,7 @@
 SharedPool subclass: #ShellConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BFFM_ENABLEOK' -> 16r465.

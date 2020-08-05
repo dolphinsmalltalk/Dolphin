@@ -3,7 +3,7 @@
 SharedPool subclass: #SHDocVwConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CSC_NAVIGATEBACK' -> 16r2.

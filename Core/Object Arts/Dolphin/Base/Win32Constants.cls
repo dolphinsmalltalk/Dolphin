@@ -3,7 +3,7 @@
 SharedPool subclass: #Win32Constants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ABOVE_NORMAL_PRIORITY_CLASS' -> 16r8000.

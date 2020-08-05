@@ -3,7 +3,7 @@
 SharedPool subclass: #CDOConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'cdoAbuDhabi' -> 16r18.

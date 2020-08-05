@@ -3,7 +3,7 @@
 SharedPool subclass: #MSScriptControlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Connected' -> 16r1.

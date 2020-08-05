@@ -3,7 +3,7 @@
 SharedPool subclass: #TextEditConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EC_LEFTMARGIN' -> 16r1.

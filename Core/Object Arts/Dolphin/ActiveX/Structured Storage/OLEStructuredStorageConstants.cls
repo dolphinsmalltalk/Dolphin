@@ -3,7 +3,7 @@
 SharedPool subclass: #OLEStructuredStorageConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LOCK_EXCLUSIVE' -> 16r2.

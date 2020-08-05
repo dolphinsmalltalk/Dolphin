@@ -127,7 +127,7 @@ package!
 SharedPool subclass: #OLEConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CLSCTX_INPROC_HANDLER' -> 16r2.
@@ -142,103 +142,103 @@ SharedPool subclass: #OLEConstants
 Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEConstants Win32Errors'
+	imports: #(#{OLEConstants} #{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalMemory variableByteSubclass: #COMTaskMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMFunctionAbstract subclass: #COMFunction
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterfaceImp subclass: #COMClassFactory
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterfaceImp subclass: #COMEnumerator
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMEnumerator subclass: #COMInterfaceEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #OLELibrary
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
+	imports: #(#{OLEConstants} #{Win32Constants} #{Win32Errors})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 		'_OffsetOf_argSizes' -> 16r4.
@@ -249,79 +249,79 @@ ExternalStructure subclass: #COMInterface
 ExternalStructure subclass: #OLEStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEConstants'
+	imports: #(#{OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IClassFactory
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IEnumXXXX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IMalloc
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IServiceProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ISupportErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IEnumXXXX subclass: #IEnumString
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IEnumXXXX subclass: #IEnumStruct
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IEnumXXXX subclass: #IEnumUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cElems' -> 16r0.
@@ -330,19 +330,19 @@ ExternalArray subclass: #OLECountedArray
 OLECountedArray subclass: #CADWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLECountedArray subclass: #CALPOLESTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Domain' -> 16r8.
@@ -356,7 +356,7 @@ OLEStructure subclass: #COAUTHIDENTITY
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAuthnLevel' -> 16rC.
@@ -370,7 +370,7 @@ OLEStructure subclass: #COAUTHINFO
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved1' -> 16r0.
@@ -381,7 +381,7 @@ OLEStructure subclass: #COSERVERINFO
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -391,13 +391,13 @@ OLEStructure subclass: #LICINFO
 OLEStructure subclass: #OLEFinalizableStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHelpContext' -> 16r10.
@@ -413,7 +413,7 @@ OLEFinalizableStructure subclass: #EXCEPINFO
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hr' -> 16r8.
@@ -423,13 +423,13 @@ OLEFinalizableStructure subclass: #MULTI_QI
 GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

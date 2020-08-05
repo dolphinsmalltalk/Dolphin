@@ -27,19 +27,19 @@ package!
 Object subclass: #MessageBoxAbstract
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: 'DefaultCaptions IconStyles'
-	poolDictionaries: 'MessageBoxConstants'
+	imports: #(#{MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MessageBoxAbstract subclass: #MessageBox
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
 	classVariableNames: 'ButtonStyles ModeStyles'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ButtonMap' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).

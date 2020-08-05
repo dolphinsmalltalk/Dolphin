@@ -3,7 +3,7 @@
 SharedPool subclass: #MessageBoxConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IDTIMEOUT' -> 16r7D00.

@@ -42,7 +42,7 @@ package!
 SharedPool subclass: #DateTimeCommCtrlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DTM_GETMCCOLOR' -> 16r1007.
@@ -143,7 +143,7 @@ SharedPool subclass: #DateTimeCommCtrlConstants
 NMHDR subclass: #NMSELCHANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_stSelEnd' -> 16r1C.
@@ -152,19 +152,19 @@ NMHDR subclass: #NMSELCHANGE
 ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'DateTimeCommCtrlConstants'
+	imports: #(#{DateTimeCommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DateTimeCommonControl subclass: #MonthCalendarView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

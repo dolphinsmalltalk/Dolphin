@@ -3,7 +3,7 @@
 SharedPool subclass: #HotKeyConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HKCOMB_A' -> 16r8.

@@ -3,7 +3,7 @@
 SharedPool subclass: #SysLinkConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ICC_LINK_CLASS' -> 16r8000.

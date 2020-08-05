@@ -3,7 +3,7 @@
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
 	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -418,7 +418,7 @@ declareClasses
 				subclass: each
 				instanceVariableNames: ''
 				classVariableNames: ''
-				poolDictionaries: '']!
+				imports: #()]!
 
 declareVariables
 	"Private - Create bindings for each of the shared variables in the package prior to those variable values being loaded. Later (after the classes in the package have been defined - in case the variables are instances of any of those classes) these will be loaded from their individual STB files."
@@ -1441,15 +1441,14 @@ tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTabl
 				to: base
 				type: 'is a subclass of'.
 
-			"Look for references to pool dictionaries"
-			aClass sharedPoolNames do: 
-					[:poolName |
+			aClass imports do: 
+					[:import |
 					self
 						trace: anIdentityDictionary
-						prerequisite: (aLookupTable lookup: poolName asQualifiedReference)
+						prerequisite: (aLookupTable lookup: import)
 						from: aClass
-						to: poolName
-						type: 'uses the shared pool']]!
+						to: import
+						type: 'imports the namespace']]!
 
 tracePrerequisitesOfImageStripper: anIdentityDictionary 
 	"Only possible to trace the stripper prereqs in DPRO"

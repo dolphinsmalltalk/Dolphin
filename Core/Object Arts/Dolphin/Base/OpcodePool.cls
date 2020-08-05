@@ -3,7 +3,7 @@
 SharedPool subclass: #OpcodePool
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BlockCopy' -> 16rFC.

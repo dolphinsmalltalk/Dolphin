@@ -3,7 +3,7 @@
 SharedPool subclass: #PrintDialogConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'PD_ALLPAGES' -> 16r0.

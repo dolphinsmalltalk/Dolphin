@@ -3,7 +3,7 @@
 SharedPool subclass: #WinSocketErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'WSA_E_CANCELLED' -> 16r277F.

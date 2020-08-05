@@ -3,7 +3,7 @@
 SharedPool subclass: #_PrimitiveFailureCode
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AccessViolation' -> -16r3FF8FC1A.

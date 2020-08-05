@@ -3,7 +3,7 @@
 AddClassChange subclass: #DolphinAddClassChange
 	instanceVariableNames: 'classConstants'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DolphinAddClassChange guid: (GUID fromString: '{aa997683-c5f3-48d4-99c3-38db54fd285a}')!
@@ -24,19 +24,21 @@ fillOutDefinitionArguments: parseTree
 	keywords := parseTree selector keywords.
 	pairs := LookupTable new.
 	keywords with: args do: [:eachKeyword :eachArg | pairs at: eachKeyword put: eachArg].
-	className := (pairs at: 'subclass:') value.
+	className := args first value.
 	instanceVariableNames := self namesIn: (pairs at: 'instanceVariableNames:') value.
 	classVariableNames := self namesIn: (pairs at: 'classVariableNames:') value.
-	poolDictionaryNames := self namesIn: (pairs at: 'poolDictionaries:') value.
+	poolDictionaryNames := (pairs lookup: 'imports:')
+				ifNil: [(pairs lookup: 'poolDictionaries:') ifNil: [#()] ifNotNil: [:arg | self namesIn: arg value]]
+				ifNotNil: [:arg | arg children collect: [:each | each value]].
 	category := (pairs lookup: 'category:') ifNil: [#Unknown] ifNotNil: [:arg | arg value asSymbol].
+	"We defer evaluating the brace array expression until needed, as mostly it is not"
 	classConstants := (pairs lookup: 'classConstants:')
-				ifNotNil: [:arg | arg childrenDo: [:each | each halt]]!
+				ifNil: [#()]
+				ifNotNil: [:arg | arg formattedCode]!
 
 isValidMessageName: aMessageNode
-	^(#(#subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants: 
-		#variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants: 
-		#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
-			includes: aMessageNode selector) or: [super isValidMessageName: aMessageNode]!
+	^(#(#subclass:instanceVariableNames:classVariableNames:imports: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants: #variableSubclass:instanceVariableNames:classVariableNames:imports: #variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants: #variableByteSubclass:instanceVariableNames:classVariableNames:imports: #variableByteSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:)
+		includes: aMessageNode selector) or: [super isValidMessageName: aMessageNode]!
 
 namesIn: aString 
 	^aString subStrings! !

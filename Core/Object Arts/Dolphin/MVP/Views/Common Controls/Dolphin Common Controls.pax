@@ -71,7 +71,7 @@ package!
 SharedPool subclass: #ListViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LV_MAX_WORKAREAS' -> 16r10.
@@ -296,7 +296,7 @@ SharedPool subclass: #ListViewConstants
 SharedPool subclass: #TabViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ODT_TAB' -> 16r65.
@@ -363,7 +363,7 @@ SharedPool subclass: #TabViewConstants
 SharedPool subclass: #TreeViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TV_FIRST' -> 16r1100.
@@ -471,7 +471,7 @@ SharedPool subclass: #TreeViewConstants
 Object subclass: #ListViewColumn
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoResizeMask' -> 16r1.
@@ -480,7 +480,7 @@ Object subclass: #ListViewColumn
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r8.
@@ -489,7 +489,7 @@ Win32Structure subclass: #CCHITTESTINFO
 Win32Structure subclass: #CCITEM
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_mask' -> 16r0
@@ -497,7 +497,7 @@ Win32Structure subclass: #CCITEM
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchImageMax' -> 16rC.
@@ -510,7 +510,7 @@ Win32Structure subclass: #LVBKIMAGEW
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -528,7 +528,7 @@ Win32Structure subclass: #LVCOLUMNW
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r0.
@@ -540,7 +540,7 @@ Win32Structure subclass: #LVFINDINFOW
 Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hInsertAfter' -> 16r4.
@@ -550,7 +550,7 @@ Win32Structure subclass: #TVINSERTSTRUCTW
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
@@ -559,13 +559,13 @@ CCHITTESTINFO subclass: #LVHITTESTINFO
 CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hItem' -> 16rC
@@ -573,7 +573,7 @@ CCHITTESTINFO subclass: #TVHITTESTINFO
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
 	classVariableNames: 'CallbackPrototype'
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r18.
@@ -594,7 +594,7 @@ CCITEM subclass: #LVITEMW
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TabViewConstants'
+	imports: #(#{TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -607,7 +607,7 @@ CCITEM subclass: #TCITEMW
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TreeViewConstants'
+	imports: #(#{TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cChildren' -> 16r20.
@@ -623,7 +623,7 @@ CCITEM subclass: #TVITEMW
 TVITEMW subclass: #TVITEMEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hwnd' -> 16r30.
@@ -634,7 +634,7 @@ TVITEMW subclass: #TVITEMEXW
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDrawStage' -> 16rC.
@@ -647,13 +647,13 @@ NMHDR subclass: #NMCUSTOMDRAW
 NMHDR subclass: #NMGETINFOTIP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
@@ -668,7 +668,7 @@ NMHDR subclass: #NMITEMACTIVATE
 NMHDR subclass: #NMKEYDOWN
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r10.
@@ -677,7 +677,7 @@ NMHDR subclass: #NMKEYDOWN
 NMHDR subclass: #NMLISTVIEW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
@@ -691,7 +691,7 @@ NMHDR subclass: #NMLISTVIEW
 NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iStart' -> 16rC.
@@ -700,7 +700,7 @@ NMHDR subclass: #NMLVFINDITEMW
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iFrom' -> 16rC.
@@ -711,7 +711,7 @@ NMHDR subclass: #NMLVODSTATECHANGE
 NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_action' -> 16rC.
@@ -722,7 +722,7 @@ NMHDR subclass: #NMTREEVIEWW
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_clrText' -> 16r30.
@@ -732,7 +732,7 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_clrText' -> 16r30.
@@ -742,7 +742,7 @@ NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r14.
@@ -755,7 +755,7 @@ NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -766,13 +766,13 @@ NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: 'ViewModes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BackImageIsTiledMask' -> 16r1.
@@ -781,7 +781,7 @@ IconicListAbstract subclass: #ListView
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
 	classVariableNames: 'TabOrientations TabViewModes'
-	poolDictionaries: 'TabViewConstants'
+	imports: #(#{TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'OrientationMask' -> 16r82
@@ -789,7 +789,7 @@ IconicListAbstract subclass: #TabView
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
 	classVariableNames: ''
-	poolDictionaries: 'TreeViewConstants'
+	imports: #(#{TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DisableExpandAllMask' -> 16r1.
@@ -800,7 +800,7 @@ IconicListAbstract subclass: #TreeView
 TabView subclass: #TabViewXP
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

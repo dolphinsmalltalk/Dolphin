@@ -52,7 +52,7 @@ package!
 SharedPool subclass: #WinRegConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HKEY_CLASSES_ROOT' -> 16r80000000.
@@ -86,25 +86,25 @@ SharedPool subclass: #WinRegConstants
 Object subclass: #RegQueryInfo
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
-	poolDictionaries: 'Win32Errors WinRegConstants'
+	imports: #(#{Win32Errors} #{WinRegConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 RegKeyAbstract variableSubclass: #RegKeyValues
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

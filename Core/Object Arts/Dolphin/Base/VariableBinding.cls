@@ -3,7 +3,7 @@
 Association subclass: #VariableBinding
 	instanceVariableNames: 'environment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 VariableBinding guid: (GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
@@ -15,6 +15,11 @@ VariableBinding comment: ''!
 	"Answer whether the receiver is equal to the argument."
 
 	^super = anAssociation and: [environment == anAssociation environment]!
+
+absoluteName
+	"Answer the <String> fully qualified name of this namespace, which is a dot-separated path to this binding from (but not including) Smalltalk."
+
+	^self environment absoluteNameOfIdentifier: self key!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -32,9 +37,9 @@ environment: aNamespace
 	environment := aNamespace!
 
 fullName
-	"Placeholder for answering fully qualified name (relative to Smalltalk)."
-	
-	^key!
+	"Answer the <String> fully qualified name of this namespace, which is a dot-separated path to this binding from (but not including) Smalltalk."
+
+	^self environment fullNameOfIdentifier: self key!
 
 fullyQualifiedReference
 	#todo.	"Temporary definition while SystemDictionary is not a proper Namespace."
@@ -51,6 +56,7 @@ refersToLiteral: anObject
 targetVariable
 	^self! !
 !VariableBinding categoriesFor: #=!comparing!public! !
+!VariableBinding categoriesFor: #absoluteName!accessing!public! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
 !VariableBinding categoriesFor: #environment!accessing!public! !

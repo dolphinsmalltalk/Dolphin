@@ -42,7 +42,7 @@ package!
 SharedPool subclass: #ComboBoxConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CB_ADDSTRING' -> 16r143.
@@ -106,7 +106,7 @@ SharedPool subclass: #ComboBoxConstants
 SharedPool subclass: #ListBoxConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LB_ADDFILE' -> 16r196.
@@ -173,25 +173,25 @@ SharedPool subclass: #ListBoxConstants
 SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ListControlView subclass: #BasicListAbstract
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
 	classVariableNames: ''
-	poolDictionaries: 'ComboBoxConstants'
+	imports: #(#{ComboBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Modes' -> #(#simple #dropDown #dropDownList)
@@ -199,7 +199,7 @@ BasicListAbstract subclass: #ComboBox
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModes'
-	poolDictionaries: 'ListBoxConstants'
+	imports: #(#{ListBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SelectionModeMask' -> 16r808

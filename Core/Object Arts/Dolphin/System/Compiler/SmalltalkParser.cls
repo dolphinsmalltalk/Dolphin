@@ -3,7 +3,7 @@
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
 	classVariableNames: 'AllowEmptyStatements'
-	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
+	imports: #(#{ExtCallArgTypes} #{SmalltalkParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
@@ -96,15 +96,15 @@ literalArrayNodeClass
 literalValueNodeClass
 	^StLiteralValueNode!
 
-lookupExternalStructType: anStIdentifierToken 
+lookupExternalStructType: anStIdentifierToken
 	| structClass |
-	structClass := (Smalltalk bindingFor: anStIdentifierToken value) 
+	structClass := anStIdentifierToken value asQualifiedReference bindingOrNil
 				ifNil: 
 					[self parserError: CErrUndefinedClass range: anStIdentifierToken sourceInterval.
 					"Error ignored, attempt to recover..."
 					DWORD]
 				ifNotNil: [:var | var value].
-	((structClass isKindOf: Class) not or: [structClass isPointers and: [structClass instSize < 1]]) 
+	((structClass isKindOf: Class) not or: [structClass isPointers and: [structClass instSize < 1]])
 		ifTrue: 
 			[self parserError: CErrInvalidStructArg range: anStIdentifierToken sourceInterval.
 			"Error ignored, attempt to recover..."

@@ -3,7 +3,7 @@
 SharedPool subclass: #ExtCallArgTypes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ExtCallArgBOOL' -> 16r9.

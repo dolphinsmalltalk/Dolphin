@@ -50,7 +50,7 @@ package!
 SharedPool subclass: #MMFConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FILE_MAP_ALL_ACCESS' -> 16rF001F.
@@ -76,13 +76,13 @@ SharedPool subclass: #MMFConstants
 Object subclass: #MemoryMappedFile
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
 	classVariableNames: ''
-	poolDictionaries: 'MMFConstants Win32Constants'
+	imports: #(#{MMFConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalAddress variableByteSubclass: #MemoryMappedFileView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

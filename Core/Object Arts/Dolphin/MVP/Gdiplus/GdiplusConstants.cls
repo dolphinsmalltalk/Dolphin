@@ -3,7 +3,7 @@
 SharedPool subclass: #GdiplusConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Aborted' -> 16r9.

@@ -3,7 +3,7 @@
 SharedPool subclass: #ProgressBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'PBM_DELTAPOS' -> 16r403.

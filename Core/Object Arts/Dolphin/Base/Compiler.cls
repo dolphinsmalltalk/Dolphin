@@ -3,7 +3,7 @@
 Object subclass: #Compiler
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultFlags DisabledWarnings'
-	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
+	imports: #(#{CompilerFlags} #{SmalltalkParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Compiler guid: (GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -256,7 +256,7 @@ evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean ifFail
 
 	^(self
 		compileForEvaluation: aString
-		in: anObject class
+		in: (anObject ifNotNil: [anObject class])
 		evaluationPools: anArray
 		flags: 0) method
 		ifNotNil: 

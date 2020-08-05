@@ -3,7 +3,7 @@
 SharedPool subclass: #ListBoxConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LB_ADDFILE' -> 16r196.

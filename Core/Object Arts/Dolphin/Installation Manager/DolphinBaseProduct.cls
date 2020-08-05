@@ -101,7 +101,6 @@ contents
 	"Deprecated pieces"
 	contents
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy Package Support.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated).pax' #plain #imageBased);
 		yourself.
 

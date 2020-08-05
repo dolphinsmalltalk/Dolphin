@@ -3,7 +3,7 @@
 Behavior subclass: #ClassDescription
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassDescription guid: (GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -76,10 +76,10 @@ addSharedPool: aPoolDictionary
 	speaking any modification to a class should be made through a <ClassBuilder>."
 
 	| poolName pools |
-	poolName := aPoolDictionary name.
-	pools := self sharedPoolNames.
+	poolName := aPoolDictionary asQualifiedReference.
+	pools := self imports.
 	(pools includes: poolName) ifTrue: [^self error: 'Pool is already referenced by this class'].
-	self setSharedPoolNames: (pools copyWith: poolName)!
+	self imports: (pools copyWith: poolName)!
 
 allClassVarNames
 	"Answer a <Set> of the <readableString> names of the receiver's and the 
@@ -139,27 +139,6 @@ allSelectors
 	self withAllSuperclassesDo: [:each | each understoodSelectorsDo: accumulate].
 	^answer!
 
-allSharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
-	dictionaries that are specified that are specified in the receiver and each of its
-	superclasses. The list is ordered with the receiver's own pool references first, and then
-	those of the superclass, and so on up the class hierarchy. Pools only appear where first
-	referenced (i.e. no duplicates)."
-
-	^self allSharedPools collect: [:each | each name]!
-
-allSharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
-	the receiver and each of its superclasses."
-
-	| pools seen |
-	pools := Array writeStream: 5.
-	seen := IdentitySet new.
-	self withAllSuperclassesDo: 
-			[:c |
-			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
-	^pools contents!
-
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in breadth-first order, with the immediate subclasses first. 
 	Breadth-first traversal is slightly less efficient, but results in a more useful ordering (the standard does not specify the order). 
@@ -208,6 +187,28 @@ asQualifiedReference
 	"Answer a <BindingReference> to this class."
 
 	^self instanceClass fullyQualifiedReference!
+
+bindingAt: aString
+	"Answer a variable binding for the named variable directly in the scope of this class (i.e. a class variable). 
+	If there is no such variable, then raise an error."
+
+	^self classPool associationAt: aString!
+
+bindingAt: aString ifAbsent: aNiladicValuable
+	"Answer a variable binding for the named variable directly in the scope of this class (i.e. a class variable). 
+	If there is no such variable, then raise an error."
+
+	^self classPool associationAt: aString ifAbsent: aNiladicValuable!
+
+bindings
+	"Answer the receiver's localled defined <VariableBinding>s."
+
+	^self classPool associations!
+
+bindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
+
+	self classPool associationsDo: aMonadicValuable!
 
 canUnderstandProtocol: protName
 	"Answer whether the receiver can understand the named <MethodProtocol>,
@@ -450,11 +451,9 @@ fullBindingFor: aString
 		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
 
 fullName
-	"Placeholder for answering fully qualified name (relative to Smalltalk)."
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path from (but not including) Smalltalk."
 
-	^self name
-
-	!
+	^self subclassResponsibility!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
@@ -466,6 +465,16 @@ hasCompilationFailures
 
 	^(self methodDictionary anySatisfy: [:each | each isCompilationFailure])
 		or: [self subclasses anySatisfy: [:each | each hasCompilationFailures]]!
+
+importedNamespacesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
+
+	self subclassResponsibility!
+
+imports
+	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
+
+	^self subclassResponsibility!
 
 includesCategory: category
 	"Answer whether the receiver includes the named category."
@@ -792,7 +801,7 @@ removeSharedPool: aPoolDictionary
 	Note: This is a low-level operation and does not recompile affected classes. Generally 
 	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self setSharedPoolNames: (self sharedPoolNames copyWithout: aPoolDictionary name)!
+	self imports: (self imports copyWithout: aPoolDictionary asQualifiedReference)!
 
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
 	"Private - Remove any protocols that are no longer supported after the removal of the <selector>, removedSelector, from the receiver. Any removed protocols still  supported by subclasses are migrated down."
@@ -855,49 +864,6 @@ setShapeFlags: anIntegerMask to: aBoolean
 	oldSpec := instanceSpec.
 	super setShapeFlags: anIntegerMask to: aBoolean.
 	oldSpec = instanceSpec ifFalse: [self isChanged: true]!
-
-setSharedPoolNames: aCollection
-	"Private - Set the <Symbol>ic names of the shared pool dictionaries that are declared as
-	referenced locally in the receiver (pools are inherited in Dolphin)."
-
-	self instanceClass setSharedPoolNames: aCollection
-!
-
-sharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
-	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
-	order of precedence."
-
-	^self instanceClass sharedPoolNames!
-
-sharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
-	locally in the receiver."
-
-	| pools |
-	pools := OrderedCollection new.
-	self sharedPoolsDo: [:each | pools addLast: each].
-	^pools!
-
-sharedPoolsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
-	the receiver in order of precedence."
-
-	| environment |
-	environment := self environment.
-	self sharedPoolNames
-		do: [:symbol | (environment bindingFor: symbol) ifNotNil: [:p | aMonadicValuable value: p value]]!
-
-sharedVariableString
-	"Answer a String containing the names of the Pools accessable
-	from the receiver and its instances. The names are separated
-	by spaces."
-
-	| aStream |
-	aStream := String smalltalkWriteStream: 32.
-	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
-		separatedBy: [aStream space].
-	^aStream contents!
 
 sourceManager
 	"Answer the receiver's source manager. Answer a DeafObject if none is available."
@@ -994,8 +960,6 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #allProtocols!protocols!public! !
 !ClassDescription categoriesFor: #allSelectors!methods-accessing!public! !
-!ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
 !ClassDescription categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
 !ClassDescription categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
 !ClassDescription categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
@@ -1003,6 +967,10 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
 !ClassDescription categoriesFor: #allSubinstances!instances!public! !
 !ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
+!ClassDescription categoriesFor: #bindingAt:!binding!public! !
+!ClassDescription categoriesFor: #bindingAt:ifAbsent:!binding!public! !
+!ClassDescription categoriesFor: #bindings!accessing!public! !
+!ClassDescription categoriesFor: #bindingsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
 !ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
 !ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
@@ -1031,6 +999,8 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #fullName!accessing!public! !
 !ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
+!ClassDescription categoriesFor: #importedNamespacesDo:!pool variables!public! !
+!ClassDescription categoriesFor: #imports!pool variables!public! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
@@ -1081,11 +1051,6 @@ withAllSubclassesDo: aMonadicValuable
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
 !ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
-!ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
-!ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
-!ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !

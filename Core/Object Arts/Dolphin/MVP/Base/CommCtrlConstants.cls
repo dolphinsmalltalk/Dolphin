@@ -3,7 +3,7 @@
 SharedPool subclass: #CommCtrlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ACM_OPEN' -> 16r464.

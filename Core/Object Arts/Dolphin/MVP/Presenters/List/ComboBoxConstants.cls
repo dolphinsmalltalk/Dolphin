@@ -3,7 +3,7 @@
 SharedPool subclass: #ComboBoxConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CB_ADDSTRING' -> 16r143.

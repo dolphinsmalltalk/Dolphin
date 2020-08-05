@@ -43,7 +43,7 @@ package!
 SharedPool subclass: #UpDownControlConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'UD_MAXVAL' -> 16r7FFF.
@@ -78,7 +78,7 @@ SharedPool subclass: #UpDownControlConstants
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nInc' -> 16r4.
@@ -87,7 +87,7 @@ Win32Structure subclass: #UDACCEL
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iDelta' -> 16r10.
@@ -96,7 +96,7 @@ NMHDR subclass: #NMUPDOWN
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'UpDownControlConstants'
+	imports: #(#{UpDownControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignmentMask' -> 16rC

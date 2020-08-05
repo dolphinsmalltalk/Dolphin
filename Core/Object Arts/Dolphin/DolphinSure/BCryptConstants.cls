@@ -3,7 +3,7 @@
 SharedPool subclass: #BCryptConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BCRYPT_3DES_112_ALGORITHM' -> '3DES_112'.

@@ -3,7 +3,7 @@
 SharedPool subclass: #CRTConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_DN_FLUSH' -> 16r1000000.

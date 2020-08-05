@@ -50,7 +50,7 @@ package!
 SharedPool subclass: #RichEditConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'cchTextLimitDefault' -> 16r7FFF.
@@ -327,13 +327,13 @@ SharedPool subclass: #RichEditConstants
 Object subclass: #RichText
 	instanceVariableNames: 'rtf'
 	classVariableNames: 'Converter ConverterMutex'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	imports: #(#{CommonDialogConstants} #{RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bAnimation' -> 16r71.
@@ -360,7 +360,7 @@ Win32Structure subclass: #CHARFORMAT2W
 Win32Structure subclass: #EDITSTREAM
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwCookie' -> 16r0.
@@ -370,7 +370,7 @@ Win32Structure subclass: #EDITSTREAM
 Win32Structure subclass: #FORMATRANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cpMax' -> 16r2C.
@@ -383,7 +383,7 @@ Win32Structure subclass: #FORMATRANGE
 Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cb' -> 16r0.
@@ -395,7 +395,7 @@ Win32Structure subclass: #GETTEXTEX
 Win32Structure subclass: #PARAFORMAT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'RichEditConstants'
+	imports: #(#{RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cTabCount' -> 16r1A.
@@ -412,7 +412,7 @@ Win32Structure subclass: #PARAFORMAT
 NMHDR subclass: #ENLINK
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrg' -> 16r18.
@@ -423,13 +423,13 @@ NMHDR subclass: #ENLINK
 TextPresenter subclass: #RichTextPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	imports: #(#{CommonDialogConstants} #{RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
-	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	imports: #(#{CommonDialogConstants} #{RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoUrlDetectionMask' -> 16r1000000.

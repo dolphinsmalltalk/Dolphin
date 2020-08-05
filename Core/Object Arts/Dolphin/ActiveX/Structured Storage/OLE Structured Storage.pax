@@ -82,7 +82,7 @@ package!
 SharedPool subclass: #OLEStructuredStorageConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LOCK_EXCLUSIVE' -> 16r2.
@@ -132,61 +132,61 @@ SharedPool subclass: #OLEStructuredStorageConstants
 COMInterfaceImp subclass: #OLELockBytesAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLELockBytesAbstract subclass: #OLELockBytes
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IRootStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_atime' -> 16r20.

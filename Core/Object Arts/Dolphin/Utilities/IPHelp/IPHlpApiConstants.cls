@@ -3,7 +3,7 @@
 SharedPool subclass: #IPHlpApiConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AD_APPLY_ALL' -> 16r7.

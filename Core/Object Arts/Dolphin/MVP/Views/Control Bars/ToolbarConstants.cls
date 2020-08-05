@@ -3,7 +3,7 @@
 SharedPool subclass: #ToolbarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BTNS_AUTOSIZE' -> 16r10.

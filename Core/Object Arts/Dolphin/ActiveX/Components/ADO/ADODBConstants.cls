@@ -3,7 +3,7 @@
 SharedPool subclass: #ADODBConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'adAddNew' -> 16r1000400.

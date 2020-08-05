@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants environment'
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables imports comment flags categories classConstants environment'
 	classVariableNames: 'FixedInitialLayout FixedLayout Unsubclassable'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IgnoreInstsMask' -> 16r2.
@@ -176,7 +176,7 @@ createProper
 	self
 		setInstanceVariablesOf: currentClass;
 		declareClassVariablesOf: currentClass;
-		setSharedPoolsOf: currentClass;
+		setImportsOf: currentClass;
 		setCommentOf: currentClass!
 
 currentClass
@@ -256,6 +256,17 @@ ignoreInstances: aBoolean
 	for removal."
 
 	flags := flags mask: IgnoreInstsMask set: aBoolean!
+
+imports
+	"Private - Answer an Array of proposed imports (BindingReferences to Namespaces)."
+
+	^imports ?? #()!
+
+imports: anArrayOfBindingReferences
+	"Set the receiver's sharedPools from the pool name list aString.
+	Any duplicate names in the list are dropped."
+
+	imports := anArrayOfBindingReferences!
 
 initialize
 	"Private - Initialize the instance."
@@ -428,6 +439,15 @@ modifyExistingClass
 		notifyClassUpdated.
 	^self currentClass!
 
+modifyImportsOf: aClass
+	| oldImports newImports |
+	oldImports := aClass imports.
+	newImports := self imports.
+	(newImports noDifference: oldImports)
+		ifFalse: 
+			[aClass imports: newImports.
+			self recompilationRequired: true]!
+
 modifyOrCreate
 	"Ascertain and execute the appropriate action depending on which pieces
 	of information have been provided.
@@ -472,22 +492,10 @@ modifyProper
 		ifFalse: 
 			[self
 				modifyClassVariablesOf: current;
-				modifySharedPoolsOf: current;
+				modifyImportsOf: current;
 				setCommentOf: current].
 	self recompilationRequired ifTrue: [current recompileAll].
 	self superclassIsBeingChanged ifTrue: [self removeUnimplementedProtocols]!
-
-modifySharedPoolsOf: aClass
-	"Private - Set the shared pools of aClass to those described by
-	the receiver's sharedPools inst var."
-
-	| oldPoolNames newPoolNames |
-	oldPoolNames := aClass sharedPoolNames.
-	newPoolNames := self sharedPools.
-	(newPoolNames noDifference: oldPoolNames)
-		ifFalse: 
-			[aClass setSharedPoolNames: newPoolNames.
-			self recompilationRequired: true]!
 
 mutateClass: oldClass toBeASubclassOf: newSuperclass
 	"Private - Create a new class with the appropriate features and mutate	all instances of oldClass to new instances of the new class and then recursively make the same change to the subclasses of aClass. Finally, remove the oldClass and if appropriate its metaclass from their respective superclasses and do a #oneWayBeome: on oldClass to newClass.
@@ -683,6 +691,11 @@ setCommentOf: aClass
 	comment notNil
 		ifTrue: [aClass comment: comment]!
 
+setImportsOf: aClass
+	"Private - Set the shared pools of the newly created class, aClass, to those described by the receiver's sharedPools inst var."
+
+	aClass imports: self imports!
+
 setInstanceVariablesOf: aClass
 	"Private - Set the instance variable layout of aClass to those described by the receiver's
 	instanceVariables inst var, or those of currentClass if no changes have been proposed."
@@ -692,27 +705,10 @@ setInstanceVariablesOf: aClass
 setNewClassCategories
 	currentClass classCategories: self categories!
 
-setSharedPoolsOf: aClass
-	"Private - Set the shared pools of the newly created class, aClass, to those described by the receiver's sharedPools inst var."
-
-	aClass setSharedPoolNames: self sharedPools.
-!
-
-sharedPools
-	"Private - Answer an Array of proposed pool dictionary names."
-
-	^sharedPools ifNil: [{}]!
-
-sharedPools: anArray
-	"Set the receiver's sharedPools inst var to anArray."
-
-	sharedPools := anArray asArray!
-
 sharedPoolString: aString
-	"Set the receiver's sharedPools from the pool name list aString.
-	Any duplicate names in the list are dropped."
+	"Private - Supports legacy class definition messages."
 
-	self sharedPools: (aString subStrings distinct collect: [:each | each asSymbol])!
+	self imports: (aString subStrings distinct collect: [:each | each asQualifiedReference])!
 
 superclass: aClass
 	"Private - Set the target superclass."
@@ -824,7 +820,7 @@ validateForCreate
 		validateInstanceSpec;
 		validateInstanceVarsForCreate;
 		validateClassVarsForCreate;
-		validatePoolNames!
+		validateImports!
 
 validateForModify
 	"Private - Ensure that the proposed class modification would result in a valid class."
@@ -836,11 +832,12 @@ validateForModify
 		validateInstanceSpecForModify;
 		validateInstanceVarsForModify;
 		validateSubclassInstanceSpecs.
-	currentClass isMeta ifFalse: [
-		self
-			validateClassInstanceVars;
-			validateClassVarsForModify;
-			validatePoolNames]!
+	currentClass isMeta
+		ifFalse: 
+			[self
+				validateClassInstanceVars;
+				validateClassVarsForModify;
+				validateImports]!
 
 validateForRemove
 	"Private - Ensure that the proposed class removal is valid. Invalid class removal errors may
@@ -859,6 +856,24 @@ validateForRename
 		validateClassName.
 	(self environment includesKey: className)
 		ifTrue: [self error: ('<1s> already exists.' expandMacrosWith: className)]!
+
+validateImports
+	"Private - Ensure that the proposed pool dictionary names exists in the environment
+	and warn if they don't start with an uppercase letter."
+
+	self imports do: 
+			[:each |
+			each isDefined
+				ifTrue: 
+					[| namespace |
+					namespace := each value.
+					namespace class isMeta
+						ifFalse: [self error: 'Invalid import: ' , each printString]]
+				ifFalse: 
+					[Warning
+						signal: ('Imported namespace <1p> does not exist.<n>Proceed to create it as an empty SharedPool?'
+								expandMacrosWith: each asString).
+					each declare value: (SharedPool subclass: each asSymbol)]]!
 
 validateInstanceSpec
 	"Private - Validate and complete the instanceSpec inst var."
@@ -903,26 +918,6 @@ validateInstanceVarsForModify
 				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
 	currentClass allSubclasses
 		do: [:cls | cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
-
-validatePoolNames
-	"Private - Ensure that the proposed pool dictionary names exists in the environment
-	and warn if they don't start with an uppercase letter."
-
-	self sharedPools do: 
-			[:poolName |
-			| firstChar ref |
-			ref := poolName asQualifiedReference.
-			ref isDefined
-				ifFalse: 
-					[Warning
-						signal: ('Pool dictionary <1p> does not exist.<n>Proceed to create it as an empty constants pool.'
-								expandMacrosWith: poolName).
-					ref declare value: (SharedPool subclass: poolName asSymbol)].
-			firstChar := poolName first.
-			(firstChar isUppercase or: [firstChar == $_])
-				ifFalse: 
-					[Warning
-						signal: ('Pool dictionary <1p> should start with an uppercase letter.' expandMacrosWith: poolName)]]!
 
 validateSubclassesOf: aClass againstInstanceSpec: instSpec 
 	"Private - Ensure that if the proposed change to the instance spec of aClass
@@ -1013,6 +1008,8 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #generateMapFrom:to:!mutating!private! !
 !ClassBuilder categoriesFor: #ignoreInstances!accessing!private! !
 !ClassBuilder categoriesFor: #ignoreInstances:!accessing!private! !
+!ClassBuilder categoriesFor: #imports!pool dictionaries!private! !
+!ClassBuilder categoriesFor: #imports:!pool dictionaries!public! !
 !ClassBuilder categoriesFor: #initialize!initializing!private! !
 !ClassBuilder categoriesFor: #initializeCopy:fromClass:superclass:!mutating!private! !
 !ClassBuilder categoriesFor: #install:!environment!private! !
@@ -1030,10 +1027,10 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #isModifyAction!private!testing! !
 !ClassBuilder categoriesFor: #modifyClassVariablesOf:!private! !
 !ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
+!ClassBuilder categoriesFor: #modifyImportsOf:!pool dictionaries!private! !
 !ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
 !ClassBuilder categoriesFor: #modifyPrivate!operations!private! !
 !ClassBuilder categoriesFor: #modifyProper!private! !
-!ClassBuilder categoriesFor: #modifySharedPoolsOf:!pool dictionaries!private! !
 !ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:!mutating!private! !
 !ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !
 !ClassBuilder categoriesFor: #mutateInstances:of:toBeInstancesOf:!mutating!private! !
@@ -1051,12 +1048,10 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #rename!operations!private! !
 !ClassBuilder categoriesFor: #requiresMutation!mutating!private! !
 !ClassBuilder categoriesFor: #setCommentOf:!comments!private! !
+!ClassBuilder categoriesFor: #setImportsOf:!pool dictionaries!private! !
 !ClassBuilder categoriesFor: #setInstanceVariablesOf:!instance variables!private! !
 !ClassBuilder categoriesFor: #setNewClassCategories!helpers!public! !
-!ClassBuilder categoriesFor: #setSharedPoolsOf:!pool dictionaries!private! !
-!ClassBuilder categoriesFor: #sharedPools!pool dictionaries!private! !
-!ClassBuilder categoriesFor: #sharedPools:!pool dictionaries!public! !
-!ClassBuilder categoriesFor: #sharedPoolString:!pool dictionaries!public! !
+!ClassBuilder categoriesFor: #sharedPoolString:!pool dictionaries!private! !
 !ClassBuilder categoriesFor: #superclass:!accessing!private! !
 !ClassBuilder categoriesFor: #superclassIsBeingChanged!private!testing! !
 !ClassBuilder categoriesFor: #translateInstance:intoANewInstanceOf:via:!mutating!private! !
@@ -1071,11 +1066,11 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #validateForModify!private!validation! !
 !ClassBuilder categoriesFor: #validateForRemove!private!validation! !
 !ClassBuilder categoriesFor: #validateForRename!private!validation! !
+!ClassBuilder categoriesFor: #validateImports!private!validation! !
 !ClassBuilder categoriesFor: #validateInstanceSpec!private!validation! !
 !ClassBuilder categoriesFor: #validateInstanceSpecForModify!private!validation! !
 !ClassBuilder categoriesFor: #validateInstanceVarsForCreate!private!validation! !
 !ClassBuilder categoriesFor: #validateInstanceVarsForModify!private!validation! !
-!ClassBuilder categoriesFor: #validatePoolNames!private!validation! !
 !ClassBuilder categoriesFor: #validateSubclassesOf:againstInstanceSpec:!private!validation! !
 !ClassBuilder categoriesFor: #validateSubclassInstanceSpecs!private!validation! !
 !ClassBuilder categoriesFor: #validateSuperclassChainForCreate!private!validation! !
@@ -1102,17 +1097,17 @@ classOf: aClass
 
 	^aClass ifNil: [Class] ifNotNil: [aClass class]!
 
-forModifying: aClass 
+forModifying: aClass
 	"Answer a new instance of the receiver set up to modify the <Class>, aClass.
 	The instance is initialized with all the current attributes of the class, so obviously
 	one or more of these must be modified if any modification is actually to take place."
 
-	^(self new)
+	^self new
 		class: aClass;
 		superclass: aClass superclass;
 		instanceVariables: aClass instVarNames;
 		classVariables: aClass classVarNames;
-		sharedPools: aClass sharedPoolNames;
+		imports: aClass imports;
 		yourself!
 
 fundamentalTypeOf: anInstanceSpec
@@ -1282,8 +1277,10 @@ validateClassVarName: aString using: aCollection
 		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
 	first := aString first.
 	(first isUppercase or: [first == $_]) ifTrue: [^self].
-	Warning signal: ('Proposed class variable <1p> should start with an uppercase letter.'
-				expandMacrosWith: aString)!
+	Warning new
+		isSuppressible: true;
+		signal: ('Proposed class variable <1p> should start with an uppercase letter.'
+					expandMacrosWith: aString)!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not

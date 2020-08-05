@@ -49,7 +49,7 @@ package!
 SharedPool subclass: #SHDocVwConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CSC_NAVIGATEBACK' -> 16r2.
@@ -128,25 +128,25 @@ SharedPool subclass: #SHDocVwConstants
 IDispatch subclass: #IWebBrowser
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{SHDocVwConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IWebBrowser subclass: #IWebBrowserApp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{SHDocVwConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IWebBrowserApp subclass: #IWebBrowser2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{SHDocVwConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

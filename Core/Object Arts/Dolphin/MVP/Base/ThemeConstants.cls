@@ -3,7 +3,7 @@
 SharedPool subclass: #ThemeConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ABS_DOWNDISABLED' -> 16r8.

@@ -3,7 +3,7 @@
 SharedPool subclass: #HTMLHelpConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HH_CLOSE_ALL' -> 16r12.

@@ -281,7 +281,7 @@ package!
 SharedPool subclass: #AXAutomationConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ACTIVEOBJECT_STRONG' -> 16r0.
@@ -473,7 +473,7 @@ SharedPool subclass: #AXAutomationConstants
 SharedPool subclass: #AXAutomationErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.
@@ -496,7 +496,7 @@ SharedPool subclass: #AXAutomationErrors
 SharedPool subclass: #AXTypeGenerationFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CommentStyleMask' -> 16r101.
@@ -518,19 +518,19 @@ SharedPool subclass: #AXTypeGenerationFlags
 Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
-	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
+	imports: #(#{AXAutomationConstants} #{AXTypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
@@ -538,181 +538,181 @@ AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
-	poolDictionaries: 'AXAutomationErrors Win32Constants'
+	imports: #(#{AXAutomationErrors} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXInterfaceTypeAnalyzer subclass: #TKindInterfaceAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXStructureTypeAnalyzer subclass: #TKindRecordAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXDispatchImpAbstract subclass: #AXDualImp
 	instanceVariableNames: 'interface piTypeInfo locale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXDualImp subclass: #AXForwardingDualImp
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IPerPropertyBrowsing
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IProvideClassInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ITypeComp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IEnumXXXX subclass: #IEnumVARIANT
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IProvideClassInfo subclass: #IProvideClassInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ITypeLib subclass: #ITypeLib2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbElements' -> 16r4.
@@ -725,25 +725,25 @@ GenericExternalArray subclass: #SAFEARRAY
 DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 LPVOID subclass: #LPBSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tdescElem' -> 16r0
@@ -751,7 +751,7 @@ OLEStructure subclass: #AbstractELEMDESC
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cy' -> 16r0
@@ -759,7 +759,7 @@ OLEStructure subclass: #CURRENCY
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_guid' -> 16r0.
@@ -768,7 +768,7 @@ OLEStructure subclass: #CUSTDATAITEM
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hi32' -> 16r4.
@@ -780,7 +780,7 @@ OLEStructure subclass: #DECIMAL
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cArgs' -> 16r8.
@@ -791,7 +791,7 @@ OLEStructure subclass: #DISPPARAMS
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cySize' -> 16r8.
@@ -806,7 +806,7 @@ OLEStructure subclass: #FONTDESC
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved' -> 16r0.
@@ -815,7 +815,7 @@ OLEStructure subclass: #IDLDESC
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pparamdescex' -> 16r0.
@@ -824,7 +824,7 @@ OLEStructure subclass: #PARAMDESC
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cBytes' -> 16r0.
@@ -833,7 +833,7 @@ OLEStructure subclass: #PARAMDESCEX
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cElements' -> 16r0.
@@ -842,7 +842,7 @@ OLEStructure subclass: #SAFEARRAYBOUND
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_guid' -> 16r0.
@@ -855,7 +855,7 @@ OLEStructure subclass: #TLIBATTR
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hreftype' -> 16r0.
@@ -867,7 +867,7 @@ OLEStructure subclass: #TYPEDESC
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cDims' -> 16r8.
@@ -876,7 +876,7 @@ AbstractELEMDESC subclass: #ARRAYDESC
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_paramdesc' -> 16r8
@@ -884,19 +884,19 @@ AbstractELEMDESC subclass: #ELEMDESC
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
 	classVariableNames: 'WellKnownCustomAttributes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cCustData' -> 16r0.
@@ -905,7 +905,7 @@ OLEFinalizableStructure subclass: #CUSTDATA
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
+	imports: #(#{AXAutomationConstants} #{AXAutomationErrors} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dblVal' -> 16r8.
@@ -919,13 +919,13 @@ OLEFinalizableStructure subclass: #VARIANT
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbAlignment' -> 16r34.
@@ -950,7 +950,7 @@ AXTypeInfoStructure subclass: #TYPEATTR
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_callconv' -> 16r14.
@@ -969,7 +969,7 @@ AXMemberDesc subclass: #FUNCDESC
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elemdesc' -> 16rC.

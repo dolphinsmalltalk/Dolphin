@@ -3,7 +3,7 @@
 SharedPool subclass: #ScintillaConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ANNOTATION_BOXED' -> 16r2.

@@ -3,7 +3,7 @@
 SharedPool subclass: #TooltipConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TTDT_AUTOMATIC' -> 16r0.

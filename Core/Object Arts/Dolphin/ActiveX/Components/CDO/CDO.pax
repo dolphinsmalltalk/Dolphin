@@ -68,7 +68,7 @@ package!
 SharedPool subclass: #CDOConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'cdoAbuDhabi' -> 16r18.
@@ -171,91 +171,91 @@ SharedPool subclass: #CDOConstants
 IDispatch subclass: #CDOIBodyPart
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIBodyParts
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIConfiguration
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIDataSource
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIDropDirectory
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIMessage
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOIMessages
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPEarlyScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPFinalScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPost
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPostEarly
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPostFinal
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOINNTPPostScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOISMTPOnArrival
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #CDOISMTPScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #(#{CDOConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

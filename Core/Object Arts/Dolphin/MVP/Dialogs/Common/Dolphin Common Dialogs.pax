@@ -49,7 +49,7 @@ package!
 SharedPool subclass: #CommonDialogConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CC_ANYCOLOR' -> 16r100.
@@ -153,19 +153,19 @@ SharedPool subclass: #CommonDialogConstants
 ExternalLibrary subclass: #ComDlgLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #CommonDialogStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #(#{CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #(#{CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -181,7 +181,7 @@ CommonDialogStructure subclass: #CHOOSECOLORW
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #(#{CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -203,7 +203,7 @@ CommonDialogStructure subclass: #CHOOSEFONTW
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #(#{CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -221,7 +221,7 @@ CommonDialogStructure subclass: #FINDREPLACEW
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved' -> 16r50.
@@ -251,7 +251,7 @@ CommonDialogStructure subclass: #OPENFILENAMEW
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lpOFN' -> 16rC.
@@ -261,7 +261,7 @@ NMHDR subclass: #OFNOTIFYEXW
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lpOFN' -> 16rC.
@@ -270,49 +270,49 @@ NMHDR subclass: #OFNOTIFYW
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook'
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants Win32Constants'
+	imports: #(#{CommonDialogConstants} #{Win32Constants})
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
 CommonDialog subclass: #ColorDialog
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommonDialog subclass: #FindDialog
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CommonDialog subclass: #FontDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 FindDialog subclass: #FindReplaceDialog
 	instanceVariableNames: 'replaceWith'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

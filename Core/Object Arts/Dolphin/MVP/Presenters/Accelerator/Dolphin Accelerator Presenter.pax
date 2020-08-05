@@ -32,7 +32,7 @@ package!
 SharedPool subclass: #HotKeyConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HKCOMB_A' -> 16r8.
@@ -54,13 +54,13 @@ SharedPool subclass: #HotKeyConstants
 ValuePresenter subclass: #AcceleratorPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TypeConverter subclass: #AccelToHotKey
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'HotKeyConstants Win32Constants'
+	imports: #(#{HotKeyConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ModifierMap' -> #(1 4 2 8 4 16)
@@ -68,7 +68,7 @@ TypeConverter subclass: #AccelToHotKey
 ValueConvertingControlView subclass: #HotKey
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
 	classVariableNames: ''
-	poolDictionaries: 'HotKeyConstants'
+	imports: #(#{HotKeyConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

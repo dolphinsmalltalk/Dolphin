@@ -37,7 +37,7 @@ package!
 SharedPool subclass: #TooltipConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TTDT_AUTOMATIC' -> 16r0.
@@ -105,13 +105,13 @@ SharedPool subclass: #TooltipConstants
 Object subclass: #OneOffNoteBubble
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants'
+	imports: #(#{TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -127,7 +127,7 @@ Win32Structure subclass: #TOOLINFOW
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants Win32Constants'
+	imports: #(#{TooltipConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IconIds' -> #[64 48 16]
@@ -135,7 +135,7 @@ MessageBoxAbstract subclass: #MessageBubble
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants'
+	imports: #(#{TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

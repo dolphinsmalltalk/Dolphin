@@ -3,7 +3,7 @@
 SharedPool subclass: #ODBCTypes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SQL_BIGINT' -> -16r5.

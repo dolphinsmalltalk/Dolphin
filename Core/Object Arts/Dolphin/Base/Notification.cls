@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Exception subclass: #Notification
-	instanceVariableNames: ''
+	instanceVariableNames: 'isSuppressible'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Notification guid: (GUID fromString: '{87b4c556-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -26,14 +26,27 @@ hresult
 
 	^HRESULT ok!
 
+initialize
+	super initialize.
+	isSuppressible := false!
+
 isResumable
 	"Answer whether the receiver represents a resumable exception. 
 	Notifications are almost always resumable."
 
-	^true! !
+	^true!
+
+isSuppressible
+	^isSuppressible!
+
+isSuppressible: aBoolean
+	isSuppressible := aBoolean! !
 !Notification categoriesFor: #defaultAction!handling!public! !
 !Notification categoriesFor: #hresult!accessing!public! !
+!Notification categoriesFor: #initialize!initializing!public! !
 !Notification categoriesFor: #isResumable!public!testing! !
+!Notification categoriesFor: #isSuppressible!accessing!public! !
+!Notification categoriesFor: #isSuppressible:!accessing!public! !
 
 Notification methodProtocol: #Notification attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 

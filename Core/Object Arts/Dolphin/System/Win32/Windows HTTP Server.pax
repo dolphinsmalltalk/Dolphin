@@ -106,7 +106,7 @@ package!
 SharedPool subclass: #WinHttpServerConsts
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HTTP_AUTH_ENABLE_ALL' -> 16r1F.
@@ -342,19 +342,19 @@ SharedPool subclass: #WinHttpServerConsts
 ExternalLibrary subclass: #HttpApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #HttpServerStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Length' -> 16r8.
@@ -363,7 +363,7 @@ HttpServerStructure subclass: #HTTP_BYTE_RANGE
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
 	classVariableNames: 'NoCache UserInvalidates'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Policy' -> 16r0.
@@ -372,7 +372,7 @@ HttpServerStructure subclass: #HTTP_CACHE_POLICY
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Flags' -> 16r4.
@@ -383,7 +383,7 @@ HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 HttpServerStructure subclass: #HTTP_COOKED_URL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AbsPathLength' -> 16r4.
@@ -398,7 +398,7 @@ HttpServerStructure subclass: #HTTP_COOKED_URL
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: 'data'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DataChunkType' -> 16r0.
@@ -414,7 +414,7 @@ HttpServerStructure subclass: #HTTP_DATA_CHUNK
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: 'HeaderToIndexMap'
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pTrailers' -> 16rC.
@@ -425,7 +425,7 @@ HttpServerStructure subclass: #HTTP_HEADERS
 HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pRawValue' -> 16r4.
@@ -434,7 +434,7 @@ HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ClientIp' -> 16r24.
@@ -471,7 +471,7 @@ HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Flags' -> 16r4.
@@ -482,7 +482,7 @@ HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Present' -> 16r0
@@ -490,7 +490,7 @@ HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	instanceVariableNames: 'setting'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_QosSetting' -> 16r4.
@@ -499,7 +499,7 @@ HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AccessToken' -> 16r10.
@@ -519,7 +519,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ChannelToken' -> 16r4.
@@ -530,7 +530,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_InfoLength' -> 16r4.
@@ -540,7 +540,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_INFO
 HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyType' -> 16r10.
@@ -552,7 +552,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 HttpServerStructure subclass: #HTTP_REQUEST_V1
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Address' -> 16r4C.
@@ -577,7 +577,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_V1
 HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Length' -> 16r4.
@@ -587,7 +587,7 @@ HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_EntityChunkCount' -> 16r110.
@@ -602,7 +602,7 @@ HttpServerStructure subclass: #HTTP_RESPONSE_V1
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Realm' -> 16r4.
@@ -611,7 +611,7 @@ HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DomainName' -> 16r4.
@@ -622,7 +622,7 @@ HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Type' -> 16r0
@@ -630,7 +630,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -639,7 +639,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	instanceVariableNames: 'address'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AddrLength' -> 16r0.
@@ -648,7 +648,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AddrCount' -> 16r0.
@@ -657,7 +657,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -666,7 +666,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AppId' -> 16r8.
@@ -683,7 +683,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -692,7 +692,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Host' -> 16r80.
@@ -701,7 +701,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -710,7 +710,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -719,7 +719,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
@@ -728,7 +728,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CertDeniedByMapper' -> 16r10.
@@ -740,7 +740,7 @@ HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ConnectionKeySize' -> 16r2.
@@ -755,7 +755,7 @@ HttpServerStructure subclass: #HTTP_SSL_INFO
 HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CipherStrength' -> 16r8.
@@ -769,7 +769,7 @@ HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_NameLength' -> 16r0.
@@ -780,7 +780,7 @@ HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_MajorVersion' -> 16r0.
@@ -789,7 +789,7 @@ HttpServerStructure subclass: #HTTP_VERSION
 HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_QueryDesc' -> 16r0
@@ -797,7 +797,7 @@ HttpServerStructure subclass: #HttpServiceConfigQuery
 HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #(#{WinHttpServerConsts})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KnownHeaders' -> 16r10
@@ -805,7 +805,7 @@ HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KnownHeaders' -> 16r10
@@ -813,7 +813,7 @@ HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_RequestQueueHandle' -> 16r4
@@ -821,7 +821,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_EnableSharing' -> 16r4
@@ -829,7 +829,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: 'directoryName softwareName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DirectoryName' -> 16r10.
@@ -849,7 +849,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Level' -> 16r4
@@ -857,7 +857,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AuthSchemes' -> 16r4.
@@ -871,7 +871,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_State' -> 16r4
@@ -879,7 +879,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DrainEntityBody' -> 16r6.
@@ -892,13 +892,13 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_MaxBandwidth' -> 16r4
@@ -906,7 +906,7 @@ HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_MaxConnections' -> 16r4
@@ -914,7 +914,7 @@ HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_BurstSize' -> 16rC.
@@ -924,7 +924,7 @@ HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pRequestInfo' -> 16r1D4.
@@ -933,7 +933,7 @@ HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pResponseInfo' -> 16r11C.
@@ -942,7 +942,7 @@ HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Buffer' -> 16r4.
@@ -951,7 +951,7 @@ HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Buffer' -> 16r4.
@@ -960,7 +960,7 @@ HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwToken' -> 16r88.
@@ -969,7 +969,7 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwToken' -> 16r8.
@@ -978,7 +978,7 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwToken' -> 16r90.
@@ -987,7 +987,7 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwToken' -> 16r8.

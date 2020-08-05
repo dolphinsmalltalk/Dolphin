@@ -3,7 +3,7 @@
 SharedPool subclass: #WinRegConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HKEY_CLASSES_ROOT' -> 16r80000000.

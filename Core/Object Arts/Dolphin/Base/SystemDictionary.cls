@@ -3,7 +3,7 @@
 Dictionary variableSubclass: #SystemDictionary
 	instanceVariableNames: 'events allClasses allRoots'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SystemDictionary guid: (GUID fromString: '{87b4c52c-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -17,6 +17,10 @@ _deepCopy: anIdentityDictionary
 	in the <IdentityDictionary> argument."
 
 	^self!
+
+absoluteNameOfIdentifier: aString
+	#todo.	"Temporary definition"
+	^'Root.Smalltalk.' , aString!
 
 add: aVariableBinding
 	"Add the <VariableBinding> argument to the receiver. Answer aVariableBinding.
@@ -94,6 +98,12 @@ atAll: keys put: newElement
 	keys do: [:key | super at: key put: newElement].
 	self bindingsChanged!
 
+bindingAt: aString 
+	^self associationAt: aString asSymbol!
+
+bindingAt: aString ifAbsent: aNiladicValuable
+	^self associationAt: aString asSymbol ifAbsent: []!
+
 bindingsChanged
 	BindingReference clearCachedBindings!
 
@@ -144,6 +154,14 @@ developmentSystem
 environment
 	^self!
 
+fullNameOfIdentifier: aString
+	#todo.	"Temporary definition until SystemDictionary is made into a (type of) Namespace"
+	^aString!
+
+fullyQualifiedReferenceFrom: anUndefinedObject
+	#todo.	"Temporary"
+	^BindingReference path: #('Root' 'Smalltalk')!
+
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
 	has no events registered for it"
@@ -176,6 +194,10 @@ postResize: oldMe
 	to perform any final state changes needed."
 
 	self setEvents: oldMe getEvents!
+
+printNameOn: aWriteStream relativeTo: anUndefinedObject
+	#todo.	"Temporary definition"
+	aWriteStream nextPutAll: 'Root.Smalltalk'!
 
 removeClass: aClass
 	"Private - Remove aClass from the receiver. Report an error if there are any subclasses or
@@ -247,6 +269,7 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 		with: aVariableBinding
 		with: oldSymbol asQualifiedReference! !
 !SystemDictionary categoriesFor: #_deepCopy:!copying!private! !
+!SystemDictionary categoriesFor: #absoluteNameOfIdentifier:!public! !
 !SystemDictionary categoriesFor: #add:!adding!public! !
 !SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
@@ -255,6 +278,8 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !SystemDictionary categoriesFor: #associationClass!constants!private! !
 !SystemDictionary categoriesFor: #at:put:!accessing!public! !
 !SystemDictionary categoriesFor: #atAll:put:!accessing!public! !
+!SystemDictionary categoriesFor: #bindingAt:!public! !
+!SystemDictionary categoriesFor: #bindingAt:ifAbsent:!public! !
 !SystemDictionary categoriesFor: #bindingsChanged!adding!private! !
 !SystemDictionary categoriesFor: #bindingsDo:!enumerating!public! !
 !SystemDictionary categoriesFor: #classAdded:!event handling!private! !
@@ -264,11 +289,14 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !SystemDictionary categoriesFor: #declareVariable:!adding!private! !
 !SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
 !SystemDictionary categoriesFor: #environment!public! !
+!SystemDictionary categoriesFor: #fullNameOfIdentifier:!public! !
+!SystemDictionary categoriesFor: #fullyQualifiedReferenceFrom:!public! !
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
 !SystemDictionary categoriesFor: #localEnvironment!accessing!private! !
 !SystemDictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
+!SystemDictionary categoriesFor: #printNameOn:relativeTo:!public! !
 !SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
 !SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !

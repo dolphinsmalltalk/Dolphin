@@ -35,7 +35,7 @@ package!
 SharedPool subclass: #ProgressBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'PBM_DELTAPOS' -> 16r403.
@@ -56,7 +56,7 @@ SharedPool subclass: #ProgressBarConstants
 Dialog subclass: #ProgressDialog
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AllowCancelMask' -> 16r1.
@@ -65,7 +65,7 @@ Dialog subclass: #ProgressDialog
 ValueConvertingControlView subclass: #ProgressBar
 	instanceVariableNames: ''
 	classVariableNames: 'ValidRange'
-	poolDictionaries: 'ProgressBarConstants'
+	imports: #(#{ProgressBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

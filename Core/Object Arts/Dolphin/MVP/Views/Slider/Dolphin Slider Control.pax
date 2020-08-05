@@ -39,7 +39,7 @@ package!
 SharedPool subclass: #TrackBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TBM_CLEARSEL' -> 16r413.
@@ -98,7 +98,7 @@ SharedPool subclass: #TrackBarConstants
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
 	classVariableNames: 'HorizontalTickStyles VerticalTickStyles'
-	poolDictionaries: 'TrackBarConstants'
+	imports: #(#{TrackBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TickStyleMask' -> 16rC

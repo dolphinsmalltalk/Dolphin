@@ -45,7 +45,7 @@ package!
 SharedPool subclass: #SysLinkConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ICC_LINK_CLASS' -> 16r8000.
@@ -69,7 +69,7 @@ SharedPool subclass: #SysLinkConstants
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_item' -> 16r8.
@@ -78,7 +78,7 @@ Win32Structure subclass: #LHITTESTINFO
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iLink' -> 16r4.
@@ -91,7 +91,7 @@ Win32Structure subclass: #LITEM
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_item' -> 16rC
@@ -99,13 +99,13 @@ NMHDR subclass: #NMLINK
 CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StaticView subclass: #SysLinkView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

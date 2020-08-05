@@ -3,7 +3,7 @@
 SharedPool subclass: #VMConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DoubleSize' -> 16r8.

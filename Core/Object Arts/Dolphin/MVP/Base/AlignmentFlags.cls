@@ -3,7 +3,7 @@
 SharedPool subclass: #AlignmentFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignBottom' -> 16r8.

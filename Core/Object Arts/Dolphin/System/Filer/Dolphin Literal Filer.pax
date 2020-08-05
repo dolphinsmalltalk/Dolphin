@@ -46,19 +46,19 @@ package!
 STBInFiler subclass: #STLInFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 STLInFiler subclass: #STLDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -92,12 +92,11 @@ literalPrintOn: aWriteStream
 
 !Class methodsFor!
 
-literalPrintOn: aWriteStream 
-	aWriteStream
-		nextPutAll: '##(Smalltalk.';
-		display: self name;
-		nextPutAll: ')'! !
-!Class categoriesFor: #literalPrintOn:!public! !
+literalPrintOn: aWriteStream
+	aWriteStream nextPutAll: '##('.
+	self printNameOn: aWriteStream relativeTo: Smalltalk.
+	aWriteStream nextPut: $)! !
+!Class categoriesFor: #literalPrintOn:!printing!public! !
 
 !Number methodsFor!
 

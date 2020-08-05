@@ -3,7 +3,7 @@
 Notification subclass: #RaisedNotificationSignal
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 RaisedNotificationSignal guid: (GUID fromString: '{586eb660-437d-11d3-97aa-0080c8d59432}')!

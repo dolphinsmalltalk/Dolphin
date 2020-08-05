@@ -3,7 +3,7 @@
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
-	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
+	imports: #(#{CompilerFlags} #{SmalltalkParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SmalltalkSystem guid: (GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -1324,9 +1324,8 @@ cloneClass: aClass as: newClassName under: superclass in: package
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass allClassVarNames])).
 	definition
 		crtab;
-		display: 'poolDictionaries: '.
-	buildVarString value: (aClass allSharedPoolNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass allSharedPoolNames])).
+		display: 'imports: ';
+		print: (aClass allImports difference: (superclass ifNil: [#()] ifNotNil: [superclass allImports])).
 	definition
 		crtab;
 		display: 'classInstanceVariableNames: '.

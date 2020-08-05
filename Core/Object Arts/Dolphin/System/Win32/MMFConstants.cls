@@ -3,7 +3,7 @@
 SharedPool subclass: #MMFConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FILE_MAP_ALL_ACCESS' -> 16rF001F.

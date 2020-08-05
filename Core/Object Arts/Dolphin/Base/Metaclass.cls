@@ -3,7 +3,7 @@
 ClassDescription subclass: #Metaclass
 	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Metaclass guid: (GUID fromString: '{87b4c4fc-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -65,10 +65,25 @@ environment
 
 	^self instanceClass environment!
 
+fullName
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path from (but not including) Smalltalk."
+
+	^self instanceClass fullName , ' class'!
+
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
 
 	^self instanceClass fullyQualifiedReference meta!
+
+importedNamespacesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
+
+	self instanceClass importedNamespacesDo: aMonadicValuable!
+
+imports
+	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
+
+	^self instanceClass imports!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
@@ -163,7 +178,10 @@ subclassesDo: aMonadicValuable
 !Metaclass categoriesFor: #comment!accessing!public! !
 !Metaclass categoriesFor: #comment:!accessing!public! !
 !Metaclass categoriesFor: #environment!accessing!public! !
+!Metaclass categoriesFor: #fullName!accessing!public! !
 !Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
+!Metaclass categoriesFor: #importedNamespacesDo:!pool variables!public! !
+!Metaclass categoriesFor: #imports!pool variables!public! !
 !Metaclass categoriesFor: #instanceClass!accessing!public! !
 !Metaclass categoriesFor: #instanceClass:!accessing!private! !
 !Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !

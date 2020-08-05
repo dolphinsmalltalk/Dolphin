@@ -49,7 +49,7 @@ package!
 SharedPool subclass: #HeaderViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HDF_CENTER' -> 16r2.
@@ -83,13 +83,13 @@ SharedPool subclass: #HeaderViewConstants
 Object subclass: #ColumnHeader
 	instanceVariableNames: 'parent index dropDownMenu'
 	classVariableNames: ''
-	poolDictionaries: 'HeaderViewConstants'
+	imports: #(#{HeaderViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -107,7 +107,7 @@ CCITEM subclass: #HDITEMW
 ControlView subclass: #HeaderView
 	instanceVariableNames: 'columnHeaders'
 	classVariableNames: 'HdnMap'
-	poolDictionaries: 'HeaderViewConstants'
+	imports: #(#{HeaderViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

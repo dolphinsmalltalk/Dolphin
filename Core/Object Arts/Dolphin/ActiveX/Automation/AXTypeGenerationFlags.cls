@@ -3,7 +3,7 @@
 SharedPool subclass: #AXTypeGenerationFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CommentStyleMask' -> 16r101.

@@ -3,7 +3,7 @@
 SharedPool subclass: #AXAutomationErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DISP_E_ARRAYISLOCKED' -> -16r7FFDFFF3.

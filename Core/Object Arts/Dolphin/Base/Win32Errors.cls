@@ -3,7 +3,7 @@
 SharedPool subclass: #Win32Errors
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CLASS_E_CLASSNOTAVAILABLE' -> -16r7FFBFEEF.

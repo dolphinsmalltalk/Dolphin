@@ -3,7 +3,7 @@
 SharedPool subclass: #FileSystemWatcherConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FILE_ACTION_ADDED' -> 16r1.

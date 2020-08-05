@@ -3,7 +3,7 @@
 Warning subclass: #RefactoringWarning
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 RefactoringWarning guid: (GUID fromString: '{80575ec0-f0f1-47c6-a7d6-2cb4a3440aaa}')!

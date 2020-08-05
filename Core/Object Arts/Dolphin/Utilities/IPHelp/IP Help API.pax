@@ -135,7 +135,7 @@ package!
 SharedPool subclass: #IPHlpApiConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AD_APPLY_ALL' -> 16r7.
@@ -861,13 +861,13 @@ SharedPool subclass: #IPHlpApiConstants
 ExternalStructure subclass: #FIXED_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_index' -> 16r0.
@@ -876,7 +876,7 @@ ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 ExternalStructure subclass: #IP_ADAPTER_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AdapterName' -> 16r8.
@@ -901,7 +901,7 @@ ExternalStructure subclass: #IP_ADAPTER_INFO
 ExternalStructure subclass: #IP_ADDR_STRING
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Context' -> 16r24.
@@ -912,7 +912,7 @@ ExternalStructure subclass: #IP_ADDR_STRING
 ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AutoconfigActive' -> 16r4.
@@ -923,7 +923,7 @@ ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Address' -> 16r4.
@@ -932,7 +932,7 @@ ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 ExternalStructure subclass: #IpHlpApiTableStruct
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwNumEntries' -> 16r0
@@ -940,7 +940,7 @@ ExternalStructure subclass: #IpHlpApiTableStruct
 ExternalStructure subclass: #MIB_ICMP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_stats' -> 16r0
@@ -948,7 +948,7 @@ ExternalStructure subclass: #MIB_ICMP
 ExternalStructure subclass: #MIB_ICMP_EX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_icmpInStats' -> 16r0.
@@ -957,7 +957,7 @@ ExternalStructure subclass: #MIB_ICMP_EX
 ExternalStructure subclass: #MIB_IFNUMBER
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwValue' -> 16r0
@@ -965,7 +965,7 @@ ExternalStructure subclass: #MIB_IFNUMBER
 ExternalStructure subclass: #MIB_IFROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bDescr' -> 16r25C.
@@ -996,7 +996,7 @@ ExternalStructure subclass: #MIB_IFROW
 ExternalStructure subclass: #MIB_IPADDRROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAddr' -> 16r0.
@@ -1010,7 +1010,7 @@ ExternalStructure subclass: #MIB_IPADDRROW
 ExternalStructure subclass: #MIB_IPFORWARDROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwForwardAge' -> 16r1C.
@@ -1031,7 +1031,7 @@ ExternalStructure subclass: #MIB_IPFORWARDROW
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bPhysAddr' -> 16r8.
@@ -1043,7 +1043,7 @@ ExternalStructure subclass: #MIB_IPNETROW
 ExternalStructure subclass: #MIB_IPSTATS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDefaultTTL' -> 16r4.
@@ -1073,7 +1073,7 @@ ExternalStructure subclass: #MIB_IPSTATS
 ExternalStructure subclass: #MIB_TCPROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwLocalAddr' -> 16r4.
@@ -1085,7 +1085,7 @@ ExternalStructure subclass: #MIB_TCPROW
 ExternalStructure subclass: #MIB_TCPSTATS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwActiveOpens' -> 16r10.
@@ -1107,7 +1107,7 @@ ExternalStructure subclass: #MIB_TCPSTATS
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwLocalAddr' -> 16r0.
@@ -1116,7 +1116,7 @@ ExternalStructure subclass: #MIB_UDPROW
 ExternalStructure subclass: #MIB_UDPSTATS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwInDatagrams' -> 16r0.
@@ -1128,7 +1128,7 @@ ExternalStructure subclass: #MIB_UDPSTATS
 ExternalStructure subclass: #MIBICMPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_icmpInStats' -> 16r0.
@@ -1137,7 +1137,7 @@ ExternalStructure subclass: #MIBICMPINFO
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAddrMaskReps' -> 16r30.
@@ -1157,7 +1157,7 @@ ExternalStructure subclass: #MIBICMPSTATS
 ExternalStructure subclass: #MIBICMPSTATS_EX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwErrors' -> 16r4.
@@ -1167,7 +1167,7 @@ ExternalStructure subclass: #MIBICMPSTATS_EX
 IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1175,7 +1175,7 @@ IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1183,7 +1183,7 @@ IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 IpHlpApiTableStruct subclass: #MIB_IFTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1191,7 +1191,7 @@ IpHlpApiTableStruct subclass: #MIB_IFTABLE
 IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1199,7 +1199,7 @@ IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1207,7 +1207,7 @@ IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
 IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1215,7 +1215,7 @@ IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1223,7 +1223,7 @@ IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
@@ -1231,19 +1231,19 @@ IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MIB_TCPROW subclass: #MIB_TCPEXROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r14
@@ -1251,7 +1251,7 @@ MIB_TCPROW subclass: #MIB_TCPEXROW
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r8

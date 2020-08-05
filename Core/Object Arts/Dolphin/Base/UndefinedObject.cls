@@ -3,7 +3,7 @@
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UndefinedObject guid: (GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -79,6 +79,9 @@ ifNotNil: notNilBlock ifNil: nilBlock
 
 	^nilBlock value!
 
+importsFromPoolsString: poolDictString
+	^poolDictString subStrings distinct collect: [:each | each asQualifiedReference]!
+
 includesBehavior: aBehavior
 	"Answer whether the receiver includes the behavior, aClass
 	(i.e. is aBehavior the receiver or a superclass of the receiver)"
@@ -117,12 +120,12 @@ name
 
 	^'nil'!
 
-newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	^(ClassBuilder new)
+newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArrayOfBindingReferences
+	^ClassBuilder new
 		className: aClassSymbol;
 		instanceVariableString: instVarString;
 		classVariableString: classVarString;
-		sharedPoolString: poolDictString;
+		imports: anArrayOfBindingReferences;
 		yourself!
 
 notNil
@@ -158,45 +161,14 @@ shallowCopy
 
 	^self!
 
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	^(self 
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		poolDictionaries: poolDictString)
-		modifyOrCreate!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArray
 	^(self
 		newClassBuilder: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
-		poolDictionaries: poolDictString)
-		categoryNames: {aCategoryOrString};
-		modifyOrCreate!
+		imports: anArray) modifyOrCreate!
 
-subclass: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		poolDictionaries: poolDictString
-		classInstanceVariableNames: classInstVarString
-	"If aClassSymbol is not an existing class then create and answer a new fixed-pointer subclass,
-	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
-	Subclasses of nil are root classes, like Object, and special care is needed in their definition. 
-	It is also the case that many modifications of Object are illegal (it cannot have named instance 
-	variables for example)."
-
-	| subclass |
-	subclass := self 
-				subclass: aClassSymbol
-				instanceVariableNames: instVarString
-				classVariableNames: classVarString
-				poolDictionaries: poolDictString.
-	subclass class instanceVariableNames: classInstVarString.
-	^subclass
-!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArray classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
 	"If aClassSymbol is not an existing class then create and answer a new fixed-pointer subclass,  otherwise modify the class with name aClassSymbol to have the indicated features and answer it. Subclasses of nil are root classes, like Object, and special care is needed in their definition.  It is also the case that many modifications of Object are illegal (it cannot have named instance variables for example)."
 
 	| subclass |
@@ -204,7 +176,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 				newClassBuilder: aClassSymbol
 				instanceVariableNames: instVarString
 				classVariableNames: classVarString
-				poolDictionaries: poolDictString)
+				imports: anArray)
 				classConstants: anArrayOfAssociations;
 				modifyOrCreate.
 	subclass class instanceVariableNames: classInstVarString.
@@ -224,23 +196,22 @@ yourAddress
 !UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
 !UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
 !UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
+!UndefinedObject categoriesFor: #importsFromPoolsString:!class hierarchy-adding!private! !
 !UndefinedObject categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
 !UndefinedObject categoriesFor: #isAtomic!public!testing! !
 !UndefinedObject categoriesFor: #isLiteral!public!testing! !
 !UndefinedObject categoriesFor: #isNil!public!testing! !
 !UndefinedObject categoriesFor: #isNull!private!testing! !
 !UndefinedObject categoriesFor: #name!accessing!public! !
-!UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
+!UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
 !UndefinedObject categoriesFor: #notNil!public!testing! !
 !UndefinedObject categoriesFor: #notNull!private!testing! !
 !UndefinedObject categoriesFor: #printOn:!printing!public! !
 !UndefinedObject categoriesFor: #printString!printing!public! !
 !UndefinedObject categoriesFor: #refersToLiteral:!private!testing! !
 !UndefinedObject categoriesFor: #shallowCopy!copying!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #yourAddress!accessing!private! !
 
 !UndefinedObject class methodsFor!

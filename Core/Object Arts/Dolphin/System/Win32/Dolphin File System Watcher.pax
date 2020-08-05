@@ -37,7 +37,7 @@ package!
 SharedPool subclass: #FileSystemWatcherConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FILE_ACTION_ADDED' -> 16r1.
@@ -57,7 +57,7 @@ SharedPool subclass: #FileSystemWatcherConstants
 Object subclass: #FileSystemChange
 	instanceVariableNames: 'time code fileNames'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)
@@ -65,13 +65,13 @@ Object subclass: #FileSystemChange
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'FileIOCompletionRoutineDescriptor'
-	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
+	imports: #(#{FileSystemWatcherConstants} #{Win32Constants} #{Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Action' -> 16r4.
@@ -82,13 +82,13 @@ ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 FileSystemChangeReader subclass: #FileSystemChangeStream
 	instanceVariableNames: 'queue'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

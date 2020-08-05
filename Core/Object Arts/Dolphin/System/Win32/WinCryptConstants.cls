@@ -3,7 +3,7 @@
 SharedPool subclass: #WinCryptConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CRYPTPROTECT_AUDIT' -> 16r10.

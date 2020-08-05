@@ -3,7 +3,7 @@
 SharedPool subclass: #SmalltalkParseErrorCodes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CErrArgTypeCannotBeVoid' -> 16r33.

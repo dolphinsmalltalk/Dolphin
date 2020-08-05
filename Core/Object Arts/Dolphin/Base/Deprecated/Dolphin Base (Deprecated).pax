@@ -34,7 +34,22 @@ package setMethodNames: #(
 	#(#{Character class} #safeCodePoint:)
 	#(#{ChunkSourceFiler} #fileOutBinaryGlobal:)
 	#(#{Class} #addClassVarName:)
+	#(#{Class} #allSharedPoolNames)
 	#(#{Class} #noClassCategoryName)
+	#(#{Class} #sharedPoolNames)
+	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{ClassDescription} #allSharedPoolNames)
+	#(#{ClassDescription} #allSharedPools)
+	#(#{ClassDescription} #sharedPoolNames)
+	#(#{ClassDescription} #sharedPools)
+	#(#{ClassDescription} #sharedPoolsDo:)
+	#(#{ClassDescription} #sharedVariableString)
 	#(#{CompilerNotification} #extra)
 	#(#{CRTLibrary} #_controlfp:mask:)
 	#(#{CRTLibrary} #_ecvt:count:dec:sign:)
@@ -167,6 +182,9 @@ package setMethodNames: #(
 	#(#{TimeStamp} #date:)
 	#(#{TimeStamp} #dateAndTime)
 	#(#{TimeStamp} #time:)
+	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
 	#(#{WindowsLocale} #timeSeparator)
 	#(#{WinMMLibrary} #timeGetTime)
 ).
@@ -193,37 +211,37 @@ package!
 ArrayField subclass: #ConformantArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StructureArrayField subclass: #ConformantStructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ArrayPointerField subclass: #ConformantArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AllocationBase' -> 16r4.
@@ -237,13 +255,13 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 STBProxy subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -361,13 +379,185 @@ addClassVarName: aString
 	#deprecated.	"Use addClassVarNamed:"
 	^self addClassVarNamed: aString!
 
+allSharedPoolNames
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
+	dictionaries that are specified that are specified in the receiver and each of its
+	superclasses. The list is ordered with the receiver's own pool references first, and then
+	those of the superclass, and so on up the class hierarchy. Pools only appear where first
+	referenced (i.e. no duplicates)."
+
+	^self allSharedPools collect: [:each | each name]!
+
 noClassCategoryName
 	"Answer the String name of the ClassCategory used to mark that no
 	category has been set for a Class."
 
-	^self classCategoryClass unclassifiedName! !
+	^self classCategoryClass unclassifiedName!
+
+sharedPoolNames
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
+
+	^imports collect: [:each | each asSymbol]!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	Notification deprecated.
+	^self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass,
+	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
+	Primarily present for backwards compatibility with Smalltalk-80."
+
+	Notification deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		categoryNames: {aCategoryOrString};
+		modifyOrCreate!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	Notification deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beBytes;
+		modifyOrCreate!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create an answer a new variable byte subclass,
+	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
+	it. Primarily present for backwards compatibility with Smalltalk-80."
+
+	Notification deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beBytes;
+		categoryNames: {aCategoryOrString};
+		modifyOrCreate!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages."
+
+	| subclass |
+	#deprecated.
+	subclass := self
+				variableByteSubclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString).
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	#deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beVariable;
+		modifyOrCreate!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create and answer a new variable pointer 
+	subclass, otherwise modify the class with name aClassSymbol to have the indicated features and 
+	answer it. Primarily intended for backwards compatibility with Smalltalk-80."
+
+	Notification deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beVariable;
+		categoryNames: {aCategoryOrString};
+		modifyOrCreate! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
+!Class categoriesFor: #allSharedPoolNames!pool variables!public! !
 !Class categoriesFor: #noClassCategoryName!constants!public! !
+!Class categoriesFor: #sharedPoolNames!pool variables!public! !
+!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+
+!ClassDescription methodsFor!
+
+allSharedPoolNames
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
+	dictionaries that are specified that are specified in the receiver and each of its
+	superclasses. The list is ordered with the receiver's own pool references first, and then
+	those of the superclass, and so on up the class hierarchy. Pools only appear where first
+	referenced (i.e. no duplicates)."
+
+	^self allSharedPools collect: [:each | each name]!
+
+allSharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
+	the receiver and each of its superclasses."
+
+	| pools seen |
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self instanceClass withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
+
+sharedPoolNames
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
+
+	^self instanceClass sharedPoolNames!
+
+sharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
+	locally in the receiver."
+
+	| pools |
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools addLast: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
+	the receiver in order of precedence."
+
+	self importedNamespacesDo: aMonadicValuable!
+
+sharedVariableString
+	"Answer a String containing the names of the Pools accessable
+	from the receiver and its instances. The names are separated
+	by spaces."
+
+	| aStream |
+	aStream := String smalltalkWriteStream: 32.
+	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
+		separatedBy: [aStream space].
+	^aStream contents! !
+!ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
+!ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
+!ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 
 !CompilerNotification methodsFor!
 
@@ -1239,6 +1429,41 @@ time: aTime
 !TimeStamp categoriesFor: #date:!accessing!public! !
 !TimeStamp categoriesFor: #dateAndTime!accessing!public! !
 !TimeStamp categoriesFor: #time:!accessing!public! !
+
+!UndefinedObject methodsFor!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	Notification deprecated.
+	^self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	Notification deprecated.
+	^(self
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		categoryNames: {aCategoryOrString};
+		modifyOrCreate!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"If aClassSymbol is not an existing class then create and answer a new fixed-pointer subclass,  otherwise modify the class with name aClassSymbol to have the indicated features and answer it. Subclasses of nil are root classes, like Object, and special care is needed in their definition.  It is also the case that many modifications of Object are illegal (it cannot have named instance variables for example)."
+
+	#deprecated.
+	^self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)
+		classInstanceVariableNames: classInstVarString
+		classConstants: anArrayOfAssociations! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 
 !WindowsLocale methodsFor!
 

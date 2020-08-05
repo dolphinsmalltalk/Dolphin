@@ -3,7 +3,7 @@
 SharedPool subclass: #MSXMLConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NODE_ATTRIBUTE' -> 16r2.

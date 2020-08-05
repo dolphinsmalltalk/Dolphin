@@ -3,7 +3,7 @@
 GUISessionManager subclass: #DevelopmentSessionManager
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
@@ -319,12 +319,14 @@ onUnhandledWarning: aWarning
 	the opportunity to bring up a walkback and go into the debugger."
 
 	| response |
-	response := aWarning abortRetryOrIgnore.
-	response == #retry
-		ifTrue: [self unhandledException: aWarning]
-		ifFalse: [
-			response == #abort ifTrue: [Processor activeProcess terminate]].
-	"ignore - Resume execution"!
+	aWarning isSuppressible
+		ifTrue: [aWarning okToContinue ifFalse: [Processor activeProcess terminate]]
+		ifFalse: 
+			[response := aWarning abortRetryOrIgnore.
+			response == #retry
+				ifTrue: [self unhandledException: aWarning]
+				ifFalse: [response == #abort ifTrue: [Processor activeProcess terminate]]
+			"ignore - Resume execution"]!
 
 onUserBreak
 	"Bring up the Smalltalk debugger (suspending the active process) ..."

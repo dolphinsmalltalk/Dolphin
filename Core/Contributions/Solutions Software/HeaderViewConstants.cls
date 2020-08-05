@@ -3,7 +3,7 @@
 SharedPool subclass: #HeaderViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HDF_CENTER' -> 16r2.

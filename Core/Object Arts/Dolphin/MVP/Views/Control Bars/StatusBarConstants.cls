@@ -3,7 +3,7 @@
 SharedPool subclass: #StatusBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SB_GETBORDERS' -> 16r407.

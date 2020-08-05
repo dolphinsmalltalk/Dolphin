@@ -3,7 +3,7 @@
 SharedPool subclass: #TreeViewConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TV_FIRST' -> 16r1100.

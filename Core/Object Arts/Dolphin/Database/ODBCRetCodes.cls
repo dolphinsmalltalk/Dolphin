@@ -3,7 +3,7 @@
 SharedPool subclass: #ODBCRetCodes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SQL_ERROR' -> -16r1.

@@ -3,7 +3,7 @@
 DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: 'wasOAD'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassBuilderTests guid: (GUID fromString: '{889ced5d-011b-4995-82ec-dcc53ee38da2}')!
@@ -199,8 +199,7 @@ testMoveVariable
 		subclass: #ClassBuilderTestClass
 		instanceVariableNames: 'var1 testVar var2'
 		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Tests-Kernel-Classes'.
+		imports: #().
 	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'testVar' 'var2').
 	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
 	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4')!

@@ -3,7 +3,7 @@
 SharedPool subclass: #CompilerFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DebugMethod' -> 16r40.

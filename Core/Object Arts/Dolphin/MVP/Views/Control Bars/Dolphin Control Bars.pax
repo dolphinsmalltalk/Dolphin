@@ -46,7 +46,7 @@ package!
 SharedPool subclass: #StatusBarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SB_GETBORDERS' -> 16r407.
@@ -75,7 +75,7 @@ SharedPool subclass: #StatusBarConstants
 SharedPool subclass: #ToolbarConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BTNS_AUTOSIZE' -> 16r10.
@@ -251,19 +251,19 @@ SharedPool subclass: #ToolbarConstants
 Object subclass: #StatusBarItemAbstract
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'
-	poolDictionaries: 'StatusBarConstants'
+	imports: #(#{StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object subclass: #ToolbarItem
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
-	poolDictionaries: 'ToolbarConstants'
+	imports: #(#{ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hInst' -> 16r0.
@@ -272,7 +272,7 @@ Win32Structure subclass: #TBADDBITMAP
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwData' -> 16rC.
@@ -285,7 +285,7 @@ Win32Structure subclass: #TBBUTTON
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchText' -> 16r1C.
@@ -302,7 +302,7 @@ Win32Structure subclass: #TBBUTTONINFOW
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHitInfo' -> 16r1C.
@@ -313,7 +313,7 @@ NMHDR subclass: #NMMOUSE
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchText' -> 16r24.
@@ -324,67 +324,67 @@ NMHDR subclass: #NMTOOLBARW
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 StatusBarItemAbstract subclass: #StatusBarNullItem
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ToolbarButton subclass: #ToolbarBitmapButton
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlView subclass: #ControlBarAbstract
 	instanceVariableNames: 'names'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
-	poolDictionaries: 'StatusBarConstants'
+	imports: #(#{StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
 	classVariableNames: ''
-	poolDictionaries: 'ToolbarConstants'
+	imports: #(#{ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LabelsMask' -> 16r1

@@ -3,7 +3,7 @@
 SharedPool subclass: #ButtonConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BCM_GETNOTE' -> 16r160A.

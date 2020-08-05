@@ -3,7 +3,7 @@
 SharedPool subclass: #MidiConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MidiChannelNoteOff' -> 16r8.

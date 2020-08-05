@@ -43,7 +43,7 @@ package!
 SharedPool subclass: #TextEditConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EC_LEFTMARGIN' -> 16r1.
@@ -113,7 +113,7 @@ SharedPool subclass: #TextEditConstants
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrg' -> 16r0.
@@ -122,7 +122,7 @@ Win32Structure subclass: #TEXTRANGE
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrgText' -> 16rC
@@ -130,19 +130,19 @@ TEXTRANGE subclass: #FINDTEXTEX
 AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ValuePresenter subclass: #TextPresenter
 	instanceVariableNames: 'findDetails'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
 	classVariableNames: 'AlignmentMap FindDialogMessage FormatMap'
-	poolDictionaries: 'TextEditConstants'
+	imports: #(#{TextEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FindDisabledMask' -> 16r20.
@@ -155,13 +155,13 @@ ValueConvertingControlView subclass: #TextEdit
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BackModes' -> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
