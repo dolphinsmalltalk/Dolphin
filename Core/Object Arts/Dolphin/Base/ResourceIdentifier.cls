@@ -73,6 +73,7 @@ hiddenObjects
 
 	| stlInFilerClass |
 	stlInFilerClass := Smalltalk at: #STLInFiler.
+	self resource ifNil: [^self error: ('Resource [', owningClass name, '>>', selector, '] does not exist')].
 	^(stlInFilerClass on: self resource readStream)
 		basicNext;
 		readMap!
