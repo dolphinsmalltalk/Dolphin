@@ -26,6 +26,20 @@ testReadFrom
 	subject offset: 2.
 	char := subject readFrom: struct.
 	self assert: char isUtf16Trail.
-	self assert: char equals: (dolphinString at: 2)! !
+	self assert: char equals: (dolphinString at: 2)!
+
+testWriteInto
+	| struct dolphinString subject actual |
+	struct := DWORD new.
+	dolphinString := Character dolphin asUtf16String.
+	subject := WCHARField new
+				offset: 0;
+				yourself.
+	subject writeInto: struct value: (dolphinString at: 1).
+	subject offset: 2.
+	subject writeInto: struct value: (dolphinString at: 2).
+	actual := Utf16String fromByteArray: struct bytes.
+	self assert: actual equals: dolphinString! !
 !WCHARFieldTest categoriesFor: #testReadFrom!public! !
+!WCHARFieldTest categoriesFor: #testWriteInto!public! !
 

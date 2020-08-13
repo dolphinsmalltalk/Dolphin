@@ -51,7 +51,7 @@ readFrom: anExternalStructure
 
 	^self arrayClass
 		fromAddress: anExternalStructure yourAddress + offset
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)
+		length: (arrayLength getElementCountOf: self in: anExternalStructure)
 		elementClass: self fieldClass!
 
 valueParameterName

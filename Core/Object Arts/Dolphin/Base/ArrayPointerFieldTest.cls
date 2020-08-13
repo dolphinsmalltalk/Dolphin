@@ -14,7 +14,7 @@ testGenerateAccessorsForSizedString
 	| structClass actual expected string struct |
 	structClass := ExternalStructure newAnonymousSubclass.
 	structClass class
-		compile: 'defineFields
+		basicCompile: 'defineFields
 		self defineField: #Test
 			type: (ArrayPointerField type: String lengthField: #Size)
 			offset: 0;
@@ -35,7 +35,9 @@ testGenerateAccessorsForSizedString
 	self assert: (actual includes: $\0).
 	self assert: actual equals: string.
 	"Test uncompiled write/read while we are here."
-	structClass methodDictionary: nil.
+	structClass
+		methodDictionary: nil;
+		flushMethodCache.
 	string := '🐬' copyWith: $\0.
 	struct Test: string.
 	self assert: struct Size equals: string size.
@@ -45,7 +47,7 @@ testGenerateAccessorsForSizeIsExpression
 	| structClass actual expected string struct |
 	structClass := ExternalStructure newAnonymousSubclass.
 	structClass class
-		compile: 'defineFields
+		basicCompile: 'defineFields
 		self defineField: #Test
 			type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: ''Size >> 1''))
 			offset: 4;
@@ -66,7 +68,9 @@ testGenerateAccessorsForSizeIsExpression
 	self assert: (actual includes: $\0).
 	self assert: actual equals: string.
 	"Test uncompiled write/read while we are here."
-	structClass methodDictionary: nil.
+	structClass
+		methodDictionary: nil;
+		flushMethodCache.
 	string := ('🐬' copyWith: $\0) asUtf16String.
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.
