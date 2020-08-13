@@ -19,7 +19,7 @@ alignment
 	"Answer a symbolic text alignment for the receiver's current mode."
 
 	| typeFlags |
-	typeFlags := self baseStyle bitAnd: SS_TYPEMASK.
+	typeFlags := self getAlignment.
 	^AlignmentMap keyAtValue: typeFlags ifAbsent: [#left]!
 
 alignment: aSymbol
@@ -47,31 +47,39 @@ beRightAligned
 
 	self setAlignment: SS_RIGHT!
 
-calculateExtent: aLayoutContext 
-	"Private - Calculate an extent for the receiver that would allow it to display all the text
-	that it currently contains."
+calculateExtent: aLayoutContext
+	"Private - Calculate an extent for the receiver that would allow it to display all the text that it currently contains in the vertical/horizontal space that best suits its configured alignment."
 
-	"Implementation Note: Unless word-wrap is disabled, the current width is taken into account.
-	We then calculate the height required to draw the receiver's text in the receiver's current
-	font within that width."
+	"Implementation Note: The calculated extent depends on the alignment mode, and sometimes (in word-wrapping modes only) the current width.
+	- In #simple mode (which is the only true single line mode, and corresponds to the SS_SIMPLE mode of the static control), the calculated extent is that required to draw the text on a single line, stripping out newlines and tabs. Mnemonic prefix characters are also not interpreted in this mode, but will appear as ampersands in the output.
+	- In the non-wrapping #leftNoWrap mode (SS_LEFTNOWORDWRAP), the width is calculated based on the longest line, and the height is that required to draw however many lines of text there are as delineated by newline separators.
+	- In the wrapping modes, #left (SS_LEFT), #right (SS_RIGHT), and #center (SS_CENTER), the width is calculated as the minimum of the current width and the width of the longest line (i.e .the current width is the maximum width), and the height is that required to draw the number of lines of text that there are after (possibly) wrapping to the width."
 
-	| canvas extent |
+	| canvas extent dtFlags wrapWidth |
+	wrapWidth := 0.
+	self isSingleLine
+		ifTrue: 
+			[wrapWidth := 0.
+			dtFlags := ##(DT_CALCRECT | DT_SINGLELINE | DT_NOPREFIX)]
+		ifFalse: 
+			[| alignmentFlags |
+			dtFlags := ##(DT_CALCRECT | DT_EXPANDTABS).
+			alignmentFlags := self getAlignment.
+			alignmentFlags ~~ SS_LEFTNOWORDWRAP
+				ifTrue: 
+					[wrapWidth := (aLayoutContext clientRectangleOf: self) width.
+
+					"The DT_LEFT (0), DT_CENTER (1), and DT_RIGHT (2) flags are actually the same as the SS_LEFT, etc, flags"
+					dtFlags := (dtFlags bitOr: alignmentFlags) bitOr: DT_WORDBREAK]].
 	canvas := self canvas.
 	canvas font: self actualFont.
-	extent := self isSingleLine 
-				ifTrue: 
-					[| text |
-					text := self text.
-					self alignment == #simple ifFalse: [text copyWithout: $&].
-					canvas textExtent: text]
-				ifFalse: 
-					[canvas 
-						textExtent: self text
-						width: (aLayoutContext clientRectangleOf: self) width
-						alignment: self alignment].
+	extent := canvas
+				textExtent: self text
+				width: wrapWidth
+				flags: dtFlags.
 	canvas free.
 
-	"Now adjust required client extent to window extent"
+	"Now adjust required client extent to window extent to account for the chrome"
 	^self calcExtentFromClientExtent: extent!
 
 clear
@@ -95,9 +103,9 @@ displayValue: anObject
 		self text: newText ]!
 
 getAlignment
-	"Private - Answers the text alignment, one of SS_LEFT, SS_CENTER, SS_RIGHT"
+	"Private - Answers the text alignment, one of SS_LEFT, SS_CENTER, SS_RIGHT, SS_LEFTNOWORDWRAP, or SS_SIMPLE"
 
-	^self baseStyleAllMask: SS_TYPEMASK.	!
+	^self baseStyle bitAnd: SS_TYPEMASK!
 
 initialize
 	"Private - Initialise the receiver."
@@ -107,9 +115,7 @@ initialize
 !
 
 isSingleLine
-	| align |
-	align := self alignment.
-	^align == #leftNoWrap or: [align == #simple]!
+	^self alignment == #simple!
 
 refreshContents
 	"The model held by the receiver has probably been changed so refresh 

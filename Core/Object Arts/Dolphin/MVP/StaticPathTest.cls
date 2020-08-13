@@ -13,6 +13,25 @@ StaticPathTest comment: ''!
 classToTest
 	^StaticPath!
 
+testCalculateExtent
+	| actualText canvas shell expected actual |
+	shell := presenter parentView.
+	shell extent: 300 @ 100.
+	shell layoutManager: FlowLayout new.
+	presenter alignment: #simple.
+	"In path's the & should be displayed as part of the path and not interpreted in any way"
+	actualText := 'c:\windows\system32\kernel32.dll&'.
+	presenter text: actualText.
+	"If debugging through it can be useful to see the size the control actually wants to be"
+	presenter usePreferredExtent: true.
+	presenter extent: 20 @ 10.
+	canvas := presenter canvas.
+	canvas font: presenter actualFont.
+	expected := presenter calcExtentFromClientExtent: (canvas textExtent: actualText).
+	canvas free.
+	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
+	self assert: actual equals: expected!
+
 testLayout
 	| preferredExtent actualExtent displayedText |
 	presenter model value: 'c:\program files\dir1\dir2\dir3\dir4\file.txt'.
@@ -27,5 +46,6 @@ testLayout
 	displayedText := presenter getWindowText.
 	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0! !
 !StaticPathTest categoriesFor: #classToTest!helpers!private! !
+!StaticPathTest categoriesFor: #testCalculateExtent!public! !
 !StaticPathTest categoriesFor: #testLayout!public!unit tests! !
 

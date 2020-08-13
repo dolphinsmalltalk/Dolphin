@@ -856,7 +856,7 @@ text: aString at: aPoint
 !
 
 textExtent: aString
-	"Answer the extent of string using the receivers currently selected font."
+	"Answer the extent of string using the receivers currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
 
 	| size text |
 	size := POINTL new.
@@ -887,6 +887,18 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 				in: rect
 				flags: ##(DT_CALCRECT | DT_WORDBREAK) | align.
 	^anIntegerWidth @ height!
+
+textExtent: aString width: widthInteger flags: flagsInteger
+	"Answer the extent of string using the receivers currently selected font when drawn with the User32 DrawText API that underlies the Canvas>>formatText:&c family of methods.
+	There are a large number of DT_XXX flags that can be used to draw the text in different ways - see https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawtextexw for details."
+
+	| rect |
+	rect := RECT extent: widthInteger @ 0.
+	self
+		formatText: aString
+		in: rect
+		flags: (DT_CALCRECT bitOr: flagsInteger).
+	^rect extent!
 
 textMetrics
 	"Answer the standard Win32 TEXTMETRICs for the currently selected font.
@@ -1105,6 +1117,7 @@ windowScaling
 !Canvas categoriesFor: #text:at:!drawing!public! !
 !Canvas categoriesFor: #textExtent:!enquiries!public! !
 !Canvas categoriesFor: #textExtent:width:alignment:!enquiries!public! !
+!Canvas categoriesFor: #textExtent:width:flags:!enquiries!public! !
 !Canvas categoriesFor: #textMetrics!accessing!public! !
 !Canvas categoriesFor: #viewportExtent!public!transformations! !
 !Canvas categoriesFor: #viewportExtent:!public!transformations! !

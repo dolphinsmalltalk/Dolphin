@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #TextEditTest
+AbstractTextEditTest subclass: #TextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -16,43 +16,35 @@ classToTest
 margins
 	^1 @ 0!
 
-nonProportionalFont
-	^Font name: 'Courier'!
+testCalculateExtent
+	"Test preferred extent calculation correctly accounts for tabs and does not process mnemonic prefixes."
 
-testPositionOfChar
-	"Use a non-proportional font to avoid variability introduced by kerning, especially of punctuation."
-
-	| text canvas lineHeight metrics i |
+	| actualText canvas shell expected actual textToMeasure |
+	"Use a non-proportional font to make calculating the expected result predictable"
 	presenter view font: self nonProportionalFont.
-	text := self text.
-	canvas := presenter view canvas.
-	canvas font: presenter view actualFont.
-	metrics := canvas textMetrics.
-	lineHeight := metrics tmHeight.
-	presenter text: text.
-	i := 0.
-	text readStream do: 
-			[:ch |
-			| line lineText startOfLine point extent |
-			i := i + 1.
-			line := presenter view lineFromPosition: i.
-			lineText := presenter view plainTextAtLine: line.
-			startOfLine := presenter view positionAtLine: line.
-			i - startOfLine > lineText size
-				ifTrue: [self assert: (String lineDelimiter includes: ch)]
-				ifFalse: 
-					[| pos |
-					extent := canvas textExtent: (lineText readStream next: i - startOfLine).
-					point := extent x @ ((line - 1) * lineHeight) + self margins.
-					pos := presenter view positionOfChar: i.
-					self assert: pos equals: point]].
-	canvas free!
+	shell := presenter parentView.
+	shell extent: 600 @ 100.
+	shell layoutManager: FlowLayout new.
+	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса & fell over'.
+	presenter text: actualText.
+	"If debugging through it can be useful to see the size the control actually wants to be to check that all the text is displayed without extra space or clipping"
+	presenter usePreferredExtent: true.
+	presenter extent: 20 @ 10.
+	canvas := presenter canvas.
+	canvas font: presenter actualFont.
+	textToMeasure := actualText copyReplaceAll: (String with: Character tab)
+				with: (String new: 8 withAll: Character space).
+	expected := presenter calcExtentFromClientExtent: (canvas textExtent: textToMeasure).
+	canvas free.
+	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
+	self assert: actual y equals: expected y.
+	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
+	self assert: (actual x - expected x) abs < 3!
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
 !TextEditTest categoriesFor: #classToTest!helpers!private! !
 !TextEditTest categoriesFor: #margins!private!unit tests! !
-!TextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!TextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
+!TextEditTest categoriesFor: #testCalculateExtent!public! !
 !TextEditTest categoriesFor: #text!constants!private! !
 
