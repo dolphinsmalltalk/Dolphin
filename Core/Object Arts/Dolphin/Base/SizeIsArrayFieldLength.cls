@@ -102,11 +102,11 @@ printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString
 				nextPut: $.;
 				crtab]!
 
-setElementCount: anInteger of: anExternalField in: anExternalStructure
+setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	setLength isNil ifTrue: [setLength := self buildLengthWriter: anExternalField].
-	^setLength value: anExternalStructure value: anInteger!
+	^setLength value: anExternalStructure value: anArrayedCollection!
 
 sizeIs: aString
 	sizeIs := aString!

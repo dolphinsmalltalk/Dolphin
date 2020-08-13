@@ -12,6 +12,7 @@ package classNames
 	add: #AlwaysSearchPolicyTest;
 	add: #AnsiStringTest;
 	add: #ArrayedCollectionTest;
+	add: #ArrayFieldTest;
 	add: #ArrayPointerFieldTest;
 	add: #ArrayTest;
 	add: #BagTest;
@@ -110,6 +111,8 @@ package classNames
 	add: #StdioFileStreamTest;
 	add: #StreamTest;
 	add: #StringTest;
+	add: #StructureArrayFieldTest;
+	add: #StructureArrayPointerFieldTest;
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
 	add: #SymbolTest;
@@ -151,6 +154,7 @@ package setPrerequisites: #(
 	'Dolphin'
 	'Dolphin Additional Sort Algorithms'
 	'Dolphin Anonymous Classes'
+	'..\MVP\Base\Dolphin Basic Geometry'
 	'Dolphin Command-line Parser'
 	'..\System\Random\Dolphin CRT Random Stream'
 	'Dolphin Legacy Date & Time'
@@ -599,7 +603,22 @@ GenericExternalArrayTest subclass: #StructureArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalFieldTest subclass: #ArrayFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalFieldTest subclass: #ArrayPointerFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalFieldTest subclass: #StructureArrayFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalFieldTest subclass: #StructureArrayPointerFieldTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -28,8 +28,8 @@ readFrom: anExternalStructure
 	at the receiver's offset, and which is of the length described by the receiver."
 
 	^self pointerClass
-		fromAddress: (anExternalStructure sdwordAtOffset: offset)
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)
+		fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
+		length: (arrayLength getElementCountOf: self in: anExternalStructure)
 		elementClass: self elementClass! !
 !StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
 !StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !

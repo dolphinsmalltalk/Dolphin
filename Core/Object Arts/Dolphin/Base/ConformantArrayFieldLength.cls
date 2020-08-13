@@ -63,11 +63,14 @@ printSetSizeFor: anExternalField on: aWriteStream
 				nextPut: $.;
 				crtab]!
 
-setElementCount: anInteger of: anExternalField in: anExternalStructure
+setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	(anExternalStructure template lookup: lengthField)
-		ifNotNil: [:sizeField | sizeField isWriteable ifTrue: [sizeField writeInto: anExternalStructure value: anInteger]]!
+		ifNotNil: 
+			[:sizeField |
+			sizeField isWriteable
+				ifTrue: [sizeField writeInto: anExternalStructure value: anArrayedCollection size]]!
 
 setLengthSelector
 	^(lengthField copyWith: $:) asSymbol! !

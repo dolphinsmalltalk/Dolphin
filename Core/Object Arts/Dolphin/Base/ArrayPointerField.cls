@@ -27,8 +27,8 @@ readFrom: anExternalStructure
 	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
 	at the receiver's offset, and which is of the length described by the receiver."
 
-	^self pointerClass fromAddress: (anExternalStructure sdwordAtOffset: offset)
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)!
+	^self pointerClass fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
+		length: (arrayLength getElementCountOf: self in: anExternalStructure)!
 
 writeInto: anExternalStructure value: anObject
 	"Private - Write the address of the externally addressable Smalltalk object, anObject,
@@ -43,7 +43,7 @@ writeInto: anExternalStructure value: anObject
 	| answer |
 	answer := super writeInto: anExternalStructure value: anObject.
 	arrayLength
-		setElementCount: anObject size
+		setElementCount: anObject
 		of: self
 		in: anExternalStructure.
 	^answer! !

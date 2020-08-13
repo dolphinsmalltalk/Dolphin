@@ -95,7 +95,7 @@ readFrom: anExternalStructure
 	<ByteArray> or a <String>, which both create a copy of the data."
 
 	^self arrayClass fromAddress: anExternalStructure yourAddress + offset
-		length: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure)!
+		length: (arrayLength getElementCountOf: self in: anExternalStructure)!
 
 writeInto: anExternalStructure value: aByteObject
 	"Private - Write the bytes of aByteObject into anExternalStructure."
@@ -104,7 +104,7 @@ writeInto: anExternalStructure value: aByteObject
 	byteSize := self isFixedSize
 				ifTrue: 
 					[aByteObject byteSize
-						min: (arrayLength getElementCountOf: ExternalField new in: anExternalStructure) * self elementSize]
+						min: (arrayLength getElementCountOf: self in: anExternalStructure) * self elementSize]
 				ifFalse: [aByteObject byteSize].
 	anExternalStructure bytes
 		replaceFrom: offset + 1

@@ -33,7 +33,7 @@ printSetSizeFor: structClass on: aWriteStream
 
 	^self subclassResponsibility!
 
-setElementCount: anInteger of: anExternalField in: anExternalStructure
+setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
