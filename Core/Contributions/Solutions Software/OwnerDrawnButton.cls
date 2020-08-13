@@ -76,12 +76,6 @@ displayState
 displayState: anObject
 	displayState := anObject!
 
-displayText
-
-	^self shouldShowKeyboardAccelerators
-		ifTrue: [self text]
-		ifFalse: [self unadornedText]!
-
 drawOn: aCanvas
 
 	self subclassResponsibility!
@@ -256,25 +250,6 @@ transitionTo: aSymbol
 	"No recognised transition"
 	^nil!
 
-unadornedText
-
-	"Check for doubled &"
-
-	| readStream writeStream |
-
-	"Quick check for common case"
-	(self text includes: $&) ifFalse: [^self text].
-
-	readStream := ReadStream on: self text.
-	writeStream := WriteStream on: (Utf16String new: self text size).
-
-	[readStream atEnd] whileFalse:
-		[| char |
-		char := readStream next.
-		(char = $& and: [readStream peek ~= $&]) ifFalse: [writeStream nextPut: char]].
-
-	^writeStream contents!
-
 uState
 
 	"Non-theme button display API state ID"
@@ -320,7 +295,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !OwnerDrawnButton categoriesFor: #defaultTransitionDurations!accessing!public! !
 !OwnerDrawnButton categoriesFor: #displayState!accessing!private! !
 !OwnerDrawnButton categoriesFor: #displayState:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #displayText!accessing!public! !
 !OwnerDrawnButton categoriesFor: #drawOn:!drawing!private! !
 !OwnerDrawnButton categoriesFor: #durationOfTransition:!accessing!public! !
 !OwnerDrawnButton categoriesFor: #initialize!initialize/release!public! !
@@ -344,7 +318,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !OwnerDrawnButton categoriesFor: #transitionDurations!accessing!private! !
 !OwnerDrawnButton categoriesFor: #transitionDurations:!accessing!private! !
 !OwnerDrawnButton categoriesFor: #transitionTo:!accessing!public! !
-!OwnerDrawnButton categoriesFor: #unadornedText!accessing!public! !
 !OwnerDrawnButton categoriesFor: #uState!accessing!public! !
 !OwnerDrawnButton categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
 !OwnerDrawnButton categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
