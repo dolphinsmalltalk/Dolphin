@@ -10,6 +10,18 @@ ResourceIdentifierTest comment: ''!
 !ResourceIdentifierTest categoriesForClass!Unclassified! !
 !ResourceIdentifierTest methodsFor!
 
+createResourceNamed: aString for: aView
+	| filer rid resource |
+
+	filer := STLOutFiler on: Array writeStream.
+	filer nextPut: aView.
+	aView destroy.
+	resource := filer stream contents.
+	rid := ResourceIdentifier class: Presenter name: aString.
+	rid assign: resource.
+	^rid
+!
+
 setUp
 	| shellView filer |
 	super setUp.
@@ -50,6 +62,25 @@ testDeserializeAll
 
 	ResourceIdentifier allResourceIdentifiers do: [:each | each hiddenObjects]!
 
+testReferenceViewRemoved
+	| childRid parentRid paretView |
+
+	childRid := self createResourceNamed: 'Test view issue990' for: ContainerView new create.
+
+	paretView := ShellView new create.
+	paretView addSubView: (ReferenceView resourceIdentifier: childRid).
+	parentRid := self createResourceNamed: 'Parent Test view issue990' for: paretView.
+
+	Presenter class removeSelector: #resource_Test_view_issue990 ifAbsent: [].
+	self assert: (Presenter class respondsTo: #resource_Test_view_issue990) not.
+
+	self should: [childRid hiddenObjects] raise: Error matching: [:err | err description = 'Resource [Presenter>>resource_Test_view_issue990] does not exist'].
+
+	Presenter class removeSelector: #resource_Parent_Test_view_issue990 ifAbsent: [].
+
+	self assert: (Presenter class respondsTo: #resource_Parent_Test_view_issue990) not.
+	!
+
 testResourceSelector
 	| rid selector |
 	rid := ResourceIdentifier class: self class name: 'Default view'.
@@ -58,9 +89,11 @@ testResourceSelector
 	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
 	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
+!ResourceIdentifierTest categoriesFor: #createResourceNamed:for:!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
+!ResourceIdentifierTest categoriesFor: #testReferenceViewRemoved!public!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
 
