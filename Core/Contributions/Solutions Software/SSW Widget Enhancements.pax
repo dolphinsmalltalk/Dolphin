@@ -19,7 +19,7 @@ package methodNames
 	add: #Canvas -> #clipTo:during:;
 	add: #Canvas -> #erase:;
 	add: #Canvas -> #erase:color:;
-	add: #Canvas -> #prefixTextDisabled:at:;
+	add: #Canvas -> #stateText:at:flags:;
 	add: #ComboBox -> #droppedWidth;
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
@@ -134,21 +134,22 @@ erase: aRectangle color: aColor
 
 	self fillRectangle: aRectangle brush: (Brush color: aColor)!
 
-prefixTextDisabled: aString at: aPoint
-
-	^UserLibrary default 
+stateText: aString at: aPoint flags: anInteger
+	| text |
+	text := aString asUtf16String.
+	^UserLibrary default
 		drawState: self asParameter
-		hbr: nil 
-		lpOutputFunc: 0 
-		lData: aString asUIntPtr
-		wData: 0 
-		x: aPoint x y: aPoint y 
-		cx: self extent x cy: self extent y
-		fuFlags: DST_PREFIXTEXT | DSS_DISABLED! !
+		hbr: nil
+		lpOutputFunc: 0
+		lData: text
+		wData: text size
+		x: aPoint x y: aPoint y
+		cx: 0 cy: 0
+		fuFlags: anInteger! !
 !Canvas categoriesFor: #clipTo:during:!drawing!public! !
 !Canvas categoriesFor: #erase:!drawing!public! !
 !Canvas categoriesFor: #erase:color:!drawing!public! !
-!Canvas categoriesFor: #prefixTextDisabled:at:!drawing!public! !
+!Canvas categoriesFor: #stateText:at:flags:!drawing!public! !
 
 !Color class methodsFor!
 

@@ -72,26 +72,34 @@ drawOn: aCanvas
 	(self hasFocus and: [self shouldShowFocusRect]) ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (self clientRectangle insetBy: 3) asParameter]!
 
 drawTextOn: aCanvas
-
-	| textPos |
-
+	| textPos textFlags |
 	aCanvas font: self actualFont.
 	textPos := self textPosOn: aCanvas.
-
+	textFlags := self shouldShowKeyboardAccelerators ifTrue: [0] ifFalse: [DT_HIDEPREFIX].
 	self isThemed
-	ifTrue:
-		[ThemeLibrary default 
-			drawThemeText: self theme 
-			hdc: aCanvas asParameter 
-			iPartId: BP_PUSHBUTTON
-			iStateId: self iState 
-			pszText: self displayText asUtf16String 
-			iCharCount: -1 dwTextFlags: 0 dwTextFlags2: 0 
-			pRect: (textPos extent: self extent) asParameter]
-	ifFalse:
-		[self isEnabled
-			ifTrue: [aCanvas formatText: self displayText in: (textPos extent: self extent)]
-			ifFalse: [aCanvas prefixTextDisabled: self displayText at: textPos]]!
+		ifTrue: 
+			[ThemeLibrary default
+				drawThemeText: self theme
+				hdc: aCanvas asParameter
+				iPartId: BP_PUSHBUTTON
+				iStateId: self iState
+				pszText: self text asUtf16String
+				iCharCount: -1
+				dwTextFlags: textFlags
+				dwTextFlags2: 0
+				pRect: (textPos extent: self extent) asParameter]
+		ifFalse: 
+			[self isEnabled
+				ifTrue: 
+					[aCanvas
+						formatText: self text
+						in: (textPos extent: self extent)
+						flags: textFlags]
+				ifFalse: 
+					[aCanvas
+						stateText: self text
+						at: textPos
+						flags: DST_PREFIXTEXT | DSS_DISABLED | textFlags]]!
 
 dropDownMenu
 	^dropDownMenu!
@@ -173,23 +181,21 @@ imageManager: anObject
 	imageManager := anObject!
 
 imagePosOn: aCanvas
-
-	| textOffsetX xPos yPos|
-
+	| textOffsetX xPos yPos |
 	(self isImageFirst or: [self hasText not])
 		ifTrue: [textOffsetX := 0]
-		ifFalse: [textOffsetX := (aCanvas textExtent: self unadornedText) x + self imageGap].
-
+		ifFalse: 
+			[textOffsetX := (aCanvas
+						textExtent: self text
+						width: 0
+						flags: DT_SINGLELINE) x
+						+ self imageGap].
 	self alignment = #left ifTrue: [xPos := 8].
 	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
-	self alignment = #right ifTrue: [xPos := (self extent x - 8) - (self labelWidthOn: aCanvas)].
-
+	self alignment = #right ifTrue: [xPos := self extent x - 8 - (self labelWidthOn: aCanvas)].
 	xPos := xPos + textOffsetX.
 	yPos := (self extent y - self imageExtent y) // 2.
-
-	^self clientRectangle topLeft + ((xPos@yPos) max: 0@0)
-
-!
+	^self clientRectangle topLeft + (xPos @ yPos max: 0 @ 0)!
 
 isImageFirst
 
@@ -204,20 +210,17 @@ isMenuOpen: anObject
 	isMenuOpen := anObject!
 
 labelWidthOn: aCanvas
-
-	| imageWidth textWidth|
-
+	| imageWidth textWidth |
 	imageWidth := 0.
 	textWidth := 0.
-
-	self hasImage 
-		ifTrue: [imageWidth := self imageExtent x]
-		ifFalse: [imageWidth := 0].
-
-	self hasText 
-		ifTrue: [textWidth := (aCanvas textExtent: self unadornedText) x]
+	self hasImage ifTrue: [imageWidth := self imageExtent x] ifFalse: [imageWidth := 0].
+	self hasText
+		ifTrue: 
+			[textWidth := (aCanvas
+						textExtent: self text
+						width: 0
+						flags: DT_SINGLELINE) x]
 		ifFalse: [textWidth := 0].
-
 	^imageWidth + self imageGap + textWidth!
 
 preTranslateKeyboardInput: aMSG
@@ -266,22 +269,20 @@ standardTransitionDurations
 	^durations!
 
 textPosOn: aCanvas
-
 	| textExtent imageOffsetX xPos yPos |
-
-	textExtent := aCanvas textExtent: self unadornedText.
+	textExtent := aCanvas
+				textExtent: self text
+				width: 0
+				flags: DT_SINGLELINE.
 	(self hasImage and: [self isImageFirst])
 		ifTrue: [imageOffsetX := self imageExtent x + self imageGap]
 		ifFalse: [imageOffsetX := 0].
-
 	self alignment = #left ifTrue: [xPos := 8].
 	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
-	self alignment = #right ifTrue: [xPos := (self extent x - 8) - (self labelWidthOn: aCanvas)].
-
+	self alignment = #right ifTrue: [xPos := self extent x - 8 - (self labelWidthOn: aCanvas)].
 	xPos := xPos + imageOffsetX.
 	yPos := (self extent y - textExtent y) // 2.
-
-	^self clientRectangle topLeft + ((xPos@yPos) max: 0@0)!
+	^self clientRectangle topLeft + (xPos @ yPos max: 0 @ 0)!
 
 trackMenu
 
