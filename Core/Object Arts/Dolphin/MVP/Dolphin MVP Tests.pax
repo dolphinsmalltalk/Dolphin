@@ -85,6 +85,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
+	'..\Base\Dolphin Anonymous Classes'
 	'..\Base\Dolphin Base Tests'
 	'Base\Dolphin Basic Geometry'
 	'Presenters\Boolean\Dolphin Boolean Presenter'

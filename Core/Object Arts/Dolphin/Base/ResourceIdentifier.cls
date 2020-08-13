@@ -71,9 +71,11 @@ hiddenObjects
 	Implementation note. This is not particularly fast since it loads the resource
 	classes it needs into the image. View resources will not be realized as windows however."
 
-	| stlInFilerClass |
+	| stlInFilerClass resource |
 	stlInFilerClass := Smalltalk at: #STLInFiler.
-	^(stlInFilerClass on: self resource readStream)
+	resource := self resource.
+	resource ifNil: [^self error: ('Resource [', owningClass name, '>>', selector, '] does not exist')].
+	^(stlInFilerClass on: resource readStream)
 		basicNext;
 		readMap!
 
