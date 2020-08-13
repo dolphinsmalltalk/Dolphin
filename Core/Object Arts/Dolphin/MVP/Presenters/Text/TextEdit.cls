@@ -112,19 +112,20 @@ calcRectangleFromClientRectangle: aRectangle
 		dwExStyle: self extendedStyle.
 	^rect asRectangle!
 
-calculateExtent: aLayoutContext 
-	"Private - Calculate an extent for the receiver that would allow it to display all the text
-	that it currently contains on a single line."
+calculateExtent: aLayoutContext
+	"Private - Calculate an extent for the receiver that would allow it to display all the text that it currently contains on a single line."
 
-	| canvas extent leading margins text |
+	| canvas extent margins text |
 	canvas := self canvas.
 	canvas font: self actualFont.
 	text := self plainText.
-	extent := canvas textExtent: (text isEmpty ifTrue: ['.'] ifFalse: [text]).
-	leading := canvas textMetrics tmExternalLeading.
+	extent := canvas
+				textExtent: (text isEmpty ifTrue: ['.'] ifFalse: [text])
+				width: 0
+				flags: ##(DT_SINGLELINE | DT_EDITCONTROL | DT_NOPREFIX | DT_EXPANDTABS | DT_EXTERNALLEADING).
 	canvas free.
 	margins := self marginWidths.
-	^self calcExtentFromClientExtent: extent + ((margins first + margins last) @ leading)!
+	^self calcExtentFromClientExtent: extent + ((margins first + margins last) @ 0)!
 
 canHScroll
 	"Answer true if the receiver is in horizontal scrolling mode"

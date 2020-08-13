@@ -7,6 +7,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #AbstractContainerViewTest;
+	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
 	add: #ARGBTest;
 	add: #BorderLayoutTest;
@@ -58,6 +59,7 @@ package classNames
 	add: #SingleSelectListViewTest;
 	add: #SliderTest;
 	add: #StaticPathTest;
+	add: #StaticTextTest;
 	add: #StStyler;
 	add: #StyledContainerTest;
 	add: #TabViewTest;
@@ -306,6 +308,11 @@ MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+PresenterTest subclass: #AbstractTextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 PresenterTest subclass: #ChoicePresenterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -341,7 +348,27 @@ PresenterTest subclass: #StaticPathTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PresenterTest subclass: #TextEditTest
+PresenterTest subclass: #StaticTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractTextEditTest subclass: #MultilineTextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractTextEditTest subclass: #TextEditTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultilineTextEditTest subclass: #RichTextEditTest
+	instanceVariableNames: 'savedLocale'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -412,21 +439,6 @@ SelectableTreeItemsTest subclass: #TreePresenterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest subclass: #TreeViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TextEditTest subclass: #MultilineTextEditTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MultilineTextEditTest subclass: #RichTextEditTest
-	instanceVariableNames: 'savedLocale'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TextEditTest subclass: #MultilineTextEditTest
+AbstractTextEditTest subclass: #MultilineTextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

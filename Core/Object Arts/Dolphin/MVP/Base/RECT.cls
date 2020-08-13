@@ -35,6 +35,14 @@ bottom: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_bottom put: anInteger!
 
+extent
+	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
+
+	"Override as an optimisation"
+
+	^Point x: (bytes sdwordAtOffset: _OffsetOf_right) - (bytes sdwordAtOffset: _OffsetOf_left)
+		y: (bytes sdwordAtOffset: _OffsetOf_bottom) - (bytes sdwordAtOffset: _OffsetOf_top)!
+
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
 
@@ -67,6 +75,7 @@ top: anInteger
 !RECT categoriesFor: #asRectangle!converting!public! !
 !RECT categoriesFor: #bottom!**compiled accessors**!public! !
 !RECT categoriesFor: #bottom:!**compiled accessors**!public! !
+!RECT categoriesFor: #extent!accessing!public! !
 !RECT categoriesFor: #left!**compiled accessors**!public! !
 !RECT categoriesFor: #left:!**compiled accessors**!public! !
 !RECT categoriesFor: #right!**compiled accessors**!public! !
