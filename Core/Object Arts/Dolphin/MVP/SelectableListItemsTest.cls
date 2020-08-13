@@ -18,7 +18,7 @@ objectsToTest
 	^(OrderedCollection new)
 		add: 5;
 		add: 0;
-		add: 'Hello';
+		add: '&Hello && Welcome';
 		add: #(1 2 3);
 		add: 0 @ 0;
 		yourself!

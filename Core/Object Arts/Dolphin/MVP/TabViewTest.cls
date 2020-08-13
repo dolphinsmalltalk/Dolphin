@@ -10,6 +10,15 @@ TabViewTest comment: ''!
 !TabViewTest categoriesForClass!Unclassified! !
 !TabViewTest methodsFor!
 
+addTestTabs
+	| objects |
+	objects := self objectsToTest.
+	presenter parentView extent: 500 @ 100.
+	presenter viewMode: #smallIcons.
+	presenter model
+		removeAll;
+		addAll: objects!
+
 autoSelectsFirst
 	^true!
 
@@ -20,26 +29,13 @@ removingResetsSelection
 	^false!
 
 testSelectionsPreservedOnRecreate
-	| objects |
-	objects := self objectsToTest.
-	presenter view viewMode: #smallIcons.
-	presenter model
-		removeAll;
-		addAll: objects.
+	self addTestTabs.
 	presenter selectionByIndex: 2.
 	presenter recreate.
-	self assert: presenter selectionsByIndex equals: #(2).
-
-
-	!
+	self assert: presenter selectionsByIndex equals: #(2)!
 
 testSetTextImageDoesNotAffectSelection
-	| objects |
-	objects := self objectsToTest.
-	presenter view viewMode: #smallIcons.
-	presenter model
-		removeAll;
-		addAll: objects.
+	self addTestTabs.
 	presenter selectionByIndex: 2.
 	self
 		shouldnt: [presenter view getImageBlock: [:each | each icon imageIndex + 1]]
@@ -50,6 +46,7 @@ testSetTextImageDoesNotAffectSelection
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
+!TabViewTest categoriesFor: #addTestTabs!helpers!private! !
 !TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
 !TabViewTest categoriesFor: #classToTest!helpers!private! !
 !TabViewTest categoriesFor: #removingResetsSelection!public!testing! !

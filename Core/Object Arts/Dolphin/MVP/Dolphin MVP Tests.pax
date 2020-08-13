@@ -63,6 +63,7 @@ package classNames
 	add: #StStyler;
 	add: #StyledContainerTest;
 	add: #TabViewTest;
+	add: #TabViewXPTest;
 	add: #TextEditTest;
 	add: #TreePresenterTest;
 	add: #TreeViewTest;
@@ -427,6 +428,11 @@ ListViewTest subclass: #SingleSelectListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
+	classInstanceVariableNames: ''!
+TabViewTest subclass: #TabViewXPTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest subclass: #MoenTreeViewTest2
 	instanceVariableNames: ''
