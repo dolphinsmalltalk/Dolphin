@@ -10,18 +10,6 @@ ResourceIdentifierTest comment: ''!
 !ResourceIdentifierTest categoriesForClass!Unclassified! !
 !ResourceIdentifierTest methodsFor!
 
-createResourceNamed: aString for: aView
-	| filer rid resource |
-
-	filer := STLOutFiler on: Array writeStream.
-	filer nextPut: aView.
-	aView destroy.
-	resource := filer stream contents.
-	rid := ResourceIdentifier class: Presenter name: aString.
-	rid assign: resource.
-	^rid
-!
-
 createResourceNamed: aString for: aView on: aPresenterClass
 	| filer rid resource |
 
@@ -84,7 +72,7 @@ testReferenceViewRemoved
 
 	paretView := ShellView new create.
 	paretView addSubView: (ReferenceView resourceIdentifier: childRid).
-	parentRid := self createResourceNamed: 'Parent Test view issue990' for: paretView.
+	parentRid := self createResourceNamed: 'Parent Test view issue990' for: paretView on: anonPresenterClass.
 
 	anonMetaclass removeSelector: #resource_Test_view_issue990 ifAbsent: [].
 	self assert: (anonMetaclass respondsTo: #resource_Test_view_issue990) not.
@@ -104,7 +92,6 @@ testResourceSelector
 	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
 	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
-!ResourceIdentifierTest categoriesFor: #createResourceNamed:for:!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #createResourceNamed:for:on:!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
