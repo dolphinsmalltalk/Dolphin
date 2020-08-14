@@ -4109,6 +4109,18 @@ viewComposerClass: toolClass
 	
 	viewComposerClass := toolClass!
 
+viewResourcesMatching: matchBlock do: doBlock 
+	| vc |
+	vc := self openViewComposerEmpty.
+	(self resourceManager allResourceIdentifiers select: matchBlock) do: 
+			[:rid | 
+			vc openOn: rid.
+			(doBlock value: vc) ifTrue: [vc fileSave].
+			(MemoryManager current)
+				collectGarbage;
+				administerLastRites].
+	vc exit!
+
 warnOfUndefinedSelectorsSentBy: aCompiledMethod 
 	(aCompiledMethod messages difference: self allSelectors) do: 
 			[:each | 
@@ -4639,6 +4651,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
 !SmalltalkSystem categoriesFor: #viewComposerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #viewComposerClass:!options!public! !
+!SmalltalkSystem categoriesFor: #viewResourcesMatching:do:!private!utilities! !
 !SmalltalkSystem categoriesFor: #warnOfUndefinedSelectorsSentBy:!helpers!private! !
 !SmalltalkSystem categoriesFor: #workspaceClass!options!public! !
 !SmalltalkSystem categoriesFor: #workspaceClass:!options!public! !

@@ -53,6 +53,11 @@ package methodNames
 	add: #ListView -> #hasTrackSelect;
 	add: #ListView -> #hasTrackSelect:;
 	add: #LVBKIMAGEW -> #offset:;
+	add: #Menu -> #find:;
+	add: #Menu -> #find:ifAbsent:;
+	add: #Menu -> #remove:;
+	add: #Menu -> #remove:ifAbsent:;
+	add: #Menu -> #replace:with:;
 	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
 	add: #RGB -> #asIndexedColorUsingPalette:;
 	add: #ScintillaIndicator -> #type;
@@ -522,6 +527,50 @@ offset: aPoint
 		xOffsetPercent: aPoint x;
 		yOffsetPercent: aPoint y! !
 !LVBKIMAGEW categoriesFor: #offset:!public! !
+
+!Menu methodsFor!
+
+find: aString
+	"Answer the <MenuItem> whose text matches the <readableString> argument.
+	Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	^self find: aString ifAbsent: [self errorNotFound: aString]!
+
+find: aString ifAbsent: exceptionHandler
+	"Answer the MenuItem whose text matches the <readableString> argument, or the 
+	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
+	item. Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	^items detect: [:aMenuItem | (aMenuItem text copyWithout: $&) = aString]
+		ifNone: exceptionHandler!
+
+remove: aString 
+	"Remove the MenuItem whose text matches the <readableString> argument. Any & characters in
+	the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	self removeItem: (self find: aString)!
+
+remove: aString ifAbsent: exceptionHandler 
+	"Remove the MenuItem whose text matches the <readableString> argument, or the 
+	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
+	item. Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	self removeItem: (self find: aString ifAbsent: [^exceptionHandler value])!
+
+replace: aString with: aMenu
+	| index |
+	Notification deprecated.	"Searching a menu by display string is a poor practice."
+	index := items indexOf: (self find: aString).
+	self itemAt: index put: aMenu! !
+!Menu categoriesFor: #find:!public!searching! !
+!Menu categoriesFor: #find:ifAbsent:!public!searching! !
+!Menu categoriesFor: #remove:!public!removing! !
+!Menu categoriesFor: #remove:ifAbsent:!public!removing! !
+!Menu categoriesFor: #replace:with:!public!replacing! !
 
 !MoenTreeView methodsFor!
 

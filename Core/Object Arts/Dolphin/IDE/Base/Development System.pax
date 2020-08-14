@@ -373,6 +373,7 @@ package methodNames
 	add: #SpinButton -> #publishedAspects;
 	add: #StAbstractVariableNode -> #displayOn:;
 	add: #StackFrame -> #debugIpFor:;
+	add: #StackFrame -> #debugPrintOn:;
 	add: #StackFrame -> #makeDebug;
 	add: #StackFrame -> #stackWorkspace;
 	add: #StAssignmentNode -> #displayOn:;

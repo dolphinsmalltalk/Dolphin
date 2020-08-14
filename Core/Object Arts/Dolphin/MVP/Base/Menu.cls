@@ -227,19 +227,10 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 		fuFlags: ##(DST_COMPLEX | DSS_DISABLED).
 	callback free!
 
-find: aString
-	"Answer the <MenuItem> whose text matches the <readableString> argument.
-	Any & characters in the MenuItems are ignored for the comparison."
+findCommand: aSymbol
+	"Answer the first <Menu>|<MenuItem> whose symbolic name or command matches the <Symbol> argument, or nil if there is no such item."
 
-	^self find: aString ifAbsent: [self errorNotFound: aString]!
-
-find: aString ifAbsent: exceptionHandler
-	"Answer the MenuItem whose text matches the <readableString> argument, or the 
-	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
-	item. Any & characters in the MenuItems are ignored for the comparison."
-
-	^items detect: [:aMenuItem | (aMenuItem text copyWithout: $&) = aString]
-		ifNone: exceptionHandler!
+	^items detect: [:aMenuItem | aMenuItem command == aSymbol] ifNone: []!
 
 flags: anInteger 
 	flags := anInteger!
@@ -570,40 +561,29 @@ registerAcceleratorKeyIn: anAcceleratorTable
 	items do: [:aMenuItem |
 		aMenuItem registerAcceleratorKeyIn: anAcceleratorTable]!
 
-remove: aString 
-	"Remove the MenuItem whose text matches the <readableString> argument. Any & characters in
-	the MenuItems are ignored for the comparison."
-
-	self removeItem: (self find: aString)!
-
-remove: aString ifAbsent: exceptionHandler 
-	"Remove the MenuItem whose text matches the <readableString> argument, or the 
-	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
-	item. Any & characters in the MenuItems are ignored for the comparison."
-
-	self removeItem: (self find: aString ifAbsent: [^exceptionHandler value])!
-
-removeItem: item
+removeItem: aMenuItem
 	"Remove the specified <MenuItem> from the receiver."
 
-	^self removeItemAt: (items indexOf: item ifAbsent: [self errorNotFound: item])!
+	^self removeItemAt: (items indexOf: aMenuItem ifAbsent: [self errorNotFound: aMenuItem])!
 
 removeItemAt: index
-	"Remove the menu item at the specified <integer> index.
-	Answer the removed item."
+	"Remove the menu item at the specified <integer> index. Answer the removed <MenuItem>."
 
 	| removed |
 	removed := items at: index.
-	items := (items copyFrom: 1 to: index - 1), (items copyFrom: index + 1).
-	self isRealized ifTrue: [
-		(UserLibrary default removeMenu: self handle uPosition: index-1 uFlags: MF_BYPOSITION)
-			ifFalse: [UserLibrary default systemError]].
+	items := items copyWithoutIndex: index.
+	self isRealized
+		ifTrue: 
+			[(UserLibrary default
+				removeMenu: self handle
+				uPosition: index - 1
+				uFlags: MF_BYPOSITION) ifFalse: [UserLibrary default systemError]].
 	^removed!
 
-replace: aString with: aMenu 
+replaceItem: oldMenuItem with: newMenuItem
 	| index |
-	index := items indexOf: (self find: aString).
-	self itemAt: index put: aMenu!
+	index := items indexOf: oldMenuItem ifAbsent: [self errorNotFound: oldMenuItem].
+	self itemAt: index put: newMenuItem!
 
 setDefault: index
 	"Set the item of the receiver with the specified 1-based <integer> index
@@ -698,8 +678,7 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #description!accessing!private! !
 !Menu categoriesFor: #description:!accessing!public! !
 !Menu categoriesFor: #drawItemImage:on:at:disabled:!helpers!private! !
-!Menu categoriesFor: #find:!accessing!public! !
-!Menu categoriesFor: #find:ifAbsent:!accessing!public! !
+!Menu categoriesFor: #findCommand:!public!searching! !
 !Menu categoriesFor: #flags:!accessing!private! !
 !Menu categoriesFor: #fromStrings:!converting!private! !
 !Menu categoriesFor: #hasSharedImageColumn!public!testing! !
@@ -744,11 +723,9 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #queryAllFromView:!operations!private! !
 !Menu categoriesFor: #queryAlong:!operations!public! !
 !Menu categoriesFor: #registerAcceleratorKeyIn:!adding!public! !
-!Menu categoriesFor: #remove:!public!removing! !
-!Menu categoriesFor: #remove:ifAbsent:!public!removing! !
 !Menu categoriesFor: #removeItem:!public!removing! !
 !Menu categoriesFor: #removeItemAt:!public!removing! !
-!Menu categoriesFor: #replace:with:!public!replacing! !
+!Menu categoriesFor: #replaceItem:with:!public!replacing! !
 !Menu categoriesFor: #setDefault:!accessing!public! !
 !Menu categoriesFor: #setItem:info:!accessing!private! !
 !Menu categoriesFor: #showIn:position:!drawing!public! !
