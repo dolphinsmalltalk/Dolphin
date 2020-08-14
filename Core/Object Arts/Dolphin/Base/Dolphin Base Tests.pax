@@ -74,6 +74,7 @@ package classNames
 	add: #LocaleTest;
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
+	add: #MenuPainterTest;
 	add: #MergesortAlgorithmTest;
 	add: #MetaclassTest;
 	add: #MethodDictionaryTest;
@@ -344,6 +345,11 @@ DolphinTest subclass: #LocaleTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #MemoryManagerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #MenuPainterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

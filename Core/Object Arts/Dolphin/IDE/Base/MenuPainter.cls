@@ -105,17 +105,17 @@ findMnemonicConflicts
 	"Private - Find the set of menu items with conflicting mnemonic keys in the receiver's menu."
 
 	| mns |
-	mns := IdentityDictionary new.
+	mns := LookupTable new.
 	conflictingMnemonics := IdentitySet new.
 	menu itemsDo: 
-			[:item | 
-			| string index |
-			string := item text.
-			((index := string indexOf: $&) ~~ 0 and: [index < string size]) 
-				ifTrue: 
+			[:item |
+			| part |
+			part := (self splitMenuText: item text) second.
+			part isEmpty
+				ifFalse: 
 					[| mnemonic |
-					mnemonic := (string at: index + 1) asUppercase.
-					(mns includesKey: mnemonic) 
+					mnemonic := part first asUppercase.
+					(mns includesKey: mnemonic)
 						ifTrue: 
 							[conflictingMnemonics
 								add: (mns at: mnemonic);
@@ -257,24 +257,24 @@ paintItemsOn: aCanvas selected: anInteger
 								on: aCanvas
 								in: rect]]]!
 
-paintItemText: aMenuItem on: aCanvas in: aRectangle 
+paintItemText: aMenuItem on: aCanvas in: aRectangle
 	"Private - Paint the menu items text at the specified position."
 
-	| string firstTab |
-	string := aMenuItem text.
-	firstTab := string indexOf: Character tab.
-	firstTab == 0 
+	| text firstTab |
+	text := aMenuItem text.
+	firstTab := text indexOf: Character tab.
+	firstTab == 0
 		ifFalse: 
 			["Any text after a tab is ignored"
-			string := string copyFrom: 1 to: firstTab - 1].
-	(conflictingMnemonics includes: aMenuItem) 
+			text := text copyFrom: 1 to: firstTab - 1].
+	(conflictingMnemonics includes: aMenuItem)
 		ifTrue: 
-			[self 
-				paintSmudgeFor: string
+			[self
+				paintSmudgeFor: text
 				on: aCanvas
 				in: aRectangle].
-	aCanvas 
-		formatText: string
+	aCanvas
+		formatText: text
 		in: aRectangle
 		flags: self drawTextFlags!
 
@@ -317,22 +317,30 @@ paintSmudge: aRectangle on: aCanvas
 		pen: oldPen!
 
 paintSmudgeFor: aString on: aCanvas in: aRectangle
-	| smudgeOrigin rect smudgeExtent origin dtFlags text |
-	rect := aRectangle asParameter.
-	(aString includes: $&) ifFalse: [^rect].
-	dtFlags := self drawTextFlags.
+	| parts rect mnemonic smudgeOrigin origin text |
 	text := aString asUtf16String.
+	parts := self splitMenuText: text.
+	mnemonic := parts second.
+	mnemonic isEmpty ifTrue: [^self].
+	rect := aRectangle asParameter.
 	aCanvas
 		formatText: text
 		in: rect
-		flags: dtFlags | DT_CALCRECT.
-	origin := (dtFlags allMask: DT_CENTER)
+		flags: (self drawTextFlags bitOr: DT_CALCRECT).
+	origin := (self drawTextFlags allMask: DT_CENTER)
 				ifTrue: [rect center - (rect extent / 2) rounded]
 				ifFalse: [aRectangle origin + (0 @ ((aRectangle height - rect height) / 2) rounded)].
-	text := text readStream.
-	smudgeOrigin := origin + ((aCanvas textExtent: (text upTo: $&)) x @ 0).
-	smudgeExtent := aCanvas textExtent: (Utf16String with: text next).
-	self paintSmudge: (smudgeOrigin extent: smudgeExtent) on: aCanvas.
+	smudgeOrigin := origin
+				+ ((aCanvas
+						textExtent: parts first
+						width: 0
+						flags: self drawTextFlags) x @ 0).
+	self
+		paintSmudge: (smudgeOrigin extent: (aCanvas
+						textExtent: mnemonic
+						width: 0
+						flags: DT_SINGLELINE))
+		on: aCanvas.
 	^rect!
 
 setHighlightColors: canvas
@@ -346,39 +354,64 @@ setHighlightColors: canvas
 		pen: txtHighlight pen;
 		brush: txtHighlight brush!
 
-widthOfItemAccelerator: aMenuItem using: aCanvas 
-	| string tabIndex menuFont size oldFont |
-	string := aMenuItem text.
-	tabIndex := string indexOf: Character tab.
+splitMenuText: aString
+	"Private - Split the menu text into 3 components; the text before the mnemonic, the mnemonic character, and the text after the mnemonic."
+
+	| len index stream |
+	len := aString size.
+	index := 1.
+	
+	[index := aString
+				nextIndexOf: $&
+				from: index
+				to: len.
+	(index == 0 or: [index == len]) ifTrue: [^{aString. ''. ''}].
+	(aString at: index + 1) == $&]
+			whileTrue: [index := index + 2].
+	stream := aString readStream.
+	^{stream basicNext: index - 1.
+		stream
+			next;
+			next: 1.
+		stream upToEnd}!
+
+widthOfItemAccelerator: aMenuItem using: aCanvas
+	| text tabIndex menuFont size oldFont |
+	text := aMenuItem text.
+	tabIndex := text indexOf: Character tab.
 	tabIndex == 0 ifTrue: [^0].
 	menuFont := self menuFont.
-	aMenuItem isDefault 
+	aMenuItem isDefault
 		ifTrue: 
 			[menuFont := menuFont copy.
 			menuFont isBold: true].
 	oldFont := aCanvas font: menuFont.
 	size := 
-			[string := string copyFrom: tabIndex + 1 to: string size.
-			aCanvas textExtent: string] 
+			[text := text copyFrom: tabIndex + 1 to: text size.
+			aCanvas
+				textExtent: text
+				width: 0
+				flags: self drawTextFlags | DT_NOPREFIX]
 					ensure: [aCanvas font: oldFont].
 	^size x!
 
-widthOfItemText: aMenuItem using: aCanvas 
+widthOfItemText: aMenuItem using: aCanvas
 	"Private - Answer the width of the text part of menuItem in pixels."
 
 	| size menuFont oldFont |
 	menuFont := self menuFont.
-	aMenuItem isDefault 
+	aMenuItem isDefault
 		ifTrue: 
 			[menuFont := menuFont copy.
 			menuFont isBold: true].
 	oldFont := aCanvas font: menuFont.
 	size := 
-			[| string tabIndex |
-			string := aMenuItem text copyWithout: $&.
-			(tabIndex := string indexOf: Character tab) isZero ifTrue: [tabIndex := string size + 1].
-			string := string copyFrom: 1 to: tabIndex - 1.
-			aCanvas textExtent: string] 
+			[| text |
+			text := aMenuItem text upTo: Character tab.
+			aCanvas
+				textExtent: text
+				width: 0
+				flags: self drawTextFlags]
 					ensure: [aCanvas font: oldFont].
 	^size x! !
 !MenuPainter categoriesFor: #borderInset!constants!private! !
@@ -416,6 +449,7 @@ widthOfItemText: aMenuItem using: aCanvas
 !MenuPainter categoriesFor: #paintSmudge:on:!painting!private! !
 !MenuPainter categoriesFor: #paintSmudgeFor:on:in:!painting!private! !
 !MenuPainter categoriesFor: #setHighlightColors:!painting!private! !
+!MenuPainter categoriesFor: #splitMenuText:!helpers!private! !
 !MenuPainter categoriesFor: #widthOfItemAccelerator:using:!helpers!private! !
 !MenuPainter categoriesFor: #widthOfItemText:using:!helpers!private! !
 
