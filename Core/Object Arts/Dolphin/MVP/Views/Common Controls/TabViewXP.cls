@@ -137,7 +137,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 	textExtent := aCanvas
 				textExtent: text
 				width: 0
-				flags: ##(DT_VCENTER | DT_SINGLELINE).
+				flags: DT_SINGLELINE.
 	imageIndex <= 0
 		ifTrue: 
 			[textOffset := 0.
