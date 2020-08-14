@@ -104,7 +104,7 @@ paintItem: aMenuItem on: aCanvas in: aRectangle
 	aMenuItem size = 0 
 		ifFalse: [self drawArrawOn: aCanvas in: (aRectangle insetOriginBy: submenuOffset @ 0)]!
 
-paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle 
+paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle
 	"Private - Paint the accelerator key in the specified Rectangle."
 
 	| keyCode text |
@@ -112,12 +112,19 @@ paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle
 	keyCode isNull ifTrue: [^self].
 	text := AcceleratorTable keyStringFromCode: keyCode.
 	text isEmpty ifTrue: [^self].
-	(conflictingAccelerators includes: aMenuItem) 
-		ifTrue: [self paintSmudge: (aRectangle insetOriginBy: (aCanvas textExtent: text) x @ 0) on: aCanvas].
-	aCanvas 
+	(conflictingAccelerators includes: aMenuItem)
+		ifTrue: 
+			[self paintSmudge: (aRectangle
+						insetOriginBy: (aCanvas
+								textExtent: text
+								width: 0
+								flags: self drawTextFlags | DT_NOPREFIX) x
+								@ 0)
+				on: aCanvas].
+	aCanvas
 		formatText: text
 		in: aRectangle
-		flags: self drawTextFlags | DT_RIGHT!
+		flags: self drawTextFlags | ##(DT_NOPREFIX | DT_RIGHT)!
 
 paintSeparatorOn: aCanvas in: aRectangle 
 	"Private - Paint a menu item separator in the specified Rectangle."
