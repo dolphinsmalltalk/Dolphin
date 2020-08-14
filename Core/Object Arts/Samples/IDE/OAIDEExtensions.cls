@@ -108,7 +108,7 @@ extendHelpMenu: aSmalltalkToolShell
 	shellView menuBar
 		ifNotNil: 
 			[:menuBar |
-			(menuBar find: 'Help' ifAbsent: [])
+			(menuBar findCommand: #help)
 				ifNotNil: 
 					[:helpMenu |
 					helpMenu

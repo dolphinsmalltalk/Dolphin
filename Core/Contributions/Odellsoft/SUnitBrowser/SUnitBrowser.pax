@@ -101,12 +101,12 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\Camp Smalltalk\SUnit\SUnit'
 	'SUnitBrowserModelApp'
-	'..\..\Camp Smalltalk\SUnit\SUnitUI'
-	'..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\Camp Smalltalk\SUnit\SUnitUI').
 
 package!
 

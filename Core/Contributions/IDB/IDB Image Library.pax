@@ -80,8 +80,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'IDB Common'
 	'IDB DeviceIndependentBitmap'
-	'IDB MultipleFileOpenDialog'
-	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
+	'IDB MultipleFileOpenDialog').
 
 package!
 

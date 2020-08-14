@@ -65,7 +65,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Shell\Windows Shell Namespace').
 
 package!

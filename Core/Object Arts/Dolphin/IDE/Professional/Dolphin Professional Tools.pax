@@ -46,6 +46,7 @@ package methodNames
 	add: #Process -> #priorityName;
 	add: #ProcessorScheduler -> #nameOfPriority:;
 	add: #SmalltalkSystem -> #openIdeaSpace;
+	add: #SmalltalkSystem -> #updateHelpMenus;
 	add: #SmalltalkToolShell -> #addToNewIdeaSpace;
 	add: #SmalltalkToolShell -> #browseSystem;
 	add: #SmalltalkToolShell -> #destroy;
@@ -312,8 +313,36 @@ publishedAspectsOfInstances
 openIdeaSpace
 	"Create a new IdeaSpace by opening a template file"
 
-	^IdeaSpaceShell open! !
+	^IdeaSpaceShell open!
+
+updateHelpMenus
+	"Private -  Make changes to the Help menus in the SystemBrowserShell menu bar and then evaluate the following to propagate the changes to all the other relevant views:
+
+		SmalltalkSystem current updateHelpMenus
+	"
+
+	| view helpmenu toolShells |
+	view := (ResourceIdentifier class: SystemBrowserShell name: 'Default view')
+				loadWithContext: View desktop.
+	helpmenu := (view menuBar findCommand: #help) binaryStoreBytes.
+	view destroy.
+	toolShells := (SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument)
+				inject: Set new
+				into: 
+					[:set :each |
+					set addAll: each resourceIdentifiers.
+					set].
+	self viewResourcesMatching: [:rid | toolShells includes: rid]
+		do: 
+			[:vc |
+			vc composingView menuBar
+				ifNotNil: 
+					[:menuBar |
+					(menuBar findCommand: #help)
+						ifNotNil: [:oldHelpMenu | menuBar replaceItem: oldHelpMenu with: (Object fromBinaryStoreBytes: helpmenu)]].
+			true]! !
 !SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
+!SmalltalkSystem categoriesFor: #updateHelpMenus!private!utilities! !
 
 !SmalltalkToolShell methodsFor!
 
