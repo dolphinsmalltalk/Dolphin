@@ -7,7 +7,7 @@
 SourceManager default fileIn: 'PreBoot.st'!
 
 "Reload the base package constituents to reflect any changes since the boot image was created."
-SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\BootSessionManager.cls'!
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\Kernel.BootSessionManager.cls'!
 SessionManager current updateBootImage!
 
 "Install some bare bones packages to get the Installation Management system working"

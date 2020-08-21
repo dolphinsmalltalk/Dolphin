@@ -46,7 +46,7 @@ namespace ST
 		ArrayOTE* m_subclasses;
 		Utf8StringOTE*	m_name;
 		POTE		m_classPool;	/* dictionary of varName, storage */
-		POTE		m_sharedPools;
+		POTE		m_imports;
 		POTE		m_environment;
 		POTE		m_comment;
 		POTE		m_classCategories;
@@ -55,8 +55,8 @@ namespace ST
 		static constexpr size_t SubClassesIndex = ClassDescription::FixedSize;
 		static constexpr size_t NameIndex = SubClassesIndex + 1;
 		static constexpr size_t ClassPoolIndex = NameIndex + 1;
-		static constexpr size_t SharedPoolsIndex = ClassPoolIndex + 1;
-		static constexpr size_t EnvironmentIndex = SharedPoolsIndex + 1;
+		static constexpr size_t ImportsIndex = ClassPoolIndex + 1;
+		static constexpr size_t EnvironmentIndex = ImportsIndex + 1;
 		static constexpr size_t CommentIndex = EnvironmentIndex + 1;
 		static constexpr size_t ClassCategoriesIndex = CommentIndex + 1;
 		static constexpr size_t GUIDIndex = ClassCategoriesIndex + 1;
@@ -66,7 +66,7 @@ namespace ST
 		__declspec(property(get = getName)) LPCSTR Name;
 		LPCSTR getName() const
 		{
-			return m_name->m_location->m_characters;
+			return (LPCSTR)m_name->m_location->m_characters;
 		}
 #endif
 	};

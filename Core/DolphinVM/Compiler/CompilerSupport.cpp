@@ -122,23 +122,21 @@ Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, PO
 
 POTE Compiler::FindGlobal(const Str& name)
 {
-	POTE ote = FindDictVariable(GetVMPointers().SmalltalkDictionary, name);
-	if (ote != m_piVM->NilPointer())
+	const POTE nil = Nil();
+
+	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().SmalltalkDictionary : m_class);
+	POTE ote = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol,
+		reinterpret_cast<Oop>(NewUtf8String(name))));
+
+	if (ote != nil)
 	{
-		// Smalltalk does actually contain bindings, so the binding wont go away
-		m_piVM->RemoveReference(Oop(ote));
-		STVariableBinding* var = reinterpret_cast<STVariableBinding*>(GetObj(ote));
+		OTE* oteBinding = ote;
+		STVariableBinding* var = reinterpret_cast<STVariableBinding*>(GetObj(oteBinding));
 		ote = (POTE)var->value;
+		// Smalltalk does actually contain bindings, so the binding wont go away
+		m_piVM->RemoveReference(Oop(oteBinding));
 	}
 	return ote;
 }
-
-//POTE Compiler::FindClass(const Str& name)
-//{
-//	POTE ote = FindGlobal(name);
-//	// If not actually a class, then return nil
-//	return ote != m_piVM->NilPointer() && m_piVM->IsAClass(ote) ? ote : m_piVM->NilPointer();
-//}
-
 
 ///////////////////////////////////////////////////////////////////////

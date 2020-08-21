@@ -142,16 +142,16 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveFloatAtOffsetPut<double>								, // case 129: ByteArray>>#doubleAtOffset:put:
 	Interpreter::primitiveFloatAtOffset<float>									, // case 130: ByteArray>>#floatAtOffset:
 	Interpreter::primitiveFloatAtOffsetPut<float>								, // case 131: ByteArray>>#floatAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<uint8_t, StoreSmallInteger>	, // case 132: ExternalAddress>>#byteAtOffset:
-	Interpreter::primitiveIndirectAtOffsetPutInteger<uint8_t, 0, 255>			, // case 133: ExternalAddress>>#byteAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<uint32_t, StoreUnsigned32>	, // case 134: ExternalAddress>>#dwordAtOffset:
-	Interpreter::primitiveIndirectUint32AtPut									, // case 135: ExternalAddress>>#dwordAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<int32_t, StoreSigned32>		, // case 136: ExternalAddress>>#sdwordAtOffset:
-	Interpreter::primitiveIndirectInt32AtPut									, // case 137: ExternalAddress>>#sdwordAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<uint16_t, StoreSmallInteger>	, // case 138: ExternalAddress>>#wordAtOffset:
-	Interpreter::primitiveIndirectAtOffsetPutInteger<uint16_t, 0, 0xffff>		, // case 139: ExternalAddress>>#wordAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<int16_t, StoreSmallInteger>	, // case 140: ExternalAddress>>#swordAtOffset:
-	Interpreter::primitiveIndirectAtOffsetPutInteger<int16_t, -0x8000, 0x7fff>	, // case 141: ExternalAddress>>#swordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<uint8_t, StoreSmallInteger>	, // case 132: External.Address>>#byteAtOffset:
+	Interpreter::primitiveIndirectAtOffsetPutInteger<uint8_t, 0, 255>			, // case 133: External.Address>>#byteAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<uint32_t, StoreUnsigned32>	, // case 134: External.Address>>#dwordAtOffset:
+	Interpreter::primitiveIndirectUint32AtPut									, // case 135: External.Address>>#dwordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<int32_t, StoreSigned32>		, // case 136: External.Address>>#sdwordAtOffset:
+	Interpreter::primitiveIndirectInt32AtPut									, // case 137: External.Address>>#sdwordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<uint16_t, StoreSmallInteger>	, // case 138: External.Address>>#wordAtOffset:
+	Interpreter::primitiveIndirectAtOffsetPutInteger<uint16_t, 0, 0xffff>		, // case 139: External.Address>>#wordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<int16_t, StoreSmallInteger>	, // case 140: External.Address>>#swordAtOffset:
+	Interpreter::primitiveIndirectAtOffsetPutInteger<int16_t, -0x8000, 0x7fff>	, // case 141: External.Address>>#swordAtOffset:put:
 	Interpreter::primitiveReplaceBytes											, // case 142: ByteArray|String>>#replaceBytesOf:from:to:startingAt:
 	Interpreter::primitiveIndirectReplaceBytes									, // case 143: ExternalAddress>>#replaceBytesOf:from:to:startingAt:
 	Interpreter::primitiveNextInt32												, // case 144: PositionableStream>>#newSDWORD
@@ -180,8 +180,8 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveLargeIntegerAsFloat									, // case 167: LargeInteger>>#asFloat
 	Interpreter::primitiveAsFloat												, // case 168: SmallInteger>>#asFloat
 	Interpreter::primitiveObjectCount											, // case 169: MemoryManager>>#objectCount
-	Interpreter::primitiveStructureIsNull										, // case 170: ExternalStructure>>#isNull
-	Interpreter::primitiveBytesIsNull											, // case 171: ExternalIntegerBytes>>isNull
+	Interpreter::primitiveStructureIsNull										, // case 170: External.Structure>>#isNull
+	Interpreter::primitiveBytesIsNull											, // case 171: External.IntegerBytes>>isNull
 	Interpreter::primitiveVariantValue											, // case 172: Variant>>#value
 	Interpreter::primitiveNextPutAll											, // case 173: WriteStream>>#basicNextPutAll:, WriteStream>>#nextPutAll:
 	Interpreter::primitiveMillisecondClockValue									, // case 174: MemoryManager>>#millisecondClock, InputState>>#millisecondClodkValue, Delay class>>#millisecondClockValue
@@ -194,10 +194,10 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveUint32AtPut											, // case 181: ByteArray>>#dwordAtOffset:put:
 	Interpreter::primitiveIntegerAtOffset<intptr_t, StoreIntPtr>				, // case 182: ByteArray>>#intptrAtOffset:
 	Interpreter::primitiveInt32AtPut											, // case 183: ByteArray>>#sdwordAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<uintptr_t, StoreUIntPtr>		, // case 184: ExternalAddress>>#intptrAtOffset:
-	Interpreter::primitiveIndirectUint32AtPut									, // case 185: ExternalAddress>>#dwordAtOffset:put:
-	Interpreter::primitiveIndirectIntegerAtOffset<intptr_t, StoreIntPtr>		, // case 186: ExternalAddress>>#intptrAtOffset:
-	Interpreter::primitiveIndirectInt32AtPut									, // case 187: ExternalAddress>>#sdwordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<uintptr_t, StoreUIntPtr>		, // case 184: External.Address>>#intptrAtOffset:
+	Interpreter::primitiveIndirectUint32AtPut									, // case 185: External.Address>>#dwordAtOffset:put:
+	Interpreter::primitiveIndirectIntegerAtOffset<intptr_t, StoreIntPtr>		, // case 186: External.Address>>#intptrAtOffset:
+	Interpreter::primitiveIndirectInt32AtPut									, // case 187: External.Address>>#sdwordAtOffset:put:
 	Interpreter::primitiveReplacePointers										, // case 188: Array>>#replaceElementsOf:from:to:startingAt:
 	Interpreter::primitiveMicrosecondClockValue									, // case 189: Delay>>#microsecondClockValue, Delay class>>#microsecondClockValue
 	Interpreter::primitiveNewFromStack											, // case 190: Array class>>#newFromStack:

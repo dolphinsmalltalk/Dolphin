@@ -46,3 +46,4 @@ UpgradeLog.htm
 *.VC.opendb
 *.VC.db
 DolphinBoot
+backup/

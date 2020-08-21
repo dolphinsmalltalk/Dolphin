@@ -138,6 +138,12 @@ typedef struct STBlockClosure
 	Oop			m_copiedValues[];
 } STBlockClosure;
 
+typedef enum {
+	None = 0,
+	IsMeta = 1,
+	IsPrivate = 2
+} BindingReferenceFlags;
+
 [
 	// N.B. No need to allocate new uuid when changing LIBRARY version
 	// just change the version number, but must allocate new coclass uuid
@@ -245,7 +251,7 @@ library DolphinVM
 	]
 	interface IDolphin : IDolphin71
 	{
-		POTE NewBindingRef([in]LPCSTR szQualifiedName, [in]Oop context, [in]BOOL meta);
+		POTE NewBindingRef([in]LPCSTR szQualifiedName, [in]Oop context, [in]BindingReferenceFlags flags);
 	};
 
 	cpp_quote("#ifndef INTPTR_MAX")

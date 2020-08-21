@@ -161,7 +161,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassLPVOID;							// 103
 			BehaviorOTE* ClassUtf8String;						// 104
 			BehaviorOTE* ClassBindingReference;					// 105
-			BehaviorOTE* _unused106;							// 106
+			BehaviorOTE* ArrayBinding;							// 106
 			BehaviorOTE* ClassLargeInteger;						// 107 - 2's complement Large Integers (32 or more bits)
 			BehaviorOTE* ClassVARIANT;							// 107
 			BehaviorOTE* ClassBSTR;								// 108

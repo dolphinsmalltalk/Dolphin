@@ -55,6 +55,8 @@ BROWSEFOLDERDIALOG.ICO  ICON                    "Res\\BrowseFolderDialog.ico"
 
 BRUSH.ICO               ICON                    "Res\\Brush.ico"
 
+CALLBACK.ICO			ICON                    "Res\\ExternalCallback.ico"
+
 CANVAS.ICO              ICON                    "Res\\Canvas.ico"
 
 CATEGORY.ICO            ICON                    "Res\\Category.ico"
@@ -106,6 +108,8 @@ CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
 DATE.ICO                ICON                    "Res\\Date.ico"
 
 DATEPRESENTER.ICO       ICON                    "Res\\DatePresenter.ico"
+
+DATEANDTIME.ICO         ICON                    "Res\\DateAndTime.ico"
 
 DATETIMECOMMONCONTROL.ICO ICON                  "Res\\DateTimePicker.ico"
 
@@ -177,11 +181,7 @@ EXCEPTION.ICO           ICON                    "Res\\Exception.ico"
 
 EXTENT.ICO              ICON                    "res\\EXTENT.ICO"
 
-EXTERNALCALLBACK.ICO    ICON                    "Res\\ExternalCallback.ico"
-
-EXTERNALLIBRARY.ICO     ICON                    "Res\\externallibrary.ico"
-
-EXTERNALSTRUCTURE.ICO   ICON                    "Res\\externalstructure.ico"
+LIBRARY.ICO				ICON                    "Res\\ExternalLibrary.ico"
 
 FILE.ICO				ICON					"Res\File.ico"
 
@@ -261,6 +261,8 @@ IDISPATCH.ICO           ICON                    "Res\\idispatch.ico"
 
 IMAGE.ICO               ICON                    "res\\image.ico"
 
+IMAGELIST.ICO        ICON						"Res\\WinImageList.ico"
+
 IMAGEPRESENTER.ICO      ICON                    "Res\\ImagePresenter.ico"
 
 IMAGEVIEW.ICO           ICON                    "Res\\ImageView.ico"
@@ -330,6 +332,8 @@ MOENTREEVIEW.ICO        ICON                    "Res\\MoenTreeView.ico"
 MOUSETRACKER.ICO        ICON                    "Res\\MouseTracker.ico"
 
 MUTEX.ICO               ICON                    "Res\\Mutex.ico"
+
+NAMESPACE.ICO           ICON                    "Res\\Namespace.ico"
 
 NEWCLASS.ICO            ICON                    "Res\\NewClass.ico"
 
@@ -443,11 +447,13 @@ SLIDER.ICO              ICON                    "Res\\Slider.ico"
 
 SLIDEYINNEYOUTEYTHING.ICO ICON                  "Res\\SlideyInneyOuteyThing.ico"
 
+SMALLTALK.ICO			ICON                    "Res\\SystemDictionary.ico"
+
 SMALLTALKOPTIONSFOLDER.ICO ICON                 "Res\\SmalltalkOptionsFolder.ico"
 
 SMALLTALKTOOLSFOLDER.ICO ICON                   "Res\\SmalltalkSystemToolsFolder.ico"
 
-SMALLTALKTOOLSHELL.ICO  ICON                   "Res\\SmalltalkToolShell.ico"
+SMALLTALKTOOLSHELL.ICO  ICON					"Res\\Tools.ico"
 
 SMALLTALKWORKSPACE.ICO  ICON                    "res\\SmalltalkWorkspace.ico"
 
@@ -483,9 +489,9 @@ STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
 
 STON.ICO                ICON                    "Res\\JSON.ico"
 
-SYSTEMBROWSERSHELL.ICO  ICON                    "Res\\SystemBrowserShell.ico"
+STRUCTURE.ICO			ICON                    "Res\\ExternalStructure.ico"
 
-SYSTEMDICTIONARY.ICO    ICON                    "Res\\SystemDictionary.ico"
+SYSTEMBROWSERSHELL.ICO  ICON                    "Res\\SystemBrowserShell.ico"
 
 TABVIEW.ICO             ICON                    "Res\\TabView.ico"
 
@@ -505,13 +511,13 @@ TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
 
 TIME_ZONE_INFORMATION.ICO ICON                  "Res\\TimeZone.ico"
 
-DATEANDTIME.ICO         ICON                    "Res\\DateAndTime.ico"
-
 TOGGLELOCALHIERARCHY.ICO ICON                   "Res\\ToggleLocalHierarchy.ico"
 
 TOOLBAR.ICO             ICON                    "Res\\Toolbar.ico"
 
 TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
+
+TOOLS.ICO				ICON					"Res\\Tools.ico"
 
 TRANSCRIPTSHELL.ICO     ICON                    "res\\TranscriptShell.ico"
 
@@ -566,8 +572,6 @@ VIEWSMALLICONS.ICO      ICON                    "Res\\ViewSmallIcons.ico"
 VIEWTILES.ICO           ICON                    "Res\\ViewTiles.ico"
 
 VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
-
-WINIMAGELIST.ICO        ICON                    "Res\\WinImageList.ico"
 
 WIZARD.ICO              ICON                    "Res\\Wizard.ico"
 

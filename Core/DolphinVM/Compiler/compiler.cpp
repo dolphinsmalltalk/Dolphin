@@ -1712,7 +1712,7 @@ void Compiler::ParseBraceArray(textpos_t textPosition)
 
 	if (m_ok)
 	{
-		GenPushStaticVariable((LPUTF8)"Smalltalk.Array", TEXTRANGE(textPosition, textPosition));
+		GenStatic(GetVMPointers().ArrayBinding, TEXTRANGE(textPosition, textPosition));
 		GenInteger(count, ThisTokenRange);
 		GenMessage((LPUTF8)"newFromStack:", 1, textPosition);
 	}
@@ -1728,31 +1728,48 @@ void Compiler::ParseBraceArray(textpos_t textPosition)
 	}
 }
 
+DEFINE_ENUM_FLAG_OPERATORS(BindingReferenceFlags)
+
 POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 {
 	POTE bindingRef = nullptr;
 	NextToken();
-	TEXTRANGE identifierRange = ThisTokenRange;
+	TEXTRANGE range = ThisTokenRange;
 	if (ThisToken == TokenType::NameConst)
 	{
 		Str identifier = ThisTokenText;
 		NextToken();
-		bool isMeta = false;
-		if (ThisToken == TokenType::NameConst && !strcmp((LPCSTR)ThisTokenText, "class"))
+
+		BindingReferenceFlags flags = BindingReferenceFlags::None;
+		while (ThisToken == TokenType::NameConst)
 		{
-			isMeta = true;
-			NextToken();
+			if (!strcmp((LPCSTR)ThisTokenText, "class"))
+			{
+				flags |= BindingReferenceFlags::IsMeta;
+				range.m_stop = ThisTokenRange.m_stop;
+				NextToken();
+			}
+			else if (!strcmp((LPCSTR)ThisTokenText, "private"))
+			{
+				flags |= BindingReferenceFlags::IsPrivate;
+				range.m_stop = ThisTokenRange.m_stop;
+				NextToken();
+			}
+			else
+			{
+				break;
+			}
 		}
 
 		if (ThisToken == TokenType::CloseBrace)
 		{
 			NextToken();
-			Str uniqueIdentifier = isMeta ? identifier + u8'*' : identifier;
+			Str uniqueIdentifier = (flags & BindingReferenceFlags::IsMeta) == BindingReferenceFlags::IsMeta ? identifier + u8'*' : identifier;
 			auto iter = m_bindingRefs.find(uniqueIdentifier);
 			if (iter == m_bindingRefs.end())
 			{
 				// We want the context to be nil here if compiling an unbound expression, such as in a file-in or workspace
-				bindingRef = m_piVM->NewBindingRef((LPCSTR)identifier.c_str(), reinterpret_cast<Oop>(this->m_class), isMeta);
+				bindingRef = m_piVM->NewBindingRef((LPCSTR)identifier.c_str(), reinterpret_cast<Oop>(this->m_class), flags);
 				m_bindingRefs[uniqueIdentifier] = bindingRef;
 			}
 			else
@@ -1762,12 +1779,21 @@ POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 		}
 		else
 		{
-			CompileError(TEXTRANGE(textPosition, identifierRange.m_stop), CErrQualifiedRefNotClosed);
+			TEXTRANGE badTokenRange = ThisTokenRange;
+			if (NextToken() == TokenType::CloseBrace)
+			{
+				CompileError(badTokenRange, CErrBadQualifiedRefModifier);
+				NextToken();
+			}
+			else
+			{
+				CompileError(TEXTRANGE(textPosition, range.m_stop), CErrQualifiedRefNotClosed);
+			}
 		}
 	}
 	else
 	{
-		CompileError(identifierRange, CErrExpectVariable);
+		CompileError(range, CErrExpectVariable);
 	}
 	return bindingRef;
 }
@@ -2368,7 +2394,7 @@ void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpec decl)
 		POTE structClass = GetVMPointers().ClassVARIANT;
 		if (structClass == Nil())
 		{
-			CompileError(retTypeRange, CErrUndefinedClass);
+			CompileError(retTypeRange, CErrUndeclared);
 			return;
 		}
 
@@ -2518,7 +2544,7 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPri
 		POTE structClass = GetVMPointers().ClassVARIANT;
 		if (structClass == Nil())
 		{
-			CompileError(retTypeRange, CErrUndefinedClass);
+			CompileError(retTypeRange, CErrUndeclared);
 			return;
 		}
 
@@ -2565,7 +2591,7 @@ POTE Compiler::FindExternalClass(const Str& strClass, const TEXTRANGE& range)
 	POTE structClass = FindGlobal(strClass);
 	if (structClass == Nil())
 	{
-		CompileError(range, CErrUndefinedClass);
+		CompileError(range, CErrUndeclared);
 		return nullptr;
 	}
 
@@ -2693,7 +2719,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"ote", DolphinX::ExtCallArgType::Ote, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
 				{ (LPUTF8)"variant", DolphinX::ExtCallArgType::Variant, (LPUTF8)"VARIANT" },
 				{ (LPUTF8)"varbool", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ (LPUTF8)"guid", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"guid", DolphinX::ExtCallArgType::Guid, (LPUTF8)"External.REFGUID" },
 				{ (LPUTF8)"date", DolphinX::ExtCallArgType::Date, (LPUTF8)"DATE" },
 				//(LPUTF8) Convert a few class types to the special types to save space and time
 				{ (LPUTF8)"ExternalAddress", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
@@ -2716,9 +2742,9 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"ULARGE_INTEGER", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ (LPUTF8)"SQWORD", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ (LPUTF8)"LARGE_INTEGER", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
-				{ (LPUTF8)"GUID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"IID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"GUID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"External.REFGUID" },
+				{ (LPUTF8)"IID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"External.REFGUID" },
+				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"External.REFGUID" },
 				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 			};
 

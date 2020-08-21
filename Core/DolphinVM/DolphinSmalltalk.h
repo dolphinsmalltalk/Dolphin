@@ -171,7 +171,7 @@ public:
     STDMETHOD_(POTE, NewBindingRef)(
         /* [in] */ LPCSTR szQualifiedname,
         /* [in] */ Oop context,
-        /* [in] */ BOOL meta
+        /* [in] */ BindingReferenceFlags flags
         );
 };
 
