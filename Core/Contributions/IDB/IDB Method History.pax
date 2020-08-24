@@ -2,15 +2,18 @@
 package := Package name: 'IDB Method History'.
 package paxVersion: 1;
 	basicComment: 'Extracts and presents class/method history from the change log
-Version 6b - October 2005
-For Version 6 of Dolphin Smalltalk
+Version 7.1 - October 2005
+For Version 7.1 of Dolphin Smalltalk
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
 
 6b - October 2005
-	- extensive rewrite'.
+	- extensive rewrite
+
+7.1 - August 2020
+	- modifications for D7.1'.
 
 package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b'.
 
@@ -21,14 +24,18 @@ package classNames
 	add: #DiffBrowser;
 	add: #HistoryBrowser;
 	add: #MethodHistoryBrowser;
+	add: #MethodVersion;
 	add: #SelectorParser;
 	yourself.
 
 package methodNames
+	add: #ChunkSourceFiler -> #sourceDescriptorForPosition:;
 	add: #ClassBrowserAbstract -> #browseMethodHistory;
 	add: #ClassBrowserAbstract -> #browseMethodHistoryForClass;
 	add: #ClassBrowserAbstract -> #canBrowseMethodHistory;
 	add: #ClassBrowserAbstract -> #canBrowseMethodHistoryForClass;
+	add: #CompiledMethod -> #loadedVersion;
+	add: #CompiledMethod -> #versionHistory;
 	add: #Debugger -> #browseMethodHistory;
 	add: #Debugger -> #canBrowseMethodHistory;
 	add: #MethodBrowserShell -> #browseMethodHistory;
@@ -48,6 +55,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
@@ -59,7 +67,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models').
+	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 
@@ -67,6 +76,11 @@ package!
 
 Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #MethodVersion
+	instanceVariableNames: 'methodClass selector source sourceDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -101,6 +115,16 @@ HistoryBrowser subclass: #MethodHistoryBrowser
 
 "Loose Methods"!
 
+!ChunkSourceFiler methodsFor!
+
+sourceDescriptorForPosition: positionInteger 
+	"Private - Answer an <integer> source descriptor which encodes the receiver's <integer> source file
+	index, sourceFileIndex, and the <integer> source file position, positionInteger. The source
+	file index must be in the range 0..15, and the position >= 0."
+
+	^self sourceDescriptorForIndex: sourceFileIndex position: positionInteger! !
+!ChunkSourceFiler categoriesFor: #sourceDescriptorForPosition:!private!source filing-file in! !
+
 !ClassBrowserAbstract methodsFor!
 
 browseMethodHistory
@@ -126,6 +150,20 @@ canBrowseMethodHistoryForClass
 !ClassBrowserAbstract categoriesFor: #browseMethodHistoryForClass!commands!idb goodies!public! !
 !ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!private!testing! !
 !ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!private!testing! !
+
+!CompiledMethod methodsFor!
+
+loadedVersion
+
+	^MethodVersion forCompiledMethod: self!
+
+versionHistory
+
+	"Answer a collection of MethodVersions representing the history of the receiver in this image"
+
+	^ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
+!CompiledMethod categoriesFor: #loadedVersion!accessing!public! !
+!CompiledMethod categoriesFor: #versionHistory!accessing!public! !
 
 !Debugger methodsFor!
 
