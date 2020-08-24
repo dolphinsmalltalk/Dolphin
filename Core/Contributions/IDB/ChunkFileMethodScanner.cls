@@ -50,7 +50,7 @@ positionsOf: aString in: aStream firstOnly: aBoolean
 			[| startPosition bytes offset |
 			aStream position > aString size ifTrue: [aStream position: aStream position - aString size].
 			startPosition := aStream position.
-			bytes := aStream nextAvailable: 500000.
+			bytes := aStream basicNextAvailable: 500000.
 			offset := 1.
 			[offset = 0]
 				whileFalse:
@@ -61,36 +61,28 @@ positionsOf: aString in: aStream firstOnly: aBoolean
 							offset := offset + 1]]].
 	^positions asSortedCollection!
 
-scan: aStream for: aString source: aSymbol
-	"Answer a collection of method definitions from aStream. First find all the positions of
+scan: aStream for: aString sourceFileIndex: anInteger
+	"Answer a collection of MethodVersions from aStream. First find all the positions of
 	aString in the target file then collect the text from that position. An occurence of aString
-	may be followed by one or more definition chunks and will always end with an empty chunk
+	may be followed by one or more definition chunks and will always end with an empty chunk"
 
-	each item
-		at: 1 = #changes or #sources 
-		at: 2 = selector as Symbol 
-		at: 3 = method source"
-
-	| chunks selectorParser |
-	selectorParser := SelectorParser new.
+	| chunks |
 	chunks := OrderedCollection new.
 	(self
 		positionsOf: aString
 		in: aStream
-		firstOnly: aSymbol == #sources)
+		firstOnly: (anInteger == SourceManager.SourcesIndex))
 		do:
 			[:offset | 
-			| chunk |
-			aStream position: offset.
+			| chunk startPos |
+			aStream position: offset; skipSeparators.
+			startPos := aStream position.
 			chunk := self nextChunkFrom: aStream.
 			[chunk isEmpty]
 				whileFalse:
-					[chunks
-						add:
-							(Array
-								with: aSymbol
-								with: (selectorParser parse: chunk) asSymbol
-								with: chunk).
+					[chunks add: (MethodVersion forSource: chunk at: startPos in: (SourceFiles at: anInteger)).
+					aStream skipSeparators.
+					startPos := aStream position.
 					chunk := self nextChunkFrom: aStream]].
 	^chunks!
 
@@ -100,27 +92,17 @@ scanChangesFileFor: aString
 	^self
 		scan: SourceManager default changesStream
 		for: aString
-		source: #changes!
+		sourceFileIndex: SourceManager.ChangesIndex!
 
 scanForMethodChunks: aMethodSelector inClass: aClass 
-	"Answers a collection of Arrays containing all the method definitions for
-	aClass>>aMethodSelector from both the sources and change files.
+	"Answers a collection of MethodVersions containing all the method definitions for
+	aClass>>aMethodSelector from both the sources and change files"
 
-	each item
-		at: 1 = #changes or #sources 
-		at: 2 = selector as Symbol 
-		at: 3 = method source"
-
-	^(self scanForMethodChunksInClass: aClass) select: [:each | aMethodSelector = (each at: 2)]!
+	^(self scanForMethodChunksInClass: aClass) select: [:each | aMethodSelector = each selector]!
 
 scanForMethodChunksInClass: aClass 
-	"Answers a collection of Arrays containing all the method definitions, from both the sources
-	and change files, belonging to aClass
-
-	each item
-		at: 1 = #changes or #sources 
-		at: 2 = selector as Symbol 
-		at: 3 = method source"
+	"Answers a collection of MethodVersions containing all the method definitions, from both the sources
+	and change files, belonging to aClass"
 
 	| target |
 	target := (String writeStream)
@@ -129,7 +111,7 @@ scanForMethodChunksInClass: aClass
 				nextPutAll: ' methodsFor!!';
 				cr;
 				contents.
-	^(self scanSourcesFileFor: target) , (self scanChangesFileFor: target)!
+	^((self scanSourcesFileFor: target) , (self scanChangesFileFor: target)) do: [ :each | each methodClass: aClass]!
 
 scanSourcesFileFor: aString
 	"Scan the sources file for method definition chunks preceded by aString"
@@ -137,10 +119,10 @@ scanSourcesFileFor: aString
 	^self
 		scan: SourceManager default sourcesFileStream
 		for: aString
-		source: #sources! !
+		sourceFileIndex: SourceManager.SourcesIndex! !
 !ChunkFileMethodScanner categoriesFor: #nextChunkFrom:!file operations!public! !
 !ChunkFileMethodScanner categoriesFor: #positionsOf:in:firstOnly:!file operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scan:for:source:!operations!public! !
+!ChunkFileMethodScanner categoriesFor: #scan:for:sourceFileIndex:!operations!public! !
 !ChunkFileMethodScanner categoriesFor: #scanChangesFileFor:!operations!public! !
 !ChunkFileMethodScanner categoriesFor: #scanForMethodChunks:inClass:!operations!public! !
 !ChunkFileMethodScanner categoriesFor: #scanForMethodChunksInClass:!operations!public! !
