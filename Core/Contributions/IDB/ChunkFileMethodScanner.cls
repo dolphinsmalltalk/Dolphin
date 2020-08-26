@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ChunkFileMethodScanner
-	instanceVariableNames: ''
+	instanceVariableNames: 'readBufferSize'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -27,6 +27,16 @@ Public Domain Freeware'!
 !ChunkFileMethodScanner categoriesForClass!IDB Goodies! !
 !ChunkFileMethodScanner methodsFor!
 
+defaultReadBufferSize
+
+	"As per original IDB version"
+
+	^500000!
+
+initialize
+
+	readBufferSize := self defaultReadBufferSize!
+
 nextChunkFrom: aStream
 	"Answer the contents of the next chunk, without bangs, in aStream"
 
@@ -50,7 +60,7 @@ positionsOf: aString in: aStream firstOnly: aBoolean
 			[| startPosition bytes offset |
 			aStream position > aString size ifTrue: [aStream position: aStream position - aString size].
 			startPosition := aStream position.
-			bytes := aStream basicNextAvailable: 500000.
+			bytes := aStream basicNextAvailable: readBufferSize.
 			offset := 1.
 			[offset = 0]
 				whileFalse:
@@ -60,6 +70,12 @@ positionsOf: aString in: aStream firstOnly: aBoolean
 							aBoolean ifTrue: [^positions asSortedCollection].
 							offset := offset + 1]]].
 	^positions asSortedCollection!
+
+readBufferSize
+	^readBufferSize!
+
+readBufferSize: anObject
+	readBufferSize := anObject!
 
 scan: aStream for: aString sourceFileIndex: anInteger
 	"Answer a collection of MethodVersions from aStream. First find all the positions of
@@ -94,13 +110,13 @@ scanChangesFileFor: aString
 		for: aString
 		sourceFileIndex: SourceManager.ChangesIndex!
 
-scanForMethodChunks: aMethodSelector inClass: aClass 
+scanForMethodVersions: aMethodSelector inClass: aClass 
 	"Answers a collection of MethodVersions containing all the method definitions for
 	aClass>>aMethodSelector from both the sources and change files"
 
-	^(self scanForMethodChunksInClass: aClass) select: [:each | aMethodSelector = each selector]!
+	^(self scanForMethodVersionsInClass: aClass) select: [:each | aMethodSelector = each selector]!
 
-scanForMethodChunksInClass: aClass 
+scanForMethodVersionsInClass: aClass 
 	"Answers a collection of MethodVersions containing all the method definitions, from both the sources
 	and change files, belonging to aClass"
 
@@ -120,12 +136,16 @@ scanSourcesFileFor: aString
 		scan: SourceManager default sourcesFileStream
 		for: aString
 		sourceFileIndex: SourceManager.SourcesIndex! !
+!ChunkFileMethodScanner categoriesFor: #defaultReadBufferSize!constants!public! !
+!ChunkFileMethodScanner categoriesFor: #initialize!initializing!public! !
 !ChunkFileMethodScanner categoriesFor: #nextChunkFrom:!file operations!public! !
 !ChunkFileMethodScanner categoriesFor: #positionsOf:in:firstOnly:!file operations!public! !
+!ChunkFileMethodScanner categoriesFor: #readBufferSize!accessing!private! !
+!ChunkFileMethodScanner categoriesFor: #readBufferSize:!accessing!private! !
 !ChunkFileMethodScanner categoriesFor: #scan:for:sourceFileIndex:!operations!public! !
 !ChunkFileMethodScanner categoriesFor: #scanChangesFileFor:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanForMethodChunks:inClass:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanForMethodChunksInClass:!operations!public! !
+!ChunkFileMethodScanner categoriesFor: #scanForMethodVersions:inClass:!operations!public! !
+!ChunkFileMethodScanner categoriesFor: #scanForMethodVersionsInClass:!operations!public! !
 !ChunkFileMethodScanner categoriesFor: #scanSourcesFileFor:!operations!public! !
 
 !ChunkFileMethodScanner class methodsFor!
@@ -134,13 +154,18 @@ forMethod: aMethodSelector inClass: aClass
 	"Answers a collection containing all the method definitions for aClass>>aMethodSelector from
 	both the sources and change files"
 
-	^super new scanForMethodChunks: aMethodSelector inClass: aClass!
+	^self new scanForMethodVersions: aMethodSelector inClass: aClass!
 
 forMethodsInClass: aClass
 	"Answers a collection containing all the method definitions, from both the sources and
 	change files, belonging to aClass"
 
-	^super new scanForMethodChunksInClass: aClass! !
+	^self new scanForMethodVersionsInClass: aClass!
+
+new
+
+	^super new initialize! !
 !ChunkFileMethodScanner class categoriesFor: #forMethod:inClass:!instance creation!public! !
 !ChunkFileMethodScanner class categoriesFor: #forMethodsInClass:!instance creation!public! !
+!ChunkFileMethodScanner class categoriesFor: #new!instance creation!public! !
 

@@ -79,6 +79,9 @@ diff
 			and: self selectedMethodVersion loadedMethod getSource
 			id: 'Current image'!
 
+history
+	^history!
+
 loadedMethodVersion
 
 	^history detect: [ :each | each isLoaded] ifNone: [nil]!
@@ -114,7 +117,9 @@ onImageChanged: aCompiledMethod
 
 	(aCompiledMethod methodClass == self methodClass and: [aCompiledMethod selector == selector]) ifTrue: 
 		[loadedVersion := aCompiledMethod loadedVersion.
-		(history includes: loadedVersion) ifFalse: [history addLast: loadedVersion].
+		(history includes: loadedVersion) ifFalse: 
+			[(history last hasSameSourceAs: aCompiledMethod) ifTrue: [history removeLast].
+			history addLast: loadedVersion].
 		self moveToLoaded]!
 
 onMethodAdded: aCompilationResult
@@ -243,11 +248,11 @@ updateHistory
 	"Get the historic information for the method. Purge consecutive duplicates from the list"
 
 	| temp |
-	Cursor wait showWhile: [temp := self scanner forMethod: selector inClass: self methodClass].
+	Cursor wait showWhile: [temp := self scanner scanForMethodVersions: selector inClass: self methodClass].
 	history := OrderedCollection with: temp first.
 	temp do: 
 			[:each |
-			(history last getSource = each getSource and: [history last sourceFileIndex = each sourceFileIndex])
+			((history last hasSameSourceAs: each) and: [history last sourceFileIndex = each sourceFileIndex])
 				ifFalse: [history add: each]].
 	self moveToLoaded!
 
@@ -272,6 +277,7 @@ updateSelection
 !MethodHistoryBrowser categoriesFor: #createComponents!initializing!operations!public! !
 !MethodHistoryBrowser categoriesFor: #createSchematicWiring!initializing!operations!public! !
 !MethodHistoryBrowser categoriesFor: #diff!commands!public! !
+!MethodHistoryBrowser categoriesFor: #history!accessing!public! !
 !MethodHistoryBrowser categoriesFor: #loadedMethodVersion!accessing!public! !
 !MethodHistoryBrowser categoriesFor: #methodClass!accessing!public! !
 !MethodHistoryBrowser categoriesFor: #moveTo:!operations!public! !

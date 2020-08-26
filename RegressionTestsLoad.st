@@ -7,6 +7,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\MVP\Gdiplus\Tests\Gdiplus Tests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\ANSI\Tests\CS ANSI Tests.pax';
+	install: 'Core\Contributions\IDB\Tests\IDB Method History Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64 Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Random\Dolphin Random Stream Tests.pax';

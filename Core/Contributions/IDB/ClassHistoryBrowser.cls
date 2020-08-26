@@ -135,7 +135,7 @@ setClass: aClass
 
 updateHistory
 	| chunks selectors methodHistory |
-	Cursor wait showWhile: [chunks := self scanner forMethodsInClass: class].
+	Cursor wait showWhile: [chunks := self scanner scanForMethodVersionsInClass: class].
 	selectors := (chunks collect: [:each | each selector]) asSet asSortedCollection.
 	methodHistory := OrderedCollection new.
 	selectors do: 

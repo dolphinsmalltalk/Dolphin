@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #HistoryBrowser
-	instanceVariableNames: ''
+	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -36,12 +36,26 @@ about: aString
 		alignment: #center;
 		text: aString!
 
+initialize
+
+	super initialize.
+	scanner := self scannerClass new!
+
 scanner
+	^scanner!
+
+scanner: aChunkFileMethodScanner
+	scanner := aChunkFileMethodScanner!
+
+scannerClass
 	"Answer the current scanner class"
 
 	^ChunkFileMethodScanner! !
 !HistoryBrowser categoriesFor: #about:!commands!public! !
-!HistoryBrowser categoriesFor: #scanner!constants!public! !
+!HistoryBrowser categoriesFor: #initialize!initializing!public! !
+!HistoryBrowser categoriesFor: #scanner!accessing!public! !
+!HistoryBrowser categoriesFor: #scanner:!public! !
+!HistoryBrowser categoriesFor: #scannerClass!constants!public! !
 
 !HistoryBrowser class methodsFor!
 
