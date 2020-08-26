@@ -40,6 +40,10 @@ hash
 
 	^sourceDescriptor hash!
 
+hasSameSourceAs: aMethodOrVersion
+
+	^self getSource = aMethodOrVersion getSource!
+
 isFromChanges
 
 	^self sourceFileIndex = SourceManager.ChangesIndex!
@@ -109,11 +113,12 @@ sourceFileIndex
 !MethodVersion categoriesFor: #forSource:at:in:!initializing!public! !
 !MethodVersion categoriesFor: #getSource!accessing!public! !
 !MethodVersion categoriesFor: #hash!comparing!public! !
+!MethodVersion categoriesFor: #hasSameSourceAs:!public!testing! !
 !MethodVersion categoriesFor: #isFromChanges!public!testing! !
 !MethodVersion categoriesFor: #isFromSources!public!testing! !
 !MethodVersion categoriesFor: #isLoaded!public!testing! !
 !MethodVersion categoriesFor: #load!operations!public! !
-!MethodVersion categoriesFor: #loadedMethod!public! !
+!MethodVersion categoriesFor: #loadedMethod!accessing!public! !
 !MethodVersion categoriesFor: #methodClass!accessing!public! !
 !MethodVersion categoriesFor: #methodClass:!accessing!private! !
 !MethodVersion categoriesFor: #printOn:!printing!public! !

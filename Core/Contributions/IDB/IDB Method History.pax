@@ -75,7 +75,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #ChunkFileMethodScanner
-	instanceVariableNames: ''
+	instanceVariableNames: 'readBufferSize'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -95,7 +95,7 @@ SmalltalkToolShell subclass: #DiffBrowser
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #HistoryBrowser
-	instanceVariableNames: ''
+	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

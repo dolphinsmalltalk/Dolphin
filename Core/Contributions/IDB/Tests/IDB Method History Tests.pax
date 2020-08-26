@@ -1,0 +1,37 @@
+﻿| package |
+package := Package name: 'IDB Method History Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #MethodHistoryTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\IDB Method History'
+	'..\..\Camp Smalltalk\SUnit\SUnit').
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #MethodHistoryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
