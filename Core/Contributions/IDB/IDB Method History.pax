@@ -15,7 +15,7 @@ Public Domain Freeware
 7.1 - August 2020
 	- modifications for D7.1'.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b'.
+package basicPackageVersion: '6b'.
 
 
 package classNames

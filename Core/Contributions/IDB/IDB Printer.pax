@@ -13,7 +13,7 @@ Public Domain Freeware
 	- Added methods contributed by James Foster.  Thanks.
 '.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b JGF.1'.
+package basicPackageVersion: '6b JGF.1'.
 
 package basicScriptAt: #preinstall put: 'Win32Constants
 	at: ''PHYSICALWIDTH'' put: 110;

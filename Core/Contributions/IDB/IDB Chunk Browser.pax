@@ -16,7 +16,7 @@ Public Domain Freeware
 	- removed Help menu and added About menu
 '.
 
-package basicPackageVersion: 'IDB$PACKAGE$VERSION 6b JGF.1'.
+package basicPackageVersion: '7c'.
 
 
 package classNames
