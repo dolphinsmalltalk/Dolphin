@@ -10,6 +10,9 @@ BlockClosureTest comment: ''!
 !BlockClosureTest categoriesForClass!Unclassified! !
 !BlockClosureTest methodsFor!
 
+blockWithCopiedValue: anObject
+	^[anObject]!
+
 nestedReturn
 	"Not actually a far return, therefore no method context needed"
 	^[
@@ -223,6 +226,17 @@ testEnsure
 	self assert: self nestedReturn3 equals: 3.
 	self assert: x equals: 3!
 
+testEqualityOfBlocksFromSameMethod
+	| temp |
+	self deny: [#one] equals: [#two].
+	"Perhaps these should be considered equal, in such a degenerate case, but this is more trouble than it's worth..."
+	self deny: [#three] equals: [#three].
+	self assert: (self blockWithCopiedValue: #one) equals: (self blockWithCopiedValue: #one).
+	self deny: (self blockWithCopiedValue: #one) equals: (self blockWithCopiedValue: #two).
+	temp := #foo.
+	"Again, perhaps these should be considered equal, but more trouble than it's worth."
+	self deny: [temp] equals: [temp]!
+
 testNesting
 	| a b c |
 	a := 
@@ -318,6 +332,7 @@ testValueWithArguments
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
 		matching: [:err | err description = 'Block expects 1 argument(s)']! !
+!BlockClosureTest categoriesFor: #blockWithCopiedValue:!helpers!private! !
 !BlockClosureTest categoriesFor: #nestedReturn!helpers!private! !
 !BlockClosureTest categoriesFor: #nestedReturn1!helpers!private! !
 !BlockClosureTest categoriesFor: #nestedReturn2!helpers!private! !
@@ -329,6 +344,7 @@ testValueWithArguments
 !BlockClosureTest categoriesFor: #testCullCullCullCull!public!tests / evaluating! !
 !BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
 !BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
+!BlockClosureTest categoriesFor: #testEqualityOfBlocksFromSameMethod!public!unit tests! !
 !BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
 !BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
 !BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !
