@@ -19,6 +19,7 @@ package classNames
 	add: #ColorTest;
 	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
+	add: #DifferencesPresenterTest;
 	add: #EvaluationConverterTest;
 	add: #FileDialogTest;
 	add: #FlowLayoutTest;
@@ -97,6 +98,7 @@ package setPrerequisites: #(
 	'Views\Common Controls\Dolphin Common Controls'
 	'Dialogs\Common\Dolphin Common Dialogs'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
+	'Presenters\Difference\Dolphin Differences Presenter'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
 	'Presenters\List\Dolphin List Presenter'
@@ -315,6 +317,11 @@ PresenterTest subclass: #AbstractTextEditTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #ChoicePresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #DifferencesPresenterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
