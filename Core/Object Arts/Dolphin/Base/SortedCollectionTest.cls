@@ -80,6 +80,6 @@ verifyConcatenation: b with: a
 !SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
-!SortedCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
+!SortedCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
 !SortedCollectionTest categoriesFor: #verifyConcatenation:with:!public!unit tests! !
 

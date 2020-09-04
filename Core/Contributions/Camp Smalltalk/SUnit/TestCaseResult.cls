@@ -59,8 +59,7 @@ displayOn: aPuttableStream
 			[self duration printHumanReadableOn: aPuttableStream.
 			aPuttableStream nextPut: $)]
 		ifFalse: 
-			[aPuttableStream nextPutAll: ' in '.
-			self printSourceOn: aPuttableStream.
+			[self printSourceOn: aPuttableStream.
 			aPuttableStream nextPut: $)]!
 
 duration

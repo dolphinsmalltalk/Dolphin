@@ -18,7 +18,7 @@ add: newElement afterIndex: index
 	| basicIndex |
 	basicIndex := index + firstIndex.
 	(basicIndex > (lastIndex + 1) or: [basicIndex < firstIndex]) ifTrue: [^self errorSubscriptBounds: index].
-	lastIndex == self basicSize ifTrue: [ 
+	lastIndex == self basicSize ifTrue: [  
 		self makeRoomAtEndFor: 1.
 		basicIndex := index + firstIndex].
 	"Slide the elements down the collection toward the new end to make room for the insertion"
@@ -418,11 +418,16 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
+	| offset len |
+	len := stopInteger - startInteger + 1.
+	len == 0 ifTrue: [^anIndexableObject].
+	(startAtInteger < 1 or: [(offset := startAtInteger + firstIndex - 1) > lastIndex])
+		ifTrue: [self errorSubscriptBounds: startAtInteger].
 	^self
 		basicReplaceElementsOf: anIndexableObject
 		from: startInteger
 		to: stopInteger
-		startingAt: startAtInteger + firstIndex - 1!
+		startingAt: offset!
 
 replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
 	"Destructively replace the elements of the receiver between the <integer> arguments
@@ -447,6 +452,22 @@ resize: anInteger
 
 	self basicResize: firstIndex + anInteger - 1.
 	lastIndex := firstIndex + anInteger - 1!
+
+reversedFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of the receiver between the <integer> indices startInteger and stopInteger, inclusive, but in reverse order."
+
+	| answer offset len start stop |
+	len := stopInteger - startInteger + 1.
+	answer := OrderedCollection ofSize: len.
+	len == 0 ifTrue: [^answer].
+	offset := firstIndex - 1.
+	(startInteger < 1 or: [(start := startInteger + offset) > lastIndex])
+		ifTrue: [self errorSubscriptBounds: startInteger].
+	(stopInteger < 1 or: [(stop := stopInteger + offset) > lastIndex])
+		ifTrue: [self errorSubscriptBounds: stopInteger].
+	offset := len + start.
+	start to: stop do: [:i | answer basicAt: offset - i put: (self basicAt: i)].
+	^answer!
 
 reverseDo: aMonadicValuable 
 	"Evaluate the <monadicValuable> argument against each of the element of the receiver in reverse
@@ -542,6 +563,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !OrderedCollection categoriesFor: #resize:!mutating!private! !
+!OrderedCollection categoriesFor: #reversedFrom:to:!copying!public! !
 !OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
 !OrderedCollection categoriesFor: #select:!enumerating!public! !
 !OrderedCollection categoriesFor: #setSize:!accessing!public! !

@@ -51,7 +51,7 @@ _sameAsString: comparand
 	size := self size.
 	string2 := String new: size.
 	1 to: size do: [:i | string2 basicAt: i put: (self at: i)].
-	^(comparand <=> string2) == 0!
+	^comparand <=> string2 == 0!
 
 = comparand
 	"Answer whether the receiver and the <Object> argument, comparand,
@@ -110,7 +110,7 @@ allButLast
 allButLast: anInteger
 	"Answer a copy of the receiver containing all but the last anInteger elements. Raise an error if there are not enough elements."
 
-	^self first: self size - anInteger!
+	^self copyFrom: 1 to: self size - anInteger!
 
 anyOne
 	"Answer an arbitrary element of the collection.Raise an error if the collection is empty."
@@ -153,7 +153,7 @@ asRunArray
 	runs := Array writeStream.
 	values := Array writeStream.
 	self runsAndValuesDo: 
-			[:run :value | 
+			[:run :value |
 			runs nextPut: run.
 			values nextPut: value].
 	^RunArray runs: runs contents values: values contents!
@@ -310,9 +310,7 @@ copyFrom: start
 	^self copyFrom: start to: self size!
 
 copyFrom: startInteger to: stopInteger
-	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
-	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
-	the same order."
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in the same order."
 
 	| len |
 	len := stopInteger - startInteger + 1.
@@ -609,7 +607,7 @@ encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
 
 encoding
-	^#pointers!
+	^self class encoding!
 
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
@@ -1141,16 +1139,18 @@ resize: anInteger
 		become: self!
 
 reverse
-	"Answer a new <sequencedReadableCollection> which contains the same elements
-	as the receiver, but in reverse order."
+	"Answer a new <sequencedReadableCollection> which contains the same elements as the receiver, but in reverse order."
 
-	| answer i |
-	i := self size.
-	answer := self copyLikeOfSize: i.
-	self do: 
-			[:element | 
-			answer at: i put: element.
-			i := i - 1].
+	^self reversedFrom: 1 to: self size!
+
+reversedFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of the receiver between the <integer> indices startInteger and stopInteger, inclusive, but in reverse order."
+
+	| answer offset len |
+	len := stopInteger - startInteger + 1.
+	answer := self species ofSize: len.
+	offset := len + startInteger.
+	startInteger to: stopInteger do: [:i | answer at: offset - i put: (self at: i)].
 	^answer!
 
 reverseDo: operation
@@ -1330,7 +1330,7 @@ writeStream
 !SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encoding!constants!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encoding!constants!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorCollectionsOfDifferentSizes!enumerating!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
@@ -1390,6 +1390,7 @@ writeStream
 !SequenceableCollection categoriesFor: #replaceFrom:to:withObject:!public!replacing! !
 !SequenceableCollection categoriesFor: #resize:!mutating!private! !
 !SequenceableCollection categoriesFor: #reverse!copying!public! !
+!SequenceableCollection categoriesFor: #reversedFrom:to:!copying!public! !
 !SequenceableCollection categoriesFor: #reverseDo:!enumerating!public! !
 !SequenceableCollection categoriesFor: #runsAndValuesDo:!enumerating!public! !
 !SequenceableCollection categoriesFor: #second!accessing!public! !
@@ -1435,6 +1436,11 @@ emitEncodingMarkerOn: aPositionableStream
 
 	!
 
+encoding
+	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #binary, #pointers, #ansi, #utf8, #utf16le or #utf32."
+
+	^#pointers!
+
 new: anInteger streamContents: aMonadicValuable
 	| stream |
 	stream := self writeStream: anInteger.
@@ -1469,6 +1475,7 @@ writeStream: anInteger
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
 !SequenceableCollection class categoriesFor: #defaultSortAlgorithm!instance creation!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
+!SequenceableCollection class categoriesFor: #encoding!constants!public! !
 !SequenceableCollection class categoriesFor: #new:streamContents:!public!stream creation! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #streamContents:!public!stream creation! !
