@@ -10,6 +10,7 @@ package classNames
 	add: #AccessNorthwindDB;
 	add: #DBConnectionTest;
 	add: #DBConnectionTestResource;
+	add: #DBTest;
 	add: #SQLServerDBTest;
 	add: #SQLServerNorthwindDB;
 	yourself.
@@ -32,8 +33,13 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #DBConnectionTest
+DolphinTest subclass: #DBTest
 	instanceVariableNames: 'connection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DBTest subclass: #DBConnectionTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
 	classInstanceVariableNames: ''!

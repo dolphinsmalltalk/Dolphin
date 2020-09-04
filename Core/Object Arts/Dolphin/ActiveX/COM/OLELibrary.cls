@@ -305,28 +305,6 @@ progIDFromCLSID: clsid lplpszProgID: lplpszProgID
 	<stdcall: hresult ProgIDFromCLSID guid* lpwstr*>
 	^self invalidCall: _failureCode!
 
-stringFromCLSID: rclsid lplpsz: lplpsz
-	"Invoke the StringFromCLSID() function of the module wrapped by the receiver.
-	Helpstring: Converts a CLSID into a string of printable characters
-
-		HRESULT __stdcall StringFromCLSID(
-			GUID* rclsid,
-			LPWSTR* lplpsz);"
-
-	<stdcall: hresult StringFromCLSID guid* lpwstr*>
-	^self invalidCall: _failureCode!
-
-stringFromIID: rclsid lplpsz: lplpsz
-	"Invoke the StringFromIID() function of the module wrapped by the receiver.
-	Helpstring: Converts an interface identifier (IID) into a string of printable characters
-
-		HRESULT __stdcall StringFromIID(
-			GUID* rclsid,
-			LPWSTR* lplpsz);"
-
-	<stdcall: hresult StringFromIID guid* lpwstr*>
-	^self invalidCall: _failureCode!
-
 supportsDCOM
 	"Answer whether the host OS supports DCOM (i.e. remote servers).
 	This is the officially recognised test!!"
@@ -369,8 +347,6 @@ uninitialize
 !OLELibrary categoriesFor: #oleLockRunning:fLock:fLastUnlockCloses:!OLE Functions-Persistent Objects!primitives!public! !
 !OLELibrary categoriesFor: #oleUninitialize!**auto generated**!OLE Functions-OLE!public! !
 !OLELibrary categoriesFor: #progIDFromCLSID:lplpszProgID:!**auto generated**!OLE Functions-GUID!public! !
-!OLELibrary categoriesFor: #stringFromCLSID:lplpsz:!**auto generated**!OLE Functions-GUID!public! !
-!OLELibrary categoriesFor: #stringFromIID:lplpsz:!**auto generated**!OLE Functions-GUID!public! !
 !OLELibrary categoriesFor: #supportsDCOM!public!testing! !
 !OLELibrary categoriesFor: #uninitialize!private!realizing/unrealizing! !
 

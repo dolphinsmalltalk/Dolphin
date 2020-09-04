@@ -57,6 +57,7 @@ package methodNames
 	add: 'FLOAT class' -> #icon;
 	add: 'Fraction class' -> #icon;
 	add: 'FramingLayout class' -> #icon;
+	add: 'GUID class' -> #icon;
 	add: 'InputState class' -> #icon;
 	add: 'Integer class' -> #icon;
 	add: 'Interval class' -> #icon;
@@ -552,6 +553,14 @@ icon
 
 	^(TextTileIcon text: $\x1F5BD)! !
 !FramingLayout class categoriesFor: #icon!constants!public! !
+
+!GUID class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!GUID class categoriesFor: #icon!constants!public! !
 
 !InputState class methodsFor!
 

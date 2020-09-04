@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AXTypeLibraryAnalyzerTest
 	instanceVariableNames: 'analyzer'
@@ -13,7 +13,8 @@ AXTypeLibraryAnalyzerTest comment: 'If these tests fail make sure you have regis
 setUp
 	"If this fails make sure you have registered TestTypelib by running regsvr32 on Tests\TLATest\Debug\TLATest.dll"
 
-	analyzer := TestTypelib current analyzer!
+	analyzer := TestTypelib current analyzer.
+	analyzer isNil ifTrue: [self skip].!
 
 tearDown
 	TestTypelib reset.

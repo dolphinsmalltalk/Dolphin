@@ -298,16 +298,13 @@ fromIdlString: aString
 	^answer!
 
 fromString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString,
-	which is in Microsoft(tm) GUID format.
-	Implementation Note: Subclasses override this because OLE defines more specific
-	functions for that purpose, which we use to be good boys, even though it appears not
-	to be necessary (i.e. if we drop down a level and use the underlying
-	RPC library function, it works anyway)."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format.
+	Implementation Note: Subclasses override this because OLE defines more specific functions for that purpose, which we use to be good boys, even though it appears not to be necessary (i.e. if we drop down a level and use the underlying RPC library function, it works anyway)."
 
 	| answer status |
 	answer := self newNull.
-	(status := RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1) uuid: answer) == 0
+	(status := RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1)
+				uuid: answer) == 0
 		ifFalse: [RPCError signalWith: status].
 	^answer!
 

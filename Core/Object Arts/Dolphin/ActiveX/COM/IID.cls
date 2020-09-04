@@ -12,17 +12,6 @@ Many interfaces are not recorded in the registry, but if they have marshalling s
 !IID categoriesForClass!External-Data-Structured-COM! !
 !IID methodsFor!
 
-asString
-	"Answer a string representation of the receiver which is expected to be a CLSID (if not
-	an error may result)."
-
-	| buf answer |
-	buf := COMTaskMemory new.
-	OLELibrary default stringFromIID: self lplpsz: buf.
-	answer := String fromUtf16String: buf.
-	buf free.		"remove finalization overhead by explicity freeing"
-	^answer!
-
 displayOn: aStream
 	"Append an 'end-user suitable' textual representation of the receiver to aStream.
 	The interface name is rather more helpful, if available!!"
@@ -40,15 +29,13 @@ interfaceName
 
 	^(((RegKey classesRoot: #read) at: 'Interface') at: self asString ifAbsent: [^nil]) value
 ! !
-!IID categoriesFor: #asString!converting!public! !
 !IID categoriesFor: #displayOn:!displaying!public! !
 !IID categoriesFor: #interfaceName!accessing!public! !
 
 !IID class methodsFor!
 
 fromString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString,
-	which is in Microsoft(tm) GUID format."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format."
 
 	| answer |
 	answer := self newNull.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
@@ -13,22 +13,19 @@ TestTypelib comment: ''!
 analyzer
 	^analyzer!
 
-isAvailable
-	"override to provide information on the readiness of the resource"
-
-	^analyzer notNil
-!
-
 libid
 	^GUID fromString: '{39EA4CC5-6518-4C4B-BD48-0FC1B44A08C8}'!
 
 setUp
 	super setUp.
-	analyzer := AXTypeLibraryAnalyzer 
+	
+	[analyzer := AXTypeLibraryAnalyzer
 				load: self libid
 				major: 1
 				minor: 0
-				locale: LOCALE_USER_DEFAULT!
+				locale: LOCALE_USER_DEFAULT]
+			on: HRESULTError
+			do: [:ex | ex hresult asInteger = AXAutomationErrors.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
 
 tearDown
 	analyzer notNil 
@@ -38,7 +35,6 @@ tearDown
 			analyzer := nil].
 	super tearDown! !
 !TestTypelib categoriesFor: #analyzer!private!unit tests! !
-!TestTypelib categoriesFor: #isAvailable!public!Testing! !
 !TestTypelib categoriesFor: #libid!Init / Release!public! !
 !TestTypelib categoriesFor: #setUp!Init / Release!public! !
 !TestTypelib categoriesFor: #tearDown!public!Running! !

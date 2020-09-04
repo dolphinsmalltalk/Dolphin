@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #XmlFormatterTest
 	instanceVariableNames: ''
@@ -20,9 +20,15 @@ assertReformat: text toCanonical: canonical
 DiffBrowser compare: reformatted with: canonical
 "!
 
-parseXml: text 
+newDocument
 	| dom |
-	dom := IXMLDOMDocument new.
+	dom := IXMLDOMDocument3 new.
+	dom setProperty_: 'ProhibitDTD' value: false.
+	^dom!
+
+parseXml: text
+	| dom |
+	dom := self newDocument.
 	dom
 		preserveWhiteSpace: false;
 		validateOnParse: false;
@@ -103,10 +109,10 @@ testCanonicalExample3_3
 	<e2></e2>
 	<e3 id="elem3" name="elem3"/>
 	<e4 id="elem4" name="elem4"></e4>
-	<e5 xmlns="http://example.org" xmlns:a="http://www.w3.org" xmlns:b="http://www.ietf.org" attr="I''m" attr2="all" b:attr="sorted" a:attr="out"/>
+	<e5 xmlns:a="http://www.w3.org" xmlns:b="http://www.ietf.org" attr="I''m" attr2="all" b:attr="sorted" a:attr="out" xmlns="http://example.org"/>
 	<e6 xmlns:a="http://www.w3.org">
 		<e7 xmlns="http://www.ietf.org">
-			<e8 xmlns="" xmlns:a="http://www.w3.org">
+			<e8 xmlns:a="http://www.w3.org" xmlns="">
 				<e9 xmlns:a="http://www.ietf.org" attr="default"/>
 			</e8>
 		</e7>
@@ -144,7 +150,7 @@ testDocumentType
 		<PUBLISHER>Scootney</PUBLISHER>
 	</BOOK>
 </COLLECTION>'.
-	dom := IXMLDOMDocument new.
+	dom := self newDocument.
 	dom loadText: text.
 	formatter := XmlFormatter new.
 	reformatted := formatter format: dom.
@@ -153,8 +159,9 @@ testDocumentType
 "
 DiffBrowser compare: reformatted with: text
 "! !
-!XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!private!unit tests! !
-!XmlFormatterTest categoriesFor: #parseXml:!public!unit tests! !
+!XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!helpers!private! !
+!XmlFormatterTest categoriesFor: #newDocument!helpers!private! !
+!XmlFormatterTest categoriesFor: #parseXml:!helpers!private! !
 !XmlFormatterTest categoriesFor: #testCanonicalExample3_1!public!unit tests! !
 !XmlFormatterTest categoriesFor: #testCanonicalExample3_2!public!unit tests! !
 !XmlFormatterTest categoriesFor: #testCanonicalExample3_3!public!unit tests! !

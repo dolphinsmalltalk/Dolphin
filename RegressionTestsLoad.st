@@ -21,6 +21,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
-	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax'
+	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\ActiveX Tests.pax';
 	yourself.
 !
