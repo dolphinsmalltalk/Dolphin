@@ -12,17 +12,6 @@ The CLSIDs of all coclasses registered on your machine can be found under the HK
 !CLSID categoriesForClass!External-Data-Structured-COM! !
 !CLSID methodsFor!
 
-asString
-	"Answer a string representation of the receiver which is expected to be a CLSID (if not
-	an error may result)."
-
-	| buf answer |
-	buf := COMTaskMemory new.
-	OLELibrary default stringFromCLSID: self lplpsz: buf.
-	answer := String fromUtf16String: buf.
-	buf free.	"remove finalization overhead by explicity freeing"
-	^answer!
-
 displayOn: aStream
 	"Append an 'end-user suitable' textual representation of the receiver to aStream.
 	GUIDs are a fairly technical concept, but they do appear in the registry in a
@@ -44,7 +33,6 @@ progID
 	pProgId := COMTaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
 	^(Utf16String fromAddress: pProgId) asString! !
-!CLSID categoriesFor: #asString!converting!public! !
 !CLSID categoriesFor: #displayOn:!displaying!public! !
 !CLSID categoriesFor: #progID!displaying!public! !
 

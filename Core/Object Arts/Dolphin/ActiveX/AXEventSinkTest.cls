@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AXEventSinkTest
 	instanceVariableNames: 'sink object received'
@@ -15,17 +15,22 @@ onAxEvent: aSymbol withArguments: anArray
 	received addLast: aSymbol -> (anArray collect: [:each | each copy])!
 
 setUp
-	| itf |
+	| itf  analyzer |
+	analyzer := TestTypelib current analyzer.
+	analyzer isNil ifTrue: [self skip].
 	itf := Smalltalk at: #TLATESTLibITestFireEvents
 				ifAbsent: 
-					[[(TestTypelib current analyzer at: #ITestFireEvents) generate] on: Compiler errorClass
-						do: [:ex | self assert: false description: ex description].
+					[
+					[
+					(analyzer at: #ITestFireEvents) generate]
+							on: Compiler errorClass
+							do: [:ex | self assert: false description: ex description].
 					Smalltalk at: #TLATESTLibITestFireEvents].
 	sink := AXEventSink target: self sourceTypeInfo: (TestTypelib current analyzer at: '_DTestEvents').
 	object := itf onCLSID: (CLSID fromString: '{B9C597B8-1712-4100-A470-A06D15D60CC2}').
 	sink connect: object.
 	sink triggerGenericEvent: true.
-	self 
+	self
 		when: #axEvent:withArguments:
 		send: #onAxEvent:withArguments:
 		to: self.

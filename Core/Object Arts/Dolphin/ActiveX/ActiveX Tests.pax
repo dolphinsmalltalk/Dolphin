@@ -8,7 +8,9 @@ package classNames
 	add: #ADODBTest;
 	add: #AXEventSinkTest;
 	add: #AXTypeLibraryAnalyzerTest;
+	add: #CLSIDTest;
 	add: #COMInterfaceTest;
+	add: #IIDTest;
 	add: #TestTypelib;
 	add: #XmlFormatterTest;
 	yourself.
@@ -19,19 +21,18 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Automation\ActiveX Automation';
-	add: 'Connection Points\ActiveX Connection Points';
-	add: 'Components\ADO\ADODB';
-	add: '..\Database\Database Tests';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: 'COM\OLE COM';
-	add: 'Components\Font\OLE Font';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: 'Components\XML DOM\XML DOM';
-	add: '..\..\Samples\MVP\XmlPad\XmlPad';
-	yourself).
+package setPrerequisites: #(
+	'Automation\ActiveX Automation'
+	'Connection Points\ActiveX Connection Points'
+	'Components\ADO\ADODB'
+	'..\Database\Database Tests'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'COM\OLE COM'
+	'Components\Font\OLE Font'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'Components\XML DOM\XML DOM'
+	'..\..\Samples\MVP\XmlPad\XmlPad').
 
 package!
 
@@ -58,6 +59,16 @@ DolphinTest subclass: #XmlFormatterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DBTest subclass: #ADODBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUIDTest subclass: #CLSIDTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUIDTest subclass: #IIDTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
