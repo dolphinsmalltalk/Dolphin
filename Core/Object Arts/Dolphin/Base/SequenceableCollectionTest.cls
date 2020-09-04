@@ -7,7 +7,7 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	classInstanceVariableNames: ''!
 SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
 SequenceableCollectionTest isAbstract: true!
-SequenceableCollectionTest comment: 'SUnitBrowser openOnTestCase: self'!
+SequenceableCollectionTest comment: ''!
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
 !SequenceableCollectionTest methodsFor!
 
@@ -59,10 +59,7 @@ testAt
 	#(-1 0 2) do: [:i | self should: [subject at: i] raise: BoundsError].
 	subject := self newCollection: #(65 66 67).
 	1 to: subject size do: [:i | self assert: (subject at: i) equals: (self assimilate: 65 + i - 1)].
-	(Array
-		with: -1
-		with: 0
-		with: subject size + 1) do: [:i | self should: [subject at: i] raise: BoundsError]!
+	{-1. 0. subject size + 1} do: [:i | self should: [subject at: i] raise: BoundsError]!
 
 testBeginsWith
 	"Test SequenceableCollection>>beginsWith:"
@@ -567,69 +564,68 @@ testIncludesAnyOf
 	self assert: (searchee includesAnyOf: (self newCollection: 'b'))!
 
 testIndexOfAnyOfStartingAt
-	| searchee db bd de a d abc offset aa |
+	| searchee db bd de a abc offset aa |
 	db := self newCollection: 'db'.
 	a := self newCollection: 'a'.
-	d := self newCollection: 'd'.
 	abc := self newCollection: 'abc'.
 	searchee := self newCollection: ''.
-	self 
+	self
 		verifyIndexOfAnyOf: searchee
 		startingAt: 1
 		in: searchee
 		is: 0.
-	self 
+	self
 		verifyIndexOfAnyOf: a
 		startingAt: 1
 		in: searchee
 		is: 0.
-	self 
+	self
 		verifyIndexOfAnyOf: db
 		startingAt: 1
 		in: searchee
 		is: 0.
 	searchee := abc.
-	self 
+	self
 		verifyIndexOfAnyOf: db
 		startingAt: 1
 		in: searchee
 		is: 2.
-	self 
+	self
 		verifyIndexOfAnyOf: db
 		startingAt: 2
 		in: searchee
 		is: 2.
-	self 
+	self
 		verifyIndexOfAnyOf: db
 		startingAt: 3
 		in: searchee
 		is: 0.
 	bd := self newCollection: 'bd'.
-	self 
+	self
 		verifyIndexOfAnyOf: bd
 		startingAt: 1
 		in: searchee
 		is: 2.
 	de := self newCollection: 'de'.
-	self 
+	self
 		verifyIndexOfAnyOf: de
 		startingAt: 1
 		in: searchee
 		is: 0.
 	searchee := self newCollection: (String new: 1).
-	searchee isSymbol 
+	searchee isSymbol
 		ifFalse: 
-			[self 
+			[self
 				verifyIndexOfAnyOf: searchee
 				startingAt: 1
 				in: searchee
 				is: 1.
-			self 
+			self
 				verifyIndexOfAnyOf: a
 				startingAt: 1
 				in: searchee
 				is: 0.
-			self 
+			self
 				verifyIndexOfAnyOf: db
 				startingAt: 1
 				in: searchee
@@ -637,17 +633,17 @@ testIndexOfAnyOfStartingAt
 	searchee := abc , (self newCollection: (String new: 1)).
 	offset := searchee first == Character null ifTrue: [1] ifFalse: [0].
 	aa := 1.
-	self 
+	self
 		verifyIndexOfAnyOf: db
 		startingAt: aa
 		in: searchee
 		is: 2 + offset.
-	self 
+	self
 		verifyIndexOfAnyOf: a
 		startingAt: aa
 		in: searchee
 		is: 1 + offset.
-	self 
+	self
 		verifyIndexOfAnyOf: de
 		startingAt: aa
 		in: searchee
@@ -766,6 +762,36 @@ testResize
 	self assert: subject size equals: 1.
 	self assert: actual equals: (self newCollection: #($a))!
 
+testReverse
+	#(#($1 $2 $3 $4 $5) #($5 $4 $3 $2 $1) #($1) #($1) #() #() #($1 $2) #($2 $1)) pairsDo: 
+			[:original :reversed |
+			| subject expected actual |
+			subject := self newCollection: original.
+			actual := subject reverse.
+			expected := self newUnsortedCollection: reversed.
+			self assert: actual equals: expected]!
+
+testReversedFromTo
+	| subject expected actual |
+	subject := self newCollection: #($1 $2 $3 $4 $5).
+	actual := subject reversedFrom: 1 to: 5.
+	expected := self newUnsortedCollection: #($5 $4 $3 $2 $1).
+	self assert: actual equals: expected.
+	actual := subject reversedFrom: 3 to: 5.
+	expected := self newUnsortedCollection: #($5 $4 $3).
+	self assert: actual equals: expected.
+	actual := subject reversedFrom: 6 to: 5.
+	expected := self newUnsortedCollection: #().
+	self assert: actual equals: expected.
+	self
+		should: [subject reversedFrom: 0 to: 1]
+		raise: BoundsError
+		matching: [:ex | ex tag = 0].
+	self
+		should: [subject reversedFrom: 5 to: 6]
+		raise: BoundsError
+		matching: [:ex | ex tag = 6]!
+
 unsortedCollectionClass
 	^self collectionClass!
 
@@ -828,6 +854,8 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testMixedConcatenation!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testResize!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testReverse!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testReversedFromTo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
 !SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !

@@ -13,6 +13,18 @@ OrderedCollectionTest comment: ''!
 collectionClass
 	^OrderedCollection!
 
+newCollection: aCollection
+	"Create a test subject that has a firstIndex that is not 1, as this then causes inherited tests to excercise the OrderedCollection offsetting logic."
+
+	| subject |
+	subject := aCollection size == 0
+				ifTrue: [self collectionClass withAll: #($1)]
+				ifFalse: 
+					[subject := self collectionClass withAll: (self assimilateElements: aCollection).
+					subject := self collectionClass withAll: (Array with: subject first) , subject].
+	subject removeFirst.
+	^subject!
+
 testFindFirst2
 	| subject |
 	subject := self collectionClass withAll: (1 to: 4).
@@ -115,7 +127,7 @@ testResize
 	self assert: subject equals: (self newCollection: #($b))!
 
 testSetSize
-	| o capacity o2 o3 o4 o5 |
+	| o capacity o2 o3 o5 |
 	o := OrderedCollection new.
 	capacity := o basicSize.
 	"Initially empty, lastIndex = 0, firstIndex = 1"
@@ -190,7 +202,6 @@ testSetSize
 	self assert: o asArray equals: (1 to: capacity - 3) asArray.
 	o2 := o copy.
 	o3 := o copy.
-	o4 := o copy.
 
 	"Size to capacity, causing elems to be shifted down because first slot empty"
 	o setSize: capacity.
@@ -330,6 +341,7 @@ testStrongTalkTests
 				addLast: 3;
 				yourself)! !
 !OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
+!OrderedCollectionTest categoriesFor: #newCollection:!helpers!private! !
 !OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !

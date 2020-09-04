@@ -463,9 +463,6 @@ encodeOn: aWriteStream put: aCharacter
 
 	^self subclassResponsibility!
 
-encoding
-	^self class encoding!
-
 expandMacros
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
@@ -644,22 +641,6 @@ hash
 	"Fold to 30 bits so is always positive SmallInteger"
 	^(hash bitShift: VMConstants.SmallIntegerMax highBit negated)
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
-
-identityIncludes: aCharacter
-	"Answer whether the <Character> argument is one of the elements of the receiver."
-
-	^(self
-		nextIdentityIndexOf: aCharacter
-		from: 1
-		to: self size) ~~ 0!
-
-includes: aCharacter
-	"Answer whether the <Character> argument is one of the elements of the receiver."
-
-	^(self
-		nextIndexOf: aCharacter
-		from: 1
-		to: self size) ~~ 0!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which
@@ -963,11 +944,6 @@ replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: star
 					[| ch |
 					(ch := stream nextAvailable) isNil ifTrue: [BoundsError signalWith: stream position + 1].
 					current := (self encodedAt: current put: ch) + 1]]!
-
-reverse
-	"Answer a copy of the receiver but with its elements in reverse order."
-
-	^self subclassResponsibility!
 
 rightString: anInteger
 	"Answer a new string comprising the rightmost anInteger characters of the receiver."
@@ -1279,7 +1255,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
 !String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!String categoriesFor: #encoding!constants!public! !
 !String categoriesFor: #expandMacros!printing!public! !
 !String categoriesFor: #expandMacrosWith:!printing!public! !
 !String categoriesFor: #expandMacrosWith:with:!printing!public! !
@@ -1295,8 +1270,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #formatWith:with:with:with:!printing!public! !
 !String categoriesFor: #formatWithArguments:!printing!public! !
 !String categoriesFor: #hash!comparing!public! !
-!String categoriesFor: #identityIncludes:!public!searching! !
-!String categoriesFor: #includes:!public!searching! !
 !String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
 !String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !String categoriesFor: #isLiteral!public!testing! !
@@ -1321,7 +1294,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #refersToLiteral:!private!testing! !
 !String categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!String categoriesFor: #reverse!copying!public! !
 !String categoriesFor: #rightString:!copying!public! !
 !String categoriesFor: #sameAs:!comparing!public! !
 !String categoriesFor: #skipOver:ignoreCase:!private!searching! !
