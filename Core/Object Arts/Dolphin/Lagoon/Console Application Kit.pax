@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'Console Application Kit'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Console Application Kit
+Copyright (c) Object Arts Ltd, 2001-2002.
+
+Components for building and deploying console applications.
+'.
+
+
+package setClassNames: #(
+	#{Kernel.ConsoleSessionManager}
+).
+
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.SessionManager subclass: #'Kernel.ConsoleSessionManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.CRTConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

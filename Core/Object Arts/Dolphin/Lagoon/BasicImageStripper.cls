@@ -156,16 +156,16 @@ emptySystemDictionary
 	| globals |
 	self startElement: 'EmptySystemDictionary' attributes: #().
 	globals := OrderedCollection new.
-	Smalltalk bindingsDo: 
+	Root allBindingsDo: 
 			[:each |
-			(each value class isMeta not or: [each value name ~~ each key]) ifTrue: [globals add: each key]].
+			(each isClassVariable not and: [each value class isMeta not or: [each value name ~~ each key]]) ifTrue: [globals add: each key]].
 	globals do: 
 			[:each |
 			self
 				logElement: 'Global'
 				attributes: #()
 				value: each.
-			Smalltalk removeKey: each].
+			each environment basicRemoveBinding: each].
 	self collectGarbage: 3.
 	self endElement: true!
 
