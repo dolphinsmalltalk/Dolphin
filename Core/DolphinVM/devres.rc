@@ -105,6 +105,8 @@ CONSOLESESSIONMANAGER.ICO ICON                  "Res\\ConsoleSessionManager.ico"
 
 CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
 
+CORE.ICO                ICON                    "Res\\CoreNamespace.ico"
+
 DATE.ICO                ICON                    "Res\\Date.ico"
 
 DATEPRESENTER.ICO       ICON                    "Res\\DatePresenter.ico"
@@ -181,6 +183,8 @@ EXCEPTION.ICO           ICON                    "Res\\Exception.ico"
 
 EXTENT.ICO              ICON                    "res\\EXTENT.ICO"
 
+EXTERNAL.ICO            ICON                    "res\\ExternalNamespace.ICO"
+
 LIBRARY.ICO				ICON                    "Res\\ExternalLibrary.ico"
 
 FILE.ICO				ICON					"Res\File.ico"
@@ -222,6 +226,8 @@ FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
 GOSEARCH.ICO            ICON                    "Res\\GoSearch.ico"
 
 GOTOFOLDER.ICO          ICON                    "Res\GotoFolder.ico"
+
+GRAPHICS.ICO            ICON                    "Res\\GraphicsNamespace.ico"
 
 GRAPHICSTOOL.ICO        ICON                    "Res\\GraphicsTool.ico"
 
@@ -276,6 +282,8 @@ INPLACERENAME.ICO       ICON                    "Res\\Rename.ico"
 INPUTSTATE.ICO          ICON                    "Res\\InputState.ico"
 
 INSPECTIT.ICO           ICON                    "Res\\BasicInspector.ico"
+
+KERNEL.ICO              ICON                    "Res\\KernelNamespace.ico"
 
 KEYBOARD.ICO            ICON                    "Res\\Keyboard.ico"
 
@@ -350,6 +358,8 @@ NUMBERPRESENTER.ICO     ICON                    "Res\\NumberPresenter.ico"
 OBJECT.ICO              ICON                    "Res\\object.ico"
 
 OPENWORKSPACE.ICO       ICON                    "res\\OpenWorkspace.ico"
+
+OS.ICO                  ICON                    "res\\OSNamespace.ico"
 
 PACKAGE.ICO             ICON                    "Res\\Package.ico"
 
@@ -437,6 +447,8 @@ SELECTPLAY.ICO			ICON                    "Res\\SelectPlay.ico"
 
 SEARCHTEXT.ICO          ICON                    "Res\\SearchText.ico"
 
+SHAREDPOOL.ICO          ICON                    "Res\\SharedPool.ico"
+
 SHELL.ICO               ICON                    "Res\\Shell.ico"
 
 SHELLVIEW.ICO           ICON                    "Res\\ShellView.ico"
@@ -517,7 +529,7 @@ TOOLBAR.ICO             ICON                    "Res\\Toolbar.ico"
 
 TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
 
-TOOLS.ICO				ICON					"Res\\Tools.ico"
+TOOLS.ICO				ICON					"Res\\ToolsNamespace.ico"
 
 TRANSCRIPTSHELL.ICO     ICON                    "res\\TranscriptShell.ico"
 

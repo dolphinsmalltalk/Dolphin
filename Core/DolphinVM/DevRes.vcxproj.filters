@@ -991,8 +991,32 @@
     <Image Include="Res\Guid.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\AXControlSite.ico" />
-    <Image Include="Res\JSON.ico" />
+    <Image Include="Res\TimeZone.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\JSON.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Namespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\OS.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PrintIt.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Tools.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\AXControlSite.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SharedPool.ico" />
+    <Image Include="Res\OSNamespace.ico" />
+    <Image Include="Res\ToolsNamespace.ico" />
+    <Image Include="Res\ExternalNamespace.ico" />
+    <Image Include="Res\CoreNamespace.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

@@ -226,6 +226,7 @@
     <Image Include="Res\Compiler.ico" />
     <Image Include="Res\ContainerView.ico" />
     <Image Include="Res\ControlBarAbstract.ico" />
+    <Image Include="Res\CoreNamespace.ico" />
     <Image Include="Res\Date.ico" />
     <Image Include="Res\DateAndTime.ico" />
     <Image Include="Res\DatePresenter.ico" />
@@ -268,6 +269,7 @@
     <Image Include="Res\extent.ico" />
     <Image Include="Res\ExternalCallback.ico" />
     <Image Include="Res\ExternalLibrary.ico" />
+    <Image Include="Res\ExternalNamespace.ico" />
     <Image Include="Res\externalstructure.ico" />
     <Image Include="Res\File.ico" />
     <Image Include="Res\FileBrowser.ico" />
@@ -300,11 +302,14 @@
     <Image Include="Res\MethodHistoryErase.ico" />
     <Image Include="Res\MethodSource.ico" />
     <Image Include="Res\MoveUp.ico" />
+    <Image Include="Res\Namespace.ico" />
     <Image Include="Res\NewIdeaSpaceShell.ico" />
     <Image Include="Res\NewPackage.ico" />
     <Image Include="Res\NewWorkspace.ico" />
     <Image Include="Res\OpenWorkspace.ico" />
     <Image Include="Res\Options.ico" />
+    <Image Include="Res\OS.ico" />
+    <Image Include="Res\OSNamespace.ico" />
     <Image Include="Res\PackageBrowserShell.ico" />
     <Image Include="Res\PasteShortcut.ico" />
     <Image Include="Res\Pencil.ico" />
@@ -312,6 +317,7 @@
     <Image Include="Res\PowerSwitch.ico" />
     <Image Include="Res\preferences.ico" />
     <Image Include="Res\PrinterCanvas.ico" />
+    <Image Include="Res\PrintIt.ico" />
     <Image Include="Res\ProcessorScheduler.ico" />
     <Image Include="Res\Profiler.ico" />
     <Image Include="Res\Properties.ico" />
@@ -331,6 +337,7 @@
     <Image Include="Res\SelectPlay.ico" />
     <Image Include="Res\SequenceableCollectionPresenter.ico" />
     <Image Include="Res\Share.ico" />
+    <Image Include="Res\SharedPool.ico" />
     <Image Include="Res\ShowNextStatement.ico" />
     <Image Include="Res\SlideyInneyOuteyThing.ico" />
     <Image Include="Res\SmalltalkOptionsFolder.ico" />
@@ -340,7 +347,10 @@
     <Image Include="Res\StatusBar.ico" />
     <Image Include="Res\TestView.ico" />
     <Image Include="Res\TextDocument.ico" />
+    <Image Include="Res\TimeZone.ico" />
     <Image Include="Res\Toolbar.ico" />
+    <Image Include="Res\Tools.ico" />
+    <Image Include="Res\ToolsNamespace.ico" />
     <Image Include="Res\UpArrow.ico" />
     <Image Include="Res\ViewContent.ico" />
     <Image Include="Res\ViewDetails.ico" />

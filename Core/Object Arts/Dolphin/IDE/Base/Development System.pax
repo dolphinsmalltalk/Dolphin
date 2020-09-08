@@ -129,6 +129,7 @@ package setClassNames: #(
 	#{Smalltalk.VisualObjectFinder}
 	#{Smalltalk.VisualShellFinder}
 	#{Smalltalk.WalkbackDialog}
+	#{Tools}
 ).
 
 package setMethodNames: #(
@@ -754,6 +755,12 @@ package!
 
 "Class Definitions"!
 
+Kernel.Namespace subclass: #Tools
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'

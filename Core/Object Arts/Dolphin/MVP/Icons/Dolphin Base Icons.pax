@@ -10,6 +10,7 @@ This package extends base system classes to add icons.
 
 
 package setMethodNames: #(
+	#(#{Core class} #icon)
 	#(#{Core.ArithmeticValue class} #icon)
 	#(#{Core.Array class} #icon)
 	#(#{Core.Association class} #icon)
@@ -63,6 +64,7 @@ package setMethodNames: #(
 	#(#{Core.Warning class} #icon)
 	#(#{Core.WarningSignal class} #icon)
 	#(#{Core.WeakArray class} #icon)
+	#(#{External class} #icon)
 	#(#{External.BOOL class} #icon)
 	#(#{External.BOOLEAN class} #icon)
 	#(#{External.Callback class} #icon)
@@ -76,6 +78,7 @@ package setMethodNames: #(
 	#(#{Graphics.ColorDefault} #icon)
 	#(#{Graphics.Point class} #icon)
 	#(#{Graphics.Rectangle class} #icon)
+	#(#{Kernel class} #icon)
 	#(#{Kernel.AbstractBindingReference class} #icon)
 	#(#{Kernel.Announcement class} #icon)
 	#(#{Kernel.BindingReference class} #icon)
@@ -95,10 +98,13 @@ package setMethodNames: #(
 	#(#{Kernel.Package class} #icon)
 	#(#{Kernel.PackageManager class} #icon)
 	#(#{Kernel.ProcessorScheduler class} #icon)
+	#(#{Kernel.SharedPool class} #icon)
 	#(#{Kernel.SourceManager class} #icon)
 	#(#{Kernel.VariableBinding} #icon)
+	#(#{OS class} #icon)
 	#(#{OS.DiskVolumeInformation class} #icon)
 	#(#{OS.TIME_ZONE_INFORMATION class} #icon)
+	#(#{Root class} #icon)
 	#(#{Smalltalk class} #icon)
 	#(#{UI class} #icon)
 	#(#{UI.AbstractCardContainer class} #icon)
@@ -129,6 +135,14 @@ package setPrerequisites: #(
 package!
 
 "Loose Methods"!
+
+!Core class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core class categoriesFor: #icon!constants!public! !
 
 !Core.ArithmeticValue class methodsFor!
 
@@ -621,6 +635,14 @@ icon
 		yourself)! !
 !Core.WeakArray class categoriesFor: #icon!constants!public! !
 
+!External class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!External class categoriesFor: #icon!constants!public! !
+
 !External.BOOL class methodsFor!
 
 icon
@@ -693,6 +715,14 @@ icon
 	^##(self) defaultIcon! !
 !External.Structure class categoriesFor: #icon!constants!public! !
 
+!Graphics class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Graphics class categoriesFor: #icon!constants!public! !
+
 !Graphics.Color methodsFor!
 
 icon
@@ -732,6 +762,14 @@ icon
 
 	^##(TextTileIcon text: $\x25AD)! !
 !Graphics.Rectangle class categoriesFor: #icon!constants!public! !
+
+!Kernel class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel class categoriesFor: #icon!constants!public! !
 
 !Kernel.AbstractBindingReference class methodsFor!
 
@@ -873,7 +911,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Graphics.Icon fromId: 'Namespace.ico'! !
+	^##(self) defaultIcon! !
 !Kernel.Namespace class categoriesFor: #icon!constants!public! !
 
 !Kernel.Package class methodsFor!
@@ -900,6 +938,14 @@ icon
 	^##(self) defaultIcon! !
 !Kernel.ProcessorScheduler class categoriesFor: #icon!constants!public! !
 
+!Kernel.SharedPool class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.SharedPool class categoriesFor: #icon!constants!public! !
+
 !Kernel.SourceManager class methodsFor!
 
 icon
@@ -918,6 +964,14 @@ icon
 icon
 	^value icon! !
 !Kernel.VariableBinding categoriesFor: #icon!constants!public! !
+
+!OS class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!OS class categoriesFor: #icon!constants!public! !
 
 !OS.DiskVolumeInformation class methodsFor!
 
@@ -939,6 +993,15 @@ icon
 
 	^##(self) defaultIcon! !
 !OS.TIME_ZONE_INFORMATION class categoriesFor: #icon!constants!public! !
+
+!Root class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##((Graphics.TextTileIcon text: $\x2130 fontName: 'Georgia')
+		yourself)! !
+!Root class categoriesFor: #icon!constants!public! !
 
 !Smalltalk class methodsFor!
 
