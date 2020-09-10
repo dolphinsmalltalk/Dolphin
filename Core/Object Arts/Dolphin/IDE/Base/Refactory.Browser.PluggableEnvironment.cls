@@ -20,13 +20,12 @@ addMethods: methodCollection
 		addMethods: methodCollection;
 		yourself!
 
-classesAndSelectorsDo: aBlock 
-	self allClassesDo: 
-			[:class | 
-			self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
+classesAndSelectorsDo: aBlock
+	environment
+		classesDo: [:class | self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
 classesDo: aBlock
-	self allClassesDo: [:each | (self includesAnyMethodsOf: each) ifTrue: [aBlock value: each]]!
+	environment classesDo: [:each | (self includesAnyMethodsOf: each) ifTrue: [aBlock value: each]]!
 
 includesAnyMethodsOf: aClass 
 	aClass selectorsAndMethodsDo: 
