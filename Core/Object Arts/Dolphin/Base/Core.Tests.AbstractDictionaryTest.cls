@@ -81,6 +81,17 @@ testAtIfAbsentPut
 	self assert: (dictionary at: #value ifAbsentPut: [3]) identicalTo: 2.
 	self assert: dictionary size identicalTo: initialSize + 1!
 
+testAtIfAbsentPutClean
+	| dictionary initialSize |
+	dictionary := self newDictionary.
+	initialSize := dictionary size.
+	self assert: (dictionary at: #key ifAbsentPutClean: [2]) identicalTo: 1.
+	self assert: dictionary size identicalTo: initialSize.
+	self assert: (dictionary at: #value ifAbsentPutClean: [2]) identicalTo: 2.
+	self assert: dictionary size identicalTo: initialSize + 1.
+	self assert: (dictionary at: #value ifAbsentPutClean: [3]) identicalTo: 2.
+	self assert: dictionary size identicalTo: initialSize + 1!
+
 testAtIfAbsentPutModifyingCollection
 	"Test at:ifAbsentPut: when modifying the collection in the block"
 
@@ -253,6 +264,7 @@ testStrongTalkTests
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutClean!public!unit tests! !
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
 !Core.Tests.AbstractDictionaryTest categoriesFor: #testCyclicRefPrinting!public! !

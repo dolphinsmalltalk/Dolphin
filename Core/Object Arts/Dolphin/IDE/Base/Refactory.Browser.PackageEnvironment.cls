@@ -102,28 +102,33 @@ packages
 packages: aCollection
 	packages := aCollection asArray!
 
-selectorsForClass: aClass do: aBlock 
-	| name |
-	(self definesClass: aClass) 
+selectorsForClass: aClass do: aBlock
+	(self definesClass: aClass)
 		ifTrue: 
-			[aClass selectorsAndMethodsDo: 
-					[:eachSelector :eachMethod | 
-					(eachMethod isLoose not and: [environment includesSelector: eachSelector in: aClass]) 
-						ifTrue: [aBlock value: eachSelector]].
+			[(PackageManager current looseMethods lookup: aClass)
+				ifNil: 
+					[aClass methodDictionary
+						keysDo: [:each | (environment includesSelector: each in: aClass) ifTrue: [aBlock value: each]]]
+				ifNotNil: 
+					[:loose |
+					aClass methodDictionary keysDo: 
+							[:each |
+							((loose includesKey: each) not and: [environment includesSelector: each in: aClass])
+								ifTrue: [aBlock value: each]]].
 			"If only one package in the environment, can skip enumeration of loose
 			methods since there cannot be any (a package cannot both define a class and
 			own loose methods of that class)"
 			self isSinglePackage ifTrue: [^self]].
 
-	"#1325: Must enumerate any loose methods, regardless of whether one of the packages in this
-	environment defines the class."
-	name := aClass fullyQualifiedReference.
+	"#1325: Must enumerate any loose methods, regardless of whether one of the packages in this environment defines the class."
 	packages do: 
-			[:eachPackage | 
+			[:eachPackage |
 			eachPackage methodNames do: 
-					[:each | 
-					each className = name 
-						ifTrue: [(environment includesSelector: each selector in: aClass) ifTrue: [aBlock value: each selector]]]]!
+					[:each |
+					"Because BindingReferences cache the binding they resolve to, it is typically faster to compare the target than the reference."
+					each className valueOrNil == aClass
+						ifTrue: 
+							[(environment includesSelector: each selector in: aClass) ifTrue: [aBlock value: each selector]]]]!
 
 storeOn: aStream
 	aStream nextPut: $(.

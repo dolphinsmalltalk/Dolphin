@@ -134,6 +134,12 @@ at: key ifAbsentPut: exceptionHandler
 
 	^mutex critical: [super at: key ifAbsentPut: exceptionHandler]!
 
+at: key ifAbsentPutClean: exceptionHandler
+	"Answer the value of the receiver keyed by the first <Object> argument. If key is not one of the receiver's keys, then add the result of evaluating  the <niladicValuable> 2nd argument and answer that result.
+	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
+
+	^mutex critical: [super at: key ifAbsentPut: exceptionHandler]!
+
 at: key ifAbsentPutValue: valueObject
 	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
 	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
@@ -308,6 +314,7 @@ stbSaveOn: anSTBOutFiler
 !Core.SharedLookupTable categoriesFor: #asByteArray!converting!public! !
 !Core.SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
 !Core.SharedLookupTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
 !Core.SharedLookupTable categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !Core.SharedLookupTable categoriesFor: #at:put:!accessing!public! !
 !Core.SharedLookupTable categoriesFor: #changeKey:to:!accessing!private! !

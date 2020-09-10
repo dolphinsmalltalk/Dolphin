@@ -107,7 +107,7 @@ allMethods
 	self allMethodsDo: [:m | answer add: m].
 	^answer!
 
-allMethodsDo: operation
+allMethodsDo: aMonadicValuable
 	"Private - Evaluate the <monadicValuable>, operation, for Answer an <IdentitySet> of all the <CompiledMethod>s 
 	directly owned by the receiver or by owning the class in which it is situated."
 
@@ -115,11 +115,14 @@ allMethodsDo: operation
 	loose := self manager looseMethods.
 	self behaviorsDo: 
 			[:eachBehavior |
-			eachBehavior methodDictionary
-				do: [:eachMethod | (loose includesKey: eachMethod name) ifFalse: [operation value: eachMethod]]].
+			eachBehavior methodDictionary do: ((loose lookup: eachBehavior)
+						ifNil: [aMonadicValuable]
+						ifNotNil: 
+							[:selectors |
+							[:eachMethod | (selectors includesKey: eachMethod selector) ifFalse: [aMonadicValuable value: eachMethod]]])].
 
 	"Finally evaluate the operation for all the package's own loose methods"
-	self methodsDo: operation!
+	self methodsDo: aMonadicValuable!
 
 allPrerequisites
 	"Private - Answer a collection of all the Packages objects which must be loaded in before the
@@ -929,25 +932,28 @@ methodsDo: aMonadicValuable
 methodsOfClass: aClass
 	"Answer a Collection of the methods of aClass which the receiver either directly owns (as loose methods) or through owning aClass."
 
-	| className owned |
+	| className |
 	className := aClass fullyQualifiedReference.
-	(self includesClassNamed: className)
+	^(self includesClassNamed: className)
 		ifTrue: 
-			[| loose methodName all |
-			"A neat way to express this would be:
-				aClass methodDictionary asIdentitySet difference: self class manager looseMethods
-			but unfortunately performance is critical here, and we can double the speed as follows:"
-			all := aClass methodDictionary.
-			owned := IdentitySet new: all size.
-			loose := self manager looseMethods.
-			methodName := MethodName className: className selector: #do:.
-			all
-				do: [:each | (loose includesKey: (methodName selector: each selector)) ifFalse: [owned add: each]]]
+			[(self manager looseMethods lookup: aClass)
+				ifNil: [aClass methodDictionary values]
+				ifNotNil: 
+					[:loose |
+					| all owned |
+					"We own the class, so we own all of its methods that are not loose (those belong to other packages)"
+					all := aClass methodDictionary.
+					owned := IdentitySet new: all size.
+					all
+						keysAndValuesDo: [:eachSelector :eachMethod | (loose includesKey: eachSelector) ifFalse: [owned add: eachMethod]].
+					owned]]
 		ifFalse: 
-			["Just pick out any loose methods we own in the class"
-			owned := IdentitySet new.
-			self methodNames do: [:each | each className = className ifTrue: [owned add: each valueOrNil]]].
-	^owned!
+			[| ownedExtensions |
+			"Just pick out any loose methods we own in the class"
+			ownedExtensions := IdentitySet new.
+			self methodNames
+				do: [:each | each className = className ifTrue: [ownedExtensions add: each valueOrNil]].
+			ownedExtensions]!
 
 name
 	"Answer the name of the receiver. This must always be the same as the stem of the package's

@@ -19,18 +19,24 @@ testAllClassesPackaged
 	self assert: Package manager unpackagedClasses asArray equals: #()!
 
 testLooseMethodCacheUpToDate
-	| allNames loose |
-	allNames := LookupTable new.
+	| allLooseMethods count |
+	allLooseMethods := LookupTable new.
 	Package manager packages do: 
 			[:eachPackage |
 			eachPackage methodNames do: 
 					[:each |
-					self deny: (allNames includesKey: each).
-					allNames at: each put: eachPackage]].
-	loose := Package manager looseMethods.
-	self assert: loose size equals: allNames size.
-	loose
-		keysAndValuesDo: [:eachKey :eachValue | self assert: (allNames lookup: eachKey) identicalTo: eachValue]! !
+					| method |
+					method := each value.
+					self deny: (allLooseMethods includesKey: method).
+					allLooseMethods at: method put: eachPackage]].
+	count := 0.
+	Package manager looseMethods keysAndValuesDo: 
+			[:eachClass :eachMap |
+			count := count + eachMap size.
+			eachMap keysAndValuesDo: 
+					[:eachSelector :eachPackage |
+					self assert: (allLooseMethods at: eachClass >> eachSelector) identicalTo: eachPackage]].
+	self assert: count equals: allLooseMethods size! !
 !PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
 !PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
 

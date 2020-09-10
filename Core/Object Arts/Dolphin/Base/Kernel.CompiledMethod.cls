@@ -108,7 +108,7 @@ isGetter
 isLoose
 	"Answer whether the receiver is owned by a package different from that of its class."
 
-	^Package manager isLooseMethod: self!
+	^PackageManager current isLooseMethod: self!
 
 isOverridden
 	"Answer whether the receiver is overridden in a subclass."

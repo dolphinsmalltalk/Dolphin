@@ -84,9 +84,11 @@ allClassesDo: aMonadicValuable
 
 	self allBindingsDo: 
 			[:each |
-			| value |
-			value := each value.
-			(value class isMeta and: [value name == each key]) ifTrue: [aMonadicValuable value: value]]!
+			each isClassVariable
+				ifFalse: 
+					[| value |
+					value := each value.
+					(value class isMeta and: [value name == each key]) ifTrue: [aMonadicValuable value: value]]]!
 
 allSatisfy: aMonadicValuable
 	^classPool allSatisfy: aMonadicValuable!

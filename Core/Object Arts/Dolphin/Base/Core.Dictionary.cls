@@ -159,6 +159,17 @@ at: key ifAbsentPut: operation
 	preexisting := self at: key ifAbsent: [AbsentCookie].
 	^preexisting == AbsentCookie ifTrue: [self at: key put: operation value] ifFalse: [preexisting]!
 
+at: keyObject ifAbsentPutClean: aMonadicValuable
+	"Answer the value of the receiver keyed by the first <Object> argument. If key is not one of the receiver's keys, then add the result of evaluating  the <niladicValuable> 2nd argument and answer that result.
+	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
+
+	| index |
+	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
+	index := self findKeyOrNil: keyObject.
+	^((self basicAt: index)
+		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: aMonadicValuable value)])
+			value!
+
 at: keyObject ifAbsentPutValue: valueObject
 	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
 	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
@@ -540,6 +551,7 @@ values
 !Core.Dictionary categoriesFor: #at:!accessing!public! !
 !Core.Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !Core.Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
 !Core.Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !Core.Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
 !Core.Dictionary categoriesFor: #at:put:!accessing!public! !

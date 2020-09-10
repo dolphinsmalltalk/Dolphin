@@ -216,7 +216,7 @@ testPackageMove
 	self assert: dolphinTestF owningPackage identicalTo: packageA.
 
 	"Check that moving the package of the selected class doesn't alter selection or trigger #selectionChanged events."
-	def := self createClassesDEF.	"Package B"
+	def do: [:each | each owningPackage: packageB].
 	self resetSelection.
 	presenter selection: dolphinTestF.
 	self

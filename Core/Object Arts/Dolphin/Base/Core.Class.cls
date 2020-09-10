@@ -143,9 +143,11 @@ allBindingsDo: aMonadicValuable visited: aSet
 			[:each |
 			| value |
 			aMonadicValuable value: each.
-			value := each value.
-			(value class isMeta and: [aSet addNewElement: value])
-				ifTrue: [value allBindingsDo: aMonadicValuable visited: aSet]]!
+			each isClassVariable
+				ifFalse: 
+					[value := each value.
+					(value class isMeta and: [aSet addNewElement: value])
+						ifTrue: [value allBindingsDo: aMonadicValuable visited: aSet]]]!
 
 allEnvironments
 	"Answer a <sequencedReadableCollection> of the receiver's environment and in turn its environment, and so on, to the top of the namespace tree. The last entry should always be Root, apart from for Root itself (which has no enclosing environments)."

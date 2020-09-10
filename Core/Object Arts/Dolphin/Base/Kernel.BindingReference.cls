@@ -129,7 +129,13 @@ setPathString: aString
 setPathString: aString context: anObject
 	pathString := aString.
 	context := anObject.
-	flags := 0! !
+	flags := 0!
+
+valueOrNil
+	"Answer the value of the variable named by the receiver, or nil if not defined.
+	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
+
+	^self bindingOrNil ifNotNil: [:var | var value]! !
 !Kernel.BindingReference categoriesFor: #asString!converting!public! !
 !Kernel.BindingReference categoriesFor: #bind!operations!private! !
 !Kernel.BindingReference categoriesFor: #bindingOrNil!accessing!public! !
@@ -151,6 +157,7 @@ setPathString: aString context: anObject
 !Kernel.BindingReference categoriesFor: #setPath:context:!initializing!private! !
 !Kernel.BindingReference categoriesFor: #setPathString:!accessing!private! !
 !Kernel.BindingReference categoriesFor: #setPathString:context:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #valueOrNil!accessing!public! !
 
 !Kernel.BindingReference class methodsFor!
 

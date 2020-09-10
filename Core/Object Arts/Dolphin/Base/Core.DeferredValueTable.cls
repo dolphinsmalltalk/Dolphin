@@ -24,6 +24,13 @@ at: key ifAbsentPut: exceptionHandler
 
 	^(super at: key ifAbsentPut: [exceptionHandler deferredValueAt: priority]) value!
 
+at: key ifAbsentPutClean: exceptionHandler
+	"Answer the value named by the argument, key.  If key is not found,
+	then add and answer the result of evaluating the niladic valuable,
+	exceptionHandler."
+
+	^(super at: key ifAbsentPutClean: [exceptionHandler deferredValueAt: priority]) value!
+
 at: anObject put: aNiladicValuable 
 	"Store the <niladicValuable> argument under the specified <Object> key
 	in the receiver. The <niladicValuable> is expected to evaluate to the 
@@ -85,6 +92,7 @@ priority: anInteger
 	priority := anInteger! !
 !Core.DeferredValueTable categoriesFor: #at:ifAbsent:!accessing!public! !
 !Core.DeferredValueTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
 !Core.DeferredValueTable categoriesFor: #at:put:!accessing!public! !
 !Core.DeferredValueTable categoriesFor: #do:!enumerating!public! !
 !Core.DeferredValueTable categoriesFor: #initialize!initializing!private! !

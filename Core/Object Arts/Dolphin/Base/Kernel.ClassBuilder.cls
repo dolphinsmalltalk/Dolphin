@@ -494,16 +494,6 @@ modifyOrCreate
 				ifFalse: [instanceSpec := instanceSpec maskClear: Behavior._BytesSubMask].
 			self modifyExistingClass]!
 
-modifyPrivate
-	"Private - Modify and answer an existing class using the details
-	in the receiver. The class is excluded from its superclasses'
-	subclasses collection."
-
-	self
-		validateForModify;
-		modifyProper.
-	^self currentClass removeFromSuper; yourself!
-
 modifyProper
 	"Private - Modify an existing class using the details contained in the receiver.
 	Implementation Note: If the receiver is attempting to modify itself, then
@@ -1077,7 +1067,6 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
 !Kernel.ClassBuilder categoriesFor: #modifyImportsOf:!pool dictionaries!private! !
 !Kernel.ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
-!Kernel.ClassBuilder categoriesFor: #modifyPrivate!operations!private! !
 !Kernel.ClassBuilder categoriesFor: #modifyProper!private! !
 !Kernel.ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:in:!mutating!private! !
 !Kernel.ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !

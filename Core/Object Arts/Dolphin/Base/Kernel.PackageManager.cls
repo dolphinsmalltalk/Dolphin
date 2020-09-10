@@ -41,7 +41,8 @@ addClass: aClass to: aPackageOrNil
 	source := self packageOfClass: aClass.
 	destination := aPackageOrNil == Package uncommitted ifFalse: [aPackageOrNil].
 	source == destination ifTrue: [^self].
-	self forgetLooseMethods.	"Could be more discriminating, but rebuild is pretty quick"
+	"Could be more discriminating and remove any selectors in the cache that currently map to the new package (as these must no longer be loose), but rebuild is pretty quick"
+	self forgetLooseMethods.
 	source
 		ifNotNil: 
 			[packagedVariables removeKey: aClass fullyQualifiedReference.
@@ -59,7 +60,11 @@ addLooseMethod: aCompiledMethod to: aPackage
 	"Private - The loose <CompiledMethod> argument has been (or is about to
 	be) added to the <Package> argument. Maintain the loose method cache."
 
-	looseMethods notNil ifTrue: [looseMethods at: aCompiledMethod name put: aPackage].
+	looseMethods notNil
+		ifTrue: 
+			[(looseMethods at: aCompiledMethod methodClass ifAbsentPutClean: [IdentityDictionary new: 5])
+				at: aCompiledMethod selector
+				put: aPackage].
 	aPackage addLooseMethod: aCompiledMethod!
 
 addManagedPackage: aPackage
@@ -384,10 +389,6 @@ errorRemovingSystemPackage
 	^self error: 'The system package must not be uninstalled.'!
 
 forgetLooseMethods
-	"Forget the cached <LookupTable> of all the <CompiledMethod>s which are owned by
-	packages which do not own the corresponding method class (i.e. those methods
-	added by a package to classes in other packages)."
-
 	looseMethods := nil!
 
 getEvents
@@ -397,14 +398,16 @@ getEvents
 	^events!
 
 getLooseMethods
-	"Private - Answer a <LookupTable> of all the <CompiledMethod>s which are owned by
-	packages which do not own the corresponding method class (i.e. those methods
-	added by a package to classes in other packages). The table maps loose methods
-	by name to their owning package."
-
 	| loose |
-	loose := LookupTable new: 4096.
-	self packages do: [:each | loose atAll: each methodNames put: each].
+	loose := IdentityDictionary new: 1536.
+	self packages do: 
+			[:each |
+			each methodNames do: 
+					[:name |
+					name methodClass
+						ifNotNil: 
+							[:mclass |
+							(loose at: mclass ifAbsentPutClean: [IdentityDictionary new: 5]) at: name selector put: each]]].
 	^loose!
 
 includesPackage: aPackage 
@@ -487,7 +490,9 @@ isLooseMethod: aCompiledMethod
 	"Answer whether the argument is a loose method (i.e. one owned by a package other
 	than that of its class)."
 
-	^self looseMethods includesKey: aCompiledMethod name!
+	^(self looseMethods lookup: aCompiledMethod methodClass)
+		ifNil: [false]
+		ifNotNil: [:selectors | selectors includesKey: aCompiledMethod selector]!
 
 isLooseResource: aResourceIdentifier
 	"Answer whether the argument is a loose resource (i.e. one owned by a package other
@@ -600,21 +605,17 @@ loadPrereqsForPackage: aPackage relativeTo: pathString extension: extensionStrin
 	trailCollection addLast: aPackage.
 	^trailCollection!
 
-looseMethodRemoved: aCompiledMethod 
+looseMethodRemoved: aCompiledMethod
 	"Private - The loose <CompiledMethod> argument has been (or is about to be) removed from the
 	system or is no longer loose. Maintain the loose method cache."
 
-	looseMethods notNil ifTrue: [looseMethods removeKey: aCompiledMethod name ifAbsent: []]!
+	looseMethods notNil
+		ifTrue: 
+			[(looseMethods lookup: aCompiledMethod methodClass)
+				ifNotNil: [:selectors | selectors removeKey: aCompiledMethod selector ifAbsent: []]]!
 
 looseMethods
-	"Answer an <LookupTable> of all the <CompiledMethod>s which are owned by packages which do
-	not own the corresponding method class (i.e. those methods added by a package to classes in
-	other packages). This information is cached to speed up the tracing of pre-requisites,
-	particular where the whole dependency tree must be calculated (as when uninstalling
-	packages). Note that the information may be outdated if requested when event processing is
-	disabled, but as this only applies during installation and uninstallation this is not 
-	material since the cache is then bypassed and is regenerated when event processing is again
-	enabled."
+	"Answer an <LookupTable> that contains further <LookupTable> for each class mapping the selectors of the loose methods in that class to the owning package (i.e. those methods added by a package to classes in other packages). This information is cached to speed up various tooling scenarios such as the tracing of pre-requisites,	particularly where the whole dependency tree must be calculated (as when uninstalling packages). Note that the information may be outdated if requested when event processing is disabled, but as this only applies during installation and uninstallation this is not material since the cache is then bypassed and is regenerated when event processing is again enabled."
 
 	^looseMethods ifNil: [looseMethods := self getLooseMethods]!
 
@@ -744,7 +745,7 @@ onClassDirtied: aClass
 	self isProcessingEvents ifFalse: [^self].
 	aClass owningPackage ifNotNil: [:package | package isChanged: true]!
 
-onClassRemoved: aClass 
+onClassRemoved: aClass
 	"Private - React to aClass being removed from the Smalltalk system. Ensure that none of the
 	packages held by the receiver refer to aClass or its methods now it has departed."
 
@@ -754,7 +755,7 @@ onClassRemoved: aClass
 	"We must inform all packages, not just the package owning the class, in case any other
 	packages include loose methods of the class. In case they do we empty our loose method
 	cache."
-	self forgetLooseMethods.
+	looseMethods isNil ifFalse: [looseMethods removeKey: aClass ifAbsent: []].
 	changed := self packages select: [:aPackage | aPackage onClassRemoved: aClass].
 	changed do: [:aPackage | aPackage membershipChanged].
 	self resetPrerequisites!
@@ -769,7 +770,6 @@ onClassRenamed: aClass from: oldBindingReference to: newBindingReference
 						to: newBindingReference].
 	changed isEmpty ifTrue: [^self].
 	"Only trigger events once all packages updated"
-	self forgetLooseMethods.
 	changePoint := aClass sourceManager changePositionOf: aClass.
 	indexValue := [changePoint].
 	changed do: [:each | each memberUpdatedAt: indexValue]!
@@ -973,9 +973,11 @@ packageOfMethod: aCompiledMethod
 	Implementation Note: Use the loose method cache if available, otherwise
 	do the slower search through each package in turn."
 
-	^looseMethods isNil
-		ifTrue: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: []]
-		ifFalse: [looseMethods lookup: aCompiledMethod name]!
+	^self isProcessingEvents
+		ifTrue: 
+			[(self looseMethods lookup: aCompiledMethod methodClass)
+				ifNotNil: [:selectors | selectors lookup: aCompiledMethod selector]]
+		ifFalse: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: []]!
 
 packageOfMethodOrItsClass: aMethod
 	"Answer the <Package> which owns the <CompiledMethod>, method,
@@ -1205,7 +1207,7 @@ youShouldBeProcessingEvents
 !Kernel.PackageManager categoriesFor: #errorPackageNotFound:!exceptions!private! !
 !Kernel.PackageManager categoriesFor: #errorPrerequisiteNotFound:!exceptions!private! !
 !Kernel.PackageManager categoriesFor: #errorRemovingSystemPackage!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #forgetLooseMethods!operations!public! !
+!Kernel.PackageManager categoriesFor: #forgetLooseMethods!operations!private! !
 !Kernel.PackageManager categoriesFor: #getEvents!events!private! !
 !Kernel.PackageManager categoriesFor: #getLooseMethods!helpers!private! !
 !Kernel.PackageManager categoriesFor: #includesPackage:!public!searching! !
