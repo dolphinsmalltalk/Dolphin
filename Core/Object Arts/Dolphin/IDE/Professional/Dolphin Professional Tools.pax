@@ -39,7 +39,9 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Class} #correspondingTestCase)
 	#(#{Core.ClassDescription} #correspondingTestCase)
+	#(#{Core.Metaclass} #correspondingTestCase)
 	#(#{Core.Process} #priorityName)
 	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
 	#(#{Smalltalk.PackageSelector} #browseDeployed)
@@ -195,21 +197,37 @@ ClassBrowserAbstract subclass: #SystemBrowserShell
 
 "Loose Methods"!
 
-!Core.ClassDescription methodsFor!
+!Core.Class methodsFor!
 
 correspondingTestCase
 	"Answer a corresponding <TestCase> class that can be used to unit test the receiver. Answer nil if
 	an appropriate test case is not available"
 
-	| potentialTestCaseNames |
-	potentialTestCaseNames := #('Test' 'Tests' 'TestCase' 'TestCases')
-				collect: [:each | (self name , each) asQualifiedReference].
-	potentialTestCaseNames do: 
+	| testsEnvironment |
+	testsEnvironment := environment at: #Tests ifAbsent: [environment].
+	#('Test' 'Tests' 'TestCase' 'TestCases') do: 
 			[:each |
-			each valueOrNil
-				ifNotNil: [:class | (class inheritsFrom: XProgramming.SUnit.TestCase) ifTrue: [^class]]].
+			| testName |
+			testName := self name , each.
+			(testsEnvironment lookup: testName) ifNotNil: [:testClass | ^testClass]].
 	^nil! !
+!Core.Class categoriesFor: #correspondingTestCase!development!public! !
+
+!Core.ClassDescription methodsFor!
+
+correspondingTestCase
+	"Answer a corresponding <TestCase> class that can be used to unit test the receiver. Answer nil if an appropriate test case is not available"
+
+	^self subclassResponsibility! !
 !Core.ClassDescription categoriesFor: #correspondingTestCase!development!public! !
+
+!Core.Metaclass methodsFor!
+
+correspondingTestCase
+	"Answer a corresponding <TestCase> class that can be used to unit test the receiver. Answer nil if an appropriate test case is not available"
+
+	^self instanceClass correspondingTestCase! !
+!Core.Metaclass categoriesFor: #correspondingTestCase!development!public! !
 
 !Core.Process methodsFor!
 
