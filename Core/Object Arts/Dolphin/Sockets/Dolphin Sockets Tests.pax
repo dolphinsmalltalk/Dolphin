@@ -30,7 +30,7 @@ package!
 "Class Definitions"!
 
 DolphinTest subclass: #AbstractSocketTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'sockets'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
