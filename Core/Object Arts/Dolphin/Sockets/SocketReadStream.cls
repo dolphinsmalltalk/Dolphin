@@ -82,6 +82,19 @@ nextAvailable
 
 	^self atEnd ifFalse: [self next]!
 
+nextAvailable: anInteger
+	"Answer up to anInteger elements of the receiver's collection. Generally, the answer will be
+	a collection of the same class as the one accessed by the receiver (though this is
+	determined by the receiver), and will contain anInteger elements, or as many as are left in
+	the receiver's collection."
+
+	| newStream count |
+	newStream := self contentsSpecies writeStream: (count := anInteger).
+	[count == 0 or: [self atEnd]] whileFalse: 
+			[newStream nextPut: self next.
+			count := count - 1].
+	^newStream contents!
+
 on: aCollection
 	super on: aCollection.
 	readLimit := 0!
@@ -149,6 +162,7 @@ upToEnd
 !SocketReadStream categoriesFor: #next!accessing!public! !
 !SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #nextAvailable!public! !
+!SocketReadStream categoriesFor: #nextAvailable:!accessing!public! !
 !SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
 !SocketReadStream categoriesFor: #readPage!operations!private! !
 !SocketReadStream categoriesFor: #setToEnd!positioning!public! !

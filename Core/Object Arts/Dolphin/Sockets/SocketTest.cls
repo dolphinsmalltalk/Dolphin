@@ -12,5 +12,5 @@ SocketTest comment: ''!
 
 serverSocketClass
 	^ServerSocket! !
-!SocketTest categoriesFor: #serverSocketClass!public!unit tests! !
+!SocketTest categoriesFor: #serverSocketClass!constants!private! !
 
