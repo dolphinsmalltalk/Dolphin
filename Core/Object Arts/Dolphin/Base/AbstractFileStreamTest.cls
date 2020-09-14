@@ -191,6 +191,9 @@ testNextPutAllStartingAt
 				size: 0;
 				write: initialData.
 			filestream := self streamClass on: file text: false.
+			self assert: filestream isReadable.
+			self assert: filestream isWriteable.
+			self assert: filestream isBinary.
 			filestream reset.
 			"Verify it was written correctly in the first place"
 			written := filestream upToEnd.
@@ -236,6 +239,9 @@ testNextPutAllStartingAt2
 			"truncate the file"
 			file size: 0.
 			filestream := self streamClass on: file text: false.
+			self assert: filestream isWriteable.
+			self assert: filestream isReadable.
+			self assert: filestream isBinary.
 			filestream
 				next: each first - 1
 				putAll: initialData
