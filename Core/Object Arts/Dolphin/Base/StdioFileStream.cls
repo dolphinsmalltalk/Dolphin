@@ -2,12 +2,13 @@
 
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'ClassForEncoding Codecs DeviceMask ReadOnlyMask'
+	classVariableNames: 'ClassForEncoding Codecs DeviceMask NonBlockingMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 StdioFileStream guid: (GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
 StdioFileStream isAbstract: true!
 StdioFileStream addClassConstant: 'DeviceMask' value: 16r40!
+StdioFileStream addClassConstant: 'NonBlockingMask' value: 16r2!
 StdioFileStream addClassConstant: 'ReadOnlyMask' value: 16r1!
 StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. FileStream itself should be used by preference in most cases.
 
@@ -60,7 +61,7 @@ attach: anExternalHandle toFd: fdInteger mode: aString
 	self
 		setStream: handle
 		name: nil
-		mode: aString!
+		flags: (self flagsFromMode: aString)!
 
 basicNext
 	"Private - Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
@@ -223,6 +224,9 @@ fileSize
 finalize
 	self close!
 
+flagsFromMode: aString
+	^aString first == $r ifTrue: [ReadOnlyMask] ifFalse: [0]!
+
 flush
 	"Flush any buffered modifications to the file."
 
@@ -237,6 +241,11 @@ isDevice
 	"Answer whether the CRT stream is connected to a device."
 
 	^flags anyMask: DeviceMask!
+
+isNonBlocking
+	"Answer whether this StdioFileStream is using the non-blocking CRT library to perform I/O. This should usually be the case for device streams (e.g. stdin) so that reading/writing does not block the entire image. It should usually not be the case for streams attached to files, because there is significant overhead to the overlapped call mechanism."
+
+	^crtlib == CRTLibrary nonblocking!
 
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the 
@@ -314,7 +323,7 @@ open: pathString mode: modeString
 	self
 		setStream: handle
 		name: pathString
-		mode: modeString!
+		flags: (self flagsFromMode: modeString)!
 
 peek
 	"Answer the next element in the collection, but do not change the position reference. 
@@ -355,19 +364,29 @@ seek: originInteger offset: offsetInteger
 		origin: originInteger) ~~ 0
 		ifTrue: [CRTError signal]!
 
-setStream: anExternalAddress name: aString mode: modeString
+setStream: anExternalAddress name: aString flags: anInteger
+	| oshandle filetype |
 	stream := anExternalAddress asExternalHandle.
-	flags := modeString first == $r ifTrue: [ReadOnlyMask] ifFalse: [0].
+	flags := anInteger.
 	name := aString.
-	crtlib := CRTLibrary default.
+	crtlib := (flags allMask: NonBlockingMask)
+				ifTrue: [CRTLibrary nonblocking]
+				ifFalse: [CRTLibrary default].
 	fd := crtlib _fileno: stream.
 	self beFinalizable.
-	(crtlib _isatty: fd)
-		ifTrue: 
-			[crtlib := CRTLibrary nonblocking.
-			flags := flags bitOr: DeviceMask].
+	"Examine the underlying OS file handle to determine the file type"
+	oshandle := crtlib _get_osfhandle: fd.
+	filetype := KernelLibrary default getFileType: oshandle.
+	((filetype == Win32Constants.FILE_TYPE_CHAR and: 
+			[flags := flags bitOr: DeviceMask.
+			true])
+		or: [filetype == Win32Constants.FILE_TYPE_PIPE])
+			ifTrue: 
+				[flags := flags bitOr: NonBlockingMask.
+				crtlib := CRTLibrary nonblocking].
 	(crtlib _setmode: fd mode: self translationMode) < 0
-		ifTrue: [self error: 'Unable to set translation mode ' , self translationMode printString]!
+		ifTrue: [self error: 'Unable to set translation mode ' , self translationMode printString].
+	^self!
 
 setToEnd
 	"Set the file pointer to the end of the file."
@@ -436,9 +455,11 @@ upTo: anObject
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
 !StdioFileStream categoriesFor: #fileSize!accessing!public! !
 !StdioFileStream categoriesFor: #finalize!finalizing!private! !
+!StdioFileStream categoriesFor: #flagsFromMode:!helpers!private! !
 !StdioFileStream categoriesFor: #flush!buffer!public! !
 !StdioFileStream categoriesFor: #isBinary!public!testing! !
 !StdioFileStream categoriesFor: #isDevice!public!testing! !
+!StdioFileStream categoriesFor: #isNonBlocking!public!testing! !
 !StdioFileStream categoriesFor: #isReadable!public!testing! !
 !StdioFileStream categoriesFor: #isText!public!testing! !
 !StdioFileStream categoriesFor: #isWriteable!public!testing! !
@@ -457,7 +478,7 @@ upTo: anObject
 !StdioFileStream categoriesFor: #position:!positioning!public! !
 !StdioFileStream categoriesFor: #reset!positioning!public! !
 !StdioFileStream categoriesFor: #seek:offset:!helpers!positioning!private! !
-!StdioFileStream categoriesFor: #setStream:name:mode:!initializing!private! !
+!StdioFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
 !StdioFileStream categoriesFor: #size!accessing!public! !
 !StdioFileStream categoriesFor: #skip:!positioning!public! !
@@ -495,8 +516,8 @@ attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: aSymbol
 attachMode: modeSymbol
 	^String with: (modeSymbol == #read ifTrue: [$r] ifFalse: [$w]) with: self encodingMode!
 
-classForEncoding: typeSymbol
-	^(ClassForEncoding lookup: typeSymbol) ifNil: [self error: 'Unsupported encoding ' , typeSymbol]!
+classForEncoding: aSymbol
+	^(ClassForEncoding lookup: aSymbol) ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
 
 encodingMode
 	^self subclassResponsibility!
@@ -507,18 +528,19 @@ encodingType
 
 	^#text!
 
-fromHandle: anExternalHandle
-	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer,
-	assumed to be in text mode."
+fromHandle: aFILE
+	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer, assumed to be for RW access and connected to a device or pipe."
 
-	^self
-		newStream: anExternalHandle
+	"This method will likely be deprecated in future because the name is unclear since there are many potential types of handles that might be passed as arguments. In this case the 'handle' is actually a CRT FILE pointer."
+
+	^(self newForEncoding: self encodingType)
+		setStream: aFILE
 		name: nil
-		type: self encodingType
-		mode: 'w+'!
+		flags: 0!
 
 initialize
 	self addClassConstant: 'ReadOnlyMask' value: 16r01.
+	self addClassConstant: 'NonBlockingMask' value: 16r02.
 	self addClassConstant: 'DeviceMask' value: 16r40.
 	self addClassConstant: 'ClassForEncoding'
 		value: (IdentityDictionary new
@@ -529,11 +551,8 @@ initialize
 				at: #utf16le put: StdioUtf16FileStream;
 				yourself)!
 
-newStream: anExternalHandle name: nameString type: aSymbol mode: modeString
-	^(self classForEncoding: aSymbol) basicNew
-		setStream: anExternalHandle
-		name: nameString
-		mode: modeString!
+newForEncoding: aSymbol
+	^(self classForEncoding: aSymbol) basicNew!
 
 on: aFile
 	"Answer an intance of the receiver attached to the open file aFile."
@@ -550,7 +569,7 @@ on: aFile type: aSymbol
 	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
 	depending on the argument, aBoolean."
 
-	| kernel oshandle proc crt fd handle mode encoding |
+	| kernel oshandle proc crt fd handle mode encoding flags |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
 	oshandle := ExternalHandle new.
@@ -566,15 +585,20 @@ on: aFile type: aSymbol
 		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [KernelLibrary default systemError].
 	crt := CRTLibrary default.
 	fd := crt _open_osfhandle: oshandle flags: 0.
-	aFile isWriteable ifTrue: [mode := 'r+'] ifFalse: [mode := 'r'].
+	aFile isWriteable
+		ifTrue: 
+			[flags := ReadOnlyMask.
+			mode := 'r+']
+		ifFalse: 
+			[flags := 0.
+			mode := 'r'].
 	encoding == #binary ifTrue: [mode := mode copyWith: $t] ifFalse: [mode := mode copyWith: $b].
 	handle := crt _fdopen: fd mode: mode.
 	handle isNil ifTrue: [CRTError signal].
-	^self
-		newStream: handle
+	^(self newForEncoding: encoding)
+		setStream: handle
 		name: aFile name
-		type: encoding
-		mode: mode!
+		flags: flags!
 
 open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	| stream concreteClass path exists mode |
@@ -616,8 +640,19 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	modeSymbol == #append ifTrue: [stream setToEnd].
 	^stream!
 
-openFd: fd mode: mode
-	^self fromHandle: (CRTLibrary default _fdopen: fd mode: (self attachMode: mode))!
+openFd: fdInteger mode: modeSymbol
+	| flags rwMode |
+	modeSymbol == #read
+		ifTrue: 
+			[flags := ReadOnlyMask.
+			rwMode := 'r']
+		ifFalse: 
+			[flags := 0.
+			rwMode := 'w'].
+	^(self newForEncoding: self encodingType)
+		setStream: (CRTLibrary default _fdopen: fdInteger mode: (rwMode copyWith: self encodingMode))
+		name: nil
+		flags: flags!
 
 read: aString 
 	"Answer a new text mode instance of the receiver whose future sequence values consist
@@ -727,7 +762,7 @@ write: aString type: aSymbol
 !StdioFileStream class categoriesFor: #encodingType!constants!public! !
 !StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
 !StdioFileStream class categoriesFor: #initialize!development!initializing!public! !
-!StdioFileStream class categoriesFor: #newStream:name:type:mode:!instance creation!private! !
+!StdioFileStream class categoriesFor: #newForEncoding:!instance creation!private! !
 !StdioFileStream class categoriesFor: #on:!instance creation!public! !
 !StdioFileStream class categoriesFor: #on:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #on:type:!instance creation!public! !

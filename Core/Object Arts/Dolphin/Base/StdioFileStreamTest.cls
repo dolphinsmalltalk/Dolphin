@@ -71,6 +71,62 @@ testCharacterTranslation
 					self assert: actual equals: each].
 			self closeTempStream: subject]!
 
+testFromHandleOnDevice
+	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: is non-blocking on a tty."
+
+	| stdout |
+	stdout := SessionManager current stdout.
+	self assert: stdout isNonBlocking!
+
+testFromHandleOnFile
+	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: on a file is blocking."
+
+	| handle errno written read |
+	filestream := self tempWriteStream.
+	self deny: filestream isNonBlocking.
+	written := 'Hello world'.
+	filestream nextPutAll: written.
+	filestream close.
+	handle := ExternalHandle new.
+	errno := CRTLibrary default
+				_wfopen_s: handle
+				filename: tempFileName
+				mode: 'rt, ccs=UTF-8'.
+	self assert: errno equals: 0.
+	filestream := StdioFileStream fromHandle: handle.
+	self assert: filestream isFinalizable.
+	self deny: filestream isNonBlocking.
+	self deny: filestream isDevice.
+	read := filestream upToEnd.
+	self assert: read equals: written!
+
+testFromHandleOnPipe
+	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: on a pipe is non-blocking."
+
+	| pipeIn pipeOut streams |
+	pipeIn := ExternalHandle new.
+	pipeOut := ExternalHandle new.
+	KernelLibrary default
+		createPipe: pipeIn
+		hWritePipe: pipeOut
+		lpPipeAttributes: (SECURITY_ATTRIBUTES new
+				bInheritHandle: 1;
+				yourself)
+		nSize: 0.
+	streams := {pipeIn -> 'rt'. pipeOut -> 'wt'} collect: 
+					[:each |
+					| fd hFile |
+					"Note that ownership of the OS handle is transferred to the CRT file here"
+					fd := CRTLibrary default _open_osfhandle: each key flags: 0.
+					hFile := CRTLibrary default _fdopen: fd mode: each value.
+					StdioFileStream fromHandle: hFile].
+	streams do: 
+			[:each |
+			self assert: each isFinalizable.
+			self assert: each isNonBlocking.
+			self deny: each isDevice.
+			each close]!
+
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
 
@@ -104,6 +160,9 @@ testNextLineUpToEof
 !StdioFileStreamTest categoriesFor: #strings!constants!private! !
 !StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
 !StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
+!StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public! !
+!StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public! !
+!StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 
