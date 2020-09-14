@@ -495,20 +495,20 @@ StdioFileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) s
 !StdioFileStream class methodsFor!
 
 attach: anExternalHandle toFd: fdInteger mode: modeSymbol
-	"Answer a new sub-instance of the receiver representing a text stdio stream with the file descriptor, fdInteger, attached to the OS file handle, anExternalHandle, The modeSymbol argument identifies the manner in which the file is opened, #read for a read-only stream (e.g. stdin), or any other mode integer for a writable stream."
+	"Answer a new sub-instance of the receiver representing a text stdio stream with the file descriptor, fdInteger, attached to the OS file handle, anExternalHandle.
+	The modeSymbol argument identifies the manner in which the file is opened, #read for a read-only stream (e.g. stdin), or any other mode integer for a writable stream."
 
 	^self basicNew
 		attach: anExternalHandle
 		toFd: fdInteger
 		mode: (self attachMode: modeSymbol)!
 
-attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: aSymbol
-	"Answer a new instance of the receiver representing a text stdio stream with the file
-	descriptor, fdInteger, attached to the OS file handle, anExternalHandle, The <symbol>
-	argument identifies the manner in which the file is opened, #read for a read-only stream
-	(e.g. stdin), or any other mode integer for a writable stream."
+attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: typeSymbol
+	"Answer a new instance of the receiver representing a text stdio stream with the file descriptor, fdInteger, attached to the OS file handle, anExternalHandle, 
+	The <symbol> argument, modeSymbol, identifies the manner in which the file is opened, #read for a read-only stream (e.g. stdin), or any other mode integer for a writable stream.
+	The <symbol> argument, typeSymbol, identifies the content type; one of #binary (to read/write raw bytes), #text (for text translation mode, sniffing the encoding from the current file content), or one of the valid String encodings - see String.Encodings."
 
-	^(self classForEncoding: aSymbol)
+	^(self classForEncoding: typeSymbol)
 		attach: anExternalHandle
 		toFd: fdInteger
 		mode: modeSymbol!
@@ -531,7 +531,7 @@ encodingType
 fromHandle: aFILE
 	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer, assumed to be for RW access and connected to a device or pipe."
 
-	"This method will likely be deprecated in future because the name is unclear since there are many potential types of handles that might be passed as arguments. In this case the 'handle' is actually a CRT FILE pointer."
+	"This method will likely be deprecated in future because the name is unclear as to the type of handle expected as an argument. In this case the 'handle' is actually a CRT FILE pointer, and not an OS file handle."
 
 	^(self newForEncoding: self encodingType)
 		setStream: aFILE
@@ -555,19 +555,18 @@ newForEncoding: aSymbol
 	^(self classForEncoding: aSymbol) basicNew!
 
 on: aFile
-	"Answer an intance of the receiver attached to the open file aFile."
+	"Answer an intance of the receiver attached to the open <File>, aFile."
 
 	^self on: aFile text: true!
 
 on: aFile text: aBoolean
-	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
-	depending on the argument, aBoolean."
+	"Answer an intance of the receiver attached to the open file <File>, aFile, in binary or text mode depending on the <Boolean> argument, aBoolean."
 
 	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 on: aFile type: aSymbol
-	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
-	depending on the argument, aBoolean."
+	"Answer an new concrete sub-instance of the receiver attached to the open <File>, aFile, with content type named by the <Symbol>, aSymbol.
+	Valid content types are #binary, to read/write raw bytes, #text (for text translation mode - sniffing the current encoding) or one of the valid String encodings - see String.Encodings."
 
 	| kernel oshandle proc crt fd handle mode encoding flags |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
@@ -654,38 +653,33 @@ openFd: fdInteger mode: modeSymbol
 		flags: flags!
 
 read: aString 
-	"Answer a new text mode instance of the receiver whose future sequence values consist
-	of the textual contents of the file identified by the <readableString> argument."
+	"Answer a new text mode instance of the receiver whose future sequence values consist of the textual contents of the file identified by the <readableString> argument."
 
 	^self read: aString text: true!
 
 read: aString text: aBoolean
-	"Answer an instance of the receiver whose future sequence values consist
-	of the contents of the file named, aString, and whose access is character
-	based or binary, depending on the <boolean> argument. Raise an exception
-	if the file does not exist."
+	"Answer an instance of the receiver whose future sequence values consist of the contents of the file named, aString, and whose access is character based or binary, depending on the <boolean> argument. Raise an exception if the file does not exist."
 
 	^self read: aString type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
-read: aString type: aSymbol
-	"Answer an instance of the receiver whose future sequence values consist
-	of the contents of the file named, aString, and whose access is character
-	based or binary, depending on the <boolean> argument. Raise an exception
-	if the file does not exist."
+read: aString type: typeSymbol
+	"Answer an instance of the receiver whose future sequence values consist of the contents of the file named, aString. 
+	The <symbol> argument, typeSymbol, identifies the content type; one of #binary (to read/write raw bytes), #text (for text translation mode, sniffing the encoding from the current file content), or one of the valid String encodings - see String.Encodings."
 
-	^self open: aString mode: #read check: true type: aSymbol!
+	^self
+		open: aString
+		mode: #read
+		check: true
+		type: typeSymbol!
 
 write: aString 
-	"Answer a new text mode instance of the receiver opened on a new or truncated file 
-	identified by the <readableString> argument."
+	"Answer a new text mode instance of the receiver opened on a new or truncated file identified by the <readableString> argument."
 
 	^self write: aString mode: #truncate!
 
 write: aString mode: aSymbol 
-	"Answer a new instance of the receiver open on the textual contents of
-	the file identified by the <readableString> argument.
-	See #write:mode:check:type: for a description of the mode <symbol> 
-	argument."
+	"Answer a new instance of the receiver open on the textual contents of the file identified by the <readableString> argument.
+	See #write:mode:check:type: for a description of the mode <symbol> argument."
 
 	^self 
 		write: aString
@@ -694,18 +688,15 @@ write: aString mode: aSymbol
 		text: true!
 
 write: aString mode: aSymbol check: checkBoolean text: textBoolean
-	"Answer a new instance of the receiver open on the contents of
-	the file identified by the <readableString> argument.
+	"Answer a new instance of the receiver open on the contents of the file identified by the <readableString> argument.
 	The <symbol> argument identifies the manner in which the file is opened.
 	It may be one of:
 		#create 	create a new file, position at its start.
 		#append	open an existing file, position at its end.
 		#truncate	create or open a file, position at its start.
 	See also the File class for further information on the mode.
-	The first <boolean> argument determines whether or not  errors are reported 
-	if the file does or does not exist (depending on the mode). 
-	The final <boolean> argument specifies the external type (#binary or #text) 
-	for which the new instance is initially configured."
+	The first <boolean> argument determines whether or not  errors are reported if the file does or does not exist (depending on the mode). 
+	The final <boolean> argument specifies the external type (#binary or #text) for which the new instance is initially configured."
 
 	^self
 		write: aString
@@ -714,15 +705,9 @@ write: aString mode: aSymbol check: checkBoolean text: textBoolean
 		type: (textBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 write: fileId mode: modeSymbol check: aBoolean type: typeSymbol
-	"Answer a new instance of the receiver open on the contents of the file identified by the
-	<readableString> argument. The first <symbol> argument identifies the manner in which the
-	file is opened. See the File class for details.
-
-	The <boolean> argument determines whether or not errors are reported if the file does or
-	does not exist (depending on the mode).
-
-	The final <symbol> argument specifies the external type (#binary or #text) for which the new
-	instance is initially configured."
+	"Answer a new instance of the receiver open on the contents of the file identified by the <readableString> argument. The first <symbol> argument identifies the manner in which the file is opened. See the File class for details.
+	The <boolean> argument determines whether or not errors are reported if the file does or does not exist (depending on the mode).
+	The final <symbol> argument specifies the external type (#binary, #text or one of members of String.Encodings) for which the new instance is initially configured."
 
 	^self
 		open: fileId
@@ -732,8 +717,7 @@ write: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 
 write: aString text: aBoolean 
 	"Create a new file/truncate an existing file for read/write access through the receiver.
-	The stream will expect characters or bytes depending on the value of the <boolean>
-	argument."
+	The stream will expect characters or bytes depending on the value of the <boolean> argument."
 
 	^self 
 		write: aString
