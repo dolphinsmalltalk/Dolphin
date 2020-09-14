@@ -71,19 +71,17 @@ testFileTimes
 	self assert: file lastWriteTime asInteger >= now asInteger!
 
 testNextAvailableColonWithPaging
-
 	"#640"
 
-	| bytes random subject writeStream |
-
+	| bytes random writeStream |
 	bytes := ByteArray new: self streamClass bufferSize + 1.
 	random := Random new.
-	1 to: bytes size do: [ :index | bytes at: index put: (random next * 255) truncated].
-
-	subject := self streamOn: bytes.
-	writeStream := ByteArray writeStream: bytes size. 
-	self shouldnt: [[subject atEnd] whileFalse: [writeStream nextPutAll: (subject nextAvailable: 64)]] raise: self streamClass endOfStreamSignal.
-
+	1 to: bytes size do: [:index | bytes at: index put: (random next * 255) truncated].
+	filestream := self streamOn: bytes.
+	writeStream := ByteArray writeStream: bytes size.
+	self
+		shouldnt: [[filestream atEnd] whileFalse: [writeStream nextPutAll: (filestream nextAvailable: 64)]]
+		raise: self streamClass endOfStreamSignal.
 	self assert: writeStream contents equals: bytes!
 
 testOwnsFile

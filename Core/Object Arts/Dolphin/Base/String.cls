@@ -1367,7 +1367,7 @@ empty
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
 
-	^self encodingName: self basicEncoding!
+	^Encodings at: self basicEncoding + 1!
 
 encodingName: anInteger
 	^Encodings at: anInteger + 1!

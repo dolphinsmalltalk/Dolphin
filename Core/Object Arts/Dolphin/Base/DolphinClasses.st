@@ -1647,7 +1647,7 @@ SequencedStream subclass: #PositionableStream
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'ClassForEncoding Codecs DeviceMask ReadOnlyMask'
+	classVariableNames: 'ClassForEncoding Codecs DeviceMask NonBlockingMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #ReadStream

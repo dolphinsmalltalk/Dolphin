@@ -60,12 +60,12 @@ open: fileId mode: modeSymbol
 		mode: modeSymbol.
 	offset := crtlib _ftelli64: stream!
 
-setStream: anExternalAddress name: aString mode: modeString
+setStream: anExternalAddress name: aString flags: anInteger
 	offset := 0.
-	super
+	^super
 		setStream: anExternalAddress
 		name: aString
-		mode: modeString!
+		flags: anInteger!
 
 translationMode
 	^CRTConstants._O_U16TEXT! !
@@ -76,7 +76,7 @@ translationMode
 !StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
-!StdioUnicodeFileStream categoriesFor: #setStream:name:mode:!initializing!private! !
+!StdioUnicodeFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
 !StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
 
 !StdioUnicodeFileStream class methodsFor!
