@@ -587,13 +587,12 @@ on: aFile type: aSymbol
 	fd := crt _open_osfhandle: oshandle flags: 0.
 	aFile isWriteable
 		ifTrue: 
-			[flags := ReadOnlyMask.
+			[flags := 0.
 			mode := 'r+']
 		ifFalse: 
-			[flags := 0.
+			[flags := ReadOnlyMask.
 			mode := 'r'].
-	encoding == #binary ifTrue: [mode := mode copyWith: $t] ifFalse: [mode := mode copyWith: $b].
-	handle := crt _fdopen: fd mode: mode.
+	handle := crt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])).
 	handle isNil ifTrue: [CRTError signal].
 	^(self newForEncoding: encoding)
 		setStream: handle
