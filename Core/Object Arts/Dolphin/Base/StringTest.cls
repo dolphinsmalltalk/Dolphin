@@ -533,8 +533,7 @@ testSplitByString
 
 	| sep empty |
 	empty := self collectionClass empty.
-	"The separator but must not be empty"
-	self should: [empty split: (self assimilateString: 'abc')] raise: Error.
+	self assert: (empty split: (self assimilateString: 'abc')) equals: #('abc').
 
 	"And again but using a string argument of more than one character"
 	sep := self assimilateString: String lineDelimiter.

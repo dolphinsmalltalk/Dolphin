@@ -540,23 +540,23 @@ size
 	^self countElements!
 
 split: aReadableString
-	"Answer an Array containing the substrings in aReadableString separated by any of the elements of the receiver (which must be Characters)."
+	"Answer an Array containing the substrings in aReadableString separated by any of the elements of the receiver (which must be instances of Character)."
 
 	| start answer size end |
 	size := aReadableString size.
-	size == 0 ifTrue: [^{}].
+	size == 0 ifTrue: [^#()].
 	end := aReadableString indexOfAnyOf: self startingAt: 1.
 	end == 0 ifTrue: [^{aReadableString}].
 	answer := Array writeStream: 5.
 	start := 1.
 	
 	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
-	start := end + 1.
+	start := end + (aReadableString encodedSizeAt: end).
 	end := aReadableString indexOfAnyOf: self startingAt: start.
 	end == 0]
 			whileFalse.
 	"Copy any remaining chars after the last separator"
-	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].
+	answer nextPut: (aReadableString copyFrom: start to: size).
 	^answer contents!
 
 storeOn: aStream 

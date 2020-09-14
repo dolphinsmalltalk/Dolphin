@@ -515,6 +515,31 @@ testSelect
 	self assert: actual equals: '文🐬🍺🍻'.
 	self assert: (self collectionClass empty select: [:each | self assert: false]) equals: ''!
 
+testSplitByCharacterArray
+	| subject actual separators |
+	subject := self assimilateString: '一1二2三3四'.
+	separators := #($\x4E00 $\x4E8C $\x4E09 $\x56DB).
+	actual := separators split: subject.
+	"Note that leading/trailing separator results in an empty element in the result collection"
+	self assert: actual equals: #('' '1' '2' '3' '').
+	"Split by empty list of separators should return original string as the single result"
+	self assert: (#() split: subject) equals: {subject}.
+	"Splitting an empty string should return an empty result"
+	subject := self assimilateString: ''.
+	actual := separators split: subject.
+	self assert: actual equals: #()!
+
+testSplitByString
+	| subject actual separators empty |
+	subject := self assimilateString: '£文a£文🐬£1£文🍺£文'.
+	separators := self assimilateString: '£文'.
+	actual := separators split: subject.
+	self assert: actual equals: #('' 'a' '🐬£1' '🍺' '').
+	empty := self assimilateString: ''.
+	self assert: (empty split: subject) equals: {subject}.
+	actual := separators split: empty.
+	self assert: actual equals: #()!
+
 testWithDo
 	| subject reversed pairs testCase expected |
 	testCase := 'a£1文🍺'.
@@ -586,6 +611,8 @@ withAllTestCases
 !UtfEncodedStringTest categoriesFor: #testRuneSubStrings!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testSecondThirdEtc!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testSelect!public!unit tests! !
+!UtfEncodedStringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
+!UtfEncodedStringTest categoriesFor: #testSplitByString!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testWithDo!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #withAllTestCases!constants!private! !
 
