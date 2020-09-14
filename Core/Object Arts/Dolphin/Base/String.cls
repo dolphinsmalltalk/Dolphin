@@ -987,7 +987,6 @@ split: aReadableString
 
 	| start end answer subSize size |
 	subSize := self size.
-	subSize == 0 ifTrue: [^self error: 'separator must consist of at least one character'].
 	size := aReadableString size.
 	size == 0 ifTrue: [^{}].
 	subSize == 1 ifTrue: [^(self at: 1) split: aReadableString].
