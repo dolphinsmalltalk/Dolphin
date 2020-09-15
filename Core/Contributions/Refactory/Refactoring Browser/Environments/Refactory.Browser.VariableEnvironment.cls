@@ -107,7 +107,7 @@ classVariables: anObject
 classVariableSelectorsFor: aClass
 	| selectors classVars nonMetaClass |
 	nonMetaClass := aClass instanceClass.
-	selectors := Set new.
+	selectors := IdentitySet new.
 	classVars := Set new.
 	classVariables keysDo: 
 			[:each |
@@ -225,7 +225,7 @@ instanceVariables: anObject
 
 instanceVariableSelectorsFor: aClass
 	| selectors |
-	selectors := Set new.
+	selectors := IdentitySet new.
 	(self instVarsFor: aClass in: self instanceVariables)
 		do: [:each | selectors addAll: (aClass whichSelectorsAccess: each)].
 	(self instVarsFor: aClass in: self instanceVariableReaders)
@@ -314,7 +314,7 @@ removeClass: aClass instanceVariableWriter: aString
 
 selectorCacheFor: aClass
 	^(selectorCache ifNil: [selectorCache := self lookupTableClass new]) at: aClass
-		ifAbsentPut: [self computeSelectorCacheFor: aClass]!
+		ifAbsentPutClean: [self computeSelectorCacheFor: aClass]!
 
 storeOn: aStream
 	aStream

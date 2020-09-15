@@ -61,7 +61,7 @@ defaultLabel
 	^stream contents!
 
 definesClass: aClass
-	^packages identityIncludes: aClass owningPackage!
+	^packages includes: aClass owningPackage!
 
 definesLooseMethodsInClass: aClass
 	| className |
@@ -100,35 +100,37 @@ packages
 	^packages!
 
 packages: aCollection
-	packages := aCollection asArray!
+	packages := aCollection asSet!
 
 selectorsForClass: aClass do: aBlock
+	| classExtensions |
+	classExtensions := PackageManager current looseMethods lookup: aClass.
 	(self definesClass: aClass)
 		ifTrue: 
-			[(PackageManager current looseMethods lookup: aClass)
+			[classExtensions
 				ifNil: 
 					[aClass methodDictionary
 						keysDo: [:each | (environment includesSelector: each in: aClass) ifTrue: [aBlock value: each]]]
 				ifNotNil: 
-					[:loose |
-					aClass methodDictionary keysDo: 
+					[aClass methodDictionary keysDo: 
 							[:each |
-							((loose includesKey: each) not and: [environment includesSelector: each in: aClass])
+							((classExtensions includesKey: each) not and: [environment includesSelector: each in: aClass])
 								ifTrue: [aBlock value: each]]].
 			"If only one package in the environment, can skip enumeration of loose
 			methods since there cannot be any (a package cannot both define a class and
 			own loose methods of that class)"
 			self isSinglePackage ifTrue: [^self]].
-
+	classExtensions isNil
+		ifTrue: 
+			["Class not extended"
+			^self].
 	"#1325: Must enumerate any loose methods, regardless of whether one of the packages in this environment defines the class."
-	packages do: 
-			[:eachPackage |
-			eachPackage methodNames do: 
-					[:each |
-					"Because BindingReferences cache the binding they resolve to, it is typically faster to compare the target than the reference."
-					each className valueOrNil == aClass
-						ifTrue: 
-							[(environment includesSelector: each selector in: aClass) ifTrue: [aBlock value: each selector]]]]!
+	classExtensions keysAndValuesDo: 
+			[:eachSelector :eachPackage |
+			(packages includes: eachPackage)
+				ifTrue: 
+					["Because BindingReferences cache the binding they resolve to, it is typically faster to compare the target than the reference."
+					(environment includesSelector: eachSelector in: aClass) ifTrue: [aBlock value: eachSelector]]]!
 
 storeOn: aStream
 	aStream nextPut: $(.

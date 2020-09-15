@@ -35,12 +35,12 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classes do: 
 			[:each |
-			each asQualifiedReference
-				ifDefined: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
+			each asQualifiedReference valueOrNil
+				ifNotNil: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
 	metaClasses do: 
 			[:each |
-			each asQualifiedReference
-				ifDefined: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
+			each asQualifiedReference valueOrNil
+				ifNotNil: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
 
 classNames
 	^(Set withAll: classes)

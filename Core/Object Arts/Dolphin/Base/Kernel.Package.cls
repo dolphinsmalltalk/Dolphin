@@ -280,11 +280,11 @@ bindingRefToLiteral: anObject
 					ref := anObject fullyQualifiedReference.
 					ref bindingOrNil == anObject ifTrue: [ref]]]
 		ifFalse: 
-			[(anObject isKindOf: Class)
+			[anObject class isMeta
 				ifTrue: 
-					[| key |
-					key := anObject fullyQualifiedReference.
-					key isDefined ifTrue: [key]]]!
+					[| ref |
+					ref := anObject fullyQualifiedReference.
+					ref bindingOrNil ifNotNil: [ref]]]!
 
 buildPrerequisiteNames
 	"Private - Calculate the names of the receiver's prerequisite packages."

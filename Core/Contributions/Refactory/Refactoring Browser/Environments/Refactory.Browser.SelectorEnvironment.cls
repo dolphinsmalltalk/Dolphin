@@ -142,8 +142,8 @@ privateSelectorsForClass: aClass
 
 privateSelectorsForClassAdd: aClass
 	^aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance fullName ifAbsentPut: [IdentitySet new: 8]]
-		ifFalse: [classSelectors at: aClass fullName ifAbsentPut: [IdentitySet new: 8]]!
+		ifTrue: [metaClassSelectors at: aClass soleInstance fullName ifAbsentPutClean: [IdentitySet new: 8]]
+		ifFalse: [classSelectors at: aClass fullName ifAbsentPutClean: [IdentitySet new: 8]]!
 
 removeClass: aClass
 	aClass isMeta

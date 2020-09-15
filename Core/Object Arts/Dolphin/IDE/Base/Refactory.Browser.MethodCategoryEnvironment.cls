@@ -71,13 +71,14 @@ postCopy
 	categories := categories copy.
 	^super postCopy!
 
-selectorsForClass: aClass do: aBlock 
+selectorsForClass: aClass do: aBlock
 	(super includesClass: aClass) ifFalse: [^self].
 	categories do: 
-			[:each | 
-			(each methodsInBehavior: aClass) do: 
-					[:eachMethod | 
-					(environment includesSelector: eachMethod selector in: aClass) 
+			[:each |
+			each methodsInBehavior: aClass
+				do: 
+					[:eachMethod |
+					(environment includesSelector: eachMethod selector in: aClass)
 						ifTrue: [aBlock value: eachMethod selector]]]!
 
 storeOn: aStream 
