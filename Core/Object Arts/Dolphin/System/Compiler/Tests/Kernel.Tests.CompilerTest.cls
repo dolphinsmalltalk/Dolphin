@@ -948,7 +948,7 @@ testRadixInteger
 					expr := eachRadix printString , suffix.
 					self evaluateExpression: expr]
 				raise: MessageNotUnderstood
-				matching: [:ex | (ex receiver = eachRadix and: [ex selector equals: suffix]) ifFalse: [false] ifTrue: [true]]]!
+				matching: [:ex | (ex receiver = eachRadix and: [ex selector = suffix]) ifFalse: [false] ifTrue: [true]]]!
 
 testReturnFromOptimizedBlock
 	| compiled lowerText upperText |
@@ -1118,11 +1118,11 @@ testSymbolScanning
 			sym := self evaluateExpression: each.
 			self denyIsNil: sym.
 			chars := (each copyFrom: 2) copyWithout: $'.
-			self assert: (sym equals: chars).
+			self assert: sym equals: chars.
 			bracketed := '(' , each , ')'.
 			sym := self evaluateExpression: bracketed.
 			self denyIsNil: sym.
-			self assert: (sym equals: chars)].
+			self assert: sym equals: chars].
 	#('#2' '#;' '#:') do: 
 			[:each |
 			self should: [self evaluateExpression: each] raise: self compilationErrorClass.
