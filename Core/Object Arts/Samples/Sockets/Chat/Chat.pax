@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Chat'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Chat Sample. 
 Copyright (c) Object Arts Ltd, 1998-2020.
@@ -28,7 +28,7 @@ You should now be able to chat between the two sessions by entering messages and
 
 
 package setClassNames: #(
-	#{Chat}
+	#{Smalltalk.Chat}
 ).
 
 package setPrerequisites: #(
@@ -49,10 +49,10 @@ package!
 
 "Class Definitions"!
 
-Presenter subclass: #Chat
+UI.Presenter subclass: #Chat
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
