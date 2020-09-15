@@ -142,11 +142,11 @@ storeUnderRegKey: aRegKey as: aString
 		put: (size > 0
 				ifTrue: 
 					[String writeStream
-						display: self class;
+						nextPutAll: self class fullName;
 						nextPut: $\0;
 						display: size;
 						contents]
-				ifFalse: [self class name])
+				ifFalse: [self class fullName])
 		type: #stringArray.
 	instVars := self class allInstVarNames.
 	instVars

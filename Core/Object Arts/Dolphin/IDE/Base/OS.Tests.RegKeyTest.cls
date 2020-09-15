@@ -44,6 +44,12 @@ testCreateUnderRoot
 	self assert: key parentKey name equals: '2'.
 	RegKey userRoot removeKey: '1'!
 
+testEmptyArraySerialisation
+	| array |
+	#() storeUnderRegKey: testKey as: 'testEmptyArraySerialisation'.
+	array := Object fromRegKey: (testKey at: 'testEmptyArraySerialisation').
+	self assert: array equals: #()!
+
 testEmptySz
 	| temp |
 	temp := RegKey userRoot createKey: GUID newUnique asString.
@@ -140,6 +146,7 @@ testSz
 !OS.Tests.RegKeyTest categoriesFor: #setUp!private!unit tests! !
 !OS.Tests.RegKeyTest categoriesFor: #tearDown!private!unit tests! !
 !OS.Tests.RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testEmptyArraySerialisation!public!unit tests! !
 !OS.Tests.RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
 !OS.Tests.RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
 !OS.Tests.RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
