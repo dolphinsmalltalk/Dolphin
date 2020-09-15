@@ -277,16 +277,16 @@ findElementOrNil: anAssociation
 
 	^self findKeyOrNil: anAssociation key!
 
-findKeyOrNil: anObject 
+findKeyOrNil: anObject
 	"Private - Answer the index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which the key hashes"
 
 	| capacity index |
 	capacity := self basicSize.
-	index := self hash: anObject max: capacity.
+	index := anObject hash \\ capacity + 1.
 	
 	[| element |
-	(element := self basicAt: index) isNil or: [anObject = element key]] 
+	(element := self basicAt: index) isNil or: [anObject = element key]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 

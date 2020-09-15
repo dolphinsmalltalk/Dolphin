@@ -28,8 +28,8 @@ findElementOrNil: anObject
 
 	| capacity index |
 	capacity := self basicSize.
-	index := self hash: anObject max: (capacity := self basicSize).
-
+	index := searchPolicy hash: anObject max: (capacity := self basicSize).
+	
 	[| element |
 	(element := self basicAt: index) isNil or: [searchPolicy compare: element with: anObject]]
 			whileFalse: [index := index \\ capacity + 1].
