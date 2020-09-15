@@ -1,0 +1,55 @@
+﻿| package |
+package := Package name: 'Dolphin Scintilla View Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{UI.Scintilla.Tests}
+	#{UI.Scintilla.Tests.MockScintillaView}
+	#{UI.Scintilla.Tests.ScintillaViewTest}
+	#{UI.Scintilla.Tests.StStyler}
+).
+
+package setPrerequisites: #(
+	'..\..\..\IDE\Base\Development System'
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Dolphin MVP Tests'
+	'Dolphin Scintilla View'
+	'..\..\..\System\Compiler\Smalltalk Parser'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.Scintilla subclass: #'UI.Scintilla.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'UI.Scintilla.Tests.MockScintillaView'
+	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
+	classVariableNames: ''
+	imports: #(#{UI.Scintilla.ScintillaConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
+	instanceVariableNames: 'view arrayDepth'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.MultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
