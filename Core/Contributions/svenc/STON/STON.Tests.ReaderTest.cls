@@ -47,7 +47,7 @@ testClass
 testClassWithUnderscore
 	| cls data reader |
 	cls := Object newAnonymousSubclass.
-	cls setName: #A_B_C123AnonClass.
+	cls setName: #A_B_C123AnonClass environment: nil.
 	data := STON toString: cls new.
 	reader := STON.Reader on: data readStream.
 	(reader instVarNamed: #classes) at: cls name put: cls.

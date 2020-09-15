@@ -1,15 +1,15 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{BSTRTest}
-	#{IDispatchTest}
-	#{SAFEARRAYTest}
-	#{VARIANTTest}
+	#{Smalltalk.BSTRTest}
+	#{Smalltalk.IDispatchTest}
+	#{Smalltalk.SAFEARRAYTest}
+	#{Smalltalk.VARIANTTest}
 ).
 
 package setMethodNames: #(
@@ -30,28 +30,28 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #BSTRTest
+Core.Tests.DolphinTest subclass: #BSTRTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #IDispatchTest
+Core.Tests.DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #VARIANTTest
+Core.Tests.DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

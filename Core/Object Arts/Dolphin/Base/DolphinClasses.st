@@ -2692,7 +2692,7 @@ Core.Behavior subclass: #'Core.ClassDescription'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.ClassDescription subclass: #'Core.Class'
-	instanceVariableNames: 'subclasses name classPool imports environment comment classCategories _guid'
+	instanceVariableNames: 'subclasses name fullName classPool imports environment comment classCategories _guid'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

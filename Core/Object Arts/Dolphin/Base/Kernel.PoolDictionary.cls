@@ -33,7 +33,7 @@ convertToSharedPool
 	poolClass basicClassPool: pool.
 	(Smalltalk localBindingFor: identifier) value: poolClass.
 	Smalltalk removeLocalBindingFor: tempName.
-	poolClass setName: identifier.
+	poolClass setName: identifier environment: poolClass environment.
 	^poolClass!
 
 displayOn: aPuttableStream

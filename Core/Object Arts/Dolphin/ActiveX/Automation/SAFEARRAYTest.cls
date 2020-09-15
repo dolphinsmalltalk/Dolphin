@@ -3,10 +3,10 @@
 External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SAFEARRAYTest guid: (GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
+SAFEARRAYTest guid: (Core.GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
 SAFEARRAYTest comment: ''!
 !SAFEARRAYTest categoriesForClass!Unclassified! !
 !SAFEARRAYTest methodsFor!
@@ -25,7 +25,7 @@ testAXRecords
 
 	| record sa sa2 ordered elem elems |
 	record := POINTL basicShallowCopy.
-	record setName: 'Dummy' asSymbol.
+	record setName: 'Dummy' asSymbol environment: Smalltalk.
 	record setGuid: GUID newUnique.
 	record unregister.
 	"Now create an array of those records"

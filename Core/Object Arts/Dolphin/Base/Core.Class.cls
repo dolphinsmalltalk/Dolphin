@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.ClassDescription subclass: #'Core.Class'
-	instanceVariableNames: 'subclasses name classPool imports environment comment classCategories _guid'
+	instanceVariableNames: 'subclasses name fullName classPool imports environment comment classCategories _guid'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -339,11 +339,6 @@ environment
 
 	^environment!
 
-environment: aNamespace
-	"Set the receiver's <Namespace>."
-
-	environment := aNamespace!
-
 fileIn
 	"File in the receiver's definition from a class file in the receiver's
 	package directory."
@@ -368,12 +363,9 @@ fileOutStem
 	^environment == Smalltalk ifTrue: [self unqualifiedName] ifFalse: [self fullName]!
 
 fullName
-	| stream |
-	(name isNil or: [environment isNil]) ifTrue: [^super fullName].
-	environment == Root ifTrue: [^self name].
-	stream := WriteStream on: (Utf8String new: 32).
-	self printNameOn: stream relativeTo: Root.
-	^stream contents!
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
+
+	^fullName!
 
 fullNameFor: aString
 	"Private - Answer the full name  of a variable with the specified local identifier, assumed to be in this namespace. This will be a (potentially) dot-separated path string that is bindable from any top-level namespace, including Smalltalk."
@@ -393,6 +385,14 @@ fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to the Root namespace. Classes in the legacy 'flat' Smalltalk namespace will have Smalltalk as the first element of the binding path."
 
 	^BindingReference pathString: self fullName!
+
+getFullName
+	| stream |
+	(name isNil or: [environment isNil]) ifTrue: [^super fullName].
+	environment == Root ifTrue: [^self name].
+	stream := WriteStream on: (Utf8String new: 32).
+	self printNameOn: stream relativeTo: Root.
+	^stream contents!
 
 guid
 	"Answer the receiver's globally unique id (a 128-bit number allocated/set 
@@ -697,8 +697,7 @@ rename: aString in: aNamespace
 	self removeFromSuper.
 	oldName := name.
 	binding := aNamespace changeKey: oldName to: aString.
-	name := binding key asSymbol.
-	environment := binding environment.
+	self setName: binding key asSymbol environment: binding environment.
 	self addToSuper.
 	"Note how the event is delayed until the class is correctly wired in"
 	aNamespace variableRenamed: binding from: oldName!
@@ -811,16 +810,14 @@ setGuid: id
 	_guid := id.
 !
 
-setName: aSymbolOrNil
+setName: aSymbolOrNil environment: aNamespace
 	"Private - Set the name of the receiver to be the <Symbol> or nil argument. The name can be nil for anonymous classes."
 
 	(aSymbolOrNil notNil and: [BindingReference isQualifiedName: aSymbolOrNil])
 		ifTrue: [self error: 'Invalid simple name ' , aSymbolOrNil].
-	name := aSymbolOrNil!
-
-setName: aSymbolOrNil environment: aNamespace
-	self setName: aSymbolOrNil.
-	environment := aNamespace!
+	name := aSymbolOrNil.
+	environment := aNamespace.
+	fullName := self getFullName!
 
 shortName
 	"Answer the shorted <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
@@ -1062,7 +1059,6 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #comment:!accessing!development!public! !
 !Core.Class categoriesFor: #definedBindings!accessing!private! !
 !Core.Class categoriesFor: #environment!accessing!public! !
-!Core.Class categoriesFor: #environment:!accessing!public! !
 !Core.Class categoriesFor: #fileIn!development!public!source filing! !
 !Core.Class categoriesFor: #fileOutName!development!private!source filing! !
 !Core.Class categoriesFor: #fileOutStem!development!private!source filing! !
@@ -1070,6 +1066,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #fullNameFor:!helpers!namespaces!private! !
 !Core.Class categoriesFor: #fullPath!accessing!namespaces!private! !
 !Core.Class categoriesFor: #fullyQualifiedReference!accessing!namespaces!public! !
+!Core.Class categoriesFor: #getFullName!helpers!private! !
 !Core.Class categoriesFor: #guid!constants!public! !
 !Core.Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Core.Class categoriesFor: #importedNamespacesDo:!namespaces!public! !
@@ -1117,7 +1114,6 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #resolveUnqualifiedName:!bindings!private! !
 !Core.Class categoriesFor: #setClassVarNames:!class variables!private! !
 !Core.Class categoriesFor: #setGuid:!accessing!private! !
-!Core.Class categoriesFor: #setName:!accessing!private! !
 !Core.Class categoriesFor: #setName:environment:!accessing!private! !
 !Core.Class categoriesFor: #shortName!accessing!public! !
 !Core.Class categoriesFor: #simpleName!accessing!public! !

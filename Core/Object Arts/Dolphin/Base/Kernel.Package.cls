@@ -512,7 +512,7 @@ fileInScript: aSymbol
 			anon := (builder new
 						superclass: originalClass;
 						yourself) createNewClass.
-			anon environment: Smalltalk.
+			anon setName: nil environment: Smalltalk.
 			
 			[self becomeA: anon.
 			self evaluateScript: aSymbol source: aString]

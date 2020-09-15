@@ -42,9 +42,9 @@ namespace ST
 	class Class : public ClassDescription
 	{
 	public:
-		// TODO: Use Utf8String
 		ArrayOTE* m_subclasses;
 		Utf8StringOTE*	m_name;
+		POTE		m_fullName;
 		POTE		m_classPool;	/* dictionary of varName, storage */
 		POTE		m_imports;
 		POTE		m_environment;
@@ -54,7 +54,8 @@ namespace ST
 
 		static constexpr size_t SubClassesIndex = ClassDescription::FixedSize;
 		static constexpr size_t NameIndex = SubClassesIndex + 1;
-		static constexpr size_t ClassPoolIndex = NameIndex + 1;
+		static constexpr size_t FullNameIndex = NameIndex + 1;
+		static constexpr size_t ClassPoolIndex = FullNameIndex + 1;
 		static constexpr size_t ImportsIndex = ClassPoolIndex + 1;
 		static constexpr size_t EnvironmentIndex = ImportsIndex + 1;
 		static constexpr size_t CommentIndex = EnvironmentIndex + 1;
