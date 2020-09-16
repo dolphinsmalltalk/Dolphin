@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefactoring
+Refactory.Browser.CreateAccessorsForVariableRefactoring subclass: #'Refactory.Browser.RenameAccessorsForVariableRefactoring'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameAccessorsForVariableRefactoring guid: (GUID fromString: '{9e8e6c09-efcb-4259-82e5-b37dde861a8c}')!
-RenameAccessorsForVariableRefactoring comment: ''!
-!RenameAccessorsForVariableRefactoring categoriesForClass!Unclassified! !
-!RenameAccessorsForVariableRefactoring methodsFor!
+Refactory.Browser.RenameAccessorsForVariableRefactoring guid: (Core.GUID fromString: '{9e8e6c09-efcb-4259-82e5-b37dde861a8c}')!
+Refactory.Browser.RenameAccessorsForVariableRefactoring comment: ''!
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesForClass!Unclassified! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring methodsFor!
 
 createGetterAccessor
 	"Currently, if we fail to find a getter to rename, we do nothing.  An option to ask the the user if they want to create one, reverting to the superclass' behaviour, could be added."
@@ -74,12 +74,12 @@ setSetterMethod
 
 	setterMethod isNil ifTrue: [setterMethod := self findSetterMethod]
 			! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #newName:!accessing!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #renameGetterRefactoring!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #renameSetterRefactoring!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #setGetterMethod!composite-accessing!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #setSetterMethod!composite-accessing!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #newName:!accessing!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #renameGetterRefactoring!public!transforming! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #renameSetterRefactoring!public!transforming! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #setGetterMethod!composite-accessing!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #setSetterMethod!composite-accessing!public! !
 

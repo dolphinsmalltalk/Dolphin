@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CSRefactorings'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Additional Refactorings developed by the Camp Smalltalk "Custom Refactorings and Rewrite Editor Usability" project: 
 
@@ -10,13 +10,14 @@ Unfortunately the project team have chosen to distribute the custom refactorings
 
 
 package setClassNames: #(
-	#{RenameAccessorsForVariableRefactoring}
-	#{RenameClassVariableAndAccessorsRefactoring}
-	#{RenameInstanceVariableAndAccessorsRefactoring}
+	#{Refactory.Browser.RenameAccessorsForVariableRefactoring}
+	#{Refactory.Browser.RenameClassVariableAndAccessorsRefactoring}
+	#{Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Refactory\RBNamespaces'
 	'..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 ).
 
@@ -24,22 +25,22 @@ package!
 
 "Class Definitions"!
 
-CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefactoring
+Refactory.Browser.CreateAccessorsForVariableRefactoring subclass: #'Refactory.Browser.RenameAccessorsForVariableRefactoring'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefactoring
+Refactory.Browser.RenameClassVariableRefactoring subclass: #'Refactory.Browser.RenameClassVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameInstanceVariableRefactoring subclass: #RenameInstanceVariableAndAccessorsRefactoring
+Refactory.Browser.RenameInstanceVariableRefactoring subclass: #'Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
