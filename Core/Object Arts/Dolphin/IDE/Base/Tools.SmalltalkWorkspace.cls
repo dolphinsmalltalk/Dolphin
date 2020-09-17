@@ -926,6 +926,9 @@ modifiedModel
 modifiedModel: aValueModel
 	modifiedModel := aValueModel!
 
+nameBindingContext
+	^self evaluationContext ifNil: [Smalltalk] ifNotNil: [:context | context basicClass]!
+
 newVariablePool
 	workspacePool := PoolDictionary new!
 
@@ -1160,7 +1163,7 @@ replaceSelection: aString
 resolveIdentifier: aString ifDefined: aMonadicValuable
 	(self workspacePool bindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
 	^(self evaluationContext class indexOfInstVar: aString ifAbsent: [])
-		ifNil: [(self selfClass fullBindingFor: aString) ifNotNil: [:var | aMonadicValuable value: var value]]
+		ifNil: [(self nameBindingContext fullBindingFor: aString) ifNotNil: [:var | aMonadicValuable value: var value]]
 		ifNotNil: [:i | aMonadicValuable value: (self evaluationContext instVarAt: i)]!
 
 searchEnvironment
@@ -1360,7 +1363,7 @@ showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 			qualifier := prefix copyFrom: 1 to: lastDot - 1.
 			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
 			choices := #().
-			(self selfClass fullBindingFor: qualifier)
+			(self nameBindingContext fullBindingFor: qualifier)
 				ifNotNil: 
 					[:var |
 					pool := var value.
@@ -1626,6 +1629,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #modifiedModel!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #modifiedModel:!accessing!public! !
+!Tools.SmalltalkWorkspace categoriesFor: #nameBindingContext!accessing!autocompletion!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #newVariablePool!operations!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #onCharAdded:!autocompletion!event handling!private! !

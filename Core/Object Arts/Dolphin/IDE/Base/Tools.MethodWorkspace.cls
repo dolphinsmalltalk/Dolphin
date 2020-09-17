@@ -219,6 +219,9 @@ method
 	Notification deprecated.
 	^self selectedMethod!
 
+nameBindingContext
+	^evaluationContext ifNil: [self parseContext ?? Smalltalk] ifNotNil: [:context | context basicClass]!
+
 nodeForRange: anInterval 
 	^self parseTree 
 		ifNotNil: 
@@ -479,6 +482,7 @@ widenSourceSelection
 !Tools.MethodWorkspace categoriesFor: #killParseTimer!helpers!private! !
 !Tools.MethodWorkspace categoriesFor: #lineFromPosition:!enquiries!public! !
 !Tools.MethodWorkspace categoriesFor: #method!accessing!private! !
+!Tools.MethodWorkspace categoriesFor: #nameBindingContext!accessing!autocompletion!private! !
 !Tools.MethodWorkspace categoriesFor: #nodeForRange:!helpers!private! !
 !Tools.MethodWorkspace categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
 !Tools.MethodWorkspace categoriesFor: #onTextChanged!event handling!public! !
