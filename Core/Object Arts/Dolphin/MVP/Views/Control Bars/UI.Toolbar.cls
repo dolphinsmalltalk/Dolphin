@@ -55,7 +55,7 @@ addBitmap: aBitmap index: anIntegerIndex
 
 	| start |
 	start := bitmapsStart at: aBitmap
-				ifAbsentPut: 
+				ifAbsentPutClean: 
 					[| gdiBitmap size |
 					gdiBitmap := aBitmap asBitmap.
 					gdiBitmap setMap3DColors: true.
@@ -123,9 +123,9 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 
 	| start |
 	start := bitmapsStart at: systemBitmapId
-				ifAbsentPut: 
+				ifAbsentPutClean: 
 					[| addBitmap |
-					(addBitmap := TBADDBITMAP new)
+					(addBitmap := TBADDBITMAP newBuffer)
 						hInst: HINST_COMMCTRL;
 						nID: systemBitmapId.
 					self tbAddBitmap: addBitmap size: 0].

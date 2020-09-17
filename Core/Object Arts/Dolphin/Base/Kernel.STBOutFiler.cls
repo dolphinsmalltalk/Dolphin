@@ -107,7 +107,7 @@ register: anObject asGlobal: aSymbol
 
 	(anObject isNil
 		ifTrue: [globalNils]
-		ifFalse: [globals at: anObject ifAbsentPut: [OrderedCollection new]]) add: aSymbol!
+		ifFalse: [globals at: anObject ifAbsentPutClean: [OrderedCollection new]]) add: aSymbol!
 
 removeOverrideFor: anObject
 	anObject isNil ifFalse: [proxyOverrides removeKey: anObject ifAbsent: []]!

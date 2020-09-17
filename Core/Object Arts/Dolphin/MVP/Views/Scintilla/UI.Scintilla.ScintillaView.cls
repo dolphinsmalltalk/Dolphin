@@ -10073,7 +10073,7 @@ setCurrentTextStyles: aCollection
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
 			newStylesByName at: each name put: each.
 			newStylesById at: each basicId + 1 put: each].
-	newStylesByName at: #normal ifAbsentPut: [TextStyle normal].
+	newStylesByName at: #normal ifAbsentPutClean: [TextStyle normal].
 	currentTextStyles := newStylesByName.
 	styleIdMap := newStylesById.
 	self updateTextStyles!

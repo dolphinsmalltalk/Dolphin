@@ -489,7 +489,7 @@ name: protocolName
 
 	| symbol |
 	symbol := protocolName asSymbol.
-	^Protocols at: symbol ifAbsentPut: [self basicNew setName: symbol; yourself]!
+	^Protocols at: symbol ifAbsentPutClean: [self basicNew setName: symbol; yourself]!
 
 new
 	"MethodProtocols must be unique for any particular name, and must be instantiated with the #name:

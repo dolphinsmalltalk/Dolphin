@@ -15,10 +15,10 @@ Instance Variables:
 !Refactory.Browser.MultiEnvironment methodsFor!
 
 addClass: aClass into: aValue
-	(environmentDictionaries at: aValue ifAbsentPut: [SelectorEnvironment new]) addClass: aClass!
+	(environmentDictionaries at: aValue ifAbsentPutClean: [SelectorEnvironment new]) addClass: aClass!
 
 addClass: aClass selector: aSymbol into: aValue
-	(environmentDictionaries at: aValue ifAbsentPut: [SelectorEnvironment new]) addClass: aClass
+	(environmentDictionaries at: aValue ifAbsentPutClean: [SelectorEnvironment new]) addClass: aClass
 		selector: aSymbol!
 
 definesClass: aClass
@@ -54,7 +54,7 @@ removeClass: aClass into: aValue
 	(environmentDictionaries at: aValue ifAbsent: [SelectorEnvironment new]) removeClass: aClass!
 
 removeClass: aClass selector: aSelector into: aValue
-	(environmentDictionaries at: aValue ifAbsentPut: [SelectorEnvironment new]) removeClass: aClass
+	(environmentDictionaries at: aValue ifAbsentPutClean: [SelectorEnvironment new]) removeClass: aClass
 		selector: aSelector!
 
 selectEnvironment: aValue

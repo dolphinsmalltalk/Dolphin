@@ -259,7 +259,7 @@ idFor: aCommandDescription
 	"Private - Answer a unique id for aCommandDescription, registering the command in our
 	CommandDescriptionRegistry if it has not been added before."
 
-	^CommandDescriptionRegistry at: aCommandDescription ifAbsentPut: [self nextId]!
+	^CommandDescriptionRegistry at: aCommandDescription ifAbsentPutClean: [self nextId]!
 
 initialize
 	"Private - Initialize the receiver's class variables.

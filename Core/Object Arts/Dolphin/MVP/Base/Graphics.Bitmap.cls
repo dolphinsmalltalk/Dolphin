@@ -673,7 +673,7 @@ sharedCopyOf: aBitmap
 	identifier. This can help save memory if the bitmap is not intended to be modified, 
 	e.g. if it contains toolbar button images."
 
-	^SharedBitmaps at: aBitmap fullIdentifier ifAbsentPut: [aBitmap isShared: true. aBitmap]!
+	^SharedBitmaps at: aBitmap fullIdentifier ifAbsentPutClean: [aBitmap isShared: true. aBitmap]!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 Bitmap. 

@@ -39,14 +39,14 @@ propertyOf: anObject at: aSymbol ifAbsentPut: valueOperation
 	exists then the result of evaluating aBlock will is stored as the value of the
 	property, and then answered."
 
-	^(register at: anObject ifAbsentPut: [IdentityDictionary new]) at: aSymbol
+	^(register at: anObject ifAbsentPutClean: [IdentityDictionary new]) at: aSymbol
 		ifAbsentPut: valueOperation!
 
 propertyOf: anObject at: aSymbol put: valueObject
 	"Associates a property valueObject with the property name aSymbol for anObject.
 	Answer the valueObject put."
 
-	^(register at: anObject ifAbsentPut: [IdentityDictionary new]) at: aSymbol put: valueObject!
+	^(register at: anObject ifAbsentPutClean: [IdentityDictionary new]) at: aSymbol put: valueObject!
 
 register
 	^register!

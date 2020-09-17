@@ -67,7 +67,7 @@ dayOfWeek: aString
 	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
 	Note that Monday is always 1, and Sunday always 7 (but see #firstDayOfWeek)"
 
-	^(info at: #dayNamesMap ifAbsentPut: [self buildDayNamesMap]) at: aString asLowercase!
+	^(info at: #dayNamesMap ifAbsentPutClean: [self buildDayNamesMap]) at: aString asLowercase!
 
 dayOfWeekAbbreviation: anInteger
 	"Answer a <String> that is the localised abbreviated name for the day of the week whose index is the <integer> argument, where Sunday is 1 and Saturday is 7."
@@ -197,7 +197,7 @@ getDateFormats: aBoolean
 getIntegerInfo: anIntegerLcType
 	"Private - Get the specified <integer> locale information from Windows, caching for subsequent use."
 
-	^info at: anIntegerLcType ifAbsentPut: [self getLocaleInfoInteger: anIntegerLcType]!
+	^info at: anIntegerLcType ifAbsentPutClean: [self getLocaleInfoInteger: anIntegerLcType]!
 
 getLocaleInfoInteger: anIntegerLcType
 	| buf |
@@ -233,7 +233,7 @@ getLocaleInfoString: anIntegerLcType
 getStringInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale."
 
-	^info at: anIntegerLcType ifAbsentPut: [self getLocaleInfoString: anIntegerLcType]!
+	^info at: anIntegerLcType ifAbsentPutClean: [self getLocaleInfoString: anIntegerLcType]!
 
 getTimeFormats
 	| formats enum |
@@ -259,7 +259,7 @@ hasLeadingZero
 indexOfMonth: aString
 	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
 
-	^(info at: #monthNamesMap ifAbsentPut: [self buildMonthNamesMap]) at: aString asLowercase!
+	^(info at: #monthNamesMap ifAbsentPutClean: [self buildMonthNamesMap]) at: aString asLowercase!
 
 infinity
 	"Answer the <String> representation for positive infinity in this locale (e.g the '∞' symbol)"
@@ -314,7 +314,7 @@ longDateFormat
 longDateFormats
 	"Answer a collection of the long date formats for the receiver locale."
 
-	^info at: #longDateFormats ifAbsentPut: [self getDateFormats: true]!
+	^info at: #longDateFormats ifAbsentPutClean: [self getDateFormats: true]!
 
 longTimeFormat
 	"Answer the long time format for the receiver locale."
@@ -438,7 +438,7 @@ shortAmDesignator
 	"Answer the short <String> used in the receiver locale to designate AM (morning)."
 
 	^info at: LOCALE_SSHORTESTAM
-		ifAbsentPut: 
+		ifAbsentPutClean: 
 			[KernelLibrary default isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTAM]
 				ifFalse: [self amDesignator first]]!
@@ -451,13 +451,13 @@ shortDateFormat
 shortDateFormats
 	"Answer a collection of the short date formats for this locale."
 
-	^info at: #shortDateFormats ifAbsentPut: [self getDateFormats: false]!
+	^info at: #shortDateFormats ifAbsentPutClean: [self getDateFormats: false]!
 
 shortPmDesignator
 	"Answer the short <String> used in the receiver locale to designate PM (afternoon)."
 
 	^info at: LOCALE_SSHORTESTPM
-		ifAbsentPut: 
+		ifAbsentPutClean: 
 			[KernelLibrary default isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTPM]
 				ifFalse: [self pmDesignator first]]!
@@ -480,7 +480,7 @@ thousandSeparator
 timeFormats
 	"Answer a collection of the time formats for the specified locale."
 
-	^info at: #timeFormats ifAbsentPut: [self getTimeFormats]!
+	^info at: #timeFormats ifAbsentPutClean: [self getTimeFormats]!
 
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."

@@ -37,7 +37,7 @@ aspectValue: anAspectSymbol
 	in our aspects dictionary"
 
 	^aspects at: anAspectSymbol
-		ifAbsentPut: [ValueAspectAdaptor subject: subjectCopy aspect: anAspectSymbol]!
+		ifAbsentPutClean: [ValueAspectAdaptor subject: subjectCopy aspect: anAspectSymbol]!
 
 doesNotUnderstand: aMessage
 	"The receiver has not understood aMessage. Most likely this is because it was intended for

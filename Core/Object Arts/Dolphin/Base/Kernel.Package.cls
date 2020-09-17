@@ -1450,7 +1450,7 @@ trace: anIdentityDictionary prerequisite: aPackage from: fromObject to: toObject
 	| targetPackage |
 	aPackage == self ifTrue: [^self].
 	targetPackage := aPackage ?? _Uncommitted.
-	(anIdentityDictionary at: targetPackage ifAbsentPut: [OrderedCollection new: 16])
+	(anIdentityDictionary at: targetPackage ifAbsentPutClean: [OrderedCollection new: 16])
 		addLast: {fromObject. toObject. aString. targetPackage}!
 
 tracePrerequisites

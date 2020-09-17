@@ -88,7 +88,7 @@ name: cat
 	nameString := cat asString.
 	^nameString isEmpty 
 		ifTrue: [self unclassified]
-		ifFalse: [self table at: nameString ifAbsentPut: [self newNamed: nameString]]!
+		ifFalse: [self table at: nameString ifAbsentPutClean: [self newNamed: nameString]]!
 
 table
 	^Table ifNil: [Table := WeakLookupTable new]!

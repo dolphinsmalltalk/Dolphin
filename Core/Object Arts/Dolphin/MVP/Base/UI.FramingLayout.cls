@@ -24,7 +24,7 @@ arrangementOf: aView
 	"Answer the current framing constraints for aView. This will lazily
 	generate one if none has currently been set."
 
-	^framings at: aView ifAbsentPut: [self newConstraintFor: aView]!
+	^framings at: aView ifAbsentPutClean: [self newConstraintFor: aView]!
 
 arrangementOf: aView put: aFramingConstraints
 	"Set the arrangement parameter of the <View>, aView< in the receiver to be the

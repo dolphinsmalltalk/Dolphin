@@ -16,7 +16,7 @@ value
 
 	| inst count |
 	count := array size.
-	inst := class new: count // 2.
+	inst := class new: (count bitShift: -1).
 	1 to: count
 		by: 2
 		do: [:i | inst at: (array at: i) put: (array at: i + 1)].

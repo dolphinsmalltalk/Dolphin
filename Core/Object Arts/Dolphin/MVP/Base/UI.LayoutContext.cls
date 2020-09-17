@@ -84,7 +84,7 @@ isViewVisible: aView
 	^aView hasVisibleStyle!
 
 positionForView: aView
-	^positions at: aView ifAbsentPut: [{aView. nil. nil}]!
+	^positions at: aView ifAbsentPutClean: [{aView. nil. nil}]!
 
 rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current

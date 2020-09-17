@@ -269,11 +269,10 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
+	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM'
-	
 ).
 
 package!
@@ -520,7 +519,7 @@ Kernel.SharedPool subclass: #AXTypeGenerationFlags
 Core.Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
-	imports: #(#{AXAutomationConstants} #{AXTypeGenerationFlags})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXTypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #AXTypeLibDocumentation
@@ -540,7 +539,7 @@ AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
-	imports: #(#{AXAutomationErrors} #{Win32Constants})
+	imports: #(#{Smalltalk.AXAutomationErrors} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
@@ -618,7 +617,7 @@ COMFunction subclass: #DispFunction
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors} #{Win32Constants})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXDispatchImpAbstract subclass: #AXDualImp
@@ -648,7 +647,7 @@ IUnknown subclass: #ICreateErrorInfo
 IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IPerPropertyBrowsing
@@ -666,7 +665,7 @@ IUnknown subclass: #IProvideClassInfo
 IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ITypeComp
@@ -678,13 +677,13 @@ IUnknown subclass: #ITypeComp
 IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IEnumXXXX subclass: #IEnumVARIANT
@@ -714,7 +713,7 @@ ITypeLib subclass: #ITypeLib2
 External.GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbElements' -> 16r4.
@@ -727,7 +726,7 @@ External.GenericExternalArray subclass: #SAFEARRAY
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tdescElem' -> 16r0
@@ -735,7 +734,7 @@ OLEStructure subclass: #AbstractELEMDESC
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cy' -> 16r0
@@ -752,7 +751,7 @@ OLEStructure subclass: #CUSTDATAITEM
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hi32' -> 16r4.
@@ -764,7 +763,7 @@ OLEStructure subclass: #DECIMAL
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cArgs' -> 16r8.
@@ -790,7 +789,7 @@ OLEStructure subclass: #FONTDESC
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved' -> 16r0.
@@ -799,7 +798,7 @@ OLEStructure subclass: #IDLDESC
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pparamdescex' -> 16r0.
@@ -826,7 +825,7 @@ OLEStructure subclass: #SAFEARRAYBOUND
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_guid' -> 16r0.
@@ -839,7 +838,7 @@ OLEStructure subclass: #TLIBATTR
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hreftype' -> 16r0.
@@ -860,7 +859,7 @@ AbstractELEMDESC subclass: #ARRAYDESC
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_paramdesc' -> 16r8
@@ -868,13 +867,13 @@ AbstractELEMDESC subclass: #ELEMDESC
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLEFinalizableStructure subclass: #CUSTDATA
@@ -889,7 +888,7 @@ OLEFinalizableStructure subclass: #CUSTDATA
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
-	imports: #(#{AXAutomationConstants} #{AXAutomationErrors} #{Win32Constants})
+	imports: #(#{Smalltalk.AXAutomationConstants} #{Smalltalk.AXAutomationErrors} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dblVal' -> 16r8.
@@ -903,7 +902,7 @@ OLEFinalizableStructure subclass: #VARIANT
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 AXTypeInfoStructure subclass: #TYPEATTR
@@ -967,7 +966,7 @@ AXMemberDesc subclass: #VARDESC
 External.DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{Smalltalk.AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.SWORD subclass: #VARIANT_BOOL
@@ -2074,7 +2073,7 @@ getVariantBoolString: anInteger
 
 variantBool: aBoolean
 	^info at: aBoolean class name
-		ifAbsentPut: 
+		ifAbsentPutClean: 
 			[self getVariantBoolString: (aBoolean
 						ifTrue: [Smalltalk.AXAutomationConstants.VARIANT_TRUE]
 						ifFalse: [Smalltalk.AXAutomationConstants.VARIANT_FALSE])]! !

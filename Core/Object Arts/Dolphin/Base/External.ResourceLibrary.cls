@@ -143,7 +143,7 @@ open: aString withAliases: aCollection flags: anInteger
 	| lib path |
 	path := File default: aString asLowercase extension: 'dll'.
 	lib := Libraries at: path
-				ifAbsentPut: 
+				ifAbsentPutClean: 
 					[self new
 						loadFlags: anInteger;
 						open: path;

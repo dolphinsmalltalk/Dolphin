@@ -85,7 +85,7 @@ withPositionsOf: aCollection inInterval: anInterval
 	| d |
 	d := self new.
 	anInterval 
-		do: [:index | (d at: (aCollection at: index) ifAbsentPut: [OrderedCollection new]) add: index].
+		do: [:index | (d at: (aCollection at: index) ifAbsentPutClean: [OrderedCollection new]) add: index].
 	^d! !
 !Core.Dictionary class categoriesFor: #withPositionsOf:inInterval:!equivalence classes!public! !
 

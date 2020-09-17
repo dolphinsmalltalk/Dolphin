@@ -28,22 +28,22 @@ accessorMethods
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)!
 
 addClass: aClass classVariable: aSymbol
-	(classVariables at: aClass fullName ifAbsentPut: [Set new]) add: aSymbol.
+	(classVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aSymbol.
 	self flushCachesFor: aClass.
 	self addSearchString: aSymbol!
 
 addClass: aClass instanceVariable: aString
-	(instanceVariables at: aClass fullName ifAbsentPut: [Set new]) add: aString.
+	(instanceVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
 addClass: aClass instanceVariableReader: aString
-	(instanceVariableReaders at: aClass fullName ifAbsentPut: [Set new]) add: aString.
+	(instanceVariableReaders at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
 addClass: aClass instanceVariableWriter: aString
-	(instanceVariableWriters at: aClass fullName ifAbsentPut: [Set new]) add: aString.
+	(instanceVariableWriters at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 

@@ -1215,7 +1215,7 @@ fileOutMethods: aCollection
 	aCollection do: 
 			[:each |
 			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
-			(methodsByClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
+			(methodsByClass at: each methodClass ifAbsentPutClean: [OrderedCollection new]) add: each selector].
 	(methodsByClass associations asSortedCollection: [:a :b | a key fullName <==> b key fullName <= 0])
 		do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
