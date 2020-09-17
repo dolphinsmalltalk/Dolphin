@@ -2209,12 +2209,12 @@ saveStateOn: aWriteStream
 		ifNil: 
 			[self hasClassSelected
 				ifTrue: 
-					['aClassBrowser actualClass: <1p>.' expandMacrosWithArguments: {self actualClass} on: aWriteStream.
+					['aClassBrowser actualClass: <1s>.' expandMacrosWithArguments: {self actualClass fullName} on: aWriteStream.
 					aWriteStream cr]]
 		ifNotNil: 
 			[:method |
-			'aClassBrowser method: (<1p> compiledMethodAt: <2p>).'
-				expandMacrosWithArguments: {method methodClass. method selector}
+			'aClassBrowser method: <1s> >> <2p>.'
+				expandMacrosWithArguments: {method methodClass fullName. method selector}
 				on: aWriteStream.
 			aWriteStream cr].
 	super saveStateOn: aWriteStream.

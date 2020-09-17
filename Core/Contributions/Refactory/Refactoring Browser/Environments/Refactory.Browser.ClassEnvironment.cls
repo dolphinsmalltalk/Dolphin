@@ -23,6 +23,12 @@ addClass: aClass
 classes: aCollection 
 	aCollection do: [:each | self addClass: each]!
 
+classes: classArray metaClasses: metaArray
+	"Private - Used to recreate an environment from its storeString"
+
+	classes := classArray asSet.
+	metaClasses := metaArray asSet!
+
 classesAndSelectorsDo: aBlock
 	#rbFix.	"Override to avoid #includesClass: check in #selectorsForClass:do:"
 	self classesDo: 
@@ -106,21 +112,14 @@ selectorsForClass: aClass do: aBlock
 storeOn: aStream
 	aStream nextPut: $(.
 	super storeOn: aStream.
-	aStream nextPutAll: ' classes: (('.
+	aStream nextPutAll: ' classes: '.
 	classes asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
-				| class |
-				class := each asQualifiedReference valueOrNil.
-				class notNil ifTrue: [sum add: class].
-				sum]) , ('.
+	aStream nextPutAll: ' metaClasses: '.
 	metaClasses asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
-				| class |
-				class := each asQualifiedReference valueOrNil.
-				class notNil ifTrue: [sum add: class class].
-				sum])))'! !
+	aStream nextPut: $)! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #addClass:!adding!public! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #classes:!initialize/release!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #classes:metaClasses:!initialize/release!private! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #classNames!accessing/classes!public! !

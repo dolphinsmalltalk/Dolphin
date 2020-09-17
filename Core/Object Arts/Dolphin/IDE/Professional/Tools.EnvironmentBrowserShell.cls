@@ -128,16 +128,13 @@ resetFor: aClass
 		and: [(classesPresenter model filter value: aClass instanceClass) not]) 
 			ifTrue: [self displayLocalHierarchyOf: aClass]!
 
-saveStateOn: aWriteStream 
+saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
 	the receiver's class as it's parameter"
 
-	aWriteStream nextPutAll: '[:anEnvironmentBrowser | '.
-	self 
-		saveStateAspects: #(#browserEnvironment)
-		for: 'anEnvironmentBrowser'
-		on: aWriteStream.
+	aWriteStream nextPutAll: '[:anEnvironmentBrowser | anEnvironmentBrowser browserEnvironment: '.
+	self browserEnvironment storeOn: aWriteStream.
 	aWriteStream
 		nextPut: $.;
 		cr.

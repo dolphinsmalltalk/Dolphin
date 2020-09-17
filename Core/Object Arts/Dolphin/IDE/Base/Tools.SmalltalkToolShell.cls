@@ -238,9 +238,13 @@ saveStateAspects: aSymbolArray for: aStringName on: aWriteStream
 
 	aSymbolArray do: 
 			[:eachSymbol |
+			| value |
 			'<1d> <2d>: ' expandMacrosWithArguments: {aStringName. eachSymbol} on: aWriteStream.
-			(self perform: eachSymbol) literalStoreEvaluationOn: aWriteStream.
-			eachSymbol == aSymbolArray last ifFalse: [aWriteStream nextPut: $.]]!
+			value := self perform: eachSymbol.
+			value isSelfEvaluating
+				ifTrue: [value printOn: aWriteStream]
+				ifFalse: [value literalStoreEvaluationOn: aWriteStream]]
+		separatedBy: [aWriteStream nextPut: $.]!
 
 saveStateOn: aWriteStream 
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
