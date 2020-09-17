@@ -288,7 +288,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 				imageAttributes: imageAttributes asParameter
 				callback: nil
 				callbackData: nil.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipDrawImageRectRectI failed' with: status]!
+	status == Ok ifFalse: [GdiplusError signal: 'GdipDrawImageRectRectI failed' with: status]!
 
 drawImage: anImage points: threePoints 
 	"Draw anImage on the receiver stretched to fit the parallelogram specified by threePoints."
@@ -529,7 +529,13 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 				height: aRectangle height asInteger) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipFillRectangleI failed' with: status]!
 
-fillRegion: aRegion brush: aBrush 
+fillRectangle: aRectangle color: aColor 
+	| fillBrush |
+	fillBrush := GdiplusSolidBrush color: aColor.
+	self fillRectangle: aRectangle brush: fillBrush.
+	fillBrush free!
+
+fillRegion: aRegion brush: aBrush
 	"Fill aRegion on the receiver using aBrush."
 
 	| status |
@@ -563,22 +569,22 @@ interpolationMode
 	| status interpolationMode |
 	interpolationMode := SDWORD new.
 	(status := GdiplusLibrary default gdipGetInterpolationMode: self asParameter
-				interpolationMode: interpolationMode asParameter) = Ok 
+				interpolationMode: interpolationMode asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetInterpolationMode failed' with: status].
 	^interpolationMode asInteger!
 
-interpolationMode: anInterpolationModeConstant 
+interpolationMode: anInterpolationModeConstant
 	"Set the receiver's interpolation mode (the algorithm that is used when images are scaled or rotated)."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetInterpolationMode: self asParameter
-				interpolationMode: anInterpolationModeConstant) = Ok 
+				interpolationMode: anInterpolationModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetInterpolationMode failed' with: status]!
 
 measureString: aString font: aFont
 	"Answer a Point that is the extent of aString as specified by aFont."
 
-	^(self 
+	^(self
 		measureString: aString
 		font: aFont
 		rect: RECTF new
@@ -609,16 +615,16 @@ pageScale
 
 	| status scale |
 	scale := FLOAT new.
-	(status := GdiplusLibrary default gdipGetPageScale: self asParameter scale: scale) = Ok 
+	(status := GdiplusLibrary default gdipGetPageScale: self asParameter scale: scale) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPageScale failed' with: status].
 	^scale value!
 
-pageScale: aRealNumber 
+pageScale: aRealNumber
 	"Set the scaling factor for the page transformation of the receiver to aRealNumber.
 	The page transformation converts page coordinates to device coordinates."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPageScale: self asParameter scale: aRealNumber) = Ok 
+	(status := GdiplusLibrary default gdipSetPageScale: self asParameter scale: aRealNumber) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPageScale failed' with: status]!
 
 pageUnit
@@ -626,15 +632,15 @@ pageUnit
 
 	| status unit |
 	unit := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPageUnit: self asParameter unit: unit) = Ok 
+	(status := GdiplusLibrary default gdipGetPageUnit: self asParameter unit: unit) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPageUnit failed' with: status].
 	^unit value!
 
-pageUnit: aUnitConstant 
+pageUnit: aUnitConstant
 	"Set the receiver's unit of measure."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPageUnit: self asParameter unit: aUnitConstant) = Ok 
+	(status := GdiplusLibrary default gdipSetPageUnit: self asParameter unit: aUnitConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPageUnit failed' with: status]!
 
 pageUnitName
@@ -646,19 +652,19 @@ pixelOffsetMode
 	| status pixelOffsetMode |
 	pixelOffsetMode := SDWORD new.
 	(status := GdiplusLibrary default gdipGetPixelOffsetMode: self asParameter
-				pixelOffsetMode: pixelOffsetMode) = Ok 
+				pixelOffsetMode: pixelOffsetMode) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPixelOffsetMode failed' with: status].
 	^pixelOffsetMode asInteger!
 
-pixelOffsetMode: aPixelOffsetModeConstant 
+pixelOffsetMode: aPixelOffsetModeConstant
 	"Set the type of pixel offsetting that is applied to lines and curves."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPixelOffsetMode: self asParameter
-				pixelOffsetMode: aPixelOffsetModeConstant) = Ok 
+				pixelOffsetMode: aPixelOffsetModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPixelOffsetMode failed' with: status]!
 
-releaseHDC: anExternalHandle 
+releaseHDC: anExternalHandle
 	" 
 	VOID ReleaseHDC(IN HDC hdc)
 	    {
@@ -673,14 +679,14 @@ resetClip
 	"Set the clipping region of the receiver to an infinite region."
 
 	| status |
-	(status := GdiplusLibrary default gdipResetClip: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipResetClip: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipResetClip failed' with: status]!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
 	| status |
-	(status := GdiplusLibrary default gdipResetWorldTransform: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipResetWorldTransform: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipResetWorldTransform failed' with: status]!
 
 resolution
@@ -689,9 +695,9 @@ resolution
 	| status dpiX dpiY |
 	dpiX := FLOAT new.
 	dpiY := FLOAT new.
-	(status := GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpiX) = Ok 
+	(status := GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpiX) = Ok
 		ifFalse: [GdiplusError signal: 'GdpiGetDpiX failed' with: status].
-	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpiY) = Ok 
+	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpiY) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetDpiY failed' with: status].
 	^dpiX asFloat asInteger @ dpiY asFloat asInteger!
 
@@ -706,15 +712,15 @@ rotateTransform: aRealAngle
 
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipRotateWorldTransform: self asParameter
 				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipRotateWorldTransform failed' with: status]!
 
 scaleTransform: aRealPoint 
@@ -722,40 +728,40 @@ scaleTransform: aRealPoint
 
 	self scaleTransform: aRealPoint order: nil!
 
-scaleTransform: aRealPoint order: aMatrixOrderConstant 
+scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipScaleWorldTransform: self asParameter
 				sx: aRealPoint x
 				sy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipScaleWorldTransform failed' with: status]!
 
 smoothingMode
 	| status smoothingMode |
 	smoothingMode := SDWORD new.
 	(status := GdiplusLibrary default gdipGetSmoothingMode: self asParameter
-				smoothingMode: smoothingMode) = Ok 
+				smoothingMode: smoothingMode) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetSmoothingMode failed' with: status].
 	^smoothingMode asInteger!
 
-smoothingMode: aSmoothingModeConstant 
+smoothingMode: aSmoothingModeConstant
 	"Set the type of smoothing (antialiasing) that is applied to lines and curves."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetSmoothingMode: self asParameter
-				smoothingMode: aSmoothingModeConstant) = Ok 
+				smoothingMode: aSmoothingModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetSmoothingMode failed' with: status]!
 
-textRenderingHint: aTextRenderingHintConstant 
+textRenderingHint: aTextRenderingHintConstant
 	"Set the text rendering mode of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetTextRenderingHint: self asParameter
-				mode: aTextRenderingHintConstant) == Ok 
+				mode: aTextRenderingHintConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetTextRenderingHint filed' with: status]!
 
 transform
@@ -764,16 +770,16 @@ transform
 	| status gpHandle |
 	gpHandle := GdiplusMatrix new.
 	(status := GdiplusLibrary default gdipGetWorldTransform: self asParameter
-				matrix: gpHandle asParameter) = Ok 
+				matrix: gpHandle asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetWorldTransform failed' with: status].
 	^gpHandle!
 
-transform: aGdiplusMatrix 
+transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetWorldTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) == Ok 
+				matrix: aGdiplusMatrix asParameter) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetWorldTransform failed' with: status]!
 
 transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
@@ -801,16 +807,16 @@ translateTransform: aRealPoint
 
 	self translateTransform: aRealPoint order: MatrixOrderPrepend!
 
-translateTransform: aRealPoint order: aMatrixOrderConstant 
+translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipTranslateWorldTransform: self asParameter
 				dx: aRealPoint x
 				dy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipTranslateWorldTransform failed' with: status]! !
 !GdiplusGraphics categoriesFor: #basicFree!private!realizing/unrealizing! !
 !GdiplusGraphics categoriesFor: #beginContainer!accessing-transformations!public! !
@@ -858,6 +864,7 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 !GdiplusGraphics categoriesFor: #fillPolygon:brush:!filling!public! !
 !GdiplusGraphics categoriesFor: #fillPolygon:brush:fillMode:!filling!public! !
 !GdiplusGraphics categoriesFor: #fillRectangle:brush:!filling!public! !
+!GdiplusGraphics categoriesFor: #fillRectangle:color:!filling!public! !
 !GdiplusGraphics categoriesFor: #fillRegion:brush:!filling!public! !
 !GdiplusGraphics categoriesFor: #getHDC!gdi interop!private! !
 !GdiplusGraphics categoriesFor: #interpolationMode!accessing-modes!public! !

@@ -714,24 +714,28 @@ asColorKeyedBitmap
 !
 
 asColorKeyedBitmap: aKeyColor
-	| image table imageAttributes bitmap keyedBitmap |
-	table := StructureArray length: 1 elementClass: GpColorMap.
+	| image imageAttributes bitmap keyedBitmap ext |
 	image := GdiplusBitmap fromBitmap: self.
-	(table at: 1)
-		oldColor: aKeyColor argbCode;
-		newColor: Color argbNoneCode.
-	imageAttributes := GdiplusImageAttributes new remapTable: table.
-	bitmap := GdiplusBitmap extent: self extent.
+	imageAttributes := GdiplusImageAttributes new.
+	imageAttributes
+		colorKeys: GdiplusConstants.ColorAdjustTypeBitmap
+		colorLow: aKeyColor
+		colorHigh: aKeyColor.
+	ext := self extent.
+	bitmap := GdiplusBitmap extent: ext.
 	bitmap graphics
 		drawImage: image
-		at: Point zero
-		extent: image extent
-		from: Point zero
-		extent: image extent
-		unit: 2
+		at: Point.Zero
+		extent: ext
+		from: Point.Zero
+		extent: ext
+		unit: nil
 		attributes: imageAttributes.
-	keyedBitmap := Bitmap displayCompatibleWithExtent: self extent.
+	image free.
+	imageAttributes free.
+	keyedBitmap := Bitmap displayCompatibleWithExtent: ext.
 	bitmap drawOn: keyedBitmap canvas.
+	bitmap free.
 	keyedBitmap freeDC.
 	^keyedBitmap! !
 !Bitmap categoriesFor: #asColorKeyedBitmap!public! !
@@ -774,9 +778,9 @@ asGdiplusRectangle
 createThumbnailExtent: extent mask: aColor 
 	| image crop rect scale thumbnail canvas r scaledExtent |
 	image := GdiplusBitmap fromView: self.
-	rect := Rectangle origin: Point zero extent: self extent.
+	rect := Rectangle extent: self extent.
 	crop := GdiplusBitmap extent: rect extent.
-	(crop graphics)
+	crop graphics
 		clear: aColor;
 		drawImage: image
 			at: 1 @ 1

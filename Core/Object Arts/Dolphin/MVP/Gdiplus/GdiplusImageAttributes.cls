@@ -16,14 +16,14 @@ basicFree
 
 	GdiplusLibrary default gdipDisposeImageAttributes: handle!
 
-colorKeys: aColorAdjustTypeConstant colorLow: lowARGB colorHigh: highARGB 
+colorKeys: aColorAdjustTypeConstant colorLow: lowARGB colorHigh: highARGB
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesColorKeys: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
+				enableFlag: TRUE
 				colorLow: lowARGB argbCode
-				colorHigh: highARGB argbCode) == Ok 
+				colorHigh: highARGB argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesColorKeys failed' with: status]!
 
 colorMatrix: aColorMatrix
@@ -34,17 +34,17 @@ colorMatrix: aColorMatrix
 		type: ColorAdjustTypeDefault
 		mode: ColorMatrixFlagsDefault!
 
-colorMatrix: aColorMatrix type: aColorAdjustTypeConstant mode: aColorMatrixFlagsConstant 
+colorMatrix: aColorMatrix type: aColorAdjustTypeConstant mode: aColorMatrixFlagsConstant
 	"Set the receiver's color-adjustment matrix for a specified category."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesColorMatrix: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
+				enableFlag: TRUE
 				colorMatrix: aColorMatrix asParameter
 				grayMatrix: nil
-				flags: aColorMatrixFlagsConstant) = Ok 
+				flags: aColorMatrixFlagsConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesColorMatrix  failed' with: status]!
 
 gamma: aFloat
@@ -52,37 +52,54 @@ gamma: aFloat
 
 	self gamma: aFloat type: ColorAdjustTypeDefault!
 
-gamma: aFloat type: aColorAdjustTypeConstant 
+gamma: aFloat type: aColorAdjustTypeConstant
 	"Set the receiver's gamma value for the specified color adjustment category."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesGamma: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
-				gamma: aFloat) = Ok 
+				enableFlag: TRUE
+				gamma: aFloat) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesGamma  failed' with: status]!
 
-outputChannel: aColorAdjustTypeConstant channelFlags: channelFlags 
+outputChannel: aColorAdjustTypeConstant channelFlags: channelFlags
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesOutputChannel: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
-				channelFlags: channelFlags) = Ok 
+				enableFlag: TRUE
+				channelFlags: channelFlags) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesOutputChannel failed' with: status]!
+
+remapColor: oldColor to: newColor
+	self remapColor: oldColor to: newColor type: ColorAdjustTypeDefault!
+
+remapColor: oldColor to: newColor type: anInteger
+	| colorMapping status |
+	colorMapping := GpColorMap newBuffer.
+	colorMapping
+		oldColor: oldColor argbCode;
+		newColor: newColor argbCode.
+	(status := GdiplusLibrary default
+				gdipSetImageAttributesRemapTable: self asParameter
+				type: anInteger
+				enableFlag: TRUE
+				mapSize: 1
+				map: colorMapping) == Ok
+		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesRemapTable failed' with: status]!
 
 remapTable: aColorMapArray
 	^self remapTable: aColorMapArray type: ColorAdjustTypeDefault!
 
-remapTable: aColorMapArray type: aColorAdjustTypeConstant 
+remapTable: aColorMapArray type: aColorAdjustTypeConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesRemapTable: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
+				enableFlag: TRUE
 				mapSize: aColorMapArray size
-				map: aColorMapArray) == Ok 
+				map: aColorMapArray) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesRemapTable failed' with: status]!
 
 threshold: aFloat
@@ -90,15 +107,15 @@ threshold: aFloat
 
 	self threshold: aFloat type: ColorAdjustTypeDefault!
 
-threshold: aFloat type: aColorAdjustTypeConstant 
+threshold: aFloat type: aColorAdjustTypeConstant
 	"Set the receiver's threshold (transparency range) for a specified category."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetImageAttributesThreshold: self asParameter
 				type: aColorAdjustTypeConstant
-				enableFlag: true asParameter
-				threshold: aFloat) = Ok 
+				enableFlag: TRUE
+				threshold: aFloat) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesThreshold  failed' with: status]! !
 !GdiplusImageAttributes categoriesFor: #basicFree!private!realizing/unrealizing! !
 !GdiplusImageAttributes categoriesFor: #colorKeys:colorLow:colorHigh:!accessing!public! !
@@ -107,6 +124,8 @@ threshold: aFloat type: aColorAdjustTypeConstant
 !GdiplusImageAttributes categoriesFor: #gamma:!accessing!public! !
 !GdiplusImageAttributes categoriesFor: #gamma:type:!accessing!public! !
 !GdiplusImageAttributes categoriesFor: #outputChannel:channelFlags:!accessing!public! !
+!GdiplusImageAttributes categoriesFor: #remapColor:to:!accessing!public! !
+!GdiplusImageAttributes categoriesFor: #remapColor:to:type:!accessing!public! !
 !GdiplusImageAttributes categoriesFor: #remapTable:!accessing!public! !
 !GdiplusImageAttributes categoriesFor: #remapTable:type:!accessing!public! !
 !GdiplusImageAttributes categoriesFor: #threshold:!accessing!public! !

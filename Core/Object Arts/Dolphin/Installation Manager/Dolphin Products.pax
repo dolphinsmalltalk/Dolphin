@@ -1,28 +1,23 @@
 ﻿| package |
 package := Package name: 'Dolphin Products'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Product Descriptions'.
 
 package basicPackageVersion: '6.1.27'.
 
 
-package classNames
-	add: #DolphinBaseProduct;
-	add: #DolphinCommunityEdition;
-	add: #DolphinCoreProduct;
-	add: #DolphinProduct;
-	add: #DolphinProfessional;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{DolphinBaseProduct}
+	#{DolphinCommunityEdition}
+	#{DolphinCoreProduct}
+	#{DolphinProduct}
+	#{DolphinProfessional}
+).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+).
 
 package!
 
@@ -53,11 +48,6 @@ DolphinBaseProduct subclass: #DolphinProfessional
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 
