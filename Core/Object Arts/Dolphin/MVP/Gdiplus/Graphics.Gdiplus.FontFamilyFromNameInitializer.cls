@@ -18,7 +18,7 @@ createHandle
 				gdipCreateFontFamilyFromName: name
 				fontCollection: fontCollection asParameter
 				fontFamily: gpHandle.
-	^status == Ok
+	^status = Ok
 		ifTrue: [gpHandle]
 		ifFalse: 
 			["For consistency of behaviour with GDI fonts in Dolphin, don't fail if the FontFamily doesn't exist on the machine, but rather return a generic font family. This is fairly likely anyway, and it is not particuarly useful to fail when the machine does not have the requested font installed."

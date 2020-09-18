@@ -19,16 +19,11 @@ createHandle
 	        lastResult = DllExports::GdipCreateImageAttributes(&nativeImageAttr);
 	    }"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreateImageAttributes: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating ImageAttributes'! !
+	self library gdipCreateImageAttributes: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.ImageAttributesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.ImageAttributesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !Graphics.Gdiplus.ImageAttributesInitializer class methodsFor!
 

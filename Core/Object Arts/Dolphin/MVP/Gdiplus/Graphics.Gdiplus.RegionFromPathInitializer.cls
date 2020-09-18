@@ -12,14 +12,10 @@ Graphics.Gdiplus.RegionFromPathInitializer comment: ''!
 !Graphics.Gdiplus.RegionFromPathInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreateRegionPath: path asParameter region: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreateRegionPath: path asParameter region: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'!
 
 isPersistent
 	^path isPersistent!
@@ -27,7 +23,6 @@ isPersistent
 path: aPath
 	path := aPath! !
 !Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!initializing!private! !
 !Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #isPersistent!public! !
 !Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #path:!initializing!private! !
 

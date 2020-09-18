@@ -10,12 +10,6 @@ Graphics.Gdiplus.LinearGradientBrushInitializer guid: (Core.GUID fromString: '{5
 Graphics.Gdiplus.LinearGradientBrushInitializer isNonInstantiable: true!
 Graphics.Gdiplus.LinearGradientBrushInitializer comment: ''!
 !Graphics.Gdiplus.LinearGradientBrushInitializer categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.LinearGradientBrushInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating LinearGradientBrush'! !
-!Graphics.Gdiplus.LinearGradientBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-
 !Graphics.Gdiplus.LinearGradientBrushInitializer class methodsFor!
 
 point1: point1 point2: point2 color1: aColor1 color2: aColor2

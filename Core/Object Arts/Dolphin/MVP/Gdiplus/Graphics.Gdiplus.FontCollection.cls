@@ -20,35 +20,39 @@ basicFree
 	!
 
 families
-	| status numSought numFound gpHandles clonedHandle families |
-	numSought := self familyCount.
-	numFound := SDWORD new.
-	gpHandles := DWORDArray new: numSought.
-	(status := GdiplusLibrary default
-				gdipGetFontCollectionFamilyList: self asParameter
-				numSought: numSought
-				gpfamilies: gpHandles
-				numFound: numFound) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyList failed' with: status].
-	families := OrderedCollection new.
-	gpHandles asOrderedCollection do: 
-			[:e |
+	^self families: self familyCount!
+
+families: anInteger
+	| numFound families clonedHandle gpHandles |
+	numFound := ByteArray newFixed: 4.
+	gpHandles := DWORDArray new: anInteger.
+	GdiplusLibrary default
+		gdipGetFontCollectionFamilyList: self asParameter
+		numSought: anInteger
+		gpfamilies: gpHandles
+		numFound: numFound.
+	numFound := numFound sdwordAtOffset: 0.
+	families := Array new: numFound.
+	gpHandles
+		from: 1
+		to: numFound
+		keysAndValuesDo: 
+			[:eachKey :eachValue |
 			clonedHandle := Handle new.
-			(status := GdiplusLibrary default gdipCloneFontFamily: e clonedFontFamily: clonedHandle) = Ok
-				ifTrue: [families add: (FontFamily new handle: clonedHandle)]
-				ifFalse: [GdiplusError signal: 'GdipCloneFontFamily failed' with: status]].
+			GdiplusLibrary default gdipCloneFontFamily: eachValue clonedFontFamily: clonedHandle.
+			families at: eachKey put: (FontFamily fromOwnedHandle: clonedHandle)].
 	^families!
 
 familyCount
 	"Answer the number of font families contained in the receiver."
 
-	| status count |
-	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyCount failed' with: status].
-	^count asInteger! !
+	| count |
+	count := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
+	^count sdwordAtOffset: 0! !
 !Graphics.Gdiplus.FontCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.FontCollection categoriesFor: #families!accessing!public! !
+!Graphics.Gdiplus.FontCollection categoriesFor: #families:!public! !
 !Graphics.Gdiplus.FontCollection categoriesFor: #familyCount!accessing!public! !
 
 !Graphics.Gdiplus.FontCollection class methodsFor!

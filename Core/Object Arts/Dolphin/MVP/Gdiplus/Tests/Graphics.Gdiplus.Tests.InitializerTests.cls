@@ -15,17 +15,10 @@ Graphics.Gdiplus.Tests.InitializerTests comment: ''!
 assertLastArgIsHandle
 	self assert: constructorArgs last class identicalTo: Handle!
 
-testErrorWith
-	self
-		should: [model gdiplusErrorWith: 123]
-		raise: GdiplusError
-		matching: [:ex | ex tag = 123]!
-
 testIsPersistent
 	"By default initializers can be persisted"
 
 	self assert: model isPersistent! !
 !Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #assertLastArgIsHandle!asserting!public! !
-!Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #testErrorWith!public!unit tests! !
 !Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #testIsPersistent!public!unit tests! !
 

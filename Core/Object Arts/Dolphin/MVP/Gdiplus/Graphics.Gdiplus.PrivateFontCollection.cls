@@ -16,9 +16,7 @@ Graphics.Gdiplus.PrivateFontCollection comment: 'GdiplusPrivateFontCollection is
 addFontFile: aFilename
 	"Adds a font file to this private font collection."
 
-	| status |
-	(status := GdiplusLibrary default gdipPrivateAddFontFile: self asParameter filename: aFilename) = Ok
-		ifFalse: [GdiplusError signal: 'GdipPrivateAddFontFile failed' with: status]! !
+	GdiplusLibrary default gdipPrivateAddFontFile: self asParameter filename: aFilename! !
 !Graphics.Gdiplus.PrivateFontCollection categoriesFor: #addFontFile:!operations!public! !
 
 !Graphics.Gdiplus.PrivateFontCollection class methodsFor!

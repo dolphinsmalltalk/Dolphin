@@ -26,16 +26,15 @@ createHandle
                                                       WrapModeTile,
                                                       &brush);"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreateLineBrushI: point1 asParameter
-				point2: point2 asParameter
-				color1: color1 argbCode
-				color2: color2 argbCode
-				wrapMode: WrapModeTile
-				lineGradient: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateLineBrushI: point1 asParameter
+		point2: point2 asParameter
+		color1: color1 argbCode
+		color2: color2 argbCode
+		wrapMode: WrapModeTile
+		lineGradient: gpHandle.
 	^gpHandle!
 
 point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor

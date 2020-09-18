@@ -12,19 +12,14 @@ Graphics.Gdiplus.RegionFromRectangleInitializer comment: ''!
 !Graphics.Gdiplus.RegionFromRectangleInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreateRegionRectI: rectangle asParameter region: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreateRegionRectI: rectangle asParameter region: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'!
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
 !Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
 
 !Graphics.Gdiplus.RegionFromRectangleInitializer class methodsFor!

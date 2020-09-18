@@ -12,16 +12,11 @@ Graphics.Gdiplus.PrivateFontCollectionInitializer comment: ''!
 !Graphics.Gdiplus.PrivateFontCollectionInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipNewPrivateFontCollection: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating PrivateFontCollection'! !
+	self library gdipNewPrivateFontCollection: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !Graphics.Gdiplus.PrivateFontCollectionInitializer class methodsFor!
 

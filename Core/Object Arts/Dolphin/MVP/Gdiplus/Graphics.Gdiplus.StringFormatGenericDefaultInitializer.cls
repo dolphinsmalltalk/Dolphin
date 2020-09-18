@@ -12,10 +12,9 @@ Graphics.Gdiplus.StringFormatGenericDefaultInitializer comment: ''!
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := self library gdipStringFormatGetGenericDefault: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
+	self library gdipStringFormatGetGenericDefault: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

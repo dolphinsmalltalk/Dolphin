@@ -12,25 +12,20 @@ Graphics.Gdiplus.AdjustableArrowCapInitializer comment: ''!
 !Graphics.Gdiplus.AdjustableArrowCapInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreateAdjustableArrowCap: height
-				width: width
-				isFilled: isFilled asParameter
-				cap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateAdjustableArrowCap: height
+		width: width
+		isFilled: isFilled asParameter
+		cap: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating AdjustableArrowCap'!
 
 height: heightReal width: widthReal isFilled: isFilledBoolean
 	height := heightReal.
 	width := widthReal.
 	isFilled := isFilledBoolean! !
 !Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #height:width:isFilled:!initializing!private! !
 
 !Graphics.Gdiplus.AdjustableArrowCapInitializer class methodsFor!

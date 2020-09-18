@@ -20,14 +20,9 @@ createHandle
 
 	"Note: GdiplusBitmap.h uses a switch on useEmbeddedColorManagement to call different flat-api functions"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error loading Image'! !
+	self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.ImageFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.ImageFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

@@ -10,12 +10,6 @@ Graphics.Gdiplus.FontFamilyInitializer guid: (Core.GUID fromString: '{c09d8c09-5
 Graphics.Gdiplus.FontFamilyInitializer isNonInstantiable: true!
 Graphics.Gdiplus.FontFamilyInitializer comment: ''!
 !Graphics.Gdiplus.FontFamilyInitializer categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.FontFamilyInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating FontFamily'! !
-!Graphics.Gdiplus.FontFamilyInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-
 !Graphics.Gdiplus.FontFamilyInitializer class methodsFor!
 
 genericSansSerif

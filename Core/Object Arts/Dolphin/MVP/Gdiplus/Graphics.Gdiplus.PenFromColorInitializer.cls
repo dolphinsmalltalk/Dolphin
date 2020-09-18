@@ -25,14 +25,13 @@ createHandle
 		        lastResult = DllExports::GdipCreatePen1(color.GetValue(),
                                     width, unit, &nativePen);"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreatePen1: color argbCode
-				width: (width ?? 1.0) asParameter
-				unit: UnitWorld
-				pen: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreatePen1: color argbCode
+		width: (width ?? 1.0) asParameter
+		unit: UnitWorld
+		pen: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
 !Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !

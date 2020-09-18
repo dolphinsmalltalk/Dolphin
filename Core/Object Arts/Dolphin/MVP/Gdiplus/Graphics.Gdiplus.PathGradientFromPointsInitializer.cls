@@ -12,29 +12,24 @@ Graphics.Gdiplus.PathGradientFromPointsInitializer comment: ''!
 !Graphics.Gdiplus.PathGradientFromPointsInitializer methodsFor!
 
 createHandle
-	| gpHandle status points |
+	| gpHandle points |
 	gpHandle := Handle new.
 	points := StructureArray
 				withAll: pathPoints
 				elementClass: POINTL
 				initializer: [:pointl :point | pointl x: point x y: point y].
 	points beUnfinalizable.
-	status := self library
-				gdipCreatePathGradientI: points
-				count: pathPoints size
-				wrapMode: wrapMode
-				polyGradient: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreatePathGradientI: points
+		count: pathPoints size
+		wrapMode: wrapMode
+		polyGradient: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating PathGradient'!
 
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
 
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class methodsFor!

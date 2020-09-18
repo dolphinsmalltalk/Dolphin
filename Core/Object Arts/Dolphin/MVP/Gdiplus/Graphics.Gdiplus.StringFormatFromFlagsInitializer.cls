@@ -12,13 +12,12 @@ Graphics.Gdiplus.StringFormatFromFlagsInitializer comment: ''!
 !Graphics.Gdiplus.StringFormatFromFlagsInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreateStringFormat: formatFlags
-				language: language
-				format: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateStringFormat: formatFlags
+		language: language
+		format: gpHandle.
 	^gpHandle!
 
 formatFlags: flagsNumber language: languageNumber

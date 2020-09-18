@@ -10,12 +10,6 @@ Graphics.Gdiplus.StringFormatInitializer guid: (Core.GUID fromString: '{14ad5dde
 Graphics.Gdiplus.StringFormatInitializer isNonInstantiable: true!
 Graphics.Gdiplus.StringFormatInitializer comment: ''!
 !Graphics.Gdiplus.StringFormatInitializer categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.StringFormatInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating StringFormat'! !
-!Graphics.Gdiplus.StringFormatInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-
 !Graphics.Gdiplus.StringFormatInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber

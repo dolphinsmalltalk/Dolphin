@@ -14,10 +14,9 @@ Graphics.Gdiplus.Matrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, 
 !Graphics.Gdiplus.Matrix methodsFor!
 
 asArray
-	| status array |
+	| array |
 	array := FLOATArray new: 6.
-	(status := GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetMatrixElements failed' with: status].
+	GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array.
 	^array asArray!
 
 basicFree
@@ -36,62 +35,53 @@ rotateTransform: aRealAngle
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
 rotateTransform: aRealAngle order: aMatrixOrderConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipRotateMatrix: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipRotateMatrix failed' with: status]!
+	GdiplusLibrary default
+		gdipRotateMatrix: self asParameter
+		angle: aRealAngle
+		order: aMatrixOrderConstant!
 
 scaleTransform: aPoint
 	self scaleTransform: aPoint order: MatrixOrderPrepend!
 
 scaleTransform: aPoint order: aMatrixOrderConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipScaleMatrix: self asParameter
-				scaleX: aPoint x
-				scaleY: aPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipScaleMatrix failed' with: status]!
+	GdiplusLibrary default
+		gdipScaleMatrix: self asParameter
+		scaleX: aPoint x
+		scaleY: aPoint y
+		order: aMatrixOrderConstant!
 
 shearTransform: aPoint
 	self shearTransform: aPoint order: MatrixOrderPrepend!
 
 shearTransform: aPoint order: aMatrixOrderConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipShearMatrix: self asParameter
-				shearX: aPoint x
-				shearY: aPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipShearMatrix failed' with: status]!
+	GdiplusLibrary default
+		gdipShearMatrix: self asParameter
+		shearX: aPoint x
+		shearY: aPoint y
+		order: aMatrixOrderConstant!
 
 transformPoints: aPointsCollection
-	| pts status |
+	| pts |
 	pts := StructureArray
 				withAll: aPointsCollection
 				elementClass: POINTL
 				initializer: [:pointl :point | pointl x: point x y: point y].
 	pts beUnfinalizable.
-	(status := GdiplusLibrary default
-				gdipTransformMatrixPointsI: self handle
-				pts: pts
-				count: aPointsCollection size) == Ok
-		ifFalse: [GdiplusError signal: 'GdipTransformMatrixPoints: failed' with: status].
+	GdiplusLibrary default
+		gdipTransformMatrixPointsI: self handle
+		pts: pts
+		count: aPointsCollection size.
 	^pts!
 
 translateTransform: aPoint
 	self translateTransform: aPoint order: MatrixOrderPrepend!
 
 translateTransform: aPoint order: aMatrixOrderConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipTranslateMatrix: self asParameter
-				offsetX: aPoint x
-				offsetY: aPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
+	GdiplusLibrary default
+		gdipTranslateMatrix: self asParameter
+		offsetX: aPoint x
+		offsetY: aPoint y
+		order: aMatrixOrderConstant! !
 !Graphics.Gdiplus.Matrix categoriesFor: #asArray!converting!public! !
 !Graphics.Gdiplus.Matrix categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.Matrix categoriesFor: #printOn:!printing!public! !

@@ -12,14 +12,10 @@ Graphics.Gdiplus.PathGradientFromPathInitializer comment: ''!
 !Graphics.Gdiplus.PathGradientFromPathInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating PathGradient'!
 
 isPersistent
 	^path isPersistent!
@@ -27,7 +23,6 @@ isPersistent
 path: aGdiplusPath
 	path := aGdiplusPath! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #isPersistent!public! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #path:!initializing!private! !
 

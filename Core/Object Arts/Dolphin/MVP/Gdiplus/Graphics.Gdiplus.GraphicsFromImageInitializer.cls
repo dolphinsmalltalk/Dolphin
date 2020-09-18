@@ -22,19 +22,14 @@ createHandle
                                                                 image->nativeImage, &graphics);
         }"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipGetImageGraphicsContext: image asParameter graphics: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipGetImageGraphicsContext: image asParameter graphics: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Graphics'!
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
 !Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
 
 !Graphics.Gdiplus.GraphicsFromImageInitializer class methodsFor!

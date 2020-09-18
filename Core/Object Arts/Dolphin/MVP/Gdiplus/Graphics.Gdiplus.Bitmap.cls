@@ -14,38 +14,35 @@ Graphics.Gdiplus.Bitmap comment: 'GdiplusBitmap expands on GdiplusImage by provi
 asBitmap
 	"Answer a <Bitmap> with the receiver's image."
 
-	| status hbmReturn |
+	| hbmReturn |
 	hbmReturn := Handle new.
-	(status := GdiplusLibrary default
-				gdipCreateHBITMAPFromBitmap: self asParameter
-				hbmReturn: hbmReturn
-				background: 0) == Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHBITMAPFromBitmap' with: status].
+	GdiplusLibrary default
+		gdipCreateHBITMAPFromBitmap: self asParameter
+		hbmReturn: hbmReturn
+		background: 0.
 	^Graphics.Bitmap fromOwnedHandle: hbmReturn!
 
 asIcon
 	"Answer an <Icon> with the receiver's image."
 
-	| status hbmReturn |
+	| hbmReturn |
 	hbmReturn := Handle new.
-	(status := GdiplusLibrary default gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn)
-		== Ok ifFalse: [^GdiplusError signal: 'Error in GdipCreateHICONFromBitmap' with: status].
+	GdiplusLibrary default gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn.
 	^Icon fromOwnedHandle: hbmReturn!
 
 cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
 	"Private - Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := GdiplusLibrary default
-				gdipCloneBitmapAreaI: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				format: aPixelFormatConstant
-				srcBitmap: self handle
-				dstBitmap: gpHandle) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneBitmapAreaI' with: status].
+	GdiplusLibrary default
+		gdipCloneBitmapAreaI: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		format: aPixelFormatConstant
+		srcBitmap: self handle
+		dstBitmap: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -56,14 +53,12 @@ cloneFormat: aPixelFormatConstant
 	^self cloneBitmapRectangle: (Rectangle extent: self extent) format: aPixelFormatConstant!
 
 lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
-	| status |
-	(status := GdiplusLibrary default
-				gdipBitmapLockBits: self handle
-				rect: rect
-				flags: flags
-				format: format
-				lockedBitmapData: lockedBitmapData) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapLockBits' with: status]
+	GdiplusLibrary default
+		gdipBitmapLockBits: self handle
+		rect: rect
+		flags: flags
+		format: format
+		lockedBitmapData: lockedBitmapData
 	"Invoke the GdipBitmapLockBits() function of the module wrapped by the receiver.
 
 		Status __stdcall GdipBitmapLockBits(
@@ -79,32 +74,26 @@ lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
 pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
-	| status color |
-	color := DWORD new.
-	status := GdiplusLibrary default
-				gdipBitmapGetPixel: self asParameter
-				x: aPoint x
-				y: aPoint y
-				color: color asParameter.
-	status == Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel  failed' with: status].
-	^Color fromArgbCode: color asInteger!
+	| color |
+	color := ByteArray newFixed: 4.
+	GdiplusLibrary default
+		gdipBitmapGetPixel: self asParameter
+		x: aPoint x
+		y: aPoint y
+		color: color.
+	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
 
-	| status |
-	status := GdiplusLibrary default
-				gdipBitmapSetPixel: self asParameter
-				x: aPoint x
-				y: aPoint y
-				color: anARGB argbCode.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipBitmapSetPixel  failed' with: status]!
+	GdiplusLibrary default
+		gdipBitmapSetPixel: self asParameter
+		x: aPoint x
+		y: aPoint y
+		color: anARGB argbCode!
 
 unlockBits: lockedBitmapData
-	| status |
-	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
-				lockedBitmapData: lockedBitmapData) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
+	GdiplusLibrary default gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #asBitmap!public! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #asIcon!public! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !

@@ -16,20 +16,15 @@ bitmap: aBitmap graphics: aGraphics
 	graphics := aGraphics!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Address new.
-	status := self library
-				gdipCreateCachedBitmap: bitmap asParameter
-				graphics: graphics asParameter
-				cachedBitmap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating CachedBitmap'! !
+	self library
+		gdipCreateCachedBitmap: bitmap asParameter
+		graphics: graphics asParameter
+		cachedBitmap: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
 !Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !Graphics.Gdiplus.CachedBitmapInitializer class methodsFor!
 

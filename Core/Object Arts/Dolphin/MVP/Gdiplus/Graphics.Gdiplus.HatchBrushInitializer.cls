@@ -12,25 +12,20 @@ Graphics.Gdiplus.HatchBrushInitializer comment: ''!
 !Graphics.Gdiplus.HatchBrushInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreateHatchBrush: style
-				forecol: forecolor argbCode
-				backcol: backcolor argbCode
-				brush: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateHatchBrush: style
+		forecol: forecolor argbCode
+		backcol: backcolor argbCode
+		brush: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating HatchBrush'!
 
 style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
 	forecolor := foreColor.
 	backcolor := backColor! !
 !Graphics.Gdiplus.HatchBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.HatchBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.HatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!initializing!private! !
 
 !Graphics.Gdiplus.HatchBrushInitializer class methodsFor!

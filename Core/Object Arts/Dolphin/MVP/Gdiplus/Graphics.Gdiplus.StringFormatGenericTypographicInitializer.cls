@@ -12,10 +12,9 @@ Graphics.Gdiplus.StringFormatGenericTypographicInitializer comment: ''!
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := self library gdipStringFormatGetGenericTypographic: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
+	self library gdipStringFormatGetGenericTypographic: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

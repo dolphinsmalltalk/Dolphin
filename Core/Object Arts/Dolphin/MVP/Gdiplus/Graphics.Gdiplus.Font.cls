@@ -19,48 +19,46 @@ basicFree
 emSize
 	"Answer the font size (commonly called the em size) of this Font object. The size is in the units of this Font object."
 
-	| status size |
-	size := FLOAT new.
-	(status := GdiplusLibrary default gdipGetFontSize: self asParameter size: size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontSize failed' with: status].
-	^size value!
+	| size |
+	size := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetFontSize: self asParameter size: size.
+	^size floatAtOffset: 0!
 
 family
 	"Answer the FontFamily on which the receiver is based."
 
-	| status gpHandle |
-	gpHandle := InstalledFontCollection new families first.
-	(status := GdiplusLibrary default gdipGetFamily: self asParameter family: gpHandle asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFamily failed' with: status].
-	^gpHandle!
+	| gpHandle fontFamily |
+	gpHandle := Handle new.
+	GdiplusLibrary default gdipGetFamily: self asParameter family: gpHandle.
+	fontFamily := FontFamily fromOwnedHandle: gpHandle.
+	fontFamily initializer: (FontFamilyInitializer name: (fontFamily getName: 0) fontCollection: nil).
+	^fontFamily!
 
 height
 	"Answer the receiver's line spacing, in pixels. The line spacing is the vertical distance
 	between the base lines of two consecutive lines of text. Thus, the line spacing includes
 	the blank space between lines along with the height of the character itself."
 
-	| status height |
-	height := FLOAT new.
-	(status := GdiplusLibrary default
-				gdipGetFontHeightGivenDPI: self asParameter
-				dpi: UI.DesktopView current resolution y
-				height: height) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontHeightGivenDPI failed' with: status].
-	^height value!
+	| height |
+	height := ByteArray newFixed: 4.
+	GdiplusLibrary default
+		gdipGetFontHeightGivenDPI: self asParameter
+		dpi: UI.DesktopView current resolution y
+		height: height.
+	^height floatAtOffset: 0!
 
 heightFromGraphics: aGdiplusGraphics
 	"Answer the receiver's line spacing, in units. The line spacing is the vertical distance
 	between the base lines of two consecutive lines of text. Thus, the line spacing includes
 	the blank space between lines along with the height of the character itself."
 
-	| status height |
-	height := FLOAT new.
-	(status := GdiplusLibrary default
-				gdipGetFontHeight: self asParameter
-				graphics: aGdiplusGraphics asParameter
-				height: height) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontHeight failed' with: status].
-	^height value!
+	| height |
+	height := ByteArray newFixed: 4.
+	GdiplusLibrary default
+		gdipGetFontHeight: self asParameter
+		graphics: aGdiplusGraphics asParameter
+		height: height.
+	^height floatAtOffset: 0!
 
 name
 	"Answer the FontFamily name on which the receiver is based."
@@ -70,11 +68,10 @@ name
 unit
 	"Answer an Integer, that represents the receiver's unit of measure."
 
-	| status unit |
-	unit := SDWORD new.
-	(status := GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontUnit failed' with: status].
-	^unit value! !
+	| unit |
+	unit := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit.
+	^unit sdwordAtOffset: 0! !
 !Graphics.Gdiplus.Font categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.Font categoriesFor: #emSize!accessing!public! !
 !Graphics.Gdiplus.Font categoriesFor: #family!accessing!public! !

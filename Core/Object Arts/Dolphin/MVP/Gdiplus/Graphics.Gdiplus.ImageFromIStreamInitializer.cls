@@ -30,14 +30,10 @@ createHandle
     }
 }"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipLoadImageFromStream: iStream asParameter image: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipLoadImageFromStream: iStream asParameter image: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error loading image'!
 
 isPersistent
 	"The IStream will no longer be valid when restoring from a saved image or binary filed content."
@@ -47,7 +43,6 @@ isPersistent
 iStream: pStream
 	iStream := pStream! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
 !Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
 

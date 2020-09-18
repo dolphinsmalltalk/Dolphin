@@ -12,28 +12,24 @@ Graphics.Gdiplus.TextureBrushInitializer comment: ''!
 !Graphics.Gdiplus.TextureBrushInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := rectangle isNil
-				ifTrue: 
-					[self library
-						gdipCreateTexture: image asParameter
-						wrapMode: wrapMode
-						texture: gpHandle]
-				ifFalse: 
-					[self library
-						gdipCreateTexture2I: image asParameter
-						wrapMode: wrapMode
-						x: rectangle left
-						y: rectangle top
-						width: rectangle width
-						height: rectangle height
-						texture: gpHandle].
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	rectangle isNil
+		ifTrue: 
+			[self library
+				gdipCreateTexture: image asParameter
+				wrapMode: wrapMode
+				texture: gpHandle]
+		ifFalse: 
+			[self library
+				gdipCreateTexture2I: image asParameter
+				wrapMode: wrapMode
+				x: rectangle left
+				y: rectangle top
+				width: rectangle width
+				height: rectangle height
+				texture: gpHandle].
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating TextureBrush'!
 
 image: anImage wrapMode: aNumber rectangle: aRectangle
 	image := anImage.
@@ -43,7 +39,6 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 isPersistent
 	^image isPersistent! !
 !Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
 !Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #isPersistent!public! !
 

@@ -12,21 +12,17 @@ Graphics.Gdiplus.MatrixInitializer comment: ''!
 !Graphics.Gdiplus.MatrixInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := self library
-				gdipCreateMatrix2: m11
-				m12: m12
-				m21: m21
-				m22: m22
-				dx: m31
-				dy: m32
-				matrix: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateMatrix2: m11
+		m12: m12
+		m21: m21
+		m22: m22
+		dx: m31
+		dy: m32
+		matrix: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Matrix'!
 
 m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m11 := aReal11.
@@ -36,7 +32,6 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m31 := aReal31.
 	m32 := aReal32! !
 !Graphics.Gdiplus.MatrixInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.MatrixInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.MatrixInitializer categoriesFor: #m11:m12:m21:m22:m31:m32:!initializing!private! !
 
 !Graphics.Gdiplus.MatrixInitializer class methodsFor!

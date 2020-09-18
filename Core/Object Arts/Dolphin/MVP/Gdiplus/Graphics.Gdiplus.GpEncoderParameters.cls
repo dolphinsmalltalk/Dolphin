@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
-	instanceVariableNames: ''
+	instanceVariableNames: 'valueBuffer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -60,12 +60,16 @@ Parameter: aStructureArrayOfGpEncoderParameter
 		from: ##(_OffsetOf_Parameter + 1)
 		to: _OffsetOf_Parameter + size
 		startingAt: 1.
-	self Count: aStructureArrayOfGpEncoderParameter size! !
+	self Count: aStructureArrayOfGpEncoderParameter size!
+
+valueBuffer: aByteArray
+	valueBuffer := aByteArray! !
 !Graphics.Gdiplus.GpEncoderParameters categoriesFor: #byteSize!accessing!public! !
 !Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count!**compiled accessors**!public! !
 !Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count:!**compiled accessors**!public! !
 !Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter!**compiled accessors**!public! !
 !Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #valueBuffer:!public! !
 
 !Graphics.Gdiplus.GpEncoderParameters class methodsFor!
 

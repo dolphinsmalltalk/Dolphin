@@ -27,20 +27,16 @@ createHandle
                                                        NULL,
                                                        &bitmap);"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreateBitmapFromScan0: width
-				height: height
-				stride: 0
-				format: format
-				scan0: 0
-				bitmap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateBitmapFromScan0: width
+		height: height
+		stride: 0
+		format: format
+		scan0: 0
+		bitmap: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'!
 
 width: widthInteger height: heightInteger format: aPixelFormat
 	width := widthInteger.
@@ -48,7 +44,6 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	format := aPixelFormat.
 	^self! !
 !Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
 
 !Graphics.Gdiplus.BitmapFromBlankInitializer class methodsFor!

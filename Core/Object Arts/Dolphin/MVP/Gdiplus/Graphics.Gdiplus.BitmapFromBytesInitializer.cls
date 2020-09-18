@@ -21,16 +21,11 @@ createHandle
 	        lastResult = DllExports::GdipCreateBitmapFromStream(stream, &bitmap);
 	    }"
 
-	| gpHandle status stm |
+	| gpHandle stm |
 	gpHandle := Handle new.
 	stm := self iStream.
-	status := self library gdipCreateBitmapFromStream: stm bitmap: gpHandle.
+	self library gdipCreateBitmapFromStream: stm bitmap: gpHandle.
 	stm free.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'! !
+	^gpHandle! !
 !Graphics.Gdiplus.BitmapFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

@@ -12,16 +12,13 @@ Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant co
 !Graphics.Gdiplus.SolidBrush methodsFor!
 
 color
-	| status color |
-	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetSolidFillColor failed' with: status].
-	^Color fromArgbCode: color value!
+	| color |
+	color := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color.
+	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 color: aColor
-	| status |
-	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode)
-		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
+	GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode! !
 !Graphics.Gdiplus.SolidBrush categoriesFor: #color!accessing!public! !
 !Graphics.Gdiplus.SolidBrush categoriesFor: #color:!accessing!public! !
 

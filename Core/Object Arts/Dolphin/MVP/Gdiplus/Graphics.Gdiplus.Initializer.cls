@@ -15,12 +15,6 @@ Graphics.Gdiplus.Initializer comment: 'An instance of GdiplusInitializer serves 
 createHandle
 	^self subclassResponsibility!
 
-gdiplusConstructorErrorDescription
-	^self subclassResponsibility!
-
-gdiplusErrorWith: status
-	^GdiplusError signal: self gdiplusConstructorErrorDescription with: status!
-
 isPersistent
 	"Answer true if the receiver holds sufficient information such that
 	it can recreate itself when the image is saved and restored. This is also
@@ -40,8 +34,6 @@ library
 library: anObject
 	library := anObject! !
 !Graphics.Gdiplus.Initializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Initializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!Graphics.Gdiplus.Initializer categoriesFor: #gdiplusErrorWith:!exceptions!private! !
 !Graphics.Gdiplus.Initializer categoriesFor: #isPersistent!public!testing! !
 !Graphics.Gdiplus.Initializer categoriesFor: #library!accessing!private! !
 !Graphics.Gdiplus.Initializer categoriesFor: #library:!private!test accessing! !

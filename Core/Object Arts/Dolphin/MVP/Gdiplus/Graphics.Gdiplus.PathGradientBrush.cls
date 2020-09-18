@@ -12,24 +12,21 @@ Graphics.Gdiplus.PathGradientBrush comment: 'A path gradient brush paints a colo
 !Graphics.Gdiplus.PathGradientBrush methodsFor!
 
 blendBellShape: focusReal scale: scaleReal
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetPathGradientSigmaBlend: self asParameter
-				focus: focusReal
-				scale: scaleReal) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientSigmaBlend failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientSigmaBlend: self asParameter
+		focus: focusReal
+		scale: scaleReal!
 
 blendColors
-	| status count blend positions |
+	| count blend positions |
 	count := self blendColorsCount.
 	blend := DWORDArray new: count.
 	positions := FLOATArray new: count.
-	(status := GdiplusLibrary default
-				gdipGetPathGradientPresetBlend: self asParameter
-				blend: blend
-				positions: positions
-				count: count) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlend failed' with: status].
+	GdiplusLibrary default
+		gdipGetPathGradientPresetBlend: self asParameter
+		blend: blend
+		positions: positions
+		count: count.
 	^{blend asArray collect: [:e | Color fromArgbCode: e]. positions asArray}!
 
 blendColors: colorsArray positions: positionsArray
@@ -41,154 +38,130 @@ blendColors: colorsArray positions: positionsArray
 	the distance from the boundary to the center point. For example, a blend position of 0.7 
 	specifies the set of all points that are 70 percent of the way from the boundary to the center point."
 
-	| status |
 	self assert: [colorsArray size = positionsArray size].
 	self assert: [positionsArray size >= 2].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	(status := GdiplusLibrary default
-				gdipSetPathGradientPresetBlend: self asParameter
-				blend: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
-				positions: (FLOATArray withAll: positionsArray)
-				count: colorsArray size) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientPresetBlend failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientPresetBlend: self asParameter
+		blend: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
+		positions: (FLOATArray withAll: positionsArray)
+		count: colorsArray size!
 
 blendColorsCount
 	"Answer the <Integer> number of preset colors currently set for the receiver."
 
-	| status count |
-	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientPresetBlendCount: self asParameter count: count)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlendCount failed' with: status].
-	^count value!
+	| count |
+	count := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientPresetBlendCount: self asParameter count: count.
+	^count sdwordAtOffset: 0!
 
 blendFactors
-	| status count factors positions |
+	| count factors positions |
 	count := self blendFactorsCount.
 	factors := FLOATArray new: count.
 	positions := FLOATArray new: count.
-	(status := GdiplusLibrary default
-				gdipGetPathGradientBlend: self asParameter
-				blend: factors
-				positions: positions
-				count: count) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlend failed' with: status].
+	GdiplusLibrary default
+		gdipGetPathGradientBlend: self asParameter
+		blend: factors
+		positions: positions
+		count: count.
 	^{factors asArray. positions asArray}!
 
 blendFactors: factorsArray positions: positionsArray
-	| status |
 	self assert: [factorsArray size = positionsArray size].
 	self assert: [positionsArray size >= 2].
 	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	(status := GdiplusLibrary default
-				gdipSetPathGradientBlend: self asParameter
-				blend: (FLOATArray withAll: factorsArray)
-				positions: (FLOATArray withAll: positionsArray)
-				count: factorsArray size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientBlend failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientBlend: self asParameter
+		blend: (FLOATArray withAll: factorsArray)
+		positions: (FLOATArray withAll: positionsArray)
+		count: factorsArray size!
 
 blendFactorsCount
 	"Answer the <Integer> number of blend factors currently set for the receiver."
 
-	| status count |
-	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientBlendCount: self asParameter count: count) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlendCount failed' with: status].
-	^count value!
+	| count |
+	count := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientBlendCount: self asParameter count: count.
+	^count sdwordAtOffset: 0!
 
 blendTriangularShape: focusReal scale: scaleReal
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetPathGradientLinearBlend: self asParameter
-				focus: focusReal
-				scale: scaleReal) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientLinearBlend failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientLinearBlend: self asParameter
+		focus: focusReal
+		scale: scaleReal!
 
 bounds
 	"Answer a bounding Rectangle for the receiver."
 
-	| status rect |
+	| rect |
 	rect := RECTL new.
-	(status := GdiplusLibrary default gdipGetPathGradientRectI: self asParameter rect: rect) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientRectI failed' with: status].
+	GdiplusLibrary default gdipGetPathGradientRectI: self asParameter rect: rect.
 	^rect asRectangle!
 
 centerColor
 	"Answer the ARGB color that appears at the receiver's center point."
 
-	| status color |
-	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter colors: color)
-		== Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterColor failed' with: status].
-	^Color fromArgbCode: color value!
+	| color |
+	color := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter colors: color.
+	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 centerColor: aColor
 	"Set the color that appears at the receiver's center point."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathGradientCenterColor: self asParameter
-				colors: aColor argbCode) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientCenterColor failed' with: status]!
+	GdiplusLibrary default gdipSetPathGradientCenterColor: self asParameter colors: aColor argbCode!
 
 centerPoint
 	"Answer the center point of the receiver."
 
-	| status point |
+	| point |
 	point := POINTL new.
-	(status := GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter points: point)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterPointI failed' with: status].
+	GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter points: point.
 	^point asPoint!
 
 centerPoint: aPoint
 	"Set the center point of the receiver. By default, the center point is at the centroid of the 
 	receiver's boundary path, but it can be set to any location inside or outside the path."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathGradientCenterPointI: self asParameter
-				points: (POINTL fromPoint: aPoint)) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientCenterPointI failed' with: status]!
+	GdiplusLibrary default gdipSetPathGradientCenterPointI: self asParameter
+		points: (POINTL fromPoint: aPoint)!
 
 focusScales
 	"Answer a Point that represents the x and y scale factors for the receiver's center color relative to its boundary path."
 
-	| status x y |
-	x := FLOAT new.
-	y := FLOAT new.
-	(status := GdiplusLibrary default
-				gdipGetPathGradientFocusScales: self asParameter
-				xScale: x
-				yScale: y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientFocusScales failed' with: status].
-	^x value @ y value!
+	| buf y |
+	buf := ByteArray newFixed: 8.
+	GdiplusLibrary default
+		gdipGetPathGradientFocusScales: self asParameter
+		xScale: buf
+		yScale: buf yourAddress + 4.
+	^(buf floatAtOffset: 0) @ (buf floatAtOffset: 4)!
 
 focusScales: aPoint
 	"Specify that the receiver's center color should appear within the receiver's boundary path 
 	scaled by a factor of aPoint in the x and y directions."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetPathGradientFocusScales: self asParameter
-				xScale: aPoint x
-				yScale: aPoint y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientFocusScales failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientFocusScales: self asParameter
+		xScale: aPoint x
+		yScale: aPoint y!
 
 isGammaCorrected
 	"Answer whether or not gamma correction is applied to the receiver."
 
-	| status result |
-	result := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientGammaCorrection: self asParameter
-				useGammaCorrection: result asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientGammaCorrection failed' with: status].
-	^result ~= 0!
+	| result |
+	result := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientGammaCorrection: self asParameter
+		useGammaCorrection: result asParameter.
+	^(result sdwordAtOffset: 0) ~~ 0!
 
 isGammaCorrected: aBoolean
 	"Set whether or not gamma correction should be applied to the receiver."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathGradientGammaCorrection: self asParameter
-				useGammaCorrection: aBoolean asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientGammaCorrection failed' with: status]!
+	GdiplusLibrary default gdipSetPathGradientGammaCorrection: self asParameter
+		useGammaCorrection: aBoolean asParameter!
 
 multiplyTransform: aGdiplusMatrix 
 	"Set the receiver's transformation matrix to the product of itself and aGdiplusMatrix."
@@ -199,28 +172,23 @@ multiplyTransform: aGdiplusMatrix order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and aGdiplusMatrix
 	with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipMultiplyPathGradientTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipMultiplyPathGradientTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipMultiplyPathGradientTransform: self asParameter
+		matrix: aGdiplusMatrix asParameter
+		order: aMatrixOrderConstant!
 
 pointCount
 	"Private - Answer the number of points that define the receiver's boundary path."
 
-	| status count |
-	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientPointCount: self asParameter count: count) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPointCount failed' with: status].
-	^count asInteger!
+	| count |
+	count := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientPointCount: self asParameter count: count.
+	^count sdwordAtOffset: 0!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
-	| status |
-	(status := GdiplusLibrary default gdipResetPathGradientTransform: self asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipResetPathGradientTransform failed' with: status]!
+	GdiplusLibrary default gdipResetPathGradientTransform: self asParameter!
 
 rotateTransform: aRealPoint 
 	"Rotate the receiver's transformation matrix by aRealPoint."
@@ -231,12 +199,10 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipRotatePathGradientTransform: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipRotatePathGradientTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipRotatePathGradientTransform: self asParameter
+		angle: aRealAngle
+		order: aMatrixOrderConstant!
 
 scaleTransform: aRealPoint 
 	"Scale the receiver's transformation matrix by aRealPoint."
@@ -247,13 +213,11 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipScalePathGradientTransform: self asParameter
-				sx: aRealPoint x
-				sy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipScalePathGradientTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipScalePathGradientTransform: self asParameter
+		sx: aRealPoint x
+		sy: aRealPoint y
+		order: aMatrixOrderConstant!
 
 surroundColor: aColor
 	"Set the specified <Color> as the single color that appears on the receiver's boundary."
@@ -263,52 +227,43 @@ surroundColor: aColor
 surroundColors
 	"Answer an Array of ARGB that are the receiver's boundary colors."
 
-	| status count colors |
+	| count colors |
 	count := self surroundColorsCount.
 	colors := DWORDArray new: count.
 	count := DWORD fromInteger: count.
-	(status := GdiplusLibrary default
-				gdipGetPathGradientSurroundColorsWithCount: self asParameter
-				color: colors
-				count: count) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorsWithCount failed' with: status].
+	GdiplusLibrary default
+		gdipGetPathGradientSurroundColorsWithCount: self asParameter
+		color: colors
+		count: count.
 	^colors collect: [:e | Color fromArgbCode: e]!
 
 surroundColors: colorsArray
 	"Set the colors that appear on the receiver's boundaries."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetPathGradientSurroundColorsWithCount: self asParameter
-				color: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
-				count: (DWORD new value: colorsArray size)) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientSurroundColorsWithCount failed' with: status]!
+	GdiplusLibrary default
+		gdipSetPathGradientSurroundColorsWithCount: self asParameter
+		color: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
+		count: (DWORDBytes fromInteger: colorsArray size)!
 
 surroundColorsCount
-	| status count |
-	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientSurroundColorCount: self asParameter
-				count: count) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorCount failed' with: status].
-	^count value!
+	| count |
+	count := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientSurroundColorCount: self asParameter count: count.
+	^count sdwordAtOffset: 0!
 
 transform
 	"Answer a GdiplusMatrix that is the receiver's transformation matrix."
 
-	| status matrix |
+	| matrix |
 	matrix := Matrix new.
-	(status := GdiplusLibrary default gdipGetPathGradientTransform: self asParameter
-				matrix: matrix asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientTransform failed' with: status].
+	GdiplusLibrary default gdipGetPathGradientTransform: self asParameter matrix: matrix asParameter.
 	^matrix!
 
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathGradientTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientTransform failed' with: status]!
+	GdiplusLibrary default gdipSetPathGradientTransform: self asParameter
+		matrix: aGdiplusMatrix asParameter!
 
 translateTransform: aRealPoint 
 	"Translate (shift) the receiver's transformation matrix by aRealPoint."
@@ -319,30 +274,24 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipTranslatePathGradientTransform: self asParameter
-				dx: aRealPoint x
-				dy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipTranslatePathGradientTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipTranslatePathGradientTransform: self asParameter
+		dx: aRealPoint x
+		dy: aRealPoint y
+		order: aMatrixOrderConstant!
 
 wrapMode
 	"Answer a number that indicates if and how painting is done outside the receiver's boundary path."
 
-	| status mode |
-	mode := DWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientWrapMode: self asParameter wrapMode: mode) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathGradientWrapMode failed' with: status].
-	^mode asInteger!
+	| mode |
+	mode := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPathGradientWrapMode: self asParameter wrapMode: mode.
+	^mode dwordAtOffset: 0!
 
 wrapMode: aWrapModeConstant
 	"Set if and how painting is done outside the receiver's boundary path."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathGradientWrapMode: self asParameter
-				wrapMode: aWrapModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPathGradientWrapMode failed' with: status]! !
+	GdiplusLibrary default gdipSetPathGradientWrapMode: self asParameter wrapMode: aWrapModeConstant! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendBellShape:scale:!accessing-properties!public! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors!accessing-properties!public! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors:positions:!accessing-properties!public! !

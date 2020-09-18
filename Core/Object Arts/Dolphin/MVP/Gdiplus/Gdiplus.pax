@@ -1680,7 +1680,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
 		'_OffsetOf_Value' -> 16r18
 	}!
 External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
-	instanceVariableNames: ''
+	instanceVariableNames: 'valueBuffer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

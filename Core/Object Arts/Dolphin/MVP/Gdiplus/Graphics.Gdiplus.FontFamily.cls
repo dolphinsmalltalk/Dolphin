@@ -21,39 +21,40 @@ basicFree
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle)
-		= Ok ifFalse: [GdiplusError signal: 'GdipCloneFontFamily failed' with: status].
+	GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
 
+getName: anInteger
+	| name |
+	name := Utf16String newFixed: LF_FACESIZE.
+	GdiplusLibrary default
+		gdipGetFamilyName: self asParameter
+		name: name
+		language: anInteger.
+	^name asString trimNulls!
+
 lineSpacing
 	"Answer the vertical distance between the base lines of two consecutive lines of text."
 
-	| status lineSpacing |
-	lineSpacing := DWORD new.
-	(status := GdiplusLibrary default
-				gdipGetLineSpacing: self asParameter
-				style: 0
-				lineSpacing: lineSpacing) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetLineSpacing failed' with: status].
-	^lineSpacing asInteger!
+	| lineSpacing |
+	lineSpacing := ByteArray newFixed: 2.
+	GdiplusLibrary default
+		gdipGetLineSpacing: self asParameter
+		style: 0
+		lineSpacing: lineSpacing.
+	^lineSpacing wordAtOffset: 0!
 
 name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
-	| status name |
-	name := Utf16String newFixed: LF_FACESIZE.
-	(status := GdiplusLibrary default
-				gdipGetFamilyName: self asParameter
-				name: name
-				language: 0) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
-	^name asString trimNulls! !
+	^self getName: Locale userDefault languageId! !
 !Graphics.Gdiplus.FontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.FontFamily categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.FontFamily categoriesFor: #getName:!helpers!private! !
 !Graphics.Gdiplus.FontFamily categoriesFor: #lineSpacing!accessing!public! !
 !Graphics.Gdiplus.FontFamily categoriesFor: #name!accessing!public! !
 
@@ -72,7 +73,7 @@ exampleGdipFFClone
 	cloneFontFamily := fontFamily clone.
 	font := Font fontFamily: cloneFontFamily pointSize: 16.
 	bitmap graphics
-		drawString: 'This is an Arial font'
+		drawString: ('This is an <1s> font' expandMacrosWith: font name)
 		font: font
 		at: 10 @ 10
 		format: nil

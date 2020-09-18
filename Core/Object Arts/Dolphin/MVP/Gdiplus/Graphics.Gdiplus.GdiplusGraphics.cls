@@ -21,11 +21,10 @@ basicFree
 beginContainer
 	"Answer an <Integer> value that identifies the container."
 
-	| status state |
-	state := DWORD new.
-	(status := GdiplusLibrary default gdipBeginContainer2: self asParameter state: state asParameter)
-		= Ok ifFalse: [GdiplusError signal: 'GdipBeginContainer2  failed' with: status].
-	^state asInteger!
+	| state |
+	state := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipBeginContainer2: self asParameter state: state asParameter.
+	^state dwordAtOffset: 0!
 
 clear
 	"Clear the receiver, i.e., erase everything on it."
@@ -35,72 +34,60 @@ clear
 clear: aColor
 	"Clear the receiver and (flood) fill it with the specified color."
 
-	| status |
-	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: aColor argbCode) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
+	GdiplusLibrary default gdipGraphicsClear: self asParameter color: aColor argbCode!
 
 clipRectangle: aRectangle combineMode: aCombineModeConstant
 	"Set the clipping region of the receiver to a region that is the combination of itself and 
 	aRectangle, using  aCombineModeConstant to specify how the two regions are combined."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetClipRectI: self asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				combineMode: aCombineModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetClipRectI failed' with: status]!
+	GdiplusLibrary default
+		gdipSetClipRectI: self asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		combineMode: aCombineModeConstant!
 
 clipRegion: aGdiplusRegion combineMode: aCombineModeConstant
 	"Set the clipping region of the receiver to a region that is the combination of itself and the region
 	specified by aGdiplusRegion, using  aCombineModeConstant to specify how the two regions are combined."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetClipRegion: self asParameter
-				region: aGdiplusRegion asParameter
-				combineMode: aCombineModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetClipRegion failed' with: status]!
+	GdiplusLibrary default
+		gdipSetClipRegion: self asParameter
+		region: aGdiplusRegion asParameter
+		combineMode: aCombineModeConstant!
 
 compositingMode
 	"Answer an Integer that represents how rendered colors are combined with background colors."
 
-	| status compositingMode |
-	compositingMode := SDWORD new.
-	status := GdiplusLibrary default gdipGetCompositingMode: self asParameter
-				compositingMode: compositingMode asParameter.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipGetCompositingMode failed' with: status].
-	^compositingMode asInteger!
+	| compositingMode |
+	compositingMode := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetCompositingMode: self asParameter
+		compositingMode: compositingMode asParameter.
+	^compositingMode sdwordAtOffset: 0!
 
 compositingMode: aCompositingModeConstant
 	"Set the receiver's compositing mode (how rendered colors are combined with background colors.)."
 
-	| status |
-	status := GdiplusLibrary default gdipSetCompositingMode: self asParameter
-				compositingMode: aCompositingModeConstant.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipSetCompositingMode failed' with: status]!
+	GdiplusLibrary default gdipSetCompositingMode: self asParameter
+		compositingMode: aCompositingModeConstant!
 
 compositingQuality
 	"Answer an Integer that represents whether gamma correction is applied when colors 
 	are blended with background colors"
 
-	| status compositingQuality |
-	compositingQuality := SDWORD new.
-	status := GdiplusLibrary default gdipGetCompositingQuality: self asParameter
-				compositingQuality: compositingQuality asParameter.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipGetCompositingQuality failed' with: status].
-	^compositingQuality asInteger!
+	| compositingQuality |
+	compositingQuality := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetCompositingQuality: self asParameter
+		compositingQuality: compositingQuality asParameter.
+	^compositingQuality sdwordAtOffset: 0!
 
 compositingQuality: aCompositingQualityConstant
 	"Set the receiver's compositingQuality (whether gamma correction is applied when 
 	colors are blended with background colors)"
 
-	| status |
-	(status := GdiplusLibrary default gdipSetCompositingQuality: self asParameter
-				compositingQuality: aCompositingQualityConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetCompositingQuality failed' with: status]!
+	GdiplusLibrary default gdipSetCompositingQuality: self asParameter
+		compositingQuality: aCompositingQualityConstant!
 
 doWithCanvas: anOperation
 	| hdc |
@@ -120,83 +107,71 @@ Any state changes you make to the device context between GetHDC and ReleaseHDC w
 drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle
 	"Draw an arc on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawArcI: self asParameter
-				pen: aGdiplusPen asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				startAngle: startAngle
-				sweepAngle: sweepAngle) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawArcI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawArcI: self asParameter
+		pen: aGdiplusPen asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		startAngle: startAngle
+		sweepAngle: sweepAngle!
 
 drawBezier: aPointsCollection pen: aGdiplusPen
 	"Draw a Bezier curve on the receiver, specified by four points using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawBezierI: self asParameter
-				pen: aGdiplusPen asParameter
-				x1: aPointsCollection first x
-				y1: aPointsCollection first y
-				x2: aPointsCollection second x
-				y2: aPointsCollection second y
-				x3: aPointsCollection third x
-				y3: aPointsCollection third y
-				x4: aPointsCollection fourth x
-				y4: aPointsCollection fourth y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawBezierI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawBezierI: self asParameter
+		pen: aGdiplusPen asParameter
+		x1: aPointsCollection first x
+		y1: aPointsCollection first y
+		x2: aPointsCollection second x
+		y2: aPointsCollection second y
+		x3: aPointsCollection third x
+		y3: aPointsCollection third y
+		x4: aPointsCollection fourth x
+		y4: aPointsCollection fourth y!
 
 drawCachedBitmap: aCachedBitmap at: aPoint
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawCachedBitmap: self asParameter
-				cachedBitmap: aCachedBitmap asParameter
-				x: aPoint x
-				y: aPoint y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawCachedBitmap failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawCachedBitmap: self asParameter
+		cachedBitmap: aCachedBitmap asParameter
+		x: aPoint x
+		y: aPoint y!
 
 drawClosedCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	"Draw a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen.
 	aReal specifies how tightly the curve bends through the coordinates of the cardinal spline."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawClosedCurve2I: self asParameter
-				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: aPointsCollection size
-				tension: aReal) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawClosedCurve2I failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawClosedCurve2I: self asParameter
+		pen: aGdiplusPen asParameter
+		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: aPointsCollection size
+		tension: aReal!
 
 drawCurve: aPointsCollection pen: aGdiplusPen
 	"Draw a cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawCurveI: self asParameter
-				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: aPointsCollection size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawCurveI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawCurveI: self asParameter
+		pen: aGdiplusPen asParameter
+		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: aPointsCollection size!
 
 drawCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	"Draw a cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen.
 	aReal specifies how tightly the curve bends through the coordinates of the cardinal spline."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawCurve2I: self asParameter
-				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: aPointsCollection size
-				tension: aReal) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawCurve2I failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawCurve2I: self asParameter
+		pen: aGdiplusPen asParameter
+		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: aPointsCollection size
+		tension: aReal!
 
 drawDropShadowRectangle: rect offset: offset alpha: alpha 
 	| shadowRect shadow |
@@ -219,15 +194,13 @@ drawDropShadowRectangle: rect offset: offset alpha: alpha
 drawEllipse: aRectangle pen: aPen
 	"Draw an ellipse on the receiver, within aRectangle's bounds, using aPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawEllipseI: self asParameter
-				pen: aPen asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawEllipseI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawEllipseI: self asParameter
+		pen: aPen asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
 drawImage: aGdiplusImage
 	"Draw all of aGdiplusImage on the receiver, at the receiver's origin."
@@ -245,15 +218,13 @@ drawImage: aGdiplusImage at: aPoint
 drawImage: aGdiplusImage at: dstOrigin extent: dstExtent
 	"Draw all of aGdiplusImage on the receiver, sized to fit the specified rectangle."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawImageRectI: self asParameter
-				image: aGdiplusImage asParameter
-				x: dstOrigin x
-				y: dstOrigin y
-				width: dstExtent x
-				height: dstExtent y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawImageRectI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawImageRectI: self asParameter
+		image: aGdiplusImage asParameter
+		x: dstOrigin x
+		y: dstOrigin y
+		width: dstExtent x
+		height: dstExtent y!
 
 drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent
 	"Draw the portion of the aGdiplusImage specified by a source rectangle to a portion of the
@@ -273,36 +244,32 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 	rectangle specified by dstOrigin and dstExtent. The image is stretched to fit the destination rectangle.
 	srcUnit is the unit of measure for the source rectangle. imageAttributes specifies color adjustments."
 
-	| status |
-	status := GdiplusLibrary default
-				gdipDrawImageRectRectI: self asParameter
-				image: aGdiplusImage asParameter
-				dstx: dstOrigin x
-				dsty: dstOrigin y
-				dstwidth: dstExtent x
-				dstheight: dstExtent y
-				srcx: srcOrigin x
-				srcy: srcOrigin y
-				srcwidth: srcExtent x
-				srcheight: srcExtent y
-				srcUnit: aSrcUnit ?? UnitPixel
-				imageAttributes: imageAttributes asParameter
-				callback: nil
-				callbackData: nil.
-	status == Ok ifFalse: [GdiplusError signal: 'GdipDrawImageRectRectI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawImageRectRectI: self asParameter
+		image: aGdiplusImage asParameter
+		dstx: dstOrigin x
+		dsty: dstOrigin y
+		dstwidth: dstExtent x
+		dstheight: dstExtent y
+		srcx: srcOrigin x
+		srcy: srcOrigin y
+		srcwidth: srcExtent x
+		srcheight: srcExtent y
+		srcUnit: aSrcUnit ?? UnitPixel
+		imageAttributes: imageAttributes asParameter
+		callback: nil
+		callbackData: nil!
 
 drawImage: anImage points: threePoints
 	"Draw anImage on the receiver stretched to fit the parallelogram specified by threePoints."
 
-	| status |
 	self assert: [threePoints size = 3].
-	(status := GdiplusLibrary default
-				gdipDrawImagePointsI: self asParameter
-				image: anImage asParameter
-				dstpoints: (StructureArray withAll: (threePoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: threePoints size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawImagePointsI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawImagePointsI: self asParameter
+		image: anImage asParameter
+		dstpoints: (StructureArray withAll: (threePoints collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: threePoints size!
 
 drawImage: aGdiplusImage rectangle: aRectangle
 	"Draw all of aGdiplusImage on the receiver, sized to fit aRectangle."
@@ -323,52 +290,44 @@ drawLine: aRectangle pen: aPen
 drawLineFrom: fromPoint to: toPoint pen: aGdiplusPen
 	"Draw a line that connects two points using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawLineI: self asParameter
-				pen: aGdiplusPen asParameter
-				x1: fromPoint x
-				y1: fromPoint y
-				x2: toPoint x
-				y2: toPoint y) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawLineI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawLineI: self asParameter
+		pen: aGdiplusPen asParameter
+		x1: fromPoint x
+		y1: fromPoint y
+		x2: toPoint x
+		y2: toPoint y!
 
 drawPath: aPath pen: aPen
 	"Draw aPath on the receiver using aPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawPath: self asParameter
-				pen: aPen asParameter
-				path: aPath asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawPath failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawPath: self asParameter
+		pen: aPen asParameter
+		path: aPath asParameter!
 
 drawPie: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle
 	"Draw a pie on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawPieI: self asParameter
-				pen: aGdiplusPen asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				startAngle: startAngle
-				sweepAngle: sweepAngle) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawPieI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawPieI: self asParameter
+		pen: aGdiplusPen asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		startAngle: startAngle
+		sweepAngle: sweepAngle!
 
 drawPolygon: collectionOfPoints pen: aPen
 	"Draw a polygon on the receiver using aPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawPolygonI: self asParameter
-				pen: aPen asParameter
-				points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: collectionOfPoints size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawPolygonI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawPolygonI: self asParameter
+		pen: aPen asParameter
+		points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: collectionOfPoints size!
 
 drawRectangle: aRectangle
 	"Draw aRectangle on the receiver."
@@ -378,15 +337,13 @@ drawRectangle: aRectangle
 drawRectangle: aRectangle pen: aPen
 	"Draw a Rectangle on the receiver using aPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipDrawRectangleI: self asParameter
-				pen: aPen asParameter
-				x: aRectangle left asInteger
-				y: aRectangle top asInteger
-				width: aRectangle width asInteger
-				height: aRectangle height asInteger) = Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawRectangleI failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawRectangleI: self asParameter
+		pen: aPen asParameter
+		x: aRectangle left asInteger
+		y: aRectangle top asInteger
+		width: aRectangle width asInteger
+		height: aRectangle height asInteger!
 
 drawString: aString at: aPoint
 	"Draw aString on the receiver at aPoint."
@@ -413,21 +370,20 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	and style) specified by aFont, text format information (layout and display manipulations)
 	specified by aStringFormat, and aBrush to fill the string."
 
-	| status font format brush text |
+	| font format brush text |
 	font := aFont ifNil: [Font new].
 	format := aStringFormat ifNil: [StringFormat genericDefault].
 	brush := aBrush ifNil: [SolidBrush new].
 	"Note that we must convert to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
-	(status := GdiplusLibrary default
-				gdipDrawString: self asParameter
-				str: text
-				length: text size
-				font: font asParameter
-				layoutRect: (RECTF fromRectangle: aRectangle)
-				stringFormat: format asParameter
-				brush: brush asParameter) == Ok
-		ifFalse: [GdiplusError signal: 'GdipDrawString failed' with: status]!
+	GdiplusLibrary default
+		gdipDrawString: self asParameter
+		str: text
+		length: text size
+		font: font asParameter
+		layoutRect: (RECTF fromRectangle: aRectangle)
+		stringFormat: format asParameter
+		brush: brush asParameter!
 
 drawString: aString layoutRect: aRectangle
 	"Draw aString on the receiver within aRectangle."
@@ -442,59 +398,49 @@ drawString: aString layoutRect: aRectangle
 endContainer: containerInteger
 	"Close a graphics container specified by containerInteger."
 
-	| status |
-	(status := GdiplusLibrary default gdipEndContainer: self asParameter state: containerInteger) = Ok
-		ifFalse: [GdiplusError signal: 'GdipEndContainer  failed' with: status]!
+	GdiplusLibrary default gdipEndContainer: self asParameter state: containerInteger!
 
 fillClosedCurve: aPointsCollection brush: aGdiplusBrush
 	"Fills a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillClosedCurveI: self asParameter
-				brush: aGdiplusBrush asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: aPointsCollection size) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillClosedCurveI failed' with: status]!
+	GdiplusLibrary default
+		gdipFillClosedCurveI: self asParameter
+		brush: aGdiplusBrush asParameter
+		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: aPointsCollection size!
 
 fillEllipse: aRectangle brush: aGdiplusBrush
 	"Fill the interior of an ellipse that is bounded by aRectangle on the receiver using aGdiplusBrush."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillEllipseI: self asParameter
-				brush: aGdiplusBrush asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillEllipseI failed' with: status]!
+	GdiplusLibrary default
+		gdipFillEllipseI: self asParameter
+		brush: aGdiplusBrush asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
 fillPath: aPath brush: aBrush
 	"Fill aPath on the receiver using a Brush."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillPath: self asParameter
-				brush: aBrush asParameter
-				path: aPath asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillPath failed' with: status]!
+	GdiplusLibrary default
+		gdipFillPath: self asParameter
+		brush: aBrush asParameter
+		path: aPath asParameter!
 
 fillPie: aRectangle brush: aGdiplusBrush startAngle: startAngle sweepAngle: sweepAngle
 	"Fill a pie on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusBrush."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillPieI: self asParameter
-				brush: aGdiplusBrush asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				startAngle: startAngle
-				sweepAngle: sweepAngle) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillPieI failed' with: status]!
+	GdiplusLibrary default
+		gdipFillPieI: self asParameter
+		brush: aGdiplusBrush asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		startAngle: startAngle
+		sweepAngle: sweepAngle!
 
 fillPolygon: collectionOfPoints brush: aBrush
 	"Fill the interior of a polygon on the receiver with aBrush."
@@ -508,28 +454,24 @@ fillPolygon: collectionOfPoints brush: aBrush fillMode: aFillModeConstant
 	"Fill the interior of a polygon on the receiver with aBrush.  aFillMode specifies how to fill a closed area
 	that is within another closed area and that is created when the curve or path passes over itself."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillPolygonI: self asParameter
-				brush: aBrush asParameter
-				points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: collectionOfPoints size
-				fillMode: aFillModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillPolygonI failed' with: status]!
+	GdiplusLibrary default
+		gdipFillPolygonI: self asParameter
+		brush: aBrush asParameter
+		points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
+				elementClass: POINTL)
+		count: collectionOfPoints size
+		fillMode: aFillModeConstant!
 
 fillRectangle: aRectangle brush: aGdiplusBrush
 	"Fill aRectangle on the receiver using a aGdiplusBrush."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillRectangleI: self asParameter
-				brush: aGdiplusBrush asParameter
-				x: aRectangle left asInteger
-				y: aRectangle top asInteger
-				width: aRectangle width asInteger
-				height: aRectangle height asInteger) == Ok
-		ifFalse: [GdiplusError signal: 'GdipFillRectangleI failed' with: status]!
+	GdiplusLibrary default
+		gdipFillRectangleI: self asParameter
+		brush: aGdiplusBrush asParameter
+		x: aRectangle left asInteger
+		y: aRectangle top asInteger
+		width: aRectangle width asInteger
+		height: aRectangle height asInteger!
 
 fillRectangle: aRectangle color: aColor 
 	| fillBrush |
@@ -540,12 +482,10 @@ fillRectangle: aRectangle color: aColor
 fillRegion: aRegion brush: aBrush
 	"Fill aRegion on the receiver using aBrush."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipFillRegion: self asParameter
-				brush: aBrush asParameter
-				region: aRegion asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipFillRegion failed' with: status]!
+	GdiplusLibrary default
+		gdipFillRegion: self asParameter
+		brush: aBrush asParameter
+		region: aRegion asParameter!
 
 getHDC
 	"
@@ -558,30 +498,26 @@ getHDC
 	        return hdc;
 	    }"
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := GdiplusLibrary default gdipGetDC: self asParameter hdc: gpHandle.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipGetDC failed' with: status].
+	GdiplusLibrary default gdipGetDC: self asParameter hdc: gpHandle.
 	^gpHandle!
 
 interpolationMode
 	"Answer an Integer that represents the receiver's interpolation mode (the algorithm 
 	that is used when images are scaled or rotated)."
 
-	| status interpolationMode |
-	interpolationMode := SDWORD new.
-	(status := GdiplusLibrary default gdipGetInterpolationMode: self asParameter
-				interpolationMode: interpolationMode asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetInterpolationMode failed' with: status].
-	^interpolationMode asInteger!
+	| interpolationMode |
+	interpolationMode := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetInterpolationMode: self asParameter
+		interpolationMode: interpolationMode asParameter.
+	^interpolationMode sdwordAtOffset: 0!
 
 interpolationMode: anInterpolationModeConstant
 	"Set the receiver's interpolation mode (the algorithm that is used when images are scaled or rotated)."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetInterpolationMode: self asParameter
-				interpolationMode: anInterpolationModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetInterpolationMode failed' with: status]!
+	GdiplusLibrary default gdipSetInterpolationMode: self asParameter
+		interpolationMode: anInterpolationModeConstant!
 
 measureString: aString font: aFont
 	"Answer a Point that is the extent of aString as specified by aFont."
@@ -595,55 +531,48 @@ measureString: aString font: aFont
 measureString: aString font: aFont rect: aRectangle format: aStringFormat
 	"Answer a Rectangle that is the bounds of aString inside aRectangle as specified by aFont and aStringFormat."
 
-	| status boundRect text |
+	| boundRect text |
 	boundRect := RECTF new.
 	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
-	(status := GdiplusLibrary default
-				gdipMeasureString: self asParameter
-				str: text
-				length: text size
-				font: aFont asParameter
-				layoutRect: (RECTF fromRectangle: aRectangle)
-				stringFormat: aStringFormat asParameter
-				boundingBox: boundRect
-				codepointsFitted: nil
-				linesFilled: nil) == Ok
-		ifFalse: [GdiplusError signal: 'GdipMeasureString failed' with: status].
+	GdiplusLibrary default
+		gdipMeasureString: self asParameter
+		str: text
+		length: text size
+		font: aFont asParameter
+		layoutRect: (RECTF fromRectangle: aRectangle)
+		stringFormat: aStringFormat asParameter
+		boundingBox: boundRect
+		codepointsFitted: nil
+		linesFilled: nil.
 	^boundRect!
 
 pageScale
 	"Answer the scaling factor currently set for the page transformation of the receiver."
 
-	| status scale |
-	scale := FLOAT new.
-	(status := GdiplusLibrary default gdipGetPageScale: self asParameter scale: scale) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPageScale failed' with: status].
-	^scale value!
+	| scale |
+	scale := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPageScale: self asParameter scale: scale.
+	^scale floatAtOffset: 0!
 
 pageScale: aRealNumber
 	"Set the scaling factor for the page transformation of the receiver to aRealNumber.
 	The page transformation converts page coordinates to device coordinates."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPageScale: self asParameter scale: aRealNumber) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPageScale failed' with: status]!
+	GdiplusLibrary default gdipSetPageScale: self asParameter scale: aRealNumber!
 
 pageUnit
 	"Answer the unit of measure currently set for the receiver."
 
-	| status unit |
-	unit := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPageUnit: self asParameter unit: unit) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPageUnit failed' with: status].
-	^unit value!
+	| unit |
+	unit := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPageUnit: self asParameter unit: unit.
+	^unit sdwordAtOffset: 0!
 
 pageUnit: aUnitConstant
 	"Set the receiver's unit of measure."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPageUnit: self asParameter unit: aUnitConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPageUnit failed' with: status]!
+	GdiplusLibrary default gdipSetPageUnit: self asParameter unit: aUnitConstant!
 
 pageUnitName
 	"Answer the receiver's page unit as a string."
@@ -651,20 +580,16 @@ pageUnitName
 	^(self class enumsUnit detect: [:e | e value = self pageUnit]) key!
 
 pixelOffsetMode
-	| status pixelOffsetMode |
-	pixelOffsetMode := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPixelOffsetMode: self asParameter
-				pixelOffsetMode: pixelOffsetMode) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPixelOffsetMode failed' with: status].
-	^pixelOffsetMode asInteger!
+	| pixelOffsetMode |
+	pixelOffsetMode := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetPixelOffsetMode: self asParameter pixelOffsetMode: pixelOffsetMode.
+	^pixelOffsetMode sdwordAtOffset: 0!
 
 pixelOffsetMode: aPixelOffsetModeConstant
 	"Set the type of pixel offsetting that is applied to lines and curves."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPixelOffsetMode: self asParameter
-				pixelOffsetMode: aPixelOffsetModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetPixelOffsetMode failed' with: status]!
+	GdiplusLibrary default gdipSetPixelOffsetMode: self asParameter
+		pixelOffsetMode: aPixelOffsetModeConstant!
 
 releaseHDC: anExternalHandle
 	" 
@@ -673,35 +598,28 @@ releaseHDC: anExternalHandle
 	        SetStatus(DllExports::GdipReleaseDC(nativeGraphics, hdc));
 	    }"
 
-	| status |
-	status := GdiplusLibrary default gdipReleaseDC: self asParameter hdc: anExternalHandle.
-	status = Ok ifFalse: [GdiplusError signal: 'ReleaseHDC failed' with: status]!
+	GdiplusLibrary default gdipReleaseDC: self asParameter hdc: anExternalHandle!
 
 resetClip
 	"Set the clipping region of the receiver to an infinite region."
 
-	| status |
-	(status := GdiplusLibrary default gdipResetClip: self asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipResetClip failed' with: status]!
+	GdiplusLibrary default gdipResetClip: self asParameter!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
-	| status |
-	(status := GdiplusLibrary default gdipResetWorldTransform: self asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipResetWorldTransform failed' with: status]!
+	GdiplusLibrary default gdipResetWorldTransform: self asParameter!
 
 resolution
 	"Answer the resolution, in dots per inch, of the display device associated with the receiver."
 
-	| status dpiX dpiY |
-	dpiX := FLOAT new.
-	dpiY := FLOAT new.
-	(status := GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpiX) = Ok
-		ifFalse: [GdiplusError signal: 'GdpiGetDpiX failed' with: status].
-	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpiY) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetDpiY failed' with: status].
-	^dpiX asFloat asInteger @ dpiY asFloat asInteger!
+	| dpi dpiX dpiY |
+	dpi := ByteArray new: 4.
+	GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpi.
+	dpiX := dpi floatAtOffset: 0.
+	GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpi.
+	dpiY := dpi floatAtOffset: 0.
+	^dpiX asInteger @ dpiY asInteger!
 
 rotate: aRealAngle at: aPoint
 	"Translate the receiver's transformation matrix by a Point and then rotate it by aRealAngle."
@@ -718,12 +636,10 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipRotateWorldTransform: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipRotateWorldTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipRotateWorldTransform: self asParameter
+		angle: aRealAngle
+		order: aMatrixOrderConstant!
 
 scaleTransform: aRealPoint 
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix defined by aRealPoint."
@@ -734,74 +650,58 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipScaleWorldTransform: self asParameter
-				sx: aRealPoint x
-				sy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipScaleWorldTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipScaleWorldTransform: self asParameter
+		sx: aRealPoint x
+		sy: aRealPoint y
+		order: aMatrixOrderConstant!
 
 smoothingMode
-	| status smoothingMode |
-	smoothingMode := SDWORD new.
-	(status := GdiplusLibrary default gdipGetSmoothingMode: self asParameter
-				smoothingMode: smoothingMode) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetSmoothingMode failed' with: status].
-	^smoothingMode asInteger!
+	| smoothingMode |
+	smoothingMode := ByteArray newFixed: 4.
+	GdiplusLibrary default gdipGetSmoothingMode: self asParameter smoothingMode: smoothingMode.
+	^smoothingMode sdwordAtOffset: 0!
 
 smoothingMode: aSmoothingModeConstant
 	"Set the type of smoothing (antialiasing) that is applied to lines and curves."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetSmoothingMode: self asParameter
-				smoothingMode: aSmoothingModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetSmoothingMode failed' with: status]!
+	GdiplusLibrary default gdipSetSmoothingMode: self asParameter smoothingMode: aSmoothingModeConstant!
 
 textRenderingHint: aTextRenderingHintConstant
 	"Set the text rendering mode of the receiver."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetTextRenderingHint: self asParameter
-				mode: aTextRenderingHintConstant) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetTextRenderingHint filed' with: status]!
+	GdiplusLibrary default gdipSetTextRenderingHint: self asParameter mode: aTextRenderingHintConstant!
 
 transform
 	"Answer a GdiplusMatrix that is the receiver's transformation matrix."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Matrix new.
-	(status := GdiplusLibrary default gdipGetWorldTransform: self asParameter
-				matrix: gpHandle asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetWorldTransform failed' with: status].
+	GdiplusLibrary default gdipGetWorldTransform: self asParameter matrix: gpHandle asParameter.
 	^gpHandle!
 
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetWorldTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetWorldTransform failed' with: status]!
+	GdiplusLibrary default gdipSetWorldTransform: self asParameter matrix: aGdiplusMatrix asParameter!
 
 transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 	"Convert aPointsCollection from one coordinate space to another. The conversion 
 	is based on the current world and page transformations of the receiver."
 
-	| status points count |
+	| points count |
 	points := StructureArray
 				withAll: aPointsCollection
 				elementClass: POINTL
 				initializer: [:pointl :point | pointl x: point x y: point y].
 	points beUnfinalizable.
 	count := points size.
-	(status := GdiplusLibrary default
-				gdipTransformPointsI: self asParameter
-				destSpace: destSpace
-				srcSpace: srcSpace
-				points: points
-				count: count) == Ok
-		ifFalse: [GdiplusError signal: 'GdipTransformPointsI failed' with: status].
+	GdiplusLibrary default
+		gdipTransformPointsI: self asParameter
+		destSpace: destSpace
+		srcSpace: srcSpace
+		points: points
+		count: count.
 	points with: (1 to: count) do: [:pointl :i | aPointsCollection at: i put: pointl asPoint]!
 
 translateTransform: aRealPoint 
@@ -813,13 +713,11 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipTranslateWorldTransform: self asParameter
-				dx: aRealPoint x
-				dy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipTranslateWorldTransform failed' with: status]! !
+	GdiplusLibrary default
+		gdipTranslateWorldTransform: self asParameter
+		dx: aRealPoint x
+		dy: aRealPoint y
+		order: aMatrixOrderConstant! !
 !Graphics.Gdiplus.GdiplusGraphics categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.GdiplusGraphics categoriesFor: #beginContainer!accessing-transformations!public! !
 !Graphics.Gdiplus.GdiplusGraphics categoriesFor: #clear!operations!public! !

@@ -12,16 +12,11 @@ Graphics.Gdiplus.InstalledFontCollectionInitializer comment: ''!
 !Graphics.Gdiplus.InstalledFontCollectionInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipNewInstalledFontCollection: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating InstalledFontCollection'! !
+	self library gdipNewInstalledFontCollection: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.InstalledFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.InstalledFontCollectionInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !Graphics.Gdiplus.InstalledFontCollectionInitializer class methodsFor!
 

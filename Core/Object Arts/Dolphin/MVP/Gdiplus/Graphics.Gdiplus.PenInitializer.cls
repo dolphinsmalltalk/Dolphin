@@ -10,12 +10,6 @@ Graphics.Gdiplus.PenInitializer guid: (Core.GUID fromString: '{b5a5d186-b0ef-421
 Graphics.Gdiplus.PenInitializer isNonInstantiable: true!
 Graphics.Gdiplus.PenInitializer comment: ''!
 !Graphics.Gdiplus.PenInitializer categoriesForClass!Unclassified! !
-!Graphics.Gdiplus.PenInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Pen'! !
-!Graphics.Gdiplus.PenInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-
 !Graphics.Gdiplus.PenInitializer class methodsFor!
 
 brush: aGdiplusBrush width: aFloat

@@ -12,23 +12,18 @@ Graphics.Gdiplus.PathInitializer comment: ''!
 !Graphics.Gdiplus.PathInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreatePath: fillMode path: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreatePath: fillMode path: gpHandle.
 	^gpHandle!
 
 fillMode: aNumber
 	fillMode := aNumber!
 
-gdiplusConstructorErrorDescription
-	^'Error creating GraphicsPath'!
-
 isPersistent
 	^false! !
 !Graphics.Gdiplus.PathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !Graphics.Gdiplus.PathInitializer categoriesFor: #fillMode:!initializing!private! !
-!Graphics.Gdiplus.PathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !Graphics.Gdiplus.PathInitializer categoriesFor: #isPersistent!public!testing! !
 
 !Graphics.Gdiplus.PathInitializer class methodsFor!

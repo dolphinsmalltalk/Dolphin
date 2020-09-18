@@ -17,49 +17,41 @@ basicFree
 	GdiplusLibrary default gdipDeleteRegion: handle!
 
 bounds: graphics
-	| status rect |
+	| rect |
 	rect := RECTL new.
-	(status := GdiplusLibrary default
-				gdipGetRegionBoundsI: self asParameter
-				graphics: graphics asParameter
-				rect: rect) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetRegionsBoundsI failed' with: status].
+	GdiplusLibrary default
+		gdipGetRegionBoundsI: self asParameter
+		graphics: graphics asParameter
+		rect: rect.
 	^rect asRectangle!
 
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := GdiplusLibrary default gdipCloneRegion: self asParameter cloneRegion: gpHandle) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneRegion' with: status].
+	GdiplusLibrary default gdipCloneRegion: self asParameter cloneRegion: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
 
 combinePath: aPath mode: aCombineModeConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipCombineRegionPath: self asParameter
-				path: aPath asParameter
-				combineMode: aCombineModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipCombineRegionPath failed' with: status]!
+	GdiplusLibrary default
+		gdipCombineRegionPath: self asParameter
+		path: aPath asParameter
+		combineMode: aCombineModeConstant!
 
 combineRectangle: aRectangle mode: aCombineModeConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipCombineRegionRectI: self asParameter
-				rect: aRectangle asParameter
-				combineMode: aCombineModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipCombineRegionRectI failed' with: status]!
+	GdiplusLibrary default
+		gdipCombineRegionRectI: self asParameter
+		rect: aRectangle asParameter
+		combineMode: aCombineModeConstant!
 
 combineRegion: aRegion mode: aCombineModeConstant
-	| status |
-	(status := GdiplusLibrary default
-				gdipCombineRegionRegion: self asParameter
-				region2: aRegion asParameter
-				combineMode: aCombineModeConstant) = Ok
-		ifFalse: [GdiplusError signal: 'GdipCombineRegionRegion failed' with: status]!
+	GdiplusLibrary default
+		gdipCombineRegionRegion: self asParameter
+		region2: aRegion asParameter
+		combineMode: aCombineModeConstant!
 
 complementPath: aPath
 	self combinePath: aPath mode: CombineModeComplement!
@@ -79,30 +71,25 @@ isVisible: aPoint graphics: aGraphics
 	"Answer whether aPoint is inside the receiver, where aGraphics contains the world and page
 	transformations required to calculate the device coordinates of the receiver and aPoint."
 
-	| status result |
-	result := SDWORD new.
-	(status := GdiplusLibrary default
-				gdipIsVisibleRegionPointI: self asParameter
-				x: aPoint x
-				y: aPoint y
-				graphics: aGraphics asParameter
-				result: result) = Ok
-		ifFalse: [GdiplusError signal: 'GdipIsVisibleRegionPointI failed' with: status].
-	^result ~= 0!
+	| result |
+	result := ByteArray newFixed: 4.
+	GdiplusLibrary default
+		gdipIsVisibleRegionPointI: self asParameter
+		x: aPoint x
+		y: aPoint y
+		graphics: aGraphics asParameter
+		result: result.
+	^(result sdwordAtOffset: 0) ~= 0!
 
 makeEmpty
 	"Update the receiver to an empty region, i.e., so that it occupies no space on the display device."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetEmpty: self asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetEmpty failed' with: status]!
+	GdiplusLibrary default gdipSetEmpty: self asParameter!
 
 makeInfinite
 	"Update the receiver to an infinite region, i.e., so that it occupies all the space on the display device."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetInfinite: self asParameter) = Ok
-		ifFalse: [GdiplusError signal: 'GdipSetInfinite failed' with: status]!
+	GdiplusLibrary default gdipSetInfinite: self asParameter!
 
 unionRegion: aRegion
 	self combineRegion: aRegion mode: CombineModeUnion!

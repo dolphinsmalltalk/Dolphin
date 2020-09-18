@@ -12,16 +12,11 @@ Graphics.Gdiplus.RegionInitializer comment: ''!
 !Graphics.Gdiplus.RegionInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library gdipCreateRegion: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'! !
+	self library gdipCreateRegion: gpHandle.
+	^gpHandle! !
 !Graphics.Gdiplus.RegionInitializer categoriesFor: #createHandle!private! !
-!Graphics.Gdiplus.RegionInitializer categoriesFor: #gdiplusConstructorErrorDescription!private! !
 
 !Graphics.Gdiplus.RegionInitializer class methodsFor!
 

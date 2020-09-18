@@ -23,10 +23,9 @@ basicFree
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := Handle new.
-	(status := GdiplusLibrary default gdipCloneBrush: self handle cloneBrush: gpHandle) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneBrush' with: status].
+	GdiplusLibrary default gdipCloneBrush: self handle cloneBrush: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself! !

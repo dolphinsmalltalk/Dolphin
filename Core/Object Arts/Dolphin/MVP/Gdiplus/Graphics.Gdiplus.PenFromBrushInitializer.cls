@@ -29,14 +29,13 @@ createHandle
 		        lastResult = DllExports::GdipCreatePen2(brush->nativeBrush,
                       		              width, unit, &nativePen);"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := Handle new.
-	status := self library
-				gdipCreatePen2: brush asParameter
-				width: (width ?? 1.0) asParameter
-				unit: UnitWorld
-				pen: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreatePen2: brush asParameter
+		width: (width ?? 1.0) asParameter
+		unit: UnitWorld
+		pen: gpHandle.
 	^gpHandle! !
 !Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
 !Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
