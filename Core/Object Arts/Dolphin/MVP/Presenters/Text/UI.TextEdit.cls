@@ -402,7 +402,6 @@ findNext: aFindDetails
 	match isEmpty
 		ifTrue: 
 			["Not found, cancel the selection."
-			Sound warningBeep.
 			self selectionStart: (aFindDetails isForwards
 						ifTrue: [self selectionRange stop + 1]
 						ifFalse: [self selectionRange start])
@@ -701,7 +700,7 @@ onFind: aFindDetails
 	action := aFindDetails action.
 	#findNext == action
 		ifTrue: 
-			[self findNext: aFindDetails.
+			[(self findNext: aFindDetails) isEmpty ifTrue: [Sound warningBeep].
 			^self].
 	#replace == action
 		ifTrue: 
@@ -932,14 +931,19 @@ refreshContents
 
 	self model notNil ifTrue: [ super refreshContents ]!
 
-replace: aFindDetails 
-	| selection |
+replace: aFindDetails
+	| selection replaced nextMatch |
 	selection := self selection.
-	(aFindDetails isCaseSensitive 
+	replaced := false.
+	(aFindDetails isCaseSensitive
 		ifTrue: [selection = aFindDetails pattern]
-		ifFalse: [selection sameAs: aFindDetails pattern]) 
-			ifTrue: [self replaceSelection: aFindDetails replaceWith].
-	^self findNext: aFindDetails!
+		ifFalse: [selection sameAs: aFindDetails pattern])
+			ifTrue: 
+				[self replaceSelection: aFindDetails replaceWith.
+				replaced := true].
+	nextMatch := self findNext: aFindDetails.
+	(nextMatch isEmpty and: [replaced not]) ifTrue: [Sound warningBeep].
+	^nextMatch!
 
 replaceAll: aFindDetails 
 	[(self replace: aFindDetails) notEmpty] whileTrue!
