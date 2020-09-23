@@ -440,10 +440,35 @@ declareClasses
 				classVariableNames: ''
 				imports: #()]!
 
+declareVariable: aBindingReference
+	| namespace path |
+	namespace := Namespace baseEnvironment.
+	path := aBindingReference path.
+	1 to: path size - 1
+		do: 
+			[:i |
+			| identifier |
+			identifier := path at: i.
+			namespace := (namespace localBindingFor: identifier)
+						ifNil: 
+							[| baseClass subNs |
+							baseClass := (namespace == Root or: [namespace == Smalltalk])
+										ifTrue: [Namespace]
+										ifFalse: [namespace].
+							subNs := baseClass
+										subclass: (namespace fullNameFor: identifier)
+										instanceVariableNames: ''
+										classVariableNames: ''
+										imports: #().
+							subNs owningPackage: self.
+							subNs]
+						ifNotNil: [:binding | binding value]].
+	^aBindingReference declare!
+
 declareVariables
 	"Private - Create bindings for each of the shared variables in the package prior to those variable values being loaded. Later (after the classes in the package have been defined - in case the variables are instances of any of those classes) these will be loaded from their individual STB files."
 
-	self variableNames do: [:each | each declare]!
+	self variableNames do: [:each | self declareVariable: each]!
 
 dependentPackages
 	"Answer a <collection> of the packages which are directly dependant on the receiver."
@@ -1830,6 +1855,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #convertOldNamesProperty:!legacy package loading!private! !
 !Kernel.Package categoriesFor: #convertPoolDictionariesToSharedPools!legacy package loading!private! !
 !Kernel.Package categoriesFor: #declareClasses!helpers!private! !
+!Kernel.Package categoriesFor: #declareVariable:!helpers!private! !
 !Kernel.Package categoriesFor: #declareVariables!helpers!private! !
 !Kernel.Package categoriesFor: #dependentPackages!accessing!public! !
 !Kernel.Package categoriesFor: #depthOfClass:!helpers!public! !
