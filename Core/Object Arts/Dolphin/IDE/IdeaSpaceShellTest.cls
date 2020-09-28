@@ -235,39 +235,41 @@ testRemoveCard
 testSaveRestore
 	"Test Save and Restore of various Ideaspace tools"
 
-	| sb cb eb ws vc rb saveString newIdeaShell newSb newCb newEb newWs newVc newRb definitionPresenter |
+	| sb cb ws saveString newSb newCb newEb newWs newVc newRb sbPackages rid wsDocData wsPools wsFilename |
 	"This test is pretty slow, but we can speed it up by ~30% by disabling redraw while populating the test subject"
 	ideaShell view
 		hide;
 		disableRedraw.
 	"System Browser on False"
 	sb := self newSystemBrowserCard.
-	sb packages: (Array with: False owningPackage with: ClassBrowserShell owningPackage).
-	sb actualClass: False.
+	sbPackages := {ClassBrowserShell owningPackage. false class owningPackage}.
+	sb packages: sbPackages.
+	sb actualClass: false class.
 
 	"Class Browser on View>>destroy with definition showing"
 	cb := self newClassBrowserCard.
-	cb method: (View compiledMethodAt: #destroy).
+	cb method: View >> #destroy.
 	cb setPinStateFor: 'filtersSlidey' to: false.
-	definitionPresenter := cb instVarNamed: 'definitionPresenter'.
-	definitionPresenter ensureVisible.
+	(cb instVarNamed: 'definitionPresenter') ensureVisible.
 
 	"Environment Browser on Object subclassses"
-	eb := self newEnvironmentBrowserCard.
-	eb browserEnvironment: (Smalltalk developmentSystem browserEnvironmentForClasses: Object subclasses).
-	eb method: (Presenter compiledMethodAt: #createComponents).
+	self newEnvironmentBrowserCard
+		browserEnvironment: (Smalltalk developmentSystem browserEnvironmentForClasses: Object subclasses);
+		method: Presenter >> #createComponents.
 
 	"Workspace"
 	ws := self newWorkspaceCard.
-	ws workspace evaluationPools: (Array with: Win32Constants with: CommCtrlConstants).
+	ws workspace evaluationPools: {Win32Constants. CommCtrlConstants}.
+	wsDocData := ws getDocumentData.
+	wsFilename := ws filename.
+	wsPools := ws workspace evaluationPools.
 
 	"View Composer"
-	vc := self newViewComposerCard.
-	vc resourceIdentifier: (ResourceIdentifier class: Shell).
+	rid := ResourceIdentifier class: Shell.
+	self newViewComposerCard resourceIdentifier: rid.
 
 	"View Browser"
-	rb := self newViewBrowserCard.
-	rb resource: (ResourceIdentifier class: Shell).
+	self newViewBrowserCard resource: (ResourceIdentifier class: Shell).
 
 	"Make the system browser the current card"
 	sb ensureVisible.
@@ -276,36 +278,36 @@ testSaveRestore
 
 	"Save it"
 	saveString := ideaShell saveStateString.
+	ideaShell view destroy.
 	"Restore state into a new idea space"
-	newIdeaShell := IdeaSpaceShell create.
-	newIdeaShell configureFromSavedStateString: saveString.
-	self assert: newIdeaShell cards size equals: 6.
-	newSb := newIdeaShell cards first.
-	newCb := newIdeaShell cards second.
-	newEb := newIdeaShell cards third.
-	newWs := newIdeaShell cards fourth.
-	newVc := newIdeaShell cards fifth.
-	newRb := newIdeaShell cards sixth.
-	self assert: newIdeaShell currentCard identicalTo: newSb.
+	ideaShell := IdeaSpaceShell create.
+	ideaShell configureFromSavedStateString: saveString.
+	self assert: ideaShell cards size equals: 6.
+	newSb := ideaShell cards first.
+	newCb := ideaShell cards second.
+	newEb := ideaShell cards third.
+	newWs := ideaShell cards fourth.
+	newVc := ideaShell cards fifth.
+	newRb := ideaShell cards sixth.
+	self assert: ideaShell currentCard identicalTo: newSb.
 	self assert: newSb isKindOf: SystemBrowserShell.
-	self assert: newSb actualClass identicalTo: sb actualClass.
-	self assert: newSb packages equals: sb packages.
+	self assert: newSb actualClass identicalTo: false class.
+	self assert: newSb packages equals: sbPackages.
 	self assert: newCb isKindOf: ClassBrowserShell.
-	self assert: newCb actualClass identicalTo: cb actualClass.
-	self assert: newCb method identicalTo: cb method.
+	self assert: newCb actualClass identicalTo: View.
+	self assert: newCb method identicalTo: View >> #destroy.
 	self deny: (newCb getPinStateFor: 'filtersSlidey').
 	self assert: newEb isKindOf: EnvironmentBrowserShell.
-	self assert: newEb method identicalTo: eb method.
+	self assert: newEb method identicalTo: Presenter >> #createComponents.
 	self assert: newWs isKindOf: SmalltalkWorkspaceDocument.
-	self assert: newWs getDocumentData equals: ws getDocumentData.
-	self assert: newWs filename equals: ws filename.
-	self assert: newWs workspace evaluationPools equals: ws workspace evaluationPools.
-	self assert: newWs workspace evaluationPools first identicalTo: ws workspace evaluationPools first.
+	self assert: newWs getDocumentData equals: wsDocData.
+	self assert: newWs filename equals: wsFilename.
+	self assert: newWs workspace evaluationPools equals: wsPools.
+	self assert: newWs workspace evaluationPools first identicalTo: wsPools first.
 	self assert: newVc isKindOf: ViewComposer.
-	self assert: newVc resourceIdentifier equals: vc resourceIdentifier.
+	self assert: newVc resourceIdentifier equals: rid.
 	self assert: newRb isKindOf: ResourceBrowser.
-	self assert: newRb resource equals: rb resource.
-	newIdeaShell view destroy!
+	self assert: newRb resource equals: rid!
 
 testSaveRestoreEmpty
 	"Test Save and Restore an empty IdeaSpace"
