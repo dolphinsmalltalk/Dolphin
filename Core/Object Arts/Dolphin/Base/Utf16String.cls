@@ -27,10 +27,14 @@ To better understand the full implications of the compromises made in introducin
 !Utf16String methodsFor!
 
 _beginsString: aString
-	^(CRTLibrary default
-		wcsncmp: aString asUtf16String
-		string2: self
-		count: self size) == 0!
+	| size comperand |
+	comperand := aString asUtf16String.
+	size := self size.
+	^size <= comperand size
+		and: [(CRTLibrary default
+				memcmp: comperand
+				buf2: self
+				count: size * 2) == 0]!
 
 asByteString: aClass
 	"Private - Answer a byte-string encoded <String> of the specified class containing the same characters as the receiver."

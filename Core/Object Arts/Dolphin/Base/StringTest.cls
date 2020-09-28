@@ -98,6 +98,45 @@ testBefore
 	self should: [self collectionClass empty before: $a] raise: NotFoundError.
 	self should: [(self assimilateString: 'a') before: $b] raise: NotFoundError!
 
+testBeginsWithEmbeddedNulls
+	| empty null poundB |
+	empty := self collectionClass empty.
+	null := self newCollection: #($\0).
+	self assert: (null beginsWith: null).
+	self deny: (empty beginsWith: null).
+	poundB := self newCollection: #($£ $\0 $b).
+	{poundB asAnsiString. poundB asUtf8String. poundB asUtf16String} do: 
+			[:each |
+			| double |
+			self assert: (poundB beginsWith: each).
+			double := self assimilateString: poundB , poundB.
+			self assert: (double occurrencesOf: $\0) equals: 2.
+			self assert: (double beginsWith: each).
+			self deny: ((self newCollection: #($a)) , poundB beginsWith: each)]!
+
+testBeginsWithMixedEncodings
+	| empty a ab b abc ad |
+	empty := self collectionClass empty.
+	a := self newCollection: #($a).
+	ab := self newCollection: #($a $£).
+	b := self newCollection: #($b).
+	abc := self newCollection: #($a $£ $c).
+	ad := self newCollection: #($a $d).
+	{$a asAnsiString. $a asUtf8String. $a asUtf16String} do: 
+			[:each |
+			self deny: (empty beginsWith: each).
+			self assert: (a beginsWith: a).
+			self assert: (ab beginsWith: a).
+			self deny: (b beginsWith: a)].
+	{'a£' asAnsiString. 'a£' asUtf8String. 'a£' asUtf16String} do: 
+			[:each |
+			self deny: (empty beginsWith: each).
+			self deny: (a beginsWith: each).
+			self assert: (ab beginsWith: each).
+			self assert: (abc beginsWith: each).
+			self deny: (b beginsWith: each).
+			self deny: (ad beginsWith: each)]!
+
 testCapitalized
 	| string cap |
 	string := self collectionClass empty.
@@ -921,6 +960,8 @@ withAllTestCases
 !StringTest categoriesFor: #testAsByteArray!public!unit tests! !
 !StringTest categoriesFor: #testAt!public!unit tests! !
 !StringTest categoriesFor: #testBefore!public!unit tests! !
+!StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
+!StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
 !StringTest categoriesFor: #testCapitalized!public!unit tests! !
 !StringTest categoriesFor: #testCaseConversions!public!unit tests! !
 !StringTest categoriesFor: #testClassFromAddress!public!unit tests! !

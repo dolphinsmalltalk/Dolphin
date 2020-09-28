@@ -27,10 +27,14 @@ To better understand the full implications of the compromises made in introducin
 !Utf8String methodsFor!
 
 _beginsString: aString
-	^(CRTLibrary default
-		strncmp: aString asUtf8String
-		string2: self
-		count: self size) == 0!
+	| size comperand |
+	comperand := aString asUtf8String.
+	size := self size.
+	^size <= comperand size
+		and: [(CRTLibrary default
+				memcmp: comperand
+				buf2: self
+				count: size) == 0]!
 
 asLowercase
 	"Answer a <readableString> which is a copy of the receiver but with the contents converted
