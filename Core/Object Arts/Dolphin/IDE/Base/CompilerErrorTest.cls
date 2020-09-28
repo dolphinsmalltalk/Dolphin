@@ -75,10 +75,17 @@ tempWarningRangeIn: aString
 		ifFalse: [^start + 2 to: (aString lastIndexOf: $$) - 2]!
 
 testErrorsBadContext
-	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
-	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."
+	"Compiler requires that allInstVarNames returns an array of strings. If it doesn't it reports CErrBadContext."
 
-	CErrBadContext!
+	| anon source |
+	anon := self class newAnonymousSubclass.
+	anon class basicCompile: 'allInstVarNames ^#bad'.
+	source := 'wibble: arg'.
+	self
+		parseMethodError: source
+		in: anon
+		range: (1 to: source size)
+		code: CErrBadContext!
 
 testErrorsBadPools
 	| source |
