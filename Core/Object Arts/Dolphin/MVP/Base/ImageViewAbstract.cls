@@ -138,11 +138,6 @@ insets: aRectangle
 	insets := aRectangle = Rectangle new ifFalse: [aRectangle].
 	self invalidateLayout; invalidate!
 
-invalidateOnResize
-	"Private - ImageViews are not Windows controls, they are normal Dolphin windows. They do not require a hard invalidate on resize as they will repaint correctly anyway."
-
-	^false!
-
 invalidateRect: aRectangle erase: aBoolean 
 	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
@@ -314,7 +309,6 @@ wmPrintClient: message wParam: wParam lParam: lParam
 !ImageViewAbstract categoriesFor: #initialize!initializing!private! !
 !ImageViewAbstract categoriesFor: #insets!accessing!public! !
 !ImageViewAbstract categoriesFor: #insets:!accessing!public! !
-!ImageViewAbstract categoriesFor: #invalidateOnResize!private!testing! !
 !ImageViewAbstract categoriesFor: #invalidateRect:erase:!drawing!public! !
 !ImageViewAbstract categoriesFor: #isDoubleBuffered!public!testing! !
 !ImageViewAbstract categoriesFor: #isDoubleBuffered:!accessing!public! !

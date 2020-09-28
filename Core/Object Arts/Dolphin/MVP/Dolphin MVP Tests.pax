@@ -27,6 +27,9 @@ package classNames
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #IconTest;
+	add: #ImageListViewTest;
+	add: #ImageViewAbstractTest;
+	add: #ImageViewTest;
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
@@ -99,6 +102,7 @@ package setPrerequisites: #(
 	'Dialogs\Common\Dolphin Common Dialogs'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
+	'Presenters\Image\Dolphin Image Presenter'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
 	'Presenters\List\Dolphin List Presenter'
@@ -326,6 +330,11 @@ PresenterTest subclass: #DifferencesPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+PresenterTest subclass: #ImageViewAbstractTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 PresenterTest subclass: #LinkButtonTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -377,6 +386,16 @@ MultilineTextEditTest subclass: #RichTextEditTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEditTest subclass: #ScintillaViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ImageViewAbstractTest subclass: #ImageListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
