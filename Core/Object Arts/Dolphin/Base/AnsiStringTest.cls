@@ -44,6 +44,19 @@ testAsPhrase
 	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase
 		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
 
+testBeginsWithIgnoreCase
+	| subject comperand pound |
+	pound := Character value: 163.
+	subject := self newCollection: {$a. $\0. $£. $b. $c}.
+	self assert: (subject beginsWith: subject ignoreCase: true).
+	self assert: (subject beginsWith: subject ignoreCase: false).
+	comperand := self newCollection: {$A. $\0. pound}.
+	self assert: (subject beginsWith: comperand ignoreCase: true).
+	self deny: (subject beginsWith: comperand ignoreCase: false).
+	comperand := self newCollection: {$A. $\0. $b. pound}.
+	self deny: (subject beginsWith: comperand ignoreCase: false).
+	self deny: (subject beginsWith: comperand ignoreCase: true)!
+
 testClassWith
 	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
 	self assert: (AnsiString with: Character replacement)
@@ -109,6 +122,7 @@ testMatch
 !AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
 !AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
+!AnsiStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
 !AnsiStringTest categoriesFor: #testClassWith!public! !
 !AnsiStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
 !AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !

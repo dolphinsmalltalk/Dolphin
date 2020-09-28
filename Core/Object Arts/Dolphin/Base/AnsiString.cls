@@ -16,10 +16,14 @@ In all but limited circumstances `Utf8String`s should be used in preference as t
 !AnsiString methodsFor!
 
 _beginsString: aString
-	^(CRTLibrary default
-		strncmp: aString asAnsiString
-		string2: self
-		count: self size) == 0!
+	| size comperand |
+	comperand := aString asAnsiString.
+	size := self size.
+	^size <= comperand size
+		and: [(CRTLibrary default
+				memcmp: comperand
+				buf2: self
+				count: size) == 0]!
 
 asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
@@ -48,24 +52,6 @@ asUppercase
 	copy := self shallowCopy.
 	UserLibrary default charUpperBuffA: copy cchLength: copy size.
 	^copy!
-
-beginsWith: aString ignoreCase: aBoolean
-	"Answer whether the receiver starts with the characters of the argument, aString. The
-	comparison may be case sensitive or insensitive, depending on the <Boolean> argument. Note
-	that unlike #beginsWith:, the comperand must be a <String>."
-
-	^(aBoolean
-		ifTrue: 
-			[CRTLibrary default
-				_strnicmp: self
-				string2: aString
-				count: aString size]
-		ifFalse: 
-			[CRTLibrary default
-				strncmp: self
-				string2: aString
-				count: aString size])
-			== 0!
 
 copyToBuffer: anAddress ofSize: anInteger
 	CRTLibrary default
@@ -175,7 +161,6 @@ urlDecoded
 !AnsiString categoriesFor: #asAnsiString!converting!public! !
 !AnsiString categoriesFor: #asLowercase!converting!public! !
 !AnsiString categoriesFor: #asUppercase!converting!public! !
-!AnsiString categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
 !AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
 !AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
 !AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !

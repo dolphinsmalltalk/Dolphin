@@ -101,26 +101,25 @@ testAnySatisfy
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self deny: (subject anySatisfy: [:each | each isSurrogate])!
 
-testBeginsWith
-	| subject comperand pound |
-	super testBeginsWith.
-	pound := '£'.
-	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
+testBeginsWithExtended
+	| subject comperand |
+	subject := self newCollection: {Character dolphin. $a. $£. $b. $c}.
 	self assert: (subject beginsWith: Character dolphin).
 	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
 	self deny: (subject beginsWith: (Character value: 16rF0)).
 	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
 	self deny: (subject beginsWith: (Character value: 16r3D)).
-	comperand := Character dolphin asUtf8String , 'a' , pound.
+	comperand := Character dolphin asUtf8String , 'a£'.
 	self assert: (subject beginsWith: comperand).
-	comperand := Character dolphin asUtf16String , 'a' , pound.
+	comperand := Character dolphin asUtf16String , 'a£'.
 	self assert: (subject beginsWith: comperand)!
 
 testBeginsWithIgnoreCase
-	| subject comperand pound |
-	pound := String with: (Character value: 163).
-	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
-	comperand := Character dolphin asUtf8String , 'A' , pound.
+	| subject comperand |
+	subject := self newCollection: {Character dolphin. $a. $\0. $£. $b. $c}.
+	self assert: (subject beginsWith: subject ignoreCase: true).
+	self assert: (subject beginsWith: subject ignoreCase: false).
+	comperand := self newCollection: {Character dolphin. $A. $\0. $£}.
 	self assert: (subject beginsWith: comperand ignoreCase: true).
 	self deny: (subject beginsWith: comperand ignoreCase: false).
 	comperand := comperand asUtf16String.
@@ -579,7 +578,7 @@ withAllTestCases
 !UtfEncodedStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testAnyone!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testAnySatisfy!public!unit tests! !
-!UtfEncodedStringTest categoriesFor: #testBeginsWith!public!unit tests! !
+!UtfEncodedStringTest categoriesFor: #testBeginsWithExtended!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testCollect!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
