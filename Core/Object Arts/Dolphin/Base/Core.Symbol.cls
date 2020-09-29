@@ -58,6 +58,9 @@ asSymbol
 
 	^self!
 
+copyEmpty: anInteger
+	^self copyingClass new: anInteger!
+
 copyFrom: startInteger to: stopInteger
 	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
 	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
@@ -70,6 +73,13 @@ copyFrom: startInteger to: stopInteger
 		to: len
 		with: self
 		startingAt: startInteger!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Symbols are immutable identity values; we can't have a direct copy of a symbol, and neither do we necessarily want to intern slices of a symbol."
+
+	^Utf8String!
 
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
@@ -182,9 +192,9 @@ shallowCopy
 	^self!
 
 species
-	"Answer the type of String to be used in place of Symbol when making a writable copy."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types. Symbols are equal to Strings in Dolphin, but we don't want them to be considered interchangeable as Symbols have a distinctly different purpose."
 
-	^Utf8String!
+	^self class!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -196,7 +206,9 @@ stbSaveOn: anSTBOutFiler
 !Core.Symbol categoriesFor: #argumentCount!accessing!public! !
 !Core.Symbol categoriesFor: #asString!converting!public! !
 !Core.Symbol categoriesFor: #asSymbol!converting!public! !
+!Core.Symbol categoriesFor: #copyEmpty:!private! !
 !Core.Symbol categoriesFor: #copyFrom:to:!copying!public! !
+!Core.Symbol categoriesFor: #copyingClass!copying!private! !
 !Core.Symbol categoriesFor: #deepCopy!copying!public! !
 !Core.Symbol categoriesFor: #displayString!printing!public! !
 !Core.Symbol categoriesFor: #forwardTo:!operations!public! !

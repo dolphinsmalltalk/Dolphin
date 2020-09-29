@@ -22,6 +22,13 @@ copyEmpty: anInteger
 		setSpecialBehavior: self getSpecialBehavior;
 		yourself!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Generally when copying part of a weak collection we don't want a weak result."
+
+	^Set!
+
 do: operation 
 	"Evaluate monadic value argument, operation, for each of the element of the 
 	receiver. Answers the receiver.
@@ -102,12 +109,12 @@ initialize
 	self beWeak!
 
 species
-	"Answer the class of object to be used when copying the receiver. There isn't much
-	point answering <WeakSet>, as elements may expire after selection/collection, etc, 
-	which is less than useful, so we answer <Set>."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types.
+	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^Set! !
 !Core.WeakSet categoriesFor: #copyEmpty:!copying!private! !
+!Core.WeakSet categoriesFor: #copyingClass!copying!private! !
 !Core.WeakSet categoriesFor: #do:!enumerating!public! !
 !Core.WeakSet categoriesFor: #elementsExpired:!finalizing!private! !
 !Core.WeakSet categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !

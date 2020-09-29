@@ -64,6 +64,11 @@ at: index put: newElement
 	^self shouldNotImplement
 !
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Array!
+
 decodeNextFrom: aReadStream
 	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -131,6 +136,8 @@ size
 	^tally!
 
 species
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
+
 	^Array! !
 !Core.RunArray categoriesFor: #allSatisfy:!enumerating!public! !
 !Core.RunArray categoriesFor: #anySatisfy:!enumerating!public! !
@@ -138,6 +145,7 @@ species
 !Core.RunArray categoriesFor: #at:!accessing!public! !
 !Core.RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
 !Core.RunArray categoriesFor: #at:put:!accessing!public! !
+!Core.RunArray categoriesFor: #copyingClass!copying!private! !
 !Core.RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !Core.RunArray categoriesFor: #postCopy!copying!public! !
 !Core.RunArray categoriesFor: #resize:!mutating!public! !

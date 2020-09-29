@@ -11,6 +11,13 @@ Core.WeakIdentityDictionary comment: ''!
 !Core.WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !
 !Core.WeakIdentityDictionary methodsFor!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Generally when copying part of a weak collection we don't want a weak result."
+
+	^IdentityDictionary!
+
 findKeyOrNil: anObject
 	"Private - This method is a copy of IdentityDictionary>>findKeyOrNil:"
 
@@ -36,11 +43,11 @@ searchPolicy
 	^SearchPolicy identity!
 
 species
-	"Answer the class of object to be used when copying the receiver. There isn't much
-	point answering a weak collection, as elements may expire after selection/collection, etc, 
-	which is less than useful."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types.
+	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^IdentityDictionary! !
+!Core.WeakIdentityDictionary categoriesFor: #copyingClass!copying!private! !
 !Core.WeakIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !Core.WeakIdentityDictionary categoriesFor: #hash:max:!private!searching! !
 !Core.WeakIdentityDictionary categoriesFor: #keysClass!constants!public! !

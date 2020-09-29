@@ -94,11 +94,9 @@ contents
 	^collection copyFrom: 1 to: self size!
 
 contentsSpecies
-	"Private - Answer the class of Object to be used when answering collections of elements from
-	the receiver."
+	"Private - Answer the class of Object to be used when answering collections of elements from the receiver."
 
-	^collection species
-!
+	^collection copyingClass!
 
 encodedSizeOf: anObject
 	"Answer the number of units that would be occupied by anObject if it were present in this stream."

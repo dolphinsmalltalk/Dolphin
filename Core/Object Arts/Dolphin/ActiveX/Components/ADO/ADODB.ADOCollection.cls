@@ -41,6 +41,11 @@ basicFree
 
 	interface free!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Array!
+
 free
 	"Release an external resources held by the receiver."
 
@@ -76,7 +81,7 @@ size
 !
 
 species
-	"Answer the class of object to be used when copying the receiver."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array!
 
@@ -100,13 +105,14 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !ADODB.ADOCollection categoriesFor: #at:!accessing!public! !
 !ADODB.ADOCollection categoriesFor: #at:put:!accessing!public! !
 !ADODB.ADOCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
+!ADODB.ADOCollection categoriesFor: #copyingClass!copying!private! !
 !ADODB.ADOCollection categoriesFor: #free!public!realizing/unrealizing! !
 !ADODB.ADOCollection categoriesFor: #interface!accessing!public! !
 !ADODB.ADOCollection categoriesFor: #interface:!accessing!private! !
 !ADODB.ADOCollection categoriesFor: #item:!accessing!public! !
 !ADODB.ADOCollection categoriesFor: #reset!methods!public! !
 !ADODB.ADOCollection categoriesFor: #size!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #species!constants!public! !
+!ADODB.ADOCollection categoriesFor: #species!accessing!public! !
 !ADODB.ADOCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
 !ADODB.ADOCollection class methodsFor!

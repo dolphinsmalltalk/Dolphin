@@ -26,6 +26,13 @@ addAnsweringIndex: newElement
 
 	^self replaceIdentity: DeadObject current with: newElement!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Generally when copying part of a weak collection we don't want a weak result."
+
+	^Array!
+
 corpsesDo: aBlock
 	"Locate each indexable variable of the receiver which formally housed an Object
 	which has sadly expired, and pass its index to aBlock for evaluation. This
@@ -106,12 +113,12 @@ remove: oldElement ifAbsent: exceptionHandler
 			oldElement]!
 
 species
-	"Answer the kind of Collection that should result from enumerations such as #collect:
-	and #select: when applied against the receiver"
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail)."
 
 	^Array! !
 !Core.WeakArray categoriesFor: #add:!adding!public! !
 !Core.WeakArray categoriesFor: #addAnsweringIndex:!adding!public! !
+!Core.WeakArray categoriesFor: #copyingClass!copying!private! !
 !Core.WeakArray categoriesFor: #corpsesDo:!enumerating!public! !
 !Core.WeakArray categoriesFor: #initialize!initializing!public! !
 !Core.WeakArray categoriesFor: #nilCorpsesAndDo:!enumerating!public! !

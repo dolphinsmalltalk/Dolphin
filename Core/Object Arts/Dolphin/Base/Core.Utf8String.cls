@@ -403,7 +403,7 @@ reversedFrom: startInteger to: stopInteger
 
 	| reversed i j size |
 	j := size := stopInteger - startInteger + 1.
-	reversed := self species new: size.
+	reversed := self copyingClass new: size.
 	i := startInteger.
 	[i <= stopInteger] whileTrue: 
 			[| ch |

@@ -143,6 +143,7 @@ package setMethodNames: #(
 	#(#{OS.CRTLibrary} #sqrt:)
 	#(#{OS.CRTLibrary} #strcat:strSource:)
 	#(#{OS.CRTLibrary} #strerror:)
+	#(#{OS.CRTLibrary} #strncmp:string2:count:)
 	#(#{OS.CRTLibrary} #strncpy:strSource:count:)
 	#(#{OS.CRTLibrary} #tan:)
 	#(#{OS.CRTLibrary} #thread_chmod:pmode:)
@@ -1108,6 +1109,11 @@ strerror: errno
 	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall: _failureCode!
 
+strncmp: string1 string2: string2 count: count
+	<cdecl: sdword strncmp lpstr lpstr intptr>
+	#deprecated.	"Smalltalk strings can contain embedded nulls, so CRT string processing functions are not as useful as they might be."
+	^self invalidCall: _failureCode!
+
 strncpy: strDest strSource: strSource count: count
 	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
@@ -1175,6 +1181,7 @@ thread_errno
 !OS.CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !OS.CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
 !OS.CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !

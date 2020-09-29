@@ -169,9 +169,8 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	^aByteObject!
 
 species
-	"Answer the preferred class of the receiver - not always the same as the
-	answer to #class (in this case the species of GUID and its subclasses 
-	is always GUID)."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types.
+	In this case the species of GUID and its subclasses is always GUID."
 
 	^GUID!
 

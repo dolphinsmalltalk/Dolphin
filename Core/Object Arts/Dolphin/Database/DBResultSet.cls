@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #DBResultSet
+Core.SequenceableCollection subclass: #DBResultSet
 	instanceVariableNames: 'statement buffer columns'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCRetCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBResultSet guid: (GUID fromString: '{87b4c512-026e-11d3-9fd7-00a0cc3e4a32}')!
+DBResultSet guid: (Core.GUID fromString: '{87b4c512-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBResultSet comment: 'A DBResultSet represents the results of a <DBStatement>. This provides access to a number of rows which are instances of <DBRow> or one of its subclasses. You can navigate around the rows using #first, #next, #last and #prev. You can also access rows by their integer index in the set using #at:.
 
 Instance Variables:
@@ -145,8 +145,7 @@ copyEmpty: anInteger
 	number of elements.
 	Implementation Note: We cannot copy result sets, so answer an <OrderedCollection>."
 
-	^self copyLike: anInteger
-!
+	^self copyingClass new: anInteger!
 
 copyFrom: start
 	"Answer a copy of a subset of the receiver which starts with its element at Integer 
@@ -157,6 +156,16 @@ copyFrom: start
 	answer := self copyLike.
 	self from: start do: [:e | answer addLast: e].
 	^answer!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Although the receiver is not extensible, when copying it helps to create an extensible collection to avoid the necessity of pre-calculating the size, and therefore we choose OrderedCollection."
+
+	^OrderedCollection!
+
+copyLike
+	^self copyingClass new: self approxSize!
 
 copySize
 	"Private - Answer the size of empty copy to create when performing various
@@ -475,7 +484,7 @@ select: discriminator
 	and the Collection implementation does not work for OrderedCollections."
 
 	| newCollection |
-	newCollection := self copyEmpty.
+	newCollection := self newSelection.
 	self do: [:each | (discriminator value: each) ifTrue: [newCollection add: each]].
 	^newCollection!
 
@@ -494,10 +503,7 @@ size
 	^rowCount < 0 ifTrue: [self countElements] ifFalse: [rowCount]!
 
 species
-	"Answer the species of DBResultSets.
-	Although the receiver is not extensible, when copying it helps to create an
-	extensible collection to avoid the necessity of pre-calculating the size,
-	and therefore we choose OrderedCollection."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^OrderedCollection!
 
@@ -558,6 +564,8 @@ with: otherCollection do: operation
 !DBResultSet categoriesFor: #collect:!enumerating!public! !
 !DBResultSet categoriesFor: #copyEmpty:!copying!private! !
 !DBResultSet categoriesFor: #copyFrom:!copying!public! !
+!DBResultSet categoriesFor: #copyingClass!copying!private! !
+!DBResultSet categoriesFor: #copyLike!copying!private! !
 !DBResultSet categoriesFor: #copySize!copying!private! !
 !DBResultSet categoriesFor: #copyWith:!copying!public! !
 !DBResultSet categoriesFor: #countElements!accessing!private! !

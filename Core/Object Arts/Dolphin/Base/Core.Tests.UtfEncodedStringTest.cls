@@ -42,7 +42,7 @@ lengthTestCases
 
 makeStringFromCodeUnits: data
 	| subject |
-	subject := self collectionClass empty species new: data size.
+	subject := self collectionClass empty copyEmpty: data size.
 	1 to: data size do: [:i | subject basicAt: i put: (data at: i)].
 	subject := self assimilateString: subject.
 	^subject!

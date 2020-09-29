@@ -41,6 +41,11 @@ asString
 
 	^self value asString!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^GUID!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -59,15 +64,14 @@ printOn: aStream
 		display: self value!
 
 species
-	"Answer the preferred class of the receiver - not always the same as the
-	answer to #class."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class."
 
 	^GUID!
 
 value
 	"Answer the <GUID> at which the receiver points."
 
-	^self species fromAddress: self!
+	^self copyingClass fromAddress: self!
 
 value: guid
 	"Set the 16-byte GUID pointed at by the receiver to the <GUID>, guid."
@@ -76,6 +80,7 @@ value: guid
 !External.REFGUID categoriesFor: #<=>!comparing!public! !
 !External.REFGUID categoriesFor: #=!comparing!public! !
 !External.REFGUID categoriesFor: #asString!converting!public! !
+!External.REFGUID categoriesFor: #copyingClass!copying!private! !
 !External.REFGUID categoriesFor: #displayOn:!printing!public! !
 !External.REFGUID categoriesFor: #hash!comparing!public! !
 !External.REFGUID categoriesFor: #printOn:!printing!public! !

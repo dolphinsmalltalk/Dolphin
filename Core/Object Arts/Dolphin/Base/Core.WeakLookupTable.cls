@@ -23,6 +23,13 @@ copyEmpty: anInteger
 	answer basicValues setSpecialBehavior: self basicValues getSpecialBehavior.
 	^answer!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Generally when copying part of a weak collection we don't want a weak result."
+
+	^LookupTable!
+
 do: operation
 	"Evaluate monadic value argument, operation, for each of the elements (values) of the 
 	receiver. Answers the receiver.
@@ -192,13 +199,6 @@ postResize: oldMe
 
 	self basicValues pathologist: self!
 
-species
-	"Answer the class of object to be used when copying the receiver. There isn't much
-	point answering a weak collection, as elements may expire after selection/collection, etc, 
-	which is less than useful."
-
-	^LookupTable!
-
 valuesClass
 	"Answer the class of Collection to use to hold the values of the receiver's elements
 	(N.B. This is a different concept from #keysClass, which is used for copying the keys of 
@@ -208,6 +208,7 @@ valuesClass
 
 	^MourningWeakArray! !
 !Core.WeakLookupTable categoriesFor: #copyEmpty:!copying!private! !
+!Core.WeakLookupTable categoriesFor: #copyingClass!copying!private! !
 !Core.WeakLookupTable categoriesFor: #do:!enumerating!public! !
 !Core.WeakLookupTable categoriesFor: #elementsExpired:!finalizing!private! !
 !Core.WeakLookupTable categoriesFor: #elementsExpired:of:!finalizing!private! !
@@ -222,7 +223,6 @@ valuesClass
 !Core.WeakLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !Core.WeakLookupTable categoriesFor: #keysDo:!enumerating!public! !
 !Core.WeakLookupTable categoriesFor: #postResize:!adding!private! !
-!Core.WeakLookupTable categoriesFor: #species!accessing!public! !
 !Core.WeakLookupTable categoriesFor: #valuesClass!constants!public! !
 
 !Core.WeakLookupTable class methodsFor!

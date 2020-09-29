@@ -355,16 +355,6 @@ strlen: aString
 	<cdecl: sdword strlen lpvoid>
 	^self invalidCall: _failureCode!
 
-strncmp: string1 string2: string2 count: count
-	"Answer the order between the <String> arguments, string1 and string2,
-	considering up to <integer>, count, characters.
-
-		int strncmp( const char *string1, const char *string2, size_t count );
-	"
-
-	<cdecl: sdword strncmp lpstr lpstr intptr>
-	^self invalidCall: _failureCode!
-
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
 	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall: _failureCode!
@@ -472,7 +462,6 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !OS.CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strlen:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !

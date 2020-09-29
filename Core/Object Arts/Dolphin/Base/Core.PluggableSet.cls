@@ -21,6 +21,13 @@ copyEmpty: anInteger
 
 	^(super copyEmpty: anInteger) setSearchPolicy: self searchPolicy!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"As the transformations performed when copying can be arbitrary, we revert to a generic <Set>"
+
+	^Set!
+
 findElementOrNil: anObject
 	"Private - Answer the index of the given object in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which the object hashes.
@@ -73,13 +80,9 @@ setSearchPolicy: aSearchPolicy
 	"Private - Set the receiver's <searchPolicy>. Answer the receiver."
 
 	searchPolicy := aSearchPolicy.
-	^self!
-
-species
-	"Answer the class of object to be used when copying the receiver with #collect:, etc."
-
-	^Set! !
+	^self! !
 !Core.PluggableSet categoriesFor: #copyEmpty:!copying!private! !
+!Core.PluggableSet categoriesFor: #copyingClass!copying!private! !
 !Core.PluggableSet categoriesFor: #findElementOrNil:!private!searching! !
 !Core.PluggableSet categoriesFor: #hash:max:!private!searching! !
 !Core.PluggableSet categoriesFor: #initialize!initializing!private! !
@@ -88,7 +91,6 @@ species
 !Core.PluggableSet categoriesFor: #searchPolicy!accessing!public! !
 !Core.PluggableSet categoriesFor: #searchPolicy:!accessing!public! !
 !Core.PluggableSet categoriesFor: #setSearchPolicy:!accessing!private! !
-!Core.PluggableSet categoriesFor: #species!constants!public! !
 
 !Core.PluggableSet class methodsFor!
 

@@ -215,7 +215,7 @@ asPhrase
 	The word boundaries are identified by colons (i.e. keywords) and capital letters."
 
 	| stream last |
-	stream := self species writeStream: self size + 10.
+	stream := self copyingClass writeStream: self size + 10.
 	self do: 
 			[:each |
 			last isNil
@@ -390,7 +390,7 @@ capitalized
 	| size write read |
 	size := self size.
 	size == 0 ifTrue: [^self].
-	write := self species writeStream: size.
+	write := self copyingClass writeStream: size.
 	read := self readStream.
 	write nextPut: read next asUppercase.
 	write nextPutAll: read upToEnd.
@@ -428,7 +428,7 @@ decodeNextAvailable: anInteger from: aReadStream
 	many as are available before the end of stream."
 
 	| newStream count next |
-	newStream := self species writeStream: (count := anInteger).
+	newStream := self copyingClass writeStream: (count := anInteger).
 	[count == 0 or: [(next := aReadStream nextAvailable) isNil]] whileFalse: 
 			[newStream nextPut: next.
 			count := count - 1].
@@ -1028,6 +1028,12 @@ skipOver: aStream ignoreCase: ignoreCase
 					^false]].
 	^true!
 
+species
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types.
+	All of the various String encodings are really just implementations of the same basic type, and all are logically sequences of Characters."
+
+	^String!
+
 split: aReadableString
 	"Answer an Array containing the substrings in aReadableString separated by the sequence of characters of the receiver."
 
@@ -1114,7 +1120,7 @@ strcspn: aString start: anInteger
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^self subclassResponsibility!
+	^OS.CRTLibrary default strlen: self!
 
 subStrings
 	"Answer an Array containing the substrings of the receiver which are separated by one or 
@@ -1123,12 +1129,11 @@ subStrings
 	| stream answer wordStream |
 	answer := OrderedCollection new.
 	stream := self readStream.
-	wordStream := self species writeStream: 10.
+	wordStream := self copyingClass writeStream: 10.
 	[stream atEnd] whileFalse: 
 			[| word next |
 			wordStream reset.
-			[stream atEnd or: [(next := stream next) isSeparator]] 
-				whileFalse: [wordStream nextPut: next].
+			[stream atEnd or: [(next := stream next) isSeparator]] whileFalse: [wordStream nextPut: next].
 			word := wordStream contents.
 			word notEmpty ifTrue: [answer add: word]].
 	^answer asArray!
@@ -1239,9 +1244,9 @@ withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
 
 	| target eol stm |
-	target := self species writeStream: self size.
+	target := self copyingClass writeStream: self size.
 	stm := self readStream.
-	eol := self species lineDelimiter.
+	eol := self copyingClass lineDelimiter.
 	stm do: 
 			[:each |
 			each == $\n
@@ -1348,6 +1353,7 @@ withNormalizedLineDelimiters
 !Core.String categoriesFor: #rightString:!copying!public! !
 !Core.String categoriesFor: #sameAs:!comparing!public! !
 !Core.String categoriesFor: #skipOver:ignoreCase:!private!searching! !
+!Core.String categoriesFor: #species!accessing!public! !
 !Core.String categoriesFor: #split:!public!tokenizing! !
 !Core.String categoriesFor: #sprintfWith:!printing!public! !
 !Core.String categoriesFor: #sprintfWith:with:!printing!public! !

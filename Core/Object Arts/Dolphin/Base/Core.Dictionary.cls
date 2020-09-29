@@ -241,8 +241,7 @@ collect: transformer
 
 	| answer |
 	answer := self copyLike.
-	self 
-		keysAndValuesDo: [:key :value | answer at: key put: (transformer value: value)].
+	self keysAndValuesDo: [:key :value | answer at: key put: (transformer value: value)].
 	^answer!
 
 copyElementsInto: newMe

@@ -58,7 +58,7 @@ at: anInteger put: anObject
 
 	^self shouldNotImplement!
 
-collect: transformer 
+collect: transformer
 	"Evaluate the <monadicValuable> argument, transformer, for each of the receiver's elements.
 	Answer a new <sequencedReadableCollection> 'like' the receiver containing the values returned 
 	by the transformer on each evaluation."
@@ -67,10 +67,16 @@ collect: transformer
 
 	| answer size |
 	size := self size.
-	answer := self copyLike: size.
-	1 to: size
-		do: [:each | answer at: each put: (transformer value: start + (step * (each - 1)))].
+	answer := self copyingClass new: size.
+	1 to: size do: [:each | answer at: each put: (transformer value: start + (step * (each - 1)))].
 	^answer!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Note that this message helps to support the ANSI protocol refinements of the sequencedReadableCollection copying messages (e.g. #copyFrom:to:) in the Interval protocol, without actually having to reimplement those messages in the Interval class."
+
+	^Array!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -173,13 +179,7 @@ size
 		ifFalse: [stop - start // step + 1]!
 
 species
-	"Answer the kind of <sequencedReadableCollection> that should result 
-	from enumerations such as #collect: and #select: when applied against 
-	the receiver.
-	Note that this message helps to support the ANSI protocol refinements
-	of the sequencedReadableCollection copying messages (e.g. #copyFrom:to:) 
-	in the Interval protocol, without actually having to reimplement those 
-	messages in the Interval class."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array!
 
@@ -239,6 +239,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !Core.Interval categoriesFor: #at:!accessing!public! !
 !Core.Interval categoriesFor: #at:put:!accessing!public! !
 !Core.Interval categoriesFor: #collect:!enumerating!public! !
+!Core.Interval categoriesFor: #copyingClass!copying!private! !
 !Core.Interval categoriesFor: #displayOn:!printing!public! !
 !Core.Interval categoriesFor: #first!accessing!public! !
 !Core.Interval categoriesFor: #hash!comparing!public! !

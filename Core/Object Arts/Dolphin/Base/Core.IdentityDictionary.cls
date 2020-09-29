@@ -40,11 +40,17 @@ keysClass
 searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
-	^SearchPolicy identity! !
+	^SearchPolicy identity!
+
+species
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
+
+	^IdentityDictionary! !
 !Core.IdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !Core.IdentityDictionary categoriesFor: #hash:max:!private!searching! !
 !Core.IdentityDictionary categoriesFor: #keysClass!constants!public! !
 !Core.IdentityDictionary categoriesFor: #searchPolicy!constants!public! !
+!Core.IdentityDictionary categoriesFor: #species!accessing!public! !
 
 Core.IdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

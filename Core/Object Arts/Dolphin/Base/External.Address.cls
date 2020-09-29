@@ -83,7 +83,7 @@ copyFrom: startInteger to: stopInteger
 
 	| len |
 	len := stopInteger - startInteger + 1.
-	^(self species new: len)
+	^(self copyingClass new: len)
 		replaceFrom: 1
 		to: len
 		with: self

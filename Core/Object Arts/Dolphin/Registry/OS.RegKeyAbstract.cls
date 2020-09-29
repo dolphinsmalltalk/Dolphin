@@ -90,6 +90,11 @@ basicRealize
 				ifTrue: [self errorNotFound: self]
 				ifFalse: [self registryLibrary systemError: dwErr]]!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Dictionary!
+
 createKey: subPath
 	"Create or open a registry key under the receiver with the specified
 	<string> relative path from here (note that this implies that more than one level can
@@ -497,14 +502,6 @@ size
 
 	^self subclassResponsibility!
 
-species
-	"Answer the class of object to be used when copying the receiver. 
-	We override to answer <Dictionary>, since any collection of registry keys
-	constructed by select:/collect: &c is no longer directly related to the actual
-	registry hierarchy."
-
-	^Dictionary!
-
 splitPath: path
 	| stem lastSlash superPath |
 	lastSlash := path lastIndexOf: $\.
@@ -760,6 +757,7 @@ valueFromObject: value
 !OS.RegKeyAbstract categoriesFor: #at:put:!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #basicFree!private!realizing/unrealizing! !
 !OS.RegKeyAbstract categoriesFor: #basicRealize!private!realizing/unrealizing! !
+!OS.RegKeyAbstract categoriesFor: #copyingClass!copying!private! !
 !OS.RegKeyAbstract categoriesFor: #createKey:!adding!public! !
 !OS.RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
 !OS.RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
@@ -803,7 +801,6 @@ valueFromObject: value
 !OS.RegKeyAbstract categoriesFor: #sam:!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #shrink!mutating!public! !
 !OS.RegKeyAbstract categoriesFor: #size!accessing!public! !
-!OS.RegKeyAbstract categoriesFor: #species!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #splitPath:!helpers!private! !
 !OS.RegKeyAbstract categoriesFor: #subKeyClass!constants!private! !
 !OS.RegKeyAbstract categoriesFor: #subKeyNamesDo:!enumerating!private! !

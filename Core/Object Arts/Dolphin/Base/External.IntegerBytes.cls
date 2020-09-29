@@ -46,6 +46,11 @@ clear
 
 	self value: 0!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^ByteArray!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -75,11 +80,6 @@ printOn: aStream
 		nextPut: $(; display: self; nextPut: $)
 !
 
-species
-	"Answer the class of object to be used when copying the contents of the receiver."
-
-	^ByteArray!
-
 value
 	"Answer the 32-bit unsigned <integer> value stored in the receiver."
 
@@ -94,11 +94,11 @@ value: anObject
 !External.IntegerBytes categoriesFor: #asUIntPtr!converting!public! !
 !External.IntegerBytes categoriesFor: #byteSize!accessing!public! !
 !External.IntegerBytes categoriesFor: #clear!initializing!public! !
+!External.IntegerBytes categoriesFor: #copyingClass!copying!private! !
 !External.IntegerBytes categoriesFor: #displayOn:!displaying!public! !
 !External.IntegerBytes categoriesFor: #hash!comparing!public! !
 !External.IntegerBytes categoriesFor: #isNull!public!testing! !
 !External.IntegerBytes categoriesFor: #printOn:!printing!public! !
-!External.IntegerBytes categoriesFor: #species!constants!public! !
 !External.IntegerBytes categoriesFor: #value!accessing!public! !
 !External.IntegerBytes categoriesFor: #value:!accessing!public! !
 

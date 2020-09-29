@@ -1286,10 +1286,8 @@ size
 	^self primitiveFailed: _failureCode!
 
 species
-	"Answer the preferred class of the receiver - not always the same as the
-	answer to #class (although this implementation uses the class primitive, which
-	should not fail). Used, for example, by Collections to determine what type of Collection
-	should result from the enumeration messages #collect:, #select:, and #reject:"
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). 
+	Precisely what 'species' means is rather vaguely defined and perhaps for that reason it has been overused in the past, for example to determine the class of object to return from collection transformation messages. We can say that two classes are of the same species if they can be used interchangeably, although even that depends on the particular point of view. Two objects are really only completely interchangeable in Smalltalk when they define an equivalent behavioural interface, but there may be more limited circumstances where they can be considered to be of the same type. One such case, and perhaps the only legitimate use of `species` is in determining whether two objects are comparable."
 
 	<primitive: 111>
 	^self primitiveFailed: _failureCode!

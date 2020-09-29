@@ -23,6 +23,13 @@ copyEmpty: anInteger
 
 	^(super copyEmpty: anInteger) setSearchPolicy: self searchPolicy!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"As the transformations performed when copying can be arbitrary, we revert to a generic LookupTable."
+
+	^LookupTable!
+
 findKeyOrNil: anObject
 	"Private - Answer the <integer> index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which 
@@ -74,13 +81,9 @@ setSearchPolicy: policy
 	"Private - Set the receiver's <searchPolicy>. Answer the receiver."
 
 	searchPolicy := policy.
-	^self!
-
-species
-	"Answer the class of object to be used when copying the receiver with #collect:, etc."
-
-	^LookupTable! !
+	^self! !
 !Core.PluggableLookupTable categoriesFor: #copyEmpty:!copying!private! !
+!Core.PluggableLookupTable categoriesFor: #copyingClass!copying!private! !
 !Core.PluggableLookupTable categoriesFor: #findKeyOrNil:!private!searching! !
 !Core.PluggableLookupTable categoriesFor: #hash:max:!private!searching! !
 !Core.PluggableLookupTable categoriesFor: #initialize!initializing!private! !
@@ -89,7 +92,6 @@ species
 !Core.PluggableLookupTable categoriesFor: #searchPolicy!accessing!public! !
 !Core.PluggableLookupTable categoriesFor: #searchPolicy:!accessing!public! !
 !Core.PluggableLookupTable categoriesFor: #setSearchPolicy:!accessing!private! !
-!Core.PluggableLookupTable categoriesFor: #species!constants!public! !
 
 !Core.PluggableLookupTable class methodsFor!
 

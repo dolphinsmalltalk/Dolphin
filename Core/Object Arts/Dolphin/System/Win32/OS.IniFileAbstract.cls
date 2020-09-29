@@ -94,6 +94,14 @@ collect: aMonadicValuable
 	self keysAndValuesDo: [:key :value | answer at: key put: (aMonadicValuable value: value)].
 	^answer!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^LookupTable!
+
+copyLike
+	^self copyingClass new: self approxSize!
+
 copySize
 	"Private - Answer the size of empty copy to create when performing various
 	copying/collecting transformations against the receiver. Can be overridden
@@ -234,11 +242,6 @@ select: discriminator
 		keysAndValuesDo: [:k :v | (discriminator value: v) ifTrue: [answer at: k put: v]].
 	^answer!
 
-species
-	"Answer the preferred class of the receiver for returning the results of projections, etc."
-
-	^LookupTable!
-
 values
 	"Answer a <seequencedReadableCollection> containing the receiver's values."
 
@@ -257,6 +260,8 @@ values
 !OS.IniFileAbstract categoriesFor: #at:ifAbsentPut:!accessing!public! !
 !OS.IniFileAbstract categoriesFor: #at:put:!adding!public! !
 !OS.IniFileAbstract categoriesFor: #collect:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #copyingClass!copying!private! !
+!OS.IniFileAbstract categoriesFor: #copyLike!copying!private! !
 !OS.IniFileAbstract categoriesFor: #copySize!copying!private! !
 !OS.IniFileAbstract categoriesFor: #countElements!accessing!private! !
 !OS.IniFileAbstract categoriesFor: #do:!enumerating!public! !
@@ -278,7 +283,6 @@ values
 !OS.IniFileAbstract categoriesFor: #removeKey:!public!removing! !
 !OS.IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !OS.IniFileAbstract categoriesFor: #select:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #species!accessing!public! !
 !OS.IniFileAbstract categoriesFor: #values!accessing!public! !
 
 OS.IniFileAbstract methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!

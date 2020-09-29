@@ -101,6 +101,11 @@ beUnsorted
 	list := newList
 !
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^OrderedCollection!
+
 from: anInteger keysAndValuesDo: operation 
 	"Evaluate the <dyadicValuable>, operation, for each element of the receiver starting with
 	the element at the specified <integer> index. A <BoundsError> will be raised if either the
@@ -292,7 +297,7 @@ sortAlgorithmClass
 	^MergesortAlgorithm!
 
 species
-	"Answer the class of object to be used when copying the receiver."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^OrderedCollection!
 
@@ -311,6 +316,7 @@ stbSaveOn: anSTBOutFiler
 !UI.ListModel categoriesFor: #beSorted!public!sorting! !
 !UI.ListModel categoriesFor: #beSorted:!public!sorting! !
 !UI.ListModel categoriesFor: #beUnsorted!public!sorting! !
+!UI.ListModel categoriesFor: #copyingClass!copying!private! !
 !UI.ListModel categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
 !UI.ListModel categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
 !UI.ListModel categoriesFor: #getEvents!events!private! !

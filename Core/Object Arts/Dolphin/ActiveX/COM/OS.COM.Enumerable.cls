@@ -60,11 +60,18 @@ collect: transformer
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver (which must be of the exact same class
-	not just the same #species), with sufficient capacity for anInteger number of elements.
-	Implementation Note: This is not possible for an OLEEnumerator, so answer an empty 
-	<OrderedCollection>"
+	not the copy-class), with sufficient capacity for anInteger number of elements."
 
-	^self species new: anInteger!
+	"Implementation Note: This is not possible for an OLEEnumerator, so answer an empty <OrderedCollection>"
+
+	^self copyingClass new: anInteger!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"For an OLEEnumerator, we copy to an appropriate Smalltalk class (Array because OLEEnumerators are fixed in size and typically static)."
+
+	^Array!
 
 copySize
 	"Private - Answer the size of empty copy to create when performing various
@@ -120,9 +127,7 @@ keysAndValuesDo: operation
 	interface do: [:elem | operation value: (index := index + 1) value: elem]!
 
 species
-	"Answer the class of object to be used when copying the receiver.
-	For an OLEEnumerator, we copy to an appropriate Smalltalk class
-	(Array because OLEEnumerators are fixed in size and typically static)."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array! !
 !OS.COM.Enumerable categoriesFor: #add:!adding!public! !
@@ -132,13 +137,14 @@ species
 !OS.COM.Enumerable categoriesFor: #basicFree!private!realizing/unrealizing! !
 !OS.COM.Enumerable categoriesFor: #collect:!enumerating!public! !
 !OS.COM.Enumerable categoriesFor: #copyEmpty:!copying!private! !
+!OS.COM.Enumerable categoriesFor: #copyingClass!copying!private! !
 !OS.COM.Enumerable categoriesFor: #copySize!copying!private! !
 !OS.COM.Enumerable categoriesFor: #free!public!realizing/unrealizing! !
 !OS.COM.Enumerable categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
 !OS.COM.Enumerable categoriesFor: #growSize!accessing!private! !
 !OS.COM.Enumerable categoriesFor: #interface:!accessing!private! !
 !OS.COM.Enumerable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OS.COM.Enumerable categoriesFor: #species!constants!public! !
+!OS.COM.Enumerable categoriesFor: #species!accessing!public! !
 
 !OS.COM.Enumerable class methodsFor!
 

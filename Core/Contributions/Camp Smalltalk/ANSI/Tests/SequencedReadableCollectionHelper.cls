@@ -3,10 +3,10 @@
 TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequencedReadableCollectionHelper guid: (GUID fromString: '{739ae9ac-703e-451d-8fda-64b1e591215d}')!
+SequencedReadableCollectionHelper guid: (Core.GUID fromString: '{739ae9ac-703e-451d-8fda-64b1e591215d}')!
 SequencedReadableCollectionHelper comment: ''!
 !SequencedReadableCollectionHelper categoriesForClass!Unclassified! !
 !SequencedReadableCollectionHelper methodsFor!
@@ -18,7 +18,7 @@ canonicalObjects
 "answer a dictionary of subsequences of the canonical object"
 	| can cl |
 	can := testCase canonicalObject.
-	cl := can species. 
+	cl := can copyingClass. 
 	^(Dictionary new) at: #a put: (cl with: (can at: 1));
 		at: #b put: (cl with: (can at: 2));
 		at: #c put: (cl with: (can at: 3));

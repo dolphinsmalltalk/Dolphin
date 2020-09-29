@@ -271,6 +271,12 @@ select: discriminator
 		keysAndValuesDo: [:k :v | (discriminator value: v) ifTrue: [answer at: k put: v]].
 	^answer!
 
+species
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types.
+	Weak types are generally considered as of the same species as their equivalent strong type."
+
+	^LookupTable!
+
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
@@ -328,6 +334,7 @@ valuesClass
 !Core.LookupTable categoriesFor: #postCopy!copying!public! !
 !Core.LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !Core.LookupTable categoriesFor: #select:!enumerating!public! !
+!Core.LookupTable categoriesFor: #species!accessing!public! !
 !Core.LookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
 !Core.LookupTable categoriesFor: #uncheckedAdd:!adding!private! !
 !Core.LookupTable categoriesFor: #uncheckedAt:put:!accessing!private! !

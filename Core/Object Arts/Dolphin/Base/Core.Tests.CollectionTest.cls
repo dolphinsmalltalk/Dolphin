@@ -125,7 +125,6 @@ testDistinct
 			| testSubject |
 			testSubject := self newCollection: array.
 			result := testSubject distinct.
-			self assert: testSubject species equals: result species.
 			self assert: testSubject asSet size equals: result size.
 			self assert: (result noDifference: testSubject asSet).
 			(result class conformsToProtocol: #sequencedReadableCollection)

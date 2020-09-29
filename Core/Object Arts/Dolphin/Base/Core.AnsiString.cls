@@ -96,7 +96,7 @@ first: anInteger
 	efficiently."
 
 	^self
-		replaceBytesOf: (self species new: anInteger)
+		replaceBytesOf: (self class new: anInteger)
 		from: 1
 		to: anInteger
 		startingAt: 1!
@@ -126,17 +126,12 @@ skipEncodingMarkerFrom: aGettableStream
 
 	!
 
-strlen
-	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
-
-	^OS.CRTLibrary default strlen: self!
-
 trimNulls
-	"Answer a copy of the receiver with trailing nulls removed.
-	Take advantage of some private knowledge about the implementation of
-	#fromAddress:"
+	"Answer a copy of the receiver with trailing nulls removed."
+	
+	"Take advantage of some private knowledge about the implementation of #fromAddress:"
 
-	^self species fromAddress: self yourAddress!
+	^self class fromAddress: self yourAddress!
 
 urlDecoded
 	"Asuming that receiver is a URI-encoded representation of a UTF-8 encoded original as
@@ -182,7 +177,6 @@ urlDecoded
 !Core.AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !Core.AnsiString categoriesFor: #reverse!copying!public! !
 !Core.AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #strlen!accessing!private! !
 !Core.AnsiString categoriesFor: #trimNulls!copying!public! !
 !Core.AnsiString categoriesFor: #urlDecoded!operations!public! !
 

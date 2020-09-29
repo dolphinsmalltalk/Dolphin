@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #DOMNodeList
+Core.SequenceableCollection subclass: #DOMNodeList
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOMNodeList guid: (GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
+DOMNodeList guid: (Core.GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
 DOMNodeList comment: 'DOMNodeList is a <sequencedReadableCollection> wrapper around the MSXML <IXMLDOMNodeList> interface. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like an array). 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
 
@@ -37,6 +37,11 @@ basicFree
 	"Private - Release any external resources held by the receiver."
 
 	interface free!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Array!
 
 free
 	"Release an external resources held by the receiver."
@@ -83,7 +88,7 @@ size
 	^self length!
 
 species
-	"Answer the class of object to be used when copying the receiver."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array!
 
@@ -98,6 +103,7 @@ xml
 !DOMNodeList categoriesFor: #at:!accessing!public! !
 !DOMNodeList categoriesFor: #at:put:!accessing!public! !
 !DOMNodeList categoriesFor: #basicFree!private!realizing/unrealizing! !
+!DOMNodeList categoriesFor: #copyingClass!copying!private! !
 !DOMNodeList categoriesFor: #free!public!realizing/unrealizing! !
 !DOMNodeList categoriesFor: #interface!accessing!private! !
 !DOMNodeList categoriesFor: #interface:!accessing!private! !
@@ -106,7 +112,7 @@ xml
 !DOMNodeList categoriesFor: #nextNode!methods!public! !
 !DOMNodeList categoriesFor: #reset!methods!public! !
 !DOMNodeList categoriesFor: #size!accessing!public! !
-!DOMNodeList categoriesFor: #species!constants!public! !
+!DOMNodeList categoriesFor: #species!accessing!public! !
 !DOMNodeList categoriesFor: #xml!accessing!public! !
 
 !DOMNodeList class methodsFor!

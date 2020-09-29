@@ -105,6 +105,11 @@ copy
 
 	^self deepCopy!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Utf16String!
+
 deepCopy
 	"Answer a 'deep copy' of the receiver. The 'deep copy' is a clone of the receiver,
 	sharing only those parts which cannot be copied (e.g. classes, nil, true, false, 
@@ -183,6 +188,7 @@ value: newValue
 !OS.COM.BSTR categoriesFor: #basicFree!private!realizing/unrealizing! !
 !OS.COM.BSTR categoriesFor: #byteSize!accessing!public! !
 !OS.COM.BSTR categoriesFor: #copy!copying!public! !
+!OS.COM.BSTR categoriesFor: #copyingClass!copying!private! !
 !OS.COM.BSTR categoriesFor: #deepCopy!copying!public! !
 !OS.COM.BSTR categoriesFor: #displayOn:!printing!public! !
 !OS.COM.BSTR categoriesFor: #free!private!realizing/unrealizing! !

@@ -132,7 +132,7 @@ collect: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, transformer, for each of <Character> elements of the receiver, answering a new <String> consisting of the <Character>s returned by the transformation."
 
 	| stream |
-	stream := self species writeStream: self size.
+	stream := self copyingClass writeStream: self size.
 	self codePointsDo: [:each | stream nextPut: (aMonadicValuable value: each)].
 	^stream grabContents!
 
@@ -387,7 +387,7 @@ select: aMonadicValuable
 	Answer a new <String> containing only those <Character>s for which the discriminator evaluates to true."
 
 	| stream |
-	stream := self species writeStream: self size.
+	stream := self copyingClass writeStream: self size.
 	self codePointsDo: [:each | (aMonadicValuable value: each) ifTrue: [stream nextPut: each]].
 	^stream grabContents!
 
@@ -414,6 +414,11 @@ skipEncodingMarkerFrom: aPositionableStream
 				into: preamble
 				startingAt: 1.
 			preamble = bom ifFalse: [aPositionableStream position: 0]]!
+
+strlen
+	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
+
+	^self subclassResponsibility!
 
 third
 	"Answer a <Character> representing the third code point of the receiver. Raise an exception if there are fewer than three code points in the receiver."
@@ -490,6 +495,7 @@ with: otherCollection do: aDyadicValuable
 !Core.UtfEncodedString categoriesFor: #select:!enumerating!public! !
 !Core.UtfEncodedString categoriesFor: #sixth!accessing!public! !
 !Core.UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #strlen!accessing!private! !
 !Core.UtfEncodedString categoriesFor: #third!accessing!public! !
 !Core.UtfEncodedString categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
 !Core.UtfEncodedString categoriesFor: #with:do:!enumerating!public! !

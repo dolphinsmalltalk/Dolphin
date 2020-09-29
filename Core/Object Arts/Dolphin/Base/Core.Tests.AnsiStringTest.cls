@@ -46,15 +46,14 @@ testAsPhrase
 		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
 
 testBeginsWithIgnoreCase
-	| subject comperand pound |
-	pound := Character value: 163.
+	| subject comperand |
 	subject := self newCollection: {$a. $\0. $£. $b. $c}.
 	self assert: (subject beginsWith: subject ignoreCase: true).
 	self assert: (subject beginsWith: subject ignoreCase: false).
-	comperand := self newCollection: {$A. $\0. pound}.
+	comperand := self newCollection: {$A. $\0. $£}.
 	self assert: (subject beginsWith: comperand ignoreCase: true).
 	self deny: (subject beginsWith: comperand ignoreCase: false).
-	comperand := self newCollection: {$A. $\0. $b. pound}.
+	comperand := self newCollection: {$A. $\0. $b. $£}.
 	self deny: (subject beginsWith: comperand ignoreCase: false).
 	self deny: (subject beginsWith: comperand ignoreCase: true)!
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CS ANSI Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -9,670 +9,670 @@ locator := FolderRelativeFileLocator basePath: self path.
 #(''AnsiDB.st'' ''AnsiInit.st'') do: [:each | SourceManager default fileIn: (locator localFileSpecFor: each)]'.
 
 package setClassNames: #(
-	#{AbstractDictionaryHelper}
-	#{ArrayANSITest}
-	#{ArrayFactoryANSITest}
-	#{BagANSITest}
-	#{BagFactoryANSITest}
-	#{BooleanANSITest}
-	#{ByteArrayANSITest}
-	#{ByteArrayFactoryANSITest}
-	#{CharacterANSITest}
-	#{CharacterFactoryANSITest}
-	#{CollectionHelper}
-	#{CollectionStreamHelper}
-	#{CollectionTest}
-	#{DateAndTimeANSITest}
-	#{DateAndTimeFactoryANSITest}
-	#{DictionaryANSITest}
-	#{DictionaryFactoryANSITest}
-	#{DurationANSITest}
-	#{DurationFactoryANSITest}
-	#{DyadicValuableANSITest}
-	#{ErrorANSITest}
-	#{ErrorClassANSITest}
-	#{ExceptionANSITest}
-	#{ExceptionClassANSITest}
-	#{ExceptionSetANSITest}
-	#{ExtensibleCollectionHelper}
-	#{FailedMessageANSITest}
-	#{FileStreamFactoryANSITest}
-	#{FloatANSITest}
-	#{FloatCharacterizationANSITest}
-	#{FractionANSITest}
-	#{FractionFactoryANSITest}
-	#{GettableStreamHelper}
-	#{IdentityDictionaryANSITest}
-	#{IdentityDictionaryFactoryANSITest}
-	#{IntegerANSITest}
-	#{IntervalANSITest}
-	#{IntervalFactoryANSITest}
-	#{MainTestCase}
-	#{MessageNotUnderstoodANSITest}
-	#{MessageNotUnderstoodSelectorANSITest}
-	#{MonadicBlockANSITest}
-	#{MsgParmSpec}
-	#{MsgReturnRuleSpec}
-	#{MsgReturnSpec}
-	#{NiladicBlockANSITest}
-	#{NilANSITest}
-	#{NotificationANSITest}
-	#{NotificationClassANSITest}
-	#{ObjectANSITest}
-	#{ObjectClassANSITest}
-	#{ObjectHelper}
-	#{OrderedCollectionANSITest}
-	#{OrderedCollectionFactoryANSITest}
-	#{ProtocolANYSpec}
-	#{ProtocolMsgSpec}
-	#{ProtocolSpec}
-	#{PuttableStreamHelper}
-	#{ReadableStringHelper}
-	#{ReadFileStreamANSITest}
-	#{ReadStreamANSITest}
-	#{ReadStreamFactoryANSITest}
-	#{ReadStreamHelper}
-	#{ReadWriteStreamANSITest}
-	#{ReadWriteStreamFactoryANSITest}
-	#{ScaledDecimalANSITest}
-	#{SelectorANSITest}
-	#{SequencedCollectionHelper}
-	#{SequencedContractibleCollectionHelper}
-	#{SequencedReadableCollectionHelper}
-	#{SequencedReadableCollectionTest}
-	#{SequencedStreamHelper}
-	#{SequencedStreamTest}
-	#{SetANSITest}
-	#{SetFactoryANSITest}
-	#{SortedCollectionANSITest}
-	#{SortedCollectionFactoryANSITest}
-	#{StringANSITest}
-	#{StringFactoryANSITest}
-	#{SymbolANSITest}
-	#{TestCaseHelper}
-	#{TestCaseProtocol}
-	#{TranscriptANSITest}
-	#{WarningANSITest}
-	#{WarningClassANSITest}
-	#{WriteFileStreamANSITest}
-	#{WriteStreamANSITest}
-	#{WriteStreamFactoryANSITest}
-	#{WriteStreamHelper}
-	#{ZeroDivideANSITest}
-	#{ZeroDivideFactoryANSITest}
+	#{Smalltalk.AbstractDictionaryHelper}
+	#{Smalltalk.ArrayANSITest}
+	#{Smalltalk.ArrayFactoryANSITest}
+	#{Smalltalk.BagANSITest}
+	#{Smalltalk.BagFactoryANSITest}
+	#{Smalltalk.BooleanANSITest}
+	#{Smalltalk.ByteArrayANSITest}
+	#{Smalltalk.ByteArrayFactoryANSITest}
+	#{Smalltalk.CharacterANSITest}
+	#{Smalltalk.CharacterFactoryANSITest}
+	#{Smalltalk.CollectionHelper}
+	#{Smalltalk.CollectionStreamHelper}
+	#{Smalltalk.CollectionTest}
+	#{Smalltalk.DateAndTimeANSITest}
+	#{Smalltalk.DateAndTimeFactoryANSITest}
+	#{Smalltalk.DictionaryANSITest}
+	#{Smalltalk.DictionaryFactoryANSITest}
+	#{Smalltalk.DurationANSITest}
+	#{Smalltalk.DurationFactoryANSITest}
+	#{Smalltalk.DyadicValuableANSITest}
+	#{Smalltalk.ErrorANSITest}
+	#{Smalltalk.ErrorClassANSITest}
+	#{Smalltalk.ExceptionANSITest}
+	#{Smalltalk.ExceptionClassANSITest}
+	#{Smalltalk.ExceptionSetANSITest}
+	#{Smalltalk.ExtensibleCollectionHelper}
+	#{Smalltalk.FailedMessageANSITest}
+	#{Smalltalk.FileStreamFactoryANSITest}
+	#{Smalltalk.FloatANSITest}
+	#{Smalltalk.FloatCharacterizationANSITest}
+	#{Smalltalk.FractionANSITest}
+	#{Smalltalk.FractionFactoryANSITest}
+	#{Smalltalk.GettableStreamHelper}
+	#{Smalltalk.IdentityDictionaryANSITest}
+	#{Smalltalk.IdentityDictionaryFactoryANSITest}
+	#{Smalltalk.IntegerANSITest}
+	#{Smalltalk.IntervalANSITest}
+	#{Smalltalk.IntervalFactoryANSITest}
+	#{Smalltalk.MainTestCase}
+	#{Smalltalk.MessageNotUnderstoodANSITest}
+	#{Smalltalk.MessageNotUnderstoodSelectorANSITest}
+	#{Smalltalk.MonadicBlockANSITest}
+	#{Smalltalk.MsgParmSpec}
+	#{Smalltalk.MsgReturnRuleSpec}
+	#{Smalltalk.MsgReturnSpec}
+	#{Smalltalk.NiladicBlockANSITest}
+	#{Smalltalk.NilANSITest}
+	#{Smalltalk.NotificationANSITest}
+	#{Smalltalk.NotificationClassANSITest}
+	#{Smalltalk.ObjectANSITest}
+	#{Smalltalk.ObjectClassANSITest}
+	#{Smalltalk.ObjectHelper}
+	#{Smalltalk.OrderedCollectionANSITest}
+	#{Smalltalk.OrderedCollectionFactoryANSITest}
+	#{Smalltalk.ProtocolANYSpec}
+	#{Smalltalk.ProtocolMsgSpec}
+	#{Smalltalk.ProtocolSpec}
+	#{Smalltalk.PuttableStreamHelper}
+	#{Smalltalk.ReadableStringHelper}
+	#{Smalltalk.ReadFileStreamANSITest}
+	#{Smalltalk.ReadStreamANSITest}
+	#{Smalltalk.ReadStreamFactoryANSITest}
+	#{Smalltalk.ReadStreamHelper}
+	#{Smalltalk.ReadWriteStreamANSITest}
+	#{Smalltalk.ReadWriteStreamFactoryANSITest}
+	#{Smalltalk.ScaledDecimalANSITest}
+	#{Smalltalk.SelectorANSITest}
+	#{Smalltalk.SequencedCollectionHelper}
+	#{Smalltalk.SequencedContractibleCollectionHelper}
+	#{Smalltalk.SequencedReadableCollectionHelper}
+	#{Smalltalk.SequencedReadableCollectionTest}
+	#{Smalltalk.SequencedStreamHelper}
+	#{Smalltalk.SequencedStreamTest}
+	#{Smalltalk.SetANSITest}
+	#{Smalltalk.SetFactoryANSITest}
+	#{Smalltalk.SortedCollectionANSITest}
+	#{Smalltalk.SortedCollectionFactoryANSITest}
+	#{Smalltalk.StringANSITest}
+	#{Smalltalk.StringFactoryANSITest}
+	#{Smalltalk.SymbolANSITest}
+	#{Smalltalk.TestCaseHelper}
+	#{Smalltalk.TestCaseProtocol}
+	#{Smalltalk.TranscriptANSITest}
+	#{Smalltalk.WarningANSITest}
+	#{Smalltalk.WarningClassANSITest}
+	#{Smalltalk.WriteFileStreamANSITest}
+	#{Smalltalk.WriteStreamANSITest}
+	#{Smalltalk.WriteStreamFactoryANSITest}
+	#{Smalltalk.WriteStreamHelper}
+	#{Smalltalk.ZeroDivideANSITest}
+	#{Smalltalk.ZeroDivideFactoryANSITest}
 ).
 
 package setMethodNames: #(
-	#(#{ClassDescription} #addProtocolNamed:)
-	#(#{ClassDescription} #ansiProtocolNames)
-	#(#{ClassDescription} #ansiProtocolNames:)
-	#(#{ClassDescription} #ansiProtocols)
-	#(#{ClassDescription} #conformsToAnsiProtocolNamed:)
-	#(#{ClassDescription} #definedAsProtocolNames)
-	#(#{ClassDescription} #removeAnsiProtocolNamed:)
-	#(#{ClassDescription} #removeAnsiProtocolNamed:ifAbsent:)
+	#(#{Core.ClassDescription} #addProtocolNamed:)
+	#(#{Core.ClassDescription} #ansiProtocolNames)
+	#(#{Core.ClassDescription} #ansiProtocolNames:)
+	#(#{Core.ClassDescription} #ansiProtocols)
+	#(#{Core.ClassDescription} #conformsToAnsiProtocolNamed:)
+	#(#{Core.ClassDescription} #definedAsProtocolNames)
+	#(#{Core.ClassDescription} #removeAnsiProtocolNamed:)
+	#(#{Core.ClassDescription} #removeAnsiProtocolNamed:ifAbsent:)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\SUnit\SUnit'
-	'..\..\SUnit\SUnitPreload'
+	'..\..\SUnit\SUnitLegacy'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #MsgParmSpec
+Core.Object subclass: #MsgParmSpec
 	instanceVariableNames: 'parmName parmProtocols parmAliasingAttribute'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #MsgReturnSpec
+Core.Object subclass: #MsgReturnSpec
 	instanceVariableNames: 'returnValueProtocols returnValueAliasingAttribute'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ProtocolANYSpec
+Core.Object subclass: #ProtocolANYSpec
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ProtocolMsgSpec
+Core.Object subclass: #ProtocolMsgSpec
 	instanceVariableNames: 'selector parameterSpecifications returnValueSpecifications specSections'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MsgReturnSpec subclass: #MsgReturnRuleSpec
 	instanceVariableNames: 'ruleSourceCode ruleBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ProtocolANYSpec subclass: #ProtocolSpec
 	instanceVariableNames: 'name conformsTo description messageSpecifications'
 	classVariableNames: 'ClassProtocols DefaultConvTable FixNum OperatorTable Protocols UnaryConvTable UndefinedConformsToNames'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCase subclass: #TestCaseProtocol
+XProgramming.SUnit.TestCase subclass: #TestCaseProtocol
 	instanceVariableNames: ''
 	classVariableNames: 'IsStrict'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseProtocol subclass: #MainTestCase
 	instanceVariableNames: 'messages helpers'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseProtocol subclass: #TestCaseHelper
 	instanceVariableNames: 'testCase'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'testSelectors'
 	classConstants: {}!
 MainTestCase subclass: #ArrayFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #BagFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #BooleanANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ByteArrayFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #CharacterANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #CharacterFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #CollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DateAndTimeANSITest
 	instanceVariableNames: 'd19970426t8 savedLocale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DateAndTimeFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DictionaryFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DurationANSITest
 	instanceVariableNames: 'off0123 smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf numList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DurationFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #DyadicValuableANSITest
 	instanceVariableNames: 'blk2args'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ErrorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ErrorClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ExceptionANSITest
 	instanceVariableNames: 'unchanged changed value exceptionClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ExceptionClassANSITest
 	instanceVariableNames: 'exceptionClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ExceptionSetANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FailedMessageANSITest
 	instanceVariableNames: 'failedMsg'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FileStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FloatANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FloatCharacterizationANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FractionANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #FractionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #IdentityDictionaryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #IdentityDictionaryFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #IntegerANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #IntervalFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #MessageNotUnderstoodANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #MessageNotUnderstoodSelectorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #MonadicBlockANSITest
 	instanceVariableNames: 'blk1args'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #NiladicBlockANSITest
 	instanceVariableNames: 'blk0args canonicalObject'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #NilANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #NotificationANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #NotificationClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ObjectANSITest
 	instanceVariableNames: 'object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ObjectClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #OrderedCollectionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ReadFileStreamANSITest
 	instanceVariableNames: 'readFileStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ReadStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ReadWriteStreamANSITest
 	instanceVariableNames: 'readWriteStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ReadWriteStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ScaledDecimalANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #SelectorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #SequencedStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #SetFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #SortedCollectionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #StringFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #TranscriptANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #WarningANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #WarningClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #WriteFileStreamANSITest
 	instanceVariableNames: 'writeFileStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #WriteStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ZeroDivideANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MainTestCase subclass: #ZeroDivideFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CollectionTest subclass: #BagANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CollectionTest subclass: #DictionaryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CollectionTest subclass: #IntervalANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CollectionTest subclass: #SequencedReadableCollectionTest
 	instanceVariableNames: 'canonicalObjects'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 CollectionTest subclass: #SetANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #ArrayANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #ByteArrayANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #OrderedCollectionANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #SortedCollectionANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #StringANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedReadableCollectionTest subclass: #SymbolANSITest
 	instanceVariableNames: 'smalltalkSymbol'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedStreamTest subclass: #ReadStreamANSITest
 	instanceVariableNames: 'readStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SequencedStreamTest subclass: #WriteStreamANSITest
 	instanceVariableNames: 'writeStream buffer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #AbstractDictionaryHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #CollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #CollectionStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #ExtensibleCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #GettableStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #ObjectHelper
 	instanceVariableNames: 'object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #PuttableStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #ReadableStringHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #ReadStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #SequencedCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #SequencedContractibleCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #SequencedStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 TestCaseHelper subclass: #WriteStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
 addProtocolNamed: protocolName 
 	"Add the protocol named, protocolName, to the list of protocols to which the receiver conforms."
@@ -740,14 +740,14 @@ removeAnsiProtocolNamed: protocolName ifAbsent: notFoundBlock
 	tmpProtocolNames isEmpty ifTrue: [^notFoundBlock value].
 	tmpProtocolNames remove: protocolName ifAbsent: [^notFoundBlock value].
 	self ansiProtocolNames: tmpProtocolNames! !
-!ClassDescription categoriesFor: #addProtocolNamed:!public! !
-!ClassDescription categoriesFor: #ansiProtocolNames!protocols!public! !
-!ClassDescription categoriesFor: #ansiProtocolNames:!public! !
-!ClassDescription categoriesFor: #ansiProtocols!protocols!public! !
-!ClassDescription categoriesFor: #conformsToAnsiProtocolNamed:!public! !
-!ClassDescription categoriesFor: #definedAsProtocolNames!public! !
-!ClassDescription categoriesFor: #removeAnsiProtocolNamed:!public! !
-!ClassDescription categoriesFor: #removeAnsiProtocolNamed:ifAbsent:!public! !
+!Core.ClassDescription categoriesFor: #addProtocolNamed:!public! !
+!Core.ClassDescription categoriesFor: #ansiProtocolNames!protocols!public! !
+!Core.ClassDescription categoriesFor: #ansiProtocolNames:!public! !
+!Core.ClassDescription categoriesFor: #ansiProtocols!protocols!public! !
+!Core.ClassDescription categoriesFor: #conformsToAnsiProtocolNamed:!public! !
+!Core.ClassDescription categoriesFor: #definedAsProtocolNames!public! !
+!Core.ClassDescription categoriesFor: #removeAnsiProtocolNamed:!public! !
+!Core.ClassDescription categoriesFor: #removeAnsiProtocolNamed:ifAbsent:!public! !
 
 "End of package definition"!
 

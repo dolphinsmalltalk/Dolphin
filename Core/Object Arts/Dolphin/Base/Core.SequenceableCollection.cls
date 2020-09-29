@@ -13,12 +13,8 @@ Core.SequenceableCollection comment: 'SequenceableCollection is the class of Col
 !Core.SequenceableCollection methodsFor!
 
 , aSequencedReadableCollection
-	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
-	species but not necessarily the exact same class) containing the elements	of the receiver 
-	in their original order with those of the <sequencedReadableCollection> argument
-	appended in their original order.
-	Note: This is the concatenation operation, and is a simplified form of 
-	#copyReplaceFrom:to:with:."
+	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's copy-class but not necessarily the exact same class) containing the elementsof the receiver in their original order with those of the <sequencedReadableCollection> argument appended in their original order.
+	Note: This is the concatenation operation, and is a simplified form of  #copyReplaceFrom:to:with:."
 
 	| size newSize |
 	size := self size.
@@ -36,7 +32,7 @@ Core.SequenceableCollection comment: 'SequenceableCollection is the class of Col
 					startingAt: 1;
 				yourself]
 		ifFalse: 
-			[(self species writeStream: newSize)
+			[(self copyingClass writeStream: newSize)
 				nextPutAll: self;
 				nextPutAll: aSequencedReadableCollection;
 				contents]!
@@ -322,17 +318,14 @@ copyFrom: startInteger to: stopInteger
 		startingAt: startInteger!
 
 copyLikeOfSize: anInteger
-	"Private - Answer a new collection of the same species as the receiver but with
-	anInteger nil or zero elements. 
+	"Private - Answer a new collection of the receiver's copying class but with the number of nil or zero elements specified by the <integer> agument.
 	N.B. Subclasses must override to preserve additional instance variables."
-	
-	"Note: This message differs from #copyEmpty: in two ways:
-	1) an instance of the receivers #species, rather than exact class (although this is usually the same) 
-	is answered; and
-	2) the answer doesn't just have sufficient capacity for anInteger elements, but actually has that 
-	many nil or zero elements."
 
-	^self species ofSize: anInteger!
+	"Note: This message differs from #copyEmpty: in two ways:
+	1) an instance of the receivers #copyClass, rather than exact class (although this is usually the same) is answered; and
+	2) the answer doesn't just have sufficient capacity for anInteger elements, but actually has that many nil or zero elements."
+
+	^self copyingClass ofSize: anInteger!
 
 copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollection
 	"Answer a new <sequencedReadableCollection> which is a copy of the receiver but in which all occurrences of an old element sequence have been replaced by a new element sequence."
@@ -1147,7 +1140,7 @@ reversedFrom: startInteger to: stopInteger
 
 	| answer offset len |
 	len := stopInteger - startInteger + 1.
-	answer := self species ofSize: len.
+	answer := self copyLikeOfSize: len.
 	offset := len + startInteger.
 	startInteger to: stopInteger do: [:i | answer at: offset - i put: (self at: i)].
 	^answer!
@@ -1191,9 +1184,8 @@ select: discriminator
 	the discriminator evaluates to true."
 
 	| aStream |
-	aStream := self species writeStream: self copySize.
-	self keysAndValuesDo: [:i :elem |
-		(discriminator value: elem) ifTrue: [aStream nextPut: elem]].
+	aStream := self copyingClass writeStream: self copySize.
+	self keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [aStream nextPut: elem]].
 	^aStream contents!
 
 sixth

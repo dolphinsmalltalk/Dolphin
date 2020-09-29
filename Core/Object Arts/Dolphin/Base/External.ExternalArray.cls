@@ -122,25 +122,28 @@ collect: transformer
 
 	| answer size |
 	size := self size.
-	answer := self species new: size.
+	answer := self copyingClass new: size.
 	self
 		uncheckedFrom: 1
 		to: size
 		keysAndValuesDo: [:i :each | answer at: i put: (transformer value: each)].
 	^answer!
 
-copyFrom: start to: stop
-	"Answer an object of the same species as the receiver
-	containing a copy of the elements of the receiver starting at index start, 
-	until index stop, inclusive."
+copyFrom: startInteger to: stopInteger
+	"Answer an object of the same species as the receiver containing a copy of the elements of the receiver starting at index start, until index stop, inclusive."
 
 	| len |
-	len := stop - start + 1.
-	^(self species new: len)
+	len := stopInteger - startInteger + 1.
+	^(self copyingClass new: len)
 		replaceFrom: 1
 		to: len
 		with: self
-		startingAt: start!
+		startingAt: startInteger!
+
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	^Array!
 
 detect: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements
@@ -362,9 +365,8 @@ select: discriminator
 	the discriminator evaluates to true."
 
 	| aStream |
-	aStream := self species writeStream.
-	self keysAndValuesDo: [:i :elem | 
-		(discriminator value: elem) ifTrue: [aStream nextPut: elem]].
+	aStream := self copyingClass writeStream.
+	self keysAndValuesDo: [:i :elem | (discriminator value: elem) ifTrue: [aStream nextPut: elem]].
 	^aStream contents!
 
 size
@@ -373,7 +375,7 @@ size
 	^self length!
 
 species
-	"Answer the class of object to be used when copying the receiver."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array!
 
@@ -430,6 +432,7 @@ with: aCollection do: aDyadicValuable
 !External.ExternalArray categoriesFor: #byteSize!accessing!public! !
 !External.ExternalArray categoriesFor: #collect:!enumerating!public! !
 !External.ExternalArray categoriesFor: #copyFrom:to:!copying!public! !
+!External.ExternalArray categoriesFor: #copyingClass!copying!private! !
 !External.ExternalArray categoriesFor: #detect:!public!searching! !
 !External.ExternalArray categoriesFor: #detect:ifNone:!public!searching! !
 !External.ExternalArray categoriesFor: #displayOn:!printing!private! !

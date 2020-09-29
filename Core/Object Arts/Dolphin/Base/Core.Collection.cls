@@ -196,39 +196,31 @@ collect: transformer
 	^answer!
 
 copyEmpty
-	"Answer an empty copy of the receiver (which must be of the exact same class
-	not just the same #species), with enough capacity for the same number of elements.
-	#copyEmpty can be useful when you wish to take a copy of a collection that
-	preserves all of the collections attributes (including the capacity) apart from its 
-	elements."
+	"Answer an empty copy of the receiver (which must be of the exact same class not just the same #species), with enough capacity for the same number of elements.
+	#copyEmpty can be useful when you wish to take a copy of a collection that preserves all of the collections attributes (including the capacity) apart from its elements."
 
 	^self copyEmpty: self copySize!
 
 copyEmpty: anInteger
-	"Private - Answer an empty copy of the receiver (which should be of the exact same class
-	not just the same #species), with sufficient capacity for anInteger number of elements."
+	"Private - Answer an empty copy of the receiver (which should be of the exact same class not just the same #species), with sufficient capacity for anInteger number of elements."
 
-	"N.B. Must be reimplemented by subclasses that need to copy additional instance 
-	variables (e.g. the sortBlock of SortedCollection)."
+	"N.B. Must be reimplemented by subclasses that need to copy additional instance variables (e.g. the sortBlock of SortedCollection)."
 
 	^self class new: anInteger!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	<primitive: 111>
+	^self class!
+
 copyLike
-	"Private - Answer an empty collection of the same species as the receiver with 
-	sufficient capacity for anInteger number of elements."
+	"Private - Answer an empty collection of the the receiver's copying class with sufficient capacity for the same number of elements."
 
-	^self copyLike: self copySize!
-
-copyLike: anInteger
-	"Private - Answer an empty collection of the same species of the receiver with 
-	sufficient capacity for anInteger number of elements."
-
-	^self species new: anInteger!
+	^self copyingClass new: self copySize!
 
 copySize
-	"Private - Answer the size of empty copy to create when performing various
-	copying/collecting transformations against the receiver. Can be overridden
-	by subclasses for which #size is a slow operation."
+	"Private - Answer the size of empty copy to create when performing various copying/collecting transformations against the receiver. Can be overridden by subclasses for which #size is a slow operation."
 
 	^self size!
 
@@ -394,10 +386,9 @@ isEmpty
 !
 
 newSelection
-	"Private - Answer a new empty collection like the receiver to 
-	contain a selection of the receiver's elements."
+	"Private - Answer a new empty collection like the receiver to 	contain a selection of the receiver's elements."
 
-	^self species new!
+	^self copyingClass new!
 
 noDifference: aCollection
 	"Answer whether the receiver contains the same elements as the <collection> argument
@@ -584,8 +575,8 @@ union: comperand
 !Core.Collection categoriesFor: #collect:!enumerating!public! !
 !Core.Collection categoriesFor: #copyEmpty!copying!public! !
 !Core.Collection categoriesFor: #copyEmpty:!copying!private! !
-!Core.Collection categoriesFor: #copyLike!enumerating!private! !
-!Core.Collection categoriesFor: #copyLike:!copying!private! !
+!Core.Collection categoriesFor: #copyingClass!copying!private! !
+!Core.Collection categoriesFor: #copyLike!copying!private! !
 !Core.Collection categoriesFor: #copySize!copying!private! !
 !Core.Collection categoriesFor: #copyWithoutDuplicates!copying!public! !
 !Core.Collection categoriesFor: #count:!enumerating!public! !
