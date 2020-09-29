@@ -839,7 +839,7 @@ resourceIdentifiers
 
 resourceIdentifiersDo: aMonadicValuable
 	self
-		resourceSelectorsDo: [:each | aMonadicValuable value: (UI.ResourceIdentifier class: self selector: each)]!
+		resourceSelectorsDo: [:each | aMonadicValuable value: (UI.ResourceIdentifier newClass: self selector: each)]!
 
 resourceNames
 	| names |

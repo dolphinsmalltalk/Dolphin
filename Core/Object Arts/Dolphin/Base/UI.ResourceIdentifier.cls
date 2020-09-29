@@ -209,7 +209,7 @@ allResourceIdentifiers
 	^rids!
 
 allResourceIdentifiersDo: aMonadicValuable
-	Class allClassesDo: [:each | each resourceIdentifiersDo: aMonadicValuable]!
+	Smalltalk allClassesDo: [:each | each resourceIdentifiersDo: aMonadicValuable]!
 
 class: aClass 
 	^self class: aClass name: 'Default view'!
@@ -226,10 +226,7 @@ class: aClass name: aString
 class: aClass selector: aSymbol
 	(aSymbol beginsWith: SelectorPrefix)
 		ifFalse: [self error: 'Invalid resource selector ' , aSymbol printString].
-	^super new
-		owningClass: aClass;
-		selector: aSymbol;
-		yourself!
+	^self newClass: aClass selector: aSymbol!
 
 exportFileExtension
 	"Answer the file extension associated with resources of this type when
@@ -261,6 +258,13 @@ nameFromSelector: aSymbol
 			ch := aSymbol at: i + prefixSize.
 			resname at: i put: (ch == $_ ifTrue: [$\x20] ifFalse: [ch])].
 	^resname!
+
+newClass: aClass selector: aSymbol
+	<primitive: 157>
+	^self new
+		owningClass: aClass;
+		selector: aSymbol;
+		yourself!
 
 onPreStripImage
 	"Private -  Allow the receiver to be stripped by clearing lazy initialized class variable
@@ -320,6 +324,7 @@ viewResourceCategoryName
 !UI.ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
 !UI.ResourceIdentifier class categoriesFor: #initialize!class initialization!public! !
 !UI.ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
+!UI.ResourceIdentifier class categoriesFor: #newClass:selector:!instance creation!private! !
 !UI.ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !UI.ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
 !UI.ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
