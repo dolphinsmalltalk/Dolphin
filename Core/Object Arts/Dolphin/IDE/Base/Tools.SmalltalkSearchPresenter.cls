@@ -11,6 +11,17 @@ Tools.SmalltalkSearchPresenter comment: ''!
 !Tools.SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkSearchPresenter methodsFor!
 
+addMethodsOfClass: aClass startingWith: aString toSearchCandidates: anOrderedCollection max: anInteger
+	| prefix |
+	prefix := aString , '>>'.
+	environment selectorsForClass: aClass
+		do: 
+			[:each |
+			anOrderedCollection
+				add: (SmalltalkSearchCandidate matchingName: prefix , each object: (aClass compiledMethodAt: each)).
+			anOrderedCollection size > anInteger ifTrue: [^#()]].
+	^anOrderedCollection!
+
 applyOptions
 	"Private - Apply the class options to the receiver"
 
@@ -27,6 +38,11 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 			^self].
 	^nil!
 
+classMatchingName: aString
+	^(BindingReference isQualifiedName: aString)
+		ifTrue: [aString asQualifiedReference valueOrNil]
+		ifFalse: [environment classes detect: [:each | each name = aString] ifNone: []]!
+
 completeWordAt: anInteger with: aString 
 	| replaceRange replaceText |
 	replaceRange := self rangeToCompleteAt: anInteger.
@@ -37,9 +53,7 @@ completeWordAt: anInteger with: aString
 		replaceSelection: aString!
 
 completionListSortBlock
-	| crt |
-	crt := OS.CRTLibrary default.
-	^[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]!
+	^[:a :b | (a displayString <===> b displayString) <= 0]!
 
 createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"
@@ -55,6 +69,35 @@ createSchematicWiring
 		when: #timerTick:
 			send: #onTimerTick:
 			to: self!
+
+filterForClassNamesMatching: aString
+	| isQualifiedName |
+	isQualifiedName := BindingReference isQualifiedName: aString.
+	^(aString includes: $\x20)
+		ifTrue: 
+			[isQualifiedName
+				ifTrue: 
+					[
+					[:each |
+					| name |
+					((name := each fullName) beginsWith: aString) ifTrue: [name]]]
+				ifFalse: 
+					[
+					[:each |
+					| name |
+					((name := each name) beginsWith: aString) ifTrue: [name]]]]
+		ifFalse: 
+			[isQualifiedName
+				ifTrue: 
+					[
+					[:each |
+					| name |
+					(each isMetaclass not and: [(name := each fullName) beginsWith: aString]) ifTrue: [name]]]
+				ifFalse: 
+					[
+					[:each |
+					| name |
+					(each isMetaclass not and: [(name := each name) beginsWith: aString]) ifTrue: [name]]]]!
 
 findDetails
 	^nil!
@@ -105,7 +148,7 @@ onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	aValueHolder value: false!
 
 onCharAdded: aCharacter
-	aCharacter = Character cr
+	aCharacter == $\r
 		ifTrue: 
 			[| searchExpression |
 			searchExpression := self view plainText copyWithoutAll: String lineDelimiter.
@@ -152,36 +195,51 @@ rangeToCompleteAt: anInteger
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
 searchItemsStartingWith: aString maxItems: anInteger
-	| result classes classFilter addBlock |
+	| candidates count |
 	"Treat searches beginning with punctuation as a selector search,
 	to allow searching for underscore-prefixed or binary selectors."
 	aString first isUppercase ifFalse: [^self selectorsStartingWith: aString maxItems: anInteger].
-	result := OrderedCollection new.
-	addBlock := 
-			[:obj |
-			(obj displayString beginsWith: aString)
-				ifTrue: 
-					[result add: obj.
-					result size > anInteger ifTrue: [^#()]]].
-	Package manager packages do: addBlock.
-	classFilter := (aString includes: $>)
-				ifTrue: 
-					[| classNamePrefix |
-					classNamePrefix := aString upTo: $>.
-					[:each | each name = classNamePrefix]]
-				ifFalse: 
-					[(aString includes: $\x20)
-						ifTrue: [[:each | each name beginsWith: aString]]
-						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
-	classes := environment classes select: classFilter.
-	classes do: 
-			[:each |
-			addBlock
-				value: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each bindingOrNil])].
-	classes size = 1
+	candidates := OrderedCollection new.
+	Package manager packages
+		do: [:each | (each name beginsWith: aString) ifTrue: [candidates add: each]].
+	"Very unlikely there will be too many matching packages, but if so don't display a list"
+	count := candidates size.
+	count > anInteger ifTrue: [^#()].
+	"Find matching classes in the environment"
+	(aString includes: $>)
 		ifTrue: 
-			[environment selectorsForClass: classes anyOne do: [:sel | addBlock value: classes anyOne >> sel]].
-	^result!
+			[| classNamePrefix |
+			classNamePrefix := aString upTo: $>.
+			(self classMatchingName: classNamePrefix)
+				ifNotNil: 
+					[:class |
+					candidates := self
+								addMethodsOfClass: class
+								startingWith: classNamePrefix
+								toSearchCandidates: candidates
+								max: anInteger]]
+		ifFalse: 
+			[| matchBlock |
+			matchBlock := self filterForClassNamesMatching: aString.
+			environment classesDo: 
+					[:each |
+					(matchBlock value: each)
+						ifNotNil: 
+							[:name |
+							candidates add: (SmalltalkSearchCandidate matchingName: name object: each).
+							"If there are too many matching classes, don't display anything yet."
+							candidates size > anInteger ifTrue: [^#()]]].
+			"If we found only one class, then also add all its methods"
+			candidates size - count = 1
+				ifTrue: 
+					[| candidate |
+					candidate := candidates last.
+					candidates := self
+								addMethodsOfClass: candidate object
+								startingWith: candidate matchingName
+								toSearchCandidates: candidates
+								max: anInteger]].
+	^candidates!
 
 searchObject
 	| searchText |
@@ -190,15 +248,7 @@ searchObject
 	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
 		ifTrue: [^Symbol findInterned: searchText].
 	(Package manager packageNamed: searchText ifNone: []) ifNotNil: [:a | ^a].
-	(BindingReference isQualifiedName: searchText)
-		ifTrue: 
-			[(BindingReference isValidQualifiedName: searchText)
-				ifTrue: [searchText asQualifiedReference ifDefined: [:a | ^a]]]
-		ifFalse: 
-			[| allClasses index |
-			allClasses := Smalltalk allClasses.
-			index := allClasses findFirst: [:each | each name = searchText].
-			index ~~ 0 ifTrue: [^allClasses at: index]].
+	(self classMatchingName: searchText) ifNotNil: [:class | ^class].
 	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | nil]!
 
 searchText
@@ -251,11 +301,14 @@ tokenStartAt: anInteger
 	^(view styleAt: anInteger) name == #specialCharacter 
 		ifTrue: [anInteger]
 		ifFalse: [view tokenStartAt: anInteger]! !
+!Tools.SmalltalkSearchPresenter categoriesFor: #addMethodsOfClass:startingWith:toSearchCandidates:max:!autocompletion!helpers!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #applyOptions!operations!options!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #autoComplete:at:maxItems:!autocompletion!helpers!private! !
+!Tools.SmalltalkSearchPresenter categoriesFor: #classMatchingName:!helpers!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #completeWordAt:with:!autocompletion!helpers!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #completionListSortBlock!autocompletion!constants!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.SmalltalkSearchPresenter categoriesFor: #filterForClassNamesMatching:!autocompletion!helpers!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #findDetails!accessing!private! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #goSearch!commands!public! !
 !Tools.SmalltalkSearchPresenter categoriesFor: #initialize!initializing!private! !

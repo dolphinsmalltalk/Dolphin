@@ -107,6 +107,7 @@ package setClassNames: #(
 	#{Tools.SingleUnarySendMethodCategory}
 	#{Tools.SmalltalkExpressionStyler}
 	#{Tools.SmalltalkMethodStyler}
+	#{Tools.SmalltalkSearchCandidate}
 	#{Tools.SmalltalkSearchPresenter}
 	#{Tools.SmalltalkStyler}
 	#{Tools.SmalltalkStylingScanner}
@@ -769,6 +770,12 @@ Core.Object subclass: #'Tools.MethodSearch'
 	classConstants: {
 		'IgnoreCaseMask' -> 16r1
 	}!
+Core.Object subclass: #'Tools.SmalltalkSearchCandidate'
+	instanceVariableNames: 'matchingName object'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Tools.SmalltalkSystemIcon'
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
