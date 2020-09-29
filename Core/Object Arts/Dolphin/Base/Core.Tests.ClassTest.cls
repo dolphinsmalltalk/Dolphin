@@ -88,7 +88,10 @@ testPoolBinding
 
 	self assert: (Exception fullBindingFor: 'WS_CHILD') notNil.
 	"But the imports are private, and so not be exported as externally resolvable names"
-	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil! !
+	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil!
+
+testStoreOn
+	self assert: self class storeString equals: 'Core.Tests.ClassTest'! !
 !Core.Tests.ClassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
 !Core.Tests.ClassTest categoriesFor: #testAllRoots!public!unit tests! !
 !Core.Tests.ClassTest categoriesFor: #testClassPoolsWellFormed!public!unit tests! !
@@ -96,4 +99,5 @@ testPoolBinding
 !Core.Tests.ClassTest categoriesFor: #testIncludesNamespace!private! !
 !Core.Tests.ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Core.Tests.ClassTest categoriesFor: #testPoolBinding!public!unit tests! !
+!Core.Tests.ClassTest categoriesFor: #testStoreOn!public!unit tests! !
 

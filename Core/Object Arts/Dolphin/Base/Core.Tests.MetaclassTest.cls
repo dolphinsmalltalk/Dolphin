@@ -74,9 +74,13 @@ testName
 	Smalltalk allRoots do: 
 			[:root |
 			root class
-				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
+				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]!
+
+testStoreOn
+	self assert: self class class storeString equals: 'Core.Tests.MetaclassTest class'! !
 !Core.Tests.MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
 !Core.Tests.MetaclassTest categoriesFor: #testInstances!public!unit tests! !
 !Core.Tests.MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Core.Tests.MetaclassTest categoriesFor: #testName!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #testStoreOn!public!unit tests! !
 

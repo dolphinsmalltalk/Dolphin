@@ -18,6 +18,9 @@ allClassHierarchyInstancesDo: aMonadicValuable
 testLessOrEqual
 	self subclassResponsibility!
 
+testStoreOn
+	self subclassResponsibility!
+
 testSubclasses
 	self allClassHierarchyInstancesDo: 
 			[:each |
@@ -25,5 +28,6 @@ testSubclasses
 			self assert: each subclasses equals: each subclasses distinct]! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Core.Tests.ClassDescriptionTest categoriesFor: #testStoreOn!public!unit tests! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #testSubclasses!public!unit tests! !
 
