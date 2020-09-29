@@ -780,9 +780,9 @@ setSpecialBehavior: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers special behavior (as defined by anIntegerMask)
 	according to the argument aBoolean. Only meaningful for variable byte classes"
 
-	self isBytes 
-		ifTrue: [self setShapeFlags: anIntegerMask to: aBoolean]
-		ifFalse: [self error: 'Must be byte class']!
+	self isPointers 
+		ifFalse: [self setShapeFlags: anIntegerMask to: aBoolean]
+		ifTrue: [self error: 'Must be byte class']!
 
 setSuperclass: aClass
 	"Private - Set the superclass of the receiver to aClass, maintaining the hierarchy

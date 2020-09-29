@@ -1069,7 +1069,7 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 baselinedSlowTests
 	| laggards |
 	laggards := Set new.
-	#(#(#{Refactory.Browser.Tests.ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{Refactory.Browser.Tests.BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{IdeaSpaceShellTest} #(#testSaveRestore)) #(#{Refactory.Browser.Tests.RenameClassTest} #(#testModelRenameClass)))
+	#(#(#{Refactory.Browser.Tests.ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{Refactory.Browser.Tests.BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{Tools.Tests.IdeaSpaceShellTest} #(#testSaveRestore)) #(#{Refactory.Browser.Tests.RenameClassTest} #(#testModelRenameClass)))
 		do: 
 			[:each |
 			each first

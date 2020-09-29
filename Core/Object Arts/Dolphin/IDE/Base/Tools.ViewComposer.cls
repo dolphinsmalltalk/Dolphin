@@ -778,22 +778,22 @@ drawAdornment
 	must be painted after all child windows of the view have been drawn, 
 	so that it appears on top of them"
 
-	self arena update.
-	self secondarySelections do: [:each | self drawSelectionFor: each ].
-	self grabbers do: [:each | each draw].
-	self saveAdornmentRegion.
+	| canvas |
+	canvas := self arena
+				update;
+				canvas.
+	self secondarySelections do: [:each | self drawSelectionFor: each on: canvas].
+	self grabbers do: [:each | each drawOn: canvas].
+	canvas free.
+	self saveAdornmentRegion!
 
-!
-
-drawSelectionFor: aView
+drawSelectionFor: aView on: aCanvas
 	"Private - Paint the selection border for aView."
 
-	| canvas aMonadicValuable |
-	canvas := self arena canvas.
-	canvas pen: (Pen color: Color highlight).
-	aMonadicValuable := [:each | canvas rectangle: each].
-	self adornmentRectanglesFor: aView do: aMonadicValuable.
-	canvas free!
+	| oldPen |
+	oldPen := aCanvas pen: (Pen color: Color highlight).
+	self adornmentRectanglesFor: aView do: [:each | aCanvas rectangle: each].
+	aCanvas pen: oldPen!
 
 drawTrackingAt: pointOffset 
 	"Private - Draws the tracking for the current selections when offset by pointOffset."
@@ -1410,7 +1410,7 @@ onDragLeaveArena: session
 	session suggestedTarget notNil ifTrue: [self invalidateAdornmentFor: session suggestedTarget].
 	self drawAdornment!
 
-onDragOverArena: session 
+onDragOverArena: session
 	"Private - Answer the operation that would occur if a drop took place now."
 
 	| op dropTarget |
@@ -1418,17 +1418,17 @@ onDragOverArena: session
 	session operation: nil.
 	"Determine where the view should be dropped. Make a note of this in the session."
 	dropTarget := self dropTargetFromSession: session.
-	dropTarget ~~ session suggestedTarget 
+	dropTarget ~~ session suggestedTarget
 		ifTrue: 
 			[session suggestedTarget notNil ifTrue: [self invalidateAdornmentFor: session suggestedTarget].
 
 			"Don't allow a drop outside of the composingView (unless the arena is empty."
 			(dropTarget == self arena and: [self composingView notNil]) ifTrue: [^session suggestedTarget: nil].
 			session hideCursorWhile: 
-					[self drawSelectionFor: dropTarget.
+					[self drawSelectionFor: dropTarget on: self arena canvas.
 					self arena update].
 			session suggestedTarget: dropTarget].
-	(self 
+	(self
 		areDragObjects: session dragObjects
 		acceptableFor: op
 		inView: dropTarget) ifFalse: [^self].
@@ -2063,7 +2063,7 @@ saveStateOn: aWriteStream
 	the receiver's class as it's parameter"
 
 	aWriteStream nextPutAll: '[ :aViewComposer | aViewComposer openOn: '.
-	self resourceIdentifier literalStoreEvaluationOn: aWriteStream.
+	self resourceIdentifier storeOn: aWriteStream.
 	aWriteStream
 		nextPut: $.;
 		cr.
@@ -2544,7 +2544,7 @@ zOrderChangedFor: aView
 !Tools.ViewComposer categoriesFor: #distributeHorizontally!commands!public! !
 !Tools.ViewComposer categoriesFor: #distributeVertically!commands!public! !
 !Tools.ViewComposer categoriesFor: #drawAdornment!adornments!private! !
-!Tools.ViewComposer categoriesFor: #drawSelectionFor:!adornments!private! !
+!Tools.ViewComposer categoriesFor: #drawSelectionFor:on:!adornments!private! !
 !Tools.ViewComposer categoriesFor: #drawTrackingAt:!adornments!private! !
 !Tools.ViewComposer categoriesFor: #dropIncrement!constants!private! !
 !Tools.ViewComposer categoriesFor: #dropTargetFromSession:!drag & drop!private! !

@@ -172,7 +172,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.AXControlBrowser'
 	}!
 Tools.SmalltalkToolShell subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
-	classVariableNames: ''
+	classVariableNames: 'Watermark'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!

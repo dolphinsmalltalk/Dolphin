@@ -589,10 +589,7 @@ lowWord
 mask: integerMask set: aBoolean
 	"Answer the result of setting/resetting the specified mask in the receiver."
 
-	^aBoolean 
-		ifTrue: [self maskSet: integerMask]
-		ifFalse: [self maskClear: integerMask]
-!
+	^aBoolean ifTrue: [self bitOr: integerMask] ifFalse: [self bitAnd: integerMask bitInvert]!
 
 maskClear: anInteger
 	"Answer a copy of the receiver with the bits of the argument, anInteger, masked out."

@@ -44,7 +44,7 @@ instSize
 isBytes
 	"Answer whether the target class is a byte class."
 
-	^dataClass isBytes!
+	^dataClass == ByteArray!
 
 isBytes: aBoolean
 	dataClass := aBoolean ifTrue: [ByteArray] ifFalse: [Array]!

@@ -356,7 +356,7 @@ basicInvalidateLayout
 	needs to be recalculated. Use #invalidateLayout to fully invalidate the parent chain
 	of views."
 
-	flags := flags maskClear: LayoutValidMask!
+	flags := flags bitAnd: ##(LayoutValidMask bitInvert)!
 
 basicPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting and this is to be performed in the
@@ -3374,7 +3374,7 @@ showWithStyle: anInteger
 	"Private - Makes this window appear with the required style.
 	Answer whether the window was previously visible."
 
-	self invalidateLayoutDeeply.
+	anInteger == SW_HIDE ifFalse: [self invalidateLayoutDeeply].
 	^UserLibrary default showWindow: handle nCmdShow: anInteger!
 
 state

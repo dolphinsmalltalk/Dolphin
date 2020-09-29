@@ -731,7 +731,7 @@ default: pathString extension: extString
 										ifFalse: [(pathString copyFrom: 1 to: i) , extString]]]
 						ifFalse: 
 							["Existing non-empty extension, leave unchanged"
-							^pathString]].
+							pathString]].
 			"If we find another path separator while searching backward, then there is no existing extension"
 			ch == $\ or: [ch == $/ or: [ch == $:]]]]
 			whileFalse: [i := i - 1].

@@ -70,16 +70,13 @@ resource: aResourceIdentifierOrNil
 resourceToolboxPresenter
 	^resourceToolboxPresenter!
 
-saveStateOn: aWriteStream 
+saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
 	the receiver's class as it's parameter"
 
-	aWriteStream nextPutAll: '[ :aResourceBrowser | '.
-	self 
-		saveStateAspects: #(#resource)
-		for: 'aResourceBrowser'
-		on: aWriteStream.
+	aWriteStream nextPutAll: '[ :aResourceBrowser | aResourceBrowser resource: '.
+	self resource storeOn: aWriteStream.
 	aWriteStream
 		nextPut: $.;
 		cr.

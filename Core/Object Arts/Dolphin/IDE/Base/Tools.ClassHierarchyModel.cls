@@ -24,6 +24,9 @@ defaultGetChildrenBlock
 defaultGetParentBlock
 	^[:aClass | aClass superclass]!
 
+defaultHasChildrenBlock
+	^[:aClass | aClass subclasses anySatisfy: filter]!
+
 observeEnvironment
 	Smalltalk
 		when: #classAdded:
@@ -58,6 +61,7 @@ setRoots: aCollection
 !Tools.ClassHierarchyModel categoriesFor: #approxSize!accessing!private! !
 !Tools.ClassHierarchyModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
 !Tools.ClassHierarchyModel categoriesFor: #defaultGetParentBlock!initializing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
 !Tools.ClassHierarchyModel categoriesFor: #observeEnvironment!initializing!private! !
 !Tools.ClassHierarchyModel categoriesFor: #onClassAdded:!event handling!public! !
 !Tools.ClassHierarchyModel categoriesFor: #onClassRemoved:!event handling!public! !

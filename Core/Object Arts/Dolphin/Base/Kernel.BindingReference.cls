@@ -184,13 +184,6 @@ newPath: anArray context: anObject
 		isImmutable: true;
 		yourself!
 
-pathString: aString
-	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument."
-
-	^self basicNew
-		setPathString: aString context: nil;
-		yourself!
-
 pathString: aString context: anObject
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
@@ -216,7 +209,6 @@ uninitialize
 !Kernel.BindingReference class categoriesFor: #flushBindings!operations!private! !
 !Kernel.BindingReference class categoriesFor: #initialize!class initialization!public! !
 !Kernel.BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
-!Kernel.BindingReference class categoriesFor: #pathString:!instance creation!public! !
 !Kernel.BindingReference class categoriesFor: #pathString:context:!instance creation!public! !
 !Kernel.BindingReference class categoriesFor: #pathString:context:flags:!instance creation!private! !
 !Kernel.BindingReference class categoriesFor: #uninitialize!class hierarchy-removing!private! !

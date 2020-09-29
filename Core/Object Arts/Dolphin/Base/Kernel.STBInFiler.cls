@@ -143,9 +143,7 @@ readMap
 	^readMap!
 
 readObjectOfClass: aClass
-	| converter |
-	converter := converters lookup: aClass.
-	^aClass stbReadFrom: self format: converter!
+	^aClass stbReadFrom: self format: (converters lookup: aClass)!
 
 readObjectOfClass: aClass format: anSTBClassConversion
 	"Private - Read the stream for the data to create an instance of aClass."
@@ -171,11 +169,11 @@ readObjectOfClass: aClass format: anSTBClassConversion
 	self register: newObject.
 
 	"Read the object's instance data."
-	aClass isBytes
-		ifTrue: 
+	aClass isPointers
+		ifTrue: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]]
+		ifFalse: 
 			["Many of these objects will be Strings, so some optimization may be possible"
-			1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
-		ifFalse: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]].
+			1 to: fullSize do: [:i | newObject basicAt: i put: stream next]].
 	anSTBClassConversion notNil
 		ifTrue: 
 			["Initialise a new instance from the old format object data and become it."

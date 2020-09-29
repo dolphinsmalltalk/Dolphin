@@ -108,14 +108,11 @@ defaultExtent
 
 	^self class defaultExtent!
 
-draw
+drawOn: aCanvas
 	"Draws the receiver in its arena"
 
-	| canvas |
 	self alignWithView.
-	canvas := self arena canvas.
-	canvas fillRectangle: self rectangle color: self defaultColor.
-	canvas free!
+	aCanvas fillRectangle: self rectangle color: self defaultColor!
 
 drawTrackingAt: pointOffset 
 	"Private - Draws the tracking for the aspect of the view associated with the receiver when 
@@ -231,7 +228,7 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 !Tools.Grabber categoriesFor: #cursors!accessing!private! !
 !Tools.Grabber categoriesFor: #defaultColor!constants!private! !
 !Tools.Grabber categoriesFor: #defaultExtent!constants!private! !
-!Tools.Grabber categoriesFor: #draw!drawing!public! !
+!Tools.Grabber categoriesFor: #drawOn:!drawing!public! !
 !Tools.Grabber categoriesFor: #drawTrackingAt:!private!tracking! !
 !Tools.Grabber categoriesFor: #endTrackingAt:!private!tracking! !
 !Tools.Grabber categoriesFor: #eraseTrackingAt:!private!tracking! !

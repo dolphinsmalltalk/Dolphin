@@ -2,7 +2,7 @@
 
 Tools.SmalltalkToolShell subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
-	classVariableNames: ''
+	classVariableNames: 'Watermark'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -393,8 +393,9 @@ removeShellDecorations: aShell
 		set: false
 		recreateIfChanged: false) ifTrue: [shellView frameChanged]!
 
-removeSizeGrip: aSmalltalkToolShell 
-	(aSmalltalkToolShell view viewNamed: 'statusbar' ifNone: [^self]) hasSizeGrip: false!
+removeSizeGrip: aSmalltalkToolShell
+	(aSmalltalkToolShell view viewNamed: 'statusbar' ifNone: [])
+		ifNotNil: [:statusbar | statusbar hasSizeGrip: false]!
 
 restorePreviousCard: last 
 	last isNil 
@@ -513,10 +514,13 @@ updateCaption
 	self caption: (self hasCurrentCard ifTrue: [self currentCard caption] ifFalse: [self basicCaption])!
 
 watermarkBitmap
-	| bitmap |
-	bitmap := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
-				usingLocator: FileLocator installRelative.
-	^bitmap createWatermarkAlphaPercent: 60 backcolor: backgroundPresenter view backcolor! !
+	(Watermark isNil or: [Watermark handle isNull])
+		ifTrue: 
+			[| bitmap |
+			bitmap := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
+						usingLocator: FileLocator installRelative.
+			Watermark := bitmap createWatermarkAlphaPercent: 60 backcolor: backgroundPresenter view backcolor].
+	^Watermark! !
 !Tools.IdeaSpaceShell categoriesFor: #absorbCard:!private! !
 !Tools.IdeaSpaceShell categoriesFor: #addIdeaCardTools:!helpers!private! !
 !Tools.IdeaSpaceShell categoriesFor: #addShellDecorations:!helpers!private! !
