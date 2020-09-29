@@ -23,11 +23,12 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'StringFormat'
 	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'FontStyleMask' -> 16r1C.
 		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 		'RotationMask' -> 16r3
 	}!

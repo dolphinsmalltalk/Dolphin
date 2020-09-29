@@ -1,11 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'StringFormat'
 	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'FontStyleMask' -> 16r1C.
 		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 		'RotationMask' -> 16r3
 	}!
@@ -39,15 +40,13 @@ Examples:
 			[self species = comperand species and: 
 					[text = comperand text and: 
 							[tilecolor = comperand tilecolor and: 
-									[fontName = comperand fontName and: 
-											[textcolor = comperand textcolor
-												and: [fontStyle == comperand basicFontStyle and: [flags == comperand flags]]]]]]]!
+									[fontName = comperand fontName and: [textcolor = comperand textcolor and: [flags == comperand flags]]]]]]!
 
 actualFontName
 	^fontName ifNil: [self defaultFontName]!
 
 actualFontStyle
-	^fontStyle ?? FontStyleRegular!
+	^(flags bitAnd: FontStyleMask) >> 2!
 
 actualTextcolor
 	"Private - Answer the colour used to draw the text. If unspecified this will default to either black
@@ -138,9 +137,6 @@ asParameter
 
 
 !
-
-basicFontStyle
-	^fontStyle!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
@@ -257,10 +253,12 @@ fontName
 	^fontName!
 
 fontStyle
-	^FontStyleNames at: (fontStyle ?? 0) + 1!
+	^FontStyleNames at: self actualFontStyle + 1!
 
 fontStyle: aSymbol
-	fontStyle := aSymbol ifNotNil: [(FontStyleNames identityIndexOf: aSymbol) - 1]!
+	| newStyle |
+	newStyle := aSymbol ifNil: [0] ifNotNil: [(FontStyleNames identityIndexOf: aSymbol) - 1].
+	flags := (flags bitAnd: ##(FontStyleMask bitInvert)) bitOr: newStyle << 2!
 
 freeDC
 	"For compatibility with the Image hierarchy"!
@@ -361,12 +359,13 @@ storeOn: aStream
 						space;
 						print: textcolor;
 						nextPut: $;].
-			styleName ~~ #regular ifTrue:
+			styleName ~~ #regular
+				ifTrue: 
 					[aStream
 						space;
 						display: #fontStyle:;
 						space;
-						print: self fontStyle;
+						print: styleName;
 						nextPut: $;].
 			r = 0
 				ifFalse: 
@@ -417,7 +416,6 @@ tilecolor
 !Graphics.TextTileIcon categoriesFor: #asBitmap!converting!public! !
 !Graphics.TextTileIcon categoriesFor: #asMenuBitmap!converting!public! !
 !Graphics.TextTileIcon categoriesFor: #asParameter!converting!public! !
-!Graphics.TextTileIcon categoriesFor: #basicFontStyle!accessing!private! !
 !Graphics.TextTileIcon categoriesFor: #bitmapWithExtent:!converting!private! !
 !Graphics.TextTileIcon categoriesFor: #defaultFontName!accessing!constants!public! !
 !Graphics.TextTileIcon categoriesFor: #drawOn:!drawing-bitmaps!public! !
@@ -475,15 +473,25 @@ stbConvertFrom: anSTBClassFormat
 	"Version 1 added textcolor, icon, style and flags instance variables. flags must be initialized to zero, the rest can be nil."
 
 	^
-	[:data | 
-	| newInstance |
+	[:data |
+	| newInstance ver |
 	newInstance := self basicNew.
 	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance flags: 0.
+	ver := anSTBClassFormat version.
+	ver < 1
+		ifTrue: [newInstance flags: 0]
+		ifFalse: 
+			[ver < 2
+				ifTrue: 
+					[(newInstance instVarAt: 6)
+						ifNotNil: 
+							[:style |
+							newInstance fontStyle: (FontStyleNames at: style + 1).
+							newInstance instVarAt: 6 put: nil]]].
 	newInstance]!
 
 stbVersion
-	^1!
+	^2!
 
 text: aString
 	^self
