@@ -27,8 +27,8 @@ package!
 "Class Definitions"!
 
 Object subclass: #TextTileIcon
-	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags margin _reserved9'
-	classVariableNames: 'FontStyleNames RotationMask StringFormat'
+	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags margin _reserved9'
+	classVariableNames: 'FontStyleMask FontStyleNames RotationMask StringFormat'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 

@@ -1,13 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #TextTileIcon
-	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags margin _reserved9'
-	classVariableNames: 'FontStyleNames RotationMask StringFormat'
+	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags margin _reserved9'
+	classVariableNames: 'FontStyleMask FontStyleNames RotationMask StringFormat'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 
 TextTileIcon guid: (GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
 
+TextTileIcon addClassConstant: 'FontStyleMask' value: 16r1C!
 TextTileIcon addClassConstant: 'FontStyleNames' value: #(#regular #bold #italic #boldItalic #underline #strikeout)!
 TextTileIcon addClassConstant: 'RotationMask' value: 16r3!
 
@@ -49,7 +50,7 @@ actualFontName
 	^fontName ifNil: [self defaultFontName]!
 
 actualFontStyle
-	^fontStyle ?? FontStyleRegular!
+	^(flags bitAnd: FontStyleMask) >> 2!
 
 actualTextcolor
 	"Private - Answer the colour used to draw the text. If unspecified this will default to either black
@@ -142,9 +143,6 @@ asSharedBitmap: aPoint
 	instance for the same icon."
 
 	^self imageManager bitmapForIcon: self extent: aPoint!
-
-basicFontStyle
-	^fontStyle!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
@@ -265,10 +263,12 @@ fontName: anObject
 	fontName := anObject!
 
 fontStyle
-	^FontStyleNames at: (fontStyle ?? 0) + 1!
+	^FontStyleNames at: self actualFontStyle + 1!
 
 fontStyle: aSymbol
-	fontStyle := aSymbol ifNotNil: [(FontStyleNames identityIndexOf: aSymbol) - 1]!
+	| newStyle |
+	newStyle := aSymbol ifNil: [0] ifNotNil: [(FontStyleNames identityIndexOf: aSymbol) - 1].
+	flags := (flags bitAnd: ##(FontStyleMask bitInvert)) bitOr: newStyle << 2!
 
 freeDC
 	"For compatibility with the Image hierarchy"!
@@ -374,12 +374,13 @@ storeOn: aStream
 						space;
 						print: textcolor;
 						nextPut: $;].
-			styleName ~~ #regular ifTrue:
+			styleName ~~ #regular
+				ifTrue: 
 					[aStream
 						space;
 						display: #fontStyle:;
 						space;
-						print: self fontStyle;
+						print: styleName;
 						nextPut: $;].
 			margin
 				ifNotNil: 
@@ -446,7 +447,6 @@ asBitmap!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
 asSharedBitmap:!converting!public! !
-basicFontStyle!accessing!private! !
 bitmapWithExtent:!converting!private! !
 defaultFontName!accessing!constants!public! !
 drawOn:!drawing-bitmaps!public! !
@@ -533,7 +533,7 @@ stbConvertFrom: anSTBClassFormat
 	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
-	^1!
+	^2!
 
 text: aString
 	^self
