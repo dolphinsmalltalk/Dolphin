@@ -329,6 +329,7 @@ beginsWith: comperand
 	"Answer whether the receiver starts with the exact characters
 	of the argument, comperand."
 
+	<primitive: 224>
 	^comperand _beginsString: self!
 
 beginsWith: aString ignoreCase: aBoolean

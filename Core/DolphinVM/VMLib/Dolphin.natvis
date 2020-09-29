@@ -90,7 +90,7 @@
   <Type Name="ST::Utf8String">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString >{m_characters,s8}</DisplayString>
-    <Expand HideRawView="0"></Expand>
+    <Expand HideRawView="true"></Expand>
   </Type>
   <!--Other scalar values-->
   <Type Name="TOTE&lt;ST::Float&gt;">

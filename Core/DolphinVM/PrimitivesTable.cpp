@@ -175,7 +175,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveFloatCompare<std::less<double>>						, // case 162: Float>>#<
 	Interpreter::unusedPrimitive												, // case 163:
 	Interpreter::primitiveFloatBinaryOp<std::multiplies<double>>				, // case 164: Float>>#*
-	Interpreter::primitiveFloatBinaryOp< std::divides<double>>					, // case 165: Float>>#/
+	Interpreter::primitiveFloatBinaryOp<std::divides<double>>					, // case 165: Float>>#/
 	Interpreter::primitiveFloatTruncationOp<Truncate>							, // case 166: Float>>#truncated
 	Interpreter::primitiveLargeIntegerAsFloat									, // case 167: LargeInteger>>#asFloat
 	Interpreter::primitiveAsFloat												, // case 168: SmallInteger>>#asFloat
@@ -234,7 +234,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveBasicNext												, // case 221: ReadStream|FileStream|ReadWriteStream>>#basicNext, ReadStream>>#basicNextAvailable
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:
 	Interpreter::primitiveStringAsUtf32String									, // case 223: Currently unimplemented/unused
-	Interpreter::unusedPrimitive												, // case 224:
+	Interpreter::primitiveBeginsWith											, // case 224:
 	Interpreter::unusedPrimitive												, // case 225:
 	Interpreter::unusedPrimitive												, // case 226:
 	Interpreter::unusedPrimitive												, // case 227:
