@@ -792,6 +792,43 @@ testReversedFromTo
 		raise: BoundsError
 		matching: [:ex | ex tag = 6]!
 
+testSelectAll
+	#('' 'a' 'abc') do: 
+			[:each |
+			| selection subject |
+			subject := self newCollection: each.
+			selection := subject select: [:a | true].
+			self assert: selection equals: subject]!
+
+testSelectEveryOther
+	#('' '' 'a' 'a' 'ab' 'a' 'abc' 'ac' 'abcd' 'ac' 'abcde' 'ace') pairsDo: 
+			[:case :result |
+			| selection subject expected count |
+			subject := self newCollection: case.
+			expected := self newCollection: result.
+			count := 0.
+			selection := subject select: [:a | (count := count + 1) odd].
+			self assert: selection equals: expected]!
+
+testSelectNone
+	| empty |
+	empty := self newCollection: ''.
+	#('' 'a' 'ab' 'abc') do: 
+			[:each |
+			| selection subject |
+			subject := self newCollection: each.
+			selection := subject select: [:a | false].
+			self assert: selection equals: empty]!
+
+testSelectOne
+	#('' '' 'b' '' 'a' 'a' 'abca' 'aa' 'bcd' '') pairsDo: 
+			[:case :result |
+			| selection subject expected |
+			subject := self newCollection: case.
+			expected := self newCollection: result.
+			selection := subject select: [:a | a = (self assimilate: $a)].
+			self assert: selection equals: expected]!
+
 unsortedCollectionClass
 	^self collectionClass!
 
@@ -856,6 +893,10 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testResize!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testReverse!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testReversedFromTo!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testSelectAll!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testSelectEveryOther!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testSelectNone!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testSelectOne!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
 !SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !

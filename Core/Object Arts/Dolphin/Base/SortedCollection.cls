@@ -274,6 +274,23 @@ reverse
 	self reverseDo: [:element | answer add: element].
 	^answer!
 
+select: aMonadicValuable
+	"Answer a new Collection like the receiver containing only those elements for which the <monadicValuable> argument evaluates to true."
+
+	"Implementation Note: The superclass implementation works, but ends up sorting the selected elements again, which is unnecessary since we know they will be selected in sorted order."
+
+	| newCollection j |
+	newCollection := self copyEmpty.
+	j := 0.
+	firstIndex to: lastIndex
+		do: 
+			[:i |
+			| each |
+			each := self basicAt: i.
+			(aMonadicValuable value: each) ifTrue: [newCollection basicAt: (j := j + 1) put: each]].
+	newCollection firstIndex: 1 lastIndex: j.
+	^newCollection!
+
 setSortAlgorithm: aSortAlgorithm 
 	algorithm := aSortAlgorithm!
 
@@ -336,6 +353,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #resize:!mutating!private! !
 !SortedCollection categoriesFor: #reSort!operations!public! !
 !SortedCollection categoriesFor: #reverse!copying!public! !
+!SortedCollection categoriesFor: #select:!enumerating!public! !
 !SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
 !SortedCollection categoriesFor: #sortBlock!accessing!public! !
 !SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
