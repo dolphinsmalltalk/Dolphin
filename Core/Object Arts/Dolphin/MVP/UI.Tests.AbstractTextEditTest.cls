@@ -29,7 +29,7 @@ testPositionOfChar
 	lineHeight := metrics tmHeight.
 	presenter text: text.
 	i := 0.
-	text readStream do: 
+	text do: 
 			[:ch |
 			| line lineText startOfLine point extent |
 			i := i + 1.
@@ -40,7 +40,7 @@ testPositionOfChar
 				ifTrue: [self assert: (String lineDelimiter includes: ch)]
 				ifFalse: 
 					[| pos |
-					extent := canvas textExtent: (lineText readStream next: i - startOfLine).
+					extent := canvas textExtent: (lineText first: i - startOfLine).
 					point := extent x @ ((line - 1) * lineHeight) + self margins.
 					pos := presenter view positionOfChar: i.
 					self assert: pos equals: point]].

@@ -44,8 +44,8 @@ testCalculateExtent
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
-!UI.Tests.TextEditTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.TextEditTest categoriesFor: #margins!private!unit tests! !
-!UI.Tests.TextEditTest categoriesFor: #testCalculateExtent!public! !
-!UI.Tests.TextEditTest categoriesFor: #text!private!unit tests! !
+!UI.Tests.TextEditTest categoriesFor: #classToTest!constants!private! !
+!UI.Tests.TextEditTest categoriesFor: #margins!constants!private! !
+!UI.Tests.TextEditTest categoriesFor: #testCalculateExtent!public!unit tests! !
+!UI.Tests.TextEditTest categoriesFor: #text!constants!private! !
 

@@ -1,21 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.MultilineTextEditTest'
+UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.AbstractMultilineTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.MultilineTextEditTest guid: (Core.GUID fromString: '{2eedba10-3618-4267-9a38-179fd63152c0}')!
-UI.Tests.MultilineTextEditTest comment: ''!
-!UI.Tests.MultilineTextEditTest categoriesForClass!Unclassified! !
-!UI.Tests.MultilineTextEditTest methodsFor!
+UI.Tests.AbstractMultilineTextEditTest guid: (Core.GUID fromString: '{8cec10d6-5d60-4f12-9a39-999fcc22b29d}')!
+UI.Tests.AbstractMultilineTextEditTest isNonInstantiable: true!
+UI.Tests.AbstractMultilineTextEditTest comment: ''!
+!UI.Tests.AbstractMultilineTextEditTest categoriesForClass!Unclassified! !
+!UI.Tests.AbstractMultilineTextEditTest methodsFor!
 
-classToTest
-	^MultilineTextEdit!
-
-margins
-	^1 @ 1!
+testPlainTextAtLine
+	presenter text: ''.
+	self assert: (presenter plainTextAtLine: 1) equals: ''.
+	#(-1 0 2) do: [:i | self should: [presenter plainTextAtLine: i] raise: BoundsError].
+	presenter text: 'a£b
+c🐬d
+'.
+	self assert: (presenter plainTextAtLine: 1) equals: 'a£b'.
+	self assert: (presenter plainTextAtLine: 2) equals: 'c🐬d'.
+	self assert: (presenter plainTextAtLine: 3) equals: ''.
+	#(-1 0 4 5) do: [:i | self should: [presenter plainTextAtLine: i] raise: BoundsError]!
 
 text
 	^'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
@@ -49,7 +56,6 @@ The following messages defined in Object have optimized implementations inlined 
 #yourself
 In addition any selector in Object with a ''basic'' prefix may be subject to inlining in future releases, so these should not be overridden.
 '! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #classToTest!constants!private! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #margins!constants!private! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.AbstractMultilineTextEditTest categoriesFor: #testPlainTextAtLine!public!unit tests! !
+!UI.Tests.AbstractMultilineTextEditTest categoriesFor: #text!constants!private! !
 

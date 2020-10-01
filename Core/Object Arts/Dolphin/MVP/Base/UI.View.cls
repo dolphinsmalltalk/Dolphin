@@ -1500,8 +1500,8 @@ getWindowText
 		getWindowText: handle
 		lpString: text
 		nMaxCount: textLen + 1.
-	"To avoid propagating Utf16Strings everywhere, convert to UTF-8"
-	^text asUtf8String!
+	"We must return UTF-16 text in order to be compatible with other control APIs that may return character counts expressed in UTF-16 code units (e.g. the Edit control's EM_LINELENGTH)"
+	^text!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."

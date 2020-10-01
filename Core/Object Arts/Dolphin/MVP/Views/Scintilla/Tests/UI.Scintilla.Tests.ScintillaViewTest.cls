@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Tests.MultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
+UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla.ScintillaConstants})

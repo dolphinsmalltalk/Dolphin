@@ -656,6 +656,7 @@ lineRange: anInteger
 	not including the end-of-line terminators (if any)."
 
 	| start |
+	anInteger < 1 ifTrue: [^self errorSubscriptBounds: anInteger].
 	start := self positionAtLine: anInteger.
 	^start to: start + (self lineLengthFromPosition: start) - 1!
 

@@ -4200,7 +4200,8 @@ lineRange: anInteger
 	| start end |
 	start := self basicPositionAtLine: anInteger - 1.
 	end := (self lineEndPosition: anInteger) - 1.
-	(start < 0 or: [end < start]) ifTrue: [^self errorSubscriptBounds: anInteger].
+	(start < 0 or: [end < start or: [end = start and: [anInteger > self lineCount]]])
+		ifTrue: [^self errorSubscriptBounds: anInteger].
 	^start + 1 to: end!
 
 lineScroll
