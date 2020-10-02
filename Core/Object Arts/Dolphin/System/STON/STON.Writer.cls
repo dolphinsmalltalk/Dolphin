@@ -55,7 +55,7 @@ encodeCharacter: char
 	#pass (output as is, clean ASCII characters) or a full escape string"
 	((code := char codePoint) < 127 and: [(encoding := stonCharacters at: code + 1) notNil])
 		ifTrue: 
-			[(encoding = #pass or: [char == $' and: [self jsonMode]])
+			[(encoding == #pass or: [char == $' and: [self jsonMode]])
 				ifTrue: [writeStream nextPut: char]
 				ifFalse: [writeStream nextPutAll: encoding]]
 		ifFalse: 
@@ -253,18 +253,15 @@ shortListElementSeparator
 !
 
 with: object do: block
-	| index |
-	referencePolicy = #ignore 
-		ifTrue: [ ^ block value ].
-	(index := objects at: object ifAbsent: [ nil ]) notNil
-		ifTrue: [
-			referencePolicy = #error
-				ifTrue: [ ^ self error: 'shared reference detected' ].
-			self writeReference: index ]
-		ifFalse: [
-			index := objects size + 1.
-			objects at: object put: index.
-			block value ]!
+	referencePolicy == #ignore ifTrue: [^block value].
+	(objects lookup: object)
+		ifNotNil: 
+			[:index |
+			referencePolicy == #error ifTrue: [^self error: 'shared reference detected'].
+			self writeReference: index]
+		ifNil: 
+			[objects at: object put: objects size + 1.
+			block value]!
 
 writeableStonCharacters
 	^stonCharacters == STONCharacters
@@ -287,7 +284,7 @@ writeFraction: fraction
 		print: fraction denominator!
 
 writeInteger: integer
-	writeStream print: integer!
+	integer printOn: writeStream!
 
 writeList: collection
 	self with: collection do: [ 

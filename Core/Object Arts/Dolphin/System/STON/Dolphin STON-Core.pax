@@ -123,6 +123,10 @@ package setMethodNames: #(
 	#(#{Core.SequenceableCollection} #stonOn:)
 	#(#{Core.SequenceableCollection class} #fromSton:)
 	#(#{Core.Set} #stonPostReferenceResolution)
+	#(#{Core.SortedCollection} #fromSton:)
+	#(#{Core.SortedCollection} #stonOn:)
+	#(#{Core.SortedCollection class} #fromSton:)
+	#(#{Core.SortedCollection class} #stonAllInstVarNames)
 	#(#{Core.String} #stonContainSubObjects)
 	#(#{Core.String} #stonOn:)
 	#(#{Core.String class} #findFirstInString:inSet:startingAt:)
@@ -701,6 +705,48 @@ stonPostReferenceResolution
 	
 	self isHealthy ifFalse: [ self rehash ]! !
 !Core.Set categoriesFor: #stonPostReferenceResolution!public!ston! !
+
+!Core.SortedCollection methodsFor!
+
+fromSton: stonReader
+	"Overridden to get back the standard object behavior"
+
+	stonReader parseMapDo: 
+			[:name :value |
+			name == #algorithm
+				ifTrue: [self algorithm: value]
+				ifFalse: 
+					[name == #array
+						ifTrue: 
+							[| size |
+							size := value size.
+							self basicResize: size.
+							self firstIndex: 1 lastIndex: size.
+							1 to: size do: [:i | self basicAt: i put: (value at: i)]]
+						ifFalse: [stonReader error: 'Unexpected SortedCollection variable ' , name]]]!
+
+stonOn: stonWriter
+	"Overridden to ensure the sort block, etc, is preserved"
+
+	stonWriter writeObject: self extra: {#array -> self asArray}! !
+!Core.SortedCollection categoriesFor: #fromSton:!public!ston! !
+!Core.SortedCollection categoriesFor: #stonOn:!public!ston! !
+
+!Core.SortedCollection class methodsFor!
+
+fromSton: stonReader
+	"Overwritten to get back the standard object behavior"
+
+	^ self new
+		fromSton: stonReader;
+		yourself!
+
+stonAllInstVarNames
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+	
+	^#('algorithm')! !
+!Core.SortedCollection class categoriesFor: #fromSton:!public!ston! !
+!Core.SortedCollection class categoriesFor: #stonAllInstVarNames!public!ston! !
 
 !Core.String methodsFor!
 

@@ -18,7 +18,8 @@ serializeAndMaterialize: object
 	| serialization materialization |
 	serialization := self serialize: object.
 	materialization := self materialize: serialization.
-	self assert: object equals: materialization
+	self assert: materialization equals: object.
+	^materialization
 	!
 
 serializeAndMaterializeJsonMode: object
@@ -224,6 +225,32 @@ testSmallIntegers
 	integers := STON listClass withAll: (-10 to: 10).
 	self serializeAndMaterialize: integers!
 
+testSortedCollections
+	| collections materialized |
+	collections := STON listClass withAll: {SortedCollection new.
+						SortedCollection new: 0.
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection.
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection: [:a :b | a < b].
+						#(5 3 7 2 1 4 10 9 8 6) asSortedCollection: [:a :b | a > b].
+						#('****' '*' '*****' '**' '***') asSortedCollection: [:a :b | a size < b size].
+						#('****' '*' '*****' '**' '***') asSortedCollection: [:a :b | a size > b size].
+						(#(nil 5 3 7 2 1 4 10 nil 9 8 6)
+							asSortedCollection: [:a :b | a isNil or: [b notNil and: [a < b]]])
+							removeFirst;
+							yourself.
+						(#(5 3 7 2 1 4 10 nil 9 8 nil 6)
+							asSortedCollection: [:a :b | a isNil or: [b notNil and: [a > b]]])
+							removeLast;
+							yourself}.
+	materialized := self serializeAndMaterialize: collections.
+	"Verify the sort algo was restored correctly."
+	materialized do: 
+			[:each |
+			| before sorted |
+			before := each asArray.
+			sorted := each reSort asArray.
+			self assert: before equals: sorted]!
+
 testSpecialCharacters
 	| primitives |
 	primitives := STON listClass withAll: {String withAll: {Character tab. Character lf. Character cr}.
@@ -307,6 +334,7 @@ testUUIDs
 !STON.Tests.WriteReadTest categoriesFor: #testPrimitives!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testSmallDictionary!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testSmallIntegers!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testSortedCollections!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testSpecialCharacters!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testStrings!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testSymbols!public!tests! !

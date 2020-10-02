@@ -13,9 +13,9 @@ STON.Tests.STONTestUser2 comment: 'STONTestUser2 extends STONTestUser with expli
 
 fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
-		key = #username ifTrue: [ username := value ].
-		key = #password ifTrue: [ password := value ].
-		key = #enabled ifTrue: [ enabled := value ] ]
+		key == #username ifTrue: [ username := value ].
+		key == #password ifTrue: [ password := value ].
+		key == #enabled ifTrue: [ enabled := value ] ]
 	!
 
 stonOn: stonWriter	
