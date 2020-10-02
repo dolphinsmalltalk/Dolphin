@@ -386,7 +386,6 @@ testRemoveExtension
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first!
 
 testRemovePathDelimiter
-	| unicode |
 	self assert: (File removePathDelimiter: '') equals: ''.
 	self assert: (File removePathDelimiter: '/') equals: ''.
 	self assert: (File removePathDelimiter: '//') equals: '/'.
@@ -397,9 +396,11 @@ testRemovePathDelimiter
 	self assert: (File removePathDelimiter: 'c:') equals: 'c:'.
 	self assert: (File removePathDelimiter: 'c:\') equals: 'c:'.
 	self assert: (File removePathDelimiter: 'c:\blah.txt') equals: 'c:\blah.txt'.
-	unicode := 'c:\blah' asUtf8String copyWith: $\x1F595.
-	self assert: (File removePathDelimiter: unicode) equals: unicode.
-	self assert: (File removePathDelimiter: unicode , '\') equals: unicode!
+	"Test with non-ASCII chars and characters outside the BMP"
+	#('c:\a🐬' 'c:\a🐬b' 'c:\a£' 'c:\a£b') do: 
+			[:each |
+			self assert: (File removePathDelimiter: each) equals: each.
+			self assert: (File removePathDelimiter: each , '\') equals: each]!
 
 testShortPath
 	| sysdir tmpDir tmpFile |

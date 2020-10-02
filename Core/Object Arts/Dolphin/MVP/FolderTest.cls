@@ -35,10 +35,23 @@ testName
 	self assert: (c name endsWith: '(C:)').
 	self assert: windows name equals: 'windows'.
 	self assert: system name equals: 'system32'.
-	self assert: oa name equals: 'Object Arts'! !
+	self assert: oa name equals: 'Object Arts'!
+
+testParent
+	| subject empty top |
+	top := Folder pathname: 'A\'.
+	#('A\B' 'A\B\' 'A\£' 'A\£\' 'A\🐬' 'A\🐬\') do: 
+			[:each |
+			subject := (Folder pathname: each) parent.
+			self assert: subject equals: top].
+	subject := top parent.
+	empty := Folder pathname: ''.
+	self assert: subject equals: empty.
+	self assertIsNil: empty parent! !
 !FolderTest categoriesFor: #folderClass!constants!private! !
 !FolderTest categoriesFor: #rootFolder!public!unit tests! !
 !FolderTest categoriesFor: #setUp!public!Running! !
 !FolderTest categoriesFor: #testFolderName!public!unit tests! !
 !FolderTest categoriesFor: #testName!public!unit tests! !
+!FolderTest categoriesFor: #testParent!public! !
 

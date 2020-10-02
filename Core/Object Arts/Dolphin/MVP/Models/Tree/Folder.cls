@@ -59,8 +59,9 @@ parent
 	but they will be equal."
 
 	| path |
-	^(path := self pathname) isEmpty 
-		ifFalse: [self class pathname: (File splitPathFrom: (path first: path size - 1))]!
+	path := self pathname.
+	^path isEmpty
+		ifFalse: [self class pathname: (File splitPathFrom: (File removePathDelimiter: path))]!
 
 pathname
 	"Answer the folder pathname of the receiver"
