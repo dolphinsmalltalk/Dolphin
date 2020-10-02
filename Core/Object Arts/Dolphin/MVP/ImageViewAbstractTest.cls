@@ -23,15 +23,18 @@ setUp
 testInvalidateOnResize
 	"We can test that the whole view is invalidated on resize"
 
-	| rect extent |
+	| rect extent retries |
 	presenter topView layoutManager: ProportionalLayout new.
 	presenter layout: #center.
-	presenter validate.
-	rect := RECT new.
-	self deny: (UserLibrary default
-				getUpdateRect: presenter handle
-				lpRect: rect
-				bErase: false).
+	rect := RECTL new.
+	retries := 0.
+	
+	[presenter validate.
+	(UserLibrary default
+		getUpdateRect: presenter handle
+		lpRect: rect
+		bErase: false) and: [retries < 5]]
+			whileTrue: [retries := retries + 1].
 	self assert: rect extent equals: 0 @ 0.
 	extent := presenter extent.
 	presenter topView extent: presenter topView extent + extent.
