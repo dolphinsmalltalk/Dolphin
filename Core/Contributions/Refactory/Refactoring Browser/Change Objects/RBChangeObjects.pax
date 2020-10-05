@@ -17,6 +17,7 @@ package setClassNames: #(
 	#{Refactory.Browser.AddMethodChange}
 	#{Refactory.Browser.AddNamespaceImportChange}
 	#{Refactory.Browser.ChangeSet}
+	#{Refactory.Browser.ClassCommentChange}
 	#{Refactory.Browser.CompositeRefactoryChange}
 	#{Refactory.Browser.DolphinAddMethodChange}
 	#{Refactory.Browser.RefactoryChange}
@@ -32,7 +33,6 @@ package setClassNames: #(
 	#{Refactory.Browser.RenameClassVariableChange}
 	#{Refactory.Browser.RenameInstanceVariableChange}
 	#{Refactory.Browser.RenameVariableChange}
-	#{Refactory.Browser.ReplaceNamespaceImportChange}
 ).
 
 package setPrerequisites: #(
@@ -112,6 +112,12 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodCh
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassCommentChange'
+	instanceVariableNames: 'comment'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RefactoryVariableChange'
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
@@ -126,12 +132,6 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveClass
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMethodChange'
 	instanceVariableNames: 'selector'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ReplaceNamespaceImportChange'
-	instanceVariableNames: 'oldImport newImport'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

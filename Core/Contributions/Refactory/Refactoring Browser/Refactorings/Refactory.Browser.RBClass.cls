@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'classVariableNames imports category classConstants'
-	classVariableNames: ''
+	instanceVariableNames: 'classVariableNames imports category classConstants comment'
+	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -63,6 +63,14 @@ classVariableNames
 classVariableNames: aCollectionOfStrings 
 	classVariableNames := aCollectionOfStrings asOrderedCollection!
 
+comment
+	^comment == LookupComment
+		ifTrue: [comment := self isDefined ifTrue: [self realClass comment]]
+		ifFalse: [comment]!
+
+comment: aString
+	model comment: (comment := aString) in: self!
+
 definitionString
 	| definitionStream |
 	definitionStream := (String writeStream: 256)
@@ -102,6 +110,9 @@ kindOfSubclass
 	^self isVariable 
 		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
 		ifFalse: ['subclass:']!
+
+name: aSymbol 
+	name := aSymbol!
 
 nonMetaclass
 	^self!
@@ -157,7 +168,10 @@ removeClassVariable: aString
 	model removeClassVariable: aString from: self!
 
 removeImport: aString
-	imports := self imports copyWithout: aString asQualifiedReference!
+	| ref |
+	ref := aString asQualifiedReference.
+	imports := self imports copyWithout: ref.
+	model removeImport: ref from: self!
 
 renameClassVariable: oldName to: newName around: aBlock
 	| varNames |
@@ -169,11 +183,9 @@ renameClassVariable: oldName to: newName around: aBlock
 		in: self
 		around: aBlock!
 
-replaceImport: oldString with: newString
-	| ref |
-	ref := newString asQualifiedReference.
-	self imports replaceAll: oldString asQualifiedReference with: ref.
-	model addImport: ref to: self!
+setName: aSymbol 
+	name := aSymbol.
+	comment := LookupComment!
 
 unqualifiedName
 	^(BindingReference splitQualifiedName: name) last asSymbol! !
@@ -188,6 +200,8 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #classConstants:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #classVariableNames!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #classVariableNames:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #comment!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #comment:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #definitionString!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
 !Refactory.Browser.RBClass categoriesFor: #directlyImportsNamespace:!public!testing! !
@@ -197,13 +211,14 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #imports:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #isMeta!public!testing! !
 !Refactory.Browser.RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
+!Refactory.Browser.RBClass categoriesFor: #name:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
 !Refactory.Browser.RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #removeImport:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
-!Refactory.Browser.RBClass categoriesFor: #replaceImport:with:!private! !
+!Refactory.Browser.RBClass categoriesFor: #setName:!initializing!private! !
 !Refactory.Browser.RBClass categoriesFor: #unqualifiedName!public! !
 
 !Refactory.Browser.RBClass class methodsFor!
@@ -213,6 +228,10 @@ existing: aBehavior
 	class := aBehavior instanceClass.
 	^(self named: class fullName asSymbol)
 		realClass: class;
-		yourself! !
+		yourself!
+
+initialize
+	LookupComment := Object new! !
 !Refactory.Browser.RBClass class categoriesFor: #existing:!instance creation!public! !
+!Refactory.Browser.RBClass class categoriesFor: #initialize!class initialization!public! !
 

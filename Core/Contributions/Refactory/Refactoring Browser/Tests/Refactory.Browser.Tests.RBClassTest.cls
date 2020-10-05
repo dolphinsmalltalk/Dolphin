@@ -46,10 +46,9 @@ testDefinesMethod
 	self assert: (messageNodeClass definesMethod: #printString)!
 
 testDefinesPoolDictionary
-	#rbFix.	"Use a different pool for Dolphin (Win32Constants instead of OpcodePool)"
-	self deny: (objectClass importsNamespace: #_BehaviorMasks).
+	self deny: (objectClass importsNamespace: #OpcodePool).
 	self assert: (newClass importsNamespace: #OpcodePool).
-	self deny: (messageNodeClass importsNamespace: #Win32Constants).
+	self deny: (messageNodeClass importsNamespace: #'OS.Win32Constants').
 	self
 		assert: ((RBNamespace new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
 

@@ -396,6 +396,9 @@ selectors
 			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
 	^selectors!
 
+setName: aSymbol 
+	name := aSymbol!
+
 shortName
 	^name!
 
@@ -606,6 +609,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #removeSubclass:!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #selectors!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #setName:!initializing!private! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #shortName!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #shortName:!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
@@ -642,7 +646,7 @@ initialize
 
 named: aSymbol
 	^self basicNew
-		name: aSymbol;
+		setName: aSymbol;
 		yourself!
 
 new

@@ -70,6 +70,9 @@ changes: aCollection
 changesSize
 	^changes inject: 0 into: [:sum :each | sum + each changesSize]!
 
+comment: aString in: aClass
+	^self addChange: (ClassCommentChange comment: aString in: aClass)!
+
 compile: source in: class 
 	^self addChange: (self addMethodChangeClass compile: source in: class)!
 
@@ -129,6 +132,9 @@ removeClassNamed: aSymbol
 removeClassVariable: variableName from: aClass
 	^self addChange: (RemoveClassVariableChange remove: variableName from: aClass)!
 
+removeImport: oldBindingReference from: aRBClass
+	^self addChange: (RemoveNamespaceImportChange remove: oldBindingReference from: aRBClass)!
+
 removeInstanceVariable: variableName from: aClass
 	^self addChange: (RemoveInstanceVariableChange remove: variableName from: aClass)!
 
@@ -142,13 +148,7 @@ renameChangesForClass: aClassName to: newClassName
 		yourself!
 
 renameClass: class to: newName
-	^self addChange: (RenameClassChange rename: class name to: newName)!
-
-replaceImport: oldBindingReference with: newBindingReference in: aRBClass
-	^self addChange: (ReplaceNamespaceImportChange
-				replaceImport: oldBindingReference
-				with: newBindingReference
-				in: aRBClass)! !
+	^self addChange: (RenameClassChange rename: class name to: newName)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #=!comparing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChange:!accessing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChangeFirst:!accessing!public! !
@@ -161,6 +161,7 @@ replaceImport: oldBindingReference with: newBindingReference in: aRBClass
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #changes!inspector accessing!private! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #changes:!inspector accessing!private! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #changesSize!accessing!public! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #comment:in:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:categories:!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:classified:!public!refactory/changes! !
@@ -176,11 +177,11 @@ replaceImport: oldBindingReference with: newBindingReference in: aRBClass
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClass:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassNamed:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassVariable:from:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeImport:from:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeInstanceVariable:from:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeMethod:from:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #renameClass:to:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #replaceImport:with:in:!public!refactory/changes! !
 
 !Refactory.Browser.CompositeRefactoryChange class methodsFor!
 

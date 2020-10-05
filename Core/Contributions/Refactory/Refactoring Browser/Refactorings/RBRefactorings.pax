@@ -159,8 +159,8 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'classVariableNames imports category classConstants'
-	classVariableNames: ''
+	instanceVariableNames: 'classVariableNames imports category classConstants comment'
+	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

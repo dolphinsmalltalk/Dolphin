@@ -173,7 +173,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	classConstants: {}!
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.VariableEnvironmentTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'ClassVariable'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

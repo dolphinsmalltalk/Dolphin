@@ -38,9 +38,15 @@ addSearchString: aString
 	searchStrings add: aString!
 
 allClasses
-	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
+	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment.
+	Note the inconsistency with allClassesDo:, which also enumerates the metaclasses."
 
 	^Smalltalk allClasses!
+
+allClassesDo: aBlock
+	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class and metaclass that could possibly be included in the receiver."
+
+	Smalltalk allBehaviorsDo: aBlock!
 
 associationAt: aKey
 	^aKey asQualifiedReference bindingOrNil
@@ -90,7 +96,7 @@ classesAndSelectorsDo: aBlock
 	self classesDo: [:class | self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
 classesDo: aBlock
-	Smalltalk allBehaviorsDo: aBlock!
+	self allClassesDo: aBlock!
 
 classNames
 	| classes names |
@@ -370,6 +376,7 @@ whichProtocolsInclude: aSelector in: aClass
 !Refactory.Browser.BrowserEnvironment categoriesFor: #|!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #allClassesDo:!enumerating!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #at:ifAbsent:!accessing/classes!public! !

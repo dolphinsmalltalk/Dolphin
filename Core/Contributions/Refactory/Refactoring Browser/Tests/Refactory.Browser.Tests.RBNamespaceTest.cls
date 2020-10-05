@@ -22,6 +22,20 @@ testAllClassesDo
 	BrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0!
 
+testCommentChange
+	| st cl |
+	st := RBNamespace new.
+	cl := st classNamed: self class fullName.
+	self assert: cl comment isString.
+	cl comment: 'a comment'.
+	self assert: cl comment = 'a comment'.
+	self assert: st changes changes size = 1.
+	self assert: st changes changes first comment = 'a comment'.
+	cl comment: nil.
+	self assert: cl comment isNil.
+	self assert: st changes changes size = 2.
+	self assert: st changes changes last comment isNil!
+
 testDefineClassAfterDeletedChange
 	| st className |
 	st := RBNamespace new.
@@ -69,14 +83,14 @@ testModelImplementorsSenders
 			poolDictionaries: ''''
 			category: ''Refactory-Testing'''.
 	class := model classNamed: #Asdf.
-	class compile: 'printOn: aStream ^super printOn: aStream' classified: #(#printing).
-	modelImps := model allImplementorsOf: #printOn:.
+	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: #(#printing).
+	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
 	self assert: modelImps size - 1
-		equals: (BrowserEnvironment new implementorsOf: #printOn:) numberSelectors.
-	refs := BrowserEnvironment new referencesTo: #printOn:.
+		equals: (BrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
+	refs := BrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
-	model allReferencesTo: #printOn:
+	model allReferencesTo: #storeOn:
 		do: 
 			[:each |
 			each modelClass = class
@@ -105,9 +119,30 @@ testReferencesPrintOn
 		do: 
 			[:each |
 			hasFoundObject := hasFoundObject
-						or: [each selector = #printStringLimitedTo: and: [each modelClass = (st classNamed: #'Core.Object')]].
+						or: [each selector = #fullPrintString and: [each modelClass = (st classNamed: #'Core.Object')]].
 			hasFoundSelf := hasFoundSelf
 						or: [each selector = #testReferencesPrintOn and: [each modelClass = (st classNamed: self class fullName)]]].
+	self assert: hasFoundObject.
+	self assert: hasFoundSelf!
+
+testReferencesPrintOnAfterAddition
+	| hasFoundObject hasFoundSelf smalltalk |
+	hasFoundObject := false.
+	hasFoundSelf := false.
+	smalltalk := RBNamespace new.
+	(smalltalk classNamed: #'Core.Object') 
+		compile: 'someTestReference self printOn: nil'
+		classified: #(testing).
+	(smalltalk classNamed: self class fullName)
+		compile: 'someTestReference ^ #printOn:'
+		classified: #(testing).
+	smalltalk allReferencesTo: #printOn: do: [ :each | 
+		hasFoundObject := hasFoundObject 
+			or: [ each selector = #someTestReference 
+			and: [ each modelClass = (smalltalk classNamed: #'Core.Object') ] ].
+		hasFoundSelf := hasFoundSelf
+			or: [ each selector = #someTestReference 
+			and: [ each modelClass = (smalltalk classNamed: self class fullName) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf!
 
@@ -151,6 +186,7 @@ testRoots
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testAllClassesDo!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testCommentChange!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassAfterDeletedChange!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassChange!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testImplementors!class tests!public! !
@@ -158,6 +194,7 @@ testRoots
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testModelImplementorsSenders!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRedefineClassChange!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOn!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterAddition!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterRemove!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRemoveClassChange!class tests!public! !
 !Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReparentSuperclassChange!class tests!public! !

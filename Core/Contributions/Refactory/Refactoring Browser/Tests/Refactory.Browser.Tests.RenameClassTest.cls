@@ -31,6 +31,7 @@ testModelRenameClass
 	class
 		compile: 'foo	^Object' classified: #(#accessing);
 		compile: 'objectName ^#(Object)' classified: #(#accessing).
+	"Ensure the test covers renaming an imported class"
 	self assert: (class imports includes: #'Core.Object' asQualifiedReference).
 	refactoring := RenameClassRefactoring
 				model: model
@@ -44,6 +45,30 @@ testModelRenameClass
 		equals: (RBParser parseMethod: 'objectName ^#(Thing)').
 	self assert: class superclass name equals: #'Core.Thing'.
 	self assert: (class imports includes: #'Core.Thing' asQualifiedReference)!
+
+testModelRenameSequenceClass
+	model
+		defineClass: 'Object subclass: #Foo1 
+			instanceVariableNames: '''' 
+			classVariableNames: '''' poolDictionaries: ''''
+			category: #''Refactory-Test data'''.
+	(model classNamed: #Foo1)
+		compile: 'foo	 ^ Foo1' classified: #(#accessing);
+		compile: 'objectName ^ #(Foo1)' classified: #(#accessing).
+	self executeRefactoring: (RenameClassRefactoring
+				model: model
+				rename: (model classNamed: #Foo1)
+				to: #Foo2).
+	self executeRefactoring: (RenameClassRefactoring
+				model: model
+				rename: (model classNamed: #Foo2)
+				to: #Foo3).
+	self deny: (model includesClassNamed: #Foo1).
+	self deny: (model includesClassNamed: #Foo2).
+	self assert: (model includesClassNamed: #Foo3).
+	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo) = (RBParser parseMethod: 'foo ^ Foo3').
+	self assert: ((model classNamed: #Foo3) parseTreeFor: #objectName)
+				= (RBParser parseMethod: 'objectName ^ #(Foo3)')!
 
 testRenameClass
 	| refactoring class oldName newName newFullName newClass |
@@ -70,5 +95,6 @@ testRenameClass
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testExistingName!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testModelRenameClass!public!tests! !
+!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testModelRenameSequenceClass!public!tests! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testRenameClass!public!tests! !
 

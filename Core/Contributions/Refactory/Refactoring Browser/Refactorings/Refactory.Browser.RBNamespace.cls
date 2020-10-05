@@ -110,6 +110,9 @@ classNamed: aString
 							behaviors := self createNewClassFor: class.
 							class isMeta ifTrue: [behaviors last] ifFalse: [behaviors first]]]]!
 
+comment: aString in: aClass
+	^ changes comment: aString in: aClass!
+
 compile: aString in: aRBClass classified: aSymbol 
 	| change |
 	change := changes 
@@ -240,6 +243,9 @@ removeClassNamed: aSymbol
 removeClassVariable: aString from: aRBClass 
 	^changes removeClassVariable: aString from: aRBClass!
 
+removeImport: aBindingReference from: aRBClass
+	^changes removeImport: aBindingReference from: aRBClass!
+
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
 
@@ -252,7 +258,7 @@ renameClass: aRBClass to: aSymbol around: aBlock
 	change := RenameClassChange rename: aRBClass fullName to: aSymbol.
 	self performChange: change around: aBlock.
 	self flushCaches.
-	dict := (newClasses includesKey: aSymbol) ifTrue: [newClasses] ifFalse: [changedClasses].
+	dict := (newClasses includesKey: aRBClass fullName) ifTrue: [newClasses] ifFalse: [changedClasses].
 	removedClasses
 		add: aRBClass name;
 		add: aRBClass name , ' class'.
@@ -291,9 +297,6 @@ replaceClassNameIn: definitionString to: aSymbol
 	parseTree receiver: (RBVariableNode named: aSymbol).
 	^parseTree formattedCode!
 
-replaceImport: oldBindingReference with: newBindingReference in: aRBClass
-	^changes replaceImport: oldBindingReference with: newBindingReference in: aRBClass!
-
 rootClasses
 	rootClasses isNil
 		ifTrue: 
@@ -329,6 +332,7 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBNamespace categoriesFor: #changes:!accessing!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #comment:in:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #defineClass:!changes!public! !
@@ -346,6 +350,7 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBNamespace categoriesFor: #removeClass:!changes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeImport:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
@@ -353,7 +358,6 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #replaceImport:with:in:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #rootClasses!accessing!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #setEnvironment:!initialize/release!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
