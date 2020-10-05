@@ -1,0 +1,39 @@
+﻿| package |
+package := Package name: 'SSW EditableListView Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #EditableListViewTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\SSW EditableListView'
+	'..\..\Camp Smalltalk\SUnit\SUnit').
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #EditableListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
