@@ -166,6 +166,15 @@ left: left top: top width: width height: height
 		bottom: top+height
 !
 
+origin: originPoint corner: cornerPoint
+	"Answer a new instance of the receiver with the specified origin and opposite corner"
+
+	^self
+		left: originPoint x
+		top: originPoint y
+		right: cornerPoint x
+		bottom: cornerPoint y!
+
 origin: originPoint extent: extentPoint
 	"Answer a new instance of the receiver with the specified origin and extent"
 
@@ -179,5 +188,6 @@ origin: originPoint extent: extentPoint
 !ExternalRectangle class categoriesFor: #icon!constants!public! !
 !ExternalRectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !ExternalRectangle class categoriesFor: #left:top:width:height:!instance creation!public! !
+!ExternalRectangle class categoriesFor: #origin:corner:!instance creation!public! !
 !ExternalRectangle class categoriesFor: #origin:extent:!instance creation!public! !
 
