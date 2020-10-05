@@ -1070,7 +1070,7 @@ stbConvert: instVarArray fromVersion: verInteger
 
 		instVars := new].
 
-	verInteger < 15 ifTrue:
+	verInteger <= 15 ifTrue:
 		["Renamed/reused inst vars. Clear out any old values no longer appropriate"
 		instVars 
 			at: base + 2 put: nil; "originalColumns - was multSelectStack"
@@ -1087,6 +1087,6 @@ stbVersion
 
 	^16! !
 !EditableListView class categoriesFor: #columnClass!constants!private! !
-!EditableListView class categoriesFor: #stbConvert:fromVersion:!constants!public! !
+!EditableListView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
 !EditableListView class categoriesFor: #stbVersion!constants!private! !
 
