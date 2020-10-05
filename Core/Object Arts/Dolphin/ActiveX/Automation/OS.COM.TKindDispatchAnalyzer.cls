@@ -32,7 +32,7 @@ baseClass
 
 	| base |
 	base := self superInterface.
-	^base name = #IDispatch ifTrue: [IDispatch] ifFalse: [base global]!
+	^base name == #IDispatch ifTrue: [IDispatch] ifFalse: [base global]!
 
 dualInterface
 	"Answer the ITypeInfo for the dual interface (TKIND_INTERFACE) associated with a TKIND_DISPATCH.

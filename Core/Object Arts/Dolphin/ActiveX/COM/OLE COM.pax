@@ -447,7 +447,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
 !Core.ByteArray methodsFor!
 
 copyToCOMTaskMemory
-	"Answer a COMTaskMemory object containing a copy of the receiver's
+	"Answer a COM.TaskMemory object containing a copy of the receiver's
 	bytes."
 
 	| size |
@@ -482,7 +482,7 @@ asBSTR
 	^OS.COM.BSTR fromString: self!
 
 copyToCOMTaskMemory
-	"Answer a COMTaskMemory object containing a copy of the receiver's
+	"Answer a COM.TaskMemory object containing a copy of the receiver's
 	characters."
 
 	^OS.COM.TaskMemory fromString: self! !

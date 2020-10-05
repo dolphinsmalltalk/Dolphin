@@ -46,7 +46,7 @@ fromString: aString locale: aLocale
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Date icon!
+	^DateAndTime icon!
 
 initialize
 	"Private - Initialize the receiver's class variables.

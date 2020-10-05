@@ -90,8 +90,6 @@ package setMethodNames: #(
 	#(#{Core.Character} #asVariant)
 	#(#{Core.Collection} #asSAFEARRAY)
 	#(#{Core.Collection} #asVariant)
-	#(#{Core.Date} #asFloat)
-	#(#{Core.Date} #asVariant)
 	#(#{Core.DateAndTime} #asFloat)
 	#(#{Core.DateAndTime} #asVariant)
 	#(#{Core.Float} #asVariant)
@@ -269,7 +267,6 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Conformant Array Fields'
-	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM'
 ).
 
@@ -1033,20 +1030,6 @@ asVariant
 	^OS.COM.VARIANT fromCollection: self! !
 !Core.Collection categoriesFor: #asSAFEARRAY!converting!public! !
 !Core.Collection categoriesFor: #asVariant!converting!public! !
-
-!Core.Date methodsFor!
-
-asFloat
-	"Answer the OLEDATE representation of the receiver."
-
-	^self asParameter asFloat!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_DATE)."
-
-	^self asSYSTEMTIME asVariant! !
-!Core.Date categoriesFor: #asFloat!converting!public! !
-!Core.Date categoriesFor: #asVariant!converting!public! !
 
 !Core.DateAndTime methodsFor!
 

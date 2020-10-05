@@ -105,6 +105,11 @@ asDays
 
 	^days!
 
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	^self asParameter asFloat!
+
 asMilliseconds
 	"Answer the number of milliseconds between a Time on January 1, 1901, and the same time in 
 	the receiver's day (this will probably be a LargeInteger). Can be used to perform 
@@ -141,6 +146,11 @@ asSYSTEMTIME
 asTimeStamp
 	^self asDateAndTime asTimeStamp
 !
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_DATE)."
+
+	^self asSYSTEMTIME asVariant!
 
 day
 	"Answer the day of the year represented by the receiver."
@@ -345,11 +355,13 @@ yyyymmdd
 !Core.Date categoriesFor: #addYears:desiredDay:!arithmetic!public! !
 !Core.Date categoriesFor: #asDateAndTime!converting!public! !
 !Core.Date categoriesFor: #asDays!converting!public! !
+!Core.Date categoriesFor: #asFloat!converting!public! !
 !Core.Date categoriesFor: #asMilliseconds!converting!public! !
 !Core.Date categoriesFor: #asParameter!converting!public! !
 !Core.Date categoriesFor: #asSeconds!converting!public! !
 !Core.Date categoriesFor: #asSYSTEMTIME!converting!public! !
 !Core.Date categoriesFor: #asTimeStamp!converting!public! !
+!Core.Date categoriesFor: #asVariant!converting!public! !
 !Core.Date categoriesFor: #day!accessing!public! !
 !Core.Date categoriesFor: #dayMonthYearDo:!accessing!public! !
 !Core.Date categoriesFor: #dayOfMonth!accessing!public! !

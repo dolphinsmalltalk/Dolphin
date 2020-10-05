@@ -21,7 +21,7 @@ allocator
 
 initialize
 	"Private - Initialize the receiver's class variables.
-		COMTaskMemory initialize
+		TaskMemory initialize
 	"
 
 	self extraInstanceSpec: 4! !
