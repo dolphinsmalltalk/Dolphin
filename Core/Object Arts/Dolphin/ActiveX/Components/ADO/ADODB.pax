@@ -80,7 +80,7 @@ package!
 Kernel.Namespace subclass: #ADODB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM private} #{External private} #{Core private})
+	imports: #(#{OS.COM private} #{OS private} #{ADODB.ADODBConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
@@ -619,7 +619,7 @@ ADODB._ADO subclass: #'ADODB.Command15'
 ADODB._ADO subclass: #'ADODB.Connection15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODB.ADODBConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB._ADO subclass: #'ADODB.Field15'

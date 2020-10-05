@@ -3,7 +3,7 @@
 ADODB._ADO subclass: #'ADODB.Connection15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODB.ADODBConstants private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Connection15 guid: (OS.COM.IID fromString: '{00001515-0000-0010-8000-00aa006d2ea4}')!
