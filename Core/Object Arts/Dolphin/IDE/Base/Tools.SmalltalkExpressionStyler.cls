@@ -11,13 +11,13 @@ Tools.SmalltalkExpressionStyler comment: 'SmalltalkExpressionStyler is a <Smallt
 !Tools.SmalltalkExpressionStyler categoriesForClass!Kernel-Objects! !
 !Tools.SmalltalkExpressionStyler methodsFor!
 
-initialBinaryStyle: aStBinarySelectorToken 
-	aStBinarySelectorToken value = #'||' 
+initialBinaryStyle: aStBinarySelectorToken
+	aStBinarySelectorToken value == #'||'
 		ifTrue: 
 			[self applyStyle: #tempOpenBar toNext: 1.
 			aStBinarySelectorToken start: aStBinarySelectorToken start + 1.
 			^#tempCloseBar].
-	aStBinarySelectorToken value = #| ifTrue: [^#tempOpenBar].
+	aStBinarySelectorToken value == #| ifTrue: [^#tempOpenBar].
 	^#binaryMessage!
 
 initialKeywordStyle

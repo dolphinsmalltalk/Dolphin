@@ -254,7 +254,7 @@ browseHierarchy
 	original receiver's class since that's where we'll most likely want to implement the
 	method."
 
-	self selectedMethod selector = #doesNotUnderstand: 
+	self selectedMethod selector == #doesNotUnderstand: 
 		ifTrue: [self systemModel browseHierarchy: self frame receiver class]
 		ifFalse: [self systemModel browseClassHierarchyOfMethod: self selectedMethod]!
 
@@ -308,7 +308,7 @@ browseSystem
 	original receiver's class since that's where we'll most likely want to implement the
 	method."
 
-	(self selectedMethod selector = #doesNotUnderstand: or: [self selectedMethod isExpression]) 
+	(self selectedMethod selector == #doesNotUnderstand: or: [self selectedMethod isExpression]) 
 		ifTrue: [self model browseSystem: self frame receiver class]
 		ifFalse: [self model browseSystemOnMethod: self selectedMethod]!
 

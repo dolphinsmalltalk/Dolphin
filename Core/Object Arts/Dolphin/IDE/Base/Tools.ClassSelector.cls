@@ -735,7 +735,7 @@ queryCommand: aCommandQuery
 									["This odd way of testing if the selected class is a kind of TestCase is 
 									used to avoid creating a dependency on the SUnit package, so it can 
 								be uninstalled if desired."
-									class allSuperclasses anySatisfy: [:each | each name = #'XProgramming.SUnit.TestCase']]]).
+									class allSuperclasses anySatisfy: [:each | each name == #'XProgramming.SUnit.TestCase']]]).
 			^true].
 	#toggleShowFullNames == selector
 		ifTrue: 

@@ -880,7 +880,7 @@ isInheritedMethod: aCompiledMethod
 isInstanceMode
 	"Private - Answer true if the receiver is in instance mode"
 
-	^modePresenter value = #instanceMode
+	^modePresenter value == #instanceMode
 !
 
 isInstanceMode: aBoolean 
@@ -1272,7 +1272,7 @@ onDropOverMode: aDragDropSession
 
 	| dropClass |
 	dropClass := self selectedClass.
-	aDragDropSession suggestedTarget = #classMode ifTrue: [dropClass := dropClass class].
+	aDragDropSession suggestedTarget == #classMode ifTrue: [dropClass := dropClass class].
 	self dropMethods: aDragDropSession onto: dropClass!
 
 onFilterCardChanged
@@ -1416,8 +1416,6 @@ onMethodSelected
 onModeSelectionChanged
 	"Private - The browser has toggled from instance to class mode, or vice versa."
 
-	"^classesPresenter isInstanceMode: modePresenter value = #instanceMode."
-
 	| changingEvent |
 	changingEvent := SelectionChangingEvent forSource: modePresenter view.
 	changingEvent
@@ -1425,7 +1423,7 @@ onModeSelectionChanged
 		oldSelection: (classesPresenter isInstanceMode ifTrue: [#instanceMode] ifFalse: [#classMode]).
 	self onPromptToSaveMethodChanges: changingEvent.
 	changingEvent value
-		ifTrue: [classesPresenter isInstanceMode: changingEvent newSelection = #instanceMode]
+		ifTrue: [classesPresenter isInstanceMode: changingEvent newSelection == #instanceMode]
 		ifFalse: [modePresenter noEventsDo: [modePresenter value: changingEvent oldSelection]]!
 
 onPackageDoubleClicked: aPoint

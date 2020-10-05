@@ -251,17 +251,17 @@ initialize
 isAlignmentCenter
 	"Answer whether the text in this column is centered."
 
-	^alignment = #center!
+	^alignment == #center!
 
 isAlignmentLeft
 	"Answer whether the text in this column is aligned to the left."
 
-	^alignment = #left!
+	^alignment == #left!
 
 isAlignmentRight
 	"Answer whether the text in this column is aligned to the right."
 
-	^alignment = #right!
+	^alignment == #right!
 
 isAutoResize
 	"Answer true if the receiver will attempt to share the available width in it's parent with

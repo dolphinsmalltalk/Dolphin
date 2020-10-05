@@ -291,7 +291,7 @@ checkOptimizedKeywordMessages: aMessageNode
 							hasNiladicBlockArg: arguments second
 							code: CErrExpectLiteralBlock]].
 	selector == #to:do: ifTrue: [^self checkMessage: aMessageNode hasMonadicBlockArg: arguments second].
-	selector = #to:by:do:
+	selector == #to:by:do:
 		ifTrue: [^self checkMessage: aMessageNode hasMonadicBlockArg: arguments third].
 	^false!
 

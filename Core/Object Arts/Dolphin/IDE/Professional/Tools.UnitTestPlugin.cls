@@ -204,17 +204,17 @@ installMenuCommands
 	| classContextMenus classMenuBarMenus methodContextMenus methodMenuBarMenus contextMenus menuBarMenus |
 	contextMenus := self allContextMenus.
 	classContextMenus := contextMenus
-				select: [:each | each items anySatisfy: [:item | item command = #newClass]].
+				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
 	classContextMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
 	menuBarMenus := self allMenuBarMenus.
 	classMenuBarMenus := menuBarMenus
-				select: [:each | each items anySatisfy: [:item | item command = #newClass]].
+				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
 	classMenuBarMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
 	methodContextMenus := contextMenus
-				select: [:each | each items anySatisfy: [:item | item command = #newMethod]].
+				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
 	methodContextMenus do: [:each | self installTestCommandsInMethodMenu: each].
 	methodMenuBarMenus := menuBarMenus
-				select: [:each | each items anySatisfy: [:item | item command = #newMethod]].
+				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
 	methodMenuBarMenus do: [:each | self installTestCommandsInMethodMenu: each]!
 
 installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel

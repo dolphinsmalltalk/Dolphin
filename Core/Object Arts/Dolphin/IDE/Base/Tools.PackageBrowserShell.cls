@@ -36,8 +36,8 @@ Class Variables:
 accept
 	"Accept the changes to any of the panes in the receiver"
 
-	currentCard = #comment ifTrue: [^self saveComment].
-	currentCard = #scripts ifTrue: [currentCard == #scripts ifTrue: [^self saveScript]].
+	currentCard == #comment ifTrue: [^self saveComment].
+	currentCard == #scripts ifTrue: [currentCard == #scripts ifTrue: [^self saveScript]].
 	Sound errorBeep!
 
 addToCommandRoute: route 
@@ -101,9 +101,9 @@ browseDefinitions
 browseHierarchy
 	"Private - Open a hierarchy browser on the currently selected class or method."
 
-	(self selectedMethod notNil and: [currentCard = #methods]) 
+	(self selectedMethod notNil and: [currentCard == #methods]) 
 		ifTrue: [^self systemModel browseClassHierarchyOfMethod: self selectedMethod].
-	(self selectedClass notNil and: [currentCard = #classes]) 
+	(self selectedClass notNil and: [currentCard == #classes]) 
 		ifTrue: [^self systemModel browseHierarchy: self selectedClass].
 	self systemModel browseHierarchy!
 
@@ -186,9 +186,9 @@ browsePackages
 	^packagesPresenter browsePackageSources!
 
 browseReferences
-	(self selectedMethod notNil and: [currentCard = #methods]) ifTrue: [^self browseMessageReferences].
-	(self selectedClass notNil and: [currentCard = #classes]) ifTrue: [^self browseClassReferences].
-	(self sharedVariable notNil and: [currentCard = #variables])
+	(self selectedMethod notNil and: [currentCard == #methods]) ifTrue: [^self browseMessageReferences].
+	(self selectedClass notNil and: [currentCard == #classes]) ifTrue: [^self browseClassReferences].
+	(self sharedVariable notNil and: [currentCard == #variables])
 		ifTrue: [^self browseVariableReferences].
 	Sound warningBeep!
 
@@ -201,9 +201,9 @@ browseSystem
 	pkgs isEmpty ifTrue: [^super browseSystem].
 	browser := self systemModel browseSystemPackages: pkgs.
 	browser isNil ifTrue: [^nil].
-	(currentCard = #methods and: [(method := self selectedMethod) notNil]) 
+	(currentCard == #methods and: [(method := self selectedMethod) notNil]) 
 		ifTrue: [browser selectMethod: method].
-	(currentCard = #classes and: [(class := self selectedClass) notNil]) 
+	(currentCard == #classes and: [(class := self selectedClass) notNil]) 
 		ifTrue: [browser actualClass: class].
 	^browser!
 

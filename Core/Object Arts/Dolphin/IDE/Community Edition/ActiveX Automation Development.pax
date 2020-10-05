@@ -4700,7 +4700,7 @@ generateDefineFunctions
 				nextPutAll: 'defineFunction: #'.
 			(self rawMethodNameForFunction: each) printSelectorOn: target.
 			retType := each retTypeName.
-			retType = #hresult
+			retType == #hresult
 				ifFalse: 
 					[target
 						crtab: 3;
