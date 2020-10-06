@@ -78,15 +78,9 @@ adornmentRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the edges of the secondary
 	selection adornments of aView."
 
-	| viewRects extent rect |
-	extent := Grabber defaultExtent.
-	rect := aView rectangle insetBy: extent // 2 negated.
-	viewRects := #(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter)
-				collect: 
-					[:eachAspect |
-					| center |
-					center := self mapPoint: (rect perform: eachAspect) toArenaFromView: aView.
-					Rectangle center: center extent: extent].
+	| viewRects |
+	viewRects := OrderedCollection new.
+	self adornmentRectanglesFor: aView do: [:rect | viewRects add: rect].
 	^viewRects!
 
 adornmentRectanglesFor: aView do: aMonadicValuable
@@ -1776,10 +1770,11 @@ performCommand: aCommand
 	| result |
 	self eraseAdornment.
 	result := super performCommand: aCommand.
-	self validateLayout.
-	self drawAdornment.
-	^result
-!
+	self isOpen
+		ifTrue: 
+			[self validateLayout.
+			self drawAdornment].
+	^result!
 
 performUndoRedo: aNiladicValuable
 	vcFlags := vcFlags maskSet: UndoRedoFlag.
