@@ -1025,20 +1025,40 @@ testPredecessorSuccessor
 			self assert: (self successor: Float fmin negated) equals: 0.0]!
 
 testPrintOnDecimalPlaces
-	| fmax fmin |
 	self assert: (self printString: 3.999 decimalPlaces: 4) equals: '3.9990'.
 	self assert: (self printString: 3.999 decimalPlaces: 3) equals: '3.999'.
 	self assert: (self printString: 3.999 decimalPlaces: 2) equals: '4.00'.
 	self assert: (self printString: 3.999 decimalPlaces: 1) equals: '4.0'.
 	self assert: (self printString: 3.999 decimalPlaces: 0) equals: '4'.
-	self assert: (self printString: Float zero decimalPlaces: 0) equals: '0'.
-	self assert: (self printString: Float zero decimalPlaces: 1) equals: '0.0'.
-	self assert: (self printString: Float zero decimalPlaces: 2) equals: '0.00'.
-	self assert: (self printString: Float negativeZero decimalPlaces: 0) equals: '-0'.
-	self assert: (self printString: Float negativeZero decimalPlaces: 1) equals: '-0.0'.
-	self assert: (self printString: Float negativeZero decimalPlaces: 3) equals: '-0.000'.
+	self assert: (self printString: -0.001 decimalPlaces: 2) equals: '-0.00'.
+	self assert: (self printString: 0.001 decimalPlaces: 2) equals: '0.00'.
 	self assert: (self printString: Float pi decimalPlaces: 15) equals: '3.141592653589793'.
 	self assert: (self printString: Float pi decimalPlaces: 3) equals: '3.142'.
+	"Number at the extremes of precision, but which have exact representations"
+	self assert: (self printString: 1.25e22 decimalPlaces: 2) equals: '12500000000000000000000.00'.
+	self assert: (self printString: 5000000000000001.0 decimalPlaces: 5)
+		equals: '5000000000000001.00000'.
+	self assert: (self printString: 50000000000001.25 decimalPlaces: 2) equals: '50000000000001.25'.
+	"A large number close to fmax"
+	self assert: (self printString: 1.0e306 decimalPlaces: 3)
+		equals: (String writeStream
+				nextPut: $1;
+				next: 306 put: $0;
+				nextPutAll: '.000';
+				contents)!
+
+testPrintOnDecimalPlacesFmax
+	| fmax |
+	fmax := String writeStream
+				nextPutAll: '17976931348623157';
+				next: 308 - 16 put: $0;
+				nextPutAll: '.00000';
+				contents.
+	self assert: (self printString: Float fmax decimalPlaces: 5) equals: fmax.
+	self assert: (self printString: Float fmax negated decimalPlaces: 5) equals: '-' , fmax!
+
+testPrintOnDecimalPlacesFmin
+	| fmax fmin |
 	fmin := String writeStream
 				nextPutAll: '0.';
 				next: 308 - 1 put: $0;
@@ -1058,23 +1078,28 @@ testPrintOnDecimalPlaces
 						contents.
 			self assert: (self printString: Float fminDenormalized decimalPlaces: 324) equals: fminDenorm.
 			self assert: (self printString: Float fminDenormalized negated decimalPlaces: 324)
-				equals: '-' , fminDenorm].
-	fmax := String writeStream
-				nextPutAll: '17976931348623157';
-				next: 308 - 16 put: $0;
-				nextPutAll: '.00000';
-				contents.
-	self assert: (self printString: Float fmax decimalPlaces: 5) equals: fmax.
-	self assert: (self printString: Float fmax negated decimalPlaces: 5) equals: '-' , fmax.
+				equals: '-' , fminDenorm]!
+
+testPrintOnDecimalPlacesInfinities
 	self assert: (self printString: Float infinity decimalPlaces: 2) equals: 'Float.Infinity'.
 	self assert: (self printString: Float infinity decimalPlaces: 0) equals: 'Float.Infinity'.
 	self assert: (self printString: Float negativeInfinity decimalPlaces: 2)
 		equals: 'Float.NegativeInfinity'.
 	self assert: (self printString: Float negativeInfinity decimalPlaces: 0)
-		equals: 'Float.NegativeInfinity'.
+		equals: 'Float.NegativeInfinity'!
+
+testPrintOnDecimalPlacesNans
 	self assert: (self printString: Float nan decimalPlaces: 1) equals: 'Float.NaN'.
 	self assert: (self printString: Float nan decimalPlaces: 0) equals: 'Float.NaN'.
 	self assert: (self printString: Float nan negated decimalPlaces: 2) equals: 'Float.NaN'!
+
+testPrintOnDecimalPlacesZeroes
+	self assert: (self printString: Float zero decimalPlaces: 0) equals: '0'.
+	self assert: (self printString: Float zero decimalPlaces: 1) equals: '0.0'.
+	self assert: (self printString: Float zero decimalPlaces: 2) equals: '0.00'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 0) equals: '-0'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 1) equals: '-0.0'.
+	self assert: (self printString: Float negativeZero decimalPlaces: 3) equals: '-0.000'.!
 
 testPrintOnSignificantFigures
 	self assert: (self printString: Float pi significantFigures: 0) equals: '0.0'.
@@ -1506,6 +1531,11 @@ zeroes
 !FloatTest categoriesFor: #testOverflow!public!unit tests! !
 !FloatTest categoriesFor: #testPredecessorSuccessor!public!unit tests! !
 !FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
+!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmax!public!unit tests! !
+!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmin!public!unit tests! !
+!FloatTest categoriesFor: #testPrintOnDecimalPlacesInfinities!public!unit tests! !
+!FloatTest categoriesFor: #testPrintOnDecimalPlacesNans!public!unit tests! !
+!FloatTest categoriesFor: #testPrintOnDecimalPlacesZeroes!public!unit tests! !
 !FloatTest categoriesFor: #testPrintOnSignificantFigures!public!unit tests! !
 !FloatTest categoriesFor: #testPrintString!public!unit tests! !
 !FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
