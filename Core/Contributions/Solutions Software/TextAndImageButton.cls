@@ -101,7 +101,8 @@ drawTextOn: aCanvas
 						in: (textPos extent: self extent)
 						flags: textFlags]
 				ifFalse: 
-					[aCanvas
+					[textFlags := self shouldShowKeyboardAccelerators ifTrue: [0] ifFalse: [DSS_HIDEPREFIX].
+					aCanvas
 						stateText: self text
 						at: textPos
 						flags: DST_PREFIXTEXT | DSS_DISABLED | textFlags]]!
