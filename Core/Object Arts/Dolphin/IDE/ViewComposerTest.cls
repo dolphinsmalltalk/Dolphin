@@ -186,6 +186,19 @@ testDropResourceOverShell
 	self doArenaDropOf: TextPresenter operation: #copy.
 	self assert: vc primarySelection isKindOf: TextEdit!
 
+testExit
+	"Exiting the view composer used to raise an error
+	due to trying to redraw the adornment after the view was closed.
+	
+	N.B. we must simulate the way the command will actually be routed
+	through #performCommand: in order to trigger the bug."
+
+	| query |
+	self openTestSubjectOnNewShell.
+	query := vc commandPolicy query: (CommandDescription command: #exit).
+	self shouldnt: [query perform] raise: Error.
+	self deny: vc isOpen!
+
 testIgnoreShellPreferredExtent
 	"Check to make sure that the VC doesn't allow the choice of shell extents
 	even when they are marked as #userPreferredExtent"
@@ -285,6 +298,7 @@ testZOrderPreservedByMutate
 !ViewComposerTest categoriesFor: #testDropResourceOverEmptyArena!public!unit tests! !
 !ViewComposerTest categoriesFor: #testDropResourceOverHierarchy!public!unit tests! !
 !ViewComposerTest categoriesFor: #testDropResourceOverShell!public!unit tests! !
+!ViewComposerTest categoriesFor: #testExit!public!unit tests! !
 !ViewComposerTest categoriesFor: #testIgnoreShellPreferredExtent!public!unit tests! !
 !ViewComposerTest categoriesFor: #testNoDragResourceOverInUseArena!public!unit tests! !
 !ViewComposerTest categoriesFor: #testPasteToArena!public!unit tests! !
