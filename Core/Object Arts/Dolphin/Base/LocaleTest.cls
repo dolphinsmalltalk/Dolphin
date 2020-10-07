@@ -26,6 +26,9 @@ tearDown
 	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
 	super tearDown!
 
+testDisplayFloatOn
+	self subclassResponsibility!
+
 testPrintDateTimeOnFormat
 	| subject now expected |
 	now := DateAndTime
@@ -82,6 +85,7 @@ testPrintDurationOnFormat
 !LocaleTest categoriesFor: #displayFloat:with:!helpers!private! !
 !LocaleTest categoriesFor: #setUp!private!running! !
 !LocaleTest categoriesFor: #tearDown!private!running! !
+!LocaleTest categoriesFor: #testDisplayFloatOn!public! !
 !LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public! !
 !LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
 

@@ -2,7 +2,7 @@
 
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'EMax EMin EMinDenormalized FMax FMin FMinDenormalized FpClassDenormal FpClassFinite FpClassInfinite FpClassNaN FpClassNegative FpClassNormal FpClassStrictlyPositive FpClassZero Infinity InvalidOperationFlag Ln2 MantissaHighBit MantissaMask NaN NegativeInfinity Precision SignificantDifference'
+	classVariableNames: 'DefaultDecimalExponents EMax EMin EMinDenormalized FMax FMin FMinDenormalized FpClassDenormal FpClassFinite FpClassInfinite FpClassNaN FpClassNegative FpClassNormal FpClassStrictlyPositive FpClassZero Infinity InvalidOperationFlag Ln2 MantissaHighBit MantissaMask NaN NegativeInfinity Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -168,15 +168,16 @@ absPrintExactlyOn: aStream base: base
 			[r := r * base.
 			mPlus := mPlus * base.
 			mMinus := mMinus * base].
-	(fixedFormat := baseExpEstimate between: -3 and: 6)
-		ifTrue: 
-			[decPointCount := baseExpEstimate.
-			baseExpEstimate <= 0
-				ifTrue: 
-					[aStream
-						nextPutAll: '0.';
-						next: baseExpEstimate negated put: $0]]
-		ifFalse: [decPointCount := 1].
+	(fixedFormat := baseExpEstimate >= DefaultDecimalExponents start
+				and: [baseExpEstimate <= DefaultDecimalExponents stop])
+			ifTrue: 
+				[decPointCount := baseExpEstimate.
+				baseExpEstimate <= 0
+					ifTrue: 
+						[aStream
+							nextPutAll: '0.';
+							next: baseExpEstimate negated put: $0]]
+			ifFalse: [decPointCount := 1].
 	slowbit := 1 - s lowBit.
 	shead := s bitShift: slowbit.
 	
@@ -185,13 +186,13 @@ absPrintExactlyOn: aStream base: base
 	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]])
 		| (tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])]
 			whileFalse: 
-				[aStream nextPut: (Character digitValue: d).
+				[aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 				r := r * base.
 				mPlus := mPlus * base.
 				mMinus := mMinus * base.
 				(decPointCount := decPointCount - 1) = 0 ifTrue: [aStream nextPut: $.]].
 	tc2 ifTrue: [(tc1 not or: [r * 2 >= s]) ifTrue: [d := d + 1]].
-	aStream nextPut: (Character digitValue: d).
+	aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 	decPointCount > 0
 		ifTrue: 
 			[decPointCount - 1 timesRepeat: [aStream nextPut: $0].
@@ -285,13 +286,13 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 	(tc1 := r <= mMinus and: [roundingLowIncludesLimits or: [r < mMinus]])
 		| (tc2 := r + mPlus >= s and: [roundingHighIncludesLimits or: [r + mPlus > s]])]
 			whileFalse: 
-				[aStream nextPut: (Character digitValue: d).
+				[aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 				r := r * base.
 				mPlus := mPlus * base.
 				mMinus := mMinus * base.
 				(decPointCount := decPointCount - 1) = 0 ifTrue: [aStream nextPut: $.]].
 	tc2 ifTrue: [(tc1 not or: [r * 2 >= s]) ifTrue: [d := d + 1]].
-	aStream nextPut: (Character digitValue: d).
+	aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: d + 1).
 	decPointCount > 0
 		ifTrue: 
 			[decPointCount - 1 timesRepeat: [aStream nextPut: $0].
@@ -341,7 +342,7 @@ absPrintOn: aStream base: base digitCount: digitCount decimalExponents: anInterv
 	[x >= fuzz] whileTrue: 
 			["use fuzz to track significance"
 			xi := x truncated.
-			aStream nextPut: (Character digitValue: xi).
+			aStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: xi + 1).
 			x := (x - xi asFloat) * fBase.
 			fuzz := fuzz * fBase.
 			exp := exp - 1.
@@ -842,6 +843,15 @@ printOn: aStream base: baseInteger decimalPlaces: placesInteger
 printOn: aStream base: baseInteger significantFigures: digitsInteger
 	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, with <integer>, digitsInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
 
+	self
+		printOn: aStream
+		base: baseInteger
+		significantFigures: digitsInteger
+		decimalExponents: DefaultDecimalExponents!
+
+printOn: aStream base: baseInteger significantFigures: digitsInteger decimalExponents: anInterval
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, with <integer>, digitsInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
+
 	| classification |
 	classification := self fpClass.
 	(classification anyMask: FpClassNaN)
@@ -868,7 +878,7 @@ printOn: aStream base: baseInteger significantFigures: digitsInteger
 			absPrintOn: aStream
 			base: baseInteger
 			digitCount: digitsInteger
-			decimalExponents: ##(-3 to: 5)!
+			decimalExponents: anInterval!
 
 printOn: aStream decimalPlaces: anInteger
 	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded to the <integer> number of decimal places, anInteger."
@@ -878,7 +888,11 @@ printOn: aStream decimalPlaces: anInteger
 printOn: aStream significantFigures: anInteger
 	"Append the printed representation of the receiver in base 10 to the <puttableStream>, aStream, with <integer>, anInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
 
-	self printOn: aStream base: 10 significantFigures: anInteger!
+	self
+		printOn: aStream
+		base: 10
+		significantFigures: anInteger
+		decimalExponents: DefaultDecimalExponents!
 
 qwordAtOffset: anInteger
 	<primitive: 191>
@@ -1061,6 +1075,7 @@ truncated
 !Float categoriesFor: #printOn:base:!printing!public! !
 !Float categoriesFor: #printOn:base:decimalPlaces:!printing!public! !
 !Float categoriesFor: #printOn:base:significantFigures:!printing!public! !
+!Float categoriesFor: #printOn:base:significantFigures:decimalExponents:!printing!public! !
 !Float categoriesFor: #printOn:decimalPlaces:!printing!public! !
 !Float categoriesFor: #printOn:significantFigures:!printing!public! !
 !Float categoriesFor: #qwordAtOffset:!accessing!private! !
@@ -1079,6 +1094,17 @@ truncated
 !Float categoriesFor: #truncated!public!truncation and round off! !
 
 !Float class methodsFor!
+
+defaultDecimalExponents
+	"Answer an <Interval> that specifies the range of exponents over which Floats are (by default) printed in decimal (as opposed to scientific) format by the #printOn:base:significantFigures: method."
+
+	^DefaultDecimalExponents!
+
+defaultDecimalExponents: anInteger
+	"Set the <Interval> that is used as the default range of exponents over which Floats are printed in decimal (as opposed to scientific) format by the #printOn:base:significantFigures: method.
+	Note that Float>>printOn: always prints floats in exactly in a fixed format as this is used to print Floats as literals that can be recompiled back to the same value. It does not use this value."
+
+	DefaultDecimalExponents := anInteger!
 
 denormalized
 	"Answer whether the characterized floating point representation allows denormalized
@@ -1231,7 +1257,8 @@ initialize
 	self addClassConstant: 'FpClassFinite'
 		value: CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NZ
 				| CRTConstants._FPCLASS_PZ | CRTConstants._FPCLASS_PD
-				| CRTConstants._FPCLASS_PN!
+				| CRTConstants._FPCLASS_PN.
+	DefaultDecimalExponents := -3 to: 6!
 
 maxExponent
 	"Private - The maximum allowed decimal exponent (power of 10) in the literal Float form."
@@ -1315,6 +1342,8 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0.0! !
+!Float class categoriesFor: #defaultDecimalExponents!accessing!public! !
+!Float class categoriesFor: #defaultDecimalExponents:!accessing!public! !
 !Float class categoriesFor: #denormalized!public!testing! !
 !Float class categoriesFor: #e!constants!public! !
 !Float class categoriesFor: #emax!constants!public! !
