@@ -14,6 +14,11 @@ buildImageManager
 
 	self image ifNotNil: [ :img | self imageIndex: (self imageManager addImage: img)]!
 
+contentOffsetOn: aCanvas
+	self alignment = #left ifTrue: [^8].
+	self alignment = #center ifTrue: [^(self extent x - (self labelWidthOn: aCanvas)) // 2].
+	self alignment = #right ifTrue: [^self extent x - 8 - (self labelWidthOn: aCanvas)]!
+
 currentBackcolor
 
 	"Modify the backcolor to reflect the receiver's state"
@@ -181,19 +186,10 @@ imageManager: anObject
 	imageManager := anObject!
 
 imagePosOn: aCanvas
-	| textOffsetX xPos yPos |
-	(self isImageFirst or: [self hasText not])
-		ifTrue: [textOffsetX := 0]
-		ifFalse: 
-			[textOffsetX := (aCanvas
-						textExtent: self text
-						width: 0
-						flags: DT_SINGLELINE) x
-						+ self imageGap].
-	self alignment = #left ifTrue: [xPos := 8].
-	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
-	self alignment = #right ifTrue: [xPos := self extent x - 8 - (self labelWidthOn: aCanvas)].
-	xPos := xPos + textOffsetX.
+	| xPos yPos |
+	xPos := self contentOffsetOn: aCanvas.
+	(self hasText and: [self isImageFirst not])
+		ifTrue: [xPos := xPos + (self textExtentOn: aCanvas) x + self imageGap].
 	yPos := (self extent y - self imageExtent y) // 2.
 	^self clientRectangle topLeft + (xPos @ yPos max: 0 @ 0)!
 
@@ -211,16 +207,8 @@ isMenuOpen: anObject
 
 labelWidthOn: aCanvas
 	| imageWidth textWidth |
-	imageWidth := 0.
-	textWidth := 0.
-	self hasImage ifTrue: [imageWidth := self imageExtent x] ifFalse: [imageWidth := 0].
-	self hasText
-		ifTrue: 
-			[textWidth := (aCanvas
-						textExtent: self text
-						width: 0
-						flags: DT_SINGLELINE) x]
-		ifFalse: [textWidth := 0].
+	imageWidth := self hasImage ifTrue: [self imageExtent x] ifFalse: [0].
+	textWidth := self hasText ifTrue: [(self textExtentOn: aCanvas) x] ifFalse: [0].
 	^imageWidth + self imageGap + textWidth!
 
 preTranslateKeyboardInput: aMSG
@@ -268,20 +256,17 @@ standardTransitionDurations
 
 	^durations!
 
+textExtentOn: aCanvas
+	^aCanvas
+		textExtent: self text
+		width: 0
+		flags: DT_SINGLELINE!
+
 textPosOn: aCanvas
-	| textExtent imageOffsetX xPos yPos |
-	textExtent := aCanvas
-				textExtent: self text
-				width: 0
-				flags: DT_SINGLELINE.
-	(self hasImage and: [self isImageFirst])
-		ifTrue: [imageOffsetX := self imageExtent x + self imageGap]
-		ifFalse: [imageOffsetX := 0].
-	self alignment = #left ifTrue: [xPos := 8].
-	self alignment = #center ifTrue: [xPos := (self extent x - (self labelWidthOn: aCanvas)) // 2].
-	self alignment = #right ifTrue: [xPos := self extent x - 8 - (self labelWidthOn: aCanvas)].
-	xPos := xPos + imageOffsetX.
-	yPos := (self extent y - textExtent y) // 2.
+	| xPos yPos |
+	xPos := self contentOffsetOn: aCanvas.
+	(self hasImage and: [self isImageFirst]) ifTrue: [xPos := self imageExtent x + self imageGap].
+	yPos := (self extent y - (self textExtentOn: aCanvas) y) // 2.
 	^self clientRectangle topLeft + (xPos @ yPos max: 0 @ 0)!
 
 trackMenu
@@ -315,6 +300,7 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 
 	^super wmLButtonDown: message wParam: wParam lParam: lParam! !
 !TextAndImageButton categoriesFor: #buildImageManager!operations!private! !
+!TextAndImageButton categoriesFor: #contentOffsetOn:!calculating!private! !
 !TextAndImageButton categoriesFor: #currentBackcolor!accessing!public! !
 !TextAndImageButton categoriesFor: #drawBackgroundOn:!drawing!private! !
 !TextAndImageButton categoriesFor: #drawDropDownArrowOn:!drawing!private! !
@@ -346,6 +332,7 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 !TextAndImageButton categoriesFor: #preTranslateKeyboardInput:!event handling!private! !
 !TextAndImageButton categoriesFor: #rebuildImageManager!operations!private! !
 !TextAndImageButton categoriesFor: #standardTransitionDurations!accessing!public! !
+!TextAndImageButton categoriesFor: #textExtentOn:!calculating!public! !
 !TextAndImageButton categoriesFor: #textPosOn:!calculating!private! !
 !TextAndImageButton categoriesFor: #trackMenu!operations!private! !
 !TextAndImageButton categoriesFor: #wmLButtonDown:wParam:lParam:!event handling-win32!private! !
