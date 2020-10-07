@@ -33,7 +33,9 @@ testDisplayFloatOn
 		{0.0001. '0.0001'}.
 		{-0.0001. '-0.0001'}.
 		{0.00001. '1.0e-5'}.
-		{-0.00001. '-1.0e-5'}} do: 
+		{-0.00001. '-1.0e-5'}.
+		{1.25e22. '1.25e22'}.
+		{50000000000001.25. '5.000000000000125e13'}} do: 
 				[:each |
 				| actual |
 				actual := String streamContents: [:s | subject displayFloat: each first on: s].
