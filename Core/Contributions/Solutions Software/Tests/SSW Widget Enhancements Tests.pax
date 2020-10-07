@@ -1,0 +1,38 @@
+﻿| package |
+package := Package name: 'SSW Widget Enhancements Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #TextAndImageButtonTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\SSW Widget Enhancements'
+	'..\..\Camp Smalltalk\SUnit\SUnit').
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #TextAndImageButtonTest
+	instanceVariableNames: 'button canvas anon'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
