@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #NUMBERFMTW
-	instanceVariableNames: 'decimalSeparator numberGrouping thousandSeparator'
+	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
 	classVariableNames: '_OffsetOf_Grouping _OffsetOf_LeadingZero _OffsetOf_lpDecimalSep _OffsetOf_lpThousandSep _OffsetOf_NegativeOrder _OffsetOf_NumDigits'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -45,15 +45,38 @@ decimalSeparator: aString
 	decimalSeparator := aString asUtf16String.
 	self lpDecimalSep: decimalSeparator!
 
+grouping
+	"Answer the <Integer> value of the receiver's grouping format - see #grouping: and #numberGrouping."
+
+	^self Grouping!
+
 Grouping
-	"Answer the <Integer> value of the receiver's 'Grouping' field."
+	"Private - Answer the <Integer> value of the receiver's 'Grouping' field."
 
 	^bytes dwordAtOffset: _OffsetOf_Grouping!
 
+grouping: anInteger
+	"Set the number of digits in each group of numbers to the left of the decimal separator.
+	Examples:
+	0 - no grouping
+	3 - groups of 3 (thousands)
+	32 - groups of 2 except for the last group of 3"
+
+	(anInteger between: 0 and: 9999)
+		ifFalse: [self error: 'Invalid grouping specification ' , anInteger printString].
+	self Grouping: anInteger!
+
 Grouping: anInteger
-	"Set the receiver's 'Grouping' field to the value of the argument, anInteger"
+	"Private - Set the receiver's 'Grouping' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Grouping put: anInteger!
+
+groupSeparator
+	^groupSeparator ifNil: [groupSeparator := self lpThousandSep]!
+
+groupSeparator: aString
+	groupSeparator := aString asUtf16String.
+	self lpThousandSep: groupSeparator!
 
 hasLeadingZero
 	^self LeadingZero asBoolean!
@@ -62,32 +85,32 @@ hasLeadingZero: aBoolean
 	self LeadingZero: aBoolean asParameter!
 
 LeadingZero
-	"Answer the <Integer> value of the receiver's 'LeadingZero' field."
+	"Private - Answer the <Integer> value of the receiver's 'LeadingZero' field."
 
 	^bytes dwordAtOffset: _OffsetOf_LeadingZero!
 
 LeadingZero: anInteger
-	"Set the receiver's 'LeadingZero' field to the value of the argument, anInteger"
+	"Private - Set the receiver's 'LeadingZero' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_LeadingZero put: anInteger!
 
 lpDecimalSep
-	"Answer the <Utf16String> value of the receiver's 'lpDecimalSep' field."
+	"Private - Answer the <Utf16String> value of the receiver's 'lpDecimalSep' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpDecimalSep)!
 
 lpDecimalSep: anUtf16String
-	"Set the receiver's 'lpDecimalSep' field to the value of the argument, anUtf16String"
+	"Private - Set the receiver's 'lpDecimalSep' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpDecimalSep put: anUtf16String yourAddress!
 
 lpThousandSep
-	"Answer the <Utf16String> value of the receiver's 'lpThousandSep' field."
+	"Private - Answer the <Utf16String> value of the receiver's 'lpThousandSep' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpThousandSep)!
 
 lpThousandSep: anUtf16String
-	"Set the receiver's 'lpThousandSep' field to the value of the argument, anUtf16String"
+	"Private - Set the receiver's 'lpThousandSep' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpThousandSep put: anUtf16String yourAddress!
 
@@ -98,12 +121,12 @@ negativeNumberMode: anInteger
 	self NegativeOrder: anInteger!
 
 NegativeOrder
-	"Answer the <Integer> value of the receiver's 'NegativeOrder' field."
+	"Private - Answer the <Integer> value of the receiver's 'NegativeOrder' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NegativeOrder!
 
 NegativeOrder: anInteger
-	"Set the receiver's 'NegativeOrder' field to the value of the argument, anInteger"
+	"Private - Set the receiver's 'NegativeOrder' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_NegativeOrder put: anInteger!
 
@@ -123,7 +146,7 @@ numberGrouping: aString
 	numberGrouping := nil.
 	groups := $; split: aString.
 	groups last = '0' ifTrue: [groups := groups resize: groups size - 1].
-	self Grouping: (groups inject: 0
+	self grouping: (groups inject: 0
 				into: 
 					[:grouping :each |
 					| group |
@@ -131,43 +154,48 @@ numberGrouping: aString
 					grouping * 10 + group])!
 
 NumDigits
-	"Answer the <Integer> value of the receiver's 'NumDigits' field."
+	"Private - Answer the <Integer> value of the receiver's 'NumDigits' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumDigits!
 
 NumDigits: anInteger
-	"Set the receiver's 'NumDigits' field to the value of the argument, anInteger"
+	"Private - Set the receiver's 'NumDigits' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_NumDigits put: anInteger!
 
 thousandSeparator
-	^thousandSeparator ifNil: [thousandSeparator := self lpThousandSep]!
+	"This should really be called groupSeparator, and will be deprecated in the next release."
+
+	^self groupSeparator!
 
 thousandSeparator: aString
-	thousandSeparator := aString asUtf16String.
-	self lpThousandSep: thousandSeparator! !
+	self groupSeparator: aString! !
 !NUMBERFMTW categoriesFor: #decimalPlaces!accessing!public! !
 !NUMBERFMTW categoriesFor: #decimalPlaces:!accessing!public! !
 !NUMBERFMTW categoriesFor: #decimalSeparator!accessing!public! !
 !NUMBERFMTW categoriesFor: #decimalSeparator:!accessing!public! !
-!NUMBERFMTW categoriesFor: #Grouping!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #Grouping:!**compiled accessors**!public! !
+!NUMBERFMTW categoriesFor: #grouping!accessing!public! !
+!NUMBERFMTW categoriesFor: #Grouping!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #grouping:!accessing!public! !
+!NUMBERFMTW categoriesFor: #Grouping:!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #groupSeparator!accessing!public! !
+!NUMBERFMTW categoriesFor: #groupSeparator:!accessing!public! !
 !NUMBERFMTW categoriesFor: #hasLeadingZero!accessing!public! !
 !NUMBERFMTW categoriesFor: #hasLeadingZero:!accessing!public! !
-!NUMBERFMTW categoriesFor: #LeadingZero!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #LeadingZero:!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #lpDecimalSep!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #lpDecimalSep:!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #lpThousandSep!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #lpThousandSep:!**compiled accessors**!public! !
+!NUMBERFMTW categoriesFor: #LeadingZero!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #LeadingZero:!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #lpDecimalSep!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #lpDecimalSep:!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #lpThousandSep!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #lpThousandSep:!**compiled accessors**!private! !
 !NUMBERFMTW categoriesFor: #negativeNumberMode!accessing!public! !
 !NUMBERFMTW categoriesFor: #negativeNumberMode:!accessing!public! !
-!NUMBERFMTW categoriesFor: #NegativeOrder!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #NegativeOrder:!**compiled accessors**!public! !
+!NUMBERFMTW categoriesFor: #NegativeOrder!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #NegativeOrder:!**compiled accessors**!private! !
 !NUMBERFMTW categoriesFor: #numberGrouping!accessing!public! !
 !NUMBERFMTW categoriesFor: #numberGrouping:!accessing!public! !
-!NUMBERFMTW categoriesFor: #NumDigits!**compiled accessors**!public! !
-!NUMBERFMTW categoriesFor: #NumDigits:!**compiled accessors**!public! !
+!NUMBERFMTW categoriesFor: #NumDigits!**compiled accessors**!private! !
+!NUMBERFMTW categoriesFor: #NumDigits:!**compiled accessors**!private! !
 !NUMBERFMTW categoriesFor: #thousandSeparator!accessing!public! !
 !NUMBERFMTW categoriesFor: #thousandSeparator:!accessing!public! !
 

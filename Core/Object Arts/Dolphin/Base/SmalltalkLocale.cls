@@ -286,6 +286,11 @@ pmDesignator
 
 	^'pm'!
 
+printFloat: aFloat
+	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
+
+	^aFloat printString!
+
 printFloat: aFloat on: aStream format: aNUMBERFMTW
 	"Append, to aStream, a String whose characters are a representation of the <Float> argument, aFloat, in <integer> base, baseInteger, using the formatting instructions specified by the <NUMBERFMT>, aNUMBERFMT."
 
@@ -367,6 +372,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
 !SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
 !SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
+!SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
 !SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
 !SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
 !SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
