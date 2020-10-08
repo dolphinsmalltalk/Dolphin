@@ -250,16 +250,21 @@ stbSaveOn: anSTBOutFiler
 
 stbConvertFrom: anSTBClassFormat
 
-	anSTBClassFormat version <= 10 ifTrue:
+	anSTBClassFormat version <= 20 ifTrue:
 		[^[:data || newInstance |
 		newInstance := self basicNew.
 		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+		"#1030 lastSelIndices needs initializing"
+		newInstance instVarAt: ##(self allInstVarNames indexOf: 'lastSelIndices') put: #().
 		newInstance]].
 
 	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
-	^20! !
-!EmbeddedComboBox class categoriesFor: #stbConvertFrom:!binary filing!public! !
+
+	"21 - lastSelIndices already initialized to #() - see #1030"
+
+	^21! !
+!EmbeddedComboBox class categoriesFor: #stbConvertFrom:!public! !
 !EmbeddedComboBox class categoriesFor: #stbVersion!binary filing!public! !
 
