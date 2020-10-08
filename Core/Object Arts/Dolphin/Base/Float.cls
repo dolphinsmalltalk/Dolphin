@@ -1096,13 +1096,12 @@ truncated
 !Float class methodsFor!
 
 defaultDecimalExponents
-	"Answer an <Interval> that specifies the range of exponents over which Floats are (by default) printed in decimal (as opposed to scientific) format by the #printOn:base:significantFigures: method."
+	"Answer an <Interval> that specifies the range of exponents over which Floats are (by default) printed in decimal (as opposed to scientific) format by printing methods."
 
 	^DefaultDecimalExponents!
 
 defaultDecimalExponents: anInteger
-	"Set the <Interval> that is used as the default range of exponents over which Floats are printed in decimal (as opposed to scientific) format by the #printOn:base:significantFigures: method.
-	Note that Float>>printOn: always prints floats in exactly in a fixed format as this is used to print Floats as literals that can be recompiled back to the same value. It does not use this value."
+	"Set the <Interval> that is used as the default range of exponents over which Floats are printed in decimal (as opposed to scientific) format by print methods."
 
 	DefaultDecimalExponents := anInteger!
 
