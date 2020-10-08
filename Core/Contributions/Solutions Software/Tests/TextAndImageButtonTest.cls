@@ -11,9 +11,18 @@ TextAndImageButtonTest comment: ''!
 !TextAndImageButtonTest methodsFor!
 
 setUp
+	| shell |
 	super setUp.
 	button := TextAndImageButton new.
-	ShellView show addSubView: button!
+	button font: (Font name: 'Segoe UI' pointSize: 8).
+	button image: Icon warning.
+	button hasBorder: true.
+	shell := ShellView new create.
+	shell layoutManager: BorderLayout new.
+	shell addSubView: button.
+	button arrangement: #center.
+	shell rectangle: (100 @ 100 extent: 250 @ 100).
+	shell show!
 
 tearDown
 	button topView destroy.
@@ -24,7 +33,7 @@ testLabelWithAmpersand
 	"Test that labels containing ampersands are not (normally) ellipsised.
 	Inspired by TabViewXPTest>>testLabelWithAmpersand"
 
-	| extent text |
+	| extent text textRect imageRect textPos |
 	text := '&Hello && World'.
 	button text: text.
 	anon := Canvas newAnonymousSubclass.
@@ -45,12 +54,19 @@ testLabelWithAmpersand
 				textExtent: text
 				width: 0
 				flags: Win32Constants.DT_SINGLELINE.
-	button drawTextOn: canvas.
-	canvas free.
+	"The test button needs to be large enough"
+	self assert: button extent > (extent + button imageExtent + (20@10)).
+	button drawOn: canvas.
 	"The text should not have been ellipsized, and the drawn extent should be
 	the full extent needed to draw the text on a single line."
 	self assert: (anon classPool at: 'DrawnText') trimNulls equals: text.
-	self assert: (anon classPool at: 'Rect') extent = extent! !
+	self assert: (anon classPool at: 'Rect') extent = extent.
+	"The text should not occlude the image"
+	imageRect := (button imagePosOn: canvas) extent: button imageExtent.
+	textRect := (button textPosOn: canvas) extent: extent.
+	self deny: (imageRect intersects: textRect).
+	canvas free.
+! !
 !TextAndImageButtonTest categoriesFor: #setUp!public!running! !
 !TextAndImageButtonTest categoriesFor: #tearDown!public!running! !
 !TextAndImageButtonTest categoriesFor: #testLabelWithAmpersand!public!unit tests! !

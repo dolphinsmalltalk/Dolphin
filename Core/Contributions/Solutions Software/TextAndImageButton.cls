@@ -266,7 +266,8 @@ textExtentOn: aCanvas
 textPosOn: aCanvas
 	| xPos yPos |
 	xPos := self contentOffsetOn: aCanvas.
-	(self hasImage and: [self isImageFirst]) ifTrue: [xPos := self imageExtent x + self imageGap].
+	(self hasImage and: [self isImageFirst])
+		ifTrue: [xPos := xPos + self imageExtent x + self imageGap].
 	yPos := (self extent y - (self textExtentOn: aCanvas) y) // 2.
 	^self clientRectangle topLeft + (xPos @ yPos max: 0 @ 0)!
 
