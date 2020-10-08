@@ -1301,7 +1301,7 @@ Win32Structure subclass: #MSGBOXPARAMSW
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #NUMBERFMTW
-	instanceVariableNames: 'decimalSeparator numberGrouping thousandSeparator'
+	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
 	classVariableNames: '_OffsetOf_Grouping _OffsetOf_LeadingZero _OffsetOf_lpDecimalSep _OffsetOf_lpThousandSep _OffsetOf_NegativeOrder _OffsetOf_NumDigits'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

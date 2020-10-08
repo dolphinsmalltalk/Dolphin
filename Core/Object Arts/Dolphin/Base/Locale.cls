@@ -503,11 +503,17 @@ printDuration: aDuration on: aWriteStream format: aString
 		formatters: self durationFormatters!
 
 printFloat: aFloat
-	"Answer a <String> representation of the <Float> first argument in the format defined for this locale."
+	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
 
 	^self
 		printFloat: aFloat
 		format: self numberFormat
+		lcid: self lcid!
+
+printFloat: aFloat format: aNUMBERFMT
+	^self
+		printFloat: aFloat
+		format: aNUMBERFMT
 		lcid: self lcid!
 
 printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
@@ -696,6 +702,7 @@ yearMonthFormat
 !Locale categoriesFor: #printDateTime:on:format:!printing!public! !
 !Locale categoriesFor: #printDuration:on:format:!printing!public! !
 !Locale categoriesFor: #printFloat:!printing!public! !
+!Locale categoriesFor: #printFloat:format:!printing!public! !
 !Locale categoriesFor: #printFloat:format:lcid:!printing!public! !
 !Locale categoriesFor: #printFloat:on:format:!printing!public! !
 !Locale categoriesFor: #printFractionalPart:on:places:!printing!private! !

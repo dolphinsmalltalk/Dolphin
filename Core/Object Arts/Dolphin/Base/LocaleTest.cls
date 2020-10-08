@@ -14,9 +14,6 @@ LocaleTest comment: ''!
 defaultSubject
 	^self subclassResponsibility!
 
-displayFloat: aFloat with: subject
-	^String streamContents: [:s | subject displayFloat: aFloat on: s]!
-
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
@@ -25,9 +22,6 @@ setUp
 tearDown
 	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
 	super tearDown!
-
-testDisplayFloatOn
-	self subclassResponsibility!
 
 testPrintDateTimeOnFormat
 	| subject now expected |
@@ -80,12 +74,55 @@ testPrintDurationOnFormat
 						printDuration: -12.1 hours
 						on: s
 						format: '+hh:mm'].
-	self assert: actual equals: '-12:06'! !
+	self assert: actual equals: '-12:06'!
+
+testPrintFloat
+	self subclassResponsibility!
+
+testPrintFloatGrouping
+	"Test printing with different number grouping."
+
+	self subclassResponsibility!
+
+testPrintFloatNumDigits
+	"Test printing different numbers of decimal places, and also what happens beyond the limits as the GetNumberFormatAPI only supports 0..9 decimal digits."
+
+	| subject format |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	"Only up to 9 decimal places can be requested"
+	0 to: 9
+		do: 
+			[:each |
+			format decimalPlaces: each.
+			self assert: (subject printFloat: 0.123404321 format: format)
+				equals: ('0.123404321' copyFrom: 1 to: each + (each > 0 ifTrue: [2] ifFalse: [1]))].
+	self assert: (subject printFloat: 0.0123456789 format: format) equals: '0.012345679'.
+	format grouping: 0.
+	"Of course we may still not have enough precision to display the result accurately as the precision of a 64-bit Float is at most 17 decimal digits"
+	self assert: (subject printFloat: 123456789.0123456789 format: format) equals: '123456789.012345660'.
+	"Attempting to specify more digits than 9 is an error as it is not supported by the GetNumberFormat API"
+	#(-1 10) do: 
+			[:each |
+			self should: [format decimalPlaces: each] raise: Error.
+			"If we force it in, we expect an invalid parameter error from GetNumberFormat"
+			format NumDigits: each.
+			self
+				should: [subject printFloat: 0.0123456789 format: format]
+				raise: Win32Error
+				matching: [:ex | ex tag = (HRESULT win32Error: Win32Errors.ERROR_INVALID_PARAMETER)]]!
+
+testPrintFloatSeparators
+	"Test printing with specific decimal and group separators."
+
+	self subclassResponsibility! !
 !LocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!LocaleTest categoriesFor: #displayFloat:with:!helpers!private! !
 !LocaleTest categoriesFor: #setUp!private!running! !
 !LocaleTest categoriesFor: #tearDown!private!running! !
-!LocaleTest categoriesFor: #testDisplayFloatOn!public! !
-!LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public! !
+!LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public!unit tests! !
 !LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
+!LocaleTest categoriesFor: #testPrintFloat!public!unit tests! !
+!LocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
+!LocaleTest categoriesFor: #testPrintFloatNumDigits!public!unit tests! !
+!LocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
 

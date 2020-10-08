@@ -13,7 +13,7 @@ SmalltalkLocaleTest comment: ''!
 defaultSubject
 	^Locale smalltalk!
 
-testDisplayFloatOn
+testPrintFloat
 	| subject |
 	subject := Locale smalltalk.
 	{{Float infinity. 'Float.Infinity'}.
@@ -38,8 +38,35 @@ testDisplayFloatOn
 		{50000000000001.25. '5.000000000000125e13'}} do: 
 				[:each |
 				| actual |
-				actual := String streamContents: [:s | subject displayFloat: each first on: s].
-				self assert: actual equals: each second]! !
+				actual := subject printFloat: each first.
+				self assert: actual equals: each second]!
+
+testPrintFloatGrouping
+	"Test printing with different number grouping."
+
+	| subject format |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	format
+		grouping: 3;
+		decimalPlaces: 1.
+	"The SmalltalkLocale doesn't support grouping"
+	self assert: (subject printFloat: 1234567890.0 format: format) equals: '1234567890.0'!
+
+testPrintFloatSeparators
+	"Test printing with different number grouping."
+
+	| subject format |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	"The SmalltalkLocale doesn't support grouping so the grouping separator has no effect"
+	format
+		decimalPlaces: 3;
+		decimalSeparator: $@;
+		thousandSeparator: $^.
+	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
 !SmalltalkLocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!SmalltalkLocaleTest categoriesFor: #testDisplayFloatOn!public! !
+!SmalltalkLocaleTest categoriesFor: #testPrintFloat!public! !
+!SmalltalkLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
+!SmalltalkLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
 
