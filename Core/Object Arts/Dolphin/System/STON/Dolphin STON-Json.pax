@@ -48,10 +48,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package setClassNames: #(
 	#{STON.JSON}
+	#{STON.JsonPrettyPrinter}
 	#{STON.JsonWriter}
 ).
 
 package setMethodNames: #(
+	#(#{STON class} #jsonPrettyPrinter)
 	#(#{STON class} #jsonWriter)
 	#(#{STON class} #put:asJsonOnStream:)
 	#(#{STON class} #put:asJsonOnStreamPretty:)
@@ -80,22 +82,28 @@ STON.Writer subclass: #'STON.JsonWriter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+STON.JsonWriter subclass: #'STON.JsonPrettyPrinter'
+	instanceVariableNames: 'level'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
 !STON class methodsFor!
 
+jsonPrettyPrinter
+	^JsonPrettyPrinter new!
+
 jsonWriter
-	^JsonWriter new
-		referencePolicy: #error;
-		yourself!
+	^JsonWriter new!
 
 put: object asJsonOnStream: stream
 	(self jsonWriter on: stream) nextPut: object!
 
 put: object asJsonOnStreamPretty: stream
-	(self jsonWriter on: stream)
-		prettyPrint: true; 
+	(self jsonPrettyPrinter on: stream)
 		nextPut: object!
 
 toJsonString: object
@@ -105,6 +113,7 @@ toJsonString: object
 toJsonStringPretty: object
 	^ String streamContents: [ :stream |
 		self put: object asJsonOnStreamPretty: stream ]! !
+!STON class categoriesFor: #jsonPrettyPrinter!private! !
 !STON class categoriesFor: #jsonWriter!accessing!public! !
 !STON class categoriesFor: #put:asJsonOnStream:!convenience!public! !
 !STON class categoriesFor: #put:asJsonOnStreamPretty:!convenience!public! !

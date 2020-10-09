@@ -36,9 +36,8 @@ serializeJson: anObject
 serializePretty: anObject
 	^String streamContents: 
 			[:stream |
-			STON writer
+			STON prettyPrinter
 				on: stream;
-				prettyPrint: true;
 				nextPut: anObject]!
 
 testAssociation
@@ -78,9 +77,8 @@ testCustomNewline
 	| output |
 	output := String streamContents: 
 					[:out |
-					(STON writer on: out)
+					(STON prettyPrinter on: out)
 						newLine: String lf;
-						prettyPrint: true;
 						nextPut: #(1)].
 	#dolphin.	"withCRs does not behave in a portable manner"
 	self assert: output equals: ('[\	1\]' withCRs copyWithout: Character cr)	"replaceAll: Character cr with: Character lf"!

@@ -11,13 +11,16 @@ STON.JsonWriter comment: ''!
 !STON.JsonWriter categoriesForClass!STON-Core-Writer! !
 !STON.JsonWriter methodsFor!
 
+emitQuote
+	writeStream nextPut: $"!
+
 encodeKey: key value: value
 	key isString ifFalse: [self error: 'JSON key names in objects must be strings'].
 	super encodeKey: key value: value!
 
 initialize
 	super initialize.
-	stringQuote := $".
+	referencePolicy := #error.
 	self
 		escape: $' with: #pass;
 		escape: $" with: '\"'!
@@ -52,9 +55,10 @@ writeScaledDecimal: scaledDecimal
 
 writeSymbol: symbol
 	self writeString: symbol! !
-!STON.JsonWriter categoriesFor: #encodeKey:value:!private! !
+!STON.JsonWriter categoriesFor: #emitQuote!helpers!private! !
+!STON.JsonWriter categoriesFor: #encodeKey:value:!helpers!private! !
 !STON.JsonWriter categoriesFor: #initialize!initialize/release!public! !
-!STON.JsonWriter categoriesFor: #jsonMode!initialize/release!public! !
+!STON.JsonWriter categoriesFor: #jsonMode!public!testing! !
 !STON.JsonWriter categoriesFor: #writeAssociation:!public!writing! !
 !STON.JsonWriter categoriesFor: #writeFraction:!public!writing! !
 !STON.JsonWriter categoriesFor: #writeNull!public!writing! !

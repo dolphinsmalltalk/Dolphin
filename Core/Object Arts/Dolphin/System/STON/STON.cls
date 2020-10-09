@@ -194,12 +194,14 @@ listClass
 mapClass
 	^ Dictionary!
 
+prettyPrinter
+	^PrettyPrinter new!
+
 put: object onStream: stream
 	(self writer on: stream) nextPut: object!
 
 put: object onStreamPretty: stream
-	(self writer on: stream)
-		prettyPrint: true; 
+	(self prettyPrinter on: stream)
 		nextPut: object!
 
 reader
@@ -226,6 +228,7 @@ writer
 !STON class categoriesFor: #fromStringWithComments:!convenience!public! !
 !STON class categoriesFor: #listClass!accessing!public! !
 !STON class categoriesFor: #mapClass!accessing!public! !
+!STON class categoriesFor: #prettyPrinter!private! !
 !STON class categoriesFor: #put:onStream:!convenience!public! !
 !STON class categoriesFor: #put:onStreamPretty:!convenience!public! !
 !STON class categoriesFor: #reader!accessing!public! !

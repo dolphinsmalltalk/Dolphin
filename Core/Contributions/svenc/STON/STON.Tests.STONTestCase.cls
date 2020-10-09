@@ -20,9 +20,8 @@ materialize: string
 serialize: anObject
 	^String streamContents: 
 			[:stream |
-			STON writer
+			(Processor activeProcess debugger ifNotNil: [STON prettyPrinter] ifNil: [STON writer])
 				on: stream;
-				prettyPrint: Processor activeProcess debugger notNil;
 				nextPut: anObject]! !
 !STON.Tests.STONTestCase categoriesFor: #materialize:!private! !
 !STON.Tests.STONTestCase categoriesFor: #serialize:!private! !

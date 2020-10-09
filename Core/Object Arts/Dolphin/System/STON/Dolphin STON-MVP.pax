@@ -16,6 +16,7 @@ package setMethodNames: #(
 	#(#{Graphics.IconImageManager class} #fromSton:)
 	#(#{Graphics.Point} #stonOn:)
 	#(#{Graphics.Point class} #fromSton:)
+	#(#{Kernel.BindingReference class} #stonAllInstVarNames)
 	#(#{UI.CardLayout class} #stonAllInstVarNames)
 	#(#{UI.ControlView class} #stonAllInstVarNames)
 	#(#{UI.FramingCalculation} #stonOn:)
@@ -127,6 +128,14 @@ fromSton: stonReader
 			index == 2 ifTrue: [answer y: each]].
 	^answer! !
 !Graphics.Point class categoriesFor: #fromSton:!public! !
+
+!Kernel.BindingReference class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^#('pathString' 'path' 'context' 'flags')! !
+!Kernel.BindingReference class categoriesFor: #stonAllInstVarNames!public! !
 
 !UI.CardLayout class methodsFor!
 

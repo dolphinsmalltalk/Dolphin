@@ -56,6 +56,7 @@ package setClassNames: #(
 	#{STON.CStyleCommentsSkipStream}
 	#{STON.ListWriter}
 	#{STON.MapWriter}
+	#{STON.PrettyPrinter}
 	#{STON.Reader}
 	#{STON.ReaderError}
 	#{STON.Reference}
@@ -188,7 +189,7 @@ Core.Object subclass: #'STON.StreamWriter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'STON.Writer'
-	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly keepNewLines referencePolicy level objects classInstVarMaps stringQuote'
+	instanceVariableNames: 'writeStream stonCharacters newLine asciiOnly keepNewLines referencePolicy objects classInstVarMaps'
 	classVariableNames: 'ExtendedCharacters'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -226,6 +227,12 @@ STON.ListWriter subclass: #'STON.ShortListWriter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+STON.Writer subclass: #'STON.PrettyPrinter'
+	instanceVariableNames: 'level'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
@@ -242,9 +249,7 @@ stonOn: stonWriter
 stonOn: stonWriter
 	"Use a map with element-occurences pairs as representation"
 
-	stonWriter 
-		writeObject: self 
-		do: [ stonWriter encodeMap: contents ]! !
+	stonWriter writeObject: self do: [stonWriter encodeMap: contents]! !
 !Core.Bag categoriesFor: #stonOn:!public!ston! !
 
 !Core.Bag class methodsFor!
@@ -347,10 +352,8 @@ stonOn: stonWriter
 	"For collections we chose to write a list of elements as delivered by #do:
 	This is not the best or most correct solution for all subclasses though,
 	so some will revert to standard object behavior or chose another solution"
-	
-	stonWriter writeObject: self do: [
-		stonWriter encodeList: self ]
-! !
+
+	stonWriter writeObject: self do: [stonWriter encodeList: self]! !
 !Core.Collection categoriesFor: #stonOn:!public!ston! !
 
 !Core.Collection class methodsFor!

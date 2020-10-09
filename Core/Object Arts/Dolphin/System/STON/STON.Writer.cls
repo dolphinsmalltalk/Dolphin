@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'STON.Writer'
-	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly keepNewLines referencePolicy level objects classInstVarMaps stringQuote'
+	instanceVariableNames: 'writeStream stonCharacters newLine asciiOnly keepNewLines referencePolicy objects classInstVarMaps'
 	classVariableNames: 'ExtendedCharacters'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -49,6 +49,9 @@ close
 		writeStream close.
 		writeStream := nil ]!
 
+emitQuote
+	writeStream nextPut: $'!
+
 encodeCharacter: char
 	| code encoding |
 	"STONCharacters contains for the lower 127 characters (codes 0 to 126) either nil (unknown), 
@@ -73,45 +76,29 @@ encodeKey: key value: value
 
 encodeList: elements
 	writeStream nextPut: $[.
-	elements isEmpty
-		ifTrue: [
-			self prettyPrintSpace ]
-		ifFalse: [
-			self indentedDo: [
-				self newlineIndent.
-				elements 
-					do: [ :each | self nextPut: each ]
-					separatedBy: [ self listElementSeparator ] ].
-			self newlineIndent ].
-	writeStream nextPut: $]
-!
+	elements do: [:each | self nextPut: each] separatedBy: [writeStream nextPut: $,].
+	writeStream nextPut: $]!
 
 encodeMap: pairs
+	| first |
 	writeStream nextPut: ${.
-	pairs isEmpty
-		ifTrue: [self prettyPrintSpace]
-		ifFalse: 
-			[self indentedDo: 
-					[| first |
-					first := true.
-					self newlineIndent.
-					pairs keysAndValuesDo: 
-							[:key :value |
-							first ifTrue: [first := false] ifFalse: [self mapElementSeparator].
-							self encodeKey: key value: value]].
-			self newlineIndent].
+	first := true.
+	pairs keysAndValuesDo: 
+			[:key :value |
+			first ifTrue: [first := false] ifFalse: [self mapElementSeparator].
+			self encodeKey: key value: value].
 	writeStream nextPut: $}!
 
 encodeString: aString
-	writeStream nextPut: stringQuote.
+	self emitQuote.
 	keepNewLines
 		ifTrue: [self encodeStringKeepingNewLines: aString]
 		ifFalse: [aString do: [:ch | self encodeCharacter: ch]].
-	writeStream nextPut: stringQuote!
+	self emitQuote!
 
-encodeStringKeepingNewLines: string
+encodeStringKeepingNewLines: aString
 	| input char |
-	input := string readStream.
+	input := aString readStream.
 	[input atEnd] whileFalse: 
 			[char := input next.
 			char == $\n
@@ -154,22 +141,17 @@ escapeUnicode4: codePoint
 	writeStream nextPutAll: '\u'.
 	codePoint printOn: writeStream base: 16 nDigits: 4!
 
-indentedDo: block
-	level := level + 1.
-	block value.
-	level := level - 1!
+indentedDo: aNiladicValuable
+	aNiladicValuable value!
 
 initialize
 	stonCharacters := STONCharacters.
-	prettyPrint := false.
 	newLine := String lineDelimiter.
-	level := 0.
 	referencePolicy := #normal.
 	keepNewLines := asciiOnly := false.
 	objects := IdentityDictionary new.
 	classInstVarMaps := IdentityDictionary new.
-	stonCharacters := STONCharacters.
-	stringQuote := $'!
+	stonCharacters := STONCharacters!
 
 instVarMapFor: aClass
 	^classInstVarMaps at: aClass
@@ -206,19 +188,15 @@ listElementSeparator
 !
 
 mapElementSeparator
-	writeStream nextPut: $,.
-	self newlineIndent
-!
+	writeStream nextPut: $,!
 
-newLine: string
+newLine: aString
 	"The sequence to use when ending a line, either CR, LF or CRLF"
-	
-	newLine := string!
+
+	newLine := aString!
 
 newlineIndent
-	prettyPrint ifTrue: [ 
-		writeStream nextPutAll: newLine.
-		level timesRepeat: [ writeStream tab ] ]!
+	!
 
 nextPut: anObject
 	anObject stonOn: self!
@@ -232,11 +210,7 @@ optimizeForLargeStructures
 		at: #FLLargeIdentityDictionary
 		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ].!
 
-prettyPrint: boolean
-	prettyPrint := boolean!
-
 prettyPrintSpace
-	prettyPrint ifTrue: [ writeStream space ]
 !
 
 referencePolicy: policy
@@ -287,12 +261,10 @@ writeInteger: integer
 	integer printOn: writeStream!
 
 writeList: collection
-	self with: collection do: [ 
-		self encodeList: collection ]!
+	self with: collection do: [self encodeList: collection]!
 
 writeMap: hashedCollection
-	self with: hashedCollection do: [ 
-		self encodeMap: hashedCollection ]!
+	self with: hashedCollection do: [self encodeMap: hashedCollection]!
 
 writeNull
 	writeStream print: nil!
@@ -416,35 +388,35 @@ writeSymbol: symbol
 		ifFalse: [self encodeString: symbol]! !
 !STON.Writer categoriesFor: #asciiOnly:!initialize/release!public! !
 !STON.Writer categoriesFor: #close!initialize/release!public! !
-!STON.Writer categoriesFor: #encodeCharacter:!private! !
-!STON.Writer categoriesFor: #encodeKey:value:!private! !
+!STON.Writer categoriesFor: #emitQuote!helpers!private! !
+!STON.Writer categoriesFor: #encodeCharacter:!helpers!private! !
+!STON.Writer categoriesFor: #encodeKey:value:!helpers!private! !
 !STON.Writer categoriesFor: #encodeList:!public!writing! !
 !STON.Writer categoriesFor: #encodeMap:!public!writing! !
-!STON.Writer categoriesFor: #encodeString:!private! !
-!STON.Writer categoriesFor: #encodeStringKeepingNewLines:!private! !
+!STON.Writer categoriesFor: #encodeString:!helpers!private! !
+!STON.Writer categoriesFor: #encodeStringKeepingNewLines:!helpers!private! !
 !STON.Writer categoriesFor: #error:!error handling!public! !
 !STON.Writer categoriesFor: #escape:with:!initialize/release!public! !
 !STON.Writer categoriesFor: #escapeUnicode:!initialize/release!public! !
-!STON.Writer categoriesFor: #escapeUnicode4:!private! !
-!STON.Writer categoriesFor: #indentedDo:!private! !
+!STON.Writer categoriesFor: #escapeUnicode4:!helpers!private! !
+!STON.Writer categoriesFor: #indentedDo:!helpers!private! !
 !STON.Writer categoriesFor: #initialize!initialize/release!private! !
-!STON.Writer categoriesFor: #instVarMapFor:!public! !
-!STON.Writer categoriesFor: #isSimpleSymbol:!private! !
-!STON.Writer categoriesFor: #jsonMode!initialize/release!public! !
+!STON.Writer categoriesFor: #instVarMapFor:!public!writing! !
+!STON.Writer categoriesFor: #isSimpleSymbol:!helpers!private! !
+!STON.Writer categoriesFor: #jsonMode!public!testing! !
 !STON.Writer categoriesFor: #keepNewLines:!initialize/release!public! !
-!STON.Writer categoriesFor: #listElementSeparator!private! !
-!STON.Writer categoriesFor: #mapElementSeparator!private! !
+!STON.Writer categoriesFor: #listElementSeparator!helpers!private! !
+!STON.Writer categoriesFor: #mapElementSeparator!helpers!private! !
 !STON.Writer categoriesFor: #newLine:!initialize/release!public! !
-!STON.Writer categoriesFor: #newlineIndent!private! !
-!STON.Writer categoriesFor: #nextPut:!public! !
+!STON.Writer categoriesFor: #newlineIndent!helpers!private! !
+!STON.Writer categoriesFor: #nextPut:!public!writing! !
 !STON.Writer categoriesFor: #on:!initialize/release!public! !
 !STON.Writer categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
-!STON.Writer categoriesFor: #prettyPrint:!initialize/release!public! !
-!STON.Writer categoriesFor: #prettyPrintSpace!private! !
+!STON.Writer categoriesFor: #prettyPrintSpace!helpers!private! !
 !STON.Writer categoriesFor: #referencePolicy:!initialize/release!public! !
 !STON.Writer categoriesFor: #reset!initialize/release!public! !
-!STON.Writer categoriesFor: #shortListElementSeparator!private! !
-!STON.Writer categoriesFor: #with:do:!private! !
+!STON.Writer categoriesFor: #shortListElementSeparator!helpers!private! !
+!STON.Writer categoriesFor: #with:do:!helpers!private! !
 !STON.Writer categoriesFor: #writeableStonCharacters!private!writing! !
 !STON.Writer categoriesFor: #writeAssociation:!public!writing! !
 !STON.Writer categoriesFor: #writeBoolean:!public!writing! !
@@ -456,7 +428,7 @@ writeSymbol: symbol
 !STON.Writer categoriesFor: #writeNull!public!writing! !
 !STON.Writer categoriesFor: #writeObject:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:do:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:extra:!public! !
+!STON.Writer categoriesFor: #writeObject:extra:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:listSingleton:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:named:do:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:named:listSingleton:!public!writing! !

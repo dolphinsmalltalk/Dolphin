@@ -14,17 +14,15 @@ STON.Tests.WritePrettyPrinterReadTest comment: 'STONWritePrettyPrinterReadTests 
 serialize: anObject
 	^String streamContents: 
 			[:stream |
-			STON writer
+			STON prettyPrinter
 				on: stream;
-				prettyPrint: true;
 				nextPut: anObject]!
 
 serializeJson: anObject
 	^String streamContents: 
 			[:stream |
-			STON jsonWriter
+			STON jsonPrettyPrinter
 				on: stream;
-				prettyPrint: true;
 				nextPut: anObject]! !
 !STON.Tests.WritePrettyPrinterReadTest categoriesFor: #serialize:!private! !
 !STON.Tests.WritePrettyPrinterReadTest categoriesFor: #serializeJson:!private! !

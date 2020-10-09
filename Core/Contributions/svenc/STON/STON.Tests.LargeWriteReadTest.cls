@@ -28,9 +28,8 @@ serialize: anObject
 serializeJson: anObject
 	^String streamContents: 
 			[:stream |
-			STON jsonWriter
+			STON jsonPrettyPrinter
 				on: stream;
-				prettyPrint: true;
 				optimizeForLargeStructures;
 				nextPut: anObject]! !
 !STON.Tests.LargeWriteReadTest categoriesFor: #materialize:!private! !
