@@ -15,6 +15,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\SSW Widget Enhancements'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
