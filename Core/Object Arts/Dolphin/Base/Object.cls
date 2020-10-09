@@ -1060,8 +1060,8 @@ primitiveFailed: anInteger
 
 	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger!
 
-printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
+printOn: aStream
+	"Append, to the <puttableStream>, aStream, a string whose characters are a
 	the same as those which would result from sending a #printString
 	message to the receiver.
 	N.B. This is really intended for development use. #displayOn: and #displayString
@@ -1070,7 +1070,7 @@ printOn: target
 
 	| name |
 	name := self class name.
-	target 
+	aStream
 		nextPutAll: (name first isVowel ifTrue: ['an '] ifFalse: ['a ']);
 		nextPutAll: name!
 
