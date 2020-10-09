@@ -29,6 +29,22 @@ tearDown
 	button := nil.
 	super tearDown!
 
+testButtonWithMenuClick
+
+	| oc cmd |
+
+	oc := OrderedCollection with: 1.
+	cmd := ClosedCommandDescription command: #removeLast description: 'test' receiver: oc.
+	
+	button 
+		commandDescription: cmd;
+		dropDownMenu: (Menu new addCommandDescription: cmd; yourself).
+
+	"#1037 ensure we're not sending a deprecated (and potentially removed) method"
+	self shouldnt: [button dispatchMessage: Win32Constants.WM_LBUTTONDOWN wParam: 0 lParam: 0] raise: MessageNotUnderstood.
+	button dispatchMessage: Win32Constants.WM_LBUTTONUP wParam: 0 lParam: 0.
+	self assert: oc isEmpty!
+
 testLabelWithAmpersand
 	"Test that labels containing ampersands are not (normally) ellipsised.
 	Inspired by TabViewXPTest>>testLabelWithAmpersand"
@@ -69,5 +85,6 @@ testLabelWithAmpersand
 ! !
 !TextAndImageButtonTest categoriesFor: #setUp!public!running! !
 !TextAndImageButtonTest categoriesFor: #tearDown!public!running! !
+!TextAndImageButtonTest categoriesFor: #testButtonWithMenuClick!public!unit tests! !
 !TextAndImageButtonTest categoriesFor: #testLabelWithAmpersand!public!unit tests! !
 

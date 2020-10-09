@@ -288,8 +288,8 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 
 	event := 
 		MouseEvent 
+			window: self
 			message: message
-			handle: handle
 			wParam: wParam
 			lParam: lParam.
 
