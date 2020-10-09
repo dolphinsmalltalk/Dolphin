@@ -422,7 +422,7 @@ initializeFromSessionManager: oldSessionManager
 	imagePath := oldSessionManager imagePath.
 	stdioStreams := oldSessionManager basicStdioStreams.
 	startupArgs := oldSessionManager startupArgs.
-	events := oldSessionManager events.
+	events := oldSessionManager getEvents.
 	^self!
 
 inputState
