@@ -36,6 +36,7 @@ package setMethodNames: #(
 	#(#{Core.Object} #isBehavior)
 	#(#{Core.Object} #isVariableBinding)
 	#(#{Kernel.CompiledCode} #allLiterals)
+	#(#{Kernel.VariableBinding} #isUnbound)
 	#(#{Kernel.VariableBinding} #isVariableBinding)
 ).
 
@@ -208,11 +209,17 @@ allLiterals
 
 !Kernel.VariableBinding methodsFor!
 
+isUnbound
+	"Answer whether the receiver is unbound - i.e. not actually installed into the system such that it is reachable from the root namespace by following its binding path."
+
+	^environment isNil or: [self fullyQualifiedReference bindingOrNil ~~ self]!
+
 isVariableBinding
 	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
 	to #key and #value methods."
 
 	^true! !
+!Kernel.VariableBinding categoriesFor: #isUnbound!public!testing! !
 !Kernel.VariableBinding categoriesFor: #isVariableBinding!public!testing! !
 
 "End of package definition"!

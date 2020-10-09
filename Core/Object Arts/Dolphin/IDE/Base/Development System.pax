@@ -3017,10 +3017,10 @@ printOffsetExpression: aSymbol on: aWriteStream
 	self 
 		printOffsetExpression: aSymbol
 		on: aWriteStream
-		extra: 0!
+		extra: nil!
 
-printOffsetExpression: aSymbol on: aWriteStream extra: anObject
-	anObject == 0
+printOffsetExpression: aSymbol on: aWriteStream extra: aMonadicValuable
+	aMonadicValuable isNil
 		ifTrue: 
 			[aWriteStream
 				nextPutAll: Structure fieldOffsetConstantPrefix;

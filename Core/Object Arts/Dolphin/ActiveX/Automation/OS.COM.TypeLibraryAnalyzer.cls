@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
-	instanceVariableNames: 'attributes namespaceName packageName globalName constantsPoolName aliasMap typeAnalyzers'
+	instanceVariableNames: 'attributes namespaceName packageName libVariableName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
@@ -136,7 +136,7 @@ dispinterfaces
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: self globalName!
+	aPuttableStream nextPutAll: self variableName!
 
 documentation
 	"Answer an <AXTypeLibDocumentation> containing the documentation for the library.
@@ -149,7 +149,7 @@ documentation
 		do: 
 			[:ex |
 			TypeLibDocumentation new
-				name: globalName
+				name: libVariableName
 				helpstring: ex messageText
 				helpcontext: 0
 				helpfile: '']!
@@ -276,16 +276,6 @@ getLibAttr
 	lib ReleaseTLibAttr: libattr.
 	^answer!
 
-globalNameFrom: name 
-	"Private - Answer a suitable global name based on the <readableString> argument, name.
-	Globals must start with an uppercase letter, ignoring any leading underscores."
-
-	| i |
-	i := name findFirst: [:e | e ~~ $_].
-	^(i == 0 or: [(name at: i) isUppercase]) 
-		ifTrue: [name]
-		ifFalse: [(name copyFrom: 1 to: i) asUppercase , (name copyFrom: i + 1)]!
-
 hash
 	"Answer the <integer> hash value for the receiver."
 
@@ -301,10 +291,11 @@ initializeAfterLoad
 initializeAliasMap
 	"Empty the receiver's alias map of any aliases previously set up by the user."
 
-	aliasMap := (LookupTable new)
-				at: 'GUID' put: #{GUID};
-				at: 'PROPVARIANT' put: #{VARIANT};
-				at: 'RemotableHandle' put: #{ExternalHandle};
+	aliasMap := LookupTable new
+				at: 'GUID' put: GUID asQualifiedReference;
+				at: 'PROPVARIANT' put: VARIANT asQualifiedReference;
+				at: 'RemotableHandle' put: Handle asQualifiedReference;
+				at: 'FILETIME' put: FILETIME asQualifiedReference;
 				yourself	"A lot of libraries pull in GUID it seems - this avoid a guid clash warning"!
 
 interfaces
@@ -371,7 +362,7 @@ names
 	^(1 to: self typeInfoCount) collect: [:i | lib nameAt: i]!
 
 namespaceName
-	^namespaceName ifNil: [namespaceName := self globalNameFrom: self name]!
+	^namespaceName ifNil: [namespaceName := self variableNameFrom: self name]!
 
 namespaceName: aString
 	namespaceName := aString!
@@ -429,7 +420,7 @@ setTypeLib: anITypeLib attributes: aTLIBATTR
 	tlbInterface := anITypeLib.
 	attributes := aTLIBATTR.
 	generationFlags := self defaultGenerationFlags.
-	namespaceName := self globalNameFrom: self name.
+	namespaceName := self variableNameFrom: self name.
 	self initializeAliasMap!
 
 sourceInterfaces
@@ -458,7 +449,7 @@ structs
 
 	^self selectTypeKind: TKIND_RECORD!
 
-suggestBindingForType: userType 
+suggestBindingForType: userType
 	"Private - Answer an <Association> which is the suggested or actual binding between
 	the global name and the global object for the <AXTypeInfoAnalyzer>, userType. 
 	If the global has not yet been defined, or alternatively if the analyzer cannot be certain 
@@ -473,20 +464,24 @@ suggestBindingForType: userType
 	All built-in types are expected to have a GUID, but the null case is handled. If either GUID
 	is null then it is not regarded as a mismatch, even if the other is non-null."
 
-	| name typeGuid suggested |
-	suggested := userType suggestedGlobalName.
-	name := suggested.
+	| typeGuid suggestedName nsBinding |
+	suggestedName := userType suggestedGlobalName.
 
 	"If its in the alias map, then we answer that regardless - caller should check suitable"
-	self aliasMap at: name asString
+	self aliasMap at: suggestedName asString
 		ifPresent: [:alias | ^alias bindingOrNil ifNil: [alias asSymbol -> nil]].
 
 	"Secondly try looking up by GUID as if there is a class with the same GUID then we know it is the right one."
 	typeGuid := userType guid.
-	typeGuid ifNotNil: [(self classBindingForGuid: typeGuid) ifNotNil: [:var | ^var]].
+	(typeGuid notNil and: [typeGuid notNull])
+		ifTrue: [(self classBindingForGuid: typeGuid) ifNotNil: [:var | ^var]].
+	nsBinding := self namespaceBinding.
+	nsBinding notNil ifTrue: [(nsBinding value localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
 
-	"Not currently defined, or defined but _may_ not be correct object, so suggest prefixed name"
-	^(self globalNameFrom: name) -> nil!
+	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
+	^(VariableBinding key: suggestedName value: nil)
+		environment: nsBinding;
+		yourself!
 
 typeAnalyzerAt: index
 	"Answer an <AXTypeInfoAnalyzer> subinstance of the appropriate type
@@ -538,13 +533,22 @@ uninitialize
 	anything which might cause embarassment later on."
 
 	self reset.
-	globalName := nil
-!
+	libVariableName := nil!
 
 unions
 	"Answer a <sequencedReadableCollection> of all the unions described in the receiver."
 
 	^self selectTypeKind: TKIND_UNION!
+
+variableNameFrom: aString
+	"Private - Answer a suitable global name based on the <readableString> argument.
+	Static variables must start with an uppercase letter, ignoring any leading underscores."
+
+	| i |
+	i := aString findFirst: [:e | e ~~ $_].
+	^(i == 0 or: [(aString at: i) isUppercase])
+		ifTrue: [aString]
+		ifFalse: [(aString copyFrom: 1 to: i) asUppercase , (aString copyFrom: i + 1)]!
 
 versionString
 	"Answer a version string for the receiver."
@@ -582,7 +586,6 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #fullNameFor:!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #globalNameFrom:!accessing!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
@@ -617,6 +620,7 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoForGuid:ifNone:!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #uninitialize!initializing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #unions!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #variableNameFrom:!accessing!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #versionString!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #vtblInterfaces!enumerating!public! !
 

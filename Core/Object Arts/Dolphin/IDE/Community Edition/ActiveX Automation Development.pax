@@ -127,11 +127,11 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #areWrappersRequired)
 	#(#{OS.COM.APIInfoAnalyzer} #compileMethodWrapper:)
 	#(#{OS.COM.APIInfoAnalyzer} #functionHasReturnValue:)
-	#(#{OS.COM.APIInfoAnalyzer} #generateGlobalDefinition:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateMethod:wrapping:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateMethodWrappers)
 	#(#{OS.COM.APIInfoAnalyzer} #generateMethodWrappers:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateRawMethod:categories:)
+	#(#{OS.COM.APIInfoAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.APIInfoAnalyzer} #idlAttributesOfFunc:)
 	#(#{OS.COM.APIInfoAnalyzer} #instanceMethodCategories:)
 	#(#{OS.COM.APIInfoAnalyzer} #isDefaultedWrapperRequiredFor:)
@@ -209,7 +209,6 @@ package setMethodNames: #(
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateClassSide:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateCollectionTest)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateDefaultMethod:wrapping:)
-	#(#{OS.COM.InterfaceTypeAnalyzer} #generateGlobalDefinition:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateInitializeTypeLib)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateMethodWrappers)
@@ -228,6 +227,7 @@ package setMethodNames: #(
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateValueAccessor:wrapping:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateValueMutator:wrapping:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #generateValuePropertyWrappers)
+	#(#{OS.COM.InterfaceTypeAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #idlAttributes)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #inspectableProperties)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #instanceMethodCategories:)
@@ -284,9 +284,9 @@ package setMethodNames: #(
 	#(#{OS.COM.StructureTypeAnalyzer} #determineNewBase:forExistingWrapper:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateClassSide:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateDefineFields)
-	#(#{OS.COM.StructureTypeAnalyzer} #generateGlobalDefinition:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateTypeLibAccessor)
+	#(#{OS.COM.StructureTypeAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateWrapper)
 	#(#{OS.COM.StructureTypeAnalyzer} #printAnonymousStruct:offset:prefix:hidden:on:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printClassCommentPreambleOn:)
@@ -298,13 +298,14 @@ package setMethodNames: #(
 	#(#{OS.COM.StructureTypeAnalyzer} #printNamedFieldDefinition:offset:prefix:hidden:on:)
 	#(#{OS.COM.StructureTypeAnalyzer class} #icon)
 	#(#{OS.COM.StructureTypeAnalyzer class} #publishedAspectsOfInstances)
-	#(#{OS.COM.TKindAliasAnalyzer} #generateGlobalDefinition:)
+	#(#{OS.COM.TKindAliasAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindAliasAnalyzer} #generateWrapper)
 	#(#{OS.COM.TKindAliasAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindAliasAnalyzer} #idlKeyword)
 	#(#{OS.COM.TKindAliasAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.TKindAliasAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.TKindAliasAnalyzer} #printIDLOn:indent:)
+	#(#{OS.COM.TKindCoclassAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindCoclassAnalyzer} #generateWrapper)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlKeyword)
@@ -335,8 +336,8 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindDispatchAnalyzer class} #icon)
 	#(#{OS.COM.TKindDispatchAnalyzer class} #publishedAspectsOfInstances)
 	#(#{OS.COM.TKindEnumAnalyzer} #constantsPool)
-	#(#{OS.COM.TKindEnumAnalyzer} #generateGlobalDefinition:)
 	#(#{OS.COM.TKindEnumAnalyzer} #generateInstanceSide:)
+	#(#{OS.COM.TKindEnumAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindEnumAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindEnumAnalyzer} #idlKeyword)
 	#(#{OS.COM.TKindEnumAnalyzer} #printIDLBodyOn:indent:)
@@ -410,13 +411,13 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #generate)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateAs:flags:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateClassComment)
-	#(#{OS.COM.TypeInfoAnalyzer} #generateClassDefinition:)
+	#(#{OS.COM.TypeInfoAnalyzer} #generateClassDefinition:imports:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateClassSide:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateConstants)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateConstantsIntoPool:)
-	#(#{OS.COM.TypeInfoAnalyzer} #generateGlobalDefinition)
-	#(#{OS.COM.TypeInfoAnalyzer} #generateGlobalDefinition:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateInstanceSide:)
+	#(#{OS.COM.TypeInfoAnalyzer} #generateVariableDefinition)
+	#(#{OS.COM.TypeInfoAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateWrapper)
 	#(#{OS.COM.TypeInfoAnalyzer} #generationFlags)
 	#(#{OS.COM.TypeInfoAnalyzer} #guidCheck:)
@@ -442,6 +443,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject} #basicIdlAttributes)
 	#(#{OS.COM.TypeInfoObject} #classComments)
 	#(#{OS.COM.TypeInfoObject} #classComments:)
+	#(#{OS.COM.TypeInfoObject} #constantsPool)
 	#(#{OS.COM.TypeInfoObject} #customAttributes)
 	#(#{OS.COM.TypeInfoObject} #defineFunctionTables)
 	#(#{OS.COM.TypeInfoObject} #defineFunctionTables:)
@@ -449,6 +451,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject} #defineMethodProtocols:)
 	#(#{OS.COM.TypeInfoObject} #forceLowercaseIdentifiers)
 	#(#{OS.COM.TypeInfoObject} #forceLowercaseIdentifiers:)
+	#(#{OS.COM.TypeInfoObject} #fullyQualifiedName)
 	#(#{OS.COM.TypeInfoObject} #generateSourceInterfaces)
 	#(#{OS.COM.TypeInfoObject} #generationFlags)
 	#(#{OS.COM.TypeInfoObject} #generationFlags:)
@@ -487,16 +490,21 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibDocumentation class} #icon)
 	#(#{OS.COM.TypeLibraryAnalyzer} #addAlias:forType:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #addClassToPackage:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #addGlobalToPackage:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #addVariableToPackage:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #binding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #checkConformanceOfExistingPool:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPool)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolBinding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #defaultNamespaceImports)
 	#(#{OS.COM.TypeLibraryAnalyzer} #defaultPackageFolder)
 	#(#{OS.COM.TypeLibraryAnalyzer} #definesSymbolicConstants)
+	#(#{OS.COM.TypeLibraryAnalyzer} #environment)
+	#(#{OS.COM.TypeLibraryAnalyzer} #fullyQualifiedName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generatableInterfaces)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generatableModules)
+	#(#{OS.COM.TypeLibraryAnalyzer} #generateClass:for:imports:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateConstantsIntoPool:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateConstantsPool)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateDispatchWrapper:)
@@ -507,13 +515,12 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateTypelibGlobal)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateTypelibGlobal:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateWrapper:name:flags:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #globalBinding)
-	#(#{OS.COM.TypeLibraryAnalyzer} #globalName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlAttributes)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlHelpAttributes:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlKeyword)
 	#(#{OS.COM.TypeLibraryAnalyzer} #isPoolCheck:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #moveClassToPackage:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceBinding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceImports)
 	#(#{OS.COM.TypeLibraryAnalyzer} #package)
 	#(#{OS.COM.TypeLibraryAnalyzer} #package:)
@@ -527,6 +534,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #printOn:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #resolveExistingPool:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #superclassClashSignal)
+	#(#{OS.COM.TypeLibraryAnalyzer} #variableName)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #example1)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #example2)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #example3)
@@ -1664,15 +1672,6 @@ functionHasReturnValue: aFUNCDESC
 
 	^aFUNCDESC hasReturnValue!
 
-generateGlobalDefinition: className
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	| class |
-	class := self generateClassDefinition: className asSymbol.
-	self guid notNull ifTrue: [class guid: self guid].
-	^class!
-
 generateMethod: aFUNCDESC wrapping: anAXMethodName
 	"Private - Generate a high-level wrapper for the method described 
 	by the <FUNCDESC> argument, calling the low-level wrapper
@@ -1725,6 +1724,15 @@ generateRawMethod: aFUNCDESC categories: aCollection
 				on: target.
 			self compileRawMethod: target contents categories: aCollection].
 	^methodName!
+
+generateVariableDefinition: aVariableBinding
+	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
+	if not heard, in the development environment."
+
+	| class |
+	class := self generateClassDefinition: aVariableBinding imports: #().
+	self guid notNull ifTrue: [class guid: self guid].
+	^class!
 
 idlAttributesOfFunc: aFUNCDESC 
 	"Private - Answer a <sequencedReadableCollection> of IDL attribute strings for the receiver."
@@ -1953,11 +1961,11 @@ selectorForFunction: aFUNCDESC
 !OS.COM.APIInfoAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #compileMethodWrapper:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #functionHasReturnValue:!helpers!private! !
-!OS.COM.APIInfoAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #generateMethod:wrapping:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #generateMethodWrappers!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #generateMethodWrappers:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #generateRawMethod:categories:!private! !
+!OS.COM.APIInfoAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #idlAttributesOfFunc:!printing-IDL!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #instanceMethodCategories:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #isDefaultedWrapperRequiredFor:!private!testing! !
@@ -2761,16 +2769,6 @@ generateDefaultMethod: aFUNCDESC wrapping: anAXMethodName
 	wrapperName isNil ifFalse: [self compileMethodWrapper: stream contents].
 	^wrapperName!
 
-generateGlobalDefinition: className
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	| class |
-	class := super generateGlobalDefinition: className.
-	"Presize to avoid recompilation when size calculated by subsequent initialization"
-	class byteSize: IUnknown byteSize.
-	^class!
-
 generateInitializeTypeLib
 	"Private - Generate the #initializeTypeLib method for a COM interface wrapper."
 
@@ -2784,11 +2782,11 @@ generateInitializeTypeLib
 		nextPutAll: '"Private - Establish a connection to the receiver''s type library.';
 		crtab;
 		tab;
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: ' initializeTypeLib'.
 	self printAutoGenMethodPostambleOn: target.
 	"Avoid generating typelib global"
-	glob := self isTraceOnly ifTrue: [lib globalName] ifFalse: [lib globalBinding key].
+	glob := self isTraceOnly ifTrue: [lib variableName] ifFalse: [lib binding key].
 	target
 		nextPutAll: 'typeLib := ';
 		nextPutAll: glob.
@@ -3041,6 +3039,16 @@ generateValuePropertyWrappers
 				ifFalse: 
 					[methodName argumentCount = 1 
 						ifTrue: [self generateValueMutator: each wrapping: methodName]]]!
+
+generateVariableDefinition: aVariableBinding
+	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
+	if not heard, in the development environment."
+
+	| class |
+	class := super generateVariableDefinition: aVariableBinding.
+	"Presize to avoid recompilation when size calculated by subsequent initialization"
+	class byteSize: IUnknown byteSize.
+	^class!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes for the receiver."
@@ -3317,7 +3325,6 @@ wrapMethodComment: aString
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateClassSide:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateCollectionTest!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateDefaultMethod:wrapping:!private! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateInitializeTypeLib!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateInstanceSide:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateMethodWrappers!private! !
@@ -3336,6 +3343,7 @@ wrapMethodComment: aString
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateValueAccessor:wrapping:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateValueMutator:wrapping:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateValuePropertyWrappers!private! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #inspectableProperties!enumerating!public! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #instanceMethodCategories:!private! !
@@ -3621,13 +3629,14 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 
 !OS.COM.StructureTypeAnalyzer methodsFor!
 
-conformsToRequiredProtocols: binding
+conformsToRequiredProtocols: aVariableBinding
 	"Private - Answer whether the global object with the specified binding conforms to all the necessary
 	class and instance <MethodProtocol>s."
 
 	"If it doesn't currently inherit from our usual base class, we'll need to see if it implements the relevant protocols"
-	^(super conformsToRequiredProtocols: binding) or: [
-		binding value class conformsToProtocol: #'externalStructure class']!
+
+	^(super conformsToRequiredProtocols: aVariableBinding)
+		or: [aVariableBinding value class conformsToProtocol: #'externalStructure class']!
 
 determineNewBase: baseClass forExistingWrapper: existingClass
 	| existingSuper |
@@ -3655,7 +3664,7 @@ generateDefineFields
 		nextPutAll: ' structure.';
 		cr;
 		crtab;
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: ' compileDefinition';
 		cr;
 		cr.
@@ -3676,15 +3685,6 @@ generateDefineFields
 	self compileClassMethod: target contents
 		categories: {self autoGenCategoryName. 'template definition'}!
 
-generateGlobalDefinition: structName
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	| class |
-	class := self generateClassDefinition: structName asSymbol.
-	self guid notNull ifTrue: [class guid: self guid].
-	^class!
-
 generateInstanceSide: aClass
 	aClass compileDefinition!
 
@@ -3703,13 +3703,22 @@ generateTypeLibAccessor
 		nextPutAll: 'and the index of the receiver''s type information in that library'.
 	self printAutoGenMethodPostambleOn: target.
 	"Avoid generating typelib global"
-	glob := self isTraceOnly ifTrue: [lib globalName] ifFalse: [lib globalBinding key].
+	glob := self isTraceOnly ifTrue: [lib variableName] ifFalse: [lib binding key].
 	target
 		nextPut: $^;
 		nextPutAll: glob;
 		nextPutAll: ' -> ';
 		display: tlbInterface libraryAndIndex value.
 	self compileClassMethod: target contents categories: self classInitializerCategories!
+
+generateVariableDefinition: aVariableBinding
+	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
+	if not heard, in the development environment."
+
+	| class |
+	class := self generateClassDefinition: aVariableBinding imports: #().
+	self guid notNull ifTrue: [class guid: self guid].
+	^class!
 
 generateWrapper
 	^(BuiltIns lookup: self guid) ifNil: [super generateWrapper]!
@@ -3741,7 +3750,7 @@ printClassCommentPreambleOn: target
 	lib := self typeLib.
 	target
 		nextPut: $`;
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: '` is an `ExternalStructure` class to wrap the ';
 		nextPutAll: self idlKeyword;
 		space;
@@ -3880,9 +3889,9 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 !OS.COM.StructureTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #generateClassSide:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #generateDefineFields!private! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #generateInstanceSide:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #generateTypeLibAccessor!automatic generation!private! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #generateWrapper!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printAnonymousStruct:offset:prefix:hidden:on:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
@@ -3911,7 +3920,7 @@ publishedAspectsOfInstances
 
 !OS.COM.TKindAliasAnalyzer methodsFor!
 
-generateGlobalDefinition: globName
+generateVariableDefinition: aVariableBinding
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
 	if not heard, in the development environment."
 
@@ -3965,7 +3974,7 @@ printIDLOn: target indent: tabs
 	(self printIDLAttributesOn: target indent: -1)
 		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
+!OS.COM.TKindAliasAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.TKindAliasAnalyzer categoriesFor: #generateWrapper!private! !
 !OS.COM.TKindAliasAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TKindAliasAnalyzer categoriesFor: #idlKeyword!constants!private! !
@@ -3974,6 +3983,12 @@ printIDLOn: target indent: tabs
 !OS.COM.TKindAliasAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
 
 !OS.COM.TKindCoclassAnalyzer methodsFor!
+
+generateVariableDefinition: aVariableBinding
+	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
+	if not heard, in the development environment."
+
+	^self shouldNotImplement!
 
 generateWrapper
 	"Private - Generate appropriate Dolphin objects to wrap the type described
@@ -4028,6 +4043,7 @@ printIDLBodyOn: target indent: tabs
 		tab: tabs;
 		nextPutAll: '};';
 		cr! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.TKindCoclassAnalyzer categoriesFor: #generateWrapper!private! !
 !OS.COM.TKindCoclassAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TKindCoclassAnalyzer categoriesFor: #idlKeyword!constants!private! !
@@ -4150,7 +4166,7 @@ printClassCommentPreambleOn: target
 	lib := self typeLib.
 	target
 		nextPut: $`;
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: '` is a wrapper class generated for the dispatch interface ';
 		print: self fullyQualifiedName;
 		nextPutAll: ' from type information in the ''';
@@ -4563,17 +4579,17 @@ publishedAspectsOfInstances
 constantsPool
 	^self typeLib constantsPoolBinding value!
 
-generateGlobalDefinition: globName
+generateInstanceSide: aPoolConstantsDictionary 
+	self generateConstantsIntoPool: aPoolConstantsDictionary!
+
+generateVariableDefinition: aVariableBinding
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
 	if not heard, in the development environment. Answer the object generated (in this case a 	<PoolConstantsDictionary>)."
 
-	| binding |
-	binding := self typeLib constantsPoolBinding.
-	self assert: [binding notNil].
-	^binding value!
-
-generateInstanceSide: aPoolConstantsDictionary 
-	self generateConstantsIntoPool: aPoolConstantsDictionary!
+	| var |
+	var := self typeLib constantsPoolBinding.
+	self assert: [var notNil].
+	^var value!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes
@@ -4634,8 +4650,8 @@ printIDLOn: target indent: tabs
 removeOldWrappers: aClass
 	"Nothing to remove in this case"! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #constantsPool!public! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #generateInstanceSide:!private! !
+!OS.COM.TKindEnumAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #idlKeyword!constants!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
@@ -4687,7 +4703,7 @@ generateDefineFunctions
 		nextPutAll: '"Declare the virtual function table for the COM interface ';
 		print: self fullyQualifiedName;
 		crtab: 2;
-		display: self globalName;
+		display: self variableName;
 		nextPutAll: ' defineTemplate'.
 	self printAutoGenMethodPostambleOn: target.
 	target nextPutAll: 'self'.
@@ -4812,7 +4828,7 @@ printClassCommentPreambleOn: target
 	lib := self typeLib.
 	target
 		nextPut: $`;
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: '` is a wrapper class for the COM interface ';
 		print: self fullyQualifiedName;
 		nextPutAll: ' generated from type information in the ''';
@@ -5217,7 +5233,7 @@ printClassCommentPreambleOn: target
 	| lib |
 	lib := self typeLib.
 	target
-		nextPutAll: self globalName;
+		nextPutAll: self variableName;
 		nextPutAll: ' is the `ExternalLibrary` class to represent the dynamic link library, ';
 		print: (self dllNameIfNone: ['(anon)']);
 		nextPut: $.;
@@ -5378,13 +5394,13 @@ autoGenMethodComment
 
 	^''!
 
-baseClassCheck: binding
+baseClassCheck: aVariableBinding
 	"Private - The receiver's global is already present, check to make sure it has the same superclass
 	and if not ask the user for confirmation that it is OK to overwrite it. Answer whether to plough
 	ahead or prompt for a new name."
 
-	^(self conformsToRequiredProtocols: binding) 
-		or: [self typeLib superclassClashSignal signal: self with: binding]!
+	^(self conformsToRequiredProtocols: aVariableBinding)
+		or: [self typeLib superclassClashSignal signal: self with: aVariableBinding]!
 
 basicGenerate
 	"Generate appropriate Dolphin objects to wrap the type described
@@ -5402,24 +5418,24 @@ canGenerateClassMessage: selector
 
 	^self isTraceOnly or: [self canGenerateMessage: selector into: self global class]!
 
-canGenerateMessage: selector
+canGenerateMessage: aSymbol
 	"Private - Answer whether an auto-generated method implementing the message with
 	the specified symbolic selector can be safely generated into the receiver's associated
 	wrapper class."
 
-	^self isTraceOnly or: [self canGenerateMessage: selector into: self global]!
+	^self isTraceOnly or: [self canGenerateMessage: aSymbol into: self global]!
 
-canGenerateMessage: selector into: class
+canGenerateMessage: aSymbol into: aClass
 	"Private - Answer whether an auto-generated method implementing the message with
 	the specified symbolic selector can be safely generated into the <ClassDescription>, class.
 	The purpose of this test is to avoid overwriting hand written methods of the same
 	name, or perhaps to avoid overriding certain critical selectors."
 
-	^(class includesSelector: selector asSymbol)
+	^(aClass includesSelector: aSymbol asSymbol)
 		ifTrue: 
 			[Notification signal: ('Warning: Wrapper method <1p>>><2s> not generated due to selector clash.'
-						expandMacrosWith: class
-						with: selector).
+						expandMacrosWith: aClass
+						with: aSymbol).
 			false]
 		ifFalse: [true]!
 
@@ -5431,15 +5447,15 @@ canGenerateMethodNamed: anAXMethodName
 	^self isTraceOnly 
 		or: [self canGenerateMessage: anAXMethodName selector into: self global]!
 
-checkConformanceOfExistingClass: binding
+checkConformanceOfExistingClass: aVariableBinding
 	"Private - Check that the existing global with the specified binding is compatible
 	with the receiver, and warn the user if not. Answers whether the global should
 	be used, or an attempt should be made to find another one."
 
-	^(self isClassCheck: binding)
-		and: [(self guidCheck: binding)
-				and: [(self baseClassCheck: binding)
-					and: [self packageCheck: binding]]]!
+	^aVariableBinding isUnbound or: 
+			[(self isClassCheck: aVariableBinding) and: 
+					[(self guidCheck: aVariableBinding)
+						and: [(self baseClassCheck: aVariableBinding) and: [self packageCheck: aVariableBinding]]]]!
 
 classCategories
 	"Private - Answer a <Set> of the class categories to which any class generated for
@@ -5486,22 +5502,23 @@ compileMethod: aString categories: aCollection
 			source := Smalltalk developmentSystem reformatSource: aString in: class.
 			class compile: source categories: aCollection]!
 
-compileRawMethod: source categories: categories
+compileRawMethod: aString categories: categories
 	"Private - Generate the method or send to trace, depending on the mode."
 
-	^self compileMethod: source categories: categories!
+	^self compileMethod: aString categories: categories!
 
-compileTestingMethod: source
+compileTestingMethod: aString
 	"Private - Generate a 'testing' method or send to trace, depending on the mode."
 
-	self compileMethod: source categories: {self autoGenCategoryName. 'testing'. 'public'}!
+	self compileMethod: aString categories: {self autoGenCategoryName. 'testing'. 'public'}!
 
-conformsToRequiredProtocols: binding
+conformsToRequiredProtocols: aVariableBinding
 	"Private - Answer whether the global object with the specified binding conforms to all the necessary
 	class and instance <MethodProtocol>s."
 
 	"If it doesn't currently inherit from our usual base class, we'll need to see if it implements the relevant protocols"
-	^binding value inheritsFrom: self baseClass!
+
+	^aVariableBinding value inheritsFrom: self baseClass!
 
 constantsPool
 	^self typeLib constantsPool!
@@ -5535,15 +5552,15 @@ generate
 		on: self typeLib superclassClashSignal
 		do: [:e | self handleClash: e response: (self superclassClashPrompt: e tag)]!
 
-generateAs: name flags: flags
+generateAs: aString flags: anInteger
 	"Generate a new global object with the <readableString> name, global,
 	including any possible wrapping of the type information such as an
 	IDispatch subclass with wrapper methods for the properties and member
 	functions of the dispinterface described by the ITypeInfo. "
 
-	self globalName: name.
-	generationFlags := flags.
-	^self generateWrapper.!
+	self globalName: aString.
+	generationFlags := anInteger.
+	^self generateWrapper!
 
 generateClassComment
 	"Private - Extract any help string associated with the interface described by the
@@ -5599,60 +5616,13 @@ generateClassComment
 			[(flags allMask: Verbose)
 				ifTrue: [Notification signal: 'Existing class comment for ' , self name , ' not overwritten']]!
 
-generateClassDefinition: suggestedName
+generateClassDefinition: aString imports: anArray
 	"Private - Generate and answer a new class to wrap the type described by the receiver."
 
-	| pools classVars instVars class baseClass var sharedVars actualName existingClass binding stream |
-	pools := self namespaceImports.
-	classVars := instVars := ''.
-	baseClass := self baseClass.
-	var := self resolveExistingClass: suggestedName.
-	existingClass := var value.
-	actualName := var key.
-	"Record any name that differs from suggestion in the alias map so that we can regenerate later to the same name
-	 without prompting the user again, and without having to keep the cached analyzers hanging around."
-	actualName ~= suggestedName ifTrue: [self typeLib addAlias: actualName forType: self].
-	existingClass isNil
-		ifTrue: 
-			[(self generationFlags allMask: Verbose)
-				ifTrue: 
-					[Notification signal: 'Generating new class ' , actualName , ' to wrap ' , self fullyQualifiedName]]
-		ifFalse: 
-			["It may we be that this is already perfect"
-			((pools difference: existingClass namespaceImports) isEmpty
-				and: [existingClass superclass == baseClass])
-					ifTrue: 
-						[self globalBinding: var.
-						^existingClass].
-			(self generationFlags allMask: Verbose)
-				ifTrue: 
-					[Notification
-						signal: 'Modifying existing class ' , existingClass name , ' to wrap ' , self fullyQualifiedName].
-
-			"Need to re-generate, but try and preserved existing details"
-			pools := existingClass namespaceImports union: pools.
-			classVars := existingClass classVariableString.
-			instVars := existingClass instanceVariableString.
-			baseClass := self determineNewBase: baseClass forExistingWrapper: existingClass].
-	stream := String smalltalkWriteStream: 32.
-	pools asSortedCollection do: [:s | stream nextPutAll: s] separatedBy: [stream space].
-	sharedVars := stream contents.
-	class := baseClass
-				subclass: actualName asSymbol
-				instanceVariableNames: instVars
-				classVariableNames: classVars
-				poolDictionaries: sharedVars.
-
-	"Immediately update the class GUID to that in the typelib (if any)"
-	self guid notNull ifTrue: [class guid: self guid].
-	class classCategories: self classCategories.
-	self isTracing ifTrue: [Notification signal: class definitionChunk].
-
-	"We can now store down the binding info."
-	binding := self environment associationAt: var key.
-	self globalBinding: binding.
-	existingClass isNil ifTrue: [self typeLib addClassToPackage: class].
-	^class!
+	^self typeLib
+		generateClass: aString
+		for: self
+		imports: anArray!
 
 generateClassSide: aClass
 	"By default, do nothing."!
@@ -5662,29 +5632,29 @@ generateConstants
 	pool := self constantsPool.
 	self generateConstantsIntoPool: pool!
 
-generateConstantsIntoPool: aPoolConstantsDictionary
+generateConstantsIntoPool: aSharedPool
 	(self generationFlags anyMask: Verbose)
 		ifTrue: 
 			[Notification signal: ('Generating constants for <1s> <2s> into pool <3s>'
 						expandMacrosWith: self idlKeyword
 						with: self name
-						with: aPoolConstantsDictionary name)].
-	self constants do: [:each | aPoolConstantsDictionary at: each name put: each lpvarValue value]!
+						with: aSharedPool name)].
+	self constants do: [:each | aSharedPool at: each name put: each lpvarValue value]!
 
-generateGlobalDefinition
+generateInstanceSide: aClass
+	"By default, do nothing. To be overridden by subclasses where necessary."!
+
+generateVariableDefinition
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
 	if not heard, in the development environment."
 
-	^self generateGlobalDefinition: self globalBinding key!
+	^self generateVariableDefinition: self binding!
 
-generateGlobalDefinition: globName
+generateVariableDefinition: aVariableBinding
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
 	if not heard, in the development environment."
 
 	^self subclassResponsibility!
-
-generateInstanceSide: aClass
-	"By default, do nothing. To be overridden by subclasses where necessary."!
 
 generateWrapper
 	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods 
@@ -5692,7 +5662,7 @@ generateWrapper
 	Answer the object generated (in this case a <COMInterface> subclass)."
 
 	| class |
-	class := self generateGlobalDefinition.
+	class := self generateVariableDefinition.
 	self removeOldWrappers: class.
 	self generateClassSide: class.
 	self generateInstanceSide: class.
@@ -5704,23 +5674,23 @@ generationFlags
 	generationFlags isNil ifTrue: [generationFlags := self typeLib generationFlags].
 	^generationFlags!
 
-guidCheck: binding 
+guidCheck: aVariableBinding
 	"Private - The receiver's global is already present, check to make sure it has the same GUID
 	and if not ask the user for confirmation that it is OK to overwrite it. Answer whether to plough
 	ahead."
 
-	| myId hisId global |
-	global := binding value.
+	| myId hisId value |
+	value := aVariableBinding value.
 	myId := self guid.
-	hisId := global guid.
-	(myId notNull and: [myId ~= hisId]) 
+	hisId := value guid.
+	(myId notNull and: [myId ~= hisId])
 		ifTrue: 
-			[(self guidClashSignal signal: self with: binding) ifFalse: [^false].
+			[(self guidClashSignal signal: self with: aVariableBinding) ifFalse: [^false].
 			"Handler ignored, so assert our guid!!"
-			global guid: myId].
+			value guid: myId].
 	^true!
 
-guidClashPrompt: binding
+guidClashPrompt: aVariableBinding
 	"Private - Prompt the user as to how they wish to resolve a guid clash."
 
 	| type mb |
@@ -5734,8 +5704,8 @@ This may be due to a name clash, or because, for example, an interface has been 
 Are you sure that you would like to overwrite it?
 
 Press Retry to suggest an alternative name for the <3s>, Ignore to overwrite, or Abort to quit.'
-				expandMacrosWith: binding key
-				with: binding value owningPackage name
+				expandMacrosWith: aVariableBinding key
+				with: aVariableBinding value owningPackage name
 				with: type).
 	mb
 		buttonStyle: #abortRetryIgnore;
@@ -5789,20 +5759,20 @@ idlTypeOfVT: vt
 
 	^VTtoIDLTypeMap at: vt!
 
-isClassCheck: binding
+isClassCheck: aVariableBinding
 	"Private - The receiver's global is already present, check to make sure it is actually a class."
 
-	| global resp mb |
-	global := binding value.
-	(global isKindOf: Class) ifTrue: [^true].
+	| value resp mb |
+	value := aVariableBinding value.
+	value class isMeta ifTrue: [^true].
 	mb := UI.MessageBox new.
 	mb iconStyle: #warning.
 	mb
 		text: ('Class name <1p> clashes with an existing global which is not a class (a <2p>).
 
 Press OK to suggest an alternative name for the <3s>, or Cancel to abort.'
-				expandMacrosWith: binding key
-				with: binding value class
+				expandMacrosWith: aVariableBinding key
+				with: aVariableBinding value class
 				with: self idlKeyword).
 	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3s>'
 				expandMacrosWith: self idlKeyword
@@ -5814,14 +5784,14 @@ Press OK to suggest an alternative name for the <3s>, or Cancel to abort.'
 	^false	"Binding not acceptable - please try a new one"!
 
 packageCheck: anAssociation
-	"Private - The receiver's global is already present, check to make sure it it in the same package,
+	"Private - The receiver's variable is already present, check to make sure it it in the same package,
 	and if not ask the user whether or not to relocate it. Note that this method never answers false,
 	so the user never gets a chance to try a different name."
 
-	| global myPackageName hisPackage |
-	global := anAssociation value.
+	| value myPackageName hisPackage |
+	value := anAssociation value.
 	myPackageName := self typeLib packageName.
-	hisPackage := global owningPackage ?? Package uncommitted.
+	hisPackage := value owningPackage ?? Package uncommitted.
 	(myPackageName = hisPackage name or: [hisPackage isSystemPackage])
 		ifFalse: 
 			[| resp type mb |
@@ -5845,7 +5815,7 @@ Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 				defaultButton: 2.
 			resp := mb open.	"Default to No, to leave as is"
 			resp == #cancel ifTrue: [self abortGeneration].
-			resp == #yes ifTrue: [self typeLib moveClassToPackage: global]].
+			resp == #yes ifTrue: [self typeLib moveClassToPackage: value]].
 	^true!
 
 printAutoGenMethodPostambleOn: target 
@@ -5997,37 +5967,33 @@ reservedSelectors
 
 	^IdentitySet new!
 
-resolveExistingClass: className
-	"Private - Attempt to locate an existing class which matches the receiver's type, starting
-	with the <readableString> class name, className, but prompting the user for further
-	global names if necessary. Answer an <Association> which is either an existing global
-	variable binding, or a suggested new name and nil value."
+resolveExistingClass: aVariableBinding
+	"Private - Attempt to locate an existing class which matches the receiver's type, starting with value associated with the <VariableBinding> argument, but prompting the user for further global names if necessary. Answer a <VariableBinding> which is either an existing static variable binding, or a suggested new variable."
 
-	| env newName prompt caption binding |
-	env := self environment.
-	newName := className.
-	
-	[newName := newName asSymbol.
-	binding := env associationAt: newName ifAbsent: [^newName -> nil].
-	self checkConformanceOfExistingClass: binding]
-			whileFalse: 
-				[prompt isNil
-					ifTrue: 
-						[| typeName |
-						typeName := self idlKeyword.
-						prompt := 'Please enter a unique global name for the <1s> <2p>' expandMacrosWith: typeName
-									with: self name.
-						caption := 'Generating <1s> <2s>.<3s>'
-									expandMacrosWith: typeName
-									with: self typeLib name
-									with: self name].
-				newName := UI.Prompter
-							on: newName , '_'
-							prompt: prompt
-							caption: caption.
-				newName isNil ifTrue: [self abortGeneration]].
+	| prompt caption var |
+	var := aVariableBinding.
+	[self checkConformanceOfExistingClass: var] whileFalse: 
+			[| newName |
+			prompt isNil
+				ifTrue: 
+					[| typeName |
+					typeName := self idlKeyword.
+					prompt := 'Please enter a unique global name for the <1s> <2p>' expandMacrosWith: typeName
+								with: self name.
+					caption := 'Generating <1s> <2s>.<3s>'
+								expandMacrosWith: typeName
+								with: self typeLib name
+								with: self name].
+			newName := UI.Prompter
+						on: var key , '_'
+						prompt: prompt
+						caption: caption.
+			newName isNil ifTrue: [self abortGeneration].
+			var := (VariableBinding key: newName value: nil)
+						environment: self environment;
+						yourself].
 	"Found a conformant class"
-	^binding!
+	^var!
 
 shouldOverwriteClassComment
 	| existingComment |
@@ -6036,7 +6002,7 @@ shouldOverwriteClassComment
 			[(existingComment contains: self autoGenClassCommentMarker)
 				or: [self generationFlags allMask: OverwriteClassComments]]!
 
-superclassClashPrompt: binding
+superclassClashPrompt: aVariableBinding
 	"Private - Prompt the user as to how they wish to resolve an inheritance mismatch."
 
 	| mb |
@@ -6049,11 +6015,11 @@ appear to implement the required protocols.
 Please press Retry to suggest an alternative name for the <4s>, or Abort to abort.
 
 You can Ignore this warning, but it is suggested that you check the location of <1s> in the hierarchy to be sure that it is correct.'
-				expandMacrosWith: {binding key.
-						binding value owningPackage name.
+				expandMacrosWith: {aVariableBinding key.
+						aVariableBinding value owningPackage name.
 						self baseClass.
 						self idlKeyword.
-						binding value superclass}).
+						aVariableBinding value superclass}).
 	mb
 		caption: ('Dolphin Type Library Analyzer: Generating <1s>.<2s>' expandMacrosWith: self typeLib name
 				with: self name).
@@ -6084,13 +6050,13 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generate!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateAs:flags:!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassComment!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassDefinition:!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassDefinition:imports:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassSide:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateConstants!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateConstantsIntoPool:!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #generateGlobalDefinition!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateInstanceSide:!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #generateVariableDefinition!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateWrapper!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generationFlags!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #guidCheck:!private! !
@@ -6160,6 +6126,9 @@ classComments: aSymbol
 	self generationFlags: (flags 
 				maskSet: (self class classCommentStyleMap at: aSymbol ifAbsent: [0]))!
 
+constantsPool
+	^self subclassResponsibility!
+
 customAttributes
 	"Private - Answer an <abstractDictionary> of the custom attributes defined against this type.
 	The keys of the dictionary are the GUIDs which uniquely identify the attribute type, and the
@@ -6214,6 +6183,9 @@ forceLowercaseIdentifiers
 
 forceLowercaseIdentifiers: aBoolean 
 	self generationFlags: (self generationFlags mask: LowercaseIdentifiers set: aBoolean)!
+
+fullyQualifiedName
+	^self subclassResponsibility!
 
 generateSourceInterfaces
 	"Answer whether wrapper classes should be generated for 'source' (event callback) interfaces."
@@ -6394,6 +6366,7 @@ tracing: aSymbol
 !OS.COM.TypeInfoObject categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !OS.COM.TypeInfoObject categoriesFor: #classComments!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #classComments:!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #constantsPool!public! !
 !OS.COM.TypeInfoObject categoriesFor: #customAttributes!printing-IDL!private! !
 !OS.COM.TypeInfoObject categoriesFor: #defineFunctionTables!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #defineFunctionTables:!accessing!public! !
@@ -6401,6 +6374,7 @@ tracing: aSymbol
 !OS.COM.TypeInfoObject categoriesFor: #defineMethodProtocols:!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #forceLowercaseIdentifiers!private!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #forceLowercaseIdentifiers:!private!testing! !
+!OS.COM.TypeInfoObject categoriesFor: #fullyQualifiedName!public! !
 !OS.COM.TypeInfoObject categoriesFor: #generateSourceInterfaces!public!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #generationFlags!accessing!converting!public! !
 !OS.COM.TypeInfoObject categoriesFor: #generationFlags:!accessing!public! !
@@ -6541,10 +6515,27 @@ addClassToPackage: class
 
 	Package manager addClass: class to: self package!
 
-addGlobalToPackage: anAssociation
+addVariableToPackage: aVariableBinding
 	"Private - Add the specified global to the package associated with the receiver."
 
-	Package manager addVariableNamed: anAssociation key asQualifiedReference to: self package!
+	Package manager addVariableNamed: aVariableBinding fullyQualifiedReference to: self package!
+
+binding
+	"Private - Answer the VariableBinding for the variable being generated for the receiver."
+
+	| name |
+	name := self variableName.
+	self assert: [self isTraceOnly not].
+	^(Root localBindingFor: name)
+		ifNil: 
+			[| var |
+			var := Root addClassVariable: name value: self.
+			self package addVariableNamed: name.
+			var]
+		ifNotNil: 
+			[:var |
+			"Ensure the binding is actually referring to the receiver"
+			var value: self]!
 
 checkConformanceOfExistingPool: binding
 	"Private - Check that the existing global with the specified binding is suitable
@@ -6555,40 +6546,39 @@ checkConformanceOfExistingPool: binding
 		and: [self packageCheck: binding]!
 
 constantsPool
-	"Private - Answer the <PoolConstantsDictionary> containing all constants (enumerations)
-	defined in the receiver, or nil if none. The pool is generated if it doesn't already exist."
+	"Private - Answer the <SharedPool> subclass containing all constants (enumerations) defined in the receiver, or nil if none. The pool is generated if it doesn't already exist."
 
-	^self constantsPoolBinding ifNotNil: 
-			[:binding | 
+	^self constantsPoolBinding
+		ifNotNil: 
+			[:var |
 			| pool |
-			pool := binding value.
-			pool isEmpty ifTrue: [self generateConstantsIntoPool: binding].
+			pool := var value.
+			pool isEmpty ifTrue: [self generateConstantsIntoPool: var].
 			pool]!
 
 constantsPoolBinding
-	"Private - Answer an <Association> which is the actual binding for the receiver's 
-	constants pool that contains all constants (enumerations) defined in the
-	receiver. Answer nil if there is no pool because there are no constants."
+	"Private - Answer a <VariableBinding> which is the actual binding for the receiver's constants pool that contains all constants (enumerations) defined in the receiver. Answer nil if there is no pool because there are no constants."
 
-	| binding |
+	| var |
+	self assert: [self isTraceOnly not].
 	constantsPoolName := (constantsPoolName isNil and: [self enums isEmpty])
 				ifTrue: ['']
 				ifFalse: [self constantsPoolName].
 	constantsPoolName isEmpty ifTrue: [^nil].
-	binding := self resolveExistingPool: constantsPoolName.
-	binding value isNil
+	var := self resolveExistingPool: constantsPoolName.
+	var value isNil
 		ifTrue: 
-			[binding value: (SharedPool subclass: binding key).
-			self addGlobalToPackage: binding	"key"].
-	constantsPoolName := binding key.
-	^binding!
+			[var value: (SharedPool subclass: var key).
+			self addVariableToPackage: var	"key"].
+	constantsPoolName := var key.
+	^var!
 
 constantsPoolName
 	"Answer the name of the <SharedPool> class into which all all of the constants and enumerated type values defined in this type library are to be placed. If not cast in stone already, answer the name that would likely be used if the pool were generated."
 
 	^constantsPoolName isNil
 		ifFalse: [constantsPoolName]
-		ifTrue: [self fullNameFor: (self globalNameFrom: self name , 'Constants')]!
+		ifTrue: [self fullNameFor: (self variableNameFrom: self name , 'Constants')]!
 
 constantsPoolName: identifier
 	"Set the <Symbol> name of the <PoolConstantsDictionary> into which all all 
@@ -6599,12 +6589,29 @@ constantsPoolName: identifier
 	constantsPoolName := identifier.
 !
 
+defaultNamespaceImports
+	"Private - Answer a <sequencedReadableCollection> of the namespaces to be imported into the generated namespace by default."
+
+	^#('OS.COM' 'OS') collect: [:each | each asQualifiedReference private]!
+
 defaultPackageFolder
 	^Tools.PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
 
 definesSymbolicConstants
 	^self enums notEmpty 
 		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
+
+environment
+	self namespaceBinding
+		ifNil: 
+			[binding := (self
+						generateClass: self namespaceName
+						for: self
+						imports: self namespaceImports) binding].
+	^binding value!
+
+fullyQualifiedName
+	^Root fullNameFor: self namespaceName!
 
 generatableInterfaces
 	"Answer a <sequencedReadableCollection> of all the interfaces that should be generated in
@@ -6622,23 +6629,76 @@ generatableModules
 	^self modules 
 		reject: [:each | (each dllNameIfNone: []) isNil and: [each constants isEmpty]]!
 
-generateConstantsIntoPool: aVariableBinding 
+generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
+	| baseClass imports var actualName classVars instVars class existingClass classGuid classInstVars classConstants |
+	imports := anArray.
+	classVars := instVars := classInstVars := ''.
+	classConstants := #().
+	baseClass := aTypeInfoObject baseClass.
+	var := aTypeInfoObject resolveExistingClass: aVariableBinding.
+	actualName := var key.
+	"Record any name that differs from suggestion in the alias map so that we can regenerate later to the same name
+	 without prompting the user again, and without having to keep the cached analyzers hanging around."
+	actualName ~= aVariableBinding key ifTrue: [self addAlias: actualName forType: aTypeInfoObject].
+	existingClass := var value.
+	existingClass isNil
+		ifTrue: 
+			[(aTypeInfoObject generationFlags allMask: Verbose)
+				ifTrue: 
+					[Notification
+						signal: 'Generating new class ' , actualName , ' to wrap ' , aTypeInfoObject fullyQualifiedName]]
+		ifFalse: 
+			["It may we be that this is already perfect"
+			((imports difference: existingClass imports) isEmpty and: [existingClass superclass == baseClass])
+				ifTrue: 
+					[aTypeInfoObject binding: var.
+					^existingClass].
+			(aTypeInfoObject generationFlags allMask: Verbose)
+				ifTrue: 
+					[Notification signal: 'Modifying existing class ' , existingClass name , ' to wrap '
+								, aTypeInfoObject fullyQualifiedName].
+
+			"Need to re-generate, but try and preserved existing details"
+			imports := existingClass imports union: imports.
+			classVars := existingClass classVariableString.
+			instVars := existingClass instanceVariableString.
+			baseClass := aTypeInfoObject determineNewBase: baseClass forExistingWrapper: existingClass.
+			classInstVars := existingClass class instanceVariableString.
+			classConstants := existingClass classConstants].
+	class := baseClass
+				subclass: actualName asSymbol
+				instanceVariableNames: instVars
+				classVariableNames: classVars
+				imports: imports
+				classInstanceVariableNames: classInstVars
+				classConstants: classConstants.
+
+	"Immediately update the class GUID to that in the typelib (if any)"
+	classGuid := aTypeInfoObject guid.
+	classGuid notNull ifTrue: [class guid: classGuid].
+	class classCategories: aTypeInfoObject classCategories.
+	aTypeInfoObject isTracing ifTrue: [Notification signal: class definitionChunk].
+
+	"We can now store down the binding info."
+	aTypeInfoObject binding: class binding.
+	existingClass isNil ifTrue: [self addClassToPackage: class].
+	^class!
+
+generateConstantsIntoPool: aVariableBinding
 	"Private - Generate the receiver's constants into the <PoolConstantsDictionary>, pool."
 
 	| poolName pool |
 	poolName := aVariableBinding key.
 	pool := aVariableBinding value.
-	self enums do: [:e | e generateAs: poolName flags: 0].
+	self enums do: [:each | each generateAs: poolName flags: 0].
 	^pool!
 
 generateConstantsPool
-	"Generate and answer a <PoolConstantsDictionary> containing all of the enumerated type values
-	defined in this type library. If the dictionary already exists, then its contents are rewritten (any
-	existing key-value pairs may remain if the keys do not clash)."
+	"Generate and answer a <SharedPool> containing all of the enumerated type values defined in this type library. If the dictionary already exists, then its contents are rewritten (any existing key-value pairs may remain if the keys do not clash)."
 
-	| binding pool |
-	binding := self constantsPoolBinding.
-	[pool := binding isNil ifFalse: [self generateConstantsIntoPool: binding]] on: OperationAborted
+	| var pool |
+	var := self constantsPoolBinding.
+	[pool := var isNil ifFalse: [self generateConstantsIntoPool: var]] on: OperationAborted
 		do: [:e | e toTrace].
 	self reset.
 	^pool!
@@ -6710,39 +6770,6 @@ generateWrapper: name name: globName flags: flags
 	types := self find: name count: 1.
 	^types do: [:each | each generateAs: globName flags: flags]!
 
-globalBinding
-	"Private - Answer the global binding for the receiver."
-
-	| name env assoc |
-	name := self globalName.
-	env := self environment.
-	assoc := env associationAt: name ifAbsent: [
-			env at: name put: self.
-			self package addVariableNamed: name.
-			env associationAt: globalName].
-	"Ensure the binding is actually referring to the receiver"
-	assoc value: self.
-	^assoc
-!
-
-globalName
-	"Private - Answer a (non-clashing) global name for the receiver."
-
-	globalName isNil ifTrue: [ | env stem libid suffix |
-		env := self environment.
-		stem := self globalNameFrom: self name.
-		(stem endsWith: 'Lib') ifFalse: [stem := stem, 'Lib'].
-		globalName := stem asSymbol.
-		libid := self guid.
-		suffix := 0.
-		[ | glob | 
-			glob := env at: globalName ifAbsent: [^globalName].
-			(glob respondsTo: #guid) not or: [glob guid ~= libid]] 
-		whileTrue: [
-			suffix := suffix + 1.
-			globalName := (stem, suffix printString) asSymbol]].
-	^globalName!
-
 idlAttributes
 	^(self basicIdlAttributes)
 		add: 'version(' , self versionString , ')' afterIndex: 1;
@@ -6778,18 +6805,19 @@ moveClassToPackage: class
 
 	Package manager addClass: class to: self package!
 
+namespaceBinding
+	^binding ifNil: [binding := self namespaceName asQualifiedReference bindingOrNil]!
+
 namespaceImports
 	"Private - Answer a <collection> of the shared variable names to be used for wrapper classes generated out
 	of the receiver, e.g. COMInterface subclasses. The shared pool will be generated if it doesn't currently 
 	exist."
 
-	^self isTraceOnly
-		ifTrue: [#()]
-		ifFalse: 
-			[| poolName |
-			self constantsPool.	"Ensure generated"
-			poolName := self constantsPoolName.
-			poolName isEmpty ifTrue: [#()] ifFalse: [{poolName asQualifiedReference}]]	"Don't want to cause generation if tracing only"!
+	| imports poolName |
+	imports := self defaultNamespaceImports.
+	poolName := self constantsPoolName.
+	poolName isEmpty ifFalse: [imports := imports copyWith: {poolName asQualifiedReference private}].
+	^imports!
 
 package
 	"Answer the package into which wrapper classes for the receiver should be generated.
@@ -6839,7 +6867,7 @@ Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 				caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' expandMacrosWith: self name).
 			resp := mb open.
 			resp == #cancel ifTrue: [self abortGeneration].
-			resp == #yes ifTrue: [self addGlobalToPackage: anAssociation]].
+			resp == #yes ifTrue: [self addVariableToPackage: anAssociation]].
 	^true!
 
 packageName
@@ -6860,7 +6888,7 @@ packageName: aString
 prefix: aString
 	"Set the name of the namespace into which the classes will be generated."
 
-	namespaceName := self globalNameFrom: aString.!
+	namespaceName := self variableNameFrom: aString!
 
 prefixGlobalNames
 	"Answer whether generated globals (e.g. classes) will be prefixed."
@@ -6955,15 +6983,13 @@ printIDLOn: aPuttableStream indent: anInteger
 		nextPutAll: '};';
 		cr!
 
-printOn: aStream 
+printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
 
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	tlbInterface isNull 
-		ifTrue: [aStream print: globalName]
-		ifFalse: [aStream print: self name].
+	tlbInterface isNull ifTrue: [aStream print: libVariableName] ifFalse: [aStream print: self name].
 	aStream nextPut: $)!
 
 resolveExistingPool: poolName
@@ -6972,37 +6998,65 @@ resolveExistingPool: poolName
 	global names if necessary. Answer an <Association> which is either an existing global
 	variable binding, or a suggested new name and nil value."
 
-	| env newName binding |
+	| env newName var |
 	env := self environment.
 	newName := poolName.
 	
 	[newName := newName asQualifiedReference.
-	binding := env bindingOrNil ifNil: [^newName -> nil].
-	self checkConformanceOfExistingPool: binding]
+	var := env bindingOrNil ifNil: [^newName -> nil].
+	self checkConformanceOfExistingPool: var]
 			whileFalse: 
 				[newName := UI.Prompter
 							on: newName , '_'
 							prompt: 'Please enter a new global name for the pool'
 							caption: ('Generating <1s> constants pool' expandMacrosWith: self name)].
-	^binding!
+	^var!
 
 superclassClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to
 	when an inheritance mismatch is detected."
 
-	^self class superclassClashSignal! !
+	^self class superclassClashSignal!
+
+variableName
+	"Private - Answer a (non-clashing) variable name for the receiver."
+
+	libVariableName isNil
+		ifTrue: 
+			[| stem libid |
+			stem := self variableNameFrom: self name.
+			(stem endsWith: 'Lib') ifFalse: [stem := stem , 'Lib'].
+			libVariableName := stem asSymbol.
+			libid := self guid.
+			self isTraceOnly
+				ifFalse: 
+					[| suffix |
+					suffix := 0.
+					
+					[| glob |
+					glob := Root at: libVariableName ifAbsent: [^libVariableName].
+					(glob respondsTo: #guid) not or: [glob guid ~= libid]]
+							whileTrue: 
+								[suffix := suffix + 1.
+								libVariableName := (stem , suffix printString) asSymbol]]].
+	^libVariableName! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #addAlias:forType:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #addClassToPackage:!helpers!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #addGlobalToPackage:!must strip!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #addVariableToPackage:!must strip!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #binding!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #checkConformanceOfExistingPool:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPool!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolName!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolName:!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultNamespaceImports!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultPackageFolder!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #definesSymbolicConstants!private!updating! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #environment!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullyQualifiedName!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generatableInterfaces!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generatableModules!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #generateClass:for:imports:!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateConstantsIntoPool:!operations!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateConstantsPool!operations!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateDispatchWrapper:!operations!public! !
@@ -7013,13 +7067,12 @@ superclassClashSignal
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateWrapper:name:flags:!operations!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #globalBinding!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #globalName!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlHelpAttributes:!printing-IDL!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlKeyword!constants!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #isPoolCheck:!private!testing! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #moveClassToPackage:!helpers!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceBinding!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceImports!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #package!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #package:!accessing!public! !
@@ -7033,6 +7086,7 @@ superclassClashSignal
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #printOn:!printing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #resolveExistingPool:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #superclassClashSignal!constants!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #variableName!accessing!private! !
 
 !OS.COM.TypeLibraryAnalyzer class methodsFor!
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
-	instanceVariableNames: 'typeLib globalBinding guid index documentation'
+	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -68,6 +68,20 @@ basicName
 	from the documentation in the type library."
 
 	^self documentation name!
+
+binding
+	"Private - Answer the global binding (or the proposed global binding) for the receiver.
+	Notes: 
+	1) The global binding is not saved down until actually generated as we want
+	to keep in step with any changes in the class library prefix.
+	2) If we find that the global binding is outdated (i.e. the global no longer exists), then 
+	we must reset."
+
+	binding notNil
+		ifTrue: 
+			["Find or clear (if removed) the current binding"
+			self binding: (self environment localBindingFor: binding key)].
+	^binding ifNil: [self suggestedBinding]!
 
 classDesc
 	"Private - Answer an <association> between a Dolphin class suitable for representing
@@ -201,36 +215,15 @@ global
 	"Answer the global object the receiver has generated/would generate.
 	N.B. This will cause the global to be generated, if it hasn't been already!!"
 
-	| binding global |
-	binding := self globalBinding.
-	(global := binding value) isNil 
-		ifTrue: [global := self generateGlobalDefinition: binding key].
+	| var global |
+	var := self binding.
+	(global := var value) isNil ifTrue: [global := self generateVariableDefinition: var].
 	^global!
 
-globalBinding
-	"Private - Answer the global binding (or the proposed global binding) for the receiver.
-	Notes: 
-	1) The global binding is not saved down until actually generated as we want
-	to keep in step with any changes in the class library prefix.
-	2) If we find that the global binding is outdated (i.e. the global no longer exists), then 
-	we must reset."
-
-	globalBinding notNil 
-		ifTrue: 
-			["Find or clear (if removed) the current binding"
-
-			self globalBinding: (self environment associationAt: globalBinding key
-						ifAbsent: [])].
-	^globalBinding ifNil: [self suggestedBinding]!
-
-globalBinding: anAssociationOrNil
-	globalBinding := anAssociationOrNil!
-
-globalName: globName 
+globalName: globName
 	"Private - Set the global name to be used for the receiver when generated."
 
-	self globalBinding: (self environment associationAt: globName
-				ifAbsent: [globName -> nil])!
+	self binding: (self environment associationAt: globName ifAbsent: [globName -> nil])!
 
 guid
 	"Answer the guid associated with the receiver."
@@ -274,7 +267,7 @@ isDual
 isGlobalDefined
 	"Answer whether a global has already been defined for the receiver."
 
-	^self globalBinding value notNil!
+	^self binding value notNil!
 
 isHidden
 	"Answer whether the receiver is describing a type which should
@@ -417,6 +410,7 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #binding!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
@@ -432,8 +426,6 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #global!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #globalBinding!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #globalBinding:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #globalName:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #hash!comparing!public! !

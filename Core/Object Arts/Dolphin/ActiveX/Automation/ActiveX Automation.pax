@@ -512,7 +512,7 @@ Kernel.SharedPool subclass: #'OS.COM.TypeGenerationFlags'
 		'WrapperStyleMask' -> 16r90
 	}!
 Core.Object subclass: #'OS.COM.TypeInfoObject'
-	instanceVariableNames: 'tlbInterface generationFlags'
+	instanceVariableNames: 'tlbInterface generationFlags binding'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
@@ -897,7 +897,7 @@ External.LPVOID subclass: #'OS.COM.LPBSTR'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
-	instanceVariableNames: 'typeLib globalBinding guid index documentation'
+	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -905,7 +905,7 @@ OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
 		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 	}!
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
-	instanceVariableNames: 'attributes namespaceName packageName globalName constantsPoolName aliasMap typeAnalyzers'
+	instanceVariableNames: 'attributes namespaceName packageName libVariableName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''

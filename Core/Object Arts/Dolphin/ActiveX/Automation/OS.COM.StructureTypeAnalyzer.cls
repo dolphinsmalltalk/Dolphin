@@ -17,7 +17,7 @@ baseClass
 	| firstVar |
 	firstVar := self variables first.
 	^(firstVar isAnonymous and: [firstVar tdesc isAnonymous not])
-		ifTrue: [firstVar tdesc typeInfo globalBinding value]
+		ifTrue: [firstVar tdesc typeInfo binding value]
 		ifFalse: [Structure]!
 
 byteSize

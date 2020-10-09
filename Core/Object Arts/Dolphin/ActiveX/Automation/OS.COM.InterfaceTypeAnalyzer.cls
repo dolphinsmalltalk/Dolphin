@@ -103,14 +103,12 @@ protocol
 	^protocol!
 
 suggestedBinding
-	"Private - Answer an <Association> for the global binding (or the proposed global binding) 
-	for the receiver, on the assumption that it doesn't currently have a binding.
-	Implementation Note: Override because there is a global table of interface classes which 
-	we can use to look up any existing wrapper class."
+	"Private - Answer the <VariableBinding> that is the binding for the receiver in its home namespace. If it doesn't have a binding that is definitely for it, then answer a proposed binding.
+	Implementation Note: Override because there is a global table of interface classes which we can use to look up any existing interface wrapper class."
 
 	^(Interface classForIID: self iid ifNone: [])
 		ifNil: [super suggestedBinding]
-		ifNotNil: [:interfaceClass | interfaceClass environment associationAt: interfaceClass name]!
+		ifNotNil: [:interfaceClass | interfaceClass binding]!
 
 superInterface
 	"Answer a <TKindInterfaceAnalyzer> describing the <COMInterface>

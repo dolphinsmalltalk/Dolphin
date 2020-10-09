@@ -11,6 +11,18 @@ OS.COM.Tests.InterfaceTest comment: ''!
 !OS.COM.Tests.InterfaceTest categoriesForClass!Unclassified! !
 !OS.COM.Tests.InterfaceTest methodsFor!
 
+testAllRegistered
+	| missing different |
+	missing := OrderedCollection new.
+	different := OrderedCollection new.
+	IUnknown withAllSubclasses do: 
+			[:each |
+			(Interface classForIID: each iid ifNone: [])
+				ifNil: [missing add: each]
+				ifNotNil: [:found | found == each ifFalse: [different add: each]]].
+	self assert: different asArray equals: #().
+	self assert: missing asArray equals: #()!
+
 testGetObject
 	| factory font |
 	self should: [IUnknown getObject: 'bad'] raise: HRESULTError.
@@ -18,5 +30,6 @@ testGetObject
 	factory := IClassFactory getObject: 'clsid:' , IFont clsid asString.
 	font := factory createInstance: nil iid: IFont iid.
 	font name! !
+!OS.COM.Tests.InterfaceTest categoriesFor: #testAllRegistered!public!unit tests! !
 !OS.COM.Tests.InterfaceTest categoriesFor: #testGetObject!public!unit tests! !
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'OS.COM.TypeInfoObject'
-	instanceVariableNames: 'tlbInterface generationFlags'
+	instanceVariableNames: 'tlbInterface generationFlags binding'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
@@ -39,6 +39,14 @@ basicName
 
 	^self subclassResponsibility!
 
+binding
+	"Private - Answer the global binding (or the proposed global binding) for the receiver."
+
+	^self subclassResponsibility!
+
+binding: aVariableBindingOrNil
+	binding := aVariableBindingOrNil!
+
 documentation
 	"Answer an <AXTypeLibDocumentation> object containing the documentation for this type."
 
@@ -55,21 +63,6 @@ free
 	tlbInterface isNil ifTrue: [^self].
 	tlbInterface free.
 	tlbInterface := nil!
-
-globalBinding
-	"Private - Answer the global binding (or the proposed global binding) for the receiver."
-
-	^self subclassResponsibility!
-
-globalName
-	"Answer the name of the generated object which represents the receiver in Smalltalk.
-	Implementation Note: If we haven't already got the globalName, then note that we
-	don't store it down, but recalculate it each time. This is deliberate: Until we've
-	actually generated the global object, we want to allow for changes in the values
-	which feed into the name generation algorithm (e.g. the typelib prefix is
-	changed)."
-
-	^self globalBinding key!
 
 guid
 	"Answer the a <GUID> which uniquely identifies the receiver."
@@ -130,15 +123,25 @@ suggestedGlobalName
 
 tlbInterface
 	tlbInterface isNull ifTrue: [self realize].
-	^tlbInterface! !
+	^tlbInterface!
+
+variableName
+	"Answer the name of the generated object which represents the receiver in Smalltalk.
+	Implementation Note: If we haven't already got the globalName, then note that we
+	don't store it down, but recalculate it each time. This is deliberate: Until we've
+	actually generated the global object, we want to allow for changes in the values
+	which feed into the name generation algorithm (e.g. the typelib prefix is
+	changed)."
+
+	^self binding key! !
 !OS.COM.TypeInfoObject categoriesFor: #asParameter!converting!public! !
 !OS.COM.TypeInfoObject categoriesFor: #attributes!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #basicName!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #binding!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #binding:!accessing!private! !
 !OS.COM.TypeInfoObject categoriesFor: #documentation!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #environment!constants!public! !
 !OS.COM.TypeInfoObject categoriesFor: #free!public!realizing/unrealizing! !
-!OS.COM.TypeInfoObject categoriesFor: #globalBinding!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #globalName!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #guid!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #helpfile!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #helpstring!accessing!public! !
@@ -150,4 +153,5 @@ tlbInterface
 !OS.COM.TypeInfoObject categoriesFor: #realize!private!realizing/unrealizing! !
 !OS.COM.TypeInfoObject categoriesFor: #suggestedGlobalName!accessing!private! !
 !OS.COM.TypeInfoObject categoriesFor: #tlbInterface!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #variableName!accessing!public! !
 

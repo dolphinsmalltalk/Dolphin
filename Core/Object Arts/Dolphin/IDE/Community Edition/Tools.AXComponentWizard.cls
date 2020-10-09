@@ -180,7 +180,7 @@ displayInstalledTypeLib: typelib
 	"Read-only aspects"
 	guid value: typelib guid asString.
 	libraryPath value: typelib path.
-	globalName value: typelib globalName.
+	globalName value: typelib variableName.
 	description value: typelib helpstring.
 	libraryName value: typelib name.
 	self updateTypelibGlobal.
@@ -215,7 +215,7 @@ generate
 					[:i :each |
 					| pct |
 					pct := (i * step) rounded.
-					progress text: 'Generating ' , each globalName.
+					progress text: 'Generating ' , each variableName.
 					each generate.
 					p value: pct]]
 					on: OperationAborted
