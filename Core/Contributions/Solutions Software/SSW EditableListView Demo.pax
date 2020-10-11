@@ -35,12 +35,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'SSW EditableListView'
-	'SSW Widget Development'
 	'SSW Widget Enhancements'
 	'..\..\Object Arts\Samples\MVP\Video Library\Video Library').
-
-package setManualPrerequisites: #(
-	'SSW Widget Development').
 
 package!
 

@@ -758,7 +758,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #productDetails!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #productDetails:!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #productMajorVersion!accessing!product!public! !
-!DevelopmentSessionManager categoriesFor: #productRegistryKey!accessing!private!product! !
+!DevelopmentSessionManager categoriesFor: #productRegistryKey!accessing!product!public! !
 !DevelopmentSessionManager categoriesFor: #productRegistryVersion!accessing!private!product! !
 !DevelopmentSessionManager categoriesFor: #productVersion!accessing!product!public! !
 !DevelopmentSessionManager categoriesFor: #productVersionSpecial!accessing!product!public! !

@@ -853,6 +853,19 @@ primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
 	<primitive: 97>
 	^self error: 'Dolphin was unable to save the image.'!
 
+productName
+	"Answer the product name from the receiver's <VersionInfo> for this session, extracted from the host executable."
+
+	^self versionInfo productName
+!
+
+productRegistryKey
+	"Answers the <readableString> registry key of this product."
+
+	"This should be overridden in application subclasses that want something more sophisticated than this simple default, for example to include organisation name."
+
+	^'Software\' , self productName!
+
 queryEndSession
 	"Fire off an event to enquire of observers whether they object to the end of this session.
 	If any observer does, then it must set the boolean value argument to the event to false."
@@ -1259,6 +1272,8 @@ windowsDirectory
 !SessionManager categoriesFor: #primaryStartup!operations-startup!public! !
 !SessionManager categoriesFor: #primQuit:!operations-shutdown!private! !
 !SessionManager categoriesFor: #primSnapshot:backup:type:maxObjects:!operations-saving!private! !
+!SessionManager categoriesFor: #productName!accessing-version!public! !
+!SessionManager categoriesFor: #productRegistryKey!accessing!product!public! !
 !SessionManager categoriesFor: #queryEndSession!event handling!public! !
 !SessionManager categoriesFor: #quit!operations-shutdown!public! !
 !SessionManager categoriesFor: #quit:!operations-shutdown!private! !

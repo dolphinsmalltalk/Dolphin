@@ -11,7 +11,7 @@ OneOffNoteBubble comment: ''!
 !OneOffNoteBubble class methodsFor!
 
 addPreviouslyViewedNote: aSymbol
-	self registryKey valueAt: aSymbol put: DateAndTime now displayString!
+	self registryKey valueAt: aSymbol put: DateAndTime now printString!
 
 defaultCaption
 	^'One-Off Note'!
@@ -63,7 +63,7 @@ name: aSymbol text: aString for: aView timeout: aDuration
 	bubble notify: aString!
 
 previouslyViewedNotes
-	"Private - Answers the a <Set> of <Symbols> indicating the OneOffNotes that have already been viewed.
+	"Private - Answer a <Set> of <Symbol>s naming the OneOffNotes that have already been viewed.
 
 	self previouslyViewedNotes
 	"
@@ -78,7 +78,7 @@ previouslyViewedNotes: aCollection
 	| regKey timeStamp |
 	self resetPreviouslyViewedNotes.
 	regKey := self registryKey.
-	timeStamp := DateAndTime now displayString.
+	timeStamp := DateAndTime now printString.
 	aCollection do: [:each | regKey valueAt: each put: timeStamp]!
 
 registryKey

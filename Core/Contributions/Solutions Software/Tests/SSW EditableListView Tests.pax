@@ -8,6 +8,10 @@ package classNames
 	add: #EditableListViewTest;
 	yourself.
 
+package methodNames
+	add: #PackageClosureTests -> #testEditableListViewDemo;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -17,7 +21,9 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\Lagoon\Lagoon Tests'
 	'..\SSW EditableListView'
+	'..\SSW EditableListView Demo'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 
 package!
@@ -34,6 +40,17 @@ TestCase subclass: #EditableListViewTest
 
 
 "Loose Methods"!
+
+!PackageClosureTests methodsFor!
+
+testEditableListViewDemo
+	"Tests predicted unimplemented messages in EditableListViewDemo
+		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
+		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
+
+	self verifyPackageClosure: (self environmentForAppDeployment: {EditableListViewDemo owningPackage})
+		missing: #(#defineTemplate #evaluate:)! !
+!PackageClosureTests categoriesFor: #testEditableListViewDemo!public!unit tests! !
 
 "End of package definition"!
 

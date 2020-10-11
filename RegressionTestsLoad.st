@@ -8,7 +8,6 @@ Package manager
 	install: 'Core\Contributions\Camp Smalltalk\SUnit\SUnitTests.pax';
 	install: 'Core\Contributions\Camp Smalltalk\ANSI\Tests\CS ANSI Tests.pax';
 	install: 'Core\Contributions\IDB\Tests\IDB Method History Tests.pax';
-	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW Widget Enhancements Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64 Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer Tests.pax';
@@ -21,6 +20,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
+	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
