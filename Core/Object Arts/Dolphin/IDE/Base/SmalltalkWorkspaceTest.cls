@@ -13,28 +13,33 @@ SmalltalkWorkspaceTest comment: ''!
 classToTest
 	^SmalltalkWorkspace!
 
-testReformatSource
+doReformatSource
 	| query |
-	presenter text: '[:foo :bar | foo foo. bar bar] value: #foo value: #bar'.
 	query := presenter commandPolicy query: (CommandDescription command: #reformatSource).
 	self assert: query isEnabled.
-	presenter reformatSource.
+	presenter reformatSource!
+
+testReformatSource
+	presenter text: '[:foo :bar | foo foo. bar bar] value: #foo value: #bar'.
+	self doReformatSource.
 	self assert: presenter text equals: '
 [:foo :bar |
 foo foo.
-bar bar] value: #foo value: #bar'!
+bar bar] value: #foo value: #bar'.
+	"No selection, cursor positioned at end"
+	self assert: presenter selectionRange equals: (59 to: 58)!
 
 testReformatSourcePartial
-	| query |
 	presenter text: '[:foo :bar | foo foo. bar bar] value: #foo value: #bar'.
 	"Just the body of the block"
 	presenter selectionRange: (14 to: 29).
-	query := presenter commandPolicy query: (CommandDescription command: #reformatSource).
-	self assert: query isEnabled.
-	presenter reformatSource.
+	self doReformatSource.
 	self assert: presenter text equals: '[:foo :bar | foo foo.
-bar bar] value: #foo value: #bar'! !
+bar bar] value: #foo value: #bar'.
+	"No selection, cursor positioned after reformatted text"
+	self assert: presenter selectionRange equals: (31 to: 30)! !
 !SmalltalkWorkspaceTest categoriesFor: #classToTest!helpers!private! !
+!SmalltalkWorkspaceTest categoriesFor: #doReformatSource!helpers!private! !
 !SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public!unit tests! !
 !SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public!unit tests! !
 
