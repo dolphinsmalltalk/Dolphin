@@ -1134,8 +1134,7 @@ reformatSource
 	Attempts to maintain the base indentation of the first selected line."
 
 	| source formatter reformatted expr tabs |
-	self hasSelection ifFalse: [self view selectAll].
-	source := self selection.
+	source := self hasSelection ifTrue: [self selection] ifFalse: [self text].
 	tabs := (source findFirst: [:each | each ~~ Character tab]) - 1.
 	expr := [SmalltalkParser parseExpression: source in: self parseContext]
 				on: SmalltalkParser notificationClass
@@ -1146,7 +1145,7 @@ reformatSource
 		ifFalse: 
 			[formatter indent: tabs
 				around: [reformatted := (source copyFrom: 1 to: tabs) , (formatter format: expr)]].
-	^self replaceSelection: reformatted!
+	^self hasSelection ifTrue: [self replaceSelection: reformatted] ifFalse: [self text: reformatted]!
 
 replaceSelection: aString
 	"Replace the current selected range of text with aString"
