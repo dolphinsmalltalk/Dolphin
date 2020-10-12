@@ -16,8 +16,8 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation Tests.pax';
-	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
+	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
