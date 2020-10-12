@@ -253,6 +253,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #cxy #pszText #hbm #cchTextMax #fmt #lParam #iImage #iOrder #type #pvFilter #state)! !
-!HDITEMW class categoriesFor: #defineFields!initializing!public! !
+!HDITEMW class categoriesFor: #defineFields!initializing!public!template definition! !
 !HDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
