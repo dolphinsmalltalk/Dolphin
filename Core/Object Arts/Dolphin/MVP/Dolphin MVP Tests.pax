@@ -62,7 +62,6 @@ package classNames
 	add: #SingleSelectListBoxTest;
 	add: #SingleSelectListViewTest;
 	add: #SliderTest;
-	add: #SmalltalkWorkspaceTest;
 	add: #StaticPathTest;
 	add: #StaticTextTest;
 	add: #StStyler;
@@ -357,11 +356,6 @@ PresenterTest subclass: #SelectableItemsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #SliderTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-PresenterTest subclass: #SmalltalkWorkspaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

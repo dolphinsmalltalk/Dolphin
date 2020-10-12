@@ -22,6 +22,7 @@ package classNames
 	add: #SmalltalkParserErrorTest;
 	add: #SmalltalkParserTest;
 	add: #SmalltalkSystemTest;
+	add: #SmalltalkWorkspaceTest;
 	add: #VersionResourceTest;
 	add: #VMTest;
 	add: #XMLDOMNodeTest;
@@ -46,6 +47,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Dolphin MVP Tests'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\ActiveX\COM\OLE COM'
@@ -139,6 +141,11 @@ AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+PresenterTest subclass: #SmalltalkWorkspaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
