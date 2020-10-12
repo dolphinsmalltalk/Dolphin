@@ -35,6 +35,6 @@ testReformatSourcePartial
 	self assert: presenter text equals: '[:foo :bar | foo foo.
 bar bar] value: #foo value: #bar'! !
 !SmalltalkWorkspaceTest categoriesFor: #classToTest!helpers!private! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public! !
+!SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public!unit tests! !
+!SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public!unit tests! !
 
