@@ -52,7 +52,16 @@ testAsSYSTEMTIME
 	self assert: actual wHour equals: now hour24.
 	self assert: actual wMinute equals: now minute.
 	self assert: actual wSecond equals: now second truncated.
-	self assert: actual wMilliseconds equals: (now second fractionPart * 1000) rounded!
+	self assert: actual wMilliseconds equals: (now second fractionPart * 1000) truncated!
+
+testAsSYSTEMTIMEInvalidMilliseconds
+	"#1045 - wMillisecond must never be 1000, even if that is what the millisecond value we have would round to"
+
+	| subject actual |
+	subject := Time fromSeconds: 599995 / 10000.
+	actual := subject asSYSTEMTIME.
+	self assert: actual wSecond equals: 59.
+	self assert: actual wMilliseconds equals: 999!
 
 testClassReadFrom
 	self assert: (Time readFrom: '00' readStream) asSeconds equals: 0.
@@ -283,6 +292,7 @@ testStoreOn
 !TimeTest categoriesFor: #setUp!private!running! !
 !TimeTest categoriesFor: #tearDown!private!running! !
 !TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
+!TimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
 !TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
 !TimeTest categoriesFor: #testFromDuration!public!testing! !
 !TimeTest categoriesFor: #testHours!public!testing! !
