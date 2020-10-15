@@ -86,7 +86,7 @@ asSYSTEMTIME
 				wHour: self hour24;
 				wMinute: self minute;
 				wSecond: secs truncated;
-				wMilliseconds: (secs fractionPart * 1000) rounded;
+				wMilliseconds: (secs fractionPart * 1000) truncated;
 				yourself]!
 
 asUnixTime

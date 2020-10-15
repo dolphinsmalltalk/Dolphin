@@ -55,7 +55,7 @@ asSYSTEMTIME
 		wHour: self hour24;
 		wMinute: self minute;
 		wSecond: self second truncated;
-		wMilliseconds: self millisecond rounded;
+		wMilliseconds: self millisecond truncated;
 		yourself!
 
 asTimeStamp
