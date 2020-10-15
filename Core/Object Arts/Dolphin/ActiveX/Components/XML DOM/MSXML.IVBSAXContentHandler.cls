@@ -72,8 +72,7 @@ characters: strChars
 	"Invoke the characters() method of the COM object.
 	Helpstring: Receive notification of character data."
 
-	^self Characters: strChars asBSTR
-!
+	^self Characters: strChars asBSTR!
 
 Characters: strChars
 	"Private - Invoke the characters() method of the COM object.
@@ -98,18 +97,13 @@ endElement: strNamespaceURI strLocalName: strLocalName strQName: strQName
 	"Invoke the endElement() method of the COM object.
 	Helpstring: Receive notification of the end of an element."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strNamespaceURI asBSTR;
-				basicAt: 2 put: strLocalName asBSTR;
-				basicAt: 3 put: strQName asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strNamespaceURI asBSTR. strLocalName asBSTR. strQName asBSTR}.
 	self
-		EndElement: (answer basicAt: 1)
-		strLocalName: (answer basicAt: 2)
-		strQName: (answer basicAt: 3).
-	^answer collect: [:each | each asObject]
-!
+		EndElement: (outputs basicAt: 1)
+		strLocalName: (outputs basicAt: 2)
+		strQName: (outputs basicAt: 3).
+	^outputs collect: [:each | each asObject]!
 
 EndElement: strNamespaceURI strLocalName: strLocalName strQName: strQName
 	"Private - Invoke the endElement() method of the COM object.
@@ -127,8 +121,7 @@ endPrefixMapping: strPrefix
 	"Invoke the endPrefixMapping() method of the COM object.
 	Helpstring: End the scope of a prefix-URI mapping."
 
-	^self EndPrefixMapping: strPrefix asBSTR
-!
+	^self EndPrefixMapping: strPrefix asBSTR!
 
 EndPrefixMapping: strPrefix
 	"Private - Invoke the endPrefixMapping() method of the COM object.
@@ -144,8 +137,7 @@ ignorableWhitespace: strChars
 	"Invoke the ignorableWhitespace() method of the COM object.
 	Helpstring: Receive notification of ignorable whitespace in element content."
 
-	^self IgnorableWhitespace: strChars asBSTR
-!
+	^self IgnorableWhitespace: strChars asBSTR!
 
 IgnorableWhitespace: strChars
 	"Private - Invoke the ignorableWhitespace() method of the COM object.
@@ -171,16 +163,10 @@ processingInstruction: strTarget strData: strData
 	"Invoke the processingInstruction() method of the COM object.
 	Helpstring: Receive notification of a processing instruction."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: strTarget asBSTR;
-				basicAt: 2 put: strData asBSTR;
-				yourself.
-	self
-		ProcessingInstruction: (answer basicAt: 1)
-		strData: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+	| outputs |
+	outputs := {strTarget asBSTR. strData asBSTR}.
+	self ProcessingInstruction: (outputs basicAt: 1) strData: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 ProcessingInstruction: strTarget strData: strData
 	"Private - Invoke the processingInstruction() method of the COM object.
@@ -207,15 +193,13 @@ setDocumentLocator: arg1
 	"Set the 'documentLocator' property of the receiver to the <IVBSAXLocator*> value of the argument.
 	Helpstring: Receive an object for locating the origin of SAX document events."
 
-	self putref_documentLocator: arg1
-!
+	self putref_documentLocator: arg1!
 
 skippedEntity: strName
 	"Invoke the skippedEntity() method of the COM object.
 	Helpstring: Receive notification of a skipped entity."
 
-	^self SkippedEntity: strName asBSTR
-!
+	^self SkippedEntity: strName asBSTR!
 
 SkippedEntity: strName
 	"Private - Invoke the skippedEntity() method of the COM object.
@@ -240,19 +224,14 @@ startElement: strNamespaceURI strLocalName: strLocalName strQName: strQName oAtt
 	"Invoke the startElement() method of the COM object.
 	Helpstring: Receive notification of the beginning of an element."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strNamespaceURI asBSTR;
-				basicAt: 2 put: strLocalName asBSTR;
-				basicAt: 3 put: strQName asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strNamespaceURI asBSTR. strLocalName asBSTR. strQName asBSTR}.
 	self
-		StartElement: (answer basicAt: 1)
-		strLocalName: (answer basicAt: 2)
-		strQName: (answer basicAt: 3)
+		StartElement: (outputs basicAt: 1)
+		strLocalName: (outputs basicAt: 2)
+		strQName: (outputs basicAt: 3)
 		oAttributes: oAttributes.
-	^answer collect: [:each | each asObject]
-!
+	^outputs collect: [:each | each asObject]!
 
 StartElement: strNamespaceURI strLocalName: strLocalName strQName: strQName oAttributes: oAttributes
 	"Private - Invoke the startElement() method of the COM object.
@@ -271,16 +250,10 @@ startPrefixMapping: strPrefix strURI: strURI
 	"Invoke the startPrefixMapping() method of the COM object.
 	Helpstring: Begin the scope of a prefix-URI Namespace mapping."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: strPrefix asBSTR;
-				basicAt: 2 put: strURI asBSTR;
-				yourself.
-	self
-		StartPrefixMapping: (answer basicAt: 1)
-		strURI: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+	| outputs |
+	outputs := {strPrefix asBSTR. strURI asBSTR}.
+	self StartPrefixMapping: (outputs basicAt: 1) strURI: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 StartPrefixMapping: strPrefix strURI: strURI
 	"Private - Invoke the startPrefixMapping() method of the COM object.
@@ -343,5 +316,5 @@ defineFunctions
 		defineFunction: #SkippedEntity:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IVBSAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

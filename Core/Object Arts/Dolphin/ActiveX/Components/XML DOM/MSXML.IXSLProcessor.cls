@@ -91,9 +91,9 @@ addParameter: baseName parameter: parameter
 	Default values are passed for all optional parameters."
 
 	^self
-		 addParameter: baseName
-		 parameter: parameter
-		 namespaceURI: ''!
+		addParameter: baseName
+		parameter: parameter
+		namespaceURI: '0'!
 
 addParameter: baseName parameter: parameter namespaceURI: namespaceURI
 	"Invoke the addParameter() method of the COM object.
@@ -102,8 +102,7 @@ addParameter: baseName parameter: parameter namespaceURI: namespaceURI
 	^self
 		AddParameter: baseName
 		parameter: parameter asVariant
-		namespaceURI: namespaceURI
-!
+		namespaceURI: namespaceURI!
 
 AddParameter: baseName parameter: parameter namespaceURI: namespaceURI
 	"Private - Invoke the addParameter() method of the COM object.
@@ -112,7 +111,7 @@ AddParameter: baseName parameter: parameter namespaceURI: namespaceURI
 		HRESULT __stdcall addParameter(
 			[in]BSTR baseName,
 			[in]VARIANT parameter,
-			[in, defaultvalue('')]BSTR namespaceURI);"
+			[in, defaultvalue('0')]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 19 bstr variant bstr>
 	^self invalidCall: _failureCode!
@@ -187,15 +186,13 @@ input
 	| answer |
 	answer := VARIANT new.
 	self get_input: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 input: pVar
 	"Set the 'input' property of the receiver to the <variant> value of the argument.
 	Helpstring: XML input tree to transform"
 
-	self put_input: pVar asVariant
-!
+	self put_input: pVar asVariant!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -214,15 +211,13 @@ output
 	| answer |
 	answer := VARIANT new.
 	self get_output: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 output: pOutput
 	"Set the 'output' property of the receiver to the <variant> value of the argument.
 	Helpstring: custom stream object for transform output"
 
-	self put_output: pOutput asVariant
-!
+	self put_output: pOutput asVariant!
 
 ownerTemplate
 	"Answer the <IXSLTemplate> value of the 'ownerTemplate' property of the receiver.
@@ -258,10 +253,9 @@ readyState
 	Helpstring: current state of the processor"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_readyState: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Reset
 	"Invoke the reset() method of the COM object.
@@ -276,9 +270,7 @@ setStartMode: mode
 	"Invoke the setStartMode() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 SetStartMode: mode
-		 namespaceURI: ''!
+	^self SetStartMode: mode namespaceURI: '0'!
 
 SetStartMode: mode namespaceURI: namespaceURI
 	"Invoke the setStartMode() method of the COM object.
@@ -286,7 +278,7 @@ SetStartMode: mode namespaceURI: namespaceURI
 
 		HRESULT __stdcall setStartMode(
 			[in]BSTR mode,
-			[in, defaultvalue('')]BSTR namespaceURI);"
+			[in, defaultvalue('0')]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 11 bstr bstr>
 	^self invalidCall: _failureCode!
@@ -298,8 +290,7 @@ startMode
 	| answer |
 	answer := BSTR new.
 	self get_startMode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 startModeURI
 	"Answer the <bstr> value of the 'startModeURI' property of the receiver.
@@ -308,8 +299,7 @@ startModeURI
 	| answer |
 	answer := BSTR new.
 	self get_startModeURI: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 stylesheet
 	"Answer the <IXMLDOMNode> value of the 'stylesheet' property of the receiver.
@@ -321,14 +311,13 @@ stylesheet
 	^answer asObject!
 
 transform
-	"Answer the <VARIANT_BOOL> result of invoking the transform() method of the COM object.
+	"Answer the <varbool> result of invoking the transform() method of the COM object.
 	Helpstring: start/resume the XSL transformation process"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self Transform: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Transform: pDone
 	"Private - Invoke the transform() method of the COM object.
@@ -404,5 +393,5 @@ defineFunctions
 		defineFunction: #get_stylesheet:
 			argumentTypes: 'IXMLDOMNode**'
 ! !
-!MSXML.IXSLProcessor class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXSLProcessor class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

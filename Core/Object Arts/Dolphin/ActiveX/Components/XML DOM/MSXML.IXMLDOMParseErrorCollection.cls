@@ -51,8 +51,7 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__newEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__newEnum: ppUnk
 	"Private - Get the value of the '_newEnum' property of the receiver.
@@ -113,10 +112,9 @@ length
 	"Answer the <sdword> value of the 'length' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 next
 	"Answer the <IXMLDOMParseError2> value of the 'next' property of the receiver."
@@ -162,5 +160,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

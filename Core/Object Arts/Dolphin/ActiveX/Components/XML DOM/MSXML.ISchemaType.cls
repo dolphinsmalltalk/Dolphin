@@ -94,10 +94,9 @@ derivedBy
 	"Answer the <sdword> value of the 'derivedBy' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_derivedBy: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 enumeration
 	"Answer the <ISchemaStringCollection> value of the 'enumeration' property of the receiver."
@@ -111,10 +110,9 @@ final
 	"Answer the <sdword> value of the 'final' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_final: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 fractionDigits
 	"Answer the <variant> value of the 'fractionDigits' property of the receiver."
@@ -122,8 +120,7 @@ fractionDigits
 	| answer |
 	answer := VARIANT new.
 	self get_fractionDigits: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_baseTypes: baseTypes
 	"Private - Get the value of the 'baseTypes' property of the receiver.
@@ -270,15 +267,12 @@ get_whitespace: whitespace
 	^self invalidCall: _failureCode!
 
 isValid: data
-	"Answer the <VARIANT_BOOL> result of invoking the isValid() method of the COM object."
+	"Answer the <varbool> result of invoking the isValid() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		IsValid: data
-		valid: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self IsValid: data valid: answer.
+	^answer asObject!
 
 IsValid: data valid: valid
 	"Private - Invoke the isValid() method of the COM object.
@@ -296,8 +290,7 @@ length
 	| answer |
 	answer := VARIANT new.
 	self get_length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 maxExclusive
 	"Answer the <bstr> value of the 'maxExclusive' property of the receiver."
@@ -305,8 +298,7 @@ maxExclusive
 	| answer |
 	answer := BSTR new.
 	self get_maxExclusive: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 maxInclusive
 	"Answer the <bstr> value of the 'maxInclusive' property of the receiver."
@@ -314,8 +306,7 @@ maxInclusive
 	| answer |
 	answer := BSTR new.
 	self get_maxInclusive: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 maxLength
 	"Answer the <variant> value of the 'maxLength' property of the receiver."
@@ -323,8 +314,7 @@ maxLength
 	| answer |
 	answer := VARIANT new.
 	self get_maxLength: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 minExclusive
 	"Answer the <bstr> value of the 'minExclusive' property of the receiver."
@@ -332,8 +322,7 @@ minExclusive
 	| answer |
 	answer := BSTR new.
 	self get_minExclusive: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 minInclusive
 	"Answer the <bstr> value of the 'minInclusive' property of the receiver."
@@ -341,8 +330,7 @@ minInclusive
 	| answer |
 	answer := BSTR new.
 	self get_minInclusive: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 minLength
 	"Answer the <variant> value of the 'minLength' property of the receiver."
@@ -350,8 +338,7 @@ minLength
 	| answer |
 	answer := VARIANT new.
 	self get_minLength: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 patterns
 	"Answer the <ISchemaStringCollection> value of the 'patterns' property of the receiver."
@@ -367,26 +354,23 @@ totalDigits
 	| answer |
 	answer := VARIANT new.
 	self get_totalDigits: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 variety
 	"Answer the <sdword> value of the 'variety' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_variety: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 whitespace
 	"Answer the <sdword> value of the 'whitespace' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_whitespace: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaType categoriesFor: #baseTypes!**auto generated**!properties!public! !
 !MSXML.ISchemaType categoriesFor: #derivedBy!**auto generated**!properties!public! !
 !MSXML.ISchemaType categoriesFor: #enumeration!**auto generated**!properties!public! !
@@ -464,5 +448,5 @@ defineFunctions
 		defineFunction: #get_patterns:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!MSXML.ISchemaType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaType class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -55,18 +55,13 @@ notationDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Invoke the notationDecl() method of the COM object.
 	Helpstring: Receive notification of a notation declaration event."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strPublicId asBSTR;
-				basicAt: 3 put: strSystemId asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strName asBSTR. strPublicId asBSTR. strSystemId asBSTR}.
 	self
-		NotationDecl: (answer basicAt: 1)
-		strPublicId: (answer basicAt: 2)
-		strSystemId: (answer basicAt: 3).
-	^answer collect: [:each | each asObject]
-!
+		NotationDecl: (outputs basicAt: 1)
+		strPublicId: (outputs basicAt: 2)
+		strSystemId: (outputs basicAt: 3).
+	^outputs collect: [:each | each asObject]!
 
 NotationDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Private - Invoke the notationDecl() method of the COM object.
@@ -84,20 +79,14 @@ unparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId st
 	"Invoke the unparsedEntityDecl() method of the COM object.
 	Helpstring: Receive notification of an unparsed entity declaration event."
 
-	| answer |
-	answer := (Array new: 4)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strPublicId asBSTR;
-				basicAt: 3 put: strSystemId asBSTR;
-				basicAt: 4 put: strNotationName asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strName asBSTR. strPublicId asBSTR. strSystemId asBSTR. strNotationName asBSTR}.
 	self
-		UnparsedEntityDecl: (answer basicAt: 1)
-		strPublicId: (answer basicAt: 2)
-		strSystemId: (answer basicAt: 3)
-		strNotationName: (answer basicAt: 4).
-	^answer collect: [:each | each asObject]
-!
+		UnparsedEntityDecl: (outputs basicAt: 1)
+		strPublicId: (outputs basicAt: 2)
+		strSystemId: (outputs basicAt: 3)
+		strNotationName: (outputs basicAt: 4).
+	^outputs collect: [:each | each asObject]!
 
 UnparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId strNotationName: strNotationName
 	"Private - Invoke the unparsedEntityDecl() method of the COM object.
@@ -130,5 +119,5 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:
 			argumentTypes: 'bstr* bstr* bstr* bstr*'
 ! !
-!MSXML.IVBSAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

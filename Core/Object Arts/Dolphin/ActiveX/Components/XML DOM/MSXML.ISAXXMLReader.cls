@@ -88,13 +88,12 @@ interface ISAXXMLReader : IUnknown
 !MSXML.ISAXXMLReader methodsFor!
 
 getBaseURL
-	"Answer the <WORD> result of invoking the getBaseURL() method of the COM object."
+	"Answer the <word> result of invoking the getBaseURL() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: TaskMemory).
+	answer := WORD newBufferClass: TaskMemory.
 	self GetBaseURL: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetBaseURL: ppwchBaseUrl
 	"Private - Invoke the getBaseURL() method of the COM object.
@@ -174,15 +173,12 @@ GetErrorHandler: ppHandler
 	^self invalidCall: _failureCode!
 
 getFeature: pwchName
-	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object."
+	"Answer the <varbool> result of invoking the getFeature() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		GetFeature: pwchName
-		pvfValue: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self GetFeature: pwchName pvfValue: answer.
+	^answer asObject!
 
 GetFeature: pwchName pvfValue: pvfValue
 	"Private - Invoke the getFeature() method of the COM object.
@@ -195,15 +191,12 @@ GetFeature: pwchName pvfValue: pvfValue
 	^self invalidCall: _failureCode!
 
 getProperty: pwchName
-	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object."
+	"Answer the <variant> result of invoking the getProperty() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetProperty: pwchName
-		pvarValue: answer.
-	^answer asObject
-!
+	self GetProperty: pwchName pvarValue: answer.
+	^answer asObject!
 
 GetProperty: pwchName pvarValue: pvarValue
 	"Private - Invoke the getProperty() method of the COM object.
@@ -216,13 +209,12 @@ GetProperty: pwchName pvarValue: pvarValue
 	^self invalidCall: _failureCode!
 
 getSecureBaseURL
-	"Answer the <WORD> result of invoking the getSecureBaseURL() method of the COM object."
+	"Answer the <word> result of invoking the getSecureBaseURL() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: TaskMemory).
+	answer := WORD newBufferClass: TaskMemory.
 	self GetSecureBaseURL: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetSecureBaseURL: ppwchSecureBaseUrl
 	"Private - Invoke the getSecureBaseURL() method of the COM object.
@@ -242,8 +234,7 @@ parse
 parse: varInput
 	"Invoke the parse() method of the COM object."
 
-	^self Parse: varInput asVariant
-!
+	^self Parse: varInput asVariant!
 
 Parse: varInput
 	"Private - Invoke the parse() method of the COM object.
@@ -321,10 +312,7 @@ PutFeature: pwchName vfValue: vfValue
 putProperty: pwchName varValue: varValue
 	"Invoke the putProperty() method of the COM object."
 
-	^self
-		PutProperty: pwchName
-		varValue: varValue asVariant
-!
+	^self PutProperty: pwchName varValue: varValue asVariant!
 
 PutProperty: pwchName varValue: varValue
 	"Private - Invoke the putProperty() method of the COM object.
@@ -418,5 +406,5 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'word*'
 ! !
-!MSXML.ISAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

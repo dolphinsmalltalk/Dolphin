@@ -192,8 +192,7 @@ targetNamespace
 	| answer |
 	answer := BSTR new.
 	self get_targetNamespace: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 types
 	"Answer the <ISchemaItemCollection> value of the 'types' property of the receiver."
@@ -209,8 +208,7 @@ version
 	| answer |
 	answer := BSTR new.
 	self get_version: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchema categoriesFor: #attributeGroups!**auto generated**!properties!public! !
 !MSXML.ISchema categoriesFor: #attributes!**auto generated**!properties!public! !
 !MSXML.ISchema categoriesFor: #elements!**auto generated**!properties!public! !
@@ -256,5 +254,5 @@ defineFunctions
 		defineFunction: #get_schemaLocations:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!MSXML.ISchema class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchema class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

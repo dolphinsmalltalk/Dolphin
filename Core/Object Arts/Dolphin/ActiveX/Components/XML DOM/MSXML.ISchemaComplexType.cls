@@ -76,10 +76,9 @@ contentType
 	"Answer the <sdword> value of the 'contentType' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_contentType: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_anyAttribute: anyAttribute
 	"Private - Get the value of the 'anyAttribute' property of the receiver.
@@ -139,19 +138,17 @@ isAbstract
 	"Answer the <varbool> value of the 'isAbstract' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_isAbstract: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 prohibitedSubstitutions
 	"Answer the <sdword> value of the 'prohibitedSubstitutions' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_prohibitedSubstitutions: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaComplexType categoriesFor: #anyAttribute!**auto generated**!properties!public! !
 !MSXML.ISchemaComplexType categoriesFor: #attributes!**auto generated**!properties!public! !
 !MSXML.ISchemaComplexType categoriesFor: #contentModel!**auto generated**!properties!public! !
@@ -185,5 +182,5 @@ defineFunctions
 		defineFunction: #get_prohibitedSubstitutions:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.ISchemaComplexType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaComplexType class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

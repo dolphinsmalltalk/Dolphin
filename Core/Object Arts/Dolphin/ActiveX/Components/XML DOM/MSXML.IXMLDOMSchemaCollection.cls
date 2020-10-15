@@ -60,17 +60,13 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__newEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 add: namespaceURI var: var
 	"Invoke the add() method of the COM object.
 	Helpstring: add a new schema"
 
-	^self
-		Add: namespaceURI
-		var: var asVariant
-!
+	^self Add: namespaceURI var: var asVariant!
 
 Add: namespaceURI var: var
 	"Private - Invoke the add() method of the COM object.
@@ -156,10 +152,9 @@ length
 	Helpstring: number of schemas in collection"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 namespaceURI: index
 	"Answer the <bstr> value of the 'namespaceURI' property of the receiver.
@@ -167,11 +162,8 @@ namespaceURI: index
 
 	| answer |
 	answer := BSTR new.
-	self
-		get_namespaceURI: index
-		length: answer.
-	^answer asObject
-!
+	self get_namespaceURI: index length: answer.
+	^answer asObject!
 
 Remove: namespaceURI
 	"Invoke the remove() method of the COM object.
@@ -218,27 +210,6 @@ defineFunctions
 			argumentTypes: 'IXMLDOMSchemaCollection*';
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
-!
-
-newXMLSchemaCache
-	"Answer a new instance of the receiver on the XMLSchemaCache COM object"
-
-	^self onCLSID: (CLSID fromString: '{373984C9-B845-449B-91E7-45AC83036ADE}')
-!
-
-newXMLSchemaCache26
-	"Answer a new instance of the receiver on the XMLSchemaCache26 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F1D-C551-11D3-89B9-0000F81FE221}')
-!
-
-newXMLSchemaCache30
-	"Answer a new instance of the receiver on the XMLSchemaCache30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F34-C551-11D3-89B9-0000F81FE221}')
 ! !
-!MSXML.IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache26!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache30!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

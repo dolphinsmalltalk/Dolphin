@@ -31,16 +31,13 @@ get_tagName: tagName
 	^self invalidCall: _failureCode!
 
 getAttribute: name
-	"Answer the <VARIANT> result of invoking the getAttribute() method of the COM object.
+	"Answer the <variant> result of invoking the getAttribute() method of the COM object.
 	Helpstring: look up the string value of an attribute by name"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetAttribute: name
-		value: answer.
-	^answer asObject
-!
+	self GetAttribute: name value: answer.
+	^answer asObject!
 
 GetAttribute: name value: value
 	"Private - Invoke the getAttribute() method of the COM object.
@@ -146,10 +143,7 @@ setAttribute: name value: value
 	"Invoke the setAttribute() method of the COM object.
 	Helpstring: set the string value of an attribute by name"
 
-	^self
-		SetAttribute: name
-		value: value asVariant
-!
+	^self SetAttribute: name value: value asVariant!
 
 SetAttribute: name value: value
 	"Private - Invoke the setAttribute() method of the COM object.
@@ -189,8 +183,7 @@ tagName
 	| answer |
 	answer := BSTR new.
 	self get_tagName: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IXMLDOMElement categoriesFor: #=!comparing!public! !
 !MSXML.IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
 !MSXML.IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
@@ -235,5 +228,5 @@ defineFunctions
 			argumentTypes: 'bstr IXMLDOMNodeList**';
 		defineFunction: #Normalize
 ! !
-!MSXML.IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

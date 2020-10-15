@@ -70,16 +70,14 @@ allowOverride
 	"Answer the <varbool> value of the 'allowOverride' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_allowOverride: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 allowOverride: fOverride
 	"Set the 'allowOverride' property of the receiver to the <varbool> value of the argument."
 
-	self put_allowOverride: fOverride
-!
+	self put_allowOverride: fOverride!
 
 DeclarePrefix: prefix namespaceURI: namespaceURI
 	"Invoke the declarePrefix() method of the COM object.
@@ -136,15 +134,12 @@ GetPrefixes: namespaceURI prefixes: prefixes
 	^self invalidCall: _failureCode!
 
 getURI: prefix
-	"Answer the <VARIANT> result of invoking the getURI() method of the COM object."
+	"Answer the <variant> result of invoking the getURI() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetURI: prefix
-		uri: answer.
-	^answer asObject
-!
+	self GetURI: prefix uri: answer.
+	^answer asObject!
 
 GetURI: prefix uri: uri
 	"Private - Invoke the getURI() method of the COM object.
@@ -157,7 +152,7 @@ GetURI: prefix uri: uri
 	^self invalidCall: _failureCode!
 
 getURIFromNode: strPrefix contextNode: contextNode
-	"Answer the <VARIANT> result of invoking the getURIFromNode() method of the COM object."
+	"Answer the <variant> result of invoking the getURIFromNode() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -165,8 +160,7 @@ getURIFromNode: strPrefix contextNode: contextNode
 		GetURIFromNode: strPrefix
 		contextNode: contextNode
 		uri: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetURIFromNode: strPrefix contextNode: contextNode uri: uri
 	"Private - Invoke the getURIFromNode() method of the COM object.
@@ -209,9 +203,7 @@ pushNodeContext: contextNode
 	"Invoke the pushNodeContext() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 PushNodeContext: contextNode
-		 fDeep: true!
+	^self PushNodeContext: contextNode fDeep: true!
 
 PushNodeContext: contextNode fDeep: fDeep
 	"Invoke the pushNodeContext() method of the COM object.
@@ -263,6 +255,12 @@ Reset
 
 !MSXML.IVBMXNamespaceManager class methodsFor!
 
+clsid
+	"Private - Answer the CLSID of the coclass (MXNamespaceManager60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a11-f192-11d4-a65f-0040963251e5}'
+!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBMXNamespaceManager'
 		IVBMXNamespaceManager defineTemplate"
@@ -287,27 +285,7 @@ defineFunctions
 			argumentTypes: 'bstr variant*';
 		defineFunction: #GetURIFromNode:contextNode:uri:
 			argumentTypes: 'bstr IXMLDOMNode* variant*'
-!
-
-newMXNamespaceManager
-	"Answer a new instance of the receiver on the MXNamespaceManager COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969D5-F192-11D4-A65F-0040963251E5}')
-!
-
-newMXNamespaceManager40
-	"Answer a new instance of the receiver on the MXNamespaceManager40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969D6-F192-11D4-A65F-0040963251E5}')
-!
-
-newMXNamespaceManager60
-	"Answer a new instance of the receiver on the MXNamespaceManager60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A11-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager!**auto generated**!instance creation!public! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager40!**auto generated**!instance creation!public! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager60!**auto generated**!instance creation!public! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

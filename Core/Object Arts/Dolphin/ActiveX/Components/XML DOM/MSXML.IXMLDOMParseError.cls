@@ -33,20 +33,18 @@ errorCode
 	Helpstring: the error code"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_errorCode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 filepos
 	"Answer the <sdword> value of the 'filepos' property of the receiver.
 	Helpstring: the absolute file position in the XML document containing the error"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_filepos: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_errorCode: errorCode
 	"Private - Get the value of the 'errorCode' property of the receiver.
@@ -126,20 +124,18 @@ line
 	Helpstring: the line number in the XML document where the error occurred"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_line: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 linepos
 	"Answer the <sdword> value of the 'linepos' property of the receiver.
 	Helpstring: the character position in the line containing the error"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_linepos: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 reason
 	"Answer the <bstr> value of the 'reason' property of the receiver.
@@ -148,8 +144,7 @@ reason
 	| answer |
 	answer := BSTR new.
 	self get_reason: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 srcText
 	"Answer the <bstr> value of the 'srcText' property of the receiver.
@@ -158,8 +153,7 @@ srcText
 	| answer |
 	answer := BSTR new.
 	self get_srcText: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 url
 	"Answer the <bstr> value of the 'url' property of the receiver.
@@ -168,15 +162,13 @@ url
 	| answer |
 	answer := BSTR new.
 	self get_url: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the <sdword> value of the 'errorCode' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
-	^self errorCode
-! !
+	^self errorCode! !
 !MSXML.IXMLDOMParseError categoriesFor: #displayOn:!printing!public! !
 !MSXML.IXMLDOMParseError categoriesFor: #errorCode!**auto generated**!properties!public! !
 !MSXML.IXMLDOMParseError categoriesFor: #filepos!**auto generated**!properties!public! !
@@ -221,6 +213,6 @@ defineFunctions
 
 icon
 	^Error icon! !
-!MSXML.IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 !MSXML.IXMLDOMParseError class categoriesFor: #icon!public! !
 

@@ -54,8 +54,7 @@ comment: strChars
 	"Invoke the comment() method of the COM object.
 	Helpstring: Report an XML comment anywhere in the document."
 
-	^self Comment: strChars asBSTR
-!
+	^self Comment: strChars asBSTR!
 
 Comment: strChars
 	"Private - Invoke the comment() method of the COM object.
@@ -89,8 +88,7 @@ endEntity: strName
 	"Invoke the endEntity() method of the COM object.
 	Helpstring: Report the end of an entity."
 
-	^self EndEntity: strName asBSTR
-!
+	^self EndEntity: strName asBSTR!
 
 EndEntity: strName
 	"Private - Invoke the endEntity() method of the COM object.
@@ -125,18 +123,13 @@ startDTD: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Invoke the startDTD() method of the COM object.
 	Helpstring: Report the start of DTD declarations, if any."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strPublicId asBSTR;
-				basicAt: 3 put: strSystemId asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strName asBSTR. strPublicId asBSTR. strSystemId asBSTR}.
 	self
-		StartDTD: (answer basicAt: 1)
-		strPublicId: (answer basicAt: 2)
-		strSystemId: (answer basicAt: 3).
-	^answer collect: [:each | each asObject]
-!
+		StartDTD: (outputs basicAt: 1)
+		strPublicId: (outputs basicAt: 2)
+		strSystemId: (outputs basicAt: 3).
+	^outputs collect: [:each | each asObject]!
 
 StartDTD: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Private - Invoke the startDTD() method of the COM object.
@@ -154,8 +147,7 @@ startEntity: strName
 	"Invoke the startEntity() method of the COM object.
 	Helpstring: Report the beginning of some internal and external XML entities."
 
-	^self StartEntity: strName asBSTR
-!
+	^self StartEntity: strName asBSTR!
 
 StartEntity: strName
 	"Private - Invoke the startEntity() method of the COM object.
@@ -199,5 +191,5 @@ defineFunctions
 		defineFunction: #Comment:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IVBSAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

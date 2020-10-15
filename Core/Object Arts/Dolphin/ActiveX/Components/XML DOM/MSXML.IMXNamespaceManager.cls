@@ -70,20 +70,19 @@ DeclarePrefix: prefix namespaceURI: namespaceURI
 	"Invoke the declarePrefix() method of the COM object.
 
 		HRESULT __stdcall declarePrefix(
-			[in]unsigned short* prefix,
-			[in]unsigned short* namespaceURI);"
+			[in]LPWSTR prefix,
+			[in]LPWSTR namespaceURI);"
 
-	<virtual stdcall: hresult 10 word* word*>
+	<virtual stdcall: hresult 10 lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 getAllowOverride
-	"Answer the <VARIANT_BOOL> result of invoking the getAllowOverride() method of the COM object."
+	"Answer the <varbool> result of invoking the getAllowOverride() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self GetAllowOverride: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetAllowOverride: fOverride
 	"Private - Invoke the getAllowOverride() method of the COM object.
@@ -97,17 +96,18 @@ GetAllowOverride: fOverride
 getDeclaredPrefix: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 	"Invoke the getDeclaredPrefix() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD new value: pwchPrefix; yourself);
-				basicAt: 2 put: (SDWORD new value: pcchPrefix; yourself);
-				yourself.
+	| outputs |
+	outputs := {WORD new
+					value: pwchPrefix;
+					yourself.
+				SDWORD new
+					value: pcchPrefix;
+					yourself}.
 	self
 		GetDeclaredPrefix: nIndex
-		pwchPrefix: (answer basicAt: 1)
-		pcchPrefix: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		pwchPrefix: (outputs basicAt: 1)
+		pcchPrefix: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetDeclaredPrefix: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 	"Private - Invoke the getDeclaredPrefix() method of the COM object.
@@ -123,57 +123,59 @@ GetDeclaredPrefix: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 getPrefix: pwszNamespaceURI nIndex: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 	"Invoke the getPrefix() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD new value: pwchPrefix; yourself);
-				basicAt: 2 put: (SDWORD new value: pcchPrefix; yourself);
-				yourself.
+	| outputs |
+	outputs := {WORD new
+					value: pwchPrefix;
+					yourself.
+				SDWORD new
+					value: pcchPrefix;
+					yourself}.
 	self
-		GetPrefix: pwszNamespaceURI
+		GetPrefix: pwszNamespaceURI asUtf16String
 		nIndex: nIndex
-		pwchPrefix: (answer basicAt: 1)
-		pcchPrefix: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		pwchPrefix: (outputs basicAt: 1)
+		pcchPrefix: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetPrefix: pwszNamespaceURI nIndex: nIndex pwchPrefix: pwchPrefix pcchPrefix: pcchPrefix
 	"Private - Invoke the getPrefix() method of the COM object.
 
 		HRESULT __stdcall getPrefix(
-			[in]unsigned short* pwszNamespaceURI,
+			[in]LPWSTR pwszNamespaceURI,
 			[in]long nIndex,
 			[in, out]unsigned short* pwchPrefix,
 			[in, out]int* pcchPrefix);"
 
-	<virtual stdcall: hresult 12 word* sdword word* sdword*>
+	<virtual stdcall: hresult 12 lpwstr sdword word* sdword*>
 	^self invalidCall: _failureCode!
 
 getURI: pwchPrefix pContextNode: pContextNode pwchUri: pwchUri pcchUri: pcchUri
 	"Invoke the getURI() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD new value: pwchUri; yourself);
-				basicAt: 2 put: (SDWORD new value: pcchUri; yourself);
-				yourself.
+	| outputs |
+	outputs := {WORD new
+					value: pwchUri;
+					yourself.
+				SDWORD new
+					value: pcchUri;
+					yourself}.
 	self
-		GetURI: pwchPrefix
+		GetURI: pwchPrefix asUtf16String
 		pContextNode: pContextNode
-		pwchUri: (answer basicAt: 1)
-		pcchUri: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		pwchUri: (outputs basicAt: 1)
+		pcchUri: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetURI: pwchPrefix pContextNode: pContextNode pwchUri: pwchUri pcchUri: pcchUri
 	"Private - Invoke the getURI() method of the COM object.
 
 		HRESULT __stdcall getURI(
-			[in]unsigned short* pwchPrefix,
+			[in]LPWSTR pwchPrefix,
 			[in]IXMLDOMNode* pContextNode,
 			[in, out]unsigned short* pwchUri,
 			[in, out]int* pcchUri);"
 
-	<virtual stdcall: hresult 13 word* IXMLDOMNode* word* sdword*>
+	<virtual stdcall: hresult 13 lpwstr IXMLDOMNode* word* sdword*>
 	^self invalidCall: _failureCode!
 
 PopContext
@@ -250,13 +252,13 @@ defineFunctions
 			argumentTypes: 'IXMLDOMNode* varbool';
 		defineFunction: #PopContext;
 		defineFunction: #DeclarePrefix:namespaceURI:
-			argumentTypes: 'word* word*';
+			argumentTypes: 'lpwstr lpwstr';
 		defineFunction: #GetDeclaredPrefix:pwchPrefix:pcchPrefix:
 			argumentTypes: 'sdword word* sdword*';
 		defineFunction: #GetPrefix:nIndex:pwchPrefix:pcchPrefix:
-			argumentTypes: 'word* sdword word* sdword*';
+			argumentTypes: 'lpwstr sdword word* sdword*';
 		defineFunction: #GetURI:pContextNode:pwchUri:pcchUri:
-			argumentTypes: 'word* IXMLDOMNode* word* sdword*'
+			argumentTypes: 'lpwstr IXMLDOMNode* word* sdword*'
 ! !
-!MSXML.IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -62,5 +62,5 @@ defineFunctions
 		defineFunction: #get_particles:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!MSXML.ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

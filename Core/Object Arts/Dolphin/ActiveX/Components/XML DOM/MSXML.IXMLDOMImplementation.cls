@@ -64,5 +64,5 @@ defineFunctions
 		defineFunction: #HasFeature:version:hasFeature:
 			argumentTypes: 'bstr bstr varbool*'
 ! !
-!MSXML.IXMLDOMImplementation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMImplementation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

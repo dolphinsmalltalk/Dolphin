@@ -11,7 +11,13 @@ MSXML comment: 'Namespace for the generated MSXML DOM component wrapper classes 
 !MSXML categoriesForClass!Kernel-Objects! !
 !MSXML class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 newDocument
 	^IXMLDOMDocument3 new! !
+!MSXML class categoriesFor: #icon!constants!public! !
 !MSXML class categoriesFor: #newDocument!private! !
 

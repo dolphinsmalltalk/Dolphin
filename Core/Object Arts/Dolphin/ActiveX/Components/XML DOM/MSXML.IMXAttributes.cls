@@ -95,10 +95,7 @@ addAttributeFromIndex: varAtts nIndex: nIndex
 	"Invoke the addAttributeFromIndex() method of the COM object.
 	Helpstring: Add an attribute, whose value is equal to the indexed attribute in the input attributes object, to the end of the list."
 
-	^self
-		AddAttributeFromIndex: varAtts asVariant
-		nIndex: nIndex
-!
+	^self AddAttributeFromIndex: varAtts asVariant nIndex: nIndex!
 
 AddAttributeFromIndex: varAtts nIndex: nIndex
 	"Private - Invoke the addAttributeFromIndex() method of the COM object.
@@ -159,8 +156,7 @@ setAttributes: varAtts
 	"Invoke the setAttributes() method of the COM object.
 	Helpstring: Copy an entire Attributes object."
 
-	^self SetAttributes: varAtts asVariant
-!
+	^self SetAttributes: varAtts asVariant!
 
 SetAttributes: varAtts
 	"Private - Invoke the setAttributes() method of the COM object.
@@ -244,6 +240,12 @@ SetValue: nIndex strValue: strValue
 
 !MSXML.IMXAttributes class methodsFor!
 
+clsid
+	"Private - Answer the CLSID of the coclass (SAXAttributes60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a0e-f192-11d4-a65f-0040963251e5}'
+!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXAttributes'
 		IMXAttributes defineTemplate"
@@ -270,34 +272,7 @@ defineFunctions
 			argumentTypes: 'sdword bstr';
 		defineFunction: #SetValue:strValue:
 			argumentTypes: 'sdword bstr'
-!
-
-newSAXAttributes
-	"Answer a new instance of the receiver on the SAXAttributes COM object"
-
-	^self onCLSID: (CLSID fromString: '{4DD441AD-526D-4A77-9F1B-9841ED802FB0}')
-!
-
-newSAXAttributes30
-	"Answer a new instance of the receiver on the SAXAttributes30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{3E784A01-F3AE-4DC0-9354-9526B9370EBA}')
-!
-
-newSAXAttributes40
-	"Answer a new instance of the receiver on the SAXAttributes40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969CA-F192-11D4-A65F-0040963251E5}')
-!
-
-newSAXAttributes60
-	"Answer a new instance of the receiver on the SAXAttributes60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A0E-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes!**auto generated**!instance creation!public! !
-!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes30!**auto generated**!instance creation!public! !
-!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes40!**auto generated**!instance creation!public! !
-!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes60!**auto generated**!instance creation!public! !
+!MSXML.IMXAttributes class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

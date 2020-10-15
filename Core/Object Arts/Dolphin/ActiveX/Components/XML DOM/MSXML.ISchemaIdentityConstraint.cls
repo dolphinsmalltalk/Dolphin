@@ -88,8 +88,7 @@ selector
 	| answer |
 	answer := BSTR new.
 	self get_selector: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaIdentityConstraint categoriesFor: #fields!**auto generated**!properties!public! !
 !MSXML.ISchemaIdentityConstraint categoriesFor: #get_fields:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
 !MSXML.ISchemaIdentityConstraint categoriesFor: #get_referencedKey:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
@@ -111,5 +110,5 @@ defineFunctions
 		defineFunction: #get_referencedKey:
 			argumentTypes: 'ISchemaIdentityConstraint**'
 ! !
-!MSXML.ISchemaIdentityConstraint class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaIdentityConstraint class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

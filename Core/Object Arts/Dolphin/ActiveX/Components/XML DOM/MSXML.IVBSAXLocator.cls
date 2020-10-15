@@ -47,10 +47,9 @@ columnNumber
 	Helpstring: Get the column number where the current document event ends."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_columnNumber: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_columnNumber: nColumn
 	"Private - Get the value of the 'columnNumber' property of the receiver.
@@ -103,10 +102,9 @@ lineNumber
 	Helpstring: Get the line number where the current document event ends."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_lineNumber: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 publicId
 	"Answer the <bstr> value of the 'publicId' property of the receiver.
@@ -115,8 +113,7 @@ publicId
 	| answer |
 	answer := BSTR new.
 	self get_publicId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 systemId
 	"Answer the <bstr> value of the 'systemId' property of the receiver.
@@ -125,8 +122,7 @@ systemId
 	| answer |
 	answer := BSTR new.
 	self get_systemId: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IVBSAXLocator categoriesFor: #columnNumber!**auto generated**!properties!public! !
 !MSXML.IVBSAXLocator categoriesFor: #get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
 !MSXML.IVBSAXLocator categoriesFor: #get_lineNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
@@ -154,5 +150,5 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IVBSAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

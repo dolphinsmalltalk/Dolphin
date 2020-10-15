@@ -66,10 +66,9 @@ processContents
 	"Answer the <sdword> value of the 'processContents' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_processContents: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaAny categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
 !MSXML.ISchemaAny categoriesFor: #get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
 !MSXML.ISchemaAny categoriesFor: #namespaces!**auto generated**!properties!public! !
@@ -87,5 +86,5 @@ defineFunctions
 		defineFunction: #get_processContents:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

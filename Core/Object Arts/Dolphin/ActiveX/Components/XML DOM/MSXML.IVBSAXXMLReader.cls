@@ -95,15 +95,13 @@ baseURL
 	| answer |
 	answer := BSTR new.
 	self get_baseURL: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 baseURL: strBaseURL
 	"Set the 'baseURL' property of the receiver to the <bstr> value of the argument.
 	Helpstring: Set or get the base URL for the document."
 
-	self put_baseURL: strBaseURL
-!
+	self put_baseURL: strBaseURL!
 
 contentHandler
 	"Answer the <IVBSAXContentHandler> value of the 'contentHandler' property of the receiver.
@@ -196,16 +194,13 @@ get_secureBaseURL: strSecureBaseURL
 	^self invalidCall: _failureCode!
 
 getFeature: strName
-	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object.
+	"Answer the <varbool> result of invoking the getFeature() method of the COM object.
 	Helpstring: Look up the value of a feature."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		GetFeature: strName
-		fValue: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self GetFeature: strName fValue: answer.
+	^answer asObject!
 
 GetFeature: strName fValue: fValue
 	"Private - Invoke the getFeature() method of the COM object.
@@ -230,16 +225,13 @@ GetProperty: strName varValue: varValue
 	^self invalidCall: _failureCode!
 
 getProperty_: strName
-	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
+	"Answer the <variant> result of invoking the getProperty() method of the COM object.
 	Helpstring: Look up the value of a property."
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetProperty: strName
-		varValue: answer.
-	^answer asObject
-!
+	self GetProperty: strName varValue: answer.
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -261,8 +253,7 @@ parse: varInput
 	"Invoke the parse() method of the COM object.
 	Helpstring: Parse an XML document."
 
-	^self Parse: varInput asVariant
-!
+	^self Parse: varInput asVariant!
 
 Parse: varInput
 	"Private - Invoke the parse() method of the COM object.
@@ -319,10 +310,7 @@ putProperty: strName varValue: varValue
 	"Invoke the putProperty() method of the COM object.
 	Helpstring: Set the value of a property."
 
-	^self
-		PutProperty: strName
-		varValue: varValue asVariant
-!
+	^self PutProperty: strName varValue: varValue asVariant!
 
 PutProperty: strName varValue: varValue
 	"Private - Invoke the putProperty() method of the COM object.
@@ -382,43 +370,37 @@ secureBaseURL
 	| answer |
 	answer := BSTR new.
 	self get_secureBaseURL: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 secureBaseURL: strSecureBaseURL
 	"Set the 'secureBaseURL' property of the receiver to the <bstr> value of the argument.
 	Helpstring: Set or get the secure base URL for the document."
 
-	self put_secureBaseURL: strSecureBaseURL
-!
+	self put_secureBaseURL: strSecureBaseURL!
 
 setContentHandler: oHandler
 	"Set the 'contentHandler' property of the receiver to the <IVBSAXContentHandler*> value of the argument.
 	Helpstring: Allow an application to register a content event handler or look up the current content event handler."
 
-	self putref_contentHandler: oHandler
-!
+	self putref_contentHandler: oHandler!
 
 setDtdHandler: oHandler
 	"Set the 'dtdHandler' property of the receiver to the <IVBSAXDTDHandler*> value of the argument.
 	Helpstring: Allow an application to register a DTD event handler or look up the current DTD event handler."
 
-	self putref_dtdHandler: oHandler
-!
+	self putref_dtdHandler: oHandler!
 
 setEntityResolver: oResolver
 	"Set the 'entityResolver' property of the receiver to the <IVBSAXEntityResolver*> value of the argument.
 	Helpstring: Allow an application to register an entity resolver or look up the current entity resolver."
 
-	self putref_entityResolver: oResolver
-!
+	self putref_entityResolver: oResolver!
 
 setErrorHandler: oHandler
 	"Set the 'errorHandler' property of the receiver to the <IVBSAXErrorHandler*> value of the argument.
 	Helpstring: Allow an application to register an error event handler or look up the current error event handler."
 
-	self putref_errorHandler: oHandler
-! !
+	self putref_errorHandler: oHandler! !
 !MSXML.IVBSAXXMLReader categoriesFor: #baseURL!**auto generated**!properties!public! !
 !MSXML.IVBSAXXMLReader categoriesFor: #baseURL:!**auto generated**!properties!public! !
 !MSXML.IVBSAXXMLReader categoriesFor: #contentHandler!**auto generated**!properties!public! !
@@ -458,6 +440,12 @@ setErrorHandler: oHandler
 !MSXML.IVBSAXXMLReader categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
 
 !MSXML.IVBSAXXMLReader class methodsFor!
+
+clsid
+	"Private - Answer the CLSID of the coclass (SAXXMLReader60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a0c-f192-11d4-a65f-0040963251e5}'
+!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXXMLReader'
@@ -500,34 +488,7 @@ defineFunctions
 			argumentTypes: 'variant';
 		defineFunction: #ParseURL:
 			argumentTypes: 'bstr'
-!
-
-newSAXXMLReader
-	"Answer a new instance of the receiver on the SAXXMLReader COM object"
-
-	^self onCLSID: (CLSID fromString: '{079AA557-4A18-424A-8EEE-E39F0A8D41B9}')
-!
-
-newSAXXMLReader30
-	"Answer a new instance of the receiver on the SAXXMLReader30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{3124C396-FB13-4836-A6AD-1317F1713688}')
-!
-
-newSAXXMLReader40
-	"Answer a new instance of the receiver on the SAXXMLReader40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{7C6E29BC-8B8B-4C3D-859E-AF6CD158BE0F}')
-!
-
-newSAXXMLReader60
-	"Answer a new instance of the receiver on the SAXXMLReader60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A0C-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #newSAXXMLReader!**auto generated**!instance creation!public! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #newSAXXMLReader30!**auto generated**!instance creation!public! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #newSAXXMLReader40!**auto generated**!instance creation!public! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #newSAXXMLReader60!**auto generated**!instance creation!public! !
+!MSXML.IVBSAXXMLReader class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IVBSAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -238,5 +238,5 @@ defineFunctions
 		defineFunction: #SkippedEntity:cchName:
 			argumentTypes: 'word* sdword'
 ! !
-!MSXML.ISAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

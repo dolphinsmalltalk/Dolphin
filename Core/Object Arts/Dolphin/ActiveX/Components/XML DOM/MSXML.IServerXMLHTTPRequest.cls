@@ -48,16 +48,13 @@ interface IServerXMLHTTPRequest : IXMLHTTPRequest
 !MSXML.IServerXMLHTTPRequest methodsFor!
 
 getOption: option
-	"Answer the <VARIANT> result of invoking the getOption() method of the COM object.
+	"Answer the <variant> result of invoking the getOption() method of the COM object.
 	Helpstring: Get an option value"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetOption: option
-		value: answer.
-	^answer asObject
-!
+	self GetOption: option value: answer.
+	^answer asObject!
 
 GetOption: option value: value
 	"Private - Invoke the getOption() method of the COM object.
@@ -74,10 +71,7 @@ setOption: option value: value
 	"Invoke the setOption() method of the COM object.
 	Helpstring: Set an option value"
 
-	^self
-		SetOption: option
-		value: value asVariant
-!
+	^self SetOption: option value: value asVariant!
 
 SetOption: option value: value
 	"Private - Invoke the setOption() method of the COM object.
@@ -104,22 +98,19 @@ SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 	^self invalidCall: _failureCode!
 
 waitForResponse
-	"Answer the <VARIANT_BOOL> result of invoking the waitForResponse() method of the COM object.
+	"Answer the <varbool> result of invoking the waitForResponse() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self waitForResponse: VARIANT unspecified!
 
 waitForResponse: timeoutInSeconds
-	"Answer the <VARIANT_BOOL> result of invoking the waitForResponse() method of the COM object.
+	"Answer the <varbool> result of invoking the waitForResponse() method of the COM object.
 	Helpstring: Wait for asynchronous send to complete, with optional timeout (in seconds)"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		WaitForResponse: timeoutInSeconds asVariant
-		isSuccessful: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self WaitForResponse: timeoutInSeconds asVariant isSuccessful: answer.
+	^answer asObject!
 
 WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 	"Private - Invoke the waitForResponse() method of the COM object.
@@ -155,20 +146,6 @@ defineFunctions
 			argumentTypes: 'sdword variant*';
 		defineFunction: #SetOption:value:
 			argumentTypes: 'sdword variant'
-!
-
-newServerXMLHTTP
-	"Answer a new instance of the receiver on the ServerXMLHTTP COM object"
-
-	^self onCLSID: (CLSID fromString: '{AFBA6B42-5692-48EA-8141-DC517DCF0EF1}')
-!
-
-newServerXMLHTTP30
-	"Answer a new instance of the receiver on the ServerXMLHTTP30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{AFB40FFD-B609-40A3-9828-F88BBE11E4E3}')
 ! !
-!MSXML.IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP!**auto generated**!instance creation!public! !
-!MSXML.IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP30!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

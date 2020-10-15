@@ -54,22 +54,19 @@ attributeDecl: strElementName strAttributeName: strAttributeName strType: strTyp
 	"Invoke the attributeDecl() method of the COM object.
 	Helpstring: Report an attribute type declaration."
 
-	| answer |
-	answer := (Array new: 5)
-				basicAt: 1 put: strElementName asBSTR;
-				basicAt: 2 put: strAttributeName asBSTR;
-				basicAt: 3 put: strType asBSTR;
-				basicAt: 4 put: strValueDefault asBSTR;
-				basicAt: 5 put: strValue asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strElementName asBSTR.
+				strAttributeName asBSTR.
+				strType asBSTR.
+				strValueDefault asBSTR.
+				strValue asBSTR}.
 	self
-		AttributeDecl: (answer basicAt: 1)
-		strAttributeName: (answer basicAt: 2)
-		strType: (answer basicAt: 3)
-		strValueDefault: (answer basicAt: 4)
-		strValue: (answer basicAt: 5).
-	^answer collect: [:each | each asObject]
-!
+		AttributeDecl: (outputs basicAt: 1)
+		strAttributeName: (outputs basicAt: 2)
+		strType: (outputs basicAt: 3)
+		strValueDefault: (outputs basicAt: 4)
+		strValue: (outputs basicAt: 5).
+	^outputs collect: [:each | each asObject]!
 
 AttributeDecl: strElementName strAttributeName: strAttributeName strType: strType strValueDefault: strValueDefault strValue: strValue
 	"Private - Invoke the attributeDecl() method of the COM object.
@@ -89,16 +86,10 @@ elementDecl: strName strModel: strModel
 	"Invoke the elementDecl() method of the COM object.
 	Helpstring: Report an element type declaration."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strModel asBSTR;
-				yourself.
-	self
-		ElementDecl: (answer basicAt: 1)
-		strModel: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+	| outputs |
+	outputs := {strName asBSTR. strModel asBSTR}.
+	self ElementDecl: (outputs basicAt: 1) strModel: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 ElementDecl: strName strModel: strModel
 	"Private - Invoke the elementDecl() method of the COM object.
@@ -115,18 +106,13 @@ externalEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Invoke the externalEntityDecl() method of the COM object.
 	Helpstring: Report a parsed external entity declaration."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strPublicId asBSTR;
-				basicAt: 3 put: strSystemId asBSTR;
-				yourself.
+	| outputs |
+	outputs := {strName asBSTR. strPublicId asBSTR. strSystemId asBSTR}.
 	self
-		ExternalEntityDecl: (answer basicAt: 1)
-		strPublicId: (answer basicAt: 2)
-		strSystemId: (answer basicAt: 3).
-	^answer collect: [:each | each asObject]
-!
+		ExternalEntityDecl: (outputs basicAt: 1)
+		strPublicId: (outputs basicAt: 2)
+		strSystemId: (outputs basicAt: 3).
+	^outputs collect: [:each | each asObject]!
 
 ExternalEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Private - Invoke the externalEntityDecl() method of the COM object.
@@ -144,16 +130,10 @@ internalEntityDecl: strName strValue: strValue
 	"Invoke the internalEntityDecl() method of the COM object.
 	Helpstring: Report an internal entity declaration."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: strName asBSTR;
-				basicAt: 2 put: strValue asBSTR;
-				yourself.
-	self
-		InternalEntityDecl: (answer basicAt: 1)
-		strValue: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+	| outputs |
+	outputs := {strName asBSTR. strValue asBSTR}.
+	self InternalEntityDecl: (outputs basicAt: 1) strValue: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 InternalEntityDecl: strName strValue: strValue
 	"Private - Invoke the internalEntityDecl() method of the COM object.
@@ -202,5 +182,5 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:strPublicId:strSystemId:
 			argumentTypes: 'bstr* bstr* bstr*'
 ! !
-!MSXML.IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -58,8 +58,7 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 notations
 	"Answer the <IXMLDOMNamedNodeMap> value of the 'notations' property of the receiver.
@@ -92,5 +91,5 @@ defineFunctions
 		defineFunction: #get_notations:
 			argumentTypes: 'IXMLDOMNamedNodeMap**'
 ! !
-!MSXML.IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -89,14 +89,13 @@ get_statusText: pbstrStatus
 	^self invalidCall: _failureCode!
 
 getAllResponseHeaders
-	"Answer the <BSTR> result of invoking the getAllResponseHeaders() method of the COM object.
+	"Answer the <bstr> result of invoking the getAllResponseHeaders() method of the COM object.
 	Helpstring: Get all HTTP response headers"
 
 	| answer |
 	answer := BSTR new.
 	self GetAllResponseHeaders: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetAllResponseHeaders: pbstrHeaders
 	"Private - Invoke the getAllResponseHeaders() method of the COM object.
@@ -109,16 +108,13 @@ GetAllResponseHeaders: pbstrHeaders
 	^self invalidCall: _failureCode!
 
 getResponseHeader: bstrHeader
-	"Answer the <BSTR> result of invoking the getResponseHeader() method of the COM object.
+	"Answer the <bstr> result of invoking the getResponseHeader() method of the COM object.
 	Helpstring: Get HTTP response header"
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetResponseHeader: bstrHeader
-		pbstrValue: answer.
-	^answer asObject
-!
+	self GetResponseHeader: bstrHeader pbstrValue: answer.
+	^answer asObject!
 
 GetResponseHeader: bstrHeader pbstrValue: pbstrValue
 	"Private - Invoke the getResponseHeader() method of the COM object.
@@ -135,19 +131,18 @@ onreadystatechange: arg1
 	"Set the 'onreadystatechange' property of the receiver to the <IDispatch*> value of the argument.
 	Helpstring: Register a complete event handler"
 
-	self put_onreadystatechange: arg1
-!
+	self put_onreadystatechange: arg1!
 
 open: bstrMethod bstrUrl: bstrUrl
 	"Invoke the open() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
-		 open: bstrMethod
-		 bstrUrl: bstrUrl
-		 varAsync: VARIANT unspecified
-		 bstrUser: VARIANT unspecified
-		 bstrPassword: VARIANT unspecified!
+		open: bstrMethod
+		bstrUrl: bstrUrl
+		varAsync: VARIANT unspecified
+		bstrUser: VARIANT unspecified
+		bstrPassword: VARIANT unspecified!
 
 open: bstrMethod bstrUrl: bstrUrl varAsync: varAsync bstrUser: bstrUser bstrPassword: bstrPassword
 	"Invoke the open() method of the COM object.
@@ -158,8 +153,7 @@ open: bstrMethod bstrUrl: bstrUrl varAsync: varAsync bstrUser: bstrUser bstrPass
 		bstrUrl: bstrUrl
 		varAsync: varAsync asVariant
 		bstrUser: bstrUser asVariant
-		bstrPassword: bstrPassword asVariant
-!
+		bstrPassword: bstrPassword asVariant!
 
 Open: bstrMethod bstrUrl: bstrUrl varAsync: varAsync bstrUser: bstrUser bstrPassword: bstrPassword
 	"Private - Invoke the open() method of the COM object.
@@ -190,30 +184,28 @@ readyState
 	Helpstring: Get ready state"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_readyState: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 responseBody
-	"Answer the <variant> value of the 'responseBody' property of the receiver.
-	Helpstring: Get response body"
+	"Answer the raw bytes of the response body."
 
-	| answer |
-	answer := VARIANT new.
-	self get_responseBody: answer.
-	^answer asObject
-!
+	"Implementation Note: Don't use the get_ResponseBody call as returning and then extracting a ByteArray via the medium of a SAFEARRAY of BYTE is inefficient. Rather just read all the bytes from the response stream."
+
+	^self responseStream contents!
 
 responseStream
-	"Answer the <variant> value of the 'responseStream' property of the receiver.
-	Helpstring: Get response body"
+	"Answer an <IStream> on the response body for accessing the raw bytes."
 
-	| answer |
-	answer := VARIANT new.
-	self get_responseStream: answer.
-	^answer asObject
-!
+	| variant stream unk |
+	variant := VARIANT newBuffer.
+	self get_responseStream: variant.
+	unk := variant value.
+	variant free.
+	stream := unk queryInterface: IStream.
+	unk free.
+	^stream!
 
 responseText
 	"Answer the <bstr> value of the 'responseText' property of the receiver.
@@ -222,18 +214,17 @@ responseText
 	| answer |
 	answer := BSTR new.
 	self get_responseText: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 responseXML
-	"Answer the <IDispatch> value of the 'responseXML' property of the receiver.
-	Helpstring: Get response body"
+	"Answer an <IXMLDOMDocument3> representing the response (which will only be useful if it succeeded and returned valid XML)."
 
-	| answer |
-	answer := IDispatch newPointer.
-	self get_responseXML: answer.
-	^answer asObject
-!
+	| disp doc |
+	disp := IDispatch newPointer.
+	self get_responseXML: disp.
+	doc := disp queryInterface: IXMLDOMDocument3.
+	disp free.
+	^doc!
 
 send
 	"Invoke the send() method of the COM object.
@@ -245,8 +236,7 @@ send: varBody
 	"Invoke the send() method of the COM object.
 	Helpstring: Send HTTP request"
 
-	^self Send: varBody asVariant
-!
+	^self Send: varBody asVariant!
 
 Send: varBody
 	"Private - Invoke the send() method of the COM object.
@@ -274,10 +264,9 @@ status
 	Helpstring: Get HTTP status code"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_status: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 statusText
 	"Answer the <bstr> value of the 'statusText' property of the receiver.
@@ -286,8 +275,7 @@ statusText
 	| answer |
 	answer := BSTR new.
 	self get_statusText: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IXMLHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
 !MSXML.IXMLHttpRequest categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
 !MSXML.IXMLHttpRequest categoriesFor: #get_responseBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
@@ -306,10 +294,10 @@ statusText
 !MSXML.IXMLHttpRequest categoriesFor: #Open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
 !MSXML.IXMLHttpRequest categoriesFor: #put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
 !MSXML.IXMLHttpRequest categoriesFor: #readyState!**auto generated**!properties!public! !
-!MSXML.IXMLHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
-!MSXML.IXMLHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseBody!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseStream!properties!public! !
 !MSXML.IXMLHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
-!MSXML.IXMLHttpRequest categoriesFor: #responseXML!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseXML!properties!public! !
 !MSXML.IXMLHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
 !MSXML.IXMLHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
 !MSXML.IXMLHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
@@ -318,6 +306,12 @@ statusText
 !MSXML.IXMLHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
 
 !MSXML.IXMLHttpRequest class methodsFor!
+
+clsid
+	"Private - Answer the CLSID of the coclass (XMLHTTP60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a0a-f192-11d4-a65f-0040963251e5}'
+!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLHTTPRequest'
@@ -351,41 +345,7 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #put_onreadystatechange:
 			argumentTypes: 'IDispatch*'
-!
-
-newXMLHTTP
-	"Answer a new instance of the receiver on the XMLHTTP COM object"
-
-	^self onCLSID: (CLSID fromString: '{F6D90F16-9C73-11D3-B32E-00C04F990BB4}')
-!
-
-newXMLHTTP26
-	"Answer a new instance of the receiver on the XMLHTTP26 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F1E-C551-11D3-89B9-0000F81FE221}')
-!
-
-newXMLHTTP30
-	"Answer a new instance of the receiver on the XMLHTTP30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F35-C551-11D3-89B9-0000F81FE221}')
-!
-
-newXMLHTTP40
-	"Answer a new instance of the receiver on the XMLHTTP40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C5-F192-11D4-A65F-0040963251E5}')
-!
-
-newXMLHTTP60
-	"Answer a new instance of the receiver on the XMLHTTP60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A0A-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IXMLHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP!**auto generated**!instance creation!public! !
-!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP26!**auto generated**!instance creation!public! !
-!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP30!**auto generated**!instance creation!public! !
-!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP40!**auto generated**!instance creation!public! !
-!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP60!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IXMLHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

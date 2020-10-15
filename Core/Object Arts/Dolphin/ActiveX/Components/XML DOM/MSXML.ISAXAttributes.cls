@@ -107,18 +107,17 @@ interface ISAXAttributes : IUnknown
 !MSXML.ISAXAttributes methodsFor!
 
 getIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
-	"Answer the <SDWORD> result of invoking the getIndexFromName() method of the COM object."
+	"Answer the <sdword> result of invoking the getIndexFromName() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self
 		GetIndexFromName: pwchUri
 		cchUri: cchUri
 		pwchLocalName: pwchLocalName
 		cchLocalName: cchLocalName
 		pnIndex: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName pnIndex: pnIndex
 	"Private - Invoke the getIndexFromName() method of the COM object.
@@ -134,16 +133,15 @@ GetIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 	^self invalidCall: _failureCode!
 
 getIndexFromQName: pwchQName cchQName: cchQName
-	"Answer the <SDWORD> result of invoking the getIndexFromQName() method of the COM object."
+	"Answer the <sdword> result of invoking the getIndexFromQName() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self
 		GetIndexFromQName: pwchQName
 		cchQName: cchQName
 		pnIndex: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetIndexFromQName: pwchQName cchQName: cchQName pnIndex: pnIndex
 	"Private - Invoke the getIndexFromQName() method of the COM object.
@@ -157,13 +155,12 @@ GetIndexFromQName: pwchQName cchQName: cchQName pnIndex: pnIndex
 	^self invalidCall: _failureCode!
 
 getLength
-	"Answer the <SDWORD> result of invoking the getLength() method of the COM object."
+	"Answer the <sdword> result of invoking the getLength() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self GetLength: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetLength: pnLength
 	"Private - Invoke the getLength() method of the COM object.
@@ -177,17 +174,13 @@ GetLength: pnLength
 getLocalName: nIndex
 	"Invoke the getLocalName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetLocalName: nIndex
-		ppwchLocalName: (answer basicAt: 1)
-		pcchLocalName: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchLocalName: (outputs basicAt: 1)
+		pcchLocalName: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetLocalName: nIndex ppwchLocalName: ppwchLocalName pcchLocalName: pcchLocalName
 	"Private - Invoke the getLocalName() method of the COM object.
@@ -203,25 +196,22 @@ GetLocalName: nIndex ppwchLocalName: ppwchLocalName pcchLocalName: pcchLocalName
 getName: nIndex
 	"Invoke the getName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 6)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				basicAt: 3 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 4 put: (SDWORD new);
-				basicAt: 5 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 6 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory.
+				SDWORD new.
+				WORD newBufferClass: TaskMemory.
+				SDWORD new.
+				WORD newBufferClass: TaskMemory.
+				SDWORD new}.
 	self
 		GetName: nIndex
-		ppwchUri: (answer basicAt: 1)
-		pcchUri: (answer basicAt: 2)
-		ppwchLocalName: (answer basicAt: 3)
-		pcchLocalName: (answer basicAt: 4)
-		ppwchQName: (answer basicAt: 5)
-		pcchQName: (answer basicAt: 6).
-	^answer collect: [:each | each asObject]
-!
+		ppwchUri: (outputs basicAt: 1)
+		pcchUri: (outputs basicAt: 2)
+		ppwchLocalName: (outputs basicAt: 3)
+		pcchLocalName: (outputs basicAt: 4)
+		ppwchQName: (outputs basicAt: 5)
+		pcchQName: (outputs basicAt: 6).
+	^outputs collect: [:each | each asObject]!
 
 GetName: nIndex ppwchUri: ppwchUri pcchUri: pcchUri ppwchLocalName: ppwchLocalName pcchLocalName: pcchLocalName ppwchQName: ppwchQName pcchQName: pcchQName
 	"Private - Invoke the getName() method of the COM object.
@@ -241,17 +231,13 @@ GetName: nIndex ppwchUri: ppwchUri pcchUri: pcchUri ppwchLocalName: ppwchLocalNa
 getQName: nIndex
 	"Invoke the getQName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetQName: nIndex
-		ppwchQName: (answer basicAt: 1)
-		pcchQName: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchQName: (outputs basicAt: 1)
+		pcchQName: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetQName: nIndex ppwchQName: ppwchQName pcchQName: pcchQName
 	"Private - Invoke the getQName() method of the COM object.
@@ -267,17 +253,13 @@ GetQName: nIndex ppwchQName: ppwchQName pcchQName: pcchQName
 getType: nIndex
 	"Invoke the getType() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetType: nIndex
-		ppwchType: (answer basicAt: 1)
-		pcchType: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchType: (outputs basicAt: 1)
+		pcchType: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetType: nIndex ppwchType: ppwchType pcchType: pcchType
 	"Private - Invoke the getType() method of the COM object.
@@ -293,20 +275,16 @@ GetType: nIndex ppwchType: ppwchType pcchType: pcchType
 getTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
 	"Invoke the getTypeFromName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetTypeFromName: pwchUri
 		cchUri: cchUri
 		pwchLocalName: pwchLocalName
 		cchLocalName: cchLocalName
-		ppwchType: (answer basicAt: 1)
-		pcchType: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchType: (outputs basicAt: 1)
+		pcchType: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName ppwchType: ppwchType pcchType: pcchType
 	"Private - Invoke the getTypeFromName() method of the COM object.
@@ -325,18 +303,14 @@ GetTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNam
 getTypeFromQName: pwchQName cchQName: cchQName
 	"Invoke the getTypeFromQName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetTypeFromQName: pwchQName
 		cchQName: cchQName
-		ppwchType: (answer basicAt: 1)
-		pcchType: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchType: (outputs basicAt: 1)
+		pcchType: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetTypeFromQName: pwchQName cchQName: cchQName ppwchType: ppwchType pcchType: pcchType
 	"Private - Invoke the getTypeFromQName() method of the COM object.
@@ -353,17 +327,13 @@ GetTypeFromQName: pwchQName cchQName: cchQName ppwchType: ppwchType pcchType: pc
 getURI: nIndex
 	"Invoke the getURI() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetURI: nIndex
-		ppwchUri: (answer basicAt: 1)
-		pcchUri: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchUri: (outputs basicAt: 1)
+		pcchUri: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetURI: nIndex ppwchUri: ppwchUri pcchUri: pcchUri
 	"Private - Invoke the getURI() method of the COM object.
@@ -379,17 +349,13 @@ GetURI: nIndex ppwchUri: ppwchUri pcchUri: pcchUri
 getValue: nIndex
 	"Invoke the getValue() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetValue: nIndex
-		ppwchValue: (answer basicAt: 1)
-		pcchValue: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchValue: (outputs basicAt: 1)
+		pcchValue: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetValue: nIndex ppwchValue: ppwchValue pcchValue: pcchValue
 	"Private - Invoke the getValue() method of the COM object.
@@ -405,20 +371,16 @@ GetValue: nIndex ppwchValue: ppwchValue pcchValue: pcchValue
 getValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
 	"Invoke the getValueFromName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetValueFromName: pwchUri
 		cchUri: cchUri
 		pwchLocalName: pwchLocalName
 		cchLocalName: cchLocalName
-		ppwchValue: (answer basicAt: 1)
-		pcchValue: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchValue: (outputs basicAt: 1)
+		pcchValue: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName ppwchValue: ppwchValue pcchValue: pcchValue
 	"Private - Invoke the getValueFromName() method of the COM object.
@@ -437,18 +399,14 @@ GetValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 getValueFromQName: pwchQName cchQName: cchQName
 	"Invoke the getValueFromQName() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
-				basicAt: 2 put: (SDWORD new);
-				yourself.
+	| outputs |
+	outputs := {WORD newBufferClass: TaskMemory. SDWORD new}.
 	self
 		GetValueFromQName: pwchQName
 		cchQName: cchQName
-		ppwchValue: (answer basicAt: 1)
-		pcchValue: (answer basicAt: 2).
-	^answer collect: [:each | each asObject]
-!
+		ppwchValue: (outputs basicAt: 1)
+		pcchValue: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue: pcchValue
 	"Private - Invoke the getValueFromQName() method of the COM object.
@@ -522,5 +480,5 @@ defineFunctions
 		defineFunction: #GetValueFromQName:cchQName:ppwchValue:pcchValue:
 			argumentTypes: 'word* sdword word** sdword*'
 ! !
-!MSXML.ISAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

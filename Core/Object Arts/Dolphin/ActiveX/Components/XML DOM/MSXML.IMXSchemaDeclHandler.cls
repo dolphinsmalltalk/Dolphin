@@ -66,5 +66,5 @@ defineFunctions
 		defineFunction: #SchemaElementDecl:
 			argumentTypes: 'ISchemaElement*'
 ! !
-!MSXML.IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

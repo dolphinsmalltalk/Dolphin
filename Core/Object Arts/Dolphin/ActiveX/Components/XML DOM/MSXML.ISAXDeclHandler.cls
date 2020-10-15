@@ -137,5 +137,5 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:
 			argumentTypes: 'word* sdword word* sdword word* sdword'
 ! !
-!MSXML.ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

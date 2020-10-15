@@ -76,8 +76,7 @@ contentHandler
 	| answer |
 	answer := IUnknown newPointer.
 	self get_contentHandler: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 dtdHandler
 	"Answer the <IUnknown> value of the 'dtdHandler' property of the receiver."
@@ -85,8 +84,7 @@ dtdHandler
 	| answer |
 	answer := IUnknown newPointer.
 	self get_dtdHandler: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 entityResolver
 	"Answer the <IUnknown> value of the 'entityResolver' property of the receiver."
@@ -94,8 +92,7 @@ entityResolver
 	| answer |
 	answer := IUnknown newPointer.
 	self get_entityResolver: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 errorHandler
 	"Answer the <IUnknown> value of the 'errorHandler' property of the receiver."
@@ -103,8 +100,7 @@ errorHandler
 	| answer |
 	answer := IUnknown newPointer.
 	self get_errorHandler: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_contentHandler: oHandler
 	"Private - Get the value of the 'contentHandler' property of the receiver.
@@ -143,15 +139,12 @@ get_errorHandler: oHandler
 	^self invalidCall: _failureCode!
 
 getFeature: strName
-	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object."
+	"Answer the <varbool> result of invoking the getFeature() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		GetFeature: strName
-		fValue: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self GetFeature: strName fValue: answer.
+	^answer asObject!
 
 GetFeature: strName fValue: fValue
 	"Private - Invoke the getFeature() method of the COM object.
@@ -174,15 +167,12 @@ GetProperty: strName varValue: varValue
 	^self invalidCall: _failureCode!
 
 getProperty_: strName
-	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object."
+	"Answer the <variant> result of invoking the getProperty() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetProperty: strName
-		varValue: answer.
-	^answer asObject
-!
+	self GetProperty: strName varValue: answer.
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -207,10 +197,7 @@ PutFeature: strName fValue: fValue
 putProperty: strName varValue: varValue
 	"Invoke the putProperty() method of the COM object."
 
-	^self
-		PutProperty: strName
-		varValue: varValue asVariant
-!
+	^self PutProperty: strName varValue: varValue asVariant!
 
 PutProperty: strName varValue: varValue
 	"Private - Invoke the putProperty() method of the COM object.
@@ -265,26 +252,22 @@ putref_errorHandler: oHandler
 setContentHandler: oHandler
 	"Set the 'contentHandler' property of the receiver to the <IUnknown*> value of the argument."
 
-	self putref_contentHandler: oHandler
-!
+	self putref_contentHandler: oHandler!
 
 setDtdHandler: oHandler
 	"Set the 'dtdHandler' property of the receiver to the <IUnknown*> value of the argument."
 
-	self putref_dtdHandler: oHandler
-!
+	self putref_dtdHandler: oHandler!
 
 setEntityResolver: oResolver
 	"Set the 'entityResolver' property of the receiver to the <IUnknown*> value of the argument."
 
-	self putref_entityResolver: oResolver
-!
+	self putref_entityResolver: oResolver!
 
 setErrorHandler: oHandler
 	"Set the 'errorHandler' property of the receiver to the <IUnknown*> value of the argument."
 
-	self putref_errorHandler: oHandler
-! !
+	self putref_errorHandler: oHandler! !
 !MSXML.IMXXMLFilter categoriesFor: #contentHandler!**auto generated**!properties!public! !
 !MSXML.IMXXMLFilter categoriesFor: #dtdHandler!**auto generated**!properties!public! !
 !MSXML.IMXXMLFilter categoriesFor: #entityResolver!**auto generated**!properties!public! !
@@ -343,5 +326,5 @@ defineFunctions
 		defineFunction: #putref_errorHandler:
 			argumentTypes: 'IUnknown*'
 ! !
-!MSXML.IMXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -45,5 +45,5 @@ defineFunctions
 		defineFunction: #SplitText:rightHandTextNode:
 			argumentTypes: 'sdword IXMLDOMText**'
 ! !
-!MSXML.IXMLDOMText class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMText class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

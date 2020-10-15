@@ -85,34 +85,30 @@ byteOrderMark
 	Helpstring: Determine whether or not to write the byte order mark"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_byteOrderMark: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 byteOrderMark: fWriteByteOrderMark
 	"Set the 'byteOrderMark' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Determine whether or not to write the byte order mark"
 
-	self put_byteOrderMark: fWriteByteOrderMark
-!
+	self put_byteOrderMark: fWriteByteOrderMark!
 
 disableOutputEscaping
 	"Answer the <varbool> value of the 'disableOutputEscaping' property of the receiver.
 	Helpstring: When enabled, the writer no longer escapes out its input when writing it out."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_disableOutputEscaping: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 disableOutputEscaping: fValue
 	"Set the 'disableOutputEscaping' property of the receiver to the <varbool> value of the argument.
 	Helpstring: When enabled, the writer no longer escapes out its input when writing it out."
 
-	self put_disableOutputEscaping: fValue
-!
+	self put_disableOutputEscaping: fValue!
 
 encoding
 	"Answer the <bstr> value of the 'encoding' property of the receiver.
@@ -121,15 +117,13 @@ encoding
 	| answer |
 	answer := BSTR new.
 	self get_encoding: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 encoding: strEncoding
 	"Set the 'encoding' property of the receiver to the <bstr> value of the argument.
 	Helpstring: Set or get the output encoding."
 
-	self put_encoding: strEncoding
-!
+	self put_encoding: strEncoding!
 
 Flush
 	"Invoke the flush() method of the COM object.
@@ -217,17 +211,15 @@ indent
 	Helpstring: Enable or disable auto indent mode."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_indent: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 indent: fIndentMode
 	"Set the 'indent' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Enable or disable auto indent mode."
 
-	self put_indent: fIndentMode
-!
+	self put_indent: fIndentMode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -244,17 +236,15 @@ omitXMLDeclaration
 	Helpstring: Determine whether or not to omit the XML declaration."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_omitXMLDeclaration: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 omitXMLDeclaration: fValue
 	"Set the 'omitXMLDeclaration' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Determine whether or not to omit the XML declaration."
 
-	self put_omitXMLDeclaration: fValue
-!
+	self put_omitXMLDeclaration: fValue!
 
 output
 	"Answer the <variant> value of the 'output' property of the receiver.
@@ -263,15 +253,13 @@ output
 	| answer |
 	answer := VARIANT new.
 	self get_output: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 output: varDestination
 	"Set the 'output' property of the receiver to the <variant> value of the argument.
 	Helpstring: Set or get the output."
 
-	self put_output: varDestination asVariant
-!
+	self put_output: varDestination asVariant!
 
 put_byteOrderMark: fWriteByteOrderMark
 	"Private - Set the value of the 'byteOrderMark' property of the object wrapped by the 
@@ -358,17 +346,15 @@ standalone
 	Helpstring: Set or get the standalone document declaration."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_standalone: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 standalone: fValue
 	"Set the 'standalone' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Set or get the standalone document declaration."
 
-	self put_standalone: fValue
-!
+	self put_standalone: fValue!
 
 version
 	"Answer the <bstr> value of the 'version' property of the receiver.
@@ -377,15 +363,13 @@ version
 	| answer |
 	answer := BSTR new.
 	self get_version: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 version: strVersion
 	"Set the 'version' property of the receiver to the <bstr> value of the argument.
 	Helpstring: Set or get the xml version info."
 
-	self put_version: strVersion
-! !
+	self put_version: strVersion! !
 !MSXML.IMXWriter categoriesFor: #byteOrderMark!**auto generated**!properties!public! !
 !MSXML.IMXWriter categoriesFor: #byteOrderMark:!**auto generated**!properties!public! !
 !MSXML.IMXWriter categoriesFor: #disableOutputEscaping!**auto generated**!properties!public! !
@@ -464,60 +448,18 @@ defineFunctions
 		defineFunction: #Flush
 !
 
-newMXHTMLWriter
-	"Answer a new instance of the receiver on the MXHTMLWriter COM object"
-
-	^self onCLSID: (CLSID fromString: '{A4C23EC3-6B70-4466-9127-550077239978}')
-!
-
-newMXHTMLWriter30
-	"Answer a new instance of the receiver on the MXHTMLWriter30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{853D1540-C1A7-4AA9-A226-4D3BD301146D}')
-!
-
-newMXHTMLWriter40
-	"Answer a new instance of the receiver on the MXHTMLWriter40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C9-F192-11D4-A65F-0040963251E5}')
-!
-
 newMXHTMLWriter60
 	"Answer a new instance of the receiver on the MXHTMLWriter60 COM object"
 
-	^self onCLSID: (CLSID fromString: '{88D96A10-F192-11D4-A65F-0040963251E5}')
-!
-
-newMXXMLWriter
-	"Answer a new instance of the receiver on the MXXMLWriter COM object"
-
-	^self onCLSID: (CLSID fromString: '{FC220AD8-A72A-4EE8-926E-0B7AD152A020}')
-!
-
-newMXXMLWriter30
-	"Answer a new instance of the receiver on the MXXMLWriter30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{3D813DFE-6C91-4A4E-8F41-04346A841D9C}')
-!
-
-newMXXMLWriter40
-	"Answer a new instance of the receiver on the MXXMLWriter40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C8-F192-11D4-A65F-0040963251E5}')
+	^self onCLSID: (CLSID fromString: '{88d96a10-f192-11d4-a65f-0040963251e5}')
 !
 
 newMXXMLWriter60
 	"Answer a new instance of the receiver on the MXXMLWriter60 COM object"
 
-	^self onCLSID: (CLSID fromString: '{88D96A0F-F192-11D4-A65F-0040963251E5}')
+	^self onCLSID: (CLSID fromString: '{88d96a0f-f192-11d4-a65f-0040963251e5}')
 ! !
-!MSXML.IMXWriter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter30!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter40!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter60!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter30!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter40!**auto generated**!instance creation!public! !
-!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter60!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter60!**auto generated**!instance creation!private! !
+!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter60!**auto generated**!instance creation!private! !
 

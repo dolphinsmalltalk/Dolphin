@@ -91,8 +91,7 @@ setStylesheet: stylesheet
 	"Set the 'stylesheet' property of the receiver to the <IXMLDOMNode*> value of the argument.
 	Helpstring: stylesheet to use with processors"
 
-	self putref_stylesheet: stylesheet
-!
+	self putref_stylesheet: stylesheet!
 
 stylesheet
 	"Answer the <IXMLDOMNode> value of the 'stylesheet' property of the receiver.
@@ -113,6 +112,12 @@ stylesheet
 
 !MSXML.IXSLTemplate class methodsFor!
 
+clsid
+	"Private - Answer the CLSID of the coclass (XSLTemplate60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a08-f192-11d4-a65f-0040963251e5}'
+!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXSLTemplate'
 		IXSLTemplate defineTemplate"
@@ -124,41 +129,7 @@ defineFunctions
 			argumentTypes: 'IXMLDOMNode**';
 		defineFunction: #CreateProcessor:
 			argumentTypes: 'IXSLProcessor**'
-!
-
-newXSLTemplate
-	"Answer a new instance of the receiver on the XSLTemplate COM object"
-
-	^self onCLSID: (CLSID fromString: '{2933BF94-7B36-11D2-B20E-00C04F983E60}')
-!
-
-newXSLTemplate26
-	"Answer a new instance of the receiver on the XSLTemplate26 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F21-C551-11D3-89B9-0000F81FE221}')
-!
-
-newXSLTemplate30
-	"Answer a new instance of the receiver on the XSLTemplate30 COM object"
-
-	^self onCLSID: (CLSID fromString: '{F5078F36-C551-11D3-89B9-0000F81FE221}')
-!
-
-newXSLTemplate40
-	"Answer a new instance of the receiver on the XSLTemplate40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C3-F192-11D4-A65F-0040963251E5}')
-!
-
-newXSLTemplate60
-	"Answer a new instance of the receiver on the XSLTemplate60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A08-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate!**auto generated**!instance creation!public! !
-!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate26!**auto generated**!instance creation!public! !
-!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate30!**auto generated**!instance creation!public! !
-!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate40!**auto generated**!instance creation!public! !
-!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate60!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -1,12 +1,61 @@
 ﻿OS.COM.TypeLibraryAnalyzer {
-	#generationFlags : 1154,
+	#generationFlags : 1162,
+	#binding : VariableBinding {
+		#key : #MSXML,
+		#value : Class [ #MSXML ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
 	#attributes : OS.COM.TLIBATTR {
 		#bytes : ByteArray [ '188f07f551c5d31189b90000f81fe22100000000010000000600000008000000' ]
 	},
+	#namespaceName : BindingReference {
+		#pathString : 'MSXML2',
+		#path : [
+			'MSXML2'
+		],
+		#flags : 0
+	},
 	#packageName : 'XML DOM',
-	#globalName : #MSXML2Lib,
+	#libVariableName : #MSXML2Lib,
 	#constantsPoolName : #MSXMLConstants,
 	#aliasMap : LookupTable {
-		'GUID' : #GUID
+		'FILETIME' : BindingReference {
+			#pathString : 'OS.FILETIME',
+			#path : [
+				'OS',
+				'FILETIME'
+			],
+			#context : Class [ #OS.COM.TypeLibraryAnalyzer ],
+			#flags : 0
+		},
+		'GUID' : BindingReference {
+			#pathString : 'Core.GUID',
+			#path : [
+				'Core',
+				'GUID'
+			],
+			#context : @12,
+			#flags : 0
+		},
+		'PROPVARIANT' : BindingReference {
+			#pathString : 'OS.COM.VARIANT',
+			#path : [
+				'OS',
+				'COM',
+				'VARIANT'
+			],
+			#context : @12,
+			#flags : 0
+		},
+		'RemotableHandle' : BindingReference {
+			#pathString : 'External.Handle',
+			#path : [
+				'External',
+				'Handle'
+			],
+			#context : @12,
+			#flags : 0
+		}
 	}
 }

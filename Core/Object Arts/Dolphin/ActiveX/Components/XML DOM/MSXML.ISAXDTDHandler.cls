@@ -91,5 +91,5 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:
 			argumentTypes: 'word* sdword word* sdword word* sdword word* sdword'
 ! !
-!MSXML.ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

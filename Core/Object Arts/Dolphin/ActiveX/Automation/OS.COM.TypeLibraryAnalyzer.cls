@@ -744,12 +744,18 @@ stbConvertToVersion2: anArray
 		startingAt: 2.
 	^answer!
 
-stbConvertToVersion3: anArray 
+stbConvertToVersion3: anArray
 	"Convert from version 2 instance.
-	In version 3 the prefix is replaced with a namespaceName."
+	In version 3 the prefix is replaced with a namespaceName and binding instance variable is added in the superclass."
 
-	anArray at: 4 put: nil.
-	^anArray!
+	| instVars |
+	instVars := Array new: 10.
+	instVars
+		at: 1 put: (anArray at: 1);
+		at: 2 put: (anArray at: 2);
+		at: 4 put: (anArray at: 3).
+	5 to: 9 do: [:i | instVars at: i + 1 put: (anArray at: i)].
+	^instVars!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

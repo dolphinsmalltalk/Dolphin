@@ -130,8 +130,7 @@ baseName
 	| answer |
 	answer := BSTR new.
 	self get_baseName: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 childNodes
 	"Answer the a <sequencedReadableCollection> on the <IXMLDOMNodeList> 
@@ -170,15 +169,13 @@ dataType
 	| answer |
 	answer := VARIANT new.
 	self get_dataType: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 dataType: dataTypeName
 	"Set the 'dataType' property of the receiver to the <bstr> value of the argument.
 	Helpstring: the data type of the node"
 
-	self put_dataType: dataTypeName
-!
+	self put_dataType: dataTypeName!
 
 definition
 	"Answer the <IXMLDOMNode> value of the 'definition' property of the receiver.
@@ -336,11 +333,11 @@ get_nodeValue: value
 	<virtual stdcall: hresult 9 variant*>
 	^self invalidCall: _failureCode!
 
-get_ownerDocument: domDocument
+get_ownerDocument: xmldomDocument
 	"Private - Get the value of the 'ownerDocument' property of the receiver.
 
 		HRESULT __stdcall ownerDocument(
-			[out, retval]IXMLDOMDocument** DOMDocument);"
+			[out, retval]IXMLDOMDocument** XMLDOMDocument);"
 
 	<virtual stdcall: hresult 24 IXMLDOMDocument**>
 	^self invalidCall: _failureCode!
@@ -409,13 +406,12 @@ get_xml: xmlString
 	^self invalidCall: _failureCode!
 
 hasChildNodes
-	"Answer the <VARIANT_BOOL> result of invoking the hasChildNodes() method of the COM object."
+	"Answer the <varbool> result of invoking the hasChildNodes() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self HasChildNodes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 HasChildNodes: hasChild
 	"Private - Invoke the hasChildNodes() method of the COM object.
@@ -486,8 +482,7 @@ namespaceURI
 	| answer |
 	answer := BSTR new.
 	self get_namespaceURI: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nextSibling
 	"Answer the <IXMLDOMNode> value of the 'nextSibling' property of the receiver.
@@ -505,18 +500,16 @@ nodeName
 	| answer |
 	answer := BSTR new.
 	self get_nodeName: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeType
 	"Answer the <sdword> value of the 'nodeType' property of the receiver.
 	Helpstring: the node's type"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_nodeType: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeTypedValue
 	"Answer the <variant> value of the 'nodeTypedValue' property of the receiver.
@@ -525,15 +518,13 @@ nodeTypedValue
 	| answer |
 	answer := VARIANT new.
 	self get_nodeTypedValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeTypedValue: typedValue
 	"Set the 'nodeTypedValue' property of the receiver to the <variant> value of the argument.
 	Helpstring: get the strongly typed value of the node"
 
-	self put_nodeTypedValue: typedValue asVariant
-!
+	self put_nodeTypedValue: typedValue asVariant!
 
 nodeTypes
 	^##((Array new: 12)
@@ -558,8 +549,7 @@ nodeTypeString
 	| answer |
 	answer := BSTR new.
 	self get_nodeTypeString: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeValue
 	"Answer the <variant> value of the 'nodeValue' property of the receiver.
@@ -568,15 +558,13 @@ nodeValue
 	| answer |
 	answer := VARIANT new.
 	self get_nodeValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeValue: value
 	"Set the 'nodeValue' property of the receiver to the <variant> value of the argument.
 	Helpstring: value stored in the node"
 
-	self put_nodeValue: value asVariant
-!
+	self put_nodeValue: value asVariant!
 
 ownerDocument
 	"Answer the <IXMLDOMDocument> value of the 'ownerDocument' property of the receiver.
@@ -601,10 +589,9 @@ parsed
 	Helpstring: has sub-tree been completely parsed"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_parsed: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 prefix
 	"Answer the <bstr> value of the 'prefix' property of the receiver.
@@ -613,8 +600,7 @@ prefix
 	| answer |
 	answer := BSTR new.
 	self get_prefix: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 previousSibling
 	"Answer the <IXMLDOMNode> value of the 'previousSibling' property of the receiver.
@@ -784,10 +770,9 @@ specified
 	Helpstring: indicates whether node is a default value"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_specified: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 text
 	"Answer the <bstr> value of the 'text' property of the receiver.
@@ -804,20 +789,16 @@ text: text
 	"Set the 'text' property of the receiver to the <bstr> value of the argument.
 	Helpstring: text content of the node and subtree"
 
-	self put_text: text
-!
+	self put_text: text!
 
 transformNode: stylesheet
-	"Answer the <BSTR> result of invoking the transformNode() method of the COM object.
+	"Answer the <bstr> result of invoking the transformNode() method of the COM object.
 	Helpstring: apply the stylesheet to the subtree"
 
 	| answer |
 	answer := BSTR new.
-	self
-		TransformNode: stylesheet
-		xmlString: answer.
-	^answer asObject
-!
+	self TransformNode: stylesheet xmlString: answer.
+	^answer asObject!
 
 TransformNode: stylesheet xmlString: xmlString
 	"Private - Invoke the transformNode() method of the COM object.
@@ -834,10 +815,7 @@ transformNodeToObject: stylesheet outputObject: outputObject
 	"Invoke the transformNodeToObject() method of the COM object.
 	Helpstring: apply the stylesheet to the subtree, returning the result through a document or a stream"
 
-	^self
-		TransformNodeToObject: stylesheet
-		outputObject: outputObject asVariant
-!
+	^self TransformNodeToObject: stylesheet outputObject: outputObject asVariant!
 
 TransformNodeToObject: stylesheet outputObject: outputObject
 	"Private - Invoke the transformNodeToObject() method of the COM object.
@@ -857,8 +835,7 @@ xml
 	| answer |
 	answer := BSTR new.
 	self get_xml: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IXMLDOMNode categoriesFor: #=!comparing!public! !
 !MSXML.IXMLDOMNode categoriesFor: #addCDATASection:!adding!public! !
 !MSXML.IXMLDOMNode categoriesFor: #addComment:!adding!public! !
@@ -1063,6 +1040,6 @@ initialize
 		at: VT_UI4 put: 'ui4';
 		at: VT_UI8 put: 'ui8';
 		shrink! !
-!MSXML.IXMLDOMNode class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMNode class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 !MSXML.IXMLDOMNode class categoriesFor: #initialize!initializing!private! !
 

@@ -74,16 +74,13 @@ GetProperty: name value: value
 	^self invalidCall: _failureCode!
 
 getProperty_: name
-	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
+	"Answer the <variant> result of invoking the getProperty() method of the COM object.
 	Helpstring: get the value of the named property"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetProperty: name
-		value: answer.
-	^answer asObject
-!
+	self GetProperty: name value: answer.
+	^answer asObject!
 
 namespaces
 	"Answer the <IXMLDOMSchemaCollection> value of the 'namespaces' property of the receiver.
@@ -111,8 +108,7 @@ schemas
 	| answer |
 	answer := VARIANT new.
 	self get_schemas: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 SetProperty: name value: value
 	"Private - Invoke the setProperty() method of the COM object.
@@ -129,17 +125,13 @@ setProperty_: name value: value
 	"Invoke the setProperty() method of the COM object.
 	Helpstring: set the value of the named property"
 
-	^self
-		SetProperty: name
-		value: value asVariant
-!
+	^self SetProperty: name value: value asVariant!
 
 setSchemas: otherCollection
 	"Set the 'schemas' property of the receiver to the <variant> value of the argument.
 	Helpstring: The associated schema cache"
 
-	self putref_schemas: otherCollection asVariant
-!
+	self putref_schemas: otherCollection asVariant!
 
 validate
 	"Answer the <IXMLDOMParseError> result of invoking the validate() method of the COM object.
@@ -238,15 +230,14 @@ newFreeThreadedDOMDocument30
 newFreeThreadedDOMDocument40
 	"Answer a new instance of the receiver on the FreeThreadedDOMDocument40 COM object"
 
-	^self onCLSID: (CLSID fromString: '{88D969C1-F192-11D4-A65F-0040963251E5}')
-! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument26!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument30!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument40!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument26!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument30!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument40!**auto generated**!instance creation!public! !
+	^self onCLSID: (CLSID fromString: '{88D969C1-F192-11D4-A65F-0040963251E5}')! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument26!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument30!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument40!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument26!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument30!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument40!instance creation!public! !
 

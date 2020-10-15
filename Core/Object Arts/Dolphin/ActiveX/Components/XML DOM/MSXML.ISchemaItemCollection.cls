@@ -55,8 +55,7 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__newEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__newEnum: ppUnk
 	"Private - Get the value of the '_newEnum' property of the receiver.
@@ -148,10 +147,9 @@ length
 	"Answer the <sdword> value of the 'length' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaItemCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !MSXML.ISchemaItemCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
 !MSXML.ISchemaItemCollection categoriesFor: #get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
@@ -183,5 +181,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

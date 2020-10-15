@@ -49,18 +49,13 @@ resolveEntity: strPublicId strSystemId: strSystemId
 	"Invoke the resolveEntity() method of the COM object.
 	Helpstring: Allow the application to resolve external entities."
 
-	| answer |
-	answer := (Array new: 3)
-				basicAt: 1 put: strPublicId asBSTR;
-				basicAt: 2 put: strSystemId asBSTR;
-				basicAt: 3 put: VARIANT new;
-				yourself.
+	| outputs |
+	outputs := {strPublicId asBSTR. strSystemId asBSTR. VARIANT new}.
 	self
-		ResolveEntity: (answer basicAt: 1)
-		strSystemId: (answer basicAt: 2)
-		varInput: (answer basicAt: 3).
-	^answer collect: [:each | each asObject]
-!
+		ResolveEntity: (outputs basicAt: 1)
+		strSystemId: (outputs basicAt: 2)
+		varInput: (outputs basicAt: 3).
+	^outputs collect: [:each | each asObject]!
 
 ResolveEntity: strPublicId strSystemId: strSystemId varInput: varInput
 	"Private - Invoke the resolveEntity() method of the COM object.
@@ -88,5 +83,5 @@ defineFunctions
 		defineFunction: #ResolveEntity:strSystemId:varInput:
 			argumentTypes: 'bstr* bstr* variant*'
 ! !
-!MSXML.IVBSAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

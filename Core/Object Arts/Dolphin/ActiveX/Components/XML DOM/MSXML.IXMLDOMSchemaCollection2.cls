@@ -113,16 +113,14 @@ validateOnLoad
 	"Answer the <varbool> value of the 'validateOnLoad' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_validateOnLoad: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 validateOnLoad: validateOnLoad
 	"Set the 'validateOnLoad' property of the receiver to the <varbool> value of the argument."
 
-	self put_validateOnLoad: validateOnLoad
-! !
+	self put_validateOnLoad: validateOnLoad! !
 !MSXML.IXMLDOMSchemaCollection2 categoriesFor: #get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
 !MSXML.IXMLDOMSchemaCollection2 categoriesFor: #getDeclaration:!**auto generated**!methods!public! !
 !MSXML.IXMLDOMSchemaCollection2 categoriesFor: #GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
@@ -134,6 +132,12 @@ validateOnLoad: validateOnLoad
 !MSXML.IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad:!**auto generated**!properties!public! !
 
 !MSXML.IXMLDOMSchemaCollection2 class methodsFor!
+
+clsid
+	"Private - Answer the CLSID of the coclass (XMLSchemaCache60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a07-f192-11d4-a65f-0040963251e5}'
+!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMSchemaCollection2'
@@ -149,20 +153,7 @@ defineFunctions
 			argumentTypes: 'bstr ISchema**';
 		defineFunction: #GetDeclaration:item:
 			argumentTypes: 'IXMLDOMNode* ISchemaItem**'
-!
-
-newXMLSchemaCache40
-	"Answer a new instance of the receiver on the XMLSchemaCache40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C2-F192-11D4-A65F-0040963251E5}')
-!
-
-newXMLSchemaCache60
-	"Answer a new instance of the receiver on the XMLSchemaCache60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A07-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache40!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache60!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

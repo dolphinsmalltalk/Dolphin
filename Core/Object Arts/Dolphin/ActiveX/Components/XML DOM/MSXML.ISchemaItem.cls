@@ -112,8 +112,7 @@ id
 	| answer |
 	answer := BSTR new.
 	self get_id: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -129,10 +128,9 @@ itemType
 	"Answer the <sdword> value of the 'itemType' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_itemType: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 name
 	"Answer the <bstr> value of the 'name' property of the receiver."
@@ -140,8 +138,7 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 namespaceURI
 	"Answer the <bstr> value of the 'namespaceURI' property of the receiver."
@@ -149,8 +146,7 @@ namespaceURI
 	| answer |
 	answer := BSTR new.
 	self get_namespaceURI: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 schema
 	"Answer the <ISchema> value of the 'schema' property of the receiver."
@@ -169,15 +165,12 @@ unhandledAttributes
 	^answer asObject!
 
 writeAnnotation: annotationSink
-	"Answer the <VARIANT_BOOL> result of invoking the writeAnnotation() method of the COM object."
+	"Answer the <varbool> result of invoking the writeAnnotation() method of the COM object."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		WriteAnnotation: annotationSink
-		isWritten: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self WriteAnnotation: annotationSink isWritten: answer.
+	^answer asObject!
 
 WriteAnnotation: annotationSink isWritten: isWritten
 	"Private - Invoke the writeAnnotation() method of the COM object.
@@ -227,5 +220,5 @@ defineFunctions
 		defineFunction: #WriteAnnotation:isWritten:
 			argumentTypes: 'IUnknown* varbool*'
 ! !
-!MSXML.ISchemaItem class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaItem class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

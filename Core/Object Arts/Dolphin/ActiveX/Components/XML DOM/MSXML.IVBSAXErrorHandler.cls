@@ -52,8 +52,7 @@ error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	^self
 		Error: oLocator
 		strErrorMessage: strErrorMessage asBSTR
-		nErrorCode: nErrorCode
-!
+		nErrorCode: nErrorCode!
 
 Error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Private - Invoke the error() method of the COM object.
@@ -74,8 +73,7 @@ fatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	^self
 		FatalError: oLocator
 		strErrorMessage: strErrorMessage asBSTR
-		nErrorCode: nErrorCode
-!
+		nErrorCode: nErrorCode!
 
 FatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Private - Invoke the fatalError() method of the COM object.
@@ -96,8 +94,7 @@ ignorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCo
 	^self
 		IgnorableWarning: oLocator
 		strErrorMessage: strErrorMessage asBSTR
-		nErrorCode: nErrorCode
-!
+		nErrorCode: nErrorCode!
 
 IgnorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Private - Invoke the ignorableWarning() method of the COM object.
@@ -143,5 +140,5 @@ defineFunctions
 		defineFunction: #IgnorableWarning:strErrorMessage:nErrorCode:
 			argumentTypes: 'IVBSAXLocator* bstr* sdword'
 ! !
-!MSXML.IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

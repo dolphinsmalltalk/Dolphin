@@ -94,5 +94,5 @@ defineFunctions
 		defineFunction: #IgnorableWarning:pwchErrorMessage:hrErrorCode:
 			argumentTypes: 'ISAXLocator* word* hresult'
 ! !
-!MSXML.ISAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

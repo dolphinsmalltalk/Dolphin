@@ -52,15 +52,12 @@ allErrors
 	^answer asObject!
 
 errorParameters: index
-	"Answer the <BSTR> result of invoking the errorParameters() method of the COM object."
+	"Answer the <bstr> result of invoking the errorParameters() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
-	self
-		ErrorParameters: index
-		param: answer.
-	^answer asObject
-!
+	self ErrorParameters: index param: answer.
+	^answer asObject!
 
 ErrorParameters: index param: param
 	"Private - Invoke the errorParameters() method of the COM object.
@@ -76,10 +73,9 @@ errorParametersCount
 	"Answer the <sdword> value of the 'errorParametersCount' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_errorParametersCount: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 errorXPath
 	"Answer the <bstr> value of the 'errorXPath' property of the receiver."
@@ -87,8 +83,7 @@ errorXPath
 	| answer |
 	answer := BSTR new.
 	self get_errorXPath: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_allErrors: allErrors
 	"Private - Get the value of the 'allErrors' property of the receiver.
@@ -141,5 +136,5 @@ defineFunctions
 		defineFunction: #get_errorParametersCount:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

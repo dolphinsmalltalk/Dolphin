@@ -43,9 +43,9 @@ setProxy: proxySetting
 	Default values are passed for all optional parameters."
 
 	^self
-		 setProxy: proxySetting
-		 varProxyServer: VARIANT unspecified
-		 varBypassList: VARIANT unspecified!
+		setProxy: proxySetting
+		varProxyServer: VARIANT unspecified
+		varBypassList: VARIANT unspecified!
 
 setProxy: proxySetting varProxyServer: varProxyServer varBypassList: varBypassList
 	"Invoke the setProxy() method of the COM object.
@@ -54,8 +54,7 @@ setProxy: proxySetting varProxyServer: varProxyServer varBypassList: varBypassLi
 	^self
 		SetProxy: proxySetting
 		varProxyServer: varProxyServer asVariant
-		varBypassList: varBypassList asVariant
-!
+		varBypassList: varBypassList asVariant!
 
 SetProxy: proxySetting varProxyServer: varProxyServer varBypassList: varBypassList
 	"Private - Invoke the setProxy() method of the COM object.
@@ -86,6 +85,12 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 
 !MSXML.IServerXMLHTTPRequest2 class methodsFor!
 
+clsid
+	"Private - Answer the CLSID of the coclass (ServerXMLHTTP60) for which the receiver is the default interface."
+
+	^CLSID fromString: '{88d96a0b-f192-11d4-a65f-0040963251e5}'
+!
+
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IServerXMLHTTPRequest2'
 		IServerXMLHTTPRequest2 defineTemplate"
@@ -95,20 +100,7 @@ defineFunctions
 			argumentTypes: 'sdword variant variant';
 		defineFunction: #SetProxyCredentials:bstrPassword:
 			argumentTypes: 'bstr bstr'
-!
-
-newServerXMLHTTP40
-	"Answer a new instance of the receiver on the ServerXMLHTTP40 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D969C6-F192-11D4-A65F-0040963251E5}')
-!
-
-newServerXMLHTTP60
-	"Answer a new instance of the receiver on the ServerXMLHTTP60 COM object"
-
-	^self onCLSID: (CLSID fromString: '{88D96A0B-F192-11D4-A65F-0040963251E5}')
 ! !
-!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP40!**auto generated**!instance creation!public! !
-!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP60!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

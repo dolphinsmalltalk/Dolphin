@@ -27,17 +27,15 @@ async
 	Helpstring: flag for asynchronous download"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_async: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 async: isAsync
 	"Set the 'async' property of the receiver to the <varbool> value of the argument.
 	Helpstring: flag for asynchronous download"
 
-	self put_async: isAsync
-!
+	self put_async: isAsync!
 
 createAttribute: name
 	"Answer the <IXMLDOMAttribute> result of invoking the createAttribute() method of the COM object.
@@ -376,16 +374,13 @@ initialize
 	self addProcessingInstruction: 'xml' data: 'version="1.0"'!
 
 load: xmlSource
-	"Answer the <VARIANT_BOOL> result of invoking the load() method of the COM object.
+	"Answer the <varbool> result of invoking the load() method of the COM object.
 	Helpstring: load document from the specified XML source"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		Load: xmlSource asVariant
-		isSuccessful: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self Load: xmlSource asVariant isSuccessful: answer.
+	^answer asObject!
 
 Load: xmlSource isSuccessful: isSuccessful
 	"Private - Invoke the load() method of the COM object.
@@ -415,16 +410,13 @@ loadURL: urlString
 		^self parseErrorClass signal: 'Error loading ', urlString printString with: self parseError]!
 
 loadXML: bstrXML
-	"Answer the <VARIANT_BOOL> result of invoking the loadXML() method of the COM object.
+	"Answer the <varbool> result of invoking the loadXML() method of the COM object.
 	Helpstring: load the document from a string"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		LoadXML: bstrXML
-		isSuccessful: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self LoadXML: bstrXML isSuccessful: answer.
+	^answer asObject!
 
 LoadXML: bstrXML isSuccessful: isSuccessful
 	"Private - Invoke the loadXML() method of the COM object.
@@ -461,22 +453,19 @@ ondataavailable: arg1
 	"Set the 'ondataavailable' property of the receiver to the <variant> value of the argument.
 	Helpstring: register an ondataavailable event handler"
 
-	self put_ondataavailable: arg1 asVariant
-!
+	self put_ondataavailable: arg1 asVariant!
 
 onreadystatechange: arg1
 	"Set the 'onreadystatechange' property of the receiver to the <variant> value of the argument.
 	Helpstring: register a readystatechange event handler"
 
-	self put_onreadystatechange: arg1 asVariant
-!
+	self put_onreadystatechange: arg1 asVariant!
 
 ontransformnode: arg1
 	"Set the 'ontransformnode' property of the receiver to the <variant> value of the argument.
 	Helpstring: register an ontransformnode event handler"
 
-	self put_ontransformnode: arg1 asVariant
-!
+	self put_ontransformnode: arg1 asVariant!
 
 ownerDocument
 	"Answer an <IXMLDOMDocument> on the receiver's owning document (itself in this case)."
@@ -502,17 +491,15 @@ preserveWhiteSpace
 	Helpstring: indicates whether the parser preserves whitespace"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_preserveWhiteSpace: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 preserveWhiteSpace: isPreserving
 	"Set the 'preserveWhiteSpace' property of the receiver to the <varbool> value of the argument.
 	Helpstring: indicates whether the parser preserves whitespace"
 
-	self put_preserveWhiteSpace: isPreserving
-!
+	self put_preserveWhiteSpace: isPreserving!
 
 printValueOn: aStream 
 	
@@ -606,34 +593,30 @@ readyState
 	Helpstring: get the state of the XML document"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_readyState: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 resolveExternals
 	"Answer the <varbool> value of the 'resolveExternals' property of the receiver.
 	Helpstring: indicates whether the parser resolves references to external DTD/Entities/Schema"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_resolveExternals: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 resolveExternals: isResolving
 	"Set the 'resolveExternals' property of the receiver to the <varbool> value of the argument.
 	Helpstring: indicates whether the parser resolves references to external DTD/Entities/Schema"
 
-	self put_resolveExternals: isResolving
-!
+	self put_resolveExternals: isResolving!
 
 save: destination
 	"Invoke the save() method of the COM object.
 	Helpstring: save the document to a specified destination"
 
-	^self Save: destination asVariant
-!
+	^self Save: destination asVariant!
 
 Save: destination
 	"Private - Invoke the save() method of the COM object.
@@ -649,8 +632,7 @@ setDocumentElement: domElement
 	"Set the 'documentElement' property of the receiver to the <IXMLDOMElement*> value of the argument.
 	Helpstring: the root of the tree"
 
-	self putref_documentElement: domElement
-!
+	self putref_documentElement: domElement!
 
 url
 	"Answer the <bstr> value of the 'url' property of the receiver.
@@ -659,25 +641,22 @@ url
 	| answer |
 	answer := BSTR new.
 	self get_url: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 validateOnParse
 	"Answer the <varbool> value of the 'validateOnParse' property of the receiver.
 	Helpstring: indicates whether the parser performs validation"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_validateOnParse: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 validateOnParse: isValidating
 	"Set the 'validateOnParse' property of the receiver to the <varbool> value of the argument.
 	Helpstring: indicates whether the parser performs validation"
 
-	self put_validateOnParse: isValidating
-! !
+	self put_validateOnParse: isValidating! !
 !MSXML.IXMLDOMDocument categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLDOMDocument!public! !
 !MSXML.IXMLDOMDocument categoriesFor: #async!**auto generated**!properties!public! !
 !MSXML.IXMLDOMDocument categoriesFor: #async:!**auto generated**!properties!public! !
@@ -836,6 +815,6 @@ new
 
 	^super new initialize! !
 !MSXML.IXMLDOMDocument class categoriesFor: #clsid!constants!public! !
-!MSXML.IXMLDOMDocument class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMDocument class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 !MSXML.IXMLDOMDocument class categoriesFor: #new!instance creation!public! !
 

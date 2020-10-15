@@ -42,13 +42,12 @@ interface ISAXLocator : IUnknown
 !MSXML.ISAXLocator methodsFor!
 
 getColumnNumber
-	"Answer the <SDWORD> result of invoking the getColumnNumber() method of the COM object."
+	"Answer the <sdword> result of invoking the getColumnNumber() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self GetColumnNumber: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetColumnNumber: pnColumn
 	"Private - Invoke the getColumnNumber() method of the COM object.
@@ -60,13 +59,12 @@ GetColumnNumber: pnColumn
 	^self invalidCall: _failureCode!
 
 getLineNumber
-	"Answer the <SDWORD> result of invoking the getLineNumber() method of the COM object."
+	"Answer the <sdword> result of invoking the getLineNumber() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self GetLineNumber: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetLineNumber: pnLine
 	"Private - Invoke the getLineNumber() method of the COM object.
@@ -78,13 +76,12 @@ GetLineNumber: pnLine
 	^self invalidCall: _failureCode!
 
 getPublicId
-	"Answer the <WORD> result of invoking the getPublicId() method of the COM object."
+	"Answer the <word> result of invoking the getPublicId() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: TaskMemory).
+	answer := WORD newBufferClass: TaskMemory.
 	self GetPublicId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetPublicId: ppwchPublicId
 	"Private - Invoke the getPublicId() method of the COM object.
@@ -96,13 +93,12 @@ GetPublicId: ppwchPublicId
 	^self invalidCall: _failureCode!
 
 getSystemId
-	"Answer the <WORD> result of invoking the getSystemId() method of the COM object."
+	"Answer the <word> result of invoking the getSystemId() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: TaskMemory).
+	answer := WORD newBufferClass: TaskMemory.
 	self GetSystemId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetSystemId: ppwchSystemId
 	"Private - Invoke the getSystemId() method of the COM object.
@@ -137,5 +133,5 @@ defineFunctions
 		defineFunction: #GetSystemId:
 			argumentTypes: 'word**'
 ! !
-!MSXML.ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

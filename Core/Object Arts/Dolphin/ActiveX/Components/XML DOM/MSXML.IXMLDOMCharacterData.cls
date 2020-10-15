@@ -47,15 +47,13 @@ data
 	| answer |
 	answer := BSTR new.
 	self get_data: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 data: data
 	"Set the 'data' property of the receiver to the <bstr> value of the argument.
 	Helpstring: value of the node"
 
-	self put_data: data
-!
+	self put_data: data!
 
 DeleteData: offset count: count
 	"Invoke the deleteData() method of the COM object.
@@ -107,10 +105,9 @@ length
 	Helpstring: number of characters in value"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 put_data: data
 	"Private - Set the value of the 'data' property of the object wrapped by the 
@@ -135,7 +132,7 @@ ReplaceData: offset count: count data: data
 	^self invalidCall: _failureCode!
 
 substringData: offset count: count
-	"Answer the <BSTR> result of invoking the substringData() method of the COM object.
+	"Answer the <bstr> result of invoking the substringData() method of the COM object.
 	Helpstring: retrieve substring of value"
 
 	| answer |
@@ -144,8 +141,7 @@ substringData: offset count: count
 		SubstringData: offset
 		count: count
 		data: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 SubstringData: offset count: count data: data
 	"Private - Invoke the substringData() method of the COM object.
@@ -199,5 +195,5 @@ defineFunctions
 		defineFunction: #ReplaceData:count:data:
 			argumentTypes: 'sdword sdword bstr'
 ! !
-!MSXML.IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

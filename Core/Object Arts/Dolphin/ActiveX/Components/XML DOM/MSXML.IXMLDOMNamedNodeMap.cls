@@ -23,8 +23,7 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__newEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__newEnum: ppUnk
 	"Private - Get the value of the '_newEnum' property of the receiver.
@@ -122,10 +121,9 @@ length
 	Helpstring: number of nodes in the collection"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nextNode
 	"Answer the <IXMLDOMNode> result of invoking the nextNode() method of the COM object.
@@ -267,5 +265,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IXMLDOMNamedNodeMap class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMNamedNodeMap class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

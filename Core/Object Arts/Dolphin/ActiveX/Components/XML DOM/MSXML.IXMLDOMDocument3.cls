@@ -101,15 +101,15 @@ defineFunctions
 newDOMDocument60
 	"Answer a new instance of the receiver on the DOMDocument60 COM object"
 
-	^self onCLSID: (CLSID fromString: '{88D96A05-F192-11D4-A65F-0040963251E5}')
+	^self onCLSID: (CLSID fromString: '{88d96a05-f192-11d4-a65f-0040963251e5}')
 !
 
 newFreeThreadedDOMDocument60
 	"Answer a new instance of the receiver on the FreeThreadedDOMDocument60 COM object"
 
-	^self onCLSID: (CLSID fromString: '{88D96A06-F192-11D4-A65F-0040963251E5}')
+	^self onCLSID: (CLSID fromString: '{88d96a06-f192-11d4-a65f-0040963251e5}')
 ! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!public! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!private! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!private! !
 

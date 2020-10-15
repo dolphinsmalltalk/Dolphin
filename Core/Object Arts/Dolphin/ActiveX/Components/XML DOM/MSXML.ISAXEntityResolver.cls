@@ -35,7 +35,7 @@ interface ISAXEntityResolver : IUnknown
 !MSXML.ISAXEntityResolver methodsFor!
 
 resolveEntity: pwchPublicId pwchSystemId: pwchSystemId
-	"Answer the <VARIANT> result of invoking the resolveEntity() method of the COM object."
+	"Answer the <variant> result of invoking the resolveEntity() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -43,8 +43,7 @@ resolveEntity: pwchPublicId pwchSystemId: pwchSystemId
 		ResolveEntity: pwchPublicId
 		pwchSystemId: pwchSystemId
 		pvarInput: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 	"Private - Invoke the resolveEntity() method of the COM object.
@@ -69,5 +68,5 @@ defineFunctions
 		defineFunction: #ResolveEntity:pwchSystemId:pvarInput:
 			argumentTypes: 'word* word* variant*'
 ! !
-!MSXML.ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

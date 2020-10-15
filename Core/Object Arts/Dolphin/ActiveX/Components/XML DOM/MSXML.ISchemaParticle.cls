@@ -60,8 +60,7 @@ maxOccurs
 	| answer |
 	answer := VARIANT new.
 	self get_maxOccurs: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 minOccurs
 	"Answer the <variant> value of the 'minOccurs' property of the receiver."
@@ -69,8 +68,7 @@ minOccurs
 	| answer |
 	answer := VARIANT new.
 	self get_minOccurs: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaParticle categoriesFor: #get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
 !MSXML.ISchemaParticle categoriesFor: #get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
 !MSXML.ISchemaParticle categoriesFor: #maxOccurs!**auto generated**!properties!public! !
@@ -88,5 +86,5 @@ defineFunctions
 		defineFunction: #get_maxOccurs:
 			argumentTypes: 'variant*'
 ! !
-!MSXML.ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

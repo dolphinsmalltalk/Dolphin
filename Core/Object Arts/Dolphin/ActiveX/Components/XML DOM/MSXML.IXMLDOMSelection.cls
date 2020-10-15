@@ -98,15 +98,13 @@ expr
 	| answer |
 	answer := BSTR new.
 	self get_expr: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 expr: expression
 	"Set the 'expr' property of the receiver to the <bstr> value of the argument.
 	Helpstring: selection expression"
 
-	self put_expr: expression
-!
+	self put_expr: expression!
 
 get_context: ppNode
 	"Private - Get the value of the 'context' property of the receiver.
@@ -138,16 +136,13 @@ GetProperty: name value: value
 	^self invalidCall: _failureCode!
 
 getProperty_: name
-	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
+	"Answer the <variant> result of invoking the getProperty() method of the COM object.
 	Helpstring: get the value of the named property"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetProperty: name
-		value: answer.
-	^answer asObject
-!
+	self GetProperty: name value: answer.
+	^answer asObject!
 
 matches: pNode
 	"Answer the <IXMLDOMNode> result of invoking the matches() method of the COM object.
@@ -240,8 +235,7 @@ setContext: ppNode
 	"Set the 'context' property of the receiver to the <IXMLDOMNode*> value of the argument.
 	Helpstring: nodes to apply selection expression to"
 
-	self putref_context: ppNode
-!
+	self putref_context: ppNode!
 
 SetProperty: name value: value
 	"Private - Invoke the setProperty() method of the COM object.
@@ -258,10 +252,7 @@ setProperty_: name value: value
 	"Invoke the setProperty() method of the COM object.
 	Helpstring: set the value of the named property"
 
-	^self
-		SetProperty: name
-		value: value asVariant
-! !
+	^self SetProperty: name value: value asVariant! !
 !MSXML.IXMLDOMSelection categoriesFor: #clone!**auto generated**!methods!public! !
 !MSXML.IXMLDOMSelection categoriesFor: #Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
 !MSXML.IXMLDOMSelection categoriesFor: #context!**auto generated**!properties!public! !
@@ -313,5 +304,5 @@ defineFunctions
 		defineFunction: #SetProperty:value:
 			argumentTypes: 'bstr variant'
 ! !
-!MSXML.IXMLDOMSelection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMSelection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -69,8 +69,7 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 printValueOn: aStream
 	[aStream nextPutAll: self xml] on: HRESULTError
@@ -93,15 +92,13 @@ value
 	| answer |
 	answer := VARIANT new.
 	self get_value: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value: attributeValue
 	"Set the 'value' property of the receiver to the <variant> value of the argument.
 	Helpstring: string value of the attribute"
 
-	self put_value: attributeValue asVariant
-! !
+	self put_value: attributeValue asVariant! !
 !MSXML.IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
 !MSXML.IXMLDOMAttribute categoriesFor: #=!comparing!public! !
 !MSXML.IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
@@ -130,5 +127,5 @@ defineFunctions
 		defineFunction: #put_value:
 			argumentTypes: 'variant'
 ! !
-!MSXML.IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

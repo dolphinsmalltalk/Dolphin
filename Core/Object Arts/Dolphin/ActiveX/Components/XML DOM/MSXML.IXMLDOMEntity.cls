@@ -58,8 +58,7 @@ notationName
 	| answer |
 	answer := BSTR new.
 	self get_notationName: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 publicId
 	"Answer the <variant> value of the 'publicId' property of the receiver.
@@ -68,8 +67,7 @@ publicId
 	| answer |
 	answer := VARIANT new.
 	self get_publicId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 systemId
 	"Answer the <variant> value of the 'systemId' property of the receiver.
@@ -78,8 +76,7 @@ systemId
 	| answer |
 	answer := VARIANT new.
 	self get_systemId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	| publicId stream systemId |
@@ -135,5 +132,5 @@ defineFunctions
 		defineFunction: #get_notationName:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IXMLDOMEntity class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMEntity class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

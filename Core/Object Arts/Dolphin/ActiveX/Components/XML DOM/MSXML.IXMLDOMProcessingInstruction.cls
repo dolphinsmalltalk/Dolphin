@@ -31,15 +31,13 @@ data
 	| answer |
 	answer := BSTR new.
 	self get_data: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 data: value
 	"Set the 'data' property of the receiver to the <bstr> value of the argument.
 	Helpstring: the data"
 
-	self put_data: value
-!
+	self put_data: value!
 
 get_data: value
 	"Private - Get the value of the 'data' property of the receiver.
@@ -85,8 +83,7 @@ target
 	| answer |
 	answer := BSTR new.
 	self get_target: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
 !MSXML.IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
 !MSXML.IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
@@ -111,5 +108,5 @@ defineFunctions
 		defineFunction: #put_data:
 			argumentTypes: 'bstr'
 ! !
-!MSXML.IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

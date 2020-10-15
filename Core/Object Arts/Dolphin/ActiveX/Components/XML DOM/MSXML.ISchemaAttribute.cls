@@ -54,8 +54,7 @@ defaultValue
 	| answer |
 	answer := BSTR new.
 	self get_defaultValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 fixedValue
 	"Answer the <bstr> value of the 'fixedValue' property of the receiver."
@@ -63,8 +62,7 @@ fixedValue
 	| answer |
 	answer := BSTR new.
 	self get_fixedValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_defaultValue: defaultValue
 	"Private - Get the value of the 'defaultValue' property of the receiver.
@@ -124,10 +122,9 @@ isReference
 	"Answer the <varbool> value of the 'isReference' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_isReference: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 scope
 	"Answer the <ISchemaComplexType> value of the 'scope' property of the receiver."
@@ -149,10 +146,9 @@ use
 	"Answer the <sdword> value of the 'use' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_use: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaAttribute categoriesFor: #defaultValue!**auto generated**!properties!public! !
 !MSXML.ISchemaAttribute categoriesFor: #fixedValue!**auto generated**!properties!public! !
 !MSXML.ISchemaAttribute categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
@@ -186,5 +182,5 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!MSXML.ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

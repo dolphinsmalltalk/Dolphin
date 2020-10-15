@@ -58,8 +58,7 @@ publicId
 	| answer |
 	answer := VARIANT new.
 	self get_publicId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 systemId
 	"Answer the <variant> value of the 'systemId' property of the receiver.
@@ -68,8 +67,7 @@ systemId
 	| answer |
 	answer := VARIANT new.
 	self get_systemId: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	| publicId stream systemId |
@@ -122,5 +120,5 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'variant*'
 ! !
-!MSXML.IXMLDOMNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

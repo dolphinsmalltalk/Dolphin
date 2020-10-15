@@ -60,8 +60,7 @@ publicIdentifier
 	| answer |
 	answer := BSTR new.
 	self get_publicIdentifier: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 systemIdentifier
 	"Answer the <bstr> value of the 'systemIdentifier' property of the receiver."
@@ -69,8 +68,7 @@ systemIdentifier
 	| answer |
 	answer := BSTR new.
 	self get_systemIdentifier: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.ISchemaNotation categoriesFor: #get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
 !MSXML.ISchemaNotation categoriesFor: #get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
 !MSXML.ISchemaNotation categoriesFor: #publicIdentifier!**auto generated**!properties!public! !
@@ -88,5 +86,5 @@ defineFunctions
 		defineFunction: #get_publicIdentifier:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

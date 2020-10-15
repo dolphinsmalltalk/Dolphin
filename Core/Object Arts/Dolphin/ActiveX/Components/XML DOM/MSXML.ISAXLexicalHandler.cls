@@ -149,5 +149,5 @@ defineFunctions
 		defineFunction: #Comment:cchChars:
 			argumentTypes: 'word* sdword'
 ! !
-!MSXML.ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

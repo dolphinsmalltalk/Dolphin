@@ -90,17 +90,16 @@ get_length: nLength
 	^self invalidCall: _failureCode!
 
 getIndexFromName: strURI strLocalName: strLocalName
-	"Answer the <SDWORD> result of invoking the getIndexFromName() method of the COM object.
+	"Answer the <sdword> result of invoking the getIndexFromName() method of the COM object.
 	Helpstring: Look up the index of an attribute by Namespace name."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self
 		GetIndexFromName: strURI
 		strLocalName: strLocalName
 		nIndex: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetIndexFromName: strURI strLocalName: strLocalName nIndex: nIndex
 	"Private - Invoke the getIndexFromName() method of the COM object.
@@ -115,16 +114,13 @@ GetIndexFromName: strURI strLocalName: strLocalName nIndex: nIndex
 	^self invalidCall: _failureCode!
 
 getIndexFromQName: strQName
-	"Answer the <SDWORD> result of invoking the getIndexFromQName() method of the COM object.
+	"Answer the <sdword> result of invoking the getIndexFromQName() method of the COM object.
 	Helpstring: Look up the index of an attribute by XML 1.0 qualified name."
 
 	| answer |
-	answer := (SDWORD new).
-	self
-		GetIndexFromQName: strQName
-		nIndex: answer.
-	^answer asObject
-!
+	answer := SDWORD new.
+	self GetIndexFromQName: strQName nIndex: answer.
+	^answer asObject!
 
 GetIndexFromQName: strQName nIndex: nIndex
 	"Private - Invoke the getIndexFromQName() method of the COM object.
@@ -138,16 +134,13 @@ GetIndexFromQName: strQName nIndex: nIndex
 	^self invalidCall: _failureCode!
 
 getLocalName: nIndex
-	"Answer the <BSTR> result of invoking the getLocalName() method of the COM object.
+	"Answer the <bstr> result of invoking the getLocalName() method of the COM object.
 	Helpstring: Look up an attribute's local name by index."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetLocalName: nIndex
-		strLocalName: answer.
-	^answer asObject
-!
+	self GetLocalName: nIndex strLocalName: answer.
+	^answer asObject!
 
 GetLocalName: nIndex strLocalName: strLocalName
 	"Private - Invoke the getLocalName() method of the COM object.
@@ -161,16 +154,13 @@ GetLocalName: nIndex strLocalName: strLocalName
 	^self invalidCall: _failureCode!
 
 getQName: nIndex
-	"Answer the <BSTR> result of invoking the getQName() method of the COM object.
+	"Answer the <bstr> result of invoking the getQName() method of the COM object.
 	Helpstring: Look up an attribute's XML 1.0 qualified name by index."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetQName: nIndex
-		strQName: answer.
-	^answer asObject
-!
+	self GetQName: nIndex strQName: answer.
+	^answer asObject!
 
 GetQName: nIndex strQName: strQName
 	"Private - Invoke the getQName() method of the COM object.
@@ -184,16 +174,13 @@ GetQName: nIndex strQName: strQName
 	^self invalidCall: _failureCode!
 
 getType: nIndex
-	"Answer the <BSTR> result of invoking the getType() method of the COM object.
+	"Answer the <bstr> result of invoking the getType() method of the COM object.
 	Helpstring: Look up an attribute's type by index."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetType: nIndex
-		strType: answer.
-	^answer asObject
-!
+	self GetType: nIndex strType: answer.
+	^answer asObject!
 
 GetType: nIndex strType: strType
 	"Private - Invoke the getType() method of the COM object.
@@ -207,7 +194,7 @@ GetType: nIndex strType: strType
 	^self invalidCall: _failureCode!
 
 getTypeFromName: strURI strLocalName: strLocalName
-	"Answer the <BSTR> result of invoking the getTypeFromName() method of the COM object.
+	"Answer the <bstr> result of invoking the getTypeFromName() method of the COM object.
 	Helpstring: Look up an attribute's type by Namespace name."
 
 	| answer |
@@ -216,8 +203,7 @@ getTypeFromName: strURI strLocalName: strLocalName
 		GetTypeFromName: strURI
 		strLocalName: strLocalName
 		strType: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetTypeFromName: strURI strLocalName: strLocalName strType: strType
 	"Private - Invoke the getTypeFromName() method of the COM object.
@@ -232,16 +218,13 @@ GetTypeFromName: strURI strLocalName: strLocalName strType: strType
 	^self invalidCall: _failureCode!
 
 getTypeFromQName: strQName
-	"Answer the <BSTR> result of invoking the getTypeFromQName() method of the COM object.
+	"Answer the <bstr> result of invoking the getTypeFromQName() method of the COM object.
 	Helpstring: Look up an attribute's type by XML 1.0 qualified name."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetTypeFromQName: strQName
-		strType: answer.
-	^answer asObject
-!
+	self GetTypeFromQName: strQName strType: answer.
+	^answer asObject!
 
 GetTypeFromQName: strQName strType: strType
 	"Private - Invoke the getTypeFromQName() method of the COM object.
@@ -255,16 +238,13 @@ GetTypeFromQName: strQName strType: strType
 	^self invalidCall: _failureCode!
 
 getURI: nIndex
-	"Answer the <BSTR> result of invoking the getURI() method of the COM object.
+	"Answer the <bstr> result of invoking the getURI() method of the COM object.
 	Helpstring: Look up an attribute's Namespace URI by index."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetURI: nIndex
-		strURI: answer.
-	^answer asObject
-!
+	self GetURI: nIndex strURI: answer.
+	^answer asObject!
 
 GetURI: nIndex strURI: strURI
 	"Private - Invoke the getURI() method of the COM object.
@@ -278,16 +258,13 @@ GetURI: nIndex strURI: strURI
 	^self invalidCall: _failureCode!
 
 getValue: nIndex
-	"Answer the <BSTR> result of invoking the getValue() method of the COM object.
+	"Answer the <bstr> result of invoking the getValue() method of the COM object.
 	Helpstring: Look up an attribute's value by index."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetValue: nIndex
-		strValue: answer.
-	^answer asObject
-!
+	self GetValue: nIndex strValue: answer.
+	^answer asObject!
 
 GetValue: nIndex strValue: strValue
 	"Private - Invoke the getValue() method of the COM object.
@@ -301,7 +278,7 @@ GetValue: nIndex strValue: strValue
 	^self invalidCall: _failureCode!
 
 getValueFromName: strURI strLocalName: strLocalName
-	"Answer the <BSTR> result of invoking the getValueFromName() method of the COM object.
+	"Answer the <bstr> result of invoking the getValueFromName() method of the COM object.
 	Helpstring: Look up an attribute's value by Namespace name."
 
 	| answer |
@@ -310,8 +287,7 @@ getValueFromName: strURI strLocalName: strLocalName
 		GetValueFromName: strURI
 		strLocalName: strLocalName
 		strValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetValueFromName: strURI strLocalName: strLocalName strValue: strValue
 	"Private - Invoke the getValueFromName() method of the COM object.
@@ -326,16 +302,13 @@ GetValueFromName: strURI strLocalName: strLocalName strValue: strValue
 	^self invalidCall: _failureCode!
 
 getValueFromQName: strQName
-	"Answer the <BSTR> result of invoking the getValueFromQName() method of the COM object.
+	"Answer the <bstr> result of invoking the getValueFromQName() method of the COM object.
 	Helpstring: Look up an attribute's value by XML 1.0 qualified name."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetValueFromQName: strQName
-		strValue: answer.
-	^answer asObject
-!
+	self GetValueFromQName: strQName strValue: answer.
+	^answer asObject!
 
 GetValueFromQName: strQName strValue: strValue
 	"Private - Invoke the getValueFromQName() method of the COM object.
@@ -363,10 +336,9 @@ length
 	Helpstring: Get the number of attributes in the list."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_length: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !MSXML.IVBSAXAttributes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
 !MSXML.IVBSAXAttributes categoriesFor: #getIndexFromName:strLocalName:!**auto generated**!methods!public! !
 !MSXML.IVBSAXAttributes categoriesFor: #GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
@@ -426,5 +398,5 @@ defineFunctions
 		defineFunction: #GetValueFromQName:strValue:
 			argumentTypes: 'bstr bstr*'
 ! !
-!MSXML.IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

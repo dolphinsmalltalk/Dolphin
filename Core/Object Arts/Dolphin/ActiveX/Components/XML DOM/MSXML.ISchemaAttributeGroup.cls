@@ -86,5 +86,5 @@ defineFunctions
 		defineFunction: #get_attributes:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!MSXML.ISchemaAttributeGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAttributeGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

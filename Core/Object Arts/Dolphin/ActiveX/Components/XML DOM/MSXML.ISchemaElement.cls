@@ -69,17 +69,15 @@ defaultValue
 	| answer |
 	answer := BSTR new.
 	self get_defaultValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 disallowedSubstitutions
 	"Answer the <sdword> value of the 'disallowedSubstitutions' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_disallowedSubstitutions: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 fixedValue
 	"Answer the <bstr> value of the 'fixedValue' property of the receiver."
@@ -87,8 +85,7 @@ fixedValue
 	| answer |
 	answer := BSTR new.
 	self get_fixedValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_defaultValue: defaultValue
 	"Private - Get the value of the 'defaultValue' property of the receiver.
@@ -201,28 +198,25 @@ isAbstract
 	"Answer the <varbool> value of the 'isAbstract' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_isAbstract: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isNillable
 	"Answer the <varbool> value of the 'isNillable' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_isNillable: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isReference
 	"Answer the <varbool> value of the 'isReference' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_isReference: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 scope
 	"Answer the <ISchemaComplexType> value of the 'scope' property of the receiver."
@@ -244,10 +238,9 @@ substitutionGroupExclusions
 	"Answer the <sdword> value of the 'substitutionGroupExclusions' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_substitutionGroupExclusions: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 type
 	"Answer the <ISchemaType> value of the 'type' property of the receiver."
@@ -309,5 +302,5 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!MSXML.ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 
