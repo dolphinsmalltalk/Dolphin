@@ -16,14 +16,14 @@ accessorMessage
 
 	^#doubleAtOffset:put:!
 
-fieldClassName
-	^Float name!
-
 readFrom: anExternalStructure
 	"Private - Answer a <Float> with the same value as the 64-bit double precision floating
 	point field at the receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes doubleAtOffset: offset!
+
+valueType
+	^Float!
 
 writeInto: anExternalStructure value: aFloat
 	"Private - Write the 64-bit IEEE double precision value of the <Float> argument, aFloat,
@@ -31,8 +31,8 @@ writeInto: anExternalStructure value: aFloat
 
 	^anExternalStructure bytes doubleAtOffset: offset put: aFloat! !
 !External.DOUBLEField categoriesFor: #accessorMessage!initializing!private! !
-!External.DOUBLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.DOUBLEField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.DOUBLEField categoriesFor: #valueType!automatic generation!constants!development!private! !
 !External.DOUBLEField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
 !External.DOUBLEField class methodsFor!

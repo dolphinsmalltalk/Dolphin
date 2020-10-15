@@ -11,14 +11,14 @@ External.LPVOIDField comment: '<LPVOIDField> is a <ScalarField> type to represen
 !External.LPVOIDField categoriesForClass!External-Data-Types! !
 !External.LPVOIDField methodsFor!
 
-fieldClassName
-	^External.Address name!
-
 readFrom: anExternalStructure
 	"Private - Answer an <ExternalAddress> with the same value as the pointer field at the
 	receiver's offset in the <ExternalStructure> argument."
 
-	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress! !
-!External.LPVOIDField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress!
+
+valueType
+	^Address! !
 !External.LPVOIDField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.LPVOIDField categoriesFor: #valueType!automatic generation!constants!development!private! !
 

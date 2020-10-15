@@ -16,14 +16,14 @@ accessorMessage
 
 	^#floatAtOffset:put:!
 
-fieldClassName
-	^Float name!
-
 readFrom: anExternalStructure
 	"Private - Answer a <Float> with the same value as the 32-bit single precision floating
 	point field at the receiver's offset in the <ExternalStructure> argument."
 
 	^anExternalStructure bytes floatAtOffset: offset!
+
+valueType
+	^Float!
 
 writeInto: anExternalStructure value: aFloat
 	"Private - Write a 32-bit IEEE single precision equivalent value to the <Float> argument,
@@ -31,8 +31,8 @@ writeInto: anExternalStructure value: aFloat
 
 	^anExternalStructure bytes floatAtOffset: offset put: aFloat! !
 !External.FLOATField categoriesFor: #accessorMessage!initializing!private! !
-!External.FLOATField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.FLOATField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.FLOATField categoriesFor: #valueType!automatic generation!constants!development!private! !
 !External.FLOATField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
 !External.FLOATField class methodsFor!

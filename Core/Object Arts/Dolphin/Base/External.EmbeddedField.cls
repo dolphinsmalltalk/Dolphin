@@ -40,29 +40,25 @@ fieldClass: aClass
 
 	fieldClass := aClass!
 
-fieldClassName
-	"Private - Answer the name of the class of object to be used to represent 
-	the embedded field described by the receiver."
-
-	^self fieldClass name!
-
 printOn: aStream
 	"Append a representation of the receiver to aStream."
 
 	aStream
 		basicPrint: self;
-		nextPut: $(; 
+		nextPut: $(;
 		print: self offset;
 		nextPutAll: ': ';
-		nextPutAll: self fieldClassName;
-		nextPut: $)
-! !
+		display: self valueType;
+		nextPut: $)!
+
+valueType
+	^self fieldClass! !
 !External.EmbeddedField categoriesFor: #alignment!constants!public! !
 !External.EmbeddedField categoriesFor: #byteSize!accessing!private! !
 !External.EmbeddedField categoriesFor: #fieldClass!accessing!private! !
 !External.EmbeddedField categoriesFor: #fieldClass:!accessing!private! !
-!External.EmbeddedField categoriesFor: #fieldClassName!accessing!private! !
 !External.EmbeddedField categoriesFor: #printOn:!printing!public! !
+!External.EmbeddedField categoriesFor: #valueType!accessing!private! !
 
 !External.EmbeddedField class methodsFor!
 

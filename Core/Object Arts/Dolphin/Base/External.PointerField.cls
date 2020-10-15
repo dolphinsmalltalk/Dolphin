@@ -17,9 +17,6 @@ byteSize
 
 	^VMConstants.IntPtrSize!
 
-fieldClassName
-	^self pointerClass name!
-
 pointerClass
 	"Private - Answer the class of Smalltalk object to be used when dereferencing
 	pointers of the receiver's type."
@@ -40,6 +37,9 @@ readFrom: anExternalStructure
 
 	^self pointerClass fromAddress: (anExternalStructure bytes intPtrAtOffset: offset)!
 
+valueType
+	^self pointerClass!
+
 writeInto: anExternalStructure value: anObject
 	"Private - Write the address of the externally addressable Smalltalk object, anObject,
 	into anExternal at the receiver's offset.
@@ -52,10 +52,10 @@ writeInto: anExternalStructure value: anObject
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
 !External.PointerField categoriesFor: #byteSize!accessing!private! !
-!External.PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.PointerField categoriesFor: #pointerClass!accessing!private! !
 !External.PointerField categoriesFor: #pointerClass:!accessing!private! !
 !External.PointerField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.PointerField categoriesFor: #valueType!automatic generation!constants!development!private! !
 !External.PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
 !External.PointerField class methodsFor!

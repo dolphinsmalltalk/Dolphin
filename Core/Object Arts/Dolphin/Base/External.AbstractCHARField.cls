@@ -14,9 +14,6 @@ External.AbstractCHARField comment: ''!
 basicWriteInto: anExternalStructure value: anInteger
 	^self subclassResponsibility!
 
-fieldClassName
-	^#Character!
-
 printMutatorValueOn: aWriteStream parameter: aString
 	"Private - Print a suitable expression onto the specified <puttableStream> which will
 	evaluate to the the value to be stored into this field in an instance of the structure when
@@ -27,12 +24,15 @@ printMutatorValueOn: aWriteStream parameter: aString
 		space;
 		display: #codePoint!
 
+valueType
+	^Character!
+
 writeInto: anExternalStructure value: aCharacter
 	"Private - Write the code point of the <Character>, aCharacter, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^self basicWriteInto: anExternalStructure value: aCharacter codePoint! !
 !External.AbstractCHARField categoriesFor: #basicWriteInto:value:!accessing!public! !
-!External.AbstractCHARField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.AbstractCHARField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!External.AbstractCHARField categoriesFor: #valueType!automatic generation!constants!development!private! !
 !External.AbstractCHARField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

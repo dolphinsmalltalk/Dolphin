@@ -37,21 +37,21 @@ package setMethodNames: #(
 	#(#{Core.ByteArray class} #fieldType)
 	#(#{Core.ByteArray class} #fieldType:indirections:)
 	#(#{Core.ByteArray class} #pointerFieldType)
-	#(#{Core.ByteArray class} #printStructField:indirections:on:)
+	#(#{Core.ByteArray class} #printStructField:indirections:on:in:)
 	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #elementType:)
 	#(#{Core.GUID class} #newToClipboard)
-	#(#{Core.GUID class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{Core.GUID class} #printStructField:indirections:on:)
+	#(#{Core.GUID class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{Core.GUID class} #printStructField:indirections:on:in:)
 	#(#{Core.String class} #arrayType)
 	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #elementType:)
-	#(#{Core.String class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{Core.String class} #printStructField:indirections:on:)
-	#(#{Core.Utf16String class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{Core.String class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{Core.String class} #printStructField:indirections:on:in:)
+	#(#{Core.Utf16String class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{External.Address class} #fieldType)
-	#(#{External.ArrayField class} #printVariable:type:indirections:on:)
-	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:)
+	#(#{External.ArrayField class} #printVariable:type:indirections:on:in:)
+	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:in:)
 	#(#{External.BOOL class} #fieldType)
 	#(#{External.BOOLEAN class} #fieldType)
 	#(#{External.BYTE class} #arrayType)
@@ -66,29 +66,29 @@ package setMethodNames: #(
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
 	#(#{External.ExternalArray class} #pointerFieldType)
-	#(#{External.ExternalArray class} #printStructField:indirections:on:)
-	#(#{External.Field class} #printArrayField:length:on:)
-	#(#{External.Field class} #printArrayField:type:on:)
-	#(#{External.Field class} #printConformantArrayLength:on:)
+	#(#{External.ExternalArray class} #printStructField:indirections:on:in:)
+	#(#{External.Field class} #printArrayField:length:on:in:)
+	#(#{External.Field class} #printArrayField:type:on:in:)
+	#(#{External.Field class} #printConformantArrayLength:on:in:)
 	#(#{External.Field class} #printFixedArrayLength:on:)
-	#(#{External.Field class} #printTypedField:on:)
-	#(#{External.Field class} #printVariable:type:indirections:on:)
+	#(#{External.Field class} #printTypedField:on:in:)
+	#(#{External.Field class} #printVariable:type:indirections:on:in:)
 	#(#{External.Field class} #warningMultiDimensionArray:)
 	#(#{External.FLOAT class} #arrayType)
 	#(#{External.FLOAT class} #fieldType)
 	#(#{External.FLOAT class} #printDefaultValue:on:)
 	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #fieldType)
-	#(#{External.Handle class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{External.Handle class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{External.INT_PTR class} #arrayType)
 	#(#{External.INT_PTR class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
-	#(#{External.IntegerBytes class} #printStructField:indirections:on:)
+	#(#{External.IntegerBytes class} #printStructField:indirections:on:in:)
 	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
-	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:)
-	#(#{External.PointerField class} #printVariable:type:indirections:on:)
+	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:in:)
+	#(#{External.PointerField class} #printVariable:type:indirections:on:in:)
 	#(#{External.QWORD class} #fieldType)
 	#(#{External.SBYTE class} #arrayType)
 	#(#{External.SBYTE class} #fieldType)
@@ -101,16 +101,16 @@ package setMethodNames: #(
 	#(#{External.Structure class} #fieldType:indirections:)
 	#(#{External.Structure class} #mustWrapOptionalArgument:)
 	#(#{External.Structure class} #printDefaultValue:on:)
-	#(#{External.Structure class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{External.Structure class} #printOptionalParameter:on:)
-	#(#{External.Structure class} #printStructField:indirections:on:)
+	#(#{External.Structure class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{External.Structure class} #printOptionalParameter:on:for:)
+	#(#{External.Structure class} #printStructField:indirections:on:in:)
 	#(#{External.Structure class} #printWrappedValue:on:)
 	#(#{External.Structure class} #unspecifiedParameterValue)
 	#(#{External.StructureArray class} #fieldType)
 	#(#{External.StructureArray class} #pointerFieldType)
-	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:)
-	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:)
-	#(#{External.StructureField class} #printVariable:type:indirections:on:)
+	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:in:)
+	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:in:)
+	#(#{External.StructureField class} #printVariable:type:indirections:on:in:)
 	#(#{External.SWORD class} #arrayType)
 	#(#{External.SWORD class} #fieldType)
 	#(#{External.UINT_PTR class} #arrayType)
@@ -156,8 +156,8 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #selectorForFunction:)
 	#(#{OS.COM.BSTR class} #newInstanceAspect:class:)
 	#(#{OS.COM.BSTR class} #printDefaultValue:on:)
-	#(#{OS.COM.BSTR class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{OS.COM.BSTR class} #printOptionalParameter:on:)
+	#(#{OS.COM.BSTR class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{OS.COM.BSTR class} #printOptionalParameter:on:for:)
 	#(#{OS.COM.BSTR class} #unspecifiedParameterValue)
 	#(#{OS.COM.CountedArray class} #fieldType)
 	#(#{OS.COM.CountedArray class} #pointerFieldType)
@@ -193,8 +193,8 @@ package setMethodNames: #(
 	#(#{OS.COM.IDispatch class} #example4)
 	#(#{OS.COM.IDispatch class} #icon)
 	#(#{OS.COM.Interface class} #icon)
-	#(#{OS.COM.Interface class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{OS.COM.Interface class} #printOptionalParameter:on:)
+	#(#{OS.COM.Interface class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{OS.COM.Interface class} #printOptionalParameter:on:for:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #areWrappersRequired)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #autoGenPropertiesCategories)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #buildMethodName:defaultOptionals:)
@@ -279,7 +279,7 @@ package setMethodNames: #(
 	#(#{OS.COM.SAFEARRAY} #printOn:)
 	#(#{OS.COM.SAFEARRAY class} #fieldType)
 	#(#{OS.COM.SAFEARRAY class} #pointerFieldType)
-	#(#{OS.COM.SAFEARRAY class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{OS.COM.SAFEARRAY class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{OS.COM.StructureTypeAnalyzer} #conformsToRequiredProtocols:)
 	#(#{OS.COM.StructureTypeAnalyzer} #determineNewBase:forExistingWrapper:)
 	#(#{OS.COM.StructureTypeAnalyzer} #generateClassSide:)
@@ -428,6 +428,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #isClassCheck:)
 	#(#{OS.COM.TypeInfoAnalyzer} #packageCheck:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printAutoGenMethodPostambleOn:)
+	#(#{OS.COM.TypeInfoAnalyzer} #printClass:on:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printHelpstringComment:on:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printIDLDecl:type:on:)
@@ -551,8 +552,8 @@ package setMethodNames: #(
 	#(#{OS.COM.VARIANT} #printIDLOn:)
 	#(#{OS.COM.VARIANT} #printOn:)
 	#(#{OS.COM.VARIANT class} #example1)
-	#(#{OS.COM.VARIANT class} #printMethodArgument:elemdesc:indirections:on:)
-	#(#{OS.COM.VARIANT class} #printOptionalParameter:on:)
+	#(#{OS.COM.VARIANT class} #printMethodArgument:elemdesc:indirections:on:for:)
+	#(#{OS.COM.VARIANT class} #printOptionalParameter:on:for:)
 	#(#{OS.COM.VARIANT_BOOL} #printOn:)
 	#(#{OS.COM.VARIANT_BOOL class} #newInstanceAspect:class:)
 	#(#{OS.HRESULT class} #fieldType)
@@ -659,20 +660,19 @@ fieldType: aVARDESC indirections: anInteger
 pointerFieldType
 	^External.ArrayPointerField!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the C-array of bytes variable described by the <VARDESC>, vardesc, with the specified
-	number of <integer> indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the for the C-array of bytes variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream! !
+		on: aPuttableStream
+		in: aNamespace! !
 !Core.ByteArray class categoriesFor: #fieldType!constants!private! !
 !Core.ByteArray class categoriesFor: #fieldType:indirections:!constants!private! !
 !Core.ByteArray class categoriesFor: #pointerFieldType!constants!private! !
-!Core.ByteArray class categoriesFor: #printStructField:indirections:on:!private! !
+!Core.ByteArray class categoriesFor: #printStructField:indirections:on:in:!private! !
 
 !Core.GUID class methodsFor!
 
@@ -696,52 +696,48 @@ newToClipboard
 	(answer asString copyFrom: 2 to: 37) copyToClipboard.
 	^answer!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isOut
+	anELEMDESC isOut
 		ifTrue: 
 			[| isIn |
 			"If an output argument, need an pointer buffer to receive the result"
-			(isIn := elemdesc isIn) ifTrue: [target nextPut: $(].
-			indirs > 1
+			(isIn := anELEMDESC isIn) ifTrue: [aPuttableStream nextPut: $(].
+			anInteger > 1
 				ifTrue: 
-					[target
-						print: External.REFGUID;
-						space.
+					[anAPIInfoAnalyzer printClass: External.REFGUID on: aPuttableStream.
 					isIn
 						ifTrue: 
-							[target
+							[aPuttableStream
+								space;
 								display: #fromAddress:;
 								space;
-								nextPutAll: argName]
+								nextPutAll: aString]
 						ifFalse: 
-							[target
+							[aPuttableStream
 								space;
 								display: #new]]
 				ifFalse: 
-					[target
-						print: GUID;
+					[anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+					aPuttableStream
 						space;
 						display: #new.
 					isIn
 						ifTrue: 
-							[target
+							[aPuttableStream
 								space;
 								display: #value:;
 								space;
-								nextPutAll: argName;
+								nextPutAll: aString;
 								nextPutAll: '; yourself']].
-			isIn ifTrue: [target nextPut: $)]]
+			isIn ifTrue: [aPuttableStream nextPut: $)]]
 		ifFalse: 
 			["Input only, just pass the GUID"
-			target nextPutAll: argName]!
+			aPuttableStream nextPutAll: aString]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Print a structure field definition message onto the <puttableStream> argument,
-	for the Guid variable described by the <VARDESC> argument, with the specified <integer>
-	number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the Guid variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	"Implementation Note: Copy <External.Structure>'s implementation."
 
@@ -749,12 +745,13 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream! !
+		on: aPuttableStream
+		in: aNamespace! !
 !Core.GUID class categoriesFor: #arrayType:!constants!private! !
 !Core.GUID class categoriesFor: #elementType:!constants!private! !
 !Core.GUID class categoriesFor: #newToClipboard!public! !
-!Core.GUID class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!Core.GUID class categoriesFor: #printStructField:indirections:on:!private! !
+!Core.GUID class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!Core.GUID class categoriesFor: #printStructField:indirections:on:in:!private! !
 
 !Core.String class methodsFor!
 
@@ -778,49 +775,42 @@ elementType: indirs
 		ifTrue: [self]
 		ifFalse: [self pointerType]!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	"Implementation Note: If the argument is an output (double indirection since one level
-	implied) we assume that the output will be allocated by the callee using CoTaskMemAlloc. 
-	This assumption may be false, in which case it may be necessary to manually write a 
-	high-level wrapper method (which calls the low-level wrapper which will have been emitted 
-	correctly regardless) following the documentation for the interface."
+	"Implementation Note: If the argument is an output (double indirection since one level implied) we assume that the output will be allocated by the callee using CoTaskMemAlloc. This assumption may be false, in which case it may be necessary to manually write a high-level wrapper method (which calls the low-level wrapper which will have been emitted correctly regardless) following the documentation for the interface."
 
-	elemdesc isOut
+	anELEMDESC isOut
 		ifFalse: 
 			["Input only, or singly indirected in-out argument - assume argument in correct form already"
-			target nextPutAll: argName]
+			aPuttableStream nextPutAll: aString]
 		ifTrue: 
 			[| isIn |
 			"Out or in,out"
-			isIn := elemdesc isIn.
-			indirs > 0
+			isIn := anELEMDESC isIn.
+			anInteger > 0
 				ifTrue: 
 					["As we already have one level of indirection, and form of out parameter must be
 					 through COM task memory, so we'll need to use a StructurePointer ot ease the
 					 task."
-					self assert: [indirs >= 1].
-					target
-						nextPut: $(;
-						print: External.StructurePointer.
+					self assert: [anInteger >= 1].
+					aPuttableStream nextPut: $(.
+					anAPIInfoAnalyzer printClass: External.StructurePointer on: aPuttableStream.
 					isIn
 						ifTrue: 
 							["If an in-out argument, need to call with value in the buffer"
-							target
+							aPuttableStream
 								nextPutAll: ' fromAddress: ';
-								nextPutAll: argName;
+								nextPutAll: aString;
 								nextPutAll: ' as';
 								print: self;
 								space;
 								nextPutAll: #copyToCOMTaskMemory]
 						ifFalse: 
 							["If an output only argument, need an pointer buffer to receive the result"
-							target
-								nextPutAll: ' newNull: ';
-								print: OS.COM.TaskMemory].
-					target
+							aPuttableStream nextPutAll: ' newNull: '.
+							anAPIInfoAnalyzer printClass: OS.COM.TaskMemory on: aPuttableStream].
+					aPuttableStream
 						nextPutAll: ' elementClass: ';
 						print: self;
 						nextPut: $)]
@@ -833,17 +823,15 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 							[#todo.	"Treat these as in-out parameters (at ELEMDESC level) so wrapper includes an argument"
 							Notification
 								signal: ('Warning: Parameter <1p> of <2s>() is () is [out]char*, which means it is a caller allocated buffer of unspecified size. The function will require a hand coded wrapper method.'
-										expandMacrosWith: argName
-										with: elemdesc owner fullName).
-							target
-								print: self;
+										expandMacrosWith: aString
+										with: anELEMDESC owner fullName).
+							anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+							aPuttableStream
 								space;
 								display: #new]]]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Print a structure field definition message onto the <puttableStream> argument,
-	for the string pointer variable described by the <VARDESC> argument, with the specified
-	<integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	aVARDESC tdesc arrayDesc
 		ifNil: 
@@ -852,38 +840,40 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 				printVariable: aVARDESC
 				type: (anInteger < 2 ifTrue: [self] ifFalse: [self pointerType])
 				indirections: anInteger
-				on: aPuttableStream]
+				on: aPuttableStream
+				in: aNamespace]
 		ifNotNil: 
 			[self assert: [anInteger == 0].
 			External.StringField
 				printArrayField: aVARDESC
 				type: self
-				on: aPuttableStream]! !
+				on: aPuttableStream
+				in: aNamespace]! !
 !Core.String class categoriesFor: #arrayType!constants!private! !
 !Core.String class categoriesFor: #arrayType:!constants!private! !
 !Core.String class categoriesFor: #elementType:!constants!private! !
-!Core.String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!Core.String class categoriesFor: #printStructField:indirections:on:!private! !
+!Core.String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!Core.String class categoriesFor: #printStructField:indirections:on:in:!private! !
 
 !Core.Utf16String class methodsFor!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isOut
+	anELEMDESC isOut
 		ifTrue: 
 			[super
-				printMethodArgument: argName
-				elemdesc: elemdesc
-				indirections: indirs
-				on: target]
+				printMethodArgument: aString
+				elemdesc: anELEMDESC
+				indirections: anInteger
+				on: aPuttableStream
+				for: anAPIInfoAnalyzer]
 		ifFalse: 
-			[target
-				nextPutAll: argName;
+			[aPuttableStream
+				nextPutAll: aString;
 				space;
 				nextPutAll: #asUtf16String]! !
-!Core.Utf16String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!Core.Utf16String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 
 !External.Address class methodsFor!
 
@@ -896,35 +886,33 @@ fieldType
 
 !External.ArrayField class methodsFor!
 
-printVariable: aVARDESC type: arrayClass indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the specified <puttableStream>
-	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
-	indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded arrays (not pointers to arrays)."
 			anInteger == 0].
 	self
 		printArrayField: aVARDESC
-		type: arrayClass
-		on: aPuttableStream! !
-!External.ArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
+		type: aClass
+		on: aPuttableStream
+		in: aNamespace! !
+!External.ArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.ArrayPointerField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
-	"Private - Print a structure field definition message onto the <puttableStream> argument,
-	for the C-array of structures variable described by the <VARDESC> argument, with the
-	specified <integer> number of indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
 			anInteger <= 1].
 	self
 		printArrayField: aVARDESC
-		type: extClass arrayType
-		on: aPuttableStream! !
-!External.ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+		type: aClass arrayType
+		on: aPuttableStream
+		in: aNamespace! !
+!External.ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.BOOL class methodsFor!
 
@@ -1030,46 +1018,58 @@ fieldType: aVARDESC indirections: anInteger
 pointerFieldType
 	^ArrayPointerField!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the structure variable described by the <VARDESC>, vardesc, with the specified <integer>
-	number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream! !
+		on: aPuttableStream
+		in: aNamespace! !
 !External.ExternalArray class categoriesFor: #arrayType!constants!private! !
 !External.ExternalArray class categoriesFor: #fieldType!constants!private! !
 !External.ExternalArray class categoriesFor: #fieldType:indirections:!private! !
 !External.ExternalArray class categoriesFor: #pointerFieldType!constants!private! !
-!External.ExternalArray class categoriesFor: #printStructField:indirections:on:!private! !
+!External.ExternalArray class categoriesFor: #printStructField:indirections:on:in:!private! !
 
 !External.Field class methodsFor!
 
-printArrayField: elementOrArrayClass length: sizeisObject on: aPuttableStream
+printArrayField: elementOrArrayClass length: sizeisObject on: aPuttableStream in: aNamespace
+	aPuttableStream nextPut: $(.
+	self
+		printClassReference: self
+		from: aNamespace
+		on: aPuttableStream.
+	aPuttableStream nextPutAll: ' type: '.
+	self
+		printClassReference: elementOrArrayClass
+		from: aNamespace
+		on: aPuttableStream.
 	aPuttableStream
-		nextPut: $(;
-		print: self;
-		nextPutAll: ' type: ';
-		print: elementOrArrayClass;
 		nextPutAll: ' length: ';
 		print: sizeisObject;
 		nextPut: $)!
 
-printArrayField: aVARDESC type: extClass on: aPuttableStream
+printArrayField: aVARDESC type: extClass on: aPuttableStream in: aNamespace
 	aPuttableStream
 		nextPut: $(;
 		print: self;
-		nextPutAll: ' type: ';
-		print: extClass.
+		nextPutAll: ' type: '.
+	self
+		printClassReference: extClass
+		from: aNamespace
+		on: aPuttableStream.
 	aVARDESC isConformant
-		ifTrue: [self printConformantArrayLength: aVARDESC on: aPuttableStream]
+		ifTrue: 
+			[self
+				printConformantArrayLength: aVARDESC
+				on: aPuttableStream
+				in: aNamespace]
 		ifFalse: [self printFixedArrayLength: aVARDESC on: aPuttableStream].
 	aPuttableStream nextPut: $)!
 
-printConformantArrayLength: aVARDESC on: aPuttableStream
+printConformantArrayLength: aVARDESC on: aPuttableStream in: aNamespace
 	| sizeIs |
 	sizeIs := Parser parseExpression: (aVARDESC customAttributes at: #size_is) value.
 	sizeIs isVariable
@@ -1087,9 +1087,12 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 						print: sizeIs value]
 				ifFalse: 
 					["Complex size_is expression, e.g. size_is(cbBytes >> 1 - 1)"
+					aPuttableStream nextPutAll: ' arrayLength: ('.
+					self
+						printClassReference: SizeIsArrayFieldLength
+						from: aNamespace
+						on: aPuttableStream.
 					aPuttableStream
-						nextPutAll: ' arrayLength: (';
-						print: SizeIsArrayFieldLength;
 						space;
 						display: #sizeIs:;
 						space;
@@ -1104,32 +1107,40 @@ printFixedArrayLength: aVARDESC on: aPuttableStream
 		nextPutAll: ' length: ';
 		print: arrayDesc elementCount!
 
-printTypedField: extClass on: aPuttableStream
+printTypedField: extClass on: aPuttableStream in: aNamespace
+	aPuttableStream nextPut: $(.
+	self
+		printClassReference: self
+		from: aNamespace
+		on: aPuttableStream.
 	aPuttableStream
-		nextPut: $(;
-		print: self;
 		space;
 		nextPutAll: #type:;
-		space;
-		print: extClass;
-		nextPut: $)!
+		space.
+	self
+		printClassReference: extClass
+		from: aNamespace
+		on: aPuttableStream.
+	aPuttableStream nextPut: $)!
 
-printVariable: vardesc type: extClass indirections: indirs on: target
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the variable described by the <VARDESC>, vardesc,  with the specified number 
-	of <integer> indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
-	target print: self; nextPutAll: ' new'!
+	self
+		printClassReference: self
+		from: aNamespace
+		on: aPuttableStream.
+	aPuttableStream nextPutAll: ' new'!
 
 warningMultiDimensionArray: aVARDESC
 	Warning
 		signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , aVARDESC printString! !
-!External.Field class categoriesFor: #printArrayField:length:on:!private! !
-!External.Field class categoriesFor: #printArrayField:type:on:!private! !
-!External.Field class categoriesFor: #printConformantArrayLength:on:!private! !
+!External.Field class categoriesFor: #printArrayField:length:on:in:!private! !
+!External.Field class categoriesFor: #printArrayField:type:on:in:!private! !
+!External.Field class categoriesFor: #printConformantArrayLength:on:in:!private! !
 !External.Field class categoriesFor: #printFixedArrayLength:on:!private! !
-!External.Field class categoriesFor: #printTypedField:on:!private! !
-!External.Field class categoriesFor: #printVariable:type:indirections:on:!private! !
+!External.Field class categoriesFor: #printTypedField:on:in:!private! !
+!External.Field class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 !External.Field class categoriesFor: #warningMultiDimensionArray:!private! !
 
 !External.FLOAT class methodsFor!
@@ -1167,28 +1178,27 @@ fieldType
 
 	^HANDLEField!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isIn 
+	anELEMDESC isIn
 		ifTrue: 
 			["If in or in-out then just the argument; no need to convert unless indirected"
-			target nextPutAll: argName.
-			indirs > 0 
+			aPuttableStream nextPutAll: aString.
+			anInteger > 0
 				ifTrue: 
-					[target
+					[aPuttableStream
 						space;
 						display: #asExternalHandle]]
 		ifFalse: 
 			["If an output only argument, need a new instance of the receiver to buffer the result"
-			target
-				print: self;
+			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
 				space;
 				display: #new]! !
 !External.Handle class categoriesFor: #arrayType:!constants!private! !
 !External.Handle class categoriesFor: #fieldType!constants!development!private! !
-!External.Handle class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!External.Handle class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 
 !External.INT_PTR class methodsFor!
 
@@ -1211,10 +1221,8 @@ fieldType
 fieldType
 	^self subclassResponsibility!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Print a structure field definition message onto the <puttableStream> argument,
-	for the integer variable described by the <VARDESC> argument, with the specified <integer>
-	number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	"Implementation Note: Copy <ExternalStructure>'s implementation."
 
@@ -1222,9 +1230,10 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream! !
+		on: aPuttableStream
+		in: aNamespace! !
 !External.IntegerBytes class categoriesFor: #fieldType!constants!development!private! !
-!External.IntegerBytes class categoriesFor: #printStructField:indirections:on:!private! !
+!External.IntegerBytes class categoriesFor: #printStructField:indirections:on:in:!private! !
 
 !External.POINT methodsFor!
 
@@ -1248,12 +1257,9 @@ pointerFieldType
 
 !External.PointerArrayField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aWriteStream
-	"Private - Print an <ExternalField> instance creation expression on the <puttableStream>
-	argument, aWriteStream, that will create a field descriptor appropriate for the structure
-	field described by the <VARDESC>, aVARDESC. In this case the field must be a pointer to a
-	fixed-length array, so we need to determine the length and element class by looking these up
-	from the typeinfo."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections.
+	In this case the field must be a pointer to a fixed-length array, so we need to determine the length and element class by looking these up from the typeinfo."
 
 	| arrayDesc elemIndirs elemclassdesc elemType |
 	self assert: 
@@ -1274,18 +1280,20 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aWriteStream
 				ifTrue: [elemType elementClass byteSize == 2 ifTrue: [Utf16String] ifFalse: [String]]
 				ifFalse: [elemType])
 		length: arrayDesc elementCount
-		on: aWriteStream! !
-!External.PointerArrayField class categoriesFor: #printVariable:type:indirections:on:!public! !
+		on: aPuttableStream
+		in: aNamespace! !
+!External.PointerArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.PointerField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the specified <puttableStream>
-	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
-	indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Generate a structure field definition message onto the specified <puttableStream> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
-	self printTypedField: extClass on: aPuttableStream! !
-!External.PointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+	self
+		printTypedField: aClass
+		on: aPuttableStream
+		in: aNamespace! !
+!External.PointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.QWORD class methodsFor!
 
@@ -1381,56 +1389,50 @@ mustWrapOptionalArgument: anELEMDESC
 printDefaultValue: aVARIANT on: aPuttableStream
 	aVARIANT value displayOn: aPuttableStream!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc.
-	Implementation Note: It does not appear to be possible to determine from the type library
-	whether double indirected output arguments are arrays or not (the size_is information, for
-	example, is lost). We therefore assume it is not an array. We do assume that the output will 
-	be allocated by the callee using CoTaskMemAlloc. Either of these assumptions may be false, in which case
-	it may be necessary to manually write a high-level wrapper method (which calls the low-level
-	wrapper which will have been emitted correctly regardless) following the documentation for
-	the interface."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isOut
+	"Implementation Note: It does not appear to be possible to determine from the type library whether double indirected output arguments are arrays or not (the size_is information, for example, is lost). We therefore assume it is not an array. We do assume that the output will be allocated by the callee using CoTaskMemAlloc. Either of these assumptions may be false, in which case it may be necessary to manually write a high-level wrapper method (which calls the low-level wrapper which will have been emitted correctly regardless) following the documentation for the interface."
+
+	anELEMDESC isOut
 		ifTrue: 
 			[| isIn |
 			"If an output argument, need an instance of the receiver to buffer the result"
-			isIn := elemdesc isIn.
-			target nextPut: $(.
-			indirs > 1
+			isIn := anELEMDESC isIn.
+			aPuttableStream nextPut: $(.
+			anInteger > 1
 				ifTrue: 
 					["Assume Callee allocates block in task memory"
-					Notification signal: 'Warning: Parameter ''' , argName , ''' of ' , elemdesc owner fullName
+					Notification signal: 'Warning: Parameter ''' , aString , ''' of ' , anELEMDESC owner fullName
 								, ' is doubly indirected output, wrapper will use COM Task Memory.'.
-					isIn ifTrue: [target nextPut: $(].
-					target
-						print: self;
+					isIn ifTrue: [aPuttableStream nextPut: $(].
+					anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+					aPuttableStream
 						space;
 						display: #newBufferClass:;
-						space;
-						print: COM.TaskMemory.
-					isIn ifTrue: [target nextPut: $)]]
+						space.
+					anAPIInfoAnalyzer printClass: COM.TaskMemory on: aPuttableStream.
+					isIn ifTrue: [aPuttableStream nextPut: $)]]
 				ifFalse: 
-					[target
-						print: self;
+					[anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+					aPuttableStream
 						space;
 						display: #new].
 			isIn
 				ifTrue: 
 					["If an in-out argument, need to call with value in the buffer"
-					target
+					aPuttableStream
 						space;
 						display: #value:;
 						space;
-						nextPutAll: argName;
+						nextPutAll: aString;
 						nextPutAll: '; yourself'].
-			target nextPut: $)]
+			aPuttableStream nextPut: $)]
 		ifFalse: 
 			["Input only argument - Default is to assume argument in correct form already"
-			target nextPutAll: argName]!
+			aPuttableStream nextPutAll: aString]!
 
-printOptionalParameter: anELEMDESC on: aPuttableStream 
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 	"Private - Print a default parameter value for  the optional method parameter described by the 
 	<ELEMDESC> onto the <puttableStream>. If the parameter is passed by reference, then
 	the value must be wrapped into a structure. 	Note, however, that if it is an output parameter, then 
@@ -1438,20 +1440,19 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 
 	| defaultValue |
 	defaultValue := anELEMDESC defaultValue ifNil: [self unspecifiedParameterValue].
-	(self mustWrapOptionalArgument: anELEMDESC) 
+	(self mustWrapOptionalArgument: anELEMDESC)
 		ifTrue: [self printWrappedValue: defaultValue on: aPuttableStream]
 		ifFalse: [self printDefaultValue: defaultValue on: aPuttableStream]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the <puttableStream>, target,
-	for the structure variable described by the <VARDESC>, vardesc, with the specified <integer>
-	number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the structure variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream!
+		on: aPuttableStream
+		in: aNamespace!
 
 printWrappedValue: aVARIANT on: aPuttableStream 
 	aPuttableStream
@@ -1479,9 +1480,9 @@ unspecifiedParameterValue
 !External.Structure class categoriesFor: #fieldType:indirections:!private! !
 !External.Structure class categoriesFor: #mustWrapOptionalArgument:!helpers!private! !
 !External.Structure class categoriesFor: #printDefaultValue:on:!helpers!private! !
-!External.Structure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!External.Structure class categoriesFor: #printOptionalParameter:on:!helpers!private! !
-!External.Structure class categoriesFor: #printStructField:indirections:on:!private! !
+!External.Structure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!External.Structure class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
+!External.Structure class categoriesFor: #printStructField:indirections:on:in:!private! !
 !External.Structure class categoriesFor: #printWrappedValue:on:!helpers!private! !
 !External.Structure class categoriesFor: #unspecifiedParameterValue!helpers!private! !
 
@@ -1497,10 +1498,8 @@ pointerFieldType
 
 !External.StructureArrayField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
-	"Private - Generate a structure field definition message onto the specified <puttableStream>
-	for the variable described by the <VARDESC>, aVARDESC, with the specified number of <integer>
-	indirections."
+printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	| arrayDesc elemclassdesc |
 	self assert: 
@@ -1515,34 +1514,35 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 	self
 		printArrayField: aVARDESC
 		type: elemclassdesc key
-		on: aPuttableStream! !
-!External.StructureArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
+		on: aPuttableStream
+		in: aNamespace! !
+!External.StructureArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.StructureArrayPointerField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream
-	"Private - Print a structure field definition message onto the <puttableStream> argument,
-	for the C-array of structures variable described by the <VARDESC> argument, with the
-	specified <integer> number of indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
 			anInteger == 1].
 	self
 		printArrayField: aVARDESC
-		type: extClass
-		on: aPuttableStream! !
-!External.StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+		type: aClass
+		on: aPuttableStream
+		in: aNamespace! !
+!External.StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.StructureField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anIntegre on: aPuttableStream
-	"Private - Generate a structure field definition message onto the specified <puttableStream>
-	for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the
-	specified number of <integer> indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+	"Private - Generate a structure field definition message onto the specified <puttableStream> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
-	self printTypedField: extClass on: aPuttableStream! !
-!External.StructureField class categoriesFor: #printVariable:type:indirections:on:!private! !
+	self
+		printTypedField: aClass
+		on: aPuttableStream
+		in: aNamespace! !
+!External.StructureField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
 
 !External.SWORD class methodsFor!
 
@@ -1854,14 +1854,12 @@ printMethodCommentPostamble: member on: aPuttableStream
 
 printMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 	self printCommentPrefixOn: aPuttableStream isPrivate: aBoolean.
-	((self functionHasReturnValue: aFUNCDESC) 
-		and: [aFUNCDESC hasMultipleOutputs not]) 
-			ifTrue: 
-				[aPuttableStream
-					nextPutAll: 'Answer the <';
-					print: aFUNCDESC classDesc key;
-					nextPutAll: '> result of invoking the ']
-			ifFalse: [aPuttableStream nextPutAll: 'Invoke the '].
+	((self functionHasReturnValue: aFUNCDESC) and: [aFUNCDESC hasMultipleOutputs not])
+		ifTrue: 
+			[aPuttableStream nextPutAll: 'Answer the <'.
+			self printClass: aFUNCDESC classDesc key on: aPuttableStream.
+			aPuttableStream nextPutAll: '> result of invoking the ']
+		ifFalse: [aPuttableStream nextPutAll: 'Invoke the '].
 	aPuttableStream
 		nextPutAll: aFUNCDESC name;
 		nextPutAll: '() ';
@@ -2001,34 +1999,33 @@ printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vartype == self vt].
 	aPuttableStream print: aVARIANT bstr!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anApiInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
 	"Implementation Note: No memory management problems here - BSTR takes care of that."
 
-	elemdesc isIn 
+	anELEMDESC isIn
 		ifTrue: 
 			["If in or in-out then just the argument "
 
 			"We don't convert it, unless BSTR* , because the VM can do it faster"
-			target nextPutAll: argName.
-			indirs > 0 
+			aPuttableStream nextPutAll: aString.
+			anInteger > 0
 				ifTrue: 
-					[target
+					[aPuttableStream
 						space;
 						display: #asBSTR]]
 		ifFalse: 
 			["If an output only argument, need a new instance of the receiver to buffer the result"
-			target
-				print: self;
+			anApiInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
 				space;
 				display: #new]!
 
-printOptionalParameter: anELEMDESC on: aPuttableStream 
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anObject
 	self printDefaultValue: (anELEMDESC defaultValue ifNil: [self unspecifiedParameterValue])
 		on: aPuttableStream.
-	(anELEMDESC indirections > 0 and: [anELEMDESC isOut not]) 
+	(anELEMDESC indirections > 0 and: [anELEMDESC isOut not])
 		ifTrue: 
 			[aPuttableStream
 				space;
@@ -2040,8 +2037,8 @@ unspecifiedParameterValue
 		yourself! !
 !OS.COM.BSTR class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 !OS.COM.BSTR class categoriesFor: #printDefaultValue:on:!helpers!private! !
-!OS.COM.BSTR class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!OS.COM.BSTR class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+!OS.COM.BSTR class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!OS.COM.BSTR class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
 !OS.COM.BSTR class categoriesFor: #unspecifiedParameterValue!helpers!private! !
 
 !OS.COM.CountedArray class methodsFor!
@@ -2516,32 +2513,31 @@ icon
 
 	^##(self) defaultIcon!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc.
-	Implementation Note: We never need to use COM Task Memory for interface pointers, as	
-	they are pointers and the memory is managed by ref. counting (i.e. the size is a known 32-bits)."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isIn 
+	"Implementation Note: We never need to use COM Task Memory for interface pointers, as they are pointers and the memory is managed by ref. counting (i.e. the size is a known 32-bits)."
+
+	anELEMDESC isIn
 		ifTrue: 
 			["If in or in-out then just pass the object as is (already a reference)"
-			target nextPutAll: argName]
+			aPuttableStream nextPutAll: aString]
 		ifFalse: 
 			["If an output only argument, need an instance of the receiver to buffer the result"
-			self assert: [indirs == 2	"[out] interface pointers must use double indirection"].
-			target
-				print: self;
+			self assert: [anInteger == 2	"[out] interface pointers must use double indirection"].
+			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
 				space;
 				display: #newPointer]!
 
-printOptionalParameter: anELEMDESC on: aPuttableStream 
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
+	anAPIInfoAnalyzer printClass: self on: aPuttableStream.
 	aPuttableStream
-		print: self;
 		space;
 		display: #newPointer! !
 !OS.COM.Interface class categoriesFor: #icon!constants!public! !
-!OS.COM.Interface class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!OS.COM.Interface class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+!OS.COM.Interface class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!OS.COM.Interface class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
 
 !OS.COM.InterfaceTypeAnalyzer methodsFor!
 
@@ -3121,9 +3117,13 @@ newAspectForMember: anAxMemberDesc ppb: anIPerPropertyBrowsing
 	aspect dispid: anAxMemberDesc memid.
 	^aspect!
 
-printArgument: anELEMDESC named: aString on: aPuttableStream 
-	anELEMDESC isOptional 
-		ifTrue: [anELEMDESC objectClass printOptionalParameter: anELEMDESC on: aPuttableStream]
+printArgument: anELEMDESC named: aString on: aPuttableStream
+	anELEMDESC isOptional
+		ifTrue: 
+			[anELEMDESC objectClass
+				printOptionalParameter: anELEMDESC
+				on: aPuttableStream
+				for: self]
 		ifFalse: [aPuttableStream nextPutAll: aString]!
 
 printDefaultMethod: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
@@ -3605,27 +3605,26 @@ fieldType
 pointerFieldType
 	^PointerField!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isIn 
+	anELEMDESC isIn
 		ifTrue: 
 			["If in or in-out then just pass a converted object"
 			#todo.	"Set the elementClass of the safe array correctly?"
-			target
-				nextPutAll: argName;
+			aPuttableStream
+				nextPutAll: aString;
 				space;
 				display: #asSAFEARRAY]
 		ifFalse: 
 			["If an output only argument, need an instance of the receiver to buffer the result"
-			target
-				print: self;
+			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
 				space;
 				display: #newPointer]! !
 !OS.COM.SAFEARRAY class categoriesFor: #fieldType!constants!private! !
 !OS.COM.SAFEARRAY class categoriesFor: #pointerFieldType!constants!private! !
-!OS.COM.SAFEARRAY class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 
 !OS.COM.StructureTypeAnalyzer methodsFor!
 
@@ -3868,7 +3867,8 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 		ifFalse: [classdesc key])
 			printStructField: aVARDESC
 			indirections: classdesc value
-			on: aPuttableStream.
+			on: aPuttableStream
+			in: self environment.
 	#(#(#isReadOnly #beReadOnly) #(#isNonBrowsable #beNonBrowsable) #(#isRestricted #beWriteOnly)) do: 
 			[:each |
 			(aVARDESC perform: each first)
@@ -4887,7 +4887,8 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				printMethodArgument: (anAXMethodName argumentNames at: nRet)
 				elemdesc: (params at: nRet)
 				indirections: answerDesc value
-				on: aPuttableStream.
+				on: aPuttableStream
+				for: self.
 			aPuttableStream
 				nextPut: $.;
 				crtab].
@@ -4930,7 +4931,8 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 								printMethodArgument: (argumentNames at: each)
 								elemdesc: arg
 								indirections: desc value
-								on: aPuttableStream]]].
+								on: aPuttableStream
+								for: self]]].
 	nRet ~= 0
 		ifTrue: 
 			[aPuttableStream
@@ -4969,7 +4971,8 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				printMethodArgument: (argumentNames at: each)
 				elemdesc: arg
 				indirections: desc value
-				on: aPuttableStream]
+				on: aPuttableStream
+				for: self]
 		separatedBy: [aPuttableStream nextPutAll: '. '].
 	aPuttableStream
 		nextPutAll: '}.';
@@ -4993,7 +4996,8 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 						printMethodArgument: (argumentNames at: i)
 						elemdesc: arg
 						indirections: desc value
-						on: aPuttableStream]
+						on: aPuttableStream
+						for: self]
 				ifFalse: 
 					["Output parameter"
 					aPuttableStream
@@ -5834,6 +5838,16 @@ printAutoGenMethodPostambleOn: target
 		cr;
 		crtab!
 
+printClass: aClass on: aPuttableStream
+	| myNamespace |
+	myNamespace := self environment.
+	(aClass environment == myNamespace or: 
+			[| var |
+			var := myNamespace fullBindingFor: aClass name.
+			var notNil and: [var value == aClass]])
+		ifTrue: [aPuttableStream nextPutAll: aClass name]
+		ifFalse: [aPuttableStream nextPutAll: aClass fullName]!
+
 printClassCommentPreambleOn: target
 	"Private - Print a comment preamble appropriate for the receiver onto the 
 	<puttableStream>, target."
@@ -6067,6 +6081,7 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isClassCheck:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #packageCheck:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printAutoGenMethodPostambleOn:!printing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #printClass:on:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printClassCommentPreambleOn:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printHelpstringComment:on:!printing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printIDLDecl:type:on:!printing-IDL!private! !
@@ -7444,29 +7459,28 @@ example1
 	var.	"Ctrl+D"
 	var value	"Ctrl+D"!
 
-printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
-	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
-	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
+printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
+	"Private - Generate an output argument instantiation statement onto the <puttableStream> argument for the function parameter described by the <ELEMDESC> argument."
 
-	elemdesc isIn
+	anELEMDESC isIn
 		ifTrue: 
 			["If in or in-out then just pass a converted object"
-			indirs > 1
+			anInteger > 1
 				ifTrue: 
-					[Notification signal: 'Warning: Parameter ''' , argName , ''' of ' , elemdesc owner fullName
+					[Notification signal: 'Warning: Parameter ''' , aString , ''' of ' , anELEMDESC owner fullName
 								, ' is input VARIANT**, may need hand coded wrapper.'].
-			target
-				nextPutAll: argName;
+			aPuttableStream
+				nextPutAll: aString;
 				space;
 				display: #asVariant]
 		ifFalse: 
 			["If an output only argument, need an instance of the receiver to buffer the result"
-			target
-				print: self;
+			anAPIInfoAnalyzer printClass: self on: aPuttableStream.
+			aPuttableStream
 				space;
-				display: (indirs > 1 ifTrue: [#newPointer] ifFalse: [#new])]!
+				display: (anInteger > 1 ifTrue: [#newPointer] ifFalse: [#new])]!
 
-printOptionalParameter: anELEMDESC on: aPuttableStream
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 	anELEMDESC hasDefaultValue
 		ifTrue: 
 			[| default |
@@ -7478,13 +7492,13 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 				space;
 				display: #asVariant]
 		ifFalse: 
-			[aPuttableStream
-				print: VARIANT;
+			[anAPIInfoAnalyzer printClass: VARIANT on: aPuttableStream.
+			aPuttableStream
 				space;
 				display: #unspecified]! !
 !OS.COM.VARIANT class categoriesFor: #example1!examples!public! !
-!OS.COM.VARIANT class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!OS.COM.VARIANT class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+!OS.COM.VARIANT class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
+!OS.COM.VARIANT class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
 
 !OS.COM.VARIANT_BOOL methodsFor!
 

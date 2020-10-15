@@ -11,14 +11,14 @@ External.HANDLEField comment: '<HANDLEField> is a <ScalarField> type to represen
 !External.HANDLEField categoriesForClass!External-Data-Types! !
 !External.HANDLEField methodsFor!
 
-fieldClassName
-	^External.Handle name!
-
 readFrom: anExternalStructure
 	"Private - Answer an <ExternalHandle> with the same value as the unsigned pointer-sized
 	field at the receiver's offset in the <ExternalStructure> argument."
 
-	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle! !
-!External.HANDLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle!
+
+valueType
+	^Handle! !
 !External.HANDLEField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.HANDLEField categoriesFor: #valueType!automatic generation!constants!development!private! !
 

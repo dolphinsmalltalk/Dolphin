@@ -24,19 +24,19 @@ byteSize
 
 	^self class byteSize!
 
-fieldClassName
-	^Integer name!
-
 printMutatorValueOn: aWriteStream parameter: aString
 	"Private - Print a suitable expression onto the specified <puttableStream> which will
 	evaluate to the the value to be stored into this field in an instance of the structure when
 	compiled into a mutator method where the value parameter is named by the <String> argument."
 
-	aWriteStream nextPutAll: aString! !
+	aWriteStream nextPutAll: aString!
+
+valueType
+	^Integer! !
 !External.ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
 !External.ScalarField categoriesFor: #byteSize!constants!private! !
-!External.ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!External.ScalarField categoriesFor: #valueType!automatic generation!constants!development!private! !
 
 !External.ScalarField class methodsFor!
 

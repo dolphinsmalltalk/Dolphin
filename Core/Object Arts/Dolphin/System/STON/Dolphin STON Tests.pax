@@ -27,6 +27,7 @@ package setMethodNames: #(
 	#(#{STON.Tests.STONTestUser class} #icon)
 	#(#{STON.Tests.TestDomainObject class} #icon)
 	#(#{STON.Tests.TestKnownObject class} #icon)
+	#(#{STON.Tests.WriteReadTest} #testBindingReferences)
 	#(#{STON.Tests.WriteReadTest} #testCompiledMethodsAndBlocks)
 	#(#{STON.Tests.WriteReadTest} #testExtendedCharacters)
 	#(#{STON.Tests.WriteReadTest} #testFramingCalculation)
@@ -198,6 +199,17 @@ icon
 
 !STON.Tests.WriteReadTest methodsFor!
 
+testBindingReferences
+	| objects rehydrated bindingIndex |
+	objects := {self class fullyQualifiedReference.
+				#{Core.Object}.
+				#{Core.Object}
+					binding;
+					yourself}.
+	rehydrated := self serializeAndMaterialize: objects.
+	bindingIndex := BindingReference indexOfInstVar: 'binding'.
+	self assert: (rehydrated allSatisfy: [:each | (each instVarAt: bindingIndex) isNil])!
+
 testCompiledMethodsAndBlocks
 	self serializeAndMaterialize: self class methodDictionary!
 
@@ -234,6 +246,7 @@ testSearchPolicy
 
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
+!STON.Tests.WriteReadTest categoriesFor: #testBindingReferences!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testFramingCalculation!public!tests! !

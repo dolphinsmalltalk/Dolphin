@@ -34,12 +34,6 @@ elementSize
 
 	^self fieldClass elementSize!
 
-fieldClassName
-	"Private - Answer the name of the class of object to be used to represent 
-	the embedded field described by the receiver."
-
-	^self arrayClass name!
-
 printElementSizeExpressionBodyOn: aWriteStream 
 	aWriteStream
 		display: self elementClass;
@@ -58,13 +52,16 @@ valueParameterName
 	"Private - Answer the name to use for the value parameter of a setter method generated for
 	the field described by the receiver."
 
-	^'aStructureArrayOf' , self elementClass name! !
+	^'aStructureArrayOf' , self elementClass name!
+
+valueType
+	^self arrayClass! !
 !External.StructureArrayField categoriesFor: #alignment!constants!public! !
 !External.StructureArrayField categoriesFor: #arrayClass!constants!private! !
 !External.StructureArrayField categoriesFor: #elementClass!accessing!private! !
 !External.StructureArrayField categoriesFor: #elementSize!accessing!private! !
-!External.StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
 !External.StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
 !External.StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
 !External.StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
+!External.StructureArrayField categoriesFor: #valueType!accessing!private! !
 

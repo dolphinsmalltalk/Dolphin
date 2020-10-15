@@ -16,9 +16,6 @@ accessorMessage
 
 	^#dwordAtOffset:put:!
 
-fieldClassName
-	^Boolean name!
-
 printMutatorValueOn: aWriteStream parameter: aString
 	"Private - Print a suitable expression onto the specified <puttableStream> which will
 	evaluate to the the value to be stored into this field in an instance of the structure when
@@ -36,6 +33,9 @@ readFrom: anExternalStructure
 
 	^(anExternalStructure bytes dwordAtOffset: offset) asBoolean!
 
+valueType
+	^Boolean!
+
 writeInto: anExternalStructure value: anObject
 	"Private - Write zero or non-zero to the BOOL field of the <ExternalStructure>,
 	anExternalStructure, at the receiver's offset, depending on the value of the <integer> or
@@ -43,8 +43,8 @@ writeInto: anExternalStructure value: anObject
 
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
 !External.BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !External.BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 !External.BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.BOOLField categoriesFor: #valueType!automatic generation!constants!development!private! !
 !External.BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
