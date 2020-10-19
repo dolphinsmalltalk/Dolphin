@@ -905,10 +905,8 @@ validateImports
 							[namespace := fullRef value.
 							namespace class isMeta ifFalse: [self error: 'Invalid import: ' , each printString]]
 						ifFalse: 
-							[Warning
-								signal: ('Imported namespace <1p> does not exist.<n>Proceed to create it as an empty SharedPool?'
-										expandMacrosWith: fullRef asString).
-							namespace := fullRef declare value: (SharedPool subclass: fullRef asSymbol)].
+							[Warning signal: ('Imported namespace <1p> does not exist.' expandMacrosWith: fullRef asString).
+							namespace := fullRef asSymbol].
 					namespace asQualifiedReference
 						isPrivate: private;
 						yourself]!
