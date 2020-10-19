@@ -2,7 +2,7 @@
 
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
-	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles Library'
+	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
 	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -10196,7 +10196,12 @@ setLexerLanguage: aSymbol
 				ifTrue: [self sciSetLexer: SCLEX_AUTOMATIC]
 				ifFalse: 
 					[self sciSetLexerLanguage: aSymbol.
-					self lexer ~~ aSymbol ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString]].
+					self lexer ~~ aSymbol ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString].
+					(LexerKeywords lookup: aSymbol)
+						ifNotNil: 
+							[:keywordSets |
+							keywordSets
+								keysAndValuesDo: [:i :each | each isNil ifFalse: [self sciSetKeyWords: i - 1 keyWords: each]]]].
 			"The fold properties must be set after the lexer has been set."
 			self isFoldingEnabled ifTrue: [self setFoldProperty: true]]!
 
@@ -12581,9 +12586,16 @@ initialize
 		value: (IdentityDictionary new
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
 				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
-				at: #text put: (self immutableCopyOfCollection: self txtTextStyles);
+				at: #null put: (self immutableCopyOfCollection: self txtTextStyles);
 				at: #smalltalk put: (self immutableCopyOfCollection: self smalltalkTextStyles);
 				at: #markdown put: (self immutableCopyOfCollection: self markdownTextStyles);
+				at: #json put: (self immutableCopyOfCollection: self jsonTextStyles);
+				shrink;
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'LexerKeywords'
+		value: (IdentityDictionary new
+				at: #json put: #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph');
 				shrink;
 				isImmutable: true;
 				yourself).
@@ -12600,6 +12612,74 @@ initialize
 		shrink;
 		isImmutable: true.
 	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings!
+
+jsonTextStyles
+	"Answer the default JSON text style settings to be used for new instances of the receiver.
+	These are the styles used as the defaults for json files in Scite."
+
+	| styles |
+	styles := self defaultTextStyles.
+	styles add: ((TextStyle name: #number)
+				id: 1;
+				forecolor: (Color fromHTMLSpec: '#007F7F');
+				yourself).
+	styles add: ((TextStyle name: #string)
+				id: 2;
+				forecolor: (Color fromHTMLSpec: '#7F0000');
+				yourself).
+	styles add: ((TextStyle name: #unclosedString)
+				id: 3;
+				forecolor: (Color fromHTMLSpec: '#FFFFFF');
+				backcolor: (Color fromHTMLSpec: '#FF0000');
+				isBackcolorExtendedToEndOfLine: true;
+				yourself).
+	styles add: ((TextStyle name: #propertyName)
+				id: 4;
+				forecolor: (Color fromHTMLSpec: '#880AE8');
+				yourself).
+	styles add: ((TextStyle name: #escapeSequence)
+				id: 5;
+				forecolor: (Color fromHTMLSpec: '#0B982E');
+				yourself).
+	styles add: ((TextStyle name: #lineComment)
+				id: 6;
+				forecolor: (Color fromHTMLSpec: '#05BBAE');
+				isItalic: true;
+				yourself).
+	styles add: ((TextStyle name: #blockComment)
+				id: 7;
+				forecolor: (Color fromHTMLSpec: '#05BBAE');
+				isItalic: true;
+				yourself).
+	styles add: ((TextStyle name: #operator)
+				id: 8;
+				forecolor: (Color fromHTMLSpec: '#18644A');
+				yourself).
+	styles add: ((TextStyle name: #urlOrIri)
+				id: 9;
+				forecolor: (Color fromHTMLSpec: '#0000FF');
+				yourself).
+	styles add: ((TextStyle name: #compactIri)
+				id: 10;
+				forecolor: (Color fromHTMLSpec: '#D137C1');
+				yourself).
+	styles add: ((TextStyle name: #keyword)
+				id: 11;
+				forecolor: (Color fromHTMLSpec: '#0BCEA7');
+				isBold: true;
+				yourself).
+	styles add: ((TextStyle name: #ldKeyword)
+				id: 12;
+				forecolor: Color black;
+				backcolor: (Color fromHTMLSpec: '#EC2806');
+				isBold: true;
+				yourself).
+	styles add: ((TextStyle name: #error)
+				id: 13;
+				forecolor: (Color fromHTMLSpec: '#FFFFFF');
+				backcolor: (Color fromHTMLSpec: '#FF0000');
+				yourself).
+	^styles!
 
 layoutCachingModes
 	^#(#none #caret #page #document)!
@@ -12759,10 +12839,8 @@ selectionModes
 	^#(#stream #rectangle #lines)!
 
 smalltalkTextStyles
-	"Answer the default text style settings to be used for new instances of the receiver in
-	conjunction with the built in (not Dolphin) smalltalk lexer. Note that these styles are
-	those from Scite, and are NOT those used in the Dolphin IDE, which uses container based
-	lexing."
+	"Answer the default text style settings to be used for new instances of the receiver in conjunction with the built in (not Dolphin) smalltalk lexer. 
+	Note that these styles are those from Scite, and are NOT those generally used in the Dolphin IDE, which uses container based lexing."
 
 	| answer keywordColor |
 	answer := self defaultTextStyles.
@@ -13138,6 +13216,7 @@ xmlTextStyles
 !UI.Scintilla.ScintillaView class categoriesFor: #immutableCopyOfCollection:!helpers!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #indentationGuideStyles!constants!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #initialize!development!initializing!private! !
+!UI.Scintilla.ScintillaView class categoriesFor: #jsonTextStyles!constants!public!style definition! !
 !UI.Scintilla.ScintillaView class categoriesFor: #layoutCachingModes!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #lineEndings!constants!public! !

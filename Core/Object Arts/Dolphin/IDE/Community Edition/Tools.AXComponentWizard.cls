@@ -62,7 +62,7 @@ browseIDL
 	lib printIDLOn: stm.
 	stm reset.
 	(Smalltalk developmentSystem workspaceShellClass show)
-		language: #text;
+		language: #null;
 		streamIn: stm!
 
 browseTypeClass
