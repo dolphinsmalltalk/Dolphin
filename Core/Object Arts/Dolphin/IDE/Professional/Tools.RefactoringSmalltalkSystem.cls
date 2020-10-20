@@ -937,11 +937,15 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 		cr;
 		cr.
 	'Would you like to remove the duplicates from <1p>?' expandMacrosWithArguments: {aClass} on: msg.
-	(MessageBox confirm: msg contents caption: 'Remove Duplicate Methods...')
-		ifTrue: 
-			[self handleRefactoringException: 
-					[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass)
-						execute]].
+	(MessageBox new
+		caption: 'Remove Duplicate Methods...';
+		isSuppressible: true;
+		uniqueId: #removeMethodsDuplicatedInSuperclassOf:;
+		confirm: msg contents)
+			ifTrue: 
+				[self handleRefactoringException: 
+						[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass)
+							execute]].
 	^true!
 
 removeMethodsIn: methodsEnvironment within: searchEnvironment
