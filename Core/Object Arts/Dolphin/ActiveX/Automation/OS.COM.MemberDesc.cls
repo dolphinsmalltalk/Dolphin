@@ -30,12 +30,10 @@ arguments
 
 	^self subclassResponsibility!
 
-argumentTypeNames
-	"Answer a <sequencedReadableCollection> containing the type names of
-	each of the receiver's parameters.
-	N.B. This may cause a large number of classes to be automatically generated!!"
+argumentTypes
+	"Answer a <sequencedReadableCollection> of <TYPEDESC> describing each of the receiver's parameters."
 
-	^self arguments collect: [:e | e typeName]!
+	^self arguments collect: [:e | e tdesc]!
 
 basicFree
 	customAttributes isNull
@@ -222,7 +220,7 @@ tdesc
 !OS.COM.MemberDesc categoriesFor: #=!comparing!public! !
 !OS.COM.MemberDesc categoriesFor: #argumentCount!accessing!public! !
 !OS.COM.MemberDesc categoriesFor: #arguments!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #argumentTypes!accessing!public! !
 !OS.COM.MemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
 !OS.COM.MemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !OS.COM.MemberDesc categoriesFor: #classDesc!accessing!private! !

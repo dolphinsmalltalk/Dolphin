@@ -299,12 +299,6 @@ oVft
 
 	^bytes swordAtOffset: _OffsetOf_oVft!
 
-retTypeName
-	"Answer a Dolphin external type name for the receiver's actual return type
-	(as opposed to the retval type name)."
-
-	^self tdescFunc typeName!
-
 retvalIndex
 	"Private - Answer the index of the retval argument of the receiver.
 	This is the index of the argument which is the real return value as
@@ -412,7 +406,6 @@ wFuncFlags
 !OS.COM.FUNCDESC categoriesFor: #optionalInputs!accessing!private! !
 !OS.COM.FUNCDESC categoriesFor: #outputIndices!accessing!private! !
 !OS.COM.FUNCDESC categoriesFor: #oVft!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #retTypeName!accessing!public! !
 !OS.COM.FUNCDESC categoriesFor: #retvalIndex!accessing!private! !
 !OS.COM.FUNCDESC categoriesFor: #selector!accessing!public! !
 !OS.COM.FUNCDESC categoriesFor: #tdescFunc!accessing!private! !

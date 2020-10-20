@@ -25,9 +25,7 @@ Class Variables:
 !OS.COM.InterfaceTypeAnalyzer methodsFor!
 
 classDesc
-	"Private - Answer an <Association> between a Dolphin class suitable for representing
-	the external type described by the receiver, and the number of indirections
-	to the type."
+	"Private - Answer an <Association> between a Dolphin class suitable for representing the external type described by the receiver, and the number of indirections to the type."
 
 	^self global -> 0!
 
@@ -37,8 +35,7 @@ clsid
 	^self guid!
 
 defaultInterface
-	"Answer a <TKindDispatchAnalyzer>/<TKindInterfaceAnalyzer> on the
-	receiver's default interface."
+	"Answer a <TKindDispatchAnalyzer>/<TKindInterfaceAnalyzer> on the receiver's default interface."
 
 	^self!
 
@@ -61,15 +58,12 @@ isDerived
 	^self attributes cImplTypes > 0!
 
 isDual
-	"Answer whether the receiver is describing a custom interface
-	which derives from IDispatch and which can be early or late
-	bound."
+	"Answer whether the receiver is describing a custom interface which derives from IDispatch and which can be early or late bound."
 
 	^self tlbInterface isDual!
 
 isExtensible
-	"Answer whether the receiver is describing a dynamically extensible interface
-	(i.e. one which may add new methods and properties at run-time)."
+	"Answer whether the receiver is describing a dynamically extensible interface (i.e. one which may add new methods and properties at run-time)."
 
 	^self attributes isExtensible!
 
@@ -103,19 +97,18 @@ protocol
 	^protocol!
 
 suggestedBinding
-	"Private - Answer the <VariableBinding> that is the binding for the receiver in its home namespace. If it doesn't have a binding that is definitely for it, then answer a proposed binding.
-	Implementation Note: Override because there is a global table of interface classes which we can use to look up any existing interface wrapper class."
+	"Private - Answer the <VariableBinding> that is the binding for the receiver in its home namespace. If it doesn't have a binding that is definitely for it, then answer a proposed binding."
+
+	"Implementation Note: Override because there is a global table of interface classes which we can use to look up any existing interface wrapper class."
 
 	^(Interface classForIID: self iid ifNone: [])
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:interfaceClass | interfaceClass binding]!
 
 superInterface
-	"Answer a <TKindInterfaceAnalyzer> describing the <COMInterface>
-	from which the receiver is derived, or nil if the receiver describes IUnknown."
+	"Answer a <TKindInterfaceAnalyzer> describing the <COMInterface> from which the receiver is derived, or nil if the receiver describes IUnknown."
 
-	^self isDerived
-		ifTrue: [self getImplTypeInfoAt: 1]! !
+	^self isDerived ifTrue: [self getImplTypeInfoAt: 1]! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #classDesc!accessing!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #clsid!accessing!public! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #defaultInterface!enquiries!public! !

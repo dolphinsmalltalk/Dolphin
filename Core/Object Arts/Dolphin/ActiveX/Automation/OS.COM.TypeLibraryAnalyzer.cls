@@ -469,7 +469,13 @@ suggestBindingForType: userType
 
 	"If its in the alias map, then we answer that regardless - caller should check suitable"
 	self aliasMap at: suggestedName asString
-		ifPresent: [:alias | ^alias bindingOrNil ifNil: [alias asSymbol -> nil]].
+		ifPresent: 
+			[:alias |
+			^alias bindingOrNil
+				ifNil: 
+					[(VariableBinding key: alias asSymbol value: nil)
+						environment: alias environment;
+						yourself]].
 
 	"Secondly try looking up by GUID as if there is a class with the same GUID then we know it is the right one."
 	typeGuid := userType guid.
@@ -480,7 +486,7 @@ suggestBindingForType: userType
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
 	^(VariableBinding key: suggestedName value: nil)
-		environment: nsBinding;
+		environment: (nsBinding ifNil: [Smalltalk] ifNotNil: [nsBinding value]);
 		yourself!
 
 typeAnalyzerAt: index

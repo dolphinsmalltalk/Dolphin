@@ -18,7 +18,9 @@ package setMethodNames: #(
 	#(#{OS.COM.DATE} #asTimeStamp)
 	#(#{OS.COM.DATE class} #max)
 	#(#{OS.COM.DATE class} #min)
+	#(#{OS.COM.FUNCDESC} #retTypeName)
 	#(#{OS.COM.LPBSTR} #asUnicodeString)
+	#(#{OS.COM.MemberDesc} #argumentTypeNames)
 ).
 
 package setVariableNames: #(
@@ -226,12 +228,26 @@ min
 !OS.COM.DATE class categoriesFor: #max!instance creation!public! !
 !OS.COM.DATE class categoriesFor: #min!instance creation!public! !
 
+!OS.COM.FUNCDESC methodsFor!
+
+retTypeName
+	Notification deprecated.
+	^self tdescFunc typeName! !
+!OS.COM.FUNCDESC categoriesFor: #retTypeName!accessing!public! !
+
 !OS.COM.LPBSTR methodsFor!
 
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 !OS.COM.LPBSTR categoriesFor: #asUnicodeString!converting!public! !
+
+!OS.COM.MemberDesc methodsFor!
+
+argumentTypeNames
+	Notification deprecated.
+	^self arguments collect: [:e | e typeName]! !
+!OS.COM.MemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
 
 "End of package definition"!
 

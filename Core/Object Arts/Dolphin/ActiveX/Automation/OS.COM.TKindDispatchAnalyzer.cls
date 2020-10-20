@@ -45,11 +45,9 @@ dualInterface
 	^self class onTypeInfo: pi!
 
 isAutomationCompatible
-	"Answer whether the receiver is describing an interface which is OLE Automation compatible.
-	By definition dispinterfaces are automation compatible."
+	"Answer whether the receiver is describing an interface which is OLE Automation compatible. By definition dispinterfaces are automation compatible."
 
-	^true
-!
+	^true!
 
 properties
 	"Answer <sequencedReadableCollection> of VARDESCs describing the 

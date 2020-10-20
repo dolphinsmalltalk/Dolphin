@@ -104,7 +104,7 @@ package setMethodNames: #(
 	#(#{External.Structure class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{External.Structure class} #printOptionalParameter:on:for:)
 	#(#{External.Structure class} #printStructField:indirections:on:in:)
-	#(#{External.Structure class} #printWrappedValue:on:)
+	#(#{External.Structure class} #printWrappedValue:on:for:)
 	#(#{External.Structure class} #unspecifiedParameterValue)
 	#(#{External.StructureArray class} #fieldType)
 	#(#{External.StructureArray class} #pointerFieldType)
@@ -125,6 +125,7 @@ package setMethodNames: #(
 	#(#{OS.COM.AbstractDispatchImplementation class} #icon)
 	#(#{OS.COM.AbstractELEMDESC} #printFieldsOn:)
 	#(#{OS.COM.APIInfoAnalyzer} #areWrappersRequired)
+	#(#{OS.COM.APIInfoAnalyzer} #basicPrintType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #compileMethodWrapper:)
 	#(#{OS.COM.APIInfoAnalyzer} #functionHasReturnValue:)
 	#(#{OS.COM.APIInfoAnalyzer} #generateMethod:wrapping:)
@@ -150,6 +151,7 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodComment:on:isPrivate:)
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodCommentHelp:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #printRawMethodCommentPreamble:on:isPrivate:)
+	#(#{OS.COM.APIInfoAnalyzer} #printType:on:)
 	#(#{OS.COM.APIInfoAnalyzer} #proputrefWrapperPrefix)
 	#(#{OS.COM.APIInfoAnalyzer} #rawMethodNameForFunction:)
 	#(#{OS.COM.APIInfoAnalyzer} #reinventBadSelector:member:)
@@ -256,7 +258,6 @@ package setMethodNames: #(
 	#(#{OS.COM.InterfaceTypeAnalyzer} #printValuePropCommentPostambleOn:)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #rawPropCategories)
 	#(#{OS.COM.InterfaceTypeAnalyzer} #reservedSelectors)
-	#(#{OS.COM.InterfaceTypeAnalyzer} #wrapMethodComment:)
 	#(#{OS.COM.InterfaceTypeAnalyzer class} #icon)
 	#(#{OS.COM.InterfaceTypeAnalyzer class} #optimizedSelectors)
 	#(#{OS.COM.InterfaceTypeAnalyzer class} #overridableIDispatchSelectors)
@@ -1433,15 +1434,16 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 			aPuttableStream nextPutAll: aString]!
 
 printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
-	"Private - Print a default parameter value for  the optional method parameter described by the 
-	<ELEMDESC> onto the <puttableStream>. If the parameter is passed by reference, then
-	the value must be wrapped into a structure. 	Note, however, that if it is an output parameter, then 
-	the wrapper method will already be wrapping the value, and so we don't want to do so again."
+	"Private - Print a default parameter value for  the optional method parameter described by the <ELEMDESC> onto the <puttableStream>. If the parameter is passed by reference, then  the value must be wrapped into a structure. 	Note, however, that if it is an output parameter, then the wrapper method will already be wrapping the value, and so we don't want to do so again."
 
 	| defaultValue |
 	defaultValue := anELEMDESC defaultValue ifNil: [self unspecifiedParameterValue].
 	(self mustWrapOptionalArgument: anELEMDESC)
-		ifTrue: [self printWrappedValue: defaultValue on: aPuttableStream]
+		ifTrue: 
+			[self
+				printWrappedValue: defaultValue
+				on: aPuttableStream
+				for: anAPIInfoAnalyzer]
 		ifFalse: [self printDefaultValue: defaultValue on: aPuttableStream]!
 
 printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
@@ -1454,10 +1456,10 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aName
 		on: aPuttableStream
 		in: aNamespace!
 
-printWrappedValue: aVARIANT on: aPuttableStream 
+printWrappedValue: aVARIANT on: aPuttableStream for: anAPIInfoAnalyzer
+	aPuttableStream nextPut: $(.
+	anAPIInfoAnalyzer printClass: self on: aPuttableStream.
 	aPuttableStream
-		nextPut: $(;
-		print: self;
 		space;
 		display: #new;
 		space;
@@ -1483,7 +1485,7 @@ unspecifiedParameterValue
 !External.Structure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 !External.Structure class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
 !External.Structure class categoriesFor: #printStructField:indirections:on:in:!private! !
-!External.Structure class categoriesFor: #printWrappedValue:on:!helpers!private! !
+!External.Structure class categoriesFor: #printWrappedValue:on:for:!helpers!private! !
 !External.Structure class categoriesFor: #unspecifiedParameterValue!helpers!private! !
 
 !External.StructureArray class methodsFor!
@@ -1662,6 +1664,17 @@ areWrappersRequired
 	"Private - Answer whether a high-level wrappers are required in general."
 	
 	^(self generationFlags noMask: RawMethodsOnly)!
+
+basicPrintType: aTYPEDESC on: aPuttableStream
+	| type classDesc typeName |
+	classDesc := aTYPEDESC classDesc.
+	type := classDesc key.
+	typeName := type typeName.
+	"Built in types start with lowercase letters - there ought to be a better way to determine this"
+	typeName first isLowerCase
+		ifTrue: [aPuttableStream nextPutAll: typeName]
+		ifFalse: [self printClass: type on: aPuttableStream].
+	^classDesc!
 
 compileMethodWrapper: aString
 	self compileMethod: aString categories: {self autoGenCategoryName. 'methods'. 'public'}!
@@ -1857,7 +1870,7 @@ printMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 	((self functionHasReturnValue: aFUNCDESC) and: [aFUNCDESC hasMultipleOutputs not])
 		ifTrue: 
 			[aPuttableStream nextPutAll: 'Answer the <'.
-			self printClass: aFUNCDESC classDesc key on: aPuttableStream.
+			self basicPrintType: aFUNCDESC tdesc on: aPuttableStream.
 			aPuttableStream nextPutAll: '> result of invoking the ']
 		ifFalse: [aPuttableStream nextPutAll: 'Invoke the '].
 	aPuttableStream
@@ -1867,9 +1880,7 @@ printMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 		nextPut: $.!
 
 printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
-	"Private - Print  an external function call for the member described by the <FUNCDESC> 
-	argument, whose selector and arguments are as described in the <AXMethodName> argument, 
-	onto the <puttableStream> argument."
+	"Private - Print an external function call for the member described by the <FUNCDESC> first argument, whose selector and arguments are as described in the <AXMethodName> 2nd argument,  onto the <puttableStream> 3rd argument."
 
 	^self subclassResponsibility!
 
@@ -1897,6 +1908,10 @@ printRawMethodCommentPreamble: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 		nextPutAll: self methodCommentDescription;
 		nextPut: $.!
 
+printType: aTYPEDESC on: aPuttableStream
+	self basicPrintType: aTYPEDESC on: aPuttableStream.
+	aTYPEDESC classDesc value timesRepeat: [aPuttableStream nextPut: $*]!
+
 proputrefWrapperPrefix
 	"Answer a <String> to be prepended to high-level wrapper methods generated to
 	wrap propputref functions. This is needed to distinguish these methods from normal
@@ -1916,15 +1931,10 @@ rawMethodNameForFunction: aFUNCDESC
 		argumentNames: name argumentNames
 		indices: name indices!
 
-reinventBadSelector: aSequencedReadableCollection member: anAXMemberDesc
-	"Private - If the selector constructed from the keywords in the <sequencedReadableCollection> 
-	argument would cause a clash with a reserved selector, then reinvent it. Answer a 
-	<sequencedReadableCollection> of keywords that combing into an unused selector.
-	Implementation Note: The algorithm is basically to append underscore
-	characters as a suffix to the primary keyword until a non-reserved selector is found. 
-	As ST methods typically don't tend to have underscores in them, this should 
-	be sucessful first time around. Note that this algorithm doesn't work for binary selectors, 
-	but that shouldn't be a problem as operators cannot be used as method/property names."
+reinventBadSelector: aSequencedReadableCollection member: aMemberDesc
+	"Private - If the selector constructed from the keywords in the <sequencedReadableCollection> argument would cause a clash with a reserved selector, then reinvent it. Answer a  <sequencedReadableCollection> of keywords that combing into an unused selector."
+
+	"Implementation Note: The algorithm is basically to append underscore characters as a suffix to the primary keyword until a non-reserved selector is found. As ST methods typically don't tend to have underscores in them, this should be sucessful first time around. Note that this algorithm doesn't work for binary selectors, but that shouldn't be a problem as operators cannot be used as method/property names."
 
 	| selector reserved primary |
 	self assert: [aSequencedReadableCollection notEmpty].
@@ -1946,7 +1956,7 @@ reinventBadSelector: aSequencedReadableCollection member: anAXMemberDesc
 			(tail notEmpty and: [tail first = $:]) ifTrue: [primary := primary , ':'].
 			Notification signal: ('Warning: Selector <1p> for <2s> is reserved, using <3p> instead'
 						expandMacrosWith: selector
-						with: anAXMemberDesc fullName
+						with: aMemberDesc fullName
 						with: unique).
 			{primary} , aSequencedReadableCollection allButFirst]
 		ifFalse: [aSequencedReadableCollection]!
@@ -1957,6 +1967,7 @@ selectorForFunction: aFUNCDESC
 
 	^(self rawMethodNameForFunction: aFUNCDESC) selector! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
+!OS.COM.APIInfoAnalyzer categoriesFor: #basicPrintType:on:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #compileMethodWrapper:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #functionHasReturnValue:!helpers!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #generateMethod:wrapping:!private! !
@@ -1982,6 +1993,7 @@ selectorForFunction: aFUNCDESC
 !OS.COM.APIInfoAnalyzer categoriesFor: #printRawMethodComment:on:isPrivate:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #printRawMethodCommentHelp:on:!printing!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #printRawMethodCommentPreamble:on:isPrivate:!private! !
+!OS.COM.APIInfoAnalyzer categoriesFor: #printType:on:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #proputrefWrapperPrefix!constants!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #rawMethodNameForFunction:!helpers!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #reinventBadSelector:member:!helpers!private! !
@@ -2022,14 +2034,16 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 				space;
 				display: #new]!
 
-printOptionalParameter: anELEMDESC on: aPuttableStream for: anObject
-	self printDefaultValue: (anELEMDESC defaultValue ifNil: [self unspecifiedParameterValue])
-		on: aPuttableStream.
-	(anELEMDESC indirections > 0 and: [anELEMDESC isOut not])
+printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
+	anELEMDESC hasDefaultValue
 		ifTrue: 
-			[aPuttableStream
-				space;
-				display: #asBSTR]!
+			[self printDefaultValue: anELEMDESC defaultValue on: aPuttableStream.
+			(anELEMDESC indirections > 0 and: [anELEMDESC isOut not])
+				ifTrue: 
+					[aPuttableStream
+						space;
+						display: #asBSTR]]
+		ifFalse: [aPuttableStream print: nil]!
 
 unspecifiedParameterValue
 	^VARIANT new
@@ -2531,10 +2545,7 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 				display: #newPointer]!
 
 printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
-	anAPIInfoAnalyzer printClass: self on: aPuttableStream.
-	aPuttableStream
-		space;
-		display: #newPointer! !
+	(anELEMDESC hasDefaultValue ifTrue: [anELEMDESC defaultValue value]) displayOn: aPuttableStream! !
 !OS.COM.Interface class categoriesFor: #icon!constants!public! !
 !OS.COM.Interface class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 !OS.COM.Interface class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
@@ -2543,20 +2554,17 @@ printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 
 areWrappersRequired
 	"Private - Answer whether a high-level wrappers are required in general.
-	We don't want to generate wrappers for source (event sink) interfaces,
-	as we implement these ourselves rather than call them."
+	We don't want to generate wrappers for source (event sink) interfaces, as we implement these ourselves rather than call them."
 
 	^self isSource not!
 
 autoGenPropertiesCategories
-	"Private - Answer the special method categories for auto-generated
-	property accessors in the receivers wrapper class."
+	"Private - Answer the special method categories for auto-generated property accessors in the receivers wrapper class."
 
 	^{self autoGenCategoryName. 'properties'. 'public'}!
 
 buildMethodName: aFUNCDESC defaultOptionals: aBoolean
-	"Private - Answer a high-level wrapper method name for the function 
-	described by the <FUNCDESC> argument."
+	"Private - Answer a high-level wrapper method name for the function described by the <FUNCDESC> argument."
 
 	| args methodName argc outOnly keywords argumentNames optional indices |
 	methodName := aFUNCDESC methodName.
@@ -2634,8 +2642,7 @@ buildPublishedAspects: aLookupTable forObject: anIUnknown
 	ppb ifNotNil: [ppb free]!
 
 classCategories
-	"Private - Answer a <Set> of the class categories to which any class generated for
-	the receiver should be added."
+	"Private - Answer a <Set> of the class categories to which any class generated for the receiver should be added."
 
 	^super classCategories
 		add: (self class classCategoryClass name: 'COM-Interfaces');
@@ -2653,9 +2660,7 @@ compileRawMethod: aString categories: anArray
 		ifTrue: [self protocol addSelector: result selector]!
 
 determineNewBase: baseClass forExistingWrapper: existingClass 
-	"Answer the superclass for the wrapper class generated by the receiver when 
-	modifying an existing wrapper class. By default the existing superclass is
-	maintained."
+	"Answer the superclass for the wrapper class generated by the receiver when modifying an existing wrapper class. By default the existing superclass is maintained."
 
 	| currentSuper |
 	currentSuper := existingClass superclass.
@@ -2677,8 +2682,12 @@ generateClassCLSIDForCoclass: aTKindCoclassAnalyzer
 		nextPutAll: aTKindCoclassAnalyzer name;
 		nextPutAll: ') for which the receiver is the default interface.'.
 	self printAutoGenMethodPostambleOn: target.
+	target nextPut: $^.
+	self printClass: CLSID on: target.
 	target
-		nextPutAll: '^CLSID fromString: ';
+		space;
+		display: #fromString:;
+		space;
 		print: aTKindCoclassAnalyzer guid asString;
 		cr.
 	self compileClassMethod: target contents categories: self classConstantsCategories!
@@ -2740,8 +2749,7 @@ generateCollectionTest
 		ifTrue: 
 			[text
 				crtab;
-				nextPutAll: (self
-							wrapMethodComment: 'The receiver is dynamically extensible, so we cannot determine this from the type library, and must perform a run-time check for the _NewEnum property.')].
+				nextPutAll: 'The receiver is dynamically extensible, so we cannot determine this from the type library, and must perform a run-time check for the _NewEnum property.'].
 	text
 		nextPut: $";
 		cr;
@@ -2768,7 +2776,7 @@ generateDefaultMethod: aFUNCDESC wrapping: anAXMethodName
 generateInitializeTypeLib
 	"Private - Generate the #initializeTypeLib method for a COM interface wrapper."
 
-	| target lib glob |
+	| target lib variableName |
 	(self canGenerateClassMessage: #initializeTypeLib) ifFalse: [^nil].
 	target := String writeStream.
 	lib := self typeLib.
@@ -2782,10 +2790,10 @@ generateInitializeTypeLib
 		nextPutAll: ' initializeTypeLib'.
 	self printAutoGenMethodPostambleOn: target.
 	"Avoid generating typelib global"
-	glob := self isTraceOnly ifTrue: [lib variableName] ifFalse: [lib binding key].
+	variableName := self isTraceOnly ifTrue: [lib variableName] ifFalse: [lib binding key].
 	target
 		nextPutAll: 'typeLib := ';
-		nextPutAll: glob.
+		nextPutAll: variableName.
 	self compileClassMethod: target contents categories: self classInitializerCategories!
 
 generateInstanceSide: aClass
@@ -2834,7 +2842,14 @@ generateNewForCoclass: aTKindCoclassAnalyzer
 		nextPutAll: ' COM object'.
 	self printAutoGenMethodPostambleOn: target.
 	target
-		nextPutAll: '^self onCLSID: (CLSID fromString: ';
+		nextPutAll: '^self ';
+		display: #onCLSID:;
+		nextPutAll: ' ('.
+	self printClass: CLSID on: target.
+	target
+		space;
+		display: #fromString:;
+		space;
 		print: aTKindCoclassAnalyzer clsid asString;
 		nextPut: $);
 		cr.
@@ -2846,11 +2861,7 @@ generatePropertyAccessors
 	^self subclassResponsibility!
 
 generatePropGet: aFUNCDESC wrapping: anAXMethodName defaultOptionals: aBoolean
-	"Private - Generate a high-level wrapper for the propget method described 
-	by the <FUNCDESC> argument. If the argument describes the DISPID_VALUE
-	propget, then generate a #value wrapper as well. Both wrappers return the correct 
-	type of  object as opposed to an HRESULT code. Answer an <AXMethodName>
-	describing the generated method (or the one that would have been generated)."
+	"Private - Generate a high-level wrapper for the propget method described by the <FUNCDESC> argument. If the argument describes the DISPID_VALUE propget, then generate a #value wrapper as well. Both wrappers return the correct type of object as opposed to an HRESULT code. Answer an <AXMethodName> describing the generated method (or the one that would have been generated)."
 
 	| methodName target |
 	self assert: [aFUNCDESC isPropGet].
@@ -2868,31 +2879,26 @@ generatePropGet: aFUNCDESC wrapping: anAXMethodName defaultOptionals: aBoolean
 		ifTrue: [self compilePropertyAccessor: target contents].
 	^methodName!
 
-generatePropGetWrappers: aFUNCDESC 
-	"Private - Generate method wrappers for the propget described by the <FUNCDESC>, method.
-	Implementation Note: At present we generate the raw get_XXX property access method, and a 
-	higher level wrapper which answers the property value directly. In the case of a dispinterface
-	these are one and the same."
+generatePropGetWrappers: aFUNCDESC
+	"Private - Generate method wrappers for the propget described by the <FUNCDESC>, method."
+
+	"Implementation Note: At present we generate the raw get_XXX property access method, and a higher level wrapper which answers the property value directly. In the case of a dispinterface these are one and the same."
 
 	| rawPropGetName wrapperName |
 	rawPropGetName := self generateRawPropGet: aFUNCDESC.
 	(rawPropGetName isNil or: [self areWrappersRequired not]) ifTrue: [^self].
-	wrapperName := self 
+	wrapperName := self
 				generatePropGet: aFUNCDESC
 				wrapping: rawPropGetName
 				defaultOptionals: false.
-	(wrapperName isNil or: [(self isDefaultedWrapperRequiredFor: aFUNCDESC) not]) 
-		ifTrue: [^self].
-	self 
+	(wrapperName isNil or: [(self isDefaultedWrapperRequiredFor: aFUNCDESC) not]) ifTrue: [^self].
+	self
 		generatePropGet: aFUNCDESC
 		wrapping: wrapperName
 		defaultOptionals: true!
 
 generatePropPut: aFUNCDESC wrapping: anAXMethodName
-	"Private - Generate a high-level wrapper for the prop-put function described 
-	by the <FUNCDESC> argument, invoking the raw prop-put method 
-	described by the <AXMethodName> argument. Answer an <AXMethodName>
-	describing the generated method (or the one that would have been generated)."
+	"Private - Generate a high-level wrapper for the prop-put function described by the <FUNCDESC> argument, invoking the raw prop-put method described by the <AXMethodName> argument. Answer an <AXMethodName> describing the generated method (or the one that would have been generated)."
 
 	| methodName |
 	self assert: [aFUNCDESC isPropSet].
@@ -2911,45 +2917,33 @@ generatePropPut: aFUNCDESC wrapping: anAXMethodName
 				ifTrue: [self compilePropertyAccessor: target contents]].
 	^methodName!
 
-generatePropPutRefWrappers: funcDesc
-	"Private - Generate a wrapper for the property put method
-	described by the <FUNCDESC>, funcDesc."
+generatePropPutRefWrappers: aFUNCDESC
+	"Private - Generate a wrapper for the property put method described by the <FUNCDESC> argument."
 
-	self generatePropPutWrappers: funcDesc!
+	self generatePropPutWrappers: aFUNCDESC!
 
 generatePropPutWrappers: aFUNCDESC
-	"Private - Generate method wrappers for the propput described by the <FUNCDESC>, method.
-	Implementation Note: At present we generate the raw put_XXX property access method, and a 
-	higher level wrapper which converts variant arguments, etc. In the case of a dispinterface
-	these are one and the same."
+	"Private - Generate method wrappers for the propput described by the <FUNCDESC>, method."
 
-	(self generateRawPropPut: aFUNCDESC) ifNotNil: 
-			[:rawMethodName | 
-			self areWrappersRequired 
-				ifTrue: [self generatePropPut: aFUNCDESC wrapping: rawMethodName]]!
+	"Implementation Note: At present we generate the raw put_XXX property access method, and a higher level wrapper which converts variant arguments, etc. In the case of a dispinterface these are one and the same."
+
+	(self generateRawPropPut: aFUNCDESC)
+		ifNotNil: [:rawMethodName | self areWrappersRequired ifTrue: [self generatePropPut: aFUNCDESC wrapping: rawMethodName]]!
 
 generateRawPropGet: aFUNCDESC
-	"Private - Generate a wrapper for the propget function described by the <FUNCDESC> argument..
-	Answer an <AXMethodName> containing selector keyword and argument information which can 
-	be used to construct a call to the method."
+	"Private - Generate a wrapper for the propget function described by the <FUNCDESC> argument. Answer an <AXMethodName> containing selector keyword and argument information which can be used to construct a call to the method."
 
 	^self rawMethodNameForFunction: aFUNCDESC!
 
 generateRawPropPut: aFUNCDESC
-	"Private - Generate a low-level wrapper for the property put function described by the 
-	<FUNCDESC> argument.. Answer an <AXMethodName> containing selector 
-	keyword and argument information which can be used to construct a call to the 
-	method."
+	"Private - Generate a low-level wrapper for the property put function described by the <FUNCDESC> argument.. Answer an <AXMethodName> containing selector keyword and argument information which can be used to construct a call to the method."
 
 	^self rawMethodNameForFunction: aFUNCDESC!
 
 generateRuntimeExtensibilityTest
-	"Private - Generate a runtime extensibility test if needed.
-	Implementation Note: IDispatch>>isExtensible is a simple '^true'
-	method, so we only generate this test method into the wrapper
-	if the interface is does _not_ add members at run-time, or if it
-	isn't a direct IDispatch descendent (we may need to override
-	a superclass method in the latter case)."
+	"Private - Generate a runtime extensibility test if needed."
+
+	"Implementation Note: IDispatch>>isExtensible is a simple '^true' method, so we only generate this test method into the wrapper if the interface is does _not_ add members at run-time, or if it isn't a direct IDispatch descendent (we may need to override a superclass method in the latter case)."
 
 	| isDynamic target |
 	isDynamic := self isExtensible.
@@ -2972,19 +2966,17 @@ generateTests
 		generateRuntimeExtensibilityTest;
 		generateCollectionTest!
 
-generateValueAccessor: anAXMemberDesc wrapping: anAXMethodName
-	"Private - Generate a #value accessor for the default property (DISPID_VALUE) 
-	described by the <AXMemberDesc> argument. The accessor for the property
-	is described by the <AXMethodName> argument."
+generateValueAccessor: aMemberDesc wrapping: anAXMethodName
+	"Private - Generate a #value accessor for the default property (DISPID_VALUE) described by the <MemberDesc> argument. The accessor for the property is described by the <AXMethodName> argument."
 
 	| target |
-	self assert: [anAXMemberDesc isValueProperty].
+	self assert: [aMemberDesc isValueProperty].
 	(self canGenerateMessage: #value) ifFalse: [^self].
 	target := String smalltalkWriteStream: 256.
 	target
 		display: #value;
 		cr.
-	self printPropGetCommentPreamble: anAXMemberDesc on: target.
+	self printPropGetCommentPreamble: aMemberDesc on: target.
 	self printValuePropCommentPostambleOn: target.
 	target
 		crtab;
@@ -2993,12 +2985,11 @@ generateValueAccessor: anAXMemberDesc wrapping: anAXMethodName
 		cr.
 	self compilePropertyAccessor: target contents!
 
-generateValueMutator: anAXMemberDesc wrapping: anAXMethodName
-	"Private - Generate a #value: mutator for the default property (DISPID_VALUE) 
-	described by the <FUNCDESC> argument."
+generateValueMutator: aMemberDesc wrapping: anAXMethodName
+	"Private - Generate a #value: mutator for the default property (DISPID_VALUE) described by the <MemberDesc> argument."
 
 	| target argumentName |
-	self assert: [anAXMemberDesc isValueProperty and: [anAXMethodName argumentCount = 1]].
+	self assert: [aMemberDesc isValueProperty and: [anAXMethodName argumentCount = 1]].
 	(self canGenerateMessage: #value:) ifFalse: [^self].
 	argumentName := anAXMethodName argumentNames first.
 	target := String smalltalkWriteStream: 256.
@@ -3009,10 +3000,10 @@ generateValueMutator: anAXMemberDesc wrapping: anAXMethodName
 		cr;
 		tab;
 		nextPutAll: '"Set the ''';
-		nextPutAll: anAXMemberDesc name;
-		nextPutAll: ''' property of the receiver to the <';
-		nextPutAll: anAXMemberDesc arguments last typeName;
-		nextPutAll: '> value of the argument.'.
+		nextPutAll: aMemberDesc name;
+		nextPutAll: ''' property of the receiver to the <'.
+	self printType: aMemberDesc arguments last tdesc on: target.
+	target nextPutAll: '> value of the argument.'.
 	self printValuePropCommentPostambleOn: target.
 	target
 		crtab;
@@ -3037,8 +3028,7 @@ generateValuePropertyWrappers
 						ifTrue: [self generateValueMutator: each wrapping: methodName]]]!
 
 generateVariableDefinition: aVariableBinding
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
+	"Private - Generate a minimal definition of the receiver so it has a referenceable presence."
 
 	| class |
 	class := super generateVariableDefinition: aVariableBinding.
@@ -3055,10 +3045,7 @@ idlAttributes
 	^attrs!
 
 inspectableProperties
-	"Answer <sequencedReadableCollection> of VARDESC/FUNCDESCs describing the inspectable
-	properties associated with the receiver. This list includes all properties which can be read
-	and which are not marked as non-browsable. We need to include the inspectableProperties of
-	all inherited interfaces."
+	"Answer <sequencedReadableCollection> of VARDESC/FUNCDESCs describing the inspectable properties associated with the receiver. This list includes all properties which can be read and which are not marked as non-browsable. We need to include the inspectableProperties of all inherited interfaces."
 
 	| answer |
 	answer := OrderedCollection new.
@@ -3068,27 +3055,21 @@ inspectableProperties
 	^answer!
 
 instanceMethodCategories: aBoolean
-	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean>
-	argument indicates whether the categories are for a public or private method."
+	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean> argument indicates whether the categories are for a public or private method."
 
 	^{self interfaceCategoryName.
 		self autoGenCategoryName.
 		aBoolean ifTrue: ['private'] ifFalse: ['public']}!
 
 interfaceCategoryName
-	"Private - Answer the name of the special method category for the interface described
-	the receiver."
+	"Private - Answer the name of the special method category for the interface described the receiver."
 
 	^'COM Interfaces-', self name!
 
 isAutomationCompatible
-	"Answer whether the receiver is describing an interface which 
-	is OLE Automation compatible. This doesn't mean that the class
-	must be derived from IDispatch, just that only uses automation
-	compatible types."
+	"Answer whether the receiver is describing an interface which is Automation compatible. This doesn't mean that the class must be derived from IDispatch, just that only uses automation compatible types."
 
-	^self attributes isAutomationCompatible
-!
+	^self attributes isAutomationCompatible!
 
 isInspectablePropGet: aFUNCDESC 
 	^aFUNCDESC isPropGet and: [aFUNCDESC isInspectable]!
@@ -3101,12 +3082,11 @@ isProtocolRequired
 methodCommentDescription
 	^'method of the COM object'!
 
-newAspectForMember: anAxMemberDesc ppb: anIPerPropertyBrowsing
+newAspectForMember: aMemberDesc ppb: anIPerPropertyBrowsing
 	| map name aspect vartype |
-	map := anIPerPropertyBrowsing
-				ifNotNil: [anIPerPropertyBrowsing stringsToValues: anAxMemberDesc memid].
-	name := anAxMemberDesc name.
-	vartype := anAxMemberDesc tdesc vartype.
+	map := anIPerPropertyBrowsing ifNotNil: [anIPerPropertyBrowsing stringsToValues: aMemberDesc memid].
+	name := aMemberDesc name.
+	vartype := aMemberDesc tdesc vartype.
 	aspect := (map isNil or: [map isEmpty])
 				ifTrue: [(VARIANT classForVT: vartype) newInstanceAspect: name class: Tools.DispatchAspect]
 				ifFalse: 
@@ -3114,7 +3094,7 @@ newAspectForMember: anAxMemberDesc ppb: anIPerPropertyBrowsing
 						choice: name
 						fromMap: map
 						nullValue: (vartype == VT_BSTR ifTrue: [''])].
-	aspect dispid: anAxMemberDesc memid.
+	aspect dispid: aMemberDesc memid.
 	^aspect!
 
 printArgument: anELEMDESC named: aString on: aPuttableStream
@@ -3170,12 +3150,9 @@ printDefaultMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				named: (argumentNames at: each)
 				on: aPuttableStream]!
 
-printMethod: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream 
-	"Private - Printe a high-level wrapper for the method described 
-	by the <FUNCDESC>, method onto the <puttableStream> argument.
-	This wrapper actually returns the correct type of object as opposed to 
-	an HRESULT code. Answer an <AXMethodName> naming the printed 
-	method, or nil if none should be generated."
+printMethod: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
+	"Private - Printe a high-level wrapper for the method described by the <FUNCDESC> first argument method onto the <puttableStream> final argument.
+	This wrapper actually returns the correct type of object as opposed to an HRESULT code. Answer an <AXMethodName> naming the printed  method, or nil if none should be generated."
 
 	| methodName |
 	self assert: [aFUNCDESC isMethod].
@@ -3184,101 +3161,88 @@ printMethod: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 	methodName printSignatureOn: aPuttableStream.
 	aPuttableStream cr.
 	self printMethodComment: aFUNCDESC on: aPuttableStream.
-	self 
+	self
 		printMethodBody: aFUNCDESC
 		wrapping: anAXMethodName
 		on: aPuttableStream.
 	^methodName!
 
 printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Print the main body of a  high-level method for the method described 
-	by the <FUNCDESC> argument, calling the low-level method described by the
-	<AXMethodName> argument, onto the <puttableStream> argument.
-	Answers nil to suppress generation of method, else self."
+	"Private - Print the main body of a  high-level method for the method described by the <FUNCDESC> first argument, calling the low-level method described by the <AXMethodName> second argument, onto the <puttableStream> third argument. Answers nil to suppress generation of method, else self."
 
 	^self subclassResponsibility!
 
-printMethodComment: aFUNCDESC on: target
-	self printMethodCommentPreamble: aFUNCDESC on: target isPrivate: false.
-	self printHelpstringComment: aFUNCDESC on: target.
-	self printAutoGenMethodPostambleOn: target!
-
-printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream 
-	"Private - Generate the main body of a high-level method for the function described 
-	by the <FUNCDESC> argument, invoking the low-level wrapper method named by the
-	<AXMethodName> argument, onto the <puttableStream> argument. The function
-	has multiple output parameters, which is thankfully an unusual occurrence."
-
-	^self subclassResponsibility!
-
-printPropertyCommentDecl: anAXMemberDesc on: aPuttableStream
-	^self subclassResponsibility!
-
-printPropertyCommentPostamble: anAXMemberDesc on: aPuttableStream
-	"Private - Print any available documentation for the property described by the 
-	<AXMemberDesc> argument, on the <puttableStream> argument. This will include
-	any documentation from the type library, perhaps an IDL representation of the 
-	property, and a standard comment associated with auto-generated methods
-	(which may be empty)."
-
-	self printHelpstringComment: anAXMemberDesc on: aPuttableStream.
-	self printPropertyCommentDecl: anAXMemberDesc on: aPuttableStream.
+printMethodComment: aFUNCDESC on: aPuttableStream
+	self
+		printMethodCommentPreamble: aFUNCDESC
+		on: aPuttableStream
+		isPrivate: false.
+	self printHelpstringComment: aFUNCDESC on: aPuttableStream.
 	self printAutoGenMethodPostambleOn: aPuttableStream!
 
-printPropGet: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream defaultOptionals: aBoolean 
-	"Private - Generate the main body of a  high-level accessor for the prop-get method described 
-	by the <FUNCDESC>, method. Answer nil if no method is to be emitted."
+printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
+	"Private - Generate the main body of a high-level method for the function described by the <FUNCDESC> first argument, invoking the low-level wrapper method named by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. The function has multiple output parameters, which is thankfully an unusual occurrence."
 
 	^self subclassResponsibility!
 
-printPropGetComment: anAXMemberDesc on: aPuttableStream
-	self
-		printPropGetCommentPreamble: anAXMemberDesc on: aPuttableStream;
-		printPropertyCommentPostamble: anAXMemberDesc on: aPuttableStream!
+printPropertyCommentDecl: aMemberDesc on: aPuttableStream
+	^self subclassResponsibility!
 
-printPropGetCommentPreamble: anAXMemberDesc on: aPuttableStream
+printPropertyCommentPostamble: aMemberDesc on: aPuttableStream
+	"Private - Print any available documentation for the property described by the <MemberDesc> argument, on the <puttableStream> argument. This will include any documentation from the type library, perhaps an IDL representation of the property, and a standard comment associated with auto-generated methods (which may be empty)."
+
+	self printHelpstringComment: aMemberDesc on: aPuttableStream.
+	self printPropertyCommentDecl: aMemberDesc on: aPuttableStream.
+	self printAutoGenMethodPostambleOn: aPuttableStream!
+
+printPropGet: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream defaultOptionals: aBoolean
+	"Private - Generate the main body of a  high-level accessor for the prop-get method described by the <FUNCDESC> first argument. Answer nil if no method is to be emitted."
+
+	^self subclassResponsibility!
+
+printPropGetComment: aMemberDesc on: aPuttableStream
+	self
+		printPropGetCommentPreamble: aMemberDesc on: aPuttableStream;
+		printPropertyCommentPostamble: aMemberDesc on: aPuttableStream!
+
+printPropGetCommentPreamble: aMemberDesc on: aPuttableStream
 	aPuttableStream
 		tab;
-		nextPutAll: '"Answer the <';
-		nextPutAll: anAXMemberDesc classDesc key typeName;
+		nextPutAll: '"Answer the <'.
+	self basicPrintType: aMemberDesc tdesc on: aPuttableStream.
+	aPuttableStream
 		nextPutAll: '> value of the ''';
-		nextPutAll: anAXMemberDesc name;
+		nextPutAll: aMemberDesc name;
 		nextPutAll: ''' property of the receiver.'!
 
 printPropPut: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Print the main body of a  high-level accessor for the prop-put method described 
-	by the <FUNCDESC> argument, calling the low-level method described by the <AXMethodName>
-	argument, onto the <puttableStream> argument. Answers nil to suppress generation of method, else self."
+	"Private - Print the main body of a  high-level accessor for the prop-put method described by the <FUNCDESC> first argument, calling the low-level method described by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. Answers nil to suppress generation of method, else self."
 
 	^self subclassResponsibility!
 
-printPropPutComment: anAXMemberDesc on: aPuttableStream
+printPropPutComment: aMemberDesc on: aPuttableStream
 	aPuttableStream
 		tab;
 		nextPutAll: '"Set the ''';
-		nextPutAll: anAXMemberDesc name;
-		nextPutAll: ''' property of the receiver to the <';
-		nextPutAll: anAXMemberDesc arguments last typeName;
-		nextPutAll: '> value of the argument.'.
-	self printPropertyCommentPostamble: anAXMemberDesc on: aPuttableStream!
+		nextPutAll: aMemberDesc name;
+		nextPutAll: ''' property of the receiver to the <'.
+	self printType: aMemberDesc arguments last tdesc on: aPuttableStream.
+	aPuttableStream nextPutAll: '> value of the argument.'.
+	self printPropertyCommentPostamble: aMemberDesc on: aPuttableStream!
 
-printRawPropGetBody: member name: anAXMethodName on: target
-	"Private - Print the code for accessing the (optionally subscripted) property 
-	described by the <FUNCDESC>/<VARDESC>, member, on the 
-	<puttableStream>, target."
+printRawPropGetBody: aMemberDesc name: anAXMethodName on: aPuttableStream
+	"Private - Print the code for accessing the (optionally subscripted) property described by the <MemberDesc> first argument onto the <puttableStream> last argument."
 
-	^self 
-		printRawMethodBody: member
+	^self
+		printRawMethodBody: aMemberDesc
 		name: anAXMethodName
-		on: target!
+		on: aPuttableStream!
 
-printRawPropPutBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
-	"Private - Print the code for accessing the (optionally subscripted) property 
-	described by the <AXMemberDesc> argument, onto the <puttableStream>
-	argument, using the most efficient property set method."
+printRawPropPutBody: aMemberDesc name: anAXMethodName on: aPuttableStream
+	"Private - Print the code for accessing the (optionally subscripted) property described by the <MemberDesc> first argument, onto the <puttableStream>last argument, using the most efficient property set method."
 
-	^self 
-		printRawMethodBody: anAXMemberDesc
+	^self
+		printRawMethodBody: aMemberDesc
 		name: anAXMethodName
 		on: aPuttableStream!
 
@@ -3289,28 +3253,18 @@ printValuePropCommentPostambleOn: aPuttableStream
 		cr!
 
 rawPropCategories
-	"Private - Answer the special method categories for auto-generated
-	property accessors in the receivers wrapper class."
+	"Private - Answer the special method categories for auto-generated property accessors in the receiver's wrapper class."
 
 	| privacy |
 	privacy := self areWrappersRequired ifTrue: ['private'] ifFalse: ['public'].
 	^{self autoGenCategoryName. self interfaceCategoryName. privacy}!
 
 reservedSelectors
-	"Answer a <Set> of all the selectors which are reserved, and should not be overridden by any
-	auto-generated method."
+	"Answer a <Set> of all the selectors which are reserved, and should not be overridden by any auto-generated method."
 
 	^self isDispatchable 
 		ifTrue: [self class reservedDispSelectors]
-		ifFalse: [self class reservedUnkSelectors]!
-
-wrapMethodComment: aString
-	| tab |
-	tab := Tools.SmalltalkWorkspace defaultTabWidth.
-	^Smalltalk developmentSystem
-		wrapText: aString
-		indent: tab
-		tabWidth: tab! !
+		ifFalse: [self class reservedUnkSelectors]! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #autoGenPropertiesCategories!constants!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #buildMethodName:defaultOptionals:!private! !
@@ -3372,7 +3326,6 @@ wrapMethodComment: aString
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #printValuePropCommentPostambleOn:!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #rawPropCategories!constants!private! !
 !OS.COM.InterfaceTypeAnalyzer categoriesFor: #reservedSelectors!accessing!public! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #wrapMethodComment:!private! !
 
 !OS.COM.InterfaceTypeAnalyzer class methodsFor!
 
@@ -4074,8 +4027,7 @@ buildPropertyMutatorName: aVARDESC
 		indices: #(1)!
 
 generatePropertyAccessor: aVARDESC
-	"Private - Generate a property accessor (get) method for property described by 
-	the <VARDESC> argument."
+	"Private - Generate a property accessor (get) method for property described by the <VARDESC> argument."
 
 	| target methodName |
 	methodName := self buildPropertyAccessorName: aVARDESC.
@@ -4093,13 +4045,13 @@ generatePropertyAccessor: aVARDESC
 generatePropertyAccessors
 	"Private - Generate get/set wrappers for the properties accessible via the dispinterface."
 
-	self properties do: [:p |
-		self generatePropertyAccessor: p.
-		p isReadOnly ifFalse: [self generatePropertyMutator: p]]!
+	self properties do: 
+			[:each |
+			self generatePropertyAccessor: each.
+			each isReadOnly ifFalse: [self generatePropertyMutator: each]]!
 
 generatePropertyMutator: aVARDESC
-	"Private - Generate a property mutator method for property described by 
-	the <VARDESC> argument."
+	"Private - Generate a property mutator method for property described by the <VARDESC> argument."
 
 	| target methodName |
 	methodName := self buildPropertyMutatorName: aVARDESC.
@@ -4116,25 +4068,20 @@ generatePropertyMutator: aVARDESC
 	self compilePropertyAccessor: target contents!
 
 generateRawMethod: aFUNCDESC categories: aCollection
-	"Private - Generate a wrapper for the method described by the <FUNCDESC> argument..
-	Answer an <AXMethodName> containing selector keyword and argument information 
-	which can be used to construct a call to the method."
+	"Private - Generate a wrapper for the method described by the <FUNCDESC> argument. Answer an <AXMethodName> containing selector keyword and argument information  which can be used to construct a call to the method."
 
 	^self rawMethodNameForFunction: aFUNCDESC!
 
 generateValuePropertyWrappers
-	(self properties detect: [:each | each isValueProperty] ifNone: []) 
+	(self properties detect: [:each | each isValueProperty] ifNone: [])
 		ifNil: [^super generateValuePropertyWrappers]
 		ifNotNil: 
-			[:valueProp | 
-			self generateValueAccessor: valueProp
-				wrapping: (self buildPropertyAccessorName: valueProp).
+			[:valueProp |
+			self generateValueAccessor: valueProp wrapping: (self buildPropertyAccessorName: valueProp).
 			self generateValueMutator: valueProp wrapping: (self buildPropertyMutatorName: valueProp)]!
 
 generateWrapper
-	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods 
-	of the dispinterface described the the receiver's ITypeInfo.
-	Answer the object generated (in this case a <COMInterface> subclass)."
+	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods of the dispinterface described the the receiver's ITypeInfo. Answer the object generated (in this case a <COMInterface> subclass)."
 
 	^self isSource
 		ifTrue: 
@@ -4145,26 +4092,24 @@ generateWrapper
 		ifFalse: [super generateWrapper]!
 
 idlKeyword
-	"Private - Answer a <readableString> IDL keyword for the type of object
-	described by the receiver, e.g. dispinterface."
+	"Private - Answer a <readableString> IDL keyword for the type of object described by the receiver, e.g. dispinterface."
 
 	^'dispinterface'!
 
-isInspectablePropGet: aFUNCDESC 
-	^(super isInspectablePropGet: aFUNCDESC) and: [aFUNCDESC argumentCount = 0]!
+isInspectablePropGet: aFUNCDESC
+	^(super isInspectablePropGet: aFUNCDESC) and: [aFUNCDESC argumentCount == 0]!
 
 isProtocolRequired
 	"Private - Answer whether a protocol should be generated for the COM interface."
 
 	^super isProtocolRequired and: [self isSource]!
 
-printClassCommentPreambleOn: target
-	"Private - Print a comment preamble appropriate for the receiver onto the 
-	<puttableStream>, target."
+printClassCommentPreambleOn: aPuttableStream
+	"Private - Print a comment preamble appropriate for the receiver onto the <puttableStream> argument."
 
 	| lib |
 	lib := self typeLib.
-	target
+	aPuttableStream
 		nextPut: $`;
 		nextPutAll: self variableName;
 		nextPutAll: '` is a wrapper class generated for the dispatch interface ';
@@ -4174,26 +4119,27 @@ printClassCommentPreambleOn: target
 		nextPutAll: ''' library. It contains methods to get and set the properties and invoke the methods exposed ';
 		nextPutAll: 'by that interface.'!
 
-printIDLBodyOn: target indent: tabs 
-	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
+printIDLBodyOn: aPuttableStream indent: anInteger
+	"Private - Print the IDL description for the receiver on the <puttableStream> argument."
 
-	super printIDLBodyOn: target indent: tabs.
-	target
+	super printIDLBodyOn: aPuttableStream indent: anInteger.
+	aPuttableStream
 		space;
 		nextPut: ${;
 		cr.
-	target
-		tab: tabs + 1;
+	aPuttableStream
+		tab: anInteger + 1;
 		nextPutAll: 'properties:';
 		cr.
-	self printIDLOfPropertiesOn: target indent: tabs.
-	target
-		tab: tabs + 1;
+	self printIDLOfPropertiesOn: aPuttableStream indent: anInteger.
+	aPuttableStream
+		tab: anInteger + 1;
 		nextPutAll: 'methods:';
 		cr.
-	self methods do: [:m | m printIDLOn: target indent: tabs + 2] separatedBy: [target cr].
-	target
-		crtab: tabs;
+	self methods do: [:m | m printIDLOn: aPuttableStream indent: anInteger + 2]
+		separatedBy: [aPuttableStream cr].
+	aPuttableStream
+		crtab: anInteger;
 		nextPutAll: '};';
 		cr!
 
@@ -4215,29 +4161,21 @@ printIDLOfPropertiesOn: aPuttableStream indent: anInteger
 	props notEmpty ifTrue: [aPuttableStream cr]!
 
 printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Print the main body of a  high-level method for the method described 
-	by the <FUNCDESC> argument, calling the low-level method described by the
-	<AXMethodName> argument, onto the <puttableStream> argument.
-	Answers nil to suppress generation of method, else self."
+	"Private - Print the main body of a  high-level method for the method described by the <FUNCDESC> first argument, calling the low-level method described by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. Answers nil to suppress generation of method, else self."
 
-	^self 
+	^self
 		printRawMethodBody: aFUNCDESC
 		name: anAXMethodName
 		on: aPuttableStream!
 
 printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Generate the main body of a high-level method for the function described 
-	by the <FUNCDESC> argument, invoking the low-level wrapper method named by the
-	<AXMethodName> argument, onto the <puttableStream> argument. The function
-	has multiple output parameters, which is thankfully an unusual occurrence."
+	"Private - Generate the main body of a high-level method for the function described by the <FUNCDESC> first argument, invoking the low-level wrapper method named by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. The function has multiple output parameters, which is thankfully an unusual occurrence."
 
 	| outputs params argumentNames hasRet |
 	outputs := aFUNCDESC outputIndices.
 	self assert: [outputs size > 1].
 
-	"User might well want to write own wrapper in this case, as can employ knowledge of component
-	 perhaps to ignore outputs if they aren't really needed, but are simply the result of a careless VB
-	 component developer passing all parameters by reference, or perhaps to wrap up as an object."
+	"User might well want to write own wrapper in this case, as can employ knowledge of component perhaps to ignore outputs if they aren't really needed, but are simply the result of a careless VB component developer passing all parameters by reference, or perhaps to wrap up as an object."
 	Notification
 		signal: 'Warning: ' , self name , '.' , aFUNCDESC name , ' has ' , outputs size displayString
 				, ' (possible) outputs that wrapper will return in an array.'.
@@ -4282,11 +4220,10 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 			retType := aFUNCDESC classDesc.
 
 			"If an interface pointer, then answer the correct type"
-			((retType key includesBehavior: IUnknown) and: [retType value = 1])
+			((retType key includesBehavior: IUnknown) and: [retType value == 1])
 				ifTrue: 
-					[aPuttableStream
-						print: retType key;
-						nextPutAll: ' attachInterface: ']].
+					[self printType: aFUNCDESC tdesc on: aPuttableStream.
+					aPuttableStream nextPutAll: ' attachInterface: ']].
 	aPuttableStream
 		nextPutAll: '(self invokeId: ';
 		display: aFUNCDESC memid;
@@ -4331,43 +4268,38 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 		nextPutAll: '(answer collect: [:each | each asObject])';
 		cr!
 
-printPropertyCommentDecl: anAXMemberDesc on: aPuttableStream
+printPropertyCommentDecl: aMemberDesc on: aPuttableStream
 	aPuttableStream crtab: 2.
-	self 
-		printIDLDecl: anAXMemberDesc name
-		type: anAXMemberDesc tdesc
+	self
+		printIDLDecl: aMemberDesc name
+		type: aMemberDesc tdesc
 		on: aPuttableStream!
 
-printPropGet: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream defaultOptionals: aBoolean 
-	"Private - Generate the main body of a  high-level accessor for the prop-get method described 
-	by the <FUNCDESC>, method. Answer nil if no method is to be emitted."
+printPropGet: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream defaultOptionals: aBoolean
+	"Private - Generate the main body of a  high-level accessor for the prop-get method described by the <FUNCDESC>, method. Answer nil if no method is to be emitted."
 
-	^aBoolean 
+	^aBoolean
 		ifTrue: 
-			[self 
+			[self
 				printDefaultMethodBody: aFUNCDESC
 				wrapping: anAXMethodName
 				on: aPuttableStream]
 		ifFalse: 
-			[self 
+			[self
 				printRawPropGetBody: aFUNCDESC
 				name: anAXMethodName
 				on: aPuttableStream]!
 
 printPropPut: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Print the main body of a  high-level accessor for the prop-put method described 
-	by the <FUNCDESC> argument, calling the low-level method described by the <AXMethodName>
-	argument, onto the <puttableStream> argument. Answers nil to suppress generation of method, else self."
+	"Private - Print the main body of a  high-level accessor for the prop-put method described by the <FUNCDESC> first argument, calling the low-level method described by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. Answers nil to suppress generation of method, else self."
 
-	^self 
+	^self
 		printRawPropPutBody: aFUNCDESC
 		name: anAXMethodName
 		on: aPuttableStream!
 
 printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
-	"Private - Print  an external function call for the member described by the <FUNCDESC> 
-	argument, whose selector and arguments are as described in the <AXMethodName> argument, 
-	onto the <puttableStream> argument."
+	"Private - Print  an external function call for the member described by the <FUNCDESC> first argument, whose selector and arguments are as described in the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument."
 
 	| argc id retType |
 	id := aFUNCDESC memid.
@@ -4391,14 +4323,14 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 				wrapping: anAXMethodName
 				on: aPuttableStream].
 	aFUNCDESC hasReturnValue ifTrue: [aPuttableStream nextPut: $^].
+	"For dispinterfaces we return the retval argument even from the raw method."
 	retType := aFUNCDESC classDesc.
 
 	"If an interface pointer, then answer the correct type"
-	((retType key includesBehavior: IUnknown) and: [retType value = 1])
+	((retType key includesBehavior: IUnknown) and: [retType value == 1])
 		ifTrue: 
-			[aPuttableStream
-				print: retType key;
-				nextPutAll: ' attachInterface: '].
+			[self printType: aFUNCDESC tdesc on: aPuttableStream.
+			aPuttableStream nextPutAll: ' attachInterface: '].
 	aPuttableStream
 		nextPutAll: '(self invokeId: ';
 		display: id.
@@ -4422,14 +4354,12 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		nextPut: $);
 		cr!
 
-printRawPropGetBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
-	"Private - Print the code for accessing the (optionally subscripted) property 
-	described by the <FUNCDESC>/<VARDESC>, member, on the 
-	<puttableStream>, target."
+printRawPropGetBody: aMemberDesc name: anAXMethodName on: aPuttableStream
+	"Private - Print the code for accessing the (optionally subscripted) property described by the <MemberDesc> first argument on the <puttableStream> last argument."
 
 	| id propType argc |
-	id := anAXMemberDesc memid.
-	argc := anAXMemberDesc argumentCount.
+	id := aMemberDesc memid.
+	argc := aMemberDesc argumentCount.
 	"Could be one of the reserved member ids, some of which have 
 		custom accessors in IDispatch"
 	argc == 0
@@ -4442,13 +4372,12 @@ printRawPropGetBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
 							[aPuttableStream nextPutAll: propget.
 							self]]].
 	aPuttableStream nextPut: $^.
-	propType := anAXMemberDesc classDesc.
+	propType := aMemberDesc classDesc.
 	"If an interface pointer, then answer the correct type"
-	((propType key includesBehavior: IUnknown) and: [propType value = 1])
+	((propType key includesBehavior: IUnknown) and: [propType value == 1])
 		ifTrue: 
-			[aPuttableStream
-				print: propType key;
-				nextPutAll: ' attachInterface: '].
+			[self printType: aMemberDesc tdesc on: aPuttableStream.
+			aPuttableStream nextPutAll: ' attachInterface: '].
 	aPuttableStream
 		nextPutAll: '(self getPropertyId: ';
 		display: id.
@@ -4487,26 +4416,22 @@ printRawPropGetBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
 		nextPut: $);
 		cr!
 
-printRawPropPutBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
-	"Private - Print the code for accessing the (optionally subscripted) property 
-	described by the <AXMemberDesc> argument, onto the <puttableStream>
-	argument, using the most efficient property set method."
+printRawPropPutBody: aMemberDesc name: anAXMethodName on: aPuttableStream
+	"Private - Print the code for accessing the (optionally subscripted) property described by the <MemberDesc> argument, onto the <puttableStream> argument, using the most efficient property set method."
 
 	| argc argumentNames |
 	aPuttableStream
 		nextPutAll: 'self setPropertyId: ';
-		display: anAXMemberDesc memid;
+		display: aMemberDesc memid;
 		space.
 	argumentNames := anAXMethodName argumentNames.
 	argc := argumentNames size.
-	argc > 1 
+	argc > 1
 		ifTrue: 
 			["Property is indexed"
-
-			argc > 2 
+			argc > 2
 				ifTrue: 
 					["Property has more than one index (very unusual)"
-
 					aPuttableStream
 						crtab: 2;
 						nextPutAll: 'withArguments: ((Array new: ';
@@ -4515,7 +4440,7 @@ printRawPropPutBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
 						crtab: 4.
 					1 to: argc - 1
 						do: 
-							[:i | 
+							[:i |
 							aPuttableStream
 								nextPutAll: 'basicAt: ';
 								display: i;
@@ -4685,9 +4610,7 @@ generateClassInitialize
 	"Private - Generate the class initialization methods for a custom interface wrapper."
 
 	super generateClassInitialize.
-	(self generationFlags anyMask: NoFunctionTable) 
-		ifFalse: [self generateDefineFunctions]
-!
+	(self generationFlags anyMask: NoFunctionTable) ifFalse: [self generateDefineFunctions]!
 
 generateDefineFunctions
 	"Private - Generate the function table definition class method for the receiver."
@@ -4715,21 +4638,21 @@ generateDefineFunctions
 				crtab: 2;
 				nextPutAll: 'defineFunction: #'.
 			(self rawMethodNameForFunction: each) printSelectorOn: target.
-			retType := each retTypeName.
-			retType == #hresult
+			retType := each tdescFunc.
+			retType vt == VT_HRESULT
 				ifFalse: 
 					[target
 						crtab: 3;
-						nextPutAll: 'returnType: ''';
-						nextPutAll: retType;
-						nextPut: $'].
-			params := each argumentTypeNames.
+						nextPutAll: 'returnType: '''.
+					self printType: retType on: target.
+					target nextPut: $'].
+			params := each argumentTypes.
 			params notEmpty
 				ifTrue: 
 					[target
 						crtab: 3;
 						nextPutAll: 'argumentTypes: '''.
-					params do: [:eachParm | target display: eachParm] separatedBy: [target space].
+					params do: [:eachParm | self printType: eachParm on: target] separatedBy: [target space].
 					target nextPut: $']]
 		separatedBy: [target nextPut: $;].
 	target cr.
@@ -4862,9 +4785,7 @@ printIDLBodyOn: target indent: tabs
 		cr!
 
 printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Print the main body of a  high-level method for the method described 
-	by the <FUNCDESC> argument, calling the low-level method described by the
-	<AXMethodName> argument, onto the <puttableStream> argument.
+	"Private - Print the main body of a  high-level method for the method described by the <FUNCDESC> first argument, calling the low-level method described by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument.
 	Answers nil to suppress generation of method, else self."
 
 	| params nRet |
@@ -4893,10 +4814,8 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				nextPut: $.;
 				crtab].
 
-	"If there is no output argument, then answer any return value from the raw method, even if
-	 it is just an HRESULT because sometimes HRESULT success codes contain useful information.
-	 However for compatibility with Smalltalk inst. var. setter methods we still want to return the
-	 receiver for property setters."
+	"If there is no output argument, then answer any return value from the raw method, even if it is just an HRESULT because sometimes HRESULT success codes contain useful information.
+	 However for compatibility with Smalltalk inst. var. setter methods we still want to return the receiver for property setters."
 	(nRet == 0 and: [aFUNCDESC hasAnswer]) ifTrue: [aPuttableStream nextPut: $^].
 
 	"Print call to raw method"
@@ -4941,18 +4860,14 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				nextPutAll: '^answer asObject']!
 
 printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
-	"Private - Generate the main body of a high-level method for the function described 
-	by the <FUNCDESC> argument, invoking the low-level wrapper method named by the
-	<AXMethodName> argument, onto the <puttableStream> argument. The function
-	has multiple output parameters, which is thankfully an unusual occurrence."
+	"Private - Generate the main body of a high-level method for the function described by the <FUNCDESC> first argument, invoking the low-level wrapper method named by the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument. 
+	The function has multiple output parameters, which is thankfully an unusual occurrence."
 
 	| outputs params argumentNames |
 	outputs := aFUNCDESC outputIndices.
 	self assert: [outputs size > 1].
 
-	"User might well want to write own wrapper in this case, as can employ knowledge of component
-	 perhaps to ignore outputs if they aren't really needed, but are simply the result of a careless VB
-	 component developer passing all parameters by reference, or perhaps to wrap up as an object."
+	"User might well want to write own wrapper in this case, as can employ knowledge of component perhaps to ignore outputs if they aren't really needed, but are simply the result of a careless VB component developer passing all parameters by reference, or perhaps to wrap up as an object."
 	Notification
 		signal: 'Warning: ' , self name , '.' , aFUNCDESC name , ' has ' , outputs size displayString
 				, ' (possible) outputs that wrapper will return in an array.'.
@@ -5040,7 +4955,7 @@ printPropPut: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 		wrapping: anAXMethodName
 		on: aPuttableStream!
 
-printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream 
+printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	"Private - Print  an external function call for the member described by the <FUNCDESC> 
 	argument, whose selector and arguments are as described in the <AXMethodName> argument, 
 	onto the <puttableStream> argument."
@@ -5048,15 +4963,16 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPutAll: '<virtual ';
 		nextPutAll: aFUNCDESC callingConvention;
-		space;
-		display: aFUNCDESC tdescFunc typeName;
+		space.
+	"Here we want to print the actual return type of the function, as opposed to any retval argument."
+	self printType: aFUNCDESC tdescFunc on: aPuttableStream.
+	aPuttableStream
 		space;
 		display: aFUNCDESC vfnIndex.
-	aFUNCDESC argumentTypeNames do: 
-			[:e | 
-			aPuttableStream
-				space;
-				display: e].
+	aFUNCDESC argumentTypes do: 
+			[:each |
+			aPuttableStream space.
+			self printType: each on: aPuttableStream].
 	aPuttableStream
 		nextPut: $>;
 		crtab;
@@ -5074,15 +4990,16 @@ printRawPropGetComment: aFUNCDESC on: aPuttableStream isPrivate: aBoolean
 	self printFunctionPrototypeComment: aFUNCDESC on: aPuttableStream.
 	self printMethodCommentPostamble: aFUNCDESC on: aPuttableStream!
 
-printRawPropPutComment: aFUNCDESC name: anAXMethodName on: aPuttableStream isPrivate: aBoolean 
+printRawPropPutComment: aFUNCDESC name: anAXMethodName on: aPuttableStream isPrivate: aBoolean
 	self printCommentPrefixOn: aPuttableStream isPrivate: aBoolean.
 	aPuttableStream
 		nextPutAll: 'Set the value of the ''';
 		nextPutAll: aFUNCDESC name;
 		nextPutAll: ''' property of the object wrapped by the ';
 		crtab;
-		nextPutAll: ' receiver to the <';
-		nextPutAll: aFUNCDESC arguments last typeName;
+		nextPutAll: ' receiver to the <'.
+	self printType: aFUNCDESC arguments last tdesc on: aPuttableStream.
+	aPuttableStream
 		nextPutAll: '> argument, ';
 		nextPutAll: anAXMethodName argumentNames last;
 		nextPut: $.;
@@ -5283,30 +5200,28 @@ printMethod: aFUNCDESC wrapping: anAXMethodName on: puttableStream
 
 	^nil!
 
-printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream 
-	"Private - Print  an external function call for the member described by the <FUNCDESC> 
-	argument, whose selector and arguments are as described in the <AXMethodName> argument, 
-	onto the <puttableStream> argument."
+printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
+	"Private - Print  an external function call for the member described by the <FUNCDESC> first argument, whose selector and arguments are as described in the <AXMethodName> 2nd argument, onto the <puttableStream> 3rd argument."
 
 	| entry procName |
 	aPuttableStream
 		nextPut: $<;
 		nextPutAll: aFUNCDESC callingConvention;
-		space;
-		display: aFUNCDESC tdescFunc typeName;
 		space.
+	"Here we want to print the actual return type of the function, as opposed to any retval argument."
+	self printType: aFUNCDESC tdescFunc on: aPuttableStream.
+	aPuttableStream space.
 	entry := self getDllEntry: aFUNCDESC.
 	procName := (entry at: 2) trimBlanks.
-	procName isEmpty 
+	procName isEmpty
 		ifTrue: 
 			[procName := entry at: 3.
 			procName = 0 ifTrue: [procName := aFUNCDESC name]].
 	aPuttableStream display: procName.
-	aFUNCDESC argumentTypeNames do: 
-			[:e | 
-			aPuttableStream
-				space;
-				display: e].
+	aFUNCDESC argumentTypes do: 
+			[:each |
+			aPuttableStream space.
+			self printType: each on: aPuttableStream].
 	aPuttableStream
 		nextPut: $>;
 		crtab;
@@ -5326,7 +5241,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 !OS.COM.TKindModuleAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #printMethod:wrapping:on:!private! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #printRawMethodBody:name:on:!public! !
+!OS.COM.TKindModuleAnalyzer categoriesFor: #printRawMethodBody:name:on:!private! !
 
 !OS.COM.TKindModuleAnalyzer class methodsFor!
 
@@ -5620,11 +5535,11 @@ generateClassComment
 			[(flags allMask: Verbose)
 				ifTrue: [Notification signal: 'Existing class comment for ' , self name , ' not overwritten']]!
 
-generateClassDefinition: aString imports: anArray
+generateClassDefinition: aVariableBinding imports: anArray
 	"Private - Generate and answer a new class to wrap the type described by the receiver."
 
 	^self typeLib
-		generateClass: aString
+		generateClass: aVariableBinding
 		for: self
 		imports: anArray!
 
@@ -5854,13 +5769,12 @@ printClassCommentPreambleOn: target
 
 	^self subclassResponsibility!
 
-printHelpstringComment: anAXMemberDesc on: aPuttableStream 
-	"Private - Print the helpstring, if any, for the <VARDESC>|<FUNCDESC> type library member,
-	member, onto the <puttableStream>, target. Answer whether any helpstring was printed."
+printHelpstringComment: aMemberDesc on: aPuttableStream
+	"Private - Print the helpstring, if any, for the <MemberDesc> first argument, onto the <puttableStream> last argument. Answer whether any helpstring was printed."
 
 	| help |
-	help := anAXMemberDesc helpstring.
-	^help isEmpty 
+	help := aMemberDesc helpstring.
+	^help isEmpty
 		ifTrue: [false]
 		ifFalse: 
 			[aPuttableStream
@@ -6518,12 +6432,8 @@ icon
 
 !OS.COM.TypeLibraryAnalyzer methodsFor!
 
-addAlias: aSymbol forType: anAXTypeInfoAnalyzer
-	"Add the <readableString> name, alias, as the alias to be used for the
-	<AXTypeInfoAnalyzer>, type, when generating classes and methods to
-	wrap that type."
-
-	self aliasMap at: anAXTypeInfoAnalyzer name asString put: aSymbol asSymbol!
+addAlias: aBindingReference forType: anAXTypeInfoAnalyzer
+	self aliasMap at: anAXTypeInfoAnalyzer name asString put: aBindingReference!
 
 addClassToPackage: class
 	"Private - Add the specified class to the package associated with the receiver."
@@ -6645,23 +6555,22 @@ generatableModules
 		reject: [:each | (each dllNameIfNone: []) isNil and: [each constants isEmpty]]!
 
 generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
-	| baseClass imports var actualName classVars instVars class existingClass classGuid classInstVars classConstants |
+	| baseClass imports var classVars instVars class existingClass classGuid classInstVars classConstants |
 	imports := anArray.
 	classVars := instVars := classInstVars := ''.
 	classConstants := #().
 	baseClass := aTypeInfoObject baseClass.
 	var := aTypeInfoObject resolveExistingClass: aVariableBinding.
-	actualName := var key.
 	"Record any name that differs from suggestion in the alias map so that we can regenerate later to the same name
 	 without prompting the user again, and without having to keep the cached analyzers hanging around."
-	actualName ~= aVariableBinding key ifTrue: [self addAlias: actualName forType: aTypeInfoObject].
+	var ~~ aVariableBinding ifTrue: [self addAlias: var fullyQualifiedReference forType: aTypeInfoObject].
 	existingClass := var value.
 	existingClass isNil
 		ifTrue: 
 			[(aTypeInfoObject generationFlags allMask: Verbose)
 				ifTrue: 
 					[Notification
-						signal: 'Generating new class ' , actualName , ' to wrap ' , aTypeInfoObject fullyQualifiedName]]
+						signal: 'Generating new class ' , var fullName , ' to wrap ' , aTypeInfoObject fullyQualifiedName]]
 		ifFalse: 
 			["It may we be that this is already perfect"
 			((imports difference: existingClass imports) isEmpty and: [existingClass superclass == baseClass])
@@ -6681,7 +6590,7 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 			classInstVars := existingClass class instanceVariableString.
 			classConstants := existingClass classConstants].
 	class := baseClass
-				subclass: actualName asSymbol
+				subclass: var fullName
 				instanceVariableNames: instVars
 				classVariableNames: classVars
 				imports: imports

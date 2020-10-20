@@ -1002,7 +1002,7 @@ asSAFEARRAY
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
-	^self name! !
+	^self fullName! !
 !Core.ByteArray class categoriesFor: #typeName!constants!private! !
 
 !Core.Character methodsFor!
@@ -1067,7 +1067,7 @@ asVariant
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
-	^self name! !
+	^self fullName! !
 !Core.GUID class categoriesFor: #typeName!constants!private! !
 
 !Core.Integer methodsFor!
@@ -1842,7 +1842,7 @@ typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	Generally speaking this is the class name."
 
-	^self name!
+	^self fullName!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 

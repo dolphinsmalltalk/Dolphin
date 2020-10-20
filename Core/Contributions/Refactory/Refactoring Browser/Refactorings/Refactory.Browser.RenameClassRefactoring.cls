@@ -53,6 +53,7 @@ renameReferences
 	newRef := newName asQualifiedReference.
 	oldRef := className asQualifiedReference.
 	#namespaceToDo.	"Also rename BindingReferences that are referring to the class being renamed."
+	#namespaceToDo. "External types appearing in ExternalMethod function descriptors also need to be renamed - seems like a pre-existing issue with not finding these."
 	self renameImportsOf: oldRef to: newRef.
 	"First the full names as both symbols and variables"
 	replacer := (ParseTreeRewriter replaceLiteral: className asSymbol with: newName asSymbol)
