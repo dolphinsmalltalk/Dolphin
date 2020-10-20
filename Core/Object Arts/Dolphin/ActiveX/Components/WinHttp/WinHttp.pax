@@ -4,7 +4,23 @@ package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk WinHttp Package. 
 
-This package implements a Smalltalk mapping for the Microsoft WinHttp component, which provides a simple and high performance HTTP client.'.
+This package implements a Smalltalk mapping for the Microsoft WinHttp component, which provides a simple and high performance HTTP client.
+
+Example:
+
+```
+	req := WinHttp.IWinHttpRequest new.
+	req get: ''https://microsoft.com''.
+	"Status"
+	req statusText.
+	"Header text"
+	headers := req getAllResponseHeaders.
+	"The raw bytes of the body"
+	bytes := req responseBody.
+	"The body as text"
+	text := req responseText.
+```
+'.
 
 
 package setClassNames: #(
@@ -23,10 +39,10 @@ package setBinaryVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\Deprecated\ActiveX (Deprecated)'
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
+	'..\..\Structured Storage\OLE Structured Storage'
 ).
 
 package!

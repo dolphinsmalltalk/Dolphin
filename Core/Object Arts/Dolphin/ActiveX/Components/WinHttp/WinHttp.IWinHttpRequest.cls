@@ -7,15 +7,15 @@ OS.COM.IDispatch subclass: #'WinHttp.IWinHttpRequest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WinHttp.IWinHttpRequest guid: (OS.COM.IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!
-WinHttp.IWinHttpRequest comment: '<IWinHttpRequest> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
+WinHttp.IWinHttpRequest comment: '`IWinHttpRequest` is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IWinHttpRequest Interface"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
 	uuid(016fe2ec-b2c8-45f8-b23b-39e53a75396b), 
@@ -96,6 +96,7 @@ interface IWinHttpRequest : IDispatch
 	HRESULT __stdcall SetAutoLogonPolicy(
 		[in]WinHttpRequestAutoLogonPolicy AutoLogonPolicy);
 };
+```
 '!
 !WinHttp.IWinHttpRequest categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
 !WinHttp.IWinHttpRequest methodsFor!
@@ -104,8 +105,7 @@ abort
 	"Invoke the Abort() method of the COM object.
 	Helpstring: Abort an asynchronous operation in progress"
 
-	^self Abort
-!
+	^self Abort!
 
 Abort
 	"Private - Invoke the Abort() method of the COM object.
@@ -115,6 +115,14 @@ Abort
 
 	<virtual stdcall: hresult 23>
 	^self invalidCall: _failureCode!
+
+get: aString
+	"Perform an HTTP Get on the specified URL, answering the HTTP status code, e.g. 200 for OK"
+
+	^self
+		open: 'get' url: aString;
+		send;
+		status!
 
 get_Option: option value: value
 	"Private - Get the value of the 'Option' property of the receiver.
@@ -172,14 +180,13 @@ get_StatusText: status
 	^self invalidCall: _failureCode!
 
 getAllResponseHeaders
-	"Answer the <BSTR> result of invoking the GetAllResponseHeaders() method of the COM object.
+	"Answer the <bstr> result of invoking the GetAllResponseHeaders() method of the COM object.
 	Helpstring: Get all HTTP response headers"
 
 	| answer |
 	answer := BSTR new.
 	self GetAllResponseHeaders: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetAllResponseHeaders: headers
 	"Private - Invoke the GetAllResponseHeaders() method of the COM object.
@@ -192,16 +199,13 @@ GetAllResponseHeaders: headers
 	^self invalidCall: _failureCode!
 
 getResponseHeader: header
-	"Answer the <BSTR> result of invoking the GetResponseHeader() method of the COM object.
+	"Answer the <bstr> result of invoking the GetResponseHeader() method of the COM object.
 	Helpstring: Get HTTP response header"
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetResponseHeader: header
-		value: answer.
-	^answer asObject
-!
+	self GetResponseHeader: header value: answer.
+	^answer asObject!
 
 GetResponseHeader: header value: value
 	"Private - Invoke the GetResponseHeader() method of the COM object.
@@ -229,9 +233,9 @@ open: method url: url
 	Default values are passed for all optional parameters."
 
 	^self
-		 open: method
-		 url: url
-		 async: VARIANT unspecified!
+		open: method
+		url: url
+		async: VARIANT unspecified!
 
 open: method url: url async: async
 	"Invoke the Open() method of the COM object.
@@ -240,8 +244,7 @@ open: method url: url async: async
 	^self
 		Open: method
 		url: url
-		async: async asVariant
-!
+		async: async asVariant!
 
 Open: method url: url async: async
 	"Private - Invoke the Open() method of the COM object.
@@ -260,19 +263,13 @@ option: option
 
 	| answer |
 	answer := VARIANT new.
-	self
-		get_Option: option
-		value: answer.
-	^answer asObject
-!
+	self get_Option: option value: answer.
+	^answer asObject!
 
 option: option value: value
 	"Set the 'Option' property of the receiver to the <variant> value of the argument."
 
-	self
-		put_Option: option
-		value: value asVariant
-!
+	self put_Option: option value: value asVariant!
 
 put_Option: option value: value
 	"Private - Set the value of the 'Option' property of the object wrapped by the 
@@ -286,24 +283,23 @@ put_Option: option value: value
 	^self invalidCall: _failureCode!
 
 responseBody
-	"Answer the <variant> value of the 'ResponseBody' property of the receiver.
-	Helpstring: Get response body as a safearray of UI1"
+	"Answer the raw bytes of the response body."
 
-	| answer |
-	answer := VARIANT new.
-	self get_ResponseBody: answer.
-	^answer asObject
-!
+	"Implementation Note: Don't use the get_ResponseBody call as returning and then extracting a ByteArray via the medium of a SAFEARRAY of BYTE is inefficient. Rather just read all the bytes from the response stream."
+
+	^self responseStream contents!
 
 responseStream
-	"Answer the <variant> value of the 'ResponseStream' property of the receiver.
-	Helpstring: Get response body as a stream"
+	"Answer an <IStream> on the response body for accessing the raw bytes."
 
-	| answer |
-	answer := VARIANT new.
-	self get_ResponseStream: answer.
-	^answer asObject
-!
+	| variant stream unk |
+	variant := VARIANT newBuffer.
+	self get_ResponseStream: variant.
+	unk := variant value.
+	variant free.
+	stream := unk queryInterface: IStream.
+	unk free.
+	^stream!
 
 responseText
 	"Answer the <bstr> value of the 'ResponseText' property of the receiver.
@@ -312,8 +308,7 @@ responseText
 	| answer |
 	answer := BSTR new.
 	self get_ResponseText: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 send
 	"Invoke the Send() method of the COM object.
@@ -325,8 +320,7 @@ send: body
 	"Invoke the Send() method of the COM object.
 	Helpstring: Send HTTP request"
 
-	^self Send: body asVariant
-!
+	^self Send: body asVariant!
 
 Send: body
 	"Private - Invoke the Send() method of the COM object.
@@ -342,8 +336,7 @@ setAutoLogonPolicy: autoLogonPolicy
 	"Invoke the SetAutoLogonPolicy() method of the COM object.
 	Helpstring: Specify if credentials should be sent automatically"
 
-	^self SetAutoLogonPolicy: autoLogonPolicy
-!
+	^self SetAutoLogonPolicy: autoLogonPolicy!
 
 SetAutoLogonPolicy: autoLogonPolicy
 	"Private - Invoke the SetAutoLogonPolicy() method of the COM object.
@@ -359,8 +352,7 @@ setClientCertificate: clientCertificate
 	"Invoke the SetClientCertificate() method of the COM object.
 	Helpstring: Specify a client certificate"
 
-	^self SetClientCertificate: clientCertificate
-!
+	^self SetClientCertificate: clientCertificate!
 
 SetClientCertificate: clientCertificate
 	"Private - Invoke the SetClientCertificate() method of the COM object.
@@ -379,8 +371,7 @@ setCredentials: userName password: password flags: flags
 	^self
 		SetCredentials: userName
 		password: password
-		flags: flags
-!
+		flags: flags!
 
 SetCredentials: userName password: password flags: flags
 	"Private - Invoke the SetCredentials() method of the COM object.
@@ -399,9 +390,9 @@ setProxy: proxySetting
 	Default values are passed for all optional parameters."
 
 	^self
-		 setProxy: proxySetting
-		 proxyServer: VARIANT unspecified
-		 bypassList: VARIANT unspecified!
+		setProxy: proxySetting
+		proxyServer: VARIANT unspecified
+		bypassList: VARIANT unspecified!
 
 setProxy: proxySetting proxyServer: proxyServer bypassList: bypassList
 	"Invoke the SetProxy() method of the COM object.
@@ -410,8 +401,7 @@ setProxy: proxySetting proxyServer: proxyServer bypassList: bypassList
 	^self
 		SetProxy: proxySetting
 		proxyServer: proxyServer asVariant
-		bypassList: bypassList asVariant
-!
+		bypassList: bypassList asVariant!
 
 SetProxy: proxySetting proxyServer: proxyServer bypassList: bypassList
 	"Private - Invoke the SetProxy() method of the COM object.
@@ -429,10 +419,7 @@ setRequestHeader: header value: value
 	"Invoke the SetRequestHeader() method of the COM object.
 	Helpstring: Add HTTP request header"
 
-	^self
-		SetRequestHeader: header
-		value: value
-!
+	^self SetRequestHeader: header value: value!
 
 SetRequestHeader: header value: value
 	"Private - Invoke the SetRequestHeader() method of the COM object.
@@ -453,8 +440,7 @@ setTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 		SetTimeouts: resolveTimeout
 		connectTimeout: connectTimeout
 		sendTimeout: sendTimeout
-		receiveTimeout: receiveTimeout
-!
+		receiveTimeout: receiveTimeout!
 
 SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTimeout receiveTimeout: receiveTimeout
 	"Private - Invoke the SetTimeouts() method of the COM object.
@@ -474,10 +460,9 @@ status
 	Helpstring: Get HTTP status code"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Status: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 statusText
 	"Answer the <bstr> value of the 'StatusText' property of the receiver.
@@ -486,26 +471,22 @@ statusText
 	| answer |
 	answer := BSTR new.
 	self get_StatusText: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 waitForResponse
-	"Answer the <VARIANT_BOOL> result of invoking the WaitForResponse() method of the COM object.
+	"Answer the <varbool> result of invoking the WaitForResponse() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self waitForResponse: VARIANT unspecified!
 
 waitForResponse: timeout
-	"Answer the <VARIANT_BOOL> result of invoking the WaitForResponse() method of the COM object.
+	"Answer the <varbool> result of invoking the WaitForResponse() method of the COM object.
 	Helpstring: Wait for asynchronous send to complete, with optional timeout (in seconds)"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
-	self
-		WaitForResponse: timeout asVariant
-		succeeded: answer.
-	^answer asObject
-!
+	answer := VARIANT_BOOL new.
+	self WaitForResponse: timeout asVariant succeeded: answer.
+	^answer asObject!
 
 WaitForResponse: timeout succeeded: succeeded
 	"Private - Invoke the WaitForResponse() method of the COM object.
@@ -519,6 +500,7 @@ WaitForResponse: timeout succeeded: succeeded
 	^self invalidCall: _failureCode! !
 !WinHttp.IWinHttpRequest categoriesFor: #abort!**auto generated**!methods!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get:!operations!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #get_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
 !WinHttp.IWinHttpRequest categoriesFor: #get_ResponseBody:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
 !WinHttp.IWinHttpRequest categoriesFor: #get_ResponseStream:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
@@ -537,8 +519,8 @@ WaitForResponse: timeout succeeded: succeeded
 !WinHttp.IWinHttpRequest categoriesFor: #option:!**auto generated**!properties!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #option:value:!**auto generated**!properties!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #put_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!WinHttp.IWinHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
-!WinHttp.IWinHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #responseBody!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #responseStream!properties!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
 !WinHttp.IWinHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
@@ -614,5 +596,5 @@ defineFunctions
 			argumentTypes: 'sdword'
 ! !
 !WinHttp.IWinHttpRequest class categoriesFor: #clsid!**auto generated**!constants!private! !
-!WinHttp.IWinHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!WinHttp.IWinHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

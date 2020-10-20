@@ -1,8 +1,15 @@
 ﻿OS.COM.TypeLibraryAnalyzer {
 	#generationFlags : 1026,
+	#binding : VariableBinding {
+		#key : #WinHttp,
+		#value : Class [ #WinHttp ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
 	#attributes : OS.COM.TLIBATTR {
 		#bytes : ByteArray [ 'fc012966516954489eb2d9a2570f2b2e00000000010000000500010008000000' ]
 	},
+	#namespaceName : 'WinHttp',
 	#packageName : 'WinHttp',
 	#libVariableName : #WinHttpLib,
 	#constantsPoolName : #WinHttpConstants,

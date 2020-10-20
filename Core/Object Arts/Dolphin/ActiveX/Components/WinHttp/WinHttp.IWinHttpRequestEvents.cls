@@ -7,15 +7,15 @@ OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WinHttp.IWinHttpRequestEvents guid: (OS.COM.IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!
-WinHttp.IWinHttpRequestEvents comment: '<IWinHttpRequestEvents> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
+WinHttp.IWinHttpRequestEvents comment: '`IWinHttpRequestEvents` is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IWinHttpRequestEvents Interface"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
 	uuid(f97f4e15-b787-4212-80d1-d380cbbf982e), 
@@ -39,6 +39,7 @@ interface IWinHttpRequestEvents : IUnknown
 		[in]long ErrorNumber,
 		[in]BSTR ErrorDescription);
 };
+```
 '!
 !WinHttp.IWinHttpRequestEvents categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
 !WinHttp.IWinHttpRequestEvents methodsFor!
@@ -103,5 +104,5 @@ defineFunctions
 			returnType: 'void'
 			argumentTypes: 'sdword bstr'
 ! !
-!WinHttp.IWinHttpRequestEvents class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!WinHttp.IWinHttpRequestEvents class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 
