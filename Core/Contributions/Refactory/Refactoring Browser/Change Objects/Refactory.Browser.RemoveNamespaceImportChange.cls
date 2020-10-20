@@ -25,7 +25,7 @@ changesFileTemplate
 	^'<1p> <2s> <3s>'!
 
 changeString
-	^'Remove pool variable named, <1s>, from <2s>' expandMacrosWith: self variable
+	^'Remove pool variable named, <1d>, from <2s>' expandMacrosWith: variable
 		with: self displayClassName!
 
 changeSymbol
