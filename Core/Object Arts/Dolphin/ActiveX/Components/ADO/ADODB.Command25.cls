@@ -7,7 +7,7 @@ ADODB.Command15 subclass: #'ADODB.Command25'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Command25 guid: (OS.COM.IID fromString: '{0000154e-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Command25 comment: '`ADODBCommand25` is a wrapper class for the COM interface ''ADODB.Command25'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Command25 comment: '`Command25` is a wrapper class for the COM interface ''ADODB.Command25'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -75,5 +75,5 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #Cancel
 ! !
-!ADODB.Command25 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Command25 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

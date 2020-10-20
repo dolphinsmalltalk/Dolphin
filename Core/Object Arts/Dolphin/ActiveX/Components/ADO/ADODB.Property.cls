@@ -7,7 +7,7 @@ OS.COM.IDispatch subclass: #'ADODB.Property'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Property guid: (OS.COM.IID fromString: '{00000503-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Property comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Property comment: '`Property` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -197,5 +197,5 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODB.Property class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Property class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

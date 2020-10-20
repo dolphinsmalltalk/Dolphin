@@ -7,7 +7,7 @@ OS.COM.IUnknown subclass: #'ADODB.ConnectionEventsVt'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.ConnectionEventsVt guid: (OS.COM.IID fromString: '{00001402-0000-0010-8000-00aa006d2ea4}')!
-ADODB.ConnectionEventsVt comment: '`ADODBConnectionEventsVt` is a wrapper class for the COM interface ''ADODB.ConnectionEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.ConnectionEventsVt comment: '`ConnectionEventsVt` is a wrapper class for the COM interface ''ADODB.ConnectionEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -322,5 +322,5 @@ defineFunctions
 		defineFunction: #Disconnect:pConnection:
 			argumentTypes: 'sdword* _Connection*'
 ! !
-!ADODB.ConnectionEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ConnectionEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

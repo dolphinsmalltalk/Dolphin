@@ -7,7 +7,7 @@ ADODB._ADO subclass: #'ADODB.Connection15'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Connection15 guid: (OS.COM.IID fromString: '{00001515-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Connection15 comment: '`ADODBConnection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Connection15 comment: '`Connection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -134,7 +134,7 @@ attributes: plAttr
 	self put_Attributes: plAttr!
 
 beginTrans
-	"Answer the <SDWORD> result of invoking the BeginTrans() method of the COM object."
+	"Answer the <sdword> result of invoking the BeginTrans() method of the COM object."
 
 	| answer |
 	answer := SDWORD new.
@@ -397,8 +397,7 @@ isolationLevel: level
 
 isVBCollection
 	"Answer whether the receiver is a VB style collection.
-	The receiver is dynamically extensible, so we cannot determine this from the type library,
-       and must perform a run-time check for the _NewEnum property."
+	The receiver is dynamically extensible, so we cannot determine this from the type library, and must perform a run-time check for the _NewEnum property."
 
 	^self has_NewEnum!
 
@@ -746,5 +745,5 @@ defineFunctions
 		defineFunction: #OpenSchema:Restrictions:SchemaID:pprset:
 			argumentTypes: 'sdword variant variant _Recordset**'
 ! !
-!ADODB.Connection15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Connection15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

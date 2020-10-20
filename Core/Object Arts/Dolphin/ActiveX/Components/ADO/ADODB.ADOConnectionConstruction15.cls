@@ -78,5 +78,5 @@ defineFunctions
 		defineFunction: #WrapDSOandSession:pSession:
 			argumentTypes: 'IUnknown* IUnknown*'
 ! !
-!ADODB.ADOConnectionConstruction15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADOConnectionConstruction15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

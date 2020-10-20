@@ -1,7 +1,9 @@
 ﻿| package |
-package := Package name: 'ADODB (Deprecated)'.
+package := Package name: 'ADODB (Old Names)'.
 package paxVersion: 2.1;
-	basicComment: 'Dolphin Smalltalk ADODB deprecated classes, methods and names. 
+	basicComment: 'Dolphin Smalltalk ADODB pre-7.2 legacy class names
+
+Aliases for ADODB classes that might be referenced from pre-7.2 code.
 '.
 
 

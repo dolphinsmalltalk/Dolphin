@@ -7,7 +7,7 @@ ADODB.Fields20 subclass: #'ADODB.Fields'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Fields guid: (OS.COM.IID fromString: '{00001564-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Fields comment: '`ADODBFields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Fields comment: '`Fields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -131,5 +131,5 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #CancelUpdate
 ! !
-!ADODB.Fields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Fields class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

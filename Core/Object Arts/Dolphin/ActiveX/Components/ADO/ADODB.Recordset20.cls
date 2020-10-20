@@ -7,7 +7,7 @@ ADODB.Recordset15 subclass: #'ADODB.Recordset20'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Recordset20 guid: (OS.COM.IID fromString: '{0000154f-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Recordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Recordset20 comment: '`Recordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -136,7 +136,7 @@ Clone: lockType ppvObject: ppvObject
 	^self invalidCall: _failureCode!
 
 compareBookmarks: bookmark1 bookmark2: bookmark2
-	"Answer the <SDWORD> result of invoking the CompareBookmarks() method of the COM object."
+	"Answer the <sdword> result of invoking the CompareBookmarks() method of the COM object."
 
 	| answer |
 	answer := SDWORD new.
@@ -215,7 +215,7 @@ get_StayInSync: pbStayInSync
 	^self invalidCall: _failureCode!
 
 getString
-	"Answer the <BSTR> result of invoking the GetString() method of the COM object.
+	"Answer the <bstr> result of invoking the GetString() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -226,7 +226,7 @@ getString
 		nullExpr: ''!
 
 getString: stringFormat numRows: numRows columnDelimeter: columnDelimeter rowDelimeter: rowDelimeter nullExpr: nullExpr
-	"Answer the <BSTR> result of invoking the GetString() method of the COM object."
+	"Answer the <bstr> result of invoking the GetString() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
@@ -377,5 +377,5 @@ defineFunctions
 		defineFunction: #Resync:ResyncValues:
 			argumentTypes: 'sdword sdword'
 ! !
-!ADODB.Recordset20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Recordset20 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

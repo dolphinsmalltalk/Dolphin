@@ -7,7 +7,7 @@ ADODB._Collection subclass: #'ADODB.Properties'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Properties guid: (OS.COM.IID fromString: '{00000504-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Properties comment: '`ADODBProperties` is a wrapper class for the COM interface ''ADODB.Properties'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Properties comment: '`Properties` is a wrapper class for the COM interface ''ADODB.Properties'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -64,5 +64,5 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant Property**'
 ! !
-!ADODB.Properties class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Properties class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

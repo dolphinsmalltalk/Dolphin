@@ -7,7 +7,7 @@ ADODB._ADO subclass: #'ADODB.Command15'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Command15 guid: (OS.COM.IID fromString: '{00001508-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Command15 comment: '`ADODBCommand15` is a wrapper class for the COM interface ''ADODB.Command15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Command15 comment: '`Command15` is a wrapper class for the COM interface ''ADODB.Command15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -463,5 +463,5 @@ defineFunctions
 		defineFunction: #put_Name:
 			argumentTypes: 'bstr'
 ! !
-!ADODB.Command15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Command15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

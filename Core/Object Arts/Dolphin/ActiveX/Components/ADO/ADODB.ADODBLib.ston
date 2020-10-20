@@ -1,15 +1,21 @@
 ﻿OS.COM.TypeLibraryAnalyzer {
 	#generationFlags : 130,
+	#binding : VariableBinding {
+		#key : #ADODB,
+		#value : Class [ #ADODB ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
 	#attributes : OS.COM.TLIBATTR {
 		#bytes : ByteArray [ '11e091b697172e43907a4d8c6933912900000000010000000600010008000000' ]
 	},
 	#namespaceName : 'ADODB',
 	#packageName : 'ADODB',
-	#globalName : #ADODBLib,
+	#libVariableName : #ADODBLib,
 	#constantsPoolName : #ADODBConstants,
 	#aliasMap : LookupTable {
-		'PROPVARIANT' : #VARIANT,
 		'GUID' : #GUID,
+		'PROPVARIANT' : #VARIANT,
 		'RemotableHandle' : #ExternalHandle
 	}
 }

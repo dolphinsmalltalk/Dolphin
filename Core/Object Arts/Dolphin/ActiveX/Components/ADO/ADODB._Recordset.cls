@@ -7,7 +7,7 @@ ADODB.Recordset21 subclass: #'ADODB._Recordset'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB._Recordset guid: (OS.COM.IID fromString: '{00001556-0000-0010-8000-00aa006d2ea4}')!
-ADODB._Recordset comment: '`ADODB_Recordset` is a wrapper class for the COM interface ''ADODB._Recordset'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Recordset comment: '`_Recordset` is a wrapper class for the COM interface ''ADODB._Recordset'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -84,6 +84,6 @@ example1
 	"Get the employees names"
 	rs collect: [:each | (each item: 'LastName') value]! !
 !ADODB._Recordset class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 !ADODB._Recordset class categoriesFor: #example1!examples!public! !
 

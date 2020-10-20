@@ -198,7 +198,7 @@ get_Value: pvar
 	^self invalidCall: _failureCode!
 
 getChunk: length
-	"Answer the <VARIANT> result of invoking the GetChunk() method of the COM object."
+	"Answer the <variant> result of invoking the GetChunk() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -346,5 +346,5 @@ defineFunctions
 		defineFunction: #get_UnderlyingValue:
 			argumentTypes: 'variant*'
 ! !
-!ADODB.Field15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Field15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

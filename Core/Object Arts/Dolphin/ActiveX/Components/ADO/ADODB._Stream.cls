@@ -7,7 +7,7 @@ OS.COM.IDispatch subclass: #'ADODB._Stream'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB._Stream guid: (OS.COM.IID fromString: '{00001565-0000-0010-8000-00aa006d2ea4}')!
-ADODB._Stream comment: '`ADODB_Stream` is a wrapper class for the COM interface ''ADODB._Stream'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Stream comment: '`_Stream` is a wrapper class for the COM interface ''ADODB._Stream'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -378,13 +378,13 @@ put_Type: ptype
 	^self invalidCall: _failureCode!
 
 read
-	"Answer the <VARIANT> result of invoking the Read() method of the COM object.
+	"Answer the <variant> result of invoking the Read() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self read: -1!
 
 read: numBytes
-	"Answer the <VARIANT> result of invoking the Read() method of the COM object."
+	"Answer the <variant> result of invoking the Read() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -402,13 +402,13 @@ Read: numBytes pval: pval
 	^self invalidCall: _failureCode!
 
 readText
-	"Answer the <BSTR> result of invoking the ReadText() method of the COM object.
+	"Answer the <bstr> result of invoking the ReadText() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self readText: -1!
 
 readText: numChars
-	"Answer the <BSTR> result of invoking the ReadText() method of the COM object."
+	"Answer the <bstr> result of invoking the ReadText() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
@@ -627,5 +627,5 @@ defineFunctions
 		defineFunction: #Cancel
 ! !
 !ADODB._Stream class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Stream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Stream class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

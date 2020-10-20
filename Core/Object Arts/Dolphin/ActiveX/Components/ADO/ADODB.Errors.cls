@@ -7,7 +7,7 @@ ADODB._Collection subclass: #'ADODB.Errors'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Errors guid: (OS.COM.IID fromString: '{00000501-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Errors comment: '`ADODBErrors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Errors comment: '`Errors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -76,5 +76,5 @@ defineFunctions
 			argumentTypes: 'variant Error**';
 		defineFunction: #Clear
 ! !
-!ADODB.Errors class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Errors class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

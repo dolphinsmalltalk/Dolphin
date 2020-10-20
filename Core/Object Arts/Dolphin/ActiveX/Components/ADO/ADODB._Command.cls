@@ -7,7 +7,7 @@ ADODB.Command25 subclass: #'ADODB._Command'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB._Command guid: (OS.COM.IID fromString: '{986761e8-7269-4890-aa65-ad7c03697a6d}')!
-ADODB._Command comment: '`ADODB_Command` is a wrapper class for the COM interface ''ADODB._Command'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Command comment: '`_Command` is a wrapper class for the COM interface ''ADODB._Command'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -183,5 +183,5 @@ defineFunctions
 			argumentTypes: 'varbool*'
 ! !
 !ADODB._Command class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Command class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Command class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

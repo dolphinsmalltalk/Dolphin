@@ -22,7 +22,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Automation\ActiveX Automation'
 	'Connection Points\ActiveX Connection Points'
-	'Components\ADO\ADODB (Deprecated)'
+	'Components\ADO\ADODB (Old Names)'
 	'..\Database\Database Tests'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'

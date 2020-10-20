@@ -7,7 +7,7 @@ ADODB._ADO subclass: #'ADODB._Record'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB._Record guid: (OS.COM.IID fromString: '{00001562-0000-0010-8000-00aa006d2ea4}')!
-ADODB._Record comment: '`ADODB_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Record comment: '`_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -134,7 +134,7 @@ Close
 	^self invalidCall: _failureCode!
 
 copyRecord
-	"Answer the <BSTR> result of invoking the CopyRecord() method of the COM object.
+	"Answer the <bstr> result of invoking the CopyRecord() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -146,7 +146,7 @@ copyRecord
 		async: false!
 
 copyRecord: source destination: destination userName: userName password: password options: options async: async
-	"Answer the <BSTR> result of invoking the CopyRecord() method of the COM object."
+	"Answer the <bstr> result of invoking the CopyRecord() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
@@ -288,8 +288,7 @@ isExtensible
 
 isVBCollection
 	"Answer whether the receiver is a VB style collection.
-	The receiver is dynamically extensible, so we cannot determine this from the type library,
-       and must perform a run-time check for the _NewEnum property."
+	The receiver is dynamically extensible, so we cannot determine this from the type library, and must perform a run-time check for the _NewEnum property."
 
 	^self has_NewEnum!
 
@@ -307,7 +306,7 @@ mode: pMode
 	self put_Mode: pMode!
 
 moveRecord
-	"Answer the <BSTR> result of invoking the MoveRecord() method of the COM object.
+	"Answer the <bstr> result of invoking the MoveRecord() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -319,7 +318,7 @@ moveRecord
 		async: false!
 
 moveRecord: source destination: destination userName: userName password: password options: options async: async
-	"Answer the <BSTR> result of invoking the MoveRecord() method of the COM object."
+	"Answer the <bstr> result of invoking the MoveRecord() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
@@ -486,7 +485,7 @@ state
 	^answer asObject!
 
 value
-	"Answer the <ADODB.Fields> value of the 'Fields' property of the receiver.
+	"Answer the <Fields> value of the 'Fields' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
@@ -584,5 +583,5 @@ defineFunctions
 		defineFunction: #Cancel
 ! !
 !ADODB._Record class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Record class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Record class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

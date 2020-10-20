@@ -7,7 +7,7 @@ OS.COM.IDispatch subclass: #'ADODB.ADORecordsetConstruction'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.ADORecordsetConstruction guid: (OS.COM.IID fromString: '{00000283-0000-0010-8000-00aa006d2ea4}')!
-ADODB.ADORecordsetConstruction comment: '`ADODBADORecordsetConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordsetConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.ADORecordsetConstruction comment: '`ADORecordsetConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordsetConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -175,5 +175,5 @@ defineFunctions
 		defineFunction: #put_RowPosition:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODB.ADORecordsetConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADORecordsetConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -7,7 +7,7 @@ OS.COM.IUnknown subclass: #'ADODB.RecordsetEventsVt'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.RecordsetEventsVt guid: (OS.COM.IID fromString: '{00001403-0000-0010-8000-00aa006d2ea4}')!
-ADODB.RecordsetEventsVt comment: '`ADODBRecordsetEventsVt` is a wrapper class for the COM interface ''ADODB.RecordsetEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.RecordsetEventsVt comment: '`RecordsetEventsVt` is a wrapper class for the COM interface ''ADODB.RecordsetEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -399,5 +399,5 @@ defineFunctions
 		defineFunction: #FetchComplete:adStatus:pRecordset:
 			argumentTypes: 'Error* sdword* _Recordset*'
 ! !
-!ADODB.RecordsetEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.RecordsetEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

@@ -7,7 +7,7 @@ ADODB._ADO subclass: #'ADODB.Recordset15'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Recordset15 guid: (OS.COM.IID fromString: '{0000150e-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Recordset15 comment: '`ADODBRecordset15` is a wrapper class for the COM interface ''ADODB.Recordset15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Recordset15 comment: '`Recordset15` is a wrapper class for the COM interface ''ADODB.Recordset15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -729,7 +729,7 @@ get_Status: pl
 	^self invalidCall: _failureCode!
 
 getRows
-	"Answer the <VARIANT> result of invoking the GetRows() method of the COM object.
+	"Answer the <variant> result of invoking the GetRows() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -738,7 +738,7 @@ getRows
 		fields: VARIANT unspecified!
 
 getRows: rows start: start fields: fields
-	"Answer the <VARIANT> result of invoking the GetRows() method of the COM object."
+	"Answer the <variant> result of invoking the GetRows() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -1195,7 +1195,7 @@ status
 	^answer asObject!
 
 supports: cursorOptions
-	"Answer the <VARIANT_BOOL> result of invoking the Supports() method of the COM object."
+	"Answer the <varbool> result of invoking the Supports() method of the COM object."
 
 	| answer |
 	answer := VARIANT_BOOL new.
@@ -1503,5 +1503,5 @@ defineFunctions
 		defineFunction: #Find:SkipRecords:SearchDirection:Start:
 			argumentTypes: 'bstr sdword sdword variant'
 ! !
-!ADODB.Recordset15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Recordset15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

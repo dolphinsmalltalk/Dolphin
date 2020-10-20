@@ -7,7 +7,7 @@ ADODB._ADO subclass: #'ADODB.Field20'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Field20 guid: (OS.COM.IID fromString: '{0000154c-0000-0010-8000-00aa006d2ea4}')!
-ADODB.Field20 comment: '`ADODBField20` is a wrapper class for the COM interface ''ADODB.Field20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Field20 comment: '`Field20` is a wrapper class for the COM interface ''ADODB.Field20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -248,7 +248,7 @@ get_Value: pvar
 	^self invalidCall: _failureCode!
 
 getChunk: length
-	"Answer the <VARIANT> result of invoking the GetChunk() method of the COM object."
+	"Answer the <variant> result of invoking the GetChunk() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -518,5 +518,5 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODB.Field20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Field20 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

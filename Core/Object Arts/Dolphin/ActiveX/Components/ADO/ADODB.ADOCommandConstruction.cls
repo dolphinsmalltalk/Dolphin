@@ -63,5 +63,5 @@ defineFunctions
 		defineFunction: #put_OLEDBCommand:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODB.ADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 
