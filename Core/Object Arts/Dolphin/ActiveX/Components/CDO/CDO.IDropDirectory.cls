@@ -16,9 +16,15 @@ Warning: This comment was automatically generated from the interface''s type inf
 !CDO.IDropDirectory categoriesForClass!CDO-Interfaces!COM-Interfaces! !
 !CDO.IDropDirectory methodsFor!
 
+getMessages
+	"Answer the <IMessages> result of invoking the GetMessages() method of the COM object.
+	Default values are passed for all optional parameters."
+
+	^self getMessages: nil!
+
 getMessages: dirName
-	"Answer the <CDO.IMessages> result of invoking the COM Object's GetMessages() method.
-	Helpstring: 'Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory.'"
+	"Answer the <IMessages> result of invoking the GetMessages() method of the COM object.
+	Helpstring: Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory."
 
 	| answer |
 	answer := IMessages newPointer.
@@ -26,13 +32,12 @@ getMessages: dirName
 	^answer asObject!
 
 GetMessages: dirName Msgs: msgs
-	"Private - Invoke the GetMessages() method of the COM object wrapped by the receiver.
-	Helpstring: 'Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory.'
+	"Private - Invoke the GetMessages() method of the COM object.
+	Helpstring: Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory.
 
 		HRESULT __stdcall GetMessages(
-			[in, optional] BSTR DirName,
-			[out, retval] IMessages** Msgs);
-	"
+			[in, optional]BSTR DirName,
+			[out, retval]IMessages** Msgs);"
 
 	<virtual stdcall: hresult 8 bstr IMessages**>
 	^self invalidCall: _failureCode!
@@ -46,6 +51,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+!CDO.IDropDirectory categoriesFor: #getMessages!**auto generated**!methods!public! !
 !CDO.IDropDirectory categoriesFor: #getMessages:!**auto generated**!methods!public! !
 !CDO.IDropDirectory categoriesFor: #GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
 !CDO.IDropDirectory categoriesFor: #isExtensible!**auto generated**!public!testing! !
@@ -54,29 +60,19 @@ isVBCollection
 !CDO.IDropDirectory class methodsFor!
 
 clsid
-	"Private - Answer the CLSID of the coclass (DropDirectory) for which the receiver is the default interface.
-	"
+	"Private - Answer the CLSID of the coclass (DropDirectory) for which the receiver is the default interface."
 
-	^CLSID fromString: '{CD000004-8B95-11D1-82DB-00C04FB1625D}'
+	^CLSID fromString: '{cd000004-8b95-11d1-82db-00c04fb1625d}'
 !
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IDropDirectory'
-		CDO.IDropDirectory defineTemplate
-	"
+		IDropDirectory defineTemplate"
 
 	self
 		defineFunction: #GetMessages:Msgs:
 			argumentTypes: 'bstr IMessages**'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.IDropDirectory initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
+! !
 !CDO.IDropDirectory class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDO.IDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.IDropDirectory class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

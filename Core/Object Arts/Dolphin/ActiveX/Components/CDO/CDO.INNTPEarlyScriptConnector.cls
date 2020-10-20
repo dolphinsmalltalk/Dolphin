@@ -31,18 +31,9 @@ isVBCollection
 !CDO.INNTPEarlyScriptConnector class methodsFor!
 
 clsid
-	"Private - Answer the CLSID of the coclass (NNTPEarlyConnector) for which the receiver is the default interface.
-	"
+	"Private - Answer the CLSID of the coclass (NNTPEarlyConnector) for which the receiver is the default interface."
 
-	^CLSID fromString: '{CD000011-8B95-11D1-82DB-00C04FB1625D}'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.INNTPEarlyScriptConnector initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
+	^CLSID fromString: '{cd000011-8b95-11d1-82db-00c04fb1625d}'
+! !
 !CDO.INNTPEarlyScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDO.INNTPEarlyScriptConnector class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

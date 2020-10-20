@@ -21,14 +21,18 @@ _newEnum
 
 	| answer |
 	answer := IUnknown newPointer.
-	self
-		get__NewEnum: answer.
-	^answer asObject
-!
+	self get__NewEnum: answer.
+	^answer asObject!
+
+add
+	"Answer the <IBodyPart> result of invoking the Add() method of the COM object.
+	Default values are passed for all optional parameters."
+
+	^self add: -1!
 
 add: index
-	"Answer the <CDO.IBodyPart> result of invoking the COM Object's Add() method.
-	Helpstring: 'Adds a BodyPart object to the collection at the specified index, and returns the newly added object.'"
+	"Answer the <IBodyPart> result of invoking the Add() method of the COM object.
+	Helpstring: Adds a BodyPart object to the collection at the specified index, and returns the newly added object."
 
 	| answer |
 	answer := IBodyPart newPointer.
@@ -36,53 +40,46 @@ add: index
 	^answer asObject!
 
 Add: index ppPart: ppPart
-	"Private - Invoke the Add() method of the COM object wrapped by the receiver.
-	Helpstring: 'Adds a BodyPart object to the collection at the specified index, and returns the newly added object.'
+	"Private - Invoke the Add() method of the COM object.
+	Helpstring: Adds a BodyPart object to the collection at the specified index, and returns the newly added object.
 
 		HRESULT __stdcall Add(
-			[in, optional, defaultvalue(-1)] long Index,
-			[out, retval] IBodyPart** ppPart);
-	"
+			[in, defaultvalue(-1)]long Index,
+			[out, retval]IBodyPart** ppPart);"
 
 	<virtual stdcall: hresult 13 sdword IBodyPart**>
 	^self invalidCall: _failureCode!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver.
-	Helpstring: 'Returns the number of BodyPart objects in the collection.'"
+	Helpstring: Returns the number of BodyPart objects in the collection."
 
 	| answer |
-	answer := (SDWORD new).
-	self
-		get_Count: answer.
-	^answer asObject
-!
+	answer := SDWORD new.
+	self get_Count: answer.
+	^answer asObject!
 
 delete: varBP
-	"Invoke the Delete() method of the COM Object.
-	Helpstring: 'Deletes the specified BodyPart object from the collection. Can use the index or a reference to the object.'"
+	"Invoke the Delete() method of the COM object.
+	Helpstring: Deletes the specified BodyPart object from the collection. Can use the index or a reference to the object."
 
-	^self
-		Delete: varBP asVariant
-!
+	^self Delete: varBP asVariant!
 
 Delete: varBP
-	"Private - Invoke the Delete() method of the COM object wrapped by the receiver.
-	Helpstring: 'Deletes the specified BodyPart object from the collection. Can use the index or a reference to the object.'
+	"Private - Invoke the Delete() method of the COM object.
+	Helpstring: Deletes the specified BodyPart object from the collection. Can use the index or a reference to the object.
 
 		HRESULT __stdcall Delete(
-			[in] VARIANT varBP);
-	"
+			[in]VARIANT varBP);"
 
 	<virtual stdcall: hresult 11 variant>
 	^self invalidCall: _failureCode!
 
 DeleteAll
-	"Invoke the DeleteAll() method of the COM object wrapped by the receiver.
-	Helpstring: 'Deletes all BodyPart objects in the collection.'
+	"Invoke the DeleteAll() method of the COM object.
+	Helpstring: Deletes all BodyPart objects in the collection.
 
-		HRESULT __stdcall DeleteAll();
-	"
+		HRESULT __stdcall DeleteAll();"
 
 	<virtual stdcall: hresult 12>
 	^self invalidCall: _failureCode!
@@ -91,31 +88,26 @@ get__NewEnum: retval
 	"Private - Get the value of the '_NewEnum' property of the receiver.
 
 		HRESULT __stdcall _NewEnum(
-			[out, retval] IUnknown** retval);
-	"
+			[out, retval]IUnknown** retval);"
 
 	<virtual stdcall: hresult 10 IUnknown**>
 	^self invalidCall: _failureCode!
 
 get_Count: varCount
 	"Private - Get the value of the 'Count' property of the receiver.
-	Helpstring: 'Returns the number of BodyPart objects in the collection.'
 
 		HRESULT __stdcall Count(
-			[out, retval] long* varCount);
-	"
+			[out, retval]long* varCount);"
 
 	<virtual stdcall: hresult 8 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Item: index ppBody: ppBody
 	"Private - Get the value of the 'Item' property of the receiver.
-	Helpstring: 'The specified BodyPart object in the collection.'
 
 		HRESULT __stdcall Item(
-			[in] long Index,
-			[out, retval] IBodyPart** ppBody);
-	"
+			[in]long Index,
+			[out, retval]IBodyPart** ppBody);"
 
 	<virtual stdcall: hresult 9 sdword IBodyPart**>
 	^self invalidCall: _failureCode!
@@ -131,14 +123,15 @@ isVBCollection
 	^true!
 
 item: index
-	"Answer the <CDO.IBodyPart> value of the 'Item' property of the receiver.
-	Helpstring: 'The specified BodyPart object in the collection.'"
+	"Answer the <IBodyPart> value of the 'Item' property of the receiver.
+	Helpstring: The specified BodyPart object in the collection."
 
 	| answer |
 	answer := IBodyPart newPointer.
 	self get_Item: index ppBody: answer.
 	^answer asObject! !
 !CDO.IBodyParts categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!CDO.IBodyParts categoriesFor: #add!**auto generated**!methods!public! !
 !CDO.IBodyParts categoriesFor: #add:!**auto generated**!methods!public! !
 !CDO.IBodyParts categoriesFor: #Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
 !CDO.IBodyParts categoriesFor: #count!**auto generated**!properties!public! !
@@ -156,8 +149,7 @@ item: index
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IBodyParts'
-		CDO.IBodyParts defineTemplate
-	"
+		IBodyParts defineTemplate"
 
 	self
 		defineFunction: #get_Count:
@@ -171,14 +163,6 @@ defineFunctions
 		defineFunction: #DeleteAll;
 		defineFunction: #Add:ppPart:
 			argumentTypes: 'sdword IBodyPart**'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.IBodyParts initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.IBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.IBodyParts class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.IBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

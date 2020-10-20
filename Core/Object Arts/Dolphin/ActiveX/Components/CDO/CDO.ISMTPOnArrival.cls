@@ -27,13 +27,12 @@ isVBCollection
 	^false!
 
 OnArrival: msg EventStatus: eventStatus
-	"Invoke the OnArrival() method of the COM object wrapped by the receiver.
-	Helpstring: 'Called by the SMTP event dispatcher when a message arrives.'
+	"Invoke the OnArrival() method of the COM object.
+	Helpstring: Called by the SMTP event dispatcher when a message arrives.
 
 		HRESULT __stdcall OnArrival(
-			[in] IMessage* Msg,
-			[in, out] CdoEventStatus* EventStatus);
-	"
+			[in]IMessage* Msg,
+			[in, out]CdoEventStatus* EventStatus);"
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
@@ -45,20 +44,11 @@ OnArrival: msg EventStatus: eventStatus
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.ISMTPOnArrival'
-		CDO.ISMTPOnArrival defineTemplate
-	"
+		ISMTPOnArrival defineTemplate"
 
 	self
 		defineFunction: #OnArrival:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.ISMTPOnArrival initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.ISMTPOnArrival class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.ISMTPOnArrival class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.ISMTPOnArrival class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

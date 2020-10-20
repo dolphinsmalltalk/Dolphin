@@ -21,96 +21,80 @@ _newEnum
 
 	| answer |
 	answer := IUnknown newPointer.
-	self
-		get__NewEnum: answer.
-	^answer asObject
-!
+	self get__NewEnum: answer.
+	^answer asObject!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver.
-	Helpstring: 'The number of message objects in the collection.'"
+	Helpstring: The number of message objects in the collection."
 
 	| answer |
-	answer := (SDWORD new).
-	self
-		get_Count: answer.
-	^answer asObject
-!
+	answer := SDWORD new.
+	self get_Count: answer.
+	^answer asObject!
 
 Delete: index
-	"Invoke the Delete() method of the COM object wrapped by the receiver.
-	Helpstring: 'Deletes the specified message object in the collection.'
+	"Invoke the Delete() method of the COM object.
+	Helpstring: Deletes the specified message object in the collection.
 
 		HRESULT __stdcall Delete(
-			[in] long Index);
-	"
+			[in]long Index);"
 
 	<virtual stdcall: hresult 10 sdword>
 	^self invalidCall: _failureCode!
 
 DeleteAll
-	"Invoke the DeleteAll() method of the COM object wrapped by the receiver.
-	Helpstring: 'Deletes all message objects in the collection.'
+	"Invoke the DeleteAll() method of the COM object.
+	Helpstring: Deletes all message objects in the collection.
 
-		HRESULT __stdcall DeleteAll();
-	"
+		HRESULT __stdcall DeleteAll();"
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode!
 
 fileName: var
 	"Answer the <bstr> value of the 'FileName' property of the receiver.
-	Helpstring: 'Returns the name of the file containing the specified message in the file system.'"
+	Helpstring: Returns the name of the file containing the specified message in the file system."
 
 	| answer |
 	answer := BSTR new.
-	self
-		get_FileName: var asVariant
-		FileName: answer.
-	^answer asObject
-!
+	self get_FileName: var asVariant FileName: answer.
+	^answer asObject!
 
 get__NewEnum: retval
 	"Private - Get the value of the '_NewEnum' property of the receiver.
 
 		HRESULT __stdcall _NewEnum(
-			[out, retval] IUnknown** retval);
-	"
+			[out, retval]IUnknown** retval);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
 	^self invalidCall: _failureCode!
 
 get_Count: varCount
 	"Private - Get the value of the 'Count' property of the receiver.
-	Helpstring: 'The number of message objects in the collection.'
 
 		HRESULT __stdcall Count(
-			[out, retval] long* varCount);
-	"
+			[out, retval]long* varCount);"
 
 	<virtual stdcall: hresult 9 sdword*>
 	^self invalidCall: _failureCode!
 
 get_FileName: var FileName: fileName
 	"Private - Get the value of the 'FileName' property of the receiver.
-	Helpstring: 'Returns the name of the file containing the specified message in the file system.'
 
 		HRESULT __stdcall FileName(
 			VARIANT var,
-			[out, retval] BSTR* FileName);
-	"
+			[out, retval]BSTR* FileName);"
 
 	<virtual stdcall: hresult 13 variant bstr*>
 	^self invalidCall: _failureCode!
 
 get_Item: index ppMessage: ppMessage
 	"Private - Get the value of the 'Item' property of the receiver.
-	Helpstring: 'Returns the message specified by index from the collection.'
 
 		HRESULT __stdcall Item(
 			long Index,
-			[out, retval] IMessage** ppMessage);
-	"
+			[out, retval]IMessage** ppMessage);"
 
 	<virtual stdcall: hresult 8 sdword IMessage**>
 	^self invalidCall: _failureCode!
@@ -126,8 +110,8 @@ isVBCollection
 	^true!
 
 item: index
-	"Answer the <CDO.IMessage> value of the 'Item' property of the receiver.
-	Helpstring: 'Returns the message specified by index from the collection.'"
+	"Answer the <IMessage> value of the 'Item' property of the receiver.
+	Helpstring: Returns the message specified by index from the collection."
 
 	| answer |
 	answer := IMessage newPointer.
@@ -150,8 +134,7 @@ item: index
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IMessages'
-		CDO.IMessages defineTemplate
-	"
+		IMessages defineTemplate"
 
 	self
 		defineFunction: #get_Item:ppMessage:
@@ -165,14 +148,6 @@ defineFunctions
 			argumentTypes: 'IUnknown**';
 		defineFunction: #get_FileName:FileName:
 			argumentTypes: 'variant bstr*'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.IMessages initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.IMessages class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.IMessages class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.IMessages class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

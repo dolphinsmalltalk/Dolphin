@@ -1,5 +1,5 @@
 ﻿OS.COM.TypeLibraryAnalyzer {
-	#generationFlags : 130,
+	#generationFlags : 128,
 	#binding : VariableBinding {
 		#key : #CDO,
 		#value : Class [ #CDO ],

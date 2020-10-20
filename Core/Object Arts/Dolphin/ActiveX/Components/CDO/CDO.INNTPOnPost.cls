@@ -27,13 +27,12 @@ isVBCollection
 	^false!
 
 OnPost: msg EventStatus: eventStatus
-	"Invoke the OnPost() method of the COM object wrapped by the receiver.
-	Helpstring: 'Called by the NNTP event dispatcher when a message is posted.'
+	"Invoke the OnPost() method of the COM object.
+	Helpstring: Called by the NNTP event dispatcher when a message is posted.
 
 		HRESULT __stdcall OnPost(
-			[in] IMessage* Msg,
-			[in, out] CdoEventStatus* EventStatus);
-	"
+			[in]IMessage* Msg,
+			[in, out]CdoEventStatus* EventStatus);"
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
@@ -45,20 +44,11 @@ OnPost: msg EventStatus: eventStatus
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.INNTPOnPost'
-		CDO.INNTPOnPost defineTemplate
-	"
+		INNTPOnPost defineTemplate"
 
 	self
 		defineFunction: #OnPost:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.INNTPOnPost initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.INNTPOnPost class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.INNTPOnPost class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.INNTPOnPost class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

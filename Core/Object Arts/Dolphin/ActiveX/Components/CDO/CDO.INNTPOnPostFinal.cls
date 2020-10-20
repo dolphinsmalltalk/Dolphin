@@ -27,13 +27,12 @@ isVBCollection
 	^false!
 
 OnPostFinal: msg EventStatus: eventStatus
-	"Invoke the OnPostFinal() method of the COM object wrapped by the receiver.
-	Helpstring: 'Called by the NNTP event dispatcher after a posted message has been saved to its final location.'
+	"Invoke the OnPostFinal() method of the COM object.
+	Helpstring: Called by the NNTP event dispatcher after a posted message has been saved to its final location.
 
 		HRESULT __stdcall OnPostFinal(
-			[in] IMessage* Msg,
-			[in, out] CdoEventStatus* EventStatus);
-	"
+			[in]IMessage* Msg,
+			[in, out]CdoEventStatus* EventStatus);"
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
@@ -45,20 +44,11 @@ OnPostFinal: msg EventStatus: eventStatus
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.INNTPOnPostFinal'
-		CDO.INNTPOnPostFinal defineTemplate
-	"
+		INNTPOnPostFinal defineTemplate"
 
 	self
 		defineFunction: #OnPostFinal:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.INNTPOnPostFinal initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.INNTPOnPostFinal class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.INNTPOnPostFinal class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.INNTPOnPostFinal class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 

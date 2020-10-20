@@ -27,13 +27,12 @@ isVBCollection
 	^false!
 
 OnPostEarly: msg EventStatus: eventStatus
-	"Invoke the OnPostEarly() method of the COM object wrapped by the receiver.
-	Helpstring: 'Called by the NNTP event dispatcher when message headers arrive.'
+	"Invoke the OnPostEarly() method of the COM object.
+	Helpstring: Called by the NNTP event dispatcher when message headers arrive.
 
 		HRESULT __stdcall OnPostEarly(
-			[in] IMessage* Msg,
-			[in, out] CdoEventStatus* EventStatus);
-	"
+			[in]IMessage* Msg,
+			[in, out]CdoEventStatus* EventStatus);"
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
@@ -45,20 +44,11 @@ OnPostEarly: msg EventStatus: eventStatus
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.INNTPOnPostEarly'
-		CDO.INNTPOnPostEarly defineTemplate
-	"
+		INNTPOnPostEarly defineTemplate"
 
 	self
 		defineFunction: #OnPostEarly:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
-!
-
-initializeTypeLib
-	"Private - Establish a connection to the receiver's type library.
-		CDO.INNTPOnPostEarly initializeTypeLib
-	"
-
-	typeLib := CDOLib! !
-!CDO.INNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDO.INNTPOnPostEarly class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+! !
+!CDO.INNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
 
