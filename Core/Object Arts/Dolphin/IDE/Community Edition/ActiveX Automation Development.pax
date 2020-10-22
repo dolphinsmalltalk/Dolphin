@@ -550,6 +550,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer class} #typeLibRegistrations)
 	#(#{OS.COM.VARDESC} #printIDLOn:indent:)
 	#(#{OS.COM.VARDESC} #printOn:)
+	#(#{OS.COM.VARIANT} #debugPrintOn:)
 	#(#{OS.COM.VARIANT} #printIDLOn:)
 	#(#{OS.COM.VARIANT} #printOn:)
 	#(#{OS.COM.VARIANT class} #example1)
@@ -2256,7 +2257,7 @@ reinventBadVarNames: anOrderedCollection
 	argument, wordsAndArgs. Answer the squeaky clean result."
 
 	| badNames |
-	badNames := (Set withAll: self analyzer global allInstVarNames)
+	badNames := (Set withAll: self analyzer programObject allInstVarNames)
 				addAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext');
 				addAll: #('answer' '_' 'outputs');
 				yourself.
@@ -5335,14 +5336,14 @@ canGenerateClassMessage: selector
 	the specified symbolic selector can be safely generated into the class side of the receiver's 
 	wrapper class."
 
-	^self isTraceOnly or: [self canGenerateMessage: selector into: self global class]!
+	^self isTraceOnly or: [self canGenerateMessage: selector into: self programObject class]!
 
 canGenerateMessage: aSymbol
 	"Private - Answer whether an auto-generated method implementing the message with
 	the specified symbolic selector can be safely generated into the receiver's associated
 	wrapper class."
 
-	^self isTraceOnly or: [self canGenerateMessage: aSymbol into: self global]!
+	^self isTraceOnly or: [self canGenerateMessage: aSymbol into: self programObject]!
 
 canGenerateMessage: aSymbol into: aClass
 	"Private - Answer whether an auto-generated method implementing the message with
@@ -5363,8 +5364,7 @@ canGenerateMethodNamed: anAXMethodName
 	the name (keyword and arguments) can be safely generated into the receiver's associated
 	wrapper class."
 
-	^self isTraceOnly 
-		or: [self canGenerateMessage: anAXMethodName selector into: self global]!
+	^self isTraceOnly or: [self canGenerateMessage: anAXMethodName selector into: self programObject]!
 
 checkConformanceOfExistingClass: aVariableBinding
 	"Private - Check that the existing global with the specified binding is compatible
@@ -5407,7 +5407,7 @@ compileClassMethod: aString categories: categories
 	"Private - Generate the method or send to trace, depending on the mode."
 
 	(self generationFlags anyMask: Trace) ifTrue: [Notification signal: aString].
-	^self isTraceOnly ifFalse: [self global class compile: aString categories: categories]!
+	^self isTraceOnly ifFalse: [self programObject class compile: aString categories: categories]!
 
 compileMethod: aString categories: aCollection
 	"Private - Generate the method or send to trace, depending on the mode."
@@ -5417,7 +5417,7 @@ compileMethod: aString categories: aCollection
 	^self isTraceOnly
 		ifFalse: 
 			[| class source |
-			class := self global.
+			class := self programObject.
 			source := Smalltalk developmentSystem reformatSource: aString in: class.
 			class compile: source categories: aCollection]!
 
@@ -5477,7 +5477,7 @@ generateAs: aString flags: anInteger
 	IDispatch subclass with wrapper methods for the properties and member
 	functions of the dispinterface described by the ITypeInfo. "
 
-	self globalName: aString.
+	self variableName: aString.
 	generationFlags := anInteger.
 	^self generateWrapper!
 
@@ -5528,7 +5528,7 @@ generateClassComment
 	flags := self generationFlags.
 	(flags anyMask: Trace) ifTrue: [Notification signal: stm contents].
 	self isTraceOnly ifTrue: [^self].
-	class := self global.
+	class := self programObject.
 	self shouldOverwriteClassComment
 		ifTrue: [class comment: stm contents]
 		ifFalse: 
@@ -5925,7 +5925,7 @@ resolveExistingClass: aVariableBinding
 
 shouldOverwriteClassComment
 	| existingComment |
-	existingComment := self global comment.
+	existingComment := self programObject comment.
 	^existingComment isEmpty or: 
 			[(existingComment contains: self autoGenClassCommentMarker)
 				or: [self generationFlags allMask: OverwriteClassComments]]!
@@ -7302,6 +7302,22 @@ printOn: aStream
 
 !OS.COM.VARIANT methodsFor!
 
+debugPrintOn: aStream
+	"For VARIANTs we want to be careful not to have any side effects when displayed in the debugger."
+
+	self isArray
+		ifTrue: 
+			[aStream
+				basicPrint: self;
+				nextPut: $(.
+			self isNull
+				ifTrue: [aStream nextPutAll: 'NULL']
+				ifFalse: 
+					[aStream nextPutAll: self typeName; nextPutAll: '[]'.
+					self isByRef ifTrue: [aStream nextPut: $*]].
+			aStream nextPut: $)]
+		ifFalse: [super debugPrintOn: aStream]!
+
 printIDLOn: aPuttableStream
 	"Append, to the <puttableStream>, target, a string whose characters are a 
 	the same as those which would be needed to represent the receiver as a literal
@@ -7339,6 +7355,7 @@ printOn: aPuttableStream
 				nextPutAll: ': ';
 				print: self value].
 	aPuttableStream nextPut: $)! !
+!OS.COM.VARIANT categoriesFor: #debugPrintOn:!printing!public! !
 !OS.COM.VARIANT categoriesFor: #printIDLOn:!printing-IDL!public! !
 !OS.COM.VARIANT categoriesFor: #printOn:!development!printing!public! !
 

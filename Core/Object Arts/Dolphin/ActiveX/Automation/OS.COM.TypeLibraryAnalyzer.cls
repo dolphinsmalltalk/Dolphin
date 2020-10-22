@@ -362,10 +362,10 @@ names
 	^(1 to: self typeInfoCount) collect: [:i | lib nameAt: i]!
 
 namespaceName
-	^namespaceName ifNil: [namespaceName := self variableNameFrom: self name]!
+	^namespaceName ifNil: [namespaceName := (self variableNameFrom: self name) asQualifiedReference]!
 
-namespaceName: aString
-	namespaceName := aString!
+namespaceName: aBindingReference
+	namespaceName := aBindingReference!
 
 path
 	"Answer the receiver's path if correctly registered, otherwise an empty string."

@@ -26,7 +26,7 @@ baseClass
 			[| name |
 			(name := base name) == #IUnknown
 				ifTrue: [IUnknown]
-				ifFalse: [name == #IDispatch ifTrue: [IDispatch] ifFalse: [base global]]]!
+				ifFalse: [name == #IDispatch ifTrue: [IDispatch] ifFalse: [base programObject]]]!
 
 vt
 	"Answer a variant type code (a member of VARENUM) which describes the type

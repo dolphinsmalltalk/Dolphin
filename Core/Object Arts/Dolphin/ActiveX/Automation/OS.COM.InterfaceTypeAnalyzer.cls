@@ -27,7 +27,7 @@ Class Variables:
 classDesc
 	"Private - Answer an <Association> between a Dolphin class suitable for representing the external type described by the receiver, and the number of indirections to the type."
 
-	^self global -> 0!
+	^self programObject -> 0!
 
 clsid
 	"Answer the CLSID of the receiver's coclass."

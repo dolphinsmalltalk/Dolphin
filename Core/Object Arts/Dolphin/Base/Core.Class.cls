@@ -418,7 +418,7 @@ imports
 	^imports!
 
 imports: anArray
-	imports := anArray.
+	imports := anArray asArray.
 	anArray isImmutable: true!
 
 importsFromPoolsString: poolDictString

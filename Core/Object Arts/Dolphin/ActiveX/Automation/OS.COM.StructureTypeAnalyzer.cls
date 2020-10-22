@@ -30,7 +30,7 @@ classDesc
 	the external type described by the receiver, and the number of indirections
 	to the type."
 
-	^self global -> 0!
+	^self programObject -> 0!
 
 isAnonymous
 	"Answer whether the receiver describes an anonymous (i.e. unnamed) structure or union."

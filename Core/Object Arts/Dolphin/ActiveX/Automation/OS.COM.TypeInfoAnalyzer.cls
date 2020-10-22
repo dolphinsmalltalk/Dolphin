@@ -211,20 +211,6 @@ getRefType: href
 
 	^(self class onTypeInfo: (self tlbInterface getRefTypeInfo: href)) asImplType!
 
-global
-	"Answer the global object the receiver has generated/would generate.
-	N.B. This will cause the global to be generated, if it hasn't been already!!"
-
-	| var global |
-	var := self binding.
-	(global := var value) isNil ifTrue: [global := self generateVariableDefinition: var].
-	^global!
-
-globalName: globName
-	"Private - Set the global name to be used for the receiver when generated."
-
-	self binding: (self environment associationAt: globName ifAbsent: [globName -> nil])!
-
 guid
 	"Answer the guid associated with the receiver."
 
@@ -264,11 +250,6 @@ isDual
 
 !
 
-isGlobalDefined
-	"Answer whether a global has already been defined for the receiver."
-
-	^self binding value notNil!
-
 isHidden
 	"Answer whether the receiver is describing a type which should
 	not be displayed in type library browsers.
@@ -279,9 +260,11 @@ isHidden
 isInstalled
 	"Answer whether the receiver has been generated into a class in this image"
 
-	^self isGlobalDefined and: [ | glob |
-		glob := self global.
-		glob methodDictionary notEmpty or: [glob class methodDictionary notEmpty]]!
+	^self isVariableDefined and: 
+			[| class |
+			class := self programObject.
+			self functions isEmpty
+				or: [class methodDictionary notEmpty or: [class class methodDictionary notEmpty]]]!
 
 isStructure
 	"Answer whether the receiver describes a struct or union type."
@@ -292,6 +275,11 @@ isUnion
 	"Answer whether the receiver describes a union."
 
 	^false!
+
+isVariableDefined
+	"Answer whether a global has already been defined for the receiver."
+
+	^self binding value notNil!
 
 nameOfID: memid
 	"Answer a <readableString> name for the member of the 
@@ -319,6 +307,15 @@ nameSansTag
 		ifTrue: [name allButFirst]
 		ifFalse: 
 			[(name beginsWith: 'tag') ifTrue: [name allButFirst: 3] ifFalse: [name]]!
+
+programObject
+	"Answer the program object (typically a class) that the receiver has generated/would generate.
+	N.B. This will cause the object to be generated, if it hasn't been already!!"
+
+	| var value |
+	var := self binding.
+	(value := var value) isNil ifTrue: [value := self generateVariableDefinition: var].
+	^value!
 
 realize
 	"Private - Load the receiver's ITypeInfo from its owning type library."
@@ -392,6 +389,15 @@ varDescAt: anInteger
 		setAnalyzer: self index: varIndex;
 		yourself!
 
+variableName: aString
+	"Private - Set the static variable name to be used for the receiver when generated."
+
+	self binding: ((self environment localBindingFor: aString)
+				ifNil: 
+					[(VariableBinding key: aString value: nil)
+						environment: self environment;
+						yourself])!
+
 variables
 	"Answer <sequencedReadableCollection> of VARDESCs describing the 
 	member variables of the object described by the receiver. The collection will
@@ -425,8 +431,6 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getImplTypeInfoAt:!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #global!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #globalName:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
@@ -434,14 +438,15 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #index!constants!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isVariableDefined!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #programObject!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
@@ -456,6 +461,7 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #typeLib!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #typeName!constants!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #varDescAt:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #variableName:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #variables!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #vt!constants!public! !
 

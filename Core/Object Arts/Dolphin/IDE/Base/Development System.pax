@@ -1209,7 +1209,7 @@ UI.ValueDialog subclass: #'Tools.CategoryPrompter'
 		'AllowReadOnlyMask' -> 16r2
 	}!
 UI.ValueDialog subclass: #'Tools.ChooseClassDialog'
-	instanceVariableNames: 'classesPresenter allowNil'
+	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -26,7 +26,7 @@ needsFree
 	i.e. it is considered that 'reference' structs do not own the underlying structure as
 	this is what is required, for example, in conjunction with StructureArray."
 
-	^self notNull and: [self isPointer not]!
+	^(self isNull or: [self isPointer]) not!
 
 onStartup
 	"Private - The system is starting. Modify the state of the receiver to account for the fact
