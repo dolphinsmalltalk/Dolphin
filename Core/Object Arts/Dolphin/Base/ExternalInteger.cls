@@ -64,7 +64,12 @@ isNull
 	"Answer whether the receiver is Null (i.e. equal to 0). 
 	This message is useful way of testing for NULL pointers or handles."
 
-	^super isNull or: [self value == 0]! !
+	^super isNull or: [self value == 0]!
+
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^false! !
 !ExternalInteger categoriesFor: #asInteger!converting!public! !
 !ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #asString!converting!public! !
@@ -72,6 +77,7 @@ isNull
 !ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #hash!comparing!public! !
 !ExternalInteger categoriesFor: #isNull!public!testing! !
+!ExternalInteger categoriesFor: #isSigned!public!testing! !
 
 !ExternalInteger class methodsFor!
 

@@ -10,6 +10,11 @@ INT_PTR comment: ''!
 !INT_PTR categoriesForClass!External-Data-Structured! !
 !INT_PTR methodsFor!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 unsignedValue: anUnsigned 
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
@@ -25,6 +30,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
+!INT_PTR categoriesFor: #isSigned!public!testing! !
 !INT_PTR categoriesFor: #unsignedValue:!accessing!public! !
 !INT_PTR categoriesFor: #value!**compiled accessors**!public! !
 !INT_PTR categoriesFor: #value:!**compiled accessors**!public! !

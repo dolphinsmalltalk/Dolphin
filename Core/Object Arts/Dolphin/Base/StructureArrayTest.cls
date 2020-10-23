@@ -13,13 +13,9 @@ StructureArrayTest comment: ''!
 arrayClass
 	^StructureArray!
 
-elementClass
-	^SDWORD!
-
-newArrayOfIntegers: anArray 
+newArrayOfIntegers: anArray
 	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])
-		elementClass: self elementClass! !
+		elementClass: self numericElementClass! !
 !StructureArrayTest categoriesFor: #arrayClass!constants!private! !
-!StructureArrayTest categoriesFor: #elementClass!helpers!private! !
 !StructureArrayTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
 

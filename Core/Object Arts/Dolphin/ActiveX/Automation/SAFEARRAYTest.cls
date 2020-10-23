@@ -13,14 +13,11 @@ SAFEARRAYTest comment: ''!
 arrayClass
 	^SAFEARRAY!
 
-elementClass
-	^VARIANT!
-
 elementClassNames
 	^super elementClassNames , #(#IUnknown #IDispatch)!
 
-newArrayOfIntegers: anArray 
-	^anArray asSAFEARRAY!
+newArrayOfIntegers: anArray
+	^SAFEARRAY withAll: anArray elementClass: SDWORD!
 
 testAXRecords
 	"Create a dummy class that is unregistered and which will therefore be represented by an AXRecord"
@@ -33,10 +30,7 @@ testAXRecords
 	"Now create an array of those records"
 	sa := self threePoints: record.
 	"Now attach a SAFEARRAY reference to it that has to deduce the content"
-	sa2 := SAFEARRAY
-				fromAddress: sa yourAddress
-				elementClass: nil
-				owner: sa.
+	sa2 := SAFEARRAY fromAddress: sa yourAddress owner: sa.
 	self assert: sa2 size equals: 3.
 	self assert: sa2 hasRecordInfo.
 	self assertIsNil: sa2 recordClass.
@@ -53,6 +47,34 @@ testAXRecords
 			self assert: elem x equals: i.
 			self assert: elem y equals: i]!
 
+testBounds
+	| subject |
+	subject := SAFEARRAY length: 3 elementClass: SDWORD.
+	self assert: (subject lowerBound: 1) equals: 0.
+	self assert: (subject upperBound: 1) equals: 2!
+
+testElementAt
+	"Test SAFEARRAY>>elementAt:, but only with vectors. Our wrapper doesn't have a way to create multi-dimensioned SAFEARRAYs at present."
+
+	| subject subjectRef invalidIndex |
+	invalidIndex := HRESULT fromUnsignedInteger: 16r8002000B.
+	subject := self newArrayOfIntegers: #(-123 123).
+	self assert: (subject elementAt: {0}) equals: (SDWORD fromInteger: -123).
+	self assert: (subject elementAt: {1}) equals: (SDWORD fromInteger: 123).
+	self
+		should: [subject elementAt: {2}]
+		raise: HRESULTError
+		matching: [:ex | ex tag = invalidIndex].
+	subjectRef := SAFEARRAY fromAddress: subject yourAddress owner: subject.
+	"Should be able to deduce the correct element class"
+	self assert: subjectRef elementClass identicalTo: SDWORD.
+	self assert: (subjectRef elementAt: {0}) equals: (SDWORD fromInteger: -123).
+	self assert: (subjectRef elementAt: {1}) equals: (SDWORD fromInteger: 123).
+	self
+		should: [subjectRef elementAt: {2}]
+		raise: HRESULTError
+		matching: [:ex | ex tag = invalidIndex]!
+
 testElementClasses
 	| array random irand triplets |
 	triplets := #(#(#SWORD -32768 32767) #(#SDWORD -2147483648 2147483647) #(#FLOAT -1.25 1.25) #(#DOUBLE -1.23456789 1.23456789) #(#BSTR '' 'abc') #(#HRESULT ##(S_OK) ##(E_NOTIMPL)) #(#VARIANT_BOOL false true) #(#CURRENCY 99.99s2) #(#SBYTE -128 127) #(#BYTE 0 255) #(#WORD 0 65535) #(#DWORD 0 4294967295) #(#VARIANT 1 1.0 'abc' nil true 1.2s2 ##(DATE
@@ -63,10 +85,7 @@ testElementClasses
 			array := SAFEARRAY length: each size - 1 elementClass: (Smalltalk at: each first).
 			self should: [array at: 1 put: Object new] raise: Error.
 			"We also want to test an indirect reference"
-			sa2 := SAFEARRAY
-						fromAddress: array yourAddress
-						elementClass: nil
-						owner: array.
+			sa2 := SAFEARRAY fromAddress: array yourAddress owner: array.
 			1 to: array size
 				do: 
 					[:i |
@@ -85,7 +104,7 @@ testElementClasses
 	irand := array at: 1.
 	self assert: irand class identicalTo: IRandomStream.
 	self assert: array iid equals: IRandomStream iid.
-	self assert: irand referenceCount equals: 2 + (random interface notNil ifTrue: [1] ifFalse: [0]).
+	self assert: irand referenceCount >= 2.
 	self assert: irand seed equals: 12345.
 	self assert: (irand isSameCOMObject: random interface).
 
@@ -140,10 +159,11 @@ threePoints: recordClass
 				y: each].
 	^sa! !
 !SAFEARRAYTest categoriesFor: #arrayClass!constants!private! !
-!SAFEARRAYTest categoriesFor: #elementClass!constants!private! !
 !SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
 !SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
 !SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
+!SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
+!SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
 !SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !
 !SAFEARRAYTest categoriesFor: #testRecordInfo!public!unit tests! !
 !SAFEARRAYTest categoriesFor: #threePoints:!public!unit tests! !

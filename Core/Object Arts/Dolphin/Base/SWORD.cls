@@ -15,6 +15,11 @@ The range of integer values that can be represented by instances of this class i
 !SWORD categoriesForClass!External-Data-Structured! !
 !SWORD methodsFor!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -24,6 +29,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
+!SWORD categoriesFor: #isSigned!public!testing! !
 !SWORD categoriesFor: #value!**compiled accessors**!public! !
 !SWORD categoriesFor: #value:!**compiled accessors**!public! !
 

@@ -17,11 +17,14 @@ arrayValueString: eachValue
 elementClassNames
 	^#(#SWORD #SDWORD #FLOAT #DOUBLE #CURRENCY #BSTR #HRESULT #VARIANT_BOOL #VARIANT #DECIMAL #SBYTE #BYTE)!
 
-elementFromValue: anObject 
-	^self elementClass fromObject: anObject!
+elementFromValue: anObject
+	^self numericElementClass fromObject: anObject!
 
 elementToValue: element 
 	^element value!
+
+numericElementClass
+	^SDWORD!
 
 testElementSize
 	self elementClassNames do: 
@@ -39,6 +42,7 @@ testInvalidLength
 !GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
 !GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
 !GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
+!GenericExternalArrayTest categoriesFor: #numericElementClass!constants!private! !
 !GenericExternalArrayTest categoriesFor: #testElementSize!public!unit tests! !
 !GenericExternalArrayTest categoriesFor: #testInvalidLength!public!unit tests! !
 

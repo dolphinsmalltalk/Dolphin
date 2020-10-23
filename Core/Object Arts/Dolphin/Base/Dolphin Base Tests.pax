@@ -50,6 +50,7 @@ package classNames
 	add: #ExternalArrayTest;
 	add: #ExternalDescriptorTest;
 	add: #ExternalFieldTest;
+	add: #ExternalIntegerTest;
 	add: #ExternalLibraryTest;
 	add: #ExternalResourceLibraryTest;
 	add: #ExternalStructureTest;
@@ -285,6 +286,11 @@ DolphinTest subclass: #ExternalDescriptorTest
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ExternalFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ExternalIntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

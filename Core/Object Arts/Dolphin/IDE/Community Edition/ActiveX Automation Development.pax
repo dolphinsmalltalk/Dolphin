@@ -5524,22 +5524,23 @@ fieldType
 !SAFEARRAY methodsFor!
 
 printOn: aStream
-	"Print a string representation of self on aStream.
-	Implementation Note: f multidimensioned then just print the dimensions rather 
-	than the contents."
+	"Print a string representation of self on aStream."
 
-	(self isNull or: [self dimensions == 1]) 
+	"Implementation Note: If multidimensioned then just print the dimensions rather than the contents."
+
+	(self isNull or: [self dimensions == 1])
 		ifTrue: [super printOn: aStream]
-		ifFalse: [
-			aStream basicPrint: self.
-			1 to: self dimensions do: [:d |
-				aStream 
-					nextPut: $[;
-					print: (self lowerBound: d); 
-					nextPutAll: '..';
-					print: (self upperBound: d);
-					nextPut: $]]]
-! !
+		ifFalse: 
+			[aStream basicPrint: self.
+			1 to: self dimensions
+				do: 
+					[:d |
+					aStream
+						nextPut: $[;
+						print: (self lowerBound: d);
+						nextPutAll: '..';
+						print: (self upperBound: d);
+						nextPut: $]]]! !
 !SAFEARRAY categoriesFor: #printOn:!printing!private! !
 
 !SAFEARRAY class methodsFor!
