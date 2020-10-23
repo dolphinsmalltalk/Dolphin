@@ -27,6 +27,12 @@ package classNames
 	add: #XMLDOMNodeTest;
 	yourself.
 
+package methodNames
+	add: #ExternalIntegerTest -> #testPrintOnNull;
+	add: #ExternalIntegerTest -> #testPrintOnSigned;
+	add: #ExternalIntegerTest -> #testPrintOnUnsigned;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -160,6 +166,26 @@ DolphinTestClassResource subclass: #CompilerTestClasses
 
 
 "Loose Methods"!
+
+!ExternalIntegerTest methodsFor!
+
+testPrintOnNull
+	| subject |
+	subject := DWORD new.
+	self assert: subject printString equals: 'a DWORD(0)'!
+
+testPrintOnSigned
+	| subject |
+	subject := SDWORD fromInteger: 123.
+	self assert: subject printString equals: 'a SDWORD(123)'!
+
+testPrintOnUnsigned
+	| subject |
+	subject := DWORD fromInteger: 123.
+	self assert: subject printString equals: 'a DWORD(16r7B)'! !
+!ExternalIntegerTest categoriesFor: #testPrintOnNull!public!unit tests! !
+!ExternalIntegerTest categoriesFor: #testPrintOnSigned!public!unit tests! !
+!ExternalIntegerTest categoriesFor: #testPrintOnUnsigned!public!unit tests! !
 
 "End of package definition"!
 

@@ -27,6 +27,11 @@ highPart: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_highPart put: anInteger!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -38,6 +43,7 @@ value: anInteger
 	bytes sqwordAtOffset: _OffsetOf_value put: anInteger! !
 !LARGE_INTEGER categoriesFor: #highPart!**compiled accessors**!public! !
 !LARGE_INTEGER categoriesFor: #highPart:!**compiled accessors**!public! !
+!LARGE_INTEGER categoriesFor: #isSigned!public!testing! !
 !LARGE_INTEGER categoriesFor: #value!**compiled accessors**!public! !
 !LARGE_INTEGER categoriesFor: #value:!**compiled accessors**!public! !
 

@@ -3162,13 +3162,20 @@ valueParameterName
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
-	| hex |
-	hex := self isNull
-			ifTrue: ['0']
-			ifFalse: [self value printStringRadix: 16].
 	aStream
 		basicPrint: self;
-		nextPut: $(; display: hex; nextPut: $)! !
+		nextPut: $(.
+	self isNull
+		ifTrue: [aStream nextPut: $0]
+		ifFalse: 
+			[self isSigned
+				ifTrue: [aStream print: self value]
+				ifFalse: 
+					[self value
+						printOn: aStream
+						base: 16
+						showRadix: true]].
+	aStream nextPut: $)! !
 !ExternalInteger categoriesFor: #printOn:!printing!public! !
 
 !ExternalInteger class methodsFor!

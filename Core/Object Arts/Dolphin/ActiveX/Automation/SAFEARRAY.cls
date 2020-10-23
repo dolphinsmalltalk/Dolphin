@@ -146,42 +146,36 @@ dimensions
 
 	^OLEAutLibrary default safeArrayGetDim: self!
 
-elementAt: indices
-	"Answer the element of the receiver at the location identified
-	by the <sequencedReadableCollection> of <integer> indices.
-	Notes:
-	1) This is likely to be rather slow, and if more than a few
-	elements are to be accessed I'd recommend going directly
-	through the pointer to the data accessible via the #data method
-	(e.g. see the #from:to:keysAndValuesDo: method).
-	2) SafeArrayGetElemnt copies the data if it is a BSTR, VARIANT, 
-	IDispatch, IUnknown, or UDT (VT_RECORD), and therefore the 
-	element will need freeing in those cases, however this will be done
-	automatically by finalization."
+elementAt: aSequencedReadableCollectionOfInteger
+	"Answer the element of the receiver at the location identified by the <sequencedReadableCollection> of <integer> argument."
+
+	"Notes:
+	1) This is likely to be rather slow because of the nature of the SAFEARRAY API, and if more than a few elements are to be accessed I'd recommend going directly through the pointer to the data accessible via the #data method (e.g. see the #from:to:keysAndValuesDo: method).
+	2) SafeArrayGetElemnt copies the data if it is a BSTR, VARIANT, IDispatch, IUnknown, or UDT (VT_RECORD), and therefore the element will need freeing in those cases, however this will be done automatically by finalization."
 
 	| buf rgIndices sz |
 	buf := self elementClass newBuffer.	"We get ownership"
-	sz := indices size.
+	sz := aSequencedReadableCollectionOfInteger size.
 	rgIndices := SDWORDArray new: sz.
-	1 to: sz do: [:i | rgIndices at: i put: (indices at: i)].
+	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
 	OLEAutLibrary default
-		safeArrayGetElement: self rgIndices: rgIndices pv: buf.
+		safeArrayGetElement: self
+		rgIndices: rgIndices
+		pv: buf.
 	^buf!
 
-elementAt: indices put: valueBuf
-	"Set the value of the  the element of the receiver at the location identified
-	by the <sequencedReadableCollection> of <integer> indices to the 
-	argument, valueBuf which must be of a suitable type. This means that, for
-	example, if the array is of type VT_I4, that you will need to wrap a 
-	Smalltalk <Integer> into a <SDWORD>."
+elementAt: aSequencedReadableCollectionOfInteger put: anExternalObject
+	"Set the value of the  the element of the receiver at the location identified by the <sequencedReadableCollection> of <integer> first argument to the 2nd argument, which must be of the element class of the receiver."
 
 	| rgIndices sz |
-	sz := indices size.
+	sz := aSequencedReadableCollectionOfInteger size.
 	rgIndices := SDWORDArray new: sz.
-	1 to: sz do: [:i | rgIndices at: i put: (indices at: i)].
+	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
 	OLEAutLibrary default
-		safeArrayPutElement: self rgIndices: rgIndices pv: valueBuf.
-	^valueBuf!
+		safeArrayPutElement: self
+		rgIndices: rgIndices
+		pv: anExternalObject.
+	^anExternalObject!
 
 elementClass
 	"Answer the class of object to be used to represent the receiver's 
@@ -260,14 +254,16 @@ length: rightDimLength
 	"Now we must redimension."
 	self redim: (lower to: rightDimLength+lower-1)!
 
-lowerBound: dimension
-	"Answer the lower bound of the specified dimension of the receiver.
-	Typically this will be 1."
+lowerBound: anInteger
+	"Answer the lower bound of the specified dimension of the receiver. Typically this will be 1."
 
 	| lBound |
-	lBound := SDWORD new.
-	OLEAutLibrary default safeArrayGetLBound: self nDim: dimension plLbound: lBound.
-	^lBound asInteger!
+	lBound := DWORDBytes new.
+	OLEAutLibrary default
+		safeArrayGetLBound: self
+		nDim: anInteger
+		plLbound: lBound.
+	^lBound asSignedInteger!
 
 newElementAt: anAddress 
 	"Private - Answer a new reference instance of the receiver's element class, pointing at the
@@ -341,11 +337,10 @@ rgsabound
 		length: self cDims
 		elementClass: SAFEARRAYBOUND!
 
-sizeOfDimension: dimension
-	"Answer the size (difference between upper and lower bounds) of
-	the specified dimension of the receiver."
+sizeOfDimension: anInteger
+	"Answer the size (difference between upper and lower bounds) of the specified dimension of the receiver."
 
-	^(self upperBound: dimension) - (self lowerBound: dimension) + 1	!
+	^(self upperBound: anInteger) - (self lowerBound: anInteger) + 1!
 
 start
 	"Private - Answer the lower bound of the receiver's least significant dimension."
@@ -361,37 +356,34 @@ unaccessData
 			[data := nil.
 			OLEAutLibrary default safeArrayUnaccessData: self]!
 
-uncheckedAt: anInteger put: anObject 
-	"Private - Set the value of the element of the receiver at the specified <integer> index
-	to the specified value, which must be representable by the element class of
-	the receiver. Assumes that the receiver is a single-dimensioned array, if
-	not an error will result. .
+uncheckedAt: anInteger put: anObject
+	"Private - Set the value of the element of the receiver at the specified <integer> index to the specified value, which must be representable by the element class of the receiver. Assumes that the receiver is a single-dimensioned array, if not an error will result. 
 	Note: This isn't likely to be terribly fast!!"
 
-	self elementAt: (Array with: anInteger + self start - 1)
-		put: (self elementClass fromObject: anObject).
+	self elementAt: {anInteger + self start - 1} put: (self elementClass fromObject: anObject).
 	^anObject!
 
-upperBound: dimension
-	"Answer the upper bound of the specified dimensions of the receiver."
+upperBound: anInteger
+	"Answer the upper bound of the specified dimension of the receiver."
 
 	| uBound |
-	uBound := SDWORD new.
-	OLEAutLibrary default safeArrayGetUBound: self nDim: dimension plUbound: uBound.
-	^uBound asInteger!
+	uBound := DWORDBytes new.
+	OLEAutLibrary default
+		safeArrayGetUBound: self
+		nDim: anInteger
+		plUbound: uBound.
+	^uBound asSignedInteger!
 
 vartype
-	"Answer the variant type of the receiver's elements. Note that this also
-	includes various flags, so it is not a raw variant type number."
+	"Answer the variant type of the receiver's elements. Note that this also includes various flags, so it is not a raw VT_XXX type number."
 
 	| vt |
-	vt := WORD new.
+	vt := ByteArray new: 2.
 	OLEAutLibrary default safeArrayGetVartype: self pvt: vt.
-	^vt asInteger!
+	^vt wordAtOffset: 0!
 
 vt
-	"Answer the receiver's variant type. This will depend on the element type,
-	but always includes the array modifier."
+	"Answer the receiver's variant type. This will depend on the element type, but always includes the array modifier."
 
 	^self class vt bitOr: self elementClass vt!
 
@@ -526,6 +518,12 @@ elementSize
 
 	^self byteSize!
 
+fromAddress: anAddress
+	"Answer a new SAFEARRAY object referencing and owning the native SAFEARRAY at the specified address.
+	As the array is considered owned, it will be freed by finalization when the new object is finalized."
+
+	^self fromAddress: anAddress owner: nil!
+
 fromAddress: psa elementClass: varClass owner: arrayOwner 
 	"Answer a new instance that points to the SAFEARRAY at
 	the address, psa, which contains elements of <variantCompatible>
@@ -539,6 +537,15 @@ fromAddress: psa elementClass: varClass owner: arrayOwner
 				elementClass: varClass;
 				owner: arrayOwner;
 				yourself]!
+
+fromAddress: anAddress owner: anObject
+	"Answer a new SAFEARRAY object referencing the native SAFEARRAY at the specified address, with the owner, anObject.
+	Unless anObject is nil, the native SAFEARRAY will not be freed when the new SAFEARRAY object goes out of scope. If anObject is nil, then the array is considered owned, it will be freed by finalization when the new object is finalized."
+
+	^self
+		fromAddress: anAddress
+		elementClass: nil
+		owner: anObject!
 
 fromAddress: psa vt: vartype owner: arrayOwner
 	"Answer a new instance that points to the SAFEARRAY at
@@ -654,7 +661,9 @@ vt
 !SAFEARRAY class categoriesFor: #createVector:vt:extra:!helpers!private! !
 !SAFEARRAY class categoriesFor: #defineFields!public!template definition! !
 !SAFEARRAY class categoriesFor: #elementSize!accessing!public! !
+!SAFEARRAY class categoriesFor: #fromAddress:!instance creation!public! !
 !SAFEARRAY class categoriesFor: #fromAddress:elementClass:owner:!instance creation!public! !
+!SAFEARRAY class categoriesFor: #fromAddress:owner:!instance creation!public! !
 !SAFEARRAY class categoriesFor: #fromAddress:vt:owner:!instance creation!public! !
 !SAFEARRAY class categoriesFor: #initialize!development!initializing!private! !
 !SAFEARRAY class categoriesFor: #length:elementClass:!instance creation!public! !

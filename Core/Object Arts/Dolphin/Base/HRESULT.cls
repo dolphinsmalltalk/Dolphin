@@ -91,6 +91,11 @@ isSeverityError
 
 	^self severity == SEVERITY_ERROR!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 printOn: aStream
 	"Append a debug textual representation of the receiver to aStream."
 
@@ -145,6 +150,7 @@ value: anInteger
 !HRESULT categoriesFor: #failed!public!testing! !
 !HRESULT categoriesFor: #isNtStatus!public!testing! !
 !HRESULT categoriesFor: #isSeverityError!public!testing! !
+!HRESULT categoriesFor: #isSigned!public!testing! !
 !HRESULT categoriesFor: #printOn:!displaying!public! !
 !HRESULT categoriesFor: #severity!accessing!public! !
 !HRESULT categoriesFor: #statusCode!accessing!public! !

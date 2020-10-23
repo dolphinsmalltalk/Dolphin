@@ -16,6 +16,11 @@ The range of integer values that can be represented by instances of this class i
 !SDWORD categoriesForClass!External-Data-Structured! !
 !SDWORD methodsFor!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 unsignedValue: anUnsigned
 	"Set the receiver's value field to the value of the unsigned positive
 	integer, anUnsigned."
@@ -31,6 +36,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
+!SDWORD categoriesFor: #isSigned!public!testing! !
 !SDWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SDWORD categoriesFor: #value!**compiled accessors**!public! !
 !SDWORD categoriesFor: #value:!**compiled accessors**!public! !

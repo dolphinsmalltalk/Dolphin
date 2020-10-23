@@ -16,6 +16,11 @@ The range of integer values that can be represented by instances of this class i
 !SBYTE categoriesForClass!External-Data-Structured! !
 !SBYTE methodsFor!
 
+isSigned
+	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
+
+	^true!
+
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
@@ -25,6 +30,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sbyteAtOffset: _OffsetOf_value put: anInteger! !
+!SBYTE categoriesFor: #isSigned!public!testing! !
 !SBYTE categoriesFor: #value!**compiled accessors**!public! !
 !SBYTE categoriesFor: #value:!**compiled accessors**!public! !
 
