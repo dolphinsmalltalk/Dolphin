@@ -2561,17 +2561,11 @@ isDeprecated
 	^self methodClass isDeprecated or: [MethodCategory deprecatedMethods includesMethod: self]!
 
 isSimpleSelfSend: aSymbol
-	"Private - Answer whether the receiver is a method that just sends the specified selector
-	(which must be zero-argument) to self. Note that this does not work for special selectors
-	such as #class, #new, etc, that have specific bytecode encodings."
+	"Private - Answer whether the receiver is a method that just sends the specified selector (which must be zero-argument) to self. Note that this does not work for special selectors such as #class, #new, etc, that have specific bytecode encodings."
 
-	^self size > 0 and: 
-			[(self at: 1) == aSymbol and: 
-					[| packed |
-					packed := self basicByteCodes.
-					(packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
-						or: [packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
-							and: [self extraIndex == 0]]]!
+	^(byteCodes == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
+		or: [byteCodes == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
+			and: [(self basicAt: 1) == aSymbol and: [self extraIndex == 0]]!
 
 stylerClass
 	^self subclassResponsibility! !

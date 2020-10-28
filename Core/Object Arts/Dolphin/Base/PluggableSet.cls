@@ -20,17 +20,16 @@ copyEmpty: anInteger
 
 	^(super copyEmpty: anInteger) setSearchPolicy: self searchPolicy!
 
-findElementOrNil: anObject 
+findElementOrNil: anObject
 	"Private - Answer the index of the given object in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which the object hashes.
 	A pluggable <searchPolicy> is used for key comparisons and hashing."
 
 	| capacity index |
-	capacity := self basicSize.
-	index := self hash: anObject max: capacity.
+	index := self hash: anObject max: (capacity := self basicSize).
 	
 	[| element |
-	(element := self basicAt: index) isNil or: [searchPolicy compare: element with: anObject]] 
+	(element := self basicAt: index) isNil or: [searchPolicy compare: element with: anObject]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 

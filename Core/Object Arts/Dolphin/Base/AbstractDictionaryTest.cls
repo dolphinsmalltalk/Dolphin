@@ -47,6 +47,22 @@ newDictionary
 newEmpty
 	^self collectionClass new!
 
+testAssociationsDo
+	| subject actual expected |
+	subject := self newEmpty.
+	subject associationsDo: [:assoc | self fail: 'empty collection should not be enumerated'].
+	expected := Set new.
+	(1 to: 5) do: 
+			[:each |
+			| key value |
+			key := self makeKey: each.
+			value := self assimilate: each.
+			expected add: (subject associationClass key: key value: value).
+			subject at: key put: value].
+	actual := Set new.
+	subject associationsDo: [:each | actual add: each].
+	self assert: actual equals: expected!
+
 testAtIfAbsent
 	| dictionary |
 	dictionary := self newDictionary.
@@ -238,6 +254,7 @@ testStrongTalkTests
 !AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
 !AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
 !AbstractDictionaryTest categoriesFor: #newEmpty!helpers!public! !
+!AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
 !AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
 !AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
 !AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !

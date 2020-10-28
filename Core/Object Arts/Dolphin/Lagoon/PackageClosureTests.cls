@@ -17,7 +17,7 @@ consoleAppUnimplemented
 	^#(#defineTemplate)!
 
 environmentForAppDeployment: aCollectionOfPackages
-	| env names devMethods removedClasses allMethods |
+	| env names devMethods removedClasses |
 	"The in-scope world is drawn from the slice of the classes & methods that are in the requested packages and their pre-reqs"
 	env := self environmentForPackageClosure: aCollectionOfPackages.
 	"Classes categorised as 'Development' are excluded"
@@ -36,11 +36,10 @@ environmentForAppDeployment: aCollectionOfPackages
 						, ImageStripper classBuildingMethodCategoryNames , ImageStripper classRemovingMethodCategoryNames
 						, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
 	"We can speed things up a bit by taking a snapshot of the devMethods environment."
-	devMethods := BrowserEnvironment new forMethods: devMethods allMethods.
+	devMethods := BrowserEnvironment new forMethodsIn: devMethods.
 	env := env & devMethods not.
 	"As before, reify the environment to speed things up as we will enumerate it more than once."
-	allMethods := env allMethods.
-	env := BrowserEnvironment new forMethods: allMethods.
+	env := BrowserEnvironment new forMethodsIn: env.
 	self
 		assert: (devMethods & (BrowserEnvironment new forMethodCategories: #('must not strip'))) isEmpty.
 	names := (aCollectionOfPackages collect: [:each | each name]) asArray sort.
@@ -54,7 +53,7 @@ environmentForPackageClosure: aCollectionOfPackages
 	aCollectionOfPackages do: 
 			[:each |
 			closure add: each.
-			closure addAll: each allPrerequisites].
+			each addAllPrerequisitesTo: closure].
 	^BrowserEnvironment new forPackages: closure!
 
 simpleGuiAppUnimplementedMessages

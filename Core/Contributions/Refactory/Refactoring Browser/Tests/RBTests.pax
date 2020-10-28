@@ -379,7 +379,7 @@ isEqualTo: anObject
 
 !CompiledCode methodsFor!
 
-isEqualTo: aMethod 
+isEqualTo: aMethod
 	| count |
 	self == aMethod ifTrue: [^true].
 	self class = aMethod class ifFalse: [^false].
@@ -389,13 +389,13 @@ isEqualTo: aMethod
 	"We need to special case static blocks in the literal frame to avoid infinite recursion"
 	1 to: count
 		do: 
-			[:i | 
+			[:i |
 			| a b |
-			a := self at: i.
-			b := aMethod at: i.
+			a := self basicAt: i.
+			b := aMethod basicAt: i.
 			"The static blocks must be equal if they are implemented by this method and
 			the bytecodes and all other literals are identical"
-			(a class == BlockClosure and: [a method == self]) 
+			(a class == BlockClosure and: [a method == self])
 				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !

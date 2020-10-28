@@ -60,6 +60,9 @@ methodsInBehavior: class
 
 	^Set new!
 
+methodsInBehavior: aBehavior do: aMonadicValuable 
+!
+
 removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver."
 
@@ -73,6 +76,7 @@ removeClass: class
 !IntermediateCategory categoriesFor: #isEmpty!public!testing! !
 !IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
 !IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
+!IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 !IntermediateCategory categoriesFor: #removeClass:!public!removing! !
 
 !IntermediateCategory class methodsFor!

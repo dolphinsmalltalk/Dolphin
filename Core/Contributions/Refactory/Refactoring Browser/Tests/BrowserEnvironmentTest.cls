@@ -44,7 +44,7 @@ copyFor: aBrowserEnvironment
 
 keysFor: aBrowserEnvironment 
 	| allKeys |
-	allKeys := Set withAll: aBrowserEnvironment keys.
+	allKeys := aBrowserEnvironment keys asSet.
 	allKeys addAll: aBrowserEnvironment not keys.
 	allKeys removeAll: Smalltalk keys.
 	self assert: allKeys isEmpty!

@@ -26,19 +26,22 @@ findKeyOrNil: anObject
 			whileFalse: [index := (index bitAnd: mask) + 1].
 	^index!
 
-fullCheck
-	"Private - Check the load factor in the receiver, and grow if exceeded."
-
-	"Slop calculation should be kept in sync with MethodDictionary class>>sizeFor:"
-
-	| capacity |
-	capacity := self basicSize.
-	(capacity - tally bitShift: 2) < capacity ifTrue: [self grow]!
-
 hash: anObject max: anInteger
 	"Implementation Note: This must match the selector hashing implementation used by the VM."
 
 	^(anObject basicIdentityHash bitAnd: anInteger - 1) + 1!
+
+privateAt: index put: newObject
+	"Private - Insert newObject as the element of the receiver at index. Attempts to maintain the
+	'optimal' load factor (and thereby ensures there is always a least one empty slot in the Set, an 
+	invariant required by the search algorithm)."
+
+	| capacity |
+	self basicAt: index put: newObject.
+	tally := tally + 1.
+	capacity := self basicSize.
+	(capacity - tally bitShift: 2) < capacity ifTrue: [self grow].
+	^newObject!
 
 removeKey: key ifAbsent: exceptionHandler 
 	"Remove the key (and its associated value), from the receiver. If key is not in the 
@@ -62,8 +65,8 @@ removeKey: key ifAbsent: exceptionHandler
 			self become: newMe.
 			value]! !
 !MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!MethodDictionary categoriesFor: #fullCheck!helpers!private! !
 !MethodDictionary categoriesFor: #hash:max:!private!searching! !
+!MethodDictionary categoriesFor: #privateAt:put:!accessing!private! !
 !MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 
 !MethodDictionary class methodsFor!

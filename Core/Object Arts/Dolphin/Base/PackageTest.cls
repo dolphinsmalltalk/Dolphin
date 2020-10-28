@@ -223,6 +223,14 @@ tearDown
 			[loadedPackages do: [:each | Package manager basicUninstall: each].
 			loadedPackages := nil]!
 
+testBehaviorFromName
+	"Regression test for fix of bug handling class names containing non-ASCII characters. Note that such names are not syntactically valid in ANSI Smalltalk syntax, but they can easily be generated programmatically, and in future we may want to modernise the syntax to allow these."
+
+	| subject |
+	subject := (ClassBuilder forAnonymousSubclassOf: Package) createNewClass new.
+	subject class compile: 'classFromName: aString ifAbsent: aBlock ^aString = ''Camión'''.
+	self assert: (subject behaviorFromName: 'Camión class' ifAbsent: []) equals: true class!
+
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
 
@@ -272,6 +280,7 @@ testTimestampInitialized
 !PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
 !PackageTest categoriesFor: #setUp!initializing!private!unit tests! !
 !PackageTest categoriesFor: #tearDown!private!unit tests! !
+!PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
 !PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
