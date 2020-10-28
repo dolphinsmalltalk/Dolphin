@@ -13,6 +13,7 @@ package classNames
 	add: #CompilerTestClasses;
 	add: #DolphinCompilerTestMethods;
 	add: #DolphinCompilerTestMethodsSubclass;
+	add: #ImageListViewTest;
 	add: #KeyedAspectTest;
 	add: #PackageEnvironmentTest;
 	add: #PluggableEnvironmentTest;
@@ -23,15 +24,18 @@ package classNames
 	add: #SmalltalkParserTest;
 	add: #SmalltalkSystemTest;
 	add: #SmalltalkWorkspaceTest;
+	add: #StStyler;
 	add: #VersionResourceTest;
 	add: #VMTest;
 	add: #XMLDOMNodeTest;
 	yourself.
 
 package methodNames
+	add: #BorderLayoutTest -> #testResourceBrowserPreview;
 	add: #ExternalIntegerTest -> #testPrintOnNull;
 	add: #ExternalIntegerTest -> #testPrintOnSigned;
 	add: #ExternalIntegerTest -> #testPrintOnUnsigned;
+	add: #ScintillaViewTest -> #testTokensFromTo;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -75,6 +79,11 @@ Object subclass: #DolphinCompilerTestMethods
 	classInstanceVariableNames: ''!
 DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StParseNodeVisitor subclass: #StStyler
+	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -153,6 +162,11 @@ PresenterTest subclass: #SmalltalkWorkspaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ImageViewAbstractTest subclass: #ImageListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -174,6 +188,28 @@ DolphinTestClassResource subclass: #CompilerTestClasses
 
 "Loose Methods"!
 
+!BorderLayoutTest methodsFor!
+
+testResourceBrowserPreview
+	"#1758"
+
+	| resourceId resourceView bmp toolbox resources |
+	resourceId := ResourceIdentifier class: ResourceBrowser name: 'Default view'.
+	resourceView := 
+			[Smalltalk developmentSystem loadViewResource: resourceId resource inContext: View desktop]
+					on: Error
+					do: [:x | ].
+	bmp := resourceView notNil
+				ifTrue: 
+					[resourceView invalidateLayoutDeeply.
+					Bitmap fromView: resourceView]
+				ifFalse: [Error icon].
+	toolbox := resourceView viewNamed: 'resourceToolbox'.
+	resources := resourceView viewNamed: 'resources'.
+	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
+	resourceView destroy! !
+!BorderLayoutTest categoriesFor: #testResourceBrowserPreview!public!unit tests! !
+
 !ExternalIntegerTest methodsFor!
 
 testPrintOnNull
@@ -193,6 +229,23 @@ testPrintOnUnsigned
 !ExternalIntegerTest categoriesFor: #testPrintOnNull!public!unit tests! !
 !ExternalIntegerTest categoriesFor: #testPrintOnSigned!public!unit tests! !
 !ExternalIntegerTest categoriesFor: #testPrintOnUnsigned!public!unit tests! !
+
+!ScintillaViewTest methodsFor!
+
+testTokensFromTo
+	| tokens expected styler |
+	presenter textStyles: SmalltalkWorkspace textStyles.
+	presenter stylerClass: SmalltalkExpressionStyler.
+	styler := StStyler new.
+	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
+			[:text |
+			presenter text: text.
+			presenter restyleAll.
+			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
+			expected := (SmalltalkScanner on: presenter text readStream) contents
+						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
+			self assert: tokens equals: expected]! !
+!ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 
 "End of package definition"!
 
