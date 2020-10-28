@@ -18,8 +18,7 @@ findElementOrNil: anObject
 	The entire method is copied for performance reasons."
 
 	| capacity index |
-	capacity := self basicSize.
-	index := self hash: anObject max: capacity.
+	index := anObject identityHash \\ (capacity := self basicSize) + 1.
 	
 	[| element |
 	(element := self basicAt: index) isNil or: [anObject == element]]

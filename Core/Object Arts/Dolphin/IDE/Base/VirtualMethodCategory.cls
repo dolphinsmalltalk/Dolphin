@@ -31,6 +31,11 @@ addMethodSilently: aCompiledMethod
 behaviorsDo: aMonadicValuable 
 	self class environment allBehaviorsDo: aMonadicValuable!
 
+includesBehavior: aBehavior
+	"Answer whether the receiver categorizes any methods in the specified class."
+
+	^aBehavior methodDictionary anySatisfy: [:each | self includesMethod: each]!
+
 includesMethod: aCompiledMethod 
 	"Answer whether the receiver includes the <CompiledMethod> argument.
 	This is the only method that must be implemented in subclasses."
@@ -49,6 +54,15 @@ isVirtual
 
 	^true!
 
+methodsInBehavior: aBehavior
+	"Answer a <sequencedReadableCollection> of <CompiledMethods>s being all the methods in the <Behavior>
+	argument which are members of the receiver."
+
+	| answer |
+	answer := WriteStream on: (Array new: 8).
+	self methodsInBehavior: aBehavior do: [:each | answer nextPut: each].
+	^answer contents!
+
 methodsInBehavior: aBehavior do: aMonadicValuable 
 	aBehavior methodDictionary 
 		do: [:each | (self includesMethod: each) ifTrue: [aMonadicValuable value: each]]!
@@ -61,12 +75,23 @@ removeMethodSilently: aCompiledMethod
 	fits the membership criteria of the category, therefore the default is to
 	do nothing here."
 
-	! !
+	!
+
+selectorsInBehavior: aBehavior
+	"Answer a <sequencedReadableCollection> of <Symbol>s being the selectors of methods in the <Behavior> argument which are members of the receiver."
+
+	| selectors |
+	selectors := WriteStream on: (Array new: 8).
+	self methodsInBehavior: aBehavior do: [:each | selectors nextPut: each selector].
+	^selectors contents! !
 !VirtualMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
 !VirtualMethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
+!VirtualMethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
 !VirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
 !VirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
 !VirtualMethodCategory categoriesFor: #isVirtual!public!testing! !
+!VirtualMethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !VirtualMethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 !VirtualMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!VirtualMethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
 

@@ -65,7 +65,7 @@ hash
 isEmpty
 	"Answer whether the receiver is an empty category (with no members)"
 
-	^self contents isEmpty!
+	^self subclassResponsibility!
 
 isIntermediate
 	"Private - Answer whether the receiver is a temporary category used only as a 

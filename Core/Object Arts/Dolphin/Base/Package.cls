@@ -246,7 +246,7 @@ behaviorFromName: aString ifAbsent: exceptionHandler
 	^index == 0
 		ifTrue: [self classFromName: aString ifAbsent: exceptionHandler]
 		ifFalse: 
-			[(self classFromName: (aString first: index - 1) ifAbsent: [])
+			[(self classFromName: (aString copyFrom: 1 to: index - 1) ifAbsent: [])
 				ifNil: [exceptionHandler value]
 				ifNotNil: [:class | class class]]!
 
@@ -617,7 +617,7 @@ includesClass: aClass
 	"Answer whether the receiver owns aClass. aClass's metaclass is
 	automatically owned as well."
 
-	^(classNames includes: aClass instanceClass name) and: [(self isImportedClass: aClass) not]!
+	^(classNames includes: aClass instanceClass name) and: [(ClassLocator isImportedClass: aClass) not]!
 
 includesGlobalNamed: globalName
 	"Answer whether the receiver owns the global named globalName."

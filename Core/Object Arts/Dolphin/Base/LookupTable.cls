@@ -103,7 +103,7 @@ findElementOrNil: anObject
 
 	^self findKeyOrNil: anObject!
 
-findKeyOrNil: anObject 
+findKeyOrNil: anObject
 	"Private - Answer the index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which 
 	the key hashes."
@@ -113,11 +113,10 @@ findKeyOrNil: anObject
 	Subclasses which use identity for key comparison and hashing MUST override this method."
 
 	| capacity index |
-	capacity := self basicSize.
-	index := self hash: anObject max: capacity.
+	index := anObject hash \\ (capacity := self basicSize) + 1.
 	
 	[| key |
-	(key := self basicAt: index) isNil or: [key = anObject]] 
+	(key := self basicAt: index) isNil or: [key = anObject]]
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 

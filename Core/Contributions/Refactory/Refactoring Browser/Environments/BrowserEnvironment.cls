@@ -186,6 +186,15 @@ forMethods: methodCollection
 		label: ('Some methods in <1d>' expandMacrosWith: self);
 		yourself!
 
+forMethodsIn: aBrowserEnvironment
+	| env |
+	env := (SelectorEnvironment onEnvironment: self)
+				label: ('Some methods in <1d>' expandMacrosWith: self);
+				yourself.
+	aBrowserEnvironment
+		classesAndSelectorsDo: [:class :selector | env addClass: class selector: selector].
+	^env!
+
 implementorsMatching: aString 
 	^SelectorEnvironment implementorsMatching: aString in: self!
 
@@ -247,14 +256,12 @@ isSystem
 
 keys
 	| keys |
-	keys := Set new.
+	keys := IdentitySet new.
 	Smalltalk keysAndValuesDo: 
-			[:key :value | 
-			| class |
-			value isBehavior 
-				ifTrue: [(self includesClass: value) ifTrue: [keys add: key]].
-			class := value class.
-			(self includesClass: class) ifTrue: [keys add: key]].
+			[:key :value |
+			value isBehavior
+				ifTrue: [((self includesClass: value) or: [self includesClass: value class]) ifTrue: [keys add: key]]
+				ifFalse: [(self includesClass: value class) ifTrue: [keys add: key]]].
 	^keys!
 
 label
@@ -288,9 +295,14 @@ numberClasses
 	^self classNames size!
 
 numberSelectors
-	| total |
+	| total classes |
 	total := 0.
-	Smalltalk allBehaviorsDo: [:class | total := total + class numberSelectors].
+	classes := Smalltalk allClasses.
+	1 to: classes size
+		do: 
+			[:i |
+			| class |
+			total := total + (class := classes at: i) numberSelectors + class class numberSelectors].
 	^total!
 
 printOn: aStream
@@ -394,6 +406,7 @@ whichProtocolsInclude: aSelector in: aClass
 !BrowserEnvironment categoriesFor: #forClasses:!environments!public! !
 !BrowserEnvironment categoriesFor: #forClassHierarchyOf:!environments!public! !
 !BrowserEnvironment categoriesFor: #forMethods:!environments!public! !
+!BrowserEnvironment categoriesFor: #forMethodsIn:!environments!public! !
 !BrowserEnvironment categoriesFor: #implementorsMatching:!environments!public! !
 !BrowserEnvironment categoriesFor: #implementorsOf:!environments!public! !
 !BrowserEnvironment categoriesFor: #includesCategory:!public!testing! !

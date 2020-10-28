@@ -17,7 +17,7 @@ categories
 	^categories select: [:each | self includesCategory: each]!
 
 categories: aCollection
-	categories := aCollection!
+	categories := aCollection asSet!
 
 classNames
 	^self categories inject: IdentitySet new

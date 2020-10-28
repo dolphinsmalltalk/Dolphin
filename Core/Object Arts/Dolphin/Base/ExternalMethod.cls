@@ -78,7 +78,7 @@ descriptorLiteral
 	a fixed offset is assumed for the literal frame), but we know better - all ExternalMethods 
 	must have a descriptor, so it is an inst. var."
 
-	^self at: 1!
+	^self basicAt: 1!
 
 functionName
 	"Private - Answer the functionName."

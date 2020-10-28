@@ -59,10 +59,21 @@ contents
 	Notification deprecated.
 	^self methods!
 
-includesMethod: method
-	"Answer whether the receiver includes the <CompiledMethod>, method."
+includesBehavior: aBehavior
+	"Answer whether the receiver categorizes any methods in the specified class."
 
-	^(method methodClass selectorsInCategory: self) identityIncludes: method selector!
+	^aBehavior includesCategory: self!
+
+includesMethod: aCompiledMethod
+	"Answer whether the receiver includes the <CompiledMethod> argument."
+
+	^(aCompiledMethod methodClass selectorsInCategory: self) identityIncludes: aCompiledMethod selector!
+
+isEmpty
+	"Answer whether the receiver is an empty category (with no members)"
+
+	self class environment allBehaviorsDo: [:each | self methodsInBehavior: each do: [:method | ^false]].
+	^true!
 
 isPrivacy
 	"Private - Answer whether the receiver is a method privacy category."
@@ -74,17 +85,16 @@ methods
 
 	| foundMethods |
 	foundMethods := IdentitySet new.
-	self behaviorsDo: [:aBehavior | foundMethods addAll: (self methodsInBehavior: aBehavior)].
+	self class environment
+		allBehaviorsDo: [:each | self methodsInBehavior: each do: [:method | foundMethods add: method]].
 	^foundMethods!
 
-methodsInBehavior: aBehavior 
+methodsInBehavior: aBehavior
 	"Answer a <sequencedReadableCollection> of <CompiledMethods>s being all the methods in the <Behavior>
 	argument which are members of the receiver."
 
-	| answer |
-	answer := OrderedCollection new: 32.
-	self methodsInBehavior: aBehavior do: [:each | answer addLast: each].
-	^answer!
+	^(aBehavior selectorsInCategory: self)
+		collect: [:eachSelector | aBehavior compiledMethodAt: eachSelector]!
 
 methodsInBehavior: aBehavior do: aMonadicValuable 
 	(aBehavior selectorsInCategory: self) do: 
@@ -117,7 +127,12 @@ removeMethodSilently: method
 	"Private - Remove the <CompiledMethod>, method, from the set of 
 	methods that are members of the receiver, and make no fuss about it." 
 
-	method methodClass removeSelector: method selector fromCategory: self! !
+	method methodClass removeSelector: method selector fromCategory: self!
+
+selectorsInBehavior: aBehavior
+	"Answer a <sequencedReadableCollection> of <Symbol>s being the selectors of methods in the <Behavior> argument which are members of the receiver."
+
+	^aBehavior selectorsInCategory: self! !
 !MethodCategory categoriesFor: #addClass:!adding!public! !
 !MethodCategory categoriesFor: #addMethod:!adding!public! !
 !MethodCategory categoriesFor: #addMethods:!adding!public! !
@@ -126,15 +141,18 @@ removeMethodSilently: method
 !MethodCategory categoriesFor: #behaviors!enumerating!private! !
 !MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
 !MethodCategory categoriesFor: #contents!enumerating!public! !
+!MethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
 !MethodCategory categoriesFor: #includesMethod:!public!testing! !
+!MethodCategory categoriesFor: #isEmpty!public!testing! !
 !MethodCategory categoriesFor: #isPrivacy!private!testing! !
-!MethodCategory categoriesFor: #methods!public! !
+!MethodCategory categoriesFor: #methods!enumerating!public! !
 !MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 !MethodCategory categoriesFor: #removeClass:!public!removing! !
 !MethodCategory categoriesFor: #removeMethod:!public!removing! !
 !MethodCategory categoriesFor: #removeMethods:!public!removing! !
 !MethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!MethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
 
 !MethodCategory class methodsFor!
 

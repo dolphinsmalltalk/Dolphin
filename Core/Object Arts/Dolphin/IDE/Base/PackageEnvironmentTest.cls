@@ -29,7 +29,7 @@ classNamesFor: aPackageEnvironment
 
 testPackageEnvironment
 	| env selectors |
-	env := BrowserEnvironment new
+	env := universalEnvironment
 				forPackages: (Array with: (Package manager packageNamed: 'Dolphin Common Dialogs')).
 	self universalTestFor: env.
 	self assert: (env includesClass: Font).

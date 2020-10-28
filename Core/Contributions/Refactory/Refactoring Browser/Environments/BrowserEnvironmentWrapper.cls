@@ -24,29 +24,30 @@ allClasses
 allClassesDo: aBlock
 	"Private - Evaluate the <monadicValuable> argument, aBlock, for every class that could possibly be included in the receiver."
 
-	| allClasses numClasses step |
+	| allClasses |
 	allClasses := Smalltalk allClasses.
-	numClasses := allClasses size.
 	progressBlock
 		ifNil: 
-			[1 to: numClasses
+			[1 to: allClasses size
 				do: 
 					[:i |
 					| class |
-					class := allClasses at: i.
-					aBlock value: class.
-					aBlock value: class class]]
+					aBlock
+						value: (class := allClasses at: i);
+						value: class class]]
 		ifNotNil: 
 			[:progress |
+			| numClasses step |
+			numClasses := allClasses size.
 			step := numClasses // 100.
 			progress value: 0.
 			1 to: numClasses
 				do: 
 					[:i |
 					| class |
-					class := allClasses at: i.
-					aBlock value: class.
-					aBlock value: class class.
+					aBlock
+						value: (class := allClasses at: i);
+						value: class class.
 					i \\ step == 0 ifTrue: [progress value: i * 100 // numClasses]].
 			progress value: 100]!
 
