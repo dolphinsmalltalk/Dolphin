@@ -27,7 +27,6 @@ package classNames
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #IconTest;
-	add: #ImageListViewTest;
 	add: #ImageViewAbstractTest;
 	add: #ImageViewTest;
 	add: #LayoutManagerTest;
@@ -64,7 +63,6 @@ package classNames
 	add: #SliderTest;
 	add: #StaticPathTest;
 	add: #StaticTextTest;
-	add: #StStyler;
 	add: #StyledContainerTest;
 	add: #TabViewTest;
 	add: #TabViewXPTest;
@@ -90,7 +88,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Anonymous Classes'
 	'..\Base\Dolphin Base Tests'
@@ -123,8 +120,7 @@ package setPrerequisites: #(
 	'Models\Tree\Dolphin Tree Models'
 	'Presenters\Tree\Dolphin Tree Presenter'
 	'Type Converters\Dolphin Type Converters'
-	'Models\Value\Dolphin Value Models'
-	'..\System\Compiler\Smalltalk Parser').
+	'Models\Value\Dolphin Value Models').
 
 package!
 
@@ -134,11 +130,6 @@ Object subclass: #MockScintillaView
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
-StParseNodeVisitor subclass: #StStyler
-	instanceVariableNames: 'view arrayDepth'
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
@@ -390,11 +381,6 @@ MultilineTextEditTest subclass: #ScintillaViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ImageViewAbstractTest subclass: #ImageListViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -497,7 +483,7 @@ testRectangleReadWrite
 
 testResourceReadWrite
 	| rid shell shell1 shell2 in contents1 contents2 |
-	rid := ResourceIdentifier class: ClassBrowserShell name: 'Default view'.
+	rid := ResourceIdentifier class: Shell name: 'Default view'.
 	
 	[shell := rid loadWithContext: View desktop.
 	contents1 := self writeLiteralsFor: shell.

@@ -104,21 +104,7 @@ testSetGetAnnotations
 					text: 'Blah'
 					style: #Notification).
 	presenter annotations: annotations.
-	self assert: (presenter annotations noDifference: annotations)!
-
-testTokensFromTo
-	| tokens expected styler |
-	presenter textStyles: SmalltalkWorkspace textStyles.
-	presenter stylerClass: SmalltalkExpressionStyler.
-	styler := StStyler new.
-	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
-			[:text |
-			presenter text: text.
-			presenter restyleAll.
-			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
-			expected := (SmalltalkScanner on: presenter text readStream) contents
-						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
-			self assert: tokens equals: expected]! !
+	self assert: (presenter annotations noDifference: annotations)! !
 !ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
 !ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
@@ -126,5 +112,4 @@ testTokensFromTo
 !ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 
