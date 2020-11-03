@@ -88,6 +88,12 @@ Certain methods are not overridden for the following reasons:
 !SharedLookupTable categoriesForClass!Collections-Unordered! !
 !SharedLookupTable methodsFor!
 
+anySatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
+
+	self do: [:e | (aMonadicValuable value: e) ifTrue: [^true]].
+	^false!
+
 asArray
 	"Answer an Array whose elements are those of the receiver (ordering is possibly arbitrary).
 	Must implement as critical section as otherwise Array size might be wrong."
@@ -296,6 +302,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
+!SharedLookupTable categoriesFor: #anySatisfy:!enumerating!public! !
 !SharedLookupTable categoriesFor: #asArray!converting!public! !
 !SharedLookupTable categoriesFor: #asByteArray!converting!public! !
 !SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !

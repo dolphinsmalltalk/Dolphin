@@ -26,6 +26,15 @@ add: anAssociation
 	^anAssociation
 !
 
+anySatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
+
+	"Implementation note: Override to avoid superclass full-block implementation."
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [(aMonadicValuable value: (values at: i)) ifTrue: [^true]]].
+	^false!
+
 associationAt: anObject ifAbsent: aNiladicValuable 
 	"Answer a new <Association> between the key and value of the receiver at the first argument.
 	If the key is not found, answer the result of evaluating the <niladicValuable> exception
@@ -277,6 +286,7 @@ valuesClass
 
 	^Array! !
 !LookupTable categoriesFor: #add:!adding!public! !
+!LookupTable categoriesFor: #anySatisfy:!enumerating!public! !
 !LookupTable categoriesFor: #associationAt:ifAbsent:!accessing!public! !
 !LookupTable categoriesFor: #associationsDo:!enumerating!public! !
 !LookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
