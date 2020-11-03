@@ -185,20 +185,24 @@ terminateProcess
 	self cancel!
 
 wait
-	"Delay the active Process until the receiver's resumption time. The processes priority is temporarily raised to prevent it holding up the timing process when its critical  section - if we did not do this and the current active process has a low priority, then it might be preempted in its critical section, which will prevent the TimingProcess from operating correctly. The resumption time is calculated outside the critical section so that it is based, as near as possible, on the millisecondClockValue at the time the #wait message is sent. If it were calculated inside, then it would incorrectly include the time taken to acquire the AccessProtect Semaphore."
+	"Delay the active Process until the receiver's resumption time. The processes priority is temporarily raised to prevent it holding up the timing process when its critical  section - if we did not do this and the current active process has a low priority, then it might be preempted in its critical section, which will prevent the TimingProcess from operating correctly.
+
+	The resumption time is calculated outside the critical section so that it is based, as near as possible, on the microsecondClockValue at the time the #wait message is sent. If it were calculated inside, then it would incorrectly include the time taken to acquire the AccessProtect Semaphore. However, we must check again upon entering the critical section that it has not been cleared by a #signal in the interim--in this case we have nothing to do, similar to if we were scheduled for an amount of time less than the current resolution."
 
 	| resumingAt |
 	resumingAt := self calcResumptionTime.
-	AccessProtect critical: [
-		"If the new Delay will be the first to wakeup, schedule it"
-		Current isNil 
-			ifTrue: [self schedule]
-			ifFalse: [
-				resumingAt < Current resumptionTime
-					ifTrue: [ 
-						Current snooze.
-						self schedule]
-					ifFalse: [self snooze]]] atPriority: TimingProcess priority-1.
+	AccessProtect critical: 
+			[resumptionTime isNil ifFalse: 
+					["If the new Delay will be the first to wakeup, schedule it"
+					Current isNil
+						ifTrue: [self schedule]
+						ifFalse: 
+							[resumingAt < Current resumptionTime
+								ifTrue: 
+									[Current snooze.
+									self schedule]
+								ifFalse: [self snooze]]]]
+		atPriority: TimingProcess priority - 1.
 	"Now make the active Process wait"
 	waitSemaphore wait!
 
