@@ -1145,7 +1145,11 @@ reformatSource
 		ifFalse: 
 			[formatter indent: tabs
 				around: [reformatted := (source copyFrom: 1 to: tabs) , (formatter format: expr)]].
-	^self hasSelection ifTrue: [self replaceSelection: reformatted] ifFalse: [self text: reformatted]!
+	^self hasSelection
+		ifTrue: [self replaceSelection: reformatted]
+		ifFalse: 
+			[self text: reformatted.
+			self view moveToEndOfDocument]!
 
 replaceSelection: aString
 	"Replace the current selected range of text with aString"
