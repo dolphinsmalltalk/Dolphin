@@ -15,6 +15,7 @@ package classNames
 	add: #DolphinCompilerTestMethodsSubclass;
 	add: #ImageListViewTest;
 	add: #KeyedAspectTest;
+	add: #MethodCategoryEnvironmentTest;
 	add: #PackageEnvironmentTest;
 	add: #PluggableEnvironmentTest;
 	add: #ProductReleaseTest;
@@ -163,6 +164,11 @@ PresenterTest subclass: #SmalltalkWorkspaceTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ImageViewAbstractTest subclass: #ImageListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
