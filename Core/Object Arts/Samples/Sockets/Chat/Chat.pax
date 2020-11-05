@@ -3,18 +3,27 @@ package := Package name: 'Chat'.
 package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Chat Sample. 
-Copyright (c) Object Arts Ltd, 1998-2000.
+Copyright (c) Object Arts Ltd, 1998-2020.
 
 This is a sample application to demonstrate chatting over a Sockets Connection. A socket link is created between two chat windows potentially running on two different machines linked by a TCP/IP network.
 
 If you have two machines linked with a TCP/IP network then start a chat window on each machine by evaluating:
 
-Chat show
+```
+	Chat show
+```
+In one chat window type in the IP address or DNS name of the machine running the other window. Click Connect to establish communications.
 
-In one chat window type in the IP address or name of the machine running the other window. Click Connect to establish communications. You should now be able to chat between the two machines by entering messages and clicking the Send button. To close the connection click Disconnect or close either of the chat windows.
+To run both ends of the Chat session on a single machine, specify a port other than the default port for one direction of the communication. For example:
+```
+chat1 := Chat show 
+		outgoingPort: 121.
+chat2 := Chat show
+		incomingPort: 121.
+```
+Then just press Connect to connect locally (it is not necessary to enter localhost, etc, although you can).
 
-If you only have one machine (but with TCP/IP installed) you can still use the demo. Start two chat windows as described above. When the second is started it will report in it''s status line that it is unable to receive calls. This is to be expected since the first chat window is hogging the port on which chatting takes place. In the second window enter the local machine address or LOCALHOST and click Connect. You should be able to chat between the two windows as before. Once again click Disconnect or close the windows to drop the connection.
-
+You should now be able to chat between the two sessions by entering messages and clicking the Send button (or pressing Alt+S). To close the connection click Disconnect or close either of the Chat windows.
 '.
 
 
@@ -46,7 +55,7 @@ package!
 "Class Definitions"!
 
 Presenter subclass: #Chat
-	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue'
+	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

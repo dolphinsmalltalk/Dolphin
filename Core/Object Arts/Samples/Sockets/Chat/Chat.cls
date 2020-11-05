@@ -1,18 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #Chat
-	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue'
+	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Chat guid: (GUID fromString: '{87b4c699-026e-11d3-9fd7-00a0cc3e4a32}')!
-Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection. An instance can be opened on any machine running TCP/IP using:
+Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection between Smalltalk images. An instance can be opened on any machine running TCP/IP using:
 
+```
 	Chat show.
+```
 
-This will connect to a TCP/IP port (given by #defaultPort) and start a background process to wait for incoming connections from another Chat window. Ideally the other Chat instance will be created on separate machine, if one is available. However, more than one Chat instance can be created on a single machine but in this case only the first will be able to receive incoming calls since this will be the one that grabs the connection port. 
+This will connect to a TCP/IP port (given by #defaultPort) and start a background process to wait for incoming connections from another Chat window. Ideally the other Chat instance will be created on separate machine, if one is available. However, more than one Chat instance can be created on a single machine but in this case only the first will be able to receive incoming calls since this will be the one that grabs the connection port. To run both ends of the Chat session on one machine, specify non-default ports for one of the connection directions as follows:
 
-To establish a Chat session, enter the target machine name or IP address and click Connect. When a connection has successfully been established a pair of threads are forked to manage sending and receiving of messages across the bidirectional socket. Outbound messages are communicated to the sender thread through a shared queue. The sender is responsible for dequeueing messages and forwarding to the remote peer, which it does by writing them to the socket''s buffered write stream. When the complete message has been written the stream is flushed so that the message is transmitted, an  operation which may block the sender thread.  The receiver thread is responsible for receiving complete messages from the socket, and enqueuing them for asynchronous display by the UI process. Note that there is no shared queue for the inbound messages, since the deferred action mechanism process by the InputState object provides this capability in a convenient way for the UI thread.
+```
+	chat1 := Chat show 
+		outgoingPort: 121.
+	chat2 := Chat show
+		incomingPort: 121.
+```
+
+To establish a Chat session, enter the target machine name or IP address (e.g. localhost if on the same machine) and click Connect. When a connection has successfully been established a pair of threads are forked to manage sending and receiving of messages across the bidirectional socket. Outbound messages are communicated to the sender thread through a shared queue. The sender is responsible for dequeueing messages and forwarding to the remote peer, which it does by writing them to the socket''s buffered write stream. When the complete message has been written the stream is flushed so that the message is transmitted, an  operation which may block the sender thread.  The receiver thread is responsible for receiving complete messages from the socket, and enqueuing them for asynchronous display by the UI process. Note that there is no shared queue for the inbound messages, since the deferred action mechanism process by the InputState object provides this capability in a convenient way for the UI thread.
 
 You can start up a Process Monitor to view the different threads involved in a Chat session and watch how the set changes depending on the session state. 
 
@@ -36,7 +45,7 @@ acceptCalls
 	"Private - Monitor the port for a connection request. If the port is already in use then we'll
 	receive an error and can display an 'Unable to receive calls' status message."
 
-	acceptSocket := [ServerSocket2 port: self defaultPort backlog: 0] on: SocketError
+	acceptSocket := [ServerSocket2 port: self incomingPort backlog: 0] on: SocketError
 				do: [:ex | nil].
 	self setAcceptStatus.
 	acceptSocket isNil ifFalse: [self forkAccepter]!
@@ -68,14 +77,11 @@ canConnect
 	addr isNil ifTrue: [^false].
 	"If can't accept connections, then cannot connect to self"
 	acceptSocket isNil ifTrue: [^true].
+	self incomingPort = self outgoingPort ifFalse: [^true].
 	"Check not attempting to connect to self..."
 	localHost := InternetAddress localHost.
-	^((Array 
-		with: localHost displayString asLowercase
-		with: localHost ipString
-		with: '127.0.0.1'
-		with: 'localhost') includes: addr displayString asLowercase) 
-		not!
+	^({localHost displayString asLowercase. localHost ipString. '127.0.0.1'. 'localhost'}
+		includes: addr displayString asLowercase) not!
 
 closeConnection
 	"Private - Forcibly any connection with another chat window.
@@ -98,7 +104,7 @@ connect
 	until some response is received from the connection request."
 
 	| sock |
-	sock := Socket2 port: self defaultPort address: self calleeAddress.
+	sock := Socket2 port: self outgoingPort address: self calleeAddress.
 	self status: #connecting.
 	self invalidateUserInterface.
 	self forkConnector: sock!
@@ -114,7 +120,7 @@ createComponents
 	super createComponents.
 	calleeAddress := self add: TextPresenter new name: 'calleeAddress'.
 	outgoingMessage := self add: TextPresenter new name: 'outgoingMessage'.
-	status := #initializing asValue.!
+	status := #initializing asValue!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -228,6 +234,12 @@ forkSender
 	[self senderMain.
 	self enqueueDisconnect] fork!
 
+incomingPort
+	^incomingPort ?? self defaultPort!
+
+incomingPort: anInteger
+	incomingPort := anInteger!
+
 isBusy
 	^#(#initializing #connecting) includes: self status!
 
@@ -276,6 +288,12 @@ onViewOpened
 				typeConverter: (MappingConverter leftToRight: Statii)).
 	self acceptCalls!
 
+outgoingPort
+	^outgoingPort ?? self defaultPort!
+
+outgoingPort: anInteger
+	outgoingPort := anInteger!
+
 peerAddress
 	^socket peerAddress displayString!
 
@@ -295,22 +313,25 @@ queryCommand: query
 			^true].
 	^super queryCommand: query!
 
-receiveMessagesOn: aStream 
+receiveMessagesOn: aStream
 	"Receive messages from the specified <gettableStream>, which is presumably connected to a Socket,
 	until the stream is exhausted. The messages are read as objects using STB, but we are careful to use
 	a validating in-filer to avoid creating a security hole that might execute code."
 
 	
 	[| filer validClasses |
-	validClasses := #(#Association #String).
+	"The messages are a pair of strings in an Assocation. We don't allow any other objects to be deserialised."
+	validClasses := Set withAll: {Association name. AnsiString name. Utf8String name. Utf16String name}.
 	filer := (STBValidatingInFiler on: aStream)
-				validationBlock: [:className | validClasses identityIncludes: className];
+				validationBlock: [:className | validClasses includes: className];
 				yourself.
 	
 	[| message |
 	message := filer next.
-	self enqueueInboundMessage: message] repeat] 
-			on: Stream endOfStreamSignal
+	self enqueueInboundMessage: message.
+	filer stream atEnd]
+			whileFalse: [filer reset]]
+			on: Stream endOfStreamSignal , STBError
 			do: [:ex | ]!
 
 send
@@ -338,7 +359,8 @@ senderMain
 	msg := sendQueue next.
 	filer nextPut: msg.
 	"The stream is buffered, so we have to flush it or the message won't get transmitted immediately"
-	filer stream flush] 
+	filer stream flush.
+	filer reset] 
 			repeat] 
 			on: SocketError
 			do: [:ex | ]!
@@ -417,6 +439,8 @@ validateUserInterface
 !Chat categoriesFor: #forkConnector:!operations!private! !
 !Chat categoriesFor: #forkReceiverOn:!private! !
 !Chat categoriesFor: #forkSender!helpers!private! !
+!Chat categoriesFor: #incomingPort!accessing!public! !
+!Chat categoriesFor: #incomingPort:!accessing!public! !
 !Chat categoriesFor: #isBusy!event handling!public! !
 !Chat categoriesFor: #isConnected!public!testing! !
 !Chat categoriesFor: #isIdle!public!testing! !
@@ -425,6 +449,8 @@ validateUserInterface
 !Chat categoriesFor: #onStartup!event handling!private! !
 !Chat categoriesFor: #onViewClosed!event handling!private! !
 !Chat categoriesFor: #onViewOpened!event handling!private! !
+!Chat categoriesFor: #outgoingPort!accessing!public! !
+!Chat categoriesFor: #outgoingPort:!accessing!public! !
 !Chat categoriesFor: #peerAddress!private! !
 !Chat categoriesFor: #queryCommand:!commands!private! !
 !Chat categoriesFor: #receiveMessagesOn:!private! !
@@ -474,10 +500,10 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 544 nil 482 #face3d 328198 ##(Smalltalk.Point) 1041 241 7 nil nil nil 544 852230 ##(Smalltalk.FramingLayout) 170 176 34 14 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 720 nil nil nil 7 nil nil nil 720 nil 8 1903849936 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 626 11 11 626 221 51 720 898 #text: 34 1 8 'Chat to &address:' 720 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 115 0 0 0 30 0 0 0] 8 #() 626 193 193 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 11 1138 #fixedViewLeft 221 1138 #fixedParentTop 11 1138 #fixedViewTop 51 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 1216 nil nil nil 7 nil nil nil 1216 nil 8 1903849936 802 nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 11 91 626 211 51 1216 898 #text: 34 1 8 '&Message:' 1216 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 45 0 0 0 110 0 0 0 70 0 0 0] 8 #() 1088 nil 27 1106 1152 11 1168 211 1184 91 1200 51 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 1536 nil 496 nil 7 nil nil nil 1536 nil 8 1903885040 1180998 4 ##(Smalltalk.CommandDescription) #disconnect 8 '&Disconnect' 1 1 nil nil false nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 165 626 161 51 1536 898 #text: 34 1 8 '&Disconnect' 1536 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 82 0 0 0 48 2 0 0 107 0 0 0] 8 #() 1088 nil 29 1106 1138 #fixedParentRight -179 1168 161 1184 165 1200 51 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 1904 nil 496 nil 7 nil nil nil 1904 nil 8 1903885040 1618 #send 8 '&Send' 1 1 nil nil false nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 85 626 161 51 1904 898 #text: 34 1 8 '&Send' 1904 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 42 0 0 0 48 2 0 0 67 0 0 0] 8 #() 1088 nil 29 1106 1888 -179 1168 161 1184 85 1200 51 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 2240 nil 496 nil 7 nil nil nil 2240 nil 8 1903885040 1618 #connect 8 '&Connect' 1 5 nil nil true nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 15 626 161 51 2240 898 #text: 34 1 8 '&Connect' 2240 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 7 0 0 0 48 2 0 0 32 0 0 0] 8 #() 1088 nil 29 1106 1888 -179 1168 161 1184 15 1200 51 410 ##(Smalltalk.TextEdit) 34 16 nil 544 34 2 8 1140916224 1025 2576 nil 496 nil 7 nil nil nil 2576 nil 8 1903872368 802 nil nil 1 834 138 144 34 1 898 #createAt:extent: 34 2 626 231 11 626 681 51 2576 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 115 0 0 0 5 0 0 0 199 1 0 0 30 0 0 0] 8 #() 1088 nil 27 1106 1152 231 1888 -229 1184 11 1200 51 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 544 34 2 8 1143017796 1025 2848 nil 496 nil 7 nil nil nil 2848 nil 8 1903872368 802 nil nil 9 834 138 144 34 1 898 #createAt:extent: 34 2 626 231 81 626 681 131 2848 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 115 0 0 0 40 0 0 0 199 1 0 0 105 0 0 0] 8 #() 1088 nil 27 1106 1152 231 1888 -229 1184 81 1200 131 170 192 34 4 2848 8 'outgoingMessage' 2576 8 'calleeAddress' 590342 ##(Smalltalk.Rectangle) 626 1 1 626 1 1 834 138 144 34 1 898 #createAt:extent: 34 2 626 1 1 626 1141 241 544 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 58 2 0 0 120 0 0 0] 34 7 2576 2240 2848 1904 1536 720 1216 1088 nil 27 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 3408 nil 496 nil 7 nil nil nil 3408 nil 8 1903688272 170 192 34 2 853766 ##(Smalltalk.StatusBarItem) 1 -1 3408 nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 3520 #defaultGetTextBlock 468040131 8 #[30 105 226 0 106] #displayString 3568 7 257 nil nil nil 8 'status' 34 1 3536 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 3408 nil nil 834 138 144 34 1 898 #createAt:extent: 34 2 626 1 601 626 1141 41 3408 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 44 1 0 0 58 2 0 0 64 1 0 0] 8 #() 1088 nil 27 nil nil 410 ##(Smalltalk.RichTextEdit) 34 18 nil 416 34 2 8 1142947908 1025 3856 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Smalltalk.ThemeColor) #smalltalkSystem nil 7 nil nil nil 3856 nil 8 1363032592 802 nil nil 3 nil 655622 ##(Smalltalk.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 16 0 226 3] 834 138 144 34 5 898 #createAt:extent: 34 2 626 1 241 626 1141 361 3856 898 #text: 34 1 524550 ##(Smalltalk.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 544 nil 482 #face3d 328198 ##(Smalltalk.Point) 1041 241 7 nil nil nil 544 852230 ##(Smalltalk.FramingLayout) 170 176 34 14 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 720 nil nil nil 7 nil nil nil 720 nil 8 1813647072 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 626 11 91 626 211 51 720 898 #text: 34 1 8 '&Message:' 720 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 45 0 0 0 110 0 0 0 70 0 0 0] 8 #() 626 193 193 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 11 1138 #fixedViewLeft 211 1138 #fixedParentTop 91 1138 #fixedViewTop 51 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 1216 nil 496 nil 7 nil nil nil 1216 nil 8 1813798864 1180998 4 ##(Smalltalk.CommandDescription) #send 8 '&Send' 1 1 nil nil false nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 85 626 161 51 1216 898 #text: 34 1 8 '&Send' 1216 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 42 0 0 0 48 2 0 0 67 0 0 0] 8 #() 1088 nil 29 1106 1138 #fixedParentRight -179 1168 161 1184 85 1200 51 410 ##(Smalltalk.TextEdit) 34 16 nil 544 34 2 8 1140916224 1025 1584 nil 496 nil 7 nil nil nil 1584 nil 8 1813790672 802 nil nil 1 834 138 144 34 1 898 #createAt:extent: 34 2 626 231 11 626 681 51 1584 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 115 0 0 0 5 0 0 0 199 1 0 0 30 0 0 0] 8 #() 1088 nil 27 1106 1152 231 1568 -229 1184 11 1200 51 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 544 34 2 8 1143017796 1025 1856 nil 496 nil 7 nil nil nil 1856 nil 8 1813790672 802 nil nil 9 834 138 144 34 1 898 #createAt:extent: 34 2 626 231 81 626 681 131 1856 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 115 0 0 0 40 0 0 0 199 1 0 0 105 0 0 0] 8 #() 1088 nil 27 1106 1152 231 1568 -229 1184 81 1200 131 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 2128 nil 496 nil 7 nil nil nil 2128 nil 8 1813798864 1298 #connect 8 '&Connect' 1 5 nil nil true nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 15 626 161 51 2128 898 #text: 34 1 8 '&Connect' 2128 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 7 0 0 0 48 2 0 0 32 0 0 0] 8 #() 1088 nil 29 1106 1568 -179 1168 161 1184 15 1200 51 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 2464 nil nil nil 7 nil nil nil 2464 nil 8 1813647072 802 nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 11 11 626 221 51 2464 898 #text: 34 1 8 'Chat to &address:' 2464 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 115 0 0 0 30 0 0 0] 8 #() 1088 nil 27 1106 1152 11 1168 221 1184 11 1200 51 410 ##(Smalltalk.PushButton) 34 20 nil 544 34 2 8 1140924416 1 2784 nil 496 nil 7 nil nil nil 2784 nil 8 1813798864 1298 #disconnect 8 '&Disconnect' 1 1 nil nil false nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 626 961 165 626 161 51 2784 898 #text: 34 1 8 '&Disconnect' 2784 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 1 0 0 82 0 0 0 48 2 0 0 107 0 0 0] 8 #() 1088 nil 29 1106 1568 -179 1168 161 1184 165 1200 51 170 192 34 4 1856 8 'outgoingMessage' 1584 8 'calleeAddress' 590342 ##(Smalltalk.Rectangle) 626 1 1 626 1 1 834 138 144 34 1 898 #createAt:extent: 34 2 626 1 1 626 1141 241 544 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 58 2 0 0 120 0 0 0] 34 7 1584 2128 1856 1216 2784 2464 720 1088 nil 27 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 3408 nil 496 nil 7 nil nil nil 3408 nil 8 1813456624 170 192 34 2 853766 ##(Smalltalk.StatusBarItem) 1 -1 3408 nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 3520 #defaultGetTextBlock 468040131 8 #[30 105 226 0 106] #displayString 3568 7 257 nil nil nil 8 'status' 34 1 3536 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 3408 nil nil 834 138 144 34 1 898 #createAt:extent: 34 2 626 1 601 626 1141 41 3408 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 44 1 0 0 58 2 0 0 64 1 0 0] 8 #() 1088 nil 27 nil nil 410 ##(Smalltalk.RichTextEdit) 34 18 nil 416 34 2 8 1142947908 1025 3856 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Smalltalk.ThemeColor) #smalltalkSystem nil 7 nil nil nil 3856 nil 8 2039560544 802 nil nil 3 nil 655622 ##(Smalltalk.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 48 0 183 4] 834 138 144 34 5 898 #createAt:extent: 34 2 626 1 241 626 1141 361 3856 898 #text: 34 1 524550 ##(Smalltalk.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
 \viewkind4\uc1\pard\lang2057\f0\fs16\par
 }
-' 3856 898 #isTextModified: 8 #(true) 3856 898 #textLimit: 8 #(1073741823) 3856 898 #resetCharFormat 8 #() 3856 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 120 0 0 0 58 2 0 0 44 1 0 0] 8 #() 1088 nil 27 170 192 34 2 3856 8 'messageDisplay' nil 834 138 144 34 1 898 #createAt:extent: 34 2 626 3839 21 626 1141 641 416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 185 9 0 0 74 1 0 0] 34 3 544 3856 3408 1088 nil 27 )!
+' 3856 898 #isTextModified: 8 #(true) 3856 898 #textLimit: 8 #(1073741823) 3856 898 #resetCharFormat 8 #() 3856 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 120 0 0 0 58 2 0 0 44 1 0 0] 8 #() 1088 nil 27 170 192 34 2 3856 8 'messageDisplay' nil 834 138 144 34 1 898 #createAt:extent: 34 2 626 6143 21 626 1141 641 416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 57 14 0 0 74 1 0 0] 34 3 544 3856 3408 1088 nil 27 )!
 
 sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
