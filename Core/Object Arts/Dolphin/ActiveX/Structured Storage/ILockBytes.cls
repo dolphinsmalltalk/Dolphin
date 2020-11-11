@@ -5,7 +5,7 @@ IUnknown subclass: #ILockBytes
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
-ILockBytes guid: (IID fromString: '{0000000A-0000-0000-C000-000000000046}')!
+ILockBytes guid: (IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
 ILockBytes comment: 'ILockBytes is a COMInterface class to wrap the standard COM interface of the same name.
 
 ILockBytes is an abstraction of a simple byte-oriented block-mode device for reading, writing and locking (though this is typically not implemented) blocks of storage. Typically we will be using an ILockBytes on a device implemented externally to Dolphin, but see the OLELockBytes class for an example of an ILockBytes implemented in Dolphin over a ByteArray. ILockBytes is the "device" interface underlying OLEs Structured Storage mechanism. The relationship between IStorage/IStreams and ILockBytes is somewhat similar to that between PositionableStreams and SequenceableCollections.

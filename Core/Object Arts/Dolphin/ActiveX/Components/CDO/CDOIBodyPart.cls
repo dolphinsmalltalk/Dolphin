@@ -5,7 +5,7 @@ IDispatch subclass: #CDOIBodyPart
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-CDOIBodyPart guid: (IID fromString: '{CD000021-8B95-11D1-82DB-00C04FB1625D}')!
+CDOIBodyPart guid: (IID fromString: '{cd000021-8b95-11d1-82db-00c04fb1625d}')!
 CDOIBodyPart comment: '<CDOIBodyPart> is a wrapper class for the COM interface ''CDO.IBodyPart'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

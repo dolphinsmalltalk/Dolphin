@@ -5,7 +5,7 @@ IDispatch subclass: #IVBSAXLocator
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IVBSAXLocator guid: (IID fromString: '{796E7AC5-5AA2-4EFF-ACAD-3FAAF01A3288}')!
+IVBSAXLocator guid: (IID fromString: '{796e7ac5-5aa2-4eff-acad-3faaf01a3288}')!
 IVBSAXLocator comment: '<IVBSAXLocator> is a wrapper class for the COM interface ''MSXML2.IVBSAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

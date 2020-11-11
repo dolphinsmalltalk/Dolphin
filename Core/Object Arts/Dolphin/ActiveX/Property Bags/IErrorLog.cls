@@ -5,7 +5,7 @@ IUnknown subclass: #IErrorLog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IErrorLog guid: (IID fromString: '{3127CA40-446E-11CE-8135-00AA004BB851}')!
+IErrorLog guid: (IID fromString: '{3127ca40-446e-11ce-8135-00aa004bb851}')!
 IErrorLog comment: '<IErrorLog> is a wrapper class for the COM interface ''OCIDL.IErrorLog'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The IErrorLog interface is an abstraction for an error log that is used to communicate detailed error information between a client and an object, and example being the error log associated with an IPersistPropertyBag::Load() operation.'!

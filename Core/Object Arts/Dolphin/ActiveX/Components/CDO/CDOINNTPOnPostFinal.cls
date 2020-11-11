@@ -5,7 +5,7 @@ IDispatch subclass: #CDOINNTPOnPostFinal
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-CDOINNTPOnPostFinal guid: (IID fromString: '{CD000028-8B95-11D1-82DB-00C04FB1625D}')!
+CDOINNTPOnPostFinal guid: (IID fromString: '{cd000028-8b95-11d1-82db-00c04fb1625d}')!
 CDOINNTPOnPostFinal comment: '<CDOINNTPOnPostFinal> is a wrapper class for the COM interface ''CDO.INNTPOnPostFinal'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

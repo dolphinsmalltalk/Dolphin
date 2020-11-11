@@ -5,7 +5,7 @@ IUnknown subclass: #IPersist
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IPersist guid: (IID fromString: '{0000010C-0000-0000-C000-000000000046}')!
+IPersist guid: (IID fromString: '{0000010c-0000-0000-c000-000000000046}')!
 IPersist isAbstract: true!
 IPersist comment: '<IPersist> is a wrapper class for the custom interface ''OBJIDL.IPersist'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

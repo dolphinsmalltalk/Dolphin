@@ -5,7 +5,7 @@ IDispatch subclass: #IWebBrowser
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
 	classInstanceVariableNames: ''!
-IWebBrowser guid: (IID fromString: '{EAB22AC1-30C1-11CF-A7EB-0000C05BAE0B}')!
+IWebBrowser guid: (IID fromString: '{eab22ac1-30c1-11cf-a7eb-0000c05bae0b}')!
 IWebBrowser comment: '<IWebBrowser> is a wrapper class for the COM interface ''SHDocVw.IWebBrowser'' generated from type information in the ''Microsoft Internet Controls'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

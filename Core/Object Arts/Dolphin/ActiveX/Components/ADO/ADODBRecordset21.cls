@@ -5,7 +5,7 @@ ADODBRecordset20 subclass: #ADODBRecordset21
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBRecordset21 guid: (IID fromString: '{00001555-0000-0010-8000-00AA006D2EA4}')!
+ADODBRecordset21 guid: (IID fromString: '{00001555-0000-0010-8000-00aa006d2ea4}')!
 ADODBRecordset21 comment: '`ADODBRecordset21` is a wrapper class for the COM interface ''ADODB.Recordset21'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

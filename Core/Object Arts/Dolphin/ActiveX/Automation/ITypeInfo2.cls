@@ -5,7 +5,7 @@ ITypeInfo subclass: #ITypeInfo2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ITypeInfo2 guid: (IID fromString: '{00020412-0000-0000-C000-000000000046}')!
+ITypeInfo2 guid: (IID fromString: '{00020412-0000-0000-c000-000000000046}')!
 ITypeInfo2 comment: '''ITypeInfo2 is an interface pointer class to wrap COM interfaces of the same name.
 
 ITypeInfo2 is a refinement of ITypeInfo which adds some bits Microsoft forget about when the defined ITypeInfo, it also adds some capabilities to look up certain pieces of commonly used information that probably made VB quicker. However as we cache the TYPEATTR once retrieved, it is unlikely that ITypeInfo2 will be quicker within Dolphin.

@@ -5,7 +5,7 @@ IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMSchemaCollection2 guid: (IID fromString: '{50EA08B0-DD1B-4664-9A50-C2F40F4BD79A}')!
+IXMLDOMSchemaCollection2 guid: (IID fromString: '{50ea08b0-dd1b-4664-9a50-c2f40f4bd79a}')!
 IXMLDOMSchemaCollection2 comment: '<IXMLDOMSchemaCollection2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

@@ -5,7 +5,7 @@ IDispatch subclass: #IVBSAXLexicalHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IVBSAXLexicalHandler guid: (IID fromString: '{032AAC35-8C0E-4D9D-979F-E3B702935576}')!
+IVBSAXLexicalHandler guid: (IID fromString: '{032aac35-8c0e-4d9d-979f-e3b702935576}')!
 IVBSAXLexicalHandler comment: '<IVBSAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

@@ -5,7 +5,7 @@ IUnknown subclass: #ICatRegister
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ICatRegister guid: (IID fromString: '{0002E012-0000-0000-C000-000000000046}')!
+ICatRegister guid: (IID fromString: '{0002e012-0000-0000-c000-000000000046}')!
 ICatRegister comment: '<ICatRegister> is a wrapper class for the COM interface ''COMCAT.ICatRegister'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 ICatRegister provides methods for registering and unregistering component category information in the Registry. This includes both the human-readable names of categories and the categories implemented/required by a given component or class.

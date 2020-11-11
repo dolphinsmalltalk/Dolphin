@@ -5,7 +5,7 @@ IUnknown subclass: #IOleClientSite
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IOleClientSite guid: (IID fromString: '{00000118-0000-0000-C000-000000000046}')!
+IOleClientSite guid: (IID fromString: '{00000118-0000-0000-c000-000000000046}')!
 IOleClientSite comment: '<IOleClientSite> is a wrapper class for the COM interface ''OCIDL.IOleClientSite'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface is implemented by Dolphin for call-in only at present (at least until Dolphin supports control creation as well as hosting), so only the function table is needed, hence the absence of any methods.'!

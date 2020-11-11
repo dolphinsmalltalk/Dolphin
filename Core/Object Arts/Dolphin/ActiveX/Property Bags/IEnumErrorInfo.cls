@@ -5,7 +5,7 @@ IEnumUnknown subclass: #IEnumErrorInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IEnumErrorInfo guid: (IID fromString: '{502052C4-0FE9-4A5F-9A7D-2335D7584DED}')!
+IEnumErrorInfo guid: (IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
 IEnumErrorInfo comment: ''!
 !IEnumErrorInfo categoriesForClass!Unclassified! !
 !IEnumErrorInfo class methodsFor!

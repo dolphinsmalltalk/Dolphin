@@ -5,7 +5,7 @@ IDispatch subclass: #ISubMatches
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ISubMatches guid: (IID fromString: '{3F4DACB3-160D-11D2-A8E9-00104B365C9F}')!
+ISubMatches guid: (IID fromString: '{3f4dacb3-160d-11d2-a8e9-00104b365c9f}')!
 ISubMatches comment: '`ISubMatches` is a wrapper class for the COM interface ''VBScript_RegExp_55.ISubMatches'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

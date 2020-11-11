@@ -5,7 +5,7 @@ IWebBrowser subclass: #IWebBrowserApp
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
 	classInstanceVariableNames: ''!
-IWebBrowserApp guid: (IID fromString: '{0002DF05-0000-0000-C000-000000000046}')!
+IWebBrowserApp guid: (IID fromString: '{0002df05-0000-0000-c000-000000000046}')!
 IWebBrowserApp comment: '<IWebBrowserApp> is a wrapper class for the COM interface ''SHDocVw.IWebBrowserApp'' generated from type information in the ''Microsoft Internet Controls'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

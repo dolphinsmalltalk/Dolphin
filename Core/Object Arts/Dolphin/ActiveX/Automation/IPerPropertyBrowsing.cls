@@ -5,7 +5,7 @@ IUnknown subclass: #IPerPropertyBrowsing
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IPerPropertyBrowsing guid: (IID fromString: '{376BD3AA-3845-101B-84ED-08002B2EC713}')!
+IPerPropertyBrowsing guid: (IID fromString: '{376bd3aa-3845-101b-84ed-08002b2ec713}')!
 IPerPropertyBrowsing comment: '`IPerPropertyBrowsing` is a wrapper class for the COM interface ''Win32.IPerPropertyBrowsing'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

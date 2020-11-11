@@ -5,7 +5,7 @@ IDispatch subclass: #IVBSAXXMLReader
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IVBSAXXMLReader guid: (IID fromString: '{8C033CAA-6CD6-4F73-B728-4531AF74945F}')!
+IVBSAXXMLReader guid: (IID fromString: '{8c033caa-6cd6-4f73-b728-4531af74945f}')!
 IVBSAXXMLReader comment: '<IVBSAXXMLReader> is a wrapper class for the COM interface ''MSXML2.IVBSAXXMLReader'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

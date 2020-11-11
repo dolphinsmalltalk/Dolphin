@@ -5,7 +5,7 @@ IUnknown subclass: #ITypeInfo
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
-ITypeInfo guid: (IID fromString: '{00020401-0000-0000-C000-000000000046}')!
+ITypeInfo guid: (IID fromString: '{00020401-0000-0000-c000-000000000046}')!
 ITypeInfo comment: 'ITypeInfo is a COMInterface class which wraps an OLE Automation ITypeInfo interface pointer.
 
 ITypeInfo contains member functions which allow one to enquire about the structure and attributes of individual elements of a Type Library. Unfortunately it is rather poorly factored (much in need of conditional elimination in fact) in that an ITypeInfo can describe any one of the following automation elements:

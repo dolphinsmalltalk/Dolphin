@@ -5,7 +5,7 @@ ADODBCommand25 subclass: #ADODB_Command
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODB_Command guid: (IID fromString: '{986761E8-7269-4890-AA65-AD7C03697A6D}')!
+ADODB_Command guid: (IID fromString: '{986761e8-7269-4890-aa65-ad7c03697a6d}')!
 ADODB_Command comment: '`ADODB_Command` is a wrapper class for the COM interface ''ADODB._Command'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

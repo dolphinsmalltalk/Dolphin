@@ -5,7 +5,7 @@ ITypeLib subclass: #ITypeLib2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ITypeLib2 guid: (IID fromString: '{00020411-0000-0000-C000-000000000046}')!
+ITypeLib2 guid: (IID fromString: '{00020411-0000-0000-c000-000000000046}')!
 ITypeLib2 comment: '<ITypeLib2> is a wrapper class for the COM interface ''OAIDL.ITypeLib2'' generated from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.

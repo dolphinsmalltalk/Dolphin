@@ -5,7 +5,7 @@ IEnumXXXX subclass: #IEnumUnknown
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IEnumUnknown guid: (IID fromString: '{00000100-0000-0000-C000-000000000046}')!
+IEnumUnknown guid: (IID fromString: '{00000100-0000-0000-c000-000000000046}')!
 IEnumUnknown comment: '<IEnumUnknown> is a wrapper class for the custom interface ''OBJIDL.IEnumUnknown'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IEnumUnknown and subclasses are used for enumerating over collections of COM interface pointers.

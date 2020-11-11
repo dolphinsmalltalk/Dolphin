@@ -5,7 +5,7 @@ IEnumXXXX subclass: #IEnumString
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IEnumString guid: (IID fromString: '{00000101-0000-0000-C000-000000000046}')!
+IEnumString guid: (IID fromString: '{00000101-0000-0000-c000-000000000046}')!
 IEnumString comment: '<IEnumString> is a wrapper class for the custom interface ''OBJIDL.IEnumString'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.

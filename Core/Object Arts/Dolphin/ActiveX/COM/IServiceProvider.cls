@@ -5,7 +5,7 @@ IUnknown subclass: #IServiceProvider
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IServiceProvider guid: (IID fromString: '{6D5140C1-7436-11CE-8034-00AA006009FA}')!
+IServiceProvider guid: (IID fromString: '{6d5140c1-7436-11ce-8034-00aa006009fa}')!
 IServiceProvider comment: '<IServiceProvider> is a wrapper class for the COM interface ''OCIDL.IServiceProvider'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

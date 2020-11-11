@@ -5,7 +5,7 @@ IDispatch subclass: #IXMLDOMNode
 	classVariableNames: 'NodeTypes VarTypeToXMLDataType'
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMNode guid: (IID fromString: '{2933BF80-7B36-11D2-B20E-00C04F983E60}')!
+IXMLDOMNode guid: (IID fromString: '{2933bf80-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMNode comment: '<IXMLDOMNode> is a wrapper class for the COM interface ''MSXML.IXMLDOMNode'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is the generic interface for a single node in the DOM document tree. In the Dolphin wrapping of the DOM you should rarely, if ever, see instances of this interface since we automatically downcast to the correct specialized type of node (using the nodeType) whenever an interface method returns an interface of this generic type.'!

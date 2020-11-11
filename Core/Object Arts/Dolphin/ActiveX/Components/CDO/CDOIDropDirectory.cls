@@ -5,7 +5,7 @@ IDispatch subclass: #CDOIDropDirectory
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-CDOIDropDirectory guid: (IID fromString: '{CD000024-8B95-11D1-82DB-00C04FB1625D}')!
+CDOIDropDirectory guid: (IID fromString: '{cd000024-8b95-11d1-82db-00c04fb1625d}')!
 CDOIDropDirectory comment: '<CDOIDropDirectory> is a wrapper class for the COM interface ''CDO.IDropDirectory'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

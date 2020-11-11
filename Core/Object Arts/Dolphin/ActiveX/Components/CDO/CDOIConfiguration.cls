@@ -5,7 +5,7 @@ IDispatch subclass: #CDOIConfiguration
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-CDOIConfiguration guid: (IID fromString: '{CD000022-8B95-11D1-82DB-00C04FB1625D}')!
+CDOIConfiguration guid: (IID fromString: '{cd000022-8b95-11d1-82db-00c04fb1625d}')!
 CDOIConfiguration comment: '<CDOIConfiguration> is a wrapper class for the COM interface ''CDO.IConfiguration'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

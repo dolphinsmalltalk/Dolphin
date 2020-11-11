@@ -5,7 +5,7 @@ IUnknown subclass: #IOleObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IOleObject guid: (IID fromString: '{00000112-0000-0000-C000-000000000046}')!
+IOleObject guid: (IID fromString: '{00000112-0000-0000-c000-000000000046}')!
 IOleObject comment: '<IOleObject> is a wrapper class for the COM interface ''OLEIDL.IOleObject'' generated from type information in the ''OLEIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

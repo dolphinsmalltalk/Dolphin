@@ -5,7 +5,7 @@ IUnknown subclass: #ISAXDeclHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-ISAXDeclHandler guid: (IID fromString: '{862629AC-771A-47B2-8337-4E6843C1BE90}')!
+ISAXDeclHandler guid: (IID fromString: '{862629ac-771a-47b2-8337-4e6843c1be90}')!
 ISAXDeclHandler comment: '<ISAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

@@ -5,7 +5,7 @@ IDispatch subclass: #IScriptProcedureCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
-IScriptProcedureCollection guid: (IID fromString: '{70841C71-067D-11D0-95D8-00A02463AB28}')!
+IScriptProcedureCollection guid: (IID fromString: '{70841c71-067d-11d0-95d8-00a02463ab28}')!
 IScriptProcedureCollection comment: '<IScriptProcedureCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedureCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:

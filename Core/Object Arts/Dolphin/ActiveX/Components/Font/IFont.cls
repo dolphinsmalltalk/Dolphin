@@ -5,7 +5,7 @@ IUnknown subclass: #IFont
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IFont guid: (IID fromString: '{BEF6E002-A874-101A-8BBA-00AA00300CAB}')!
+IFont guid: (IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}')!
 IFont comment: '`IFont` is a wrapper class for the COM interface ''stdole.IFont'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

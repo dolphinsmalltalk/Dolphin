@@ -5,7 +5,7 @@ IUnknown subclass: #IDolphinAxHost
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IDolphinAxHost guid: (IID fromString: '{4EA0745E-6C01-4BB4-B0AE-47A53BA9174A}')!
+IDolphinAxHost guid: (IID fromString: '{4ea0745e-6c01-4bb4-b0ae-47a53ba9174a}')!
 IDolphinAxHost comment: '<IDolphinAxHost> is a wrapper class for the COM interface ''ActiveXHost.IDolphinAxHost'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

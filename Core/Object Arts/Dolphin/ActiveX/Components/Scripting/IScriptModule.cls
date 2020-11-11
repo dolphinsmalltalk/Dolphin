@@ -5,7 +5,7 @@ IDispatch subclass: #IScriptModule
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
-IScriptModule guid: (IID fromString: '{70841C70-067D-11D0-95D8-00A02463AB28}')!
+IScriptModule guid: (IID fromString: '{70841c70-067d-11d0-95d8-00a02463ab28}')!
 IScriptModule comment: '<IScriptModule> is a wrapper class for the COM interface ''MSScriptControl.IScriptModule'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:

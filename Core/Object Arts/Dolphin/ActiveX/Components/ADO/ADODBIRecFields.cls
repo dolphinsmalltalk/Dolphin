@@ -5,7 +5,7 @@ IUnknown subclass: #ADODBIRecFields
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBIRecFields guid: (IID fromString: '{00000563-0000-0010-8000-00AA006D2EA4}')!
+ADODBIRecFields guid: (IID fromString: '{00000563-0000-0010-8000-00aa006d2ea4}')!
 ADODBIRecFields comment: '<ADODBIRecFields> is a wrapper class for the COM interface ''ADODB.IRecFields'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

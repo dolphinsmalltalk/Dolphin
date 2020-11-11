@@ -5,7 +5,7 @@ IUnknown subclass: #IMalloc
 	classVariableNames: 'Shared Task'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IMalloc guid: (IID fromString: '{00000002-0000-0000-C000-000000000046}')!
+IMalloc guid: (IID fromString: '{00000002-0000-0000-c000-000000000046}')!
 IMalloc comment: '<IMalloc> is a wrapper class for the custom interface ''OBJIDL.IMalloc'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
