@@ -5,7 +5,7 @@ ISequentialStream subclass: #IStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IStream guid: (IID fromString: '{0000000C-0000-0000-C000-000000000046}')!
+IStream guid: (IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
 IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 
 IStream expands on ISequentialStream to offer the ability to access and adjust the current stream position, and to lock ranges of bytes in the underlying device (ILockBytes). It also offers transactional control, "directory" information, and copying. IStream is widely implmented and (in particular) used by COM objects for persistent storage purposes, marshalling, etc.

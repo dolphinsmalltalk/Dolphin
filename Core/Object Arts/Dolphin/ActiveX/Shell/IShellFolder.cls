@@ -5,7 +5,7 @@ IUnknown subclass: #IShellFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IShellFolder guid: (IID fromString: '{000214E6-0000-0000-C000-000000000046}')!
+IShellFolder guid: (IID fromString: '{000214e6-0000-0000-c000-000000000046}')!
 IShellFolder comment: ''!
 !IShellFolder categoriesForClass!COM-Interfaces! !
 !IShellFolder methodsFor!

@@ -30,7 +30,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
 	'..\..\Base\Dolphin'
-	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM').
 
 package!

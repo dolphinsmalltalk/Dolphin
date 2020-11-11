@@ -5,7 +5,7 @@ IDispatch subclass: #ADODBADOStreamConstruction
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBADOStreamConstruction guid: (IID fromString: '{00000568-0000-0010-8000-00AA006D2EA4}')!
+ADODBADOStreamConstruction guid: (IID fromString: '{00000568-0000-0010-8000-00aa006d2ea4}')!
 ADODBADOStreamConstruction comment: '`ADODBADOStreamConstruction` is a wrapper class for the COM interface ''ADODB.ADOStreamConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -5,7 +5,7 @@ IDispatch subclass: #IXSLTemplate
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXSLTemplate guid: (IID fromString: '{2933BF93-7B36-11D2-B20E-00C04F983E60}')!
+IXSLTemplate guid: (IID fromString: '{2933bf93-7b36-11d2-b20e-00c04f983e60}')!
 IXSLTemplate comment: '<IXSLTemplate> is a wrapper class for the COM interface ''MSXML2.IXSLTemplate'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

@@ -5,7 +5,7 @@ IUnknown subclass: #IClassFactory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IClassFactory guid: (IID fromString: '{00000001-0000-0000-C000-000000000046}')!
+IClassFactory guid: (IID fromString: '{00000001-0000-0000-c000-000000000046}')!
 IClassFactory comment: '<IClassFactory> is a wrapper class for the custom interface ''UNKNWN.IClassFactory'' from type information in the ''IUnknown Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.

@@ -5,7 +5,7 @@ IDispatch subclass: #CDOINNTPFinalScriptConnector
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-CDOINNTPFinalScriptConnector guid: (IID fromString: '{CD000032-8B95-11D1-82DB-00C04FB1625D}')!
+CDOINNTPFinalScriptConnector guid: (IID fromString: '{cd000032-8b95-11d1-82db-00c04fb1625d}')!
 CDOINNTPFinalScriptConnector comment: '<CDOINNTPFinalScriptConnector> is a wrapper class for the COM interface ''CDO.INNTPFinalScriptConnector'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

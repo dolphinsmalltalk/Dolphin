@@ -5,7 +5,7 @@ IDispatch subclass: #ISchemaItem
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-ISchemaItem guid: (IID fromString: '{50EA08B3-DD1B-4664-9A50-C2F40F4BD79A}')!
+ISchemaItem guid: (IID fromString: '{50ea08b3-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchemaItem comment: '<ISchemaItem> is a wrapper class for the COM interface ''MSXML2.ISchemaItem'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

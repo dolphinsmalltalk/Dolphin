@@ -5,7 +5,7 @@ IDispatch subclass: #IScriptModuleCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
-IScriptModuleCollection guid: (IID fromString: '{70841C6F-067D-11D0-95D8-00A02463AB28}')!
+IScriptModuleCollection guid: (IID fromString: '{70841c6f-067d-11d0-95d8-00a02463ab28}')!
 IScriptModuleCollection comment: '<IScriptModuleCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptModuleCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:

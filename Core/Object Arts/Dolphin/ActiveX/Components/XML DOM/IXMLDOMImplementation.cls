@@ -5,7 +5,7 @@ IDispatch subclass: #IXMLDOMImplementation
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMImplementation guid: (IID fromString: '{2933BF8F-7B36-11D2-B20E-00C04F983E60}')!
+IXMLDOMImplementation guid: (IID fromString: '{2933bf8f-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMImplementation comment: '<IXMLDOMImplementation> is a wrapper class for the COM interface ''MSXML.IXMLDOMImplementation'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface provides methods that are independent of any particular instance of the DOM. An instance of this interface can only be aquired using the #implementation method of <IXMLDOMDocument>.'!

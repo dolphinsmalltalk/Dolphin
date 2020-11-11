@@ -5,7 +5,7 @@ ExternalStructure subclass: #COMInterface
 	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
-COMInterface guid: (IID fromString: '{87B4C591-026E-11D3-9FD7-00A0CC3E4A32}')!
+COMInterface guid: (IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMInterface isAbstract: true!
 COMInterface addClassConstant: '_OffsetOf_argSizes' value: 16r4!
 COMInterface addClassConstant: '_OffsetOf_interfaceCookie' value: 16rC!

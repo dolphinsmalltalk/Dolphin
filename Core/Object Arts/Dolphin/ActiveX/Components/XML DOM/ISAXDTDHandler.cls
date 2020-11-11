@@ -5,7 +5,7 @@ IUnknown subclass: #ISAXDTDHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-ISAXDTDHandler guid: (IID fromString: '{E15C1BAF-AFB3-4D60-8C36-19A8C45DEFED}')!
+ISAXDTDHandler guid: (IID fromString: '{e15c1baf-afb3-4d60-8c36-19a8c45defed}')!
 ISAXDTDHandler comment: '<ISAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

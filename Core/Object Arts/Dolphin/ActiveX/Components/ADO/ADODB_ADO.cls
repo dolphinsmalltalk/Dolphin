@@ -5,7 +5,7 @@ IDispatch subclass: #ADODB_ADO
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODB_ADO guid: (IID fromString: '{00000534-0000-0010-8000-00AA006D2EA4}')!
+ADODB_ADO guid: (IID fromString: '{00000534-0000-0010-8000-00aa006d2ea4}')!
 ADODB_ADO comment: '`ADODB_ADO` is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

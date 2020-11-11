@@ -5,7 +5,7 @@ IDispatch subclass: #ADODBADORecordConstruction
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBADORecordConstruction guid: (IID fromString: '{00000567-0000-0010-8000-00AA006D2EA4}')!
+ADODBADORecordConstruction guid: (IID fromString: '{00000567-0000-0010-8000-00aa006d2ea4}')!
 ADODBADORecordConstruction comment: '`ADODBADORecordConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

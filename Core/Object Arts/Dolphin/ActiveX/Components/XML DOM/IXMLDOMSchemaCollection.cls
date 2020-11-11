@@ -5,7 +5,7 @@ IDispatch subclass: #IXMLDOMSchemaCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMSchemaCollection guid: (IID fromString: '{373984C8-B845-449B-91E7-45AC83036ADE}')!
+IXMLDOMSchemaCollection guid: (IID fromString: '{373984c8-b845-449b-91e7-45ac83036ade}')!
 IXMLDOMSchemaCollection comment: '<IXMLDOMSchemaCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

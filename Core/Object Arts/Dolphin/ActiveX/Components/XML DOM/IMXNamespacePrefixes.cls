@@ -5,7 +5,7 @@ IDispatch subclass: #IMXNamespacePrefixes
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IMXNamespacePrefixes guid: (IID fromString: '{C90352F4-643C-4FBC-BB23-E996EB2D51FD}')!
+IMXNamespacePrefixes guid: (IID fromString: '{c90352f4-643c-4fbc-bb23-e996eb2d51fd}')!
 IMXNamespacePrefixes comment: '<IMXNamespacePrefixes> is a wrapper class for the COM interface ''MSXML2.IMXNamespacePrefixes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

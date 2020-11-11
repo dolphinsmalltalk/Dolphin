@@ -5,7 +5,7 @@ IEnumXXXX subclass: #IEnumVARIANT
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IEnumVARIANT guid: (IID fromString: '{00020404-0000-0000-C000-000000000046}')!
+IEnumVARIANT guid: (IID fromString: '{00020404-0000-0000-c000-000000000046}')!
 IEnumVARIANT comment: '<IEnumVARIANT> is a wrapper class for the custom interface ''stdole.IEnumVARIANT'' from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 Implementation Notes: We have to be careful here to manage the lifetime of the VARIANTs correctly. This necessitates overrides of a couple of superclass methods in order to make sure that the objects/collections answered have a lifetime independent of the buffer originally used to retrieve them with the interface Next() function. It is also convenient to immediately convert the variants to their underlying value.

@@ -5,7 +5,7 @@ IDispatch subclass: #IVBSAXErrorHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IVBSAXErrorHandler guid: (IID fromString: '{D963D3FE-173C-4862-9095-B92F66995F52}')!
+IVBSAXErrorHandler guid: (IID fromString: '{d963d3fe-173c-4862-9095-b92f66995f52}')!
 IVBSAXErrorHandler comment: '<IVBSAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

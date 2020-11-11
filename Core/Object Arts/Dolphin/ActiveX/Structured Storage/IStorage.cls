@@ -5,7 +5,7 @@ IUnknown subclass: #IStorage
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
-IStorage guid: (IID fromString: '{0000000B-0000-0000-C000-000000000046}')!
+IStorage guid: (IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
 IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
 
 IStorage is an abstraction to represent a structured storage mechanism somewhat similar to a file system which contains both streams (files), represented by IStream interfaces, and sub-storages (sub-directories), represented by further IStorage interfaces. The standard system implementation of IStorage provides a file system within a file (or in fact, and byte device which implements ILockBytes). These are commonly called "compound files".

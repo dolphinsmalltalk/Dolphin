@@ -5,7 +5,7 @@ IXMLDOMParseError subclass: #IXMLDOMParseError2
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMParseError2 guid: (IID fromString: '{3EFAA428-272F-11D2-836F-0000F87A7782}')!
+IXMLDOMParseError2 guid: (IID fromString: '{3efaa428-272f-11d2-836f-0000f87a7782}')!
 IXMLDOMParseError2 comment: '<IXMLDOMParseError2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseError2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

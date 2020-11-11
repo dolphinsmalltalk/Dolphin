@@ -5,7 +5,7 @@ IUnknown subclass: #ADODBADOConnectionConstruction15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBADOConnectionConstruction15 guid: (IID fromString: '{00000516-0000-0010-8000-00AA006D2EA4}')!
+ADODBADOConnectionConstruction15 guid: (IID fromString: '{00000516-0000-0010-8000-00aa006d2ea4}')!
 ADODBADOConnectionConstruction15 comment: '<ADODBADOConnectionConstruction15> is a wrapper class for the COM interface ''ADODB.ADOConnectionConstruction15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

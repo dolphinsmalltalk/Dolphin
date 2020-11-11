@@ -5,7 +5,7 @@ IDispatch subclass: #ISchemaStringCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-ISchemaStringCollection guid: (IID fromString: '{50EA08B1-DD1B-4664-9A50-C2F40F4BD79A}')!
+ISchemaStringCollection guid: (IID fromString: '{50ea08b1-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchemaStringCollection comment: '<ISchemaStringCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaStringCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

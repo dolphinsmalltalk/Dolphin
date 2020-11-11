@@ -5,7 +5,7 @@ IXMLDOMNode subclass: #IXMLDOMDocument
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
-IXMLDOMDocument guid: (IID fromString: '{2933BF81-7B36-11D2-B20E-00C04F983E60}')!
+IXMLDOMDocument guid: (IID fromString: '{2933bf81-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMDocument comment: '<IXMLDOMDocument> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocument'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent documents, i.e. it represents the top node of the XML DOM tree.'!
