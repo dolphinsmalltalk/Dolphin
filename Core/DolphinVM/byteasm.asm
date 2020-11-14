@@ -676,17 +676,11 @@ SendSelectorArgs MACRO selector, args
 	mov		[MESSAGE], edx								;; Set the MESSAGE global
 	test	al, 1
 	
-	jnz		sendToSmallInteger
+	jnz		execMethodOfSmallInteger
 
 	ASSUME	eax:PTR OTE
 	mov		ecx, [eax].m_oteClass						;; Get the class of the Object
 
-	jmp		execMethodOfClass							; Jump to routine to exec class>>message in ECX>>EDX
-
-sendToSmallInteger:
-	ASSUME	eax:SDWORD									;; EAX is a SmallInteger
-
-	mov		ecx, [Pointers.ClassSmallInteger]
 	jmp		execMethodOfClass							; Jump to routine to exec class>>message in ECX>>EDX
 ENDM
 
@@ -3263,6 +3257,8 @@ pointerAt:
 	DispatchNext
 
 ;byteObjectAt:
+; TODO: Implement for 1, 2 and 4 byte encodings (see primitiveBasicAt)
+;
 ;	ASSUME	eax:PTR OTE							; EAX is Oop of receiver
 ;	ASSUME	edx:DWORD							; EDX is the index
 ;	ASSUME	ecx:PTR OTE							; ECX is the Oop of the receiver's class
@@ -3377,6 +3373,8 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 	DispatchNext
 
 byteObjectAtPut:
+; TODO: Implement for 1, 2 and 4 byte encodings (see primitiveBasicAtPut)
+;
 ;	ASSUME	ecx:PTR OTE						; ECX is receiver Oop (known byte object)
 ;	ASSUME	edx:DWORD						; EDX is index
 ;
@@ -3516,36 +3514,6 @@ ENDBYTECODE blockCopy
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ShortSendXArgsN MACRO x, index
-	LOCAL sendToSmallInteger
-
-	mov		edx, [pMethod]							; Load current method
-	ASSUME	edx:PTR CompiledCodeObj
-	LoadStackValueInto <x>,<eax>					;; Load receiver into EAX (under arg)
-
-	push DWORD	x									; N arguments
-	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
-
-	mov     edx, [edx].m_aLiterals[&index*OOPSIZE]	; Load selector Oop into edx
-	test	al, 1									; Test for immediate receiver (used later)
-
-	mov		[MESSAGE], edx							; Save down message
-	jnz		sendToSmallInteger						; If a SmallInteger need to load class differently
-
-	ASSUME	eax:PTR OTE
-	
-	mov		ecx, [eax].m_oteClass					; Get class into ECX
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-
-sendToSmallInteger:
-	ASSUME	eax:DWORD
-
-	mov		ecx, [Pointers.ClassSmallInteger]
-
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-	ASSUME	ecx:NOTHING
-ENDM
-
 ShortSendXArgs MACRO x, offset
 	LOCAL sendToSmallInteger
 
@@ -3558,57 +3526,50 @@ ShortSendXArgs MACRO x, offset
 	mov		[STACKPOINTER], _SP		 				;; Save down stack pointer (needed for DNU and C++ primitives)
 
 	mov     edx, [edx].m_aLiterals[(ecx*OOPSIZE)-(offset*OOPSIZE)]	;; Load selector Oop into ecx
-	jnz		sendToSmallInteger						;; If a SmallInteger need to load class differently
 
 	ASSUME	eax:PTR OTE
 
 	pushd	x										;; X arguments
 	mov		[MESSAGE], edx							;; Save down message
+
+	jnz		execMethodOfSmallInteger				;; If a SmallInteger need to load class differently
 	
 	mov		ecx, [eax].m_oteClass					;; Get class into ECX
 	jmp		execMethodOfClass						;; Jump to routine to exec class>>message in ECX>>EDX
-
-sendToSmallInteger:
-	ASSUME	eax:DWORD
-
-	pushd	x
-	mov		[MESSAGE], edx
-
-	mov		ecx, [Pointers.ClassSmallInteger]
-	jmp		execMethodOfClass						;; Jump to routine to exec class>>message in ECX>>EDX
-
-	ASSUME	ecx:NOTHING
 ENDM
 
 BEGINBYTECODE shortSendNoArgs
 	ShortSendXArgs <0>, <FIRSTSHORTSENDNOARGS>
 ENDBYTECODE shortSendNoArgs
 
-BEGINBYTECODE shortSendSelfNoArgs
+ShortSendSelfNoArgs MACRO x, index, offset
 	mov		eax, [_BP-OOPSIZE]						; Access receiver at _BP-1
 
-	; ecx-offset is the literal index
 	mov		edx, [pMethod]							; Load current method
 	ASSUME	edx:PTR CompiledCodeObj
 
-	PushOop <a>										; push receiver
+	mov		[_SP+OOPSIZE], eax						;; push object onto stack
+	add     _SP, OOPSIZE
 	
 	test	al, 1									; Test for immediate receiver (used later)
-	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 
-	mov     edx, [edx].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTSENDSELFNOARGS*OOPSIZE)]		; Load selector Oop into ecx
+	mov     edx, [edx].m_aLiterals[(index*OOPSIZE)-(offset*OOPSIZE)]
 
 	pushd	0										; 0 arguments
+
+	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 	mov		[MESSAGE], edx							; Save down message
 
-	jnz		@F										; If a SmallInteger need to load class differently
+	jnz		execMethodOfSmallInteger				; If a SmallInteger need to load class differently
+
 	mov		ecx, (OTE PTR[eax]).m_oteClass			; Get class into ECX
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-@@:
-	mov		ecx, [Pointers.ClassSmallInteger]
 	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
 
 	ASSUME	ecx:NOTHING
+ENDM
+
+BEGINBYTECODE shortSendSelfNoArgs
+	ShortSendSelfNoArgs <0>, ecx, FIRSTSHORTSENDSELFNOARGS
 ENDBYTECODE shortSendSelfNoArgs
 
 BEGINBYTECODE shortSendOneArg
@@ -3618,8 +3579,6 @@ ENDBYTECODE shortSendOneArg
 BEGINBYTECODE shortSendTwoArgs
 	ShortSendXArgs <00000002h>, <FIRSTSHORTSENDTWOARGS>
 ENDBYTECODE shortSendTwoArgs
-
-ASSUME edx:NOTHING
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Send Instruction  (double byte)
@@ -3646,16 +3605,10 @@ SendLiteralECXinEAXwithEDXArgs MACRO
 	test	al, 1							; Is the receiver a SmallInteger
 	
 	mov		edx, ecx						; Move message selector into edx (ECX now free)
-	jnz		sendToSmallInteger				; Branch if receiver is a SmallInteger
+	jnz		execMethodOfSmallInteger
 
 	ASSUME	eax:PTR OTE						; Receiver is an object
 	mov		ecx, [eax].m_oteClass			; Get the class of the Object
-	jmp		execMethodOfClass				; Jump to routine to exec class>>message in ECX>>EDX
-
-sendToSmallInteger:
-	ASSUME	eax:SDWORD						; Receiver is a SmallInteger
-
-	mov		ecx, [Pointers.ClassSmallInteger]
 	jmp		execMethodOfClass				; Jump to routine to exec class>>message in ECX>>EDX
 ENDM
 
@@ -3691,11 +3644,8 @@ BEGINBYTECODE sendTempNoArgs
 	mov		[MESSAGE], edx							; Save down message
 	mov		[_SP], eax								; Temp pushed on Smalltalk stack
 
-	jnz		@F										; If a SmallInteger need to load class differently
+	jnz		execMethodOfSmallInteger				; If a SmallInteger need to load class differently
 	mov		ecx, (OTE PTR[eax]).m_oteClass			; Get class into ECX
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-@@:
-	mov		ecx, [Pointers.ClassSmallInteger]
 	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
 
 	ASSUME	ecx:NOTHING
@@ -3941,8 +3891,11 @@ ENDBYTECODE longSend
 ; The main body of the routine is very short, being a switch
 ; through a jump table (see immediately below).
 
+ALIGNPROC
+execMethodOfSmallInteger:
+	mov		ecx, [Pointers.ClassSmallInteger]
 
-BEGINPROC execMethodOfClass
+BEGINPROCNOALIGN execMethodOfClass
 	ASSUME	edx:PTR OTE		; Selector (N.B. must have been saved down in MESSAGE global
 	ASSUME	ecx:PTR OTE		; Class
 							; [ESP] is the argument count (i.e. one arg on stack)
