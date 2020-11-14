@@ -1070,7 +1070,7 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 #ifdef _DEBUG
 	int newActivePriority = activeProcess()->Priority();
 	int highestPriorityWaiting = highestWaitingPriority();
- 	HARDASSERT(newActivePriority >= highestPriorityWaiting);
+ 	//HARDASSERT(newActivePriority >= highestPriorityWaiting);
 #endif
 
 	return aProcess;	// We resumed something, even if it was the previously active process
