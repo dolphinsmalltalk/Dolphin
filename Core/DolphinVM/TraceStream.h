@@ -11,7 +11,7 @@ public:
 	
 	basic_tracestreambuf () : std::basic_streambuf<charT, traits>() 
 	{
-		setp(buffer, buffer+bufSize);
+		this->setp(buffer, buffer+bufSize);
 	}
 	
 	virtual ~basic_tracestreambuf ()
@@ -22,7 +22,9 @@ public:
 	
 protected:
 	// Implementation
-	
+	using int_type = typename traits::int_type;
+	using char_type = typename traits::char_type;
+
 	int_type overflow(int_type ch = traits::eof())
 	{
 		if (output_buffer() < 0)
@@ -30,7 +32,7 @@ protected:
 		else
 		{
 			if (!traits::eq_int_type(traits::eof(), ch))
-				return sputc(traits::to_char_type(ch));
+				return this->sputc(traits::to_char_type(ch));
 			else
 				return traits::not_eof(ch);
 		}
@@ -44,8 +46,8 @@ protected:
 private:
 	int output_buffer()
 	{
-		charT* pb = pbase();
-		long count = pptr() - pb;
+		char_type* pb = this->pbase();
+		long count = this->pptr() - pb;
 		if (count != 0)
 		{
 			pb[count] = 0;
@@ -53,7 +55,7 @@ private:
 		}
 		
 		// Empty the put area
-		pbump(-count);
+		this->pbump(-count);
 		return 0;
 	}
 	

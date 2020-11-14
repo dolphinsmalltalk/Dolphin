@@ -24,6 +24,7 @@ Smalltalk compiler
 #undef max
 #include <valarray>
 typedef std::valarray<POTE> POTEARRAY;
+#include <unordered_map>
 
 #ifdef _DEBUG
 	#include "..\disassembler.h"
@@ -40,8 +41,8 @@ ENABLE_BITMASK_OPERATORS(CompilerFlags)
 #define ARGLIMIT			UINT8_MAX		// maximum number of arguments (VM limit)
 #define	ENVTEMPLIMIT		63				// (2^6)-1. Note that actual limit is 62, since value of 1 indicates that a context with 0 slots is required for a far ^-return 
 
-#define GENERATEDTEMPSTART " "
-#define TEMPSDELIMITER '|'
+#define GENERATEDTEMPSTART u8" "
+#define TEMPSDELIMITER u8'|'
 
 #include "bytecode.h"
 
@@ -95,7 +96,7 @@ public:
 	bool get_Ok() const { return m_ok; }
 
 	__declspec(property(get = get_LiteralCount)) size_t LiteralCount;
-	size_t get_LiteralCount() const { return m_literalFrame.size(); }
+	size_t get_LiteralCount() const { return m_literals.size(); }
 
 	void Warning(int code, Oop extra=0);
 	void Warning(const TEXTRANGE& range, int code, Oop extra=0);
@@ -118,7 +119,7 @@ private:
 	bool get_WantSyntaxCheckOnly() const { return !!(m_flags & CompilerFlags::SyntaxCheckOnly); }
 
 	__declspec(property(get = get_CodeSize)) size_t CodeSize;
-	size_t Compiler::get_CodeSize() const
+	size_t get_CodeSize() const
 	{
 		return m_bytecodes.size();
 	}
@@ -162,11 +163,11 @@ private:
 	void WarnIfRestrictedSelector(textpos_t start);
 
 	// Code generation
+	enum class LiteralType { ReferenceOnly, Normal };
 	size_t AddToFrameUnconditional(Oop object, const TEXTRANGE&);
-	size_t AddToFrame(Oop object, const TEXTRANGE&);
+	size_t AddToFrame(Oop object, const TEXTRANGE&, LiteralType type);
 	size_t AddStringToFrame(POTE string, const TEXTRANGE&);
-	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&);
-	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
+	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&, LiteralType refOnly);
 	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	void RemoveByte(ip_t pos);
 	void RemoveBytes(ip_t start, size_t count);
@@ -232,6 +233,7 @@ private:
 	size_t ShortenJumps();
 	void FixupJumps();
 	void FixupJump(ip_t);
+	void insertImmediateAsFirstLiteral(Oop immediate);
 
 	// Recursive Decent Parsing
 	POTE  ParseMethod();
@@ -441,7 +443,9 @@ private:
 
 	// Dynamic array of literals
 	typedef std::vector<Oop> OOPVECTOR;
-	OOPVECTOR m_literalFrame;					// Literal frame
+	OOPVECTOR m_literalFrame;			// Literal frame
+	typedef std::unordered_map<Oop, size_t> LiteralMap;
+	LiteralMap m_literals;				// All literals
 	size_t m_literalLimit;
 
 	// Fixed size array of instance vars (determined from class)
@@ -583,9 +587,4 @@ inline void Compiler::RemoveByte(ip_t ip)
 inline Str Compiler::GetString(POTE ote) 
 { 
 	return MakeString(m_piVM, ote); 
-}
-
-inline POTE Compiler::AddSymbolToFrame(const char* s, const TEXTRANGE& tokenRange)
-{
-	return AddSymbolToFrame((LPUTF8)s, tokenRange);
 }

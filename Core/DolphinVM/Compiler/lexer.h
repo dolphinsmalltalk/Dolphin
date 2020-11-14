@@ -12,7 +12,7 @@ The Smalltalk lexical analyser
 
 ///////////////////////
 
-typedef const uint8_t* LPUTF8;
+typedef const char8_t* LPUTF8;
 
 class Lexer
 {
@@ -48,13 +48,13 @@ public:
 	Lexer();
 	virtual ~Lexer();
 	
-	uint8_t Step();
-	void PushBack(uint8_t ch);
+	char8_t Step();
+	void PushBack(char8_t ch);
 	void StepBack(size_t n);
 	TokenType NextToken();
 	TokenType ScanString(textpos_t);
 	void ScanNumber();
-	int DigitValue(uint8_t ch) const;
+	int DigitValue(char8_t ch) const;
 
 	enum class radix_t { Min = 2, Decimal=10, Hex=16, Max = 36 };
 	void ScanInteger(radix_t radix);
@@ -136,8 +136,8 @@ protected:
 
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
 	
-	uint8_t PeekAtChar(size_t lookAhead=0) const;
-	bool IsASingleBinaryChar(uint8_t ch) const;
+	char8_t PeekAtChar(size_t lookAhead=0) const;
+	bool IsASingleBinaryChar(char8_t ch) const;
 	
 	TEXTRANGE CompileTextRange() const
 	{
@@ -147,21 +147,21 @@ protected:
 	//******************************************************************************
 	// ANSI X3J20 Compliant Lexicon (added by BSM)
 	//******************************************************************************
-	static bool isNonCaseLetter(uint8_t ch);
-	static bool isLetter(uint8_t ch);
-	static bool isIdentifierFirst(uint8_t ch);
-	static bool isIdentifierSubsequent(uint8_t ch);
-	static bool isAnsiBinaryChar(uint8_t ch);
+	static bool isNonCaseLetter(char8_t ch);
+	static bool isLetter(char8_t ch);
+	static bool isIdentifierFirst(char8_t ch);
+	static bool isIdentifierSubsequent(char8_t ch);
+	static bool isAnsiBinaryChar(char8_t ch);
 	
-	static bool isupper(uint8_t ch);
-	static bool islower(uint8_t ch);
-	static bool isdigit(uint8_t ch);
-	static bool isspace(uint8_t ch);
+	static bool isupper(char8_t ch);
+	static bool islower(char8_t ch);
+	static bool isdigit(char8_t ch);
+	static bool isspace(char8_t ch);
 	
 	void SkipBlanks();
 	void SkipComments();
 
-	void SetText(const uint8_t* compiletext, textpos_t offset);
+	void SetText(const char8_t* compiletext, textpos_t offset);
 
 	__declspec(property(get = get_Text)) LPUTF8 Text;
 	LPUTF8 get_Text() const
@@ -216,8 +216,8 @@ protected:
 		return static_cast<textpos_t>(m_buffer.size() - 1);
 	}
 
-	__declspec(property(get = get_CharPtr)) const uint8_t* CharPtr;
-	const uint8_t* get_CharPtr() const
+	__declspec(property(get = get_CharPtr)) const char8_t* CharPtr;
+	const char8_t* get_CharPtr() const
 	{
 		return m_cp;
 	}
@@ -243,21 +243,21 @@ protected:
 
 private:
 	int32_t ReadUtf8();
-	int32_t ReadUtf8(uint8_t ch);
+	int32_t ReadUtf8(char8_t ch);
 	int32_t ReadHexCodePoint();
-	uint8_t NextChar();
+	char8_t NextChar();
 
 private:
 	// The current token
 	TokenType m_tokenType;
 	intptr_t m_integer;
-	uint8_t* m_token;
-	uint8_t* tp;
+	char8_t* m_token;
+	char8_t* tp;
 	
 	// Buffer state
 	Str m_buffer;
-	const uint8_t* m_cp;
-	uint8_t m_cc;
+	const char8_t* m_cp;
+	char8_t m_cc;
 	int m_lineno;
 	textpos_t m_base;
 	
@@ -280,7 +280,7 @@ inline bool Lexer::ThisTokenIsSpecial(const char match) const
 	return m_tokenType== TokenType::Special && m_token[0] == match && m_token[1] == 0;
 }
 
-inline uint8_t Lexer::NextChar()
+inline char8_t Lexer::NextChar()
 {
 	m_cc=*m_cp ? *m_cp++ : '\0';
 	if (m_cc == '\n')
@@ -288,9 +288,9 @@ inline uint8_t Lexer::NextChar()
 	return m_cc;
 }
 
-inline uint8_t Lexer::Step()
+inline char8_t Lexer::Step()
 {
-	uint8_t ch = NextChar();
+	char8_t ch = NextChar();
 	if (ch)
 	{
 		*tp++ = ch;
@@ -300,12 +300,12 @@ inline uint8_t Lexer::Step()
 	return ch;
 }
 
-inline uint8_t Lexer::PeekAtChar(size_t lookAhead) const
+inline char8_t Lexer::PeekAtChar(size_t lookAhead) const
 {
 	return m_cp[lookAhead];
 }
 
-inline void Lexer::PushBack(uint8_t ch)
+inline void Lexer::PushBack(char8_t ch)
 {
 	_ASSERTE(m_cp>m_buffer.c_str());
 	if (ch)
@@ -336,42 +336,42 @@ inline void Lexer::StepBack(size_t n)
 // N.B. These must not be internationalized (currently)
 //******************************************************************************
 
-inline bool Lexer::isNonCaseLetter(uint8_t c)
+inline bool Lexer::isNonCaseLetter(char8_t c)
 {
 	return c == '_';
 }
 
-inline bool Lexer::isupper(uint8_t c)
+inline bool Lexer::isupper(char8_t c)
 {
 	return c >= 'A' && c <= 'Z';
 }
 
-inline bool Lexer::islower(uint8_t c)
+inline bool Lexer::islower(char8_t c)
 {
 	return c >= 'a' && c <= 'z';
 }
 
-inline bool Lexer::isLetter(uint8_t c) 
+inline bool Lexer::isLetter(char8_t c)
 {
 	return islower(c) || isupper(c) || isNonCaseLetter(c); 
 }
 
-inline bool Lexer::isdigit(uint8_t c)
+inline bool Lexer::isdigit(char8_t c)
 {
 	return c >= '0' && c <= '9';
 }
 
-inline bool Lexer::isIdentifierFirst(uint8_t c)
+inline bool Lexer::isIdentifierFirst(char8_t c)
 {
 	return isLetter(c);
 }
 
-inline bool Lexer::isIdentifierSubsequent(uint8_t c)
+inline bool Lexer::isIdentifierSubsequent(char8_t c)
 {
 	return isLetter(c) || isdigit(c);
 }
 
-inline bool Lexer::isspace(uint8_t c)
+inline bool Lexer::isspace(char8_t c)
 {
 	return c == 0x20 || (c >= 0x09 && c <= 0x0D);
 }

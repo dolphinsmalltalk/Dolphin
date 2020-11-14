@@ -11,6 +11,7 @@ Smalltalk compiler bytecode optimizer.
 
 #include "Compiler.h"
 #include <locale.h>
+#include <utility>
 
 #include <crtdbg.h>
 #define CHECKREFERENCES
@@ -1805,6 +1806,26 @@ inline void Compiler::MakeQuickMethod(STMethodHeader& hdr, STPrimitives primitiv
 	hdr.primitiveIndex = primitiveIndex;
 }
 
+void Compiler::insertImmediateAsFirstLiteral(Oop newLiteralForImmediate)
+{
+	// Should only be called to insert an object that is encodable in bytecodes (and therefore cannot
+	// already be in the literal frame) as part of creating a quick method definition to return a constant
+	_ASSERTE(IsIntegerObject(newLiteralForImmediate) || m_piVM->FetchClassOf(newLiteralForImmediate) == GetVMPointers().ClassCharacter);
+	_ASSERTE(!m_literals.contains(newLiteralForImmediate));
+
+	size_t i = m_literalFrame.size();
+	if (i > 0)
+	{
+		Oop firstLiteral = m_literalFrame[0];
+		m_literals[firstLiteral] = i;
+		m_literalFrame.push_back(firstLiteral);
+		m_literalFrame[0] = newLiteralForImmediate;
+		m_literals[newLiteralForImmediate] = 0;
+	}
+	else
+		AddToFrame(newLiteralForImmediate, TEXTRANGE(), LiteralType::Normal);
+}
+
 POTE Compiler::NewMethod()
 {
 	// Must do this before generate the bytecodes as the textmaps may be offset if packed
@@ -1816,7 +1837,7 @@ POTE Compiler::NewMethod()
 	size_t blockCount = Pass2();
 	
 	_ASSERTE(sizeof(STMethodHeader) == sizeof(uintptr_t));
-	_ASSERTE(LiteralCount<=LITERALLIMIT);
+	_ASSERTE(m_literalFrame.size() <= LITERALLIMIT);
 	
 	// As we keep the class of the method in the method, we no longer need to store the super
 	// class as an extra literal
@@ -1875,7 +1896,7 @@ POTE Compiler::NewMethod()
 	{
 		// Primitive return of literal zero
 		_ASSERTE(!bNeedsContext);
-		_ASSERTE(LiteralCount>0);
+		_ASSERTE(m_literalFrame.size() > 0);
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 
 		// Note that in this case the literal may be a clean block, in which case the code size
@@ -1886,11 +1907,11 @@ POTE Compiler::NewMethod()
 	{
 		// Primitive return of literal zero from a ##() expression that generated literal frame entries
 		_ASSERTE(!bNeedsContext);
-		_ASSERTE(LiteralCount>1);
+		_ASSERTE(m_literalFrame.size() > 1);
 		auto index = m_bytecodes[ip_t::zero].indexOfShortPushConst();
-		Oop tmp = m_literalFrame[0];
-		m_literalFrame[0] = m_literalFrame[index];
-		m_literalFrame[index] = tmp;
+
+		std::swap(m_literalFrame[0], m_literalFrame[index]);
+
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 	}
@@ -1898,7 +1919,7 @@ POTE Compiler::NewMethod()
 	{
 		// Primitive return of literal zero
 		_ASSERTE(!bNeedsContext);
-		_ASSERTE(LiteralCount>0);
+		_ASSERTE(m_literalFrame.size() > 0);
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_STATIC_ZERO);
 
 		// Note that in this case the literal may be a clean block, in which case the code size
@@ -1909,11 +1930,11 @@ POTE Compiler::NewMethod()
 	{
 		// Primitive return of literal zero from a ##() expression that generated literal frame entries
 		_ASSERTE(!bNeedsContext);
-		_ASSERTE(LiteralCount>1);
+		_ASSERTE(m_literalFrame.size() > 1);
 		auto index = m_bytecodes[ip_t::zero].indexOfShortPushStatic();
-		Oop tmp = m_literalFrame[0];
-		m_literalFrame[0] = m_literalFrame[index];
-		m_literalFrame[index] = tmp;
+
+		std::swap(m_literalFrame[0], m_literalFrame[index]);
+
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushStatic;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_STATIC_ZERO);
 	}
@@ -1958,14 +1979,7 @@ POTE Compiler::NewMethod()
 
 		_ASSERTE(m_primitiveIndex == 0);
 		intptr_t immediateValue = static_cast<intptr_t>(byte0 - OpCode::ShortPushMinusOne) - 1;
-		Oop literalInt = IntegerObjectOf(immediateValue);
-		if (LiteralCount > 0)
-		{
-			m_literalFrame.push_back(m_literalFrame[0]);
-			m_literalFrame[0] = literalInt;
-		}
-		else
-			AddToFrameUnconditional(literalInt, TEXTRANGE());
+		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateValue));
 	}
 	else if (byte0 == OpCode::PushImmediate && static_cast<OpCode>(byte2) == OpCode::ReturnMessageStackTop)
 	{
@@ -1974,13 +1988,7 @@ POTE Compiler::NewMethod()
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 		_ASSERTE(m_primitiveIndex == 0);
 		int8_t immediateByte = static_cast<int8_t>(byte1);
-		if (LiteralCount > 0)
-		{
-			m_literalFrame.push_back(m_literalFrame[0]);
-			m_literalFrame[0] = IntegerObjectOf(immediateByte);
-		}
-		else
-			AddToFrameUnconditional(IntegerObjectOf(immediateByte), TEXTRANGE());
+		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateByte));
 	}
 	else if (byte0 == OpCode::LongPushImmediate && m_bytecodes[ip_t::three].Opcode == OpCode::ReturnMessageStackTop)
 	{
@@ -1989,13 +1997,7 @@ POTE Compiler::NewMethod()
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 		_ASSERTE(m_primitiveIndex == 0);
 		int16_t immediateWord = static_cast<int16_t>(byte2 << 8) + byte1;
-		if (LiteralCount > 0)
-		{
-			m_literalFrame.push_back(m_literalFrame[0]);
-			m_literalFrame[0] = IntegerObjectOf(immediateWord);
-		}
-		else
-			AddToFrameUnconditional(IntegerObjectOf(immediateWord), TEXTRANGE());
+		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateWord));
 		// We can save space by replacing the LongPushImmediate instruction with 2-byte argument with a single byte push const 0
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
 		RemoveBytes(ip_t::one, 2);
@@ -2011,13 +2013,7 @@ POTE Compiler::NewMethod()
 									| (m_bytecodes[longPush - 2].byte << 16) 
 									| (m_bytecodes[longPush - 3].byte << 8) 
 									| m_bytecodes[longPush - 4].byte);
-		if (LiteralCount > 0)
-		{
-			m_literalFrame.push_back(m_literalFrame[0]);
-			m_literalFrame[0] = IntegerObjectOf(immediateValue);
-		}
-		else
-			AddToFrameUnconditional(IntegerObjectOf(immediateValue), TEXTRANGE());
+		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateValue));
 		// We can save space by replacing the ExLongPushImmediate instruction with 4-byte argument with a single byte push const 0
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
 		RemoveBytes(ip_t::one, ExLongPushImmediateInstructionSize-1);
@@ -2029,13 +2025,7 @@ POTE Compiler::NewMethod()
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
 		_ASSERTE(m_primitiveIndex == 0);
 		Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter(byte1));
-		if (LiteralCount > 0)
-		{
-			m_literalFrame.push_back(m_literalFrame[0]);
-			m_literalFrame[0] = oopChar;
-		}
-		else
-			AddToFrameUnconditional(oopChar, TEXTRANGE());
+		insertImmediateAsFirstLiteral(oopChar);
 	}
 	else if ((byte0 == OpCode::ShortPushTemp && ArgumentCount == 1 && CodeSize <= sizeof(uintptr_t))
 		&& ((static_cast<OpCode>(byte1) == OpCode::PopStoreInstVar && m_bytecodes[ip_t::three].Opcode == OpCode::ReturnSelf)
@@ -2136,13 +2126,27 @@ POTE Compiler::NewMethod()
 	// We have to delay setting up the initialIP of the clean blocks until the bytecodes have been allocated.
 	PatchCleanBlockLiterals(method);
 
-	// Install literals
-	const size_t loopEnd = LiteralCount;
-	for (size_t i=0; i<loopEnd; i++)
+	// Install literals 
+	// First those referenced from bytecodes
+	const size_t loopEnd = m_literalFrame.size();
+	size_t i = 0;
+	for (; i<loopEnd; i++)
 	{
 		Oop oopLiteral = m_literalFrame[i];
 		_ASSERTE(oopLiteral != NULL);
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
+	}
+	// Then the literals for code that is optimised away
+	for (LiteralMap::const_iterator it = m_literals.cbegin(); it != m_literals.cend(); it++)
+	{
+		if ((*it).second == -1)
+		{
+			Oop oopLiteral = (*it).first;
+			_ASSERTE(oopLiteral != NULL);
+			_ASSERTE(i < LiteralCount);	// Method only allocated to hold LiteralCount literals, so we don't want to write off the end
+			m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
+			i++;
+		}
 	}
 	
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(NewUtf8String(Selector)));
@@ -2565,7 +2569,7 @@ void Compiler::MakeCleanBlockAt(ip_t i)
 		pScope->SetCleanBlockLiteral(blockPointer);
 	}
 
-	size_t index = AddToFrame(reinterpret_cast<Oop>(blockPointer), pScope->TextRange);
+	size_t index = AddToFrame(reinterpret_cast<Oop>(blockPointer), pScope->TextRange, LiteralType::Normal);
 	if (index < NumShortPushConsts)		// In range of short instructions ?
 	{
 		byte1.Opcode = OpCode::ShortPushConst + index;
