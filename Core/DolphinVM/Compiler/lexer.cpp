@@ -66,12 +66,12 @@ void Lexer::CompileErrorV(const TEXTRANGE& range, int code, ...)
 	va_end(extras);
 }
 
-void Lexer::SetText(const uint8_t* compiletext, textpos_t offset)
+void Lexer::SetText(const char8_t* compiletext, textpos_t offset)
 {
 	m_tokenType = TokenType::None;
 	m_buffer = compiletext;
 	m_cp = m_buffer.c_str();
-	m_token = new uint8_t[m_buffer.size() + 1];
+	m_token = new char8_t[m_buffer.size() + 1];
 	m_lineno = 1;
 	m_base = offset;
 	AdvanceCharPtr(static_cast<size_t>(offset));
@@ -80,7 +80,7 @@ void Lexer::SetText(const uint8_t* compiletext, textpos_t offset)
 // ANSI Binary chars are ...
 // Note that this does include '-', and therefore whitespace is
 // required to separate negation from a binary operator
-bool Lexer::isAnsiBinaryChar(uint8_t ch)
+bool Lexer::isAnsiBinaryChar(char8_t ch)
 {
 	switch (ch)
 	{
@@ -105,7 +105,7 @@ bool Lexer::isAnsiBinaryChar(uint8_t ch)
 	return false;
 }
 
-bool Lexer::IsASingleBinaryChar(uint8_t ch) const
+bool Lexer::IsASingleBinaryChar(char8_t ch) const
 {
 	// Returns true if (ch) is a single binary characater
 	// that can't be continued.
@@ -146,13 +146,13 @@ void Lexer::SkipComments()
 			CompileError(TEXTRANGE(commentStart, CharPosition), LErrCommentNotClosed);
 		}
 
-		const uint8_t* ep = m_cp;
+		const char8_t* ep = m_cp;
 		NextChar();
 		SkipBlanks();
 	}
 }
 
-inline bool issign(uint8_t ch)
+inline bool issign(char8_t ch)
 {
 	return ch == '-' || ch == '+';
 }
@@ -218,7 +218,7 @@ void Lexer::ScanFloat()
 	PushBack(ch);
 }
 
-int Lexer::DigitValue(uint8_t ch) const
+int Lexer::DigitValue(char8_t ch) const
 {
 	return ch >= '0' && ch <= '9'
 		? ch - '0'
@@ -259,11 +259,11 @@ void Lexer::ScanInteger(radix_t radix)
 // Note that the first digit has already been placed in the token buffer
 void Lexer::ScanExponentInteger()
 {
-	uint8_t e = NextChar();
-	uint8_t* mark = tp;
+	char8_t e = NextChar();
+	char8_t* mark = tp;
 	*tp++ = e;
 
-	uint8_t ch = PeekAtChar();
+	char8_t ch = PeekAtChar();
 	if (ch == '-' || ch == '+')
 	{
 		*tp++ = NextChar();
@@ -312,7 +312,7 @@ void Lexer::ScanNumber()
 			// Probably a short or long integer with a leading radix.
 
 			*tp++ = NextChar();
-			uint8_t* startSuffix = tp;
+			char8_t* startSuffix = tp;
 			intptr_t radixCandidate = m_integer;
 			radix_t radix = static_cast<radix_t>(radixCandidate);
 			ScanInteger(radix);
@@ -453,7 +453,7 @@ void Lexer::ScanIdentifierOrKeyword()
 
 void Lexer::ScanSymbol()
 {
-	uint8_t* lastColon = nullptr;
+	char8_t* lastColon = nullptr;
 	while (isIdentifierFirst(m_cc))
 	{
 		*tp++ = m_cc;
@@ -676,7 +676,7 @@ int32_t Lexer::ReadUtf8()
 	return ReadUtf8(ch);
 }
 
-int32_t Lexer::ReadUtf8(uint8_t ch)
+int32_t Lexer::ReadUtf8(char8_t ch)
 {
 	if (__isascii(ch))
 	{

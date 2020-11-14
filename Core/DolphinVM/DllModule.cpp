@@ -56,6 +56,7 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 
 	LPCTSTR szClsid = OLE2T(lpOleStr);
 	CRegKey key;
+	LONG lRes = 0;
 
 	hRes = RegisterProgID(szClsid, lpszProgID, szDesc);
 	if (FAILED(hRes))
@@ -69,7 +70,7 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 		goto end;
 	}
 
-	LONG lRes = key.Open(HKEY_CLASSES_ROOT, _T("CLSID"), KEY_READ | KEY_WRITE);
+	lRes = key.Open(HKEY_CLASSES_ROOT, _T("CLSID"), KEY_READ | KEY_WRITE);
 	if (lRes != ERROR_SUCCESS)
 	{
 		hRes = AtlHresultFromWin32(lRes);

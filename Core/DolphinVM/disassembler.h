@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bytecdes.h"
+#include <xstring>
 
 enum class JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
 
@@ -42,17 +43,17 @@ public:
 	void EmitIp(I ip, std::wostream& stream)
 	{
 		// Print one-based ip as this is how they are disassembled in the image
-		stream << std::dec << setw(5) << static_cast<uintptr_t>(ip + 1) << L":";
+		stream << std::dec << std::setw(5) << static_cast<uintptr_t>(ip + 1) << L":";
 	}
 
 	size_t EmitRawBytes(I ip, std::wostream& stream)
 	{
 		size_t len = lengthOfByteCode(GetOpCode(ip));
-		stream << std::hex << uppercase << setfill(L'0');
+		stream << std::hex << std::uppercase << std::setfill(L'0');
 		size_t j;
 		for (j = 0; j < min(len, 3); j++)
 		{
-			stream << L' ' << setw(2) << static_cast<uint32_t>(GetBytecode(ip + j));
+			stream << L' ' << std::setw(2) << static_cast<uint32_t>(GetBytecode(ip + j));
 		}
 		if (len > 3)
 		{
@@ -63,11 +64,11 @@ public:
 		{
 			stream << L"   ";
 		}
-		stream << setfill(L' ') << nouppercase << std::dec;
+		stream << std::setfill(L' ') << std::nouppercase << std::dec;
 		return len;
 	}
 
-	void BytecodeDisassembler::EmitDecodedInstructionAt(I ip, std::wostream& stream)
+	void EmitDecodedInstructionAt(I ip, std::wostream& stream)
 	{
 		const OpCode opcode = GetOpCode(ip);
 
@@ -668,7 +669,7 @@ public:
 		stream.flush();
 	}
 
-	void BytecodeDisassembler::PrintJumpInstruction(I ip, std::wostream& stream, JumpType jumpType, int16_t offset, size_t target)
+	void PrintJumpInstruction(I ip, std::wostream& stream, JumpType jumpType, int16_t offset, size_t target)
 	{
 		const char* JumpNames[] = { "Jump", "Jump If True", "Jump If False", "Jump If Nil", "Jump If Not Nil" };
 		stream << JumpNames[static_cast<std::underlying_type<JumpType>::type>(jumpType)] << L' ';
@@ -679,33 +680,33 @@ public:
 		stream << std::dec << static_cast<int>(offset) << L" to " << (target + 1);
 	}
 
-	void BytecodeDisassembler::PrintStaticInstruction(I ip, std::wostream& stream, const char* type, size_t index)
+	void PrintStaticInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
 		stream << type << L" [" << std::dec << index << L"]: " << context.GetLiteralAsString(index);
 	}
 
-	void BytecodeDisassembler::PrintInstVarInstruction(I ip, std::wostream& stream, const char* type, size_t index)
+	void PrintInstVarInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
-		stream << type << L" InstVar[" << std::dec << index << L"]: " << context.GetInstVar(index).c_str();
+		stream << type << L" InstVar[" << std::dec << index << L"]: " << context.GetInstVar(index);
 	}
 
-	void BytecodeDisassembler::PrintSendInstruction(I ip, std::wostream& stream, int index, int argumentCount)
+	void PrintSendInstruction(I ip, std::wostream& stream, int index, int argumentCount)
 	{
-		wstring selector = context.GetLiteralAsString(index);
+		std::wstring selector = context.GetLiteralAsString(index);
 		stream << L"Send[" << std::dec << index << L"]: #" << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
 	}
 
-	void BytecodeDisassembler::PrintTempInstruction(I ip, std::wostream& stream, const char* type, size_t index)
+	void PrintTempInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
 		stream << type << L" Temp[" << std::dec << index << L"]";
 	}
 
-	void BytecodeDisassembler::PrintPushImmediate(I ip, std::wostream& stream, int value, int byteSize)
+	void PrintPushImmediate(I ip, std::wostream& stream, int value, int byteSize)
 	{
 		stream << L"Push " << std::dec << value;
 		if (byteSize > 0)
 		{
-			stream << L" (" << std::hex << L"0x" << setfill(L'0') << setw(static_cast<streamsize>(byteSize) * 2) << value << L')' << setfill(L' ');
+			stream << L" (" << std::hex << L"0x" << std::setfill(L'0') << std::setw(static_cast<std::streamsize>(byteSize) * 2) << value << L')' << std::setfill(L' ');
 		}
 	}
 };

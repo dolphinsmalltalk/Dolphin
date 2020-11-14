@@ -114,10 +114,9 @@ Compiler::~Compiler()
 
 	// Free literal frame
 	{
-		const size_t count = m_literalFrame.size();
-		for (size_t i = 0; i < count; i++)
+		for(LiteralMap::const_iterator it = m_literals.cbegin(); it != m_literals.cend(); it++)
 		{
-			m_piVM->RemoveReference(m_literalFrame[i]);
+			m_piVM->RemoveReference((*it).first);
 		}
 	}
 }
@@ -156,8 +155,8 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	{
 		char szPrompt[256];
 		::LoadString(GetResLibHandle(), IDS_P_NOTACLASS, szPrompt, sizeof(szPrompt)-1);
-		Str actualClassName = recurse ? GetNameOfClass(Oop(m_piVM->FetchClassOf(oopClass)), false) : (LPUTF8)"invalid object";
-		uint8_t buf[512];
+		Str actualClassName = recurse ? GetNameOfClass(Oop(m_piVM->FetchClassOf(oopClass)), false) : u8"invalid object";
+		char8_t buf[512];
 		VERIFY(wsprintf((LPSTR)buf, szPrompt, actualClassName.c_str())>=0);
 		return buf;
 	}
@@ -446,7 +445,7 @@ void Compiler::RenameTemporary(tempcount_t temporary, LPUTF8 newName, const TEXT
 
 void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool isArg)
 {
-	if (strspn((LPCSTR)name.c_str(), GENERATEDTEMPSTART) != 0)
+	if (strspn((LPCSTR)name.c_str(), (LPCSTR)GENERATEDTEMPSTART) != 0)
 		return;
 
 	if (IsPseudoVariable(name))
@@ -634,8 +633,9 @@ void Compiler::GenPushStaticConstant(POTE oteStatic, const TEXTRANGE& range)
 	if (GenPushImmediate(literal, range))
 	{
 		// We still want the variable added to the literal frame so that it can be used to accurately
-		// identify references to the constant.
-		AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+		// identify references to the constant, but we put it at the end of the frame so it doesn't cause
+		// unnecessarily lengthen the bytecodes required to reference literals from the code
+		AddToFrame(reinterpret_cast<Oop>(oteStatic), range, LiteralType::ReferenceOnly);
 	}
 	else
 	{
@@ -865,11 +865,11 @@ size_t Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
 	//
 	_ASSERTE(object);
 	_ASSERTE(!IsIntegerObject(object) || IntegerValueOf(object) < INT16_MIN || IntegerValueOf(object) > INT16_MAX || errRange.Span <= 0);
-	size_t index = LiteralCount;
+	_ASSERTE(!m_literals.contains(object) || m_literals[object] == -1);
+	size_t index = m_literalFrame.size();
 	if (index < m_literalLimit)
 	{
 		m_literalFrame.push_back(object);
-		m_piVM->AddReference(object);
 		CHECKREFERENCES
 	}
 	else
@@ -881,24 +881,40 @@ size_t Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
 	return index;
 }
 
-size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange)
+size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange, LiteralType type)
 {
 	// Adds (object) to the literal frame if it is not already there.
 	// Returns the index to the object in the literal frame.
 	//
-	for (size_t i=LiteralCount;i>0;i--)
+	LiteralMap::iterator it = m_literals.find(object);
+	size_t index;
+	if (it != m_literals.end())
 	{
-		Oop literalPointer = m_literalFrame[i-1];
-		_ASSERTE(literalPointer);
-
-		if (literalPointer == object)
+		index = (*it).second;
+		if (type == LiteralType::Normal && index == static_cast<size_t>(-1))
 		{
-			CHECKREFERENCES
-			return i-1;
+			// Need to insert previously reference only literal into the frame
+			index = AddToFrameUnconditional(object, errRange);
+			(*it).second = index;
 		}
 	}
-	
-	return AddToFrameUnconditional(object, errRange);
+	else
+	{
+		// New literal
+
+		if (type == LiteralType::Normal)
+		{
+			index = AddToFrameUnconditional(object, errRange);
+		}
+		else
+		{
+			index = static_cast<size_t>(-1);
+		}
+
+		m_piVM->AddReference(object);
+		m_literals[object] = index;
+	}
+	return index;
 }
 
 
@@ -911,30 +927,39 @@ size_t Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 	POTE classPointer = m_piVM->FetchClassOf(Oop(stringPointer));
 	LPUTF8 szValue = (LPUTF8)FetchBytesOf(stringPointer);
 
-	for (size_t i=LiteralCount;i>0;i--)
+	for (LiteralMap::iterator it = m_literals.begin(); it != m_literals.end(); it++)
 	{
-		Oop literalPointer = m_literalFrame[i - 1];
+		Oop literalPointer = (*it).first;
 		_ASSERTE(literalPointer);
 
 		if ((m_piVM->FetchClassOf(literalPointer) == classPointer) &&
 			strcmp((LPCSTR)FetchBytesOf(POTE(literalPointer)), (LPCSTR)szValue) == 0)
 		{
+			// Found an equivalent string already among the literals
+
+			size_t index = (*it).second;
+			if (index == -1)
+			{
+				index = AddToFrameUnconditional(literalPointer, range);
+				(*it).second = index;
+			}
+
 			m_piVM->RemoveReference((Oop)stringPointer);
-			return i - 1;
+			return index;
 		}
 	}
 	
 	Oop oopString = reinterpret_cast<Oop>(stringPointer);
 	m_piVM->MakeImmutable(oopString, TRUE);
-	size_t i = AddToFrameUnconditional(oopString, range);
+	size_t index = AddToFrame(oopString, range, LiteralType::Normal);
 	m_piVM->RemoveReference((Oop)stringPointer);
-	return i;
+	return index;
 }
 
 void Compiler::GenLiteralConstant(Oop object, const TEXTRANGE& range)
 {
 	m_piVM->MakeImmutable(object, TRUE);
-	GenConstant(AddToFrame(object, range));
+	GenConstant(AddToFrame(object, range, LiteralType::Normal));
 }
 
 bool Compiler::GenPushImmediate(Oop objectPointer, const TEXTRANGE& range)
@@ -979,7 +1004,7 @@ void Compiler::GenPushConstant(Oop objectPointer, const TEXTRANGE& range)
 	if (!GenPushImmediate(objectPointer, range))
 	{
 		// Note that we may be pushing the value of a variable here, we don't want to mark it immutable
-		GenConstant(AddToFrame(objectPointer, range));
+		GenConstant(AddToFrame(objectPointer, range, LiteralType::Normal));
 	}
 }
 
@@ -1011,7 +1036,7 @@ void Compiler::GenConstant(size_t index)
 // Generates code to push a literal variable.
 void Compiler::GenStatic(const POTE oteStatic, const TEXTRANGE& range)
 {
-	size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+	size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range, LiteralType::Normal);
 
 	if (m_ok)
 	{
@@ -1061,7 +1086,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	// symbol in the frame.
 	POTE oteSelector = InternSymbol(pattern);
 	TEXTRANGE errRange = TEXTRANGE(messageStart, argCount == 0 ? ThisTokenRange.m_stop : LastTokenRange.m_stop);
-	size_t symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
+	size_t symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange, LiteralType::Normal);
 	if (symbolIndex == -1)
 		return ip_t::npos;
 
@@ -1248,7 +1273,7 @@ ip_t Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, textpos_t
 
 	case StaticType::Variable:
 		{
-			size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+			size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range, LiteralType::Normal);
 			_ASSERTE(index <= UINT16_MAX);
 			storeIP = index <= UINT8_MAX
 							? GenInstructionExtended(OpCode::StoreStatic, static_cast<uint8_t>(index))
@@ -1746,7 +1771,7 @@ void Compiler::ParseTerm(textpos_t textPosition)
 		break;
 
 	case TokenType::SymbolConst:
-		GenConstant(AddToFrame(reinterpret_cast<Oop>(InternSymbol(ThisTokenText)), ThisTokenRange));
+		GenConstant(AddToFrame(reinterpret_cast<Oop>(InternSymbol(ThisTokenText)), ThisTokenRange, LiteralType::Normal));
 		NextToken();
 		break;
 
@@ -2096,7 +2121,7 @@ ip_t Compiler::ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition)
 		}
 		else if (strToken == (LPUTF8)"yourself" && !(m_flags & CompilerFlags::SendYourself))
 		{
-			AddSymbolToFrame(ThisTokenText, ThisTokenRange);
+			AddSymbolToFrame(ThisTokenText, ThisTokenRange, LiteralType::ReferenceOnly);
 			// We don't send yourself, since it is a Nop
 			isSpecialCase=true;
 		}
@@ -2345,7 +2370,7 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 	
 	if (m_ok && retType.parm)
 	{
-		retType.parm = AddToFrameUnconditional(retType.parm, range);
+		retType.parm = AddToFrame(retType.parm, range, LiteralType::Normal);
 		_ASSERTE(retType.parm==1);
 	}
 }
@@ -2364,7 +2389,7 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 	
 	size_t procNameSize = strlen((LPCSTR)szProcName)+1;
 	size_t size = sizeof(DolphinX::ExternalMethodDescriptor) + argsLen + procNameSize;
-	size_t index=AddToFrameUnconditional(Oop(m_piVM->NewByteArray(size)), LastTokenRange);
+	size_t index=AddToFrame(Oop(m_piVM->NewByteArray(size)), LastTokenRange, LiteralType::Normal);
 	
 	// This must be the first literal in the frame!
 	_ASSERTE(index==0);
@@ -2390,7 +2415,7 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 		// Any types with a literal argument are added to frame (only ExtCallArgSTRUCT at present)
 		if (types[i].parm)
 		{
-			size_t frameIndex = AddToFrame(types[i].parm, types[i].range);
+			size_t frameIndex = AddToFrame(types[i].parm, types[i].range, LiteralType::Normal);
 			_ASSERTE(frameIndex <= UINT8_MAX);
 			argsEtc.m_descriptor.m_args[argsLen++] = static_cast<uint8_t>(frameIndex);
 		}
@@ -3187,7 +3212,7 @@ Oop Compiler::ParseConstExpression()
 		{
 			STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 
-			// Add all the literals in the expression to the literal frame of this method as this
+			// Add all the literals in the expression to the end of the literal frame of this method as this
 			// allows normal references search to work in IDE
 			const size_t loopEnd = pCompiler->LiteralCount;
 			for (size_t i=0; i < loopEnd;i++)
@@ -3201,7 +3226,7 @@ Oop Compiler::ParseConstExpression()
 							m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassArray)))
 
 				{
-					AddToFrame(oopLiteral, LastTokenRange);
+					AddToFrame(oopLiteral, LastTokenRange, LiteralType::ReferenceOnly);
 				}
 			}
 
@@ -3744,8 +3769,8 @@ void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 		else
 		{
 			Str erroneousText = GetTextRange(range);
-			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, GetClassName().c_str(), m_selector.c_str(), LineNo, range.m_start, range.m_stop,
-				erroneousText.c_str());
+			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, (LPCSTR)GetClassName().c_str(), (LPCSTR)m_selector.c_str(), LineNo, range.m_start, range.m_stop,
+				(LPCSTR)erroneousText.c_str());
 			fprintf(stdout, (LPCSTR)Text);
 		}
 	}

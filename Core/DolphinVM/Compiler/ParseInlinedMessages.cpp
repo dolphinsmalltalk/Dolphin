@@ -25,8 +25,8 @@ template bool Compiler::ParseWhileLoopBlock<false>(const ip_t, const TEXTRANGE&,
 ///////////////////////////////////////////////////////////////////////////////
 // When inlining code the compiler sometimes has to generate temporaries. It prefixes
 // these with a space so that the names cannot possibly clash with user defined temps
-static const uint8_t eachTempName[] = GENERATEDTEMPSTART "each";
-static const uint8_t valueTempName[] = GENERATEDTEMPSTART "value";
+static const char8_t eachTempName[] = GENERATEDTEMPSTART u8"each";
+static const char8_t valueTempName[] = GENERATEDTEMPSTART u8"value";
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +49,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifTrue:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(u8"ifTrue:"));
 		return false;
 	}
 
@@ -65,7 +65,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	if (strcmp((LPCSTR)ThisTokenText, "ifFalse:") == 0)
 	{
 		// An else block exists
-		POTE oteSelector = AddSymbolToFrame("ifTrue:ifFalse:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:ifFalse:", messageRange, LiteralType::ReferenceOnly);
 
 		NextToken();
 
@@ -75,7 +75,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	{
 		// When #ifFalse: branch is missing, value of expression if condition false is nil
 		
-		POTE oteSelector = AddSymbolToFrame("ifTrue:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:", messageRange, LiteralType::ReferenceOnly);
 
 		GenInstruction(OpCode::ShortPushNil);
 	}
@@ -92,7 +92,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifFalse:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(u8"ifFalse:"));
 		return false;
 	}
 
@@ -109,7 +109,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	{
 		// An else block exists
 
-		POTE oteSelector = AddSymbolToFrame("ifFalse:ifTrue:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:ifTrue:", messageRange, LiteralType::ReferenceOnly);
 
 		NextToken();
 
@@ -119,7 +119,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	{
 		// When ifTrue: branch is missing, value of expression if condition false is nil
 
-		POTE oteSelector = AddSymbolToFrame("ifFalse:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:", messageRange, LiteralType::ReferenceOnly);
 
 		// N.B. We used (pre 5.5) to reorder the "blocks" to take advantage of the shorter jump on false
 		// instruction (i.e. we put the empty true block first), but it turns out that this
@@ -148,7 +148,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 
 bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 {
-	POTE oteSelector = AddSymbolToFrame("and:", messageRange);
+	POTE oteSelector = AddSymbolToFrame(u8"and:", messageRange, LiteralType::ReferenceOnly);
 
 	// Assume we can reorder blocks to allow us to use the smaller
 	// jump on false instruction.
@@ -182,7 +182,7 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 
 bool Compiler::ParseOrCondition(const TEXTRANGE& messageRange)
 {
-	POTE oteSelector = AddSymbolToFrame("or:", messageRange);
+	POTE oteSelector = AddSymbolToFrame(u8"or:", messageRange, LiteralType::ReferenceOnly);
 
 	if (!ThisTokenIsBinary('['))
 	{
@@ -346,7 +346,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifNil:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(u8"ifNil:"));
 		return false;
 	}
 
@@ -365,7 +365,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 
 	if (strcmp((LPCSTR)ThisTokenText, "ifNotNil:") == 0)
 	{
-		POTE oteSelector = AddSymbolToFrame("ifNil:ifNotNil:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNil:ifNotNil:", messageRange, LiteralType::ReferenceOnly);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
@@ -398,7 +398,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 	}
 	else
 	{
-		POTE oteSelector = AddSymbolToFrame("ifNil:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNil:", messageRange, LiteralType::ReferenceOnly);
 
 		// No "else" branch, but we still need an instruction to jump to
 		ifNotNilMark = GenNop();
@@ -420,7 +420,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectMonadicOrNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifNotNil:"));
+		Warning(CWarnExpectMonadicOrNiladicBlockArg, (Oop)InternSymbol(u8"ifNotNil:"));
 		return false;
 	}
 
@@ -447,7 +447,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 	// Has an #ifNil: branch?
 	if (strcmp((LPCSTR)ThisTokenText, "ifNil:") == 0)
 	{
-		POTE oteSelector = AddSymbolToFrame("ifNotNil:ifNil:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:ifNil:", messageRange, LiteralType::ReferenceOnly);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
@@ -466,7 +466,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 	{
 		// No "ifNil:" branch 
 
-		POTE oteSelector = AddSymbolToFrame("ifNotNil:", messageRange);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:", messageRange, LiteralType::ReferenceOnly);
 
 		if (!hasArg)
 		{
@@ -575,7 +575,7 @@ bool Compiler::ParseRepeatLoop(const ip_t loopmark, const TEXTRANGE& receiverRan
 	// We add a literal symbol to the frame for the message send regardless of 
 	// whether we are able to generate the inlined version so that searching
 	// for references, etc, works as expected.
-	POTE oteSelector = AddSymbolToFrame(ThisTokenText, ThisTokenRange);
+	POTE oteSelector = AddSymbolToFrame(ThisTokenText, ThisTokenRange, LiteralType::ReferenceOnly);
 
 	switch (InlineLoopBlock(loopmark, ThisTokenRange))
 	{
@@ -595,10 +595,10 @@ bool Compiler::ParseRepeatLoop(const ip_t loopmark, const TEXTRANGE& receiverRan
 }
 
 
-POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange)
+POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange, LiteralType type)
 {
 	POTE oteSelector = InternSymbol(s);
-	AddToFrame(reinterpret_cast<Oop>(oteSelector), tokenRange);
+	AddToFrame(reinterpret_cast<Oop>(oteSelector), tokenRange, type);
 	return oteSelector;
 }
 
@@ -607,7 +607,7 @@ POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange)
 template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const ip_t loopmark, 
 								   const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange)
 {
-	POTE oteSelector = AddSymbolToFrame(WhileTrue ? "whileTrue:" : "whileFalse:", tokenRange);
+	POTE oteSelector = AddSymbolToFrame(WhileTrue ? u8"whileTrue:" : u8"whileFalse:", tokenRange, LiteralType::ReferenceOnly);
 
 	if (!ThisTokenIsBinary('['))
 	{
@@ -671,7 +671,7 @@ template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const ip_t loopmark
 // Returns whether we were able to optimize this loop
 template <bool WhileTrue> bool Compiler::ParseWhileLoop(const ip_t loopmark, const TEXTRANGE& receiverRange)
 {
-	POTE oteSelector = AddSymbolToFrame(ThisTokenText, ThisTokenRange);
+	POTE oteSelector = AddSymbolToFrame(ThisTokenText, ThisTokenRange, LiteralType::ReferenceOnly);
 
 	switch (InlineLoopBlock(loopmark, ThisTokenRange))
 	{
@@ -770,7 +770,7 @@ void Compiler::ParseToByNumberDo(ip_t toPointer, Oop oopNumber, bool bNegativeSt
 // produce optimized form of to:do: message
 bool Compiler::ParseToDoBlock(textpos_t exprStart, ip_t toPointer)
 {
-	POTE oteSelector = AddSymbolToFrame("to:do:", TEXTRANGE(exprStart, exprStart + 2));
+	POTE oteSelector = AddSymbolToFrame(u8"to:do:", TEXTRANGE(exprStart, exprStart + 2), LiteralType::ReferenceOnly);
 
 	// Only optimize if a block is next
 	if (!ThisTokenIsBinary('['))
@@ -788,7 +788,7 @@ bool Compiler::ParseToByDoBlock(textpos_t exprStart, ip_t toPointer, ip_t byPoin
 {
 	_ASSERTE(toPointer>ip_t::zero && byPointer>ip_t::zero);
 	
-	POTE oteSelector = AddSymbolToFrame("to:by:do:", TEXTRANGE(exprStart, exprStart +2));
+	POTE oteSelector = AddSymbolToFrame(u8"to:by:do:", TEXTRANGE(exprStart, exprStart +2), LiteralType::ReferenceOnly);
 
 	// Only optimize if a block is next
 	if (!ThisTokenIsBinary('['))
@@ -833,7 +833,7 @@ bool Compiler::ParseToByDoBlock(textpos_t exprStart, ip_t toPointer, ip_t byPoin
 // Note that we perform the conditional jump as a backwards jump at the end for optimal performance
 bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const textpos_t textPosition)
 {
-	POTE oteSelector = AddSymbolToFrame("timesRepeat:", messageRange);
+	POTE oteSelector = AddSymbolToFrame(u8"timesRepeat:", messageRange, LiteralType::ReferenceOnly);
 
 	if (!ThisTokenIsBinary('['))
 	{
