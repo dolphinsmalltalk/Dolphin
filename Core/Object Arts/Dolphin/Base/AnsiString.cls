@@ -71,6 +71,11 @@ decodeNextFrom: aReadStream
 
 	^aReadStream basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
+encodedSizeAt: anInteger
+	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Always 1 in the case of an ANSI string (multi-byte code pages are not supported)."
+
+	^1!
+
 encodeOn: aWriteStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument as a single byte ANSI code unit.
 	 An error is raised if the <Character> has code point that is not representable in the ANSI encoding."
@@ -164,6 +169,7 @@ urlDecoded
 !AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
 !AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
 !AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!AnsiString categoriesFor: #encodedSizeAt:!encode/decode!private! !
 !AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
 !AnsiString categoriesFor: #first:!copying!public! !
 !AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !

@@ -211,11 +211,6 @@ encodedAt: anInteger put: aCharacter
 
 	^self subclassResponsibility!
 
-encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
-
-	^self subclassResponsibility!
-
 encodedSizeOf: aCharacter
 	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver's encoding."
 
@@ -465,7 +460,6 @@ with: otherCollection do: aDyadicValuable
 !UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
 !UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
 !UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!UtfEncodedString categoriesFor: #encodedSizeAt:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #errorIntraCharacterIndex:!encode/decode!private! !

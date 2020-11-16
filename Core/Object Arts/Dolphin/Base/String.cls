@@ -456,6 +456,11 @@ displayString
 
 	^self!
 
+encodedSizeAt: anInteger
+	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Throw an error if the code unit at anInteger is not either an ASCII code point or a UTF-8 lead surrogate"
+
+	^self subclassResponsibility!
+
 encodeOn: aWriteStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument using the character
 	encoding of the receiver, e.g. for Utf8String, this would be the relevant sequence of 1 to 4
@@ -1253,6 +1258,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
+!String categoriesFor: #encodedSizeAt:!encode/decode!private! !
 !String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !String categoriesFor: #expandMacros!printing!public! !
 !String categoriesFor: #expandMacrosWith:!printing!public! !

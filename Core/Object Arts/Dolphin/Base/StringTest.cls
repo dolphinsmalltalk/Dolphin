@@ -567,6 +567,52 @@ testReverseDo
 			actual := actual contents.
 			self assert: actual equals: expected]!
 
+testSplitByCharacterArray
+	| empty separators |
+	empty := #().
+	self assert: (empty split: (self assimilateString: 'abc')) equals: #('abc').
+
+	"Split by multiple chars - each of the characters in the separator collection is a potential separator"
+	separators := '.-' asArray.
+	self assert: (separators split: empty) equals: (#() collect: [:e | self assimilateString: e]).
+	self assert: (separators split: (self assimilateString: 'a'))
+		equals: (#('a') collect: [:e | self assimilateString: e]).
+	self assert: (separators split: (self assimilateString: '.a'))
+		equals: (#('' 'a') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: '-a'))
+		equals: (#('' 'a') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'a-'))
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: '-.a'))
+		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'a.-'))
+		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'ab'))
+		equals: (#('ab') collect: [:e | self assimilateString: e]).
+	self assert: (separators split: (self assimilateString: '-ab'))
+		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'ab.'))
+		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'ab-..'))
+		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: '--ab'))
+		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'a.b'))
+		equals: (#('a' 'b') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'a-.b'))
+		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'ab-c.'))
+		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+	self assert: (separators split: (self assimilateString: 'a.b-.c'))
+		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
+	1 to: 3
+		do: 
+			[:i |
+			| subject |
+			subject := self
+						assimilateString: (String streamContents: [:strm | i timesRepeat: [strm nextPut: $-]]).
+			self assert: (#($-) split: subject) equals: (Array new: i + 1 withAll: '')]!
+
 testSplitByString
 	"Test String>>split:, which tokenizes the argument string into sequences that are separated by the receiver string."
 
@@ -981,6 +1027,7 @@ withAllTestCases
 !StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !StringTest categoriesFor: #testReverse!public!unit tests! !
 !StringTest categoriesFor: #testReverseDo!public!unit tests! !
+!StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
 !StringTest categoriesFor: #testSplitByString!public!unit tests! !
 !StringTest categoriesFor: #testSplitSingle!public!unit tests! !
 !StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
