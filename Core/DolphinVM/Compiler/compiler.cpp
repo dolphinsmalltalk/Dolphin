@@ -2706,6 +2706,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"float", DolphinX::ExtCallArgType::Float, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ (LPUTF8)"hresult", DolphinX::ExtCallArgType::HResult, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ (LPUTF8)"ntstatus", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"errno", DolphinX::ExtCallArgType::Errno, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 				{ (LPUTF8)"char", DolphinX::ExtCallArgType::Char, (LPUTF8)DolphinX::ExtCallArgType::LPStr},
 				{ (LPUTF8)"byte", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
 				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},

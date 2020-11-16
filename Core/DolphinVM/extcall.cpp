@@ -731,7 +731,7 @@ void doBlah()
 		ByteArray* argTypes = static_cast<ByteArray*>(arrayPointer->m_location);
 
 		// Compiler should have generated a literal array of argument types
-		ASSERT(arrayPointer->isNil() || argTypes->m_class == Pointers.ClassByteArray);
+		ASSERT(isNil(arrayPointer) || argTypes->m_class == Pointers.ClassByteArray);
 
 		FARPROC pVirtualProc = reinterpret_cast<FARPROC*>(reinterpret_cast<uintptr_t*>(thisPointer)->[argTypes->m_elements[VirtualCallOffset]]);
 			
@@ -766,7 +766,7 @@ void doBlah()
 		ByteArray* argTypes = static_cast<ByteArray*>(ObjectMemory::GetObj(arrayPointer));
 
 		// Compiler should have generated a literal array of argument types
-		ASSERT(arrayPointer->isNil() || argTypes.m_class == Pointers.ClassByteArray);
+		ASSERT(isNil(arrayPointer) || argTypes.m_class == Pointers.ClassByteArray);
 
 		// Try the cached address
 		FARPROC pLibProc = *reinterpret_cast<FARPROC*>(argTypes.m_elements);

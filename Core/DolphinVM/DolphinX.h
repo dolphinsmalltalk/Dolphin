@@ -48,7 +48,7 @@ namespace DolphinX {
 		UIntPtr,		//26
 		IntPtr,		//27
 		NTStatus,		//28
-								//29
+		Errno,			//29	integer return code, fails external call if non-zero
 								//30
 								//31
 								//32

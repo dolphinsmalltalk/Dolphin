@@ -555,6 +555,9 @@ testExtCallOverlappedIntDivZero
 
 	self verifyExtCallIntDivZero: true!
 
+testExtCallOverlappedRetErrno
+	self verifyExtCallRetErrno: true!
+
 testExtCallOverlappedRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly by overlapped calls."
 
@@ -578,6 +581,9 @@ testExtCallOverlappedTermination
 	1 to: 5 do: [:i | self earlyTermination: false].
 	"2) Call is terminated before completion, but is allowed to start"
 	1 to: 5 do: [:i | self earlyTermination: true]!
+
+testExtCallRetErrno
+	self verifyExtCallRetErrno: false!
 
 testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
@@ -3180,6 +3186,23 @@ verifyExtCallIntDivZero: aBoolean
 		raise: ZeroDivide
 		matching: [:ex | ex dividend = 123]!
 
+verifyExtCallRetErrno: aBoolean
+	| method |
+	method := self
+				compile: ('errno: anInteger
+	%<<1?overlap :>stdcall: errno AnswerDWORD dword>
+	^''Failure '', _failureCode printString'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	self assert: (method value: VMLibrary default withArguments: {0}) identicalTo: 0.
+
+	"Any non-zero result should fail. It is assumed the codes don't exceed the SmallInteger range"
+	{SmallInteger minimum. -1. 1. SmallInteger maximum} do: 
+			[:each |
+			| result |
+			result := method value: VMLibrary default withArguments: {each}.
+			self assert: result equals: 'Failure ' , each printString]!
+
 verifyExtCallRetHRESULT: aBoolean
 	| method |
 	method := self
@@ -3593,11 +3616,13 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedGC!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedGpf!public! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedIntDivZero!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetErrno!public! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetHRESULT!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetLpwstr!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetNtStatus!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedTermination!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallRetErrno!public! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallRetNtStatus!public!unit tests! !
@@ -3696,6 +3721,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallFpFault:!helpers!private! !
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallGpf:!helpers!private! !
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallIntDivZero:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetErrno:!helpers!private! !
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetHRESULT:!helpers!private! !
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetLpwstr:!helpers!private! !
 !Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetNtStatus:!helpers!private! !

@@ -221,6 +221,7 @@ Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 		'ExtCallArgDATE' -> 16r17.
 		'ExtCallArgDOUBLE' -> 16rB.
 		'ExtCallArgDWORD' -> 16r7.
+		'ExtCallArgErrno' -> 16r1D.
 		'ExtCallArgFLOAT' -> 16rE.
 		'ExtCallArgGUID' -> 16r19.
 		'ExtCallArgHANDLE' -> 16rA.

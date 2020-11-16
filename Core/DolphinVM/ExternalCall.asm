@@ -755,6 +755,7 @@ extCallArgINTPTR:
 extCallArgSDWORD:
 extCallArgHRESULT:
 extCallArgNTSTATUS:
+extCallArgErrno:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1											; Is it a SmallInteger?
@@ -1745,6 +1746,24 @@ extCallRetNTSTATUS:
 
 	ret
 
+extCallRetErrno:
+	test	RESULT, RESULT
+	jnz		@F
+	mov		RESULT, SMALLINTZERO
+	AnswerResult
+
+@@:
+	lea		RESULT, [RESULT*2+1]
+
+	mov		ecx, callContext
+	ASSUME	ecx:PTR InterpRegisters
+
+	mov		_SP, [ecx].m_stackPointer
+	mov		_IP, [ecx].m_instructionPointer
+	mov		_BP, [ecx].m_basePointer
+
+	ret
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetUINTPTR:
@@ -2003,7 +2022,7 @@ pushOopTable	DD	OFFSET FLAT:extCallArgVOID			; 0
 	DD	OFFSET FLAT:extCallArgUINTPTR		; 26
 	DD	OFFSET FLAT:extCallArgINTPTR		; 27
 	DD	OFFSET FLAT:extCallArgNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallArgReserved		; 29
+	DD	OFFSET FLAT:extCallArgErrno			; 29
 	DD	OFFSET FLAT:extCallArgReserved		; 30
 	DD	OFFSET FLAT:extCallArgReserved		; 31
 	DD	OFFSET FLAT:extCallArgReserved		; 32
@@ -2068,7 +2087,7 @@ returnOopTable	DD	OFFSET FLAT:extCallRetVOID			; 0
 	DD	OFFSET FLAT:extCallRetUINTPTR		; 26
 	DD	OFFSET FLAT:extCallRetINTPTR		; 27
 	DD	OFFSET FLAT:extCallRetNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallRetReserved		; 29
+	DD	OFFSET FLAT:extCallRetErrno			; 29
 	DD	OFFSET FLAT:extCallRetReserved		; 30
 	DD	OFFSET FLAT:extCallRetReserved		; 31
 	DD	OFFSET FLAT:extCallRetReserved	    ; 32
