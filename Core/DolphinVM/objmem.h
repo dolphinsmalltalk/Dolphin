@@ -656,13 +656,15 @@ inline void __fastcall ObjectMemory::AddToZct(TOTE<Object>* ote)
 	m_nZctEntries = zctEntries;
 
 #ifdef _DEBUG
-	if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
+	if (!alwaysReconcileOnAdd && m_nZctEntries < m_nZctHighWater)
 #else
-	if (zctEntries >= m_nZctHighWater)
+	if (zctEntries < m_nZctHighWater)
 #endif
 	{
-		ReconcileZct();
+		return;
 	}
+
+	ReconcileZct();
 }
 
 inline void __fastcall ObjectMemory::AddStackRefToZct(TOTE<Object>* ote)
@@ -674,11 +676,13 @@ inline void __fastcall ObjectMemory::AddStackRefToZct(TOTE<Object>* ote)
 	m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
 	m_nZctEntries = zctEntries;
 
-	if (zctEntries >= m_nZctHighWater)
+	if (zctEntries < m_nZctHighWater)
 	{
-		// The Zct overflowed when attempting to repopulate it from the active process stack. We must "grow" it.
-		GrowZct();
+		return;
 	}
+
+	// The Zct overflowed when attempting to repopulate it from the active process stack. We must "grow" it.
+	GrowZct();
 }
 
 
@@ -789,9 +793,9 @@ inline uintptr_t ObjectMemory::storeWordOfObjectWithValue(size_t wordIndex, Oop 
 
 inline BehaviorOTE* ObjectMemory::fetchClassOf(Oop objectPointer)
 {
-	return isIntegerObject(objectPointer) 
-			? Pointers.ClassSmallInteger 
-			: reinterpret_cast<OTE*>(objectPointer)->m_oteClass;
+	return !isIntegerObject(objectPointer)
+			? reinterpret_cast<OTE*>(objectPointer)->m_oteClass
+			: Pointers.ClassSmallInteger;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
