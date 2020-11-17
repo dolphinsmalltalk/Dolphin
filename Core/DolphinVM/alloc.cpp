@@ -62,21 +62,25 @@ POBJECT ObjectMemory::allocLargeObject(size_t objectSize, OTE*& ote)
 inline POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
 {
 	// Callers are expected to round requests to Oop granularity
-	if (objectSize > MaxSmallObjectSize)
+	if (objectSize <= MaxSmallObjectSize)
+	{
+		// Smallblock heap already has space for object size at start of obj which includes
+		// heap overhead,etc, and is rounded to a paragraph size
+		// Why not alloc. four bytes less, overwrite this size with our object size, and then
+		// move back the object body pointer by four. On delete need to reapply the object
+		// size back into the object? - No wouldn't work because of the way heap accesses
+		// adjoining objects when freeing!
+
+		POBJECT pObj = static_cast<POBJECT>(allocSmallChunk(objectSize));
+		ote = allocateOop(pObj);
+		ote->setSize(objectSize);
+		ASSERT(ote->heapSpace() == Spaces::Pools);
+		return pObj;
+	}
+	else
+	{
 		return allocLargeObject(objectSize, ote);
-
-	// Smallblock heap already has space for object size at start of obj which includes
-	// heap overhead,etc, and is rounded to a paragraph size
-	// Why not alloc. four bytes less, overwrite this size with our object size, and then
-	// move back the object body pointer by four. On delete need to reapply the object
-	// size back into the object? - No wouldn't work because of the way heap accesses
-	// adjoining objects when freeing!
-
-	POBJECT pObj = static_cast<POBJECT>(allocSmallChunk(objectSize));
-	ote = allocateOop(pObj);
-	ote->setSize(objectSize);
-	ASSERT(ote->heapSpace() == Spaces::Pools);
-	return pObj;
+	}
 }
 
 
@@ -95,7 +99,12 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 	PointersOTE* copyPointer;
 	size_t size;
 
-	if (ote->heapSpace() == Spaces::Virtual)
+	if (ote->heapSpace() != Spaces::Virtual)
+	{
+		size = ote->pointersSize();
+		copyPointer = newPointerObject(classPointer, size);
+	}
+	else
 	{
 		Interpreter::resizeActiveProcess();
 
@@ -109,21 +118,20 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 		VirtualOTE* virtualCopy = ObjectMemory::newVirtualObject(classPointer,
 			currentTotalByteSize / sizeof(Oop),
 			maxByteSize / sizeof(Oop));
-		if (!virtualCopy)
+		if (virtualCopy)
+		{
+			pVObj = virtualCopy->m_location;
+			pBase = pVObj->getHeader();
+			ASSERT(pBase->getMaxAllocation() == maxByteSize);
+			ASSERT(pBase->getCurrentAllocation() == currentTotalByteSize);
+			virtualCopy->setSize(ote->getSize());
+
+			copyPointer = reinterpret_cast<PointersOTE*>(virtualCopy);
+		}
+		else
+		{
 			return nullptr;
-
-		pVObj = virtualCopy->m_location;
-		pBase = pVObj->getHeader();
-		ASSERT(pBase->getMaxAllocation() == maxByteSize);
-		ASSERT(pBase->getCurrentAllocation() == currentTotalByteSize);
-		virtualCopy->setSize(ote->getSize());
-
-		copyPointer = reinterpret_cast<PointersOTE*>(virtualCopy);
-	}
-	else
-	{
-		size = ote->pointersSize();
-		copyPointer = newPointerObject(classPointer, size);
+		}
 	}
 
 	// Now copy over all the fields
@@ -771,44 +779,48 @@ void ObjectMemory::FixedSizePool::morePages()
 	ASSERT(dwPageSize*nPages == dwAllocationGranularity);
 
 	uint8_t* pStart = static_cast<uint8_t*>(::VirtualAlloc(NULL, dwAllocationGranularity, MEM_COMMIT, PAGE_READWRITE));
-	if (!pStart)
-		::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);	// Fatal - we must exit Dolphin
-
-	#ifdef _DEBUG
+	if (pStart)
 	{
-		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"FixedSizePool: new pages @ " << LPVOID(pStart) << std::endl;
-	}
-	#endif
+#ifdef _DEBUG
+		{
+			tracelock lock(TRACESTREAM);
+			TRACESTREAM << L"FixedSizePool: new pages @ " << LPVOID(pStart) << std::endl;
+		}
+#endif
 
-	// Put the allocation (64k) into the allocation list so we can free it later
-	{
-		m_nAllocations++;
-		m_pAllocations = static_cast<void**>(realloc(m_pAllocations, m_nAllocations*sizeof(void*)));
-		m_pAllocations[m_nAllocations-1] = pStart;
-	}
+		// Put the allocation (64k) into the allocation list so we can free it later
+		{
+			m_nAllocations++;
+			m_pAllocations = static_cast<void**>(realloc(m_pAllocations, m_nAllocations * sizeof(void*)));
+			m_pAllocations[m_nAllocations - 1] = pStart;
+		}
 
-	// We don't know whether the chunks are to contain zeros or nils, so we don't bother to init the space
-	#ifdef _DEBUG
+		// We don't know whether the chunks are to contain zeros or nils, so we don't bother to init the space
+#ifdef _DEBUG
 		memset(pStart, 0xCD, dwAllocationGranularity);
-	#endif
+#endif
 
-	uint8_t* pLast = pStart + dwAllocationGranularity - dwPageSize;
+		uint8_t* pLast = pStart + dwAllocationGranularity - dwPageSize;
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 		// ASSERT that pLast is correct by causing a GPF if it isn't!
 		memset(reinterpret_cast<uint8_t*>(pLast), 0xCD, dwPageSize);
-	#endif
+#endif
 
-	for (uint8_t* p = pStart; p < pLast; p += dwPageSize)
-		reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + dwPageSize);
+		for (uint8_t* p = pStart; p < pLast; p += dwPageSize)
+			reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + dwPageSize);
 
-	reinterpret_cast<Link*>(pLast)->next = 0;
-	m_pFreePages = reinterpret_cast<Link*>(pStart);
+		reinterpret_cast<Link*>(pLast)->next = 0;
+		m_pFreePages = reinterpret_cast<Link*>(pStart);
 
-	#ifdef _DEBUG
-	//		m_nPages++;
-	#endif
+#ifdef _DEBUG
+		//		m_nPages++;
+#endif
+	}
+	else
+	{
+		::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);	// Fatal - we must exit Dolphin
+	}
 }
 
 inline uint8_t* ObjectMemory::FixedSizePool::allocatePage()
