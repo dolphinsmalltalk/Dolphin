@@ -84,7 +84,7 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 	}
 	else
 	{
-		StringEncoding encoding = ST::String::GetEncoding(oteChars);
+		StringEncoding encoding = oteChars->m_oteClass->m_location->m_instanceSpec.m_encoding;
 		switch (encoding)
 		{
 		case StringEncoding::Ansi:

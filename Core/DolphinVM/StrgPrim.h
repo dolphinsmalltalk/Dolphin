@@ -61,7 +61,7 @@ struct CmpOrdinalW
 
 template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnyStringCompare(const OTE* oteReceiver, const OTE* oteArg)
 {
-	switch (ENCODINGPAIR(ST::String::GetEncoding(oteReceiver), ST::String::GetEncoding(oteArg)))
+	switch (ENCODINGPAIR(oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding, oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
 	{
 	case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
 		// This is the one case where we can use an Ansi comparison. It can't be used for CP_UTF8.

@@ -813,7 +813,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 					auto oteStringArg= reinterpret_cast<StringOTE*>(oteValue);
 
-					switch (ENCODINGPAIR(ST::String::GetEncoding(oteBuf), ST::String::GetEncoding(oteStringArg)))
+					switch (ENCODINGPAIR(oteBuf->m_oteClass->m_location->m_instanceSpec.m_encoding, oteStringArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
 					{
 					case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
 					{

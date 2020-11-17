@@ -57,7 +57,7 @@ namespace ST
 		Oop				m_fields[];
 	};
 
-	enum class StringEncoding
+	enum class StringEncoding : uint8_t
 	{
 		Ansi,
 		Utf8,
