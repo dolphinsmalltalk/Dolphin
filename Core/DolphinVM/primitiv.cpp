@@ -105,20 +105,8 @@ Oop* __fastcall Interpreter::primitiveSize(Oop* const sp, primargcount_t)
 	}
 	else
 	{
-		switch(ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
-		{
-		case 1:
-			*sp = integerObjectOf(bytesSize);
-			break;
-		case 2:
-			*sp = integerObjectOf(bytesSize >> 1);
-			break;
-		case 4:
-			*sp = integerObjectOf(bytesSize >> 2);
-			break;
-		default:
-			_assume(false);
-		}
+		size_t shift = static_cast<size_t>(ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)));
+		*sp = integerObjectOf(bytesSize >> shift);
 
 		return sp;
 	}
@@ -592,7 +580,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const primargcount_
 		{
 			switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 			{
-			case 1:
+			case ByteElementSize::Bytes:
 				if (static_cast<size_t>(index) < oteReceiver->bytesSize())
 				{
 					uint8_t value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -601,7 +589,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const primargcount_
 				}
 				break;
 				
-			case 2:
+			case ByteElementSize::Words:
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 2))
 				{
 					uint16_t value = reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -610,7 +598,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const primargcount_
 				}
 				break;
 
-			case 4:
+			case ByteElementSize::Quads:
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 4))
 				{
 					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -686,7 +674,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 
 					switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 					{
-					case 1:
+					case ByteElementSize::Bytes:
 						if (newValue <= UINT8_MAX)
 						{
 							if (index < size)
@@ -703,7 +691,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 						else
 							return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);
 
-					case 2:
+					case ByteElementSize::Words:
 						if (newValue <= UINT16_MAX)
 						{
 							if (index < (size / 2))
@@ -720,7 +708,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 						else
 							return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);
 
-					case 4:
+					case ByteElementSize::Quads:
 						if (index < (size / 4))
 						{
 							reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint32_t>(newValue);
@@ -777,7 +765,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 		{
 			switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 			{
-			case 1:
+			case ByteElementSize::Bytes:
 				if (static_cast<size_t>(index) < oteReceiver->bytesSize())
 				{
 					uint8_t value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -786,7 +774,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 				}
 				break;
 
-			case 2:
+			case ByteElementSize::Words:
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 2))
 				{
 					uint16_t value = reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -795,7 +783,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 				}
 				break;
 
-			case 4:
+			case ByteElementSize::Quads:
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 4))
 				{
 					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
@@ -863,7 +851,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t
 
 					switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 					{
-					case 1:
+					case ByteElementSize::Bytes:
 						if (newValue <= UINT8_MAX)
 						{
 							if (index < size)
@@ -880,7 +868,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t
 						}
 						return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);
 
-					case 2:
+					case ByteElementSize::Words:
 						if (newValue <= UINT16_MAX)
 						{
 							if (index < (size / 2))
@@ -897,7 +885,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t
 						}
 						return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);
 
-					case 4:
+					case ByteElementSize::Quads:
 						if (index < (size / 4))
 						{
 							reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint32_t>(newValue);
