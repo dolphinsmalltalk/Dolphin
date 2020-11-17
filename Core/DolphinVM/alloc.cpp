@@ -476,11 +476,11 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 	if (oteObj->isBytes())
 	{
 		BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(oteObj);
-		size_t elementSize = ObjectMemory::GetBytesElementSize(oteBytes);
+		size_t elementSizeShift = static_cast<size_t>(ObjectMemory::GetBytesElementSize(oteBytes));
 
-		if (count == 0 || ((startingAt + count) * elementSize <= oteBytes->bytesSize()))
+		if (count == 0 || (((startingAt + count) << elementSizeShift) <= oteBytes->bytesSize()))
 		{
-			size_t objectSize = elementSize * count;
+			size_t objectSize = count << elementSizeShift;
 
 			if (oteBytes->m_flags.m_weakOrZ)
 			{
@@ -488,7 +488,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 				auto newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + NULLTERMSIZE, oteSlice));
 				// When copying strings, the slices has the same string class
 				(oteSlice->m_oteClass = oteBytes->m_oteClass)->countUp();
-				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt * elementSize), objectSize);
+				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
 				*reinterpret_cast<NULLTERMTYPE*>(&newBytes->m_fields[objectSize]) = 0;
 				oteSlice->beNullTerminated();
 				return oteSlice;
@@ -499,7 +499,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, size_t startingAt, size_t count)
 				// When copying bytes, the slice is always a ByteArray
 				oteSlice->m_oteClass = Pointers.ClassByteArray;
 				oteSlice->beBytes();
-				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt * elementSize), objectSize);
+				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt << elementSizeShift), objectSize);
 				return oteSlice;
 			}
 		}

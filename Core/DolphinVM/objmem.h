@@ -49,6 +49,13 @@ class obinstream;
 
 #define pointerFromIndex(index)	(m_pOT+static_cast<ptrdiff_t>(index))
 
+enum class ByteElementSize : size_t
+{
+	Bytes = 0,
+	Words = 1,
+	Quads = 2
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Class of Object Memory Managers
 
@@ -92,7 +99,7 @@ public:
 	// Class pointer access
 	static BehaviorOTE* fetchClassOf(Oop objectPointer);
 
-	static size_t GetBytesElementSize(BytesOTE* ote);
+	static ByteElementSize GetBytesElementSize(BytesOTE* ote);
 
 	// Use CRT Small block heap OR pool if size <= this threshold
 	static constexpr size_t MaxSmallObjectSize = 0x3f8;
@@ -1139,26 +1146,16 @@ inline ArrayOTE* ST::Array::NewUninitialized(size_t size)
 
 #include "STClassDesc.h"
 
-inline size_t ObjectMemory::GetBytesElementSize(BytesOTE* ote)
+__forceinline ByteElementSize ObjectMemory::GetBytesElementSize(BytesOTE * ote)
 {
 	ASSERT(ote->isBytes());
 
+	int shift = 0;
+	// Null-terminated classes (strings) have an encoding size
 	// TODO: Should be using revised InstanceSpec here, not string encoding
 	if (ote->m_flags.m_weakOrZ)
 	{
-		switch (reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding)
-		{
-		case StringEncoding::Ansi:
-		case StringEncoding::Utf8:
-			return sizeof(uint8_t);
-
-		case StringEncoding::Utf16:
-			return sizeof(uint16_t);
-		case StringEncoding::Utf32:
-			return sizeof(uint32_t);
-		default:
-			__assume(false);
-		}
+		shift = (int)reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding << 1;
 	}
-	return sizeof(uint8_t);
+	return static_cast<ByteElementSize>((0x90 >> shift) & 0x3);
 }
