@@ -310,7 +310,12 @@ inline BOOL Interpreter::sampleInput()
 	if (m_nInputPollInterval > 0)
 	{
 		// Look for any input in the queue, not just for new stuff
-		if (((::GetQueueStatus(m_dwQueueStatusMask) >> 16) & m_dwQueueStatusMask) != 0)
+		if (((::GetQueueStatus(m_dwQueueStatusMask) >> 16) & m_dwQueueStatusMask) == 0)
+		{
+			// No input found, reset for next sampling
+			ResetInputPollCounter();
+		}
+		else
 		{
 			// Note that we must signal the semaphore here because, even though
 			// we signal the wakeup event allowing the idle task to restart, the 
@@ -338,11 +343,6 @@ inline BOOL Interpreter::sampleInput()
 			// It is very unlikely, but it is possible, and Bill has found that it can
 			// happen when using Sockets.
 			SetWakeupEvent();
-		}
-		else
-		{
-			// No input found, reset for next sampling
-			ResetInputPollCounter();
 		}
 	}
 
