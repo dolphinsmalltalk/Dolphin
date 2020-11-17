@@ -94,13 +94,15 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 			#endif
 
 			// May be able to do some quicker resizing here if size is still in same pool?
-			if ((byteSize+Extra) > MaxSmallObjectSize)
+			if ((byteSize + Extra) <= MaxSmallObjectSize)
 			{
-				pObject = allocChunk(byteSize+Extra);
-				ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
+				pObject = allocSmallChunk(byteSize + Extra);
 			}
 			else
-				pObject = allocSmallChunk(byteSize+Extra);
+			{
+				pObject = allocChunk(byteSize + Extra);
+				ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
+			}
 	
 			POBJECT pOldObject = ote->m_location;
 			auto oldSize = ote->getSize();
