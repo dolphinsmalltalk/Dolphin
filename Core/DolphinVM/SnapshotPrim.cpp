@@ -46,7 +46,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 	}
 
 	Utf16StringBuf buf;
-	StringEncoding encoding = String::GetEncoding(oteArg);
+	StringEncoding encoding = oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding;
 	switch (encoding)
 	{
 	case StringEncoding::Ansi:

@@ -295,7 +295,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 					StringOTE* oteReceiver = reinterpret_cast<StringOTE*>(*(sp - 3));
 					ASSERT(!oteReceiver->isPointers());
 
-					switch (String::GetEncoding(oteReceiver))
+					switch (oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 					{
 					case StringEncoding::Ansi:
 					{
@@ -522,7 +522,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const primargcount
 	{
 		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
 		AnsiStringOTE* oteReceiver = reinterpret_cast<AnsiStringOTE*>(*newSp);
-		switch (String::GetEncoding(oteReceiver))
+		switch (oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 		{
 		case StringEncoding::Ansi:
 			if (static_cast<size_t>(index) < oteReceiver->bytesSize())
@@ -661,7 +661,7 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 				SmallInteger code = ObjectMemoryIntegerValueOf(reinterpret_cast<const CharOTE*>(oopValue)->m_location->m_code);
 				char32_t codeUnit = code & 0x1fffff;
 
-				switch (ST::String::GetEncoding(oteReceiver))
+				switch (oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 				{
 				case StringEncoding::Ansi:
 					if (index < receiverSize)
@@ -1043,7 +1043,7 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
 
 	if (receiver->isNullTerminated())
 	{
-		switch (ST::String::GetEncoding(receiver))
+		switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 		{
 		case StringEncoding::Ansi:
 		{
@@ -1096,7 +1096,7 @@ extern "C" SmallInteger __cdecl HashBytes(const uint8_t* bytes, size_t size)
 Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
-	switch (ST::String::GetEncoding(receiver))
+	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 	{
 	case StringEncoding::Ansi:
 	{
@@ -1138,7 +1138,7 @@ Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	BehaviorOTE* oteClass = receiver->m_oteClass;
-	switch (ST::String::GetEncoding(receiver))
+	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 	{
 	case StringEncoding::Ansi:
 	{
@@ -1176,7 +1176,7 @@ Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp, primargc
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	BehaviorOTE* oteClass = receiver->m_oteClass;
-	switch (ST::String::GetEncoding(receiver))
+	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 	{
 	case StringEncoding::Ansi:
 	{
@@ -1279,7 +1279,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 		{
 			// Should probably double-dispatch this rather than handling all this in one
 			// primitive, or at least define one primitive for each string class
-			switch (ENCODINGPAIR(ST::String::GetEncoding(oteReceiver), ST::String::GetEncoding(oteArg)))
+			switch (ENCODINGPAIR(oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding, oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
 			{
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
 			{
@@ -1459,7 +1459,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 Oop* __fastcall Interpreter::primitiveStringAsUtf32String(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
-	switch (ST::String::GetEncoding(receiver))
+	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 	{
 	case StringEncoding::Ansi:
 	case StringEncoding::Utf8:

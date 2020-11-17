@@ -181,7 +181,8 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 {
 	ASSERT(oteString->isNullTerminated());
 
-	switch (ST::String::GetEncoding(oteString))
+	switch (oteString->m_oteClass->m_location->m_instanceSpec.m_encoding)
+
 	{
 	case StringEncoding::Ansi:
 		return Utf16String::New<CP_ACP>(reinterpret_cast<const AnsiStringOTE*>(oteString)->m_location->m_characters, oteString->getSize());

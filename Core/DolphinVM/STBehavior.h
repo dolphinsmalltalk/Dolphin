@@ -31,7 +31,16 @@ union InstanceSpecification
 		uint16_t m_pointers : 1;	// Pointers or bytes?
 		uint16_t m_nullTerminated : 1;	// Null terminated byte object?
 
-		uint16_t m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+		union
+		{
+			uint16_t m_extraSpec : 16;				// High word for class specific purposes (e.g. structure byte size)
+			struct
+			{
+				ST::StringEncoding m_encoding : 2;
+				uint8_t : 6;
+				uint8_t : 8;
+			};
+		};
 	};
 	SmallUinteger m_value;
 
