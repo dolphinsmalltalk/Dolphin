@@ -137,6 +137,50 @@ testBeginsWithMixedEncodings
 			self deny: (b beginsWith: each).
 			self deny: (ad beginsWith: each)]!
 
+testBinarySelectorExpandMacrosWith
+
+	self assert: (self assimilateString: 'test <1d> displayString') << 1.23s2 equals: 'test 1.23 displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << 1.23s2 equals: 'test 1.23s printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << $Z equals: 'test Z asString'.
+	self assert: (self assimilateString: 'test <1?yes:no> conditional True') << true equals: 'test yes conditional True'.
+	self assert: (self assimilateString: 'test <1?yes:no> conditional False') << false equals: 'test no conditional False'!
+
+testBinarySelectorExpandMacrosWithArguments
+
+	| pattern expectedResult |
+
+	pattern := 'test displayString <1d> printString <2p> asString <3s> newline<N>tab<T>conditionals <4?yes:no> <5?yes:no> end test'.
+	pattern := self assimilateString: pattern.
+
+	expectedResult := 'test displayString 1.23 printString 4.56s asString Z newline', String lineDelimiter, 'tab	conditionals yes no end test'.
+	expectedResult := self assimilateString: expectedResult.
+
+	self assert: pattern << #(1.23 4.56s2 $Z true false) equals: expectedResult!
+
+testBinarySelectorExpandMacrosWithCollection
+
+	"Test special handling of collections when using << expandMacrosWith... binary selector"
+
+	"A collection should be treated as a collection of arguments"
+	self assert: (self assimilateString: 'test <1d> <2d> <3d> displayString') << (1 to: 10) equals: 'test 1 2 3 displayString'.
+	self assert: (self assimilateString: 'test <1p> <2p> <3p> printString') << #(4 5 6) equals: 'test 4 5 6 printString'.
+	self assert: (self assimilateString: 'test <1s><2s><3s> asString') << #($a $b $c) equals: 'test abc asString'.
+
+	"Wrap in an Array to treat the collection as an individual argument"
+	self assert: (self assimilateString: 'test <1d> displayString') << {(1 to: 10)} equals: 'test 1 .. 10 displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << {#(4 5 6)} equals: 'test #(4 5 6) printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << {#($a $b $c)} equals: 'test abc asString'.
+
+	"...but a String should always be treated as an individual argument"
+	self assert: (self assimilateString: 'test <1d> displayString') << 'hello world' equals: 'test hello world displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << 'hello world' equals: 'test ''hello world'' printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << 'hello world' equals: 'test hello world asString'.
+
+	self assert: (self assimilateString: 'test <1d> displayString') << {'hello world'} equals: 'test hello world displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << {'hello world'} equals: 'test ''hello world'' printString'.
+	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'} equals: 'test hello world asString'
+!
+
 testCapitalized
 	| string cap |
 	string := self collectionClass empty.
@@ -241,6 +285,26 @@ testEquals
 	self assert: #abc equals: abc.
 	self assert: abc equals: #abc.
 !
+
+testExpandMacrosWith
+
+	self assert: ((self assimilateString: 'test <1d> displayString') expandMacrosWith: 1.23s2) equals: 'test 1.23 displayString'.
+	self assert: ((self assimilateString: 'test <1p> printString') expandMacrosWith: 1.23s2) equals: 'test 1.23s printString'.
+	self assert: ((self assimilateString: 'test <1s> asString') expandMacrosWith: $Z) equals: 'test Z asString'.
+	self assert: ((self assimilateString: 'test <1?yes:no> conditional True') expandMacrosWith: true) equals: 'test yes conditional True'.
+	self assert: ((self assimilateString: 'test <1?yes:no> conditional False') expandMacrosWith: false) equals: 'test no conditional False'!
+
+testExpandMacrosWithArguments
+
+	| pattern expectedResult |
+
+	pattern := 'test displayString <1d> printString <2p> asString <3s> newline<N>tab<T>conditionals <4?yes:no> <5?yes:no> end test'.
+	pattern := self assimilateString: pattern.
+
+	expectedResult := 'test displayString 1.23 printString 4.56s asString Z newline', String lineDelimiter, 'tab	conditionals yes no end test'.
+	expectedResult := self assimilateString: expectedResult.
+
+	self assert: (pattern expandMacrosWithArguments: #(1.23 4.56s2 $Z true false)) equals: expectedResult!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
@@ -1008,6 +1072,9 @@ withAllTestCases
 !StringTest categoriesFor: #testBefore!public!unit tests! !
 !StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
 !StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
+!StringTest categoriesFor: #testBinarySelectorExpandMacrosWith!public!unit tests! !
+!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
+!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
 !StringTest categoriesFor: #testCapitalized!public!unit tests! !
 !StringTest categoriesFor: #testCaseConversions!public!unit tests! !
 !StringTest categoriesFor: #testClassFromAddress!public!unit tests! !
@@ -1015,6 +1082,8 @@ withAllTestCases
 !StringTest categoriesFor: #testCopyWithout!public! !
 !StringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !StringTest categoriesFor: #testEquals!public!unit tests! !
+!StringTest categoriesFor: #testExpandMacrosWith!public!unit tests! !
+!StringTest categoriesFor: #testExpandMacrosWithArguments!public!unit tests! !
 !StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !StringTest categoriesFor: #testHash!public!unit tests! !

@@ -323,6 +323,12 @@ errorNotKeyed
 
 	^self error: ('<1p>s do not respond to keyed accessing messages' expandMacrosWith: self class)!
 
+expandMacrosIn: aString
+
+	"Private - Expand aString with the collection of replaceable arguments represented by the receiver."
+
+	^aString expandMacrosWithArguments: self!
+
 fold: aDyadicValuable 
 	"Evaluate the <dyadicValuable> argument, operation, across the elements of the receiver
 	starting with the first two elements. For subsequent evaluations the first argument to the
@@ -629,6 +635,7 @@ union: comperand
 !Collection categoriesFor: #do:separatedBy:!enumerating!public! !
 !Collection categoriesFor: #errorEmptyCollection!exceptions!private! !
 !Collection categoriesFor: #errorNotKeyed!exceptions!private! !
+!Collection categoriesFor: #expandMacrosIn:!double dispatch!private! !
 !Collection categoriesFor: #fold:!enumerating!public! !
 !Collection categoriesFor: #growSize!accessing!private! !
 !Collection categoriesFor: #identityIncludes:!public!searching! !
