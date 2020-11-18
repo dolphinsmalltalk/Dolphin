@@ -178,7 +178,12 @@ testBinarySelectorExpandMacrosWithCollection
 
 	self assert: (self assimilateString: 'test <1d> displayString') << {'hello world'} equals: 'test hello world displayString'.
 	self assert: (self assimilateString: 'test <1p> printString') << {'hello world'} equals: 'test ''hello world'' printString'.
-	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'} equals: 'test hello world asString'
+	self assert: (self assimilateString: 'test <1s> asString') << {'hello world'} equals: 'test hello world asString'.
+
+	"Similarly any non-sequenceable collection"
+	self assert: (self assimilateString: 'test <1d> displayString') << (Set with: 1) equals: 'test a Set(1) displayString'.
+	self assert: (self assimilateString: 'test <1p> printString') << (Set with: 1) equals: 'test a Set(1) printString'.
+	self should: [self assert: (self assimilateString: 'test <1s> asString') << (Set with: 1)] raise: Error
 !
 
 testCapitalized
