@@ -651,6 +651,8 @@ public:
 
 	// Object mutation
 	static Oop* __fastcall primitiveChangeBehavior(Oop* const sp, primargcount_t argCount);
+	static boolean hasCompatibleShape(OTE* oteReceiver, ST::Behavior* argClass);
+
 	static Oop* __fastcall primitiveResize(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBecome(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveOneWayBecome(Oop* const sp, primargcount_t argCount);
