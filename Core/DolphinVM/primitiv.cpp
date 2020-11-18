@@ -256,10 +256,14 @@ Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, primargcount
 
 				// We must check class shapes the same, so compare instance spec. of receivers class with that of new class by xor'ing together
 				// and then checking if any of the important shape bits are different
-				SmallUinteger diff = receiverClass->m_instanceSpec.m_value ^ argClass->m_instanceSpec.m_value;
-				if ((diff & ~InstanceSpecification::IndirectMask) == 0)
+				InstanceSpecification sourceClassShape = receiverClass->m_instanceSpec;
+				InstanceSpecification targetClassShape = argClass->m_instanceSpec;
+				SmallUinteger diff = (sourceClassShape.m_value ^ targetClassShape.m_value) & ~InstanceSpecification::IndirectMask;
+				if (diff == 0 
+					|| ((diff & ~InstanceSpecification::FixedFieldsMask) == InstanceSpecification::IndexableMask
+						&& (targetClassShape.m_indexable		// Source class must be non-indexable, but the target can be any (indexable) size
+							|| targetClassShape.m_fixedFields == oteReceiver->pointersSize())))	// Source indexable, target fixed but of same fixed size as number of indexed vars
 				{
-
 					oteReceiver->m_oteClass = oteClassArg;
 					// We must reduce the count on the class, since it has been overwritten in the object, and count up the new class
 					oteClassArg->countUp();
