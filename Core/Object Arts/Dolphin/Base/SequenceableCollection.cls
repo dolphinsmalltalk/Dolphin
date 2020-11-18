@@ -642,6 +642,11 @@ errorValueNotFound: aValue
 	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
 !
 
+expandMacrosIn: aString
+	"Private - Expand aString with the collection of replaceable arguments represented by the receiver."
+
+	^aString expandMacrosWithArguments: self!
+
 fifth
 	"Answer an <Object> which is the fifth element of the receiver. 
 	Raise an exception if the element does not exist."
@@ -1336,6 +1341,7 @@ writeStream
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorValueNotFound:!exceptions!private! !
+!SequenceableCollection categoriesFor: #expandMacrosIn:!double dispatch!private! !
 !SequenceableCollection categoriesFor: #fifth!accessing!public! !
 !SequenceableCollection categoriesFor: #findFirst:!public!searching! !
 !SequenceableCollection categoriesFor: #findLast:!public!searching! !
