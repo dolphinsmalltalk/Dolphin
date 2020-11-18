@@ -115,9 +115,8 @@ restoreView
 	subViews and then apply the receiver's placement."
 
 	| newView |
-	newView := viewClass basicNew.
-	1 to: instVars size do: [:i | newView instVarAt: i put: (instVars at: i)].
-
+	newView := instVars.
+	newView becomeA: viewClass.
 	"Copy across any events which might have been registered during the restoration of parents"
 	newView setEvents: self getEvents.
 
