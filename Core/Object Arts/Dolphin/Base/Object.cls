@@ -630,6 +630,12 @@ events
 		ifTrue: [NullEventsCollection current]
 		ifFalse: [events]!
 
+expandMacrosIn: aString
+
+	"Private - Expand aString with the replaceable argument represented by the receiver."
+
+	^aString expandMacrosWith: self!
+
 finalize
 	"Perform any death-bed operations as the receiver is about to expire. The default is to
 	do nothing.
@@ -1546,6 +1552,7 @@ yourself
 !Object categoriesFor: #errorNotFound:!exceptions!public! !
 !Object categoriesFor: #errorSubscriptBounds:!exceptions!public! !
 !Object categoriesFor: #events!debugger-step over!events!public! !
+!Object categoriesFor: #expandMacrosIn:!double dispatch!private! !
 !Object categoriesFor: #finalize!finalizing!public! !
 !Object categoriesFor: #free!finalizing!public! !
 !Object categoriesFor: #getDependents!dependency!private! !
