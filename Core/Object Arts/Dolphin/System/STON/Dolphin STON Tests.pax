@@ -239,10 +239,14 @@ testIsSimpleSymbol2
 !
 
 testLegacyDate
-	| date tz |
-	tz := Locale timeZoneInformation offset printStringFormat: '+hh:mm'.
-	date := (Date year: 2012 month: 1 day: 1).
-	self assert: (self serialize: date) equals: ('Date[''2012-01-01<1s>'']' expandMacrosWith: tz) !
+	| date tz offset |
+	offset := Locale timeZoneInformation offset.
+	tz := offset = 0 seconds ifTrue: ['Z'] ifFalse: [offset printStringFormat: '+hh:mm'].
+	date := Date
+				year: 2012
+				month: 1
+				day: 1.
+	self assert: (self serialize: date) equals: ('Date[''2012-01-01<1s>'']' expandMacrosWith: tz)!
 
 testProcessor
 	self assert: (self serialize: Processor) equals: 'ProcessorScheduler'!
