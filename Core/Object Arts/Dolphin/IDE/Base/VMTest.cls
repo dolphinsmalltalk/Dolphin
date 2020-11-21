@@ -1733,6 +1733,12 @@ testPrimitiveHashBytes
 				equals: (method value: each asUtf8String withArguments: #())].
 	#('🐬' '你好') do: [:each | self assert: each asUtf16String hash equals: each asUtf8String hash]!
 
+testPrimitiveHighBit
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #highBit.
+	{0. 0. 1. 1. 2. 2. SmallInteger maximum. VMConstants.IntPtrBits - 2. -1. 'IntegerOutOfRange'. SmallInteger minimum. 'IntegerOutOfRange'}
+		pairsDo: [:each :expected | self assert: (method value: each withArguments: #()) equals: expected]!
+
 testPrimitiveIdentical
 	| method |
 	method := self createPrimitiveMethodLike: Object >> #==.
@@ -3567,6 +3573,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveHighBit!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIndexOfSp!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !

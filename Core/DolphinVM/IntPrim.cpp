@@ -153,7 +153,7 @@ Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, primargcount_t)
 	}
 	else
 	{
-		return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Negative receiver
+		return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);		// Negative receiver
 	}
 }
 
