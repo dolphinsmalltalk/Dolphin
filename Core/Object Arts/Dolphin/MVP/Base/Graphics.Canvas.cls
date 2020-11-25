@@ -342,7 +342,8 @@ fonts: aString do: operation
 						value: lplf
 						value: lptm
 						value: dwType]
-				descriptor: (External.Descriptor returnType: 'sdword' argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
+				descriptor: (External.FunctionDescriptor returnType: 'sdword'
+						argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
 	answer := GDILibrary default
 				enumFonts: self asParameter
 				lpFaceName: aString

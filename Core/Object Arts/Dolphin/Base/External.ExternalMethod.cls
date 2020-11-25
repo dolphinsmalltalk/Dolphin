@@ -9,7 +9,7 @@ Kernel.CompiledMethod variableSubclass: #'External.ExternalMethod'
 External.ExternalMethod guid: (Core.GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
 
-The first literal of each ExternalMethod holds a <ByteArray> which contains a descriptor for the function call. The byte array format is understood by the <ExternalDescriptor> class, but essentially there are details of the return and argument types, the name of function, and space to cache the procedure address.
+The first literal of each ExternalMethod holds a <ByteArray> which contains a descriptor for the function call. The byte array format is understood by the <FunctionDescriptor> class, but essentially there are details of the return and argument types, the name of function, and space to cache the procedure address.
 '!
 !External.ExternalMethod categoriesForClass!Kernel-Methods! !
 !External.ExternalMethod methodsFor!
@@ -32,7 +32,7 @@ clear
 	self descriptorLiteral replaceFrom: 1 to: 4 withObject: 0!
 
 descriptor
-	"Private - Answer an ExternalDescriptor generated from the receivers descriptor literal (which has
+	"Private - Answer a <FunctionDescriptor> generated from the receivers descriptor literal (which has
 	a more compact, but more complex, format)."
 
 	| descriptor typeinfo i descriptorClass size |
@@ -60,18 +60,12 @@ descriptor
 					[typeinfo at: i + 1 put: (typeinfo at: i).
 					typeinfo at: i put: type.
 					i := i - 1]].
-	^descriptorClass descriptor: typeinfo literals: self literals
-
-	"
-(UserLibrary compiledMethodAt: #childWindowFromPoint:point:) descriptor
-
-descriptorLiteral at: 11
-"!
+	^descriptorClass descriptor: typeinfo literals: self literals!
 
 descriptorClass
 	"Private - Answer the class of descriptor to use for the receiver."
 
-	^Descriptor!
+	^FunctionDescriptor!
 
 descriptorLiteral
 	"Private - Answer the argument type descriptor literal from the receiver's 'literal frame'.

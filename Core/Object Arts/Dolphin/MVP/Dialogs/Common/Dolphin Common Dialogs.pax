@@ -158,7 +158,7 @@ External.DynamicLinkLibrary subclass: #'OS.ComDlgLibrary'
 	classConstants: {}!
 UI.ValueDialog subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook'
-	classVariableNames: ''
+	classVariableNames: 'HookCallbackDescriptor'
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!

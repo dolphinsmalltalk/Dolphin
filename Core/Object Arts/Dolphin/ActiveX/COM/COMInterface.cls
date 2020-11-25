@@ -359,12 +359,12 @@ vtbl: anExternalAddress
 
 !COMInterface class methodsFor!
 
-addFunction: functionClass selector: aSymbol descriptor: anExternalDescriptor
+addFunction: functionClass selector: aSymbol descriptor: aFunctionDescriptor
 	"Private - Add a function call definition to the receivers dispatch table."
 
 	functions add: (functionClass
 					selector: aSymbol
-					descriptor: anExternalDescriptor)!
+					descriptor: aFunctionDescriptor)!
 
 argSizes
 	"Private - Answer the DWORD array of arg sizes."
@@ -610,14 +610,14 @@ defineFunction: aSymbol argumentTypes: aString
 
 !
 
-defineFunction: aSymbol descriptor: anExternalDescriptor
+defineFunction: aSymbol descriptor: aFunctionDescriptor
 	"Declare a virtual function supported by the receiver and implemented in the object
 	on which instances of the receiver are actually created (the 'client' or 'implementor')."
 
 	self
 		addFunction: COMFunction
 		selector: aSymbol
-		descriptor: anExternalDescriptor!
+		descriptor: aFunctionDescriptor!
 
 defineFunction: aSymbol returnType: retString
 	"Declare a virtual function supported by the receiver and implemented in the object

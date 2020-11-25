@@ -1050,21 +1050,21 @@ perform: selector withArguments: arguments
 		for: self
 		withArgs: arguments!
 
-perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor
+perform: aSymbol withArgumentsAt: anAddress descriptor: aFunctionDescriptor
 	"Private - Send message with selector, aSymbol, to anObject,
 	with arguments instantiated from memory at anAddress using the 
-	the external arguments types from the typinfo in anExternalDescriptor.
+	the external arguments types from the typinfo in aFunctionDescriptor.
 	Implementation Note: For performance and consistency (with outbound external calls) 
 	reasons, we use a VM supplied primitive to instantiate and push the arguments and 
 	perform the message, but there is no reason that this cannot be done in Smalltalk 
 	if different argument conversions are required. The standard conversions are the 
 	same as those performed for return types by the external call primitive (see
-	the ExternalLibrary class).
+	the DynamicLinkLibrary class).
 
 	Primitive Failure reasons:
 		InvalidParameter1	- the selector, aSymbol, is an immediate object (e.g. a SmallInteger).
 		InvalidParameter2	- anAddress is not a valid address object (SmallInteger/byte indirection)
-		InvalidParameter3	- anExternalDescriptor is invalid."
+		InvalidParameter3	- aFunctionDescriptor is invalid."
 
 	<primitive: 114>
 	^self primitiveFailed: _failureCode!

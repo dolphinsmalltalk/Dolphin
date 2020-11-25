@@ -45,6 +45,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\Base\Deprecated\Dolphin Base (Deprecated)'
 ).
 
 package!

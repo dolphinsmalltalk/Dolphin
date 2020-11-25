@@ -9,7 +9,7 @@ Core.Error subclass: #'External.InvalidExternalCall'
 External.InvalidExternalCall guid: (Core.GUID fromString: '{87b4c55b-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.InvalidExternalCall comment: 'Exception to represent an invalid attempt to invoke an external procedure call, perhaps because of passing an invalid object type as an argument.
 
-See <ExternalDescriptor>''s class comment for a description of the argument types supported by Dolphin.'!
+See <FunctionDescriptor>''s class comment for a description of the argument types supported by Dolphin.'!
 !External.InvalidExternalCall categoriesForClass!System-Exception Handling! !
 !External.InvalidExternalCall methodsFor!
 
@@ -66,7 +66,7 @@ invalidArgument: anInteger got: anObject expected: type
 	the StackFrame argument, raising an appropriate Error if validation of an 
 	argument fails."
 
-	##(Descriptor initialize).	"cause External.Descriptor to be initialized during boot"
+	##(FunctionDescriptor initialize).	"cause External.FunctionDescriptor to be initialized during boot"
 	^self new
 		argument: anObject;
 		type: type;

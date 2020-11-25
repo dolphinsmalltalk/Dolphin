@@ -11,7 +11,7 @@ COMFunction comment: 'COMFunction is the generic class of <COMFunctionAbstract> 
 
 Instance Variables:
 	selector		<Symbol>. Selector to be forwarded.
-	descriptor		<ExternalDescriptor>. Argument type descriptions.
+	descriptor		<FunctionDescriptor>. Argument type descriptions.
 '!
 !COMFunction categoriesForClass!COM-Implementations! !
 !COMFunction methodsFor!
@@ -35,10 +35,10 @@ descriptor
 
 	^descriptor!
 
-descriptor: anExternalDescriptor
+descriptor: aFunctionDescriptor
 	"Private - Set the receiver's external function descriptor."
 
-	descriptor := anExternalDescriptor!
+	descriptor := aFunctionDescriptor!
 
 selector
 	"Private - Answer the selector sent when the receiver is evaluated."
@@ -66,13 +66,13 @@ prototype: anExternalMethod
 		selector: anExternalMethod selector
 		descriptor: anExternalMethod descriptor!
 
-selector: aSymbol descriptor: anExternalDescriptor
+selector: aSymbol descriptor: aFunctionDescriptor
 	"Answer a new instance of the receiver appropriate for dispatching callbacks
 	with the specified prototype, using the specified message selector."
 
 	^self new
 		selector: aSymbol;
-		descriptor: anExternalDescriptor! !
+		descriptor: aFunctionDescriptor! !
 !COMFunction class categoriesFor: #prototype:!instance creation!public! !
 !COMFunction class categoriesFor: #selector:descriptor:!instance creation!public! !
 

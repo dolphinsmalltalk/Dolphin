@@ -53,7 +53,7 @@ Smalltalk.ExternalAddress := External.Address!
 
 Smalltalk.ExternalCallback := External.Callback!
 
-Smalltalk.ExternalDescriptor := External.Descriptor!
+Smalltalk.ExternalDescriptor := External.FunctionDescriptor!
 
 Smalltalk.ExternalField := External.Field!
 

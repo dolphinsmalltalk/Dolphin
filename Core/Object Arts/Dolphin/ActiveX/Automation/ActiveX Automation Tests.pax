@@ -14,7 +14,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{External.Tests.AddressTest} #testBSTRFromAddress)
-	#(#{External.Tests.DescriptorTest} #testComPtrs)
+	#(#{External.Tests.FunctionDescriptorTest} #testComPtrs)
 ).
 
 package setPrerequisites: #(
@@ -68,7 +68,7 @@ testBSTRFromAddress
 	self assert: (Smalltalk.BSTR fromAddress: 0) equals: empty! !
 !External.Tests.AddressTest categoriesFor: #testBSTRFromAddress!public!unit tests! !
 
-!External.Tests.DescriptorTest methodsFor!
+!External.Tests.FunctionDescriptorTest methodsFor!
 
 testComPtrs
 	self
@@ -79,7 +79,7 @@ testComPtrs
 		parseStructArg: Smalltalk.IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
-!External.Tests.DescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
+!External.Tests.FunctionDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
 
 "End of package definition"!
 

@@ -1689,7 +1689,7 @@ systemCodePages: anInteger
 					[:codePage |
 					ids addLast: codePage.
 					true]
-				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: (External.FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	kernel := OS.KernelLibrary default.
 	kernel enumSystemCodePages: enum asParameter dwFlags: anInteger.
 	enum free.

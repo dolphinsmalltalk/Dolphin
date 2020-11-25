@@ -1809,7 +1809,7 @@ Graphics.GraphicsTool subclass: #'Graphics.ImageList'
 	classConstants: {}!
 Graphics.GraphicsTool subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
-	classVariableNames: ''
+	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1902,7 +1902,7 @@ Graphics.ImageManager subclass: #'Graphics.IconImageManager'
 	classConstants: {}!
 Kernel.InputState subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'EnumHandlesDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

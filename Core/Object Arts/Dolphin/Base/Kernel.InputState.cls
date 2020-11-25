@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
+	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -21,7 +21,7 @@ Instance Variables:
 	msgWindow	<PostedActionWindow> 
 
 Class Variables:
-	EnumHandlesDescriptor	<ExternalDescriptor>. Callback descriptor for EnumWindows.
+	EnumHandlesDescriptor	<FunctionDescriptor>. Callback descriptor for EnumWindows.
 	UserInterruptSignal		<Signal>. Exception raised when Break key combination is pressed.
 	SamplingInterval		<SmallInteger> approximate millisecond interval between tests of system input queue for host system messsages when running background processes.
 '!
@@ -673,7 +673,6 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 
 initialize
 	SamplingInterval := 16384.
-	EnumHandlesDescriptor := External.Descriptor fromString: 'stdcall: dword handle dword'.
 	MaxIdleSleep := 15000!
 
 maxIdleSleep

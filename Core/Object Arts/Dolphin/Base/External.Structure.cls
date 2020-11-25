@@ -602,7 +602,7 @@ descriptorClass
 	"Private - Return the class of external function descriptor associated with
 	the receiver."
 
-	^Descriptor!
+	^FunctionDescriptor!
 
 dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."

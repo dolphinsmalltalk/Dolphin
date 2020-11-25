@@ -130,8 +130,8 @@ testEquals
 	self deny: #'Core.Object' asQualifiedReference equals: #{Object}!
 
 testHash
-	self assert: (self subjectClass path: #(#Smalltalk 'OpcodePool' 'Nop')) hash
-		equals: (self subjectClass pathString: 'Smalltalk.OpcodePool.Nop') hash.
+	self assert: (self subjectClass path: #(#Kernel 'OpcodePool' 'Nop')) hash
+		equals: (self subjectClass pathString: 'Kernel.OpcodePool.Nop') hash.
 	"Same target variable, but different paths, so different hashes."
 	self deny: (self subjectClass path: #('Object')) hash
 		equals: (self subjectClass path: #(#Smalltalk 'Object')) hash.

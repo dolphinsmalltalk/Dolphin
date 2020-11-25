@@ -401,7 +401,8 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := External.Descriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'!
+	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
+				argumentTypes: 'DWORD DWORD OVERLAPPED*'!
 
 monitorDirectory: aString 
 	^(self directory: aString)

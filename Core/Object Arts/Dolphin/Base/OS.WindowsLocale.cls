@@ -2,7 +2,7 @@
 
 Core.Locale subclass: #'OS.WindowsLocale'
 	instanceVariableNames: 'lcid info'
-	classVariableNames: ''
+	classVariableNames: 'EnumNamesDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -185,7 +185,7 @@ getDateFormats: aBoolean
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: EnumNamesDescriptor.
 	(self nlsLib
 		enumDateFormats: enum asParameter
 		locale: self asParameter
@@ -242,7 +242,7 @@ getTimeFormats
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: EnumNamesDescriptor.
 	(self nlsLib
 		enumTimeFormats: enum asParameter
 		locale: self asParameter
@@ -555,6 +555,9 @@ yearMonthFormat
 
 !OS.WindowsLocale class methodsFor!
 
+initialize
+	EnumNamesDescriptor := FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr'!
+
 installedUILanguages: anInteger
 	"Private - Answer a collection of UI languages installed on the system.
 		self installedUILanguages: MUI_LANGUAGE_LICENSED.
@@ -566,7 +569,7 @@ installedUILanguages: anInteger
 					[:language :lParam |
 					languages nextPut: language.
 					true]
-				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
+				descriptor: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
 	KernelLibrary default
 		enumUILanguages: enum asParameter
 		dwFlags: (MUI_LANGUAGE_NAME bitOr: anInteger)
@@ -596,10 +599,11 @@ systemLocales: anInteger
 					[:locale |
 					locales addLast: locale.
 					true]
-				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: EnumNamesDescriptor.
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+!OS.WindowsLocale class categoriesFor: #initialize!class initialization!development!public! !
 !OS.WindowsLocale class categoriesFor: #installedUILanguages:!enquiries!private! !
 !OS.WindowsLocale class categoriesFor: #named:!instance creation!public! !
 !OS.WindowsLocale class categoriesFor: #reset!initializing!private! !

@@ -166,13 +166,13 @@ block: aBlockClosure argumentTypes: aString
 		descriptor: (self descriptorClass argumentTypes: aString);
 		yourself!
 
-block: aBlockClosure descriptor: anExternalDescriptor
+block: aBlockClosure descriptor: aFunctionDescriptor
 	"Answer a new subinstance of the receiver appropriate for dispatching callbacks
 	to the block, aBlockClosure, with the specified descriptor."
 
 	^BlockCallback new
 		block: aBlockClosure;
-		descriptor: anExternalDescriptor;
+		descriptor: aFunctionDescriptor;
 		yourself!
 
 callback: anInteger withArgumentsAt: anAddress
@@ -204,7 +204,7 @@ deallocateThunks
 descriptorClass
 	"Private - Answer the class used to build and represent function descriptors."
 
-	^Descriptor!
+	^FunctionDescriptor!
 
 fromCookie: anInteger
 	"Answer the receiver's registered instance with the cookie, anInteger. If there is no such
@@ -258,14 +258,14 @@ receiver: anObject prototype: anExternalMethod
 		selector: anExternalMethod selector
 		descriptor: anExternalMethod descriptor!
 
-receiver: anObject selector: aSymbol descriptor: anExternalDescriptor
+receiver: anObject selector: aSymbol descriptor: aFunctionDescriptor
 	"Answer a new instance of the receiver configured to send the <selector>, aSymbol,
-	to the <Object>, anObject, when invoked as a callback with descriptor, anExternalDescriptor."
+	to the <Object>, anObject, when invoked as a callback with descriptor, aFunctionDescriptor."
 
 	^MessageCallback new
 		receiver: anObject;
 		selector: aSymbol;
-		descriptor: anExternalDescriptor;
+		descriptor: aFunctionDescriptor;
 		yourself!
 
 register: instance

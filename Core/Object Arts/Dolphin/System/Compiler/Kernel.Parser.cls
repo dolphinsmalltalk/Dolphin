@@ -74,7 +74,7 @@ errorPosition
 	^currentToken start!
 
 externalReferenceTypeFor: anInteger
-	^(External.Descriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
+	^(External.FunctionDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
 
 initialize
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
@@ -346,7 +346,8 @@ parseExternalArgType
 				indirections: 0;
 				yourself].
 	structClass := nil.
-	valueType := External.Descriptor typeFromName: currentToken value ifAbsent: [ExtCallArgSTRUCT].
+	valueType := External.FunctionDescriptor typeFromName: currentToken value
+				ifAbsent: [ExtCallArgSTRUCT].
 	"We can't look up the struct class until semantic analysis, so hold as a variable for later resolution"
 	structClass := valueType == ExtCallArgSTRUCT ifTrue: [StVariableNode identifierToken: currentToken].
 	typeToken := currentToken.
@@ -357,8 +358,7 @@ parseExternalArgType
 			[| refType |
 			refType := valueType.
 			indirections > 1
-				ifTrue: 
-					[valueType == ExtCallArgSTRUCT ifFalse: [refType := self externalReferenceTypeFor: valueType]].
+				ifTrue: [valueType == ExtCallArgSTRUCT ifFalse: [refType := self externalReferenceTypeFor: valueType]].
 			stop := currentToken stop.
 			refType == ExtCallArgLPPVOID
 				ifTrue: 
@@ -384,7 +384,7 @@ parseExternalArgTypeQualifier
 	currentToken isBinary ifFalse: [^0].
 	qualifier := currentToken value.
 	qualifier == #> ifTrue: [^0].
-	(qualifier == #*> or: [qualifier == #**>]) ifTrue: [qualifier := self patchExternalDescriptorClose].
+	(qualifier == #*> or: [qualifier == #**>]) ifTrue: [qualifier := self patchFunctionDescriptorClose].
 	qualifier == #* ifTrue: [^1].
 	qualifier == #** ifTrue: [^2].
 	self parserError: CErrBadExtTypeQualifier.
@@ -451,7 +451,7 @@ parseExternalCallingConvention
 	currentToken isKeyword
 		ifTrue: 
 			[| answer |
-			answer := External.Descriptor conventionFromName: currentToken value.
+			answer := External.FunctionDescriptor conventionFromName: currentToken value.
 			answer < 0
 				ifTrue: 
 					[self parserError: CErrBadPrimCallType.
@@ -1009,7 +1009,7 @@ parseVariableNode: anStVariableNodeClass
 	self addCommentsTo: node.
 	^node!
 
-patchExternalDescriptorClose
+patchFunctionDescriptorClose
 	"Hack needed because scanner treats trailing *> and **> binary selectors rather than two tokens"
 
 	| qualifier |
@@ -1242,7 +1242,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseUnaryPattern!parsing!private! !
 !Kernel.Parser categoriesFor: #parseVariableNode:!parsing!private! !
-!Kernel.Parser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
+!Kernel.Parser categoriesFor: #patchFunctionDescriptorClose!parsing!private! !
 !Kernel.Parser categoriesFor: #patchLiteralArrayToken!parsing!private! !
 !Kernel.Parser categoriesFor: #patchLiteralMessage!helpers!private! !
 !Kernel.Parser categoriesFor: #patchNegativeLiteral!helpers!private! !

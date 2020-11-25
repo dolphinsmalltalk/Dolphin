@@ -2,7 +2,7 @@
 
 Graphics.GraphicsTool subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
-	classVariableNames: ''
+	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -217,8 +217,7 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 						on: hdc
 						at: 0 @ 0.
 					true]
-				descriptor: (External.Descriptor returnType: 'bool'
-						argumentTypes: 'handle intptr uintptr sdword sdword').
+				descriptor: DrawStateCallbackDescriptor.
 	UserLibrary default
 		drawState: hDC
 		hbr: nil
@@ -788,7 +787,9 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	View registerMessageMappings: self menuMessageMappings!
+	View registerMessageMappings: self menuMessageMappings.
+	DrawStateCallbackDescriptor := External.FunctionDescriptor returnType: 'bool'
+				argumentTypes: 'handle intptr uintptr sdword sdword'!
 
 menuMessageMappings
 	^{WM_CONTEXTMENU -> #wmContextMenu:wParam:lParam:.

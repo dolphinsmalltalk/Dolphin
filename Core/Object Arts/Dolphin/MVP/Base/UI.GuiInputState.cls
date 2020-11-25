@@ -2,7 +2,7 @@
 
 Kernel.InputState subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'EnumHandlesDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -19,7 +19,7 @@ aboutToForkUI
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+				descriptor: EnumHandlesDescriptor.
 	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
 	callback free.
 	^answer!
@@ -50,7 +50,7 @@ isDolphinWindow: hWnd
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+				descriptor: EnumHandlesDescriptor.
 	answer := UserLibrary default
 				enumThreadWindows: KernelLibrary default getCurrentThreadId
 				lpfn: callback asParameter
@@ -152,4 +152,11 @@ visibleWindows
 !UI.GuiInputState categoriesFor: #uiIdle:!idling!private! !
 !UI.GuiInputState categoriesFor: #userSessionIdleMs!idling!public! !
 !UI.GuiInputState categoriesFor: #visibleWindows!private!testing! !
+
+!UI.GuiInputState class methodsFor!
+
+initialize
+	EnumHandlesDescriptor := External.FunctionDescriptor returnType: 'bool'
+				argumentTypes: 'handle uintptr'! !
+!UI.GuiInputState class categoriesFor: #initialize!development!initializing!public! !
 

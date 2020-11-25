@@ -84,6 +84,7 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := External.Descriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
+	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
+				argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
 !OS.FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
 

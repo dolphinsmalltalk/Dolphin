@@ -128,7 +128,7 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 						value: (Canvas withNonOwnedDC: hDC)
 						value: emfr
 						value: handles]
-				descriptor: (External.Descriptor returnType: 'int'
+				descriptor: (External.FunctionDescriptor returnType: 'int'
 						argumentTypes: 'handle lpvoid lpvoid sdword lpvoid').
 	lpRect := RECTL origin: originPoint extent: sizePoint.
 	answer := GDILibrary default

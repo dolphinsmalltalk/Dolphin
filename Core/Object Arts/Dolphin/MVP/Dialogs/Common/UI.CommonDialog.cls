@@ -2,7 +2,7 @@
 
 UI.ValueDialog subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook'
-	classVariableNames: ''
+	classVariableNames: 'HookCallbackDescriptor'
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
@@ -55,7 +55,7 @@ createHook
 								with: uiMsg
 								with: wParam
 								with: lParam) asUIntPtr]]
-				argumentTypes: 'handle dword uintptr uintptr']!
+				descriptor: HookCallbackDescriptor]!
 
 extractResult: apiResult
 	"Private - Extract and apply the result from the parameter structure 
@@ -169,6 +169,9 @@ defaultView
 hookHandlers
 	^hookHandlers!
 
+initialize
+	HookCallbackDescriptor := External.FunctionDescriptor argumentTypes: 'handle dword uintptr uintptr'!
+
 initializeDefaultHooks
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:!
@@ -201,6 +204,7 @@ showModalOn: aModel
 	^(self on: aModel) showModal! !
 !UI.CommonDialog class categoriesFor: #defaultView!constants!public! !
 !UI.CommonDialog class categoriesFor: #hookHandlers!accessing!private! !
+!UI.CommonDialog class categoriesFor: #initialize!class initialization!development!private! !
 !UI.CommonDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
 !UI.CommonDialog class categoriesFor: #showModal!instance creation!public! !
 !UI.CommonDialog class categoriesFor: #showModal:!instance creation!private! !
