@@ -48,7 +48,7 @@ Kernel.Namespace subclass: #Smalltalk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External})
-	classInstanceVariableNames: 'events allRoots allClasses'
+	classInstanceVariableNames: 'events allRoots allClasses classesByGuid'
 	classConstants: {}!
 Kernel.Namespace subclass: #UI
 	instanceVariableNames: ''
