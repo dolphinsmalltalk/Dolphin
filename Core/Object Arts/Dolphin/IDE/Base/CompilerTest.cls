@@ -861,6 +861,15 @@ testLiteralStringEncoding
 				self assert: actual equals: each.
 				self assert: actual isKindOf: each class]!
 
+testMutable
+	| class mutator inst |
+	class := CompilerTestClasses current testClass.
+	mutator := class compile: 'iv1_mutable: op <mutable> iv1 := op'.
+	inst := class new.
+	self assert: mutator extraIndex equals: 49.
+	inst perform: mutator selector with: 123.
+	self assert: (inst perform: #iv1) equals: 123!
+
 testNestedCopyingBlocks
 	| method value value2 |
 	method := self getTestMethod: #testNestedCopyingBlocks.
@@ -1524,6 +1533,7 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
 !CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
 !CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
+!CompilerTest categoriesFor: #testMutable!public!unit tests!unit tests-known failures! !
 !CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
 !CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 !CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !

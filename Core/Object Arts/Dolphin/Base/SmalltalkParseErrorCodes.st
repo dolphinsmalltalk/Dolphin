@@ -68,6 +68,7 @@ SmalltalkParseErrorCodes at: 'CWarnExpectNiladicBlockReceiver' put: 16r3F6!
 SmalltalkParseErrorCodes at: 'CWarnFirst' put: 16r3E8!
 SmalltalkParseErrorCodes at: 'CWarnLast' put: 16r3F9!
 SmalltalkParseErrorCodes at: 'CWarnMsgUnimplemented' put: 16r3EC!
+SmalltalkParseErrorCodes at: 'CWarnMutableIgnored' put: 16r3FA!
 SmalltalkParseErrorCodes at: 'CWarnReadBeforeWritten' put: 16r3F1!
 SmalltalkParseErrorCodes at: 'CWarnReadNotWritten' put: 16r3F0!
 SmalltalkParseErrorCodes at: 'CWarnRedefiningArg' put: 16r3E8!

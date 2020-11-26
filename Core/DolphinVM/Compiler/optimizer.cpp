@@ -2046,7 +2046,7 @@ POTE Compiler::NewMethod()
 			byte1 = static_cast<uint8_t>(OpCode::PopStoreInstVar);
 		}
 
-		MakeQuickMethod(hdr, PRIMITIVE_SET_INSTVAR);
+		MakeQuickMethod(hdr, m_isMutable ? PRIMITIVE_SET_MUTABLE_INSTVAR : PRIMITIVE_SET_INSTVAR);
 		
 		// We go ahead and generate the bytes anyway, as they're needed by the primitive
 	}
@@ -2056,6 +2056,11 @@ POTE Compiler::NewMethod()
 		_ASSERTE(m_primitiveIndex == PRIMITIVE_ACTIVATE_METHOD);
 	}
 	
+	if (m_isMutable && hdr.primitiveIndex != PRIMITIVE_SET_MUTABLE_INSTVAR)
+	{
+		Warning(TEXTRANGE(textpos_t::start, static_cast<textpos_t>(TextLength - 1)), CWarnMutableIgnored);
+	}
+
 	if (bNeedsContext)
 	{
 		// There is a sublety in the envTempCount, which is that it is the number of required slots in the context+1

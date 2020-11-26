@@ -80,6 +80,13 @@ newLine
 space
 	codeStream space!
 
+visitAnnotationNode: anStPrimitiveNode
+	codeStream
+		nextPut: $<;
+		display: anStPrimitiveNode selector;
+		nextPut: $>.
+	self newLine!
+
 visitArrayNode: anArrayNode
 	self bracketWith: '{}' around: [self formatArray: anArrayNode]!
 
@@ -141,6 +148,7 @@ visitVariableNode: aVariableNode
 !RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
 !RBSourceFormatter categoriesFor: #newLine!formatting!private! !
 !RBSourceFormatter categoriesFor: #space!formatting!private! !
+!RBSourceFormatter categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
 !RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !

@@ -13,7 +13,7 @@
 ******************************************************************************/
 #pragma once
 
-typedef enum { 
+typedef enum {
 	PRIMITIVE_ACTIVATE_METHOD = 0,
 	PRIMITIVE_RETURN_SELF = 1,
 	PRIMITIVE_RETURN_TRUE = 2,
@@ -22,7 +22,8 @@ typedef enum {
 	PRIMITIVE_RETURN_LITERAL_ZERO = 5,
 	PRIMITIVE_RETURN_INSTVAR = 6,
 	PRIMITIVE_SET_INSTVAR = 7,
-	PRIMITIVE_RETURN_STATIC_ZERO=8,
+	PRIMITIVE_RETURN_STATIC_ZERO = 8,
+	PRIMITIVE_SET_MUTABLE_INSTVAR = 49,
 	PRIMITIVE_MAX = 255
 } STPrimitives;
 

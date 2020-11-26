@@ -82,13 +82,14 @@ Compiler::LibCallType Compiler::callTypes[4] =
 ///////////////////////
 
 Compiler::Compiler() :
-		m_class(0),
+		m_class(nullptr),
 		m_codePointer(ip_t::zero),
 		m_compiledMethodClass(nullptr),
 		m_compilerObject(0),
 		m_context(0),
 		m_flags(CompilerFlags::Default),
 		m_instVarsInitialized(false),
+		m_isMutable(false),
 		m_literalLimit(LITERALLIMIT),
 		m_notifier(0),
 		m_ok(true),
@@ -2224,6 +2225,18 @@ void Compiler::ParsePrimitive()
 						return;
 					}
 				}
+			}
+			else if (strToken == (LPUTF8)"mutable")
+			{
+				NextToken();
+				if (ThisTokenIsBinary('>'))
+				{
+					NextToken();
+					this->m_isMutable = true;
+					return;
+				}
+				else
+					CompileError(CErrExpectCloseTag);
 			}
 		}
 	}

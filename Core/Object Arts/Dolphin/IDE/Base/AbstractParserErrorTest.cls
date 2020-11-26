@@ -1524,6 +1524,14 @@ testUnoptimizedLoopsNonMonadicArg
 				range: ((source indexOf: $[) to: (source indexOf: $|)).
 			self]!
 
+testWarningMutableIgnored
+	#(#testWarningMutableIgnored) do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: [:source | 1 to: source size]
+				code: CWarnMutableIgnored]!
+
 testWarningReadBeforeWritten
 	#(#testWarningReadBeforeWrittenMethodTemp #testWarningReadBeforeWrittenBlockTemp #testWarningReadBeforeWrittenFullBlock)
 		do: 
@@ -1961,6 +1969,7 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentWarning!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testRestrictedSelectors!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testUnoptimizedLoopsNonMonadicArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningMutableIgnored!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningReadBeforeWritten!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningReadNotWritten!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningArg!public!unit tests! !

@@ -2395,6 +2395,20 @@ testPrimitiveResume
 	self assert: e isDead.
 	self assert: a isDead!
 
+testPrimitiveSetMutableInstVar
+	| method assoc |
+	method := (Association >> #value:) copy.
+	method extraIndex: 49.
+	assoc := 1 -> 2.
+	self deny: assoc isImmutable.
+	method value: assoc withArguments: #(3).
+	self assert: assoc value identicalTo: 3.
+	assoc isImmutable: true.
+	self should: [assoc value: 4] raise: Processor constWriteSignal.
+	self assert: assoc value identicalTo: 3.
+	method value: assoc withArguments: #(4).
+	self assert: assoc value identicalTo: 4!
+
 testPrimitiveSetSpecialBehavior
 	| method subject before after nullTermMask |
 	method := self createPrimitiveMethodLike: Object >> #setSpecialBehavior:.
@@ -3598,6 +3612,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testPrimitiveQuo!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveSetMutableInstVar!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !

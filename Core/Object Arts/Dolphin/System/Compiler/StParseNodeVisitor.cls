@@ -16,6 +16,8 @@ processBlock: aBlockNode
 	self visitArgumentNodes: aBlockNode arguments.
 	self visitNode: aBlockNode body!
 
+visitAnnotationNode: anStAnnotationNode!
+
 visitArgumentNode: anStParameterNode
 	"Here to allow subclasses to detect arguments or temporaries."
 
@@ -108,6 +110,7 @@ visitThisContextVariableNode: anStSelfVariableNode
 visitVariableNode: aVariableNode
 	^aVariableNode! !
 !StParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
+!StParseNodeVisitor categoriesFor: #visitAnnotationNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !

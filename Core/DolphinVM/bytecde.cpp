@@ -164,6 +164,35 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp
 	}
 }
 
+__declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
+{
+	_asm
+	{
+		mov		ecx, [m_registers.m_oopNewMethod]
+		mov		ecx, [ecx]OTE.m_location
+		movzx	eax, [ecx]CompiledMethod.m_byteCodes + 2
+		mov		edx, [esi - OOPSIZE]
+		mov		ecx, [edx]OTE.m_location
+		lea		eax, [ecx]VariantObject.m_fields[eax * OOPSIZE]
+
+		mov		edx, [esi]
+		mov		ecx, [eax]
+
+		test	dl, 1
+		jnz		store
+		inc		[edx]OTE.m_count
+		jnz		store
+		mov		[edx]OTE.m_count, 0xff // MAXCOUNT
+
+	store:
+		mov[eax], edx
+		call	ObjectMemory::countDown
+
+		lea		eax, [esi - OOPSIZE]
+		ret
+	}
+}
+
 #else
 
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
@@ -244,6 +273,14 @@ Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 	}
 }
 
+Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
+{
+	MethodOTE* oteSetter = m_registers.m_oopNewMethod;
+	auto pMethod = oteSetter->m_location;
+	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
+	ObjectMemory::storePointerOfObjectWithValue(pMethod->m_packedByteCodes.third, oteReceiver, *sp);
+	return sp - 1;
+}
 #endif
 
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
