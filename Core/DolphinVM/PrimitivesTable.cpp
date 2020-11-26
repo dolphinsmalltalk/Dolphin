@@ -58,7 +58,7 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveFloatCompare<std::greater_equal<double>>				, // case 46:  Float>>#>=
 	Interpreter::primitiveFloatCompare<std::equal_to<double>>					, // case 47:  Float>>#=
 	Interpreter::primitiveAsyncDLL32CallThunk									, // case 48:  Overlapped FFI call primitive
-	Interpreter::unusedPrimitive												, // case 49:  
+	Interpreter::primitiveSetMutableInstVar										, // case 49:  <mutable inst var> := arg
 	Interpreter::primitiveCopyFromTo											, // case 50:  ArrayedCollection>>#copyFrom:to:
 	Interpreter::primitiveStringComparison<CmpA,CmpW>							, // case 51:  String>>#trueCompare:
 	Interpreter::primitiveStringNextIndexOfFromTo								, // case 52:  String>>#nextIdentityIndexOf:from:to:

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope'
+	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -39,6 +39,9 @@ addToFrameStatic: aLiteralNode
 	that are referenced in the static expression so that these can be searched on later."
 	(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
 		ifTrue: [self addLiteral: aLiteralNode value: value]!
+
+annotations
+	^annotations ifNil: [annotations := OrderedCollection new]!
 
 assignStaticVariable: anStVariableNode
 	self accessStaticVariable: anStVariableNode!
@@ -78,6 +81,26 @@ blockDepth
 			[scope isInlined ifFalse: [depth := depth + 1].
 			scope := scope outer].
 	^depth!
+
+checkAnnotations: aStMethodNode
+	annotations ifNil: [^self].
+	(annotations detect: [:each | each first == #mutable] ifNone: [])
+		ifNotNil: 
+			[(aStMethodNode argumentCount ~~ 1 or: 
+					[| statements |
+					statements := aStMethodNode body statements.
+					statements size > 1 or: 
+							[| statement |
+							statement := statements first.
+							statement isAssignment not or: 
+									[| rhs |
+									rhs := statement value.
+									rhs isVariable not or: 
+											[rhs name ~= aStMethodNode arguments first name or: 
+													[| lhs |
+													lhs := currentScope lookupVariable: statement variable.
+													lhs isNil or: [lhs isInstanceVariable not]]]]]])
+				ifTrue: [self signalError: CWarnMutableIgnored forNode: aStMethodNode]]!
 
 checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode 
 	aStProgramNode isBlock 
@@ -478,6 +501,9 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
+visitAnnotationNode: anStAnnotationNode
+	self annotations add: {anStAnnotationNode selector. anStAnnotationNode arguments}!
+
 visitArgumentNode: anStParameterNode
 	self checkRedefines: anStParameterNode.
 	self currentScope declareArgument: anStParameterNode!
@@ -540,6 +566,7 @@ visitMethodNode: aMethodNode
 	self checkRestrictedSelectors: aMethodNode.
 	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
 	super visitMethodNode: aMethodNode.
+	self checkAnnotations: aMethodNode.
 	self removeScope!
 
 visitOptimizedNode: anOptimizedNode
@@ -635,10 +662,12 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #addMessageToFrame:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #addToFrame:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #addToFrameStatic:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #annotations!accessing!private! !
 !StSemanticAnalyser categoriesFor: #assignStaticVariable:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #assignVariable:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #bindVariable:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #blockDepth!helpers!private! !
+!StSemanticAnalyser categoriesFor: #checkAnnotations:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkLiteralFrameSize:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
@@ -678,6 +707,7 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #signalError:forNode:extras:!error handling!private! !
 !StSemanticAnalyser categoriesFor: #signalError:forNode:range:extras:!error handling!private! !
 !StSemanticAnalyser categoriesFor: #tempDecls!accessing!private! !
+!StSemanticAnalyser categoriesFor: #visitAnnotationNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitArgumentNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !

@@ -291,6 +291,7 @@ initialize
 		at: CWarnUnreachable put: 'unreachable code';
 		at: CWarnUnimplementedAbstractMethod put: 'subclass <4p> does not implement <3p>';
 		at: CWarnUsesBooleanClass put: 'references boolean class <1p> rather than its instance <2p>';
+		at: CWarnMutableIgnored put: '%<mutable> attribute ignored in non-mutator method';
 		yourself.
 	formats
 		at: CInfoUnreferencedArg put: 'unreferenced argument <1p>';

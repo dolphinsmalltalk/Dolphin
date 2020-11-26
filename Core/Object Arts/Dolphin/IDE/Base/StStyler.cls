@@ -146,6 +146,10 @@ styleTemporaries: anArray
 			view applyStyle: #tempDecl toNext: each name size.
 			self colorComments: each postComments]!
 
+visitAnnotationNode: anStAnnotationNode
+	(view plainTextRange: anStAnnotationNode sourceInterval)
+		do: [:each | view applyStyle: (each isSeparator ifTrue: [#whitespace] ifFalse: [#tag]) toNext: 1]!
+
 visitAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode variable.
 	self styleInterstitialSpaceBefore: anAssignmentNode value.
@@ -270,6 +274,7 @@ visitVariableNode: aVariableNode
 !StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
 !StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
 !StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
+!StStyler categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
 !StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
 !StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !

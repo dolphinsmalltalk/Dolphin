@@ -25,6 +25,7 @@ package classNames
 	add: #SmalltalkParser;
 	add: #SmalltalkScanner;
 	add: #StAbstractVariableNode;
+	add: #StAnnotationNode;
 	add: #StAssignmentNode;
 	add: #StAssignmentToken;
 	add: #StBinarySelectorToken;
@@ -142,6 +143,11 @@ StProgramNode subclass: #StTagNode
 	classInstanceVariableNames: ''!
 StProgramNode subclass: #StValueNode
 	instanceVariableNames: 'parentheses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StTagNode subclass: #StAnnotationNode
+	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

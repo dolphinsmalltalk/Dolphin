@@ -306,20 +306,25 @@ parseExpression: aString
 		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
 	^body!
 
-parseExtendedExternalCall: startInteger
-	currentToken isIdentifier 
+parseExtendedTags: startInteger
+	currentToken isIdentifier
 		ifTrue: 
-			[| modifier |
-			modifier := currentToken value.
-			modifier = 'virtual' 
+			[| selector |
+			selector := currentToken value.
+			selector = 'virtual'
 				ifTrue: 
 					[self step.
-					^self parseExternalCall: startInteger isVirtual: true]
-				ifFalse: 
-					[modifier = 'overlap' 
-						ifTrue: 
-							[self step.
-							^self parseOverlappedCall: startInteger]]].
+					^self parseExternalCall: startInteger isVirtual: true].
+			selector = 'overlap'
+				ifTrue: 
+					[self step.
+					^self parseOverlappedCall: startInteger].
+			selector = 'mutable'
+				ifTrue: 
+					[self step.
+					^(StAnnotationNode selector: selector)
+						start: startInteger;
+						yourself]].
 	self parserError: CErrBadPrimCallType.
 	"Attempt to recover..."
 	self step.
@@ -879,7 +884,7 @@ parseTag: startInteger
 							primitiveNode errorTemp: self parseTempDecl].
 					primitiveNode]
 				ifFalse: [self parseExternalCall: startInteger isVirtual: false]]
-		ifFalse: [self parseExtendedExternalCall: startInteger]!
+		ifFalse: [self parseExtendedTags: startInteger]!
 
 parseTags
 	| tag start |
@@ -1138,7 +1143,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
-!SmalltalkParser categoriesFor: #parseExtendedExternalCall:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseExtendedTags:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExternalArgType!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !

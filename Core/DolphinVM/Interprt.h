@@ -507,6 +507,7 @@ public:
 	static Oop* __fastcall primitiveReturnInstVar(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveSetInstVar(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveSetMutableInstVar(Oop* const sp, primargcount_t argCount);
 
 	// SmallInteger Arithmetic
 	static Oop* __fastcall primitiveAdd(Oop* const sp, primargcount_t argCount);

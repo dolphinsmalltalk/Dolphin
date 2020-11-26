@@ -285,6 +285,10 @@ testWarningCantOptimizeLoop
 	[:c | ] repeat.
 	!
 
+testWarningMutableIgnored
+	<mutable>
+	^1!
+
 testWarningReadBeforeWrittenBlockTemp
 	
 	[| _tmp |
@@ -539,6 +543,7 @@ testWarnUnimplementedAbstractMethod
 !DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullBlocks!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullInOptimized!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningCantOptimizeLoop!public! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningMutableIgnored!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenBlockTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenFullBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenMethodTemp!public!unit tests! !
