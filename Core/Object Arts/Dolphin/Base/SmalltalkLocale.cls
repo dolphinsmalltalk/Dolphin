@@ -388,7 +388,11 @@ current
 	^Current!
 
 initialize
-	Current := self new! !
+	Current := self new!
+
+reset
+	Current numberFormat: nil! !
 !SmalltalkLocale class categoriesFor: #current!instance creation!public! !
 !SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
+!SmalltalkLocale class categoriesFor: #reset!initializing!private! !
 
