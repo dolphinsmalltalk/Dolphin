@@ -406,10 +406,14 @@ negativeSign
 numberFormat
 	^numberFormat
 		ifNil: 
-			[numberFormat := self getNumberFormat.
+			[self numberFormat: self getNumberFormat.
 			numberFormat isImmutable: true.
 			numberFormat bytes isImmutable: true.
 			numberFormat]!
+
+numberFormat: aNUMBERFORMATWOrNil
+	<mutable>
+	numberFormat := aNUMBERFORMATWOrNil!
 
 numberGrouping
 	"Answer a <string> which describes the way in which number digits should be grouped in the receiver locale. The format string consists of a series of integers specifying from left to right how many digits of the number should be formed into a group before the next group (if needed), each group being separated by the 'thousands' separator for the locale. There can be up to 9 characters in the string. If the last character is zero, then the preceding group specification is repeated.
@@ -694,6 +698,7 @@ yearMonthFormat
 !Locale categoriesFor: #negativeNumberMode!constants!public! !
 !Locale categoriesFor: #negativeSign!constants!public! !
 !Locale categoriesFor: #numberFormat!constants!public! !
+!Locale categoriesFor: #numberFormat:!accessing!private! !
 !Locale categoriesFor: #numberGrouping!constants!public! !
 !Locale categoriesFor: #percentSymbol!constants!public! !
 !Locale categoriesFor: #pmDesignator!constants!public! !
@@ -795,7 +800,10 @@ onStartup
 	information (e.g. Dates and Times). Can be sent at other times
 	if the Locale has been changed."
 
-	TimeZoneInfo := UserDefault := SystemDefault := nil!
+	self withAllSubclassesDo: [:each | each reset]!
+
+reset
+	TimeZoneInfo := nil!
 
 smalltalk
 	"Answer the special 'Smalltalk' locale instance. This isn't a real Locale, but is configured to print Floats, etc, in Smalltalk syntax."
@@ -838,6 +846,7 @@ userDefault: aLocale
 !Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Locale class categoriesFor: #onSettingChanged:!event handling!private! !
 !Locale class categoriesFor: #onStartup!event handling!private! !
+!Locale class categoriesFor: #reset!initializing!private! !
 !Locale class categoriesFor: #smalltalk!instance creation!public! !
 !Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
 !Locale class categoriesFor: #systemDefault!instance creation!public! !

@@ -474,6 +474,9 @@ yearMonthFormat
 
 !WindowsLocale class methodsFor!
 
+reset
+	UserDefault := SystemDefault := nil!
+
 systemLocales: anInteger 
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."
 
@@ -487,5 +490,6 @@ systemLocales: anInteger
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+!WindowsLocale class categoriesFor: #reset!initializing!private! !
 !WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
 
