@@ -195,7 +195,7 @@ changeKey: key to: newKey
 	| assoc |
 	assoc := self associationAt: key.
 	self removeKey: key.
-	assoc whileMutableDo: [assoc key: newKey].
+	assoc setKey: newKey.
 	"We want to preserve the association of the element we're renaming, so we must
 	 remove any existing element with the same name"
 	self removeKey: newKey ifAbsent: [].

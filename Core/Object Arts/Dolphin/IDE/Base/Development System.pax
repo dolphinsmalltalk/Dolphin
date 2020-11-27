@@ -4767,7 +4767,7 @@ errorModify: key value: value
 						with: (self at: key)).
 	recompile isNil ifTrue: [^self].
 	var := self associationAt: key.
-	var whileMutableDo: [var value: value].
+	var setValue: value.
 	self isChanged: true.
 	recompile ifTrue: [self recompileReferencesToVarNamed: key]
 
