@@ -158,7 +158,7 @@ byteCodes: anObject
 				ifTrue: [anObject]
 				ifFalse: [self class packByteCodes: anObject].
 	codes isImmutable: true.
-	byteCodes := codes!
+	self setByteCodes: codes!
 
 byteCodeSegments
 	^self byteCodeDispatcher segments!
@@ -512,6 +512,7 @@ sendsSpecialSelector: anInteger
 	^self byteCodeDispatcher sendsSpecialSelector: anInteger!
 
 setByteCodes: anObject 
+	<mutable>
 	byteCodes := anObject!
 
 sourceDescriptor
@@ -522,10 +523,10 @@ sourceDescriptor
 	^sourceDescriptor!
 
 sourceDescriptor: anObject
-	"Private - Set the receiver's source descriptor to anObject. This should normally only be
-	sent by the receiver's source manager."
+	"Private - Set the receiver's source descriptor to anObject. This should normally only be sent by the receiver's source manager."
 
-	self whileMutableDo: [sourceDescriptor := anObject]!
+	<mutable>
+	sourceDescriptor := anObject!
 
 specialMessages
 	"Private - Answer a Collection of all the special message selectors which

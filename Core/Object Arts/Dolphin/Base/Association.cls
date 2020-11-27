@@ -72,6 +72,16 @@ printOn: aStream
 		nextPutAll: ' -> ';
 		print: value!
 
+setKey: aKey
+	<mutable>
+	key := aKey
+!
+
+setValue: anObject
+	<mutable>
+	value := anObject
+!
+
 value
 	"Answer the 'value' of the receiver."
 
@@ -93,6 +103,8 @@ value: aValue
 !Association categoriesFor: #key:value:!initializing!public! !
 !Association categoriesFor: #owningPackage:!accessing!development!public! !
 !Association categoriesFor: #printOn:!printing!public! !
+!Association categoriesFor: #setKey:!accessing!public! !
+!Association categoriesFor: #setValue:!accessing!public! !
 !Association categoriesFor: #value!accessing!public! !
 !Association categoriesFor: #value:!accessing!public! !
 
