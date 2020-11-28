@@ -2233,10 +2233,12 @@ void Compiler::ParsePrimitive()
 				{
 					NextToken();
 					this->m_isMutable = true;
-					return;
 				}
 				else
+				{
 					CompileError(CErrExpectCloseTag);
+				}
+				return;
 			}
 		}
 	}
