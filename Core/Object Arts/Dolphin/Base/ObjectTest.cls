@@ -19,6 +19,29 @@ testAssert
 	self should: [Object assert: [false]] raise: Error.
 	self should: [Object assert: false] raise: MessageNotUnderstood!
 
+testBecome
+	| a b aIdHash bIdHash aHash bHash c |
+	a := {1}.
+	b := {2}.
+	c := a.
+	aHash := a hash.
+	bHash := b hash.
+	self deny: aHash equals: bHash.
+	aIdHash := a identityHash.
+	bIdHash := b identityHash.
+	self deny: aIdHash equals: bIdHash.
+	a become: b.
+	"Referenced values are swapped - collections hashed by value will be broken"
+	self assert: a equals: {2}.
+	self assert: b equals: {1}.
+	self assert: a hash equals: bHash.
+	self assert: b hash equals: aHash.
+	"c is still referencing the exact same thing as a, even though it is now the former b"
+	self assert: c identicalTo: a.
+	"But crucially identity is preserved. This is important, for example, so that identity-hashed collections are not broken by become:"
+	self assert: a identityHash equals: aIdHash.
+	self assert: b identityHash equals: bIdHash!
+
 testDeepCopy
 	"#2198"
 
@@ -307,6 +330,7 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self deny: aWeakIdentitDictionary hasWeakValues! !
 !ObjectTest categoriesFor: #newEventSource!helpers!private! !
 !ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
+!ObjectTest categoriesFor: #testBecome!public!unit tests! !
 !ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
 !ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
 !ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
