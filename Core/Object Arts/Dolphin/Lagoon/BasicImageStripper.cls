@@ -308,8 +308,7 @@ prepareExternalStructures
 	structs do: 
 			[:each |
 			"Access the byteSize to ensure set (important if not compiling external structures)"
-			each byteSize.
-			each class methodDictionary removeKey: #defineFields ifAbsent: []].
+			each byteSize].
 	"Remove the structure template definition and compiling mechanisms"
 	#('compiling' 'template definition') do: 
 			[:each |
@@ -317,6 +316,8 @@ prepareExternalStructures
 				removeMethods: (each asMethodCategory methodsInBehavior: ExternalStructure class)
 				reason: 'structure definition: ' , each
 				force: true].
+	"Remove any remaining defineFields methods that might have not been correctly categorised"
+	structs do: [:each | self removeSelectors: #(#defineFields) of: each class].
 	self endElement: true.
 	self
 		finishedWithAll: #(#compileExternalStructures #compileExternalStructuresNow: #defineExternalStructures: #prepareExternalStructures #externalStructureClasses)!
