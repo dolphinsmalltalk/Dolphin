@@ -78,6 +78,7 @@ package classNames
 	add: #MenuPainterTest;
 	add: #MergesortAlgorithmTest;
 	add: #MetaclassTest;
+	add: #MethodCategoryTest;
 	add: #MethodDictionaryTest;
 	add: #MustBeBooleanTestClasses;
 	add: #NeverSearchPolicyTest;
@@ -356,6 +357,11 @@ DolphinTest subclass: #MemoryManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #MenuPainterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #MethodCategoryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
