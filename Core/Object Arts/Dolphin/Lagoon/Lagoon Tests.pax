@@ -1,17 +1,18 @@
 ﻿| package |
 package := Package name: 'Lagoon Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{CRTLibraryImportTest}
-	#{PackageClosureTests}
+	#{Smalltalk.CRTLibraryImportTest}
+	#{Smalltalk.PackageClosureTests}
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\Base\Dolphin Base Tests'
 	'..\..\Samples\MVP\Etch-a-Sketch\Etch-a-Sketch'
 	'..\..\Samples\MVP\Hello World\Hello World'
@@ -19,7 +20,7 @@ package setPrerequisites: #(
 	'..\MVP\Icons\Internal Bitmaps and Icons'
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\RBOldNames'
 	'..\..\Samples\MVP\RegEdit\RegEdit'
 ).
 
@@ -27,16 +28,16 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #CRTLibraryImportTest
+Core.Tests.DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PackageClosureTests
+Core.Tests.DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

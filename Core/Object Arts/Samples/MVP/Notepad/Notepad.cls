@@ -15,7 +15,7 @@ Example:
 	Notepad show
 
 Class Variables:
-	ResourceLib	`ExternalResourceLibrary` for accessing resources within the standard NOTEPAD.EXE.
+	ResourceLib	`External.ResourceLibrary` for accessing resources within the standard NOTEPAD.EXE.
 
 
 
@@ -134,7 +134,7 @@ resourceLib
 
 	^ResourceLib
 		ifNil: 
-			[ResourceLib := ExternalResourceLibrary open: SessionManager current systemDirectory , '\notepad.exe']!
+			[ResourceLib := External.ResourceLibrary open: SessionManager current systemDirectory , '\notepad.exe']!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system.

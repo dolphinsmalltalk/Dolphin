@@ -477,7 +477,7 @@ imageStripper
 	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
 	We reconstitute this here."
 
-	^self rehydrateImageStripper: ImageStripper!
+	^self rehydrateImageStripper: Smalltalk.ImageStripper!
 
 rehydrateImageStripper: stripperClass 
 	| stripper |

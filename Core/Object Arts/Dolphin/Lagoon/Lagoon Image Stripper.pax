@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Lagoon Image Stripper'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Lagoon Image Stripper.
 Copyright (c) Object Arts Ltd, 1998-2006.
@@ -13,38 +13,39 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{BasicImageStripper}
-	#{ImageStripper}
-	#{ImageStripperProgress}
-	#{VersionResource}
-	#{VS_VERSION_INFO_HEADER}
+	#{Smalltalk.BasicImageStripper}
+	#{Smalltalk.ImageStripper}
+	#{Smalltalk.ImageStripperProgress}
+	#{Smalltalk.VersionResource}
+	#{Smalltalk.VS_VERSION_INFO_HEADER}
 ).
 
 package setMethodNames: #(
-	#(#{ExternalStructure class} #fullyCompileDefinition)
-	#(#{ExternalStructure class} #removeTemplate)
-	#(#{Object class} #onPreStripImage)
-	#(#{UserLibrary} #messageBox:lpText:lpCaption:uType:)
+	#(#{Core.Object class} #onPreStripImage)
+	#(#{External.Structure class} #fullyCompileDefinition)
+	#(#{External.Structure class} #removeTemplate)
+	#(#{OS.UserLibrary} #messageBox:lpText:lpCaption:uType:)
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\Base\Deprecated\Dolphin Base (Old Names)'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #BasicImageStripper
+Core.Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ImageStripperProgress
+Core.Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CaptionId' -> 16r3F9.
@@ -52,16 +53,16 @@ Object subclass: #ImageStripperProgress
 		'ProgressId' -> 16r3F7.
 		'StatusId' -> 16r3F8
 	}!
-Object subclass: #VersionResource
+Core.Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
 	classVariableNames: ''
-	poolDictionaries: 'MessageBoxConstants Win32Constants'
+	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AllResourcesStripped' -> 16r1.
@@ -95,10 +96,10 @@ BasicImageStripper subclass: #ImageStripper
 		'UnattendedMask' -> 16r1000000.
 		'WriteLogMask' -> 16r400
 	}!
-Win32Structure subclass: #VS_VERSION_INFO_HEADER
+OS.Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_wLength' -> 16r0.
@@ -108,7 +109,16 @@ Win32Structure subclass: #VS_VERSION_INFO_HEADER
 
 "Loose Methods"!
 
-!ExternalStructure class methodsFor!
+!Core.Object class methodsFor!
+
+onPreStripImage
+	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
+
+	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
+	classPool removeKey: '_PropertyRegister'! !
+!Core.Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+
+!External.Structure class methodsFor!
 
 fullyCompileDefinition
 	"Builds a new template and generates compiled methods for accessing 
@@ -121,24 +131,15 @@ fullyCompileDefinition
 
 removeTemplate
 	template := nil! !
-!ExternalStructure class categoriesFor: #fullyCompileDefinition!compiling!public! !
-!ExternalStructure class categoriesFor: #removeTemplate!private!template definition! !
+!External.Structure class categoriesFor: #fullyCompileDefinition!compiling!public! !
+!External.Structure class categoriesFor: #removeTemplate!private!template definition! !
 
-!Object class methodsFor!
-
-onPreStripImage
-	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
-
-	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
-	classPool removeKey: '_PropertyRegister'! !
-!Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-
-!UserLibrary methodsFor!
+!OS.UserLibrary methodsFor!
 
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
 	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
 
 "End of package definition"!
 

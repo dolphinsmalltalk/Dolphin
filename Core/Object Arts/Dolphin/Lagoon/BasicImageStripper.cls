@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #BasicImageStripper
+Core.Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicImageStripper guid: (GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
-BasicImageStripper isAbstract: true!
+BasicImageStripper guid: (Core.GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
+BasicImageStripper isNonInstantiable: true!
 BasicImageStripper comment: 'Base image stripping methods. These can safely be encrypted during release.'!
 !BasicImageStripper categoriesForClass!MVP-Models! !
 !BasicImageStripper methodsFor!
@@ -58,7 +58,10 @@ collectGarbage: iterations
 	| memMan |
 	Smalltalk clearCachedClasses.
 	memMan := MemoryManager current.
-	iterations timesRepeat: [memMan collectGarbage; administerLastRites].!
+	iterations timesRepeat: 
+			[memMan
+				collectGarbage;
+				administerLastRites]!
 
 compileExternalStructures
 	^false!
@@ -186,8 +189,7 @@ finishedWithAll: aCollectionOfSymbols
 			[current name == #Object] whileFalse: 
 					[(current methodDictionary removeKey: each ifAbsent: []) ifNotNil: [removed := true].
 					current := current superclass].
-			removed
-				ifFalse: [self notify: self class name, ' hierarchy does not define ' , each printString]]!
+			removed ifFalse: [self notify: self class name , ' hierarchy does not define ' , each printString]]!
 
 foldDuplicateBytecodes
 	"Private - Eliminate duplicate byte code arrays"
@@ -268,8 +270,7 @@ messagesSentByClasses: aCollectionOfClasses
 					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
 
 	"Add all messages that can be triggered by events"
-	Object._EventsRegister
-		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
+	_EventsRegister do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
 	^sent!
 
 notify: aString
@@ -280,8 +281,7 @@ notRequiredClasses
 	should be forcibly dropped during an image strip. Can be overridden by subclasses 
 	to alter the stripping strategy"
 
-	^Set new
-!
+	^Set new!
 
 notRequiredMethodCategories
 	"Answer an IdentitySet of MethodCategorys whose methods are known to be not required
@@ -389,7 +389,7 @@ removeClassMetaInfo
 					[:each |
 					each
 						basicClassPool: nil;
-						basicSharedPools: nil.
+						imports: nil.
 					"If retaining inst vars, they are collapsed into a string for compactness"
 					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
 			self endTag].
@@ -553,7 +553,7 @@ removePackageManagement
 	self systemPackageManager class reset.
 	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
-	#(#{PoolDictionary} #{PoolConstantsDictionary} #{ResourceIdentifier} #{CompiledMethod})
+	#(#{PoolDictionary} #{ResourceIdentifier} #{CompiledMethod})
 		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: [])]].
 	self
 		removeMethods: methods
@@ -724,7 +724,7 @@ shouldRemoveResources
 	^self stripRedundantResources!
 
 shrinkEventsRegister
-	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
+	_EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
 
 speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal

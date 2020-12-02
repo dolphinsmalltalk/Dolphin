@@ -3,7 +3,7 @@
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
 	classVariableNames: ''
-	poolDictionaries: 'MessageBoxConstants Win32Constants'
+	imports: #(#{OS.MessageBoxConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AllResourcesStripped' -> 16r1.
@@ -37,7 +37,7 @@ BasicImageStripper subclass: #ImageStripper
 		'UnattendedMask' -> 16r1000000.
 		'WriteLogMask' -> 16r400
 	}!
-ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
+ImageStripper guid: (Core.GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:
@@ -174,7 +174,7 @@ buildApplication
 	This method is in the 'must not strip' category to prevent the receiver pulling the rug out
 	from under its own feet!!"
 
-	| stubFile path saveBlock t |
+	| stubFile path saveBlock |
 	"Check stub file exists before we get too far"
 	stubFile := self checkedStubFilePath.
 	path := self executablePath.
@@ -214,24 +214,19 @@ buildApplication
 	"Have another go at finding redundant stuff now dev. classes out of the picture, but
 	 this time strip resources too"
 	self removeRedundantObjects: true.
-
 	self prepareCycle3.
 	self finishedWithAll: #(#prepareCycle3).
 	self removeRedundantObjects: true.
-
 	self prepareCycle4.
 	self finishedWithAll: #(#prepareCycle4).
 	self removeRedundantObjects: false.
-
 	self prepareCycle5.
 	self finishedWithAll: #(#prepareCycle5).
 	self removeRedundantObjects: false.
-
 	self prepareCycle6: classRemovingMethods.
 	classRemovingMethods := nil.
 	self finishedWithAll: #(#prepareCycle6:).
 	self removeRedundantMethods.
-
 	self
 		finishedWithAll: #(#stripRedundantMethods #removeRedundantMethods #removeRedundantMethodsOnceFrom: #saveBlock:).
 	self logSentMessages: messageMap.
@@ -312,7 +307,7 @@ checkedStubFilePath
 
 	| stubFile |
 	stubFile := self stubFilePath.
-	^(File exists: stubFile) 
+	^(File exists: stubFile)
 		ifTrue: [stubFile]
 		ifFalse: [self error: 'Stub file not found: ''' , stubFile , '''']!
 
@@ -338,12 +333,12 @@ classesReferencedByMethod: aCompiledMethod
 	| classes |
 	classes := Set new: 5.
 	aCompiledMethod literalReferencesDo: 
-			[:each | 
+			[:each |
 			| value |
 			value := (each isMemberOf: VariableBinding) ifTrue: [each value] ifFalse: [each].
 			"Don't add a class just because it is referenced by one of its own methods"
-			(value class isMeta and: [value ~~ aCompiledMethod methodClass instanceClass]) 
-					ifTrue: [classes add: value]].
+			(value class isMeta and: [value ~~ aCompiledMethod methodClass instanceClass])
+				ifTrue: [classes add: value]].
 	^classes!
 
 classReferencesToIgnore
@@ -357,7 +352,8 @@ classReferencesToIgnore
 classRemovingMethods
 	| methods |
 	methods := Set new: 200.
-	self class classRemovingMethodCategoryNames do: [:each | methods addAll: each asMethodCategory methods].
+	self class classRemovingMethodCategoryNames
+		do: [:each | methods addAll: each asMethodCategory methods].
 	^WeakArray withAll: methods!
 
 clearChangedProperties
@@ -409,7 +405,7 @@ compileExternalStructures
 
 	^flags allMask: CompileStructsMask!
 
-copyAndUpdateStub: stubFile to: exeFile 
+copyAndUpdateStub: stubFile to: exeFile
 	"Private - Copy over the stub and update it if required. Answer the name of the
 	new stub file."
 
@@ -417,7 +413,7 @@ copyAndUpdateStub: stubFile to: exeFile
 	File createDirectoryPath: (File splitPathFrom: exeFile).
 	File copy: stubFile to: exeFile.
 	File isWriteable: exeFile set: true.
-	self isResourceUpdatingRequired 
+	self isResourceUpdatingRequired
 		ifTrue: 
 			[KernelLibrary default updateResourcesOf: exeFile do: [:hUpdate | self updateStubResources: hUpdate]].
 	^exeFile!
@@ -492,10 +488,9 @@ executablePath
 	"Answer the full path of the executable to which the resultant stripped image will
 	be saved"
 
-	^self executableName notEmpty 
+	^self executableName notEmpty
 		ifTrue: [FileLocator imageRelative localFileSpecFor: self executableName]
-		ifFalse: ['Please choose an executable name']
-!
+		ifFalse: ['Please choose an executable name']!
 
 exeFileExtension
 	"Answer the extension to use for the executable file"
@@ -1023,25 +1018,28 @@ logStrippingError: anError
 		value: anError description.
 	logStream flush!
 
-logValue: anObject 
+logValue: anObject
 	| string |
 	string := anObject displayString.
 	(string includesAnyOf: '<>
-	&') 
+	&')
 		ifTrue: 
 			[string do: 
-					[:each | 
-					(##((LookupTable new)
-"						at: Character tab put: '&#9';
-						at: Character lf put: '&#10';
-						at: Character cr put: '&#13';"
+					[:each |
+					(##(LookupTable new
 						at: $& put: '&amp;';
 						at: $< put: '&lt;';
 						at: $> put: '&gt;';
 						at: $" put: '&quot;';
-						shrink) at: each ifAbsent: []) 
-						ifNil: [logStream nextPut: each]
-						ifNotNil: [:quoted | logStream nextPutAll: quoted]]]
+						shrink
+					"						at: Character tab put: '&#9';
+						at: Character lf put: '&#10';
+						at: Character cr put: '&#13';")
+							at: each
+							ifAbsent: []) ifNil: [logStream nextPut: each] ifNotNil: [:quoted | logStream nextPutAll: quoted]
+					"						at: Character tab put: '&#9';
+						at: Character lf put: '&#10';
+						at: Character cr put: '&#13';"]]
 		ifFalse: [logStream nextPutAll: string]!
 
 manifestResourceId
@@ -1319,7 +1317,7 @@ referencesFromObjectsInClasses: aCollection
 			messages isEmpty ifFalse: [messageMap at: eachMethod put: messages]].
 
 	"Add all messages that can be triggered by events"
-	Object._EventsRegister
+	_EventsRegister
 		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | messageMap at: ms put: {ms selector}]]].
 
 	"Note that we don't add the preserved aspect setters to the sent messages as this would prevent removal of non-aspect setter 
@@ -1541,7 +1539,7 @@ requiredPackageNames
 
 	^Set new
 		add: rootPackageName;
-		yourself.!
+		yourself!
 
 resourcesForClasses: classes
 	"Private - Answer a <collection> of the <ResourceIdentifiers> for all resources that are potentially 
@@ -1665,13 +1663,13 @@ The development system will now exit.'
 	"No arguments - just exit"
 	SessionManager current primQuit: 0!
 
-scanResourcesForViewReferences: aCollectionOfResourceIdentifiers 
+scanResourcesForViewReferences: aCollectionOfResourceIdentifiers
 	"Private - Scan the <Set> of <ResourceIdentifier>s, resourceIds, for references to other resources, and answer
 	a further set of them. Any newly added resources are recursively scanned for further references."
 
 	| refd |
 	refd := Set new.
-	aCollectionOfResourceIdentifiers 
+	aCollectionOfResourceIdentifiers
 		do: [:each | (refd includes: each) ifFalse: [self addReferencedViews: each to: refd]].
 	^refd!
 
@@ -1857,7 +1855,7 @@ stubFile
 stubFilePath
 	"Answer the full path to the stub file. "
 
-	^stubFilePath isNil 
+	^stubFilePath isNil
 		ifTrue: [self defaultStubFilePath]
 		ifFalse: [FileLocator imageRelative localFileSpecFor: stubFilePath]!
 
@@ -1898,7 +1896,7 @@ updateStringTableResource: anExternalHandle
 	handle."
 !
 
-updateStubResources: anExternalHandle 
+updateStubResources: anExternalHandle
 	"Private - Update the resources of the exe/dll stub through the supplied resource update
 	handle."
 
@@ -1951,7 +1949,7 @@ updateXPManifestResource: anExternalHandle
 		cbData: manifest size) ifFalse: [KernelLibrary default systemError]!
 
 verifyRequiredPackages
-	| packages required found missing  |
+	| packages required found missing |
 	packages := super verifyRequiredPackages.
 	found := packages collect: [:each | each name].
 	required := self requiredPackageNames.
@@ -1981,14 +1979,14 @@ versionResource
 	the deployed application/dll."
 
 	| originalFilename |
-	versionResource isNil 
+	versionResource isNil
 		ifTrue: 
 			[versionResource := VersionResource forPath: self stubFilePath.
 			"Stub might not contain a version resource"
 			versionResource isNil ifTrue: [^nil]].
 	originalFilename := File splitFilenameFrom: self executableName.
 	versionResource stringTables do: 
-			[:each | 
+			[:each |
 			(each includesKey: 'OriginalFilename') ifTrue: [each at: 'OriginalFilename' put: originalFilename]].
 	^versionResource!
 
@@ -2012,8 +2010,9 @@ vmReferencedClasses
 	"Answer a <collection> of all the classes referenced directly by the VM.
 	These must not be stripped!!"
 
-	^VMLibrary default registry 
-		select: [:each | each class isMeta and: [(#('GUID' 'PoolConstantsDictionary') includes: each name asString) not]]!
+	^VMLibrary default registry select: 
+			[:each |
+			each class isMeta and: [(#('GUID' 'PoolConstantsDictionary') includes: each name asString) not]]!
 
 writeLogFile
 	"Answer true if the receiver will write a log file during
