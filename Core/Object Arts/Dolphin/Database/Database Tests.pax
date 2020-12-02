@@ -1,18 +1,18 @@
 ﻿| package |
 package := Package name: 'Database Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AccessDBTest}
-	#{AccessNorthwindDB}
-	#{DBConnectionTest}
-	#{DBConnectionTestResource}
-	#{DBTest}
-	#{SQLServerDBTest}
-	#{SQLServerNorthwindDB}
+	#{Smalltalk.AccessDBTest}
+	#{Smalltalk.AccessNorthwindDB}
+	#{Smalltalk.DBConnectionTest}
+	#{Smalltalk.DBConnectionTestResource}
+	#{Smalltalk.DBTest}
+	#{Smalltalk.SQLServerDBTest}
+	#{Smalltalk.SQLServerNorthwindDB}
 ).
 
 package setPrerequisites: #(
@@ -28,46 +28,46 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #DBTest
+Core.Tests.DolphinTest subclass: #DBTest
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCTypes'
+	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBConnectionTest subclass: #AccessDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBConnectionTest subclass: #SQLServerDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestResource subclass: #DBConnectionTestResource
+XProgramming.SUnit.TestResource subclass: #DBConnectionTestResource
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBConnectionTestResource subclass: #AccessNorthwindDB
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

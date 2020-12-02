@@ -3,10 +3,10 @@
 DBConnectionTest subclass: #AccessDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AccessDBTest guid: (GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
+AccessDBTest guid: (Core.GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
 AccessDBTest comment: ''!
 !AccessDBTest categoriesForClass!Unclassified! !
 !AccessDBTest methodsFor!

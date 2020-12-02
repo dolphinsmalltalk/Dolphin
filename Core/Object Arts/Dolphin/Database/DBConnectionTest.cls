@@ -3,11 +3,11 @@
 DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCTypes'
+	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTest guid: (GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
-DBConnectionTest isAbstract: true!
+DBConnectionTest guid: (Core.GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
+DBConnectionTest isNonInstantiable: true!
 DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!
@@ -193,9 +193,9 @@ testDSNlessConnection
 	| c connStr locator |
 	c := DBConnection new.
 	locator := PackageRelativeFileLocator package: self class owningPackage.
-	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>'
-				expandMacrosWithArguments: {locator localFileSpecFor: 'Northwind.mdb'. locator basePath}
-				locale: Locale invariant.
+	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' 
+				expandMacrosWith: (locator localFileSpecFor: 'Northwind.mdb')
+				with: locator basePath.
 	c connectString: connStr.
 	c open.
 	self assert: (c tables includes: 'Customers').
@@ -212,12 +212,12 @@ testDSNlessConnection
 
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
-	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites allSatisfy: [:each | each name = 'Dolphin' or: [each name = 'Dolphin Legacy Date & Time']])!
+	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites collect: [:each | each name]) asArray sort equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
 
 testPreparedQuery
 	| statement results |
 	statement := connection prepare: 'select * from Suppliers where SupplierID=?'.
-	statement paramCols: {(connection columns: 'Suppliers') at: 1}.
+	statement paramCols: (Array with: ((connection columns: 'Suppliers') at: 1)).
 	statement values: #(3).
 	statement exec.
 	results := statement results.

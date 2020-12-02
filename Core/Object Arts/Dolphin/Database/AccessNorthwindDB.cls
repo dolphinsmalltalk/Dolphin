@@ -3,17 +3,18 @@
 DBConnectionTestResource subclass: #AccessNorthwindDB
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AccessNorthwindDB guid: (GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
+AccessNorthwindDB guid: (Core.GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
 AccessNorthwindDB comment: ''!
 !AccessNorthwindDB categoriesForClass!Unclassified! !
 !AccessNorthwindDB methodsFor!
 
 connectString
-	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWithArguments: {filename}
-		locale: Locale invariant!
+	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWith: filename
+
+!
 
 createDatabase
 	| source |

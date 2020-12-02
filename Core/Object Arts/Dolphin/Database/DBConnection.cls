@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBConnection
+Core.Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCRetCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnection guid: (GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
+DBConnection guid: (Core.GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
 
 One can use a DBConnection to query the capabilities of the underlying driver and the structure of the database. One can then interact with the database by submitting SQL queries using #exec: or #query:[cursorType:]. One can also prepare a DBStatement for later parameterization and execution with #prepare:[cursorType:].
@@ -33,7 +33,7 @@ allocStmtHandle: aDBStatement
 	This may cause a connection to be lazily established (via the handle method)."
 
 	| hStmt ret |
-	hStmt := ExternalHandle new.
+	hStmt := External.Handle new.
 
 	ret := ODBCLibrary default
 		sqlAllocHandle: SQL_HANDLE_STMT
@@ -434,7 +434,7 @@ getHandle
 
 getHandle: anInteger
 	| value |
-	value := ExternalHandle new.
+	value := External.Handle new.
 	self dbCheckException: (ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
@@ -1267,7 +1267,7 @@ allocHandle
 	"Private - Answer a new connection handle."
 
 	| hDBC ret |
-	hDBC := ExternalHandle new.
+	hDBC := External.Handle new.
 	ret := ODBCLibrary default
 			sqlAllocHandle: SQL_HANDLE_DBC
 			inputHandle: self environmentHandle
@@ -1363,7 +1363,7 @@ environmentHandle
 	HEnv isNull 
 		ifTrue: 
 			[| ret |
-			HEnv := ExternalHandle new.
+			HEnv := External.Handle new.
 			ret := ODBCLibrary default 
 						sqlAllocHandle: SQL_HANDLE_ENV
 						inputHandle: nil

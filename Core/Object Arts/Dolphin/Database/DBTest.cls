@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DBTest
+Core.Tests.DolphinTest subclass: #DBTest
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DBTest guid: (GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
-DBTest isAbstract: true!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+DBTest guid: (Core.GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
+DBTest isNonInstantiable: true!
 DBTest comment: ''!
 !DBTest categoriesForClass!Unclassified! !
 !DBTest methodsFor!

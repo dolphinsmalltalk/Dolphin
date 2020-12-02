@@ -1,15 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestResource subclass: #DBConnectionTestResource
+XProgramming.SUnit.TestResource subclass: #DBConnectionTestResource
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTestResource guid: (GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
+DBConnectionTestResource guid: (Core.GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
 DBConnectionTestResource comment: ''!
 !DBConnectionTestResource categoriesForClass!Unclassified! !
 !DBConnectionTestResource methodsFor!
+
+canConnect
+	| cnxn |
+	cnxn := self createConnection.
+	^[cnxn notNil] ensure: [cnxn close]!
 
 connect
 	connection := self newConnection!
@@ -19,6 +24,11 @@ connection
 
 connectString
 	self subclassResponsibility!
+
+createConnection
+	^(DBConnection new connectString: self connectString)
+		open;
+		yourself!
 
 createDatabase
 	"Private - Override in subclasses"
@@ -43,9 +53,11 @@ setUp
 
 tearDown
 	self dropDatabase! !
+!DBConnectionTestResource categoriesFor: #canConnect!private! !
 !DBConnectionTestResource categoriesFor: #connect!private! !
 !DBConnectionTestResource categoriesFor: #connection!private! !
 !DBConnectionTestResource categoriesFor: #connectString!private! !
+!DBConnectionTestResource categoriesFor: #createConnection!public! !
 !DBConnectionTestResource categoriesFor: #createDatabase!private! !
 !DBConnectionTestResource categoriesFor: #dropDatabase!private! !
 !DBConnectionTestResource categoriesFor: #newConnection!public! !

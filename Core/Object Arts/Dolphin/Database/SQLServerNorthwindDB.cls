@@ -3,10 +3,10 @@
 DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SQLServerNorthwindDB guid: (GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
+SQLServerNorthwindDB guid: (Core.GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
 SQLServerNorthwindDB comment: ''!
 !SQLServerNorthwindDB categoriesForClass!Unclassified! !
 !SQLServerNorthwindDB methodsFor!
@@ -15,16 +15,19 @@ connectString
 	"Private - APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!!'"
 
 	^'DRIVER=SQL Server;Server=<1d>;Database=master;uid=<2d>;pwd=<3d>;Language=us_english'
-		expandMacrosWithArguments: {self serverName. self uid. self pwd}
-		locale: Locale invariant!
+		expandMacrosWith: self serverName
+		with: self uid
+		with: self pwd!
 
 createDatabase
 	| sql cmd process |
 	sql := (PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'Northwind.sql'.
 	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
-				expandMacrosWithArguments: {self serverName. self uid. self pwd. sql}
-				locale: Locale invariant.
+				expandMacrosWith: self serverName
+				with: self uid
+				with: self pwd
+				with: sql.
 	process := ExternalProcess new.
 	process commandLine: cmd.
 	^
