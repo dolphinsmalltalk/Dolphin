@@ -195,8 +195,8 @@ buildTestSuite
 	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: packages).
 	classSelections := TestCase allSubclasses
 				select: [:eachClass | eachClass isAbstract not and: [packages includesClass: eachClass]].
-	parentEnvironment := ClassEnvironment new classes: classSelections.
-	testEnvironment := ClassEnvironment new classes: classSelections.
+	parentEnvironment := Refactory.Browser.BrowserEnvironment new forClasses: classSelections.
+	testEnvironment := Refactory.Browser.BrowserEnvironment new forClasses: classSelections.
 	classSelections do: 
 			[:eachClass |
 			| hierarchyEnvironment |
