@@ -209,7 +209,7 @@ emitSecureChunk: aString description: description publisherCertificate: certific
 	"Private - Output the specified text as a trusted chunk on aStream"
 
 	| trusted filer |
-	trusted := DolphinSureTrustedData 
+	trusted := Smalltalk.DolphinSureTrustedData 
 				data: aString
 				description: description
 				publisherCertificate: certificate
@@ -248,7 +248,7 @@ secureFileInFrom: aStream
 	pos := aStream position.
 	actual := aStream skipSeparators; nextAvailable: secureMarker size.
 	aStream position: pos.
-	((actual = secureMarker) or: [NotSignedCertificate new confirmTrustFor: 'Unknown Content']) ifTrue: [ 
+	((actual = secureMarker) or: [Smalltalk.NotSignedCertificate new confirmTrustFor: 'Unknown Content']) ifTrue: [ 
 		self fileInFrom: aStream ]!
 
 secureFileItIn: aString
