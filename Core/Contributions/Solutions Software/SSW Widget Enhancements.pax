@@ -215,7 +215,7 @@ asSmallIcon
 
 withExtent: aPoint
 
-	^IconWithExtent new
+	^Smalltalk.IconWithExtent new
 		fileLocator: self fileLocator;
 		identifier: self identifier;
 		instanceHandle: self instanceHandle;

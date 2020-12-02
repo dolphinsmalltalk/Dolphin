@@ -131,7 +131,7 @@ getHeaderControl
 
 	hHandle := self lvmGetHeader.
 
-	^(HeaderView fromHandle: hHandle)
+	^(Smalltalk.HeaderView fromHandle: hHandle)
 		subclassWindow: hHandle;
 		isManaged: false;
 		yourself

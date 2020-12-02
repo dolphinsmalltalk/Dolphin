@@ -1,11 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #TextAndImageButtonTest
+XProgramming.SUnit.TestCase subclass: #TextAndImageButtonTest
 	instanceVariableNames: 'button canvas anon'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TextAndImageButtonTest guid: (GUID fromString: '{fdb7cc36-fd20-49e9-b512-b324a64641e3}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+TextAndImageButtonTest guid: (Core.GUID fromString: '{fdb7cc36-fd20-49e9-b512-b324a64641e3}')!
 TextAndImageButtonTest comment: ''!
 !TextAndImageButtonTest categoriesForClass!SUnit! !
 !TextAndImageButtonTest methodsFor!
@@ -54,8 +55,8 @@ testLabelWithAmpersand
 	button text: text.
 	anon := Canvas newAnonymousSubclass.
 	anon basicClassPool: (anon classPool
-				at: 'DrawnText' put: nil;
-				at: 'Rect' put: nil;
+				add: (VariableBinding key: 'DrawnText' value: nil);
+				add: (VariableBinding key: 'Rect' value: nil);
 				yourself).
 	canvas := button canvas.
 	canvas becomeAn: anon.
