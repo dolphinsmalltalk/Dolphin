@@ -3,12 +3,12 @@
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
 	classVariableNames: 'HoverForecolor HoverStyle'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IndicatorStyles' -> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)
 	}!
-ScintillaIndicatorStyle guid: (GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
+ScintillaIndicatorStyle guid: (Core.GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
 ScintillaIndicatorStyle comment: '`ScintillaIndicatorStyle` instances represent the indicator configuration for a particular `ScintillaView`.
 
 Indicators are orthogonal to visual styles, and can be used to highlight areas of text regardless of styling. A common example usage would be highlight erroneous text by underlining it with a squiggly line.
@@ -309,7 +309,7 @@ buildPropertyMap
 					setSelector: #basicForeAlpha:
 					getMessage: SCI_INDICSETOUTLINEALPHA);
 		shrink;
-		yourself!
+		yourself	"Magic number for default value is from the Scintilla code - no const for this"	"Magic number for default value is from the Scintilla code - no const for this"!
 
 initialize
 	"

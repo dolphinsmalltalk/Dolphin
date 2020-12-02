@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaKeyBinding
+Core.Object subclass: #ScintillaKeyBinding
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
-	poolDictionaries: 'ScintillaConstants Win32Constants'
+	imports: #(#{ScintillaConstants} #{Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaKeyBinding guid: (GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
+ScintillaKeyBinding guid: (Core.GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
 ScintillaKeyBinding comment: 'ScintillaKeyBinding is a support class for the ScintillaView, used to represent the key bindings defined in a particular instance. The control itself defines a large set of default mappings, but these can be replaced and/or augmented.
 
 Instance Variables:
@@ -45,7 +45,7 @@ acceleratorKeyString
 
 	^AcceleratorTable keyStringFromCode: self acceleratorKey!
 
-acceleratorKeyString: keys 
+acceleratorKeyString: keys
 	"Sets the accelerator key to the key code generated from parsing the <readableString>
 	accelerator key description, keys. The string is assumed to be using UK English key names."
 

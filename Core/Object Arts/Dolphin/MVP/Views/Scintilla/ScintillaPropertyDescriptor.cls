@@ -3,11 +3,12 @@
 Object subclass: #ScintillaPropertyDescriptor
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
 	classVariableNames: 'AlwaysPrintMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-ScintillaPropertyDescriptor guid: (GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
-ScintillaPropertyDescriptor addClassConstant: 'AlwaysPrintMask' value: 16r1!
+	classConstants: {
+		'AlwaysPrintMask' -> 16r1
+	}!
+ScintillaPropertyDescriptor guid: (Core.GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
 ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
 
 ## Instance Variables:

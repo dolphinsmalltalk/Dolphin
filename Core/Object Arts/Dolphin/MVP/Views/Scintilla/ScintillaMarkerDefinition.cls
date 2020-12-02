@@ -3,10 +3,10 @@
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaMarkerDefinition guid: (GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
+ScintillaMarkerDefinition guid: (Core.GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
 ScintillaMarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
 
 Markers can be displayed in any symbol margins configured for the view to mark particular lines.
@@ -84,11 +84,11 @@ forecolor: aColorOrNil
 	self updateViewProperty: #forecolor!
 
 glyphName
-	^self code 
+	^self code
 		ifNil: [#circle]
 		ifNotNil: 
-			[:c | 
-			c < SC_MARK_CHARACTER 
+			[:c |
+			c < SC_MARK_CHARACTER
 				ifTrue: [self class glyphNames at: c + 1]
 				ifFalse: [(Character codePoint: c - SC_MARK_CHARACTER) asSymbol]]!
 

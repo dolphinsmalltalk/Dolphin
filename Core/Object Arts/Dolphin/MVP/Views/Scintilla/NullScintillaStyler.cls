@@ -3,10 +3,10 @@
 ScintillaStyler subclass: #NullScintillaStyler
 	instanceVariableNames: 'normalStyleName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NullScintillaStyler guid: (GUID fromString: '{930680af-646b-4660-a349-1f5e5a8e0fec}')!
+NullScintillaStyler guid: (Core.GUID fromString: '{930680af-646b-4660-a349-1f5e5a8e0fec}')!
 NullScintillaStyler comment: 'NullScintillaStyler is a <ScintillaStyler> that leaves text in plain unformatted form, i.e. all text assumes the configured ''normal'' style, which is normally the style named #normal.
 
 This styler is useful either when one wants to use Scintilla, but with plain text, or to temporarily disable styling.

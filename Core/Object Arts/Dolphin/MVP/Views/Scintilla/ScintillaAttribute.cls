@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaAttribute
+Core.Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{ScintillaConstants})
 	classInstanceVariableNames: 'propertyMap'
 	classConstants: {}!
-ScintillaAttribute guid: (GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
-ScintillaAttribute isAbstract: true!
+ScintillaAttribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
+ScintillaAttribute isNonInstantiable: true!
 ScintillaAttribute comment: '`ScintillaAttribute` is the abstract superclass of objects that wrap various attributes of `ScintillaView`s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
 ## Instance Variables:

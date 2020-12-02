@@ -3,7 +3,7 @@
 ScintillaAttribute subclass: #ScintillaTextStyle
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'PredefinedStyleNames'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EolFilledMask' -> 16rC0.
@@ -13,7 +13,7 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 		'ReadOnlyMask' -> 16r300.
 		'UnderlinedMask' -> 16r30
 	}!
-ScintillaTextStyle guid: (GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
+ScintillaTextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
 ScintillaTextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:

@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaMarker
+Core.Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaMarker guid: (GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
+ScintillaMarker guid: (Core.GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
 ScintillaMarker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
 
 Instance Variables:

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultilineTextEdit subclass: #ScintillaView
+UI.MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles Library'
-	poolDictionaries: 'ScintillaConstants Win32Constants'
+	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AnnotationStylesOffset' -> 16r200.
@@ -13,7 +13,7 @@ MultilineTextEdit subclass: #ScintillaView
 		'FoldingMask' -> 16r2.
 		'MarginStylesOffset' -> 16r100
 	}!
-ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
+ScintillaView guid: (Core.GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
 ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -144,19 +144,19 @@ activeHotspotForecolor: aColorOrNil
 	activeHotspotForecolor := aColorOrNil.
 	self setActiveHotspotForecolor!
 
-addAnnotation: aScintillaAnnotation 
+addAnnotation: aScintillaAnnotation
 	"Append the specified <ScintillaAnnotation> to the current annotations (if any) for the line
 	with which is is associated."
 
 	| line newText newStyles |
 	line := aScintillaAnnotation line.
-	(self getRawAnnotation: line) 
+	(self getRawAnnotation: line)
 		ifNil: 
 			["No existing annotations on the line"
 			newText := String writeStream.
 			newStyles := ByteArray writeStream]
 		ifNotNil: 
-			[:existing | 
+			[:existing |
 			newText := WriteStream with: existing text.
 			"Add the LF separator"
 			newText nextPut: $\n.
@@ -165,7 +165,7 @@ addAnnotation: aScintillaAnnotation
 			newStyles nextPut: 0].
 	newText nextPutAll: aScintillaAnnotation text.
 	self printAnnotationStyleBytes: aScintillaAnnotation on: newStyles.
-	self 
+	self
 		basicAnnotateLine: line
 		withText: newText contents
 		inStyles: newStyles contents.
@@ -240,7 +240,7 @@ anchorPosition: anchorInteger
 				wParam: anchorInteger - 1
 				lParam: 0]!
 
-annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation 
+annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation
 	"Apply the <collection> of <ScintillaAnnotation> as the annotations for the line identified
 	by the one-based <integer> index, anInteger. Note that the line number associated with the
 	<ScintillaAnnotations> are ignored, and all annotations are associated with specified line."
@@ -249,13 +249,13 @@ annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation
 	text := String writeStream.
 	styleBytes := ByteArray writeStream.
 	aCollectionOfScintillaAnnotation do: 
-			[:each | 
+			[:each |
 			text nextPutAll: each text.
 			self printAnnotationStyleBytes: each on: styleBytes]
 		separatedBy: 
 			[text nextPut: $\n.
 			styleBytes nextPut: 0].
-	self 
+	self
 		basicAnnotateLine: anInteger
 		withText: text contents
 		inStyles: styleBytes contents.
@@ -350,14 +350,14 @@ annotationStyles: aCollection
 	annotationStyles := self buildAnnotationStyles: aCollection.
 	self updateTextStyles!
 
-annotationStylesFromStyleBytes: aByteArray 
+annotationStylesFromStyleBytes: aByteArray
 	| runs values styleLookup |
 	runs := Array writeStream.
 	values := Array writeStream.
 	styleLookup := IdentityDictionary new: annotationStyles size.
 	annotationStyles do: [:each | styleLookup at: each id put: each name].
 	aByteArray runsAndValuesDo: 
-			[:run :value | 
+			[:run :value |
 			runs nextPut: run.
 			values nextPut: (styleLookup at: value)].
 	^RunArray runs: runs contents values: values contents!
@@ -505,7 +505,7 @@ autoCompletionImageIdSeparator
 	"Answer the <Character> used as the separator between entry text and image identifiers in an
 	auto-completion list <String>."
 
-	^Character value: self sciAutoCGetTypeSeparator !
+	^Character value: self sciAutoCGetTypeSeparator!
 
 autoCompletionImageIdSeparator: aCharacter 
 	"Set the <Character> used as the separator between entry text and image identifiers in an
@@ -828,7 +828,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 	rawAnnotations := OrderedCollection new.
 	"Use a stable sort algorithm to preserve any existing ordering"
 	(aCollectionOfScintillaAnnotations
-		asSortedCollectionUsing: (MergesortAlgorithm newSortBlock: [:a :b | a line < b line])) do: 
+		asSortedCollectionUsing: (SortAlgorithm mergeSort: [:a :b | a line < b line])) do: 
 				[:eachAnnotation |
 				eachAnnotation line ~= currentLine
 					ifTrue: 
@@ -1495,7 +1495,7 @@ cutSelection
 				wParam: 0
 				lParam: 0]!
 
-decodeStyledText: aByteArray 
+decodeStyledText: aByteArray
 	| tokens pair lastStyle buffer wsStyle stream ws |
 	tokens := OrderedCollection new.
 	pair := nil -> nil.
@@ -1510,10 +1510,10 @@ decodeStyledText: aByteArray
 			[| char style |
 			char := stream next.
 			style := stream next.
-			(style == wsStyle and: [wsStyle ~~ 0 or: [ws identityIncludes: char]]) 
+			(style == wsStyle and: [wsStyle ~~ 0 or: [ws identityIncludes: char]])
 				ifTrue: [lastStyle := nil]
 				ifFalse: 
-					[lastStyle == style 
+					[lastStyle == style
 						ifFalse: 
 							[lastStyle := style.
 							pair value: buffer contents asString.
@@ -1528,7 +1528,7 @@ defaultBraceChars
 	"Private - Answer a <String> containing the set of <Character>s that Scintilla considers to be brace
 	characters by default."
 
-	^##((IdentityDictionary new)
+	^##(IdentityDictionary new
 		at: #normal put: '()[]{}<>';
 		yourself)!
 
@@ -1578,8 +1578,8 @@ defaultMarkerDefinitions
 	application domain to the definition for that marker, where the definition specifies
 	attributes such as the glyph used, and foreground and background colours."
 
-	^IdentityDictionary 
-		with: #default -> ((ScintillaMarkerDefinition new)
+	^IdentityDictionary
+		with: #default -> (ScintillaMarkerDefinition new
 						name: #circle;
 						yourself)!
 
@@ -1607,7 +1607,7 @@ defaultWhitespaceChars
 	"Answer a <String> containing the <Character>s that Scintilla considers to be whitespace by
 	default."
 
-	^Character byteCharacterSet select: [:each | each codePoint < 16r20 or: [each == $ ]]!
+	^Character byteCharacterSet select: [:each | each codePoint < 16r20 or: [each == $\x20]]!
 
 defaultWindowStyle
 	"Private - Answer a default style to use when creating a ScintillaView."
@@ -2466,7 +2466,7 @@ find: aFindDetails range: anInterval
 		range: range
 		flags: findFlags!
 
-find: aString range: anInterval flags: anInteger 
+find: aString range: anInterval flags: anInteger
 	"Attempt to find the text findString in the receivers text within findRange. flags are from
 	the SCFIND enumeration. Answer the (1-based) position of the found string, or 0 if nothing matched."
 
@@ -2474,7 +2474,7 @@ find: aString range: anInterval flags: anInteger
 	start := anInterval start - 1.
 	stop := anInterval stop.
 	stop < start ifTrue: [stop := stop - 1].
-	findText := FINDTEXTEX 
+	findText := FINDTEXTEX
 				from: start
 				to: stop
 				text: (stringClass coerceString: aString).
@@ -2773,7 +2773,7 @@ getRawAnnotations
 	rawAnnotations := Array writeStream.
 	1 to: self lineCount
 		do: 
-			[:i | 
+			[:i |
 			"Checking for presence of annotations on each line is not stricly necessary,
 			but makes this run up to 25% faster, which might be significant for very
 			large files."
@@ -3997,7 +3997,7 @@ keyBindings: aCollectionOfScintillaKeyBindings
 
 keyboardCommands
 	^self keyBindings collect: 
-			[:each | 
+			[:each |
 			(CommandDescription command: each commandSymbol)
 				acceleratorKey: each acceleratorKey;
 				yourself]!
@@ -4329,15 +4329,14 @@ markers: aCollection
 	markers := aCollection asIdentitySet.
 	self updateMarkers!
 
-markerTypesOnLine: anInteger 
+markerTypesOnLine: anInteger
 	"Answer a <collection> of <Symbol>s, being the names of the marker types currently
 	set on the line with the specified one-based <integer> index."
 
 	| mask types |
 	mask := (self sciMarkerGet: anInteger) asDword.
 	types := IdentitySet new.
-	markerDefinitions 
-		do: [:each | (mask allMask: (1 bitShift: each id)) ifTrue: [types add: each name]].
+	markerDefinitions do: [:each | (mask allMask: (1 bitShift: each id)) ifTrue: [types add: each name]].
 	^types!
 
 maxCompletionListHeight
@@ -4861,7 +4860,7 @@ onViewCreated
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
 	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but the interaction with auto-completion is just too clunky. There is a noticeable delay when the auto-completion list is shown and refreshed. This is may be because Scintilla is still using a (GDI) ListBox for the auto-completion. Interaction when drawing over other GDI windows is also rather flishy-flashy. In the single-line search presenter the Scintilla view frequently fails to paint text (when the text is slightly too large vertically), and the auto-completion list comes up at the wrong location (over the text)."
-	(false and: [VMLibrary default isWindowsVistaOrGreater])
+	(false and: [KernelLibrary default isWindowsVistaOrGreater])
 		ifTrue: 
 			[self
 				drawingTechnology: #directWrite;
@@ -4936,7 +4935,7 @@ plainText: aString
 
 	self modifyText: [self setText: aString]!
 
-plainTextFrom: startInteger to: stopInteger 
+plainTextFrom: startInteger to: stopInteger
 	"Answer a string containing the plain text contents of the receiver in the specified
 	one-based, end-inclusive, range."
 
@@ -4944,7 +4943,10 @@ plainTextFrom: startInteger to: stopInteger
 	startInteger < 1 ifTrue: [^self errorSubscriptBounds: startInteger].
 	stopInteger < startInteger ifTrue: [^String new].
 	stopInteger > self textLength ifTrue: [^self errorSubscriptBounds: stopInteger].
-	range := TEXTRANGE from: startInteger - 1 to: stopInteger type: stringClass.
+	range := TEXTRANGE
+				from: startInteger - 1
+				to: stopInteger
+				type: stringClass.
 	self sciGetTextRange: range.
 	^range text!
 
@@ -10062,12 +10064,12 @@ setCurrentTextStyles: aCollection
 	count := aCollection size.
 	allocatedStyles := OrderedCollection new: count.
 	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles add: id]].
-	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255) 
+	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255)
 				difference: allocatedStyles) readStream.
 	newStylesByName := IdentityDictionary new: count.
 	newStylesById := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
 	aCollection do: 
-			[:each | 
+			[:each |
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
 			newStylesByName at: each name put: each.
 			newStylesById at: each basicId + 1 put: each].
@@ -10467,7 +10469,7 @@ styleAt: anInteger
 
 	^self styleWithId: (self styleIdAt: anInteger)!
 
-styledTextFrom: startInteger to: stopInteger 
+styledTextFrom: startInteger to: stopInteger
 	"Private - Answer a <ByteArray> containing pairs of bytes that represent the character and
 	style byte for each position in the specified range."
 
@@ -10477,7 +10479,7 @@ styledTextFrom: startInteger to: stopInteger
 	stopInteger > self textLength ifTrue: [self errorSubscriptBounds: stopInteger].
 	"Note extra two bytes needed for null-terminator"
 	bytes := ByteArray newFixed: (stopInteger - startInteger + 1 + 1) * 2.
-	range := TEXTRANGE 
+	range := TEXTRANGE
 				from: startInteger - 1
 				to: stopInteger
 				text: bytes.
@@ -10740,9 +10742,7 @@ textLength
 textLimit
 	"Answer the current text limit for the control (i.e. the amount of text it can hold)."
 
-	^SmallInteger maximum
-
-!
+	^SmallInteger maximum!
 
 textLimit: anInteger 
 	"Set the maximum text limit for the receiver."
@@ -11147,7 +11147,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 					[:defId | 
 					shell 
 						sendMessage: WM_COMMAND
-						wParam: BN_CLICKED << 16 | shell defaultButtonId
+						wParam: ButtonConstants.BN_CLICKED << 16 | shell defaultButtonId
 						lParam: defId].
 			^0	"Suppress default processing"].
 	^super 
@@ -12558,7 +12558,7 @@ initialize
 	| defaultKeyBindings |
 	self addClassConstant: 'CodePages'
 		value: (IdentityDictionary new
-				at: WinNlsConstants.CP_ACP put: #ansi;
+				at: NlsConstants.CP_ACP put: #ansi;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;
