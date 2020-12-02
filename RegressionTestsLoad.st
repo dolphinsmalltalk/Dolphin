@@ -19,8 +19,8 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\ActiveX Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation Tests.pax';
+	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Compiler Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
-	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Parser Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
