@@ -3,10 +3,10 @@
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChunkBrowserClassGUIDChunk guid: (GUID fromString: '{9b98323b-e586-4209-a7bc-11eaf78617b6}')!
+ChunkBrowserClassGUIDChunk guid: (Core.GUID fromString: '{9b98323b-e586-4209-a7bc-11eaf78617b6}')!
 ChunkBrowserClassGUIDChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
@@ -46,10 +46,8 @@ isChunkClassFor: aString
 	Abc guid: (CLSID fromString: '{6AA41459-4B33-412A-95A7-261C78522521}'"
 
 	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and:
-			[(aString indexOfSubCollection: ' guid: (GUID fromString: ''{') = firstSpaceIndex
-				or:
+	^(firstSpaceIndex := aString indexOf: Character space) ~= 0 and: 
+			[(aString indexOfSubCollection: ' guid: (Core.GUID fromString: ''{') = firstSpaceIndex or: 
 					[(aString indexOfSubCollection: ' guid: (IID fromString: ''{') = firstSpaceIndex
 						or: [(aString indexOfSubCollection: ' guid: (CLSID fromString: ''{') = firstSpaceIndex]]]! !
 !ChunkBrowserClassGUIDChunk class categoriesFor: #chunkType!constants!public! !

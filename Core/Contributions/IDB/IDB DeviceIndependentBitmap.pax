@@ -97,7 +97,7 @@ getDeviceIndependentBitmapIfNone: exceptionHandler
 
 			"We have to create a new DeviceIndependentBitmap of the appropriate size and then 
 	copy the color table and image bits"
-			bitmap := DeviceIndependentBitmap 
+			bitmap := Smalltalk.DeviceIndependentBitmap 
 						width: bitmapInfoHeader biWidth
 						height: bitmapInfoHeader biHeight
 						depth: bitmapInfoHeader biBitCount.

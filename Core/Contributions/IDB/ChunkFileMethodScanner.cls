@@ -56,17 +56,15 @@ positionsOf: aString in: aStream firstOnly: aBoolean
 	| positions |
 	positions := Set new.
 	aStream reset.
-	[aStream atEnd]
-		whileFalse:
+	[aStream atEnd] whileFalse: 
 			[| startPosition bytes offset |
 			aStream position > aString size ifTrue: [aStream position: aStream position - aString size].
 			startPosition := aStream position.
 			bytes := aStream basicNextAvailable: readBufferSize.
 			offset := 1.
-			[offset = 0]
-				whileFalse:
+			[offset = 0] whileFalse: 
 					[(offset := bytes indexOfSubCollection: aString startingAt: offset) = 0
-						ifFalse:
+						ifFalse: 
 							[positions add: startPosition + offset + aString size - 1.
 							aBoolean ifTrue: [^positions asSortedCollection].
 							offset := offset + 1]]].
@@ -122,10 +120,9 @@ scanForMethodVersionsInClass: aClass
 	and change files, belonging to aClass"
 
 	| target |
-	target := (String writeStream)
-				nextPut: $!!;
-				nextPutAll: aClass name;
-				nextPutAll: ' methodsFor!!';
+	target := String writeStream.
+	(ChunkSourceFiler on: target sourceFileIndex: -1) emitHeaderForMethodsOf: aClass.
+	target := target
 				cr;
 				contents.
 	^((self scanSourcesFileFor: target) , (self scanChangesFileFor: target)) do: [ :each | each methodClass: aClass]!

@@ -3,10 +3,10 @@
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChunkBrowserClassDefineChunk guid: (GUID fromString: '{9a18662b-ed08-4733-bf8b-c22ede8994e8}')!
+ChunkBrowserClassDefineChunk guid: (Core.GUID fromString: '{9a18662b-ed08-4733-bf8b-c22ede8994e8}')!
 ChunkBrowserClassDefineChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
@@ -28,15 +28,15 @@ initialize: aString
 
 	| space1 space2 eol |
 	super initialize: aString.
-	space1 := rawText indexOf: $ .
+	space1 := rawText indexOf: $\x20.
 	space2 := rawText
-		nextIndexOf: $ 
-		from: space1 + 1
-		to: rawText size.
+				nextIndexOf: $\x20
+				from: space1 + 1
+				to: rawText size.
 	eol := rawText
-		nextIndexOf: String lineDelimiter first
-		from: space2 + 1
-		to: rawText size.
+				nextIndexOf: String lineDelimiter first
+				from: space2 + 1
+				to: rawText size.
 	identity1 := rawText copyFrom: space2 + 2 to: eol - 1.
 	identity2 := rawText copyFrom: 1 to: space1 - 1!
 
@@ -66,13 +66,11 @@ isChunkClassFor: aString
 	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
 
 	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and:
+	^(firstSpaceIndex := aString indexOf: $\x20) ~~ 0 and: 
 			[(#(' subclass: ' ' variableSubclass: ' ' variableByteSubclass: ')
-				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex])
-				and:
-					[#('instanceVariableNames: ' 'classVariableNames: ' 'poolDictionaries: ' 'classInstanceVariableNames: ')
-						allSatisfy: [:each | (aString indexOfSubCollection: each) ~= 0]]]! !
+				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]) and: 
+						[#('instanceVariableNames: ' 'classVariableNames: ' 'classInstanceVariableNames: ')
+							allSatisfy: [:each | (aString indexOfSubCollection: each) ~~ 0]]]! !
 !ChunkBrowserClassDefineChunk class categoriesFor: #chunkType!constants!public! !
 !ChunkBrowserClassDefineChunk class categoriesFor: #isChunkClassFor:!public!testing! !
 

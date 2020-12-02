@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Chunk Browser'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	basicComment: 'Chunk Browser
 Version 7c - January 2016
 For Version 7 of Dolphin Smalltalk
@@ -20,33 +20,33 @@ package basicPackageVersion: '7c'.
 
 
 package setClassNames: #(
-	#{ChunkBrowser}
-	#{ChunkBrowserCategoryChunk}
-	#{ChunkBrowserChunk}
-	#{ChunkBrowserClassCategoryChunk}
-	#{ChunkBrowserClassCategorySeriesStartChunk}
-	#{ChunkBrowserClassCommentChunk}
-	#{ChunkBrowserClassDefineChunk}
-	#{ChunkBrowserClassDeleteChunk}
-	#{ChunkBrowserClassGUIDChunk}
-	#{ChunkBrowserClassProtocolChunk}
-	#{ChunkBrowserExpressionChunk}
-	#{ChunkBrowserFilter}
-	#{ChunkBrowserMethodCategoryChunk}
-	#{ChunkBrowserMethodCategorySeriesStartChunk}
-	#{ChunkBrowserMethodDefineChunk}
-	#{ChunkBrowserMethodDefineSeriesStartChunk}
-	#{ChunkBrowserMethodDeleteChunk}
-	#{ChunkBrowserModel}
-	#{ChunkBrowserOtherChunk}
-	#{ChunkBrowserSeriesChunk}
-	#{ChunkBrowserSeriesStartChunk}
-	#{ChunkBrowserSystemChunk}
+	#{Smalltalk.ChunkBrowser}
+	#{Smalltalk.ChunkBrowserCategoryChunk}
+	#{Smalltalk.ChunkBrowserChunk}
+	#{Smalltalk.ChunkBrowserClassCategoryChunk}
+	#{Smalltalk.ChunkBrowserClassCategorySeriesStartChunk}
+	#{Smalltalk.ChunkBrowserClassCommentChunk}
+	#{Smalltalk.ChunkBrowserClassDefineChunk}
+	#{Smalltalk.ChunkBrowserClassDeleteChunk}
+	#{Smalltalk.ChunkBrowserClassGUIDChunk}
+	#{Smalltalk.ChunkBrowserClassProtocolChunk}
+	#{Smalltalk.ChunkBrowserExpressionChunk}
+	#{Smalltalk.ChunkBrowserFilter}
+	#{Smalltalk.ChunkBrowserMethodCategoryChunk}
+	#{Smalltalk.ChunkBrowserMethodCategorySeriesStartChunk}
+	#{Smalltalk.ChunkBrowserMethodDefineChunk}
+	#{Smalltalk.ChunkBrowserMethodDefineSeriesStartChunk}
+	#{Smalltalk.ChunkBrowserMethodDeleteChunk}
+	#{Smalltalk.ChunkBrowserModel}
+	#{Smalltalk.ChunkBrowserOtherChunk}
+	#{Smalltalk.ChunkBrowserSeriesChunk}
+	#{Smalltalk.ChunkBrowserSeriesStartChunk}
+	#{Smalltalk.ChunkBrowserSystemChunk}
 ).
 
 package setMethodNames: #(
-	#(#{Toolbar class} #resource_Chunk_Browser_Chunk_tools)
-	#(#{Toolbar class} #resource_Chunk_Browser_Tools)
+	#(#{UI.Toolbar class} #resource_Chunk_Browser_Chunk_tools)
+	#(#{UI.Toolbar class} #resource_Chunk_Browser_Tools)
 ).
 
 package setPrerequisites: #(
@@ -77,142 +77,142 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ChunkBrowserChunk
+Core.Object subclass: #ChunkBrowserChunk
 	instanceVariableNames: 'rawText index identity1 identity2 picked'
 	classVariableNames: 'ChunkClasses'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassCommentChunk
 	instanceVariableNames: 'comment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDeleteChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	instanceVariableNames: 'attributes selectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserOtherChunk subclass: #ChunkBrowserSystemChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserMethodDefineChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserCategoryChunk subclass: #ChunkBrowserClassCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserCategoryChunk subclass: #ChunkBrowserMethodCategoryChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserClassCategorySeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodCategorySeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodDefineSeriesStartChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #ChunkBrowserFilter
+Core.Model subclass: #ChunkBrowserFilter
 	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #ChunkBrowserModel
+Core.Model subclass: #ChunkBrowserModel
 	instanceVariableNames: 'chunks'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IdbToolShell subclass: #ChunkBrowser
 	instanceVariableNames: 'chunkList chunkText pathname filter'
 	classVariableNames: 'ChunkTypeSelection CompareMethodsUsingParser'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_Chunk_Browser_Chunk_tools
 	"Answer the literal data from which the 'Chunk Browser Chunk tools' resource can be reconstituted.
@@ -222,7 +222,7 @@ resource_Chunk_Browser_Chunk_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Chunk_Browser_Chunk_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 22 49555 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) 459270 ##(Smalltalk.Message) #toggleChunkType: 8 #(#'Class GUID') 8 'Class GUID' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'GUID.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 49555 49551 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Delete') 8 'Class Delete' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil 482 #darkGray nil nil 1 nil nil 49551 49547 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Category') 8 'Class Category' 1 1 722 nil true 768 8 'Folder.ico' 816 49547 49565 594 416 1 626 658 #toggleChunkType: 8 #(#System) 8 'System' 1 1 930 $\x1F42C nil nil 482 #darkSlateBlue nil nil 1 nil nil 49565 49561 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Define') 8 'Method Define' 1 1 722 nil true 768 8 'NewMethod.ico' 816 49561 49557 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Protocol') 8 'Class Protocol' 1 1 722 nil true 768 8 'MethodProtocol.ico' 816 49557 49553 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Comment') 8 'Class Comment' 1 1 722 nil true 768 8 'ClassComment.ico' 816 49553 49549 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Define') 8 'Class Define' 1 1 722 nil true 768 8 'NewClass.ico' 816 49549 49567 594 416 1 626 658 #toggleChunkType: 8 #(#Other) 8 'Other' 1 1 722 nil true 768 8 'EvaluateIt.ico' 816 49567 49563 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Delete') 8 'Method Delete' 1 1 930 $\x2716 nil nil 482 #blue nil nil 1 nil nil 49563 49559 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Category') 8 'Method Category' 1 1 722 nil true 768 8 'Category.ico' 816 49559 34 12 976 1536 848 1424 608 1312 1872 1200 1760 1088 1648 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 2178 521 49 416 2130 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 131 8 0 0 34 0 0 0] 8 #() 2178 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 22 49555 1115206 1 ##(UI.ToolbarIconButton) 416 1 1180998 4 ##(UI.CommandDescription) 459270 ##(Smalltalk.Message) #toggleChunkType: 8 #(#'Class GUID') 8 'Class GUID' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'GUID.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 49555 49551 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Delete') 8 'Class Delete' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil 482 #darkGray nil nil 1 nil nil 49551 49547 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Category') 8 'Class Category' 1 1 722 nil true 768 8 'Folder.ico' 816 49547 49565 594 416 1 626 658 #toggleChunkType: 8 #(#System) 8 'System' 1 1 930 $\x1F42C nil nil 482 #darkSlateBlue nil nil 1 nil nil 49565 49561 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Define') 8 'Method Define' 1 1 722 nil true 768 8 'NewMethod.ico' 816 49561 49557 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Protocol') 8 'Class Protocol' 1 1 722 nil true 768 8 'MethodProtocol.ico' 816 49557 49553 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Comment') 8 'Class Comment' 1 1 722 nil true 768 8 'ClassComment.ico' 816 49553 49549 594 416 1 626 658 #toggleChunkType: 8 #(#'Class Define') 8 'Class Define' 1 1 722 nil true 768 8 'NewClass.ico' 816 49549 49567 594 416 1 626 658 #toggleChunkType: 8 #(#Other) 8 'Other' 1 1 722 nil true 768 8 'EvaluateIt.ico' 816 49567 49563 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Delete') 8 'Method Delete' 1 1 930 $\x2716 nil nil 482 #blue nil nil 1 nil nil 49563 49559 594 416 1 626 658 #toggleChunkType: 8 #(#'Method Category') 8 'Method Category' 1 1 722 nil true 768 8 'Category.ico' 816 49559 34 12 976 1536 848 1424 608 1312 1872 1200 1760 1088 1648 1049158 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil 656198 1 ##(UI.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 2178 521 49 416 2130 #updateSizePosted 544 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 131 8 0 0 34 0 0 0] 8 #() 2178 193 193 nil 27)!
 
 resource_Chunk_Browser_Tools
 	"Answer the literal data from which the 'Chunk Browser Tools' resource can be reconstituted.
@@ -232,9 +232,9 @@ resource_Chunk_Browser_Tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Chunk_Browser_Tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 8 47821 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #restoreSelection 8 'Restore Selected Chunk' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x1F501 nil nil 482 #commonGreen nil nil 1 nil nil 47821 47819 594 416 1 626 #showDifferences 8 'Open Differences Browser' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 47 786694 ##(Smalltalk.ShellLibrary) 47819 47817 594 416 1 626 #copyText 8 'Copy Text' 1 1 770 nil true 816 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 47817 47815 594 416 1 626 #fileOpen 8 'Open' 1 1 770 nil true 816 8 'FileOpen.ico' 960 47815 34 6 992 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 864 720 608 1090 416 1 nil nil 1 nil nil nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1282 211 51 416 1234 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 232 7 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_Chunk_Browser_Chunk_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Chunk_Browser_Tools!public!resources-views! !
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 8 47821 1115206 1 ##(UI.ToolbarIconButton) 416 1 1180998 4 ##(UI.CommandDescription) #restoreSelection 8 'Restore Selected Chunk' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x1F501 nil nil 482 #commonGreen nil nil 1 nil nil 47821 47819 594 416 1 626 #showDifferences 8 'Open Differences Browser' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 47 786694 ##(OS.ShellLibrary) 47819 47817 594 416 1 626 #copyText 8 'Copy Text' 1 1 770 nil true 816 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 47817 47815 594 416 1 626 #fileOpen 8 'Open' 1 1 770 nil true 816 8 'FileOpen.ico' 960 47815 34 6 992 1049158 1 ##(UI.ToolbarSeparator) 416 1 864 720 608 1090 416 1 nil nil 1 nil nil nil nil 656198 1 ##(UI.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1282 211 51 416 1234 #updateSizePosted 544 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 232 7 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27)! !
+!UI.Toolbar class categoriesFor: #resource_Chunk_Browser_Chunk_tools!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_Chunk_Browser_Tools!public!resources-views! !
 
 "End of package definition"!
 
