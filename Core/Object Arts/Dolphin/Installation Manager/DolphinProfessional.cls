@@ -3,10 +3,10 @@
 DolphinBaseProduct subclass: #DolphinProfessional
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinProfessional guid: (GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
+DolphinProfessional guid: (Core.GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
 DolphinProfessional comment: ''!
 !DolphinProfessional categoriesForClass!System-Support! !
 !DolphinProfessional methodsFor!
@@ -29,6 +29,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Lagoon\Lagoon Image Stripper.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Application Deployment Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server Kit.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Info.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin File System Watcher.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin Memory-Mapped Files.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\Dolphin Overlapped IO.pax' #encrypted #imageBased);
@@ -61,7 +62,9 @@ contents
 	"Refactoring Browser (third party) - First load dummy RBParser package which aliases all the RB parser classes to Smalltalk Parser"
 	contents
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint.pax' #plain #imageBased).
+		add: #('Core\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\RBOldNames.pax' #plain #imageBased).
+
 
 	"Camp Smalltalk Custom refactorings"
 	contents
@@ -93,12 +96,12 @@ developmentClasses
 	classes := (ClassCategory name: 'Development') classes asSet.
 
 	"Should already all be there, but just in case"
-	#('Development System' 'Dolphin Community Edition Tools' 'Dolphin Professional Tools' 'Dolphin Refactoring Browser') 
+	#('Development System' 'Dolphin Community Edition Tools' 'Dolphin Professional Tools' 'Dolphin Refactoring Browser')
 		do: [:p | classes addAll: (Package manager packageNamed: p) classes].
 
 	"Remove some that shouldn't"
 	#('Object Arts Development' 'Installation Manager') do: 
-			[:p | 
+			[:p |
 			| package |
 			package := Package manager packageNamed: p ifNone: [].
 			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: []]]].

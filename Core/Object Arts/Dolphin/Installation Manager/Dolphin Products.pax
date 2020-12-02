@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Products'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Product Descriptions'.
 
@@ -8,11 +8,11 @@ package basicPackageVersion: '6.1.27'.
 
 
 package setClassNames: #(
-	#{DolphinBaseProduct}
-	#{DolphinCommunityEdition}
-	#{DolphinCoreProduct}
-	#{DolphinProduct}
-	#{DolphinProfessional}
+	#{Smalltalk.DolphinBaseProduct}
+	#{Smalltalk.DolphinCommunityEdition}
+	#{Smalltalk.DolphinCoreProduct}
+	#{Smalltalk.DolphinProduct}
+	#{Smalltalk.DolphinProfessional}
 ).
 
 package setPrerequisites: #(
@@ -23,7 +23,7 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #DolphinProduct
+Core.Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()

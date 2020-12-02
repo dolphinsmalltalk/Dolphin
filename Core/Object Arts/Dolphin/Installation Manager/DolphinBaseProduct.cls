@@ -3,10 +3,10 @@
 DolphinCoreProduct subclass: #DolphinBaseProduct
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinBaseProduct guid: (GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
+DolphinBaseProduct guid: (Core.GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
 DolphinBaseProduct comment: ''!
 !DolphinBaseProduct categoriesForClass!System-Support! !
 !DolphinBaseProduct methodsFor!
@@ -38,6 +38,7 @@ contents
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitPreload.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitUI.pax' #plain #imageBased);
+		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitLegacy.pax' #plain #imageBased);
 		yourself.
 
 	contents
@@ -100,7 +101,6 @@ contents
 
 	"Deprecated pieces"
 	contents
-		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated).pax' #plain #imageBased);
 		yourself.
 
@@ -159,12 +159,22 @@ fullName
 	^'Dolphin Smalltalk Base'!
 
 warnOfUnlistedContent
-	| unlistedContent |
-	unlistedContent := self unlistedPrerequisites.
-	unlistedContent isEmpty 
+	| unpackaged unlistedContent |
+	unpackaged := Package manager unpackagedClasses.
+	unpackaged isEmpty
 		ifFalse: 
-			[self unlistedContentException 
-				signal: 'The deployed image will include the following unlisted pre-requisite packages: ' 
+			[Notification signal: 'The image contains the following unpackaged classes: '
+						, unpackaged asSortedCollection asArray fullPrintString].
+	unpackaged := Package manager unpackagedVariables.
+	unpackaged isEmpty
+		ifFalse: 
+			[Notification signal: 'The image contains the following unpackaged variables: '
+						, unpackaged asSortedCollection asArray fullPrintString].
+	unlistedContent := self unlistedPrerequisites.
+	unlistedContent isEmpty
+		ifFalse: 
+			[self unlistedContentException
+				signal: 'The deployed image will include the following unlisted pre-requisite packages: '
 						, unlistedContent displayString]! !
 !DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
 !DolphinBaseProduct categoriesFor: #contents!accessing!public! !

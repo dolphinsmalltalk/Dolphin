@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DolphinProduct
+Core.Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
-DolphinProduct isAbstract: true!
+DolphinProduct guid: (Core.GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
+DolphinProduct isNonInstantiable: true!
 DolphinProduct comment: ''!
 !DolphinProduct categoriesForClass!System-Support! !
 !DolphinProduct methodsFor!
@@ -20,7 +20,7 @@ allPackages
 	| set |
 	set := IdentitySet new.
 	self packages do: [:each | each addAllPrerequisitesTo: set].
-	^set asOrderedCollection.!
+	^set asOrderedCollection!
 
 basicLoad
 	"Private - Loads the required packages into the image for the receiver. 
@@ -32,7 +32,7 @@ basicLoad
 	self installProductDetails.
 	packageManager := Package manager.
 	self packagePaths do: 
-			[:each | 
+			[:each |
 			| name |
 			name := File splitStemFrom: each.
 			packageManager packageNamed: name
@@ -70,16 +70,20 @@ contents
 	"Some loaded by boot part 2 script"
 	answer
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBase);
+		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Anonymous Classes.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Command-line Parser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin SizeIs Fields.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Compiler.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Recent\Dolphin Recent Menu.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy Package Support.pax' #plain #imageBased);
@@ -117,7 +121,6 @@ contents
 		yourself.
 	"These views have to be loaded before the development system because they have #publishedAspects, etc, methods"
 	answer
-		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBase);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Radio\Dolphin Radio Buttons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls.pax' #plain #imageBased);
@@ -141,6 +144,7 @@ contents
 	"The development system itself"
 	answer
 		add: #('Core\Object Arts\Dolphin\System\Trace\Debug Trace Stream.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\RBNamespaces.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Parser\RBParser.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects.pax' #plain #imageBased);
@@ -177,16 +181,16 @@ displayOn: aPuttableStream
 encryptedClasses
 	"Answer classes owned by the receiver that will be encrypted in the deployed executable."
 
-	encryptedClasses isNil 
+	encryptedClasses isNil
 		ifTrue: 
 			[| packages classes |
 			packages := self encryptedPackageNames collect: [:each | Package manager packageNamed: each].
 			classes := Set new.
 			packages do: [:each | classes addAll: each classes].
 			classes := classes asArray select: [:each | self isSafeToEncrypt: each].
-			self shouldEncryptMetaclasses 
+			self shouldEncryptMetaclasses
 				ifTrue: [classes := classes , (classes collect: [:each | each class])].
-			encryptedClasses := classes asSortedCollection: [:a :b | (a name <==> b name) <= 0]].
+			encryptedClasses := classes asSortedCollection: [:a :b | a name <==> b name <= 0]].
 	^encryptedClasses!
 
 encryptedClasses: aCollectionOfClasses
@@ -217,15 +221,14 @@ imageLevel
 	^(self versionMask << 8) | self class productMask!
 
 installProductDetails
-	"Private - Informs the development system of the details of the receiver" 
+	"Private - Informs the development system of the details of the receiver"
 
-	SessionManager current productDetails: self productDetails
-!
+	SessionManager current productDetails: self productDetails!
 
 installProductSounds
-	"Private - Installs the sounds scheme for the receiver" 
+	"Private - Installs the sounds scheme for the receiver"
 
-	Sound clearRegistry.!
+	Sound clearRegistry!
 
 installSplash
 	"Use the default"!
@@ -255,8 +258,7 @@ load
 	packages that should not be present"
 
 	self basicLoad.
-	SessionManager current saveImage
-!
+	SessionManager current saveImage!
 
 loadAndShrink
 	"Loads the required packages into the image for the receiver. Also shrinks the image
@@ -293,7 +295,7 @@ name
 packageNames
 	"Answer the list of package names associated with the receiver"
 
-	^self packagePaths collect: [:each | File splitStemFrom: each ]!
+	^self packagePaths collect: [:each | File splitStemFrom: each]!
 
 packagePaths
 	"Answer the list of package path names associated with the receiver"
@@ -303,8 +305,7 @@ packagePaths
 packages
 	"Answer the list of package associated with the receiver"
 
-	^(self packageNames collect: [:each | Package manager packageNamed: each ])
-!
+	^self packageNames collect: [:each | Package manager packageNamed: each]!
 
 preShrink
 	"Private - Perform any pre-shrinkage actions"!
@@ -326,7 +327,7 @@ productDetails
 
 	| array |
 	array := VMLibrary default defaultProductDetails.
-	8 < array size ifTrue: [array := (array , (Array new: 8)) copyFrom: 1 to: 8].
+	8 < array size ifTrue: [array := array , (Array new: 8) copyFrom: 1 to: 8].
 	^array
 		at: 1 put: self fullName;
 		at: 2 put: self name;
@@ -374,7 +375,7 @@ shrink
 	self resizeSymbolTable!
 
 shrinkEventsRegister
-	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
+	_EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
 
 shrinkHashedCollections
 	Set primAllSubinstances do: [:each | each shrink]!
@@ -486,7 +487,7 @@ fromString: aString
 	| stm version sub |
 	(aString beginsWith: self productPrefix) ifFalse: [self errorInvalidProductDescription: aString].
 	stm := aString readStream.
-	stm position: self productPrefix size+1.
+	stm position: self productPrefix size + 1.
 	version := Float readFrom: stm.
 	version = 0.0 ifTrue: [self errorInvalidProductDescription: aString].
 	stm skipSeparators.
@@ -515,8 +516,7 @@ loadAndShrink
 new
 	"Answers an instance of the receiver for this version of Dolphin"
 
-	^self version: SessionManager current productVersion
-!
+	^self version: SessionManager current productVersion!
 
 ofImageLevel: imageLevel
 	| versionMask productMask |
