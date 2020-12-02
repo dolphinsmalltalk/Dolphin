@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ComparisonPolicy
+Core.Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ComparisonPolicy guid: (GUID fromString: '{02cd77f7-d41d-4e1c-82ee-92322a049235}')!
+ComparisonPolicy guid: (Core.GUID fromString: '{02cd77f7-d41d-4e1c-82ee-92322a049235}')!
 ComparisonPolicy comment: 'This class has now been deprecated, use SearchPolicy (which implements the <comparisonPolicy> protocol) instead.'!
 !ComparisonPolicy categoriesForClass!Deprecated! !
 !ComparisonPolicy class methodsFor!
@@ -32,19 +32,19 @@ new
 
 	^self shouldNotImplement!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 	1: ComparisionPolicy subsumed by SearchPolicy."
 
 	^
-	[:data | 
+	[:data |
 	| compareBlock |
-	Notification 
+	Notification
 		signal: 'STB reference to deprecated class ComparisonPolicy encountered. Please resave the offending resource or binary file'.
 	compareBlock := data first.
 	(compareBlock class == BlockClosure and: 
-			[compareBlock method methodClass == self class 
-				and: [SearchPolicy respondsTo: compareBlock method selector]]) 
+			[compareBlock method methodClass == self class
+				and: [SearchPolicy respondsTo: compareBlock method selector]])
 		ifTrue: [(SearchPolicy perform: compareBlock method selector) shallowCopy]
 		ifFalse: [PluggableSearchPolicy newCompareBlock: compareBlock hashBlock: [:each | each hash]]]!
 

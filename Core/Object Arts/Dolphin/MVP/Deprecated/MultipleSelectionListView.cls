@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListView subclass: #MultipleSelectionListView
+UI.ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultipleSelectionListView guid: (GUID fromString: '{87b4c733-026e-11d3-9fd7-00a0cc3e4a32}')!
+MultipleSelectionListView guid: (Core.GUID fromString: '{87b4c733-026e-11d3-9fd7-00a0cc3e4a32}')!
 MultipleSelectionListView comment: 'MultipleSelectionListView has now been deprecated - instances should be replaced by <ListView> instances configured to operate in multiple selection mode.  Note that ListView corrects the historical design error in MultipleSelectionListView in that the single selection protocols (#selection[:], #selectionByIndex[:], etc) always operate on a single item (this class redefines the single selection protocols to operate on collections). For multiple selections the multiple selection protocols (e.g. #selections[:], #selectionsByIndex[:], etc) must be used.'!
 !MultipleSelectionListView categoriesForClass!MVP-Views! !
 !MultipleSelectionListView methodsFor!
@@ -65,15 +65,6 @@ selectionOrNil
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk developmentSystem deprecatedIcon!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	(aspects at: #isMultiSelect) beReadOnly.
-	^aspects! !
+	^Smalltalk developmentSystem deprecatedIcon! !
 !MultipleSelectionListView class categoriesFor: #icon!constants!public! !
-!MultipleSelectionListView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 

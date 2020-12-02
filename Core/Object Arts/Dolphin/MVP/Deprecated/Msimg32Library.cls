@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #Msimg32Library
+External.Library subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Msimg32Library guid: (GUID fromString: '{5a76781d-d74e-48fe-8991-46ae340fcc94}')!
+Msimg32Library guid: (Core.GUID fromString: '{5a76781d-d74e-48fe-8991-46ae340fcc94}')!
 Msimg32Library comment: 'Deprecated. Use equivalent functions in GDILIbrary instead.'!
 !Msimg32Library categoriesForClass!Deprecated! !
 !Msimg32Library methodsFor!
