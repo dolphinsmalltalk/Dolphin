@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRARC
+OS.ENHMETARECORD subclass: #'OS.EMRARC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptlEnd' -> 16r20.
 		'_OffsetOf_ptlStart' -> 16r18.
 		'_OffsetOf_rclBox' -> 16r8
 	}!
-EMRARC guid: (GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
-EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRARC guid: (Core.GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
+OS.EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMRARC {
 	POINTL ptlEnd;
 } EMRARC;
 '!
-!EMRARC categoriesForClass!Win32-Structs! !
-!EMRARC methodsFor!
+!OS.EMRARC categoriesForClass!Win32-Structs! !
+!OS.EMRARC methodsFor!
 
 ptlEnd
 	"Answer the <POINTL> value of the receiver's 'ptlEnd' field."
@@ -59,9 +59,9 @@ ptlStart: aPOINTL
 		startingAt: 1!
 
 rclBox
-	"Answer the <RECT> value of the receiver's 'rclBox' field."
+	"Answer the <RECTL> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
 rclBox: aRECT
 	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
@@ -69,16 +69,16 @@ rclBox: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRARC categoriesFor: #ptlEnd!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlEnd:!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlStart!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlStart:!**compiled accessors**!public! !
-!EMRARC categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRARC categoriesFor: #rclBox:!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #ptlEnd!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #ptlEnd:!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #ptlStart!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #ptlStart:!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #rclBox!**compiled accessors**!public! !
+!OS.EMRARC categoriesFor: #rclBox:!**compiled accessors**!public! !
 
-!EMRARC class methodsFor!
+!OS.EMRARC class methodsFor!
 
 defineFields
 	"Define the fields of the EMRARC structure.
@@ -96,9 +96,15 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rclBox type: (StructureField type: RECT) offset: 8;
-		defineField: #ptlStart type: (StructureField type: POINTL) offset: 24;
-		defineField: #ptlEnd type: (StructureField type: POINTL) offset: 32.
+		defineField: #rclBox
+			type: (StructureField type: RECTL)
+			offset: 8;
+		defineField: #ptlStart
+			type: (StructureField type: POINTL)
+			offset: 24;
+		defineField: #ptlEnd
+			type: (StructureField type: POINTL)
+			offset: 32.
 	self byteSize: 40!
 
 getFieldNames
@@ -108,7 +114,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ARC. EMR_ARCTO. EMR_CHORD. EMR_PIE}! !
-!EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRARC class categoriesFor: #iTypes!constants!public! !
+!OS.EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRARC class categoriesFor: #iTypes!constants!public! !
 

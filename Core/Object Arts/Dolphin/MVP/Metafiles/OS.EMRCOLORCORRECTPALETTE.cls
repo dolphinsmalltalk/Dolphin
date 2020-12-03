@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRCOLORCORRECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPalette' -> 16r8.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 		'_OffsetOf_nPalEntries' -> 16r10.
 		'_OffsetOf_nReserved' -> 16r14
 	}!
-EMRCOLORCORRECTPALETTE guid: (GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
-EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCOLORCORRECTPALETTE guid: (Core.GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
+OS.EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagCOLORCORRECTPALETTE {
 	[helpstring("Reserved")] DWORD nReserved;
 } COLORCORRECTPALETTE;
 '!
-!EMRCOLORCORRECTPALETTE categoriesForClass!Win32-Structs! !
-!EMRCOLORCORRECTPALETTE methodsFor!
+!OS.EMRCOLORCORRECTPALETTE categoriesForClass!Win32-Structs! !
+!OS.EMRCOLORCORRECTPALETTE methodsFor!
 
 ihPalette
 	"Answer the <Integer> value of the receiver's 'ihPalette' field."
@@ -71,16 +71,16 @@ nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nReserved!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nReserved:!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry:!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries:!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nReserved!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nReserved:!**compiled accessors**!public! !
 
-!EMRCOLORCORRECTPALETTE class methodsFor!
+!OS.EMRCOLORCORRECTPALETTE class methodsFor!
 
 defineFields
 	"Define the fields of the COLORCORRECTPALETTE structure.
@@ -120,7 +120,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_COLORCORRECTPALETTE}! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #ENHMETAHEADER
+OS.ENHMETARECORD subclass: #'OS.ENHMETAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bOpenGL' -> 16r60.
@@ -24,8 +24,8 @@ ENHMETARECORD subclass: #ENHMETAHEADER
 		'_OffsetOf_szlMicrometers' -> 16r64.
 		'_OffsetOf_szlMillimeters' -> 16r50
 	}!
-ENHMETAHEADER guid: (GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
-ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
+OS.ENHMETAHEADER guid: (Core.GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
+OS.ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 
 The type library contains no documentation for this struct
 
@@ -56,8 +56,8 @@ IDL definition follows:
 			[helpstring(''Size of the reference device in micrometers'')] SIZEL szlMicrometers;
 		} ENHMETAHEADER;
 '!
-!ENHMETAHEADER categoriesForClass!Win32-Structs! !
-!ENHMETAHEADER methodsFor!
+!OS.ENHMETAHEADER categoriesForClass!Win32-Structs! !
+!OS.ENHMETAHEADER methodsFor!
 
 bOpenGL
 	"Answer the <Integer> value of the receiver's 'bOpenGL' field."
@@ -170,9 +170,9 @@ offPixelFormat: anInteger
 	bytes dwordAtOffset: _OffsetOf_offPixelFormat put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -180,13 +180,13 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 rclFrame
-	"Answer the <RECT> value of the receiver's 'rclFrame' field."
+	"Answer the <RECTL> value of the receiver's 'rclFrame' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
 rclFrame: aRECT
 	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
@@ -194,13 +194,13 @@ rclFrame: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclFrame + 1)
-		to: ##(_OffsetOf_rclFrame + RECT basicByteSize)
+		to: ##(_OffsetOf_rclFrame + RECTL basicByteSize)
 		startingAt: 1!
 
 szlDevice
 	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
 szlDevice: aSIZE
 	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
@@ -208,13 +208,13 @@ szlDevice: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlDevice + 1)
-		to: ##(_OffsetOf_szlDevice + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlDevice + SIZEL basicByteSize)
 		startingAt: 1!
 
 szlMicrometers
 	"Answer the <SIZE> value of the receiver's 'szlMicrometers' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMicrometers!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMicrometers!
 
 szlMicrometers: aSIZE
 	"Set the receiver's 'szlMicrometers' field to the value of the argument, aSIZE"
@@ -222,13 +222,13 @@ szlMicrometers: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMicrometers + 1)
-		to: ##(_OffsetOf_szlMicrometers + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlMicrometers + SIZEL basicByteSize)
 		startingAt: 1!
 
 szlMillimeters
 	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
 szlMillimeters: aSIZE
 	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
@@ -236,42 +236,42 @@ szlMillimeters: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMillimeters + 1)
-		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlMillimeters + SIZEL basicByteSize)
 		startingAt: 1! !
-!ENHMETAHEADER categoriesFor: #bOpenGL!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #bOpenGL:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #cbPixelFormat!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #cbPixelFormat:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #dSignature!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #dSignature:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nBytes!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nBytes:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nDescription!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nHandles!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nHandles:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nRecords!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nRecords:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nVersion!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nVersion:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offDescription!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offPixelFormat!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offPixelFormat:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclBounds!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclFrame!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclFrame:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlDevice!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlDevice:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMicrometers!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMicrometers:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMillimeters!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #bOpenGL!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #bOpenGL:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #cbPixelFormat!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #cbPixelFormat:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #dSignature!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #dSignature:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nBytes!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nBytes:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nDescription!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nDescription:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nHandles!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nHandles:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nPalEntries!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nPalEntries:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nRecords!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nRecords:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nVersion!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #nVersion:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #offDescription!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #offDescription:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #offPixelFormat!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #offPixelFormat:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #rclFrame!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #rclFrame:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlDevice!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlDevice:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlMicrometers!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlMicrometers:!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlMillimeters!**compiled accessors**!public! !
+!OS.ENHMETAHEADER categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
 
-!ENHMETAHEADER class methodsFor!
+!OS.ENHMETAHEADER class methodsFor!
 
 defineFields
 	"Define the fields of the ENHMETAHEADER structure.
@@ -304,23 +304,57 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rclBounds type: (StructureField type: RECT) offset: 8;
-		defineField: #rclFrame type: (StructureField type: RECT) offset: 24;
-		defineField: #dSignature type: DWORDField new offset: 40;
-		defineField: #nVersion type: DWORDField new offset: 44;
-		defineField: #nBytes type: DWORDField new offset: 48;
-		defineField: #nRecords type: DWORDField new offset: 52;
-		defineField: #nHandles type: WORDField new offset: 56;
-		defineField: #sReserved type: WORDField filler offset: 58;
-		defineField: #nDescription type: DWORDField new offset: 60;
-		defineField: #offDescription type: DWORDField new offset: 64;
-		defineField: #nPalEntries type: DWORDField new offset: 68;
-		defineField: #szlDevice type: (StructureField type: SIZE) offset: 72;
-		defineField: #szlMillimeters type: (StructureField type: SIZE) offset: 80;
-		defineField: #cbPixelFormat type: DWORDField new offset: 88;
-		defineField: #offPixelFormat type: DWORDField new offset: 92;
-		defineField: #bOpenGL type: DWORDField new offset: 96;
-		defineField: #szlMicrometers type: (StructureField type: SIZE) offset: 100.
+		defineField: #rclBounds
+			type: (StructureField type: RECTL)
+			offset: 8;
+		defineField: #rclFrame
+			type: (StructureField type: RECTL)
+			offset: 24;
+		defineField: #dSignature
+			type: DWORDField new
+			offset: 40;
+		defineField: #nVersion
+			type: DWORDField new
+			offset: 44;
+		defineField: #nBytes
+			type: DWORDField new
+			offset: 48;
+		defineField: #nRecords
+			type: DWORDField new
+			offset: 52;
+		defineField: #nHandles
+			type: WORDField new
+			offset: 56;
+		defineField: #sReserved
+			type: WORDField filler
+			offset: 58;
+		defineField: #nDescription
+			type: DWORDField new
+			offset: 60;
+		defineField: #offDescription
+			type: DWORDField new
+			offset: 64;
+		defineField: #nPalEntries
+			type: DWORDField new
+			offset: 68;
+		defineField: #szlDevice
+			type: (StructureField type: SIZEL)
+			offset: 72;
+		defineField: #szlMillimeters
+			type: (StructureField type: SIZEL)
+			offset: 80;
+		defineField: #cbPixelFormat
+			type: DWORDField new
+			offset: 88;
+		defineField: #offPixelFormat
+			type: DWORDField new
+			offset: 92;
+		defineField: #bOpenGL
+			type: DWORDField new
+			offset: 96;
+		defineField: #szlMicrometers
+			type: (StructureField type: SIZEL)
+			offset: 100.
 	self byteSize: 108!
 
 getFieldNames
@@ -330,7 +364,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_HEADER}! !
-!ENHMETAHEADER class categoriesFor: #defineFields!public!template definition! !
-!ENHMETAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ENHMETAHEADER class categoriesFor: #iTypes!constants!public! !
+!OS.ENHMETAHEADER class categoriesFor: #defineFields!public!template definition! !
+!OS.ENHMETAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ENHMETAHEADER class categoriesFor: #iTypes!constants!public! !
 

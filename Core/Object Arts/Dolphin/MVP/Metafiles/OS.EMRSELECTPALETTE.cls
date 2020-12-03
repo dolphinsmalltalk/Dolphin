@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSELECTPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRSELECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPal' -> 16r8
 	}!
-EMRSELECTPALETTE guid: (GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
-EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSELECTPALETTE guid: (Core.GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
+OS.EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSELECTPALETTE {
 	[helpstring("Palette handle index, background mode only")] DWORD ihPal;
 } EMRSELECTPALETTE;
 '!
-!EMRSELECTPALETTE categoriesForClass!Win32-Structs! !
-!EMRSELECTPALETTE methodsFor!
+!OS.EMRSELECTPALETTE categoriesForClass!Win32-Structs! !
+!OS.EMRSELECTPALETTE methodsFor!
 
 ihPal
 	"Answer the <Integer> value of the receiver's 'ihPal' field."
@@ -35,10 +35,10 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
-!EMRSELECTPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRSELECTPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
+!OS.EMRSELECTPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
+!OS.EMRSELECTPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
 
-!EMRSELECTPALETTE class methodsFor!
+!OS.EMRSELECTPALETTE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSELECTPALETTE structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihPal
-			type: DWORDField new
-			offset: 8.
+		type: DWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SELECTPALETTE}! !
-!EMRSELECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSELECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSELECTPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSELECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSELECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSELECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

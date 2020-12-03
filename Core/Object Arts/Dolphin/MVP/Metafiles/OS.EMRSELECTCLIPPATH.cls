@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSELECTCLIPPATH
+OS.ENHMETARECORD subclass: #'OS.EMRSELECTCLIPPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMode' -> 16r8
 	}!
-EMRSELECTCLIPPATH guid: (GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
-EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSELECTCLIPPATH guid: (Core.GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
+OS.EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSELECTCLIPPATH {
 	DWORD iMode;
 } EMRSELECTCLIPPATH;
 '!
-!EMRSELECTCLIPPATH categoriesForClass!Win32-Structs! !
-!EMRSELECTCLIPPATH methodsFor!
+!OS.EMRSELECTCLIPPATH categoriesForClass!Win32-Structs! !
+!OS.EMRSELECTCLIPPATH methodsFor!
 
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
@@ -35,10 +35,10 @@ iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
-!EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
-!EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
+!OS.EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
+!OS.EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
 
-!EMRSELECTCLIPPATH class methodsFor!
+!OS.EMRSELECTCLIPPATH class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSELECTCLIPPATH structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iMode
-			type: DWORDField new
-			offset: 8.
+		type: DWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -67,7 +67,7 @@ iTypes
 
 	^{EMR_SELECTCLIPPATH. EMR_SETBKMODE. EMR_SETMAPMODE. EMR_SETLAYOUT. EMR_SETPOLYFILLMODE}
 		, {EMR_SETROP2. EMR_SETSTRETCHBLTMODE. EMR_SETICMMODE. EMR_SETTEXTALIGN}! !
-!EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
+OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTORGEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptlOrigin' -> 16r8
 	}!
-EMRSETVIEWPORTORGEX guid: (GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
-EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETVIEWPORTORGEX guid: (Core.GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
+OS.EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETVIEWPORTORGEX {
 	POINTL ptlOrigin;
 } EMRSETVIEWPORTORGEX;
 '!
-!EMRSETVIEWPORTORGEX categoriesForClass!Win32-Structs! !
-!EMRSETVIEWPORTORGEX methodsFor!
+!OS.EMRSETVIEWPORTORGEX categoriesForClass!Win32-Structs! !
+!OS.EMRSETVIEWPORTORGEX methodsFor!
 
 ptlOrigin
 	"Answer the <POINTL> value of the receiver's 'ptlOrigin' field."
@@ -39,10 +39,10 @@ ptlOrigin: aPOINTL
 		from: ##(_OffsetOf_ptlOrigin + 1)
 		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin!**compiled accessors**!public! !
-!EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin:!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin:!**compiled accessors**!public! !
 
-!EMRSETVIEWPORTORGEX class methodsFor!
+!OS.EMRSETVIEWPORTORGEX class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETVIEWPORTORGEX structure.
@@ -59,8 +59,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ptlOrigin
-			type: (StructureField type: POINTL)
-			offset: 8.
+		type: (StructureField type: POINTL)
+		offset: 8.
 	self byteSize: 16!
 
 getFieldNames
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTORGEX. EMR_SETWINDOWORGEX. EMR_SETBRUSHORGEX}! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
 

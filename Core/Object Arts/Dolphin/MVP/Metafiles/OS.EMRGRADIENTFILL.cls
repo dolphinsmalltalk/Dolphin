@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRGRADIENTFILL
+OS.ENHMETARECORD subclass: #'OS.EMRGRADIENTFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nTri' -> 16r1C.
@@ -12,8 +12,8 @@ ENHMETARECORD subclass: #EMRGRADIENTFILL
 		'_OffsetOf_ulMode' -> 16r20.
 		'_OffsetOf_Ver' -> 16r24
 	}!
-EMRGRADIENTFILL guid: (GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
-EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRGRADIENTFILL guid: (Core.GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
+OS.EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -31,8 +31,8 @@ struct tagEMRGRADIENTFILL {
 	TRIVERTEX Ver[1];
 } EMRGRADIENTFILL;
 '!
-!EMRGRADIENTFILL categoriesForClass!Win32-Structs! !
-!EMRGRADIENTFILL methodsFor!
+!OS.EMRGRADIENTFILL categoriesForClass!Win32-Structs! !
+!OS.EMRGRADIENTFILL methodsFor!
 
 nTri
 	"Answer the <Integer> value of the receiver's 'nTri' field."
@@ -55,17 +55,17 @@ nVer: anInteger
 	bytes dwordAtOffset: _OffsetOf_nVer put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 ulMode
@@ -84,7 +84,7 @@ Ver
 	^StructureArray
 		fromAddress: bytes yourAddress + _OffsetOf_Ver
 		length: self nVer
-		elementClass: TRIVERTEX!
+		elementClass: OS.TRIVERTEX!
 
 Ver: aStructureArrayOfTRIVERTEX
 	"Set the receiver's 'Ver' field to the value of the argument, aStructureArrayOfTRIVERTEX"
@@ -95,20 +95,19 @@ Ver: aStructureArrayOfTRIVERTEX
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Ver + 1)
 		to: _OffsetOf_Ver + size
-		startingAt: 1.
-	self nVer: aStructureArrayOfTRIVERTEX size! !
-!EMRGRADIENTFILL categoriesFor: #nTri!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nTri:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nVer!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nVer:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #ulMode!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #ulMode:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #Ver!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #Ver:!**compiled accessors**!public! !
+		startingAt: 1! !
+!OS.EMRGRADIENTFILL categoriesFor: #nTri!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #nTri:!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #nVer!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #nVer:!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #ulMode!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #ulMode:!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #Ver!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesFor: #Ver:!**compiled accessors**!public! !
 
-!EMRGRADIENTFILL class methodsFor!
+!OS.EMRGRADIENTFILL class methodsFor!
 
 defineFields
 	"Define the fields of the EMRGRADIENTFILL structure.
@@ -129,7 +128,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #nVer
 			type: DWORDField new
@@ -151,7 +150,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GRADIENTFILL}! !
-!EMRGRADIENTFILL class categoriesFor: #defineFields!public!template definition! !
-!EMRGRADIENTFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGRADIENTFILL class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGRADIENTFILL class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRGRADIENTFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRGRADIENTFILL class categoriesFor: #iTypes!constants!public! !
 

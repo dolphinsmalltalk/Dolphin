@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r1C.
@@ -13,8 +13,8 @@ ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
 		'_OffsetOf_offBits' -> 16r18.
 		'_OffsetOf_offBmi' -> 16r10
 	}!
-EMRCREATEDIBPATTERNBRUSHPT guid: (GUID fromString: '{ae1203b9-a6b7-4cca-8fc6-408d43a80c8c}')!
-EMRCREATEDIBPATTERNBRUSHPT comment: '<EMRCREATEDIBPATTERNBRUSHPT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEDIBPATTERNBRUSHPT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCREATEDIBPATTERNBRUSHPT guid: (Core.GUID fromString: '{ae1203b9-a6b7-4cca-8fc6-408d43a80c8c}')!
+OS.EMRCREATEDIBPATTERNBRUSHPT comment: '<EMRCREATEDIBPATTERNBRUSHPT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEDIBPATTERNBRUSHPT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagEMRCREATEDIBPATTERNBRUSHPT {
 	[helpstring("Size of the bitmap bits")] DWORD cbBits;
 } EMRCREATEDIBPATTERNBRUSHPT;
 '!
-!EMRCREATEDIBPATTERNBRUSHPT categoriesForClass!Win32-Structs! !
-!EMRCREATEDIBPATTERNBRUSHPT methodsFor!
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesForClass!Win32-Structs! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT methodsFor!
 
 cbBits
 	"Answer the <Integer> value of the receiver's 'cbBits' field."
@@ -95,20 +95,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits:!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi!**compiled accessors**!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi:!**compiled accessors**!public! !
 
-!EMRCREATEDIBPATTERNBRUSHPT class methodsFor!
+!OS.EMRCREATEDIBPATTERNBRUSHPT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCREATEDIBPATTERNBRUSHPT structure.
@@ -129,12 +129,24 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ihBrush type: DWORDField new offset: 8;
-		defineField: #iUsage type: DWORDField new offset: 12;
-		defineField: #offBmi type: DWORDField new offset: 16;
-		defineField: #cbBmi type: DWORDField new offset: 20;
-		defineField: #offBits type: DWORDField new offset: 24;
-		defineField: #cbBits type: DWORDField new offset: 28.
+		defineField: #ihBrush
+			type: DWORDField new
+			offset: 8;
+		defineField: #iUsage
+			type: DWORDField new
+			offset: 12;
+		defineField: #offBmi
+			type: DWORDField new
+			offset: 16;
+		defineField: #cbBmi
+			type: DWORDField new
+			offset: 20;
+		defineField: #offBits
+			type: DWORDField new
+			offset: 24;
+		defineField: #cbBits
+			type: DWORDField new
+			offset: 28.
 	self byteSize: 32!
 
 getFieldNames
@@ -144,7 +156,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEDIBPATTERNBRUSHPT}! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #iTypes!constants!public! !
 

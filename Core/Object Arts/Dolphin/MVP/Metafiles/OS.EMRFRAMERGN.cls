@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRFRAMERGN
+OS.ENHMETARECORD subclass: #'OS.EMRFRAMERGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
@@ -12,8 +12,8 @@ ENHMETARECORD subclass: #EMRFRAMERGN
 		'_OffsetOf_RGNDATA' -> 16r28.
 		'_OffsetOf_szlStroke' -> 16r20
 	}!
-EMRFRAMERGN guid: (GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
-EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRFRAMERGN guid: (Core.GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
+OS.EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -31,8 +31,8 @@ struct tagEMRFRAMERGN {
 	BYTE* RGNDATA;
 } EMRFRAMERGN;
 '!
-!EMRFRAMERGN categoriesForClass!Win32-Structs! !
-!EMRFRAMERGN methodsFor!
+!OS.EMRFRAMERGN categoriesForClass!Win32-Structs! !
+!OS.EMRFRAMERGN methodsFor!
 
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
@@ -55,9 +55,9 @@ ihBrush: anInteger
 	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -65,7 +65,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 RGNDATA
@@ -88,7 +88,7 @@ RGNDATA: anExternalArray
 szlStroke
 	"Answer the <SIZE> value of the receiver's 'szlStroke' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlStroke!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlStroke!
 
 szlStroke: aSIZE
 	"Set the receiver's 'szlStroke' field to the value of the argument, aSIZE"
@@ -96,20 +96,20 @@ szlStroke: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlStroke + 1)
-		to: ##(_OffsetOf_szlStroke + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlStroke + SIZEL basicByteSize)
 		startingAt: 1! !
-!EMRFRAMERGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #szlStroke!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #szlStroke:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #ihBrush!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #szlStroke!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesFor: #szlStroke:!**compiled accessors**!public! !
 
-!EMRFRAMERGN class methodsFor!
+!OS.EMRFRAMERGN class methodsFor!
 
 defineFields
 	"Define the fields of the EMRFRAMERGN structure.
@@ -130,7 +130,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cbRgnData
 			type: DWORDField new
@@ -139,7 +139,7 @@ defineFields
 			type: DWORDField new
 			offset: 28;
 		defineField: #szlStroke
-			type: (StructureField type: SIZE)
+			type: (StructureField type: SIZEL)
 			offset: 32;
 		defineField: #RGNDATA
 			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)
@@ -152,7 +152,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FRAMERGN}! !
-!EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRFRAMERGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRFRAMERGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRFRAMERGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRFRAMERGN class categoriesFor: #iTypes!constants!public! !
 

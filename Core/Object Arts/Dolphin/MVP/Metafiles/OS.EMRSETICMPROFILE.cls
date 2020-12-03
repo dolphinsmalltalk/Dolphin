@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETICMPROFILE
+OS.ENHMETARECORD subclass: #'OS.EMRSETICMPROFILE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r10.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRSETICMPROFILE
 		'_OffsetOf_Data' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16r8
 	}!
-EMRSETICMPROFILE guid: (GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
-EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETICMPROFILE guid: (Core.GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
+OS.EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagEMRSETICMPROFILE {
 	[helpstring("Array size is cbName + cbData")] BYTE Data[1];
 } EMRSETICMPROFILE;
 '!
-!EMRSETICMPROFILE categoriesForClass!Win32-Structs! !
-!EMRSETICMPROFILE methodsFor!
+!OS.EMRSETICMPROFILE categoriesForClass!Win32-Structs! !
+!OS.EMRSETICMPROFILE methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -80,17 +80,17 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbName:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #Data!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #dataLength!accessing!public! !
-!EMRSETICMPROFILE categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #cbName:!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #dataLength!accessing!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesFor: #dwFlags:!**compiled accessors**!public! !
 
-!EMRSETICMPROFILE class methodsFor!
+!OS.EMRSETICMPROFILE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETICMPROFILE structure.
@@ -130,7 +130,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETICMPROFILEA. EMR_SETICMPROFILEW}! !
-!EMRSETICMPROFILE class categoriesFor: #defineFields!public!template definition! !
-!EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETICMPROFILE class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
 

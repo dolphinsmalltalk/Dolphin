@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
+OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_text' -> 16r4C
 	}!
-EMREXTTEXTOUTA guid: (GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
-EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXTTEXTOUTA guid: (Core.GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
+OS.EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMREXTTEXTOUTA {
 	[helpstring("This is followed by the string and spacing array")] EMRTEXT EMRTEXT;
 } EMREXTTEXTOUTA;
 '!
-!EMREXTTEXTOUTA categoriesForClass!Win32-Structs! !
-!EMREXTTEXTOUTA methodsFor!
+!OS.EMREXTTEXTOUTA categoriesForClass!Win32-Structs! !
+!OS.EMREXTTEXTOUTA methodsFor!
 
 text
 	"Answer the receiver's text field as a Smalltalk object."
@@ -46,10 +46,10 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes byteAtOffset: _OffsetOf_text + size put: 0! !
-!EMREXTTEXTOUTA categoriesFor: #text!accessing!public! !
-!EMREXTTEXTOUTA categoriesFor: #text:!accessing!public! !
+!OS.EMREXTTEXTOUTA categoriesFor: #text!accessing!public! !
+!OS.EMREXTTEXTOUTA categoriesFor: #text:!accessing!public! !
 
-!EMREXTTEXTOUTA class methodsFor!
+!OS.EMREXTTEXTOUTA class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTTEXTOUTA structure.
@@ -67,7 +67,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTTEXTOUTA}! !
-!EMREXTTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
-!EMREXTTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTTEXTOUTA class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
+!OS.EMREXTTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXTTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

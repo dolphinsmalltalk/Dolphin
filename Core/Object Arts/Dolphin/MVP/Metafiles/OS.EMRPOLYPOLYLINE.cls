@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPOLYPOLYLINE
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aPolyCounts' -> 16r20.
@@ -12,8 +12,8 @@ ENHMETARECORD subclass: #EMRPOLYPOLYLINE
 		'_OffsetOf_nPolys' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRPOLYPOLYLINE guid: (GUID fromString: '{b8dbb77d-883a-49cc-ba50-d75d9d773cdb}')!
-EMRPOLYPOLYLINE comment: '<EMRPOLYPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPOLYPOLYLINE guid: (Core.GUID fromString: '{b8dbb77d-883a-49cc-ba50-d75d9d773cdb}')!
+OS.EMRPOLYPOLYLINE comment: '<EMRPOLYPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -31,8 +31,8 @@ struct tagEMRPOLYPOLYLINE {
 	[helpstring("Array of points")] POINTL* aptl;
 } EMRPOLYPOLYLINE;
 '!
-!EMRPOLYPOLYLINE categoriesForClass!Win32-Structs! !
-!EMRPOLYPOLYLINE methodsFor!
+!OS.EMRPOLYPOLYLINE categoriesForClass!Win32-Structs! !
+!OS.EMRPOLYPOLYLINE methodsFor!
 
 aPolyCounts
 	"Answer the <DWORDArray> value of the receiver's 'aPolyCounts' field."
@@ -48,20 +48,19 @@ aPolyCounts: aDWORDArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
-		startingAt: 1.
-	self nPolys: aDWORDArray size!
+		startingAt: 1!
 
 aptl
 	"Answer the receiver's aptl field as a Smalltalk object."
 
 	"Implementation Note: Custom accessor needed because the offset will vary depending on the number of elements in aPolyCounts"
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + self aptlOffset
 		length: self cptl
 		elementClass: POINTL!
 
-aptl: anObject 
+aptl: anObject
 	"Set the receiver's aptl field to the value of anObject."
 
 	"Implementation Note: Custom accessor needed because the offset will vary depending on the number of elements in aPolyCounts"
@@ -69,7 +68,7 @@ aptl: anObject
 	| size offset |
 	size := anObject byteSize min: self cptl * ##(POINTL basicByteSize).
 	offset := self aptlOffset.
-	anObject 
+	anObject
 		replaceBytesOf: bytes
 		from: offset + 1
 		to: offset + size
@@ -99,31 +98,31 @@ nPolys: anInteger
 	bytes dwordAtOffset: _OffsetOf_nPolys put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRPOLYPOLYLINE categoriesFor: #aPolyCounts!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptl!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptl:!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptlOffset!private! !
-!EMRPOLYPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #nPolys!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #nPolys:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #aPolyCounts!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #aptl!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #aptl:!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #aptlOffset!private! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #nPolys!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #nPolys:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRPOLYPOLYLINE class methodsFor!
+!OS.EMRPOLYPOLYLINE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPOLYPOLYLINE structure.
@@ -144,7 +143,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #nPolys
 			type: DWORDField new
@@ -165,7 +164,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYPOLYLINE. EMR_POLYPOLYGON}! !
-!EMRPOLYPOLYLINE class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYPOLYLINE class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
 

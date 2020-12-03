@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
+OS.ENHMETARECORD subclass: #'OS.EMRSETDIBITSTODEVICE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
@@ -21,8 +21,8 @@ ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r24
 	}!
-EMRSETDIBITSTODEVICE guid: (GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
-EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETDIBITSTODEVICE guid: (Core.GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
+OS.EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -49,8 +49,8 @@ struct tagEMRSETDIBITSTODEVICE {
 	DWORD cScans;
 } EMRSETDIBITSTODEVICE;
 '!
-!EMRSETDIBITSTODEVICE categoriesForClass!Win32-Structs! !
-!EMRSETDIBITSTODEVICE methodsFor!
+!OS.EMRSETDIBITSTODEVICE categoriesForClass!Win32-Structs! !
+!OS.EMRSETDIBITSTODEVICE methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -143,9 +143,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -153,7 +153,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -195,36 +195,36 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cScans!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cScans:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #iStartScan!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #iStartScan:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRSETDIBITSTODEVICE categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cScans!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cScans:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #iStartScan!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #iStartScan:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRSETDIBITSTODEVICE class methodsFor!
+!OS.EMRSETDIBITSTODEVICE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETDIBITSTODEVICE structure.
@@ -254,7 +254,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -304,7 +304,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETDIBITSTODEVICE}! !
-!EMRSETDIBITSTODEVICE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETDIBITSTODEVICE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETDIBITSTODEVICE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETDIBITSTODEVICE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETDIBITSTODEVICE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETDIBITSTODEVICE class categoriesFor: #iTypes!constants!public! !
 

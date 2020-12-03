@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRBITBLT
+OS.ENHMETARECORD subclass: #'OS.EMRBITBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -22,8 +22,8 @@ ENHMETARECORD subclass: #EMRBITBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMRBITBLT guid: (GUID fromString: '{d5466d52-7472-4ffd-bd6b-49157e55918d}')!
-EMRBITBLT comment: '<EMRBITBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRBITBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRBITBLT guid: (Core.GUID fromString: '{d5466d52-7472-4ffd-bd6b-49157e55918d}')!
+OS.EMRBITBLT comment: '<EMRBITBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRBITBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -51,8 +51,8 @@ struct tagEMRBITBLT {
 	[helpstring("Size of the source bitmap bits")] DWORD cbBitsSrc;
 } EMRBITBLT;
 '!
-!EMRBITBLT categoriesForClass!Win32-Structs! !
-!EMRBITBLT methodsFor!
+!OS.EMRBITBLT categoriesForClass!Win32-Structs! !
+!OS.EMRBITBLT methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -145,9 +145,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -155,7 +155,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -211,38 +211,38 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRBITBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRBITBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRBITBLT class methodsFor!
+!OS.EMRBITBLT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRBITBLT structure.
@@ -272,21 +272,51 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rclBounds type: (StructureField type: RECT) offset: 8;
-		defineField: #xDest type: SDWORDField new offset: 24;
-		defineField: #yDest type: SDWORDField new offset: 28;
-		defineField: #cxDest type: SDWORDField new offset: 32;
-		defineField: #cyDest type: SDWORDField new offset: 36;
-		defineField: #dwRop type: DWORDField new offset: 40;
-		defineField: #xSrc type: SDWORDField new offset: 44;
-		defineField: #ySrc type: SDWORDField new offset: 48;
-		defineField: #xformSrc type: (StructureField type: XFORM) offset: 52;
-		defineField: #crBkColorSrc type: DWORDField new offset: 76;
-		defineField: #iUsageSrc type: DWORDField new offset: 80;
-		defineField: #offBmiSrc type: DWORDField new offset: 84;
-		defineField: #cbBmiSrc type: DWORDField new offset: 88;
-		defineField: #offBitsSrc type: DWORDField new offset: 92;
-		defineField: #cbBitsSrc type: DWORDField new offset: 96.
+		defineField: #rclBounds
+			type: (StructureField type: RECTL)
+			offset: 8;
+		defineField: #xDest
+			type: SDWORDField new
+			offset: 24;
+		defineField: #yDest
+			type: SDWORDField new
+			offset: 28;
+		defineField: #cxDest
+			type: SDWORDField new
+			offset: 32;
+		defineField: #cyDest
+			type: SDWORDField new
+			offset: 36;
+		defineField: #dwRop
+			type: DWORDField new
+			offset: 40;
+		defineField: #xSrc
+			type: SDWORDField new
+			offset: 44;
+		defineField: #ySrc
+			type: SDWORDField new
+			offset: 48;
+		defineField: #xformSrc
+			type: (StructureField type: XFORM)
+			offset: 52;
+		defineField: #crBkColorSrc
+			type: DWORDField new
+			offset: 76;
+		defineField: #iUsageSrc
+			type: DWORDField new
+			offset: 80;
+		defineField: #offBmiSrc
+			type: DWORDField new
+			offset: 84;
+		defineField: #cbBmiSrc
+			type: DWORDField new
+			offset: 88;
+		defineField: #offBitsSrc
+			type: DWORDField new
+			offset: 92;
+		defineField: #cbBitsSrc
+			type: DWORDField new
+			offset: 96.
 	self byteSize: 100!
 
 getFieldNames
@@ -296,7 +326,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_BITBLT}! !
-!EMRBITBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRBITBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRBITBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRBITBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRBITBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRBITBLT class categoriesFor: #iTypes!constants!public! !
 

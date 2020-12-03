@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Metafiles'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.
 Copyright (c) Object Arts Ltd. 2010.'.
@@ -9,28 +9,28 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{EnhancedMetafileRecordTypes}
-	#{ENHMETAHEADER}
-	#{ENHMETARECORD}
-	#{Metafile}
+	#{Graphics.Metafile}
+	#{OS.EnhancedMetafileRecordTypes}
+	#{OS.ENHMETAHEADER}
+	#{OS.ENHMETARECORD}
 ).
 
 package setMethodNames: #(
-	#(#{Clipboard} #getMetafile)
-	#(#{Clipboard} #getMetafileIfNone:)
-	#(#{GDILibrary} #closeEnhMetaFile:)
-	#(#{GDILibrary} #copyEnhMetaFile:lpszFile:)
-	#(#{GDILibrary} #createEnhMetaFile:lpFileName:lpRect:lpDescription:)
-	#(#{GDILibrary} #deleteEnhMetaFile:)
-	#(#{GDILibrary} #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:)
-	#(#{GDILibrary} #getEnhMetaFile:)
-	#(#{GDILibrary} #getEnhMetaFileBits:cbBuffer:lpbBuffer:)
-	#(#{GDILibrary} #getEnhMetaFileDescription:cchBuffer:lpszDescription:)
-	#(#{GDILibrary} #getEnhMetaFileHeader:cbBuffer:lpemnh:)
-	#(#{GDILibrary} #getEnhMetaFilePaletteEntries:cbEntries:lppe:)
-	#(#{GDILibrary} #playEnhMetaFile:hemf:lpRect:)
-	#(#{GDILibrary} #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:)
-	#(#{GDILibrary} #setEnhMetaFileBits:lpData:)
+	#(#{OS.GDILibrary} #closeEnhMetaFile:)
+	#(#{OS.GDILibrary} #copyEnhMetaFile:lpszFile:)
+	#(#{OS.GDILibrary} #createEnhMetaFile:lpFileName:lpRect:lpDescription:)
+	#(#{OS.GDILibrary} #deleteEnhMetaFile:)
+	#(#{OS.GDILibrary} #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:)
+	#(#{OS.GDILibrary} #getEnhMetaFile:)
+	#(#{OS.GDILibrary} #getEnhMetaFileBits:cbBuffer:lpbBuffer:)
+	#(#{OS.GDILibrary} #getEnhMetaFileDescription:cchBuffer:lpszDescription:)
+	#(#{OS.GDILibrary} #getEnhMetaFileHeader:cbBuffer:lpemnh:)
+	#(#{OS.GDILibrary} #getEnhMetaFilePaletteEntries:cbEntries:lppe:)
+	#(#{OS.GDILibrary} #playEnhMetaFile:hemf:lpRect:)
+	#(#{OS.GDILibrary} #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:)
+	#(#{OS.GDILibrary} #setEnhMetaFileBits:lpData:)
+	#(#{UI.Clipboard} #getMetafile)
+	#(#{UI.Clipboard} #getMetafileIfNone:)
 ).
 
 package setPrerequisites: #(
@@ -43,7 +43,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #EnhancedMetafileRecordTypes
+Kernel.SharedPool subclass: #'OS.EnhancedMetafileRecordTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -173,16 +173,22 @@ SharedPool subclass: #EnhancedMetafileRecordTypes
 		'EMR_TRANSPARENTBLT' -> 16r74.
 		'EMR_WIDENPATH' -> 16r42
 	}!
-ExternalStructure subclass: #ENHMETARECORD
+Graphics.Image subclass: #'Graphics.Metafile'
+	instanceVariableNames: 'header'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'OS.ENHMETARECORD'
 	instanceVariableNames: ''
 	classVariableNames: 'RecordTypes'
-	imports: #(#{EnhancedMetafileRecordTypes})
+	imports: #(#{OS.EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nSize' -> 16r4
 	}!
-ENHMETARECORD subclass: #ENHMETAHEADER
+OS.ENHMETARECORD subclass: #'OS.ENHMETAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -206,36 +212,10 @@ ENHMETARECORD subclass: #ENHMETAHEADER
 		'_OffsetOf_szlMicrometers' -> 16r64.
 		'_OffsetOf_szlMillimeters' -> 16r50
 	}!
-Image subclass: #Metafile
-	instanceVariableNames: 'header'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!Clipboard methodsFor!
-
-getMetafile
-	"Answer a <Metafile> copied from the clipboard Enhanced Metafile on the clipboard, or raise an 
-	exception if no metafile is available."
-
-	^self getMetafileIfNone: [self errorFormatNotAvailable: #Metafile]!
-
-getMetafileIfNone: exceptionHandler 
-	"Answer a Metafile representing the Enhanced Metafile currently on the clipboard, or if none
-	the result of evaluating the <niladicValuable> exceptionHandler. Note that because the
-	clipboard retains ownership of the metafile, we must immediately copy it."
-
-	^self apply: 
-			[| hemf |
-			hemf := UserLibrary default getClipboardData: CF_ENHMETAFILE.
-			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
-!Clipboard categoriesFor: #getMetafile!accessing!public! !
-!Clipboard categoriesFor: #getMetafileIfNone:!accessing!public! !
-
-!GDILibrary methodsFor!
+!OS.GDILibrary methodsFor!
 
 closeEnhMetaFile: hdc
 	"Invoke the CloseEnhMetaFile() function of the module wrapped by the receiver.
@@ -290,9 +270,9 @@ enumEnhMetaFile: hdc hemf: hemf lpEnhMetaFunc: lpEnhMetaFunc lpData: lpData lpRe
 			HENHMETAFILE hemf,
 			CALLBACK lpEnhMetaFunc,
 			LPVOID lpData,
-			RECT* lpRect);"
+			RECTL* lpRect);"
 
-	<stdcall: bool EnumEnhMetaFile handle handle void* void* RECT*>
+	<stdcall: bool EnumEnhMetaFile handle handle void* void* RECTL*>
 	^self invalidCall: _failureCode!
 
 getEnhMetaFile: lpszMetaFile
@@ -388,19 +368,39 @@ setEnhMetaFileBits: cbBuffer lpData: lpData
 
 	<stdcall: handle SetEnhMetaFileBits dword byte*>
 	^self invalidCall: _failureCode! !
-!GDILibrary categoriesFor: #closeEnhMetaFile:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #deleteEnhMetaFile:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #getEnhMetaFile:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #getEnhMetaFileBits:cbBuffer:lpbBuffer:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #getEnhMetaFileDescription:cchBuffer:lpszDescription:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #getEnhMetaFileHeader:cbBuffer:lpemnh:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #getEnhMetaFilePaletteEntries:cbEntries:lppe:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #playEnhMetaFile:hemf:lpRect:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:!public!win32 functions-metafile! !
-!GDILibrary categoriesFor: #setEnhMetaFileBits:lpData:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #closeEnhMetaFile:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #deleteEnhMetaFile:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #getEnhMetaFile:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #getEnhMetaFileBits:cbBuffer:lpbBuffer:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #getEnhMetaFileDescription:cchBuffer:lpszDescription:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #getEnhMetaFileHeader:cbBuffer:lpemnh:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #getEnhMetaFilePaletteEntries:cbEntries:lppe:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #playEnhMetaFile:hemf:lpRect:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesFor: #setEnhMetaFileBits:lpData:!public!win32 functions-metafile! !
+
+!UI.Clipboard methodsFor!
+
+getMetafile
+	"Answer a <Metafile> copied from the clipboard Enhanced Metafile on the clipboard, or raise an 
+	exception if no metafile is available."
+
+	^self getMetafileIfNone: [self errorFormatNotAvailable: #Metafile]!
+
+getMetafileIfNone: exceptionHandler
+	"Answer a Metafile representing the Enhanced Metafile currently on the clipboard, or if none
+	the result of evaluating the <niladicValuable> exceptionHandler. Note that because the
+	clipboard retains ownership of the metafile, we must immediately copy it."
+
+	^self apply: 
+			[| hemf |
+			hemf := UserLibrary default getClipboardData: CF_ENHMETAFILE.
+			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
+!UI.Clipboard categoriesFor: #getMetafile!accessing!public! !
+!UI.Clipboard categoriesFor: #getMetafileIfNone:!accessing!public! !
 
 "End of package definition"!
 

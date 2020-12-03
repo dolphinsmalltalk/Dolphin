@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #EXTLOGPEN
+External.Structure subclass: #'OS.EXTLOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elpBrushStyle' -> 16r8.
@@ -14,8 +14,8 @@ ExternalStructure subclass: #EXTLOGPEN
 		'_OffsetOf_elpStyleEntry' -> 16r18.
 		'_OffsetOf_elpWidth' -> 16r4
 	}!
-EXTLOGPEN guid: (GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
-EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EXTLOGPEN guid: (Core.GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
+OS.EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -34,8 +34,8 @@ struct tagEXTLOGPEN {
 	DWORD* elpStyleEntry;
 } EXTLOGPEN;
 '!
-!EXTLOGPEN categoriesForClass!Win32-Structs! !
-!EXTLOGPEN methodsFor!
+!OS.EXTLOGPEN categoriesForClass!Win32-Structs! !
+!OS.EXTLOGPEN methodsFor!
 
 elpBrushStyle
 	"Answer the <Integer> value of the receiver's 'elpBrushStyle' field."
@@ -113,22 +113,22 @@ elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
-!EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpColor:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpHatch!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpHatch:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpNumEntries!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpNumEntries:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpPenStyle!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpPenStyle:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpStyleEntry!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpStyleEntry:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpWidth!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpWidth:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpColor:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpHatch!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpHatch:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpNumEntries!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpNumEntries:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpPenStyle!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpPenStyle:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpStyleEntry!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpStyleEntry:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpWidth!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesFor: #elpWidth:!**compiled accessors**!public! !
 
-!EXTLOGPEN class methodsFor!
+!OS.EXTLOGPEN class methodsFor!
 
 defineFields
 	"Define the fields of the EXTLOGPEN structure.
@@ -173,6 +173,6 @@ defineFields
 
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
-!EXTLOGPEN class categoriesFor: #defineFields!public!template definition! !
-!EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXTLOGPEN class categoriesFor: #defineFields!public!template definition! !
+!OS.EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

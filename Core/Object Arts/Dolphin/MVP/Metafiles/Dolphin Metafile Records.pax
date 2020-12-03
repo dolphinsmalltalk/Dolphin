@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Metafile Records'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk metafile extensions for handling individual metafile records. Allows diagnostic tracing, and also manipulation of the individual records.
 Copyright (c) Object Arts Ltd. 2010.'.
@@ -9,88 +9,88 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{CIEXYZ}
-	#{CIEXYZTRIPLE}
-	#{COLORADJUSTMENT}
-	#{EMRALPHABLEND}
-	#{EMRANGLEARC}
-	#{EMRARC}
-	#{EMRBITBLT}
-	#{EMRCOLORCORRECTPALETTE}
-	#{EMRCOLORMATCHTOTARGET}
-	#{EMRCREATEBRUSHINDIRECT}
-	#{EMRCREATECOLORSPACE}
-	#{EMRCREATECOLORSPACEW}
-	#{EMRCREATEDIBPATTERNBRUSHPT}
-	#{EMRCREATEMONOBRUSH}
-	#{EMRCREATEPALETTE}
-	#{EMRCREATEPEN}
-	#{EMRELLIPSE}
-	#{EMREOF}
-	#{EMREXCLUDECLIPRECT}
-	#{EMREXTCREATEFONTINDIRECTW}
-	#{EMREXTCREATEPEN}
-	#{EMREXTFLOODFILL}
-	#{EMREXTSELECTCLIPRGN}
-	#{EMREXTTEXTOUT}
-	#{EMREXTTEXTOUTA}
-	#{EMREXTTEXTOUTW}
-	#{EMRFILLPATH}
-	#{EMRFILLRGN}
-	#{EMRFRAMERGN}
-	#{EMRGDICOMMENT}
-	#{EMRGLSBOUNDEDRECORD}
-	#{EMRGLSRECORD}
-	#{EMRGRADIENTFILL}
-	#{EMRINVERTRGN}
-	#{EMRLINETO}
-	#{EMRMASKBLT}
-	#{EMRMODIFYWORLDTRANSFORM}
-	#{EMROFFSETCLIPRGN}
-	#{EMRPIXELFORMAT}
-	#{EMRPLGBLT}
-	#{EMRPOLYDRAW}
-	#{EMRPOLYDRAW16}
-	#{EMRPOLYLINE}
-	#{EMRPOLYLINE16}
-	#{EMRPOLYPOLYLINE}
-	#{EMRPOLYPOLYLINE16}
-	#{EMRPOLYTEXTOUTA}
-	#{EMRRESIZEPALETTE}
-	#{EMRRESTOREDC}
-	#{EMRROUNDRECT}
-	#{EMRSCALEVIEWPORTEXTEX}
-	#{EMRSELECTCLIPPATH}
-	#{EMRSELECTOBJECT}
-	#{EMRSELECTPALETTE}
-	#{EMRSETARCDIRECTION}
-	#{EMRSETBKCOLOR}
-	#{EMRSETCOLORADJUSTMENT}
-	#{EMRSETCOLORSPACE}
-	#{EMRSETDIBITSTODEVICE}
-	#{EMRSETICMPROFILE}
-	#{EMRSETMAPPERFLAGS}
-	#{EMRSETMITERLIMIT}
-	#{EMRSETPALETTEENTRIES}
-	#{EMRSETPIXELV}
-	#{EMRSETVIEWPORTEXTEX}
-	#{EMRSETVIEWPORTORGEX}
-	#{EMRSETWORLDTRANSFORM}
-	#{EMRSTRETCHBLT}
-	#{EMRSTRETCHDIBITS}
-	#{EMRTEXT}
-	#{EMRTRANSPARENTBLT}
-	#{EXTLOGFONTW}
-	#{EXTLOGPEN}
-	#{LOGCOLORSPACE}
-	#{LOGCOLORSPACEW}
-	#{PIXELFORMATDESCRIPTOR}
-	#{POINTS}
-	#{XFORM}
+	#{OS.CIEXYZ}
+	#{OS.CIEXYZTRIPLE}
+	#{OS.COLORADJUSTMENT}
+	#{OS.EMRALPHABLEND}
+	#{OS.EMRANGLEARC}
+	#{OS.EMRARC}
+	#{OS.EMRBITBLT}
+	#{OS.EMRCOLORCORRECTPALETTE}
+	#{OS.EMRCOLORMATCHTOTARGET}
+	#{OS.EMRCREATEBRUSHINDIRECT}
+	#{OS.EMRCREATECOLORSPACE}
+	#{OS.EMRCREATECOLORSPACEW}
+	#{OS.EMRCREATEDIBPATTERNBRUSHPT}
+	#{OS.EMRCREATEMONOBRUSH}
+	#{OS.EMRCREATEPALETTE}
+	#{OS.EMRCREATEPEN}
+	#{OS.EMRELLIPSE}
+	#{OS.EMREOF}
+	#{OS.EMREXCLUDECLIPRECT}
+	#{OS.EMREXTCREATEFONTINDIRECTW}
+	#{OS.EMREXTCREATEPEN}
+	#{OS.EMREXTFLOODFILL}
+	#{OS.EMREXTSELECTCLIPRGN}
+	#{OS.EMREXTTEXTOUT}
+	#{OS.EMREXTTEXTOUTA}
+	#{OS.EMREXTTEXTOUTW}
+	#{OS.EMRFILLPATH}
+	#{OS.EMRFILLRGN}
+	#{OS.EMRFRAMERGN}
+	#{OS.EMRGDICOMMENT}
+	#{OS.EMRGLSBOUNDEDRECORD}
+	#{OS.EMRGLSRECORD}
+	#{OS.EMRGRADIENTFILL}
+	#{OS.EMRINVERTRGN}
+	#{OS.EMRLINETO}
+	#{OS.EMRMASKBLT}
+	#{OS.EMRMODIFYWORLDTRANSFORM}
+	#{OS.EMROFFSETCLIPRGN}
+	#{OS.EMRPIXELFORMAT}
+	#{OS.EMRPLGBLT}
+	#{OS.EMRPOLYDRAW}
+	#{OS.EMRPOLYDRAW16}
+	#{OS.EMRPOLYLINE}
+	#{OS.EMRPOLYLINE16}
+	#{OS.EMRPOLYPOLYLINE}
+	#{OS.EMRPOLYPOLYLINE16}
+	#{OS.EMRPOLYTEXTOUTA}
+	#{OS.EMRRESIZEPALETTE}
+	#{OS.EMRRESTOREDC}
+	#{OS.EMRROUNDRECT}
+	#{OS.EMRSCALEVIEWPORTEXTEX}
+	#{OS.EMRSELECTCLIPPATH}
+	#{OS.EMRSELECTOBJECT}
+	#{OS.EMRSELECTPALETTE}
+	#{OS.EMRSETARCDIRECTION}
+	#{OS.EMRSETBKCOLOR}
+	#{OS.EMRSETCOLORADJUSTMENT}
+	#{OS.EMRSETCOLORSPACE}
+	#{OS.EMRSETDIBITSTODEVICE}
+	#{OS.EMRSETICMPROFILE}
+	#{OS.EMRSETMAPPERFLAGS}
+	#{OS.EMRSETMITERLIMIT}
+	#{OS.EMRSETPALETTEENTRIES}
+	#{OS.EMRSETPIXELV}
+	#{OS.EMRSETVIEWPORTEXTEX}
+	#{OS.EMRSETVIEWPORTORGEX}
+	#{OS.EMRSETWORLDTRANSFORM}
+	#{OS.EMRSTRETCHBLT}
+	#{OS.EMRSTRETCHDIBITS}
+	#{OS.EMRTEXT}
+	#{OS.EMRTRANSPARENTBLT}
+	#{OS.EXTLOGFONTW}
+	#{OS.EXTLOGPEN}
+	#{OS.LOGCOLORSPACE}
+	#{OS.LOGCOLORSPACEW}
+	#{OS.PIXELFORMATDESCRIPTOR}
+	#{OS.POINTS}
+	#{OS.XFORM}
 ).
 
 package setMethodNames: #(
-	#(#{ENHMETARECORD class} #fromAddress:)
+	#(#{OS.ENHMETARECORD class} #fromAddress:)
 ).
 
 package setPrerequisites: #(
@@ -105,30 +105,30 @@ package!
 
 "Class Definitions"!
 
-ExternalStructure subclass: #CIEXYZ
+External.Structure subclass: #'OS.CIEXYZ'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ciexyzX' -> 16r0.
 		'_OffsetOf_ciexyzY' -> 16r4.
 		'_OffsetOf_ciexyzZ' -> 16r8
 	}!
-ExternalStructure subclass: #CIEXYZTRIPLE
+External.Structure subclass: #'OS.CIEXYZTRIPLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ciexyzBlue' -> 16r18.
 		'_OffsetOf_ciexyzGreen' -> 16rC.
 		'_OffsetOf_ciexyzRed' -> 16r0
 	}!
-ExternalStructure subclass: #COLORADJUSTMENT
+External.Structure subclass: #'OS.COLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_caBlueGamma' -> 16rA.
@@ -144,10 +144,10 @@ ExternalStructure subclass: #COLORADJUSTMENT
 		'_OffsetOf_caReferenceWhite' -> 16rE.
 		'_OffsetOf_caSize' -> 16r0
 	}!
-ExternalStructure subclass: #EMRTEXT
+External.Structure subclass: #'OS.EMRTEXT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fOptions' -> 16r10.
@@ -157,10 +157,10 @@ ExternalStructure subclass: #EMRTEXT
 		'_OffsetOf_ptlReference' -> 16r0.
 		'_OffsetOf_rcl' -> 16r14
 	}!
-ExternalStructure subclass: #EXTLOGFONTW
+External.Structure subclass: #'OS.EXTLOGFONTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elfCulture' -> 16r130.
@@ -174,10 +174,10 @@ ExternalStructure subclass: #EXTLOGFONTW
 		'_OffsetOf_elfVendorId' -> 16r12C.
 		'_OffsetOf_elfVersion' -> 16r11C
 	}!
-ExternalStructure subclass: #EXTLOGPEN
+External.Structure subclass: #'OS.EXTLOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elpBrushStyle' -> 16r8.
@@ -188,10 +188,10 @@ ExternalStructure subclass: #EXTLOGPEN
 		'_OffsetOf_elpStyleEntry' -> 16r18.
 		'_OffsetOf_elpWidth' -> 16r4
 	}!
-ExternalStructure subclass: #LOGCOLORSPACE
+External.Structure subclass: #'OS.LOGCOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lcsCSType' -> 16rC.
@@ -205,10 +205,10 @@ ExternalStructure subclass: #LOGCOLORSPACE
 		'_OffsetOf_lcsSize' -> 16r8.
 		'_OffsetOf_lcsVersion' -> 16r4
 	}!
-ExternalStructure subclass: #LOGCOLORSPACEW
+External.Structure subclass: #'OS.LOGCOLORSPACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lcsCSType' -> 16rC.
@@ -222,10 +222,10 @@ ExternalStructure subclass: #LOGCOLORSPACEW
 		'_OffsetOf_lcsSize' -> 16r8.
 		'_OffsetOf_lcsVersion' -> 16r4
 	}!
-ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
+External.Structure subclass: #'OS.PIXELFORMATDESCRIPTOR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bReserved' -> 16r1B.
@@ -255,10 +255,10 @@ ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 		'_OffsetOf_nSize' -> 16r0.
 		'_OffsetOf_nVersion' -> 16r2
 	}!
-ExternalStructure subclass: #XFORM
+External.Structure subclass: #'OS.XFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_eDx' -> 16r10.
@@ -268,10 +268,10 @@ ExternalStructure subclass: #XFORM
 		'_OffsetOf_eM21' -> 16r8.
 		'_OffsetOf_eM22' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRALPHABLEND
+OS.ENHMETARECORD subclass: #'OS.EMRALPHABLEND'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -292,10 +292,10 @@ ENHMETARECORD subclass: #EMRALPHABLEND
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-ENHMETARECORD subclass: #EMRANGLEARC
+OS.ENHMETARECORD subclass: #'OS.EMRANGLEARC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_eStartAngle' -> 16r14.
@@ -303,20 +303,20 @@ ENHMETARECORD subclass: #EMRANGLEARC
 		'_OffsetOf_nRadius' -> 16r10.
 		'_OffsetOf_ptlCenter' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRARC
+OS.ENHMETARECORD subclass: #'OS.EMRARC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptlEnd' -> 16r20.
 		'_OffsetOf_ptlStart' -> 16r18.
 		'_OffsetOf_rclBox' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRBITBLT
+OS.ENHMETARECORD subclass: #'OS.EMRBITBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -335,10 +335,10 @@ ENHMETARECORD subclass: #EMRBITBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRCOLORCORRECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPalette' -> 16r8.
@@ -346,10 +346,10 @@ ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 		'_OffsetOf_nPalEntries' -> 16r10.
 		'_OffsetOf_nReserved' -> 16r14
 	}!
-ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
+OS.ENHMETARECORD subclass: #'OS.EMRCOLORMATCHTOTARGET'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r14.
@@ -358,28 +358,28 @@ ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 		'_OffsetOf_dwAction' -> 16r8.
 		'_OffsetOf_dwFlags' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRCREATEBRUSHINDIRECT
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEBRUSHINDIRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihBrush' -> 16r8.
 		'_OffsetOf_lb' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRCREATECOLORSPACE
+OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihCS' -> 16r8.
 		'_OffsetOf_lcs' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
+OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r158.
@@ -388,10 +388,10 @@ ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 		'_OffsetOf_ihCS' -> 16r8.
 		'_OffsetOf_lcs' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r1C.
@@ -401,10 +401,10 @@ ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
 		'_OffsetOf_offBits' -> 16r18.
 		'_OffsetOf_offBmi' -> 16r10
 	}!
-ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEMONOBRUSH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r1C.
@@ -414,63 +414,63 @@ ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 		'_OffsetOf_offBits' -> 16r18.
 		'_OffsetOf_offBmi' -> 16r10
 	}!
-ENHMETARECORD subclass: #EMRCREATEPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPal' -> 16r8.
 		'_OffsetOf_lgpl' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRCREATEPEN
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPen' -> 16r8.
 		'_OffsetOf_lopn' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRELLIPSE
+OS.ENHMETARECORD subclass: #'OS.EMRELLIPSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBox' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMREOF
+OS.ENHMETARECORD subclass: #'OS.EMREOF'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nPalEntries' -> 16r8.
 		'_OffsetOf_nSizeLast' -> 16r10.
 		'_OffsetOf_offPalEntries' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
+OS.ENHMETARECORD subclass: #'OS.EMREXCLUDECLIPRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclClip' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
+OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elfw' -> 16rC.
 		'_OffsetOf_ihFont' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMREXTCREATEPEN
+OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r18.
@@ -480,30 +480,30 @@ ENHMETARECORD subclass: #EMREXTCREATEPEN
 		'_OffsetOf_offBits' -> 16r14.
 		'_OffsetOf_offBmi' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMREXTFLOODFILL
+OS.ENHMETARECORD subclass: #'OS.EMREXTFLOODFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_iMode' -> 16r14.
 		'_OffsetOf_ptlStart' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMREXTSELECTCLIPRGN
+OS.ENHMETARECORD subclass: #'OS.EMREXTSELECTCLIPRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r8.
 		'_OffsetOf_iMode' -> 16rC.
 		'_OffsetOf_RGNDATA' -> 16r10
 	}!
-ENHMETARECORD subclass: #EMREXTTEXTOUT
+OS.ENHMETARECORD subclass: #'OS.EMREXTTEXTOUT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_EMRTEXT' -> 16r24.
@@ -512,18 +512,18 @@ ENHMETARECORD subclass: #EMREXTTEXTOUT
 		'_OffsetOf_iGraphicsMode' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRFILLPATH
+OS.ENHMETARECORD subclass: #'OS.EMRFILLPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRFILLRGN
+OS.ENHMETARECORD subclass: #'OS.EMRFILLRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
@@ -531,10 +531,10 @@ ENHMETARECORD subclass: #EMRFILLRGN
 		'_OffsetOf_rclBounds' -> 16r8.
 		'_OffsetOf_RGNDATA' -> 16r20
 	}!
-ENHMETARECORD subclass: #EMRFRAMERGN
+OS.ENHMETARECORD subclass: #'OS.EMRFRAMERGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
@@ -543,38 +543,38 @@ ENHMETARECORD subclass: #EMRFRAMERGN
 		'_OffsetOf_RGNDATA' -> 16r28.
 		'_OffsetOf_szlStroke' -> 16r20
 	}!
-ENHMETARECORD subclass: #EMRGDICOMMENT
+OS.ENHMETARECORD subclass: #'OS.EMRGDICOMMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r8.
 		'_OffsetOf_Data' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
+OS.ENHMETARECORD subclass: #'OS.EMRGLSBOUNDEDRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r18.
 		'_OffsetOf_Data' -> 16r1C.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRGLSRECORD
+OS.ENHMETARECORD subclass: #'OS.EMRGLSRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r8.
 		'_OffsetOf_Data' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRGRADIENTFILL
+OS.ENHMETARECORD subclass: #'OS.EMRGRADIENTFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nTri' -> 16r1C.
@@ -583,28 +583,28 @@ ENHMETARECORD subclass: #EMRGRADIENTFILL
 		'_OffsetOf_ulMode' -> 16r20.
 		'_OffsetOf_Ver' -> 16r24
 	}!
-ENHMETARECORD subclass: #EMRINVERTRGN
+OS.ENHMETARECORD subclass: #'OS.EMRINVERTRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8.
 		'_OffsetOf_RGNDATA' -> 16r1C
 	}!
-ENHMETARECORD subclass: #EMRLINETO
+OS.ENHMETARECORD subclass: #'OS.EMRLINETO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptl' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRMASKBLT
+OS.ENHMETARECORD subclass: #'OS.EMRMASKBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsMask' -> 16r7C.
@@ -630,35 +630,35 @@ ENHMETARECORD subclass: #EMRMASKBLT
 		'_OffsetOf_yMask' -> 16r68.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
+OS.ENHMETARECORD subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMode' -> 16r20.
 		'_OffsetOf_XFORM' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMROFFSETCLIPRGN
+OS.ENHMETARECORD subclass: #'OS.EMROFFSETCLIPRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptlOffset' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPIXELFORMAT
+OS.ENHMETARECORD subclass: #'OS.EMRPIXELFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pfd' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPLGBLT
+OS.ENHMETARECORD subclass: #'OS.EMRPLGBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aptlDest' -> 16r18.
@@ -682,10 +682,10 @@ ENHMETARECORD subclass: #EMRPLGBLT
 		'_OffsetOf_yMask' -> 16r74.
 		'_OffsetOf_ySrc' -> 16r34
 	}!
-ENHMETARECORD subclass: #EMRPOLYDRAW
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYDRAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abTypes' -> 16r24.
@@ -693,10 +693,10 @@ ENHMETARECORD subclass: #EMRPOLYDRAW
 		'_OffsetOf_cptl' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYDRAW16
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYDRAW16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abTypes' -> 16r20.
@@ -704,30 +704,30 @@ ENHMETARECORD subclass: #EMRPOLYDRAW16
 		'_OffsetOf_cpts' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYLINE
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYLINE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aptl' -> 16r1C.
 		'_OffsetOf_cptl' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYLINE16
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYLINE16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_apts' -> 16r1C.
 		'_OffsetOf_cpts' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYPOLYLINE
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aPolyCounts' -> 16r20.
@@ -736,10 +736,10 @@ ENHMETARECORD subclass: #EMRPOLYPOLYLINE
 		'_OffsetOf_nPolys' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYPOLYLINE16
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aPolyCounts' -> 16r20.
@@ -748,10 +748,10 @@ ENHMETARECORD subclass: #EMRPOLYPOLYLINE16
 		'_OffsetOf_nPolys' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aemrtext' -> 16r28.
@@ -761,36 +761,36 @@ ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 		'_OffsetOf_iGraphicsMode' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRRESIZEPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRRESIZEPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cEntries' -> 16rC.
 		'_OffsetOf_ihPal' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRRESTOREDC
+OS.ENHMETARECORD subclass: #'OS.EMRRESTOREDC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iRelative' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRROUNDRECT
+OS.ENHMETARECORD subclass: #'OS.EMRROUNDRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBox' -> 16r8.
 		'_OffsetOf_szlCorner' -> 16r18
 	}!
-ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
+OS.ENHMETARECORD subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_xDenom' -> 16rC.
@@ -798,66 +798,66 @@ ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 		'_OffsetOf_yDenom' -> 16r14.
 		'_OffsetOf_yNum' -> 16r10
 	}!
-ENHMETARECORD subclass: #EMRSELECTCLIPPATH
+OS.ENHMETARECORD subclass: #'OS.EMRSELECTCLIPPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMode' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSELECTOBJECT
+OS.ENHMETARECORD subclass: #'OS.EMRSELECTOBJECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihObject' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSELECTPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRSELECTPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPal' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETARCDIRECTION
+OS.ENHMETARECORD subclass: #'OS.EMRSETARCDIRECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iArcDirection' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETBKCOLOR
+OS.ENHMETARECORD subclass: #'OS.EMRSETBKCOLOR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_crColor' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
+OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_COLORADJUSTMENT' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETCOLORSPACE
+OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihCS' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
+OS.ENHMETARECORD subclass: #'OS.EMRSETDIBITSTODEVICE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
@@ -875,10 +875,10 @@ ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r24
 	}!
-ENHMETARECORD subclass: #EMRSETICMPROFILE
+OS.ENHMETARECORD subclass: #'OS.EMRSETICMPROFILE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r10.
@@ -886,26 +886,26 @@ ENHMETARECORD subclass: #EMRSETICMPROFILE
 		'_OffsetOf_Data' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETMAPPERFLAGS
+OS.ENHMETARECORD subclass: #'OS.EMRSETMAPPERFLAGS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETMITERLIMIT
+OS.ENHMETARECORD subclass: #'OS.EMRSETMITERLIMIT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_eMiterLimit' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
+OS.ENHMETARECORD subclass: #'OS.EMRSETPALETTEENTRIES'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aPalEntries' -> 16r14.
@@ -913,43 +913,43 @@ ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 		'_OffsetOf_ihPal' -> 16r8.
 		'_OffsetOf_iStart' -> 16rC
 	}!
-ENHMETARECORD subclass: #EMRSETPIXELV
+OS.ENHMETARECORD subclass: #'OS.EMRSETPIXELV'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_ptlPixel' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
+OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_szlExtent' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
+OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTORGEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptlOrigin' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
+OS.ENHMETARECORD subclass: #'OS.EMRSETWORLDTRANSFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_XFORM' -> 16r8
 	}!
-ENHMETARECORD subclass: #EMRSTRETCHBLT
+OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -970,10 +970,10 @@ ENHMETARECORD subclass: #EMRSTRETCHBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-ENHMETARECORD subclass: #EMRSTRETCHDIBITS
+OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHDIBITS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
@@ -992,10 +992,10 @@ ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r24
 	}!
-ENHMETARECORD subclass: #EMRTRANSPARENTBLT
+OS.ENHMETARECORD subclass: #'OS.EMRTRANSPARENTBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -1016,26 +1016,26 @@ ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
+OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_text' -> 16r4C
 	}!
-EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
+OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_text' -> 16r4C
 	}!
-ExternalPoint subclass: #POINTS
+External.POINT subclass: #'OS.POINTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
@@ -1044,7 +1044,7 @@ ExternalPoint subclass: #POINTS
 
 "Loose Methods"!
 
-!ENHMETARECORD class methodsFor!
+!OS.ENHMETARECORD class methodsFor!
 
 fromAddress: anAddress
 	"Answer a new sub-instance of the appropriate record type that points to the enhanced meta
@@ -1054,7 +1054,7 @@ fromAddress: anAddress
 	iType := anAddress dwordAtOffset: 0.
 	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
 	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
-!ENHMETARECORD class categoriesFor: #fromAddress:!instance creation!public! !
+!OS.ENHMETARECORD class categoriesFor: #fromAddress:!instance creation!public! !
 
 "End of package definition"!
 

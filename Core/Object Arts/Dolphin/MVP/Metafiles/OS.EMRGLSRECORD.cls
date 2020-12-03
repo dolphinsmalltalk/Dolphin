@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRGLSRECORD
+OS.ENHMETARECORD subclass: #'OS.EMRGLSRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r8.
 		'_OffsetOf_Data' -> 16rC
 	}!
-EMRGLSRECORD guid: (GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
-EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRGLSRECORD guid: (Core.GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
+OS.EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRGLSRECORD {
 	BYTE* Data;
 } EMRGLSRECORD;
 '!
-!EMRGLSRECORD categoriesForClass!Win32-Structs! !
-!EMRGLSRECORD methodsFor!
+!OS.EMRGLSRECORD categoriesForClass!Win32-Structs! !
+!OS.EMRGLSRECORD methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -54,12 +54,12 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
-!EMRGLSRECORD categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #Data!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRGLSRECORD categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRGLSRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRGLSRECORD categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRGLSRECORD categoriesFor: #Data:!**compiled accessors**!public! !
 
-!EMRGLSRECORD class methodsFor!
+!OS.EMRGLSRECORD class methodsFor!
 
 defineFields
 	"Define the fields of the EMRGLSRECORD structure.
@@ -91,7 +91,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GLSRECORD}! !
-!EMRGLSRECORD class categoriesFor: #defineFields!public!template definition! !
-!EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGLSRECORD class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
 

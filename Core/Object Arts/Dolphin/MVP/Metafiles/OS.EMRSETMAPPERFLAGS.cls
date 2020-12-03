@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETMAPPERFLAGS
+OS.ENHMETARECORD subclass: #'OS.EMRSETMAPPERFLAGS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r8
 	}!
-EMRSETMAPPERFLAGS guid: (GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
-EMRSETMAPPERFLAGS comment: '<EMRSETMAPPERFLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMAPPERFLAGS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETMAPPERFLAGS guid: (Core.GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
+OS.EMRSETMAPPERFLAGS comment: '<EMRSETMAPPERFLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMAPPERFLAGS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETMAPPERFLAGS {
 	DWORD dwFlags;
 } EMRSETMAPPERFLAGS;
 '!
-!EMRSETMAPPERFLAGS categoriesForClass!Win32-Structs! !
-!EMRSETMAPPERFLAGS methodsFor!
+!OS.EMRSETMAPPERFLAGS categoriesForClass!Win32-Structs! !
+!OS.EMRSETMAPPERFLAGS methodsFor!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
@@ -35,10 +35,10 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRSETMAPPERFLAGS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRSETMAPPERFLAGS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRSETMAPPERFLAGS categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.EMRSETMAPPERFLAGS categoriesFor: #dwFlags:!**compiled accessors**!public! !
 
-!EMRSETMAPPERFLAGS class methodsFor!
+!OS.EMRSETMAPPERFLAGS class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETMAPPERFLAGS structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #dwFlags
-			type: DWORDField new
-			offset: 8.
+		type: DWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETMAPPERFLAGS}! !
-!EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !
 

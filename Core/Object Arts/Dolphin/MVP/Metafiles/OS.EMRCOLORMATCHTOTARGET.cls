@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
+OS.ENHMETARECORD subclass: #'OS.EMRCOLORMATCHTOTARGET'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r14.
@@ -12,8 +12,8 @@ ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 		'_OffsetOf_dwAction' -> 16r8.
 		'_OffsetOf_dwFlags' -> 16rC
 	}!
-EMRCOLORMATCHTOTARGET guid: (GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
-EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCOLORMATCHTOTARGET guid: (Core.GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
+OS.EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -31,8 +31,8 @@ struct tagCOLORMATCHTOTARGET {
 	[helpstring("Array size is cbName + cbData")] BYTE Data[1];
 } COLORMATCHTOTARGET;
 '!
-!EMRCOLORMATCHTOTARGET categoriesForClass!Win32-Structs! !
-!EMRCOLORMATCHTOTARGET methodsFor!
+!OS.EMRCOLORMATCHTOTARGET categoriesForClass!Win32-Structs! !
+!OS.EMRCOLORMATCHTOTARGET methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -94,19 +94,19 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbName!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbName:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #Data!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dataLength!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwAction!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwAction:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #cbName!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #cbName:!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #dataLength!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #dwAction!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #dwAction:!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags:!**compiled accessors**!public! !
 
-!EMRCOLORMATCHTOTARGET class methodsFor!
+!OS.EMRCOLORMATCHTOTARGET class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCOLORMATCHTOTARGET structure.
@@ -150,7 +150,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_COLORMATCHTOTARGETW}! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!public!template definition! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRCOLORMATCHTOTARGET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCOLORMATCHTOTARGET class categoriesFor: #iTypes!constants!public! !
 

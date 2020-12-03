@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #CIEXYZ
+External.Structure subclass: #'OS.CIEXYZ'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ciexyzX' -> 16r0.
 		'_OffsetOf_ciexyzY' -> 16r4.
 		'_OffsetOf_ciexyzZ' -> 16r8
 	}!
-CIEXYZ guid: (GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
-CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.CIEXYZ guid: (Core.GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
+OS.CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagCIEXYZ {
 	long ciexyzZ;
 } CIEXYZ;
 '!
-!CIEXYZ categoriesForClass!Win32-Structs! !
-!CIEXYZ methodsFor!
+!OS.CIEXYZ categoriesForClass!Win32-Structs! !
+!OS.CIEXYZ methodsFor!
 
 ciexyzX
 	"Answer the <Integer> value of the receiver's 'ciexyzX' field."
@@ -58,14 +58,14 @@ ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ciexyzZ put: anInteger! !
-!CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzY:!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzZ!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzZ:!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzY:!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzZ!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesFor: #ciexyzZ:!**compiled accessors**!public! !
 
-!CIEXYZ class methodsFor!
+!OS.CIEXYZ class methodsFor!
 
 defineFields
 	"Define the fields of the CIEXYZ structure.
@@ -81,13 +81,19 @@ defineFields
 "
 
 	self
-		defineField: #ciexyzX type: SDWORDField new offset: 0;
-		defineField: #ciexyzY type: SDWORDField new offset: 4;
-		defineField: #ciexyzZ type: SDWORDField new offset: 8.
+		defineField: #ciexyzX
+			type: SDWORDField new
+			offset: 0;
+		defineField: #ciexyzY
+			type: SDWORDField new
+			offset: 4;
+		defineField: #ciexyzZ
+			type: SDWORDField new
+			offset: 8.
 	self byteSize: 12!
 
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
-!CIEXYZ class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CIEXYZ class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

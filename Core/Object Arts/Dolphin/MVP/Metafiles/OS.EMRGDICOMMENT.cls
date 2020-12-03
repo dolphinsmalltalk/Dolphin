@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRGDICOMMENT
+OS.ENHMETARECORD subclass: #'OS.EMRGDICOMMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r8.
 		'_OffsetOf_Data' -> 16rC
 	}!
-EMRGDICOMMENT guid: (GUID fromString: '{5b2c2616-4205-49f8-86dc-fa73c7092f5b}')!
-EMRGDICOMMENT comment: '<EMRGDICOMMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGDICOMMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRGDICOMMENT guid: (Core.GUID fromString: '{5b2c2616-4205-49f8-86dc-fa73c7092f5b}')!
+OS.EMRGDICOMMENT comment: '<EMRGDICOMMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGDICOMMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRGDICOMMENT {
 	BYTE* Data;
 } EMRGDICOMMENT;
 '!
-!EMRGDICOMMENT categoriesForClass!Win32-Structs! !
-!EMRGDICOMMENT methodsFor!
+!OS.EMRGDICOMMENT categoriesForClass!Win32-Structs! !
+!OS.EMRGDICOMMENT methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -54,12 +54,12 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
-!EMRGDICOMMENT categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #Data!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRGDICOMMENT categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRGDICOMMENT categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRGDICOMMENT categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRGDICOMMENT categoriesFor: #Data:!**compiled accessors**!public! !
 
-!EMRGDICOMMENT class methodsFor!
+!OS.EMRGDICOMMENT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRGDICOMMENT structure.
@@ -91,7 +91,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GDICOMMENT}! !
-!EMRGDICOMMENT class categoriesFor: #defineFields!public!template definition! !
-!EMRGDICOMMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGDICOMMENT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGDICOMMENT class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRGDICOMMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRGDICOMMENT class categoriesFor: #iTypes!constants!public! !
 

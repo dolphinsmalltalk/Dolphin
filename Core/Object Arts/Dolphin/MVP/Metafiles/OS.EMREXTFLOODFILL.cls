@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXTFLOODFILL
+OS.ENHMETARECORD subclass: #'OS.EMREXTFLOODFILL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_iMode' -> 16r14.
 		'_OffsetOf_ptlStart' -> 16r8
 	}!
-EMREXTFLOODFILL guid: (GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
-EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXTFLOODFILL guid: (Core.GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
+OS.EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMREXTFLOODFILL {
 	DWORD iMode;
 } EMREXTFLOODFILL;
 '!
-!EMREXTFLOODFILL categoriesForClass!Win32-Structs! !
-!EMREXTFLOODFILL methodsFor!
+!OS.EMREXTFLOODFILL categoriesForClass!Win32-Structs! !
+!OS.EMREXTFLOODFILL methodsFor!
 
 crColor
 	"Answer the <Integer> value of the receiver's 'crColor' field."
@@ -63,14 +63,14 @@ ptlStart: aPOINTL
 		from: ##(_OffsetOf_ptlStart + 1)
 		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
 		startingAt: 1! !
-!EMREXTFLOODFILL categoriesFor: #crColor!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #crColor:!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #iMode!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #iMode:!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #ptlStart!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #ptlStart:!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #crColor!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #crColor:!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #iMode!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #iMode:!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #ptlStart!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesFor: #ptlStart:!**compiled accessors**!public! !
 
-!EMREXTFLOODFILL class methodsFor!
+!OS.EMREXTFLOODFILL class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTFLOODFILL structure.
@@ -88,9 +88,15 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ptlStart type: (StructureField type: POINTL) offset: 8;
-		defineField: #crColor type: DWORDField new offset: 16;
-		defineField: #iMode type: DWORDField new offset: 20.
+		defineField: #ptlStart
+			type: (StructureField type: POINTL)
+			offset: 8;
+		defineField: #crColor
+			type: DWORDField new
+			offset: 16;
+		defineField: #iMode
+			type: DWORDField new
+			offset: 20.
 	self byteSize: 24!
 
 getFieldNames
@@ -100,7 +106,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTFLOODFILL}! !
-!EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRROUNDRECT
+OS.ENHMETARECORD subclass: #'OS.EMRROUNDRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBox' -> 16r8.
 		'_OffsetOf_szlCorner' -> 16r18
 	}!
-EMRROUNDRECT guid: (GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
-EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRROUNDRECT guid: (Core.GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
+OS.EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,13 +25,13 @@ struct tagEMRROUNDRECT {
 	SIZEL szlCorner;
 } EMRROUNDRECT;
 '!
-!EMRROUNDRECT categoriesForClass!Win32-Structs! !
-!EMRROUNDRECT methodsFor!
+!OS.EMRROUNDRECT categoriesForClass!Win32-Structs! !
+!OS.EMRROUNDRECT methodsFor!
 
 rclBox
-	"Answer the <RECT> value of the receiver's 'rclBox' field."
+	"Answer the <RECTL> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
 rclBox: aRECT
 	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
@@ -39,13 +39,13 @@ rclBox: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
 		startingAt: 1!
 
 szlCorner
 	"Answer the <SIZE> value of the receiver's 'szlCorner' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlCorner!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlCorner!
 
 szlCorner: aSIZE
 	"Set the receiver's 'szlCorner' field to the value of the argument, aSIZE"
@@ -53,14 +53,14 @@ szlCorner: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlCorner + 1)
-		to: ##(_OffsetOf_szlCorner + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlCorner + SIZEL basicByteSize)
 		startingAt: 1! !
-!EMRROUNDRECT categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #rclBox:!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #szlCorner!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #szlCorner:!**compiled accessors**!public! !
+!OS.EMRROUNDRECT categoriesFor: #rclBox!**compiled accessors**!public! !
+!OS.EMRROUNDRECT categoriesFor: #rclBox:!**compiled accessors**!public! !
+!OS.EMRROUNDRECT categoriesFor: #szlCorner!**compiled accessors**!public! !
+!OS.EMRROUNDRECT categoriesFor: #szlCorner:!**compiled accessors**!public! !
 
-!EMRROUNDRECT class methodsFor!
+!OS.EMRROUNDRECT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRROUNDRECT structure.
@@ -78,10 +78,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBox
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #szlCorner
-			type: (StructureField type: SIZE)
+			type: (StructureField type: SIZEL)
 			offset: 24.
 	self byteSize: 32!
 
@@ -92,7 +92,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ROUNDRECT}! !
-!EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
 

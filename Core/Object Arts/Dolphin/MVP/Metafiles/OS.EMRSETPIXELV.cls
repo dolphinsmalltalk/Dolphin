@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETPIXELV
+OS.ENHMETARECORD subclass: #'OS.EMRSETPIXELV'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_ptlPixel' -> 16r8
 	}!
-EMRSETPIXELV guid: (GUID fromString: '{a1dc1f6e-41ae-4ffa-90d8-778106a60b0b}')!
-EMRSETPIXELV comment: '<EMRSETPIXELV> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPIXELV'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETPIXELV guid: (Core.GUID fromString: '{a1dc1f6e-41ae-4ffa-90d8-778106a60b0b}')!
+OS.EMRSETPIXELV comment: '<EMRSETPIXELV> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPIXELV'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRSETPIXELV {
 	COLORREF crColor;
 } EMRSETPIXELV;
 '!
-!EMRSETPIXELV categoriesForClass!Win32-Structs! !
-!EMRSETPIXELV methodsFor!
+!OS.EMRSETPIXELV categoriesForClass!Win32-Structs! !
+!OS.EMRSETPIXELV methodsFor!
 
 crColor
 	"Answer the <Integer> value of the receiver's 'crColor' field."
@@ -51,12 +51,12 @@ ptlPixel: aPOINTL
 		from: ##(_OffsetOf_ptlPixel + 1)
 		to: ##(_OffsetOf_ptlPixel + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRSETPIXELV categoriesFor: #crColor!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #crColor:!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #ptlPixel!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #ptlPixel:!**compiled accessors**!public! !
+!OS.EMRSETPIXELV categoriesFor: #crColor!**compiled accessors**!public! !
+!OS.EMRSETPIXELV categoriesFor: #crColor:!**compiled accessors**!public! !
+!OS.EMRSETPIXELV categoriesFor: #ptlPixel!**compiled accessors**!public! !
+!OS.EMRSETPIXELV categoriesFor: #ptlPixel:!**compiled accessors**!public! !
 
-!EMRSETPIXELV class methodsFor!
+!OS.EMRSETPIXELV class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETPIXELV structure.
@@ -88,7 +88,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPIXELV}! !
-!EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
 

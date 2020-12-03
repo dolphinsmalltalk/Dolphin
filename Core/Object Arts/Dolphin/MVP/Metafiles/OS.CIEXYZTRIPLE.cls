@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #CIEXYZTRIPLE
+External.Structure subclass: #'OS.CIEXYZTRIPLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ciexyzBlue' -> 16r18.
 		'_OffsetOf_ciexyzGreen' -> 16rC.
 		'_OffsetOf_ciexyzRed' -> 16r0
 	}!
-CIEXYZTRIPLE guid: (GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
-CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.CIEXYZTRIPLE guid: (Core.GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
+OS.CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagCIEXYZTRIPLE {
 	CIEXYZ ciexyzBlue;
 } CIEXYZTRIPLE;
 '!
-!CIEXYZTRIPLE categoriesForClass!Win32-Structs! !
-!CIEXYZTRIPLE methodsFor!
+!OS.CIEXYZTRIPLE categoriesForClass!Win32-Structs! !
+!OS.CIEXYZTRIPLE methodsFor!
 
 ciexyzBlue
 	"Answer the <CIEXYZ> value of the receiver's 'ciexyzBlue' field."
@@ -70,14 +70,14 @@ ciexyzRed: aCIEXYZ
 		from: ##(_OffsetOf_ciexyzRed + 1)
 		to: ##(_OffsetOf_ciexyzRed + CIEXYZ basicByteSize)
 		startingAt: 1! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzBlue!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzBlue:!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzGreen!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzGreen:!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzRed!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzRed:!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzBlue!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzBlue:!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzGreen!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzGreen:!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzRed!**compiled accessors**!public! !
+!OS.CIEXYZTRIPLE categoriesFor: #ciexyzRed:!**compiled accessors**!public! !
 
-!CIEXYZTRIPLE class methodsFor!
+!OS.CIEXYZTRIPLE class methodsFor!
 
 defineFields
 	"Define the fields of the CIEXYZTRIPLE structure.
@@ -93,13 +93,19 @@ defineFields
 "
 
 	self
-		defineField: #ciexyzRed type: (StructureField type: CIEXYZ) offset: 0;
-		defineField: #ciexyzGreen type: (StructureField type: CIEXYZ) offset: 12;
-		defineField: #ciexyzBlue type: (StructureField type: CIEXYZ) offset: 24.
+		defineField: #ciexyzRed
+			type: (StructureField type: CIEXYZ)
+			offset: 0;
+		defineField: #ciexyzGreen
+			type: (StructureField type: CIEXYZ)
+			offset: 12;
+		defineField: #ciexyzBlue
+			type: (StructureField type: CIEXYZ)
+			offset: 24.
 	self byteSize: 36!
 
 getFieldNames
 	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
-!CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CIEXYZTRIPLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.CIEXYZTRIPLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

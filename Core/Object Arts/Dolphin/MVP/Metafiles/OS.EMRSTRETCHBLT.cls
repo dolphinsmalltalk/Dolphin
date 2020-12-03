@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSTRETCHBLT
+OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -24,8 +24,8 @@ ENHMETARECORD subclass: #EMRSTRETCHBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMRSTRETCHBLT guid: (GUID fromString: '{04e7165e-c2d6-4a3d-8a28-d197f35d85a3}')!
-EMRSTRETCHBLT comment: '<EMRSTRETCHBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSTRETCHBLT guid: (Core.GUID fromString: '{04e7165e-c2d6-4a3d-8a28-d197f35d85a3}')!
+OS.EMRSTRETCHBLT comment: '<EMRSTRETCHBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -55,8 +55,8 @@ struct tagEMRSTRETCHBLT {
 	long cySrc;
 } EMRSTRETCHBLT;
 '!
-!EMRSTRETCHBLT categoriesForClass!Win32-Structs! !
-!EMRSTRETCHBLT methodsFor!
+!OS.EMRSTRETCHBLT categoriesForClass!Win32-Structs! !
+!OS.EMRSTRETCHBLT methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -169,9 +169,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -179,7 +179,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -235,42 +235,42 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRSTRETCHBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRSTRETCHBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRSTRETCHBLT class methodsFor!
+!OS.EMRSTRETCHBLT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSTRETCHBLT structure.
@@ -303,7 +303,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -362,7 +362,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_STRETCHBLT}! !
-!EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSTRETCHBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSTRETCHBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSTRETCHBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSTRETCHBLT class categoriesFor: #iTypes!constants!public! !
 

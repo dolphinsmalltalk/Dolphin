@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
+OS.ENHMETARECORD subclass: #'OS.EMRSETWORLDTRANSFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_XFORM' -> 16r8
 	}!
-EMRSETWORLDTRANSFORM guid: (GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
-EMRSETWORLDTRANSFORM comment: '<EMRSETWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETWORLDTRANSFORM guid: (Core.GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
+OS.EMRSETWORLDTRANSFORM comment: '<EMRSETWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETWORLDTRANSFORM {
 	XFORM XFORM;
 } EMRSETWORLDTRANSFORM;
 '!
-!EMRSETWORLDTRANSFORM categoriesForClass!Win32-Structs! !
-!EMRSETWORLDTRANSFORM methodsFor!
+!OS.EMRSETWORLDTRANSFORM categoriesForClass!Win32-Structs! !
+!OS.EMRSETWORLDTRANSFORM methodsFor!
 
 XFORM
 	"Answer the <XFORM> value of the receiver's 'XFORM' field."
@@ -39,10 +39,10 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
-!EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
-!EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
+!OS.EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
+!OS.EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
 
-!EMRSETWORLDTRANSFORM class methodsFor!
+!OS.EMRSETWORLDTRANSFORM class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETWORLDTRANSFORM structure.
@@ -59,8 +59,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #XFORM
-			type: (StructureField type: XFORM)
-			offset: 8.
+		type: (StructureField type: XFORM)
+		offset: 8.
 	self byteSize: 32!
 
 getFieldNames
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETWORLDTRANSFORM}! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
 

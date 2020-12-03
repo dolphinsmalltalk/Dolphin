@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPLGBLT
+OS.ENHMETARECORD subclass: #'OS.EMRPLGBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aptlDest' -> 16r18.
@@ -27,8 +27,8 @@ ENHMETARECORD subclass: #EMRPLGBLT
 		'_OffsetOf_yMask' -> 16r74.
 		'_OffsetOf_ySrc' -> 16r34
 	}!
-EMRPLGBLT guid: (GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
-EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPLGBLT guid: (Core.GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
+OS.EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -61,8 +61,8 @@ struct tagEMRPLGBLT {
 	[helpstring("Size of the mask bitmap bits if any")] DWORD cbBitsMask;
 } EMRPLGBLT;
 '!
-!EMRPLGBLT categoriesForClass!Win32-Structs! !
-!EMRPLGBLT methodsFor!
+!OS.EMRPLGBLT categoriesForClass!Win32-Structs! !
+!OS.EMRPLGBLT methodsFor!
 
 aptlDest
 	"Answer the <StructureArray> value of the receiver's 'aptlDest' field."
@@ -214,9 +214,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -224,7 +224,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xformSrc
@@ -280,48 +280,48 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRPLGBLT categoriesFor: #aptlDest!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #aptlDest:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBitsMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBmiMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBmiMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #iUsageMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #iUsageMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBitsMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBitsMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBmiMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBmiMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #yMask!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #yMask:!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRPLGBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #aptlDest!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #aptlDest:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBitsMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBmiMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBmiMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #iUsageMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #iUsageMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBitsMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBitsMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBmiMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBmiMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #yMask!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #yMask:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRPLGBLT class methodsFor!
+!OS.EMRPLGBLT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPLGBLT structure.
@@ -357,7 +357,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #aptlDest
 			type: (StructureArrayField type: POINTL length: 3)
@@ -425,7 +425,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_PLGBLT}! !
-!EMRPLGBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRPLGBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPLGBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPLGBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRPLGBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPLGBLT class categoriesFor: #iTypes!constants!public! !
 

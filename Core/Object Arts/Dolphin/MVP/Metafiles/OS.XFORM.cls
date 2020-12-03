@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #XFORM
+External.Structure subclass: #'OS.XFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_eDx' -> 16r10.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #XFORM
 		'_OffsetOf_eM21' -> 16r8.
 		'_OffsetOf_eM22' -> 16rC
 	}!
-XFORM guid: (GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
-XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.XFORM guid: (Core.GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
+OS.XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -32,8 +32,8 @@ struct tagXFORM {
 	float eDy;
 } XFORM;
 '!
-!XFORM categoriesForClass!Win32-Structs! !
-!XFORM methodsFor!
+!OS.XFORM categoriesForClass!Win32-Structs! !
+!OS.XFORM methodsFor!
 
 eDx
 	"Answer the <Float> value of the receiver's 'eDx' field."
@@ -94,20 +94,20 @@ eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
-!XFORM categoriesFor: #eDx!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDy!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDy:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM11!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM11:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM12!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM12:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM21!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM21:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM22!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM22:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eDx!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eDy!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eDy:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM11!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM11:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM12!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM12:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM21!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM21:!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM22!**compiled accessors**!public! !
+!OS.XFORM categoriesFor: #eM22:!**compiled accessors**!public! !
 
-!XFORM class methodsFor!
+!OS.XFORM class methodsFor!
 
 defineFields
 	"Define the fields of the XFORM structure.
@@ -135,6 +135,6 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
-!XFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.XFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

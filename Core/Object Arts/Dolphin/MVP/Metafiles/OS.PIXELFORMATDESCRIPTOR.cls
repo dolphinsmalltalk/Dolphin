@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
+External.Structure subclass: #'OS.PIXELFORMATDESCRIPTOR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bReserved' -> 16r1B.
@@ -33,8 +33,8 @@ ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 		'_OffsetOf_nSize' -> 16r0.
 		'_OffsetOf_nVersion' -> 16r2
 	}!
-PIXELFORMATDESCRIPTOR guid: (GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
-PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.PIXELFORMATDESCRIPTOR guid: (Core.GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
+OS.PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -72,8 +72,8 @@ struct tagPIXELFORMATDESCRIPTOR {
 	unsigned long dwDamageMask;
 } PIXELFORMATDESCRIPTOR;
 '!
-!PIXELFORMATDESCRIPTOR categoriesForClass!Win32-Structs! !
-!PIXELFORMATDESCRIPTOR methodsFor!
+!OS.PIXELFORMATDESCRIPTOR categoriesForClass!Win32-Structs! !
+!OS.PIXELFORMATDESCRIPTOR methodsFor!
 
 bReserved
 	"Answer the <Integer> value of the receiver's 'bReserved' field."
@@ -334,60 +334,60 @@ nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_nVersion put: anInteger! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #bReserved!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #bReserved:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nSize!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nSize:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nVersion!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nVersion:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #bReserved!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #bReserved:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #nSize!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #nSize:!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #nVersion!**compiled accessors**!public! !
+!OS.PIXELFORMATDESCRIPTOR categoriesFor: #nVersion:!**compiled accessors**!public! !
 
-!PIXELFORMATDESCRIPTOR class methodsFor!
+!OS.PIXELFORMATDESCRIPTOR class methodsFor!
 
 defineFields
 	"Define the fields of the PIXELFORMATDESCRIPTOR structure.
@@ -426,36 +426,88 @@ defineFields
 "
 
 	self
-		defineField: #nSize type: WORDField new offset: 0;
-		defineField: #nVersion type: WORDField new offset: 2;
-		defineField: #dwFlags type: DWORDField new offset: 4;
-		defineField: #iPixelType type: BYTEField new offset: 8;
-		defineField: #cColorBits type: BYTEField new offset: 9;
-		defineField: #cRedBits type: BYTEField new offset: 10;
-		defineField: #cRedShift type: BYTEField new offset: 11;
-		defineField: #cGreenBits type: BYTEField new offset: 12;
-		defineField: #cGreenShift type: BYTEField new offset: 13;
-		defineField: #cBlueBits type: BYTEField new offset: 14;
-		defineField: #cBlueShift type: BYTEField new offset: 15;
-		defineField: #cAlphaBits type: BYTEField new offset: 16;
-		defineField: #cAlphaShift type: BYTEField new offset: 17;
-		defineField: #cAccumBits type: BYTEField new offset: 18;
-		defineField: #cAccumRedBits type: BYTEField new offset: 19;
-		defineField: #cAccumGreenBits type: BYTEField new offset: 20;
-		defineField: #cAccumBlueBits type: BYTEField new offset: 21;
-		defineField: #cAccumAlphaBits type: BYTEField new offset: 22;
-		defineField: #cDepthBits type: BYTEField new offset: 23;
-		defineField: #cStencilBits type: BYTEField new offset: 24;
-		defineField: #cAuxBuffers type: BYTEField new offset: 25;
-		defineField: #iLayerType type: BYTEField new offset: 26;
-		defineField: #bReserved type: BYTEField new offset: 27;
-		defineField: #dwLayerMask type: DWORDField new offset: 28;
-		defineField: #dwVisibleMask type: DWORDField new offset: 32;
-		defineField: #dwDamageMask type: DWORDField new offset: 36.
+		defineField: #nSize
+			type: WORDField new
+			offset: 0;
+		defineField: #nVersion
+			type: WORDField new
+			offset: 2;
+		defineField: #dwFlags
+			type: DWORDField new
+			offset: 4;
+		defineField: #iPixelType
+			type: BYTEField new
+			offset: 8;
+		defineField: #cColorBits
+			type: BYTEField new
+			offset: 9;
+		defineField: #cRedBits
+			type: BYTEField new
+			offset: 10;
+		defineField: #cRedShift
+			type: BYTEField new
+			offset: 11;
+		defineField: #cGreenBits
+			type: BYTEField new
+			offset: 12;
+		defineField: #cGreenShift
+			type: BYTEField new
+			offset: 13;
+		defineField: #cBlueBits
+			type: BYTEField new
+			offset: 14;
+		defineField: #cBlueShift
+			type: BYTEField new
+			offset: 15;
+		defineField: #cAlphaBits
+			type: BYTEField new
+			offset: 16;
+		defineField: #cAlphaShift
+			type: BYTEField new
+			offset: 17;
+		defineField: #cAccumBits
+			type: BYTEField new
+			offset: 18;
+		defineField: #cAccumRedBits
+			type: BYTEField new
+			offset: 19;
+		defineField: #cAccumGreenBits
+			type: BYTEField new
+			offset: 20;
+		defineField: #cAccumBlueBits
+			type: BYTEField new
+			offset: 21;
+		defineField: #cAccumAlphaBits
+			type: BYTEField new
+			offset: 22;
+		defineField: #cDepthBits
+			type: BYTEField new
+			offset: 23;
+		defineField: #cStencilBits
+			type: BYTEField new
+			offset: 24;
+		defineField: #cAuxBuffers
+			type: BYTEField new
+			offset: 25;
+		defineField: #iLayerType
+			type: BYTEField new
+			offset: 26;
+		defineField: #bReserved
+			type: BYTEField new
+			offset: 27;
+		defineField: #dwLayerMask
+			type: DWORDField new
+			offset: 28;
+		defineField: #dwVisibleMask
+			type: DWORDField new
+			offset: 32;
+		defineField: #dwDamageMask
+			type: DWORDField new
+			offset: 36.
 	self byteSize: 40!
 
 getFieldNames
 	^#(#nSize #nVersion #dwFlags #iPixelType #cColorBits #cRedBits #cRedShift #cGreenBits #cGreenShift #cBlueBits #cBlueShift #cAlphaBits #cAlphaShift #cAccumBits #cAccumRedBits #cAccumGreenBits #cAccumBlueBits #cAccumAlphaBits #cDepthBits #cStencilBits #cAuxBuffers #iLayerType #bReserved #dwLayerMask #dwVisibleMask #dwDamageMask)! !
-!PIXELFORMATDESCRIPTOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PIXELFORMATDESCRIPTOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PIXELFORMATDESCRIPTOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.PIXELFORMATDESCRIPTOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

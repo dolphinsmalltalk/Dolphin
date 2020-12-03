@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCREATECOLORSPACE
+OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihCS' -> 16r8.
 		'_OffsetOf_lcs' -> 16rC
 	}!
-EMRCREATECOLORSPACE guid: (GUID fromString: '{20d38d2a-27f0-4a74-ad30-adb4de0f37c1}')!
-EMRCREATECOLORSPACE comment: '<EMRCREATECOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCREATECOLORSPACE guid: (Core.GUID fromString: '{20d38d2a-27f0-4a74-ad30-adb4de0f37c1}')!
+OS.EMRCREATECOLORSPACE comment: '<EMRCREATECOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRCREATECOLORSPACE {
 	LOGCOLORSPACE lcs;
 } EMRCREATECOLORSPACE;
 '!
-!EMRCREATECOLORSPACE categoriesForClass!Win32-Structs! !
-!EMRCREATECOLORSPACE methodsFor!
+!OS.EMRCREATECOLORSPACE categoriesForClass!Win32-Structs! !
+!OS.EMRCREATECOLORSPACE methodsFor!
 
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
@@ -51,12 +51,12 @@ lcs: aLOGCOLORSPACE
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACE basicByteSize)
 		startingAt: 1! !
-!EMRCREATECOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #lcs!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #lcs:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACE categoriesFor: #lcs!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACE categoriesFor: #lcs:!**compiled accessors**!public! !
 
-!EMRCREATECOLORSPACE class methodsFor!
+!OS.EMRCREATECOLORSPACE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCREATECOLORSPACE structure.
@@ -73,8 +73,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ihCS type: DWORDField new offset: 8;
-		defineField: #lcs type: (StructureField type: LOGCOLORSPACE) offset: 12.
+		defineField: #ihCS
+			type: DWORDField new
+			offset: 8;
+		defineField: #lcs
+			type: (StructureField type: LOGCOLORSPACE)
+			offset: 12.
 	self byteSize: 340!
 
 getFieldNames
@@ -84,7 +88,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATECOLORSPACE}! !
-!EMRCREATECOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATECOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATECOLORSPACE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATECOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRCREATECOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCREATECOLORSPACE class categoriesFor: #iTypes!constants!public! !
 

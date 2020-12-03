@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRELLIPSE
+OS.ENHMETARECORD subclass: #'OS.EMRELLIPSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBox' -> 16r8
 	}!
-EMRELLIPSE guid: (GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
-EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRELLIPSE guid: (Core.GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
+OS.EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,13 +23,13 @@ struct tagEMRELLIPSE {
 	[helpstring("Inclusive-inclusive bounding rectangle")] RECTL rclBox;
 } EMRELLIPSE;
 '!
-!EMRELLIPSE categoriesForClass!Win32-Structs! !
-!EMRELLIPSE methodsFor!
+!OS.EMRELLIPSE categoriesForClass!Win32-Structs! !
+!OS.EMRELLIPSE methodsFor!
 
 rclBox
-	"Answer the <RECT> value of the receiver's 'rclBox' field."
+	"Answer the <RECTL> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
 rclBox: aRECT
 	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
@@ -37,12 +37,12 @@ rclBox: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRELLIPSE categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRELLIPSE categoriesFor: #rclBox:!**compiled accessors**!public! !
+!OS.EMRELLIPSE categoriesFor: #rclBox!**compiled accessors**!public! !
+!OS.EMRELLIPSE categoriesFor: #rclBox:!**compiled accessors**!public! !
 
-!EMRELLIPSE class methodsFor!
+!OS.EMRELLIPSE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRELLIPSE structure.
@@ -58,7 +58,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rclBox type: (StructureField type: RECT) offset: 8.
+		defineField: #rclBox
+		type: (StructureField type: RECTL)
+		offset: 8.
 	self byteSize: 24!
 
 getFieldNames
@@ -68,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ELLIPSE. EMR_RECTANGLE}! !
-!EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
 

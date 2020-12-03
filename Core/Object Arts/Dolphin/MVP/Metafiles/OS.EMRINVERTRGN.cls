@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRINVERTRGN
+OS.ENHMETARECORD subclass: #'OS.EMRINVERTRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8.
 		'_OffsetOf_RGNDATA' -> 16r1C
 	}!
-EMRINVERTRGN guid: (GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
-EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRINVERTRGN guid: (Core.GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
+OS.EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMRINVERTRGN {
 	BYTE* RGNDATA;
 } EMRINVERTRGN;
 '!
-!EMRINVERTRGN categoriesForClass!Win32-Structs! !
-!EMRINVERTRGN methodsFor!
+!OS.EMRINVERTRGN categoriesForClass!Win32-Structs! !
+!OS.EMRINVERTRGN methodsFor!
 
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
@@ -41,9 +41,9 @@ cbRgnData: anInteger
 	bytes dwordAtOffset: _OffsetOf_cbRgnData put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -51,7 +51,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 RGNDATA
@@ -70,14 +70,14 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!EMRINVERTRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
 
-!EMRINVERTRGN class methodsFor!
+!OS.EMRINVERTRGN class methodsFor!
 
 defineFields
 	"Define the fields of the EMRINVERTRGN structure.
@@ -96,7 +96,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cbRgnData
 			type: DWORDField new
@@ -112,7 +112,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_INVERTRGN. EMR_PAINTRGN}! !
-!EMRINVERTRGN class categoriesFor: #defineFields!public!template definition! !
-!EMRINVERTRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRINVERTRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRINVERTRGN class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRINVERTRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRINVERTRGN class categoriesFor: #iTypes!constants!public! !
 

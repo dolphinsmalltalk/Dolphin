@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXTSELECTCLIPRGN
+OS.ENHMETARECORD subclass: #'OS.EMREXTSELECTCLIPRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r8.
 		'_OffsetOf_iMode' -> 16rC.
 		'_OffsetOf_RGNDATA' -> 16r10
 	}!
-EMREXTSELECTCLIPRGN guid: (GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
-EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXTSELECTCLIPRGN guid: (Core.GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
+OS.EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMREXTSELECTCLIPRGN {
 	BYTE* RGNDATA;
 } EMREXTSELECTCLIPRGN;
 '!
-!EMREXTSELECTCLIPRGN categoriesForClass!Win32-Structs! !
-!EMREXTSELECTCLIPRGN methodsFor!
+!OS.EMREXTSELECTCLIPRGN categoriesForClass!Win32-Structs! !
+!OS.EMREXTSELECTCLIPRGN methodsFor!
 
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
@@ -66,14 +66,14 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMREXTSELECTCLIPRGN categoriesFor: #iMode!**compiled accessors**!public! !
-!EMREXTSELECTCLIPRGN categoriesFor: #iMode:!**compiled accessors**!public! !
-!EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #iMode!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #iMode:!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
 
-!EMREXTSELECTCLIPRGN class methodsFor!
+!OS.EMREXTSELECTCLIPRGN class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTSELECTCLIPRGN structure.
@@ -108,7 +108,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTSELECTCLIPRGN}! !
-!EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!public!template definition! !
-!EMREXTSELECTCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTSELECTCLIPRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!public!template definition! !
+!OS.EMREXTSELECTCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXTSELECTCLIPRGN class categoriesFor: #iTypes!constants!public! !
 

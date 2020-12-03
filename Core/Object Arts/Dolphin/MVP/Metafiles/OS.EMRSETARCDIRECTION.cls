@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETARCDIRECTION
+OS.ENHMETARECORD subclass: #'OS.EMRSETARCDIRECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iArcDirection' -> 16r8
 	}!
-EMRSETARCDIRECTION guid: (GUID fromString: '{41d545c1-ed58-46f1-9b90-34ef56bd4213}')!
-EMRSETARCDIRECTION comment: '<EMRSETARCDIRECTION> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETARCDIRECTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETARCDIRECTION guid: (Core.GUID fromString: '{41d545c1-ed58-46f1-9b90-34ef56bd4213}')!
+OS.EMRSETARCDIRECTION comment: '<EMRSETARCDIRECTION> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETARCDIRECTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETARCDIRECTION {
 	[helpstring("Specifies the arc direction in the advanced graphics mode.")] DWORD iArcDirection;
 } EMRSETARCDIRECTION;
 '!
-!EMRSETARCDIRECTION categoriesForClass!Win32-Structs! !
-!EMRSETARCDIRECTION methodsFor!
+!OS.EMRSETARCDIRECTION categoriesForClass!Win32-Structs! !
+!OS.EMRSETARCDIRECTION methodsFor!
 
 iArcDirection
 	"Answer the <Integer> value of the receiver's 'iArcDirection' field."
@@ -35,10 +35,10 @@ iArcDirection: anInteger
 	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iArcDirection put: anInteger! !
-!EMRSETARCDIRECTION categoriesFor: #iArcDirection!**compiled accessors**!public! !
-!EMRSETARCDIRECTION categoriesFor: #iArcDirection:!**compiled accessors**!public! !
+!OS.EMRSETARCDIRECTION categoriesFor: #iArcDirection!**compiled accessors**!public! !
+!OS.EMRSETARCDIRECTION categoriesFor: #iArcDirection:!**compiled accessors**!public! !
 
-!EMRSETARCDIRECTION class methodsFor!
+!OS.EMRSETARCDIRECTION class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETARCDIRECTION structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iArcDirection
-			type: DWORDField new
-			offset: 8.
+		type: DWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETARCDIRECTION}! !
-!EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !
 

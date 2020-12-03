@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
+OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elfw' -> 16rC.
 		'_OffsetOf_ihFont' -> 16r8
 	}!
-EMREXTCREATEFONTINDIRECTW guid: (GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
-EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXTCREATEFONTINDIRECTW guid: (Core.GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
+OS.EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMREXTCREATEFONTINDIRECT {
 	EXTLOGFONT elfw;
 } EMREXTCREATEFONTINDIRECT;
 '!
-!EMREXTCREATEFONTINDIRECTW categoriesForClass!Win32-Structs! !
-!EMREXTCREATEFONTINDIRECTW methodsFor!
+!OS.EMREXTCREATEFONTINDIRECTW categoriesForClass!Win32-Structs! !
+!OS.EMREXTCREATEFONTINDIRECTW methodsFor!
 
 elfw
 	"Answer the <EXTLOGFONTW> value of the receiver's 'elfw' field."
@@ -51,12 +51,12 @@ ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihFont put: anInteger! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont:!**compiled accessors**!public! !
+!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
+!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
+!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !
+!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont:!**compiled accessors**!public! !
 
-!EMREXTCREATEFONTINDIRECTW class methodsFor!
+!OS.EMREXTCREATEFONTINDIRECTW class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTCREATEFONTINDIRECTW structure.
@@ -73,8 +73,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ihFont type: DWORDField new offset: 8;
-		defineField: #elfw type: (StructureField type: EXTLOGFONTW) offset: 12.
+		defineField: #ihFont
+			type: DWORDField new
+			offset: 8;
+		defineField: #elfw
+			type: (StructureField type: EXTLOGFONTW)
+			offset: 12.
 	self byteSize: 332!
 
 getFieldNames
@@ -84,7 +88,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTCREATEFONTINDIRECTW}! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!public!template definition! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!public!template definition! !
+!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
 

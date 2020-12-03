@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
+OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_COLORADJUSTMENT' -> 16r8
 	}!
-EMRSETCOLORADJUSTMENT guid: (GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
-EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETCOLORADJUSTMENT guid: (Core.GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
+OS.EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETCOLORADJUSTMENT {
 	COLORADJUSTMENT COLORADJUSTMENT;
 } EMRSETCOLORADJUSTMENT;
 '!
-!EMRSETCOLORADJUSTMENT categoriesForClass!Win32-Structs! !
-!EMRSETCOLORADJUSTMENT methodsFor!
+!OS.EMRSETCOLORADJUSTMENT categoriesForClass!Win32-Structs! !
+!OS.EMRSETCOLORADJUSTMENT methodsFor!
 
 COLORADJUSTMENT
 	"Answer the <COLORADJUSTMENT> value of the receiver's 'COLORADJUSTMENT' field."
@@ -39,10 +39,10 @@ COLORADJUSTMENT: aCOLORADJUSTMENT
 		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
 		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT basicByteSize)
 		startingAt: 1! !
-!EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT!**compiled accessors**!public! !
-!EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT:!**compiled accessors**!public! !
+!OS.EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT!**compiled accessors**!public! !
+!OS.EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT:!**compiled accessors**!public! !
 
-!EMRSETCOLORADJUSTMENT class methodsFor!
+!OS.EMRSETCOLORADJUSTMENT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETCOLORADJUSTMENT structure.
@@ -59,8 +59,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #COLORADJUSTMENT
-			type: (StructureField type: COLORADJUSTMENT)
-			offset: 8.
+		type: (StructureField type: COLORADJUSTMENT)
+		offset: 8.
 	self byteSize: 32!
 
 getFieldNames
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORADJUSTMENT}! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
 

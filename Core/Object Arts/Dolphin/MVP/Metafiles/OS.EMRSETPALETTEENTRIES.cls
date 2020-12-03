@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
+OS.ENHMETARECORD subclass: #'OS.EMRSETPALETTEENTRIES'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aPalEntries' -> 16r14.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 		'_OffsetOf_ihPal' -> 16r8.
 		'_OffsetOf_iStart' -> 16rC
 	}!
-EMRSETPALETTEENTRIES guid: (GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
-EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETPALETTEENTRIES guid: (Core.GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
+OS.EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagEMRSETPALETTEENTRIES {
 	PALETTEENTRY* aPalEntries;
 } EMRSETPALETTEENTRIES;
 '!
-!EMRSETPALETTEENTRIES categoriesForClass!Win32-Structs! !
-!EMRSETPALETTEENTRIES methodsFor!
+!OS.EMRSETPALETTEENTRIES categoriesForClass!Win32-Structs! !
+!OS.EMRSETPALETTEENTRIES methodsFor!
 
 aPalEntries
 	"Answer the <StructureArray> value of the receiver's 'aPalEntries' field."
@@ -81,16 +81,16 @@ iStart: anInteger
 	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iStart put: anInteger! !
-!EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #cEntries:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #ihPal:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #iStart!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #iStart:!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #cEntries:!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #ihPal!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #ihPal:!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #iStart!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesFor: #iStart:!**compiled accessors**!public! !
 
-!EMRSETPALETTEENTRIES class methodsFor!
+!OS.EMRSETPALETTEENTRIES class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETPALETTEENTRIES structure.
@@ -129,7 +129,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPALETTEENTRIES}! !
-!EMRSETPALETTEENTRIES class categoriesFor: #defineFields!public!template definition! !
-!EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETPALETTEENTRIES class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
 

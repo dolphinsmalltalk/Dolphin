@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPIXELFORMAT
+OS.ENHMETARECORD subclass: #'OS.EMRPIXELFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pfd' -> 16r8
 	}!
-EMRPIXELFORMAT guid: (GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
-EMRPIXELFORMAT comment: '<EMRPIXELFORMAT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPIXELFORMAT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPIXELFORMAT guid: (Core.GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
+OS.EMRPIXELFORMAT comment: '<EMRPIXELFORMAT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPIXELFORMAT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRPIXELFORMAT {
 	PIXELFORMATDESCRIPTOR pfd;
 } EMRPIXELFORMAT;
 '!
-!EMRPIXELFORMAT categoriesForClass!Win32-Structs! !
-!EMRPIXELFORMAT methodsFor!
+!OS.EMRPIXELFORMAT categoriesForClass!Win32-Structs! !
+!OS.EMRPIXELFORMAT methodsFor!
 
 pfd
 	"Answer the <PIXELFORMATDESCRIPTOR> value of the receiver's 'pfd' field."
@@ -39,10 +39,10 @@ pfd: aPIXELFORMATDESCRIPTOR
 		from: ##(_OffsetOf_pfd + 1)
 		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
 		startingAt: 1! !
-!EMRPIXELFORMAT categoriesFor: #pfd!**compiled accessors**!public! !
-!EMRPIXELFORMAT categoriesFor: #pfd:!**compiled accessors**!public! !
+!OS.EMRPIXELFORMAT categoriesFor: #pfd!**compiled accessors**!public! !
+!OS.EMRPIXELFORMAT categoriesFor: #pfd:!**compiled accessors**!public! !
 
-!EMRPIXELFORMAT class methodsFor!
+!OS.EMRPIXELFORMAT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPIXELFORMAT structure.
@@ -57,7 +57,7 @@ defineFields
 "
 
 	super defineFields.
-	self 
+	self
 		defineField: #pfd
 		type: (StructureField type: PIXELFORMATDESCRIPTOR)
 		offset: 8.
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_PIXELFORMAT}! !
-!EMRPIXELFORMAT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRPIXELFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPIXELFORMAT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPIXELFORMAT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRPIXELFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPIXELFORMAT class categoriesFor: #iTypes!constants!public! !
 

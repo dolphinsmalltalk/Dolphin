@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRMASKBLT
+OS.ENHMETARECORD subclass: #'OS.EMRMASKBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsMask' -> 16r7C.
@@ -29,8 +29,8 @@ ENHMETARECORD subclass: #EMRMASKBLT
 		'_OffsetOf_yMask' -> 16r68.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMRMASKBLT guid: (GUID fromString: '{99001d44-ed7a-4cee-84b9-dbcf1f67898b}')!
-EMRMASKBLT comment: '<EMRMASKBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMASKBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRMASKBLT guid: (Core.GUID fromString: '{99001d44-ed7a-4cee-84b9-dbcf1f67898b}')!
+OS.EMRMASKBLT comment: '<EMRMASKBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMASKBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -65,8 +65,8 @@ struct tagEMRMASKBLT {
 	[helpstring("Size of the mask bitmap bits if any")] DWORD cbBitsMask;
 } EMRMASKBLT;
 '!
-!EMRMASKBLT categoriesForClass!Win32-Structs! !
-!EMRMASKBLT methodsFor!
+!OS.EMRMASKBLT categoriesForClass!Win32-Structs! !
+!OS.EMRMASKBLT methodsFor!
 
 cbBitsMask
 	"Answer the <Integer> value of the receiver's 'cbBitsMask' field."
@@ -209,9 +209,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -219,7 +219,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -295,52 +295,52 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRMASKBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBitsMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBmiMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBmiMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #iUsageMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #iUsageMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBitsMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBitsMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBmiMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBmiMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #yMask!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #yMask:!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRMASKBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBitsMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBmiMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBmiMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #iUsageMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #iUsageMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBitsMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBitsMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBmiMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBmiMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #yMask!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #yMask:!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRMASKBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRMASKBLT class methodsFor!
+!OS.EMRMASKBLT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRMASKBLT structure.
@@ -378,7 +378,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -452,7 +452,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_MASKBLT}! !
-!EMRMASKBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRMASKBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRMASKBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRMASKBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRMASKBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRMASKBLT class categoriesFor: #iTypes!constants!public! !
 

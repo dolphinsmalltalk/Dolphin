@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
+OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r158.
@@ -12,8 +12,8 @@ ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 		'_OffsetOf_ihCS' -> 16r8.
 		'_OffsetOf_lcs' -> 16rC
 	}!
-EMRCREATECOLORSPACEW guid: (GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
-EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCREATECOLORSPACEW guid: (Core.GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
+OS.EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -31,8 +31,8 @@ struct tagEMRCREATECOLORSPACEW {
 	[helpstring("Array size is cbData")] BYTE* Data;
 } EMRCREATECOLORSPACEW;
 '!
-!EMRCREATECOLORSPACEW categoriesForClass!Win32-Structs! !
-!EMRCREATECOLORSPACEW methodsFor!
+!OS.EMRCREATECOLORSPACEW categoriesForClass!Win32-Structs! !
+!OS.EMRCREATECOLORSPACEW methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -94,18 +94,18 @@ lcs: aLOGCOLORSPACEW
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
 		startingAt: 1! !
-!EMRCREATECOLORSPACEW categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #Data!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #ihCS:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #lcs!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #lcs:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #ihCS!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #ihCS:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #lcs!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesFor: #lcs:!**compiled accessors**!public! !
 
-!EMRCREATECOLORSPACEW class methodsFor!
+!OS.EMRCREATECOLORSPACEW class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCREATECOLORSPACEW structure.
@@ -148,7 +148,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATECOLORSPACEW}! !
-!EMRCREATECOLORSPACEW class categoriesFor: #defineFields!public!template definition! !
-!EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATECOLORSPACEW class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
 

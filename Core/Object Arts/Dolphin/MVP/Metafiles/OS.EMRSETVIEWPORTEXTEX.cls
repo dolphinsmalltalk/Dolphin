@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
+OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_szlExtent' -> 16r8
 	}!
-EMRSETVIEWPORTEXTEX guid: (GUID fromString: '{4f4dcf23-8e3c-4b18-8546-b833b55d3305}')!
-EMRSETVIEWPORTEXTEX comment: '<EMRSETVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETVIEWPORTEXTEX guid: (Core.GUID fromString: '{4f4dcf23-8e3c-4b18-8546-b833b55d3305}')!
+OS.EMRSETVIEWPORTEXTEX comment: '<EMRSETVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,13 +23,13 @@ struct tagEMRSETVIEWPORTEXTEX {
 	SIZEL szlExtent;
 } EMRSETVIEWPORTEXTEX;
 '!
-!EMRSETVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
-!EMRSETVIEWPORTEXTEX methodsFor!
+!OS.EMRSETVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
+!OS.EMRSETVIEWPORTEXTEX methodsFor!
 
 szlExtent
 	"Answer the <SIZE> value of the receiver's 'szlExtent' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlExtent!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlExtent!
 
 szlExtent: aSIZE
 	"Set the receiver's 'szlExtent' field to the value of the argument, aSIZE"
@@ -37,12 +37,12 @@ szlExtent: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlExtent + 1)
-		to: ##(_OffsetOf_szlExtent + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlExtent + SIZEL basicByteSize)
 		startingAt: 1! !
-!EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent!**compiled accessors**!public! !
-!EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent:!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent:!**compiled accessors**!public! !
 
-!EMRSETVIEWPORTEXTEX class methodsFor!
+!OS.EMRSETVIEWPORTEXTEX class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETVIEWPORTEXTEX structure.
@@ -59,8 +59,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #szlExtent
-			type: (StructureField type: SIZE)
-			offset: 8.
+		type: (StructureField type: SIZEL)
+		offset: 8.
 	self byteSize: 16!
 
 getFieldNames
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTEXTEX. EMR_SETWINDOWEXTEX}! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
 

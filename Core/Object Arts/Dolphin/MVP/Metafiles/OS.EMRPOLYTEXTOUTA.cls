@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYTEXTOUTA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_aemrtext' -> 16r28.
@@ -13,8 +13,8 @@ ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 		'_OffsetOf_iGraphicsMode' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRPOLYTEXTOUTA guid: (GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
-EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPOLYTEXTOUTA guid: (Core.GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
+OS.EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagEMRPOLYTEXTOUTA {
 	[helpstring("Array of EMRTEXT structures.  This is followed by the strings and spacing arrays.")] EMRTEXT* aemrtext;
 } EMRPOLYTEXTOUTA;
 '!
-!EMRPOLYTEXTOUTA categoriesForClass!Win32-Structs! !
-!EMRPOLYTEXTOUTA methodsFor!
+!OS.EMRPOLYTEXTOUTA categoriesForClass!Win32-Structs! !
+!OS.EMRPOLYTEXTOUTA methodsFor!
 
 aemrtext
 	"Answer the <StructureArray> value of the receiver's 'aemrtext' field."
@@ -97,9 +97,9 @@ iGraphicsMode: anInteger
 	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -107,22 +107,22 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRPOLYTEXTOUTA categoriesFor: #aemrtext!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #aemrtext:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #cStrings!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #cStrings:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #exScale!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #exScale:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #eyScale!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #eyScale:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #aemrtext!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #aemrtext:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #cStrings!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #cStrings:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #exScale!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #exScale:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #eyScale!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #eyScale:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRPOLYTEXTOUTA class methodsFor!
+!OS.EMRPOLYTEXTOUTA class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPOLYTEXTOUTA structure.
@@ -144,7 +144,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #iGraphicsMode
 			type: DWORDField new
@@ -169,7 +169,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYTEXTOUTA. EMR_POLYTEXTOUTW}! !
-!EMRPOLYTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

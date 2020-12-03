@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #EnhancedMetafileRecordTypes
+Kernel.SharedPool subclass: #'OS.EnhancedMetafileRecordTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -130,6 +130,7 @@ SharedPool subclass: #EnhancedMetafileRecordTypes
 		'EMR_TRANSPARENTBLT' -> 16r74.
 		'EMR_WIDENPATH' -> 16r42
 	}!
-EnhancedMetafileRecordTypes guid: (GUID fromString: '{c7e0098e-0256-4501-8c4c-ff3e15338278}')!
-EnhancedMetafileRecordTypes comment: ''!
-!EnhancedMetafileRecordTypes categoriesForClass!Unclassified! !
+OS.EnhancedMetafileRecordTypes guid: (Core.GUID fromString: '{c7e0098e-0256-4501-8c4c-ff3e15338278}')!
+OS.EnhancedMetafileRecordTypes isNonInstantiable: true!
+OS.EnhancedMetafileRecordTypes comment: ''!
+!OS.EnhancedMetafileRecordTypes categoriesForClass!Unclassified! !

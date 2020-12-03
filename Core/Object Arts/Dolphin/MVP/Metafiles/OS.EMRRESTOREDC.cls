@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRRESTOREDC
+OS.ENHMETARECORD subclass: #'OS.EMRRESTOREDC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iRelative' -> 16r8
 	}!
-EMRRESTOREDC guid: (GUID fromString: '{77f6595f-287e-4df2-be4c-dfd546be3718}')!
-EMRRESTOREDC comment: '<EMRRESTOREDC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESTOREDC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRRESTOREDC guid: (Core.GUID fromString: '{77f6595f-287e-4df2-be4c-dfd546be3718}')!
+OS.EMRRESTOREDC comment: '<EMRRESTOREDC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESTOREDC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRRESTOREDC {
 	[helpstring("Specifies a relative instance")] long iRelative;
 } EMRRESTOREDC;
 '!
-!EMRRESTOREDC categoriesForClass!Win32-Structs! !
-!EMRRESTOREDC methodsFor!
+!OS.EMRRESTOREDC categoriesForClass!Win32-Structs! !
+!OS.EMRRESTOREDC methodsFor!
 
 iRelative
 	"Answer the <Integer> value of the receiver's 'iRelative' field."
@@ -35,10 +35,10 @@ iRelative: anInteger
 	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
-!EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
-!EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
+!OS.EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
+!OS.EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
 
-!EMRRESTOREDC class methodsFor!
+!OS.EMRRESTOREDC class methodsFor!
 
 defineFields
 	"Define the fields of the EMRRESTOREDC structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iRelative
-			type: SDWORDField new
-			offset: 8.
+		type: SDWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_RESTOREDC}! !
-!EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
+!OS.EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
 

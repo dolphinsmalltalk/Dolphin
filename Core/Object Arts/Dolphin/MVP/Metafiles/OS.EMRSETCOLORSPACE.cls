@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSETCOLORSPACE
+OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORSPACE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihCS' -> 16r8
 	}!
-EMRSETCOLORSPACE guid: (GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
-EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSETCOLORSPACE guid: (Core.GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
+OS.EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagEMRSETCOLORSPACE {
 	[helpstring("ColorSpace handle index")] DWORD ihCS;
 } EMRSETCOLORSPACE;
 '!
-!EMRSETCOLORSPACE categoriesForClass!Win32-Structs! !
-!EMRSETCOLORSPACE methodsFor!
+!OS.EMRSETCOLORSPACE categoriesForClass!Win32-Structs! !
+!OS.EMRSETCOLORSPACE methodsFor!
 
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
@@ -35,10 +35,10 @@ ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
-!EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
+!OS.EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
+!OS.EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
 
-!EMRSETCOLORSPACE class methodsFor!
+!OS.EMRSETCOLORSPACE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSETCOLORSPACE structure.
@@ -55,8 +55,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #ihCS
-			type: DWORDField new
-			offset: 8.
+		type: DWORDField new
+		offset: 8.
 	self byteSize: 12!
 
 getFieldNames
@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORSPACE. EMR_DELETECOLORSPACE}! !
-!EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
 

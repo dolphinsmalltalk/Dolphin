@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRFILLPATH
+OS.ENHMETARECORD subclass: #'OS.EMRFILLPATH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRFILLPATH guid: (GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
-EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRFILLPATH guid: (Core.GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
+OS.EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,26 +23,26 @@ struct tagEMRFILLPATH {
 	[helpstring("Inclusive-inclusive bounds in device units")] RECTL rclBounds;
 } EMRFILLPATH;
 '!
-!EMRFILLPATH categoriesForClass!Win32-Structs! !
-!EMRFILLPATH methodsFor!
+!OS.EMRFILLPATH categoriesForClass!Win32-Structs! !
+!OS.EMRFILLPATH methodsFor!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRFILLPATH categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRFILLPATH categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRFILLPATH categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRFILLPATH categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRFILLPATH class methodsFor!
+!OS.EMRFILLPATH class methodsFor!
 
 defineFields
 	"Define the fields of the EMRFILLPATH structure.
@@ -59,8 +59,8 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
-			offset: 8.
+		type: (StructureField type: RECTL)
+		offset: 8.
 	self byteSize: 24!
 
 getFieldNames
@@ -70,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FILLPATH. EMR_STROKEANDFILLPATH. EMR_STROKEPATH}! !
-!EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
 

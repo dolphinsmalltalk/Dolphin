@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCREATEPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ihPal' -> 16r8.
 		'_OffsetOf_lgpl' -> 16rC
 	}!
-EMRCREATEPALETTE guid: (GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
-EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCREATEPALETTE guid: (Core.GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
+OS.EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRCREATEPALETTE {
 	[helpstring("The peFlags fields in the palette entries do not contain any flags")] LOGPALETTE lgpl;
 } EMRCREATEPALETTE;
 '!
-!EMRCREATEPALETTE categoriesForClass!Win32-Structs! !
-!EMRCREATEPALETTE methodsFor!
+!OS.EMRCREATEPALETTE categoriesForClass!Win32-Structs! !
+!OS.EMRCREATEPALETTE methodsFor!
 
 ihPal
 	"Answer the <Integer> value of the receiver's 'ihPal' field."
@@ -51,12 +51,12 @@ lgpl: aLOGPALETTE
 		from: ##(_OffsetOf_lgpl + 1)
 		to: ##(_OffsetOf_lgpl + LOGPALETTE basicByteSize)
 		startingAt: 1! !
-!EMRCREATEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #lgpl!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #lgpl:!**compiled accessors**!public! !
+!OS.EMRCREATEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
+!OS.EMRCREATEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
+!OS.EMRCREATEPALETTE categoriesFor: #lgpl!**compiled accessors**!public! !
+!OS.EMRCREATEPALETTE categoriesFor: #lgpl:!**compiled accessors**!public! !
 
-!EMRCREATEPALETTE class methodsFor!
+!OS.EMRCREATEPALETTE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCREATEPALETTE structure.
@@ -88,7 +88,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEPALETTE}! !
-!EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
 

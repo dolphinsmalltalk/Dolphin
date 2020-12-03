@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
+OS.ENHMETARECORD subclass: #'OS.EMRCREATEMONOBRUSH'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r1C.
@@ -13,8 +13,8 @@ ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 		'_OffsetOf_offBits' -> 16r18.
 		'_OffsetOf_offBmi' -> 16r10
 	}!
-EMRCREATEMONOBRUSH guid: (GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
-EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRCREATEMONOBRUSH guid: (Core.GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
+OS.EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagEMRCREATEMONOBRUSH {
 	[helpstring("Size of the bitmap bits")] DWORD cbBits;
 } EMRCREATEMONOBRUSH;
 '!
-!EMRCREATEMONOBRUSH categoriesForClass!Win32-Structs! !
-!EMRCREATEMONOBRUSH methodsFor!
+!OS.EMRCREATEMONOBRUSH categoriesForClass!Win32-Structs! !
+!OS.EMRCREATEMONOBRUSH methodsFor!
 
 cbBits
 	"Answer the <Integer> value of the receiver's 'cbBits' field."
@@ -95,20 +95,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #iUsage!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #iUsage:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBits!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBmi:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBits!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBits:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBmi!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBmi:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #ihBrush!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #ihBrush:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #iUsage!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #iUsage:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #offBits!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #offBits:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #offBmi!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesFor: #offBmi:!**compiled accessors**!public! !
 
-!EMRCREATEMONOBRUSH class methodsFor!
+!OS.EMRCREATEMONOBRUSH class methodsFor!
 
 defineFields
 	"Define the fields of the EMRCREATEMONOBRUSH structure.
@@ -129,12 +129,24 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ihBrush type: DWORDField new offset: 8;
-		defineField: #iUsage type: DWORDField new offset: 12;
-		defineField: #offBmi type: DWORDField new offset: 16;
-		defineField: #cbBmi type: DWORDField new offset: 20;
-		defineField: #offBits type: DWORDField new offset: 24;
-		defineField: #cbBits type: DWORDField new offset: 28.
+		defineField: #ihBrush
+			type: DWORDField new
+			offset: 8;
+		defineField: #iUsage
+			type: DWORDField new
+			offset: 12;
+		defineField: #offBmi
+			type: DWORDField new
+			offset: 16;
+		defineField: #cbBmi
+			type: DWORDField new
+			offset: 20;
+		defineField: #offBits
+			type: DWORDField new
+			offset: 24;
+		defineField: #cbBits
+			type: DWORDField new
+			offset: 28.
 	self byteSize: 32!
 
 getFieldNames
@@ -144,7 +156,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEMONOBRUSH}! !
-!EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
 

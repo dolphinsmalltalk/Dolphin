@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXTCREATEPEN
+OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBits' -> 16r18.
@@ -13,8 +13,8 @@ ENHMETARECORD subclass: #EMREXTCREATEPEN
 		'_OffsetOf_offBits' -> 16r14.
 		'_OffsetOf_offBmi' -> 16rC
 	}!
-EMREXTCREATEPEN guid: (GUID fromString: '{797b4380-74af-4163-8248-87bca7b9a3f4}')!
-EMREXTCREATEPEN comment: '<EMREXTCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXTCREATEPEN guid: (Core.GUID fromString: '{797b4380-74af-4163-8248-87bca7b9a3f4}')!
+OS.EMREXTCREATEPEN comment: '<EMREXTCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagEMREXTCREATEPEN {
 	[helpstring("The extended pen with the style array.")] EXTLOGPEN elp;
 } EMREXTCREATEPEN;
 '!
-!EMREXTCREATEPEN categoriesForClass!Win32-Structs! !
-!EMREXTCREATEPEN methodsFor!
+!OS.EMREXTCREATEPEN categoriesForClass!Win32-Structs! !
+!OS.EMREXTCREATEPEN methodsFor!
 
 cbBits
 	"Answer the <Integer> value of the receiver's 'cbBits' field."
@@ -99,20 +99,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMREXTCREATEPEN categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #elp!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #elp:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBits!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBmi:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #cbBits!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #cbBits:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #cbBmi!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #cbBmi:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #elp!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #elp:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #offBits!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #offBits:!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #offBmi!**compiled accessors**!public! !
+!OS.EMREXTCREATEPEN categoriesFor: #offBmi:!**compiled accessors**!public! !
 
-!EMREXTCREATEPEN class methodsFor!
+!OS.EMREXTCREATEPEN class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTCREATEPEN structure.
@@ -133,12 +133,24 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #ihPen type: DWORDField new offset: 8;
-		defineField: #offBmi type: DWORDField new offset: 12;
-		defineField: #cbBmi type: DWORDField new offset: 16;
-		defineField: #offBits type: DWORDField new offset: 20;
-		defineField: #cbBits type: DWORDField new offset: 24;
-		defineField: #elp type: (StructureField type: EXTLOGPEN) offset: 28.
+		defineField: #ihPen
+			type: DWORDField new
+			offset: 8;
+		defineField: #offBmi
+			type: DWORDField new
+			offset: 12;
+		defineField: #cbBmi
+			type: DWORDField new
+			offset: 16;
+		defineField: #offBits
+			type: DWORDField new
+			offset: 20;
+		defineField: #cbBits
+			type: DWORDField new
+			offset: 24;
+		defineField: #elp
+			type: (StructureField type: EXTLOGPEN)
+			offset: 28.
 	self byteSize: 56!
 
 getFieldNames
@@ -148,7 +160,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTCREATEPEN}! !
-!EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTCREATEPEN class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMREXTCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXTCREATEPEN class categoriesFor: #iTypes!constants!public! !
 

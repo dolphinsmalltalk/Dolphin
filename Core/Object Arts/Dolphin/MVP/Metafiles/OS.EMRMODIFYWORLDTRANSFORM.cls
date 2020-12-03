@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
+OS.ENHMETARECORD subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMode' -> 16r20.
 		'_OffsetOf_XFORM' -> 16r8
 	}!
-EMRMODIFYWORLDTRANSFORM guid: (GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
-EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRMODIFYWORLDTRANSFORM guid: (Core.GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
+OS.EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRMODIFYWORLDTRANSFORM {
 	DWORD iMode;
 } EMRMODIFYWORLDTRANSFORM;
 '!
-!EMRMODIFYWORLDTRANSFORM categoriesForClass!Win32-Structs! !
-!EMRMODIFYWORLDTRANSFORM methodsFor!
+!OS.EMRMODIFYWORLDTRANSFORM categoriesForClass!Win32-Structs! !
+!OS.EMRMODIFYWORLDTRANSFORM methodsFor!
 
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
@@ -51,12 +51,12 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode:!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
+!OS.EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode!**compiled accessors**!public! !
+!OS.EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode:!**compiled accessors**!public! !
+!OS.EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
+!OS.EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
 
-!EMRMODIFYWORLDTRANSFORM class methodsFor!
+!OS.EMRMODIFYWORLDTRANSFORM class methodsFor!
 
 defineFields
 	"Define the fields of the EMRMODIFYWORLDTRANSFORM structure.
@@ -88,7 +88,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_MODIFYWORLDTRANSFORM}! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
+!OS.EMRMODIFYWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRMODIFYWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRMODIFYWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
 

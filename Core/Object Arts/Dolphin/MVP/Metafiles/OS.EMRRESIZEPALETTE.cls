@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRRESIZEPALETTE
+OS.ENHMETARECORD subclass: #'OS.EMRRESIZEPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cEntries' -> 16rC.
 		'_OffsetOf_ihPal' -> 16r8
 	}!
-EMRRESIZEPALETTE guid: (GUID fromString: '{7a0359ce-039f-4128-a1ed-09dc1fb5e2e5}')!
-EMRRESIZEPALETTE comment: '<EMRRESIZEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESIZEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRRESIZEPALETTE guid: (Core.GUID fromString: '{7a0359ce-039f-4128-a1ed-09dc1fb5e2e5}')!
+OS.EMRRESIZEPALETTE comment: '<EMRRESIZEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESIZEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,8 +25,8 @@ struct tagEMRRESIZEPALETTE {
 	DWORD cEntries;
 } EMRRESIZEPALETTE;
 '!
-!EMRRESIZEPALETTE categoriesForClass!Win32-Structs! !
-!EMRRESIZEPALETTE methodsFor!
+!OS.EMRRESIZEPALETTE categoriesForClass!Win32-Structs! !
+!OS.EMRRESIZEPALETTE methodsFor!
 
 cEntries
 	"Answer the <Integer> value of the receiver's 'cEntries' field."
@@ -47,12 +47,12 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
-!EMRRESIZEPALETTE categoriesFor: #cEntries!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #cEntries:!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
+!OS.EMRRESIZEPALETTE categoriesFor: #cEntries!**compiled accessors**!public! !
+!OS.EMRRESIZEPALETTE categoriesFor: #cEntries:!**compiled accessors**!public! !
+!OS.EMRRESIZEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
+!OS.EMRRESIZEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
 
-!EMRRESIZEPALETTE class methodsFor!
+!OS.EMRRESIZEPALETTE class methodsFor!
 
 defineFields
 	"Define the fields of the EMRRESIZEPALETTE structure.
@@ -84,7 +84,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_RESIZEPALETTE}! !
-!EMRRESIZEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRRESIZEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRRESIZEPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRRESIZEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRRESIZEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRRESIZEPALETTE class categoriesFor: #iTypes!constants!public! !
 

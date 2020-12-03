@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREOF
+OS.ENHMETARECORD subclass: #'OS.EMREOF'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nPalEntries' -> 16r8.
 		'_OffsetOf_nSizeLast' -> 16r10.
 		'_OffsetOf_offPalEntries' -> 16rC
 	}!
-EMREOF guid: (GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
-EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREOF guid: (Core.GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
+OS.EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMREOF {
 	[helpstring("Same as nSize and must be the last DWORD of the record.  The palette entries, if exist, precede this field.")] DWORD nSizeLast;
 } EMREOF;
 '!
-!EMREOF categoriesForClass!Win32-Structs! !
-!EMREOF methodsFor!
+!OS.EMREOF categoriesForClass!Win32-Structs! !
+!OS.EMREOF methodsFor!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
@@ -59,14 +59,14 @@ offPalEntries: anInteger
 	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offPalEntries put: anInteger! !
-!EMREOF categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!EMREOF categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!EMREOF categoriesFor: #nSizeLast!**compiled accessors**!public! !
-!EMREOF categoriesFor: #nSizeLast:!**compiled accessors**!public! !
-!EMREOF categoriesFor: #offPalEntries!**compiled accessors**!public! !
-!EMREOF categoriesFor: #offPalEntries:!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #nPalEntries!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #nPalEntries:!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #nSizeLast!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #nSizeLast:!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #offPalEntries!**compiled accessors**!public! !
+!OS.EMREOF categoriesFor: #offPalEntries:!**compiled accessors**!public! !
 
-!EMREOF class methodsFor!
+!OS.EMREOF class methodsFor!
 
 defineFields
 	"Define the fields of the EMREOF structure.
@@ -84,9 +84,15 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #nPalEntries type: DWORDField new offset: 8;
-		defineField: #offPalEntries type: DWORDField new offset: 12;
-		defineField: #nSizeLast type: DWORDField new offset: 16.
+		defineField: #nPalEntries
+			type: DWORDField new
+			offset: 8;
+		defineField: #offPalEntries
+			type: DWORDField new
+			offset: 12;
+		defineField: #nSizeLast
+			type: DWORDField new
+			offset: 16.
 	self byteSize: 20!
 
 getFieldNames
@@ -96,7 +102,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EOF}! !
-!EMREOF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREOF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREOF class categoriesFor: #iTypes!constants!public! !
+!OS.EMREOF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMREOF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREOF class categoriesFor: #iTypes!constants!public! !
 

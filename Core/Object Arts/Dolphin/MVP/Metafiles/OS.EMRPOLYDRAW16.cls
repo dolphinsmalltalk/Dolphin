@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPOLYDRAW16
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYDRAW16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abTypes' -> 16r20.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRPOLYDRAW16
 		'_OffsetOf_cpts' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRPOLYDRAW16 guid: (GUID fromString: '{f3d1f8c2-c73d-4ae7-9717-b798c4956a06}')!
-EMRPOLYDRAW16 comment: '<EMRPOLYDRAW16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPOLYDRAW16 guid: (Core.GUID fromString: '{f3d1f8c2-c73d-4ae7-9717-b798c4956a06}')!
+OS.EMRPOLYDRAW16 comment: '<EMRPOLYDRAW16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagEMRPOLYDRAW16 {
 	[helpstring("Array of point types")] BYTE* abTypes;
 } EMRPOLYDRAW16;
 '!
-!EMRPOLYDRAW16 categoriesForClass!Win32-Structs! !
-!EMRPOLYDRAW16 methodsFor!
+!OS.EMRPOLYDRAW16 categoriesForClass!Win32-Structs! !
+!OS.EMRPOLYDRAW16 methodsFor!
 
 abTypes
 	"Answer the receiver's abTypes field as a Smalltalk object."
@@ -83,9 +83,9 @@ cpts: anInteger
 	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -93,19 +93,19 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRPOLYDRAW16 categoriesFor: #abTypes!public! !
-!EMRPOLYDRAW16 categoriesFor: #abTypes:!public! !
-!EMRPOLYDRAW16 categoriesFor: #abTypesOffset!accessing!private! !
-!EMRPOLYDRAW16 categoriesFor: #apts!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #apts:!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #cpts!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #cpts:!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #abTypes!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #abTypes:!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #abTypesOffset!accessing!private! !
+!OS.EMRPOLYDRAW16 categoriesFor: #apts!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #apts:!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #cpts!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #cpts:!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRPOLYDRAW16 class methodsFor!
+!OS.EMRPOLYDRAW16 class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPOLYDRAW16 structure.
@@ -125,7 +125,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cpts
 			type: DWORDField new
@@ -145,7 +145,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYDRAW16}! !
-!EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRPOLYDRAW16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYDRAW16 class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRPOLYDRAW16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPOLYDRAW16 class categoriesFor: #iTypes!constants!public! !
 

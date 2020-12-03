@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRFILLRGN
+OS.ENHMETARECORD subclass: #'OS.EMRFILLRGN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbRgnData' -> 16r18.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRFILLRGN
 		'_OffsetOf_rclBounds' -> 16r8.
 		'_OffsetOf_RGNDATA' -> 16r20
 	}!
-EMRFILLRGN guid: (GUID fromString: '{5840d53d-c10c-442c-be9f-cfada623813e}')!
-EMRFILLRGN comment: '<EMRFILLRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRFILLRGN guid: (Core.GUID fromString: '{5840d53d-c10c-442c-be9f-cfada623813e}')!
+OS.EMRFILLRGN comment: '<EMRFILLRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagEMRFILLRGN {
 	BYTE* RGNDATA;
 } EMRFILLRGN;
 '!
-!EMRFILLRGN categoriesForClass!Win32-Structs! !
-!EMRFILLRGN methodsFor!
+!OS.EMRFILLRGN categoriesForClass!Win32-Structs! !
+!OS.EMRFILLRGN methodsFor!
 
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
@@ -53,9 +53,9 @@ ihBrush: anInteger
 	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -63,7 +63,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 RGNDATA
@@ -82,16 +82,16 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!EMRFILLRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMRFILLRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #ihBrush!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
+!OS.EMRFILLRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
 
-!EMRFILLRGN class methodsFor!
+!OS.EMRFILLRGN class methodsFor!
 
 defineFields
 	"Define the fields of the EMRFILLRGN structure.
@@ -111,7 +111,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cbRgnData
 			type: DWORDField new
@@ -130,7 +130,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FILLRGN}! !
-!EMRFILLRGN class categoriesFor: #defineFields!public!template definition! !
-!EMRFILLRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRFILLRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRFILLRGN class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRFILLRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRFILLRGN class categoriesFor: #iTypes!constants!public! !
 

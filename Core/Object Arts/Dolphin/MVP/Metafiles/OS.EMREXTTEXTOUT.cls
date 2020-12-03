@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXTTEXTOUT
+OS.ENHMETARECORD subclass: #'OS.EMREXTTEXTOUT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_EMRTEXT' -> 16r24.
@@ -12,11 +12,11 @@ ENHMETARECORD subclass: #EMREXTTEXTOUT
 		'_OffsetOf_iGraphicsMode' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMREXTTEXTOUT guid: (GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
-EMREXTTEXTOUT isAbstract: true!
-EMREXTTEXTOUT comment: ''!
-!EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
-!EMREXTTEXTOUT methodsFor!
+OS.EMREXTTEXTOUT guid: (Core.GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
+OS.EMREXTTEXTOUT isNonInstantiable: true!
+OS.EMREXTTEXTOUT comment: ''!
+!OS.EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
+!OS.EMREXTTEXTOUT methodsFor!
 
 EMRTEXT
 	"Answer the <EMRTEXT> value of the receiver's 'EMRTEXT' field."
@@ -63,9 +63,9 @@ iGraphicsMode: anInteger
 	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -73,20 +73,20 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMREXTTEXTOUT categoriesFor: #EMRTEXT!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #EMRTEXT:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #exScale!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #exScale:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #eyScale!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #eyScale:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #EMRTEXT!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #EMRTEXT:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #exScale!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #exScale:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #eyScale!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #eyScale:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMREXTTEXTOUT class methodsFor!
+!OS.EMREXTTEXTOUT class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXTTEXTOUT structure.
@@ -107,7 +107,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #iGraphicsMode
 			type: DWORDField new
@@ -127,6 +127,6 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
-!EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTTEXTOUT class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMREXTTEXTOUT class categoriesFor: #iTypes!constants!public! !
 

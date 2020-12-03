@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #LOGCOLORSPACEW
+External.Structure subclass: #'OS.LOGCOLORSPACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lcsCSType' -> 16rC.
@@ -17,8 +17,8 @@ ExternalStructure subclass: #LOGCOLORSPACEW
 		'_OffsetOf_lcsSize' -> 16r8.
 		'_OffsetOf_lcsVersion' -> 16r4
 	}!
-LOGCOLORSPACEW guid: (GUID fromString: '{8b3e3016-08e0-4e61-835b-ff4cfbcec91a}')!
-LOGCOLORSPACEW comment: '<LOGCOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.LOGCOLORSPACEW guid: (Core.GUID fromString: '{8b3e3016-08e0-4e61-835b-ff4cfbcec91a}')!
+OS.LOGCOLORSPACEW comment: '<LOGCOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -40,8 +40,8 @@ struct tagLOGCOLORSPACEW {
 	BYTE lcsFilename[260];
 } LOGCOLORSPACEW;
 '!
-!LOGCOLORSPACEW categoriesForClass!Win32-Structs! !
-!LOGCOLORSPACEW methodsFor!
+!OS.LOGCOLORSPACEW categoriesForClass!Win32-Structs! !
+!OS.LOGCOLORSPACEW methodsFor!
 
 lcsCSType
 	"Answer the <Integer> value of the receiver's 'lcsCSType' field."
@@ -152,28 +152,28 @@ lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
-!LOGCOLORSPACEW categoriesFor: #lcsCSType!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsCSType:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsEndpoints!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsEndpoints:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsFilename!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsFilename:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaBlue!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaBlue:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaGreen!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaGreen:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaRed!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsGammaRed:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsIntent!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsIntent:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsSignature!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsSignature:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsSize!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsSize:!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsVersion!**compiled accessors**!public! !
-!LOGCOLORSPACEW categoriesFor: #lcsVersion:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsCSType!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsCSType:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsEndpoints!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsEndpoints:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsFilename!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsFilename:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaBlue!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaBlue:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaGreen!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaGreen:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaRed!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsGammaRed:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsIntent!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsIntent:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsSignature!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsSignature:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsSize!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsSize:!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsVersion!**compiled accessors**!public! !
+!OS.LOGCOLORSPACEW categoriesFor: #lcsVersion:!**compiled accessors**!public! !
 
-!LOGCOLORSPACEW class methodsFor!
+!OS.LOGCOLORSPACEW class methodsFor!
 
 defineFields
 	"Define the fields of the LOGCOLORSPACEW structure.
@@ -196,20 +196,40 @@ defineFields
 "
 
 	self
-		defineField: #lcsSignature type: DWORDField new offset: 0;
-		defineField: #lcsVersion type: DWORDField new offset: 4;
-		defineField: #lcsSize type: DWORDField new offset: 8;
-		defineField: #lcsCSType type: SDWORDField new offset: 12;
-		defineField: #lcsIntent type: SDWORDField new offset: 16;
-		defineField: #lcsEndpoints type: (StructureField type: CIEXYZTRIPLE) offset: 20;
-		defineField: #lcsGammaRed type: DWORDField new offset: 56;
-		defineField: #lcsGammaGreen type: DWORDField new offset: 60;
-		defineField: #lcsGammaBlue type: DWORDField new offset: 64;
-		defineField: #lcsFilename type: (ArrayField type: ByteArray length: 260) offset: 68.
+		defineField: #lcsSignature
+			type: DWORDField new
+			offset: 0;
+		defineField: #lcsVersion
+			type: DWORDField new
+			offset: 4;
+		defineField: #lcsSize
+			type: DWORDField new
+			offset: 8;
+		defineField: #lcsCSType
+			type: SDWORDField new
+			offset: 12;
+		defineField: #lcsIntent
+			type: SDWORDField new
+			offset: 16;
+		defineField: #lcsEndpoints
+			type: (StructureField type: CIEXYZTRIPLE)
+			offset: 20;
+		defineField: #lcsGammaRed
+			type: DWORDField new
+			offset: 56;
+		defineField: #lcsGammaGreen
+			type: DWORDField new
+			offset: 60;
+		defineField: #lcsGammaBlue
+			type: DWORDField new
+			offset: 64;
+		defineField: #lcsFilename
+			type: (ArrayField type: ByteArray length: 260)
+			offset: 68.
 	self byteSize: 328!
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
-!LOGCOLORSPACEW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGCOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LOGCOLORSPACEW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.LOGCOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

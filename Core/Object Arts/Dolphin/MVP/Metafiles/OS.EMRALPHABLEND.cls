@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRALPHABLEND
+OS.ENHMETARECORD subclass: #'OS.EMRALPHABLEND'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -24,8 +24,8 @@ ENHMETARECORD subclass: #EMRALPHABLEND
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMRALPHABLEND guid: (GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
-EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRALPHABLEND guid: (Core.GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
+OS.EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -55,8 +55,8 @@ struct tagEMRALPHABLEND {
 	long cySrc;
 } EMRALPHABLEND;
 '!
-!EMRALPHABLEND categoriesForClass!Win32-Structs! !
-!EMRALPHABLEND methodsFor!
+!OS.EMRALPHABLEND categoriesForClass!Win32-Structs! !
+!OS.EMRALPHABLEND methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -169,9 +169,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -179,7 +179,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -235,42 +235,42 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRALPHABLEND categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRALPHABLEND categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRALPHABLEND class methodsFor!
+!OS.EMRALPHABLEND class methodsFor!
 
 defineFields
 	"Define the fields of the EMRALPHABLEND structure.
@@ -303,7 +303,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -362,7 +362,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ALPHABLEND}! !
-!EMRALPHABLEND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRALPHABLEND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRALPHABLEND class categoriesFor: #iTypes!constants!public! !
+!OS.EMRALPHABLEND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRALPHABLEND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRALPHABLEND class categoriesFor: #iTypes!constants!public! !
 

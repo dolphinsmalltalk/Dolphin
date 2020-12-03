@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #EXTLOGFONTW
+External.Structure subclass: #'OS.EXTLOGFONTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elfCulture' -> 16r130.
@@ -17,8 +17,8 @@ ExternalStructure subclass: #EXTLOGFONTW
 		'_OffsetOf_elfVendorId' -> 16r12C.
 		'_OffsetOf_elfVersion' -> 16r11C
 	}!
-EXTLOGFONTW guid: (GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
-EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EXTLOGFONTW guid: (Core.GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
+OS.EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -40,8 +40,8 @@ struct tagEXTLOGFONT {
 	PANOSE elfPanose;
 } EXTLOGFONT;
 '!
-!EXTLOGFONTW categoriesForClass!Win32-Structs! !
-!EXTLOGFONTW methodsFor!
+!OS.EXTLOGFONTW categoriesForClass!Win32-Structs! !
+!OS.EXTLOGFONTW methodsFor!
 
 elfFullName
 	"Answer the <Utf16String> value of the receiver's 'elfFullName' field."
@@ -140,22 +140,22 @@ elfVendorId: anExternalArray
 		from: ##(_OffsetOf_elfVendorId + 1)
 		to: _OffsetOf_elfVendorId + size
 		startingAt: 1! !
-!EXTLOGFONTW categoriesFor: #elfFullName!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfFullName:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfLogFont!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfLogFont:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfMatch!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfMatch:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfPanose!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfPanose:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyle!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyle:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyleSize!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyleSize:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfVendorId!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfVendorId:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfFullName!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfFullName:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfLogFont!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfLogFont:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfMatch!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfMatch:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfPanose!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfPanose:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfStyle!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfStyle:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfStyleSize!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfStyleSize:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfVendorId!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesFor: #elfVendorId:!**compiled accessors**!public! !
 
-!EXTLOGFONTW class methodsFor!
+!OS.EXTLOGFONTW class methodsFor!
 
 defineFields
 	"Define the fields of the EXTLOGFONTW structure.
@@ -178,20 +178,40 @@ defineFields
 "
 
 	self
-		defineField: #elfLogFont type: (StructureField type: LOGFONTW) offset: 0;
-		defineField: #elfFullName type: (StringField type: Utf16String length: 64) offset: 92;
-		defineField: #elfStyle type: (StringField type: Utf16String length: 32) offset: 220;
-		defineField: #elfVersion type: DWORDField new beFiller offset: 284;
-		defineField: #elfStyleSize type: DWORDField new offset: 288;
-		defineField: #elfMatch type: DWORDField new offset: 292;
-		defineField: #elfReserved type: DWORDField new beFiller offset: 296;
-		defineField: #elfVendorId type: (ArrayField type: ExternalArray length: 4) offset: 300;
-		defineField: #elfCulture type: DWORDField new beFiller offset: 304;
-		defineField: #elfPanose type: (StructureField type: PANOSE) offset: 308.
+		defineField: #elfLogFont
+			type: (StructureField type: LOGFONTW)
+			offset: 0;
+		defineField: #elfFullName
+			type: (StringField type: Utf16String length: 64)
+			offset: 92;
+		defineField: #elfStyle
+			type: (StringField type: Utf16String length: 32)
+			offset: 220;
+		defineField: #elfVersion
+			type: DWORDField new beFiller
+			offset: 284;
+		defineField: #elfStyleSize
+			type: DWORDField new
+			offset: 288;
+		defineField: #elfMatch
+			type: DWORDField new
+			offset: 292;
+		defineField: #elfReserved
+			type: DWORDField new beFiller
+			offset: 296;
+		defineField: #elfVendorId
+			type: (ArrayField type: ExternalArray length: 4)
+			offset: 300;
+		defineField: #elfCulture
+			type: DWORDField new beFiller
+			offset: 304;
+		defineField: #elfPanose
+			type: (StructureField type: PANOSE)
+			offset: 308.
 	self byteSize: 320!
 
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
-!EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

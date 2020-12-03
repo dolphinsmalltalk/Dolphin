@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRPOLYLINE16
+OS.ENHMETARECORD subclass: #'OS.EMRPOLYLINE16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_apts' -> 16r1C.
 		'_OffsetOf_cpts' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRPOLYLINE16 guid: (GUID fromString: '{89918c5e-59a5-4f2a-a8a0-61e552795224}')!
-EMRPOLYLINE16 comment: '<EMRPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRPOLYLINE16 guid: (Core.GUID fromString: '{89918c5e-59a5-4f2a-a8a0-61e552795224}')!
+OS.EMRPOLYLINE16 comment: '<EMRPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMRPOLYLINE16 {
 	POINTS* apts;
 } EMRPOLYLINE16;
 '!
-!EMRPOLYLINE16 categoriesForClass!Win32-Structs! !
-!EMRPOLYLINE16 methodsFor!
+!OS.EMRPOLYLINE16 categoriesForClass!Win32-Structs! !
+!OS.EMRPOLYLINE16 methodsFor!
 
 apts
 	"Answer the <StructureArray> value of the receiver's 'apts' field."
@@ -61,9 +61,9 @@ cpts: anInteger
 	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -71,16 +71,16 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRPOLYLINE16 categoriesFor: #apts!**compiled accessors**!public! !
-!EMRPOLYLINE16 categoriesFor: #apts:!**compiled accessors**!public! !
-!EMRPOLYLINE16 categoriesFor: #cpts!**compiled accessors**!public! !
-!EMRPOLYLINE16 categoriesFor: #cpts:!**compiled accessors**!public! !
-!EMRPOLYLINE16 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYLINE16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #apts!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #apts:!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #cpts!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #cpts:!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRPOLYLINE16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRPOLYLINE16 class methodsFor!
+!OS.EMRPOLYLINE16 class methodsFor!
 
 defineFields
 	"Define the fields of the EMRPOLYLINE16 structure.
@@ -99,7 +99,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cpts
 			type: DWORDField new
@@ -116,7 +116,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYLINE16. EMR_POLYBEZIER16. EMR_POLYGON16. EMR_POLYBEZIERTO16. EMR_POLYLINETO16}! !
-!EMRPOLYLINE16 class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYLINE16 class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
 

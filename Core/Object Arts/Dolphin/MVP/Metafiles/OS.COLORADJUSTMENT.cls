@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #COLORADJUSTMENT
+External.Structure subclass: #'OS.COLORADJUSTMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_caBlueGamma' -> 16rA.
@@ -19,8 +19,8 @@ ExternalStructure subclass: #COLORADJUSTMENT
 		'_OffsetOf_caReferenceWhite' -> 16rE.
 		'_OffsetOf_caSize' -> 16r0
 	}!
-COLORADJUSTMENT guid: (GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
-COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.COLORADJUSTMENT guid: (Core.GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
+OS.COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -44,8 +44,8 @@ struct tagCOLORADJUSTMENT {
 	short caRedGreenTint;
 } COLORADJUSTMENT;
 '!
-!COLORADJUSTMENT categoriesForClass!Win32-Structs! !
-!COLORADJUSTMENT methodsFor!
+!OS.COLORADJUSTMENT categoriesForClass!Win32-Structs! !
+!OS.COLORADJUSTMENT methodsFor!
 
 caBlueGamma
 	"Answer the <Integer> value of the receiver's 'caBlueGamma' field."
@@ -166,32 +166,32 @@ caSize: anInteger
 	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_caSize put: anInteger! !
-!COLORADJUSTMENT categoriesFor: #caBlueGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBlueGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBrightness!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBrightness:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caColorfulness!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caColorfulness:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caContrast!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caContrast:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caFlags!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caFlags:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caGreenGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caGreenGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caIlluminantIndex!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caIlluminantIndex:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGreenTint!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGreenTint:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceBlack!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceBlack:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceWhite!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceWhite:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caSize!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caSize:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caBlueGamma!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caBlueGamma:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caBrightness!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caBrightness:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caColorfulness!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caColorfulness:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caContrast!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caContrast:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caFlags!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caFlags:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caGreenGamma!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caGreenGamma:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caIlluminantIndex!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caIlluminantIndex:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caRedGamma!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caRedGamma:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caRedGreenTint!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caRedGreenTint:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caReferenceBlack!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caReferenceBlack:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caReferenceWhite!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caReferenceWhite:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caSize!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesFor: #caSize:!**compiled accessors**!public! !
 
-!COLORADJUSTMENT class methodsFor!
+!OS.COLORADJUSTMENT class methodsFor!
 
 defineFields
 	"Define the fields of the COLORADJUSTMENT structure.
@@ -216,22 +216,46 @@ defineFields
 "
 
 	self
-		defineField: #caSize type: WORDField new offset: 0;
-		defineField: #caFlags type: WORDField new offset: 2;
-		defineField: #caIlluminantIndex type: WORDField new offset: 4;
-		defineField: #caRedGamma type: WORDField new offset: 6;
-		defineField: #caGreenGamma type: WORDField new offset: 8;
-		defineField: #caBlueGamma type: WORDField new offset: 10;
-		defineField: #caReferenceBlack type: WORDField new offset: 12;
-		defineField: #caReferenceWhite type: WORDField new offset: 14;
-		defineField: #caContrast type: SWORDField new offset: 16;
-		defineField: #caBrightness type: SWORDField new offset: 18;
-		defineField: #caColorfulness type: SWORDField new offset: 20;
-		defineField: #caRedGreenTint type: SWORDField new offset: 22.
+		defineField: #caSize
+			type: WORDField new
+			offset: 0;
+		defineField: #caFlags
+			type: WORDField new
+			offset: 2;
+		defineField: #caIlluminantIndex
+			type: WORDField new
+			offset: 4;
+		defineField: #caRedGamma
+			type: WORDField new
+			offset: 6;
+		defineField: #caGreenGamma
+			type: WORDField new
+			offset: 8;
+		defineField: #caBlueGamma
+			type: WORDField new
+			offset: 10;
+		defineField: #caReferenceBlack
+			type: WORDField new
+			offset: 12;
+		defineField: #caReferenceWhite
+			type: WORDField new
+			offset: 14;
+		defineField: #caContrast
+			type: SWORDField new
+			offset: 16;
+		defineField: #caBrightness
+			type: SWORDField new
+			offset: 18;
+		defineField: #caColorfulness
+			type: SWORDField new
+			offset: 20;
+		defineField: #caRedGreenTint
+			type: SWORDField new
+			offset: 22.
 	self byteSize: 24!
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
-!COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

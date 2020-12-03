@@ -1,26 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ENHMETARECORD
+External.Structure subclass: #'OS.ENHMETARECORD'
 	instanceVariableNames: ''
 	classVariableNames: 'RecordTypes'
-	poolDictionaries: 'EnhancedMetafileRecordTypes'
+	imports: #(#{OS.EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nSize' -> 16r4
 	}!
-ENHMETARECORD guid: (GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
-ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
-!ENHMETARECORD categoriesForClass!Win32-Structs! !
-!ENHMETARECORD methodsFor!
+OS.ENHMETARECORD guid: (Core.GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
+OS.ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
+!OS.ENHMETARECORD categoriesForClass!Win32-Structs! !
+!OS.ENHMETARECORD methodsFor!
 
-getField: fieldNameString 
+getField: fieldNameString
 	"Private - Answer the value of the named field of the receiver,
 	or if there is no such field then raise an exception."
 
 	| selector |
 	selector := fieldNameString asSymbol.
-	selector == #iType 
+	selector == #iType
 		ifTrue: [(EnhancedMetafileRecordTypes keyAtValue: self iType ifAbsent: []) ifNotNil: [:name | ^name]].
 	^self perform: selector!
 
@@ -43,13 +43,13 @@ nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
-!ENHMETARECORD categoriesFor: #getField:!accessing!private! !
-!ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #nSize!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #nSize:!**compiled accessors**!public! !
+!OS.ENHMETARECORD categoriesFor: #getField:!accessing!private! !
+!OS.ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
+!OS.ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
+!OS.ENHMETARECORD categoriesFor: #nSize!**compiled accessors**!public! !
+!OS.ENHMETARECORD categoriesFor: #nSize:!**compiled accessors**!public! !
 
-!ENHMETARECORD class methodsFor!
+!OS.ENHMETARECORD class methodsFor!
 
 defineFields
 	"Define the fields of the EMR structure.
@@ -64,8 +64,12 @@ defineFields
 "
 
 	self
-		defineField: #iType type: DWORDField new offset: 0;
-		defineField: #nSize type: DWORDField new offset: 4.
+		defineField: #iType
+			type: DWORDField new
+			offset: 0;
+		defineField: #nSize
+			type: DWORDField new
+			offset: 4.
 	self byteSize: 8!
 
 getFieldNames
@@ -100,12 +104,12 @@ uninitializeBeforeRemove
 
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
-!ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ENHMETARECORD class categoriesFor: #initialize!public! !
-!ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
-!ENHMETARECORD class categoriesFor: #iTypes!constants!public! !
-!ENHMETARECORD class categoriesFor: #registerRecordTypes!initializing!private! !
-!ENHMETARECORD class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!ENHMETARECORD class categoriesFor: #unregisterRecordTypes!accessing!private! !
+!OS.ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ENHMETARECORD class categoriesFor: #initialize!public! !
+!OS.ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
+!OS.ENHMETARECORD class categoriesFor: #iTypes!constants!public! !
+!OS.ENHMETARECORD class categoriesFor: #registerRecordTypes!initializing!private! !
+!OS.ENHMETARECORD class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
+!OS.ENHMETARECORD class categoriesFor: #unregisterRecordTypes!accessing!private! !
 

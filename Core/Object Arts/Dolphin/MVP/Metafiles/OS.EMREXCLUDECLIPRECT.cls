@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
+OS.ENHMETARECORD subclass: #'OS.EMREXCLUDECLIPRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rclClip' -> 16r8
 	}!
-EMREXCLUDECLIPRECT guid: (GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
-EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMREXCLUDECLIPRECT guid: (Core.GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
+OS.EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,13 +23,13 @@ struct tagEMREXCLUDECLIPRECT {
 	RECTL rclClip;
 } EMREXCLUDECLIPRECT;
 '!
-!EMREXCLUDECLIPRECT categoriesForClass!Win32-Structs! !
-!EMREXCLUDECLIPRECT methodsFor!
+!OS.EMREXCLUDECLIPRECT categoriesForClass!Win32-Structs! !
+!OS.EMREXCLUDECLIPRECT methodsFor!
 
 rclClip
-	"Answer the <RECT> value of the receiver's 'rclClip' field."
+	"Answer the <RECTL> value of the receiver's 'rclClip' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclClip!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclClip!
 
 rclClip: aRECT
 	"Set the receiver's 'rclClip' field to the value of the argument, aRECT"
@@ -37,12 +37,12 @@ rclClip: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclClip + 1)
-		to: ##(_OffsetOf_rclClip + RECT basicByteSize)
+		to: ##(_OffsetOf_rclClip + RECTL basicByteSize)
 		startingAt: 1! !
-!EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
-!EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !
+!OS.EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
+!OS.EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !
 
-!EMREXCLUDECLIPRECT class methodsFor!
+!OS.EMREXCLUDECLIPRECT class methodsFor!
 
 defineFields
 	"Define the fields of the EMREXCLUDECLIPRECT structure.
@@ -58,7 +58,9 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rclClip type: (StructureField type: RECT) offset: 8.
+		defineField: #rclClip
+		type: (StructureField type: RECTL)
+		offset: 8.
 	self byteSize: 24!
 
 getFieldNames
@@ -68,7 +70,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXCLUDECLIPRECT. EMR_INTERSECTCLIPRECT}! !
-!EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
 

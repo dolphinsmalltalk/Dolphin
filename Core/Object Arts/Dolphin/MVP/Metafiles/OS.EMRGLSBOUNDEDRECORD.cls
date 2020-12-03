@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
+OS.ENHMETARECORD subclass: #'OS.EMRGLSBOUNDEDRECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbData' -> 16r18.
 		'_OffsetOf_Data' -> 16r1C.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
-EMRGLSBOUNDEDRECORD guid: (GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
-EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRGLSBOUNDEDRECORD guid: (Core.GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
+OS.EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagEMRGLSBOUNDEDRECORD {
 	BYTE* Data;
 } EMRGLSBOUNDEDRECORD;
 '!
-!EMRGLSBOUNDEDRECORD categoriesForClass!Win32-Structs! !
-!EMRGLSBOUNDEDRECORD methodsFor!
+!OS.EMRGLSBOUNDEDRECORD categoriesForClass!Win32-Structs! !
+!OS.EMRGLSBOUNDEDRECORD methodsFor!
 
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
@@ -58,9 +58,9 @@ Data: anExternalArray
 	self cbData: anExternalArray size!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -68,16 +68,16 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #Data!**compiled accessors**!public! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #cbData!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #Data!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds:!**compiled accessors**!public! !
 
-!EMRGLSBOUNDEDRECORD class methodsFor!
+!OS.EMRGLSBOUNDEDRECORD class methodsFor!
 
 defineFields
 	"Define the fields of the EMRGLSBOUNDEDRECORD structure.
@@ -96,7 +96,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #cbData
 			type: DWORDField new
@@ -113,7 +113,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GLSBOUNDEDRECORD}! !
-!EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!public!template definition! !
-!EMRGLSBOUNDEDRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGLSBOUNDEDRECORD class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!public!template definition! !
+!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #iTypes!constants!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRTRANSPARENTBLT
+OS.ENHMETARECORD subclass: #'OS.EMRTRANSPARENTBLT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r60.
@@ -24,8 +24,8 @@ ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r30
 	}!
-EMRTRANSPARENTBLT guid: (GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
-EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRTRANSPARENTBLT guid: (Core.GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
+OS.EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -55,8 +55,8 @@ struct tagEMRTRANSPARENTBLT {
 	long cySrc;
 } EMRTRANSPARENTBLT;
 '!
-!EMRTRANSPARENTBLT categoriesForClass!Win32-Structs! !
-!EMRTRANSPARENTBLT methodsFor!
+!OS.EMRTRANSPARENTBLT categoriesForClass!Win32-Structs! !
+!OS.EMRTRANSPARENTBLT methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -169,9 +169,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -179,7 +179,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -235,42 +235,42 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRTRANSPARENTBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRTRANSPARENTBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRTRANSPARENTBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRTRANSPARENTBLT class methodsFor!
+!OS.EMRTRANSPARENTBLT class methodsFor!
 
 defineFields
 	"Define the fields of the EMRTRANSPARENTBLT structure.
@@ -303,7 +303,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -362,7 +362,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_TRANSPARENTBLT}! !
-!EMRTRANSPARENTBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRTRANSPARENTBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRTRANSPARENTBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRTRANSPARENTBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRTRANSPARENTBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRTRANSPARENTBLT class categoriesFor: #iTypes!constants!public! !
 

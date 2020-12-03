@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
+OS.ENHMETARECORD subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_xDenom' -> 16rC.
@@ -11,8 +11,8 @@ ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 		'_OffsetOf_yDenom' -> 16r14.
 		'_OffsetOf_yNum' -> 16r10
 	}!
-EMRSCALEVIEWPORTEXTEX guid: (GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
-EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSCALEVIEWPORTEXTEX guid: (Core.GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
+OS.EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 	long yDenom;
 } EMRSCALEVIEWPORTEXTEX;
 '!
-!EMRSCALEVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
-!EMRSCALEVIEWPORTEXTEX methodsFor!
+!OS.EMRSCALEVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
+!OS.EMRSCALEVIEWPORTEXTEX methodsFor!
 
 xDenom
 	"Answer the <Integer> value of the receiver's 'xDenom' field."
@@ -71,16 +71,16 @@ yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum:!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum:!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom:!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum:!**compiled accessors**!public! !
 
-!EMRSCALEVIEWPORTEXTEX class methodsFor!
+!OS.EMRSCALEVIEWPORTEXTEX class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSCALEVIEWPORTEXTEX structure.
@@ -120,7 +120,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SCALEVIEWPORTEXTEX. EMR_SCALEWINDOWEXTEX}! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ENHMETARECORD subclass: #EMRSTRETCHDIBITS
+OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHDIBITS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
@@ -22,8 +22,8 @@ ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 		'_OffsetOf_yDest' -> 16r1C.
 		'_OffsetOf_ySrc' -> 16r24
 	}!
-EMRSTRETCHDIBITS guid: (GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
-EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.EMRSTRETCHDIBITS guid: (Core.GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
+OS.EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -51,8 +51,8 @@ struct tagEMRSTRETCHDIBITS {
 	long cyDest;
 } EMRSTRETCHDIBITS;
 '!
-!EMRSTRETCHDIBITS categoriesForClass!Win32-Structs! !
-!EMRSTRETCHDIBITS methodsFor!
+!OS.EMRSTRETCHDIBITS categoriesForClass!Win32-Structs! !
+!OS.EMRSTRETCHDIBITS methodsFor!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
@@ -155,9 +155,9 @@ offBmiSrc: anInteger
 	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -165,7 +165,7 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 xDest
@@ -207,38 +207,38 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cxDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cxDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cxSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cxSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cyDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cyDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cySrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #cySrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #dwRop!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #dwRop:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #iUsageSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #offBitsSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #offBmiSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #rclBounds!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #xDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #xDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #xSrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #xSrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #yDest!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #yDest:!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #ySrc!**compiled accessors**!public! !
+!OS.EMRSTRETCHDIBITS categoriesFor: #ySrc:!**compiled accessors**!public! !
 
-!EMRSTRETCHDIBITS class methodsFor!
+!OS.EMRSTRETCHDIBITS class methodsFor!
 
 defineFields
 	"Define the fields of the EMRSTRETCHDIBITS structure.
@@ -269,7 +269,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #rclBounds
-			type: (StructureField type: RECT)
+			type: (StructureField type: RECTL)
 			offset: 8;
 		defineField: #xDest
 			type: SDWORDField new
@@ -322,7 +322,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_STRETCHDIBITS}! !
-!EMRSTRETCHDIBITS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSTRETCHDIBITS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSTRETCHDIBITS class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSTRETCHDIBITS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EMRSTRETCHDIBITS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRSTRETCHDIBITS class categoriesFor: #iTypes!constants!public! !
 

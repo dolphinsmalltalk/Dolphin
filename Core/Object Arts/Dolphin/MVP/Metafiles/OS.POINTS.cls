@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalPoint subclass: #POINTS
+External.POINT subclass: #'OS.POINTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r2
 	}!
-POINTS guid: (GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
-POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.POINTS guid: (Core.GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
+OS.POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagPOINTS {
 	short y;
 } POINTS;
 '!
-!POINTS categoriesForClass!Win32-Structs! !
-!POINTS methodsFor!
+!OS.POINTS categoriesForClass!Win32-Structs! !
+!OS.POINTS methodsFor!
 
 asDword
 	"Answer the receiver in a form suitable for passing or returning 
@@ -60,14 +60,14 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
-!POINTS categoriesFor: #asDword!converting!public! !
-!POINTS categoriesFor: #asUIntPtr!converting!public! !
-!POINTS categoriesFor: #x!**compiled accessors**!public! !
-!POINTS categoriesFor: #x:!**compiled accessors**!public! !
-!POINTS categoriesFor: #y!**compiled accessors**!public! !
-!POINTS categoriesFor: #y:!**compiled accessors**!public! !
+!OS.POINTS categoriesFor: #asDword!converting!public! !
+!OS.POINTS categoriesFor: #asUIntPtr!converting!public! !
+!OS.POINTS categoriesFor: #x!**compiled accessors**!public! !
+!OS.POINTS categoriesFor: #x:!**compiled accessors**!public! !
+!OS.POINTS categoriesFor: #y!**compiled accessors**!public! !
+!OS.POINTS categoriesFor: #y:!**compiled accessors**!public! !
 
-!POINTS class methodsFor!
+!OS.POINTS class methodsFor!
 
 defineFields
 	"Define the fields of the POINTS structure.
@@ -85,11 +85,11 @@ defineFields
 		defineField: #x type: SWORDField new beOverride;
 		defineField: #y type: SWORDField new beOverride!
 
-x: x y: y 
+x: x y: y
 	^self basicNew bytes: ((ByteArray newFixed: 4)
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
-!POINTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!POINTS class categoriesFor: #x:y:!instance creation!public! !
+!OS.POINTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.POINTS class categoriesFor: #x:y:!instance creation!public! !
 
