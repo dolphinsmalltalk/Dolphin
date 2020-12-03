@@ -44,6 +44,14 @@ Example usage:
 
 	^self resumptionTime <= anotherDelay resumptionTime!
 
+basicCancel
+	^self == Current
+		ifTrue: 
+			[self class
+				cancelTimer;
+				scheduleNext]
+		ifFalse: [Pending remove: self ifAbsent: []]!
+
 calcResumptionTime
 	"Private - Calculate and answer the value of the millisecond clock after which any Process
 	waiting on the receiver will be rescheduled. We could lazily evaluate this from the normal
@@ -56,18 +64,10 @@ calcResumptionTime
 	^resumptionTime!
 
 cancel
-	"Cancel the receiver. Any Process waiting on the receiver, remains waiting (but see #resume),
+	"Cancel the receiver. Any Process waiting on the receiver, remains waiting (but see #signal),
 	the receiver is simply removed from the collection of Delays managed by the TimingProcess."
 
-	AccessProtect critical: [
-		self == Current
-			ifTrue: [
-				self class
-					cancelTimer;
-					scheduleNext]
-			ifFalse: [
-				Pending remove: self ifAbsent: []]]
-!
+	AccessProtect critical: [self basicCancel]!
 
 delta: anInteger
 	"Private - Adjust the delay provided by the receiver by the specified delta (e.g. on
@@ -162,9 +162,9 @@ schedule
 signal
 	"Immediately resume the Process waiting on the receiver."
 
-	self cancel.
-	self wakeup
-!
+	AccessProtect critical: 
+			[self basicCancel.
+			self wakeup]!
 
 snooze
 	"Private - The receiver wants a few more moments in bed, press the snooze button on 
@@ -212,6 +212,7 @@ wakeup
 	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
 !Delay categoriesFor: #<=!comparing!public! !
+!Delay categoriesFor: #basicCancel!private!process synchronisation! !
 !Delay categoriesFor: #calcResumptionTime!accessing!private! !
 !Delay categoriesFor: #cancel!process synchronisation!public! !
 !Delay categoriesFor: #delta:!operations!private! !
