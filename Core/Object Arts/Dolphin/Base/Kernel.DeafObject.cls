@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DeafObject
+Core.Object subclass: #'Kernel.DeafObject'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DeafObject guid: (GUID fromString: '{87b4c47a-026e-11d3-9fd7-00a0cc3e4a32}')!
-DeafObject comment: 'DeafObject is a singleton class whose sole instance is deaf to all requests - i.e. it appears to understand all messages, but takes no action except to answer itself. This ensures that the results of all message sends to the DeafObject are also deaf. DeafObject can be useful for avoiding a proliferation of #isNil tests.
+Kernel.DeafObject guid: (Core.GUID fromString: '{87b4c47a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.DeafObject comment: 'DeafObject is a singleton class whose sole instance is deaf to all requests - i.e. it appears to understand all messages, but takes no action except to answer itself. This ensures that the results of all message sends to the DeafObject are also deaf. DeafObject can be useful for avoiding a proliferation of #isNil tests.
 
 N.B. DeafObject cannot be used to substitute for any object which has special significance to either the Compiler or the VM, a good example being <Boolean>s. The following expression will raise a ''Must be boolean'' error because it is not a true message send:
 
@@ -18,8 +18,8 @@ Class Variables:
 
 
 '!
-!DeafObject categoriesForClass!System-Support! !
-!DeafObject methodsFor!
+!Kernel.DeafObject categoriesForClass!System-Support! !
+!Kernel.DeafObject methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -46,12 +46,12 @@ mustBeBoolean
 	indefinitely, causing an unbreakable loop."
 
 	^true! !
-!DeafObject categoriesFor: #=!comparing!public! !
-!DeafObject categoriesFor: #asParameter!converting!public! !
-!DeafObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!DeafObject categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+!Kernel.DeafObject categoriesFor: #=!comparing!public! !
+!Kernel.DeafObject categoriesFor: #asParameter!converting!public! !
+!Kernel.DeafObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!Kernel.DeafObject categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
 
-!DeafObject class methodsFor!
+!Kernel.DeafObject class methodsFor!
 
 current
 	"Answer the singleton <DeafObject>."
@@ -62,6 +62,6 @@ initialize
 	"Private - Initialize the receiver's class variables."
 
 	Current isNil ifTrue: [Current := self new]! !
-!DeafObject class categoriesFor: #current!accessing!public! !
-!DeafObject class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.DeafObject class categoriesFor: #current!accessing!public! !
+!Kernel.DeafObject class categoriesFor: #initialize!development!initializing!private! !
 

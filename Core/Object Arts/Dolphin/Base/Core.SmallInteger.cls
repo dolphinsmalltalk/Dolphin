@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Integer subclass: #SmallInteger
+Core.Integer subclass: #'Core.SmallInteger'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmallInteger guid: (GUID fromString: '{87b4c65f-026e-11d3-9fd7-00a0cc3e4a32}')!
-SmallInteger comment: 'Class SmallInteger is an optimized representation of 31-bit 2''s complement integers.
+Core.SmallInteger guid: (Core.GUID fromString: '{87b4c65f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SmallInteger comment: 'Class SmallInteger is an optimized representation of 31-bit 2''s complement integers.
 
 Wherever an Integer may be represented as a SmallInteger, then its only truly valid representation is as a SmallInteger. (i.e their "normalized" representation is as a SmallInteger). The range is such that the majority of integers used for counting and indexing, and even arithmetical tasks, will be SmallIntegers.'!
-!SmallInteger categoriesForClass!Magnitude-Numbers! !
-!SmallInteger methodsFor!
+!Core.SmallInteger categoriesForClass!Magnitude-Numbers! !
+!Core.SmallInteger methodsFor!
 
 - operand
 	"Answer the result of subtracting the <number>, operand, from the receiver. The primitive fails iff the operand is not a SmallInteger."
@@ -382,7 +382,7 @@ lowBit
 			t := t bitShift: -1].
 	^i!
 
-multiplyByInteger: anInteger 
+multiplyByInteger: anInteger
 	"Private - Answer the result of multiplying the receiver by the argument, anInteger.
 
 	Implementation Note: Invoked when SmallInteger multiplied by another SmallInteger but the
@@ -524,63 +524,63 @@ species
 	will fail for immediate classes, so we must override here."
 
 	^SmallInteger! !
-!SmallInteger categoriesFor: #-!arithmetic!public! !
-!SmallInteger categoriesFor: #&!bit manipulation!public! !
-!SmallInteger categoriesFor: #*!arithmetic!public! !
-!SmallInteger categoriesFor: #/!arithmetic!public! !
-!SmallInteger categoriesFor: #//!arithmetic!public! !
-!SmallInteger categoriesFor: #\\!arithmetic!public! !
-!SmallInteger categoriesFor: #_deepCopy:!copying!private! !
-!SmallInteger categoriesFor: #|!bit manipulation!public! !
-!SmallInteger categoriesFor: #+!arithmetic!public! !
-!SmallInteger categoriesFor: #<!comparing!public! !
-!SmallInteger categoriesFor: #<<!bit manipulation!public! !
-!SmallInteger categoriesFor: #<=!comparing!public! !
-!SmallInteger categoriesFor: #=!comparing!public! !
-!SmallInteger categoriesFor: #>!comparing!public! !
-!SmallInteger categoriesFor: #>=!comparing!public! !
-!SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
-!SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
-!SmallInteger categoriesFor: #asFloat!converting!public! !
-!SmallInteger categoriesFor: #asStackPointer!converting!private! !
-!SmallInteger categoriesFor: #basicAt:!accessing!private! !
-!SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
-!SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
-!SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
-!SmallInteger categoriesFor: #basicSize!accessing!private! !
-!SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
-!SmallInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!SmallInteger categoriesFor: #byteAt:!accessing!private! !
-!SmallInteger categoriesFor: #byteSize!accessing!private! !
-!SmallInteger categoriesFor: #coerce:!coercing!private! !
-!SmallInteger categoriesFor: #decimalDigitLength!enquiries!private! !
-!SmallInteger categoriesFor: #deepCopy!copying!public! !
-!SmallInteger categoriesFor: #generality!coercing!private! !
-!SmallInteger categoriesFor: #hash!comparing!public! !
-!SmallInteger categoriesFor: #highBit!bit manipulation!public! !
-!SmallInteger categoriesFor: #identityHash!comparing!public! !
-!SmallInteger categoriesFor: #instVarAt:!accessing!private! !
-!SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
-!SmallInteger categoriesFor: #isAtomic!public!testing! !
-!SmallInteger categoriesFor: #isImmediate!public!testing! !
-!SmallInteger categoriesFor: #isZero!public!testing! !
-!SmallInteger categoriesFor: #lowBit!bit manipulation!public! !
-!SmallInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!SmallInteger categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
-!SmallInteger categoriesFor: #printOn:base:!printing!public! !
-!SmallInteger categoriesFor: #printOn:base:nDigits:!printing!public! !
-!SmallInteger categoriesFor: #printString!printing!public! !
-!SmallInteger categoriesFor: #printStringBase:!printing!public! !
-!SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
-!SmallInteger categoriesFor: #quo:!arithmetic!public! !
-!SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
-!SmallInteger categoriesFor: #shallowCopy!copying!public! !
-!SmallInteger categoriesFor: #species!accessing!public! !
+!Core.SmallInteger categoriesFor: #-!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #&!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #*!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #/!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #//!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #\\!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #_deepCopy:!copying!private! !
+!Core.SmallInteger categoriesFor: #|!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #+!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #<!comparing!public! !
+!Core.SmallInteger categoriesFor: #<<!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #<=!comparing!public! !
+!Core.SmallInteger categoriesFor: #=!comparing!public! !
+!Core.SmallInteger categoriesFor: #>!comparing!public! !
+!Core.SmallInteger categoriesFor: #>=!comparing!public! !
+!Core.SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #asFloat!converting!public! !
+!Core.SmallInteger categoriesFor: #asStackPointer!converting!private! !
+!Core.SmallInteger categoriesFor: #basicAt:!accessing!private! !
+!Core.SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
+!Core.SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
+!Core.SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
+!Core.SmallInteger categoriesFor: #basicSize!accessing!private! !
+!Core.SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
+!Core.SmallInteger categoriesFor: #bitAnd:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #bitOr:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #bitShift:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #bitXor:!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #byteAt:!accessing!private! !
+!Core.SmallInteger categoriesFor: #byteSize!accessing!private! !
+!Core.SmallInteger categoriesFor: #coerce:!coercing!private! !
+!Core.SmallInteger categoriesFor: #decimalDigitLength!enquiries!private! !
+!Core.SmallInteger categoriesFor: #deepCopy!copying!public! !
+!Core.SmallInteger categoriesFor: #generality!coercing!private! !
+!Core.SmallInteger categoriesFor: #hash!comparing!public! !
+!Core.SmallInteger categoriesFor: #highBit!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #identityHash!comparing!public! !
+!Core.SmallInteger categoriesFor: #instVarAt:!accessing!private! !
+!Core.SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
+!Core.SmallInteger categoriesFor: #isAtomic!public!testing! !
+!Core.SmallInteger categoriesFor: #isImmediate!public!testing! !
+!Core.SmallInteger categoriesFor: #isZero!public!testing! !
+!Core.SmallInteger categoriesFor: #lowBit!bit manipulation!public! !
+!Core.SmallInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!Core.SmallInteger categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
+!Core.SmallInteger categoriesFor: #printOn:base:!printing!public! !
+!Core.SmallInteger categoriesFor: #printOn:base:nDigits:!printing!public! !
+!Core.SmallInteger categoriesFor: #printString!printing!public! !
+!Core.SmallInteger categoriesFor: #printStringBase:!printing!public! !
+!Core.SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
+!Core.SmallInteger categoriesFor: #quo:!arithmetic!public! !
+!Core.SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
+!Core.SmallInteger categoriesFor: #shallowCopy!copying!public! !
+!Core.SmallInteger categoriesFor: #species!accessing!public! !
 
-!SmallInteger class methodsFor!
+!Core.SmallInteger class methodsFor!
 
 basicNew
 	"SmallIntegers are immediate objects, and cannot be instantiated directly, they
@@ -611,9 +611,9 @@ minimum
 	represented as a SmallInteger"
 
 	^VMConstants.SmallIntegerMin! !
-!SmallInteger class categoriesFor: #basicNew!instance creation!public! !
-!SmallInteger class categoriesFor: #hasImmediateInstances!public!testing! !
-!SmallInteger class categoriesFor: #maxBytes!constants!public! !
-!SmallInteger class categoriesFor: #maximum!constants!public! !
-!SmallInteger class categoriesFor: #minimum!constants!public! !
+!Core.SmallInteger class categoriesFor: #basicNew!instance creation!public! !
+!Core.SmallInteger class categoriesFor: #hasImmediateInstances!public!testing! !
+!Core.SmallInteger class categoriesFor: #maxBytes!constants!public! !
+!Core.SmallInteger class categoriesFor: #maximum!constants!public! !
+!Core.SmallInteger class categoriesFor: #minimum!constants!public! !
 

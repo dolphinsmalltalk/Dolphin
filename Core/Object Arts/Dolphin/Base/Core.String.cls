@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollection variableByteSubclass: #String
+Core.ArrayedCollection variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'empty'
 	classConstants: {
 		'EncodingAnsi' -> 16r0.
@@ -14,10 +14,10 @@ ArrayedCollection variableByteSubclass: #String
 		'LineDelimiter' -> '
 '
 	}!
-String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
-String isNullTerminated: true!
-String isAbstract: true!
-String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
+Core.String guid: (Core.GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.String isNullTerminated: true!
+Core.String isNonInstantiable: true!
+Core.String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
 String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
 
@@ -33,8 +33,8 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
  sequencedCollection
  readableString
  String'!
-!String categoriesForClass!Collections-Text! !
-!String methodsFor!
+!Core.String categoriesForClass!Collections-Text! !
+!Core.String methodsFor!
 
 , aSequencedReadableCollection
 	"Answer a new <String> like the receiver (i.e. of the receiver's species but not necessarily
@@ -44,12 +44,11 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
 
 	<primitive: 218>
 	^self class == aSequencedReadableCollection class
-		ifTrue: [
-			"For concatenation of the same string encoding we can use efficient array block copy operations"
+		ifTrue: 
+			["For concatenation of the same string encoding we can use efficient array block copy operations"
 			super , aSequencedReadableCollection]
 		ifFalse: 
-			[
-			"For mixed encoding, we stream into a Utf8String"
+			["For mixed encoding, we stream into a Utf8String"
 			(Utf8String writeStream: self size + aSequencedReadableCollection size)
 				nextPutAll: self;
 				nextPutAll: aSequencedReadableCollection;
@@ -119,8 +118,8 @@ _sameAsString: aString
 	| string1 string2 |
 	string1 := self asUtf16String.
 	string2 := comparand asUtf16String.
-	^(KernelLibrary default
-		compareString: WinNlsConstants.LOCALE_USER_DEFAULT
+	^(OS.KernelLibrary default
+		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		lpString1: string1
 		cchCount1: string1 size
@@ -139,9 +138,9 @@ _sameAsString: aString
 	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes the OS StringCompare function, in essence as follows:"
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
-	^(KernelLibrary default
-		compareString: WinNlsConstants.LOCALE_USER_DEFAULT
-		dwCmpFlags: WinNlsConstants.NORM_IGNORECASE
+	^(OS.KernelLibrary default
+		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
+		dwCmpFlags: OS.NlsConstants.NORM_IGNORECASE
 		lpString1: string1
 		cchCount1: string1 size
 		lpString2: string2
@@ -342,13 +341,13 @@ beginsWith: aString ignoreCase: aBoolean
 	string2 := aString asUtf16String.
 	cch := string2 size.
 	^cch <= string1 size and: 
-			[(KernelLibrary default
-				compareString: WinNlsConstants.LOCALE_USER_DEFAULT
-				dwCmpFlags: (aBoolean ifTrue: [WinNlsConstants.NORM_IGNORECASE] ifFalse: [0])
+			[(OS.KernelLibrary default
+				compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
+				dwCmpFlags: (aBoolean ifTrue: [OS.NlsConstants.NORM_IGNORECASE] ifFalse: [0])
 				lpString1: string1
 				cchCount1: cch
 				lpString2: string2
-				cchCount2: cch) == WinNlsConstants.CSTR_EQUAL]!
+				cchCount2: cch) == OS.NlsConstants.CSTR_EQUAL]!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -440,8 +439,7 @@ decodeNextFrom: aReadStream
 	^self subclassResponsibility!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
-	Since this message is intended for producing end-user text, the receiver is appended to the stream as-is."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self!
 
@@ -656,7 +654,7 @@ formatWith: anObject1 with: anObject2 with: anObject3 with: anObject4
 
 	^self formatWithArguments: {anObject1. anObject2. anObject3. anObject4}!
 
-formatWithArguments: aCollection 
+formatWithArguments: aCollection
 	"Answer a <readableString> which is a message formatted from the receiver, assumed to be a
 	Win32 format string (see
 	http://msdn.microsoft.com/library/en-us/debug/base/formatmessage.asp for further
@@ -671,10 +669,10 @@ formatWithArguments: aCollection
 	"Note that although the #formatWith:&c family of methods have not been deprecated in Dolphin
 	6, we recommend that, where possible, you use #expandMacrosXXX by preference."
 
-	^KernelLibrary default 
+	^OS.KernelLibrary default
 		formatMessage: 0
 		source: self
-		flags: Win32Constants.FORMAT_MESSAGE_FROM_STRING
+		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_STRING
 		withArguments: aCollection!
 
 hash
@@ -1035,7 +1033,7 @@ split: aReadableString
 	| start end answer subSize size |
 	subSize := self size.
 	size := aReadableString size.
-	size == 0 ifTrue: [^{}].
+	size == 0 ifTrue: [^#()].
 	subSize == 1 ifTrue: [^(self at: 1) split: aReadableString].
 	end := aReadableString findString: self startingAt: 1.
 	end == 0 ifTrue: [^{aReadableString}].
@@ -1109,8 +1107,8 @@ storeOn: aStream
 
 	self printOn: aStream!
 
-strcspn: aString start: anInteger 
-	^CRTLibrary default strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
+strcspn: aString start: anInteger
+	^OS.CRTLibrary default strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
@@ -1148,7 +1146,7 @@ subStringsAnsi: separators
 	The separators are removed."
 
 	| start answer size end |
-	#deprecated. "Will be removed in 7.2"
+	#deprecated.	"Will be removed in 7.2"
 	size := self size.
 	size == 0 ifTrue: [^{}].
 	end := self indexOfAnyOf: separators startingAt: 1.
@@ -1169,11 +1167,11 @@ titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
 
 	| kernel src dest len |
-	kernel := KernelLibrary default.
+	kernel := OS.KernelLibrary default.
 	src := self asUtf16String.
 	len := kernel
-				lcMapString: WinNlsConstants.LOCALE_USER_DEFAULT
-				dwMapFlags: WinNlsConstants.LCMAP_TITLECASE
+				lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
+				dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
 				lpScrStr: src
 				cchSrc: src size
 				lpDestStr: nil
@@ -1181,8 +1179,8 @@ titleCased
 	len == 0 ifTrue: [kernel systemError].
 	dest := Utf16String newFixed: len.
 	kernel
-		lcMapString: WinNlsConstants.LOCALE_USER_DEFAULT
-		dwMapFlags: WinNlsConstants.LCMAP_TITLECASE
+		lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
+		dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
 		lpScrStr: src
 		cchSrc: src size
 		lpDestStr: dest
@@ -1254,123 +1252,123 @@ withNormalizedLineDelimiters
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
-!String categoriesFor: #,!copying!public! !
-!String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
-!String categoriesFor: #_sameAsString:!comparing!private! !
-!String categoriesFor: #<!comparing!public! !
-!String categoriesFor: #<<!printing!public! !
-!String categoriesFor: #<=!comparing!public! !
-!String categoriesFor: #<===>!public! !
-!String categoriesFor: #<==>!comparing!public! !
-!String categoriesFor: #<=>!comparing!public! !
-!String categoriesFor: #=!comparing!public! !
-!String categoriesFor: #>!comparing!public! !
-!String categoriesFor: #>=!comparing!public! !
-!String categoriesFor: #appendToStream:!double dispatch!private! !
-!String categoriesFor: #asAnsiString!converting!public! !
-!String categoriesFor: #asByteArray!converting!public! !
-!String categoriesFor: #asLowercase!converting!public! !
-!String categoriesFor: #asMethodCategory!converting!public! !
-!String categoriesFor: #asNumber!converting!public! !
-!String categoriesFor: #asPhrase!converting!public! !
-!String categoriesFor: #asQualifiedReference!public! !
-!String categoriesFor: #asResourceId!converting!public! !
-!String categoriesFor: #associations!accessing!public! !
-!String categoriesFor: #asString!converting!public! !
-!String categoriesFor: #asSymbol!converting!public! !
-!String categoriesFor: #asUIntPtr!converting!public! !
-!String categoriesFor: #asUppercase!converting!public! !
-!String categoriesFor: #asUtf16String!converting!public! !
-!String categoriesFor: #asUtf8String!converting!public! !
-!String categoriesFor: #at:!accessing!public! !
-!String categoriesFor: #at:ifAbsent:!accessing!public! !
-!String categoriesFor: #at:put:!accessing!public! !
-!String categoriesFor: #beginsWith:!comparing!public! !
-!String categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
-!String categoriesFor: #between:and:!comparing!public! !
-!String categoriesFor: #byteAt:!accessing!public! !
-!String categoriesFor: #byteAt:put:!accessing!public! !
-!String categoriesFor: #byteSize!accessing!private! !
-!String categoriesFor: #capitalized!converting!public! !
-!String categoriesFor: #codePage!constants!public! !
-!String categoriesFor: #codePointsDo:!public! !
-!String categoriesFor: #contains:!public!searching! !
-!String categoriesFor: #copyReplaceAll:with:!public! !
-!String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
-!String categoriesFor: #decodeAt:!encode/decode!private! !
-!String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
-!String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!String categoriesFor: #displayOn:!printing!public! !
-!String categoriesFor: #displayString!printing!public! !
-!String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!String categoriesFor: #expandMacros!printing!public! !
-!String categoriesFor: #expandMacrosIn:!double dispatch!private! !
-!String categoriesFor: #expandMacrosWith:!printing!public! !
-!String categoriesFor: #expandMacrosWith:with:!printing!public! !
-!String categoriesFor: #expandMacrosWith:with:with:!printing!public! !
-!String categoriesFor: #expandMacrosWith:with:with:with:!printing!public! !
-!String categoriesFor: #expandMacrosWithArguments:!printing!public! !
-!String categoriesFor: #expandMacrosWithArguments:locale:!printing!public! !
-!String categoriesFor: #expandMacrosWithArguments:on:!printing!public! !
-!String categoriesFor: #findString:!public!searching! !
-!String categoriesFor: #findString:startingAt:!public!searching! !
-!String categoriesFor: #findString:startingAt:ignoreCase:!public!searching! !
-!String categoriesFor: #formatWith:!printing!public! !
-!String categoriesFor: #formatWith:with:!printing!public! !
-!String categoriesFor: #formatWith:with:with:!printing!public! !
-!String categoriesFor: #formatWith:with:with:with:!printing!public! !
-!String categoriesFor: #formatWithArguments:!printing!public! !
-!String categoriesFor: #hash!comparing!public! !
-!String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
-!String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!String categoriesFor: #isLiteral!public!testing! !
-!String categoriesFor: #isString!public!testing! !
-!String categoriesFor: #leftString:!copying!public! !
-!String categoriesFor: #length!accessing!public! !
-!String categoriesFor: #lines!copying!public! !
-!String categoriesFor: #lookup:!accessing!public! !
-!String categoriesFor: #match:!public!searching! !
-!String categoriesFor: #match:ignoreCase:!public!searching! !
-!String categoriesFor: #matchPatternFrom:in:from:!private!searching! !
-!String categoriesFor: #max:!comparing!public! !
-!String categoriesFor: #midString:from:!copying!public! !
-!String categoriesFor: #min:!comparing!public! !
-!String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!String categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!String categoriesFor: #occurrencesOf:!public!searching! !
-!String categoriesFor: #occurrencesOf:from:to:!public!searching! !
-!String categoriesFor: #prevIndexOf:from:to:!public!searching! !
-!String categoriesFor: #printOn:!printing!public! !
-!String categoriesFor: #refersToLiteral:!private!testing! !
-!String categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
-!String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!String categoriesFor: #rightString:!copying!public! !
-!String categoriesFor: #sameAs:!comparing!public! !
-!String categoriesFor: #skipOver:ignoreCase:!private!searching! !
-!String categoriesFor: #split:!public!tokenizing! !
-!String categoriesFor: #sprintfWith:!printing!public! !
-!String categoriesFor: #sprintfWith:with:!printing!public! !
-!String categoriesFor: #storeOn:!printing!public! !
-!String categoriesFor: #strcspn:start:!private!searching! !
-!String categoriesFor: #strlen!accessing!private! !
-!String categoriesFor: #subStrings!public!tokenizing! !
-!String categoriesFor: #subStrings:!public!tokenizing! !
-!String categoriesFor: #subStringsAnsi:!copying!public! !
-!String categoriesFor: #titleCased!converting!public! !
-!String categoriesFor: #trimBlanks!copying!public! !
-!String categoriesFor: #trimNulls!copying!public! !
-!String categoriesFor: #truncateTo:!converting!public! !
-!String categoriesFor: #unescapePercents!operations!public! !
-!String categoriesFor: #urlDecoded!operations!public! !
-!String categoriesFor: #urlEncoded!operations!public! !
-!String categoriesFor: #withNormalizedLineDelimiters!converting!public! !
+!Core.String categoriesFor: #,!copying!public! !
+!Core.String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
+!Core.String categoriesFor: #_sameAsString:!comparing!private! !
+!Core.String categoriesFor: #<!comparing!public! !
+!Core.String categoriesFor: #<<!printing!public! !
+!Core.String categoriesFor: #<=!comparing!public! !
+!Core.String categoriesFor: #<===>!public! !
+!Core.String categoriesFor: #<==>!comparing!public! !
+!Core.String categoriesFor: #<=>!comparing!public! !
+!Core.String categoriesFor: #=!comparing!public! !
+!Core.String categoriesFor: #>!comparing!public! !
+!Core.String categoriesFor: #>=!comparing!public! !
+!Core.String categoriesFor: #appendToStream:!double dispatch!private! !
+!Core.String categoriesFor: #asAnsiString!converting!public! !
+!Core.String categoriesFor: #asByteArray!converting!public! !
+!Core.String categoriesFor: #asLowercase!converting!public! !
+!Core.String categoriesFor: #asMethodCategory!converting!public! !
+!Core.String categoriesFor: #asNumber!converting!public! !
+!Core.String categoriesFor: #asPhrase!converting!public! !
+!Core.String categoriesFor: #asQualifiedReference!public! !
+!Core.String categoriesFor: #asResourceId!converting!public! !
+!Core.String categoriesFor: #associations!accessing!public! !
+!Core.String categoriesFor: #asString!converting!public! !
+!Core.String categoriesFor: #asSymbol!converting!public! !
+!Core.String categoriesFor: #asUIntPtr!converting!public! !
+!Core.String categoriesFor: #asUppercase!converting!public! !
+!Core.String categoriesFor: #asUtf16String!converting!public! !
+!Core.String categoriesFor: #asUtf8String!converting!public! !
+!Core.String categoriesFor: #at:!accessing!public! !
+!Core.String categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.String categoriesFor: #at:put:!accessing!public! !
+!Core.String categoriesFor: #beginsWith:!comparing!public! !
+!Core.String categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
+!Core.String categoriesFor: #between:and:!comparing!public! !
+!Core.String categoriesFor: #byteAt:!accessing!public! !
+!Core.String categoriesFor: #byteAt:put:!accessing!public! !
+!Core.String categoriesFor: #byteSize!accessing!private! !
+!Core.String categoriesFor: #capitalized!converting!public! !
+!Core.String categoriesFor: #codePage!constants!public! !
+!Core.String categoriesFor: #codePointsDo:!public! !
+!Core.String categoriesFor: #contains:!public!searching! !
+!Core.String categoriesFor: #copyReplaceAll:with:!public! !
+!Core.String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
+!Core.String categoriesFor: #decodeAt:!encode/decode!private! !
+!Core.String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
+!Core.String categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.String categoriesFor: #displayOn:!printing!public! !
+!Core.String categoriesFor: #displayString!printing!public! !
+!Core.String categoriesFor: #encodedSizeAt:!encode/decode!private! !
+!Core.String categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Core.String categoriesFor: #expandMacros!printing!public! !
+!Core.String categoriesFor: #expandMacrosIn:!double dispatch!private! !
+!Core.String categoriesFor: #expandMacrosWith:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWith:with:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWith:with:with:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWith:with:with:with:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWithArguments:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWithArguments:locale:!printing!public! !
+!Core.String categoriesFor: #expandMacrosWithArguments:on:!printing!public! !
+!Core.String categoriesFor: #findString:!public!searching! !
+!Core.String categoriesFor: #findString:startingAt:!public!searching! !
+!Core.String categoriesFor: #findString:startingAt:ignoreCase:!public!searching! !
+!Core.String categoriesFor: #formatWith:!printing!public! !
+!Core.String categoriesFor: #formatWith:with:!printing!public! !
+!Core.String categoriesFor: #formatWith:with:with:!printing!public! !
+!Core.String categoriesFor: #formatWith:with:with:with:!printing!public! !
+!Core.String categoriesFor: #formatWithArguments:!printing!public! !
+!Core.String categoriesFor: #hash!comparing!public! !
+!Core.String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
+!Core.String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!Core.String categoriesFor: #isLiteral!public!testing! !
+!Core.String categoriesFor: #isString!public!testing! !
+!Core.String categoriesFor: #leftString:!copying!public! !
+!Core.String categoriesFor: #length!accessing!public! !
+!Core.String categoriesFor: #lines!copying!public! !
+!Core.String categoriesFor: #lookup:!accessing!public! !
+!Core.String categoriesFor: #match:!public!searching! !
+!Core.String categoriesFor: #match:ignoreCase:!public!searching! !
+!Core.String categoriesFor: #matchPatternFrom:in:from:!private!searching! !
+!Core.String categoriesFor: #max:!comparing!public! !
+!Core.String categoriesFor: #midString:from:!copying!public! !
+!Core.String categoriesFor: #min:!comparing!public! !
+!Core.String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!Core.String categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Core.String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
+!Core.String categoriesFor: #occurrencesOf:!public!searching! !
+!Core.String categoriesFor: #occurrencesOf:from:to:!public!searching! !
+!Core.String categoriesFor: #prevIndexOf:from:to:!public!searching! !
+!Core.String categoriesFor: #printOn:!printing!public! !
+!Core.String categoriesFor: #refersToLiteral:!private!testing! !
+!Core.String categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
+!Core.String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.String categoriesFor: #rightString:!copying!public! !
+!Core.String categoriesFor: #sameAs:!comparing!public! !
+!Core.String categoriesFor: #skipOver:ignoreCase:!private!searching! !
+!Core.String categoriesFor: #split:!public!tokenizing! !
+!Core.String categoriesFor: #sprintfWith:!printing!public! !
+!Core.String categoriesFor: #sprintfWith:with:!printing!public! !
+!Core.String categoriesFor: #storeOn:!printing!public! !
+!Core.String categoriesFor: #strcspn:start:!private!searching! !
+!Core.String categoriesFor: #strlen!accessing!private! !
+!Core.String categoriesFor: #subStrings!public!tokenizing! !
+!Core.String categoriesFor: #subStrings:!public!tokenizing! !
+!Core.String categoriesFor: #subStringsAnsi:!copying!public! !
+!Core.String categoriesFor: #titleCased!converting!public! !
+!Core.String categoriesFor: #trimBlanks!copying!public! !
+!Core.String categoriesFor: #trimNulls!copying!public! !
+!Core.String categoriesFor: #truncateTo:!converting!public! !
+!Core.String categoriesFor: #unescapePercents!operations!public! !
+!Core.String categoriesFor: #urlDecoded!operations!public! !
+!Core.String categoriesFor: #urlEncoded!operations!public! !
+!Core.String categoriesFor: #withNormalizedLineDelimiters!converting!public! !
 
-String methodProtocol: #readableString attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
-String methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
+Core.String methodProtocol: #readableString attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
+Core.String methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
 
-!String class methodsFor!
+!Core.String class methodsFor!
 
 ansiClass
 	"Answer the class of String to use for ANSI-encoded strings."
@@ -1443,7 +1441,7 @@ formatMessage: anIntegerId withArguments: argumentCollection
 	specified id in the specified module, with arguments substituted from
 	argumentCollection."
 
-	^self 
+	^self
 		formatMessage: anIntegerId
 		in: SessionManager current defaultResourceLibrary
 		withArguments: argumentCollection!
@@ -1453,10 +1451,10 @@ formatSystemMessage: anIntegerId withArguments: arguments
 	specified id in the specified module, with arguments substituted from
 	argumentCollection."
 
-	^KernelLibrary default
+	^OS.KernelLibrary default
 		formatMessage: anIntegerId
 		source: 0
-		flags: Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
+		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
 		withArguments: arguments!
 
 fromAddress: anAddress
@@ -1529,7 +1527,7 @@ fromGlobalHandle: anExternalHandle
 	"Answer a new String instantiated from the contents of the global heap block with the specified handle."
 
 	| kernel p |
-	kernel := KernelLibrary default.
+	kernel := OS.KernelLibrary default.
 	p := kernel globalLock: anExternalHandle.
 	^[self fromAddress: p] ensure: [kernel globalUnlock: anExternalHandle]!
 
@@ -1542,13 +1540,13 @@ fromId: resourceId in: anExternalLibraryOrHandle
 	"Answer a new String loaded from the resources of the module with handle, anExternalLibraryOrHandle."
 
 	| len pch |
-	pch := ExternalAddress new.
-	(len := UserLibrary default
+	pch := External.Address new.
+	(len := OS.UserLibrary default
 				loadString: anExternalLibraryOrHandle asParameter
 				uID: resourceId asResourceId
 				lpBuffer: pch basicYourAddress
 				nBufferMax: 0) isZero
-		ifTrue: [UserLibrary default systemError].
+		ifTrue: [OS.UserLibrary default systemError].
 	^Utf16String fromAddress: pch length: len!
 
 fromString: aString
@@ -1561,9 +1559,9 @@ fromUtf16String: anAddressOrUtf16String
 	address."
 
 	| answer size lib |
-	lib := KernelLibrary default.
+	lib := OS.KernelLibrary default.
 	(size := lib
-				wideCharToMultiByte: WinNlsConstants.CP_UTF8
+				wideCharToMultiByte: OS.NlsConstants.CP_UTF8
 				dwFlags: 0
 				lpWideCharStr: anAddressOrUtf16String
 				cchWideChar: -1
@@ -1574,7 +1572,7 @@ fromUtf16String: anAddressOrUtf16String
 		ifTrue: [lib systemError].
 	answer := self new: size - 1.
 	lib
-		wideCharToMultiByte: WinNlsConstants.CP_UTF8
+		wideCharToMultiByte: OS.NlsConstants.CP_UTF8
 		dwFlags: 0
 		lpWideCharStr: anAddressOrUtf16String
 		cchWideChar: -1
@@ -1590,7 +1588,7 @@ initialize
 installedCodePages
 	"Answer the names of all code pages installed on the host system."
 
-	^self systemCodePages: WinNlsConstants.CP_INSTALLED!
+	^self systemCodePages: OS.NlsConstants.CP_INSTALLED!
 
 lf
 	^AnsiString with: $\n!
@@ -1678,7 +1676,7 @@ supportedCodePages
 		self supportedCodePages
 	"
 
-	^self systemCodePages: WinNlsConstants.CP_SUPPORTED!
+	^self systemCodePages: OS.NlsConstants.CP_SUPPORTED!
 
 systemCodePages: anInteger
 	"Private - Answer a collection of system locales, depending on the flags argument,
@@ -1687,15 +1685,15 @@ systemCodePages: anInteger
 
 	| enum ids kernel |
 	ids := OrderedCollection new: 30.
-	enum := ExternalCallback block: 
+	enum := External.Callback block: 
 					[:codePage |
 					ids addLast: codePage.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
-	kernel := KernelLibrary default.
+				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
+	kernel := OS.KernelLibrary default.
 	kernel enumSystemCodePages: enum asParameter dwFlags: anInteger.
 	enum free.
-	^ids collect: [:each | CPINFOEXW codePage: (Integer fromString: each)]!
+	^ids collect: [:each | OS.CPINFOEXW codePage: (Integer fromString: each)]!
 
 tab
 	"Answer an instance of the receiver containing a tab character."
@@ -1766,55 +1764,55 @@ withAll: aCollectionOfCharacters
 	stream := self writeStream: aCollectionOfCharacters size.
 	aCollectionOfCharacters do: [:each | stream nextPut: each].
 	^stream grabContents! !
-!String class categoriesFor: #ansiClass!constants!public! !
-!String class categoriesFor: #basicEncoding!accessing!public! !
-!String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!String class categoriesFor: #codePage!constants!public! !
-!String class categoriesFor: #coerceString:!instance creation!public! !
-!String class categoriesFor: #cr!constants!public! !
-!String class categoriesFor: #elementSize!constants!public! !
-!String class categoriesFor: #empty!instance creation!public! !
-!String class categoriesFor: #encoding!constants!public! !
-!String class categoriesFor: #encodingName:!enquiries!private! !
-!String class categoriesFor: #encodings!constants!public! !
-!String class categoriesFor: #errorInvalidCodePoint:!exceptions!private! !
-!String class categoriesFor: #formatMessage:in:withArguments:!instance creation!public! !
-!String class categoriesFor: #formatMessage:withArguments:!instance creation!public! !
-!String class categoriesFor: #formatSystemMessage:withArguments:!instance creation!public! !
-!String class categoriesFor: #fromAddress:!instance creation!public! !
-!String class categoriesFor: #fromAddress:length:!instance creation!public! !
-!String class categoriesFor: #fromAtomId:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:length:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:length:startingAt:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:startingAt:!instance creation!public! !
-!String class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!String class categoriesFor: #fromId:!instance creation!public! !
-!String class categoriesFor: #fromId:in:!instance creation!public! !
-!String class categoriesFor: #fromString:!instance creation!public! !
-!String class categoriesFor: #fromUtf16String:!instance creation!public! !
-!String class categoriesFor: #initialize!class initialization!development!public! !
-!String class categoriesFor: #installedCodePages!enquiries!public! !
-!String class categoriesFor: #lf!constants!public! !
-!String class categoriesFor: #lineDelimiter!instance creation!public! !
-!String class categoriesFor: #new:!instance creation!public! !
-!String class categoriesFor: #newFixed:!instance creation!public! !
-!String class categoriesFor: #readFrom:!instance creation!public! !
-!String class categoriesFor: #smalltalkWriteStream!instance creation!public!streaming! !
-!String class categoriesFor: #smalltalkWriteStream:!instance creation!public!streaming! !
-!String class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!String class categoriesFor: #stbVersion!binary filing!constants!public! !
-!String class categoriesFor: #supportedCodePages!enquiries!public! !
-!String class categoriesFor: #systemCodePages:!enquiries!private! !
-!String class categoriesFor: #tab!instance creation!public! !
-!String class categoriesFor: #utf16Class!constants!public! !
-!String class categoriesFor: #utf8Class!constants!public! !
-!String class categoriesFor: #with:!instance creation!public! !
-!String class categoriesFor: #with:with:!instance creation!public! !
-!String class categoriesFor: #with:with:with:!instance creation!public! !
-!String class categoriesFor: #with:with:with:with:!instance creation!public! !
-!String class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!String class categoriesFor: #withAll:!instance creation!public! !
+!Core.String class categoriesFor: #ansiClass!constants!public! !
+!Core.String class categoriesFor: #basicEncoding!accessing!public! !
+!Core.String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
+!Core.String class categoriesFor: #codePage!constants!public! !
+!Core.String class categoriesFor: #coerceString:!instance creation!public! !
+!Core.String class categoriesFor: #cr!constants!public! !
+!Core.String class categoriesFor: #elementSize!constants!public! !
+!Core.String class categoriesFor: #empty!instance creation!public! !
+!Core.String class categoriesFor: #encoding!constants!public! !
+!Core.String class categoriesFor: #encodingName:!enquiries!private! !
+!Core.String class categoriesFor: #encodings!constants!public! !
+!Core.String class categoriesFor: #errorInvalidCodePoint:!exceptions!private! !
+!Core.String class categoriesFor: #formatMessage:in:withArguments:!instance creation!public! !
+!Core.String class categoriesFor: #formatMessage:withArguments:!instance creation!public! !
+!Core.String class categoriesFor: #formatSystemMessage:withArguments:!instance creation!public! !
+!Core.String class categoriesFor: #fromAddress:!instance creation!public! !
+!Core.String class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Core.String class categoriesFor: #fromAtomId:!instance creation!public! !
+!Core.String class categoriesFor: #fromByteArray:!instance creation!public! !
+!Core.String class categoriesFor: #fromByteArray:length:!instance creation!public! !
+!Core.String class categoriesFor: #fromByteArray:length:startingAt:!instance creation!public! !
+!Core.String class categoriesFor: #fromByteArray:startingAt:!instance creation!public! !
+!Core.String class categoriesFor: #fromGlobalHandle:!instance creation!public! !
+!Core.String class categoriesFor: #fromId:!instance creation!public! !
+!Core.String class categoriesFor: #fromId:in:!instance creation!public! !
+!Core.String class categoriesFor: #fromString:!instance creation!public! !
+!Core.String class categoriesFor: #fromUtf16String:!instance creation!public! !
+!Core.String class categoriesFor: #initialize!class initialization!development!public! !
+!Core.String class categoriesFor: #installedCodePages!enquiries!public! !
+!Core.String class categoriesFor: #lf!constants!public! !
+!Core.String class categoriesFor: #lineDelimiter!instance creation!public! !
+!Core.String class categoriesFor: #new:!instance creation!public! !
+!Core.String class categoriesFor: #newFixed:!instance creation!public! !
+!Core.String class categoriesFor: #readFrom:!instance creation!public! !
+!Core.String class categoriesFor: #smalltalkWriteStream!instance creation!public!streaming! !
+!Core.String class categoriesFor: #smalltalkWriteStream:!instance creation!public!streaming! !
+!Core.String class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Core.String class categoriesFor: #stbVersion!binary filing!constants!public! !
+!Core.String class categoriesFor: #supportedCodePages!enquiries!public! !
+!Core.String class categoriesFor: #systemCodePages:!enquiries!private! !
+!Core.String class categoriesFor: #tab!instance creation!public! !
+!Core.String class categoriesFor: #utf16Class!constants!public! !
+!Core.String class categoriesFor: #utf8Class!constants!public! !
+!Core.String class categoriesFor: #with:!instance creation!public! !
+!Core.String class categoriesFor: #with:with:!instance creation!public! !
+!Core.String class categoriesFor: #with:with:with:!instance creation!public! !
+!Core.String class categoriesFor: #with:with:with:with:!instance creation!public! !
+!Core.String class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.String class categoriesFor: #withAll:!instance creation!public! !
 
-String class methodProtocol: #'String factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.String class methodProtocol: #'String factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

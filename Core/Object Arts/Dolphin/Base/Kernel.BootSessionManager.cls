@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SessionManager subclass: #BootSessionManager
+Core.SessionManager subclass: #'Kernel.BootSessionManager'
 	instanceVariableNames: 'productDetails startTime'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BootSessionManager guid: (GUID fromString: '{9dbc5fa6-dace-4809-88b9-83242b7f7d72}')!
-BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>s installed when the Dolphin image is booting from sources.'!
-!BootSessionManager categoriesForClass!Development! !
-!BootSessionManager methodsFor!
+Kernel.BootSessionManager guid: (Core.GUID fromString: '{9dbc5fa6-dace-4809-88b9-83242b7f7d72}')!
+Kernel.BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>s installed when the Dolphin image is booting from sources.'!
+!Kernel.BootSessionManager categoriesForClass!Development! !
+!Kernel.BootSessionManager methodsFor!
 
 allocConsole
 	"Private - Open a console window for this session."
 
 	"Attach to the existing console so that the output goes to the build log"
-	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS) ifFalse: [
-		KernelLibrary default allocConsole]
-!
+
+	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS)
+		ifFalse: [KernelLibrary default allocConsole]!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
@@ -38,8 +38,10 @@ bootFinished
 
 bootStarted
 	startTime := DateAndTime now.
-	self stdout nextPutAll: 'Boot started at'; print: startTime; cr
-!
+	self stdout
+		nextPutAll: 'Boot started at';
+		print: startTime;
+		cr!
 
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
@@ -124,9 +126,12 @@ openSources
 
 	self class sourceManager openSources: self imagePath.
 	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
-	self stdout 
-		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
-		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.'; cr; flush.!
+	self stdout
+		nextPutAll: 'Dolphin Smalltalk Boot';
+		cr;
+		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.';
+		cr;
+		flush!
 
 primaryStartup
 	"Private - Perform very early startup actions.
@@ -158,9 +163,8 @@ productDetails: anArray
 
 productVersion
 	"Answers the <Float> version of this product"
-	
-	^VMLibrary default defaultProductDetails at: 3
-!
+
+	^VMLibrary default defaultProductDetails at: 3!
 
 quit: anInteger
 	"Private - Force a close down of the session with the specified exit code."
@@ -235,7 +239,7 @@ reloadBootPackages
 
 reloadPackage: aPackage
 	| newPackage missingClasses |
-	Notification signal: 'Reloading ' , aPackage name printString, ' ...'.
+	Notification signal: 'Reloading ' , aPackage name printString , ' ...'.
 	newPackage := Package fromFile: aPackage fileOutName.
 	Package manager
 		basicRemovePackage: aPackage;
@@ -256,7 +260,7 @@ reloadPackage: aPackage
 	missingClasses := aPackage classesInHierarchyOrder difference: newPackage classes.
 	missingClasses reverseDo: 
 			[:each |
-			Notification signal: 'Removing obsolete boot class ' , each fullName, '...'.
+			Notification signal: 'Removing obsolete boot class ' , each fullName , '...'.
 			each removeFromSystem]!
 
 saveImageDefault
@@ -285,8 +289,8 @@ shutdown
 
 snapshot
 	"Private - Performs a snapshot of the current image."
-	
-	Notification signal: 'Saving booted image to ', self imageFileName.
+
+	Notification signal: 'Saving booted image to ' , self imageFileName.
 	self snapshot: self imageFileName!
 
 startUI
@@ -322,41 +326,41 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadBootPackages! !
-!BootSessionManager categoriesFor: #allocConsole!operations!private! !
-!BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!BootSessionManager categoriesFor: #bootFinished!event handling!public! !
-!BootSessionManager categoriesFor: #bootStarted!event handling!public! !
-!BootSessionManager categoriesFor: #fileInClass:!private! !
-!BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
-!BootSessionManager categoriesFor: #keepAlive!idling!public! !
-!BootSessionManager categoriesFor: #logError:!operations-logging!public! !
-!BootSessionManager categoriesFor: #main!operations-startup!public! !
-!BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
-!BootSessionManager categoriesFor: #openConsole!operations!public! !
-!BootSessionManager categoriesFor: #openFd:mode:!operations!private! !
-!BootSessionManager categoriesFor: #openSources!operations-source files!private! !
-!BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
-!BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
-!BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
-!BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
-!BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
-!BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
-!BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
-!BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
-!BootSessionManager categoriesFor: #shellOpened:!operations-startup!private! !
-!BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
-!BootSessionManager categoriesFor: #snapshot!operations-saving!private! !
-!BootSessionManager categoriesFor: #startUI!operations-startup!public! !
-!BootSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
-!BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #allocConsole!operations!private! !
+!Kernel.BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #bootFinished!event handling!public! !
+!Kernel.BootSessionManager categoriesFor: #bootStarted!event handling!public! !
+!Kernel.BootSessionManager categoriesFor: #fileInClass:!private! !
+!Kernel.BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
+!Kernel.BootSessionManager categoriesFor: #keepAlive!idling!public! !
+!Kernel.BootSessionManager categoriesFor: #logError:!operations-logging!public! !
+!Kernel.BootSessionManager categoriesFor: #main!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
+!Kernel.BootSessionManager categoriesFor: #openConsole!operations!public! !
+!Kernel.BootSessionManager categoriesFor: #openFd:mode:!operations!private! !
+!Kernel.BootSessionManager categoriesFor: #openSources!operations-source files!private! !
+!Kernel.BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
+!Kernel.BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
+!Kernel.BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
+!Kernel.BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
+!Kernel.BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
+!Kernel.BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
+!Kernel.BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
+!Kernel.BootSessionManager categoriesFor: #shellOpened:!operations-startup!private! !
+!Kernel.BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
+!Kernel.BootSessionManager categoriesFor: #snapshot!operations-saving!private! !
+!Kernel.BootSessionManager categoriesFor: #startUI!operations-startup!public! !
+!Kernel.BootSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
+!Kernel.BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Kernel.BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
 
-!BootSessionManager class methodsFor!
+!Kernel.BootSessionManager class methodsFor!
 
 imageExtension
 	"Answer the suffix for an executable image file"
 
 	^'img7'.! !
-!BootSessionManager class categoriesFor: #imageExtension!constants!public! !
+!Kernel.BootSessionManager class categoriesFor: #imageExtension!constants!public! !
 

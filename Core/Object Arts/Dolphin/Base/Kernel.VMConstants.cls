@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #VMConstants
+Kernel.SharedPool subclass: #'Kernel.VMConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -30,6 +30,7 @@ SharedPool subclass: #VMConstants
 		'UIntMax' -> 16rFFFFFFFF.
 		'UIntPtrMax' -> 16rFFFFFFFF
 	}!
-VMConstants guid: (GUID fromString: '{0ce3edb9-a86f-4a2e-b743-3de1e198c6ff}')!
-VMConstants comment: ''!
-!VMConstants categoriesForClass!Unclassified! !
+Kernel.VMConstants guid: (Core.GUID fromString: '{0ce3edb9-a86f-4a2e-b743-3de1e198c6ff}')!
+Kernel.VMConstants isNonInstantiable: true!
+Kernel.VMConstants comment: ''!
+!Kernel.VMConstants categoriesForClass!Unclassified! !

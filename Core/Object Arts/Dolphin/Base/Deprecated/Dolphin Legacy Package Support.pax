@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Package Support'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Package Support.
 Copyright © Object Arts Ltd. 1997-2020. 
@@ -13,33 +13,33 @@ package basicScriptAt: #postinstall put: 'Package binaryPacLoader: [:package :st
 package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 
 package setClassNames: #(
-	#{MethodContext}
+	#{Kernel.Bytecode}
+	#{Smalltalk.MethodContext}
+	#{Smalltalk.PoolConstantsDictionary}
 ).
 
 package setMethodNames: #(
-	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
-	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
-	#(#{Package} #allResourceNames)
-	#(#{Package} #allResourceNames:)
-	#(#{Package} #basicLoadVersion4:filer:)
-	#(#{Package} #errorUnknownFileVersion:)
-	#(#{Package} #fileInClassDefinitions:)
-	#(#{Package} #initializeLegacyResources)
-	#(#{Package} #loadGlobalsFromFiler:)
-	#(#{Package} #loadLegacyPAC:)
-	#(#{Package} #loadLegacyResources)
-	#(#{Package} #loadResourcesFromFiler:)
-	#(#{Package} #loadVersion1:filer:)
-	#(#{Package} #loadVersion2:filer:)
-	#(#{Package} #loadVersion3:filer:)
-	#(#{Package} #loadVersion4:filer:)
-	#(#{Package} #loadVersion5:filer:)
-	#(#{Package} #resourceNames)
-	#(#{Package} #script:)
-	#(#{Package} #script:put:)
-	#(#{Package} #versionLookup)
-	#(#{Package class} #name:comment:)
-	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Kernel.Package} #allResourceNames:)
+	#(#{Kernel.Package} #basicLoadVersion4:filer:)
+	#(#{Kernel.Package} #errorUnknownFileVersion:)
+	#(#{Kernel.Package} #fileInClassDefinitions:)
+	#(#{Kernel.Package} #loadGlobalsFromFiler:)
+	#(#{Kernel.Package} #loadLegacyPAC:)
+	#(#{Kernel.Package} #loadLegacyResources)
+	#(#{Kernel.Package} #loadResourcesFromFiler:)
+	#(#{Kernel.Package} #loadVersion1:filer:)
+	#(#{Kernel.Package} #loadVersion2:filer:)
+	#(#{Kernel.Package} #loadVersion3:filer:)
+	#(#{Kernel.Package} #loadVersion4:filer:)
+	#(#{Kernel.Package} #loadVersion5:filer:)
+	#(#{Kernel.Package} #resourceNames)
+	#(#{Kernel.Package} #script:)
+	#(#{Kernel.Package} #script:put:)
+	#(#{Kernel.Package} #versionLookup)
+	#(#{Kernel.Package class} #name:comment:)
 ).
 
 package setPrerequisites: #(
@@ -50,8 +50,20 @@ package!
 
 "Class Definitions"!
 
-Object variableSubclass: #MethodContext
+Core.Object subclass: #'Kernel.Bytecode'
+	instanceVariableNames: 'instruction args jumpTarget ip'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -59,7 +71,7 @@ Object variableSubclass: #MethodContext
 
 "Loose Methods"!
 
-!Class methodsFor!
+!Core.Class methodsFor!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
 	"For loading pre-7.2 packages."
@@ -70,7 +82,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 				subclass: aClassSymbol
 				instanceVariableNames: instVarString
 				classVariableNames: classVarString
-				imports: (self importsFromPoolsString: poolDictString).
+				poolDictionaries: poolDictString.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
@@ -86,15 +98,26 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				imports: (self importsFromPoolsString: poolDictString).
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 
-!Package methodsFor!
+!Core.UndefinedObject methodsFor!
 
-allResourceNames
-	"Private - Answer a <Collection> of all the resource names directly owned by the receiver or by its owned classes."
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages"
 
-	^self propertyAt: #allResourceNames ifAbsent: [^OrderedCollection new]!
+	| subclass |
+	#deprecated.
+	subclass := self
+				subclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+
+!Kernel.Package methodsFor!
 
 allResourceNames: resources
 	"Private - Record the <Collection> of <Associations>s, resources, as the names of all resources
@@ -123,7 +146,7 @@ errorUnknownFileVersion: foundVersion
 			'Unknown package file version found ', foundVersion displayString,
 			'. Current version is ', self class packageFileVersion displayString!
 
-fileInClassDefinitions: aFileStream 
+fileInClassDefinitions: aFileStream
 	"Private - Load all package classes from the filestream up to the end marker.
 	Note that this is only used for loading binary legacy (pre 4.0) packages."
 
@@ -132,22 +155,11 @@ fileInClassDefinitions: aFileStream
 	filer := ChunkSourceFiler on: aFileStream.
 	
 	[filer atEnd ifTrue: [^self errorFileCorrupt].
-	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition'] 
+	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition']
 			whileFalse.
 	aFileStream skipSeparators.
 	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
 	aFileStream beBinary!
-
-initializeLegacyResources
-	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
-	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
-	we are only concerned with loose resources"
-
-	self allResourceNames do: 
-			[:each | 
-			| rid |
-			rid := ResourceIdentifier class: each key asQualifiedReference value name: each value.
-			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
 
 loadGlobalsFromFiler: binaryFiler
 	"Private - File in binary definitions of all the globals held by
@@ -156,7 +168,7 @@ loadGlobalsFromFiler: binaryFiler
 
 	variableNames size timesRepeat: [binaryFiler next]!
 
-loadLegacyPAC: aReadStream 
+loadLegacyPAC: aReadStream
 	"Private - Load the package the receiver represents from the Dolphin 3.x format 
 	(mixed STB binary and source text) on the <readableStream> argument, aReadStream."
 
@@ -169,7 +181,7 @@ loadLegacyPAC: aReadStream
 	version := binaryFiler next.
 	selector := self versionLookup at: version ifAbsent: [^self errorUnknownFileVersion: version].
 	self fileInScript: #preinstall.
-	self 
+	self
 		perform: selector
 		with: aReadStream
 		with: binaryFiler.
@@ -185,23 +197,23 @@ loadLegacyResources
 	resNames do: 
 			[:each |
 			| viewResClass resIdClass rid filename resource |
-			resIdClass := #{ResourceIdentifier} value.
-			rid := resIdClass class: each key asQualifiedReference value name: each value.
-			viewResClass := #{ViewResource} value.
+			resIdClass := #{UI.ResourceIdentifier} value.
+			rid := resIdClass class:  (BindingReference pathString: each key home: Smalltalk) value name: each value.
+			viewResClass := #{Smalltalk.ViewResource} value.
 			filename := viewResClass generateFilenameFrom: rid inPackage: self.
 			resource := viewResClass inSTBFileWithName: filename.
 			rid assign: resource].
 	self initializeLegacyResources!
 
-loadResourcesFromFiler: binaryFiler 
+loadResourcesFromFiler: binaryFiler
 	"Private - File in binary definitions of all the resources held by
 	the receiver are directly or indirectly through class ownership."
 
 	| aResourceIdentifier resourceNames |
 	resourceNames := OrderedCollection new.
 	[(aResourceIdentifier := binaryFiler next) notNil] whileTrue: 
-			["Read in the binary resource"
-			| resource |
+			[| resource |
+			"Read in the binary resource"
 			resource := binaryFiler next.
 			aResourceIdentifier assign: resource.
 			resourceNames add: aResourceIdentifier owningClass name -> aResourceIdentifier name].
@@ -248,7 +260,7 @@ loadVersion3: aFileStream filer: binaryFiler
 			className := binaryFiler next.
 			resourceClass := self classFromName: className.
 			binaryFiler next
-				keysAndValuesDo: [:resourceName :resource | (ResourceIdentifier class: resourceClass name: resourceName) assign: resource]].
+				keysAndValuesDo: [:resourceName :resource | (UI.ResourceIdentifier class: resourceClass name: resourceName) assign: resource]].
 
 	"File in any trailing source code of class/methods"
 	self sourceManager fileInFrom: aFileStream beText.
@@ -288,58 +300,40 @@ script: scriptSymbol put: aString
 versionLookup
 	"This dictionary is used for loading legacy packages"
 
-	^##((LookupTable new)
+	^##(LookupTable new
 		at: 1 put: #loadVersion1:filer:;
 		at: 2 put: #loadVersion2:filer:;
 		at: 3 put: #loadVersion3:filer:;
 		at: 4 put: #loadVersion4:filer:;
 		at: 5 put: #loadVersion5:filer:;
 		shrink;
-		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
-!Package categoriesFor: #allResourceNames!accessing!private! !
-!Package categoriesFor: #allResourceNames:!private!source filing! !
-!Package categoriesFor: #basicLoadVersion4:filer:!legacy package loading!private! !
-!Package categoriesFor: #errorUnknownFileVersion:!exceptions!legacy package loading!private! !
-!Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
-!Package categoriesFor: #initializeLegacyResources!initializing!private! !
-!Package categoriesFor: #loadGlobalsFromFiler:!legacy package loading!private! !
-!Package categoriesFor: #loadLegacyPAC:!legacy package loading!private! !
-!Package categoriesFor: #loadLegacyResources!legacy package loading!private! !
-!Package categoriesFor: #loadResourcesFromFiler:!legacy package loading!private! !
-!Package categoriesFor: #loadVersion1:filer:!legacy package loading!private! !
-!Package categoriesFor: #loadVersion2:filer:!legacy package loading!private! !
-!Package categoriesFor: #loadVersion3:filer:!legacy package loading!private! !
-!Package categoriesFor: #loadVersion4:filer:!legacy package loading!private! !
-!Package categoriesFor: #loadVersion5:filer:!legacy package loading!private! !
-!Package categoriesFor: #resourceNames!legacy package loading!public! !
-!Package categoriesFor: #script:!legacy package loading!public! !
-!Package categoriesFor: #script:put:!legacy package loading!public! !
-!Package categoriesFor: #versionLookup!constants!legacy package loading!private! !
+		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"	"same format as 4, except VM version loaded here"! !
+!Kernel.Package categoriesFor: #allResourceNames:!private!source filing! !
+!Kernel.Package categoriesFor: #basicLoadVersion4:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #errorUnknownFileVersion:!exceptions!legacy package loading!private! !
+!Kernel.Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
+!Kernel.Package categoriesFor: #loadGlobalsFromFiler:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadLegacyPAC:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadLegacyResources!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadResourcesFromFiler:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadVersion1:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadVersion2:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadVersion3:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadVersion4:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #loadVersion5:filer:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #resourceNames!legacy package loading!public! !
+!Kernel.Package categoriesFor: #script:!legacy package loading!public! !
+!Kernel.Package categoriesFor: #script:put:!legacy package loading!public! !
+!Kernel.Package categoriesFor: #versionLookup!constants!legacy package loading!private! !
 
-!Package class methodsFor!
+!Kernel.Package class methodsFor!
 
 name: nameString comment: commentString 
 	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
 	^(self name: nameString)
 		basicComment: commentString;
 		yourself! !
-!Package class categoriesFor: #name:comment:!instance creation!public! !
-
-!UndefinedObject methodsFor!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
-	"For loading pre-7.2 packages"
-
-	| subclass |
-	Notification deprecated.
-	subclass := (self
-				newClassBuilder: aClassSymbol
-				instanceVariableNames: instVarString
-				classVariableNames: classVarString
-				imports: (self importsFromPoolsString: poolDictString)) modifyOrCreate.
-	subclass class instanceVariableNames: classInstVarString.
-	^subclass! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Kernel.Package class categoriesFor: #name:comment:!instance creation!public! !
 
 "End of package definition"!
 

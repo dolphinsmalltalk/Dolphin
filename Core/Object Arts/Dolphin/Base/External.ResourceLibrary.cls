@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #ExternalResourceLibrary
+External.Library subclass: #'External.ResourceLibrary'
 	instanceVariableNames: 'fileName loadFlags'
 	classVariableNames: 'Libraries'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalResourceLibrary guid: (GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
-!ExternalResourceLibrary categoriesForClass!External-Libraries! !
-!ExternalResourceLibrary methodsFor!
+External.ResourceLibrary guid: (Core.GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.ResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
+!External.ResourceLibrary categoriesForClass!External-Libraries! !
+!External.ResourceLibrary methodsFor!
 
 attemptToOpen: aString
 	^
@@ -41,24 +41,20 @@ open: aString
 	name := self class aliasFor: aString.
 	[self basicOpen: name] on: Win32Error
 		do: 
-			[:e1 | 
-			"Supplied path didn't work"
-
+			[:e1 |
 			| filename |
+			"Supplied path didn't work"
 			((File splitPathFrom: name) notEmpty and: 
 					["previously pathed, so try stem only"
-
-					self attemptToOpen: (File splitStemFrom: name)]) 
+					self attemptToOpen: (File splitStemFrom: name)])
 				ifTrue: [^self].
 			filename := File splitFilenameFrom: name.
 			"Try the current image path"
-			(self attemptToOpen: (FileLocator imageRelative localFileSpecFor: filename)) 
-				ifTrue: [^self].
+			(self attemptToOpen: (FileLocator imageRelative localFileSpecFor: filename)) ifTrue: [^self].
 			"Finally try the installation path"
-			(self attemptToOpen: (FileLocator installRelative localFileSpecFor: filename)) 
-				ifTrue: [^self].
+			(self attemptToOpen: (FileLocator installRelative localFileSpecFor: filename)) ifTrue: [^self].
 			"No luck, report the original error as a notification"
-			Notification 
+			Notification
 				signal: 'Resource library ' , fileName , ' could not be opened (' , e1 description , ')'].
 	^self!
 
@@ -66,19 +62,17 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler.
 	Use a special proxy in order to share a common instance on reload."
 
-	anSTBOutFiler
-		saveObject: self
-		as: (STBExternalResourceLibraryProxy forLibrary: self)! !
-!ExternalResourceLibrary categoriesFor: #attemptToOpen:!helpers!instance creation!private! !
-!ExternalResourceLibrary categoriesFor: #fileName!accessing!public! !
-!ExternalResourceLibrary categoriesFor: #loadFlags!constants!private! !
-!ExternalResourceLibrary categoriesFor: #loadFlags:!accessing!private! !
-!ExternalResourceLibrary categoriesFor: #open:!helpers!private! !
-!ExternalResourceLibrary categoriesFor: #stbSaveOn:!binary filing!instance creation!public! !
+	anSTBOutFiler saveObject: self as: (STBExternalResourceLibraryProxy forLibrary: self)! !
+!External.ResourceLibrary categoriesFor: #attemptToOpen:!helpers!instance creation!private! !
+!External.ResourceLibrary categoriesFor: #fileName!accessing!public! !
+!External.ResourceLibrary categoriesFor: #loadFlags!constants!private! !
+!External.ResourceLibrary categoriesFor: #loadFlags:!accessing!private! !
+!External.ResourceLibrary categoriesFor: #open:!helpers!private! !
+!External.ResourceLibrary categoriesFor: #stbSaveOn:!binary filing!instance creation!public! !
 
-!ExternalResourceLibrary class methodsFor!
+!External.ResourceLibrary class methodsFor!
 
-aliasFor: libraryNameString 
+aliasFor: libraryNameString
 	"Answer the name of the resource file which should actually be opened in place
 	of the named library. Generally the argument will be answered, but on occassion, e.g
 	after a product upgrade, the resource file name has changed and so we can use
@@ -100,7 +94,7 @@ defaultLoadFlags
 
 initialize
 	"Private - Initialize the receiver's class variables, &c.
-		ExternalResourceLibrary initialize
+		ResourceLibrary initialize
 	"
 
 	Libraries := WeakLookupTable new!
@@ -150,13 +144,12 @@ open: aString withAliases: aCollection flags: anInteger
 	path := File default: aString asLowercase extension: 'dll'.
 	lib := Libraries at: path
 				ifAbsentPut: 
-					[(self new)
+					[self new
 						loadFlags: anInteger;
 						open: path;
 						initialize;
 						yourself].
-	aCollection 
-		do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
+	aCollection do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
 	^lib!
 
 stbConvertFrom: anSTBClassFormat 
@@ -174,14 +167,14 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ExternalResourceLibrary class categoriesFor: #aliasFor:!enquiries!public! !
-!ExternalResourceLibrary class categoriesFor: #defaultLoadFlags!constants!private! !
-!ExternalResourceLibrary class categoriesFor: #initialize!development!private! !
-!ExternalResourceLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ExternalResourceLibrary class categoriesFor: #open:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAlias:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAliases:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAliases:flags:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ExternalResourceLibrary class categoriesFor: #stbVersion!binary filing!public! !
+!External.ResourceLibrary class categoriesFor: #aliasFor:!enquiries!public! !
+!External.ResourceLibrary class categoriesFor: #defaultLoadFlags!constants!private! !
+!External.ResourceLibrary class categoriesFor: #initialize!development!private! !
+!External.ResourceLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!External.ResourceLibrary class categoriesFor: #open:!instance creation!public! !
+!External.ResourceLibrary class categoriesFor: #open:withAlias:!instance creation!public! !
+!External.ResourceLibrary class categoriesFor: #open:withAliases:!instance creation!public! !
+!External.ResourceLibrary class categoriesFor: #open:withAliases:flags:!instance creation!public! !
+!External.ResourceLibrary class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!External.ResourceLibrary class categoriesFor: #stbVersion!binary filing!public! !
 

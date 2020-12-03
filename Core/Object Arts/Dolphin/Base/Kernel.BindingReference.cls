@@ -1,13 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractBindingReference subclass: #BindingReference
-	instanceVariableNames: 'pathString path context binding generation'
+Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
+	instanceVariableNames: 'pathString path context flags binding generation'
 	classVariableNames: 'Generation'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-BindingReference guid: (GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
-BindingReference comment: 'BindingReference''s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
+	classConstants: {
+		'MetaMask' -> 16r1.
+		'PrivateMask' -> 16r2
+	}!
+Kernel.BindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
+Kernel.BindingReference comment: 'BindingReference''s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
 
 ## Instance Variables:
   `pathString`		`<string>`. The qualified name.
@@ -20,8 +23,8 @@ BindingReference comment: 'BindingReference''s represent symbolic references to 
   `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class.
 
 '!
-!BindingReference categoriesForClass!System-Namespaces! !
-!BindingReference methodsFor!
+!Kernel.BindingReference categoriesForClass!System-Namespaces! !
+!Kernel.BindingReference methodsFor!
 
 asString
 	"Answer a <readableString> that describes the receiver as a qualified name in the context of the home namespace."
@@ -45,8 +48,8 @@ context
 
 	^context!
 
-context: anObject
-	context := anObject!
+flags
+	^flags!
 
 hash
 	"Answer the <integer> hash value for the receiver."
@@ -64,6 +67,14 @@ instance
 	"Answer a <BindingReference> that resolves to the value of the binding to which the receiver resolves."
 
 	^self!
+
+isPrivate
+	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
+
+	^flags allMask: PrivateMask!
+
+isPrivate: aBoolean
+	self setFlags: (flags mask: PrivateMask set: aBoolean)!
 
 meta
 	"Answer a <BindingReference> that resolves to the class of the value of the binding to which the receiver resolves."
@@ -90,6 +101,14 @@ setBinding: aVariableBindingOrNil
 	<mutable>
 	binding := aVariableBindingOrNil!
 
+setContext: anObject
+	<mutable>
+	context := anObject!
+
+setFlags: anInteger
+	<mutable>
+	flags := anInteger!
+
 setGeneration: anInteger
 	<mutable>
 	generation := anInteger!
@@ -98,26 +117,42 @@ setPath: anArray
 	<mutable>
 	path := anArray!
 
+setPath: anArray context: anObject
+	path := anArray.
+	context := anObject.
+	flags := 0!
+
 setPathString: aString
 	<mutable>
-	pathString := aString! !
-!BindingReference categoriesFor: #asString!converting!public! !
-!BindingReference categoriesFor: #bind!operations!private! !
-!BindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!BindingReference categoriesFor: #context!accessing!public! !
-!BindingReference categoriesFor: #context:!initializing!private! !
-!BindingReference categoriesFor: #hash!comparing!public! !
-!BindingReference categoriesFor: #home!accessing!public! !
-!BindingReference categoriesFor: #instance!converting!public! !
-!BindingReference categoriesFor: #meta!converting!displaying!public! !
-!BindingReference categoriesFor: #path!accessing!public! !
-!BindingReference categoriesFor: #pathString!accessing!public! !
-!BindingReference categoriesFor: #setBinding:!initializing!private! !
-!BindingReference categoriesFor: #setGeneration:!initializing!private! !
-!BindingReference categoriesFor: #setPath:!initializing!private! !
-!BindingReference categoriesFor: #setPathString:!initializing!private! !
+	pathString := aString!
 
-!BindingReference class methodsFor!
+setPathString: aString context: anObject
+	pathString := aString.
+	context := anObject.
+	flags := 0! !
+!Kernel.BindingReference categoriesFor: #asString!converting!public! !
+!Kernel.BindingReference categoriesFor: #bind!operations!private! !
+!Kernel.BindingReference categoriesFor: #bindingOrNil!accessing!public! !
+!Kernel.BindingReference categoriesFor: #context!accessing!public! !
+!Kernel.BindingReference categoriesFor: #flags!accessing!private! !
+!Kernel.BindingReference categoriesFor: #hash!comparing!public! !
+!Kernel.BindingReference categoriesFor: #home!accessing!public! !
+!Kernel.BindingReference categoriesFor: #instance!converting!public! !
+!Kernel.BindingReference categoriesFor: #isPrivate!public!testing! !
+!Kernel.BindingReference categoriesFor: #isPrivate:!accessing!public! !
+!Kernel.BindingReference categoriesFor: #meta!converting!displaying!public! !
+!Kernel.BindingReference categoriesFor: #path!accessing!public! !
+!Kernel.BindingReference categoriesFor: #pathString!accessing!public! !
+!Kernel.BindingReference categoriesFor: #setBinding:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setContext:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setFlags:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setGeneration:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setPath:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setPath:context:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #setPathString:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #setPathString:context:!initializing!private! !
+
+!Kernel.BindingReference class methodsFor!
 
 clearCachedBindings
 	Generation := Generation + 1.
@@ -134,12 +169,11 @@ initialize
 	self flushBindings.
 	VMLibrary default
 		registryAt: self name put: self;
-		registryAtIndex: 65 put: #pathString:context:meta:!
+		registryAtIndex: 65 put: #pathString:context:flags:!
 
 newPath: anArray context: anObject
 	^self basicNew
-		setPath: anArray;
-		context: anObject;
+		setPath: anArray context: anObject;
 		isImmutable: true;
 		yourself!
 
@@ -147,38 +181,36 @@ pathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument."
 
 	^self basicNew
-		setPathString: aString;
+		setPathString: aString context: nil;
 		yourself!
 
-pathString: aString context: aBehavior
-	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument,
-	which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method),
-	and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
+pathString: aString context: anObject
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
+	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self basicNew
-		setPathString: aString;
-		context: aBehavior;
+		setPathString: aString context: anObject;
 		isImmutable: true;
 		yourself!
 
-pathString: aString context: anObject meta: aBoolean
+pathString: aString context: anObject flags: anInteger
 	"Private - Use by the Compiler to construct literal instances."
 
 	| ref |
 	ref := self pathString: aString context: anObject.
-	^aBoolean ifTrue: [ref meta] ifFalse: [ref]!
+	(anInteger allMask: PrivateMask) ifTrue: [ref isPrivate: true].
+	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
 uninitialize
 	VMLibrary default
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil! !
-!BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
-!BindingReference class categoriesFor: #flushBindings!operations!private! !
-!BindingReference class categoriesFor: #initialize!class initialization!public! !
-!BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
-!BindingReference class categoriesFor: #pathString:!instance creation!public! !
-!BindingReference class categoriesFor: #pathString:context:!instance creation!public! !
-!BindingReference class categoriesFor: #pathString:context:meta:!instance creation!private! !
-!BindingReference class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
+!Kernel.BindingReference class categoriesFor: #flushBindings!operations!private! !
+!Kernel.BindingReference class categoriesFor: #initialize!class initialization!public! !
+!Kernel.BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
+!Kernel.BindingReference class categoriesFor: #pathString:!instance creation!public! !
+!Kernel.BindingReference class categoriesFor: #pathString:context:!instance creation!public! !
+!Kernel.BindingReference class categoriesFor: #pathString:context:flags:!instance creation!private! !
+!Kernel.BindingReference class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

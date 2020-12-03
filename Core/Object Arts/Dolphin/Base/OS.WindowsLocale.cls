@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Locale subclass: #WindowsLocale
+Core.Locale subclass: #'OS.WindowsLocale'
 	instanceVariableNames: 'lcid info'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsLocale guid: (GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
-WindowsLocale comment: ''!
-!WindowsLocale categoriesForClass!Unclassified! !
-!WindowsLocale methodsFor!
+OS.WindowsLocale guid: (Core.GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
+OS.WindowsLocale comment: ''!
+!OS.WindowsLocale categoriesForClass!Unclassified! !
+!OS.WindowsLocale methodsFor!
 
 amDesignator
 	"Answer the <String> used in the receiver locale to designate AM (morning)."
@@ -101,9 +101,9 @@ displayName
 	^self getStringInfo: LOCALE_SNATIVEDISPLAYNAME!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	"If displaying the Locale in its own language, we can used its native name, or in the default UI language (most likely) we can use the localized name. Failing that we have to display it in English."
+	"If displaying the Locale in its own language, we can used its native name, or in the default UI language (most likely) we can use the localized name. Failing that we have to display it in English as we have no general translation capability."
 
 	| targetLangId |
 	targetLangId := aPuttableStream locale languageId.
@@ -142,12 +142,12 @@ getCalendarInfoInteger: anInteger
 	lib := self nlsLib.
 	buf := DWORDBytes new.
 	size := lib
-		getCalendarInfo: lcid
-		calendar: self calendarId
-		calType: (anInteger bitOr: CAL_RETURN_NUMBER)
-		lpCalData: nil
-		cchData: 0
-		lpValue: buf.
+				getCalendarInfo: lcid
+				calendar: self calendarId
+				calType: (anInteger bitOr: CAL_RETURN_NUMBER)
+				lpCalData: nil
+				cchData: 0
+				lpValue: buf.
 	size == 2 ifFalse: [^lib systemError].
 	^buf value!
 
@@ -156,11 +156,23 @@ getCalendarInfoString: anIntegerLcType
 
 	| buf lib size |
 	lib := self nlsLib.
-	size := lib getCalendarInfo: lcid calendar: self calendarId calType: anIntegerLcType lpCalData: nil cchData: 0 lpValue: nil.
+	size := lib
+				getCalendarInfo: lcid
+				calendar: self calendarId
+				calType: anIntegerLcType
+				lpCalData: nil
+				cchData: 0
+				lpValue: nil.
 	size == 0 ifTrue: [^lib systemError].
 	"Strings allocate extra space for null automatically"
 	buf := Utf16String newFixed: size - 1.
-	lib getCalendarInfo: lcid calendar: self calendarId calType: anIntegerLcType lpCalData: buf cchData: size lpValue: nil.
+	lib
+		getCalendarInfo: lcid
+		calendar: self calendarId
+		calType: anIntegerLcType
+		lpCalData: buf
+		cchData: size
+		lpValue: nil.
 	^buf asUtf8String!
 
 getDateFormats: aBoolean
@@ -169,11 +181,11 @@ getDateFormats: aBoolean
 
 	| enum formats |
 	formats := Array writeStream: 4.
-	enum := ExternalCallback block: 
+	enum := Callback block: 
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib
 		enumDateFormats: enum asParameter
 		locale: self asParameter
@@ -226,11 +238,11 @@ getStringInfo: anIntegerLcType
 getTimeFormats
 	| formats enum |
 	formats := Array writeStream: 4.
-	enum := ExternalCallback block: 
+	enum := Callback block: 
 					[:format |
 					formats nextPut: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib
 		enumTimeFormats: enum asParameter
 		locale: self asParameter
@@ -281,9 +293,6 @@ lcid
 	^lcid!
 
 lcid: anLCID
-	"Private - Set the receiver's Win32 LCID which identifies the locale the
-	receiver is representing. Answer the receiver."
-
 	lcid := anLCID.
 	info := IdentityDictionary new!
 
@@ -430,7 +439,7 @@ shortAmDesignator
 
 	^info at: LOCALE_SSHORTESTAM
 		ifAbsentPut: 
-			[VMLibrary default isWindows10OrGreater
+			[KernelLibrary default isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTAM]
 				ifFalse: [self amDesignator first]]!
 
@@ -449,7 +458,7 @@ shortPmDesignator
 
 	^info at: LOCALE_SSHORTESTPM
 		ifAbsentPut: 
-			[VMLibrary default isWindows10OrGreater
+			[KernelLibrary default isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTPM]
 				ifFalse: [self pmDesignator first]]!
 
@@ -477,74 +486,74 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self getStringInfo: LOCALE_SYEARMONTH! !
-!WindowsLocale categoriesFor: #amDesignator!constants!public! !
-!WindowsLocale categoriesFor: #asParameter!converting!public! !
-!WindowsLocale categoriesFor: #buildDayNamesMap!helpers!private! !
-!WindowsLocale categoriesFor: #buildMonthNamesMap!helpers!private! !
-!WindowsLocale categoriesFor: #calendarId!constants!public! !
-!WindowsLocale categoriesFor: #code!constants!public! !
-!WindowsLocale categoriesFor: #currency!constants!public! !
-!WindowsLocale categoriesFor: #dayOfWeek:!mapping!public! !
-!WindowsLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!WindowsLocale categoriesFor: #dayOfWeekName:!constants!public! !
-!WindowsLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!WindowsLocale categoriesFor: #decimalPlaces!constants!public! !
-!WindowsLocale categoriesFor: #decimalSeparator!constants!public! !
-!WindowsLocale categoriesFor: #displayName!displaying!public! !
-!WindowsLocale categoriesFor: #displayOn:!displaying!public! !
-!WindowsLocale categoriesFor: #durationFormat!constants!public! !
-!WindowsLocale categoriesFor: #englishDisplayName!displaying!public! !
-!WindowsLocale categoriesFor: #englishLanguageName!constants!public! !
-!WindowsLocale categoriesFor: #firstDayOfWeek!constants!public! !
-!WindowsLocale categoriesFor: #getCalendarInfoInteger:!helpers!private! !
-!WindowsLocale categoriesFor: #getCalendarInfoString:!helpers!private! !
-!WindowsLocale categoriesFor: #getDateFormats:!helpers!private! !
-!WindowsLocale categoriesFor: #getIntegerInfo:!helpers!private! !
-!WindowsLocale categoriesFor: #getLocaleInfoInteger:!helpers!private! !
-!WindowsLocale categoriesFor: #getLocaleInfoString:!helpers!private! !
-!WindowsLocale categoriesFor: #getStringInfo:!helpers!private! !
-!WindowsLocale categoriesFor: #getTimeFormats!helpers!private! !
-!WindowsLocale categoriesFor: #hasLeadingZero!constants!public! !
-!WindowsLocale categoriesFor: #indexOfMonth:!enquiries!public! !
-!WindowsLocale categoriesFor: #infinity!constants!public! !
-!WindowsLocale categoriesFor: #isInstalled!public!testing! !
-!WindowsLocale categoriesFor: #iso639LanguageName!constants!public! !
-!WindowsLocale categoriesFor: #isValid!public!testing! !
-!WindowsLocale categoriesFor: #lastTwoDigitYear!constants!public! !
-!WindowsLocale categoriesFor: #lcid!accessing!public! !
-!WindowsLocale categoriesFor: #lcid:!initializing!private! !
-!WindowsLocale categoriesFor: #listSeparator!constants!public! !
-!WindowsLocale categoriesFor: #localizedDisplayName!constants!public! !
-!WindowsLocale categoriesFor: #longDateFormat!constants!public! !
-!WindowsLocale categoriesFor: #longDateFormats!constants!public! !
-!WindowsLocale categoriesFor: #longTimeFormat!constants!public! !
-!WindowsLocale categoriesFor: #monthAbbreviation:!constants!public! !
-!WindowsLocale categoriesFor: #monthName:!enquiries!public! !
-!WindowsLocale categoriesFor: #name!constants!public! !
-!WindowsLocale categoriesFor: #nameOfDay:!enquiries!public! !
-!WindowsLocale categoriesFor: #nan!constants!public! !
-!WindowsLocale categoriesFor: #nativeDigits!constants!public! !
-!WindowsLocale categoriesFor: #negativeInfinity!constants!public! !
-!WindowsLocale categoriesFor: #negativeNumberMode!constants!public! !
-!WindowsLocale categoriesFor: #negativeSign!constants!public! !
-!WindowsLocale categoriesFor: #nlsLib!constants!private! !
-!WindowsLocale categoriesFor: #numberGrouping!constants!public! !
-!WindowsLocale categoriesFor: #parentName!constants!public! !
-!WindowsLocale categoriesFor: #percentSymbol!constants!public! !
-!WindowsLocale categoriesFor: #pmDesignator!constants!public! !
-!WindowsLocale categoriesFor: #primary!printing!public! !
-!WindowsLocale categoriesFor: #printOn:!development!printing!public! !
-!WindowsLocale categoriesFor: #shortAmDesignator!constants!public! !
-!WindowsLocale categoriesFor: #shortDateFormat!constants!public! !
-!WindowsLocale categoriesFor: #shortDateFormats!constants!public! !
-!WindowsLocale categoriesFor: #shortPmDesignator!constants!public! !
-!WindowsLocale categoriesFor: #shortTimeFormat!constants!public! !
-!WindowsLocale categoriesFor: #tag!constants!public! !
-!WindowsLocale categoriesFor: #thousandSeparator!constants!public! !
-!WindowsLocale categoriesFor: #timeFormats!constants!public! !
-!WindowsLocale categoriesFor: #yearMonthFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #amDesignator!constants!public! !
+!OS.WindowsLocale categoriesFor: #asParameter!converting!public! !
+!OS.WindowsLocale categoriesFor: #buildDayNamesMap!helpers!private! !
+!OS.WindowsLocale categoriesFor: #buildMonthNamesMap!helpers!private! !
+!OS.WindowsLocale categoriesFor: #calendarId!constants!public! !
+!OS.WindowsLocale categoriesFor: #code!constants!public! !
+!OS.WindowsLocale categoriesFor: #currency!constants!public! !
+!OS.WindowsLocale categoriesFor: #dayOfWeek:!mapping!public! !
+!OS.WindowsLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
+!OS.WindowsLocale categoriesFor: #dayOfWeekName:!constants!public! !
+!OS.WindowsLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
+!OS.WindowsLocale categoriesFor: #decimalPlaces!constants!public! !
+!OS.WindowsLocale categoriesFor: #decimalSeparator!constants!public! !
+!OS.WindowsLocale categoriesFor: #displayName!displaying!public! !
+!OS.WindowsLocale categoriesFor: #displayOn:!displaying!public! !
+!OS.WindowsLocale categoriesFor: #durationFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #englishDisplayName!displaying!public! !
+!OS.WindowsLocale categoriesFor: #englishLanguageName!constants!public! !
+!OS.WindowsLocale categoriesFor: #firstDayOfWeek!constants!public! !
+!OS.WindowsLocale categoriesFor: #getCalendarInfoInteger:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getCalendarInfoString:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getDateFormats:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getIntegerInfo:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getLocaleInfoInteger:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getLocaleInfoString:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getStringInfo:!helpers!private! !
+!OS.WindowsLocale categoriesFor: #getTimeFormats!helpers!private! !
+!OS.WindowsLocale categoriesFor: #hasLeadingZero!constants!public! !
+!OS.WindowsLocale categoriesFor: #indexOfMonth:!enquiries!public! !
+!OS.WindowsLocale categoriesFor: #infinity!constants!public! !
+!OS.WindowsLocale categoriesFor: #isInstalled!public!testing! !
+!OS.WindowsLocale categoriesFor: #iso639LanguageName!constants!public! !
+!OS.WindowsLocale categoriesFor: #isValid!public!testing! !
+!OS.WindowsLocale categoriesFor: #lastTwoDigitYear!constants!public! !
+!OS.WindowsLocale categoriesFor: #lcid!accessing!public! !
+!OS.WindowsLocale categoriesFor: #lcid:!initializing!private! !
+!OS.WindowsLocale categoriesFor: #listSeparator!constants!public! !
+!OS.WindowsLocale categoriesFor: #localizedDisplayName!constants!public! !
+!OS.WindowsLocale categoriesFor: #longDateFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #longDateFormats!constants!public! !
+!OS.WindowsLocale categoriesFor: #longTimeFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #monthAbbreviation:!constants!public! !
+!OS.WindowsLocale categoriesFor: #monthName:!enquiries!public! !
+!OS.WindowsLocale categoriesFor: #name!constants!public! !
+!OS.WindowsLocale categoriesFor: #nameOfDay:!enquiries!public! !
+!OS.WindowsLocale categoriesFor: #nan!constants!public! !
+!OS.WindowsLocale categoriesFor: #nativeDigits!constants!public! !
+!OS.WindowsLocale categoriesFor: #negativeInfinity!constants!public! !
+!OS.WindowsLocale categoriesFor: #negativeNumberMode!constants!public! !
+!OS.WindowsLocale categoriesFor: #negativeSign!constants!public! !
+!OS.WindowsLocale categoriesFor: #nlsLib!constants!private! !
+!OS.WindowsLocale categoriesFor: #numberGrouping!constants!public! !
+!OS.WindowsLocale categoriesFor: #parentName!constants!public! !
+!OS.WindowsLocale categoriesFor: #percentSymbol!constants!public! !
+!OS.WindowsLocale categoriesFor: #pmDesignator!constants!public! !
+!OS.WindowsLocale categoriesFor: #primary!printing!public! !
+!OS.WindowsLocale categoriesFor: #printOn:!development!printing!public! !
+!OS.WindowsLocale categoriesFor: #shortAmDesignator!constants!public! !
+!OS.WindowsLocale categoriesFor: #shortDateFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #shortDateFormats!constants!public! !
+!OS.WindowsLocale categoriesFor: #shortPmDesignator!constants!public! !
+!OS.WindowsLocale categoriesFor: #shortTimeFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #tag!constants!public! !
+!OS.WindowsLocale categoriesFor: #thousandSeparator!constants!public! !
+!OS.WindowsLocale categoriesFor: #timeFormats!constants!public! !
+!OS.WindowsLocale categoriesFor: #yearMonthFormat!constants!public! !
 
-!WindowsLocale class methodsFor!
+!OS.WindowsLocale class methodsFor!
 
 installedUILanguages: anInteger
 	"Private - Answer a collection of UI languages installed on the system.
@@ -553,11 +562,11 @@ installedUILanguages: anInteger
 
 	| enum languages |
 	languages := Array writeStream.
-	enum := ExternalCallback block: 
+	enum := Callback block: 
 					[:language :lParam |
 					languages nextPut: language.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
+				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
 	KernelLibrary default
 		enumUILanguages: enum asParameter
 		dwFlags: (MUI_LANGUAGE_NAME bitOr: anInteger)
@@ -575,24 +584,23 @@ named: aString
 	^self lcid: lcid!
 
 reset
-	SystemDefault := nil.
-	self userDefault: nil!
+	UserDefault := SystemDefault := nil!
 
 systemLocales: anInteger 
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."
 
 	| enum locales |
 	locales := OrderedCollection new: 30.
-	enum := ExternalCallback block: 
-					[:locale | 
+	enum := Callback block: 
+					[:locale |
 					locales addLast: locale.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
+				descriptor: (Descriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
-!WindowsLocale class categoriesFor: #installedUILanguages:!enquiries!private! !
-!WindowsLocale class categoriesFor: #named:!instance creation!public! !
-!WindowsLocale class categoriesFor: #reset!initializing!private! !
-!WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
+!OS.WindowsLocale class categoriesFor: #installedUILanguages:!enquiries!private! !
+!OS.WindowsLocale class categoriesFor: #named:!instance creation!public! !
+!OS.WindowsLocale class categoriesFor: #reset!initializing!private! !
+!OS.WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
 

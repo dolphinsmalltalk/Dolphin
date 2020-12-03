@@ -1,14 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PoolDictionary variableSubclass: #PoolConstantsDictionary
+Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PoolConstantsDictionary guid: (GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
-PoolConstantsDictionary comment: ''!
-!PoolConstantsDictionary categoriesForClass!Collections-Unordered!System-Support! !
+PoolConstantsDictionary guid: (Core.GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
+PoolConstantsDictionary comment: 'Prior to Dolphin 7.2, `PoolConstantDictionary` instances were used as shared constants pools, the canonical example being `Win32Constants`.  From Dolphin 7.2 constants pools are namespaces specialised to hold immutable bindings, and are created as subclasses of `SharedPool`. 
+
+`PoolConstantDictionary` definitions stored in older packages will be automatically converted to `SharedPool` subclasses at package load time, so this class is only required for loading such packages. It should have no instances at other times.'!
+!PoolConstantsDictionary categoriesForClass!Deprecated! !
 !PoolConstantsDictionary methodsFor!
 
 add: anAssociation
@@ -17,16 +19,6 @@ add: anAssociation
 
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation!
-
-at: key ifAbsentPut: operation 
-	"Answer the value of the receiver keyed by the <Object> argument, key.
-	If key is not one of the receiver's keys, then add the result of evaluating 
-	the <niladicValuable>, operation, at key, and answer that result."
-
-	^super at: key asString
-		ifAbsentPut: 
-			[self isChanged: true.
-			operation value]!
 
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
@@ -47,7 +39,7 @@ keyString: anObject
 name
 	"Answer the receiver's name."
 
-	^name ifNil: [super name]!
+	^name ifNil: [self environment keyAtValue: self ifAbsent: [self anonymousName]]!
 
 name: aSymbol 
 	name := aSymbol asSymbol!
@@ -62,29 +54,8 @@ preResize: newMe
 	receiver's elements are added to newMe. We must assign across the
 	search policy."
 
-	name isNil ifFalse: [newMe name: name]!
-
-recompileReferencesToVarNamed: keyString
-	"Private - Recompile any methods which references the named key, assumed to
-	be a variable name from the receiver."
-
-	| var |
-	Notification
-		signal: ('Recompiling references to <1p> in <2s>' expandMacrosWith: keyString with: self name).
-	var := self associationAt: keyString.
-	self classesReferencing do: 
-			[:c |
-			c recompileReferencesToLiteral: var.
-			c class recompileReferencesToLiteral: var]!
-
-removeIndex: anInteger
-	"Private - Remove the element at index, anInteger, in the receiver. Does not
-	check that the element is empty."
-
-	super removeIndex: anInteger.
-	self isChanged: true! !
+	name isNil ifFalse: [newMe name: name]! !
 !PoolConstantsDictionary categoriesFor: #add:!adding!public! !
-!PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
 !PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !
@@ -92,8 +63,6 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #name:!accessing!private! !
 !PoolConstantsDictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
-!PoolConstantsDictionary categoriesFor: #recompileReferencesToVarNamed:!development!private! !
-!PoolConstantsDictionary categoriesFor: #removeIndex:!development!private!removing! !
 
 !PoolConstantsDictionary class methodsFor!
 

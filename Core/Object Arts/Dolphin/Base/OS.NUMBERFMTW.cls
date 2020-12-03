@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #NUMBERFMTW
+OS.Win32Structure subclass: #'OS.NUMBERFMTW'
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Grouping' -> 16r8.
@@ -13,8 +13,8 @@ Win32Structure subclass: #NUMBERFMTW
 		'_OffsetOf_NegativeOrder' -> 16r14.
 		'_OffsetOf_NumDigits' -> 16r0
 	}!
-NUMBERFMTW guid: (GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
-NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
+OS.NUMBERFMTW guid: (Core.GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
+OS.NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
 
 NUMBERFMTW is used in conjunction with the GetNumberFormat API to produce localised representations of printed decimal numbers.
 
@@ -30,8 +30,8 @@ struct tagNUMBERFMTW {
 	[helpstring("negative number ordering")] unsigned int NegativeOrder;
 } NUMBERFMTW;
 ```'!
-!NUMBERFMTW categoriesForClass!Win32-Structs! !
-!NUMBERFMTW methodsFor!
+!OS.NUMBERFMTW categoriesForClass!Win32-Structs! !
+!OS.NUMBERFMTW methodsFor!
 
 decimalPlaces
 	^self NumDigits!
@@ -172,36 +172,36 @@ thousandSeparator
 
 thousandSeparator: aString
 	self groupSeparator: aString! !
-!NUMBERFMTW categoriesFor: #decimalPlaces!accessing!public! !
-!NUMBERFMTW categoriesFor: #decimalPlaces:!accessing!public! !
-!NUMBERFMTW categoriesFor: #decimalSeparator!accessing!public! !
-!NUMBERFMTW categoriesFor: #decimalSeparator:!accessing!public! !
-!NUMBERFMTW categoriesFor: #grouping!accessing!public! !
-!NUMBERFMTW categoriesFor: #Grouping!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #grouping:!accessing!public! !
-!NUMBERFMTW categoriesFor: #Grouping:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #groupSeparator!accessing!public! !
-!NUMBERFMTW categoriesFor: #groupSeparator:!accessing!public! !
-!NUMBERFMTW categoriesFor: #hasLeadingZero!accessing!public! !
-!NUMBERFMTW categoriesFor: #hasLeadingZero:!accessing!public! !
-!NUMBERFMTW categoriesFor: #LeadingZero!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #LeadingZero:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #lpDecimalSep!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #lpDecimalSep:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #lpThousandSep!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #lpThousandSep:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #negativeNumberMode!accessing!public! !
-!NUMBERFMTW categoriesFor: #negativeNumberMode:!accessing!public! !
-!NUMBERFMTW categoriesFor: #NegativeOrder!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #NegativeOrder:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #numberGrouping!accessing!public! !
-!NUMBERFMTW categoriesFor: #numberGrouping:!accessing!public! !
-!NUMBERFMTW categoriesFor: #NumDigits!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #NumDigits:!**compiled accessors**!private! !
-!NUMBERFMTW categoriesFor: #thousandSeparator!accessing!public! !
-!NUMBERFMTW categoriesFor: #thousandSeparator:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #decimalPlaces!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #decimalPlaces:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #decimalSeparator!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #decimalSeparator:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #grouping!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #Grouping!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #grouping:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #Grouping:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #groupSeparator!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #groupSeparator:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #hasLeadingZero!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #hasLeadingZero:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #LeadingZero!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #LeadingZero:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #lpDecimalSep!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #lpDecimalSep:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #lpThousandSep!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #lpThousandSep:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #negativeNumberMode!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #negativeNumberMode:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #NegativeOrder!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #NegativeOrder:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #numberGrouping!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #numberGrouping:!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #NumDigits!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #NumDigits:!**compiled accessors**!private! !
+!OS.NUMBERFMTW categoriesFor: #thousandSeparator!accessing!public! !
+!OS.NUMBERFMTW categoriesFor: #thousandSeparator:!accessing!public! !
 
-!NUMBERFMTW class methodsFor!
+!OS.NUMBERFMTW class methodsFor!
 
 defineFields
 	"Define the fields of the NUMBERFMTW structure.
@@ -230,6 +230,6 @@ defineFields
 
 getFieldNames
 	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
-!NUMBERFMTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!NUMBERFMTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NUMBERFMTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.NUMBERFMTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

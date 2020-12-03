@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #CannotReturnError
+Core.Error subclass: #'Kernel.CannotReturnError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CannotReturnError guid: (GUID fromString: '{3986fbda-d1ac-42bd-81d9-060d7515a133}')!
-CannotReturnError comment: ''!
-!CannotReturnError categoriesForClass!Kernel-Exception Handling! !
-!CannotReturnError methodsFor!
+Kernel.CannotReturnError guid: (Core.GUID fromString: '{3986fbda-d1ac-42bd-81d9-060d7515a133}')!
+Kernel.CannotReturnError comment: ''!
+!Kernel.CannotReturnError categoriesForClass!Kernel-Exception Handling! !
+!Kernel.CannotReturnError methodsFor!
 
 description
 	^'Cannot return ' , self tag basicPrintString , ' to expired context or across Processes'! !
-!CannotReturnError categoriesFor: #description!displaying!public! !
+!Kernel.CannotReturnError categoriesFor: #description!displaying!public! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ObjectRegistry
+Core.Object subclass: #'Kernel.ObjectRegistry'
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ObjectRegistry guid: (GUID fromString: '{87b4c4a5-026e-11d3-9fd7-00a0cc3e4a32}')!
-ObjectRegistry isAbstract: true!
-ObjectRegistry comment: 'ObjectRegistry is part of Dolphin''s external interfacing support, its purpose being to provide a unique <integer> identifier for a specific object, and, depending on the subclass, to maintain a reference to that object to prevent it from being garbage collected. This can be useful, for example, where one needs some unique identifier for an object to be passed to some external entity. 
+Kernel.ObjectRegistry guid: (Core.GUID fromString: '{87b4c4a5-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ObjectRegistry isNonInstantiable: true!
+Kernel.ObjectRegistry comment: 'ObjectRegistry is part of Dolphin''s external interfacing support, its purpose being to provide a unique <integer> identifier for a specific object, and, depending on the subclass, to maintain a reference to that object to prevent it from being garbage collected. This can be useful, for example, where one needs some unique identifier for an object to be passed to some external entity. 
 
 Note: The Oop (address) of an object is not a suitable candidate for uniquely identifying an object, because it may change over time as the garbage collector moves objects in memory. The identity hash of an object, although time invariant, is not suitable either because it is of limited range (16-bits), and therefore not guaranteed to be unique.
 
@@ -16,8 +16,8 @@ ObjectRegistry itself is abstract: Subclasses implement both permanent registrie
 
 Instance Variables:
 	registry		<sequencedCollection>. The collection of registered objects.'!
-!ObjectRegistry categoriesForClass!System-Support! !
-!ObjectRegistry methodsFor!
+!Kernel.ObjectRegistry categoriesForClass!System-Support! !
+!Kernel.ObjectRegistry methodsFor!
 
 addAnsweringIndex: anObject
 	"Register the argument, anObject, answering a unique SmallInteger id which can be used
@@ -69,16 +69,16 @@ removeAtIndex: anInteger
 	Raise an error if there is no element indexed by anInteger."
 
 	^self subclassResponsibility! !
-!ObjectRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!ObjectRegistry categoriesFor: #at:!accessing!debugger-step through!public! !
-!ObjectRegistry categoriesFor: #at:ifAbsent:!accessing!public! !
-!ObjectRegistry categoriesFor: #indexOf:ifAbsent:!accessing!public! !
-!ObjectRegistry categoriesFor: #initialize:!initializing!private! !
-!ObjectRegistry categoriesFor: #lookup:!public! !
-!ObjectRegistry categoriesFor: #remove:ifAbsent:!public!removing! !
-!ObjectRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!Kernel.ObjectRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
+!Kernel.ObjectRegistry categoriesFor: #at:!accessing!debugger-step through!public! !
+!Kernel.ObjectRegistry categoriesFor: #at:ifAbsent:!accessing!public! !
+!Kernel.ObjectRegistry categoriesFor: #indexOf:ifAbsent:!accessing!public! !
+!Kernel.ObjectRegistry categoriesFor: #initialize:!initializing!private! !
+!Kernel.ObjectRegistry categoriesFor: #lookup:!public! !
+!Kernel.ObjectRegistry categoriesFor: #remove:ifAbsent:!public!removing! !
+!Kernel.ObjectRegistry categoriesFor: #removeAtIndex:!public!removing! !
 
-!ObjectRegistry class methodsFor!
+!Kernel.ObjectRegistry class methodsFor!
 
 defaultCapacity
 	"Private - Answer the default capacity for an instance of the receiver."
@@ -95,7 +95,7 @@ new: anInteger
 	for anInteger elements."
 
 	^self basicNew initialize: anInteger! !
-!ObjectRegistry class categoriesFor: #defaultCapacity!constants!private! !
-!ObjectRegistry class categoriesFor: #new!instance creation!public! !
-!ObjectRegistry class categoriesFor: #new:!instance creation!public! !
+!Kernel.ObjectRegistry class categoriesFor: #defaultCapacity!constants!private! !
+!Kernel.ObjectRegistry class categoriesFor: #new!instance creation!public! !
+!Kernel.ObjectRegistry class categoriesFor: #new:!instance creation!public! !
 

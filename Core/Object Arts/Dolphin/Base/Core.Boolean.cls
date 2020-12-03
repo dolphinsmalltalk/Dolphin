@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Boolean
+Core.Object subclass: #'Core.Boolean'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Boolean guid: (GUID fromString: '{87b4c45c-026e-11d3-9fd7-00a0cc3e4a32}')!
-Boolean isAbstract: true!
-Boolean comment: 'Boolean is the class which provides the protocol for logical values. The actual logical values, true and false, are represented by Boolean''s subclasses True and False. Boolean itself is abstract.
+Core.Boolean guid: (Core.GUID fromString: '{87b4c45c-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Boolean isNonInstantiable: true!
+Core.Boolean comment: 'Boolean is the class which provides the protocol for logical values. The actual logical values, true and false, are represented by Boolean''s subclasses True and False. Boolean itself is abstract.
 
 In Smalltalk many control structures, such as conditional evaluations, are implemented by sending messages to Booleans, rather than by incorporating control flow mechanisms into the syntax of the language. The compiler does, however, inline certain commonly used messages such as #ifTrue:ifFalse: for reasons of performance. For this reason some methods of Boolean are not normally executed unless #perform:''d.
 
 Booleans implement the ANSI protocols <Object> (by inheritance) and <boolean>.'!
-!Boolean categoriesForClass!Kernel-Objects! !
-!Boolean methodsFor!
+!Core.Boolean categoriesForClass!Kernel-Objects! !
+!Core.Boolean methodsFor!
 
 & operand
 	"Answer whether the receiver and the <boolean> argument, operand,
@@ -173,34 +173,34 @@ xor: operand
 	This method was incorrectly defined in Dolphin versions pre-dating beta 2f."
 
 	^self ~~ operand! !
-!Boolean categoriesFor: #&!logical operations!public! !
-!Boolean categoriesFor: #|!logical operations!public! !
-!Boolean categoriesFor: #and:!control flow!public! !
-!Boolean categoriesFor: #asBoolean!converting!public! !
-!Boolean categoriesFor: #asDword!converting!public! !
-!Boolean categoriesFor: #asParameter!converting!public! !
-!Boolean categoriesFor: #asUIntPtr!converting!public! !
-!Boolean categoriesFor: #deepCopy!copying!public! !
-!Boolean categoriesFor: #eqv:!logical operations!public! !
-!Boolean categoriesFor: #ifFalse:!control flow!public! !
-!Boolean categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!Boolean categoriesFor: #ifTrue:!control flow!public! !
-!Boolean categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!Boolean categoriesFor: #isAtomic!public!testing! !
-!Boolean categoriesFor: #isLiteral!public!testing! !
-!Boolean categoriesFor: #not!logical operations!public! !
-!Boolean categoriesFor: #or:!control flow!public! !
-!Boolean categoriesFor: #shallowCopy!copying!public! !
-!Boolean categoriesFor: #xor:!logical operations!public! !
+!Core.Boolean categoriesFor: #&!logical operations!public! !
+!Core.Boolean categoriesFor: #|!logical operations!public! !
+!Core.Boolean categoriesFor: #and:!control flow!public! !
+!Core.Boolean categoriesFor: #asBoolean!converting!public! !
+!Core.Boolean categoriesFor: #asDword!converting!public! !
+!Core.Boolean categoriesFor: #asParameter!converting!public! !
+!Core.Boolean categoriesFor: #asUIntPtr!converting!public! !
+!Core.Boolean categoriesFor: #deepCopy!copying!public! !
+!Core.Boolean categoriesFor: #eqv:!logical operations!public! !
+!Core.Boolean categoriesFor: #ifFalse:!control flow!public! !
+!Core.Boolean categoriesFor: #ifFalse:ifTrue:!control flow!public! !
+!Core.Boolean categoriesFor: #ifTrue:!control flow!public! !
+!Core.Boolean categoriesFor: #ifTrue:ifFalse:!control flow!public! !
+!Core.Boolean categoriesFor: #isAtomic!public!testing! !
+!Core.Boolean categoriesFor: #isLiteral!public!testing! !
+!Core.Boolean categoriesFor: #not!logical operations!public! !
+!Core.Boolean categoriesFor: #or:!control flow!public! !
+!Core.Boolean categoriesFor: #shallowCopy!copying!public! !
+!Core.Boolean categoriesFor: #xor:!logical operations!public! !
 
-Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& #| #and: #eqv: #ifFalse: #ifFalse:ifTrue: #ifTrue: #ifTrue:ifFalse: #not #or: #xor:)!
+Core.Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& #| #and: #eqv: #ifFalse: #ifFalse:ifTrue: #ifTrue: #ifTrue:ifFalse: #not #or: #xor:)!
 
-!Boolean class methodsFor!
+!Core.Boolean class methodsFor!
 
 new
 	"It is not necessary to instantiate Booleans - use the literals 'true' 
 	and 'false'."
 
 	^self shouldNotImplement! !
-!Boolean class categoriesFor: #new!instance creation!public! !
+!Core.Boolean class categoriesFor: #new!instance creation!public! !
 

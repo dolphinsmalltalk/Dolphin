@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Signal
+Core.Object subclass: #'Core.Signal'
 	instanceVariableNames: 'description resumable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Signal guid: (GUID fromString: '{87b4c4b9-026e-11d3-9fd7-00a0cc3e4a32}')!
-Signal comment: ''!
-!Signal categoriesForClass!Kernel-Exception Handling! !
-!Signal methodsFor!
+Core.Signal guid: (Core.GUID fromString: '{87b4c4b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Signal comment: ''!
+!Core.Signal categoriesForClass!Kernel-Exception Handling! !
+!Core.Signal methodsFor!
 
 , arg
 	"Answer a new <ExceptionSet> containing the receiver and the argument."
@@ -22,6 +22,7 @@ defaultAction: exception
 	Implementation Note: forward to the SessionManager for application specific handling."
 
 	"Will not return unless execution is to be resumed"
+
 	^SessionManager current onUnhandledError: exception!
 
 defaultResumption
@@ -131,29 +132,29 @@ signalWith: signalerTag
 	This method will not normally return to its sender."
 	
 	^self newException signalWith: signalerTag! !
-!Signal categoriesFor: #,!filtering!public! !
-!Signal categoriesFor: #defaultAction:!handling!private! !
-!Signal categoriesFor: #defaultResumption!constants!private! !
-!Signal categoriesFor: #description!accessing!private! !
-!Signal categoriesFor: #description:!accessing!public! !
-!Signal categoriesFor: #exceptionClass!constants!private! !
-!Signal categoriesFor: #handles:!filtering!public! !
-!Signal categoriesFor: #initialize!initializing!private! !
-!Signal categoriesFor: #isResumable!public!testing! !
-!Signal categoriesFor: #makeNonResumable!accessing!public! !
-!Signal categoriesFor: #makeResumable!accessing!public! !
-!Signal categoriesFor: #newException!public!raising! !
-!Signal categoriesFor: #printOn:!printing!public! !
-!Signal categoriesFor: #resumable:!accessing!public! !
-!Signal categoriesFor: #signal!public!raising! !
-!Signal categoriesFor: #signal:!public!raising! !
-!Signal categoriesFor: #signal:with:!public!raising! !
-!Signal categoriesFor: #signalWith:!public!raising! !
+!Core.Signal categoriesFor: #,!filtering!public! !
+!Core.Signal categoriesFor: #defaultAction:!handling!private! !
+!Core.Signal categoriesFor: #defaultResumption!constants!private! !
+!Core.Signal categoriesFor: #description!accessing!private! !
+!Core.Signal categoriesFor: #description:!accessing!public! !
+!Core.Signal categoriesFor: #exceptionClass!constants!private! !
+!Core.Signal categoriesFor: #handles:!filtering!public! !
+!Core.Signal categoriesFor: #initialize!initializing!private! !
+!Core.Signal categoriesFor: #isResumable!public!testing! !
+!Core.Signal categoriesFor: #makeNonResumable!accessing!public! !
+!Core.Signal categoriesFor: #makeResumable!accessing!public! !
+!Core.Signal categoriesFor: #newException!public!raising! !
+!Core.Signal categoriesFor: #printOn:!printing!public! !
+!Core.Signal categoriesFor: #resumable:!accessing!public! !
+!Core.Signal categoriesFor: #signal!public!raising! !
+!Core.Signal categoriesFor: #signal:!public!raising! !
+!Core.Signal categoriesFor: #signal:with:!public!raising! !
+!Core.Signal categoriesFor: #signalWith:!public!raising! !
 
-Signal methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
-Signal methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
+Core.Signal methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
+Core.Signal methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
 
-!Signal class methodsFor!
+!Core.Signal class methodsFor!
 
 description: anObject
 	"Answer a new, non-resumable, instance of the receiver with the specified description"
@@ -171,7 +172,7 @@ resumableDescription: anObject
 	^self new 
 		description: anObject;
 		makeResumable! !
-!Signal class categoriesFor: #description:!instance creation!public! !
-!Signal class categoriesFor: #new!instance creation!public! !
-!Signal class categoriesFor: #resumableDescription:!instance creation!public! !
+!Core.Signal class categoriesFor: #description:!instance creation!public! !
+!Core.Signal class categoriesFor: #new!instance creation!public! !
+!Core.Signal class categoriesFor: #resumableDescription:!instance creation!public! !
 

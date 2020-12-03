@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalScalar subclass: #DOUBLE
+External.SCALAR subclass: #'External.DOUBLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOUBLE guid: (GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
-DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
-!DOUBLE categoriesForClass!External-Data-Structured! !
-!DOUBLE methodsFor!
+External.DOUBLE guid: (Core.GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
+!External.DOUBLE categoriesForClass!External-Data-Structured! !
+!External.DOUBLE methodsFor!
 
 asFloat
 	"Answer a <Float> of the same value as the receiver's contents."
@@ -25,11 +25,11 @@ value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
 	bytes doubleAtOffset: _OffsetOf_value put: aFloat! !
-!DOUBLE categoriesFor: #asFloat!converting!public! !
-!DOUBLE categoriesFor: #value!**compiled accessors**!public! !
-!DOUBLE categoriesFor: #value:!**compiled accessors**!public! !
+!External.DOUBLE categoriesFor: #asFloat!converting!public! !
+!External.DOUBLE categoriesFor: #value!**compiled accessors**!public! !
+!External.DOUBLE categoriesFor: #value:!**compiled accessors**!public! !
 
-!DOUBLE class methodsFor!
+!External.DOUBLE class methodsFor!
 
 defineFields
 	"Define the fields of the DOUBLE 'structure'.
@@ -50,7 +50,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DOUBLE class categoriesFor: #defineFields!public!template definition! !
-!DOUBLE class categoriesFor: #initialize!development!initializing!private! !
-!DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.DOUBLE class categoriesFor: #defineFields!public!template definition! !
+!External.DOUBLE class categoriesFor: #initialize!development!initializing!private! !
+!External.DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

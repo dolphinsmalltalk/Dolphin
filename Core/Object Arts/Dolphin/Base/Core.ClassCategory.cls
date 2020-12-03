@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Category subclass: #ClassCategory
+Core.Category subclass: #'Core.ClassCategory'
 	instanceVariableNames: ''
 	classVariableNames: 'Table Unclassified'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassCategory guid: (GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassCategory comment: ''!
-!ClassCategory categoriesForClass!System-Support! !
-!ClassCategory methodsFor!
+Core.ClassCategory guid: (Core.GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ClassCategory comment: ''!
+!Core.ClassCategory categoriesForClass!System-Support! !
+!Core.ClassCategory methodsFor!
 
 addClass: class
 	"Add the <Class>, class, to the collection of classes associated with the receiver."
@@ -43,14 +43,14 @@ removeClass: aClass
 
 	aClass removeFromCategory: self.
 	^aClass! !
-!ClassCategory categoriesFor: #addClass:!adding!public! !
-!ClassCategory categoriesFor: #classes!public! !
-!ClassCategory categoriesFor: #contents!enumerating!public! !
-!ClassCategory categoriesFor: #includesClass:!public!testing! !
-!ClassCategory categoriesFor: #isEmpty!public!testing! !
-!ClassCategory categoriesFor: #removeClass:!public!removing! !
+!Core.ClassCategory categoriesFor: #addClass:!adding!public! !
+!Core.ClassCategory categoriesFor: #classes!public! !
+!Core.ClassCategory categoriesFor: #contents!enumerating!public! !
+!Core.ClassCategory categoriesFor: #includesClass:!public!testing! !
+!Core.ClassCategory categoriesFor: #isEmpty!public!testing! !
+!Core.ClassCategory categoriesFor: #removeClass:!public!removing! !
 
-!ClassCategory class methodsFor!
+!Core.ClassCategory class methodsFor!
 
 allClassCategories
 	"Answer the set of all <classCategory>s current registered in the system."
@@ -112,11 +112,11 @@ uninitialize
 
 	Table := nil.
 	Unclassified := nil! !
-!ClassCategory class categoriesFor: #allClassCategories!accessing!public! !
-!ClassCategory class categoriesFor: #initialize!initializing!private! !
-!ClassCategory class categoriesFor: #name:!instance creation!public! !
-!ClassCategory class categoriesFor: #table!accessing!private! !
-!ClassCategory class categoriesFor: #unclassified!instance creation!public! !
-!ClassCategory class categoriesFor: #unclassifiedName!constants!private! !
-!ClassCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.ClassCategory class categoriesFor: #allClassCategories!accessing!public! !
+!Core.ClassCategory class categoriesFor: #initialize!initializing!private! !
+!Core.ClassCategory class categoriesFor: #name:!instance creation!public! !
+!Core.ClassCategory class categoriesFor: #table!accessing!private! !
+!Core.ClassCategory class categoriesFor: #unclassified!instance creation!public! !
+!Core.ClassCategory class categoriesFor: #unclassifiedName!constants!private! !
+!Core.ClassCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

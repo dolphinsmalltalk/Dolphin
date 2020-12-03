@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PermanentLibrary subclass: #CRTLibrary
+External.PermanentLibrary subclass: #'OS.CRTLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CRTLibrary guid: (GUID fromString: '{87b4c58b-026e-11d3-9fd7-00a0cc3e4a32}')!
-CRTLibrary comment: 'CRTLibrary is the <ExternalLibrary> class to represent the MS C run-time library, MSVCRT.DLL.
+OS.CRTLibrary guid: (Core.GUID fromString: '{87b4c58b-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.CRTLibrary comment: 'CRTLibrary is the <ExternalLibrary> class to represent the MS C run-time library, MSVCRT.DLL.
 
 The C runtime library is linked with the VM and is therefore permanently available. It provides many useful services (some of which are not wrapped at present) and is used quite extensively by the base image to avoid re-inventing the wheel and to keep the image size down.
 
 If there is a function of the C runtime library which you wish to make use of then you should add it using the existing methods as a guide. It is possible to call vararg functions, but you may need to add a number of methods with increasing numbers of arguments. Note that all the functions use the cdecl calling convention.'!
-!CRTLibrary categoriesForClass!External-Libraries! !
-!CRTLibrary methodsFor!
+!OS.CRTLibrary categoriesForClass!External-Libraries! !
+!OS.CRTLibrary methodsFor!
 
 __iscsym: aCharacter
 	"Answer whether the argument is a letter, underscore, or digit.
@@ -413,82 +413,82 @@ wcsncmp: string1 string2: string2 count: count
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
 	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
-!CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
-!CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_control87:mask:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_filelengthi64:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_statusfp!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
-!CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #fclose:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #feof:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fflush:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fputs:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fputwc:stream:!public! !
-!CRTLibrary categoriesFor: #fputws:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #free:!CRT functions-memory allocation!public! !
-!CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #initialize!initializing!private! !
-!CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #memcpy_s:destSize:src:count:!public! !
-!CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
-!CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strlen:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
-!CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #ungetwc:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
+!OS.CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
+!OS.CRTLibrary categoriesFor: #_control87:mask:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
+!OS.CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
+!OS.CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #_filelengthi64:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
+!OS.CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_statusfp!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
+!OS.CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
+!OS.CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!OS.CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #fclose:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #feof:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fflush:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fputs:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fputwc:stream:!public! !
+!OS.CRTLibrary categoriesFor: #fputws:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #free:!CRT functions-memory allocation!public! !
+!OS.CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #initialize!initializing!private! !
+!OS.CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
+!OS.CRTLibrary categoriesFor: #memcpy_s:destSize:src:count:!public! !
+!OS.CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
+!OS.CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
+!OS.CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strlen:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
+!OS.CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #ungetwc:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 
-!CRTLibrary class methodsFor!
+!OS.CRTLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the external library the 
 	receiver represents."
 
-	^File splitStemFrom: (self default fileName)!
+	^File splitStemFrom: self default fileName!
 
 nonblocking
 	"Answer the instance of the receiver to use for overlapped invocations of CRT library functions."
@@ -499,7 +499,7 @@ open
 	"Answer a new instance of the receiver to represent the CRT DLL."
 
 	^(self fromHandle: VMLibrary default crtHandle) initialize! !
-!CRTLibrary class categoriesFor: #fileName!constants!public! !
-!CRTLibrary class categoriesFor: #nonblocking!accessing!public! !
-!CRTLibrary class categoriesFor: #open!instance creation!public! !
+!OS.CRTLibrary class categoriesFor: #fileName!constants!public! !
+!OS.CRTLibrary class categoriesFor: #nonblocking!accessing!public! !
+!OS.CRTLibrary class categoriesFor: #open!instance creation!public! !
 

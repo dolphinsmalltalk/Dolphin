@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #VS_FIXEDFILEINFO
+OS.Win32Structure subclass: #'OS.VS_FIXEDFILEINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFileDateLS' -> 16r30.
@@ -20,14 +20,14 @@ Win32Structure subclass: #VS_FIXEDFILEINFO
 		'_OffsetOf_dwSignature' -> 16r0.
 		'_OffsetOf_dwStrucVersion' -> 16r4
 	}!
-VS_FIXEDFILEINFO guid: (GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
-VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
+OS.VS_FIXEDFILEINFO guid: (Core.GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the Windows version information library (Version.DLL) to access standard version information such as the product major and minor version numbers from the resources of exes and dlls.
 
 See also the VersionInfo and VersionLibrary classes.'!
-!VS_FIXEDFILEINFO categoriesForClass!External-Data-Structured-Win32! !
-!VS_FIXEDFILEINFO methodsFor!
+!OS.VS_FIXEDFILEINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.VS_FIXEDFILEINFO methodsFor!
 
 dwFileVersionLS
 	"Answer the <Integer> value of the receiver's 'dwFileVersionLS' field."
@@ -94,19 +94,19 @@ versionAtOffset: anInteger put: anArray
 			(self bytes)
 				wordAtOffset: offset put: (anArray at: i + 1);
 				wordAtOffset: offset + 2 put: (anArray at: i)]! !
-!VS_FIXEDFILEINFO categoriesFor: #dwFileVersionLS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwFileVersionMS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwProductVersionLS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwProductVersionMS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersion!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersionString!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #formatFileVersionString:!operations!public! !
-!VS_FIXEDFILEINFO categoriesFor: #formatProductVersionString:!operations!public! !
-!VS_FIXEDFILEINFO categoriesFor: #productVersionString!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #versionAtOffset:put:!accessing!private! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #dwFileVersionLS!**compiled accessors**!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #dwFileVersionMS!**compiled accessors**!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #dwProductVersionLS!**compiled accessors**!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #dwProductVersionMS!**compiled accessors**!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #fileVersion!accessing!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!accessing!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #fileVersionString!accessing!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #formatFileVersionString:!operations!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #formatProductVersionString:!operations!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #productVersionString!accessing!public! !
+!OS.VS_FIXEDFILEINFO categoriesFor: #versionAtOffset:put:!accessing!private! !
 
-!VS_FIXEDFILEINFO class methodsFor!
+!OS.VS_FIXEDFILEINFO class methodsFor!
 
 defineFields
 	"Private - Define the layout of the Win32 VS_FIXEDFILEINFO structure.
@@ -143,11 +143,10 @@ defineFields
 		defineField: #dwFileType type: DWORDField readOnly;
 		defineField: #dwFileSubtype type: DWORDField readOnly;
 		defineField: #dwFileDateMS type: DWORDField readOnly;
-		defineField: #dwFileDateLS type: DWORDField readOnly
-!
+		defineField: #dwFileDateLS type: DWORDField readOnly!
 
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
-!VS_FIXEDFILEINFO class categoriesFor: #defineFields!public!template definition! !
-!VS_FIXEDFILEINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.VS_FIXEDFILEINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.VS_FIXEDFILEINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,19 +1,20 @@
 ﻿| package |
 package := Package name: 'Dolphin Message Box'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin MessageBox
 Copyright (c) Object Arts Ltd. 1997-2016'.
 
 
 package setClassNames: #(
-	#{ConfirmationRequiredWarning}
-	#{MessageBox}
-	#{MessageBoxAbstract}
+	#{UI.ConfirmationRequiredWarning}
+	#{UI.MessageBox}
+	#{UI.MessageBoxAbstract}
 ).
 
 package setMethodNames: #(
-	#(#{ShlwapiLibrary} #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:)
+	#(#{Core.Notification} #showMessage:style:)
+	#(#{OS.ShlwapiLibrary} #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:)
 ).
 
 package setPrerequisites: #(
@@ -24,32 +25,48 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #MessageBoxAbstract
+Core.Object subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: 'DefaultCaptions IconStyles'
-	imports: #(#{MessageBoxConstants})
+	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Warning subclass: #ConfirmationRequiredWarning
+Core.Warning subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageBoxAbstract subclass: #MessageBox
+UI.MessageBoxAbstract subclass: #'UI.MessageBox'
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
 	classVariableNames: 'ButtonStyles ModeStyles'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ButtonMap' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
-		'ButtonsForStyle' -> #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11)).
+		'ButtonsForStyle' -> #(#(16r1) #(16r1 16r2) #(16r3 16r4 16r2) #(16r6 16r7 16r2) #(16r6 16r7) #(16r4 16r2) #(16r2 16rA 16rB)).
 		'SuppressibleMask' -> 16r10
 	}!
 
 "Loose Methods"!
 
-!ShlwapiLibrary methodsFor!
+!Core.Notification methodsFor!
+
+showMessage: aString style: anInteger
+	"Implementation Note: Avoid creating a dependency on MessageBox, as this class will always be required in an application even if MessageBox is not."
+
+	| mb |
+	mb := UI.MessageBox new.
+	self isSuppressible
+		ifTrue: 
+			[mb
+				uniqueId: self raisingFrame method displayString;
+				isSuppressible: true].
+	mb setStyle: anInteger maskedBy: MB_TYPEMASK.
+	^mb warning: aString! !
+!Core.Notification categoriesFor: #showMessage:style:!helpers!private! !
+
+!OS.ShlwapiLibrary methodsFor!
 
 shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefault: iDefault pszRegVal: pszRegVal
 	"Invoke the SHMessageBoxCheck() function of the module wrapped by the receiver.
@@ -65,7 +82,7 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 
 	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
 
 "End of package definition"!
 

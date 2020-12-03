@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Delay
+Core.Object subclass: #'Core.Delay'
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
 	classVariableNames: 'AccessProtect Current HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultResolution' -> 16r3D09
 	}!
-Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
+Core.Delay guid: (Core.GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 `Delay`s constructed to wait for an absolute time are "one-shot", in that once they have expired further attempts to `#wait` on them will return immediately. Conversely, `Delay`s scheduled to wait for a time interval can be waited on again to delay for the same interval.
 
@@ -38,8 +38,8 @@ Example usage:
   `Resolution`		`<integer>`; current clock resolution, in microseconds.
 
 '!
-!Delay categoriesForClass!Kernel-Processes! !
-!Delay methodsFor!
+!Core.Delay categoriesForClass!Kernel-Processes! !
+!Core.Delay methodsFor!
 
 <= anotherDelay
 	"Answer whether the receiver is less than or equal to the <Delay>, anotherDelay."
@@ -213,28 +213,28 @@ wakeup
 
 	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
-!Delay categoriesFor: #<=!comparing!public! !
-!Delay categoriesFor: #basicCancel!private!process synchronisation! !
-!Delay categoriesFor: #calcResumptionTime!accessing!private! !
-!Delay categoriesFor: #cancel!process synchronisation!public! !
-!Delay categoriesFor: #delta:!operations!private! !
-!Delay categoriesFor: #duration:!accessing!private! !
-!Delay categoriesFor: #getDuration!accessing!private! !
-!Delay categoriesFor: #hasExpired!private!testing! !
-!Delay categoriesFor: #initialize!initializing!private! !
-!Delay categoriesFor: #microsecondClockValue!enquiries!public! !
-!Delay categoriesFor: #printOn:!development!printing!public! !
-!Delay categoriesFor: #resumptionTime!accessing!public! !
-!Delay categoriesFor: #resumptionTime:!accessing!private! !
-!Delay categoriesFor: #riseAndShine!private!process synchronisation! !
-!Delay categoriesFor: #schedule!initializing!private! !
-!Delay categoriesFor: #signal!process synchronisation!public! !
-!Delay categoriesFor: #snooze!private!process synchronisation! !
-!Delay categoriesFor: #terminateProcess!process synchronisation!public! !
-!Delay categoriesFor: #wait!process synchronisation!public! !
-!Delay categoriesFor: #wakeup!private!process synchronisation! !
+!Core.Delay categoriesFor: #<=!comparing!public! !
+!Core.Delay categoriesFor: #basicCancel!private!process synchronisation! !
+!Core.Delay categoriesFor: #calcResumptionTime!accessing!private! !
+!Core.Delay categoriesFor: #cancel!process synchronisation!public! !
+!Core.Delay categoriesFor: #delta:!operations!private! !
+!Core.Delay categoriesFor: #duration:!accessing!private! !
+!Core.Delay categoriesFor: #getDuration!accessing!private! !
+!Core.Delay categoriesFor: #hasExpired!private!testing! !
+!Core.Delay categoriesFor: #initialize!initializing!private! !
+!Core.Delay categoriesFor: #microsecondClockValue!enquiries!public! !
+!Core.Delay categoriesFor: #printOn:!development!printing!public! !
+!Core.Delay categoriesFor: #resumptionTime!accessing!public! !
+!Core.Delay categoriesFor: #resumptionTime:!accessing!private! !
+!Core.Delay categoriesFor: #riseAndShine!private!process synchronisation! !
+!Core.Delay categoriesFor: #schedule!initializing!private! !
+!Core.Delay categoriesFor: #signal!process synchronisation!public! !
+!Core.Delay categoriesFor: #snooze!private!process synchronisation! !
+!Core.Delay categoriesFor: #terminateProcess!process synchronisation!public! !
+!Core.Delay categoriesFor: #wait!process synchronisation!public! !
+!Core.Delay categoriesFor: #wakeup!private!process synchronisation! !
 
-!Delay class methodsFor!
+!Core.Delay class methodsFor!
 
 aboutToIdle
 	"Private - The system is about to go idle.
@@ -318,7 +318,7 @@ forSeconds: anInteger
 getTicksToNanos
 	| freq |
 	freq := LargeInteger new64.
-	(KernelLibrary default queryPerformanceFrequency: freq basicYourAddress)
+	(OS.KernelLibrary default queryPerformanceFrequency: freq basicYourAddress)
 		ifFalse: [self error: 'performance counter not available'].
 	^1e9 / freq normalize!
 
@@ -351,8 +351,8 @@ keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."
 
 	(TimingProcess isNil or: [TimingProcess suspendingList isNil])
-		ifTrue: [
-			Notification signal: 'Starting new timing process'.
+		ifTrue: 
+			[Notification signal: 'Starting new timing process'.
 			self forkTimingProcess]!
 
 lowestResolution
@@ -413,7 +413,7 @@ queryOsTimerResolution
 	min := ByteArray newFixed: 4.
 	max := ByteArray newFixed: 4.
 	actual := ByteArray newFixed: 4.
-	(NTLibrary default
+	(OS.NTLibrary default
 		ntQueryTimerResolution: min
 		maximum: max
 		actual: actual) == 0
@@ -458,8 +458,8 @@ resolution: aDuration set: aBoolean
 	resolution can reduce battery life, so this should be used with care."
 
 	| actualResolution |
-	actualResolution := DWORDBytes new.
-	NTLibrary default
+	actualResolution := External.DWORDBytes new.
+	OS.NTLibrary default
 		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.
@@ -497,34 +497,34 @@ untilMilliseconds: millisecondTime
 	wait until the millisecond clock reaches the value millisecondTime."
 
 	^self new resumptionTime: millisecondTime * 1000! !
-!Delay class categoriesFor: #aboutToIdle!event handling!private! !
-!Delay class categoriesFor: #cancelTimer!operations!private! !
-!Delay class categoriesFor: #clampResolution:!helpers!private! !
-!Delay class categoriesFor: #forDuration:!instance creation!public! !
-!Delay class categoriesFor: #forkTimingProcess!initializing!private! !
-!Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
-!Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
-!Delay class categoriesFor: #forSeconds:!instance creation!public! !
-!Delay class categoriesFor: #getTicksToNanos!helpers!private! !
-!Delay class categoriesFor: #highestResolution!constants!public! !
-!Delay class categoriesFor: #initialize!development!initializing!public! !
-!Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
-!Delay class categoriesFor: #keepAlive!helpers!private! !
-!Delay class categoriesFor: #lowestResolution!constants!public! !
-!Delay class categoriesFor: #microsecondClockValue!initializing!public! !
-!Delay class categoriesFor: #millisecondClockValue!accessing!public! !
-!Delay class categoriesFor: #new!instance creation!public! !
-!Delay class categoriesFor: #onExit!event handling!public! !
-!Delay class categoriesFor: #onPreSaveImage!event handling!private! !
-!Delay class categoriesFor: #onStartup!event handling!public! !
-!Delay class categoriesFor: #prod!operations!private! !
-!Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !
-!Delay class categoriesFor: #reschedule!initializing!private! !
-!Delay class categoriesFor: #resolution!constants!public! !
-!Delay class categoriesFor: #resolution:do:!operations!public! !
-!Delay class categoriesFor: #resolution:set:!helpers!public! !
-!Delay class categoriesFor: #scheduleNext!initializing!private! !
-!Delay class categoriesFor: #signalTimerAfter:!private!processes-synchronising! !
-!Delay class categoriesFor: #timingProcess!initializing!private! !
-!Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
+!Core.Delay class categoriesFor: #aboutToIdle!event handling!private! !
+!Core.Delay class categoriesFor: #cancelTimer!operations!private! !
+!Core.Delay class categoriesFor: #clampResolution:!helpers!private! !
+!Core.Delay class categoriesFor: #forDuration:!instance creation!public! !
+!Core.Delay class categoriesFor: #forkTimingProcess!initializing!private! !
+!Core.Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
+!Core.Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
+!Core.Delay class categoriesFor: #forSeconds:!instance creation!public! !
+!Core.Delay class categoriesFor: #getTicksToNanos!helpers!private! !
+!Core.Delay class categoriesFor: #highestResolution!constants!public! !
+!Core.Delay class categoriesFor: #initialize!development!initializing!public! !
+!Core.Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
+!Core.Delay class categoriesFor: #keepAlive!helpers!private! !
+!Core.Delay class categoriesFor: #lowestResolution!constants!public! !
+!Core.Delay class categoriesFor: #microsecondClockValue!initializing!public! !
+!Core.Delay class categoriesFor: #millisecondClockValue!accessing!public! !
+!Core.Delay class categoriesFor: #new!instance creation!public! !
+!Core.Delay class categoriesFor: #onExit!event handling!public! !
+!Core.Delay class categoriesFor: #onPreSaveImage!event handling!private! !
+!Core.Delay class categoriesFor: #onStartup!event handling!public! !
+!Core.Delay class categoriesFor: #prod!operations!private! !
+!Core.Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !
+!Core.Delay class categoriesFor: #reschedule!initializing!private! !
+!Core.Delay class categoriesFor: #resolution!constants!public! !
+!Core.Delay class categoriesFor: #resolution:do:!operations!public! !
+!Core.Delay class categoriesFor: #resolution:set:!helpers!public! !
+!Core.Delay class categoriesFor: #scheduleNext!initializing!private! !
+!Core.Delay class categoriesFor: #signalTimerAfter:!private!processes-synchronising! !
+!Core.Delay class categoriesFor: #timingProcess!initializing!private! !
+!Core.Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
 

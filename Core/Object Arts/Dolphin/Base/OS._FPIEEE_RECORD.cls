@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #_FPIEEE_RECORD
+External.Structure subclass: #'OS._FPIEEE_RECORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cause' -> 16r4.
@@ -14,10 +14,10 @@ ExternalStructure subclass: #_FPIEEE_RECORD
 		'_OffsetOf_result' -> 16r40.
 		'_OffsetOf_status' -> 16rC
 	}!
-_FPIEEE_RECORD guid: (GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
-_FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
-!_FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
-!_FPIEEE_RECORD methodsFor!
+OS._FPIEEE_RECORD guid: (Core.GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS._FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
+!OS._FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
+!OS._FPIEEE_RECORD methodsFor!
 
 cause
 	"Answer the <Integer> value of the receiver's 'cause' field."
@@ -120,25 +120,25 @@ roundingModeName
 	"Answer the symbolic name of the rounding mode configured at the time of the exception."
 
 	^self class roundingModes at: self roundingMode + 1 ifAbsent: [#Unknown]! !
-!_FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isUnderflow!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isZeroDivide!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #operand1!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #operand2!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #operation!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
+!OS._FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
+!OS._FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
+!OS._FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
+!OS._FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
+!OS._FPIEEE_RECORD categoriesFor: #isUnderflow!public!testing! !
+!OS._FPIEEE_RECORD categoriesFor: #isZeroDivide!public!testing! !
+!OS._FPIEEE_RECORD categoriesFor: #operand1!**compiled accessors**!public! !
+!OS._FPIEEE_RECORD categoriesFor: #operand2!**compiled accessors**!public! !
+!OS._FPIEEE_RECORD categoriesFor: #operation!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
 
-!_FPIEEE_RECORD class methodsFor!
+!OS._FPIEEE_RECORD class methodsFor!
 
 defineFields
 	"Define the fields of the _FPIEEE_RECORD 'structure'. The _FPIEEE_RECORD is a
@@ -157,7 +157,7 @@ defineFields
 		defineField: #result type: (StructureField type: _FPIEEE_VALUE) beFiller!
 
 exceptionFlags
-	^#(#Inexact #Underflow #Overflow #ZeroDivide #InvalidOperation)!
+	^#(#Inexact #Underflow #Overflow #'Core.ZeroDivide' #InvalidOperation)!
 
 exceptionFlags: anInteger do: aMonadicValuable
 	(anInteger bitAnd: 2r11111) == 0
@@ -196,12 +196,12 @@ printFlags: anInteger on: aStream
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
-!_FPIEEE_RECORD class categoriesFor: #defineFields!public!template definition! !
-!_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
-!_FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !
-!_FPIEEE_RECORD class categoriesFor: #roundingModes!constants!public! !
+!OS._FPIEEE_RECORD class categoriesFor: #defineFields!public!template definition! !
+!OS._FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
+!OS._FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
+!OS._FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS._FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
+!OS._FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
+!OS._FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !
+!OS._FPIEEE_RECORD class categoriesFor: #roundingModes!constants!public! !
 

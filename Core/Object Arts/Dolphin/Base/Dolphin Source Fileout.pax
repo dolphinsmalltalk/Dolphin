@@ -1,133 +1,130 @@
 ﻿| package |
 package := Package name: 'Dolphin Source Fileout'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
 	addAllSelectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage);
 	addClass: Class;
-	addClass: Package;
-	addClass: PoolDictionary'.
+	addClass: Package'.
 
 package setMethodNames: #(
-	#(#{BootSessionManager} #saveImageTo:)
-	#(#{ChunkSourceFiler} #emitCategories:for:in:)
-	#(#{ChunkSourceFiler} #emitCategoriesOfClass:)
-	#(#{ChunkSourceFiler} #emitCategoriesOfMethod:)
-	#(#{ChunkSourceFiler} #emitComment:)
-	#(#{ChunkSourceFiler} #emitCommentOfClass:)
-	#(#{ChunkSourceFiler} #emitDeclarationForClass:variable:)
-	#(#{ChunkSourceFiler} #emitMethod:)
-	#(#{ChunkSourceFiler} #emitSetBehaviorFlag:forClass:)
-	#(#{ChunkSourceFiler} #fileOutBasicDefinitionOfClass:)
-	#(#{ChunkSourceFiler} #fileOutBinaryVariable:)
-	#(#{ChunkSourceFiler} #fileOutPoolDictionary:)
-	#(#{ChunkSourceFiler} #fileOutProtocols:ofBehavior:)
-	#(#{ChunkSourceFiler} #logEvaluation:)
-	#(#{ChunkSourceFiler} #storeCommentString:forClass:)
-	#(#{ChunkSourceFiler} #storeCommentString:forPackage:)
-	#(#{ChunkSourceFiler} #storeSource:for:)
-	#(#{Class} #canFileOut)
-	#(#{Class} #definitionChunk)
-	#(#{Class} #fileOut)
-	#(#{Class} #fileOutOn:)
-	#(#{Class} #storeClassCategories)
-	#(#{CompiledMethod} #storeCategories)
-	#(#{Metaclass} #storeClassCategories)
-	#(#{Package} #allFileOutNames)
-	#(#{Package} #beNotUsingPAX)
-	#(#{Package} #beUsingPAX)
-	#(#{Package} #canFileOut)
-	#(#{Package} #checkTimestamps)
-	#(#{Package} #createPackagePath)
-	#(#{Package} #dotPacPath)
-	#(#{Package} #fileModificationTime)
-	#(#{Package} #fileOut)
-	#(#{Package} #fileOutAll)
-	#(#{Package} #fileOutAllChanged)
-	#(#{Package} #fileOutAllOn:)
-	#(#{Package} #fileOutBinaryVariableNamesOn:)
-	#(#{Package} #fileOutBinaryVariables)
-	#(#{Package} #fileOutBootDefinitions)
-	#(#{Package} #fileOutClassDefinitionsOn:)
-	#(#{Package} #fileOutClassesOn:)
-	#(#{Package} #fileOutLooseMethodsOn:)
-	#(#{Package} #fileOutMethodsOfClass:on:)
-	#(#{Package} #fileOutNames)
-	#(#{Package} #fileOutOn:)
-	#(#{Package} #fileOutSourceVariableNamesOn:)
-	#(#{Package} #fileOutVariableAliasesOn:)
-	#(#{Package} #isRenegade)
-	#(#{Package} #isUsingPAX)
-	#(#{Package} #isUsingPAX:)
-	#(#{Package} #save)
-	#(#{Package} #saveAs:)
-	#(#{Package} #saveChanges)
-	#(#{Package} #savePAC)
-	#(#{Package} #savePAX)
-	#(#{Package} #savePAXAboutBlockOn:)
-	#(#{Package} #savePAXChunkOn:)
-	#(#{Package} #savePAXCollection:initializer:on:)
-	#(#{Package} #savePAXManualPrerequisitesOn:)
-	#(#{Package} #savePAXNames:initializer:on:)
-	#(#{Package} #savePAXNamesOn:)
-	#(#{Package} #savePAXPackageOn:)
-	#(#{Package} #savePAXPackageVersionOn:)
-	#(#{Package} #savePAXPrerequisiteNamesOn:)
-	#(#{Package} #savePAXScriptsOn:)
-	#(#{Package} #savePAXStripperBytesOn:)
-	#(#{Package} #savePAXUntracedVariablesOn:)
-	#(#{Package} #savePAXVariableNamesOn:)
-	#(#{Package} #saveSingleFilePackage)
-	#(#{Package} #toggleUsingPAX)
-	#(#{Package} #updateTimestamp)
-	#(#{SourceFiler} #emitCategoriesOfClass:)
-	#(#{SourceFiler} #emitCategoriesOfMethod:)
-	#(#{SourceFiler} #emitCategoriesOfMethods:)
-	#(#{SourceFiler} #emitComment:)
-	#(#{SourceFiler} #emitCommentOfClass:)
-	#(#{SourceFiler} #emitDeclarationForClass:variable:)
-	#(#{SourceFiler} #emitMessages:ofBehavior:)
-	#(#{SourceFiler} #emitMethod:)
-	#(#{SourceFiler} #emitSetBehaviorFlag:forClass:)
-	#(#{SourceFiler} #emitSpecialBehaviourAttributesOfClass:)
-	#(#{SourceFiler} #fileOutAllMethodsOfBehavior:)
-	#(#{SourceFiler} #fileOutAttributesOfClass:)
-	#(#{SourceFiler} #fileOutBasicDefinitionOfClass:)
-	#(#{SourceFiler} #fileOutBinaryVariable:)
-	#(#{SourceFiler} #fileOutClass:)
-	#(#{SourceFiler} #fileOutDefinitionOfClass:)
-	#(#{SourceFiler} #fileOutExpression:)
-	#(#{SourceFiler} #fileOutMessages:ofBehavior:)
-	#(#{SourceFiler} #fileOutMethods:)
-	#(#{SourceFiler} #fileOutPoolDictionary:)
-	#(#{SourceFiler} #fileOutProtocols:ofBehavior:)
-	#(#{SourceFiler} #fileOutResource:)
-	#(#{SourceFiler} #storeCommentString:forClass:)
-	#(#{SourceFiler} #storeCommentString:forPackage:)
-	#(#{SourceManager} #basicCompressSources:)
-	#(#{SourceManager} #compressChangedMethodsOf:onto:)
-	#(#{SourceManager} #compressChanges)
-	#(#{SourceManager} #compressChangesOf:onto:)
-	#(#{SourceManager} #compressChangesOnto:)
-	#(#{SourceManager} #compressPackageCommentsOn:)
-	#(#{SourceManager} #compressSources)
-	#(#{SourceManager} #compressSourcesWith:)
-	#(#{SourceManager} #copyAndReopenSources:)
-	#(#{SourceManager} #createSources:)
-	#(#{SourceManager} #createSourcesFile:)
-	#(#{SourceManager} #emitFileOutHeaderOn:)
-	#(#{SourceManager} #fileOut:)
-	#(#{SourceManager} #fileOut:to:)
-	#(#{SourceManager} #fileOutPackagedClass:)
-	#(#{SourceManager} #fileOutPackagedClass:to:)
-	#(#{SourceManager} #logChanged:)
-	#(#{SourceManager} #logComment:)
-	#(#{SourceManager} #logComment:to:)
-	#(#{SourceManager} #newSourceFiler:)
-	#(#{SourceManager} #storeCategoriesForClass:)
-	#(#{SourceManager} #storeCategoriesForMethod:)
+	#(#{Core.Class} #canFileOut)
+	#(#{Core.Class} #definitionChunk)
+	#(#{Core.Class} #fileOut)
+	#(#{Core.Class} #fileOutOn:)
+	#(#{Core.Class} #storeClassCategories)
+	#(#{Core.Metaclass} #storeClassCategories)
+	#(#{Kernel.BootSessionManager} #saveImageTo:)
+	#(#{Kernel.ChunkSourceFiler} #emitCategories:for:in:)
+	#(#{Kernel.ChunkSourceFiler} #emitCategoriesOfClass:)
+	#(#{Kernel.ChunkSourceFiler} #emitCategoriesOfMethod:)
+	#(#{Kernel.ChunkSourceFiler} #emitComment:)
+	#(#{Kernel.ChunkSourceFiler} #emitCommentOfClass:)
+	#(#{Kernel.ChunkSourceFiler} #emitMethod:)
+	#(#{Kernel.ChunkSourceFiler} #emitSetBehaviorFlag:forClass:)
+	#(#{Kernel.ChunkSourceFiler} #fileOutBasicDefinitionOfClass:)
+	#(#{Kernel.ChunkSourceFiler} #fileOutBinaryVariable:)
+	#(#{Kernel.ChunkSourceFiler} #fileOutProtocols:ofBehavior:)
+	#(#{Kernel.ChunkSourceFiler} #logEvaluation:)
+	#(#{Kernel.ChunkSourceFiler} #storeCommentString:forClass:)
+	#(#{Kernel.ChunkSourceFiler} #storeCommentString:forPackage:)
+	#(#{Kernel.ChunkSourceFiler} #storeSource:for:)
+	#(#{Kernel.CompiledMethod} #storeCategories)
+	#(#{Kernel.Package} #allFileOutNames)
+	#(#{Kernel.Package} #beNotUsingPAX)
+	#(#{Kernel.Package} #beUsingPAX)
+	#(#{Kernel.Package} #canFileOut)
+	#(#{Kernel.Package} #checkTimestamps)
+	#(#{Kernel.Package} #createPackagePath)
+	#(#{Kernel.Package} #dotPacPath)
+	#(#{Kernel.Package} #fileModificationTime)
+	#(#{Kernel.Package} #fileOut)
+	#(#{Kernel.Package} #fileOutAll)
+	#(#{Kernel.Package} #fileOutAllChanged)
+	#(#{Kernel.Package} #fileOutAllOn:)
+	#(#{Kernel.Package} #fileOutBinaryVariableNamesOn:)
+	#(#{Kernel.Package} #fileOutBinaryVariables)
+	#(#{Kernel.Package} #fileOutBootDefinitions)
+	#(#{Kernel.Package} #fileOutClassDefinitionsOn:)
+	#(#{Kernel.Package} #fileOutClassesOn:)
+	#(#{Kernel.Package} #fileOutLooseMethodsOn:)
+	#(#{Kernel.Package} #fileOutMethodsOfClass:on:)
+	#(#{Kernel.Package} #fileOutNames)
+	#(#{Kernel.Package} #fileOutOn:)
+	#(#{Kernel.Package} #fileOutSourceVariableNamesOn:)
+	#(#{Kernel.Package} #fileOutVariableAliasesOn:)
+	#(#{Kernel.Package} #isRenegade)
+	#(#{Kernel.Package} #isUsingPAX)
+	#(#{Kernel.Package} #isUsingPAX:)
+	#(#{Kernel.Package} #save)
+	#(#{Kernel.Package} #saveAs:)
+	#(#{Kernel.Package} #saveChanges)
+	#(#{Kernel.Package} #savePAC)
+	#(#{Kernel.Package} #savePAX)
+	#(#{Kernel.Package} #savePAXAboutBlockOn:)
+	#(#{Kernel.Package} #savePAXChunkOn:)
+	#(#{Kernel.Package} #savePAXCollection:initializer:on:)
+	#(#{Kernel.Package} #savePAXManualPrerequisitesOn:)
+	#(#{Kernel.Package} #savePAXNames:initializer:on:)
+	#(#{Kernel.Package} #savePAXNamesOn:)
+	#(#{Kernel.Package} #savePAXPackageOn:)
+	#(#{Kernel.Package} #savePAXPackageVersionOn:)
+	#(#{Kernel.Package} #savePAXPrerequisiteNamesOn:)
+	#(#{Kernel.Package} #savePAXScriptsOn:)
+	#(#{Kernel.Package} #savePAXStripperBytesOn:)
+	#(#{Kernel.Package} #savePAXUntracedVariablesOn:)
+	#(#{Kernel.Package} #savePAXVariableNamesOn:)
+	#(#{Kernel.Package} #saveSingleFilePackage)
+	#(#{Kernel.Package} #toggleUsingPAX)
+	#(#{Kernel.Package} #updateTimestamp)
+	#(#{Kernel.SourceFiler} #emitCategoriesOfClass:)
+	#(#{Kernel.SourceFiler} #emitCategoriesOfMethod:)
+	#(#{Kernel.SourceFiler} #emitCategoriesOfMethods:)
+	#(#{Kernel.SourceFiler} #emitComment:)
+	#(#{Kernel.SourceFiler} #emitCommentOfClass:)
+	#(#{Kernel.SourceFiler} #emitDeclarationForClass:variable:)
+	#(#{Kernel.SourceFiler} #emitMessages:ofBehavior:)
+	#(#{Kernel.SourceFiler} #emitMethod:)
+	#(#{Kernel.SourceFiler} #emitSetBehaviorFlag:forClass:)
+	#(#{Kernel.SourceFiler} #emitSpecialBehaviourAttributesOfClass:)
+	#(#{Kernel.SourceFiler} #fileOutAllMethodsOfBehavior:)
+	#(#{Kernel.SourceFiler} #fileOutAttributesOfClass:)
+	#(#{Kernel.SourceFiler} #fileOutBasicDefinitionOfClass:)
+	#(#{Kernel.SourceFiler} #fileOutBinaryVariable:)
+	#(#{Kernel.SourceFiler} #fileOutClass:)
+	#(#{Kernel.SourceFiler} #fileOutDefinitionOfClass:)
+	#(#{Kernel.SourceFiler} #fileOutExpression:)
+	#(#{Kernel.SourceFiler} #fileOutMessages:ofBehavior:)
+	#(#{Kernel.SourceFiler} #fileOutMethods:)
+	#(#{Kernel.SourceFiler} #fileOutPoolDictionary:)
+	#(#{Kernel.SourceFiler} #fileOutProtocols:ofBehavior:)
+	#(#{Kernel.SourceFiler} #fileOutResource:)
+	#(#{Kernel.SourceFiler} #storeCommentString:forClass:)
+	#(#{Kernel.SourceFiler} #storeCommentString:forPackage:)
+	#(#{Kernel.SourceManager} #basicCompressSources:)
+	#(#{Kernel.SourceManager} #compressChangedMethodsOf:onto:)
+	#(#{Kernel.SourceManager} #compressChanges)
+	#(#{Kernel.SourceManager} #compressChangesOf:onto:)
+	#(#{Kernel.SourceManager} #compressChangesOnto:)
+	#(#{Kernel.SourceManager} #compressPackageCommentsOn:)
+	#(#{Kernel.SourceManager} #compressSources)
+	#(#{Kernel.SourceManager} #compressSourcesWith:)
+	#(#{Kernel.SourceManager} #copyAndReopenSources:)
+	#(#{Kernel.SourceManager} #createSources:)
+	#(#{Kernel.SourceManager} #createSourcesFile:)
+	#(#{Kernel.SourceManager} #emitFileOutHeaderOn:)
+	#(#{Kernel.SourceManager} #fileOut:)
+	#(#{Kernel.SourceManager} #fileOut:to:)
+	#(#{Kernel.SourceManager} #fileOutPackagedClass:)
+	#(#{Kernel.SourceManager} #fileOutPackagedClass:to:)
+	#(#{Kernel.SourceManager} #logChanged:)
+	#(#{Kernel.SourceManager} #logComment:)
+	#(#{Kernel.SourceManager} #logComment:to:)
+	#(#{Kernel.SourceManager} #newSourceFiler:)
+	#(#{Kernel.SourceManager} #storeCategoriesForClass:)
+	#(#{Kernel.SourceManager} #storeCategoriesForMethod:)
 ).
 
 package setPrerequisites: #(
@@ -144,7 +141,52 @@ package!
 
 "Loose Methods"!
 
-!BootSessionManager methodsFor!
+!Core.Class methodsFor!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self fileOutName!
+
+definitionChunk
+	"Answer a chunk string for the definition of the receiver"
+
+	| stream |
+	stream := String writeStream: 256.
+	(self sourceManager sourceFilerOn: stream) fileOutDefinitionOfClass: self.
+	^stream contents!
+
+fileOut
+	"File out the receiver's definition to a class file in the receiver's
+	package directory."
+
+	self sourceManager fileOutPackagedClass: self!
+
+fileOutOn: aSourceFiler
+	aSourceFiler fileOutClass: self!
+
+storeClassCategories
+	"Private - Record the categories of the receiver to the change log.
+	The job is simply delegated to the receiver's source manager (if available)."
+
+	self sourceManager storeCategoriesForClass: self! !
+!Core.Class categoriesFor: #canFileOut!public!source filing! !
+!Core.Class categoriesFor: #definitionChunk!public!source filing-class definition! !
+!Core.Class categoriesFor: #fileOut!public!source filing! !
+!Core.Class categoriesFor: #fileOutOn:!public!source filing! !
+!Core.Class categoriesFor: #storeClassCategories!private!source filing-methods! !
+
+!Core.Metaclass methodsFor!
+
+storeClassCategories
+	"Private - Record the categories of the receiver to the change log.
+	The job is simply delegated to the receiver's source manager (if available)."
+
+	self instanceClass storeClassCategories! !
+!Core.Metaclass categoriesFor: #storeClassCategories!private!source filing-methods! !
+
+!Kernel.BootSessionManager methodsFor!
 
 saveImageTo: aString
 	"Private - Snapshot to filePath.img, marking the log with a timestamp and copying sources
@@ -165,7 +207,7 @@ saveImageTo: aString
 	self createSentinel
 		ifTrue: 
 			[| mb |
-			mb := MessageBox new.
+			mb := Smalltalk.MessageBox new.
 			mb beTaskModal.
 			mb
 				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'
@@ -187,14 +229,14 @@ saveImageTo: aString
 					openSources]
 						on: Error
 						do: [:anError | anError resignalAsWarning]]! !
-!BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
+!Kernel.BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
 
-!ChunkSourceFiler methodsFor!
+!Kernel.ChunkSourceFiler methodsFor!
 
-emitCategories: aCollection for: aSymbol in: aClass 
+emitCategories: aCollection for: aSymbol in: aClass
+	stream nextPut: $!!.
+	self emitClassName: aClass.
 	stream
-		nextPut: $!!;
-		nextPutAll: aClass name;
 		space;
 		nextPutAll: #categoriesFor:;
 		space.
@@ -210,10 +252,10 @@ emitCategoriesOfClass: aClass
 
 	| categories |
 	categories := aClass categories.
-	categories notEmpty ifFalse: [^self].
+	categories isEmpty ifTrue: [^self].
+	stream nextPut: $!!.
+	self emitClassName: aClass.
 	stream
-		nextPut: $!!;
-		nextPutAll: aClass name;
 		space;
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
@@ -246,28 +288,14 @@ emitCommentOfClass: aClass
 	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
 	aWriteStream."
 
+	self emitClassName: aClass.
 	stream
-		nextPutAll: aClass name;
 		space;
 		display: #comment:;
 		space.
 	self
 		nextChunkPut: aClass comment fullPrintString;
 		cr!
-
-emitDeclarationForClass: aClass variable: anAssociation
-	| value |
-	stream
-		nextPutAll: aClass name;
-		nextPutAll: (anAssociation isImmutable
-					ifTrue: [' addClassConstant: ']
-					ifFalse: [' addClassVariable: ']);
-		print: anAssociation key;
-		nextPutAll: ' value: '.
-	value := anAssociation value.
-	self
-		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString]).
-	stream cr!
 
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, 
@@ -280,8 +308,8 @@ emitSetBehaviorFlag: flagName forClass: aClass
 	"Private - Emit an attribute for the <Class>, aClass, to define its special behaviour flag named by
 	the <Symbol>, flagName."
 
+	self emitClassName: aClass.
 	stream
-		print: aClass;
 		space;
 		nextPutAll: flagName;
 		nextPutAll: ': true!!';
@@ -323,46 +351,6 @@ fileOutBinaryVariable: aBindingReference
 		nextPut: $!!;
 		cr!
 
-fileOutPoolDictionary: aPoolDictionary
-	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
-	to the <puttableStream>, aWriteStream. The definition should be sufficient to recreate a
-	copy of the dictionary."
-
-	| poolName |
-	poolName := aPoolDictionary fullyQualifiedReference.
-	stream
-		print: poolName;
-		space;
-		display: #declare:;
-		nextPutAll: ' (';
-		nextPutAll: aPoolDictionary class name;
-		nextPutAll: ' named: ';
-		print: aPoolDictionary name.
-	self emitChunk: ')'.
-	aPoolDictionary associations asSortedCollection do: 
-			[:a |
-			| value |
-			stream
-				display: poolName;
-				nextPutAll: ' at: ';
-				print: a key;
-				nextPutAll: ' put: '.
-			value := a value.
-			value isSelfEvaluating
-				ifTrue: 
-					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
-				ifFalse: 
-					[stream
-						nextPut: $(;
-						print: Object;
-						space;
-						display: #fromBinaryStoreBytes:;
-						space;
-						cr.
-					value binaryStoreBytes base64StoreOn: stream.
-					self emitChunk: ')']].
-	self emitChunk: poolName asString, ' shrink'!
-
 fileOutProtocols: aCollection ofBehavior: aClassDescription 
 	"File out the <MethodProtocol>s in the <collection>, aCollection, to source stream,
 	associating them with the <ClassDescription>, aClassDescription."
@@ -370,8 +358,8 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 	aCollection isEmpty ifTrue: [^self].
 	(aCollection asSortedCollection: [:a :b | (a name <==> b name) <= 0]) do: 
 			[:p | 
+			self emitClassName: aClassDescription.
 			stream
-				nextPutAll: aClassDescription name;
 				nextPutAll: ' methodProtocol: ';
 				print: p asSymbol;
 				nextPutAll: ' attributes: ';
@@ -432,78 +420,31 @@ storeSource: aString for: aSourceObject
 	sourceFileIndex notNil 
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
-!ChunkSourceFiler categoriesFor: #emitCategories:for:in:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitComment:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitMethod:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #storeSource:for:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitCategories:for:in:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitComment:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitMethod:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #storeSource:for:!private!source filing-file out! !
 
-!Class methodsFor!
-
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
-definitionChunk
-	"Answer a chunk string for the definition of the receiver"
-
-	| stream |
-	stream := String smalltalkWriteStream: 256.
-	(self sourceManager sourceFilerOn: stream) fileOutDefinitionOfClass: self.
-	^stream contents!
-
-fileOut
-	"File out the receiver's definition to a class file in the receiver's
-	package directory."
-
-	self sourceManager fileOutPackagedClass: self!
-
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutClass: self!
-
-storeClassCategories
-	"Private - Record the categories of the receiver to the change log.
-	The job is simply delegated to the receiver's source manager (if available)."
-
-	self sourceManager storeCategoriesForClass: self! !
-!Class categoriesFor: #canFileOut!public!source filing! !
-!Class categoriesFor: #definitionChunk!public!source filing-class definition! !
-!Class categoriesFor: #fileOut!public!source filing! !
-!Class categoriesFor: #fileOutOn:!public!source filing! !
-!Class categoriesFor: #storeClassCategories!private!source filing-methods! !
-
-!CompiledMethod methodsFor!
+!Kernel.CompiledMethod methodsFor!
 
 storeCategories
 	"Private - Record the categories of the receiver.
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
-!CompiledMethod categoriesFor: #storeCategories!private!source filing-methods! !
+!Kernel.CompiledMethod categoriesFor: #storeCategories!private!source filing-methods! !
 
-!Metaclass methodsFor!
-
-storeClassCategories
-	"Private - Record the categories of the receiver to the change log.
-	The job is simply delegated to the receiver's source manager (if available)."
-
-	self instanceClass storeClassCategories! !
-!Metaclass categoriesFor: #storeClassCategories!private!source filing-methods! !
-
-!Package methodsFor!
+!Kernel.Package methodsFor!
 
 allFileOutNames
 	"Private - Answers an OrderedCollection of the source filenames for the receiver and all of its 
@@ -527,7 +468,7 @@ beNotUsingPAX
 				expandMacrosWith: self name
 				with: names size
 				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
 		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
 beUsingPAX
@@ -541,7 +482,7 @@ beUsingPAX
 	msg := 'Placing this package into PAX source mode will create <1p> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self allSourceObjects size
 				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name))
+	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name))
 		ifTrue: [self fileOutAll]!
 
 canFileOut
@@ -557,7 +498,7 @@ checkTimestamps
 
 	| mb warning |
 	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
-	mb := MessageBox new.
+	mb := UI.MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
@@ -571,7 +512,7 @@ If you proceed and save it from this image then you may lose changes that have b
 Alternatively you can proceed and overwrite any changes on disk. You can also choose to suppress this warning so it is not shown again, however if you do so then in future modified files will be overwritten regardless of the choice that you make now.'
 				expandMacrosWithArguments: {self name.
 						self timestamp.
-						(FILETIME fromInteger: self fileModificationTime)}
+						FILETIME fromInteger: self fileModificationTime}
 				locale: Locale smalltalk.
 	mb okCancel.
 	(mb warning: warning) == #cancel ifTrue: [OperationAborted signal]!
@@ -579,8 +520,7 @@ Alternatively you can proceed and overwrite any changes on disk. You can also ch
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"
 
-	File createDirectoryPath: (File splitPathFrom: self fileOutName)
-!
+	File createDirectoryPath: (File splitPathFrom: self fileOutName)!
 
 dotPacPath
 	^File path: self packageFileName extension: self class packageExtension!
@@ -591,7 +531,7 @@ fileModificationTime
 	Win32 FILETIME), or 0 if it does not currently exist."
 
 	| fileName |
-	fileName := self isSystemPackage 
+	fileName := self isSystemPackage
 				ifTrue: [self classDefinitionsFileName]
 				ifFalse: [self isUsingPAX ifTrue: [self fileOutName] ifFalse: [self packageFileName]].
 	^(File lastWriteTime: fileName) ifNil: [0] ifNotNil: [:filetime | filetime asInteger]!
@@ -660,8 +600,7 @@ fileOutBootDefinitions
 	Note that the base system package cannot contain any resources."
 
 	| filer |
-	filer := ChunkSourceFiler 
-				on: (FileStream write: self classDefinitionsFileName text: true).
+	filer := self sourceManager newSourceFiler: self classDefinitionsFileName.
 	[self fileOutClassDefinitionsOn: filer] ensure: [filer close]!
 
 fileOutClassDefinitionsOn: aSourceFiler
@@ -675,11 +614,11 @@ fileOutClassDefinitionsOn: aSourceFiler
 	aSourceFiler
 		emitComment: 'Class Definitions';
 		cr.
-	"The shared pools should be defined first as these may be referenced by other class definitions."
+	"The namespaces should be defined first as these may be referenced by other class definitions."
 	classes
-		do: [:each | (each inheritsFrom: SharedPool) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+		do: [:each | (each inheritsFrom: Namespace) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	classes
-		do: [:each | (each inheritsFrom: SharedPool) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+		do: [:each | (each inheritsFrom: Namespace) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	aSourceFiler cr!
 
 fileOutClassesOn: aSourceFiler
@@ -1086,55 +1025,55 @@ updateTimestamp
 	"Private - Synchronise the receiver's timestamp with its source file."
 
 	timestamp := self fileModificationTime! !
-!Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
-!Package categoriesFor: #beNotUsingPAX!modes!public! !
-!Package categoriesFor: #beUsingPAX!modes!public! !
-!Package categoriesFor: #canFileOut!public!source filing! !
-!Package categoriesFor: #checkTimestamps!helpers!private! !
-!Package categoriesFor: #createPackagePath!private!source filing! !
-!Package categoriesFor: #dotPacPath!helpers!private! !
-!Package categoriesFor: #fileModificationTime!helpers!private! !
-!Package categoriesFor: #fileOut!public!source filing! !
-!Package categoriesFor: #fileOutAll!public!source filing! !
-!Package categoriesFor: #fileOutAllChanged!public!source filing! !
-!Package categoriesFor: #fileOutAllOn:!public!source filing! !
-!Package categoriesFor: #fileOutBinaryVariableNamesOn:!private!source filing! !
-!Package categoriesFor: #fileOutBinaryVariables!private!source filing! !
-!Package categoriesFor: #fileOutBootDefinitions!private!source filing! !
-!Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
-!Package categoriesFor: #fileOutClassesOn:!private!source filing! !
-!Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
-!Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
-!Package categoriesFor: #fileOutNames!private!source filing! !
-!Package categoriesFor: #fileOutOn:!public!source filing! !
-!Package categoriesFor: #fileOutSourceVariableNamesOn:!private!source filing! !
-!Package categoriesFor: #fileOutVariableAliasesOn:!private!source filing! !
-!Package categoriesFor: #isRenegade!public!testing! !
-!Package categoriesFor: #isUsingPAX!public!testing! !
-!Package categoriesFor: #isUsingPAX:!accessing!public! !
-!Package categoriesFor: #save!commands!public! !
-!Package categoriesFor: #saveAs:!commands!public! !
-!Package categoriesFor: #saveChanges!operations!public! !
-!Package categoriesFor: #savePAC!helpers!private! !
-!Package categoriesFor: #savePAX!private!source filing-pax! !
-!Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXCollection:initializer:on:!private!source filing-pax! !
-!Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXNames:initializer:on:!private!source filing-pax! !
-!Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXUntracedVariablesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXVariableNamesOn:!private!source filing-pax! !
-!Package categoriesFor: #saveSingleFilePackage!public!source filing! !
-!Package categoriesFor: #toggleUsingPAX!commands!public! !
-!Package categoriesFor: #updateTimestamp!helpers!private! !
+!Kernel.Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
+!Kernel.Package categoriesFor: #beNotUsingPAX!modes!public! !
+!Kernel.Package categoriesFor: #beUsingPAX!modes!public! !
+!Kernel.Package categoriesFor: #canFileOut!public!source filing! !
+!Kernel.Package categoriesFor: #checkTimestamps!helpers!private! !
+!Kernel.Package categoriesFor: #createPackagePath!private!source filing! !
+!Kernel.Package categoriesFor: #dotPacPath!helpers!private! !
+!Kernel.Package categoriesFor: #fileModificationTime!helpers!private! !
+!Kernel.Package categoriesFor: #fileOut!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAll!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAllChanged!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAllOn:!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutBinaryVariableNamesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutBinaryVariables!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutBootDefinitions!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutClassesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutNames!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutOn:!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutSourceVariableNamesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutVariableAliasesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #isRenegade!public!testing! !
+!Kernel.Package categoriesFor: #isUsingPAX!public!testing! !
+!Kernel.Package categoriesFor: #isUsingPAX:!accessing!public! !
+!Kernel.Package categoriesFor: #save!commands!public! !
+!Kernel.Package categoriesFor: #saveAs:!commands!public! !
+!Kernel.Package categoriesFor: #saveChanges!operations!public! !
+!Kernel.Package categoriesFor: #savePAC!helpers!private! !
+!Kernel.Package categoriesFor: #savePAX!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXCollection:initializer:on:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXNames:initializer:on:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXUntracedVariablesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXVariableNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #saveSingleFilePackage!public!source filing! !
+!Kernel.Package categoriesFor: #toggleUsingPAX!commands!public! !
+!Kernel.Package categoriesFor: #updateTimestamp!helpers!private! !
 
-!SourceFiler methodsFor!
+!Kernel.SourceFiler methodsFor!
 
 emitCategoriesOfClass: aClass 
 	"Private - Emit a chunk to source stream to reclassify the <Class>, aClass, in all its existing 
@@ -1168,12 +1107,11 @@ emitCommentOfClass: aClass
 emitDeclarationForClass: aClass variable: each
 	^self subclassResponsibility!
 
-emitMessages: aClass ofBehavior: selectors 
+emitMessages: aClass ofBehavior: selectors
 	| methods sortedSelectors |
-	sortedSelectors := selectors 
-				asSortedCollection: SortedCollection caseSensitiveSortBlock.
+	sortedSelectors := selectors asSortedCollection: SortedCollection caseSensitiveSortBlock.
 	methods := sortedSelectors asArray collect: 
-					[:selector | 
+					[:selector |
 					| method |
 					self
 						cr;
@@ -1197,10 +1135,8 @@ emitSetBehaviorFlag: flagName forClass: aClass
 emitSpecialBehaviourAttributesOfClass: aClass
 	"Private - Emit attributes for the <Class>, aClass, to define its special behaviour flags."
 
-	#(#isIndirection #isNullTerminated)
-		do: [:flagName | (aClass perform: flagName) ifTrue: [self emitSetBehaviorFlag: flagName forClass: aClass]].
-	"We only emit the #isAbstract flag if the class has been explicitly marked non-instantiable, not just because it answers true to #isAbstract."
-	aClass isNonInstantiable ifTrue: [self emitSetBehaviorFlag: #isAbstract forClass: aClass]!
+	#(#isIndirection #isNullTerminated #isNonInstantiable)
+		do: [:flagName | (aClass perform: flagName) ifTrue: [self emitSetBehaviorFlag: flagName forClass: aClass]]!
 
 fileOutAllMethodsOfBehavior: aClassDescription 
 	"Emit definitions of all methods in the <ClassDescription> argument, aClassDescription,
@@ -1266,19 +1202,18 @@ fileOutMessages: selectors ofBehavior: aClass
 	self isSourceOnly ifFalse: [self emitCategoriesOfMethods: methods].
 	self cr!
 
-fileOutMethods: aCollection 
+fileOutMethods: aCollection
 	"Append the definitions of the methods in the <collection> argument to the source stream,
 	ordered by class. Any method category settings are included."
 
 	| methodsByClass |
 	methodsByClass := Dictionary new.
 	aCollection do: 
-			[:each | 
+			[:each |
 			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
 			(methodsByClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
-	(methodsByClass associations 
-		asSortedCollection: [:a :b | (a key fullName <==> b key fullName) <= 0]) 
-			do: [:each | self fileOutMessages: each value ofBehavior: each key]!
+	(methodsByClass associations asSortedCollection: [:a :b | a key fullName <==> b key fullName <= 0])
+		do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
 fileOutPoolDictionary: aPoolDictionary 
 	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
@@ -1311,34 +1246,34 @@ storeCommentString: aString forPackage: aPackage
 	descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
-!SourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing! !
-!SourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing! !
-!SourceFiler categoriesFor: #emitCategoriesOfMethods:!private!source filing! !
-!SourceFiler categoriesFor: #emitComment:!operations-logging!private! !
-!SourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
-!SourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
-!SourceFiler categoriesFor: #emitMessages:ofBehavior:!private!source filing! !
-!SourceFiler categoriesFor: #emitMethod:!private!source filing! !
-!SourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing! !
-!SourceFiler categoriesFor: #emitSpecialBehaviourAttributesOfClass:!private!source filing! !
-!SourceFiler categoriesFor: #fileOutAllMethodsOfBehavior:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutClass:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutDefinitionOfClass:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutExpression:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutMethods:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutResource:!public!source filing! !
-!SourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing! !
-!SourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitCategoriesOfMethods:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitComment:!operations-logging!private! !
+!Kernel.SourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitMessages:ofBehavior:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitMethod:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitSpecialBehaviourAttributesOfClass:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutAllMethodsOfBehavior:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutClass:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutDefinitionOfClass:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutExpression:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutMethods:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutResource:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing! !
 
-!SourceManager methodsFor!
+!Kernel.SourceManager methodsFor!
 
-basicCompressSources: progress 
+basicCompressSources: progress
 	"Private - Compresses the sources file reporting the progress to
 	<monadicValuable>, progress."
 
@@ -1357,7 +1292,7 @@ basicCompressSources: progress
 	self logComment: 'Compressing sources....' to: filer.
 	index := 0.
 	classes do: 
-			[:class | 
+			[:class |
 			filer storeCommentString: class comment forClass: class.
 			filer fileOutAllMethodsOfBehavior: class class.
 			filer fileOutAllMethodsOfBehavior: class.
@@ -1423,19 +1358,19 @@ compressChangesOf: aClass onto: aSourceFiler
 				isChanged: false;
 				changeIndexValue: [0]]!
 
-compressChangesOnto: aSourceFiler 
+compressChangesOnto: aSourceFiler
 	Smalltalk allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
 	Package manager packages do: 
-			[:each | 
-			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 
+			[:each |
+			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex
 				ifTrue: [aSourceFiler storeCommentString: each comment forPackage: each]]!
 
-compressPackageCommentsOn: aSourceFiler 
+compressPackageCommentsOn: aSourceFiler
 	Package manager packages do: 
-			[:each | 
+			[:each |
 			| comment |
 			comment := each comment.
-			comment isEmpty 
+			comment isEmpty
 				ifTrue: [each sourceDescriptor: nil]
 				ifFalse: [aSourceFiler storeCommentString: comment forPackage: each]]!
 
@@ -1455,7 +1390,7 @@ compressSourcesWith: aProgressDialog
 	aProgressDialog showModal.
 !
 
-copyAndReopenSources: aString 
+copyAndReopenSources: aString
 	"Private - Copy sources to the path and root file name (i.e. without extension) specified
 	by the <readableString> argument, and then open the copies for any further perusal and 
 	modification.
@@ -1469,15 +1404,15 @@ copyAndReopenSources: aString
 	hadSources := self hasSources.
 
 	"Copy and and swap over sources. Take care to end up with a good sources and imagePath"
-	hadSources 
+	hadSources
 		ifTrue: 
 			[self copySourceFilesTo: aString.
 			self closeSources].
-	hadSources 
+	hadSources
 		ifFalse: 
 			[self createSources: aString.
 			"We have permanently lost access to any source information so mark all methods"
-			Smalltalk 
+			Smalltalk
 				allBehaviorsDo: [:aBehavior | aBehavior methodDictionary do: [:aMethod | aMethod loseSource]]].
 	self openSources: aString!
 
@@ -1486,14 +1421,17 @@ createSources: filePath
 	update the receiver to use these new files though."
 
 	self createSourcesFile: filePath.
-	(File open: (self changesFileNameFromPath: filePath) mode: #truncate check: false) close!
+	(File
+		open: (self changesFileNameFromPath: filePath)
+		mode: #truncate
+		check: false) close!
 
 createSourcesFile: filePath 
 	"Private - Create (or truncate) a source file with the specified path (and default extension)."
 
 	(self newSourceFiler: (self sourcesFileNameFromPath: filePath)) close!
 
-emitFileOutHeaderOn: aSourceFiler 
+emitFileOutHeaderOn: aSourceFiler
 	"Private - Append the standard Dolphin file out header to the
 	<puttableStream>, aWriteStream."
 
@@ -1568,9 +1506,11 @@ logComment: aString to: aSourceFiler
 	timestamp := DateAndTime now.
 	stampedComment := String writeStream: 25 + aString size.
 	stampedComment locale: Locale invariant.
-	#todo. "Use the standard form for a DateAndTime here - Ian's chunk browser relies on the original format, so that needs to be fixed."
+	#todo.	"Use the standard form for a DateAndTime here - Ian's chunk browser relies on the original format, so that needs to be fixed."
 	timestamp printOn: stampedComment format: 'HH:mm:ss, dd MMMM yyyy'.
-	stampedComment nextPutAll: ': '; nextPutAll: aString.
+	stampedComment
+		nextPutAll: ': ';
+		nextPutAll: aString.
 	stampedComment := stampedComment contents.
 	mutex critical: 
 			[aSourceFiler
@@ -1609,28 +1549,28 @@ storeCategoriesForMethod: method
 						emitCategoriesOfMethod: method;
 						cr;
 						flush]]! !
-!SourceManager categoriesFor: #basicCompressSources:!operations-source files!private! !
-!SourceManager categoriesFor: #compressChangedMethodsOf:onto:!operations-source files!private! !
-!SourceManager categoriesFor: #compressChanges!operations-source files!public! !
-!SourceManager categoriesFor: #compressChangesOf:onto:!operations-source files!private! !
-!SourceManager categoriesFor: #compressChangesOnto:!operations-source files!public! !
-!SourceManager categoriesFor: #compressPackageCommentsOn:!operations-source files!private! !
-!SourceManager categoriesFor: #compressSources!operations-source files!public! !
-!SourceManager categoriesFor: #compressSourcesWith:!operations-source files!public! !
-!SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
-!SourceManager categoriesFor: #createSources:!operations-source files!private! !
-!SourceManager categoriesFor: #createSourcesFile:!operations-source files!private! !
-!SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
-!SourceManager categoriesFor: #fileOut:!public!source filing! !
-!SourceManager categoriesFor: #fileOut:to:!public!source filing! !
-!SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
-!SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
-!SourceManager categoriesFor: #logChanged:!public!source filing! !
-!SourceManager categoriesFor: #logComment:!operations-logging!public! !
-!SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
-!SourceManager categoriesFor: #newSourceFiler:!private!source filing! !
-!SourceManager categoriesFor: #storeCategoriesForClass:!private!source filing! !
-!SourceManager categoriesFor: #storeCategoriesForMethod:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #basicCompressSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #compressChangedMethodsOf:onto:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #compressChanges!operations-source files!public! !
+!Kernel.SourceManager categoriesFor: #compressChangesOf:onto:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #compressChangesOnto:!operations-source files!public! !
+!Kernel.SourceManager categoriesFor: #compressPackageCommentsOn:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #compressSources!operations-source files!public! !
+!Kernel.SourceManager categoriesFor: #compressSourcesWith:!operations-source files!public! !
+!Kernel.SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #createSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #createSourcesFile:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #fileOut:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileOut:to:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #logChanged:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #logComment:!operations-logging!public! !
+!Kernel.SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
+!Kernel.SourceManager categoriesFor: #newSourceFiler:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #storeCategoriesForClass:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #storeCategoriesForMethod:!private!source filing! !
 
 "End of package definition"!
 

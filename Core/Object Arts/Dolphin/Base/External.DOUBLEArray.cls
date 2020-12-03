@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #DOUBLEArray
+External.ExternalArray subclass: #'External.DOUBLEArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOUBLEArray guid: (GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
-DOUBLEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
-!DOUBLEArray categoriesForClass!Unclassified! !
-!DOUBLEArray methodsFor!
+External.DOUBLEArray guid: (Core.GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
+External.DOUBLEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
+!External.DOUBLEArray categoriesForClass!Unclassified! !
+!External.DOUBLEArray methodsFor!
 
 uncheckedAt: anInteger 
 	"Private - Answer a <Float> representing the 64-bit double-precision 
@@ -23,14 +23,14 @@ uncheckedAt: anInteger put: aFloat
 	with the <Float> argument."
 
 	^bytes doubleAtOffset: (anInteger - 1) * VMConstants.DoubleSize put: aFloat! !
-!DOUBLEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!DOUBLEArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.DOUBLEArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.DOUBLEArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!DOUBLEArray class methodsFor!
+!External.DOUBLEArray class methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^DOUBLE! !
-!DOUBLEArray class categoriesFor: #elementClass!constants!public! !
+!External.DOUBLEArray class categoriesFor: #elementClass!constants!public! !
 

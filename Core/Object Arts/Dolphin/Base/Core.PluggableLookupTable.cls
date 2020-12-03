@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LookupTable variableSubclass: #PluggableLookupTable
+Core.LookupTable variableSubclass: #'Core.PluggableLookupTable'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableLookupTable guid: (GUID fromString: '{123a1504-7cb8-11d3-93ca-00a024ca708a}')!
-PluggableLookupTable comment: 'PluggableLookupTable is the class of <LookupTable>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <LookupTable>s (equality search) or <IdentityDictionary>s (identity search), or indeed any user-defined search policy.
+Core.PluggableLookupTable guid: (Core.GUID fromString: '{123a1504-7cb8-11d3-93ca-00a024ca708a}')!
+Core.PluggableLookupTable comment: 'PluggableLookupTable is the class of <LookupTable>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <LookupTable>s (equality search) or <IdentityDictionary>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.
 
 '!
-!PluggableLookupTable categoriesForClass!Collections-Unordered! !
-!PluggableLookupTable methodsFor!
+!Core.PluggableLookupTable categoriesForClass!Collections-Unordered! !
+!Core.PluggableLookupTable methodsFor!
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver, with enough space for anInteger
@@ -79,20 +79,19 @@ setSearchPolicy: policy
 species
 	"Answer the class of object to be used when copying the receiver with #collect:, etc."
 
-	^LookupTable
-! !
-!PluggableLookupTable categoriesFor: #copyEmpty:!copying!private! !
-!PluggableLookupTable categoriesFor: #findKeyOrNil:!private!searching! !
-!PluggableLookupTable categoriesFor: #hash:max:!private!searching! !
-!PluggableLookupTable categoriesFor: #initialize!initializing!private! !
-!PluggableLookupTable categoriesFor: #newSelection!enumerating!private! !
-!PluggableLookupTable categoriesFor: #preResize:!adding!public! !
-!PluggableLookupTable categoriesFor: #searchPolicy!accessing!public! !
-!PluggableLookupTable categoriesFor: #searchPolicy:!accessing!public! !
-!PluggableLookupTable categoriesFor: #setSearchPolicy:!accessing!private! !
-!PluggableLookupTable categoriesFor: #species!constants!public! !
+	^LookupTable! !
+!Core.PluggableLookupTable categoriesFor: #copyEmpty:!copying!private! !
+!Core.PluggableLookupTable categoriesFor: #findKeyOrNil:!private!searching! !
+!Core.PluggableLookupTable categoriesFor: #hash:max:!private!searching! !
+!Core.PluggableLookupTable categoriesFor: #initialize!initializing!private! !
+!Core.PluggableLookupTable categoriesFor: #newSelection!enumerating!private! !
+!Core.PluggableLookupTable categoriesFor: #preResize:!adding!public! !
+!Core.PluggableLookupTable categoriesFor: #searchPolicy!accessing!public! !
+!Core.PluggableLookupTable categoriesFor: #searchPolicy:!accessing!public! !
+!Core.PluggableLookupTable categoriesFor: #setSearchPolicy:!accessing!private! !
+!Core.PluggableLookupTable categoriesFor: #species!constants!public! !
 
-!PluggableLookupTable class methodsFor!
+!Core.PluggableLookupTable class methodsFor!
 
 defaultSearchPolicy
 	"Answer the default <searchPolicy> used by instances of the receiver."
@@ -109,7 +108,7 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
-!PluggableLookupTable class categoriesFor: #defaultSearchPolicy!constants!public! !
-!PluggableLookupTable class categoriesFor: #new:searchPolicy:!instance creation!public! !
-!PluggableLookupTable class categoriesFor: #searchPolicy:!instance creation!public! !
+!Core.PluggableLookupTable class categoriesFor: #defaultSearchPolicy!constants!public! !
+!Core.PluggableLookupTable class categoriesFor: #new:searchPolicy:!instance creation!public! !
+!Core.PluggableLookupTable class categoriesFor: #searchPolicy:!instance creation!public! !
 

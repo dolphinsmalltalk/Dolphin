@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #CompilerFlags
+Kernel.SharedPool subclass: #'Kernel.CompilerFlags'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,6 +15,7 @@ SharedPool subclass: #CompilerFlags
 		'TempsMap' -> 16r20.
 		'TextMap' -> 16r10
 	}!
-CompilerFlags guid: (GUID fromString: '{45a06e12-fe26-49ce-ac75-97b052644c90}')!
-CompilerFlags comment: ''!
-!CompilerFlags categoriesForClass!System-Compiler! !
+Kernel.CompilerFlags guid: (Core.GUID fromString: '{45a06e12-fe26-49ce-ac75-97b052644c90}')!
+Kernel.CompilerFlags isNonInstantiable: true!
+Kernel.CompilerFlags comment: ''!
+!Kernel.CompilerFlags categoriesForClass!System-Compiler! !

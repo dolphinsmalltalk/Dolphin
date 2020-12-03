@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #ArrayedCollection
+Core.SequenceableCollection subclass: #'Core.ArrayedCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayedCollection guid: (GUID fromString: '{87b4c50c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ArrayedCollection isAbstract: true!
-ArrayedCollection comment: 'ArrayedCollection is the class of <SequenceableCollection>s of a fixed size which are indexable by integer keys from 1 to the size of the collection.'!
-!ArrayedCollection categoriesForClass!Collections-Abstract! !
-!ArrayedCollection methodsFor!
+Core.ArrayedCollection guid: (Core.GUID fromString: '{87b4c50c-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ArrayedCollection isNonInstantiable: true!
+Core.ArrayedCollection comment: 'ArrayedCollection is the class of <SequenceableCollection>s of a fixed size which are indexable by integer keys from 1 to the size of the collection.'!
+!Core.ArrayedCollection categoriesForClass!Collections-Abstract! !
+!Core.ArrayedCollection methodsFor!
 
 add: newElement
 	"ArrayedCollections are not, in general, extensible."
@@ -220,31 +220,31 @@ sortUsing: aSortAlgorithm
 		sort: self
 		from: 1
 		to: self size! !
-!ArrayedCollection categoriesFor: #add:!adding!public! !
-!ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!ArrayedCollection categoriesFor: #at:!accessing!public! !
-!ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!ArrayedCollection categoriesFor: #at:put:!accessing!public! !
-!ArrayedCollection categoriesFor: #copyFrom:to:!public! !
-!ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
-!ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!ArrayedCollection categoriesFor: #findFirst:!public!searching! !
-!ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
-!ArrayedCollection categoriesFor: #includes:!public!searching! !
-!ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
-!ArrayedCollection categoriesFor: #lookup:!accessing!public! !
-!ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!ArrayedCollection categoriesFor: #removeAll!public! !
-!ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
-!ArrayedCollection categoriesFor: #resize:!mutating!public! !
-!ArrayedCollection categoriesFor: #size!accessing!public! !
-!ArrayedCollection categoriesFor: #sort!public!sorting! !
-!ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
+!Core.ArrayedCollection categoriesFor: #add:!adding!public! !
+!Core.ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
+!Core.ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.ArrayedCollection categoriesFor: #at:!accessing!public! !
+!Core.ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.ArrayedCollection categoriesFor: #at:put:!accessing!public! !
+!Core.ArrayedCollection categoriesFor: #copyFrom:to:!public! !
+!Core.ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
+!Core.ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
+!Core.ArrayedCollection categoriesFor: #findFirst:!public!searching! !
+!Core.ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
+!Core.ArrayedCollection categoriesFor: #includes:!public!searching! !
+!Core.ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
+!Core.ArrayedCollection categoriesFor: #lookup:!accessing!public! !
+!Core.ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!Core.ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Core.ArrayedCollection categoriesFor: #removeAll!public! !
+!Core.ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
+!Core.ArrayedCollection categoriesFor: #resize:!mutating!public! !
+!Core.ArrayedCollection categoriesFor: #size!accessing!public! !
+!Core.ArrayedCollection categoriesFor: #sort!public!sorting! !
+!Core.ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
 
-!ArrayedCollection class methodsFor!
+!Core.ArrayedCollection class methodsFor!
 
 new
 	"Answer a new, empty, instance of the receiver."
@@ -320,14 +320,14 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
-!ArrayedCollection class categoriesFor: #new!instance creation!public! !
-!ArrayedCollection class categoriesFor: #new:withAll:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #withAll:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #new!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #new:withAll:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #with:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #with:with:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #with:with:with:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #with:with:with:with:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.ArrayedCollection class categoriesFor: #withAll:!instance creation!public! !
 
-ArrayedCollection class methodProtocol: #'Array factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.ArrayedCollection class methodProtocol: #'Array factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

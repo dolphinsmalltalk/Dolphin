@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MethodName
+Core.Object subclass: #'Kernel.MethodName'
 	instanceVariableNames: 'className selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodName guid: (GUID fromString: '{22638432-c25d-413a-9087-34a3b4ad2b08}')!
-MethodName comment: ''!
-!MethodName categoriesForClass!Kernel-Objects! !
-!MethodName methodsFor!
+Kernel.MethodName guid: (Core.GUID fromString: '{22638432-c25d-413a-9087-34a3b4ad2b08}')!
+Kernel.MethodName comment: ''!
+!Kernel.MethodName categoriesForClass!Kernel-Objects! !
+!Kernel.MethodName methodsFor!
 
 <= aMethodName
 	"Answer whether the receiver should sort before the argument."
@@ -36,6 +36,9 @@ className: aBindingReference selector: aSymbol
 hash
 	^(className hash + selector hash) hashMultiply!
 
+methodClass
+	^className valueOrNil!
+
 printOn: aPuttableStream
 	aPuttableStream
 		display: className;
@@ -45,19 +48,31 @@ printOn: aPuttableStream
 selector
 	^selector!
 
+selector: aSymbol
+	selector := aSymbol!
+
+value
+	^className value compiledMethodAt: selector!
+
 valueOrNil
 	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: []]! !
-!MethodName categoriesFor: #<=!public! !
-!MethodName categoriesFor: #=!comparing!public! !
-!MethodName categoriesFor: #className!accessing!public! !
-!MethodName categoriesFor: #className:!public! !
-!MethodName categoriesFor: #className:selector:!initializing!private! !
-!MethodName categoriesFor: #hash!comparing!public! !
-!MethodName categoriesFor: #printOn:!printing!public! !
-!MethodName categoriesFor: #selector!accessing!public! !
-!MethodName categoriesFor: #valueOrNil!public! !
+!Kernel.MethodName categoriesFor: #<=!comparing!public! !
+!Kernel.MethodName categoriesFor: #=!comparing!public! !
+!Kernel.MethodName categoriesFor: #className!accessing!public! !
+!Kernel.MethodName categoriesFor: #className:!initializing!public! !
+!Kernel.MethodName categoriesFor: #className:selector:!initializing!private! !
+!Kernel.MethodName categoriesFor: #hash!comparing!public! !
+!Kernel.MethodName categoriesFor: #methodClass!accessing!public! !
+!Kernel.MethodName categoriesFor: #printOn:!printing!public! !
+!Kernel.MethodName categoriesFor: #selector!accessing!public! !
+!Kernel.MethodName categoriesFor: #selector:!initializing!private! !
+!Kernel.MethodName categoriesFor: #value!evaluating!public! !
+!Kernel.MethodName categoriesFor: #valueOrNil!evaluating!public! !
 
-!MethodName class methodsFor!
+!Kernel.MethodName class methodsFor!
+
+class: aClassDescription selector: aSymbol
+	^self className: aClassDescription fullyQualifiedReference selector: aSymbol!
 
 className: aBindingReference selector: aSymbol
 	<primitive: 157>
@@ -67,6 +82,7 @@ className: aBindingReference selector: aSymbol
 
 method: aCompiledMethod
 	^self className: aCompiledMethod methodClass fullyQualifiedReference selector: aCompiledMethod selector! !
-!MethodName class categoriesFor: #className:selector:!public! !
-!MethodName class categoriesFor: #method:!public! !
+!Kernel.MethodName class categoriesFor: #class:selector:!public! !
+!Kernel.MethodName class categoriesFor: #className:selector:!public! !
+!Kernel.MethodName class categoriesFor: #method:!public! !
 

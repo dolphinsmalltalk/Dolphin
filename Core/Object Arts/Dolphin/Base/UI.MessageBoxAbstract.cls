@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MessageBoxAbstract
+Core.Object subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: 'DefaultCaptions IconStyles'
-	poolDictionaries: 'MessageBoxConstants'
+	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageBoxAbstract guid: (GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
-MessageBoxAbstract isAbstract: true!
-MessageBoxAbstract comment: 'MessageBoxAbstract is the abstract class of dialogs that display a message to the user to acknowledge. Subclasses might include a number of responses that the user can make, typically by pressing buttons, making them useful for asking questions as well as displaying informational messages.
+UI.MessageBoxAbstract guid: (Core.GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
+UI.MessageBoxAbstract isNonInstantiable: true!
+UI.MessageBoxAbstract comment: 'MessageBoxAbstract is the abstract class of dialogs that display a message to the user to acknowledge. Subclasses might include a number of responses that the user can make, typically by pressing buttons, making them useful for asking questions as well as displaying informational messages.
 
 Instance Variables:
 	text			<String>. Message text.
@@ -20,8 +20,8 @@ Class Variables:
 	IconStyles			<IdentityDictionary>
 
 '!
-!MessageBoxAbstract categoriesForClass!Kernel-Objects! !
-!MessageBoxAbstract methodsFor!
+!UI.MessageBoxAbstract categoriesForClass!Kernel-Objects! !
+!UI.MessageBoxAbstract methodsFor!
 
 beep
 	"Private - Play the system parp appropriate for the style of the receiver."
@@ -117,25 +117,25 @@ warning: warningString
 	self text: warningString.
 	self iconStyle: #warning.
 	^self open! !
-!MessageBoxAbstract categoriesFor: #beep!parping!private! !
-!MessageBoxAbstract categoriesFor: #caption!accessing!public! !
-!MessageBoxAbstract categoriesFor: #caption:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #defaultCaption!constants!private! !
-!MessageBoxAbstract categoriesFor: #errorMsg:!operations!public! !
-!MessageBoxAbstract categoriesFor: #iconStyle!accessing-styles!public! !
-!MessageBoxAbstract categoriesFor: #iconStyle:!accessing-styles!public! !
-!MessageBoxAbstract categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!MessageBoxAbstract categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBoxAbstract categoriesFor: #notify:!operations!public! !
-!MessageBoxAbstract categoriesFor: #open!displaying!public! !
-!MessageBoxAbstract categoriesFor: #owner!accessing!public! !
-!MessageBoxAbstract categoriesFor: #owner:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #ownerHandle!accessing!private! !
-!MessageBoxAbstract categoriesFor: #text!accessing!public! !
-!MessageBoxAbstract categoriesFor: #text:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #warning:!operations!public! !
+!UI.MessageBoxAbstract categoriesFor: #beep!parping!private! !
+!UI.MessageBoxAbstract categoriesFor: #caption!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #caption:!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #defaultCaption!constants!private! !
+!UI.MessageBoxAbstract categoriesFor: #errorMsg:!operations!public! !
+!UI.MessageBoxAbstract categoriesFor: #iconStyle!accessing-styles!public! !
+!UI.MessageBoxAbstract categoriesFor: #iconStyle:!accessing-styles!public! !
+!UI.MessageBoxAbstract categoriesFor: #iconStyleFlag!accessing-styles!private! !
+!UI.MessageBoxAbstract categoriesFor: #iconStyleFlag:!accessing-styles!private! !
+!UI.MessageBoxAbstract categoriesFor: #notify:!operations!public! !
+!UI.MessageBoxAbstract categoriesFor: #open!displaying!public! !
+!UI.MessageBoxAbstract categoriesFor: #owner!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #owner:!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #ownerHandle!accessing!private! !
+!UI.MessageBoxAbstract categoriesFor: #text!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #text:!accessing!public! !
+!UI.MessageBoxAbstract categoriesFor: #warning:!operations!public! !
 
-!MessageBoxAbstract class methodsFor!
+!UI.MessageBoxAbstract class methodsFor!
 
 defaultCaption: aSymbol
 	"Private - Answer a suitable default caption based on style of the 
@@ -163,7 +163,7 @@ initialize
 
 	"
 
-	IconStyles := (IdentityDictionary new)
+	IconStyles := IdentityDictionary new
 				at: #none put: 0;
 				at: #error put: MB_ICONERROR;
 				at: #prompt put: MB_ICONQUESTION;
@@ -174,7 +174,7 @@ initialize
 				yourself.
 
 	"Where there is no entry in the table for the message box type, the application name is used."
-	DefaultCaptions := (IdentityDictionary new)
+	DefaultCaptions := IdentityDictionary new
 				at: #confirm put: 'Please confirm...';
 				at: #notify put: 'Note';
 				shrink;
@@ -213,13 +213,13 @@ warning: warningString caption: titleString
 	(self new)
 		caption: titleString;
 		warning: warningString! !
-!MessageBoxAbstract class categoriesFor: #defaultCaption:!constants!private! !
-!MessageBoxAbstract class categoriesFor: #errorMsg:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #errorMsg:caption:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #initialize!development!initializing!public! !
-!MessageBoxAbstract class categoriesFor: #new!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #notify:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #notify:caption:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #warning:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #warning:caption:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #defaultCaption:!constants!private! !
+!UI.MessageBoxAbstract class categoriesFor: #errorMsg:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #errorMsg:caption:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #initialize!development!initializing!public! !
+!UI.MessageBoxAbstract class categoriesFor: #new!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #notify:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #notify:caption:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #warning:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesFor: #warning:caption:!instance creation!public! !
 

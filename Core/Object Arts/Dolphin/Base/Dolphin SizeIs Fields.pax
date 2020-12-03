@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin SizeIs Fields'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin SizeIs Fields Package.
 
@@ -8,14 +8,14 @@ Contains support for sophisticated conformant field types that can interpret a M
 
 
 package setClassNames: #(
-	#{ArithmeticExpressionVisitor}
-	#{SizeIsArrayFieldLength}
-	#{SizeIsExpressionFormatter}
+	#{External.SizeIsArrayFieldLength}
+	#{External.SizeIsExpressionFormatter}
+	#{Kernel.ArithmeticExpressionVisitor}
 ).
 
 package setMethodNames: #(
-	#(#{StAssignmentNode} #solveFor:)
-	#(#{StMessageNode} #inverseArithmeticOperator)
+	#(#{Kernel.StAssignmentNode} #solveFor:)
+	#(#{Kernel.StMessageNode} #inverseArithmeticOperator)
 ).
 
 package setPrerequisites: #(
@@ -27,28 +27,28 @@ package!
 
 "Class Definitions"!
 
-ArrayFieldLength subclass: #SizeIsArrayFieldLength
+External.ArrayFieldLength subclass: #'External.SizeIsArrayFieldLength'
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
+Kernel.ParseNodeVisitor subclass: #'Kernel.ArithmeticExpressionVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArithmeticExpressionVisitor subclass: #SizeIsExpressionFormatter
+Kernel.ArithmeticExpressionVisitor subclass: #'External.SizeIsExpressionFormatter'
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!StAssignmentNode methodsFor!
+!Kernel.StAssignmentNode methodsFor!
 
 solveFor: aString
 	"Answer an <StAssignmentNode> that rewrites the assignment expression described by the
@@ -120,14 +120,14 @@ solveFor: aString
 					variable: term;
 					value: op argument;
 					solveFor: aString]! !
-!StAssignmentNode categoriesFor: #solveFor:!operations!private! !
+!Kernel.StAssignmentNode categoriesFor: #solveFor:!operations!private! !
 
-!StMessageNode methodsFor!
+!Kernel.StMessageNode methodsFor!
 
 inverseArithmeticOperator
 	"If the receiver describes an arithmetic operation, then answer its inverse. If not, throw an error."
 
-	^##((IdentityDictionary new)
+	^##(IdentityDictionary new
 		at: #+ put: #-;
 		at: #- put: #+;
 		at: #>> put: #<<;
@@ -136,7 +136,7 @@ inverseArithmeticOperator
 		at: #* put: #/;
 		at: #// put: #*;
 		shrink) at: self selector! !
-!StMessageNode categoriesFor: #inverseArithmeticOperator!public! !
+!Kernel.StMessageNode categoriesFor: #inverseArithmeticOperator!public! !
 
 "End of package definition"!
 

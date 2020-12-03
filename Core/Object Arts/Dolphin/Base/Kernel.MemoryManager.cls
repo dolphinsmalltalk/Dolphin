@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MemoryManager
+Core.Object subclass: #'Kernel.MemoryManager'
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
 	classVariableNames: 'Current GCInterval'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MemoryManager guid: (GUID fromString: '{703bd0ad-fbff-4d00-866b-b80387f7b1d7}')!
-MemoryManager comment: 'MemoryManager is a singleton class whose sole instance is responsible for scheduling garbage collection, performing finalization, saving the image, etc.
+Kernel.MemoryManager guid: (Core.GUID fromString: '{703bd0ad-fbff-4d00-866b-b80387f7b1d7}')!
+Kernel.MemoryManager comment: 'MemoryManager is a singleton class whose sole instance is responsible for scheduling garbage collection, performing finalization, saving the image, etc.
 
 The MemoryManager owns two processes which are responsible for performing certain garbage collection activities in synchronization with the image. The garbage collector itself cannot perform these tasks because it runs asynchronously in the VM. The first of these processes is responsible for sending #finalize messages to objects that were previously marked as finalized before they expired. It does this by consuming objects from a queue which is populated by the collector. This activity is performed at low priority, as in general it is considered that reclaiming resources is a lower priority activity than interactive tasks. Also the asynchronous nature of garbage collection makes it unpredictable when (if ever) an object will actually be ready for finalization. However, to avoid the queue growing indefinitely when a higher priority CPU intensive task is consuming all available cycles, the finalization queue has a "high water mark". When the collector enqueues a finalizable object and finds the queue has passed the high water mark, it sends an interrupt (via the Processor object) to indicate this condition. The MemoryManager responds by temporarily boosting the priority of the finalization task to a relatively high level (above the normal "user" levels), so that it is cleared down quickly.
 
@@ -35,8 +35,8 @@ Class Variables:
 	Current		<MemoryManager>. Singleton instance.
 
 '!
-!MemoryManager categoriesForClass!System-Support! !
-!MemoryManager methodsFor!
+!Kernel.MemoryManager categoriesForClass!System-Support! !
+!Kernel.MemoryManager methodsFor!
 
 aboutToIdle
 	"Private - The system is about to quiesce, see whether its appropriate to reschedule 
@@ -72,8 +72,7 @@ bereavedOverflow: interruptArg
 	it is because the Undertaker has died, and must be restarted."
 
 	Notification signal: 'WARNING: Bereavement queue overflow'.
-	self ensureProcessesRunning
-!
+	self ensureProcessesRunning!
 
 bytesUsedByObject: anObject 
 	"Answer the memory consumed directly by the <Object> argument. This does not include any
@@ -173,10 +172,10 @@ directFunerals
 	(which is in any case required for synchronisation with the VM's garbage collection activities). 
 	This allows a user Process to synchronously send #directFunerals at certain points, though this 
 	should not be necessary because the Undertaker (necessarily) runs at a very high priority."
-	
+
 	| queueEntry |
 	queueEntry := Array new: 2.
-	[self dequeueBereavementInto: queueEntry] 
+	[self dequeueBereavementInto: queueEntry]
 		whileTrue: [(queueEntry basicAt: 1) elementsExpired: (queueEntry basicAt: 2)]!
 
 ensureProcessesRunning
@@ -244,7 +243,7 @@ forkUndertaker
 	data inside a critical section against the mutex with a supersend, implement 
 	elementsExpired: repairing the shared data inside the mutex)."
 
-	Notification signal: self class name, ': Restarting Undertaker process...'.
+	Notification signal: self class name , ': Restarting Undertaker process...'.
 	[self undertakerMain] forkAt: Processor highIOPriority!
 
 gcInterval
@@ -416,8 +415,7 @@ registerObjects
 
 	"Signal the semaphores in case any objects waiting in the queues"
 	lastRequests signal.
-	bereavements signal
-	!
+	bereavements signal!
 
 resetGCStats
 	lastGCTime := lastGCDuration := 0.
@@ -456,45 +454,45 @@ undertakerMain
 	[undertaker == Processor activeProcess] whileTrue: [
 	 	bereavements wait.
 		self directFunerals]! !
-!MemoryManager categoriesFor: #aboutToIdle!accessing!private! !
-!MemoryManager categoriesFor: #administerLastRites!finalizing!private! !
-!MemoryManager categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
-!MemoryManager categoriesFor: #bytesUsedByObject:!helpers!private! !
-!MemoryManager categoriesFor: #collectGarbage!garbage collection!private! !
-!MemoryManager categoriesFor: #compact!garbage collection!private! !
-!MemoryManager categoriesFor: #dequeueBereavementInto:!finalizing!private! !
-!MemoryManager categoriesFor: #dequeueForFinalization!finalizing!private! !
-!MemoryManager categoriesFor: #directFunerals!finalizing!private! !
-!MemoryManager categoriesFor: #ensureProcessesRunning!finalizing!private! !
-!MemoryManager categoriesFor: #finalizer!accessing!private! !
-!MemoryManager categoriesFor: #finalizerMain!finalizing!private! !
-!MemoryManager categoriesFor: #finalizerPriority!finalizing!private! !
-!MemoryManager categoriesFor: #forkFinalizer!finalizing!private! !
-!MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
-!MemoryManager categoriesFor: #gcInterval!accessing!private! !
-!MemoryManager categoriesFor: #getEvents!events!private! !
-!MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!MemoryManager categoriesFor: #initialize!development!initializing!private! !
-!MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
-!MemoryManager categoriesFor: #maxObjects!accessing!public! !
-!MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
-!MemoryManager categoriesFor: #minGCInterval!accessing!private! !
-!MemoryManager categoriesFor: #objectCount!garbage collection!private! !
-!MemoryManager categoriesFor: #objectHeaderSize!accessing!private! !
-!MemoryManager categoriesFor: #onPreSaveImage!event handling!private! !
-!MemoryManager categoriesFor: #onStartup!event handling!private! !
-!MemoryManager categoriesFor: #otOverflow:!interrupts!interrupts-handling!private! !
-!MemoryManager categoriesFor: #primCollectGarbage:!garbage collection!private! !
-!MemoryManager categoriesFor: #primCompact!garbage collection!private! !
-!MemoryManager categoriesFor: #primInstanceStats:!enquiries!private! !
-!MemoryManager categoriesFor: #registerObjects!initializing!private! !
-!MemoryManager categoriesFor: #resetGCStats!initializing!private! !
-!MemoryManager categoriesFor: #setEvents:!events!private! !
-!MemoryManager categoriesFor: #undertaker!accessing!private! !
-!MemoryManager categoriesFor: #undertaker:!finalizing!private! !
-!MemoryManager categoriesFor: #undertakerMain!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #aboutToIdle!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #administerLastRites!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
+!Kernel.MemoryManager categoriesFor: #bytesUsedByObject:!helpers!private! !
+!Kernel.MemoryManager categoriesFor: #collectGarbage!garbage collection!private! !
+!Kernel.MemoryManager categoriesFor: #compact!garbage collection!private! !
+!Kernel.MemoryManager categoriesFor: #dequeueBereavementInto:!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #dequeueForFinalization!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #directFunerals!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #ensureProcessesRunning!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #finalizer!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #finalizerMain!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #finalizerPriority!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #forkFinalizer!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #gcInterval!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #getEvents!events!private! !
+!Kernel.MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
+!Kernel.MemoryManager categoriesFor: #initialize!development!initializing!private! !
+!Kernel.MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
+!Kernel.MemoryManager categoriesFor: #maxObjects!accessing!public! !
+!Kernel.MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
+!Kernel.MemoryManager categoriesFor: #minGCInterval!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #objectCount!garbage collection!private! !
+!Kernel.MemoryManager categoriesFor: #objectHeaderSize!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #onPreSaveImage!event handling!private! !
+!Kernel.MemoryManager categoriesFor: #onStartup!event handling!private! !
+!Kernel.MemoryManager categoriesFor: #otOverflow:!interrupts!interrupts-handling!private! !
+!Kernel.MemoryManager categoriesFor: #primCollectGarbage:!garbage collection!private! !
+!Kernel.MemoryManager categoriesFor: #primCompact!garbage collection!private! !
+!Kernel.MemoryManager categoriesFor: #primInstanceStats:!enquiries!private! !
+!Kernel.MemoryManager categoriesFor: #registerObjects!initializing!private! !
+!Kernel.MemoryManager categoriesFor: #resetGCStats!initializing!private! !
+!Kernel.MemoryManager categoriesFor: #setEvents:!events!private! !
+!Kernel.MemoryManager categoriesFor: #undertaker!accessing!private! !
+!Kernel.MemoryManager categoriesFor: #undertaker:!finalizing!private! !
+!Kernel.MemoryManager categoriesFor: #undertakerMain!finalizing!private! !
 
-!MemoryManager class methodsFor!
+!Kernel.MemoryManager class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver.
@@ -529,9 +527,9 @@ removeFromSystem
 	and must not be deleted."
 
 	^self shouldNotImplement! !
-!MemoryManager class categoriesFor: #current!instance creation!public! !
-!MemoryManager class categoriesFor: #gcInterval:!accessing!public! !
-!MemoryManager class categoriesFor: #initialize!development!initializing!must strip!public! !
-!MemoryManager class categoriesFor: #new!development!instance creation!public! !
-!MemoryManager class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
+!Kernel.MemoryManager class categoriesFor: #current!instance creation!public! !
+!Kernel.MemoryManager class categoriesFor: #gcInterval:!accessing!public! !
+!Kernel.MemoryManager class categoriesFor: #initialize!development!initializing!must strip!public! !
+!Kernel.MemoryManager class categoriesFor: #new!development!instance creation!public! !
+!Kernel.MemoryManager class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #UndefinedObject
+Core.Object subclass: #'Core.UndefinedObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UndefinedObject guid: (GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
-UndefinedObject comment: 'UndefinedObject is the singleton class of the distinguished object, <nil>.
+Core.UndefinedObject guid: (Core.GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.UndefinedObject comment: 'UndefinedObject is the singleton class of the distinguished object, <nil>.
 
 <nil> is the initial value of all new variables (instance or otherwise), and hence a  primary purpose of UndefinedObject is to provide a means of detecting errors, especially those resulting from the failure to correctly initialize variables.
 
@@ -18,8 +18,8 @@ When interfacing to external functions, etc, <nil> is treated as the null pointe
 UndefinedObject implements the following ANSI protocols:
 	<Object>
 	<nil>'!
-!UndefinedObject categoriesForClass!Kernel-Objects! !
-!UndefinedObject methodsFor!
+!Core.UndefinedObject categoriesForClass!Kernel-Objects! !
+!Core.UndefinedObject methodsFor!
 
 ?? anObject
 	"Answer the receiver if not nil, else the operand."
@@ -41,7 +41,7 @@ deepCopy
 	^self!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
 ifNil: nilBlock 
@@ -82,11 +82,8 @@ ifNotNil: notNilBlock ifNil: nilBlock
 importsFromPoolsString: poolDictString
 	^poolDictString subStrings distinct collect: [:each | each asQualifiedReference]!
 
-includesBehavior: aBehavior
-	"Answer whether the receiver includes the behavior, aClass
-	(i.e. is aBehavior the receiver or a superclass of the receiver)"
-
-	^aBehavior isNil!
+includesEnvironment: aClass
+	^false!
 
 isAtomic
 	"Answer whether or not the receiver has a single unique instance for any individual value it
@@ -187,39 +184,39 @@ yourAddress
 	Nil is treated like a NULL pointer."
 
 	^0! !
-!UndefinedObject categoriesFor: #??!converting!public! !
-!UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
-!UndefinedObject categoriesFor: #bindingFor:!binding!public! !
-!UndefinedObject categoriesFor: #deepCopy!copying!public! !
-!UndefinedObject categoriesFor: #displayOn:!displaying!public! !
-!UndefinedObject categoriesFor: #ifNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!UndefinedObject categoriesFor: #importsFromPoolsString:!class hierarchy-adding!private! !
-!UndefinedObject categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
-!UndefinedObject categoriesFor: #isAtomic!public!testing! !
-!UndefinedObject categoriesFor: #isLiteral!public!testing! !
-!UndefinedObject categoriesFor: #isNil!public!testing! !
-!UndefinedObject categoriesFor: #isNull!private!testing! !
-!UndefinedObject categoriesFor: #name!accessing!public! !
-!UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
-!UndefinedObject categoriesFor: #notNil!public!testing! !
-!UndefinedObject categoriesFor: #notNull!private!testing! !
-!UndefinedObject categoriesFor: #printOn:!printing!public! !
-!UndefinedObject categoriesFor: #printString!printing!public! !
-!UndefinedObject categoriesFor: #refersToLiteral:!private!testing! !
-!UndefinedObject categoriesFor: #shallowCopy!copying!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #yourAddress!accessing!private! !
+!Core.UndefinedObject categoriesFor: #??!converting!public! !
+!Core.UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
+!Core.UndefinedObject categoriesFor: #bindingFor:!binding!public! !
+!Core.UndefinedObject categoriesFor: #deepCopy!copying!public! !
+!Core.UndefinedObject categoriesFor: #displayOn:!displaying!public! !
+!Core.UndefinedObject categoriesFor: #ifNil:!control flow!public! !
+!Core.UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
+!Core.UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
+!Core.UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
+!Core.UndefinedObject categoriesFor: #importsFromPoolsString:!class hierarchy-adding!private! !
+!Core.UndefinedObject categoriesFor: #includesEnvironment:!private!testing! !
+!Core.UndefinedObject categoriesFor: #isAtomic!public!testing! !
+!Core.UndefinedObject categoriesFor: #isLiteral!public!testing! !
+!Core.UndefinedObject categoriesFor: #isNil!public!testing! !
+!Core.UndefinedObject categoriesFor: #isNull!private!testing! !
+!Core.UndefinedObject categoriesFor: #name!accessing!public! !
+!Core.UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
+!Core.UndefinedObject categoriesFor: #notNil!public!testing! !
+!Core.UndefinedObject categoriesFor: #notNull!private!testing! !
+!Core.UndefinedObject categoriesFor: #printOn:!printing!public! !
+!Core.UndefinedObject categoriesFor: #printString!printing!public! !
+!Core.UndefinedObject categoriesFor: #refersToLiteral:!private!testing! !
+!Core.UndefinedObject categoriesFor: #shallowCopy!copying!public! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!Core.UndefinedObject categoriesFor: #yourAddress!accessing!private! !
 
-!UndefinedObject class methodsFor!
+!Core.UndefinedObject class methodsFor!
 
 new
 	"Answer a new instance of the receiver.
 	There can be only one!!"
 
 	^nil! !
-!UndefinedObject class categoriesFor: #new!instance creation!public! !
+!Core.UndefinedObject class categoriesFor: #new!instance creation!public! !
 

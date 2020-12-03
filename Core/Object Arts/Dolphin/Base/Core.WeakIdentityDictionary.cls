@@ -1,22 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WeakLookupTable variableSubclass: #WeakIdentityDictionary
+Core.WeakLookupTable variableSubclass: #'Core.WeakIdentityDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakIdentityDictionary guid: (GUID fromString: '{87b4c534-026e-11d3-9fd7-00a0cc3e4a32}')!
-WeakIdentityDictionary comment: ''!
-!WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !
-!WeakIdentityDictionary methodsFor!
+Core.WeakIdentityDictionary guid: (Core.GUID fromString: '{87b4c534-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakIdentityDictionary comment: ''!
+!Core.WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !
+!Core.WeakIdentityDictionary methodsFor!
 
 findKeyOrNil: anObject
 	"Private - This method is a copy of IdentityDictionary>>findKeyOrNil:"
 
 	| capacity index |
-	capacity := self basicSize.
-	index := anObject identityHash \\ capacity + 1.
+	index := anObject identityHash \\ (capacity := self basicSize) + 1.
 	
 	[| key |
 	(key := self basicAt: index) isNil or: [key == anObject]]
@@ -28,7 +27,7 @@ hash: anObject max: anInteger
 
 keysClass
 	"Answer the class of Collection to be used for collecting the keys of the receiver"
-	
+
 	^IdentitySet!
 
 searchPolicy
@@ -42,13 +41,13 @@ species
 	which is less than useful."
 
 	^IdentityDictionary! !
-!WeakIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!WeakIdentityDictionary categoriesFor: #hash:max:!private!searching! !
-!WeakIdentityDictionary categoriesFor: #keysClass!constants!public! !
-!WeakIdentityDictionary categoriesFor: #searchPolicy!constants!public! !
-!WeakIdentityDictionary categoriesFor: #species!accessing!public! !
+!Core.WeakIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
+!Core.WeakIdentityDictionary categoriesFor: #hash:max:!private!searching! !
+!Core.WeakIdentityDictionary categoriesFor: #keysClass!constants!public! !
+!Core.WeakIdentityDictionary categoriesFor: #searchPolicy!constants!public! !
+!Core.WeakIdentityDictionary categoriesFor: #species!accessing!public! !
 
-!WeakIdentityDictionary class methodsFor!
+!Core.WeakIdentityDictionary class methodsFor!
 
 initialize
 	"Initialize the receiver.
@@ -64,8 +63,8 @@ new: anInteger
 	^(super new: anInteger)
 		haveWeakKeys;
 		yourself! !
-!WeakIdentityDictionary class categoriesFor: #initialize!development!initializing!public! !
-!WeakIdentityDictionary class categoriesFor: #new:!instance creation!public! !
+!Core.WeakIdentityDictionary class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakIdentityDictionary class categoriesFor: #new:!instance creation!public! !
 
-WeakIdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
+Core.WeakIdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

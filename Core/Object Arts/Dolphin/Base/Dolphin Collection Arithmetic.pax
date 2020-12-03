@@ -1,13 +1,13 @@
 ﻿| package |
 package := Package name: 'Dolphin Collection Arithmetic'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setMethodNames: #(
-	#(#{Collection} #max)
-	#(#{Collection} #sum)
+	#(#{Core.Collection} #max)
+	#(#{Core.Collection} #sum)
 ).
 
 package setPrerequisites: #(
@@ -18,7 +18,7 @@ package!
 
 "Loose Methods"!
 
-!Collection methodsFor!
+!Core.Collection methodsFor!
 
 max
 	^ self inject: self anyOne into: [:max :each | max max: each]!
@@ -27,8 +27,8 @@ sum
 	| sample |
 	sample :=self anyOne.
 	^(self inject: sample into: [:sum :each | sum + each]) - sample! !
-!Collection categoriesFor: #max!arithmetic!public! !
-!Collection categoriesFor: #sum!arithmetic!public! !
+!Core.Collection categoriesFor: #max!arithmetic!public! !
+!Core.Collection categoriesFor: #sum!arithmetic!public! !
 
 "End of package definition"!
 

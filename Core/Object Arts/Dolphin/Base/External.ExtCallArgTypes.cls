@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ExtCallArgTypes
+Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -43,6 +43,7 @@ SharedPool subclass: #ExtCallArgTypes
 		'ExtCallArgVOID' -> 16r0.
 		'ExtCallArgWORD' -> 16r5
 	}!
-ExtCallArgTypes guid: (GUID fromString: '{653fdbfe-ab01-4733-82d1-8791949ad833}')!
-ExtCallArgTypes comment: ''!
-!ExtCallArgTypes categoriesForClass!External-Libraries! !
+External.ExtCallArgTypes guid: (Core.GUID fromString: '{653fdbfe-ab01-4733-82d1-8791949ad833}')!
+External.ExtCallArgTypes isNonInstantiable: true!
+External.ExtCallArgTypes comment: ''!
+!External.ExtCallArgTypes categoriesForClass!External-Libraries! !

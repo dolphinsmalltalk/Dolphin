@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Magnitude subclass: #ArithmeticValue
+Core.Magnitude subclass: #'Core.ArithmeticValue'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArithmeticValue guid: (GUID fromString: '{87b4c64f-026e-11d3-9fd7-00a0cc3e4a32}')!
-ArithmeticValue isAbstract: true!
-ArithmeticValue comment: ''!
-!ArithmeticValue categoriesForClass!Magnitude-General! !
-!ArithmeticValue methodsFor!
+Core.ArithmeticValue guid: (Core.GUID fromString: '{87b4c64f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ArithmeticValue isNonInstantiable: true!
+Core.ArithmeticValue comment: ''!
+!Core.ArithmeticValue categoriesForClass!Magnitude-General! !
+!Core.ArithmeticValue methodsFor!
 
 - operand
 	"Answer the difference between the receiver and the <number>
@@ -471,74 +471,74 @@ understandsArithmetic
 	All Numbers do."
 
 	^true! !
-!ArithmeticValue categoriesFor: #-!arithmetic!public! !
-!ArithmeticValue categoriesFor: #%!arithmetic!public! !
-!ArithmeticValue categoriesFor: #*!arithmetic!public! !
-!ArithmeticValue categoriesFor: #**!mathematical!public! !
-!ArithmeticValue categoriesFor: #/!arithmetic!public! !
-!ArithmeticValue categoriesFor: #//!arithmetic!public! !
-!ArithmeticValue categoriesFor: #\\!arithmetic!public! !
-!ArithmeticValue categoriesFor: #+!arithmetic!public! !
-!ArithmeticValue categoriesFor: #=!comparing!public! !
-!ArithmeticValue categoriesFor: #abs!arithmetic!public! !
-!ArithmeticValue categoriesFor: #addToFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #ceiling!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #coerce:!coercing!private! !
-!ArithmeticValue categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #floor!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #generality!coercing!private! !
-!ArithmeticValue categoriesFor: #greaterThanFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #isZero!public!testing! !
-!ArithmeticValue categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #negated!arithmetic!public! !
-!ArithmeticValue categoriesFor: #negative!public!testing! !
-!ArithmeticValue categoriesFor: #positive!public!testing! !
-!ArithmeticValue categoriesFor: #quo:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #quotientFromInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #raisedTo:!mathematical!public! !
-!ArithmeticValue categoriesFor: #raisedToInteger:!mathematical!public! !
-!ArithmeticValue categoriesFor: #reciprocal!arithmetic!public! !
-!ArithmeticValue categoriesFor: #rem:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #retry:coercing:!coercing!private! !
-!ArithmeticValue categoriesFor: #roundDownTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #rounded!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #roundTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #roundUpTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #sign!public!testing! !
-!ArithmeticValue categoriesFor: #squared!mathematical!public! !
-!ArithmeticValue categoriesFor: #strictlyPositive!public!testing! !
-!ArithmeticValue categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #truncated!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #truncateTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #understandsArithmetic!public!testing! !
+!Core.ArithmeticValue categoriesFor: #-!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #%!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #*!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #**!mathematical!public! !
+!Core.ArithmeticValue categoriesFor: #/!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #//!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #\\!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #+!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #=!comparing!public! !
+!Core.ArithmeticValue categoriesFor: #abs!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #addToFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #addToFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #addToInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #addToPoint:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #addToPoint3D:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #addToScaledDecimal:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #ceiling!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #coerce:!coercing!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoPoint:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #equalToFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #equalToFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #equalToInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #floor!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #generality!coercing!private! !
+!Core.ArithmeticValue categoriesFor: #greaterThanFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #greaterThanFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #greaterThanInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #isZero!public!testing! !
+!Core.ArithmeticValue categoriesFor: #multiplyByFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #multiplyByFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #multiplyByPoint:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #negated!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #negative!public!testing! !
+!Core.ArithmeticValue categoriesFor: #positive!public!testing! !
+!Core.ArithmeticValue categoriesFor: #quo:!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #quotientFromInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #raisedTo:!mathematical!public! !
+!Core.ArithmeticValue categoriesFor: #raisedToInteger:!mathematical!public! !
+!Core.ArithmeticValue categoriesFor: #reciprocal!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #rem:!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #retry:coercing:!coercing!private! !
+!Core.ArithmeticValue categoriesFor: #roundDownTo:!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #rounded!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #roundTo:!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #roundUpTo:!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #sign!public!testing! !
+!Core.ArithmeticValue categoriesFor: #squared!mathematical!public! !
+!Core.ArithmeticValue categoriesFor: #strictlyPositive!public!testing! !
+!Core.ArithmeticValue categoriesFor: #subtractFromFloat:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #subtractFromFraction:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #subtractFromPoint:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #truncated!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #truncateTo:!public!truncation and round off! !
+!Core.ArithmeticValue categoriesFor: #understandsArithmetic!public!testing! !
 
-!ArithmeticValue class methodsFor!
+!Core.ArithmeticValue class methodsFor!
 
 one
 	"Answer the receiver's representation of one."
@@ -549,6 +549,6 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^self subclassResponsibility! !
-!ArithmeticValue class categoriesFor: #one!instance creation!public! !
-!ArithmeticValue class categoriesFor: #zero!instance creation!public! !
+!Core.ArithmeticValue class categoriesFor: #one!instance creation!public! !
+!Core.ArithmeticValue class categoriesFor: #zero!instance creation!public! !
 

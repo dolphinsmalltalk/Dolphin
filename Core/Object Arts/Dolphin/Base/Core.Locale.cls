@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Locale
+Core.Object subclass: #'Core.Locale'
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
-	poolDictionaries: 'WinNlsConstants'
+	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
-Locale isAbstract: true!
-Locale comment: ''!
-!Locale categoriesForClass!System-Support! !
-!Locale methodsFor!
+Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Locale isNonInstantiable: true!
+Core.Locale comment: ''!
+!Core.Locale categoriesForClass!System-Support! !
+!Core.Locale methodsFor!
 
 = anObject
 	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
@@ -114,7 +114,9 @@ dateAndTimeFormatters
 				stream
 					nextPutAll: (time hour24 < 12 ifTrue: [locale shortAmDesignator] ifFalse: [locale shortPmDesignator])];
 		at: 'tt'
-			put: [:locale :time :stream | stream nextPutAll: (time hour24 < 12 ifTrue: [locale amDesignator] ifFalse: [locale pmDesignator])].
+			put: 
+				[:locale :time :stream |
+				stream nextPutAll: (time hour24 < 12 ifTrue: [locale amDesignator] ifFalse: [locale pmDesignator])].
 	1 to: 9
 		do: 
 			[:i |
@@ -133,7 +135,11 @@ dateAndTimeFormatters
 						printOn: stream
 						base: 10
 						nDigits: i]].
-	formatters)!
+	formatters)
+	"Date formats"
+	"Time formats"
+	"Date formats"
+	"Time formats"!
 
 dateFormat
 	"Answer the default date format for the receiver locale.
@@ -218,6 +224,11 @@ displayFloat: aFloat on: aWriteStream
 		printFloat: aFloat
 		on: aWriteStream
 		format: self numberFormat!
+
+displayInteger: anInteger on: aStream
+	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a user would want to see it."
+
+	anInteger printOn: aStream base: 10!
 
 displayName
 	"The name of the locale in its native language."
@@ -326,7 +337,7 @@ firstDayOfWeek
 	^self subclassResponsibility!
 
 getNumberFormat
-	^NUMBERFMTW new
+	^OS.NUMBERFMTW new
 		decimalPlaces: self decimalPlaces;
 		hasLeadingZero: self hasLeadingZero;
 		numberGrouping: self numberGrouping;
@@ -608,7 +619,7 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 							digitCount: 17
 							decimalExponents: ##(SmallInteger minimum to: SmallInteger maximum).
 					stream grabContents].
-	lib := KernelLibrary default.
+	lib := OS.KernelLibrary default.
 	size := lib
 				getNumberFormat: lcidInteger
 				dwFlags: 0
@@ -717,79 +728,80 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
-!Locale categoriesFor: #=!comparing!public! !
-!Locale categoriesFor: #amDesignator!constants!public! !
-!Locale categoriesFor: #boolFormat!constants!public! !
-!Locale categoriesFor: #dateAndTimeFormatters!printing!private! !
-!Locale categoriesFor: #dateFormat!constants!public! !
-!Locale categoriesFor: #dayOfWeek:!mapping!public! !
-!Locale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!Locale categoriesFor: #dayOfWeekName:!constants!public! !
-!Locale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!Locale categoriesFor: #decimalPlaces!constants!public! !
-!Locale categoriesFor: #decimalSeparator!constants!public! !
-!Locale categoriesFor: #displayDate:on:!printing!public! !
-!Locale categoriesFor: #displayDateTime:on:!printing!public! !
-!Locale categoriesFor: #displayDuration:on:!printing!public! !
-!Locale categoriesFor: #displayFloat:on:!printing!public! !
-!Locale categoriesFor: #displayName!displaying!public! !
-!Locale categoriesFor: #displayTime:on:!printing!public! !
-!Locale categoriesFor: #durationFormat!constants!public! !
-!Locale categoriesFor: #durationFormatters!printing!private! !
-!Locale categoriesFor: #englishDisplayName!constants!public! !
-!Locale categoriesFor: #englishLanguageName!constants!public! !
-!Locale categoriesFor: #firstDayOfWeek!constants!public! !
-!Locale categoriesFor: #getNumberFormat!helpers!private! !
-!Locale categoriesFor: #hash!comparing!public! !
-!Locale categoriesFor: #hasLeadingZero!constants!public! !
-!Locale categoriesFor: #indexOfMonth:!enquiries!public! !
-!Locale categoriesFor: #infinity!constants!public! !
-!Locale categoriesFor: #isInstalled!public!testing! !
-!Locale categoriesFor: #iso639LanguageName!constants!public! !
-!Locale categoriesFor: #isSelfEvaluating!public!testing! !
-!Locale categoriesFor: #isValid!public!testing! !
-!Locale categoriesFor: #languageId!accessing!public! !
-!Locale categoriesFor: #lastTwoDigitYear!constants!public! !
-!Locale categoriesFor: #lcid!accessing!public! !
-!Locale categoriesFor: #listSeparator!constants!public! !
-!Locale categoriesFor: #localizedDisplayName!constants!public! !
-!Locale categoriesFor: #longDateFormat!constants!public! !
-!Locale categoriesFor: #longTimeFormat!constants!public! !
-!Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
-!Locale categoriesFor: #monthName:!enquiries!public! !
-!Locale categoriesFor: #name!constants!public! !
-!Locale categoriesFor: #nan!constants!public! !
-!Locale categoriesFor: #nativeDigits!constants!public! !
-!Locale categoriesFor: #negativeInfinity!constants!public! !
-!Locale categoriesFor: #negativeNumberMode!constants!public! !
-!Locale categoriesFor: #negativeSign!constants!public! !
-!Locale categoriesFor: #numberFormat!constants!public! !
-!Locale categoriesFor: #numberFormat:!accessing!private! !
-!Locale categoriesFor: #numberGrouping!constants!public! !
-!Locale categoriesFor: #percentSymbol!constants!public! !
-!Locale categoriesFor: #pmDesignator!constants!public! !
-!Locale categoriesFor: #primary!printing!public! !
-!Locale categoriesFor: #print:on:format:alphabet:formatters:!printing!private! !
-!Locale categoriesFor: #printDate:on:format:!printing!public! !
-!Locale categoriesFor: #printDateTime:on:format:!printing!public! !
-!Locale categoriesFor: #printDuration:on:format:!printing!public! !
-!Locale categoriesFor: #printFloat:!printing!public! !
-!Locale categoriesFor: #printFloat:format:!printing!public! !
-!Locale categoriesFor: #printFloat:format:lcid:!printing!public! !
-!Locale categoriesFor: #printFloat:on:format:!printing!public! !
-!Locale categoriesFor: #printFractionalPart:on:places:!printing!private! !
-!Locale categoriesFor: #printTime:on:format:!printing!public! !
-!Locale categoriesFor: #shortAmDesignator!constants!public! !
-!Locale categoriesFor: #shortDateFormat!constants!public! !
-!Locale categoriesFor: #shortPmDesignator!constants!public! !
-!Locale categoriesFor: #shortTimeFormat!constants!public! !
-!Locale categoriesFor: #subLanguageId!accessing!public! !
-!Locale categoriesFor: #tag!constants!public! !
-!Locale categoriesFor: #thousandSeparator!constants!public! !
-!Locale categoriesFor: #timeFormat!constants!public! !
-!Locale categoriesFor: #yearMonthFormat!constants!public! !
+!Core.Locale categoriesFor: #=!comparing!public! !
+!Core.Locale categoriesFor: #amDesignator!constants!public! !
+!Core.Locale categoriesFor: #boolFormat!constants!public! !
+!Core.Locale categoriesFor: #dateAndTimeFormatters!printing!private! !
+!Core.Locale categoriesFor: #dateFormat!constants!public! !
+!Core.Locale categoriesFor: #dayOfWeek:!mapping!public! !
+!Core.Locale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
+!Core.Locale categoriesFor: #dayOfWeekName:!constants!public! !
+!Core.Locale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
+!Core.Locale categoriesFor: #decimalPlaces!constants!public! !
+!Core.Locale categoriesFor: #decimalSeparator!constants!public! !
+!Core.Locale categoriesFor: #displayDate:on:!printing!public! !
+!Core.Locale categoriesFor: #displayDateTime:on:!printing!public! !
+!Core.Locale categoriesFor: #displayDuration:on:!printing!public! !
+!Core.Locale categoriesFor: #displayFloat:on:!printing!public! !
+!Core.Locale categoriesFor: #displayInteger:on:!printing!public! !
+!Core.Locale categoriesFor: #displayName!displaying!public! !
+!Core.Locale categoriesFor: #displayTime:on:!printing!public! !
+!Core.Locale categoriesFor: #durationFormat!constants!public! !
+!Core.Locale categoriesFor: #durationFormatters!printing!private! !
+!Core.Locale categoriesFor: #englishDisplayName!constants!public! !
+!Core.Locale categoriesFor: #englishLanguageName!constants!public! !
+!Core.Locale categoriesFor: #firstDayOfWeek!constants!public! !
+!Core.Locale categoriesFor: #getNumberFormat!helpers!private! !
+!Core.Locale categoriesFor: #hash!comparing!public! !
+!Core.Locale categoriesFor: #hasLeadingZero!constants!public! !
+!Core.Locale categoriesFor: #indexOfMonth:!enquiries!public! !
+!Core.Locale categoriesFor: #infinity!constants!public! !
+!Core.Locale categoriesFor: #isInstalled!public!testing! !
+!Core.Locale categoriesFor: #iso639LanguageName!constants!public! !
+!Core.Locale categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.Locale categoriesFor: #isValid!public!testing! !
+!Core.Locale categoriesFor: #languageId!accessing!public! !
+!Core.Locale categoriesFor: #lastTwoDigitYear!constants!public! !
+!Core.Locale categoriesFor: #lcid!accessing!public! !
+!Core.Locale categoriesFor: #listSeparator!constants!public! !
+!Core.Locale categoriesFor: #localizedDisplayName!constants!public! !
+!Core.Locale categoriesFor: #longDateFormat!constants!public! !
+!Core.Locale categoriesFor: #longTimeFormat!constants!public! !
+!Core.Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
+!Core.Locale categoriesFor: #monthName:!enquiries!public! !
+!Core.Locale categoriesFor: #name!constants!public! !
+!Core.Locale categoriesFor: #nan!constants!public! !
+!Core.Locale categoriesFor: #nativeDigits!constants!public! !
+!Core.Locale categoriesFor: #negativeInfinity!constants!public! !
+!Core.Locale categoriesFor: #negativeNumberMode!constants!public! !
+!Core.Locale categoriesFor: #negativeSign!constants!public! !
+!Core.Locale categoriesFor: #numberFormat!constants!public! !
+!Core.Locale categoriesFor: #numberFormat:!accessing!private! !
+!Core.Locale categoriesFor: #numberGrouping!constants!public! !
+!Core.Locale categoriesFor: #percentSymbol!constants!public! !
+!Core.Locale categoriesFor: #pmDesignator!constants!public! !
+!Core.Locale categoriesFor: #primary!printing!public! !
+!Core.Locale categoriesFor: #print:on:format:alphabet:formatters:!printing!private! !
+!Core.Locale categoriesFor: #printDate:on:format:!printing!public! !
+!Core.Locale categoriesFor: #printDateTime:on:format:!printing!public! !
+!Core.Locale categoriesFor: #printDuration:on:format:!printing!public! !
+!Core.Locale categoriesFor: #printFloat:!printing!public! !
+!Core.Locale categoriesFor: #printFloat:format:!printing!public! !
+!Core.Locale categoriesFor: #printFloat:format:lcid:!printing!public! !
+!Core.Locale categoriesFor: #printFloat:on:format:!printing!public! !
+!Core.Locale categoriesFor: #printFractionalPart:on:places:!printing!private! !
+!Core.Locale categoriesFor: #printTime:on:format:!printing!public! !
+!Core.Locale categoriesFor: #shortAmDesignator!constants!public! !
+!Core.Locale categoriesFor: #shortDateFormat!constants!public! !
+!Core.Locale categoriesFor: #shortPmDesignator!constants!public! !
+!Core.Locale categoriesFor: #shortTimeFormat!constants!public! !
+!Core.Locale categoriesFor: #subLanguageId!accessing!public! !
+!Core.Locale categoriesFor: #tag!constants!public! !
+!Core.Locale categoriesFor: #thousandSeparator!constants!public! !
+!Core.Locale categoriesFor: #timeFormat!constants!public! !
+!Core.Locale categoriesFor: #yearMonthFormat!constants!public! !
 
-!Locale class methodsFor!
+!Core.Locale class methodsFor!
 
 default
 	"Answer the instance of the receiver which represents the default user locale."
@@ -798,9 +810,9 @@ default
 
 getTimeZoneInfo
 	| timeZoneInfo rc |
-	timeZoneInfo := TIME_ZONE_INFORMATION new.
-	rc := KernelLibrary default getTimeZoneInformation: timeZoneInfo.
-	rc = -1 ifTrue: [^KernelLibrary default systemError].
+	timeZoneInfo := OS.TIME_ZONE_INFORMATION new.
+	rc := OS.KernelLibrary default getTimeZoneInformation: timeZoneInfo.
+	rc = -1 ifTrue: [^OS.KernelLibrary default systemError].
 	timeZoneInfo zoneId: rc.
 	^timeZoneInfo!
 
@@ -817,11 +829,11 @@ installedSystemLocales
 		Locale installedSystemLocales
 	"
 
-	^WindowsLocale systemLocales: LCID_INSTALLED!
+	^OS.WindowsLocale systemLocales: LCID_INSTALLED!
 
 installedUILanguages
 	^InstalledUILanguages
-		ifNil: [InstalledUILanguages := (WindowsLocale installedUILanguages: MUI_LANGUAGE_NAME) asSet]!
+		ifNil: [InstalledUILanguages := (OS.WindowsLocale installedUILanguages: MUI_LANGUAGE_NAME) asSet]!
 
 invariant
 	"Answer the instance of the receiver which represents the invariant locale."
@@ -831,7 +843,7 @@ invariant
 lcid: anLCID
 	"Answer an instance of the receiver to represent the Locale with the specified id."
 
-	^WindowsLocale new lcid: anLCID!
+	^OS.WindowsLocale new lcid: anLCID!
 
 makeLangId: langIdBits subLang: subLangIdBits
 	"Private - Answer a Win32 language Id word constructed from langIdBits (10 bits
@@ -851,7 +863,7 @@ makeLcId: langIdWord sortId: sortIdBits
 named: aString
 	"Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	^(aString sameAs: 'smalltalk') ifTrue: [self smalltalk] ifFalse: [WindowsLocale named: aString]!
+	^(aString sameAs: 'smalltalk') ifTrue: [self smalltalk] ifFalse: [OS.WindowsLocale named: aString]!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
@@ -893,18 +905,18 @@ supportedSystemLocales
 		Locale supportedSystemLocales
 	"
 
-	^WindowsLocale systemLocales: LCID_SUPPORTED!
+	^OS.WindowsLocale systemLocales: LCID_SUPPORTED!
 
 systemDefault
 	"Answer the instance of the receiver which represents the default system locale."
 
-	^SystemDefault ifNil: [SystemDefault := self lcid: KernelLibrary default getSystemDefaultLCID]!
+	^SystemDefault ifNil: [SystemDefault := self lcid: OS.KernelLibrary default getSystemDefaultLCID]!
 
 timeZoneInformation
 	^TimeZoneInfo ifNil: [TimeZoneInfo := self getTimeZoneInfo]!
 
 uiDefault
-	^self lcid: KernelLibrary default getThreadUILanguage!
+	^self lcid: OS.KernelLibrary default getThreadUILanguage!
 
 userDefault
 	"Answer the instance of the receiver which represents the default user locale."
@@ -916,25 +928,25 @@ userDefault: aLocale
 	oldDefault := UserDefault.
 	UserDefault := aLocale ifNil: [self uiDefault].
 	^oldDefault! !
-!Locale class categoriesFor: #default!accessing!public! !
-!Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
-!Locale class categoriesFor: #initialize!class initialization!public! !
-!Locale class categoriesFor: #installedSystemLocales!enquiries!private! !
-!Locale class categoriesFor: #installedUILanguages!enquiries!public! !
-!Locale class categoriesFor: #invariant!instance creation!public! !
-!Locale class categoriesFor: #lcid:!instance creation!public! !
-!Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !
-!Locale class categoriesFor: #makeLcId:sortId:!enquiries!private! !
-!Locale class categoriesFor: #named:!instance creation!public! !
-!Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Locale class categoriesFor: #onSettingChanged:!event handling!private! !
-!Locale class categoriesFor: #onStartup!event handling!private! !
-!Locale class categoriesFor: #reset!initializing!private! !
-!Locale class categoriesFor: #smalltalk!instance creation!public! !
-!Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
-!Locale class categoriesFor: #systemDefault!instance creation!public! !
-!Locale class categoriesFor: #timeZoneInformation!enquiries!public! !
-!Locale class categoriesFor: #uiDefault!instance creation!public! !
-!Locale class categoriesFor: #userDefault!instance creation!public! !
-!Locale class categoriesFor: #userDefault:!instance creation!public! !
+!Core.Locale class categoriesFor: #default!accessing!public! !
+!Core.Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
+!Core.Locale class categoriesFor: #initialize!class initialization!public! !
+!Core.Locale class categoriesFor: #installedSystemLocales!enquiries!private! !
+!Core.Locale class categoriesFor: #installedUILanguages!enquiries!public! !
+!Core.Locale class categoriesFor: #invariant!instance creation!public! !
+!Core.Locale class categoriesFor: #lcid:!instance creation!public! !
+!Core.Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !
+!Core.Locale class categoriesFor: #makeLcId:sortId:!enquiries!private! !
+!Core.Locale class categoriesFor: #named:!instance creation!public! !
+!Core.Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Core.Locale class categoriesFor: #onSettingChanged:!event handling!private! !
+!Core.Locale class categoriesFor: #onStartup!event handling!private! !
+!Core.Locale class categoriesFor: #reset!initializing!public! !
+!Core.Locale class categoriesFor: #smalltalk!instance creation!public! !
+!Core.Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
+!Core.Locale class categoriesFor: #systemDefault!instance creation!public! !
+!Core.Locale class categoriesFor: #timeZoneInformation!enquiries!public! !
+!Core.Locale class categoriesFor: #uiDefault!instance creation!public! !
+!Core.Locale class categoriesFor: #userDefault!instance creation!public! !
+!Core.Locale class categoriesFor: #userDefault:!instance creation!public! !
 

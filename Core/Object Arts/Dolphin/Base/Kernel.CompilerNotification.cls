@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Notification subclass: #CompilerNotification
+Core.Notification subclass: #'Kernel.CompilerNotification'
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
 	classVariableNames: 'ErrorFormats'
-	imports: #(#{SmalltalkParseErrorCodes})
+	imports: #(#{Kernel.ParseErrorCodes private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompilerNotification guid: (GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
-CompilerNotification isAbstract: true!
-CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.
+Kernel.CompilerNotification guid: (Core.GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.CompilerNotification isNonInstantiable: true!
+Kernel.CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.
 
 Instance Variables:
 	position		<integer>. Position in source text at which error detected. Not necessarily the same as range start.
@@ -20,8 +20,8 @@ Instance Variables:
 	selector		<Symbol>. Selector of the method being compiled, if available
 
 N.B. The inherited''''tag'''' instance variable is used to hold the <integer> error code, but the inherited ''''messageText'''' instance variable is unused.'''!
-!CompilerNotification categoriesForClass!System-Compiler! !
-!CompilerNotification methodsFor!
+!Kernel.CompilerNotification categoriesForClass!System-Compiler! !
+!Kernel.CompilerNotification methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
@@ -47,7 +47,7 @@ code: anInteger in: aString for: aClass selector: aSymbol position: posInteger l
 	offset := 0!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: self severityName;
@@ -133,37 +133,37 @@ source
 	was being compiled."
 
 	^source ?? ''! !
-!CompilerNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!CompilerNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!CompilerNotification categoriesFor: #code:in:for:selector:position:line:ranges:extras:!initializing!private! !
-!CompilerNotification categoriesFor: #displayOn:!displaying!public! !
-!CompilerNotification categoriesFor: #errorCode!accessing!public! !
-!CompilerNotification categoriesFor: #errorMessage!accessing!public! !
-!CompilerNotification categoriesFor: #extras!accessing!public! !
-!CompilerNotification categoriesFor: #line!accessing!public! !
-!CompilerNotification categoriesFor: #methodClass!accessing!public! !
-!CompilerNotification categoriesFor: #offset!private! !
-!CompilerNotification categoriesFor: #offset:!private! !
-!CompilerNotification categoriesFor: #position!accessing!public! !
-!CompilerNotification categoriesFor: #range!accessing!public! !
-!CompilerNotification categoriesFor: #ranges!accessing!public! !
-!CompilerNotification categoriesFor: #selector!accessing!public! !
-!CompilerNotification categoriesFor: #severity!constants!public! !
-!CompilerNotification categoriesFor: #severityName!displaying!public! !
-!CompilerNotification categoriesFor: #source!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #_descriptionArguments!displaying!public! !
+!Kernel.CompilerNotification categoriesFor: #_descriptionFormat!displaying!public! !
+!Kernel.CompilerNotification categoriesFor: #code:in:for:selector:position:line:ranges:extras:!initializing!private! !
+!Kernel.CompilerNotification categoriesFor: #displayOn:!displaying!public! !
+!Kernel.CompilerNotification categoriesFor: #errorCode!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #errorMessage!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #extras!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #line!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #methodClass!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #offset!private! !
+!Kernel.CompilerNotification categoriesFor: #offset:!private! !
+!Kernel.CompilerNotification categoriesFor: #position!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #range!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #ranges!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #selector!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #severity!constants!public! !
+!Kernel.CompilerNotification categoriesFor: #severityName!displaying!public! !
+!Kernel.CompilerNotification categoriesFor: #source!accessing!public! !
 
-!CompilerNotification class methodsFor!
+!Kernel.CompilerNotification class methodsFor!
 
 beep
 	"Sound a beep describing the severity of the notification."
 
 	self severityClass beep!
 
-classForCode: anInteger 
-	^anInteger < CWarnFirst 
+classForCode: anInteger
+	^anInteger < CWarnFirst
 		ifTrue: [CompilerErrorNotification]
 		ifFalse: 
-			[(Compiler isWarningDisabled: anInteger) 
+			[(Compiler isWarningDisabled: anInteger)
 				ifTrue: [DeafObject current]
 				ifFalse: 
 					[anInteger < CInfoFirst ifTrue: [CompilerWarningNotification] ifFalse: [CompilerInfoNotification]]]!
@@ -235,7 +235,6 @@ initialize
 		at: CErrExpectExtType put: 'external type expected';
 		at: CErrArgTypeCannotBeVoid put: 'argument type can''t be void';
 		at: CErrNotIndirectable put: 'too many indirections for type <2d>';
-		at: CErrUndefinedClass put: 'undefined class <1p>';
 		at: CErrInvalidStructArg put: 'invalid structure class type <1p>';
 		at: CErrBadExtTypeQualifier put: 'invalid external type qualifier';
 		at: CErrInsufficientArgTypes put: 'insufficient argument types';
@@ -269,8 +268,8 @@ initialize
 		at: CErrStaticExprNotClosed put: 'static expression not closed';
 		at: CErrEmptyConditionBlock put: 'condition block of <2p> cannot be empty';
 		at: CErrQualifiedRefNotClosed put: 'qualified reference not closed';
+		at: CErrBadQualifiedRefModifier put: 'invalid qualified reference modifier <1p>';
 		yourself.
-
 	formats
 		at: CWarnRedefiningArg put: 'redefining argument <1p>';
 		at: CWarnRedefiningTemp put: 'redefining temporary variable <1p>';
@@ -298,10 +297,13 @@ initialize
 		at: CInfoSupersendsOther put: 'supersends other message <2p>';
 		at: CInfoHardBreakpoint put: 'contains hardcoded breakpoint';
 		yourself.
-	codesPool := #{SmalltalkParseErrorCodes} value.
+	codesPool := #{ParseErrorCodes} value.
 	codes := Set new.
-	codesPool bindingsDo:  [:binding | self assert: [formats includesKey: binding value]. codes add: binding value].
-	formats keysDo:  [:each | self assert: [codes includes: each]].
+	codesPool bindingsDo: 
+			[:binding |
+			self assert: [formats includesKey: binding value].
+			codes add: binding value].
+	formats keysDo: [:each | self assert: [codes includes: each]].
 	self addClassConstant: 'ErrorFormats' value: formats!
 
 severity
@@ -309,11 +311,11 @@ severity
 	sorting compilation issues by severity."
 
 	^self subclassResponsibility! !
-!CompilerNotification class categoriesFor: #beep!parping!public! !
-!CompilerNotification class categoriesFor: #classForCode:!private! !
-!CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
-!CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
-!CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
-!CompilerNotification class categoriesFor: #severity!constants!public! !
+!Kernel.CompilerNotification class categoriesFor: #beep!parping!public! !
+!Kernel.CompilerNotification class categoriesFor: #classForCode:!private! !
+!Kernel.CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
+!Kernel.CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
+!Kernel.CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
+!Kernel.CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.CompilerNotification class categoriesFor: #severity!constants!public! !
 

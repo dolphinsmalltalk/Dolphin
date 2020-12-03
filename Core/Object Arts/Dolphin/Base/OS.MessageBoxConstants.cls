@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #MessageBoxConstants
+Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -33,6 +33,7 @@ SharedPool subclass: #MessageBoxConstants
 		'MB_YESNO' -> 16r4.
 		'MB_YESNOCANCEL' -> 16r3
 	}!
-MessageBoxConstants guid: (GUID fromString: '{ae2717d5-7d5d-4625-aed8-d9b721d4e019}')!
-MessageBoxConstants comment: ''!
-!MessageBoxConstants categoriesForClass!Unclassified! !
+OS.MessageBoxConstants guid: (Core.GUID fromString: '{ae2717d5-7d5d-4625-aed8-d9b721d4e019}')!
+OS.MessageBoxConstants isNonInstantiable: true!
+OS.MessageBoxConstants comment: ''!
+!OS.MessageBoxConstants categoriesForClass!Unclassified! !

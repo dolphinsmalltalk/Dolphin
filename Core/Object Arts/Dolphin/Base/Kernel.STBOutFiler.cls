@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBFiler subclass: #STBOutFiler
+Kernel.STBFiler subclass: #'Kernel.STBOutFiler'
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBOutFiler guid: (GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBOutFiler comment: '<STBOutFiler> is the basic binary filer for serializing a tree of <Object>s to a byte stream.
+Kernel.STBOutFiler guid: (Core.GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBOutFiler comment: '<STBOutFiler> is the basic binary filer for serializing a tree of <Object>s to a byte stream.
 
 Instance Variables:
 	writeMap		<IdentityDictionary>. Map of <Object>s to their <SmallInteger> id in the binary output stream.
@@ -16,8 +16,8 @@ Instance Variables:
 	proxyOverrides	<IdentityDictionary>. Map of <Object>s to the <STBProxy>s (or special values) output in their place.
 
 '!
-!STBOutFiler categoriesForClass!System-Binary storage! !
-!STBOutFiler methodsFor!
+!Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
+!Kernel.STBOutFiler methodsFor!
 
 basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
@@ -73,11 +73,11 @@ override: anObject with: anObjectToSave
 putCharacter: aCharacter
 	self writeInteger: (STBPrefix encodeCharacter: aCharacter)!
 
-putGlobal: anObject 
+putGlobal: anObject
 	"Private - Wrap anObject up as an STBGlobalObjectProxy and output that instead."
 
 	| symbol |
-	anObject isNil 
+	anObject isNil
 		ifTrue: [symbol := globalNils removeFirst]
 		ifFalse: 
 			[| symbolCollection |
@@ -144,16 +144,18 @@ saveObject: anObject as: anObjectToSave
 	"Write anObject to the stream in STB format as anObjectToSave."
 
 	"If anObjectToSave is zero then output anObject as normal (ie. without any proxy)."
-	anObjectToSave == 0
-		ifTrue: [^self saveObject: anObject].
+
+	anObjectToSave == 0 ifTrue: [^self saveObject: anObject].
 
 	"A proxy of nil means output nil instead of anObject."
-	anObjectToSave isNil
-		ifTrue: [^self basicNextPut: nil].
+	anObjectToSave isNil ifTrue: [^self basicNextPut: nil].
 
 	"Output anObject to save instead of anObject marking it as a proxy so the STBInFiler
 	knows to do a #fixup:to on input."
-	self writeObject: anObject as: anObjectToSave withPrefix: STBPrefix forProxy!
+	self
+		writeObject: anObject
+		as: anObjectToSave
+		withPrefix: STBPrefix forProxy!
 
 serializeObject: anObject
 	"Let anObject output itself."
@@ -178,7 +180,7 @@ writeClass: class withPrefix: anSTBPrefix
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
 			| classVersion locatorString |
-			locatorString := class name asString.
+			locatorString := class fullName asString.
 			self writeInteger: (anSTBPrefix encodeClass: class locator: locatorString).
 			(classVersion := class stbVersion) ~~ 0 ifTrue: [self writeInteger: classVersion].
 			self writeClass: class withLocator: locatorString.
@@ -215,7 +217,7 @@ writeObject: anObject as: objectToSave withPrefix: anSTBPrefix
 		register: anObject;
 		writeInstanceVariables: objectToSave!
 
-writePreambleFor: anObject 
+writePreambleFor: anObject
 	"Write the normal STB pre-amble for anObject to the output stream. The object is also
 	registered in the write map so that any subsequent refs are shared. This method is intended
 	for use from custom implementations of the class side #stbSaveOn: message."
@@ -223,31 +225,31 @@ writePreambleFor: anObject
 	self
 		writeClass: anObject class withPrefix: STBPrefix forData;
 		register: anObject! !
-!STBOutFiler categoriesFor: #basicNextPut:!operations!private! !
-!STBOutFiler categoriesFor: #nextPut:!operations!public! !
-!STBOutFiler categoriesFor: #objectIsGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #override:with:!proxies!public! !
-!STBOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!STBOutFiler categoriesFor: #putGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #refForObject:!private!searching! !
-!STBOutFiler categoriesFor: #register:!accessing!private! !
-!STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
-!STBOutFiler categoriesFor: #removeOverrideFor:!proxies!public! !
-!STBOutFiler categoriesFor: #reset!initializing!private! !
-!STBOutFiler categoriesFor: #resetStream!initializing!private! !
-!STBOutFiler categoriesFor: #saveObject:!operations!public! !
-!STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
-!STBOutFiler categoriesFor: #serializeObject:!operations!private! !
-!STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
-!STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
-!STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
-!STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!STBOutFiler categoriesFor: #writeNil!operations!private! !
-!STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
-!STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
+!Kernel.STBOutFiler categoriesFor: #basicNextPut:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #nextPut:!operations!public! !
+!Kernel.STBOutFiler categoriesFor: #objectIsGlobal:!globals!private! !
+!Kernel.STBOutFiler categoriesFor: #override:with:!proxies!public! !
+!Kernel.STBOutFiler categoriesFor: #putCharacter:!helpers!private! !
+!Kernel.STBOutFiler categoriesFor: #putGlobal:!globals!private! !
+!Kernel.STBOutFiler categoriesFor: #refForObject:!private!searching! !
+!Kernel.STBOutFiler categoriesFor: #register:!accessing!private! !
+!Kernel.STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
+!Kernel.STBOutFiler categoriesFor: #removeOverrideFor:!proxies!public! !
+!Kernel.STBOutFiler categoriesFor: #reset!initializing!private! !
+!Kernel.STBOutFiler categoriesFor: #resetStream!initializing!private! !
+!Kernel.STBOutFiler categoriesFor: #saveObject:!operations!public! !
+!Kernel.STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
+!Kernel.STBOutFiler categoriesFor: #serializeObject:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
+!Kernel.STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
+!Kernel.STBOutFiler categoriesFor: #writeNil!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
+!Kernel.STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
 
-!STBOutFiler class methodsFor!
+!Kernel.STBOutFiler class methodsFor!
 
 uninitialize
 	"Private - STBPrefix is only used by STBOutFiler now so if STBOutFiler is going, we no longer need it.
@@ -255,5 +257,5 @@ uninitialize
 	them away."
 
 	STBPrefix uninitialize! !
-!STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

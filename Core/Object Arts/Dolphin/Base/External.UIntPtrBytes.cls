@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalIntegerBytes variableByteSubclass: #UIntPtrBytes
+External.IntegerBytes variableByteSubclass: #'External.UIntPtrBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UIntPtrBytes guid: (GUID fromString: '{c9f5efed-9b23-441a-b6e4-9a0d3c7282ab}')!
-UIntPtrBytes comment: ''!
-!UIntPtrBytes categoriesForClass!External-Data-Unstructured! !
-!UIntPtrBytes methodsFor!
+External.UIntPtrBytes guid: (Core.GUID fromString: '{c9f5efed-9b23-441a-b6e4-9a0d3c7282ab}')!
+External.UIntPtrBytes comment: ''!
+!External.UIntPtrBytes categoriesForClass!External-Data-Unstructured! !
+!External.UIntPtrBytes methodsFor!
 
 asInteger
 	"Answer the unsigned <integer> value of the receiver."
@@ -65,18 +65,18 @@ value: anObject
 	"Set the unsigned <integer> value stored in the receiver."
 
 	self uintPtrAtOffset: 0 put: anObject! !
-!UIntPtrBytes categoriesFor: #asInteger!converting!public! !
-!UIntPtrBytes categoriesFor: #asSignedInteger!converting!public! !
-!UIntPtrBytes categoriesFor: #asUIntPtr!converting!public! !
-!UIntPtrBytes categoriesFor: #highPart!accessing!public! !
-!UIntPtrBytes categoriesFor: #highPart:!accessing!public! !
-!UIntPtrBytes categoriesFor: #highPartSigned!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPart!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPart:!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPartSigned!accessing!public! !
-!UIntPtrBytes categoriesFor: #value:!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #asInteger!converting!public! !
+!External.UIntPtrBytes categoriesFor: #asSignedInteger!converting!public! !
+!External.UIntPtrBytes categoriesFor: #asUIntPtr!converting!public! !
+!External.UIntPtrBytes categoriesFor: #highPart!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #highPart:!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #highPartSigned!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #lowPart!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #lowPart:!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #lowPartSigned!accessing!public! !
+!External.UIntPtrBytes categoriesFor: #value:!accessing!public! !
 
-!UIntPtrBytes class methodsFor!
+!External.UIntPtrBytes class methodsFor!
 
 elementSize
 	"Private - Answer the size of the receiver's constituent elements in bytes."
@@ -85,6 +85,6 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
-!UIntPtrBytes class categoriesFor: #elementSize!constants!private! !
-!UIntPtrBytes class categoriesFor: #valueAtAddress:!instance creation!private! !
+!External.UIntPtrBytes class categoriesFor: #elementSize!constants!private! !
+!External.UIntPtrBytes class categoriesFor: #valueAtAddress:!instance creation!private! !
 

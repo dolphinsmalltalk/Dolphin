@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Package
+Core.Object subclass: #'Kernel.Package'
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
 	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
-Package comment: ''!
-!Package categoriesForClass!Development! !
-!Package methodsFor!
+Kernel.Package guid: (Core.GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.Package comment: ''!
+!Kernel.Package categoriesForClass!Development! !
+!Kernel.Package methodsFor!
 
 about
 	"Displays an about screen for the receiver using the aboutBlock if any has been set."
@@ -38,9 +38,7 @@ aboutBlockBytes: aByteArray
 	"Private - Set the receiver's about block by rehydrating that in serialized
 	form in the <ByteArray> argument."
 
-	aboutBlock := Object fromBinaryStoreBytes: aByteArray
-
-!
+	aboutBlock := Object fromBinaryStoreBytes: aByteArray!
 
 addAllPrerequisitesTo: aSet
 	"Private - Add to <aSet> all those Packages which must be loaded in
@@ -105,7 +103,7 @@ allMethods
 	the receiver or by owning the class in which it is situated."
 
 	| answer |
-	answer := IdentitySet new: (classNames size * 20).	"On average, about 10 methods per behaviour"
+	answer := IdentitySet new: classNames size * 20.	"On average, about 10 methods per behaviour"
 	self allMethodsDo: [:m | answer add: m].
 	^answer!
 
@@ -130,7 +128,7 @@ allPrerequisites
 	| answer |
 	answer := IdentitySet new.
 	self addAllPrerequisitesTo: answer.
-	^answer.!
+	^answer!
 
 allResourceIdentifiers
 	"Answer a Set of all the ResourceIdentifiers directly owned by
@@ -141,6 +139,11 @@ allResourceIdentifiers
 	self classesDo: [:each | each resourceIdentifiersDo: [:eachResId | resources add: eachResId]].
 	self looseResourceIdentifiersDo: [:each | resources add: each].
 	^resources!
+
+allResourceNames
+	"Private - Answer a <Collection> of all the resource names directly owned by the receiver or by its owned classes."
+
+	^self propertyAt: #allResourceNames ifAbsent: [^OrderedCollection new]!
 
 allSourceObjects
 	"Answer a <collection> containing the members of the receiver that can be filed out as 
@@ -210,6 +213,11 @@ basicRemoveVariableNamed: aBindingReference
 	variableNames remove: aBindingReference ifAbsent: [].
 	^aBindingReference!
 
+basicResetPrerequisites
+	"Private - Mark that the prerequisite packages for the receiver have changed. The packages will be recalculated the next time the #prerequsiteNames accessor is sent."
+
+	prerequisiteNames := nil!
+
 basicScriptAt: scriptSymbol put: aString 
 	"Private - Set the script String associated with scriptSymbol."
 
@@ -234,7 +242,7 @@ behaviors
 	"Answer an <IdentitySet> of the <Behavior>s owned by the receiver."
 
 	| answer |
-	answer := IdentitySet new: (classNames size + 1) * 2. "Avoid need to grow set by presizing"
+	answer := IdentitySet new: (classNames size + 1) * 2.	"Avoid need to grow set by presizing"
 	self behaviorsDo: [:b | answer add: b].
 	^answer!
 
@@ -261,11 +269,10 @@ bindingRefToLiteral: anObject
 
 	^(anObject isKindOf: VariableBinding)
 		ifTrue: 
-			[| key |
-			key := anObject key.
-			"Avoid interning symbols for all the string Pool variable names by checking first if the var name is a symbol"
-			(key isKindOf: Symbol)
-				ifTrue: 
+			["For class variables the dependency is on the class owning the variable, not the referenced thing"
+			anObject isClassVariable
+				ifTrue: [anObject environment fullyQualifiedReference]
+				ifFalse: 
 					[| ref |
 					ref := anObject fullyQualifiedReference.
 					ref bindingOrNil == anObject ifTrue: [ref]]]
@@ -281,8 +288,8 @@ buildPrerequisiteNames
 
 	| prereqs |
 	prereqs := Set new.
-	self calculatePrerequisites do:[:each | prereqs add: each name].
-	self manualPrerequisites 
+	self calculatePrerequisites do: [:each | prereqs add: each name].
+	self manualPrerequisites
 		do: [:each | (self manager packageNamed: each ifNone: []) notNil ifTrue: [prereqs add: each]].
 	^prereqs!
 
@@ -317,7 +324,10 @@ classDefinitionsFileName
 	"Private - Answer a filename to use for filing out the class definitions of the receiver.
 	Note this is only relevant if the receiver is a system package."
 
-	^File composePath: self path stem: self name, 'Classes' extension: 'st'.!
+	^File
+		composePath: self path
+		stem: self name , 'Classes'
+		extension: 'st'!
 
 classes
 	"Answer a Set of the Classes owned by the receiver."
@@ -354,13 +364,16 @@ classNames
 
 	^classNames!
 
+classNames: anObject
+	classNames := anObject!
+
 comment
 	"Answer the comment String of the receiver"
 
-	^comment 
+	^comment
 		ifNil: ['']
 		ifNotNil: 
-			[comment isInteger 
+			[comment isInteger
 				ifTrue: [Utf8String readFrom: (self sourceManager getSourceFromDescriptor: comment) readStream]
 				ifFalse: [comment]]!
 
@@ -405,8 +418,12 @@ convertOldNamesProperty: aSymbol
 convertPoolDictionariesToSharedPools
 	#{PoolDictionary} ifDefined: 
 			[:pcClass |
-			((self variableNames collect: [:each | each value]) select: [:each | each isKindOf: pcClass])
-				do: [:each | each convertToSharedPool]]!
+			(self variableNames select: [:each | each valueOrNil isKindOf: pcClass]) do: 
+					[:each |
+					| poolClass |
+					poolClass := each value convertToSharedPool.
+					self basicRemoveVariableNamed: each.
+					classNames add: poolClass fullyQualifiedReference]]!
 
 declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes
@@ -440,9 +457,14 @@ depthOfClass: aClass
 	^depth!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self name!
+
+ensureNamesFullyQualified
+	self paxVersion >= 2.1 ifTrue: [^self].
+	classNames := classNames collect: [:each | each binding fullyQualifiedReference].
+	variableNames := variableNames collect: [:each | each binding fullyQualifiedReference]!
 
 errorFileCorrupt
 	"Private - Filing in the receivers owned objects has failed because the
@@ -450,16 +472,9 @@ errorFileCorrupt
 
 	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
 
-fileInClasses
-	"Private - Load all packaged classes from external files"
-
-	self classesInHierarchyOrder do: [:each | self sourceManager fileIn: each fileOutName]!
-
-fileInScript: aSymbol
-	"Private - 'File in' the named script."
-
+evaluateScript: aSymbol source: aString
 	| filer |
-	filer := self sourceManager chunkFilerOn: (self scriptAt: aSymbol) readStream.
+	filer := self sourceManager chunkFilerOn: aString readStream.
 	filer evaluationContext: self.
 	[filer fileIn] on: Compiler errorClass
 		do: 
@@ -474,6 +489,33 @@ fileInScript: aSymbol
 				beep;
 				resume]!
 
+fileInClasses
+	"Private - Load all packaged classes from external files"
+
+	self classesInHierarchyOrder do: [:each | self sourceManager fileIn: each fileOutName]!
+
+fileInScript: aSymbol
+	"Private - 'File in' the named script."
+
+	| aString |
+	aString := self scriptAt: aSymbol.
+	aString isEmpty ifTrue: [^self].
+
+	"If the AnonymousClassBuilder is defined, then create an anonymous package class in which to run the script. This allows us to load legacy scripts with Smalltalk on the binding path so that legacy class names will be found. The alternative would be to compile the script in the context of a class in Smalltalk, but we want 'self' in the script to be this package."
+	#{AnonymousClassBuilder} ifDefined: 
+			[:builder |
+			| originalClass anon |
+			originalClass := self class.
+			anon := (builder new
+						superclass: originalClass;
+						yourself) createNewClass.
+			anon environment: Smalltalk.
+			
+			[self becomeA: anon.
+			self evaluateScript: aSymbol source: aString]
+					ensure: [self becomeA: originalClass]]
+		ifNotDefined: [self evaluateScript: aSymbol source: aString]!
+
 fileNameForBinaryVariable: globalName
 	"Private - Answer a filename for storing the binary globalName."
 
@@ -485,13 +527,18 @@ fileNameForBinaryVariable: globalName
 fileNameForSourceGlobal: globalName
 	"Private - Answer a filename for storing the source globalObject."
 
-	^File composePath: self path stem: globalName asString extension: self class sourceGlobalExtension
-!
+	^File
+		composePath: self path
+		stem: globalName asString
+		extension: self class sourceGlobalExtension!
 
 fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
 
-	^File composePath: self path stem: self name extension: self class sourcePackageExtension!
+	^File
+		composePath: self path
+		stem: self name
+		extension: self class sourcePackageExtension!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -527,7 +574,7 @@ hasCyclicPrerequisites
 	handle this smoothly though it is possible to load in such a thing by
 	repeatedly trying to load in all packages until it works..."
 
-	^self hasCyclicPrerequisites: IdentitySet new safe: IdentitySet new.!
+	^self hasCyclicPrerequisites: IdentitySet new safe: IdentitySet new!
 
 hasCyclicPrerequisites: trail safe: safe
 	"Private - Walk the package pre-requisite net looking for a cyclic dependency.
@@ -552,7 +599,7 @@ hasUncommittedPrerequisites
 
 	^self allPrerequisites includes: _Uncommitted.!
 
-hierarchyOrderOfClasses: aCollection 
+hierarchyOrderOfClasses: aCollection
 	"Private - Answer an OrderedCollection of all the Classes owned
 	by the receiver intersected with the collection in classes. 
 	The classes are ordered by their depth in the class hierarchy, with Object
@@ -585,10 +632,10 @@ imageStripperBytes: aByteArray
 includesClass: aClass
 	"Answer whether the receiver owns aClass. aClass's metaclass is automatically owned as well."
 
-	^(self includesClassNamed: aClass instanceClass asQualifiedReference) and: [(self isImportedClass: aClass) not]!
+	^(self includesClassNamed: aClass asQualifiedReference) and: [(self isImportedClass: aClass) not]!
 
 includesClassNamed: aBindingReference
-	^classNames includes: aBindingReference!
+	^classNames includes: aBindingReference instance!
 
 includesMethod: aCompiledMethod
 	"Answer whether the receiver owns aMethod."
@@ -636,6 +683,17 @@ initializeGlobals
 			target := each value.
 			target class isMeta ifTrue: [ClassLocator addAlias: each asSymbol forClass: target]]!
 
+initializeLegacyResources
+	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
+	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
+	we are only concerned with loose resources"
+
+	self allResourceNames do: 
+			[:each |
+			| rid |
+			rid := UI.ResourceIdentifier class: each key asQualifiedReference value name: each value.
+			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
+
 initializeOldSourcePackage
 	(self respondsTo: #loadLegacyResources) 
 		ifTrue: [self perform: #loadLegacyResources]
@@ -658,7 +716,7 @@ isChanged
 
 	^self changeIndex notNil!
 
-isChanged: aBoolean 
+isChanged: aBoolean
 	"Set the changed flag for the receiver to aBoolean"
 
 	self isChanged = aBoolean ifTrue: [^self].
@@ -694,7 +752,7 @@ load
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
 	packages are currently loaded in."
 
-	((File splitExtensionFrom: self packageFileName) sameAs: self class sourcePackageExtension) 
+	((File splitExtensionFrom: self packageFileName) sameAs: self class sourcePackageExtension)
 		ifTrue: [self loadPAX]
 		ifFalse: [self loadPAC].
 	self removePAXProperties.
@@ -745,9 +803,8 @@ loadPAC: stream
 
 	"File in the definitions of the package's members (pools, classes, methods, globals, resources, etc)"
 	filer fileIn.
-	self paxVersion < 1 ifTrue: [self perform: #initializeLegacyResources].
-	self initializeGlobals.
-	self fileInScript: #postinstall!
+	self ensureNamesFullyQualified.
+	self postLoadInitialization: [self initializeLegacyResources]!
 
 loadPAX
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
@@ -762,6 +819,7 @@ loadPAX
 	filer := ChunkSourceFiler on: stream.
 	
 	[| none |
+	"Initialize old style (pre D6) binary resources"
 	filer nextChunk.	"Skip the first chunk since it represents the receiver."
 	self fileInScript: #preinstall.
 
@@ -780,15 +838,10 @@ loadPAX
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
 	filer fileIn.
+	self ensureNamesFullyQualified.
 	self fileInClasses.
 	self loadBinaryVariables.
-	self initializeGlobals.
-	self paxVersion < 1
-		ifTrue: 
-			["Initialize old style (pre D6) binary resources"
-			self initializeOldSourcePackage].
-	self convertPoolDictionariesToSharedPools.
-	self fileInScript: #postinstall]
+	self postLoadInitialization: [self initializeOldSourcePackage]]
 			ensure: [filer close]!
 
 looseResourceIdentifiers
@@ -800,13 +853,13 @@ looseResourceIdentifiers
 looseResourceIdentifiersDo: aMonadicValuable
 	self methodNames do: 
 			[:each |
-			(each selector beginsWith: ResourceIdentifier.SelectorPrefix)
+			(each selector beginsWith: UI.ResourceIdentifier.SelectorPrefix)
 				ifTrue: 
 					[each className valueOrNil
 						ifNotNil: 
 							[:methodClass |
 							aMonadicValuable
-								value: (ResourceIdentifier class: methodClass instanceClass selector: each selector)]]]!
+								value: (UI.ResourceIdentifier class: methodClass instanceClass selector: each selector)]]]!
 
 manager
 	"Answer the object responsible for managing this package."
@@ -820,7 +873,7 @@ manualPrerequisites
 	is provided to permit the user to specify any additional pre-requisites. At present the collection
 	must be maintained by inspecting the properties of the package."
 
-	^manualPrerequisites isNil 
+	^manualPrerequisites isNil
 		ifTrue: [OrderedCollection new]
 		ifFalse: [manualPrerequisites asOrderedCollection]!
 
@@ -864,7 +917,7 @@ methods
 	"Answer an <IdentitySet> of the <CompiledMethod>s owned by the receiver."
 
 	| newIdentitySet |
-	newIdentitySet := IdentitySet new: 16.
+	newIdentitySet := IdentitySet new: self methodNames size.
 	self methodsDo: [:each | newIdentitySet add: each].
 	^newIdentitySet!
 
@@ -874,25 +927,27 @@ methodsDo: aMonadicValuable
 	self methodNames do: [:each | each valueOrNil ifNotNil: [:method | aMonadicValuable value: method]]!
 
 methodsOfClass: aClass
-	"Answer a Collection of the methods of aClass which the receiver either
-	directly owns (as loose methods) or through owning aClass."
+	"Answer a Collection of the methods of aClass which the receiver either directly owns (as loose methods) or through owning aClass."
 
-	^(self includesClass: aClass) 
+	| className owned |
+	className := aClass fullyQualifiedReference.
+	(self includesClassNamed: className)
 		ifTrue: 
-			["A neat way to express this would be:
+			[| loose methodName all |
+			"A neat way to express this would be:
 				aClass methodDictionary asIdentitySet difference: self class manager looseMethods
 			but unfortunately performance is critical here, and we can double the speed as follows:"
-
-			| owned loose all |
 			all := aClass methodDictionary.
 			owned := IdentitySet new: all size.
 			loose := self manager looseMethods.
-			all do: [:each | (loose includesKey: each name) ifFalse: [owned add: each]].
-			owned]
+			methodName := MethodName className: className selector: #do:.
+			all
+				do: [:each | (loose includesKey: (methodName selector: each selector)) ifFalse: [owned add: each]]]
 		ifFalse: 
 			["Just pick out any loose methods we own in the class"
-
-			self methods select: [:aMethod | aMethod methodClass == aClass]]!
+			owned := IdentitySet new.
+			self methodNames do: [:each | each className = className ifTrue: [owned add: each valueOrNil]]].
+	^owned!
 
 name
 	"Answer the name of the receiver. This must always be the same as the stem of the package's
@@ -1070,11 +1125,21 @@ paxVersion
 
 	^self propertyAt: #paxVersion ifAbsent: [self class paxVersion]!
 
-paxVersion: anInteger
+paxVersion: aNumber
 	"Private - Temporarily record the PAX format version in which the package being loaded
 	was saved. This may be used for loading old format source packages in future."
 
-	self propertyAt: #paxVersion put: anInteger!
+	self propertyAt: #paxVersion put: aNumber!
+
+postLoadInitialization: aNiladicValuable
+	self paxVersion < 2.1 ifTrue: [self updateMethodNamesToFullyQualified].
+	self initializeGlobals.
+	self paxVersion < 1
+		ifTrue: 
+			["Load/Initialize old style (pre D6) binary resources"
+			aNiladicValuable value].
+	self convertPoolDictionariesToSharedPools.
+	^self fileInScript: #postinstall!
 
 preDeclareClassesOnLoad
 	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. See the class side implementation of this message for further details."
@@ -1096,12 +1161,10 @@ prerequisiteNames
 	updating after every change we set all Packages prerequisitePackages to nil and 
 	recalculate them as they are requested."
 
-	^prerequisiteNames ifNil: 
+	^prerequisiteNames
+		ifNil: 
 			["To save time make a special case of the system package"
-
-			self isSystemPackage 
-				ifTrue: [Set new]
-				ifFalse: [prerequisiteNames := self buildPrerequisiteNames]]!
+			self isSystemPackage ifTrue: [Set new] ifFalse: [prerequisiteNames := self buildPrerequisiteNames]]!
 
 prerequisites
 	"Answer a collection of <Package>s that must be loaded before the
@@ -1151,10 +1214,10 @@ propertyAt: aSymbol ifAbsent: aBlock
 propertyManager
 	^properties ifNil: [properties := PropertyManager new]!
 
-rebaseTo: basePathName 
+rebaseTo: basePathName
 	"Rebase this package relative to the give base image directory"
 
-	self packageFileName: (File 
+	self packageFileName: (File
 				relativePathOf: (File fullPathOf: self packagePathname relativeTo: basePathName)
 				to: SessionManager current imagePath)!
 
@@ -1234,14 +1297,10 @@ resetChangeFlags
 	self isChanged: false!
 
 resetPrerequisites
-	"Private - Mark that the prerequisite packages for the receiver
-	have changed. The packages will be recalculated the next time the
-	#prerequsiteNames accessor is sent. An event is triggered
-	iff the pre-reqs are actually reset, in case any tool (such as a
-	PackagePrerequisitesShell) is monitoring them."
+	"Private - Mark that the prerequisite packages for the receiver have changed. The packages will be recalculated the next time the #prerequsiteNames accessor is sent. An event is triggered iff the pre-reqs are actually reset, in case any tool (such as a PackagePrerequisitesShell) is monitoring them."
 
 	prerequisiteNames isNil ifTrue: [^self].
-	prerequisiteNames := nil.
+	self basicResetPrerequisites.
 	self trigger: #prerequisitesReset!
 
 resourceIdentifiers
@@ -1379,12 +1438,14 @@ timestamp
 timestamp: anObject
 	timestamp := anObject!
 
-trace: anIdentityDictionary prerequisite: aPackage from: from to: to type: type
+trace: anIdentityDictionary prerequisite: aPackage from: fromObject to: toObject dependency: aString
 	"Private - Append the supplied details of a prerequisite link to the trace <IdentityDictionary>, which is keyed by <Package>."
 
+	| targetPackage |
 	aPackage == self ifTrue: [^self].
-	(anIdentityDictionary at: aPackage ?? _Uncommitted ifAbsentPut: [OrderedCollection new: 16])
-		addLast: {from. to. type}!
+	targetPackage := aPackage ?? _Uncommitted.
+	(anIdentityDictionary at: targetPackage ifAbsentPut: [OrderedCollection new: 16])
+		addLast: {fromObject. toObject. aString. targetPackage}!
 
 tracePrerequisites
 	"Private - Answer an IdentityDictionary of prerequisite package keys against an
@@ -1420,7 +1481,7 @@ tracePrerequisites: anIdentityDictionary
 		tracePrerequisitesOfVariables: trace packagedVariables: anIdentityDictionary;
 		tracePrerequisitesOfMethods: trace;
 		tracePrerequisitesOfImageStripper: trace;
-		tracePrerequisiteVariables: trace packagedVariables: anIdentityDictionary.
+		tracePrerequisitesOfLiterals: trace packagedVariables: anIdentityDictionary.
 	^trace!
 
 tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTable
@@ -1430,7 +1491,7 @@ tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTabl
 	manager := self manager.
 	self classesDo: 
 			[:aClass |
-			| base prereq |
+			| base prereq env |
 			base := aClass superclass.
 			"Have to account specially for subclasses of nil to avoid dependency on _Uncommitted"
 			prereq := base isNil ifTrue: [manager systemPackage] ifFalse: [manager packageOfClass: base].
@@ -1439,18 +1500,29 @@ tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTabl
 				prerequisite: prereq
 				from: aClass
 				to: base
-				type: 'is a subclass of'.
-
+				dependency: 'is a subclass of'.
+			env := aClass environment ?? Root.
+			self
+				trace: anIdentityDictionary
+				prerequisite: env owningPackage
+				from: aClass
+				to: env
+				dependency: 'is defined in namespace'.
 			aClass imports do: 
 					[:import |
-					self
-						trace: anIdentityDictionary
-						prerequisite: (aLookupTable lookup: import)
-						from: aClass
-						to: import
-						type: 'imports the namespace']]!
+					import bindingOrNil
+						ifNotNil: 
+							[:binding |
+							self
+								trace: anIdentityDictionary
+								prerequisite: (manager packageOfVariableNamed: binding fullyQualifiedReference)
+								from: aClass
+								to: import
+								dependency: ((binding value inheritsFrom: SharedPool)
+										ifTrue: ['imports the shared pool']
+										ifFalse: ['imports the namespace'])]]]!
 
-tracePrerequisitesOfImageStripper: anIdentityDictionary 
+tracePrerequisitesOfImageStripper: anIdentityDictionary
 	"Only possible to trace the stripper prereqs in DPRO"
 
 	| stream hiddenObjects |
@@ -1461,26 +1533,42 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 				basicNext;
 				readMap] ensure: [stream close].
 	hiddenObjects do: 
-			[:each | 
+			[:each |
 			(each class isMeta and: 
-					[
+					[| imageStripperClass lagoonPackage |
 					"We only trace prerequisite objects that are NOT in the
 					Lagoon package. After all, we know that Lagoon must be
 					present if an ImageStripper is ever loaded into memory"
-					| imageStripperClass lagoonPackage |
 					imageStripperClass := #{ImageStripper} value.
 					lagoonPackage := imageStripperClass owningPackage.
-					each owningPackage ~= lagoonPackage]) 
+					each owningPackage ~= lagoonPackage])
 				ifTrue: 
-					[self 
+					[self
 						trace: anIdentityDictionary
 						prerequisite: each owningPackage
 						from: self
 						to: each
-						type: 'references class']]!
+						dependency: 'references class']]!
+
+tracePrerequisitesOfLiterals: anIdentityDictionary packagedVariables: aLookupTable
+	"Private - Trace the prerequisites of the receiver that are from method literals."
+
+	self allMethodsDo: 
+			[:eachMethod |
+			eachMethod literalReferencesDo: 
+					[:eachLiteral |
+					(self bindingRefToLiteral: eachLiteral)
+						ifNotNil: 
+							[:ref |
+							self
+								trace: anIdentityDictionary
+								prerequisite: (aLookupTable lookup: ref)
+								from: eachMethod
+								to: ref
+								dependency: 'references global']]]!
 
 tracePrerequisitesOfMethods: anIdentityDictionary
-	"Private - Trace the prerequisites of the receiver's loose methods."
+	"Private - Trace the prerequisite method classes of the receiver's loose methods (i.e. the extended classes)."
 
 	| manager |
 	manager := self manager.
@@ -1493,7 +1581,7 @@ tracePrerequisitesOfMethods: anIdentityDictionary
 				prerequisite: (manager packageOfClass: class)
 				from: each
 				to: class
-				type: 'is a method of']!
+				dependency: 'is a method of']!
 
 tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTable
 	"Private - Trace the prerequisites of the receiver's shared variables."
@@ -1514,7 +1602,7 @@ tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTa
 								prerequisite: (aLookupTable lookup: target)
 								from: each
 								to: each value
-								type: 'is an alias for']
+								dependency: 'is an alias for']
 						ifFalse: 
 							["The variable is not an alias, so the package is dependent on the class of the variables value."
 							self
@@ -1522,24 +1610,7 @@ tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTa
 								prerequisite: (aLookupTable lookup: value class fullyQualifiedReference)
 								from: each value
 								to: each value class
-								type: 'is an instance of']]]!
-
-tracePrerequisiteVariables: anIdentityDictionary packagedVariables: aLookupTable
-	"Private - Trace the prerequisites of the receiver that come about because of references to variables from methods."
-
-	self allMethodsDo: 
-			[:eachMethod |
-			eachMethod literalReferencesDo: 
-					[:eachLiteral |
-					(self bindingRefToLiteral: eachLiteral)
-						ifNotNil: 
-							[:ref |
-							self
-								trace: anIdentityDictionary
-								prerequisite: (aLookupTable lookup: ref)
-								from: eachMethod
-								to: ref
-								type: 'references global']]]!
+								dependency: 'is an instance of']]]!
 
 uninstall
 	"Uninstall the receiver and any dependent packages from the system with no questions asked.
@@ -1585,7 +1656,7 @@ uninstallClasses
 	 keeping references to uninstalled packaged classes, then try commenting in this code."
 	classes do: 
 			[:aClass |
-			aClass classBinding isNil
+			aClass bindingOrNil isNil
 				ifTrue: 
 					[aClass class methodDictionary: nil.
 					aClass methodDictionary: nil]]!
@@ -1595,7 +1666,7 @@ uninstallGlobals
 	in case globals hold onto instances of any of the classes."
 
 	self variableNames
-		do: [:globalName | [globalName removeFromSystem] on: Error do: [:ignoredException | ignoredException notify]]!
+		do: [:globalName | [globalName undeclare] on: Error do: [:ignoredException | ignoredException notify]]!
 
 uninstallMethods
 	"Private - Uninstall the methods owned by the receiver that belong to classes which are not
@@ -1629,6 +1700,17 @@ upateFileNames
 	include relative paths, so just toss them away"
 	prerequisiteNames := nil!
 
+updateMethodNamesToFullyQualified
+	methodNames do: 
+			[:each |
+			| fullyQualified |
+			fullyQualified := each className binding fullyQualifiedReference.
+			each className: (each className isMeta ifTrue: [fullyQualified meta] ifFalse: [fullyQualified])]!
+
+updateNamesToFullyQualified
+	classNames := classNames collect: [:each | each binding fullyQualifiedReference].
+	variableNames := variableNames collect: [:each | each binding fullyQualifiedReference]!
+
 upgrade
 	self paxVersion < 2 ifTrue: [self upgradeToVersion2]!
 
@@ -1652,10 +1734,19 @@ variableNames
 
 	^variableNames!
 
+variableNames: aSet 
+	variableNames := aSet!
+
 variables
 	"Private - Answer a <collection> of <VariableBindings>s, being the receiver's shared variables."
 
-	^self variableNames collect: [:each | each bindingOrNil ifNil: [each asSymbol -> nil]]!
+	^self variableNames collect: 
+			[:each |
+			each bindingOrNil
+				ifNil: 
+					[(VariableBinding key: each asSymbol value: nil)
+						environment: each namespace;
+						yourself]]!
 
 versionIfRequired
 	Package manager versionPackageIfRequired: self!
@@ -1678,203 +1769,213 @@ It will probably load, but it may not operate correctly.
 If you experience subsequent problems please contact the package supplier for an updated version.'
 				expandMacrosWith: self name
 				with: versionString)! !
-!Package categoriesFor: #about!commands!public! !
-!Package categoriesFor: #aboutBlock!accessing!public! !
-!Package categoriesFor: #aboutBlock:!accessing!public! !
-!Package categoriesFor: #aboutBlockBytes:!accessing!private! !
-!Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
-!Package categoriesFor: #addClass:!adding!public! !
-!Package categoriesFor: #addLooseMethod:!adding!private! !
-!Package categoriesFor: #addMethod:!adding!public! !
-!Package categoriesFor: #addPackagedMethod:!adding!private! !
-!Package categoriesFor: #addResourceIdentifier:!adding!public! !
-!Package categoriesFor: #addVariableNamed:!adding!public! !
-!Package categoriesFor: #aliasVariableNames!accessing!private! !
-!Package categoriesFor: #allDependentPackages!accessing!public! !
-!Package categoriesFor: #allMethods!accessing!public! !
-!Package categoriesFor: #allMethodsDo:!enumerating!private! !
-!Package categoriesFor: #allPrerequisites!accessing!private! !
-!Package categoriesFor: #allResourceIdentifiers!accessing!public! !
-!Package categoriesFor: #allSourceObjects!accessing!public!source filing! !
-!Package categoriesFor: #allSourceObjectsDo:!enumerating!public!source filing! !
-!Package categoriesFor: #basicAddClass:!adding!private! !
-!Package categoriesFor: #basicAddVariableNamed:!adding!private! !
-!Package categoriesFor: #basicComment:!accessing!private! !
-!Package categoriesFor: #basicPackageVersion:!accessing!private! !
-!Package categoriesFor: #basicRemoveClass:!private!removing! !
-!Package categoriesFor: #basicRemoveVariableNamed:!private!removing! !
-!Package categoriesFor: #basicScriptAt:put:!accessing!private! !
-!Package categoriesFor: #behaviorFromName:ifAbsent:!mapping!private! !
-!Package categoriesFor: #behaviors!enumerating!public! !
-!Package categoriesFor: #behaviorsDo:!enumerating!public! !
-!Package categoriesFor: #binaryGlobalNames:!accessing!legacy package loading!private! !
-!Package categoriesFor: #binaryVariableNames!accessing!private! !
-!Package categoriesFor: #bindingRefToLiteral:!helpers!private! !
-!Package categoriesFor: #buildPrerequisiteNames!helpers!private! !
-!Package categoriesFor: #calculatePrerequisites!helpers!private! !
-!Package categoriesFor: #canShowAbout!public!testing! !
-!Package categoriesFor: #changedFrom:!initializing!public! !
-!Package categoriesFor: #changeIndex!accessing!private! !
-!Package categoriesFor: #changeIndexValue:!accessing!private! !
-!Package categoriesFor: #classDefinitionsFileName!accessing!private! !
-!Package categoriesFor: #classes!accessing!public! !
-!Package categoriesFor: #classesDo:!enumerating!public! !
-!Package categoriesFor: #classesInHierarchyOrder!enumerating!private! !
-!Package categoriesFor: #classFromName:!helpers!private! !
-!Package categoriesFor: #classFromName:ifAbsent:!helpers!private! !
-!Package categoriesFor: #classNames!accessing!public! !
-!Package categoriesFor: #comment!accessing!public! !
-!Package categoriesFor: #comment:!accessing!public! !
-!Package categoriesFor: #convertOldMethodNames!legacy package loading!private! !
-!Package categoriesFor: #convertOldNames:!legacy package loading!private! !
-!Package categoriesFor: #convertOldNamesProperty:!legacy package loading!private! !
-!Package categoriesFor: #convertPoolDictionariesToSharedPools!legacy package loading!private! !
-!Package categoriesFor: #declareClasses!helpers!private! !
-!Package categoriesFor: #declareVariables!helpers!private! !
-!Package categoriesFor: #dependentPackages!accessing!public! !
-!Package categoriesFor: #depthOfClass:!helpers!public! !
-!Package categoriesFor: #displayOn:!displaying!public! !
-!Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Package categoriesFor: #fileInClasses!private!source filing! !
-!Package categoriesFor: #fileInScript:!private!source filing! !
-!Package categoriesFor: #fileNameForBinaryVariable:!helpers!private! !
-!Package categoriesFor: #fileNameForSourceGlobal:!helpers!private! !
-!Package categoriesFor: #fileOutName!public!source filing! !
-!Package categoriesFor: #getEvents!accessing!private! !
-!Package categoriesFor: #getPrerequisites!accessing!private! !
-!Package categoriesFor: #globalAliases:!legacy package loading!private! !
-!Package categoriesFor: #globalNames!legacy package loading!public! !
-!Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
-!Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
-!Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
-!Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
-!Package categoriesFor: #imageStripper:!accessing!public! !
-!Package categoriesFor: #imageStripperBytes!accessing!private! !
-!Package categoriesFor: #imageStripperBytes:!accessing!private! !
-!Package categoriesFor: #includesClass:!public!testing! !
-!Package categoriesFor: #includesClassNamed:!public!testing! !
-!Package categoriesFor: #includesMethod:!public!testing! !
-!Package categoriesFor: #includesResourceIdentifier:!private!testing! !
-!Package categoriesFor: #includesVariableNamed:!public!testing! !
-!Package categoriesFor: #initialize!initializing!private! !
-!Package categoriesFor: #initializeClasses!initializing!private! !
-!Package categoriesFor: #initializeGlobals!initializing!private! !
-!Package categoriesFor: #initializeOldSourcePackage!initializing!private! !
-!Package categoriesFor: #isAlias:!initializing!private! !
-!Package categoriesFor: #isBasePackage!public!testing! !
-!Package categoriesFor: #isChanged!public!testing! !
-!Package categoriesFor: #isChanged:!accessing!public! !
-!Package categoriesFor: #isDefaultPackage!public!testing! !
-!Package categoriesFor: #isImportedClass:!initializing!private! !
-!Package categoriesFor: #isInstalled!public!testing! !
-!Package categoriesFor: #isSourceObject:!initializing!private! !
-!Package categoriesFor: #isSystemPackage!public!testing! !
-!Package categoriesFor: #load!initializing!private! !
-!Package categoriesFor: #loadBinaryVariables!initializing!private! !
-!Package categoriesFor: #loadPAC!initializing!private! !
-!Package categoriesFor: #loadPAC:!initializing!private! !
-!Package categoriesFor: #loadPAX!initializing!private! !
-!Package categoriesFor: #looseResourceIdentifiers!initializing!public! !
-!Package categoriesFor: #looseResourceIdentifiersDo:!initializing!public! !
-!Package categoriesFor: #manager!initializing!public! !
-!Package categoriesFor: #manualPrerequisites!initializing!public! !
-!Package categoriesFor: #manualPrerequisites:!initializing!public! !
-!Package categoriesFor: #membershipChanged!initializing!private! !
-!Package categoriesFor: #membershipChangedAt:!events!private! !
-!Package categoriesFor: #memberUpdatedAt:!events!private! !
-!Package categoriesFor: #methodNames!accessing!public! !
-!Package categoriesFor: #methods!accessing!public! !
-!Package categoriesFor: #methodsDo:!enumerating!public! !
-!Package categoriesFor: #methodsOfClass:!accessing!public! !
-!Package categoriesFor: #name!accessing!public! !
-!Package categoriesFor: #nameForResourceIdentifier:!helpers!private! !
-!Package categoriesFor: #okToSaveOrDeploy!private!testing! !
-!Package categoriesFor: #okToUninstall!private!testing! !
-!Package categoriesFor: #onClassRemoved:!events!private! !
-!Package categoriesFor: #onClassRenamed:from:to:!events!private! !
-!Package categoriesFor: #onVariableRenamed:from:!events!private! !
-!Package categoriesFor: #owningPackage!adding!public! !
-!Package categoriesFor: #packageFileName!accessing!public! !
-!Package categoriesFor: #packageFileName:!accessing!private! !
-!Package categoriesFor: #packageFolder!accessing!public! !
-!Package categoriesFor: #packagePathname!accessing!private! !
-!Package categoriesFor: #packagePathname:!accessing!private! !
-!Package categoriesFor: #packageVersion!accessing!public! !
-!Package categoriesFor: #packageVersion:!accessing!public! !
-!Package categoriesFor: #path!accessing!public! !
-!Package categoriesFor: #paxVersion!accessing!private! !
-!Package categoriesFor: #paxVersion:!initializing!private! !
-!Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Package categoriesFor: #prerequisiteNames!accessing!private! !
-!Package categoriesFor: #prerequisites!accessing!public! !
-!Package categoriesFor: #printOn:!initializing!public! !
-!Package categoriesFor: #privateUninstall!initializing!private! !
-!Package categoriesFor: #propertyAt:ifAbsent:!initializing!public! !
-!Package categoriesFor: #propertyManager!initializing!private! !
-!Package categoriesFor: #rebaseTo:!initializing!public! !
-!Package categoriesFor: #remainingClasses!initializing!public! !
-!Package categoriesFor: #removeClass:!initializing!public! !
-!Package categoriesFor: #removeClassName:!initializing!private! !
-!Package categoriesFor: #removeGlobalNamed:!initializing!public! !
-!Package categoriesFor: #removeLooseMethod:!initializing!private! !
-!Package categoriesFor: #removeMethod:!initializing!public! !
-!Package categoriesFor: #removeMethodNames:!initializing!private! !
-!Package categoriesFor: #removePackagedMethod:!initializing!private! !
-!Package categoriesFor: #removePAXProperties!initializing!private! !
-!Package categoriesFor: #removeVariableNamed:!initializing!public! !
-!Package categoriesFor: #renameLooseMethodsOf:to:!initializing!private! !
-!Package categoriesFor: #resetChangeFlags!initializing!public! !
-!Package categoriesFor: #resetPrerequisites!initializing!private! !
-!Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Package categoriesFor: #scriptAt:!accessing!public! !
-!Package categoriesFor: #scriptAt:put:!accessing!public! !
-!Package categoriesFor: #scripts!accessing!private! !
-!Package categoriesFor: #setAliasVariableNames:!initializing!private! !
-!Package categoriesFor: #setBinaryVariableNames:!initializing!private! !
-!Package categoriesFor: #setClassNames:!initializing!private! !
-!Package categoriesFor: #setEvents:!events!private! !
-!Package categoriesFor: #setManualPrerequisites:!initializing!private! !
-!Package categoriesFor: #setMethodNames:!initializing!private! !
-!Package categoriesFor: #setPackageFileName:!initializing!private! !
-!Package categoriesFor: #setPrerequisites:!initializing!private! !
-!Package categoriesFor: #setUntracedVariables:!initializing!private! !
-!Package categoriesFor: #setVariableNames:!initializing!private! !
-!Package categoriesFor: #shrink!private! !
-!Package categoriesFor: #sourceDescriptor!accessing!private! !
-!Package categoriesFor: #sourceDescriptor:!accessing!private! !
-!Package categoriesFor: #sourceManager!accessing!public! !
-!Package categoriesFor: #sourceVariableNames!accessing!private! !
-!Package categoriesFor: #stbSaveOn:!binary filing!public! !
-!Package categoriesFor: #storeComment!helpers!private! !
-!Package categoriesFor: #synchronizeNames!helpers!private! !
-!Package categoriesFor: #timestamp!accessing!public! !
-!Package categoriesFor: #timestamp:!accessing!private! !
-!Package categoriesFor: #trace:prerequisite:from:to:type:!helpers!private! !
-!Package categoriesFor: #tracePrerequisites!operations!private! !
-!Package categoriesFor: #tracePrerequisites:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfClasses:packagedVariables:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
-!Package categoriesFor: #tracePrerequisiteVariables:packagedVariables:!operations!private! !
-!Package categoriesFor: #uninstall!public!removing! !
-!Package categoriesFor: #uninstallClasses!class hierarchy-removing!private!removing! !
-!Package categoriesFor: #uninstallGlobals!private!removing! !
-!Package categoriesFor: #uninstallMethods!private!removing! !
-!Package categoriesFor: #untracedGlobals:!legacy package loading!private! !
-!Package categoriesFor: #untracedVariables!accessing!public! !
-!Package categoriesFor: #untracedVariables:!accessing!public! !
-!Package categoriesFor: #upateFileNames!operations!private! !
-!Package categoriesFor: #upgrade!helpers!private! !
-!Package categoriesFor: #upgradeToVersion2!helpers!private! !
-!Package categoriesFor: #validate!operations!private! !
-!Package categoriesFor: #variableNames!accessing!public! !
-!Package categoriesFor: #variables!private!source filing! !
-!Package categoriesFor: #versionIfRequired!public! !
-!Package categoriesFor: #vmVersionCheck:!constants!private! !
+!Kernel.Package categoriesFor: #about!commands!public! !
+!Kernel.Package categoriesFor: #aboutBlock!accessing!public! !
+!Kernel.Package categoriesFor: #aboutBlock:!accessing!public! !
+!Kernel.Package categoriesFor: #aboutBlockBytes:!accessing!private! !
+!Kernel.Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
+!Kernel.Package categoriesFor: #addClass:!adding!public! !
+!Kernel.Package categoriesFor: #addLooseMethod:!adding!private! !
+!Kernel.Package categoriesFor: #addMethod:!adding!public! !
+!Kernel.Package categoriesFor: #addPackagedMethod:!adding!private! !
+!Kernel.Package categoriesFor: #addResourceIdentifier:!adding!public! !
+!Kernel.Package categoriesFor: #addVariableNamed:!adding!public! !
+!Kernel.Package categoriesFor: #aliasVariableNames!accessing!private! !
+!Kernel.Package categoriesFor: #allDependentPackages!accessing!public! !
+!Kernel.Package categoriesFor: #allMethods!accessing!public! !
+!Kernel.Package categoriesFor: #allMethodsDo:!enumerating!private! !
+!Kernel.Package categoriesFor: #allPrerequisites!accessing!private! !
+!Kernel.Package categoriesFor: #allResourceIdentifiers!accessing!public! !
+!Kernel.Package categoriesFor: #allResourceNames!accessing!private! !
+!Kernel.Package categoriesFor: #allSourceObjects!accessing!public!source filing! !
+!Kernel.Package categoriesFor: #allSourceObjectsDo:!enumerating!public!source filing! !
+!Kernel.Package categoriesFor: #basicAddClass:!adding!private! !
+!Kernel.Package categoriesFor: #basicAddVariableNamed:!adding!private! !
+!Kernel.Package categoriesFor: #basicComment:!accessing!private! !
+!Kernel.Package categoriesFor: #basicPackageVersion:!accessing!private! !
+!Kernel.Package categoriesFor: #basicRemoveClass:!private!removing! !
+!Kernel.Package categoriesFor: #basicRemoveVariableNamed:!private!removing! !
+!Kernel.Package categoriesFor: #basicResetPrerequisites!initializing!private! !
+!Kernel.Package categoriesFor: #basicScriptAt:put:!accessing!private! !
+!Kernel.Package categoriesFor: #behaviorFromName:ifAbsent:!mapping!private! !
+!Kernel.Package categoriesFor: #behaviors!enumerating!public! !
+!Kernel.Package categoriesFor: #behaviorsDo:!enumerating!public! !
+!Kernel.Package categoriesFor: #binaryGlobalNames:!accessing!legacy package loading!private! !
+!Kernel.Package categoriesFor: #binaryVariableNames!accessing!private! !
+!Kernel.Package categoriesFor: #bindingRefToLiteral:!helpers!private! !
+!Kernel.Package categoriesFor: #buildPrerequisiteNames!helpers!private! !
+!Kernel.Package categoriesFor: #calculatePrerequisites!helpers!private! !
+!Kernel.Package categoriesFor: #canShowAbout!public!testing! !
+!Kernel.Package categoriesFor: #changedFrom:!initializing!public! !
+!Kernel.Package categoriesFor: #changeIndex!accessing!private! !
+!Kernel.Package categoriesFor: #changeIndexValue:!accessing!private! !
+!Kernel.Package categoriesFor: #classDefinitionsFileName!accessing!private! !
+!Kernel.Package categoriesFor: #classes!accessing!public! !
+!Kernel.Package categoriesFor: #classesDo:!enumerating!public! !
+!Kernel.Package categoriesFor: #classesInHierarchyOrder!enumerating!private! !
+!Kernel.Package categoriesFor: #classFromName:!helpers!private! !
+!Kernel.Package categoriesFor: #classFromName:ifAbsent:!helpers!private! !
+!Kernel.Package categoriesFor: #classNames!accessing!public! !
+!Kernel.Package categoriesFor: #classNames:!accessing!private! !
+!Kernel.Package categoriesFor: #comment!accessing!public! !
+!Kernel.Package categoriesFor: #comment:!accessing!public! !
+!Kernel.Package categoriesFor: #convertOldMethodNames!legacy package loading!private! !
+!Kernel.Package categoriesFor: #convertOldNames:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #convertOldNamesProperty:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #convertPoolDictionariesToSharedPools!legacy package loading!private! !
+!Kernel.Package categoriesFor: #declareClasses!helpers!private! !
+!Kernel.Package categoriesFor: #declareVariables!helpers!private! !
+!Kernel.Package categoriesFor: #dependentPackages!accessing!public! !
+!Kernel.Package categoriesFor: #depthOfClass:!helpers!public! !
+!Kernel.Package categoriesFor: #displayOn:!displaying!public! !
+!Kernel.Package categoriesFor: #ensureNamesFullyQualified!loading!private! !
+!Kernel.Package categoriesFor: #errorFileCorrupt!exceptions!private! !
+!Kernel.Package categoriesFor: #evaluateScript:source:!private!source filing! !
+!Kernel.Package categoriesFor: #fileInClasses!private!source filing! !
+!Kernel.Package categoriesFor: #fileInScript:!private!source filing! !
+!Kernel.Package categoriesFor: #fileNameForBinaryVariable:!helpers!private! !
+!Kernel.Package categoriesFor: #fileNameForSourceGlobal:!helpers!private! !
+!Kernel.Package categoriesFor: #fileOutName!public!source filing! !
+!Kernel.Package categoriesFor: #getEvents!accessing!private! !
+!Kernel.Package categoriesFor: #getPrerequisites!accessing!private! !
+!Kernel.Package categoriesFor: #globalAliases:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #globalNames!legacy package loading!public! !
+!Kernel.Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
+!Kernel.Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
+!Kernel.Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
+!Kernel.Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
+!Kernel.Package categoriesFor: #imageStripper:!accessing!public! !
+!Kernel.Package categoriesFor: #imageStripperBytes!accessing!private! !
+!Kernel.Package categoriesFor: #imageStripperBytes:!accessing!private! !
+!Kernel.Package categoriesFor: #includesClass:!public!testing! !
+!Kernel.Package categoriesFor: #includesClassNamed:!public!testing! !
+!Kernel.Package categoriesFor: #includesMethod:!public!testing! !
+!Kernel.Package categoriesFor: #includesResourceIdentifier:!private!testing! !
+!Kernel.Package categoriesFor: #includesVariableNamed:!public!testing! !
+!Kernel.Package categoriesFor: #initialize!initializing!private! !
+!Kernel.Package categoriesFor: #initializeClasses!initializing!private! !
+!Kernel.Package categoriesFor: #initializeGlobals!initializing!private! !
+!Kernel.Package categoriesFor: #initializeLegacyResources!initializing!private! !
+!Kernel.Package categoriesFor: #initializeOldSourcePackage!initializing!private! !
+!Kernel.Package categoriesFor: #isAlias:!initializing!private! !
+!Kernel.Package categoriesFor: #isBasePackage!public!testing! !
+!Kernel.Package categoriesFor: #isChanged!public!testing! !
+!Kernel.Package categoriesFor: #isChanged:!accessing!public! !
+!Kernel.Package categoriesFor: #isDefaultPackage!public!testing! !
+!Kernel.Package categoriesFor: #isImportedClass:!initializing!private! !
+!Kernel.Package categoriesFor: #isInstalled!public!testing! !
+!Kernel.Package categoriesFor: #isSourceObject:!initializing!private! !
+!Kernel.Package categoriesFor: #isSystemPackage!public!testing! !
+!Kernel.Package categoriesFor: #load!initializing!private! !
+!Kernel.Package categoriesFor: #loadBinaryVariables!initializing!private! !
+!Kernel.Package categoriesFor: #loadPAC!loading!private! !
+!Kernel.Package categoriesFor: #loadPAC:!loading!private! !
+!Kernel.Package categoriesFor: #loadPAX!loading!private! !
+!Kernel.Package categoriesFor: #looseResourceIdentifiers!initializing!public! !
+!Kernel.Package categoriesFor: #looseResourceIdentifiersDo:!initializing!public! !
+!Kernel.Package categoriesFor: #manager!initializing!public! !
+!Kernel.Package categoriesFor: #manualPrerequisites!initializing!public! !
+!Kernel.Package categoriesFor: #manualPrerequisites:!initializing!public! !
+!Kernel.Package categoriesFor: #membershipChanged!initializing!private! !
+!Kernel.Package categoriesFor: #membershipChangedAt:!events!private! !
+!Kernel.Package categoriesFor: #memberUpdatedAt:!events!private! !
+!Kernel.Package categoriesFor: #methodNames!accessing!public! !
+!Kernel.Package categoriesFor: #methods!accessing!public! !
+!Kernel.Package categoriesFor: #methodsDo:!enumerating!public! !
+!Kernel.Package categoriesFor: #methodsOfClass:!accessing!public! !
+!Kernel.Package categoriesFor: #name!accessing!public! !
+!Kernel.Package categoriesFor: #nameForResourceIdentifier:!helpers!private! !
+!Kernel.Package categoriesFor: #okToSaveOrDeploy!private!testing! !
+!Kernel.Package categoriesFor: #okToUninstall!private!testing! !
+!Kernel.Package categoriesFor: #onClassRemoved:!events!private! !
+!Kernel.Package categoriesFor: #onClassRenamed:from:to:!events!private! !
+!Kernel.Package categoriesFor: #onVariableRenamed:from:!events!private! !
+!Kernel.Package categoriesFor: #owningPackage!adding!public! !
+!Kernel.Package categoriesFor: #packageFileName!accessing!public! !
+!Kernel.Package categoriesFor: #packageFileName:!accessing!private! !
+!Kernel.Package categoriesFor: #packageFolder!accessing!public! !
+!Kernel.Package categoriesFor: #packagePathname!accessing!private! !
+!Kernel.Package categoriesFor: #packagePathname:!accessing!private! !
+!Kernel.Package categoriesFor: #packageVersion!accessing!public! !
+!Kernel.Package categoriesFor: #packageVersion:!accessing!public! !
+!Kernel.Package categoriesFor: #path!accessing!public! !
+!Kernel.Package categoriesFor: #paxVersion!accessing!private! !
+!Kernel.Package categoriesFor: #paxVersion:!initializing!private! !
+!Kernel.Package categoriesFor: #postLoadInitialization:!loading!private! !
+!Kernel.Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
+!Kernel.Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
+!Kernel.Package categoriesFor: #prerequisiteNames!accessing!private! !
+!Kernel.Package categoriesFor: #prerequisites!accessing!public! !
+!Kernel.Package categoriesFor: #printOn:!initializing!public! !
+!Kernel.Package categoriesFor: #privateUninstall!initializing!private! !
+!Kernel.Package categoriesFor: #propertyAt:ifAbsent:!initializing!public! !
+!Kernel.Package categoriesFor: #propertyManager!initializing!private! !
+!Kernel.Package categoriesFor: #rebaseTo:!initializing!public! !
+!Kernel.Package categoriesFor: #remainingClasses!initializing!public! !
+!Kernel.Package categoriesFor: #removeClass:!initializing!public! !
+!Kernel.Package categoriesFor: #removeClassName:!initializing!private! !
+!Kernel.Package categoriesFor: #removeGlobalNamed:!initializing!public! !
+!Kernel.Package categoriesFor: #removeLooseMethod:!initializing!private! !
+!Kernel.Package categoriesFor: #removeMethod:!initializing!public! !
+!Kernel.Package categoriesFor: #removeMethodNames:!initializing!private! !
+!Kernel.Package categoriesFor: #removePackagedMethod:!initializing!private! !
+!Kernel.Package categoriesFor: #removePAXProperties!initializing!private! !
+!Kernel.Package categoriesFor: #removeVariableNamed:!initializing!public! !
+!Kernel.Package categoriesFor: #renameLooseMethodsOf:to:!initializing!private! !
+!Kernel.Package categoriesFor: #resetChangeFlags!initializing!public! !
+!Kernel.Package categoriesFor: #resetPrerequisites!initializing!private! !
+!Kernel.Package categoriesFor: #resourceIdentifiers!accessing!public! !
+!Kernel.Package categoriesFor: #scriptAt:!accessing!public! !
+!Kernel.Package categoriesFor: #scriptAt:put:!accessing!public! !
+!Kernel.Package categoriesFor: #scripts!accessing!private! !
+!Kernel.Package categoriesFor: #setAliasVariableNames:!initializing!private! !
+!Kernel.Package categoriesFor: #setBinaryVariableNames:!initializing!private! !
+!Kernel.Package categoriesFor: #setClassNames:!initializing!private! !
+!Kernel.Package categoriesFor: #setEvents:!events!private! !
+!Kernel.Package categoriesFor: #setManualPrerequisites:!initializing!private! !
+!Kernel.Package categoriesFor: #setMethodNames:!initializing!private! !
+!Kernel.Package categoriesFor: #setPackageFileName:!initializing!private! !
+!Kernel.Package categoriesFor: #setPrerequisites:!initializing!private! !
+!Kernel.Package categoriesFor: #setUntracedVariables:!initializing!private! !
+!Kernel.Package categoriesFor: #setVariableNames:!initializing!private! !
+!Kernel.Package categoriesFor: #shrink!private! !
+!Kernel.Package categoriesFor: #sourceDescriptor!accessing!private! !
+!Kernel.Package categoriesFor: #sourceDescriptor:!accessing!private! !
+!Kernel.Package categoriesFor: #sourceManager!accessing!public! !
+!Kernel.Package categoriesFor: #sourceVariableNames!accessing!private! !
+!Kernel.Package categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.Package categoriesFor: #storeComment!helpers!private! !
+!Kernel.Package categoriesFor: #synchronizeNames!helpers!private! !
+!Kernel.Package categoriesFor: #timestamp!accessing!public! !
+!Kernel.Package categoriesFor: #timestamp:!accessing!private! !
+!Kernel.Package categoriesFor: #trace:prerequisite:from:to:dependency:!helpers!private! !
+!Kernel.Package categoriesFor: #tracePrerequisites!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisites:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfClasses:packagedVariables:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
+!Kernel.Package categoriesFor: #uninstall!public!removing! !
+!Kernel.Package categoriesFor: #uninstallClasses!class hierarchy-removing!private!removing! !
+!Kernel.Package categoriesFor: #uninstallGlobals!private!removing! !
+!Kernel.Package categoriesFor: #uninstallMethods!private!removing! !
+!Kernel.Package categoriesFor: #untracedGlobals:!legacy package loading!private! !
+!Kernel.Package categoriesFor: #untracedVariables!accessing!public! !
+!Kernel.Package categoriesFor: #untracedVariables:!accessing!public! !
+!Kernel.Package categoriesFor: #upateFileNames!operations!private! !
+!Kernel.Package categoriesFor: #updateMethodNamesToFullyQualified!loading!private! !
+!Kernel.Package categoriesFor: #updateNamesToFullyQualified!loading!private! !
+!Kernel.Package categoriesFor: #upgrade!helpers!private! !
+!Kernel.Package categoriesFor: #upgradeToVersion2!helpers!private! !
+!Kernel.Package categoriesFor: #validate!operations!private! !
+!Kernel.Package categoriesFor: #variableNames!accessing!public! !
+!Kernel.Package categoriesFor: #variableNames:!private! !
+!Kernel.Package categoriesFor: #variables!private!source filing! !
+!Kernel.Package categoriesFor: #versionIfRequired!public! !
+!Kernel.Package categoriesFor: #vmVersionCheck:!constants!private! !
 
-!Package class methodsFor!
+!Kernel.Package class methodsFor!
 
 binaryPacLoader: aDyadicValuable
 	BinaryPacLoader := aDyadicValuable!
@@ -1911,11 +2012,10 @@ fromFile: path
 	package"
 
 	| answer pathname |
-
 	pathname := File default: path extension: self sourcePackageExtension.
-	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension) 
-		ifTrue: [self fromPAXFile: pathname]
-		ifFalse: [self fromPACFile: pathname].
+	answer := ((File splitExtensionFrom: pathname) sameAs: self sourcePackageExtension)
+				ifTrue: [self fromPAXFile: pathname]
+				ifFalse: [self fromPACFile: pathname].
 	answer setPackageFileName: pathname.
 	^answer!
 
@@ -1937,7 +2037,7 @@ fromPACFile: pathname
 	answer isNil ifTrue: [self errorInvalidPACFile: pathname].
 	^answer!
 
-fromPAXFile: pathname 
+fromPAXFile: pathname
 	"Private - Answer a new instance of the receiver created from the .PAX file at the
 	specified <readableString> path, pathname, or raise an error if the file does not contain a
 	package in source text representation."
@@ -2002,9 +2102,10 @@ paxVersion
 	"Private - Answer the current PAX format version number.
 	0 - Original D5.1 format
 	1 - D6.0 format with implicit literal (i.e. not embedded binary) resources
-	2 - D7.2 format, using BindingReferences"
+	2 - Early D7.2 format, using BindingReferences
+	2.1 - D7.2 format with fully qualified names"
 
-	^2!
+	^2.1!
 
 preDeclareClassesOnLoad
 	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. This is generally not necessary except in circumstances where one or more of the source globals in the package as dependencies on classes in the package, or where classes in the package are being used in the role of pool dictionaries by other classes in the package. The historic behaviour was to declare classes, but as of 7.2 this is now off by default. The reason for this is that pre-declaration is relatively expensive (causing a class mutation when the actual class declaration is subsequently loaded), and so worth avoiding when not required. The setting can either be changed globally (i.e. `Package declareClassesOnLoad: true`) or for individual packages using the `preDeclareClassesOnLoad` property on the instance side. If the property is set, then it will be persisted to the package file and respected by future loads. "
@@ -2037,17 +2138,13 @@ stbConvertFrom: anSTBClassFormat
 	"Convert version 0 packages by mutating class names from Strings
 	into Symbols. There is no layout change."
 
-	Notification signal: 'Converting package from version ',
-						anSTBClassFormat version printString, ' to: ',
-						self stbVersion printString.
-
-	^[:data |
-		(anSTBClassFormat version to: self stbVersion - 1)
-			inject: data into: [:inject :version |
-				self perform: ('stbConvertFromVersion', version displayString, ':') asSymbol with: inject]]
-		
-		
-		!
+	Notification
+		signal: 'Converting package from version ' , anSTBClassFormat version printString , ' to: '
+				, self stbVersion printString.
+	^
+	[:data |
+	(anSTBClassFormat version to: self stbVersion - 1) inject: data
+		into: [:inject :version | self perform: ('stbConvertFromVersion' , version displayString , ':') asSymbol with: inject]]!
 
 stbConvertFromVersion0: data
 	"Private - Convert version 0 packages by mutating class names from Strings
@@ -2073,7 +2170,7 @@ stbConvertFromVersion0: data
 	globalNames becomeA: IdentitySet.
 	^data!
 
-stbConvertFromVersion1: anArray 
+stbConvertFromVersion1: anArray
 	"Private - Convert version 1 packages  to version2. The preinstall and
 	postinstall instance variables are replaced by a dictionary which holds
 	those scripts and any more we define. Answer the mutated data.
@@ -2100,12 +2197,12 @@ stbConvertFromVersion1: anArray
 	newData at: 8 put: (anArray at: 10).
 	scripts := IdentityDictionary new.
 	(preinstall notNil and: [preinstall notEmpty]) ifTrue: [scripts at: #preinstall put: preinstall].
-	(postinstall notNil and: [postinstall notEmpty]) 
+	(postinstall notNil and: [postinstall notEmpty])
 		ifTrue: [scripts at: #postinstall put: postinstall].
 	newData at: 9 put: scripts.
 	^newData!
 
-stbConvertFromVersion2: anArray 
+stbConvertFromVersion2: anArray
 	"Private - Convert version 2 packages to version3. The only change is the
 	addition of a list of resources owned by a packkage which doesn't also
 	own the class which the resource is from. This is similar to the methodNames
@@ -2125,7 +2222,7 @@ stbConvertFromVersion2: anArray
 
 	^anArray copyWith: Set new!
 
-stbConvertFromVersion3: anArray 
+stbConvertFromVersion3: anArray
 	"Private - Convert version 3 packages to version 4. The main change is the
 	addition of an imageStripperBytes instance variable to hold a filed imageStripper
 	to be associated with the package. We hold the image stripper in this form to allow
@@ -2151,6 +2248,7 @@ stbConvertFromVersion3: anArray
 								11 imageStripperBytes"
 
 	"Copy over adding a nil imageStripperBytes slot"
+
 	| newData packagePathName |
 	newData := anArray copyWith: nil.
 
@@ -2159,7 +2257,7 @@ stbConvertFromVersion3: anArray
 	newData at: 2 put: packagePathName.
 	^newData!
 
-stbConvertFromVersion4: anArray 
+stbConvertFromVersion4: anArray
 	"Private - Convert version 4 packages (Dolphin 3.0) to version 5 (Dolphin 3.05).
 	Adds an aboutBlock (12) and versionString (13) instance variables."
 
@@ -2192,7 +2290,6 @@ stbConvertFromVersion5: anArray
 								15	timestamp
 								16	untracedGlobals"
 
-	| newPackage |
 	anArray at: 8 put: nil.	"singleFile"
 	anArray at: 10 put: nil.
 	^anArray!
@@ -2234,39 +2331,39 @@ unsaveableSignal
 	a package with uncommitted or cyclic pre-requisites."
 
 	^UnsaveableSignal! !
-!Package class categoriesFor: #binaryPacLoader:!accessing!private! !
-!Package class categoriesFor: #binaryVariableExtension!constants!private! !
-!Package class categoriesFor: #clashSignal!constants!private! !
-!Package class categoriesFor: #defaultSortBlock!constants!public! !
-!Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
-!Package class categoriesFor: #errorInvalidPAXFile:!exceptions!private! !
-!Package class categoriesFor: #fromFile:!instance creation!private! !
-!Package class categoriesFor: #fromPACFile:!instance creation!private! !
-!Package class categoriesFor: #fromPAXFile:!instance creation!private! !
-!Package class categoriesFor: #initialize!initializing!private! !
-!Package class categoriesFor: #manager!accessing!public! !
-!Package class categoriesFor: #name:!instance creation!public! !
-!Package class categoriesFor: #new!instance creation!public! !
-!Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Package class categoriesFor: #packageExtension!constants!private! !
-!Package class categoriesFor: #packageFileVersion!constants!public! !
-!Package class categoriesFor: #paxVersion!constants!private! !
-!Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Package class categoriesFor: #readFrom:!instance creation!private! !
-!Package class categoriesFor: #sourceGlobalExtension!constants!private! !
-!Package class categoriesFor: #sourcePackageExtension!constants!private! !
-!Package class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Package class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion7:!binary filing!private! !
-!Package class categoriesFor: #stbVersion!binary filing!public! !
-!Package class categoriesFor: #uncommitted!accessing!public! !
-!Package class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Package class categoriesFor: #unsaveableSignal!constants!private! !
+!Kernel.Package class categoriesFor: #binaryPacLoader:!accessing!private! !
+!Kernel.Package class categoriesFor: #binaryVariableExtension!constants!private! !
+!Kernel.Package class categoriesFor: #clashSignal!constants!private! !
+!Kernel.Package class categoriesFor: #defaultSortBlock!constants!public! !
+!Kernel.Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
+!Kernel.Package class categoriesFor: #errorInvalidPAXFile:!exceptions!private! !
+!Kernel.Package class categoriesFor: #fromFile:!instance creation!private! !
+!Kernel.Package class categoriesFor: #fromPACFile:!instance creation!private! !
+!Kernel.Package class categoriesFor: #fromPAXFile:!instance creation!private! !
+!Kernel.Package class categoriesFor: #initialize!initializing!private! !
+!Kernel.Package class categoriesFor: #manager!accessing!public! !
+!Kernel.Package class categoriesFor: #name:!instance creation!public! !
+!Kernel.Package class categoriesFor: #new!instance creation!public! !
+!Kernel.Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Kernel.Package class categoriesFor: #packageExtension!constants!private! !
+!Kernel.Package class categoriesFor: #packageFileVersion!constants!public! !
+!Kernel.Package class categoriesFor: #paxVersion!constants!private! !
+!Kernel.Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
+!Kernel.Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
+!Kernel.Package class categoriesFor: #readFrom:!instance creation!private! !
+!Kernel.Package class categoriesFor: #sourceGlobalExtension!constants!private! !
+!Kernel.Package class categoriesFor: #sourcePackageExtension!constants!private! !
+!Kernel.Package class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbConvertFromVersion7:!binary filing!private! !
+!Kernel.Package class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.Package class categoriesFor: #uncommitted!accessing!public! !
+!Kernel.Package class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.Package class categoriesFor: #unsaveableSignal!constants!private! !
 

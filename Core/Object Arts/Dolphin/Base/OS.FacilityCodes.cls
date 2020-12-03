@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #FacilityCodes
+Kernel.SharedPool subclass: #'OS.FacilityCodes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -18,6 +18,7 @@ SharedPool subclass: #FacilityCodes
 		'FACILITY_WIN32' -> 16r7.
 		'FACILITY_WINDOWS' -> 16r8
 	}!
-FacilityCodes guid: (GUID fromString: '{c29edf9c-e9d8-4309-b214-7a3dae1c1a01}')!
-FacilityCodes comment: ''!
-!FacilityCodes categoriesForClass!Unclassified! !
+OS.FacilityCodes guid: (Core.GUID fromString: '{c29edf9c-e9d8-4309-b214-7a3dae1c1a01}')!
+OS.FacilityCodes isNonInstantiable: true!
+OS.FacilityCodes comment: ''!
+!OS.FacilityCodes categoriesForClass!Unclassified! !

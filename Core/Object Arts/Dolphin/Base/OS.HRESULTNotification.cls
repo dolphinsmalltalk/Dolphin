@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Notification subclass: #HRESULTNotification
+Core.Notification subclass: #'OS.HRESULTNotification'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HRESULTNotification guid: (GUID fromString: '{87b4c56e-026e-11d3-9fd7-00a0cc3e4a32}')!
-HRESULTNotification comment: ''!
-!HRESULTNotification categoriesForClass!System-Exception Handling! !
-!HRESULTNotification methodsFor!
+OS.HRESULTNotification guid: (Core.GUID fromString: '{87b4c56e-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.HRESULTNotification comment: ''!
+!OS.HRESULTNotification categoriesForClass!System-Exception Handling! !
+!OS.HRESULTNotification methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
@@ -27,7 +27,7 @@ hresult
 	"Answer the HRESULT error code associated with the receiver."
 
 	^self tag! !
-!HRESULTNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!HRESULTNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!HRESULTNotification categoriesFor: #hresult!accessing!public! !
+!OS.HRESULTNotification categoriesFor: #_descriptionArguments!displaying!public! !
+!OS.HRESULTNotification categoriesFor: #_descriptionFormat!displaying!public! !
+!OS.HRESULTNotification categoriesFor: #hresult!accessing!public! !
 

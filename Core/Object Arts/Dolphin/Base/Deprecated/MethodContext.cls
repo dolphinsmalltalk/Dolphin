@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object variableSubclass: #MethodContext
+Core.Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodContext guid: (GUID fromString: '{87b4c4a2-026e-11d3-9fd7-00a0cc3e4a32}')!
+MethodContext guid: (Core.GUID fromString: '{87b4c4a2-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodContext comment: 'MethodContext is present only to assist in the conversion of old view resources. It is no longer used.'!
 !MethodContext categoriesForClass!Deprecated! !
 !MethodContext methodsFor!
@@ -25,20 +25,18 @@ receiver
 
 !MethodContext class methodsFor!
 
-stbConvertFrom: format 
+stbConvertFrom: format
 	^
-	[:data | 
+	[:data |
 	| ctxt size |
 	size := data size.
-	format version < 1 
+	format version < 1
 		ifTrue: 
-			[
-			"Version 0 was the original Dolphin representation (Smalltalk-80 style blocks)"
+			["Version 0 was the original Dolphin representation (Smalltalk-80 style blocks)"
 			ctxt := self basicNew: size - 3.
 			1 to: data size do: [:i | ctxt instVarAt: i put: (data at: i)]]
 		ifFalse: 
-			[
-			"Version 1 was an interim format used during the migration to the BlockClosure VM"
+			["Version 1 was an interim format used during the migration to the BlockClosure VM"
 			ctxt := Context basicNew: size - 4.
 			1 to: size - 4 do: [:i | ctxt basicAt: i put: (data at: i + 4)].
 			ctxt outer: (data at: 1)].

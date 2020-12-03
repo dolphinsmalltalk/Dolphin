@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayField subclass: #StructureArrayField
+External.ArrayField subclass: #'External.StructureArrayField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureArrayField guid: (GUID fromString: '{87b4c4e1-026e-11d3-9fd7-00a0cc3e4a32}')!
-StructureArrayField comment: 'StructureArrayField is an <ExternalField> type that can be used to described embedded arrays of structures in <ExternalStructures>.
+External.StructureArrayField guid: (Core.GUID fromString: '{87b4c4e1-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.StructureArrayField comment: 'StructureArrayField is an <ExternalField> type that can be used to described embedded arrays of structures in <ExternalStructures>.
 '!
-!StructureArrayField categoriesForClass!External-Data-Types! !
-!StructureArrayField methodsFor!
+!External.StructureArrayField categoriesForClass!External-Data-Types! !
+!External.StructureArrayField methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -46,13 +46,12 @@ printElementSizeExpressionBodyOn: aWriteStream
 		space;
 		display: #basicByteSize!
 
-readFrom: anExternalStructure
-	"Private - Answer a <StructureArray> of the receiver's field class which references the
-	array of structures embedded in the <ExternalStructure> argument at the receiver's offset."
+readFrom: aStructure
+	"Private - Answer a <StructureArray> of the receiver's field class which references the array of structures embedded in the <External.Structure> argument at the receiver's offset."
 
 	^self arrayClass
-		fromAddress: anExternalStructure yourAddress + offset
-		length: (arrayLength getElementCountOf: self in: anExternalStructure)
+		fromAddress: aStructure yourAddress + offset
+		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self fieldClass!
 
 valueParameterName
@@ -60,12 +59,12 @@ valueParameterName
 	the field described by the receiver."
 
 	^'aStructureArrayOf' , self elementClass name! !
-!StructureArrayField categoriesFor: #alignment!constants!public! !
-!StructureArrayField categoriesFor: #arrayClass!constants!private! !
-!StructureArrayField categoriesFor: #elementClass!accessing!private! !
-!StructureArrayField categoriesFor: #elementSize!accessing!private! !
-!StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
-!StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
+!External.StructureArrayField categoriesFor: #alignment!constants!public! !
+!External.StructureArrayField categoriesFor: #arrayClass!constants!private! !
+!External.StructureArrayField categoriesFor: #elementClass!accessing!private! !
+!External.StructureArrayField categoriesFor: #elementSize!accessing!private! !
+!External.StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
+!External.StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
+!External.StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
 

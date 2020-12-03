@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WeakArray variableSubclass: #MourningWeakArray
+Core.WeakArray variableSubclass: #'Core.MourningWeakArray'
 	instanceVariableNames: 'pathologist'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MourningWeakArray guid: (GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
-MourningWeakArray comment: ''!
-!MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
-!MourningWeakArray methodsFor!
+Core.MourningWeakArray guid: (Core.GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MourningWeakArray comment: ''!
+!Core.MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+!Core.MourningWeakArray methodsFor!
 
 elementsExpired: anInteger
 	"Grieve for the loss of anInteger elements. Only objects marked as weak (see #beWeak) 
@@ -45,12 +45,12 @@ pathologist: anObject
 	"Set the receiver's 'pathologist' to anObject. See #pathologist."
 
 	pathologist := anObject isNil ifTrue: [self class] ifFalse: [anObject]! !
-!MourningWeakArray categoriesFor: #elementsExpired:!finalizing!public! !
-!MourningWeakArray categoriesFor: #initialize!initializing!private! !
-!MourningWeakArray categoriesFor: #pathologist!accessing!public! !
-!MourningWeakArray categoriesFor: #pathologist:!initializing!public! !
+!Core.MourningWeakArray categoriesFor: #elementsExpired:!finalizing!public! !
+!Core.MourningWeakArray categoriesFor: #initialize!initializing!private! !
+!Core.MourningWeakArray categoriesFor: #pathologist!accessing!public! !
+!Core.MourningWeakArray categoriesFor: #pathologist:!initializing!public! !
 
-!MourningWeakArray class methodsFor!
+!Core.MourningWeakArray class methodsFor!
 
 elementsExpired: anInteger of: aWeakArray
 	"Private - At least one of aWeakArray's elements has died, process the Corpses. The default is to
@@ -65,6 +65,6 @@ initialize
 	"Initialize the receiver."
 
 	self makeMourner! !
-!MourningWeakArray class categoriesFor: #elementsExpired:of:!finalizing!private! !
-!MourningWeakArray class categoriesFor: #initialize!development!initializing!public! !
+!Core.MourningWeakArray class categoriesFor: #elementsExpired:of:!finalizing!private! !
+!Core.MourningWeakArray class categoriesFor: #initialize!development!initializing!public! !
 

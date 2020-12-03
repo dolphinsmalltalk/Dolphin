@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #CRTError
+Core.Error subclass: #'External.CRTError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CRTError guid: (GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
-CRTError comment: 'Exception to represent C-runtime library errors.'!
-!CRTError categoriesForClass!System-Exception Handling! !
-!CRTError methodsFor!
+External.CRTError guid: (Core.GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
+External.CRTError comment: 'Exception to represent C-runtime library errors.'!
+!External.CRTError categoriesForClass!System-Exception Handling! !
+!External.CRTError methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
@@ -50,10 +50,10 @@ strerror
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !
-!CRTError categoriesFor: #_descriptionArguments!displaying!public! !
-!CRTError categoriesFor: #_descriptionFormat!displaying!public! !
-!CRTError categoriesFor: #errno!accessing!public! !
-!CRTError categoriesFor: #initialize!initializing!private! !
-!CRTError categoriesFor: #messageText!accessing!public! !
-!CRTError categoriesFor: #strerror!accessing!public! !
+!External.CRTError categoriesFor: #_descriptionArguments!displaying!public! !
+!External.CRTError categoriesFor: #_descriptionFormat!displaying!public! !
+!External.CRTError categoriesFor: #errno!accessing!public! !
+!External.CRTError categoriesFor: #initialize!initializing!private! !
+!External.CRTError categoriesFor: #messageText!accessing!public! !
+!External.CRTError categoriesFor: #strerror!accessing!public! !
 

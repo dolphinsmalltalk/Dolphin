@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UIntPtrBytes variableByteSubclass: #ExternalHandle
+External.UIntPtrBytes variableByteSubclass: #'External.Handle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalHandle guid: (GUID fromString: '{87b4c518-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalHandle comment: ''!
-!ExternalHandle categoriesForClass!External-Data-Unstructured! !
-!ExternalHandle methodsFor!
+External.Handle guid: (Core.GUID fromString: '{87b4c518-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Handle comment: ''!
+!External.Handle categoriesForClass!External-Data-Unstructured! !
+!External.Handle methodsFor!
 
 asExternalHandle
 	"Answer the receiver as an ExternalHandle."
@@ -26,7 +26,7 @@ stbSaveOn: anSTBOutFiler
 	Output nil in place of the receiver as the future validity of an external handle is uncertain."
 
 	anSTBOutFiler saveObject: self as: nil! !
-!ExternalHandle categoriesFor: #asExternalHandle!converting!public! !
-!ExternalHandle categoriesFor: #handle!accessing!private! !
-!ExternalHandle categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.Handle categoriesFor: #asExternalHandle!converting!public! !
+!External.Handle categoriesFor: #handle!accessing!private! !
+!External.Handle categoriesFor: #stbSaveOn:!binary filing!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SingletonSearchPolicy subclass: #IdentitySearchPolicy
+Kernel.SingletonSearchPolicy subclass: #'Kernel.IdentitySearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IdentitySearchPolicy guid: (GUID fromString: '{123a1503-7cb8-11d3-93ca-00a024ca708a}')!
-IdentitySearchPolicy comment: 'IdentitySearchPolicy is for configuring pluggable collections and models to use identity based search and comparisons, i.e. using #== and #identityHash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as an <IdentitySet>.'!
-!IdentitySearchPolicy categoriesForClass!Collections-Support! !
-!IdentitySearchPolicy methodsFor!
+Kernel.IdentitySearchPolicy guid: (Core.GUID fromString: '{123a1503-7cb8-11d3-93ca-00a024ca708a}')!
+Kernel.IdentitySearchPolicy comment: 'IdentitySearchPolicy is for configuring pluggable collections and models to use identity based search and comparisons, i.e. using #== and #identityHash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as an <IdentitySet>.'!
+!Kernel.IdentitySearchPolicy categoriesForClass!Collections-Support! !
+!Kernel.IdentitySearchPolicy methodsFor!
 
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -27,6 +27,11 @@ hash: operand max: maximum
 	between 1 and the <integer>, maximum."
 
 	^operand identityHash \\ maximum + 1!
+
+isIdentity
+	"Answer whether or not the receiver is a search policy that compares by object identity."
+
+	^true!
 
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed
@@ -59,12 +64,13 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIdentityIndexOf: anElement from: start to: stop! !
-!IdentitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!IdentitySearchPolicy categoriesFor: #hash:!comparing!public! !
-!IdentitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!IdentitySearchPolicy categoriesFor: #name!accessing!public! !
-!IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!IdentitySearchPolicy categoriesFor: #newSet!operations!public! !
-!IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!Kernel.IdentitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #hash:!comparing!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #isIdentity!public!testing! !
+!Kernel.IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!Kernel.IdentitySearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #newSet!operations!public! !
+!Kernel.IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 

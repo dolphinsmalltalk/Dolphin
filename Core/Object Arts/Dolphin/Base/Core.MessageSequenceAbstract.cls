@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MessageSequenceAbstract
+Core.Object subclass: #'Core.MessageSequenceAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageSequenceAbstract guid: (GUID fromString: '{87b4c4a0-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageSequenceAbstract isAbstract: true!
-MessageSequenceAbstract comment: ''!
-!MessageSequenceAbstract categoriesForClass!Kernel-Objects! !
-!MessageSequenceAbstract methodsFor!
+Core.MessageSequenceAbstract guid: (Core.GUID fromString: '{87b4c4a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MessageSequenceAbstract isNonInstantiable: true!
+Core.MessageSequenceAbstract comment: ''!
+!Core.MessageSequenceAbstract categoriesForClass!Kernel-Objects! !
+!Core.MessageSequenceAbstract methodsFor!
 
 add: anEventMessageSend
 	"Adds a <MessageSend> to this sequence."
@@ -94,27 +94,27 @@ valueWithArguments: argArray
 	| answer |
 	self messagesDo: [:each | answer := each valueWithArguments: argArray].
 	^answer! !
-!MessageSequenceAbstract categoriesFor: #add:!adding!public! !
-!MessageSequenceAbstract categoriesFor: #argumentCount!accessing!public! !
-!MessageSequenceAbstract categoriesFor: #asMinimumRepresentation!converting!public! !
-!MessageSequenceAbstract categoriesFor: #forwardTo:!operations!public! !
-!MessageSequenceAbstract categoriesFor: #includes:!public!searching! !
-!MessageSequenceAbstract categoriesFor: #isEmpty!public!testing! !
-!MessageSequenceAbstract categoriesFor: #messagesDo:!enumerating!private! !
-!MessageSequenceAbstract categoriesFor: #notEmpty!public!testing! !
-!MessageSequenceAbstract categoriesFor: #value!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #value:!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #value:value:!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.MessageSequenceAbstract categoriesFor: #add:!adding!public! !
+!Core.MessageSequenceAbstract categoriesFor: #argumentCount!accessing!public! !
+!Core.MessageSequenceAbstract categoriesFor: #asMinimumRepresentation!converting!public! !
+!Core.MessageSequenceAbstract categoriesFor: #forwardTo:!operations!public! !
+!Core.MessageSequenceAbstract categoriesFor: #includes:!public!searching! !
+!Core.MessageSequenceAbstract categoriesFor: #isEmpty!public!testing! !
+!Core.MessageSequenceAbstract categoriesFor: #messagesDo:!enumerating!private! !
+!Core.MessageSequenceAbstract categoriesFor: #notEmpty!public!testing! !
+!Core.MessageSequenceAbstract categoriesFor: #value!evaluating!public! !
+!Core.MessageSequenceAbstract categoriesFor: #value:!evaluating!public! !
+!Core.MessageSequenceAbstract categoriesFor: #value:value:!evaluating!public! !
+!Core.MessageSequenceAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
 
-MessageSequenceAbstract methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
-MessageSequenceAbstract methodProtocol: #messageSend attributes: #() selectors: #()!
+Core.MessageSequenceAbstract methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
+Core.MessageSequenceAbstract methodProtocol: #messageSend attributes: #() selectors: #()!
 
-!MessageSequenceAbstract class methodsFor!
+!Core.MessageSequenceAbstract class methodsFor!
 
 new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
-!MessageSequenceAbstract class categoriesFor: #new!instance creation!public! !
+!Core.MessageSequenceAbstract class categoriesFor: #new!instance creation!public! !
 

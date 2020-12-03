@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithm subclass: #DefaultSortAlgorithm
+Core.SortAlgorithm subclass: #'Kernel.DefaultSortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DefaultSortAlgorithm guid: (GUID fromString: '{4da46cbc-7732-4a19-b7ef-7548a1c4506f}')!
-DefaultSortAlgorithm comment: 'DefaultSortAlgorithm implements the default sorting algorithm and sort-ordering as a sorting strategy for use in conjunction with <SortedCollection>s.
+Kernel.DefaultSortAlgorithm guid: (Core.GUID fromString: '{4da46cbc-7732-4a19-b7ef-7548a1c4506f}')!
+Kernel.DefaultSortAlgorithm comment: 'DefaultSortAlgorithm implements the default sorting algorithm and sort-ordering as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Currently DefaultSortAlgorithm is an implementation of the Introsort algorithm. This is a modified Quicksort that switches to Heapsort when it detects that quicksort is going quadratic. The sort-order relationship is fixed and always uses the #<= message to compare elements.
 
 The default sort algorithm is not guaranteed to be a stable sort (in fact in the current implementation it definitely is not), i.e. if the collection has previously been sorted by some other criteria, then this previous ordering of sort equal elements is not maintained when resorting.'!
-!DefaultSortAlgorithm categoriesForClass!Kernel-Objects! !
-!DefaultSortAlgorithm methodsFor!
+!Kernel.DefaultSortAlgorithm categoriesForClass!Kernel-Objects! !
+!Kernel.DefaultSortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -165,14 +165,14 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^[:a :b | a <= b]! !
-!DefaultSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!DefaultSortAlgorithm categoriesFor: #insertionSort:from:to:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sift:from:between:and:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sort:from:to:!public!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sort:from:to:limit:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #insertionSort:from:to:!private!sorting! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #sift:from:between:and:!private!sorting! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #sort:from:to:!public!sorting! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #sort:from:to:limit:!private!sorting! !
+!Kernel.DefaultSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
 
-!DefaultSortAlgorithm class methodsFor!
+!Kernel.DefaultSortAlgorithm class methodsFor!
 
 current
 	^Current!
@@ -185,8 +185,8 @@ newSortBlock: aDyadicValuable
 
 pluggableEquivalentClass
 	^IntrosortAlgorithm! !
-!DefaultSortAlgorithm class categoriesFor: #current!instance creation!public! !
-!DefaultSortAlgorithm class categoriesFor: #initialize!development!initializing!public! !
-!DefaultSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
-!DefaultSortAlgorithm class categoriesFor: #pluggableEquivalentClass!constants!public! !
+!Kernel.DefaultSortAlgorithm class categoriesFor: #current!instance creation!public! !
+!Kernel.DefaultSortAlgorithm class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.DefaultSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!Kernel.DefaultSortAlgorithm class categoriesFor: #pluggableEquivalentClass!constants!public! !
 

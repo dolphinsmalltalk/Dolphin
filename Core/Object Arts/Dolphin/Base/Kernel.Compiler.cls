@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Compiler
+Core.Object subclass: #'Kernel.Compiler'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultFlags DisabledWarnings'
-	imports: #(#{CompilerFlags} #{SmalltalkParseErrorCodes})
+	imports: #(#{Kernel.CompilerFlags} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Compiler guid: (GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
-Compiler comment: 'The Compiler class is responsible for compiling new methods and evaluating expressions.'!
-!Compiler categoriesForClass!System-Compiler! !
-!Compiler class methodsFor!
+Kernel.Compiler guid: (Core.GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.Compiler comment: 'The Compiler class is responsible for compiling new methods and evaluating expressions.'!
+!Kernel.Compiler categoriesForClass!System-Compiler! !
+!Kernel.Compiler class methodsFor!
 
 compile: aString in: aClass 
 	"Compile the String conversion of the argument code as a method of aClass.
@@ -226,12 +226,11 @@ evaluate: aString for: anObject
 		evaluationPools: nil!
 
 evaluate: aString for: anObject evaluationPools: anArray
-	^(self
-		compileForEvaluation: aString
-		in: (anObject ifNotNil: [anObject class])
+	^self
+		evaluate: aString
+		for: anObject
 		evaluationPools: anArray
-		flags: 0) method
-		ifNotNil: [:expr | expr value: anObject withArguments: #()]!
+		logged: false!
 
 evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean 
 	"Compile and evaluate the expression, aString, with anObject as the 
@@ -339,8 +338,7 @@ isAValidLocalIdentifier: aString
 isValidSelector: aSymbol
 	"Answer whether the <Symbol> argument is a valid selector (unary, binary or keyword)."
 
-	^(Symbol isLiteralSymbol: aSymbol) and: [
-		(self isAReservedWord: aSymbol asString) not]!
+	^(Symbol isLiteralSymbol: aSymbol) and: [(self isAReservedWord: aSymbol asString) not]!
 
 isWarningDisabled: anInteger 
 	^anInteger >= CWarnFirst and: [DisabledWarnings includes: anInteger]!
@@ -417,47 +415,58 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative #pathString:)
+	"Uses:
+		notificationCallback:		Sent with compilation errors/warnings
+		allInstVarNames			To query class metadata
+		evaluate:for:evaluationPools:	To evaluate ##(...) expressions
+		bindingFor:				To lookup variables in the evaluation pools.
+		fullBindingFor:				Sent to  a namespace to resolve stative variables
+		asNumber				Sent to parse numeric literals
+		understandsArithmetic		Sent to verify the type of literals when parsing some messages with inline forms, e.g. #to:by:do:
+		negative					Similarly to above, but to check for negative 'step'
+		#pathString:context:meta:	Sent to instantiate BindingReference objects for literal binding references"
+
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative #pathString:context:flags:)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass
 	^CompilerWarningNotification! !
-!Compiler class categoriesFor: #compile:in:!compiling!public! !
-!Compiler class categoriesFor: #compile:in:flags:!compiling!private! !
-!Compiler class categoriesFor: #compileDebugExpression:in:evaluationPools:!compiling!public! !
-!Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
-!Compiler class categoriesFor: #compileExpression:in:!compiling!public! !
-!Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
-!Compiler class categoriesFor: #compileForEvaluation:in:evaluationPools:flags:!compiling!private! !
-!Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
-!Compiler class categoriesFor: #debugInfoFlags:!development!public! !
-!Compiler class categoriesFor: #debugInfoFor:in:debug:!development!public! !
-!Compiler class categoriesFor: #debugInfoForExpression:in:evaluationPools:debug:!development!public! !
-!Compiler class categoriesFor: #defaultFlags!constants!public! !
-!Compiler class categoriesFor: #defaultFlags:!accessing!public! !
-!Compiler class categoriesFor: #disableWarning:!helpers!public! !
-!Compiler class categoriesFor: #enableWarning:!helpers!public! !
-!Compiler class categoriesFor: #errorClass!public! !
-!Compiler class categoriesFor: #evaluate:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:logged:!evaluating!public! !
-!Compiler class categoriesFor: #identifierFrom:!parsing!public! !
-!Compiler class categoriesFor: #initialize!development!initializing!private! !
-!Compiler class categoriesFor: #isAReservedWord:!parsing!private! !
-!Compiler class categoriesFor: #isAValidIdentifierChar:!parsing!private! !
-!Compiler class categoriesFor: #isAValidInitialIdentifierChar:!parsing!private! !
-!Compiler class categoriesFor: #isAValidLocalIdentifier:!parsing!private! !
-!Compiler class categoriesFor: #isValidSelector:!public!testing! !
-!Compiler class categoriesFor: #isWarningDisabled:!exceptions!private! !
-!Compiler class categoriesFor: #notificationCallback:!exceptions!private! !
-!Compiler class categoriesFor: #notificationClass!public! !
-!Compiler class categoriesFor: #reservedWords!constants!private! !
-!Compiler class categoriesFor: #temporariesMapOf:in:!development!public! !
-!Compiler class categoriesFor: #textMapOf:in:!development!public! !
-!Compiler class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!Compiler class categoriesFor: #warningClass!public! !
+!Kernel.Compiler class categoriesFor: #compile:in:!compiling!public! !
+!Kernel.Compiler class categoriesFor: #compile:in:flags:!compiling!private! !
+!Kernel.Compiler class categoriesFor: #compileDebugExpression:in:evaluationPools:!compiling!public! !
+!Kernel.Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
+!Kernel.Compiler class categoriesFor: #compileExpression:in:!compiling!public! !
+!Kernel.Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
+!Kernel.Compiler class categoriesFor: #compileForEvaluation:in:evaluationPools:flags:!compiling!private! !
+!Kernel.Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
+!Kernel.Compiler class categoriesFor: #debugInfoFlags:!development!public! !
+!Kernel.Compiler class categoriesFor: #debugInfoFor:in:debug:!development!public! !
+!Kernel.Compiler class categoriesFor: #debugInfoForExpression:in:evaluationPools:debug:!development!public! !
+!Kernel.Compiler class categoriesFor: #defaultFlags!constants!public! !
+!Kernel.Compiler class categoriesFor: #defaultFlags:!accessing!public! !
+!Kernel.Compiler class categoriesFor: #disableWarning:!helpers!public! !
+!Kernel.Compiler class categoriesFor: #enableWarning:!helpers!public! !
+!Kernel.Compiler class categoriesFor: #errorClass!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #evaluate:logged:!evaluating!public! !
+!Kernel.Compiler class categoriesFor: #identifierFrom:!parsing!public! !
+!Kernel.Compiler class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.Compiler class categoriesFor: #isAReservedWord:!parsing!private! !
+!Kernel.Compiler class categoriesFor: #isAValidIdentifierChar:!parsing!private! !
+!Kernel.Compiler class categoriesFor: #isAValidInitialIdentifierChar:!parsing!private! !
+!Kernel.Compiler class categoriesFor: #isAValidLocalIdentifier:!parsing!private! !
+!Kernel.Compiler class categoriesFor: #isValidSelector:!public!testing! !
+!Kernel.Compiler class categoriesFor: #isWarningDisabled:!exceptions!private! !
+!Kernel.Compiler class categoriesFor: #notificationCallback:!exceptions!private! !
+!Kernel.Compiler class categoriesFor: #notificationClass!public! !
+!Kernel.Compiler class categoriesFor: #reservedWords!constants!private! !
+!Kernel.Compiler class categoriesFor: #temporariesMapOf:in:!development!public! !
+!Kernel.Compiler class categoriesFor: #textMapOf:in:!development!public! !
+!Kernel.Compiler class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Kernel.Compiler class categoriesFor: #warningClass!public! !
 

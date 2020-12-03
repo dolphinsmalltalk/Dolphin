@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object variableSubclass: #Context
+Core.Object variableSubclass: #'Kernel.Context'
 	instanceVariableNames: 'outer block'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Context guid: (GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
-Context comment: ''!
-!Context categoriesForClass!Kernel-Processes! !
-!Context methodsFor!
+Kernel.Context guid: (Core.GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
+Kernel.Context comment: ''!
+!Kernel.Context categoriesForClass!Kernel-Processes! !
+!Kernel.Context methodsFor!
 
 block
 	^block!
@@ -38,10 +38,10 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
-!Context categoriesFor: #block!accessing!private! !
-!Context categoriesFor: #frameClass!constants!public! !
-!Context categoriesFor: #home!accessing!public! !
-!Context categoriesFor: #outer!accessing!private! !
-!Context categoriesFor: #outer:!accessing!private! !
-!Context categoriesFor: #printOn:!printing!public! !
+!Kernel.Context categoriesFor: #block!accessing!private! !
+!Kernel.Context categoriesFor: #frameClass!constants!public! !
+!Kernel.Context categoriesFor: #home!accessing!public! !
+!Kernel.Context categoriesFor: #outer!accessing!private! !
+!Kernel.Context categoriesFor: #outer:!accessing!private! !
+!Kernel.Context categoriesFor: #printOn:!printing!public! !
 

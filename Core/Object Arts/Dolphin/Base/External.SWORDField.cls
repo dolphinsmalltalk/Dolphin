@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScalarField subclass: #SWORDField
+External.ScalarField subclass: #'External.SWORDField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SWORDField guid: (GUID fromString: '{87b4c4ee-026e-11d3-9fd7-00a0cc3e4a32}')!
-SWORDField comment: '<SWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit signed integers.'!
-!SWORDField categoriesForClass!External-Data-Types! !
-!SWORDField methodsFor!
+External.SWORDField guid: (Core.GUID fromString: '{87b4c4ee-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.SWORDField comment: '<SWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit signed integers.'!
+!External.SWORDField categoriesForClass!External-Data-Types! !
+!External.SWORDField methodsFor!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
@@ -27,16 +27,16 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes swordAtOffset: offset put: anInteger! !
-!SWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!SWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!SWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SWORDField categoriesFor: #accessorMessage!automatic generation!private! !
+!External.SWORDField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.SWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!SWORDField class methodsFor!
+!External.SWORDField class methodsFor!
 
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes.
 	A WORD is always 16-bits/2 bytes."
 
 	^2! !
-!SWORDField class categoriesFor: #byteSize!constants!private! !
+!External.SWORDField class categoriesFor: #byteSize!constants!private! !
 

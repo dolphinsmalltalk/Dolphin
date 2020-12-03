@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBResourceSTBFileAccessorProxy
+Kernel.STBProxy subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBResourceSTBFileAccessorProxy guid: (GUID fromString: '{87b4c6f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+STBResourceSTBFileAccessorProxy guid: (Core.GUID fromString: '{87b4c6f1-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBResourceSTBFileAccessorProxy comment: ''!
 !STBResourceSTBFileAccessorProxy categoriesForClass!System-Binary storage! !
 !STBResourceSTBFileAccessorProxy methodsFor!
@@ -21,7 +21,7 @@ fileName: aString
 
 	fileName := aString!
 
-stbFixup: inFiler at: anInteger 
+stbFixup: inFiler at: anInteger
 	"Answer the object that this one represents.
 	If the receiver's bytes inst var is non-nil then we create a new file containing
 	this data - the contents of the original ResourceSTBFileAccesor file. Also,
@@ -30,7 +30,7 @@ stbFixup: inFiler at: anInteger
 	resource STB data."
 
 	| accessor classLocator |
-	bytes notNil 
+	bytes notNil
 		ifTrue: 
 			[| stream |
 			stream := FileStream write: fileName text: false.

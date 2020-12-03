@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Set variableSubclass: #IdentitySet
+Core.Set variableSubclass: #'Core.IdentitySet'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IdentitySet guid: (GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
-IdentitySet comment: ''!
-!IdentitySet categoriesForClass!Collections-Unordered! !
-!IdentitySet methodsFor!
+Core.IdentitySet guid: (Core.GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.IdentitySet comment: ''!
+!Core.IdentitySet categoriesForClass!Collections-Unordered! !
+!Core.IdentitySet methodsFor!
 
 findElementOrNil: anObject
 	"Private - Answer the index of the given object in the receiver, or, if not found,
@@ -20,7 +20,7 @@ findElementOrNil: anObject
 
 	| capacity index |
 	index := anObject identityHash \\ (capacity := self basicSize) + 1.
-	
+
 	[| element |
 	(element := self basicAt: index) isNil or: [anObject == element]]
 			whileFalse: [index := index \\ capacity + 1].
@@ -37,7 +37,7 @@ identityIncludes: anObject
 	identical."
 
 	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
-!IdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!IdentitySet categoriesFor: #hash:max:!private!searching! !
-!IdentitySet categoriesFor: #identityIncludes:!public!searching! !
+!Core.IdentitySet categoriesFor: #findElementOrNil:!private!searching! !
+!Core.IdentitySet categoriesFor: #hash:max:!private!searching! !
+!Core.IdentitySet categoriesFor: #identityIncludes:!public!searching! !
 

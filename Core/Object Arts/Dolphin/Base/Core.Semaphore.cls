@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LinkedList subclass: #Semaphore
+Core.LinkedList subclass: #'Core.Semaphore'
 	instanceVariableNames: 'signals'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Semaphore guid: (GUID fromString: '{87b4c524-026e-11d3-9fd7-00a0cc3e4a32}')!
-Semaphore comment: ''!
-!Semaphore categoriesForClass!Kernel-Processes! !
-!Semaphore methodsFor!
+Core.Semaphore guid: (Core.GUID fromString: '{87b4c524-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Semaphore comment: ''!
+!Core.Semaphore categoriesForClass!Kernel-Processes! !
+!Core.Semaphore methodsFor!
 
 = anObject
 	"Answer whether the receiver and anObject are considered equivalent.
@@ -46,12 +46,10 @@ critical: aBlock
 
 	| retHolder |
 	retHolder := Array new: 1.
-	^[
-		self wait: Win32Constants.INFINITE ret: retHolder.
-		aBlock value
-	] ensure: [
-		(retHolder basicAt: 1) == Win32Constants.WAIT_OBJECT_0 
-			ifTrue: [self signal]]!
+	^
+	[self wait: OS.Win32Constants.INFINITE ret: retHolder.
+	aBlock value]
+			ensure: [(retHolder basicAt: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal]]!
 
 critical: aBlock atPriority: anInteger
 	"Evaluate aBlock as a critical section - i.e. aBlock is evaluated only when
@@ -66,13 +64,11 @@ critical: aBlock atPriority: anInteger
 	| activePriority waitResult |
 	activePriority := Processor activeProcess priority: anInteger.
 	waitResult := Array new: 1.
-	^[
-		self wait: Win32Constants.INFINITE ret: waitResult.
-		aBlock value
-	] ensure: [
-		(waitResult basicAt: 1) == Win32Constants.WAIT_OBJECT_0 
-			ifTrue: [self signal].
-		Processor activeProcess priority: activePriority]!
+	^
+	[self wait: OS.Win32Constants.INFINITE ret: waitResult.
+	aBlock value] ensure: 
+				[(waitResult basicAt: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal].
+				Processor activeProcess priority: activePriority]!
 
 excessSignals
 	"Private - Answer the count of signals in excess of waits to the receiver"
@@ -163,7 +159,7 @@ wait
 
 	| ret |
 	ret := Array new: 1.
-	self wait: Win32Constants.INFINITE ret: ret.
+	self wait: OS.Win32Constants.INFINITE ret: ret.
 	^ret basicAt: 1!
 
 wait: timeout
@@ -204,28 +200,28 @@ wait: timeout ret: returnValueHolder
 
 	<primitive: 86>
 	^self primitiveFailed: _failureCode! !
-!Semaphore categoriesFor: #=!comparing!public! !
-!Semaphore categoriesFor: #add:afterIndex:!adding!public! !
-!Semaphore categoriesFor: #critical:!process synchronisation!public! !
-!Semaphore categoriesFor: #critical:atPriority:!process synchronisation!public! !
-!Semaphore categoriesFor: #excessSignals!accessing!private! !
-!Semaphore categoriesFor: #excessSignals:!initializing!private! !
-!Semaphore categoriesFor: #hash!comparing!public! !
-!Semaphore categoriesFor: #initialize!initializing!private! !
-!Semaphore categoriesFor: #primSetSignals:!private!process synchronisation! !
-!Semaphore categoriesFor: #printOn:!printing!public! !
-!Semaphore categoriesFor: #pulse!process synchronisation!public! !
-!Semaphore categoriesFor: #reset!process synchronisation!public! !
-!Semaphore categoriesFor: #set!process synchronisation!public! !
-!Semaphore categoriesFor: #signal!process synchronisation!public! !
-!Semaphore categoriesFor: #terminateProcess!process synchronisation!public! !
-!Semaphore categoriesFor: #wait!process synchronisation!public! !
-!Semaphore categoriesFor: #wait:!process synchronisation!public! !
-!Semaphore categoriesFor: #wait:ret:!private!process synchronisation! !
+!Core.Semaphore categoriesFor: #=!comparing!public! !
+!Core.Semaphore categoriesFor: #add:afterIndex:!adding!public! !
+!Core.Semaphore categoriesFor: #critical:!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #critical:atPriority:!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #excessSignals!accessing!private! !
+!Core.Semaphore categoriesFor: #excessSignals:!initializing!private! !
+!Core.Semaphore categoriesFor: #hash!comparing!public! !
+!Core.Semaphore categoriesFor: #initialize!initializing!private! !
+!Core.Semaphore categoriesFor: #primSetSignals:!private!process synchronisation! !
+!Core.Semaphore categoriesFor: #printOn:!printing!public! !
+!Core.Semaphore categoriesFor: #pulse!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #reset!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #set!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #signal!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #terminateProcess!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #wait!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #wait:!process synchronisation!public! !
+!Core.Semaphore categoriesFor: #wait:ret:!private!process synchronisation! !
 
-Semaphore methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
+Core.Semaphore methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
 
-!Semaphore class methodsFor!
+!Core.Semaphore class methodsFor!
 
 boolean
 	"Answer a new Boolean Semaphore, initially signalled.
@@ -246,7 +242,7 @@ new
 	(i.e. it's initial value is zero)."
 
 	^self basicNew initialize! !
-!Semaphore class categoriesFor: #boolean!instance creation!public! !
-!Semaphore class categoriesFor: #forMutualExclusion!instance creation!public! !
-!Semaphore class categoriesFor: #new!instance creation!public! !
+!Core.Semaphore class categoriesFor: #boolean!instance creation!public! !
+!Core.Semaphore class categoriesFor: #forMutualExclusion!instance creation!public! !
+!Core.Semaphore class categoriesFor: #new!instance creation!public! !
 

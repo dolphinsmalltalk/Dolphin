@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MessageSequenceAbstract subclass: #EventMessageSequence
+Core.MessageSequenceAbstract subclass: #'Kernel.EventMessageSequence'
 	instanceVariableNames: 'receivers messages tally'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EventMessageSequence guid: (GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
-EventMessageSequence comment: ''!
-!EventMessageSequence categoriesForClass!System-Support! !
-!EventMessageSequence methodsFor!
+Kernel.EventMessageSequence guid: (Core.GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.EventMessageSequence comment: ''!
+!Kernel.EventMessageSequence categoriesForClass!System-Support! !
+!Kernel.EventMessageSequence methodsFor!
 
 add: aMessageSend
 	"Adds a <MessageSend> to this sequence. Normally this would be an
@@ -50,7 +50,7 @@ initialize
 	messages := Array new: 1.
 	tally := 0!
 
-messagesDo: operation 
+messagesDo: operation
 	"Private - Evaluates the <monadicValuable>, operation, for all non-dead elements of the receiver.
 	An event message registration is considered dead if the target (receiver) of the message has been
 	garbage collected."
@@ -59,13 +59,11 @@ messagesDo: operation
 	corpse := DeadObject current.
 	1 to: receivers basicSize
 		do: 
-			[:index | 
-			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
-
+			[:index |
 			| receiver |
+			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
 			receiver := receivers at: index.
-			receiver == corpse 
-				ifFalse: [(messages at: index) ifNotNil: [:msg | operation value: msg]]]!
+			receiver == corpse ifFalse: [(messages at: index) ifNotNil: [:msg | operation value: msg]]]!
 
 removeMessagesFor: anObject
 	"Removes all the messages in this sequence that are destined for anObject. Answers the receiver."
@@ -74,8 +72,8 @@ removeMessagesFor: anObject
 	corpse := DeadObject current.
 	1 to: receivers basicSize
 		do: 
-			[:index | 
-			(receivers at: index) == anObject 
+			[:index |
+			(receivers at: index) == anObject
 				ifTrue: 
 					[tally := tally - 1.
 					receivers at: index put: corpse.	"corpse marks empty slots"
@@ -85,10 +83,10 @@ size
 	"Answers the number of messages in the receiver"
 
 	^tally! !
-!EventMessageSequence categoriesFor: #add:!adding!public! !
-!EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
-!EventMessageSequence categoriesFor: #initialize!initializing!private! !
-!EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!private! !
-!EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!EventMessageSequence categoriesFor: #size!accessing!public! !
+!Kernel.EventMessageSequence categoriesFor: #add:!adding!public! !
+!Kernel.EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
+!Kernel.EventMessageSequence categoriesFor: #initialize!initializing!private! !
+!Kernel.EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!private! !
+!Kernel.EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
+!Kernel.EventMessageSequence categoriesFor: #size!accessing!public! !
 

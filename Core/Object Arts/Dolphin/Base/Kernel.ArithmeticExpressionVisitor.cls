@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
+Kernel.ParseNodeVisitor subclass: #'Kernel.ArithmeticExpressionVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArithmeticExpressionVisitor guid: (GUID fromString: '{aef2d77a-820d-495f-9347-bffdde83a15d}')!
-ArithmeticExpressionVisitor isAbstract: true!
-ArithmeticExpressionVisitor comment: ''!
-!ArithmeticExpressionVisitor categoriesForClass!Refactory-ParseTree Matching! !
-!ArithmeticExpressionVisitor methodsFor!
+Kernel.ArithmeticExpressionVisitor guid: (Core.GUID fromString: '{aef2d77a-820d-495f-9347-bffdde83a15d}')!
+Kernel.ArithmeticExpressionVisitor isNonInstantiable: true!
+Kernel.ArithmeticExpressionVisitor comment: ''!
+!Kernel.ArithmeticExpressionVisitor categoriesForClass!Refactory-ParseTree Matching! !
+!Kernel.ArithmeticExpressionVisitor methodsFor!
 
 errorInvalidArithmeticExpression: aStProgramNode
 	^self error: 'Unexpected node type in expression: ' , aStProgramNode printString!
@@ -56,19 +56,19 @@ visitStatements: aNodeCollection
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
-!ArithmeticExpressionVisitor categoriesFor: #errorInvalidArithmeticExpression:!exceptions!private! !
-!ArithmeticExpressionVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!ArithmeticExpressionVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitStatements:!helpers!private! !
-!ArithmeticExpressionVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #errorInvalidArithmeticExpression:!exceptions!private! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitMessageNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitMethodNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitReturnNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitStatements:!helpers!private! !
+!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitVariableNode:!public!visiting! !
 

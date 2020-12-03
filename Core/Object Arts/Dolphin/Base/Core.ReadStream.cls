@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PositionableStream subclass: #ReadStream
+Core.PositionableStream subclass: #'Core.ReadStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReadStream guid: (GUID fromString: '{87b4c6fa-026e-11d3-9fd7-00a0cc3e4a32}')!
-ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStream that represents
+Core.ReadStream guid: (Core.GUID fromString: '{87b4c6fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStream that represents
 an accessor that can only read elements from a collection.'!
-!ReadStream categoriesForClass!Collections-Streams! !
-!ReadStream methodsFor!
+!Core.ReadStream categoriesForClass!Collections-Streams! !
+!Core.ReadStream methodsFor!
 
 basicNext
 	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
@@ -93,14 +93,14 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
-!ReadStream categoriesFor: #basicNext!accessing!public! !
-!ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
-!ReadStream categoriesFor: #isReadable!public!testing! !
-!ReadStream categoriesFor: #next!accessing!public! !
-!ReadStream categoriesFor: #nextAvailable!accessing!public! !
+!Core.ReadStream categoriesFor: #basicNext!accessing!public! !
+!Core.ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Core.ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
+!Core.ReadStream categoriesFor: #isReadable!public!testing! !
+!Core.ReadStream categoriesFor: #next!accessing!public! !
+!Core.ReadStream categoriesFor: #nextAvailable!accessing!public! !
 
-ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
+Core.ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 
-ReadStream class methodProtocol: #'ReadStream factory' attributes: #(#ansi #readOnly) selectors: #(#on:)!
+Core.ReadStream class methodProtocol: #'ReadStream factory' attributes: #(#ansi #readOnly) selectors: #(#on:)!
 

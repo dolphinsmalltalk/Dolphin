@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Set variableSubclass: #PluggableSet
+Core.Set variableSubclass: #'Core.PluggableSet'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableSet guid: (GUID fromString: '{faa6a208-2202-4d7e-b342-d9590b9bf6c8}')!
-PluggableSet comment: 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
+Core.PluggableSet guid: (Core.GUID fromString: '{faa6a208-2202-4d7e-b342-d9590b9bf6c8}')!
+Core.PluggableSet comment: 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.'!
-!PluggableSet categoriesForClass!Collections-Unordered! !
-!PluggableSet methodsFor!
+!Core.PluggableSet categoriesForClass!Collections-Unordered! !
+!Core.PluggableSet methodsFor!
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver, with enough space for anInteger
@@ -27,8 +27,9 @@ findElementOrNil: anObject
 	A pluggable <searchPolicy> is used for key comparisons and hashing."
 
 	| capacity index |
+	capacity := self basicSize.
 	index := self hash: anObject max: (capacity := self basicSize).
-	
+
 	[| element |
 	(element := self basicAt: index) isNil or: [searchPolicy compare: element with: anObject]]
 			whileFalse: [index := index \\ capacity + 1].
@@ -77,20 +78,19 @@ setSearchPolicy: aSearchPolicy
 species
 	"Answer the class of object to be used when copying the receiver with #collect:, etc."
 
-	^Set
-! !
-!PluggableSet categoriesFor: #copyEmpty:!copying!private! !
-!PluggableSet categoriesFor: #findElementOrNil:!private!searching! !
-!PluggableSet categoriesFor: #hash:max:!private!searching! !
-!PluggableSet categoriesFor: #initialize!initializing!private! !
-!PluggableSet categoriesFor: #newSelection!enumerating!private! !
-!PluggableSet categoriesFor: #preResize:!adding!public! !
-!PluggableSet categoriesFor: #searchPolicy!accessing!public! !
-!PluggableSet categoriesFor: #searchPolicy:!accessing!public! !
-!PluggableSet categoriesFor: #setSearchPolicy:!accessing!private! !
-!PluggableSet categoriesFor: #species!constants!public! !
+	^Set! !
+!Core.PluggableSet categoriesFor: #copyEmpty:!copying!private! !
+!Core.PluggableSet categoriesFor: #findElementOrNil:!private!searching! !
+!Core.PluggableSet categoriesFor: #hash:max:!private!searching! !
+!Core.PluggableSet categoriesFor: #initialize!initializing!private! !
+!Core.PluggableSet categoriesFor: #newSelection!enumerating!private! !
+!Core.PluggableSet categoriesFor: #preResize:!adding!public! !
+!Core.PluggableSet categoriesFor: #searchPolicy!accessing!public! !
+!Core.PluggableSet categoriesFor: #searchPolicy:!accessing!public! !
+!Core.PluggableSet categoriesFor: #setSearchPolicy:!accessing!private! !
+!Core.PluggableSet categoriesFor: #species!constants!public! !
 
-!PluggableSet class methodsFor!
+!Core.PluggableSet class methodsFor!
 
 defaultSearchPolicy
 	"Answer the default <searchPolicy> used by instances of the receiver."
@@ -107,7 +107,7 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
-!PluggableSet class categoriesFor: #defaultSearchPolicy!constants!public! !
-!PluggableSet class categoriesFor: #new:searchPolicy:!instance creation!public! !
-!PluggableSet class categoriesFor: #searchPolicy:!instance creation!public! !
+!Core.PluggableSet class categoriesFor: #defaultSearchPolicy!constants!public! !
+!Core.PluggableSet class categoriesFor: #new:searchPolicy:!instance creation!public! !
+!Core.PluggableSet class categoriesFor: #searchPolicy:!instance creation!public! !
 

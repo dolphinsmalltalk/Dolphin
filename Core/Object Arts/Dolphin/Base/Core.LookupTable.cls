@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dictionary variableSubclass: #LookupTable
+Core.Dictionary variableSubclass: #'Core.LookupTable'
 	instanceVariableNames: 'values'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LookupTable guid: (GUID fromString: '{87b4c529-026e-11d3-9fd7-00a0cc3e4a32}')!
-LookupTable comment: 'A LookupTable is a form of <Dictionary> that does not actually store <Assocation>s, but instead maintains parallel vectors of keys and values. This has the advantage of consuming less space and generally offering higher performance. 
+Core.LookupTable guid: (Core.GUID fromString: '{87b4c529-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.LookupTable comment: 'A LookupTable is a form of <Dictionary> that does not actually store <Assocation>s, but instead maintains parallel vectors of keys and values. This has the advantage of consuming less space and generally offering higher performance. 
 
 Dictionary behaviour involving <Assocation>s (e.g. #associationsDo:, #associationAt:) is implemented by dynamically generating associations as required. This may adversely affect performance where such behaviour is used extensively, and the transient nature of the associations may not always be appropriate. In these (rare) cases a standard Dictionary should be used.
 
@@ -15,8 +15,8 @@ LookupTable itself uses equality-based hashing and comparisons. The subclass Ide
 
 Instance Variables:
 	values	<Array> of values associated with the same numbered keys in the indexable instance variables of the LookupTable.'!
-!LookupTable categoriesForClass!Collections-Unordered! !
-!LookupTable methodsFor!
+!Core.LookupTable categoriesForClass!Collections-Unordered! !
+!Core.LookupTable methodsFor!
 
 add: anAssociation
 	"Add anAssociation to the receiver. Answer anAssociation. Unlike Dictionaries, 
@@ -124,7 +124,7 @@ findKeyOrNil: anObject
 
 	| capacity index |
 	index := anObject hash \\ (capacity := self basicSize) + 1.
-	
+
 	[| key |
 	(key := self basicAt: index) isNil or: [key = anObject]]
 			whileFalse: [index := index \\ capacity + 1].
@@ -286,33 +286,33 @@ valuesClass
 	the receiver)."
 
 	^Array! !
-!LookupTable categoriesFor: #add:!adding!public! !
-!LookupTable categoriesFor: #anySatisfy:!enumerating!public! !
-!LookupTable categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #associationsDo:!enumerating!public! !
-!LookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #at:put:!accessing!public! !
-!LookupTable categoriesFor: #basicValues!accessing!private! !
-!LookupTable categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!LookupTable categoriesFor: #copyElementsInto:!adding!private! !
-!LookupTable categoriesFor: #do:!debugger-step through!enumerating!public! !
-!LookupTable categoriesFor: #findElementOrNil:!private!searching! !
-!LookupTable categoriesFor: #findKeyOrNil:!private!searching! !
-!LookupTable categoriesFor: #identityIncludes:!public!searching! !
-!LookupTable categoriesFor: #includesAssociation:!public!searching! !
-!LookupTable categoriesFor: #initialize!initializing!private! !
-!LookupTable categoriesFor: #isImmutable:!initializing!public! !
-!LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!LookupTable categoriesFor: #keysDo:!enumerating!public! !
-!LookupTable categoriesFor: #lookup:!accessing!public! !
-!LookupTable categoriesFor: #moveFrom:to:!private!removing! !
-!LookupTable categoriesFor: #postCopy!copying!public! !
-!LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!LookupTable categoriesFor: #select:!enumerating!public! !
-!LookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
-!LookupTable categoriesFor: #uncheckedAdd:!adding!private! !
-!LookupTable categoriesFor: #uncheckedAt:put:!accessing!private! !
-!LookupTable categoriesFor: #valuesClass!constants!public! !
+!Core.LookupTable categoriesFor: #add:!adding!public! !
+!Core.LookupTable categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.LookupTable categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!Core.LookupTable categoriesFor: #associationsDo:!enumerating!public! !
+!Core.LookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.LookupTable categoriesFor: #at:put:!accessing!public! !
+!Core.LookupTable categoriesFor: #basicValues!accessing!private! !
+!Core.LookupTable categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
+!Core.LookupTable categoriesFor: #copyElementsInto:!adding!private! !
+!Core.LookupTable categoriesFor: #do:!debugger-step through!enumerating!public! !
+!Core.LookupTable categoriesFor: #findElementOrNil:!private!searching! !
+!Core.LookupTable categoriesFor: #findKeyOrNil:!private!searching! !
+!Core.LookupTable categoriesFor: #identityIncludes:!public!searching! !
+!Core.LookupTable categoriesFor: #includesAssociation:!public!searching! !
+!Core.LookupTable categoriesFor: #initialize!initializing!private! !
+!Core.LookupTable categoriesFor: #isImmutable:!initializing!public! !
+!Core.LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
+!Core.LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!Core.LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!Core.LookupTable categoriesFor: #keysDo:!enumerating!public! !
+!Core.LookupTable categoriesFor: #lookup:!accessing!public! !
+!Core.LookupTable categoriesFor: #moveFrom:to:!private!removing! !
+!Core.LookupTable categoriesFor: #postCopy!copying!public! !
+!Core.LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!Core.LookupTable categoriesFor: #select:!enumerating!public! !
+!Core.LookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.LookupTable categoriesFor: #uncheckedAdd:!adding!private! !
+!Core.LookupTable categoriesFor: #uncheckedAt:put:!accessing!private! !
+!Core.LookupTable categoriesFor: #valuesClass!constants!public! !
 

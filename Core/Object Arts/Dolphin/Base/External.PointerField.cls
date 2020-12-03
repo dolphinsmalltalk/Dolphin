@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalField subclass: #PointerField
+External.Field subclass: #'External.PointerField'
 	instanceVariableNames: 'pointerClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointerField guid: (GUID fromString: '{87b4c4dc-026e-11d3-9fd7-00a0cc3e4a32}')!
-PointerField comment: 'PointerField is an <ExternalField> type to represent fields of <ExternalStructure>s that are pointers to external data.'!
-!PointerField categoriesForClass!External-Data-Types! !
-!PointerField methodsFor!
+External.PointerField guid: (Core.GUID fromString: '{87b4c4dc-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.PointerField comment: 'PointerField is an <ExternalField> type to represent fields of <ExternalStructure>s that are pointers to external data.'!
+!External.PointerField categoriesForClass!External-Data-Types! !
+!External.PointerField methodsFor!
 
 byteSize
 	"Private - Answer the byte size of the ExternalField the receiver represents
@@ -51,19 +51,19 @@ writeInto: anExternalStructure value: anObject
 	the class instance variable 'template')."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
-!PointerField categoriesFor: #byteSize!accessing!private! !
-!PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!PointerField categoriesFor: #pointerClass!accessing!private! !
-!PointerField categoriesFor: #pointerClass:!accessing!private! !
-!PointerField categoriesFor: #readFrom:!indirect accessing!private! !
-!PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.PointerField categoriesFor: #byteSize!accessing!private! !
+!External.PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!External.PointerField categoriesFor: #pointerClass!accessing!private! !
+!External.PointerField categoriesFor: #pointerClass:!accessing!private! !
+!External.PointerField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!PointerField class methodsFor!
+!External.PointerField class methodsFor!
 
 type: aClass
 	"Answer a new instance of the receiver which is used for dereferencing
 	pointers to objects of type aClass"
 
 	^super new pointerClass: aClass! !
-!PointerField class categoriesFor: #type:!instance creation!public! !
+!External.PointerField class categoriesFor: #type:!instance creation!public! !
 

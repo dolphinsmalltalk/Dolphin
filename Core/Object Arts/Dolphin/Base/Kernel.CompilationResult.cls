@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CompilationResult
+Core.Object subclass: #'Kernel.CompilationResult'
 	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompilationResult guid: (GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
-CompilationResult comment: ''!
-!CompilationResult categoriesForClass!System-Support! !
-!CompilationResult methodsFor!
+Kernel.CompilationResult guid: (Core.GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.CompilationResult comment: ''!
+!Kernel.CompilationResult categoriesForClass!System-Support! !
+!Kernel.CompilationResult methodsFor!
 
 buildTempsMap
 	| stream |
@@ -34,9 +34,7 @@ buildTextMap
 	rawTextMap := nil!
 
 fireSystemUpdateEvent
-	Smalltalk
-		trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:])
-		with: self!
+	Smalltalk trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:]) with: self!
 
 isNew
 	^oldMethod isNil!
@@ -95,24 +93,24 @@ textMap
 
 	textMap isNil ifTrue: [self buildTextMap].
 	^textMap! !
-!CompilationResult categoriesFor: #buildTempsMap!development!private! !
-!CompilationResult categoriesFor: #buildTextMap!development!private! !
-!CompilationResult categoriesFor: #fireSystemUpdateEvent!helpers!private! !
-!CompilationResult categoriesFor: #isNew!accessing!public! !
-!CompilationResult categoriesFor: #method!accessing!public! !
-!CompilationResult categoriesFor: #method:!accessing!private! !
-!CompilationResult categoriesFor: #method:rawTextMap:rawTempsMap:!initializing!private! !
-!CompilationResult categoriesFor: #oldMethod!accessing!public! !
-!CompilationResult categoriesFor: #oldMethod:!accessing!public! !
-!CompilationResult categoriesFor: #package!accessing!public! !
-!CompilationResult categoriesFor: #package:!accessing!public! !
-!CompilationResult categoriesFor: #rawTempsMap:!accessing!private! !
-!CompilationResult categoriesFor: #rawTextMap:!accessing!private! !
-!CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
-!CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
-!CompilationResult categoriesFor: #textMap!accessing!development!public! !
+!Kernel.CompilationResult categoriesFor: #buildTempsMap!development!private! !
+!Kernel.CompilationResult categoriesFor: #buildTextMap!development!private! !
+!Kernel.CompilationResult categoriesFor: #fireSystemUpdateEvent!helpers!private! !
+!Kernel.CompilationResult categoriesFor: #isNew!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #method!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #method:!accessing!private! !
+!Kernel.CompilationResult categoriesFor: #method:rawTextMap:rawTempsMap:!initializing!private! !
+!Kernel.CompilationResult categoriesFor: #oldMethod!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #oldMethod:!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #package!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #package:!accessing!public! !
+!Kernel.CompilationResult categoriesFor: #rawTempsMap:!accessing!private! !
+!Kernel.CompilationResult categoriesFor: #rawTextMap:!accessing!private! !
+!Kernel.CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
+!Kernel.CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
+!Kernel.CompilationResult categoriesFor: #textMap!accessing!development!public! !
 
-!CompilationResult class methodsFor!
+!Kernel.CompilationResult class methodsFor!
 
 method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
 	<primitive: 157>
@@ -120,5 +118,5 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
 		method: aCompiledMethod
 		rawTextMap: textArray
 		rawTempsMap: tempsArray! !
-!CompilationResult class categoriesFor: #method:rawTextMap:rawTempsMap:!instance creation!public! !
+!Kernel.CompilationResult class categoriesFor: #method:rawTextMap:rawTempsMap:!instance creation!public! !
 

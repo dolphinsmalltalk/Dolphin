@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base (Deprecated)'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
 Copyright (c) Object Arts Ltd 1997-2002. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -12,193 +12,178 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ConformantArrayField}
-	#{ConformantArrayPointerField}
-	#{ConformantStructureArrayField}
-	#{ConformantStructureArrayPointerField}
-	#{MEMORY_BASIC_INFORMATION}
-	#{OSVERSIONINFO}
-	#{PoolConstantsDictionary}
-	#{STBSymbolProxy}
+	#{External.ConformantArrayField}
+	#{External.ConformantArrayPointerField}
+	#{External.ConformantStructureArrayField}
+	#{External.ConformantStructureArrayPointerField}
+	#{Smalltalk.MEMORY_BASIC_INFORMATION}
+	#{Smalltalk.STBSymbolProxy}
 ).
 
 package setMethodNames: #(
-	#(#{_FPIEEE_RECORD} #causeCode)
-	#(#{_FPIEEE_RECORD} #causeName)
-	#(#{_FPIEEE_VALUE} #valueType)
-	#(#{ArithmeticValue} #quoAndRem:)
-	#(#{Behavior} #makeIndirect)
-	#(#{Behavior} #makeNullTerminated)
-	#(#{ByteCodeDispatcher} #byteCodeSegments)
-	#(#{Category class} #categoryIcon)
-	#(#{Character class} #safeCodePoint:)
-	#(#{ChunkSourceFiler} #fileOutBinaryGlobal:)
-	#(#{Class} #addClassVarName:)
-	#(#{Class} #allSharedPoolNames)
-	#(#{Class} #noClassCategoryName)
-	#(#{Class} #sharedPoolNames)
-	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
-	#(#{Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
-	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
-	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
-	#(#{Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
-	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
-	#(#{Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
-	#(#{ClassDescription} #allSharedPoolNames)
-	#(#{ClassDescription} #allSharedPools)
-	#(#{ClassDescription} #sharedPoolNames)
-	#(#{ClassDescription} #sharedPools)
-	#(#{ClassDescription} #sharedPoolsDo:)
-	#(#{ClassDescription} #sharedVariableString)
-	#(#{CompilerNotification} #extra)
-	#(#{CRTLibrary} #_controlfp:mask:)
-	#(#{CRTLibrary} #_ecvt:count:dec:sign:)
-	#(#{CRTLibrary} #_eof:)
-	#(#{CRTLibrary} #_filelength:)
-	#(#{CRTLibrary} #_finite:)
-	#(#{CRTLibrary} #_fpclass:)
-	#(#{CRTLibrary} #_gcvt:count:buffer:)
-	#(#{CRTLibrary} #_gcvt_s:bufferSize:value:digits:)
-	#(#{CRTLibrary} #_i64toa:string:radix:)
-	#(#{CRTLibrary} #_logb:)
-	#(#{CRTLibrary} #_ltoa:string:radix:)
-	#(#{CRTLibrary} #_makepath:drive:dir:fname:ext:)
-	#(#{CRTLibrary} #_putenv:)
-	#(#{CRTLibrary} #_rotl:shift:)
-	#(#{CRTLibrary} #_rotr:shift:)
-	#(#{CRTLibrary} #_splitpath:drive:dir:fname:ext:)
-	#(#{CRTLibrary} #_stricoll:string2:)
-	#(#{CRTLibrary} #acos:)
-	#(#{CRTLibrary} #asin:)
-	#(#{CRTLibrary} #atan:)
-	#(#{CRTLibrary} #atan:x:)
-	#(#{CRTLibrary} #ceil:)
-	#(#{CRTLibrary} #chmod:pmode:)
-	#(#{CRTLibrary} #cos:)
-	#(#{CRTLibrary} #exp:)
-	#(#{CRTLibrary} #fabs:)
-	#(#{CRTLibrary} #floor:)
-	#(#{CRTLibrary} #fopen:mode:)
-	#(#{CRTLibrary} #fopen_s:filename:mode:)
-	#(#{CRTLibrary} #fread:size:count:stream:)
-	#(#{CRTLibrary} #freopen:mode:stream:)
-	#(#{CRTLibrary} #frexp:expptr:)
-	#(#{CRTLibrary} #fseek:offset:origin:)
-	#(#{CRTLibrary} #ftell:)
-	#(#{CRTLibrary} #getenv:)
-	#(#{CRTLibrary} #iswspace:)
-	#(#{CRTLibrary} #ldexp:exp:)
-	#(#{CRTLibrary} #log:)
-	#(#{CRTLibrary} #log10:)
-	#(#{CRTLibrary} #log2:)
-	#(#{CRTLibrary} #memcpy:src:count:)
-	#(#{CRTLibrary} #memmove:src:count:)
-	#(#{CRTLibrary} #modf:intptr:)
-	#(#{CRTLibrary} #pow:y:)
-	#(#{CRTLibrary} #sin:)
-	#(#{CRTLibrary} #sqrt:)
-	#(#{CRTLibrary} #strcat:strSource:)
-	#(#{CRTLibrary} #strerror:)
-	#(#{CRTLibrary} #strncpy:strSource:count:)
-	#(#{CRTLibrary} #tan:)
-	#(#{CRTLibrary} #thread_chmod:pmode:)
-	#(#{CRTLibrary} #thread_errno)
-	#(#{Date} #evaluateYYMMDD:)
-	#(#{Date} #monthIndex)
-	#(#{Date} #weekday)
-	#(#{Date} #weekdayIndex)
-	#(#{Date class} #dateAndTimeNow)
-	#(#{Date class} #dayOfWeek:)
-	#(#{Date class} #nameOfDay:)
-	#(#{Date class} #nameOfMonth:)
-	#(#{Date class} #shortNameOfDay:)
-	#(#{Date class} #shortNameOfMonth:)
-	#(#{ExternalCallback class} #receiver:prototype:)
-	#(#{ExternalCallback class} #receiver:prototype:closure:)
-	#(#{ExternalCallback class} #receiver:selector:)
-	#(#{ExternalCallback class} #receiver:selector:closure:)
-	#(#{ExternalDescriptor class} #oneStringArg)
-	#(#{ExternalLibrary} #invalidCall)
-	#(#{ExternalStructure} #do:)
-	#(#{ExternalStructure} #do:separatedBy:)
-	#(#{File} #readCharacter)
-	#(#{File class} #change:extension:)
-	#(#{File class} #for:inAndBelow:do:)
-	#(#{Integer} #digitSize)
-	#(#{Integer} #highSWord)
-	#(#{Integer} #lowSWord)
-	#(#{KernelLibrary} #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:)
-	#(#{KernelLibrary} #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:)
-	#(#{KernelLibrary} #getFileSize:lpFileSizeHigh:)
-	#(#{KernelLibrary} #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:)
-	#(#{KernelLibrary} #getVersionEx:)
-	#(#{KernelLibrary} #lstrcmp:lpString2:)
-	#(#{KernelLibrary} #lstrcmpi:lpString2:)
-	#(#{KernelLibrary} #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:)
-	#(#{KernelLibrary class} #clear)
-	#(#{Locale} #dateOrder)
-	#(#{Locale} #dateSeparator)
-	#(#{Locale} #isMonthBeforeDay)
-	#(#{MessageBox} #abortRetryIgnore)
-	#(#{MessageBox} #error)
-	#(#{MessageBox} #fatalError)
-	#(#{MessageBox} #ok)
-	#(#{MessageBox} #okCancel)
-	#(#{MessageBox} #prompt)
-	#(#{MessageBox} #retryCancel)
-	#(#{MessageBox} #systemModal)
-	#(#{MessageBox} #taskModal)
-	#(#{MessageBox} #yesNo)
-	#(#{MessageBox} #yesNoCancel)
-	#(#{MessageBoxAbstract} #notify)
-	#(#{MessageBoxAbstract} #warning)
-	#(#{Package} #addGlobalNamed:)
-	#(#{Package} #includesGlobalNamed:)
-	#(#{Package} #isBaseImagePackage)
-	#(#{Package} #untracedGlobals)
-	#(#{PackageManager} #addGlobalNamed:to:)
-	#(#{PackageManager} #allGlobalAliases)
-	#(#{PackageManager} #packageOfGlobalNamed:)
-	#(#{Process} #fpeMask)
-	#(#{Process} #fpeMask:)
-	#(#{SortAlgorithm class} #sortBlock:)
-	#(#{SortedCollection class} #value:value:)
-	#(#{SourceFiler} #fileOutBinaryGlobal:)
-	#(#{STBClassProxy class} #for:)
-	#(#{STBCollectionProxy class} #for:)
-	#(#{STBPrefix} #isLiteralPrefix)
-	#(#{STBSingletonProxy class} #for:)
-	#(#{STBSingletonProxy class} #for:using:)
-	#(#{Stream} #nextOrNil)
-	#(#{String} #asUnicodeString)
-	#(#{String} #equals:)
-	#(#{String class} #fromUnicodeString:)
-	#(#{String class} #unicodeClass)
-	#(#{Time} #hours)
-	#(#{Time} #milliseconds)
-	#(#{Time} #minutes)
-	#(#{Time class} #dateAndTimeNow)
-	#(#{Time class} #microsecondsToRun:)
-	#(#{TimeStamp} #date:)
-	#(#{TimeStamp} #dateAndTime)
-	#(#{TimeStamp} #time:)
-	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
-	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
-	#(#{UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
-	#(#{WindowsLocale} #timeSeparator)
-	#(#{WinMMLibrary} #timeGetTime)
+	#(#{Core.ArithmeticValue} #quoAndRem:)
+	#(#{Core.Behavior} #makeIndirect)
+	#(#{Core.Behavior} #makeNullTerminated)
+	#(#{Core.Category class} #categoryIcon)
+	#(#{Core.Character class} #safeCodePoint:)
+	#(#{Core.Class} #allSharedPoolNames)
+	#(#{Core.Class} #sharedPoolNames)
+	#(#{Core.Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Core.Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{Core.Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Core.Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{Core.Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
+	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:)
+	#(#{Core.ClassDescription} #allSharedPoolNames)
+	#(#{Core.ClassDescription} #allSharedPools)
+	#(#{Core.ClassDescription} #sharedPoolNames)
+	#(#{Core.ClassDescription} #sharedPools)
+	#(#{Core.ClassDescription} #sharedPoolsDo:)
+	#(#{Core.ClassDescription} #sharedVariableString)
+	#(#{Core.File} #readCharacter)
+	#(#{Core.File class} #change:extension:)
+	#(#{Core.File class} #for:inAndBelow:do:)
+	#(#{Core.Integer} #digitSize)
+	#(#{Core.Locale} #dateOrder)
+	#(#{Core.Locale} #dateSeparator)
+	#(#{Core.Locale} #isMonthBeforeDay)
+	#(#{Core.SortAlgorithm class} #sortBlock:)
+	#(#{Core.SortedCollection class} #value:value:)
+	#(#{Core.Stream} #nextOrNil)
+	#(#{Core.String} #asUnicodeString)
+	#(#{Core.String} #equals:)
+	#(#{Core.String class} #fromUnicodeString:)
+	#(#{Core.String class} #unicodeClass)
+	#(#{Core.Time class} #microsecondsToRun:)
+	#(#{Core.TimeStamp} #date:)
+	#(#{Core.TimeStamp} #dateAndTime)
+	#(#{Core.TimeStamp} #time:)
+	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
+	#(#{External.Library} #invalidCall)
+	#(#{External.Structure} #do:)
+	#(#{External.Structure} #do:separatedBy:)
+	#(#{Kernel.ByteCodeDispatcher} #byteCodeSegments)
+	#(#{Kernel.ChunkSourceFiler} #fileOutBinaryGlobal:)
+	#(#{Kernel.CompilerNotification} #extra)
+	#(#{Kernel.Package} #addGlobalNamed:)
+	#(#{Kernel.Package} #includesGlobalNamed:)
+	#(#{Kernel.Package} #isBaseImagePackage)
+	#(#{Kernel.Package} #untracedGlobals)
+	#(#{Kernel.PackageManager} #addGlobalNamed:to:)
+	#(#{Kernel.PackageManager} #allGlobalAliases)
+	#(#{Kernel.PackageManager} #packageOfGlobalNamed:)
+	#(#{Kernel.SourceFiler} #fileOutBinaryGlobal:)
+	#(#{Kernel.STBClassProxy class} #for:)
+	#(#{Kernel.STBCollectionProxy class} #for:)
+	#(#{Kernel.STBPrefix} #isLiteralPrefix)
+	#(#{Kernel.STBSingletonProxy class} #for:)
+	#(#{Kernel.STBSingletonProxy class} #for:using:)
+	#(#{Kernel.VMLibrary} #isWindows10OrGreater)
+	#(#{Kernel.VMLibrary} #isWindows7OrGreater)
+	#(#{Kernel.VMLibrary} #isWindows7SP1OrGreater)
+	#(#{Kernel.VMLibrary} #isWindows8OrGreater)
+	#(#{Kernel.VMLibrary} #isWindows8Point1OrGreater)
+	#(#{Kernel.VMLibrary} #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:)
+	#(#{Kernel.VMLibrary} #isWindowsVistaOrGreater)
+	#(#{Kernel.VMLibrary} #isWindowsVistaSP1OrGreater)
+	#(#{Kernel.VMLibrary} #isWindowsVistaSP2OrGreater)
+	#(#{Kernel.VMLibrary} #isWindowsXPOrGreater)
+	#(#{OS._FPIEEE_RECORD} #causeCode)
+	#(#{OS._FPIEEE_RECORD} #causeName)
+	#(#{OS._FPIEEE_VALUE} #valueType)
+	#(#{OS.CRTLibrary} #_controlfp:mask:)
+	#(#{OS.CRTLibrary} #_ecvt:count:dec:sign:)
+	#(#{OS.CRTLibrary} #_eof:)
+	#(#{OS.CRTLibrary} #_filelength:)
+	#(#{OS.CRTLibrary} #_finite:)
+	#(#{OS.CRTLibrary} #_fpclass:)
+	#(#{OS.CRTLibrary} #_gcvt:count:buffer:)
+	#(#{OS.CRTLibrary} #_gcvt_s:bufferSize:value:digits:)
+	#(#{OS.CRTLibrary} #_i64toa:string:radix:)
+	#(#{OS.CRTLibrary} #_logb:)
+	#(#{OS.CRTLibrary} #_ltoa:string:radix:)
+	#(#{OS.CRTLibrary} #_makepath:drive:dir:fname:ext:)
+	#(#{OS.CRTLibrary} #_putenv:)
+	#(#{OS.CRTLibrary} #_rotl:shift:)
+	#(#{OS.CRTLibrary} #_rotr:shift:)
+	#(#{OS.CRTLibrary} #_splitpath:drive:dir:fname:ext:)
+	#(#{OS.CRTLibrary} #_stricoll:string2:)
+	#(#{OS.CRTLibrary} #acos:)
+	#(#{OS.CRTLibrary} #asin:)
+	#(#{OS.CRTLibrary} #atan:)
+	#(#{OS.CRTLibrary} #atan:x:)
+	#(#{OS.CRTLibrary} #ceil:)
+	#(#{OS.CRTLibrary} #chmod:pmode:)
+	#(#{OS.CRTLibrary} #cos:)
+	#(#{OS.CRTLibrary} #exp:)
+	#(#{OS.CRTLibrary} #fabs:)
+	#(#{OS.CRTLibrary} #floor:)
+	#(#{OS.CRTLibrary} #fopen:mode:)
+	#(#{OS.CRTLibrary} #fopen_s:filename:mode:)
+	#(#{OS.CRTLibrary} #fread:size:count:stream:)
+	#(#{OS.CRTLibrary} #freopen:mode:stream:)
+	#(#{OS.CRTLibrary} #frexp:expptr:)
+	#(#{OS.CRTLibrary} #fseek:offset:origin:)
+	#(#{OS.CRTLibrary} #ftell:)
+	#(#{OS.CRTLibrary} #getenv:)
+	#(#{OS.CRTLibrary} #iswspace:)
+	#(#{OS.CRTLibrary} #ldexp:exp:)
+	#(#{OS.CRTLibrary} #log:)
+	#(#{OS.CRTLibrary} #log10:)
+	#(#{OS.CRTLibrary} #log2:)
+	#(#{OS.CRTLibrary} #memcpy:src:count:)
+	#(#{OS.CRTLibrary} #memmove:src:count:)
+	#(#{OS.CRTLibrary} #modf:intptr:)
+	#(#{OS.CRTLibrary} #pow:y:)
+	#(#{OS.CRTLibrary} #sin:)
+	#(#{OS.CRTLibrary} #sqrt:)
+	#(#{OS.CRTLibrary} #strcat:strSource:)
+	#(#{OS.CRTLibrary} #strerror:)
+	#(#{OS.CRTLibrary} #strncpy:strSource:count:)
+	#(#{OS.CRTLibrary} #tan:)
+	#(#{OS.CRTLibrary} #thread_chmod:pmode:)
+	#(#{OS.CRTLibrary} #thread_errno)
+	#(#{OS.KernelLibrary} #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:)
+	#(#{OS.KernelLibrary} #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:)
+	#(#{OS.KernelLibrary} #getFileSize:lpFileSizeHigh:)
+	#(#{OS.KernelLibrary} #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:)
+	#(#{OS.KernelLibrary} #lstrcmp:lpString2:)
+	#(#{OS.KernelLibrary} #lstrcmpi:lpString2:)
+	#(#{OS.KernelLibrary} #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:)
+	#(#{OS.WindowsLocale} #timeSeparator)
+	#(#{OS.WinMMLibrary} #timeGetTime)
+	#(#{UI.MessageBox} #abortRetryIgnore)
+	#(#{UI.MessageBox} #error)
+	#(#{UI.MessageBox} #fatalError)
+	#(#{UI.MessageBox} #ok)
+	#(#{UI.MessageBox} #okCancel)
+	#(#{UI.MessageBox} #prompt)
+	#(#{UI.MessageBox} #retryCancel)
+	#(#{UI.MessageBox} #systemModal)
+	#(#{UI.MessageBox} #taskModal)
+	#(#{UI.MessageBox} #yesNo)
+	#(#{UI.MessageBox} #yesNoCancel)
+	#(#{UI.MessageBoxAbstract} #notify)
+	#(#{UI.MessageBoxAbstract} #warning)
 ).
 
 package setVariableNames: #(
-	#{UnicodeString}
+	#{Smalltalk.UnicodeString}
+	#{Smalltalk.WinNlsConstants}
 ).
 
 package setAliasVariableNames: #(
-	#{UnicodeString}
+	#{Smalltalk.UnicodeString}
+	#{Smalltalk.WinNlsConstants}
 ).
 
 package setPrerequisites: #(
 	'..\Dolphin'
+	'Dolphin Base (Old Names)'
 	'..\Dolphin Conformant Array Fields'
 	'..\Dolphin Legacy Date & Time'
 	'..\Dolphin Message Box'
@@ -208,37 +193,37 @@ package!
 
 "Class Definitions"!
 
-ArrayField subclass: #ConformantArrayField
+External.ArrayField subclass: #'External.ConformantArrayField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureArrayField subclass: #ConformantStructureArrayField
+External.StructureArrayField subclass: #'External.ConformantStructureArrayField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayPointerField subclass: #ConformantArrayPointerField
+External.ArrayPointerField subclass: #'External.ConformantArrayPointerField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
+External.StructureArrayPointerField subclass: #'External.ConformantStructureArrayPointerField'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PoolDictionary variableSubclass: #PoolConstantsDictionary
-	instanceVariableNames: 'name'
+Kernel.STBProxy subclass: #STBSymbolProxy
+	instanceVariableNames: 'string'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #MEMORY_BASIC_INFORMATION
+OS.Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -252,60 +237,26 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 		'_OffsetOf_State' -> 16r10.
 		'_OffsetOf_Type' -> 16r18
 	}!
-OSVERSIONINFOEXW subclass: #OSVERSIONINFO
-	instanceVariableNames: 'osName'
-	classVariableNames: 'Current'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-STBProxy subclass: #STBSymbolProxy
-	instanceVariableNames: 'string'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Variable Aliases"!
 
-UnicodeString := Utf16String!
+Smalltalk.UnicodeString := Core.Utf16String!
+
+Smalltalk.WinNlsConstants := OS.NlsConstants!
 
 
 "Loose Methods"!
 
-!_FPIEEE_RECORD methodsFor!
-
-causeCode
-	"Answer an <integer> which identifies the cause of the exception."
-
-	#deprecated.	"Could be more than one cause"
-	^(self cause bitAnd: 16r1F) highBit!
-
-causeName
-	"Answer the symbolic name of the type of floating point exception the receiver
-	represents."
-
-	#deprecated.	"Could be more than one cause"
-	^self causeNames last! !
-!_FPIEEE_RECORD categoriesFor: #causeCode!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #causeName!accessing!public! !
-
-!_FPIEEE_VALUE methodsFor!
-
-valueType
-	#deprecated.
-	^self format! !
-!_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
-
-!ArithmeticValue methodsFor!
+!Core.ArithmeticValue methodsFor!
 
 quoAndRem: aNumber
 	| quo |
 	Notification deprecated.
 	quo := self quo: aNumber.
 	^{quo. self - (quo * aNumber)}! !
-!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
+!Core.ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
 
-!Behavior methodsFor!
+!Core.Behavior methodsFor!
 
 makeIndirect
 	Notification deprecated.
@@ -314,34 +265,406 @@ makeIndirect
 makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
-!Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
-!Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+!Core.Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
+!Core.Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
 
-!ByteCodeDispatcher methodsFor!
-
-byteCodeSegments
-	#deprecated.
-	^self segments! !
-!ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
-
-!Category class methodsFor!
+!Core.Category class methodsFor!
 
 categoryIcon
 	"Answer an Icon representing the Category objects which the receiver collects." 
 
 	^self icon! !
-!Category class categoriesFor: #categoryIcon!constants!public! !
+!Core.Category class categoriesFor: #categoryIcon!constants!public! !
 
-!Character class methodsFor!
+!Core.Character class methodsFor!
 
 safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
-!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
+!Core.Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 
-!ChunkSourceFiler methodsFor!
+!Core.Class methodsFor!
 
-fileOutBinaryGlobal: anAssociation 
+allSharedPoolNames
+	#deprecated.
+	^self allSharedPools collect: [:each | each name]!
+
+sharedPoolNames
+	Notification deprecated.
+	^imports collect: [:each | each asSymbol]!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	#deprecated.
+	^self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass,
+	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
+	Primarily present for backwards compatibility with Smalltalk-80."
+
+	Notification deprecated.
+	^(self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		poolDictionaries: poolDictString)
+		categories: {ClassCategory name: aCategoryOrString};
+		yourself!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	Notification deprecated.
+	^self
+		variableByteSubclass: 'Smalltalk.', aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create an answer a new variable byte subclass,
+	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
+	it. Primarily present for backwards compatibility with Smalltalk-80."
+
+	#deprecated.
+	^(self
+		variableByteSubclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		poolDictionaries: poolDictString)
+		categories: {ClassCategory name: aCategoryOrString};
+		yourself!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
+	"For loading pre-7.2 packages."
+
+	| subclass |
+	#deprecated.
+	subclass := self
+				variableByteSubclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"For loading early 7.2 packages that didn't have fully qualified class names."
+
+	| subclass |
+	#namespaceToDo. "Remove this"
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString))
+				beBytes;
+				classConstants: anArrayOfAssociations;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	"For loading pre-7.2 packages"
+
+	Notification deprecated.
+	^(self
+		newClassBuilder: 'Smalltalk.' , aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beVariable;
+		modifyOrCreate!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create and answer a new variable pointer 
+	subclass, otherwise modify the class with name aClassSymbol to have the indicated features and 
+	answer it. Primarily intended for backwards compatibility with Smalltalk-80."
+
+	#deprecated.
+	^(self
+		variableSubclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		poolDictionaries: poolDictString)
+		categories: {ClassCategory name: aCategoryOrString};
+		yourself!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"For loading early 7.2 packages that didn't have fully qualified class names."
+
+	| subclass |
+	#namespaceToDo. "Remove this"
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: (self importsFromPoolsString: poolDictString))
+				beVariable;
+				classConstants: anArrayOfAssociations;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass! !
+!Core.Class categoriesFor: #allSharedPoolNames!pool variables!public! !
+!Core.Class categoriesFor: #sharedPoolNames!pool variables!public! !
+!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+
+!Core.ClassDescription methodsFor!
+
+allSharedPoolNames
+	#deprecated.
+	^self allSharedPools collect: [:each | each name]!
+
+allSharedPools
+	| pools seen |
+	#deprecated.
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self instanceClass withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
+
+sharedPoolNames
+	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
+	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
+	order of precedence."
+
+	^self instanceClass sharedPoolNames!
+
+sharedPools
+	| pools |
+	#deprecated.
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools addLast: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	Notification deprecated.
+	self
+		importedNamespacesDo: [:each | (each inheritsFrom: SharedPool) ifTrue: [aMonadicValuable value: each]]!
+
+sharedVariableString
+	| aStream |
+	Notification deprecated.
+	aStream := String smalltalkWriteStream: 32.
+	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
+		separatedBy: [aStream space].
+	^aStream contents! !
+!Core.ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
+!Core.ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
+!Core.ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
+!Core.ClassDescription categoriesFor: #sharedPools!pool variables!public! !
+!Core.ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
+!Core.ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
+
+!Core.File methodsFor!
+
+readCharacter
+	"Answer the next Character from the file or nil if the receiver
+	is positioned past the current EOF.
+	Signal a FileException if an error occurs."
+
+	| string |
+	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
+	string := String new: 1.
+	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
+!Core.File categoriesFor: #readCharacter!operations!public! !
+
+!Core.File class methodsFor!
+
+change: aPathnameString extension: anExtensionString
+	#deprecated.	"use #path:extension:"
+	^self path: aPathnameString extension: anExtensionString!
+
+for: matchString inAndBelow: dirString do: operation
+	#deprecated.	"Use #forAll:in:do:"
+	^self 
+		forAll: matchString
+		in: dirString
+		do: [:each | operation value: each directory value: each]! !
+!Core.File class categoriesFor: #change:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #for:inAndBelow:do:!enumerating!public! !
+
+!Core.Integer methodsFor!
+
+digitSize
+	#deprecated.
+	^self digitLength! !
+!Core.Integer categoriesFor: #digitSize!accessing!public! !
+
+!Core.Locale methodsFor!
+
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated.	"Use dateFormat"
+	^self getIntegerInfo: LOCALE_IDATE!
+
+dateSeparator
+	"Answer the character used in the receiver locale to separate date components."
+
+	Notification deprecated.	"Use dateFormat"
+	^self getStringInfo: LOCALE_SDATE!
+
+isMonthBeforeDay
+	"Answer true if the format for the receiver is expecting a month before a day"
+
+	Notification deprecated.	"Use dateFormat"
+	^self dateOrder ~= 1! !
+!Core.Locale categoriesFor: #dateOrder!constants!public! !
+!Core.Locale categoriesFor: #dateSeparator!constants!public! !
+!Core.Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
+
+!Core.SortAlgorithm class methodsFor!
+
+sortBlock: aDyadicValuable
+	Notification deprecated.
+	^self newSortBlock: aDyadicValuable! !
+!Core.SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+
+!Core.SortedCollection class methodsFor!
+
+value: anObject1 value: anObject2
+	"Private - Implement this part of the <dyadicValuable> protocol in order that the receiver
+	can be its own default sort 'block' for historical reasons. This is no longer used as of
+	Dolphin 6, and is deprecated in Dolphin 7.1"
+
+	Notification deprecated.
+	^anObject1 <= anObject2! !
+!Core.SortedCollection class categoriesFor: #value:value:!evaluating!private! !
+
+!Core.Stream methodsFor!
+
+nextOrNil
+	#deprecated.
+	^self nextAvailable! !
+!Core.Stream categoriesFor: #nextOrNil!accessing!public! !
+
+!Core.String methodsFor!
+
+asUnicodeString
+	Notification deprecated.
+	^self asUtf16String!
+
+equals: comperand
+	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
+	^self = comperand! !
+!Core.String categoriesFor: #asUnicodeString!converting!public! !
+!Core.String categoriesFor: #equals:!comparing!public! !
+
+!Core.String class methodsFor!
+
+fromUnicodeString: anAddressOrUnicodeString
+	#deprecated.
+	^self fromUtf16String: anAddressOrUnicodeString!
+
+unicodeClass
+	#deprecated.
+	^self utf16Class! !
+!Core.String class categoriesFor: #fromUnicodeString:!instance creation!public! !
+!Core.String class categoriesFor: #unicodeClass!constants!public! !
+
+!Core.Time class methodsFor!
+
+microsecondsToRun: timedBlock
+	"Answer the number of microseconds consumed by the evaluation of timedBlock
+	(including the overhead)."
+
+	^timedBlock timeToRun asMicroseconds asInteger! !
+!Core.Time class categoriesFor: #microsecondsToRun:!operations!public! !
+
+!Core.TimeStamp methodsFor!
+
+date: aDate
+	"Timestamps are immutable and should be initialized at creation time."
+
+	Notification deprecated.
+	self isImmutable: false.
+	date := aDate!
+
+dateAndTime
+	"Answer a two element Array containing the date and time."
+
+	Notification deprecated.
+	^{self date. self time}!
+
+time: aTime
+	"Timestamps are immutable and should be initialized at creation time."
+
+	Notification deprecated.
+	self isImmutable: false.
+	time := aTime! !
+!Core.TimeStamp categoriesFor: #date:!accessing!public! !
+!Core.TimeStamp categoriesFor: #dateAndTime!accessing!public! !
+!Core.TimeStamp categoriesFor: #time:!accessing!public! !
+
+!Core.UndefinedObject methodsFor!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	Notification deprecated.
+	^self
+		subclass: 'Smalltalk.', aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	#deprecated.
+	^(self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		poolDictionaries: poolDictString)
+		categories: {ClassCategory name: aCategoryOrString};
+		yourself! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+
+!External.Library methodsFor!
+
+invalidCall
+	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
+
+	Notification deprecated.
+	^self invalidCall: Failed! !
+!External.Library categoriesFor: #invalidCall!exceptions!public! !
+
+!External.Structure methodsFor!
+
+do: aOneArgumentBlock 
+	#deprecated.
+	self fieldsDo: aOneArgumentBlock!
+
+do: operation separatedBy: separator 
+	#deprecated.
+	self fieldsDo: operation separatedBy: separator! !
+!External.Structure categoriesFor: #do:!enumerating!public! !
+!External.Structure categoriesFor: #do:separatedBy:!enumerating!public! !
+
+!Kernel.ByteCodeDispatcher methodsFor!
+
+byteCodeSegments
+	#deprecated.
+	^self segments! !
+!Kernel.ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
+
+!Kernel.ChunkSourceFiler methodsFor!
+
+fileOutBinaryGlobal: anAssociation
 	"File out the text representation of the non-<sourceObject> which is the value of the
 	<Association>, anAssociation, onto the receiver's source stream. The key of the association
 	is the global name. If the global is just an alias to a class, then we don't need to binary
@@ -350,7 +673,7 @@ fileOutBinaryGlobal: anAssociation
 	| glob |
 	#deprecated.
 	glob := anAssociation value.
-	(glob class isMeta and: [anAssociation key ~= glob name]) 
+	(glob class isMeta and: [anAssociation key ~= glob name])
 		ifTrue: 
 			[stream
 				nextPutAll: anAssociation key;
@@ -371,202 +694,180 @@ fileOutBinaryGlobal: anAssociation
 	stream
 		nextPut: $!!;
 		cr! !
-!ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing-file out! !
 
-!Class methodsFor!
-
-addClassVarName: aString
-	#deprecated.	"Use addClassVarNamed:"
-	^self addClassVarNamed: aString!
-
-allSharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
-	dictionaries that are specified that are specified in the receiver and each of its
-	superclasses. The list is ordered with the receiver's own pool references first, and then
-	those of the superclass, and so on up the class hierarchy. Pools only appear where first
-	referenced (i.e. no duplicates)."
-
-	^self allSharedPools collect: [:each | each name]!
-
-noClassCategoryName
-	"Answer the String name of the ClassCategory used to mark that no
-	category has been set for a Class."
-
-	^self classCategoryClass unclassifiedName!
-
-sharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
-	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
-	order of precedence."
-
-	^imports collect: [:each | each asSymbol]!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	Notification deprecated.
-	^self
-		subclass: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString)!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass,
-	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
-	Primarily present for backwards compatibility with Smalltalk-80."
-
-	Notification deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		categoryNames: {aCategoryOrString};
-		modifyOrCreate!
-
-variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	Notification deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		beBytes;
-		modifyOrCreate!
-
-variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	"If aClassSymbol is not an existing class then create an answer a new variable byte subclass,
-	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
-	it. Primarily present for backwards compatibility with Smalltalk-80."
-
-	Notification deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		beBytes;
-		categoryNames: {aCategoryOrString};
-		modifyOrCreate!
-
-variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
-	"For loading pre-7.2 packages."
-
-	| subclass |
-	#deprecated.
-	subclass := self
-				variableByteSubclass: aClassSymbol
-				instanceVariableNames: instVarString
-				classVariableNames: classVarString
-				imports: (self importsFromPoolsString: poolDictString).
-	subclass class instanceVariableNames: classInstVarString.
-	^subclass!
-
-variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	#deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		beVariable;
-		modifyOrCreate!
-
-variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	"If aClassSymbol is not an existing class then create and answer a new variable pointer 
-	subclass, otherwise modify the class with name aClassSymbol to have the indicated features and 
-	answer it. Primarily intended for backwards compatibility with Smalltalk-80."
-
-	Notification deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		beVariable;
-		categoryNames: {aCategoryOrString};
-		modifyOrCreate! !
-!Class categoriesFor: #addClassVarName:!class variables!public! !
-!Class categoriesFor: #allSharedPoolNames!pool variables!public! !
-!Class categoriesFor: #noClassCategoryName!constants!public! !
-!Class categoriesFor: #sharedPoolNames!pool variables!public! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-
-!ClassDescription methodsFor!
-
-allSharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
-	dictionaries that are specified that are specified in the receiver and each of its
-	superclasses. The list is ordered with the receiver's own pool references first, and then
-	those of the superclass, and so on up the class hierarchy. Pools only appear where first
-	referenced (i.e. no duplicates)."
-
-	^self allSharedPools collect: [:each | each name]!
-
-allSharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
-	the receiver and each of its superclasses."
-
-	| pools seen |
-	pools := Array writeStream: 5.
-	seen := IdentitySet new.
-	self instanceClass withAllSuperclassesDo: 
-			[:c |
-			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
-	^pools contents!
-
-sharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of the shared pool
-	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
-	order of precedence."
-
-	^self instanceClass sharedPoolNames!
-
-sharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
-	locally in the receiver."
-
-	| pools |
-	pools := OrderedCollection new.
-	self sharedPoolsDo: [:each | pools addLast: each].
-	^pools!
-
-sharedPoolsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
-	the receiver in order of precedence."
-
-	self importedNamespacesDo: aMonadicValuable!
-
-sharedVariableString
-	"Answer a String containing the names of the Pools accessable
-	from the receiver and its instances. The names are separated
-	by spaces."
-
-	| aStream |
-	aStream := String smalltalkWriteStream: 32.
-	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
-		separatedBy: [aStream space].
-	^aStream contents! !
-!ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
-!ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
-
-!CompilerNotification methodsFor!
+!Kernel.CompilerNotification methodsFor!
 
 extra
 	#deprecated.
 	^extras isEmpty ifFalse: [extras anyOne]! !
-!CompilerNotification categoriesFor: #extra!accessing!public! !
+!Kernel.CompilerNotification categoriesFor: #extra!accessing!public! !
 
-!CRTLibrary methodsFor!
+!Kernel.Package methodsFor!
+
+addGlobalNamed: globalName
+	#deprecated.
+	^self addVariableNamed: globalName!
+
+includesGlobalNamed: globalName
+	#deprecated.
+	^self includesVariableNamed: globalName asQualifiedReference!
+
+isBaseImagePackage
+	"Answer true if the receiver is a basic component of Dolphin "
+
+	#deprecated.
+	^self isBasePackage!
+
+untracedGlobals
+	#deprecated.
+	^self untracedVariables collect: [:each | each asSymbol]! !
+!Kernel.Package categoriesFor: #addGlobalNamed:!adding!public! !
+!Kernel.Package categoriesFor: #includesGlobalNamed:!public!testing! !
+!Kernel.Package categoriesFor: #isBaseImagePackage!public!testing! !
+!Kernel.Package categoriesFor: #untracedGlobals!accessing!public! !
+
+!Kernel.PackageManager methodsFor!
+
+addGlobalNamed: globalName to: aPackageOrNil
+	#deprecated.
+	^self addVariableNamed: globalName asQualifiedReference to: aPackageOrNil!
+
+allGlobalAliases
+	#deprecated.
+	^self allVariableAliases collect: [:each | each asSymbol]!
+
+packageOfGlobalNamed: globalName 
+	#deprecated.
+	^self packageOfVariableNamed: globalName asQualifiedReference! !
+!Kernel.PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
+!Kernel.PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
+!Kernel.PackageManager categoriesFor: #packageOfGlobalNamed:!public!searching! !
+
+!Kernel.SourceFiler methodsFor!
+
+fileOutBinaryGlobal: anAssociation 
+	"File out the text representation of the non-<sourceObject>
+	which is the value of the <Association>, anAssociation, to the
+	source stream. The key of the association is the global name."
+
+	#deprecated.
+	^self subclassResponsibility! !
+!Kernel.SourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
+
+!Kernel.STBClassProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass! !
+!Kernel.STBClassProxy class categoriesFor: #for:!instance creation!public! !
+
+!Kernel.STBCollectionProxy class methodsFor!
+
+for: aCollection 
+	#deprecated.
+	^self forCollection: aCollection! !
+!Kernel.STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+
+!Kernel.STBPrefix methodsFor!
+
+isLiteralPrefix
+	#deprecated.
+	^dword anyMask: LiteralPrefixMask! !
+!Kernel.STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
+
+!Kernel.STBSingletonProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass!
+
+for: aClass using: aSelectorSymbol 
+	#deprecated.
+	^self forClass: aClass using: aSelectorSymbol! !
+!Kernel.STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
+!Kernel.STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
+
+!Kernel.VMLibrary methodsFor!
+
+isWindows10OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindows10OrGreater!
+
+isWindows7OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindows7OrGreater!
+
+isWindows7SP1OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindows7SP1OrGreater!
+
+isWindows8OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindows8OrGreater!
+
+isWindows8Point1OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindows8Point1OrGreater!
+
+isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
+	Notification deprecated.
+	^KernelLibrary default
+		isWindowsVersionOrGreater: wMajorVersion
+		wMinorVersion: wMinorVersion
+		wServicePackMajor: wServicePackMajor!
+
+isWindowsVistaOrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindowsVistaOrGreater!
+
+isWindowsVistaSP1OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindowsVistaSP1OrGreater!
+
+isWindowsVistaSP2OrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindowsVistaSP2OrGreater!
+
+isWindowsXPOrGreater
+	Notification deprecated.
+	^KernelLibrary default isWindowsXPOrGreater! !
+!Kernel.VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
+
+!OS._FPIEEE_RECORD methodsFor!
+
+causeCode
+	"Answer an <integer> which identifies the cause of the exception."
+
+	#deprecated.	"Could be more than one cause"
+	^(self cause bitAnd: 16r1F) highBit!
+
+causeName
+	"Answer the symbolic name of the type of floating point exception the receiver
+	represents."
+
+	#deprecated.	"Could be more than one cause"
+	^self causeNames last! !
+!OS._FPIEEE_RECORD categoriesFor: #causeCode!accessing!public! !
+!OS._FPIEEE_RECORD categoriesFor: #causeName!accessing!public! !
+
+!OS._FPIEEE_VALUE methodsFor!
+
+valueType
+	#deprecated.
+	^self format! !
+!OS._FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
+
+!OS.CRTLibrary methodsFor!
 
 _controlfp: newInteger mask: maskInteger
 	<cdecl: dword _controlfp dword dword>
@@ -826,235 +1127,60 @@ thread_errno
 	<overlap cdecl: sdword _errno>
 	#deprecated. "Use CRTLibraryNonBlocking>>errno"
 	^self invalidCall: _failureCode! !
-!CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
-!CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
-!CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log2:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
+!OS.CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
+!OS.CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
+!OS.CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #log2:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
+!OS.CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
+!OS.CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
+!OS.CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 
-!Date methodsFor!
-
-evaluateYYMMDD: aTriadicValuable
-	Notification deprecated.
-	^self dayMonthYearDo: [:d :m :y | aTriadicValuable value: y value: m value: d]!
-
-monthIndex
-	Notification deprecated.
-	^self month!
-
-weekday
-	Notification deprecated.
-	^Locale default dayOfWeekName: self dayOfWeek!
-
-weekdayIndex
-	Notification deprecated.
-	^(self asDays + 1) \\ 7 + 1! !
-!Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
-!Date categoriesFor: #monthIndex!accessing!public! !
-!Date categoriesFor: #weekday!accessing!public! !
-!Date categoriesFor: #weekdayIndex!accessing!public! !
-
-!Date class methodsFor!
-
-dateAndTimeNow 
-	"Answer an Array whose first element is the current local Date and whose
-	second element is the current local Time."
-
-	"Use DateAndTime now"
-	Notification deprecated. 
-	^Time dateAndTimeNow!
-
-dayOfWeek: dayName
-	Notification deprecated.
-	^Locale default dayOfWeek: dayName!
-
-nameOfDay: dayIndex
-	"Use Locale>>dayOfWeekName:, but note that it expects Sunday as the first day of the week."
-	
-	Notification deprecated.
-	^Locale default dayOfWeekName: (dayIndex + 1) \\ 7!
-
-nameOfMonth: monthIndex
-	"Use Locale>>monthName:"
-
-	Notification deprecated.
-	^Locale default monthName: monthIndex!
-
-shortNameOfDay: dayIndex
-	"Use Locale>>dayOfWeekAbbreviation:, but note that it expects Sunday as the first day of the week."
-	
-	Notification deprecated.
-	^Locale default dayOfWeekAbbreviation: (dayIndex + 1) \\ 7!
-
-shortNameOfMonth: monthIndex
-	Notification deprecated.
-	^self monthAbbreviation: monthIndex! !
-!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
-!Date class categoriesFor: #dayOfWeek:!enquiries!public! !
-!Date class categoriesFor: #nameOfDay:!enquiries!public! !
-!Date class categoriesFor: #nameOfMonth:!enquiries!public! !
-!Date class categoriesFor: #shortNameOfDay:!enquiries!public! !
-!Date class categoriesFor: #shortNameOfMonth:!enquiries!public! !
-
-!ExternalCallback class methodsFor!
-
-receiver: anObject prototype: anExternalMethod
-	#deprecated.	"Use #receiver:selector:descriptor:"
-	self assert: 
-			[(anExternalMethod isKindOf: ExternalMethod) 
-				and: [anExternalMethod primitiveIndex == self callbackPrimitive]].
-	^MessageCallback 
-		receiver: anObject
-		selector: anExternalMethod selector
-		descriptor: anExternalMethod descriptor!
-
-receiver: anObject prototype: anExternalMethod closure: extraObject
-	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
-	^(self receiver: anObject prototype: anExternalMethod) 
-		closure: extraObject!
-
-receiver: anObject selector: aSymbol
-	#deprecated.	"Use #receiver:selector:descriptor:"
-	^self receiver: anObject prototype: (anObject class definitionOf: aSymbol)!
-
-receiver: anObject selector: aSymbol closure: extraObject
-	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
-	^(self receiver: anObject selector: aSymbol) closure: extraObject! !
-!ExternalCallback class categoriesFor: #receiver:prototype:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:prototype:closure:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:closure:!instance creation!public! !
-
-!ExternalDescriptor class methodsFor!
-
-oneStringArg
-	"Answer a shared instance of the receiver describing a standard function
-	with a single string argument."
-
-	#deprecated.
-	^self argumentTypes: 'lpstr'! !
-!ExternalDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
-
-!ExternalLibrary methodsFor!
-
-invalidCall
-	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
-
-	Notification deprecated. 
-	^self invalidCall: _PrimitiveFailureCode.Failed! !
-!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
-
-!ExternalStructure methodsFor!
-
-do: aOneArgumentBlock 
-	#deprecated.
-	self fieldsDo: aOneArgumentBlock!
-
-do: operation separatedBy: separator 
-	#deprecated.
-	self fieldsDo: operation separatedBy: separator! !
-!ExternalStructure categoriesFor: #do:!enumerating!public! !
-!ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
-
-!File methodsFor!
-
-readCharacter
-	"Answer the next Character from the file or nil if the receiver
-	is positioned past the current EOF.
-	Signal a FileException if an error occurs."
-
-	| string |
-	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
-	string := String new: 1.
-	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
-!File categoriesFor: #readCharacter!operations!public! !
-
-!File class methodsFor!
-
-change: aPathnameString extension: anExtensionString
-	#deprecated.	"use #path:extension:"
-	^self path: aPathnameString extension: anExtensionString!
-
-for: matchString inAndBelow: dirString do: operation
-	#deprecated.	"Use #forAll:in:do:"
-	^self 
-		forAll: matchString
-		in: dirString
-		do: [:each | operation value: each directory value: each]! !
-!File class categoriesFor: #change:extension:!filename manipulation!public! !
-!File class categoriesFor: #for:inAndBelow:do:!enumerating!public! !
-
-!Integer methodsFor!
-
-digitSize
-	#deprecated.
-	^self digitLength!
-
-highSWord
-	"Answers the high order signed word of the receiver (assumes the receiver is a 32-bit Integer)."
-
-	#deprecated.
-	^(DWORD fromInteger: self) highSWord
-!
-
-lowSWord
-	"Answers the low order signed word of the receiver (assumes the receiver is a 32-bit Integer)."
-
-	#deprecated.
-	^(DWORD fromInteger: self) lowSWord
-! !
-!Integer categoriesFor: #digitSize!accessing!public! !
-!Integer categoriesFor: #highSWord!bit manipulation!public! !
-!Integer categoriesFor: #lowSWord!bit manipulation!public! !
-
-!KernelLibrary methodsFor!
+!OS.KernelLibrary methodsFor!
 
 compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
 	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
@@ -1080,16 +1206,6 @@ getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatSt
 
 !
 
-getVersionEx: anOSVERSIONINFO 
-	"Populate the argument with extended OS version information. Answers whether the request succeeded.
-		BOOL GetVersionEx(
-			LPOSVERSIONINFO lpVersionInformation 
-		);"
-
-	<stdcall: bool GetVersionExW OSVERSIONINFO*>
-	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
-	^self invalidCall: _failureCode!
-
 lstrcmp: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpW lpwstr lpwstr>
 	#deprecated.
@@ -1104,54 +1220,32 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+!OS.KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
+!OS.KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
+!OS.KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
+!OS.KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
+!OS.KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+!OS.KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
+!OS.KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
 
-!KernelLibrary class methodsFor!
+!OS.WindowsLocale methodsFor!
 
-clear
-	"Private - Clear down cached external function addresses and any default 
-	instances of the receiver from previous runs. etc."
+timeSeparator
+	"Answer the character used in the receiver locale to separate time components."
 
-	super clear.
-	OSVERSIONINFO clear
-! !
-!KernelLibrary class categoriesFor: #clear!initializing!private! !
+	Notification deprecated.	"Use timeFormat"
+	^self getStringInfo: LOCALE_STIME! !
+!OS.WindowsLocale categoriesFor: #timeSeparator!constants!public! !
 
-!Locale methodsFor!
+!OS.WinMMLibrary methodsFor!
 
-dateOrder
-	"Answer the date ordering used in the receiver locale.
-		0	Month - Day - Year
-		1	Day - Month - Year
-		2	Year - Month - Day."
+timeGetTime
+	<stdcall: dword timeGetTime>
+	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
+	^self invalidCall: _failureCode! !
+!OS.WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
 
-	Notification deprecated. "Use dateFormat"
-	^self getIntegerInfo: LOCALE_IDATE
-!
-
-dateSeparator
-	"Answer the character used in the receiver locale to separate date components."
-
-	Notification deprecated. "Use dateFormat"
-	^self getStringInfo: LOCALE_SDATE!
-
-isMonthBeforeDay
-	"Answer true if the format for the receiver is expecting a month before a day"
-
-	Notification deprecated. "Use dateFormat"
-	^self dateOrder ~= 1! !
-!Locale categoriesFor: #dateOrder!constants!public! !
-!Locale categoriesFor: #dateSeparator!constants!public! !
-!Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
-
-!MessageBox methodsFor!
+!UI.MessageBox methodsFor!
 
 abortRetryIgnore
 	#deprecated.
@@ -1196,19 +1290,19 @@ yesNo
 yesNoCancel
 	#deprecated.
 	self buttonStyle: #yesNoCancel! !
-!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
-!MessageBox categoriesFor: #error!modes!public! !
-!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
-!MessageBox categoriesFor: #ok!accessing-styles!public! !
-!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #prompt!accessing-styles!public! !
-!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
-!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #error!modes!public! !
+!UI.MessageBox categoriesFor: #fatalError!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #ok!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #okCancel!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #prompt!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #systemModal!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #taskModal!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #yesNo!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
 
-!MessageBoxAbstract methodsFor!
+!UI.MessageBoxAbstract methodsFor!
 
 notify
 	#deprecated.
@@ -1217,270 +1311,8 @@ notify
 warning
 	#deprecated.
 	self iconStyle: #warning! !
-!MessageBoxAbstract categoriesFor: #notify!modes!public! !
-!MessageBoxAbstract categoriesFor: #warning!modes!public! !
-
-!Package methodsFor!
-
-addGlobalNamed: globalName
-	#deprecated.
-	^self addVariableNamed: globalName!
-
-includesGlobalNamed: globalName
-	#deprecated.
-	^self includesVariableNamed: globalName asQualifiedReference!
-
-isBaseImagePackage
-	"Answer true if the receiver is a basic component of Dolphin "
-
-	#deprecated.
-	^self isBasePackage!
-
-untracedGlobals
-	#deprecated.
-	^self untracedVariables collect: [:each | each asSymbol]! !
-!Package categoriesFor: #addGlobalNamed:!adding!public! !
-!Package categoriesFor: #includesGlobalNamed:!public!testing! !
-!Package categoriesFor: #isBaseImagePackage!public!testing! !
-!Package categoriesFor: #untracedGlobals!accessing!public! !
-
-!PackageManager methodsFor!
-
-addGlobalNamed: globalName to: aPackageOrNil
-	#deprecated.
-	^self addVariableNamed: globalName asQualifiedReference to: aPackageOrNil!
-
-allGlobalAliases
-	#deprecated.
-	^self allVariableAliases collect: [:each | each asSymbol]!
-
-packageOfGlobalNamed: globalName 
-	#deprecated.
-	^self packageOfVariableNamed: globalName asQualifiedReference! !
-!PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
-!PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
-!PackageManager categoriesFor: #packageOfGlobalNamed:!public!searching! !
-
-!Process methodsFor!
-
-fpeMask
-	#deprecated.	"Use Float class>>exceptionMask, or #fpControl"
-	^fpControl bitAnd: CRTConstants._MCW_EM!
-
-fpeMask: anInteger
-	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
-	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
-!Process categoriesFor: #fpeMask!accessing!public! !
-!Process categoriesFor: #fpeMask:!accessing!private! !
-
-!SortAlgorithm class methodsFor!
-
-sortBlock: aDyadicValuable
-	Notification deprecated.
-	^self newSortBlock: aDyadicValuable! !
-!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
-
-!SortedCollection class methodsFor!
-
-value: anObject1 value: anObject2 
-	"Private - Implement this part of the <dyadicValuable> protocol in order that the receiver
-	can be its own default sort 'block' for historical reasons. This is no longer used as of
-	Dolphin 6, and is deprecated in Dolphin 7.1"
-
-	Notification deprecated.
-	^anObject1 <= anObject2! !
-!SortedCollection class categoriesFor: #value:value:!evaluating!private! !
-
-!SourceFiler methodsFor!
-
-fileOutBinaryGlobal: anAssociation 
-	"File out the text representation of the non-<sourceObject>
-	which is the value of the <Association>, anAssociation, to the
-	source stream. The key of the association is the global name."
-
-	#deprecated.
-	^self subclassResponsibility! !
-!SourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
-
-!STBClassProxy class methodsFor!
-
-for: aClass 
-	#deprecated.
-	^self forClass: aClass! !
-!STBClassProxy class categoriesFor: #for:!instance creation!public! !
-
-!STBCollectionProxy class methodsFor!
-
-for: aCollection 
-	#deprecated.
-	^self forCollection: aCollection! !
-!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
-
-!STBPrefix methodsFor!
-
-isLiteralPrefix
-	#deprecated.
-	^dword anyMask: LiteralPrefixMask! !
-!STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
-
-!STBSingletonProxy class methodsFor!
-
-for: aClass 
-	#deprecated.
-	^self forClass: aClass!
-
-for: aClass using: aSelectorSymbol 
-	#deprecated.
-	^self forClass: aClass using: aSelectorSymbol! !
-!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
-
-!Stream methodsFor!
-
-nextOrNil
-	#deprecated.
-	^self nextAvailable! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
-
-!String methodsFor!
-
-asUnicodeString
-	Notification deprecated.
-	^self asUtf16String!
-
-equals: comperand
-	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
-	^self = comperand! !
-!String categoriesFor: #asUnicodeString!converting!public! !
-!String categoriesFor: #equals:!comparing!public! !
-
-!String class methodsFor!
-
-fromUnicodeString: anAddressOrUnicodeString
-	#deprecated.
-	^self fromUtf16String: anAddressOrUnicodeString!
-
-unicodeClass
-	#deprecated.
-	^self utf16Class! !
-!String class categoriesFor: #fromUnicodeString:!instance creation!public! !
-!String class categoriesFor: #unicodeClass!constants!public! !
-
-!Time methodsFor!
-
-hours
-	Notification deprecated.
-	^self hour24!
-
-milliseconds
-	Notification deprecated.
-	^self millisecond!
-
-minutes
-	Notification deprecated.
-	^self minute! !
-!Time categoriesFor: #hours!accessing!public! !
-!Time categoriesFor: #milliseconds!accessing!public! !
-!Time categoriesFor: #minutes!accessing!public! !
-
-!Time class methodsFor!
-
-dateAndTimeNow
-	"Answer an Array whose first element is the current local Date and whose
-	second element is the current local Time."
-
-	| now |
-	"Use DateAndTime now"
-	Notification deprecated.
-	now := DateAndTime now.
-	^{now asDate. now asTime}!
-
-microsecondsToRun: timedBlock
-	"Answer the number of microseconds consumed by the evaluation of timedBlock
-	(including the overhead)."
-
-	^timedBlock timeToRun asMicroseconds asInteger! !
-!Time class categoriesFor: #dateAndTimeNow!accessing!public! !
-!Time class categoriesFor: #microsecondsToRun:!operations!public! !
-
-!TimeStamp methodsFor!
-
-date: aDate
-	"Timestamps are immutable and should be initialized at creation time."
-
-	Notification deprecated.
-	self isImmutable: false.
-	date := aDate
-!
-
-dateAndTime
-	"Answer a two element Array containing the date and time."
-
-	Notification deprecated.
-	^{self date. self time}!
-
-time: aTime
-	"Timestamps are immutable and should be initialized at creation time."
-
-	Notification deprecated.
-	self isImmutable: false.
-	time := aTime
-! !
-!TimeStamp categoriesFor: #date:!accessing!public! !
-!TimeStamp categoriesFor: #dateAndTime!accessing!public! !
-!TimeStamp categoriesFor: #time:!accessing!public! !
-
-!UndefinedObject methodsFor!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
-	Notification deprecated.
-	^self
-		subclass: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString)!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	Notification deprecated.
-	^(self
-		newClassBuilder: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		categoryNames: {aCategoryOrString};
-		modifyOrCreate!
-
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
-	"If aClassSymbol is not an existing class then create and answer a new fixed-pointer subclass,  otherwise modify the class with name aClassSymbol to have the indicated features and answer it. Subclasses of nil are root classes, like Object, and special care is needed in their definition.  It is also the case that many modifications of Object are illegal (it cannot have named instance variables for example)."
-
-	#deprecated.
-	^self
-		subclass: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString)
-		classInstanceVariableNames: classInstVarString
-		classConstants: anArrayOfAssociations! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-
-!WindowsLocale methodsFor!
-
-timeSeparator
-	"Answer the character used in the receiver locale to separate time components."
-
-	Notification deprecated. "Use timeFormat"
-	^self getStringInfo: LOCALE_STIME! !
-!WindowsLocale categoriesFor: #timeSeparator!constants!public! !
-
-!WinMMLibrary methodsFor!
-
-timeGetTime
-	<stdcall: dword timeGetTime>
-	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
-	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
+!UI.MessageBoxAbstract categoriesFor: #notify!modes!public! !
+!UI.MessageBoxAbstract categoriesFor: #warning!modes!public! !
 
 "End of package definition"!
 

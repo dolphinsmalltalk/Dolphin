@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ByteCodeDispatcher
+Core.Object subclass: #'Kernel.ByteCodeDispatcher'
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
 	classVariableNames: 'RunStarts'
-	poolDictionaries: 'OpcodePool'
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FirstShowSpecialSend' -> 16r7E.
 		'InstructionLengths' -> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 7 4 4 5].
 		'Instructions' -> #(#break #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushInstVar: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #shortPushTemp: #pushContextTemp: #pushContextTemp: #shortPushOuterTemp: #shortPushOuterTemp: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushConst: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #shortPushStatic: #pushSelf #pushPseudo: #pushPseudo: #pushPseudo: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushImmediate: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortPushSelfAndTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortStoreTemp: #shortPopPushTemp: #shortPopPushTemp: #popPushSelf #popDup #popContextTemp: #popContextTemp: #shortPopOuterTemp: #shortPopOuterTemp: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopInstVar: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #shortPopTemp: #popStackTop #incrementStackTop #decrementStackTop #duplicateStackTop #returnSelf #returnPseudo: #returnPseudo: #returnPseudo: #returnFromMessage #returnFromBlock #returnFromBlockHome #popReturnSelf #nop #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJump: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortJumpIfFalse: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #isZero #pushActiveFrame #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #pushInstVar: #pushTemp: #pushConst: #pushStatic: #storeInstVar: #storeTemp: #storeStatic: #popInstVar: #popTemp: #popStatic: #pushImmediate: #pushChar: #send: #supersend: #specialSend: #nearJump: #nearJumpIfTrue: #nearJumpIfFalse: #nearJumpIfNil: #nearJumpIfNotNil: #unused: #unused: #sendTempZeroArgs: #pushSelfAndTemp: #pushOuterTemp: #storeOuterTemp: #popOuterTemp: #sendSelfZeroArgs: #unused: #pushTempPair: #longPushConst:with: #longPushStatic:with: #longStoreStatic:with: #longPopStoreStatic:with: #longPushImmediate:with: #longSend:with: #longSupersend:with: #longJump:with: #longJumpIfTrue:with: #longJumpIfFalse:with: #longJumpIfNil:with: #longJumpIfNotNil:with: #pushOuter:temp: #storeOuter:temp: #incTemp:temp: #incPushTemp:temp: #decTemp:temp: #decPushTemp:temp: #blockCopy:stack:env:copy:offset1:offset2: #exLongSend:with:with: #exLongSupersend:with:with: #exLongPushImmediate:byte2:byte3:byte4:)
 	}!
-ByteCodeDispatcher guid: (GUID fromString: '{87b4c45d-026e-11d3-9fd7-00a0cc3e4a32}')!
-ByteCodeDispatcher comment: 'ByteCodeDispatchers decode bytecodes in <CompiledMethod>s and dispatches them to a plug-in <bytecodeInterpreter> client.
+Kernel.ByteCodeDispatcher guid: (Core.GUID fromString: '{87b4c45d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ByteCodeDispatcher comment: 'ByteCodeDispatchers decode bytecodes in <CompiledMethod>s and dispatches them to a plug-in <bytecodeInterpreter> client.
 
 Instance Variables:
 	byteCodes			<ByteArray>
@@ -26,8 +26,8 @@ Class Variables:
 	RunStarts			<IdentityDictionary>
 
 '!
-!ByteCodeDispatcher categoriesForClass!Kernel-Objects! !
-!ByteCodeDispatcher methodsFor!
+!Kernel.ByteCodeDispatcher categoriesForClass!Kernel-Objects! !
+!Kernel.ByteCodeDispatcher methodsFor!
 
 accessesInstVarAt: anInteger 
 	"Answer whether the method which the receiver is interpreting accesses the
@@ -169,9 +169,7 @@ instruction: aSymbol do: aDyadicValuable
 				value: (aSymbol last == $: ifTrue: [{byteCode - (RunStarts at: aSymbol)}] ifFalse: [#()])].
 	instructionLength == 2 ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 1}].
 	instructionLength == 3
-		ifTrue: 
-			[^aDyadicValuable value: aSymbol
-				value: {byteCodes at: ip - 2. byteCodes at: ip - 1}].
+		ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 2. byteCodes at: ip - 1}].
 	^instructionLength == 4
 		ifTrue: 
 			[aDyadicValuable value: aSymbol
@@ -189,7 +187,7 @@ instructions
 
 	| answer |
 	answer := OrderedCollection new.
-	self instructionsDo: [:selector :args | answer add: (selector -> args)].
+	self instructionsDo: [:selector :args | answer add: selector -> args].
 	^answer!
 
 instructions: anArray 
@@ -390,45 +388,45 @@ writesStatic: anAssociation
 						or: 
 							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector) 
 								and: [offset == (args first + (args last * 256))]]]]! !
-!ByteCodeDispatcher categoriesFor: #accessesInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #accessesInstVarAtAnyOf:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #accessToInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #atEnd!private!testing! !
-!ByteCodeDispatcher categoriesFor: #byteCodes!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #containsInstruction:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #dispatchAll!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #dispatchNext!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #fetch!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarAccess:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarRead:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarWrite:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfIP:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #instruction:do:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #instructions!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #instructions:!public! !
-!ByteCodeDispatcher categoriesFor: #instructionsDo:!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #interpreter:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #next!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #prevIP:!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #readsInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #readsStatic:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #reset!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #segments!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #selectorOfMessageSend:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #accessesInstVarAt:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #accessesInstVarAtAnyOf:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #accessToInstVarAt:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #atEnd!private!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #byteCodes!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #containsInstruction:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #dispatchAll!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #dispatchNext!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #fetch!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarAccess:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarRead:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarWrite:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #indexOfIP:!accessing!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #instruction:do:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #instructions!interpreting!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #instructions:!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #instructionsDo:!interpreting!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #interpreter:!accessing!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #method!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #method:!accessing!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #next!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #prevIP:!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #readsInstVarAt:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #readsStatic:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #reset!interpreting!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #segments!accessing!public! !
+!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfMessageSend:!interpreting!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
+!Kernel.ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
 
-!ByteCodeDispatcher class methodsFor!
+!Kernel.ByteCodeDispatcher class methodsFor!
 
 bytecodeRuns
 	^#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #shortSpecialSendEx:) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #exLongPushImmediate:byte2:byte3:byte4:))!
@@ -496,12 +494,12 @@ on: aCompiledCode for: anInstructionInterpreter
 	^(self on: aCompiledCode)
 		interpreter: anInstructionInterpreter;
 		yourself! !
-!ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
-!ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
-!ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
-!ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
-!ByteCodeDispatcher class categoriesFor: #instructions!accessing!public! !
-!ByteCodeDispatcher class categoriesFor: #lengthOfInstruction:!interpreting!private! !
-!ByteCodeDispatcher class categoriesFor: #on:!instance creation!public! !
-!ByteCodeDispatcher class categoriesFor: #on:for:!instance creation!public! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #instructions!accessing!public! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #lengthOfInstruction:!interpreting!private! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #on:!instance creation!public! !
+!Kernel.ByteCodeDispatcher class categoriesFor: #on:for:!instance creation!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayPointerField subclass: #ConformantArrayPointerField
+External.ArrayPointerField subclass: #'External.ConformantArrayPointerField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ConformantArrayPointerField guid: (GUID fromString: '{e228a7a7-fc7a-45fb-a6cd-e0ea5edeecc4}')!
-ConformantArrayPointerField comment: 'ConformantArrayPointerField is now deprecated, and should be replaced by use of ArrayPointerField class>>type:lengthField:'!
-!ConformantArrayPointerField categoriesForClass!Deprecated! !
-!ConformantArrayPointerField class methodsFor!
+External.ConformantArrayPointerField guid: (Core.GUID fromString: '{e228a7a7-fc7a-45fb-a6cd-e0ea5edeecc4}')!
+External.ConformantArrayPointerField comment: 'ConformantArrayPointerField is now deprecated, and should be replaced by use of ArrayPointerField class>>type:lengthField:'!
+!External.ConformantArrayPointerField categoriesForClass!Deprecated! !
+!External.ConformantArrayPointerField class methodsFor!
 
 type: aClass length: aSymbol
 	^ArrayPointerField type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ConformantArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
+!External.ConformantArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
 

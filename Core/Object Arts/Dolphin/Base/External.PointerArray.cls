@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UINT_PTRArray subclass: #PointerArray
+External.UINT_PTRArray subclass: #'External.PointerArray'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointerArray guid: (GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
-PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
+External.PointerArray guid: (Core.GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
+External.PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
 
 Instance Variables:
 	elementClass	<ExternalStructure>. Class to represent elements of the array.
 
 '!
-!PointerArray categoriesForClass!External-Data-Structured! !
-!PointerArray methodsFor!
+!External.PointerArray categoriesForClass!External-Data-Structured! !
+!External.PointerArray methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent the receiver's elements."
@@ -37,12 +37,12 @@ uncheckedAt: anInteger
 uncheckedAt: anInteger put: newValue 
 	super uncheckedAt: anInteger put: newValue yourAddress.
 	^newValue! !
-!PointerArray categoriesFor: #elementClass!accessing!public! !
-!PointerArray categoriesFor: #elementClass:!accessing!private! !
-!PointerArray categoriesFor: #uncheckedAt:!accessing!private! !
-!PointerArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.PointerArray categoriesFor: #elementClass!accessing!public! !
+!External.PointerArray categoriesFor: #elementClass:!accessing!private! !
+!External.PointerArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.PointerArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!PointerArray class methodsFor!
+!External.PointerArray class methodsFor!
 
 fromAddress: anAddress length: anInteger elementClass: elementClass
 	"Answer a new instance of the receiver that points at an
@@ -64,6 +64,6 @@ length: anInteger elementClass: elementClass
 	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^(self length: anInteger elementSize: self elementSize) elementClass: elementClass! !
-!PointerArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
-!PointerArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!External.PointerArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
+!External.PointerArray class categoriesFor: #length:elementClass:!instance creation!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #WIN32_FIND_DATAW
+OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cAlternateFileName' -> 16r234.
@@ -17,12 +17,12 @@ Win32Structure subclass: #WIN32_FIND_DATAW
 		'_OffsetOf_nFileSizeHigh' -> 16r1C.
 		'_OffsetOf_nFileSizeLow' -> 16r20
 	}!
-WIN32_FIND_DATAW guid: (GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
-WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
+OS.WIN32_FIND_DATAW guid: (Core.GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 
 See File class for example usage.'!
-!WIN32_FIND_DATAW categoriesForClass!External-Data-Structured-Win32! !
-!WIN32_FIND_DATAW methodsFor!
+!OS.WIN32_FIND_DATAW categoriesForClass!External-Data-Structured-Win32! !
+!OS.WIN32_FIND_DATAW methodsFor!
 
 cAlternateFileName
 	"Answer the <Utf16String> value of the receiver's 'cAlternateFileName' field."
@@ -110,25 +110,25 @@ stem
 	"Answer the stem (name sans extension) of the file described by the receiver."
 
 	^File splitStemFrom: self fileName! !
-!WIN32_FIND_DATAW categoriesFor: #cAlternateFileName!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #cFileName!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #directory!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #directory:!accessing!private! !
-!WIN32_FIND_DATAW categoriesFor: #dwFileAttributes!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #fileName!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #fileSize!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftCreationTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftLastAccessTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftLastWriteTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #isDirectory!public!testing! !
-!WIN32_FIND_DATAW categoriesFor: #isReadOnly!public!testing! !
-!WIN32_FIND_DATAW categoriesFor: #nFileSizeHigh!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #nFileSizeLow!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #path!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #shortFileName!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #stem!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #cAlternateFileName!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #cFileName!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #directory!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #directory:!accessing!private! !
+!OS.WIN32_FIND_DATAW categoriesFor: #dwFileAttributes!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #fileName!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #fileSize!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #ftCreationTime!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #ftLastAccessTime!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #ftLastWriteTime!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #isDirectory!public!testing! !
+!OS.WIN32_FIND_DATAW categoriesFor: #isReadOnly!public!testing! !
+!OS.WIN32_FIND_DATAW categoriesFor: #nFileSizeHigh!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #nFileSizeLow!**compiled accessors**!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #path!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #shortFileName!accessing!public! !
+!OS.WIN32_FIND_DATAW categoriesFor: #stem!accessing!public! !
 
-!WIN32_FIND_DATAW class methodsFor!
+!OS.WIN32_FIND_DATAW class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 WIN32_FIND_DATAW structure. 
@@ -150,7 +150,7 @@ defineFields
 			WCHAR    cAlternateFileName[ 14 ]; 
 		} WIN32_FIND_DATAw;"
 
-	self 
+	self
 		defineField: #dwFileAttributes type: DWORDField readOnly;
 		defineField: #ftCreationTime type: (StructureField type: FILETIME) beReadOnly;
 		defineField: #ftLastAccessTime type: (StructureField type: FILETIME) beReadOnly;
@@ -164,6 +164,6 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
-!WIN32_FIND_DATAW class categoriesFor: #defineFields!public!template definition! !
-!WIN32_FIND_DATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WIN32_FIND_DATAW class categoriesFor: #defineFields!public!template definition! !
+!OS.WIN32_FIND_DATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

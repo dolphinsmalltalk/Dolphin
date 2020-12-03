@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Utf8String variableByteSubclass: #Symbol
+Core.Utf8String variableByteSubclass: #'Core.Symbol'
 	instanceVariableNames: ''
 	classVariableNames: 'Table'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CharClassifications' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)
 	}!
-Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
-Symbol isNullTerminated: true!
-Symbol comment: '`Symbol` is a class of interned `String`s that are guaranteed to be unique throughout the system.
+Core.Symbol guid: (Core.GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Symbol isNullTerminated: true!
+Core.Symbol comment: '`Symbol` is a class of interned `String`s that are guaranteed to be unique throughout the system.
 
 `Symbol`s can contain any Unicode code points as they have the same representation as `Utf8String`s.
 
@@ -21,8 +21,8 @@ Symbol complies with the following ANSI protocols:
   <sequencedReadableCollection>
   <readableString>
   <symbol>'!
-!Symbol categoriesForClass!Collections-Text! !
-!Symbol methodsFor!
+!Core.Symbol categoriesForClass!Collections-Text! !
+!Core.Symbol methodsFor!
 
 argumentCount
 	"Answer the <integer> number of arguments required by a method with the receiver as its selector."
@@ -65,7 +65,7 @@ copyFrom: startInteger to: stopInteger
 
 	| len |
 	len := stopInteger - startInteger + 1.
-	^(self species new: len)
+	^(Utf8String new: len)
 		replaceFrom: 1
 		to: len
 		with: self
@@ -193,32 +193,32 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #argumentCount!accessing!public! !
-!Symbol categoriesFor: #asString!converting!public! !
-!Symbol categoriesFor: #asSymbol!converting!public! !
-!Symbol categoriesFor: #copyFrom:to:!copying!public! !
-!Symbol categoriesFor: #deepCopy!copying!public! !
-!Symbol categoriesFor: #displayString!printing!public! !
-!Symbol categoriesFor: #forwardTo:!operations!public! !
-!Symbol categoriesFor: #isAtomic!public!testing! !
-!Symbol categoriesFor: #isInfix!public!testing! !
-!Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
-!Symbol categoriesFor: #keywords!accessing!public! !
-!Symbol categoriesFor: #mutableCopy!copying!public! !
-!Symbol categoriesFor: #numArgs!accessing!public! !
-!Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
-!Symbol categoriesFor: #printOn:!printing!public! !
-!Symbol categoriesFor: #refersToLiteral:!private!testing! !
-!Symbol categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Symbol categoriesFor: #shallowCopy!copying!public! !
-!Symbol categoriesFor: #species!accessing!public! !
-!Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Symbol categoriesFor: #argumentCount!accessing!public! !
+!Core.Symbol categoriesFor: #asString!converting!public! !
+!Core.Symbol categoriesFor: #asSymbol!converting!public! !
+!Core.Symbol categoriesFor: #copyFrom:to:!copying!public! !
+!Core.Symbol categoriesFor: #deepCopy!copying!public! !
+!Core.Symbol categoriesFor: #displayString!printing!public! !
+!Core.Symbol categoriesFor: #forwardTo:!operations!public! !
+!Core.Symbol categoriesFor: #isAtomic!public!testing! !
+!Core.Symbol categoriesFor: #isInfix!public!testing! !
+!Core.Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
+!Core.Symbol categoriesFor: #keywords!accessing!public! !
+!Core.Symbol categoriesFor: #mutableCopy!copying!public! !
+!Core.Symbol categoriesFor: #numArgs!accessing!public! !
+!Core.Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
+!Core.Symbol categoriesFor: #printOn:!printing!public! !
+!Core.Symbol categoriesFor: #refersToLiteral:!private!testing! !
+!Core.Symbol categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.Symbol categoriesFor: #shallowCopy!copying!public! !
+!Core.Symbol categoriesFor: #species!accessing!public! !
+!Core.Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
 
-Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
-Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
-Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
+Core.Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
+Core.Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
+Core.Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
 
-!Symbol class methodsFor!
+!Core.Symbol class methodsFor!
 
 addUnique: aSymbol
 	"Private - Add the argument aSymbol as a new entry in the Symbol Table. This private method should only be 
@@ -357,7 +357,7 @@ resizeTable: anInteger
 	the average length of which is approximately equal to the <integer> argument.
 	N.B. The argument is not the size of the resulting symbol table, which is answered."
 
-	 | newSize insts |
+	| newSize insts |
 	Table := nil.
 	insts := self allInstances.
 	newSize := (Integer primesUpTo: insts size // anInteger) last.
@@ -410,7 +410,7 @@ stats
 		print: count / full asFloat;
 		contents!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	| stream size answer bytes |
@@ -440,23 +440,23 @@ with: aCharacter
 
 withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
-!Symbol class categoriesFor: #addUnique:!accessing!private! !
-!Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
-!Symbol class categoriesFor: #coerceString:!instance creation!public! !
-!Symbol class categoriesFor: #findInterned:!accessing!public! !
-!Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
-!Symbol class categoriesFor: #initialize!development!initializing!public! !
-!Symbol class categoriesFor: #intern:!instance creation!public! !
-!Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
-!Symbol class categoriesFor: #internCharacter:!instance creation!public! !
-!Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
-!Symbol class categoriesFor: #new:!instance creation!public! !
-!Symbol class categoriesFor: #readFrom:!instance creation!public! !
-!Symbol class categoriesFor: #resizeTable!initializing!private! !
-!Symbol class categoriesFor: #resizeTable:!initializing!private! !
-!Symbol class categoriesFor: #stats!development!private! !
-!Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
-!Symbol class categoriesFor: #with:!instance creation!public! !
-!Symbol class categoriesFor: #withAll:!instance creation!public! !
+!Core.Symbol class categoriesFor: #addUnique:!accessing!private! !
+!Core.Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
+!Core.Symbol class categoriesFor: #coerceString:!instance creation!public! !
+!Core.Symbol class categoriesFor: #findInterned:!accessing!public! !
+!Core.Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Core.Symbol class categoriesFor: #initialize!development!initializing!public! !
+!Core.Symbol class categoriesFor: #intern:!instance creation!public! !
+!Core.Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
+!Core.Symbol class categoriesFor: #internCharacter:!instance creation!public! !
+!Core.Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
+!Core.Symbol class categoriesFor: #new:!instance creation!public! !
+!Core.Symbol class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Symbol class categoriesFor: #resizeTable!initializing!private! !
+!Core.Symbol class categoriesFor: #resizeTable:!initializing!private! !
+!Core.Symbol class categoriesFor: #stats!development!private! !
+!Core.Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Core.Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
+!Core.Symbol class categoriesFor: #with:!instance creation!public! !
+!Core.Symbol class categoriesFor: #withAll:!instance creation!public! !
 

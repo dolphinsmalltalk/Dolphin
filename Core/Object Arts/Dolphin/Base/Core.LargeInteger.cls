@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Integer variableByteSubclass: #LargeInteger
+Core.Integer variableByteSubclass: #'Core.LargeInteger'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LargeInteger guid: (GUID fromString: '{87b4c65e-026e-11d3-9fd7-00a0cc3e4a32}')!
-LargeInteger isIndirection: true!
-LargeInteger comment: 'Class LargeInteger is the class of Integers which are outside the range of SmallIntegers (i.e. outside (SmallInteger minimum..SmallInteger maximum). Basically any Integer requiring more than 31-bits to be represented in 2''s complement will be a LargeInteger.
+Core.LargeInteger guid: (Core.GUID fromString: '{87b4c65e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.LargeInteger isIndirection: true!
+Core.LargeInteger comment: 'Class LargeInteger is the class of Integers which are outside the range of SmallIntegers (i.e. outside (SmallInteger minimum..SmallInteger maximum). Basically any Integer requiring more than 31-bits to be represented in 2''s complement will be a LargeInteger.
 
 LargeIntegers in Dolphin do not follow the standard signed-magnitude radix-256 Smalltalk representation, with separate subclasses for positive and negative integers. Dolphin''s LargeIntegers follow standard machine representation, in that they are 2''s complement, 32-bit granular (i.e. they might have 32, 64, 96, ...n*32 bits). This representation has the dual advantages of higher performance, and simplified external interfacing. In particular the 32 and 64-bit Integers have the same representation externally as they do in Dolphin. Note that all integers are considered immutable - attempts to update the individual bytes will fail.
 
 LargeInteger includes high performance primitive implementations for the common arithmetical operations and bit manipulations.'!
-!LargeInteger categoriesForClass!Magnitude-Numbers! !
-!LargeInteger methodsFor!
+!Core.LargeInteger categoriesForClass!Magnitude-Numbers! !
+!Core.LargeInteger methodsFor!
 
 - operand
 	"Answer a <number> which is the difference between the receiver and the <number> argument, operand."
@@ -475,52 +475,52 @@ subtractFromInteger: anInteger
 	and therefore it is better to send #+ that #addToInteger:."
 
 	^self negated + anInteger! !
-!LargeInteger categoriesFor: #-!arithmetic!public! !
-!LargeInteger categoriesFor: #*!arithmetic!public! !
-!LargeInteger categoriesFor: #/!arithmetic!public! !
-!LargeInteger categoriesFor: #//!arithmetic!public! !
-!LargeInteger categoriesFor: #\\!arithmetic!public! !
-!LargeInteger categoriesFor: #+!arithmetic!public! !
-!LargeInteger categoriesFor: #<!comparing!public! !
-!LargeInteger categoriesFor: #<=!comparing!public! !
-!LargeInteger categoriesFor: #=!comparing!public! !
-!LargeInteger categoriesFor: #>!comparing!public! !
-!LargeInteger categoriesFor: #>=!comparing!public! !
-!LargeInteger categoriesFor: #addToInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #asFloat!converting!public! !
-!LargeInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitInvert!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!LargeInteger categoriesFor: #byteAt:!accessing!private! !
-!LargeInteger categoriesFor: #byteSize!accessing!private! !
-!LargeInteger categoriesFor: #digitAt:!accessing!public! !
-!LargeInteger categoriesFor: #digitLength!accessing!public! !
-!LargeInteger categoriesFor: #dwordAtOffset:!accessing!primitives!private! !
-!LargeInteger categoriesFor: #dwordAtOffset:put:!accessing!primitives!private! !
-!LargeInteger categoriesFor: #gcd:!factorization!public! !
-!LargeInteger categoriesFor: #generality!coercing!private! !
-!LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #hash!comparing!public! !
-!LargeInteger categoriesFor: #highBit!bit manipulation!public! !
-!LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
-!LargeInteger categoriesFor: #isZero!public!testing! !
-!LargeInteger categoriesFor: #limbSize!accessing!private! !
-!LargeInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #negated!arithmetic!public! !
-!LargeInteger categoriesFor: #normalize!converting!private! !
-!LargeInteger categoriesFor: #printOn:base:!printing!private! !
-!LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
-!LargeInteger categoriesFor: #quo:!arithmetic!public! !
-!LargeInteger categoriesFor: #quotientFromInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #reciprocal!arithmetic!public! !
-!LargeInteger categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!LargeInteger categoriesFor: #sdwordAtOffset:!accessing!private! !
-!LargeInteger categoriesFor: #signBit!private!testing! !
-!LargeInteger categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesFor: #-!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #*!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #/!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #//!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #\\!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #+!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #<!comparing!public! !
+!Core.LargeInteger categoriesFor: #<=!comparing!public! !
+!Core.LargeInteger categoriesFor: #=!comparing!public! !
+!Core.LargeInteger categoriesFor: #>!comparing!public! !
+!Core.LargeInteger categoriesFor: #>=!comparing!public! !
+!Core.LargeInteger categoriesFor: #addToInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesFor: #asFloat!converting!public! !
+!Core.LargeInteger categoriesFor: #bitAnd:!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #bitInvert!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #bitOr:!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #bitShift:!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #bitXor:!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #byteAt:!accessing!private! !
+!Core.LargeInteger categoriesFor: #byteSize!accessing!private! !
+!Core.LargeInteger categoriesFor: #digitAt:!accessing!public! !
+!Core.LargeInteger categoriesFor: #digitLength!accessing!public! !
+!Core.LargeInteger categoriesFor: #dwordAtOffset:!accessing!primitives!private! !
+!Core.LargeInteger categoriesFor: #dwordAtOffset:put:!accessing!primitives!private! !
+!Core.LargeInteger categoriesFor: #gcd:!factorization!public! !
+!Core.LargeInteger categoriesFor: #generality!coercing!private! !
+!Core.LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesFor: #hash!comparing!public! !
+!Core.LargeInteger categoriesFor: #highBit!bit manipulation!public! !
+!Core.LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
+!Core.LargeInteger categoriesFor: #isZero!public!testing! !
+!Core.LargeInteger categoriesFor: #limbSize!accessing!private! !
+!Core.LargeInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesFor: #negated!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #normalize!converting!private! !
+!Core.LargeInteger categoriesFor: #printOn:base:!printing!private! !
+!Core.LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
+!Core.LargeInteger categoriesFor: #quo:!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #quotientFromInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesFor: #reciprocal!arithmetic!public! !
+!Core.LargeInteger categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+!Core.LargeInteger categoriesFor: #sdwordAtOffset:!accessing!private! !
+!Core.LargeInteger categoriesFor: #signBit!private!testing! !
+!Core.LargeInteger categoriesFor: #subtractFromInteger:!double dispatch!private! !
 
-!LargeInteger class methodsFor!
+!Core.LargeInteger class methodsFor!
 
 fromBytes: bytes 
 	"Answer an instance of the receiver instantiated from the the byte object, bytes,
@@ -554,8 +554,8 @@ new64
 	N.B. The answer is not a valid LargeInteger since zero is a SmallInteger."
 
 	^self basicNew: 8! !
-!LargeInteger class categoriesFor: #fromBytes:!instance creation!public! !
-!LargeInteger class categoriesFor: #fromSmallInteger:!instance creation!private! !
-!LargeInteger class categoriesFor: #new:!instance creation!private! !
-!LargeInteger class categoriesFor: #new64!instance creation!private! !
+!Core.LargeInteger class categoriesFor: #fromBytes:!instance creation!public! !
+!Core.LargeInteger class categoriesFor: #fromSmallInteger:!instance creation!private! !
+!Core.LargeInteger class categoriesFor: #new:!instance creation!private! !
+!Core.LargeInteger class categoriesFor: #new64!instance creation!private! !
 

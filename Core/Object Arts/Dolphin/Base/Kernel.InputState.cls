@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #InputState
+Core.Object subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
-InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
+Kernel.InputState guid: (Core.GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
 
 Instance Variables:
 	inputSemaphore	<Semaphore> on which the UI process blocks when the idle (i.e. when message loop is empty).
@@ -25,8 +25,8 @@ Class Variables:
 	UserInterruptSignal		<Signal>. Exception raised when Break key combination is pressed.
 	SamplingInterval		<SmallInteger> approximate millisecond interval between tests of system input queue for host system messsages when running background processes.
 '!
-!InputState categoriesForClass!Kernel-Support! !
-!InputState methodsFor!
+!Kernel.InputState categoriesForClass!Kernel-Support! !
+!Kernel.InputState methodsFor!
 
 aboutToForkUI
 	"Private - A new main UI process is being started. Reset any global UI state."
@@ -68,7 +68,7 @@ createAndRegisterWakeupEvent
 	wants to wake up the image from an idle state (i.e. from its call to
 	MsgWaitForMultipleObjects[Ex])."
 
-	wakeupEvent := KernelLibrary default 
+	wakeupEvent := KernelLibrary default
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -76,9 +76,9 @@ createAndRegisterWakeupEvent
 	VMLibrary default registryAt: #WakeupEvent put: wakeupEvent!
 
 createPostedActionWindow
-	| hWnd  |
+	| hWnd |
 	hWnd := VMLibrary default registryAt: #MsgWndHandle.
-	msgWindow := (PostedActionWindow new)
+	msgWindow := PostedActionWindow new
 				handle: hWnd;
 				yourself.
 	self windowAt: hWnd put: msgWindow!
@@ -94,10 +94,10 @@ ensureIdlerRunning
 	!
 
 ensureMainRunning
-	main notNil 
+	main notNil
 		ifTrue: 
 			[main suspendingList == inputSemaphore ifTrue: [^self].
-			main isAlive 
+			main isAlive
 				ifTrue: 
 					["Check for user break"
 					VMLibrary default isUserBreakRequested ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
@@ -165,7 +165,7 @@ hasVisibleWindows
 	user := UserLibrary default.
 	hDesktop := user getDesktopWindow.
 	^windows anySatisfy: 
-			[:each | 
+			[:each |
 			| hWnd |
 			hWnd := each asParameter.
 			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]!
@@ -181,19 +181,19 @@ idle
 	MemoryManager current aboutToIdle.
 	"Disable background sampling while sleeping"
 	self primSampleInterval: -1.
-	UserLibrary default 
+	UserLibrary default
 		msgWaitForMultipleObjectsEx: 1
 		pHandles: wakeupEvent
 		dwMilliseconds: MaxIdleSleep
 		dwWakeMask: queueStatusMask
-		dwFlags: Win32Constants.MWMO_ALERTABLE.
+		dwFlags: MWMO_ALERTABLE.
 	"Rather than use the return value from MsgWaitForMultipleObjectsEx() we call
 	GetQueueStatus(). This has the effect of clearing the 'new message' flag so that the next
 	call to MsgWaitFor&c will not return immediately if the UI loop is blocked for some reason
 	and so is not calling PeekMessage/GetMessage (which also clear the flag). This prevents
 	short-cycling where the idle process goes into a tight loop calling MsgWaitFor&c when the
 	main UI process is put to sleep."
-	self isInputAvailable 
+	self isInputAvailable
 		ifTrue: 
 			[self ensureMainRunning.
 			inputSemaphore set]!
@@ -221,8 +221,8 @@ idler
 
 	^idler!
 
-initializeFrom: anInputState 
-	anInputState isNil 
+initializeFrom: anInputState
+	anInputState isNil
 		ifTrue: 
 			[deferredActions := SharedQueue new.
 			windows := LookupTable new]
@@ -237,7 +237,7 @@ initializeFrom: anInputState
 		registerAsDispatcher;
 		createAndRegisterInputSemaphore;
 		setSamplingInterval: 60.
-	queueStatusMask := VMLibrary default inputQueueMask!
+	queueStatusMask := KernelLibrary default inputQueueMask!
 
 inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
@@ -256,7 +256,7 @@ isInputAvailable
 
 	^(UserLibrary default getQueueStatus: queueStatusMask) anyMask: (queueStatusMask bitShift: 16)!
 
-isInputReady: aMSG 
+isInputReady: aMSG
 	"Private - Answer whether there is currently a message waiting in the host system queue (if
 	there is, it is peeked into the argument, aMSG). Reset the VM sample interval too. Does not
 	signal the inputSemaphore, which is left to the caller to do when appropriate."
@@ -269,12 +269,12 @@ isInputReady: aMSG
 	that GetMessage() can be called without it blocking."
 
 	self primSampleInterval: SamplingInterval.
-	^UserLibrary default 
+	^UserLibrary default
 		peekMessage: aMSG
 		hWnd: 0
 		uMsgFilterMin: 0
 		uMsgFilterMax: 0
-		wRemoveMsg: Win32Constants.PM_NOREMOVE!
+		wRemoveMsg: PM_NOREMOVE!
 
 keepAlive
 	"Private - Stay-alive test. Sent during idle time to determine if the session needs to stay
@@ -282,7 +282,7 @@ keepAlive
 
 	self hasVisibleWindows ifFalse: [SessionManager current noVisibleWindows]!
 
-loopWhile: aBlock 
+loopWhile: aBlock
 	"Pump messages until the <niladicValuable> argument evaluates to false."
 
 	"Implementation Note: Host system events are processed at a higher priority to deferred
@@ -307,14 +307,14 @@ loopWhile: aBlock
 	robustness ensure it does not accumulate a backlog of actions as this would cause very
 	strange behaviour."
 	msgWindow evaluatePendingActions ifTrue: [activity := true].
-	deferredActions nextNoWait 
+	deferredActions nextNoWait
 		ifNil: 
 			[self waitForInput: activity.
 			activity := false]
 		ifNotNil: 
-			[:action | 
+			[:action |
 			activity := true.
-			action value]] 
+			action value]]
 			repeat!
 
 main
@@ -363,14 +363,14 @@ postQuit: anInteger
 
 	UserLibrary default postQuitMessage: anInteger!
 
-preTranslateMessage: aMSG 
+preTranslateMessage: aMSG
 	"Private - Pre-dispatch message filter. Answers true if some window consumed the message, or
 	false to have message dispatched as normal."
 
 	| handle |
 	handle := aMSG hwnd.
 	[handle isNull] whileFalse: 
-			[(self windowAt: handle ifAbsent: []) 
+			[(self windowAt: handle ifAbsent: [])
 				ifNotNil: [:window | (window preTranslateMessage: aMSG) ifTrue: [^true]].
 			handle := UserLibrary default getParent: handle].
 	^false!
@@ -411,20 +411,20 @@ prod
 
 	Processor activeProcess == main ifFalse: [self inputSemaphore signal]!
 
-pumpMessage: aMSG 
+pumpMessage: aMSG
 	"Private - Read and dispatch the first pending host system message. If a WM_QUIT is
 	received, then exit Smalltalk."
 
-	(UserLibrary default 
+	(UserLibrary default
 		getMessage: aMSG
 		hWnd: 0
 		wMsgFilterMin: 0
-		wMsgFilterMax: 0) == 0 
+		wMsgFilterMax: 0) == 0
 		ifTrue: [SessionManager current onQuit: aMSG swParam]
 		ifFalse: 
-			[(self preTranslateMessage: aMSG) 
+			[(self preTranslateMessage: aMSG)
 				ifFalse: 
-					[(UserLibrary default)
+					[UserLibrary default
 						translateMessage: aMSG;
 						dispatchMessage: aMSG]]!
 
@@ -438,7 +438,7 @@ pumpMessages
 			[| msg |
 			msg := MSG new.
 			self loopWhile: [self isInputReady: msg]]
-		ifFalse: [self prod].!
+		ifFalse: [self prod]!
 
 purgeDeadWindows
 	"Remove any windows in the windows collection which have a NULL handle. In normal use there
@@ -448,7 +448,7 @@ purgeDeadWindows
 	| bEnabled |
 	bEnabled := Processor enableAsyncEvents: false.
 	windows := windows select: 
-					[:each | 
+					[:each |
 					| hWnd |
 					(hWnd := each asParameter) notNil and: [UserLibrary default isWindow: hWnd]].
 	lastWindow := nil.
@@ -493,7 +493,7 @@ setSamplingInterval: anInteger
 	SamplingInterval := anInteger.
 	self primSampleInterval: SamplingInterval!
 
-startIdleTimer: aView 
+startIdleTimer: aView
 	"Private - Start the idle timer (e.g. when a menu is popped), hosted by the window, aView,
 	which must respond to #asParameter by answering its window handle (it need not be a View).
 	If the idle timer is already active then this do nothing."
@@ -502,27 +502,27 @@ startIdleTimer: aView
 	[| idleHost hWnd |
 	idleHost := idleTimer basicAt: 1.
 	hWnd := aView asParameter.
-	(idleHost == DeadObject current or: [hWnd isNull or: [(UserLibrary default isWindow: hWnd) not]]) 
+	(idleHost == DeadObject current or: [hWnd isNull or: [(UserLibrary default isWindow: hWnd) not]])
 		ifTrue: 
 			[idleTimer basicAt: 1 put: aView.
-			UserLibrary default 
+			UserLibrary default
 				setTimer: hWnd
-				nIDEvent: Win32Constants.WM_ENTERIDLE
+				nIDEvent: WM_ENTERIDLE
 				uElapse: 100
-				lpTimerFunc: nil]] 
+				lpTimerFunc: nil]]
 			critical!
 
-stopIdleTimer: aView 
+stopIdleTimer: aView
 	"Private - Stop the idle timer hosted by the specified window. If the idle timer is not
 	actually hosted by aView, then do nothing."
 
 	
 	[| idleHost |
 	idleHost := idleTimer basicAt: 1.
-	idleHost == aView 
+	idleHost == aView
 		ifTrue: 
 			[idleTimer basicAt: 1 put: DeadObject current.
-			UserLibrary default killTimer: aView asParameter uIDEvent: Win32Constants.WM_ENTERIDLE]] 
+			UserLibrary default killTimer: aView asParameter uIDEvent: WM_ENTERIDLE]]
 			critical!
 
 topLevelWindows
@@ -538,7 +538,7 @@ uiIdle
 userInterruptSignal
 	"Answer the user interrupt <Signal>."
 
-	UserInterruptSignal isNil 
+	UserInterruptSignal isNil
 		ifTrue: [UserInterruptSignal := Signal resumableDescription: 'User Interrupt'].
 	^UserInterruptSignal!
 
@@ -616,64 +616,64 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 					wParam: wParam
 					lParam: lParam) asUIntPtr]
 					ifCurtailed: [Processor unwindCallback: cookie])! !
-!InputState categoriesFor: #aboutToForkUI!idling!private! !
-!InputState categoriesFor: #aboutToIdle!idling!public! !
-!InputState categoriesFor: #consoleStartup!operations-startup!private! !
-!InputState categoriesFor: #createAndRegisterInputSemaphore!initializing!private! !
-!InputState categoriesFor: #createAndRegisterWakeupEvent!initializing!private! !
-!InputState categoriesFor: #createPostedActionWindow!initializing!private! !
-!InputState categoriesFor: #deferredActions!accessing!private! !
-!InputState categoriesFor: #ensureIdlerRunning!idling!private! !
-!InputState categoriesFor: #ensureMainRunning!idling!private! !
-!InputState categoriesFor: #enterIdle!idling!private! !
-!InputState categoriesFor: #forkIdler!idling!private! !
-!InputState categoriesFor: #forkMain!message dispatching!private! !
-!InputState categoriesFor: #hasVisibleWindows!private!testing! !
-!InputState categoriesFor: #idle!idling!private! !
-!InputState categoriesFor: #idleLoop!idling!private! !
-!InputState categoriesFor: #idlePanic!idling!private! !
-!InputState categoriesFor: #idler!idling!private! !
-!InputState categoriesFor: #initializeFrom:!initializing!private! !
-!InputState categoriesFor: #inputSemaphore!accessing!private! !
-!InputState categoriesFor: #isInputAvailable!idling!private! !
-!InputState categoriesFor: #isInputReady:!message dispatching!private! !
-!InputState categoriesFor: #keepAlive!idling!private! !
-!InputState categoriesFor: #loopWhile:!message dispatching!public! !
-!InputState categoriesFor: #main!accessing!private! !
-!InputState categoriesFor: #main:!initializing!private! !
-!InputState categoriesFor: #mainLoop!message dispatching!private! !
-!InputState categoriesFor: #millisecondClockValue!enquiries!private! !
-!InputState categoriesFor: #msgWindow!accessing!private! !
-!InputState categoriesFor: #onExit!event handling!private! !
-!InputState categoriesFor: #postAction:!message dispatching!public! !
-!InputState categoriesFor: #postQuit:!operations-shutdown!private! !
-!InputState categoriesFor: #preTranslateMessage:!message dispatching!private! !
-!InputState categoriesFor: #primSampleInterval:!message dispatching!private! !
-!InputState categoriesFor: #processDeferredActions!operations!public! !
-!InputState categoriesFor: #prod!message dispatching!public! !
-!InputState categoriesFor: #pumpMessage:!message dispatching!private! !
-!InputState categoriesFor: #pumpMessages!message dispatching!public! !
-!InputState categoriesFor: #purgeDeadWindows!public!removing! !
-!InputState categoriesFor: #queueDeferredAction:!message dispatching!public! !
-!InputState categoriesFor: #registerAsDispatcher!initializing!private! !
-!InputState categoriesFor: #removeWindowAt:!accessing!private! !
-!InputState categoriesFor: #setSamplingInterval:!initializing!private! !
-!InputState categoriesFor: #startIdleTimer:!idling!private! !
-!InputState categoriesFor: #stopIdleTimer:!idling!private! !
-!InputState categoriesFor: #topLevelWindows!enumerating!public! !
-!InputState categoriesFor: #uiIdle!idling!private! !
-!InputState categoriesFor: #userInterruptSignal!constants!public! !
-!InputState categoriesFor: #waitForInput:!idling!private! !
-!InputState categoriesFor: #windowAt:ifAbsent:!accessing!public! !
-!InputState categoriesFor: #windowAt:put:!accessing!public! !
-!InputState categoriesFor: #windows!accessing!private! !
-!InputState categoriesFor: #wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
+!Kernel.InputState categoriesFor: #aboutToForkUI!idling!private! !
+!Kernel.InputState categoriesFor: #aboutToIdle!idling!public! !
+!Kernel.InputState categoriesFor: #consoleStartup!operations-startup!private! !
+!Kernel.InputState categoriesFor: #createAndRegisterInputSemaphore!initializing!private! !
+!Kernel.InputState categoriesFor: #createAndRegisterWakeupEvent!initializing!private! !
+!Kernel.InputState categoriesFor: #createPostedActionWindow!initializing!private! !
+!Kernel.InputState categoriesFor: #deferredActions!accessing!private! !
+!Kernel.InputState categoriesFor: #ensureIdlerRunning!idling!private! !
+!Kernel.InputState categoriesFor: #ensureMainRunning!idling!private! !
+!Kernel.InputState categoriesFor: #enterIdle!idling!private! !
+!Kernel.InputState categoriesFor: #forkIdler!idling!private! !
+!Kernel.InputState categoriesFor: #forkMain!message dispatching!private! !
+!Kernel.InputState categoriesFor: #hasVisibleWindows!private!testing! !
+!Kernel.InputState categoriesFor: #idle!idling!private! !
+!Kernel.InputState categoriesFor: #idleLoop!idling!private! !
+!Kernel.InputState categoriesFor: #idlePanic!idling!private! !
+!Kernel.InputState categoriesFor: #idler!idling!private! !
+!Kernel.InputState categoriesFor: #initializeFrom:!initializing!private! !
+!Kernel.InputState categoriesFor: #inputSemaphore!accessing!private! !
+!Kernel.InputState categoriesFor: #isInputAvailable!idling!private! !
+!Kernel.InputState categoriesFor: #isInputReady:!message dispatching!private! !
+!Kernel.InputState categoriesFor: #keepAlive!idling!private! !
+!Kernel.InputState categoriesFor: #loopWhile:!message dispatching!public! !
+!Kernel.InputState categoriesFor: #main!accessing!private! !
+!Kernel.InputState categoriesFor: #main:!initializing!private! !
+!Kernel.InputState categoriesFor: #mainLoop!message dispatching!private! !
+!Kernel.InputState categoriesFor: #millisecondClockValue!enquiries!private! !
+!Kernel.InputState categoriesFor: #msgWindow!accessing!private! !
+!Kernel.InputState categoriesFor: #onExit!event handling!private! !
+!Kernel.InputState categoriesFor: #postAction:!message dispatching!public! !
+!Kernel.InputState categoriesFor: #postQuit:!operations-shutdown!private! !
+!Kernel.InputState categoriesFor: #preTranslateMessage:!message dispatching!private! !
+!Kernel.InputState categoriesFor: #primSampleInterval:!message dispatching!private! !
+!Kernel.InputState categoriesFor: #processDeferredActions!operations!public! !
+!Kernel.InputState categoriesFor: #prod!message dispatching!public! !
+!Kernel.InputState categoriesFor: #pumpMessage:!message dispatching!private! !
+!Kernel.InputState categoriesFor: #pumpMessages!message dispatching!public! !
+!Kernel.InputState categoriesFor: #purgeDeadWindows!public!removing! !
+!Kernel.InputState categoriesFor: #queueDeferredAction:!message dispatching!public! !
+!Kernel.InputState categoriesFor: #registerAsDispatcher!initializing!private! !
+!Kernel.InputState categoriesFor: #removeWindowAt:!accessing!private! !
+!Kernel.InputState categoriesFor: #setSamplingInterval:!initializing!private! !
+!Kernel.InputState categoriesFor: #startIdleTimer:!idling!private! !
+!Kernel.InputState categoriesFor: #stopIdleTimer:!idling!private! !
+!Kernel.InputState categoriesFor: #topLevelWindows!enumerating!public! !
+!Kernel.InputState categoriesFor: #uiIdle!idling!private! !
+!Kernel.InputState categoriesFor: #userInterruptSignal!constants!public! !
+!Kernel.InputState categoriesFor: #waitForInput:!idling!private! !
+!Kernel.InputState categoriesFor: #windowAt:ifAbsent:!accessing!public! !
+!Kernel.InputState categoriesFor: #windowAt:put:!accessing!public! !
+!Kernel.InputState categoriesFor: #windows!accessing!private! !
+!Kernel.InputState categoriesFor: #wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
 
-!InputState class methodsFor!
+!Kernel.InputState class methodsFor!
 
 initialize
 	SamplingInterval := 16384.
-	EnumHandlesDescriptor := ExternalDescriptor fromString: 'stdcall: dword handle dword'.
+	EnumHandlesDescriptor := External.Descriptor fromString: 'stdcall: dword handle dword'.
 	MaxIdleSleep := 15000!
 
 maxIdleSleep
@@ -686,8 +686,8 @@ newFromOld: anInputState
 	^(self new)
 		initializeFrom: anInputState;
 		yourself! !
-!InputState class categoriesFor: #initialize!development!initializing!public! !
-!InputState class categoriesFor: #maxIdleSleep!accessing!public! !
-!InputState class categoriesFor: #maxIdleSleep:!accessing!public! !
-!InputState class categoriesFor: #newFromOld:!instance creation!private! !
+!Kernel.InputState class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.InputState class categoriesFor: #maxIdleSleep!accessing!public! !
+!Kernel.InputState class categoriesFor: #maxIdleSleep:!accessing!public! !
+!Kernel.InputState class categoriesFor: #newFromOld:!instance creation!private! !
 

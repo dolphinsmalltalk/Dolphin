@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #OSVERSIONINFOEXW
+OS.Win32Structure subclass: #'OS.OSVERSIONINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwBuildNumber' -> 16rC.
@@ -18,8 +18,8 @@ Win32Structure subclass: #OSVERSIONINFOEXW
 		'_OffsetOf_wServicePackMinor' -> 16r116.
 		'_OffsetOf_wSuiteMask' -> 16r118
 	}!
-OSVERSIONINFOEXW guid: (GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
-OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
+OS.OSVERSIONINFOEXW guid: (Core.GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
+OS.OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
@@ -42,8 +42,8 @@ struct tagOSVERSIONINFOEXW {
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BYTE wReserved;
 } OSVERSIONINFOEXW;
 '!
-!OSVERSIONINFOEXW categoriesForClass!Win32-Structs! !
-!OSVERSIONINFOEXW methodsFor!
+!OS.OSVERSIONINFOEXW categoriesForClass!Win32-Structs! !
+!OS.OSVERSIONINFOEXW methodsFor!
 
 dwBuildNumber
 	"Answer the <Integer> value of the receiver's 'dwBuildNumber' field."
@@ -134,26 +134,26 @@ wSuiteMask: anInteger
 	"Set the receiver's 'wSuiteMask' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wSuiteMask put: anInteger! !
-!OSVERSIONINFOEXW categoriesFor: #dwBuildNumber!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwBuildNumber:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMajorVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMajorVersion:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMinorVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMinorVersion:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwPlatformId!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwPlatformId:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #szCSDVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wProductType!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wProductType:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMajor!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMajor:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMinor!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMinor:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wSuiteMask!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wSuiteMask:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwBuildNumber!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwBuildNumber:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwMajorVersion!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwMajorVersion:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwMinorVersion!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwMinorVersion:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwPlatformId!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwPlatformId:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #szCSDVersion!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wProductType!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wProductType:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wServicePackMajor!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wServicePackMajor:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wServicePackMinor!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wServicePackMinor:!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wSuiteMask!**compiled accessors**!public! !
+!OS.OSVERSIONINFOEXW categoriesFor: #wSuiteMask:!**compiled accessors**!public! !
 
-!OSVERSIONINFOEXW class methodsFor!
+!OS.OSVERSIONINFOEXW class methodsFor!
 
 defineFields
 	"Define the fields of the OSVERSIONINFOEXW structure.
@@ -177,21 +177,43 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
-		defineField: #dwMajorVersion type: DWORDField new offset: 4;
-		defineField: #dwMinorVersion type: DWORDField new offset: 8;
-		defineField: #dwBuildNumber type: DWORDField new offset: 12;
-		defineField: #dwPlatformId type: DWORDField new offset: 16;
-		defineField: #szCSDVersion type: (StringField type: Utf16String length: 128) beReadOnly offset: 20;
-		defineField: #wServicePackMajor type: WORDField new offset: 276;
-		defineField: #wServicePackMinor type: WORDField new offset: 278;
-		defineField: #wSuiteMask type: WORDField new offset: 280;
-		defineField: #wProductType type: BYTEField new offset: 282;
-		defineField: #wReserved type: BYTEField new beFiller offset: 283.
+		defineField: #dwSize
+			type: DWORDField new beWriteOnly
+			offset: 0;
+		defineField: #dwMajorVersion
+			type: DWORDField new
+			offset: 4;
+		defineField: #dwMinorVersion
+			type: DWORDField new
+			offset: 8;
+		defineField: #dwBuildNumber
+			type: DWORDField new
+			offset: 12;
+		defineField: #dwPlatformId
+			type: DWORDField new
+			offset: 16;
+		defineField: #szCSDVersion
+			type: (StringField type: Utf16String length: 128) beReadOnly
+			offset: 20;
+		defineField: #wServicePackMajor
+			type: WORDField new
+			offset: 276;
+		defineField: #wServicePackMinor
+			type: WORDField new
+			offset: 278;
+		defineField: #wSuiteMask
+			type: WORDField new
+			offset: 280;
+		defineField: #wProductType
+			type: BYTEField new
+			offset: 282;
+		defineField: #wReserved
+			type: BYTEField new beFiller
+			offset: 283.
 	self byteSize: 284!
 
 getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
-!OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

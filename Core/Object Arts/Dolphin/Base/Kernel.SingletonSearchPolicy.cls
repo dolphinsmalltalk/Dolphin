@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SearchPolicy subclass: #SingletonSearchPolicy
+Core.SearchPolicy subclass: #'Kernel.SingletonSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
-SingletonSearchPolicy guid: (GUID fromString: '{0f05b43d-e5e5-41cc-91d2-4e924305aafb}')!
-SingletonSearchPolicy isAbstract: true!
-SingletonSearchPolicy comment: ''!
-!SingletonSearchPolicy categoriesForClass!Collections-Support! !
-!SingletonSearchPolicy methodsFor!
+Kernel.SingletonSearchPolicy guid: (Core.GUID fromString: '{0f05b43d-e5e5-41cc-91d2-4e924305aafb}')!
+Kernel.SingletonSearchPolicy isNonInstantiable: true!
+Kernel.SingletonSearchPolicy comment: ''!
+!Kernel.SingletonSearchPolicy categoriesForClass!Collections-Support! !
+!Kernel.SingletonSearchPolicy methodsFor!
 
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
@@ -21,10 +21,10 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!SingletonSearchPolicy categoriesFor: #name!accessing!public! !
-!SingletonSearchPolicy categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.SingletonSearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.SingletonSearchPolicy categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!SingletonSearchPolicy class methodsFor!
+!Kernel.SingletonSearchPolicy class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver."
@@ -49,8 +49,8 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	current := nil! !
-!SingletonSearchPolicy class categoriesFor: #current!instance creation!public! !
-!SingletonSearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!SingletonSearchPolicy class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!SingletonSearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.SingletonSearchPolicy class categoriesFor: #current!instance creation!public! !
+!Kernel.SingletonSearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Kernel.SingletonSearchPolicy class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Kernel.SingletonSearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

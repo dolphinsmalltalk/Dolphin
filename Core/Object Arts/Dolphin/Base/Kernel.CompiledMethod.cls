@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompiledCode variableSubclass: #CompiledMethod
+Kernel.CompiledCode variableSubclass: #'Kernel.CompiledMethod'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompiledMethod guid: (GUID fromString: '{87b4c544-026e-11d3-9fd7-00a0cc3e4a32}')!
-CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects representing actual methods of objects, as opposed to unbound expressions (see CompiledExpression).
+Kernel.CompiledMethod guid: (Core.GUID fromString: '{87b4c544-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects representing actual methods of objects, as opposed to unbound expressions (see CompiledExpression).
 
 '!
-!CompiledMethod categoriesForClass!Kernel-Methods! !
-!CompiledMethod methodsFor!
+!Kernel.CompiledMethod categoriesForClass!Kernel-Methods! !
+!Kernel.CompiledMethod methodsFor!
 
 <= aCompiledMethod
 	^methodClass name < aCompiledMethod methodClass name
@@ -48,6 +48,12 @@ changePosition
 	#isChanged."
 
 	^self changeManager changePositionOf: self!
+
+displayOn: aPuttableStream
+	aPuttableStream
+		display: self methodClass;
+		nextPutAll: '>>';
+		display: self selector!
 
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
@@ -148,10 +154,10 @@ owningPackage
 
 	^Package manager packageOfMethodOrItsClass: self!
 
-owningPackage: aPackage
-	"Set the receiver's <Package> to be the argument. Any current package association is lost."
+owningPackage: aPackageOrNil
+	"Set the receiver's <Package> to be the argument. Any current package association is replaced."
 
-	aPackage addMethod: self!
+	self methodClass packageManager addMethod: self to: aPackageOrNil!
 
 owningPackageIfLoose
 	"Answers the package that owns the receiver as a loose method,
@@ -189,37 +195,38 @@ storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
-!CompiledMethod categoriesFor: #<=!comparing!public! !
-!CompiledMethod categoriesFor: #categories!categories-accessing!development!public! !
-!CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
-!CompiledMethod categoriesFor: #changeManager!development!private! !
-!CompiledMethod categoriesFor: #changePosition!development!private!testing! !
-!CompiledMethod categoriesFor: #getDebugInfo!development!private! !
-!CompiledMethod categoriesFor: #getSource!accessing!development!public! !
-!CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #isChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #isClassMethod!public!testing! !
-!CompiledMethod categoriesFor: #isExpression!private!testing! !
-!CompiledMethod categoriesFor: #isExternalCall!private!testing! !
-!CompiledMethod categoriesFor: #isGetter!public!testing! !
-!CompiledMethod categoriesFor: #isLoose!development!public!testing! !
-!CompiledMethod categoriesFor: #isOverridden!public!testing! !
-!CompiledMethod categoriesFor: #isOverride!public!testing! !
-!CompiledMethod categoriesFor: #isSelfEvaluating!public!testing! !
-!CompiledMethod categoriesFor: #isUnbound!public!testing! !
-!CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
-!CompiledMethod categoriesFor: #name!accessing!public! !
-!CompiledMethod categoriesFor: #owningPackage!accessing!development!public! !
-!CompiledMethod categoriesFor: #owningPackage:!accessing!development!public! !
-!CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !
-!CompiledMethod categoriesFor: #printOn:!printing!public! !
-!CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
-!CompiledMethod categoriesFor: #protocols!categories-accessing!development!public! !
-!CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
-!CompiledMethod categoriesFor: #recompile!compiling!development!private! !
-!CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
+!Kernel.CompiledMethod categoriesFor: #<=!comparing!public! !
+!Kernel.CompiledMethod categoriesFor: #categories!categories-accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
+!Kernel.CompiledMethod categoriesFor: #changeManager!development!private! !
+!Kernel.CompiledMethod categoriesFor: #changePosition!development!private!testing! !
+!Kernel.CompiledMethod categoriesFor: #displayOn:!printing!public! !
+!Kernel.CompiledMethod categoriesFor: #getDebugInfo!development!private! !
+!Kernel.CompiledMethod categoriesFor: #getSource!accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
+!Kernel.CompiledMethod categoriesFor: #isChanged!development!private!testing! !
+!Kernel.CompiledMethod categoriesFor: #isClassMethod!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isExpression!private!testing! !
+!Kernel.CompiledMethod categoriesFor: #isExternalCall!private!testing! !
+!Kernel.CompiledMethod categoriesFor: #isGetter!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isLoose!development!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isOverridden!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isOverride!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isSelfEvaluating!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #isUnbound!public!testing! !
+!Kernel.CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
+!Kernel.CompiledMethod categoriesFor: #name!accessing!public! !
+!Kernel.CompiledMethod categoriesFor: #owningPackage!accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #owningPackage:!accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #printOn:!printing!public! !
+!Kernel.CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
+!Kernel.CompiledMethod categoriesFor: #protocols!categories-accessing!development!public! !
+!Kernel.CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
+!Kernel.CompiledMethod categoriesFor: #recompile!compiling!development!private! !
+!Kernel.CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
 
-!CompiledMethod class methodsFor!
+!Kernel.CompiledMethod class methodsFor!
 
 defaultSortBlock
 	"Private - Answer a dyadic valuable (sort block) suitable for comparing two instances
@@ -246,6 +253,6 @@ fromString: aString
 			stream peekFor: $#.
 			selector := stream upToEnd asSymbol.
 			theClass compiledMethodAt: selector ifAbsent: []]! !
-!CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
-!CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
+!Kernel.CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
+!Kernel.CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
 

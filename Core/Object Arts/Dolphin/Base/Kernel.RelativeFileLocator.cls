@@ -1,21 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FileLocator subclass: #RelativeFileLocator
+Core.FileLocator subclass: #'Kernel.RelativeFileLocator'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RelativeFileLocator guid: (GUID fromString: '{b1397191-87fc-4d23-9e6d-3730f12e4b5c}')!
-RelativeFileLocator comment: 'RelativeFileLocator is the abstract class of <FileLocator>s that can be used to map between an absolute path and a path relative to a certain base directory.
+Kernel.RelativeFileLocator guid: (Core.GUID fromString: '{b1397191-87fc-4d23-9e6d-3730f12e4b5c}')!
+Kernel.RelativeFileLocator isNonInstantiable: true!
+Kernel.RelativeFileLocator comment: 'RelativeFileLocator is the abstract class of <FileLocator>s that can be used to map between an absolute path and a path relative to a certain base directory.
 RelativeFileLocators use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.'!
-!RelativeFileLocator categoriesForClass!System-Support! !
-!RelativeFileLocator methodsFor!
+!Kernel.RelativeFileLocator categoriesForClass!System-Support! !
+!Kernel.RelativeFileLocator methodsFor!
 
 relativePathTo: aString 
 	"Answer a minimal <readableString> relative path to the resource with the 
 	specified <readableString> path from the receiver's base path."
 
 	^self relativePathIfSubPath: aString! !
-!RelativeFileLocator categoriesFor: #relativePathTo:!accessing!public! !
+!Kernel.RelativeFileLocator categoriesFor: #relativePathTo:!accessing!public! !
 

@@ -153,13 +153,13 @@ canBrowseMethodHistoryForClass
 
 loadedVersion
 
-	^MethodVersion forCompiledMethod: self!
+	^Smalltalk.MethodVersion forCompiledMethod: self!
 
 versionHistory
 
 	"Answer a collection of MethodVersions representing the history of the receiver in this image"
 
-	^ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
+	^Smalltalk.ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
 !CompiledMethod categoriesFor: #loadedVersion!accessing!public! !
 !CompiledMethod categoriesFor: #versionHistory!accessing!public! !
 

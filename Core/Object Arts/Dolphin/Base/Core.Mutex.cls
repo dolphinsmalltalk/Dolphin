@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Mutex
+Core.Object subclass: #'Core.Mutex'
 	instanceVariableNames: 'owner semaphore'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Mutex guid: (GUID fromString: '{87b4c4a4-026e-11d3-9fd7-00a0cc3e4a32}')!
-Mutex comment: 'Mutex is the class of process synchronisation objects which provide mutually exclusive access to critical sections, potentially permitting a single process to enter such critical sections multiple times recursively (in some other Smalltalk systems this class is in fact called, RecursionLock).
+Core.Mutex guid: (Core.GUID fromString: '{87b4c4a4-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Mutex comment: 'Mutex is the class of process synchronisation objects which provide mutually exclusive access to critical sections, potentially permitting a single process to enter such critical sections multiple times recursively (in some other Smalltalk systems this class is in fact called, RecursionLock).
 
 If any process is in a Mutex, then no other process is permitted to enter that Mutex, but that process may re-enter.
 
@@ -19,8 +19,8 @@ Instance Variables:
 
 	owner		<Process> which currently owns the instance, or nil if no owner
 	semaphore	<Semaphore> used for mutual exclusion	'!
-!Mutex categoriesForClass!Kernel-Processes! !
-!Mutex methodsFor!
+!Core.Mutex categoriesForClass!Kernel-Processes! !
+!Core.Mutex methodsFor!
 
 critical: aNiladicBlock
 	"Wait until the receiver is NOT owned by another Process than that currently
@@ -66,26 +66,29 @@ critical: aNiladicBlock ifLocked: exceptionHandler
 	Implementation Note: See #critical: for comments on the implementation."
 
 	| active stateHolder |
-	(active := Processor activeProcess) == owner
-		ifTrue: [^aNiladicBlock value].
-
+	(active := Processor activeProcess) == owner ifTrue: [^aNiladicBlock value].
 	stateHolder := Array new: 1.
-	^[
-		semaphore wait: 0 ret: stateHolder.
-		(stateHolder basicAt: 1) == WAIT_TIMEOUT 
-			ifTrue: [exceptionHandler value]
-			ifFalse: [
-				owner := active.
-				stateHolder basicAt: 1 put: active.
-				aNiladicBlock value]
-	] ensure: [ | state |
-		(state := stateHolder basicAt: 1) == active
-			ifTrue: [
-				owner == active ifTrue: [
-					owner := nil. semaphore signal]]
-			ifFalse: [
-				state == WAIT_OBJECT_0 ifTrue: [
-					owner := nil. semaphore signal]]]!
+	^
+	[semaphore wait: 0 ret: stateHolder.
+	(stateHolder basicAt: 1) == WAIT_TIMEOUT
+		ifTrue: [exceptionHandler value]
+		ifFalse: 
+			[owner := active.
+			stateHolder basicAt: 1 put: active.
+			aNiladicBlock value]]
+			ensure: 
+				[| state |
+				(state := stateHolder basicAt: 1) == active
+					ifTrue: 
+						[owner == active
+							ifTrue: 
+								[owner := nil.
+								semaphore signal]]
+					ifFalse: 
+						[state == WAIT_OBJECT_0
+							ifTrue: 
+								[owner := nil.
+								semaphore signal]]]!
 
 initialize
 	"Private - Initialise the receiver. The owner is initially nil, signifying no owner,
@@ -121,20 +124,20 @@ signal
 
 	Processor activeProcess == owner ifTrue: [
 		owner := nil. semaphore signal]! !
-!Mutex categoriesFor: #critical:!debugger-step over!process synchronisation!public! !
-!Mutex categoriesFor: #critical:ifLocked:!process synchronisation!public! !
-!Mutex categoriesFor: #initialize!initializing!private! !
-!Mutex categoriesFor: #owner!accessing!private! !
-!Mutex categoriesFor: #printOn:!printing!public! !
-!Mutex categoriesFor: #signal!private!process synchronisation! !
+!Core.Mutex categoriesFor: #critical:!debugger-step over!process synchronisation!public! !
+!Core.Mutex categoriesFor: #critical:ifLocked:!process synchronisation!public! !
+!Core.Mutex categoriesFor: #initialize!initializing!private! !
+!Core.Mutex categoriesFor: #owner!accessing!private! !
+!Core.Mutex categoriesFor: #printOn:!printing!public! !
+!Core.Mutex categoriesFor: #signal!private!process synchronisation! !
 
-Mutex methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
+Core.Mutex methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
 
-!Mutex class methodsFor!
+!Core.Mutex class methodsFor!
 
 new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Mutex class categoriesFor: #new!instance creation!public! !
+!Core.Mutex class categoriesFor: #new!instance creation!public! !
 

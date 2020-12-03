@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StdioTextFileStream subclass: #StdioAnsiFileStream
+External.StdioTextFileStream subclass: #'External.StdioAnsiFileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StdioAnsiFileStream guid: (GUID fromString: '{37ed07fd-6fc6-41d9-aa82-7147a1af19fd}')!
-StdioAnsiFileStream comment: ''!
-!StdioAnsiFileStream categoriesForClass!Collections-Streams! !
-!StdioAnsiFileStream methodsFor!
+External.StdioAnsiFileStream guid: (Core.GUID fromString: '{37ed07fd-6fc6-41d9-aa82-7147a1af19fd}')!
+External.StdioAnsiFileStream comment: ''!
+!External.StdioAnsiFileStream categoriesForClass!Collections-Streams! !
+!External.StdioAnsiFileStream methodsFor!
 
 contentsSpecies
 	^AnsiString!
@@ -53,10 +53,10 @@ peekFor: anObject
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
 					false]]! !
-!StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
-!StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
-!StdioAnsiFileStream categoriesFor: #next!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
+!External.StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
+!External.StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
+!External.StdioAnsiFileStream categoriesFor: #next!accessing!public! !
+!External.StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
+!External.StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
+!External.StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Resource Framework'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.
 Copyright (c) Object Arts Ltd. 1997-2006. 
@@ -11,32 +11,33 @@ package basicPackageVersion: '6.1.1'.
 
 
 package setClassNames: #(
-	#{BytecodeRewriter}
-	#{Resource}
-	#{ResourceAccessor}
-	#{ResourceDummyAccessor}
-	#{ResourceGeneratorAccessor}
-	#{ResourceSTBAccessor}
-	#{ResourceSTBByteArrayAccessor}
-	#{ResourceSTBFileAccessor}
-	#{STBResourceSTBByteArrayAccessorProxy}
-	#{STBResourceSTBFileAccessorProxy}
-	#{ViewResource}
+	#{Kernel.BytecodeRewriter}
+	#{Smalltalk.Resource}
+	#{Smalltalk.ResourceAccessor}
+	#{Smalltalk.ResourceDummyAccessor}
+	#{Smalltalk.ResourceGeneratorAccessor}
+	#{Smalltalk.ResourceSTBAccessor}
+	#{Smalltalk.ResourceSTBByteArrayAccessor}
+	#{Smalltalk.ResourceSTBFileAccessor}
+	#{Smalltalk.STBResourceSTBByteArrayAccessorProxy}
+	#{Smalltalk.STBResourceSTBFileAccessorProxy}
+	#{Smalltalk.ViewResource}
 ).
 
 package setMethodNames: #(
-	#(#{BlockClosure class} #convertBlockToClosure:)
-	#(#{BlockClosure class} #convertMethodContext:)
-	#(#{BlockClosure class} #rewriterClass)
-	#(#{BlockClosure class} #stbConvertFrom:)
-	#(#{ChunkSourceFiler} #fileOutResource:)
-	#(#{ResourceIdentifier} #assignBinaryResourceData:)
-	#(#{ResourceIdentifier class} #resourceAt:ifAbsent:)
-	#(#{RuntimeSessionManager} #initializeFromSessionManager:)
+	#(#{Kernel.BlockClosure class} #convertBlockToClosure:)
+	#(#{Kernel.BlockClosure class} #convertMethodContext:)
+	#(#{Kernel.BlockClosure class} #rewriterClass)
+	#(#{Kernel.BlockClosure class} #stbConvertFrom:)
+	#(#{Kernel.ChunkSourceFiler} #fileOutResource:)
+	#(#{UI.ResourceIdentifier} #assignBinaryResourceData:)
+	#(#{UI.ResourceIdentifier class} #resourceAt:ifAbsent:)
+	#(#{UI.RuntimeSessionManager} #initializeFromSessionManager:)
 ).
 
 package setPrerequisites: #(
 	'..\Dolphin'
+	'Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 ).
 
@@ -44,76 +45,76 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #BytecodeRewriter
+Core.Object subclass: #'Kernel.BytecodeRewriter'
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
-	poolDictionaries: 'OpcodePool'
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Resource
+Core.Object subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ResourceAccessor
+Core.Object subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Resource subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ResourceAccessor subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ResourceAccessor subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
+Kernel.STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBProxy subclass: #STBResourceSTBFileAccessorProxy
+Kernel.STBProxy subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!BlockClosure class methodsFor!
+!Kernel.BlockClosure class methodsFor!
 
 convertBlockToClosure: anArray 
 	"Private - Convert an old-format block to a new format closure. The bytecodes are rewritten
@@ -143,7 +144,7 @@ convertBlockToClosure: anArray
 		initialIP: (rewriter blockMap at: originalIP).
 	^answer!
 
-convertMethodContext: aMethodContext 
+convertMethodContext: aMethodContext
 	"Private - Convert an old-format MethodContext to a new format Context."
 
 	| context size |
@@ -179,14 +180,14 @@ stbConvertFrom: anSTBClassFormat
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
-!BlockClosure class categoriesFor: #convertBlockToClosure:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!Kernel.BlockClosure class categoriesFor: #convertBlockToClosure:!binary filing!development!private! !
+!Kernel.BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
+!Kernel.BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
+!Kernel.BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 
-!ChunkSourceFiler methodsFor!
+!Kernel.ChunkSourceFiler methodsFor!
 
-fileOutResource: aResourceIdentifier 
+fileOutResource: aResourceIdentifier
 	"Append a definition of the resource identified by the <ResourceIdentifier>,
 	aResourceIdentifer, to the <puttableStream>, aWriteStream. The definition should be
 	sufficient to recreate a copy of the resource."
@@ -205,28 +206,27 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
-!ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
 
-!ResourceIdentifier methodsFor!
+!UI.ResourceIdentifier methodsFor!
 
 assignBinaryResourceData: aViewResource
-	| view viewClass |
-	viewClass := #{View} value.
-	view := aViewResource loadWithContext: viewClass desktop forEdit: true.
+	| view |
+	view := aViewResource loadWithContext: #{View} value desktop forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !
-!ResourceIdentifier categoriesFor: #assignBinaryResourceData:!private! !
+!UI.ResourceIdentifier categoriesFor: #assignBinaryResourceData:!private! !
 
-!ResourceIdentifier class methodsFor!
+!UI.ResourceIdentifier class methodsFor!
 
 resourceAt: aResourceIdentifier ifAbsent: aBlock 
 	"Legacy resource location code from the previous resource manager framework.
 	Answers the resource data associated with aResourceIdentifier"
 
 	^aResourceIdentifier resource! !
-!ResourceIdentifier class categoriesFor: #resourceAt:ifAbsent:!accessing!public! !
+!UI.ResourceIdentifier class categoriesFor: #resourceAt:ifAbsent:!accessing!public! !
 
-!RuntimeSessionManager methodsFor!
+!UI.RuntimeSessionManager methodsFor!
 
 initializeFromSessionManager: oldSessionManager
 	"Private - The receiver has taken take over as the current session
@@ -235,7 +235,7 @@ initializeFromSessionManager: oldSessionManager
 
 	super initializeFromSessionManager: oldSessionManager.
 	#{ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
-!RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+!UI.RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
 
 "End of package definition"!
 

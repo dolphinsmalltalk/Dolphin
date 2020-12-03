@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalCallback subclass: #MessageCallback
+External.Callback subclass: #'External.MessageCallback'
 	instanceVariableNames: 'receiver selector closure'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageCallback guid: (GUID fromString: '{87b4c578-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageCallback comment: ''!
-!MessageCallback categoriesForClass!System-Support! !
-!MessageCallback methodsFor!
+External.MessageCallback guid: (Core.GUID fromString: '{87b4c578-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.MessageCallback comment: ''!
+!External.MessageCallback categoriesForClass!System-Support! !
+!External.MessageCallback methodsFor!
 
 closure
 	"Answer the user supplied 'closure' object supplied when the receiver was created.
@@ -51,10 +51,10 @@ valueWithArgumentsAt: anAddress
 	"Private - Evaluate the receiver with arguments instantiated from the raw data at anAddress."
 
 	^receiver perform: selector withArgumentsAt: anAddress descriptor: descriptor! !
-!MessageCallback categoriesFor: #closure!accessing!public! !
-!MessageCallback categoriesFor: #closure:!accessing!public! !
-!MessageCallback categoriesFor: #printOn:!development!printing!public! !
-!MessageCallback categoriesFor: #receiver:!initializing!private! !
-!MessageCallback categoriesFor: #selector:!initializing!private! !
-!MessageCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.MessageCallback categoriesFor: #closure!accessing!public! !
+!External.MessageCallback categoriesFor: #closure:!accessing!public! !
+!External.MessageCallback categoriesFor: #printOn:!development!printing!public! !
+!External.MessageCallback categoriesFor: #receiver:!initializing!private! !
+!External.MessageCallback categoriesFor: #selector:!initializing!private! !
+!External.MessageCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
 

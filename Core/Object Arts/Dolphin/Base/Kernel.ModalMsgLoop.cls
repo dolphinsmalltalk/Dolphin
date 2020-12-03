@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ModalMsgLoop
+Core.Object subclass: #'Kernel.ModalMsgLoop'
 	instanceVariableNames: 'loop'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ModalMsgLoop guid: (GUID fromString: '{9fe23040-75a9-11d3-b376-080046056106}')!
-ModalMsgLoop comment: 'ModalMsgLoop is a special process synchronisation object that can be used to block the main UI process while still servicing the message queue, without having to start a new UI process.
+Kernel.ModalMsgLoop guid: (Core.GUID fromString: '{9fe23040-75a9-11d3-b376-080046056106}')!
+Kernel.ModalMsgLoop comment: 'ModalMsgLoop is a special process synchronisation object that can be used to block the main UI process while still servicing the message queue, without having to start a new UI process.
 
 For example:
 
@@ -22,8 +22,8 @@ Instance Variables:
 	loop		<boolean>. Used to control termination of the modal loop.
 
 '!
-!ModalMsgLoop categoriesForClass!Unclassified! !
-!ModalMsgLoop methodsFor!
+!Kernel.ModalMsgLoop categoriesForClass!Unclassified! !
+!Kernel.ModalMsgLoop methodsFor!
 
 initialize
 	"Private - Initialize the receiver's instance variables."
@@ -34,23 +34,22 @@ signal
 	"Terminate the modal loop, and return control to the sender of #wait."
 
 	loop := false.
-	SessionManager inputState prod
-!
+	SessionManager inputState prod!
 
 wait
 	"Start the modal loop, returning when the receiver is signalled. While waiting the Windows
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
 	SessionManager inputState loopWhile: [loop]! !
-!ModalMsgLoop categoriesFor: #initialize!initializing!private! !
-!ModalMsgLoop categoriesFor: #signal!process synchronisation!public! !
-!ModalMsgLoop categoriesFor: #wait!process synchronisation!public! !
+!Kernel.ModalMsgLoop categoriesFor: #initialize!initializing!private! !
+!Kernel.ModalMsgLoop categoriesFor: #signal!process synchronisation!public! !
+!Kernel.ModalMsgLoop categoriesFor: #wait!process synchronisation!public! !
 
-!ModalMsgLoop class methodsFor!
+!Kernel.ModalMsgLoop class methodsFor!
 
 new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!ModalMsgLoop class categoriesFor: #new!instance creation!public! !
+!Kernel.ModalMsgLoop class categoriesFor: #new!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CommandLineOption
+Core.Object subclass: #'Kernel.CommandLineOption'
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandLineOption guid: (GUID fromString: '{24fed4fa-6d57-4f07-b973-b1cd9591567a}')!
-CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
-!CommandLineOption categoriesForClass!Kernel-Objects! !
-!CommandLineOption methodsFor!
+Kernel.CommandLineOption guid: (Core.GUID fromString: '{24fed4fa-6d57-4f07-b973-b1cd9591567a}')!
+Kernel.CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
+!Kernel.CommandLineOption categoriesForClass!Kernel-Objects! !
+!Kernel.CommandLineOption methodsFor!
 
 initializeFromStream: aStream
 
@@ -86,23 +86,23 @@ value: anObject
 		ifTrue: [block value: anObject]
 		ifFalse: [block value].
 ! !
-!CommandLineOption categoriesFor: #initializeFromStream:!private! !
-!CommandLineOption categoriesFor: #initializeOption:!private! !
-!CommandLineOption categoriesFor: #initializeOption:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:block:!private! !
-!CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentRequired:!accessing!public! !
-!CommandLineOption categoriesFor: #isLongOption!public! !
-!CommandLineOption categoriesFor: #name!accessing!public! !
-!CommandLineOption categoriesFor: #name:!accessing!public! !
-!CommandLineOption categoriesFor: #value:!public! !
+!Kernel.CommandLineOption categoriesFor: #initializeFromStream:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOption:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOption:block:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOptionAllowingArgument:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOptionAllowingArgument:block:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOptionRequiringArgument:!private! !
+!Kernel.CommandLineOption categoriesFor: #initializeOptionRequiringArgument:block:!private! !
+!Kernel.CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #isArgumentRequired:!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #isLongOption!public! !
+!Kernel.CommandLineOption categoriesFor: #name!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #name:!accessing!public! !
+!Kernel.CommandLineOption categoriesFor: #value:!public! !
 
-!CommandLineOption class methodsFor!
+!Kernel.CommandLineOption class methodsFor!
 
 allowingArgument: aString 
 	^(self new)
@@ -139,11 +139,11 @@ requiringArgument: aString block: aBlock
 	^(self new)
 		initializeOptionRequiringArgument: aString block: aBlock;
 		yourself! !
-!CommandLineOption class categoriesFor: #allowingArgument:!public! !
-!CommandLineOption class categoriesFor: #allowingArgument:block:!public! !
-!CommandLineOption class categoriesFor: #fromStream:!public! !
-!CommandLineOption class categoriesFor: #named:!public! !
-!CommandLineOption class categoriesFor: #named:block:!public! !
-!CommandLineOption class categoriesFor: #requiringArgument:!public! !
-!CommandLineOption class categoriesFor: #requiringArgument:block:!public! !
+!Kernel.CommandLineOption class categoriesFor: #allowingArgument:!public! !
+!Kernel.CommandLineOption class categoriesFor: #allowingArgument:block:!public! !
+!Kernel.CommandLineOption class categoriesFor: #fromStream:!public! !
+!Kernel.CommandLineOption class categoriesFor: #named:!public! !
+!Kernel.CommandLineOption class categoriesFor: #named:block:!public! !
+!Kernel.CommandLineOption class categoriesFor: #requiringArgument:!public! !
+!Kernel.CommandLineOption class categoriesFor: #requiringArgument:block:!public! !
 

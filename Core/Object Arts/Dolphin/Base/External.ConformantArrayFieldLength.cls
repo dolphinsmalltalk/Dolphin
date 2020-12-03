@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayFieldLength subclass: #ConformantArrayFieldLength
+External.ArrayFieldLength subclass: #'External.ConformantArrayFieldLength'
 	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ConformantArrayFieldLength guid: (GUID fromString: '{6158a44a-0df9-4478-8ac1-0112fed71ca1}')!
-ConformantArrayFieldLength comment: '<ConformantArrayFieldLength> is a type of <ArrayFieldLength> that can be used to describe conformant array fields where the array element count is stored directly as another field in the described structure. For example, give the C++ structure definitions:
+External.ConformantArrayFieldLength guid: (Core.GUID fromString: '{6158a44a-0df9-4478-8ac1-0112fed71ca1}')!
+External.ConformantArrayFieldLength comment: '<ConformantArrayFieldLength> is a type of <ArrayFieldLength> that can be used to describe conformant array fields where the array element count is stored directly as another field in the described structure. For example, give the C++ structure definitions:
 
 	struct PALETTEENTRY {...};
 	struct LOGPALETTE {	
@@ -30,8 +30,8 @@ Instance Variables:
 	lengthField	<Symbol>. Name of the length field in the ExternalStructure for which this object is providing meta-information.
 
 '!
-!ConformantArrayFieldLength categoriesForClass!Kernel-Objects! !
-!ConformantArrayFieldLength methodsFor!
+!External.ConformantArrayFieldLength categoriesForClass!Kernel-Objects! !
+!External.ConformantArrayFieldLength methodsFor!
 
 getElementCountOf: anExternalField in: anExternalStructure
 	"Private - Answer the number of elements in the array field of the <ExternalStructure> argument."
@@ -75,19 +75,19 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 
 setLengthSelector
 	^(lengthField copyWith: $:) asSymbol! !
-!ConformantArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!ConformantArrayFieldLength categoriesFor: #lengthField:!accessing!private! !
-!ConformantArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!ConformantArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!ConformantArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!ConformantArrayFieldLength categoriesFor: #setLengthSelector!private! !
+!External.ConformantArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
+!External.ConformantArrayFieldLength categoriesFor: #lengthField:!accessing!private! !
+!External.ConformantArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
+!External.ConformantArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
+!External.ConformantArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!External.ConformantArrayFieldLength categoriesFor: #setLengthSelector!accessing!private! !
 
-!ConformantArrayFieldLength class methodsFor!
+!External.ConformantArrayFieldLength class methodsFor!
 
 lengthField: aSymbol
 	"Answer a new instance of the receiver to describe a conformant (sized) array length stored
 	in the named field of the <ExternalStructure> of which the owning <ExternalField> is a field."
 
 	^self new lengthField: aSymbol! !
-!ConformantArrayFieldLength class categoriesFor: #lengthField:!instance creation!public! !
+!External.ConformantArrayFieldLength class categoriesFor: #lengthField:!instance creation!public! !
 

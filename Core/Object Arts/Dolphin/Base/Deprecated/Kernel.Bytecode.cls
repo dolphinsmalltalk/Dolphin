@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Bytecode
+Core.Object subclass: #'Kernel.Bytecode'
 	instanceVariableNames: 'instruction args jumpTarget ip'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Bytecode guid: (GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
-Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
-!Bytecode categoriesForClass!Kernel-Objects! !
-!Bytecode methodsFor!
+Kernel.Bytecode guid: (Core.GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
+Kernel.Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
+!Kernel.Bytecode categoriesForClass!Kernel-Objects! !
+!Kernel.Bytecode methodsFor!
 
 args
 	^args!
@@ -49,22 +49,22 @@ setInstruction: aSymbol arguments: anArray ip: aSmallInteger
 	args := anArray.
 	ip := aSmallInteger.
 ! !
-!Bytecode categoriesFor: #args!accessing!public! !
-!Bytecode categoriesFor: #instruction!accessing!public! !
-!Bytecode categoriesFor: #instruction:!accessing!public! !
-!Bytecode categoriesFor: #ip!accessing!public! !
-!Bytecode categoriesFor: #ip:!accessing!public! !
-!Bytecode categoriesFor: #jumpOffset:!accessing!public! !
-!Bytecode categoriesFor: #jumpTarget!accessing!public! !
-!Bytecode categoriesFor: #jumpTarget:!accessing!public! !
-!Bytecode categoriesFor: #setInstruction:arguments:ip:!initializing!private! !
+!Kernel.Bytecode categoriesFor: #args!accessing!public! !
+!Kernel.Bytecode categoriesFor: #instruction!accessing!public! !
+!Kernel.Bytecode categoriesFor: #instruction:!accessing!public! !
+!Kernel.Bytecode categoriesFor: #ip!accessing!public! !
+!Kernel.Bytecode categoriesFor: #ip:!accessing!public! !
+!Kernel.Bytecode categoriesFor: #jumpOffset:!accessing!public! !
+!Kernel.Bytecode categoriesFor: #jumpTarget!accessing!public! !
+!Kernel.Bytecode categoriesFor: #jumpTarget:!accessing!public! !
+!Kernel.Bytecode categoriesFor: #setInstruction:arguments:ip:!initializing!private! !
 
-!Bytecode class methodsFor!
+!Kernel.Bytecode class methodsFor!
 
 instruction: bytecodeInteger arguments: anArray ip: aSmallInteger 
 	^self new 
 		setInstruction: bytecodeInteger
 		arguments: anArray
 		ip: aSmallInteger! !
-!Bytecode class categoriesFor: #instruction:arguments:ip:!instance creation!public! !
+!Kernel.Bytecode class categoriesFor: #instruction:arguments:ip:!instance creation!public! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ExternalCallback
+Core.Object subclass: #'External.Callback'
 	instanceVariableNames: 'thunk cookie descriptor'
 	classVariableNames: 'Registry ThunkBase'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ArgSizeOffset' -> 16rE.
 		'MaxThunks' -> 16r100.
 		'ThunkSize' -> 16r10
 	}!
-ExternalCallback guid: (GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalCallback isAbstract: true!
-ExternalCallback comment: ''!
-!ExternalCallback categoriesForClass!System-Support! !
-!ExternalCallback methodsFor!
+External.Callback guid: (Core.GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Callback isNonInstantiable: true!
+External.Callback comment: ''!
+!External.Callback categoriesForClass!System-Support! !
+!External.Callback methodsFor!
 
 argumentCount
 	"Private - Answer the number of arguments expected by the receiver."
@@ -53,7 +53,7 @@ cookie: anInteger
 	"Private - Set the callbacks magic cookie. Answer the receiver."
 
 	anInteger > MaxThunks 
-		ifTrue: [self error: 'Insufficient callback thunks; increase ExternalCallback.MaxThunks and restart'].
+		ifTrue: [self error: 'Insufficient callback thunks; increase External.Callback.MaxThunks and restart'].
 	cookie := anInteger!
 
 descriptor
@@ -102,21 +102,21 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^self subclassResponsibility! !
-!ExternalCallback categoriesFor: #argumentCount!accessing!private! !
-!ExternalCallback categoriesFor: #argumentsSize!accessing!private! !
-!ExternalCallback categoriesFor: #argumentTypes!accessing!private! !
-!ExternalCallback categoriesFor: #asParameter!converting!public! !
-!ExternalCallback categoriesFor: #callingConvention!accessing!private! !
-!ExternalCallback categoriesFor: #cookie!accessing!public! !
-!ExternalCallback categoriesFor: #cookie:!accessing!private! !
-!ExternalCallback categoriesFor: #descriptor!accessing!private! !
-!ExternalCallback categoriesFor: #descriptor:!initializing!private! !
-!ExternalCallback categoriesFor: #free!public!realizing/unrealizing! !
-!ExternalCallback categoriesFor: #makeProcInstance!private!realizing/unrealizing! !
-!ExternalCallback categoriesFor: #thunk!converting!private! !
-!ExternalCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.Callback categoriesFor: #argumentCount!accessing!private! !
+!External.Callback categoriesFor: #argumentsSize!accessing!private! !
+!External.Callback categoriesFor: #argumentTypes!accessing!private! !
+!External.Callback categoriesFor: #asParameter!converting!public! !
+!External.Callback categoriesFor: #callingConvention!accessing!private! !
+!External.Callback categoriesFor: #cookie!accessing!public! !
+!External.Callback categoriesFor: #cookie:!accessing!private! !
+!External.Callback categoriesFor: #descriptor!accessing!private! !
+!External.Callback categoriesFor: #descriptor:!initializing!private! !
+!External.Callback categoriesFor: #free!public!realizing/unrealizing! !
+!External.Callback categoriesFor: #makeProcInstance!private!realizing/unrealizing! !
+!External.Callback categoriesFor: #thunk!converting!private! !
+!External.Callback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
 
-!ExternalCallback class methodsFor!
+!External.Callback class methodsFor!
 
 allocateThunks
 	"Private - Allocate and populate a block of memory with callback thunks. Note that the
@@ -126,7 +126,7 @@ allocateThunks
 
 	| procAddress |
 	self deallocateThunks.
-	ThunkBase := KernelLibrary default 
+	ThunkBase := KernelLibrary default
 				virtualAlloc: 0
 				dwSize: MaxThunks * ThunkSize
 				flAllocationType: MEM_COMMIT
@@ -134,7 +134,7 @@ allocateThunks
 	procAddress := VMLibrary default getGenericCallback.
 	1 to: MaxThunks
 		do: 
-			[:i | 
+			[:i |
 			| offset |
 			offset := ThunkSize * (i - 1) - 1.
 			"push esp - value of esp saved is that before push"
@@ -161,7 +161,7 @@ block: aBlockClosure argumentTypes: aString
 	"Answer a new subinstance of the receiver appropriate for dispatching callbacks
 	to the block, aBlockClosure, with the specified argument types."
 
-	^(BlockCallback new)
+	^BlockCallback new
 		block: aBlockClosure;
 		descriptor: (self descriptorClass argumentTypes: aString);
 		yourself!
@@ -170,7 +170,7 @@ block: aBlockClosure descriptor: anExternalDescriptor
 	"Answer a new subinstance of the receiver appropriate for dispatching callbacks
 	to the block, aBlockClosure, with the specified descriptor."
 
-	^(BlockCallback new)
+	^BlockCallback new
 		block: aBlockClosure;
 		descriptor: anExternalDescriptor;
 		yourself!
@@ -195,7 +195,7 @@ clear
 
 deallocateThunks
 	ThunkBase isNil ifTrue: [^self].
-	KernelLibrary default 
+	KernelLibrary default
 		virtualFree: ThunkBase
 		dwSize: 0
 		dwFreeType: MEM_RELEASE.
@@ -204,7 +204,7 @@ deallocateThunks
 descriptorClass
 	"Private - Answer the class used to build and represent function descriptors."
 
-	^ExternalDescriptor!
+	^Descriptor!
 
 fromCookie: anInteger
 	"Answer the receiver's registered instance with the cookie, anInteger. If there is no such
@@ -219,7 +219,7 @@ fromCookie: anInteger
 
 initialize
 	"Private - Initialize the receiver's class variables.
-		ExternalCallback initialize
+		External.Callback initialize
 	"
 
 	self addClassConstant: 'ThunkSize' value: 16.
@@ -248,11 +248,21 @@ onStartup
 	self allocateThunks.
 	self clear!
 
+receiver: anObject prototype: anExternalMethod
+	#deprecated.	"Use #receiver:selector:descriptor:"
+	self assert: 
+			[(anExternalMethod isKindOf: ExternalMethod)
+				and: [anExternalMethod primitiveIndex == self callbackPrimitive]].
+	^MessageCallback
+		receiver: anObject
+		selector: anExternalMethod selector
+		descriptor: anExternalMethod descriptor!
+
 receiver: anObject selector: aSymbol descriptor: anExternalDescriptor
 	"Answer a new instance of the receiver configured to send the <selector>, aSymbol,
 	to the <Object>, anObject, when invoked as a callback with descriptor, anExternalDescriptor."
 
-	^(MessageCallback new)
+	^MessageCallback new
 		receiver: anObject;
 		selector: aSymbol;
 		descriptor: anExternalDescriptor;
@@ -278,20 +288,21 @@ uninitializeBeforeRemove
 
 unitializeSubclass: anExternalCallbackClass
 	! !
-!ExternalCallback class categoriesFor: #allocateThunks!helpers!private! !
-!ExternalCallback class categoriesFor: #block:argumentTypes:!instance creation!public! !
-!ExternalCallback class categoriesFor: #block:descriptor:!instance creation!public! !
-!ExternalCallback class categoriesFor: #callback:withArgumentsAt:!operations!private! !
-!ExternalCallback class categoriesFor: #callbackPrimitive!constants!private! !
-!ExternalCallback class categoriesFor: #clear!initializing!private! !
-!ExternalCallback class categoriesFor: #deallocateThunks!initializing!private! !
-!ExternalCallback class categoriesFor: #descriptorClass!constants!private! !
-!ExternalCallback class categoriesFor: #fromCookie:!accessing!public! !
-!ExternalCallback class categoriesFor: #initialize!development!initializing!public! !
-!ExternalCallback class categoriesFor: #new!instance creation!public! !
-!ExternalCallback class categoriesFor: #onStartup!event handling!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:descriptor:!instance creation!public! !
-!ExternalCallback class categoriesFor: #register:!instance creation!private! !
-!ExternalCallback class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ExternalCallback class categoriesFor: #unitializeSubclass:!development!initializing!public! !
+!External.Callback class categoriesFor: #allocateThunks!helpers!private! !
+!External.Callback class categoriesFor: #block:argumentTypes:!instance creation!public! !
+!External.Callback class categoriesFor: #block:descriptor:!instance creation!public! !
+!External.Callback class categoriesFor: #callback:withArgumentsAt:!operations!private! !
+!External.Callback class categoriesFor: #callbackPrimitive!constants!private! !
+!External.Callback class categoriesFor: #clear!initializing!private! !
+!External.Callback class categoriesFor: #deallocateThunks!initializing!private! !
+!External.Callback class categoriesFor: #descriptorClass!constants!private! !
+!External.Callback class categoriesFor: #fromCookie:!accessing!public! !
+!External.Callback class categoriesFor: #initialize!development!initializing!public! !
+!External.Callback class categoriesFor: #new!instance creation!public! !
+!External.Callback class categoriesFor: #onStartup!event handling!public! !
+!External.Callback class categoriesFor: #receiver:prototype:!instance creation!public! !
+!External.Callback class categoriesFor: #receiver:selector:descriptor:!instance creation!public! !
+!External.Callback class categoriesFor: #register:!instance creation!private! !
+!External.Callback class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!External.Callback class categoriesFor: #unitializeSubclass:!development!initializing!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #MessageNotUnderstood
+Core.Error subclass: #'Core.MessageNotUnderstood'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageNotUnderstood guid: (GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageNotUnderstood comment: ''!
-!MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !
-!MessageNotUnderstood methodsFor!
+Core.MessageNotUnderstood guid: (Core.GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MessageNotUnderstood comment: ''!
+!Core.MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !
+!Core.MessageNotUnderstood methodsFor!
 
 _descriptionArguments
 	"Answer an string describing the extra information supplied when the receiver
@@ -51,17 +51,17 @@ selector
 	<failedMessage>."
 
 	^self message selector! !
-!MessageNotUnderstood categoriesFor: #_descriptionArguments!displaying!public! !
-!MessageNotUnderstood categoriesFor: #_descriptionFormat!displaying!public! !
-!MessageNotUnderstood categoriesFor: #isResumable!public!testing! !
-!MessageNotUnderstood categoriesFor: #message!accessing!public! !
-!MessageNotUnderstood categoriesFor: #receiver!accessing!public! !
-!MessageNotUnderstood categoriesFor: #receiver:!accessing!public! !
-!MessageNotUnderstood categoriesFor: #selector!accessing!public! !
+!Core.MessageNotUnderstood categoriesFor: #_descriptionArguments!displaying!public! !
+!Core.MessageNotUnderstood categoriesFor: #_descriptionFormat!displaying!public! !
+!Core.MessageNotUnderstood categoriesFor: #isResumable!public!testing! !
+!Core.MessageNotUnderstood categoriesFor: #message!accessing!public! !
+!Core.MessageNotUnderstood categoriesFor: #receiver!accessing!public! !
+!Core.MessageNotUnderstood categoriesFor: #receiver:!accessing!public! !
+!Core.MessageNotUnderstood categoriesFor: #selector!accessing!public! !
 
-MessageNotUnderstood methodProtocol: #MessageNotUnderstood attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #message #messageText #messageText: #outer #pass #receiver #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
+Core.MessageNotUnderstood methodProtocol: #MessageNotUnderstood attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #message #messageText #messageText: #outer #pass #receiver #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
-!MessageNotUnderstood class methodsFor!
+!Core.MessageNotUnderstood class methodsFor!
 
 receiver: anObject message: aMessage
 	"Raise a new instance of the receiver reporting that the <object>, anObject, did not understand
@@ -71,7 +71,7 @@ receiver: anObject message: aMessage
 		receiver: anObject;
 		tag: aMessage;
 		signal! !
-!MessageNotUnderstood class categoriesFor: #receiver:message:!instance creation!public! !
+!Core.MessageNotUnderstood class categoriesFor: #receiver:message:!instance creation!public! !
 
-MessageNotUnderstood class methodProtocol: #MessageNotUnderstoodSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
+Core.MessageNotUnderstood class methodProtocol: #MessageNotUnderstoodSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 

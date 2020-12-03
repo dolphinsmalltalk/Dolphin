@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MessageBoxAbstract subclass: #MessageBox
+UI.MessageBoxAbstract subclass: #'UI.MessageBox'
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
 	classVariableNames: 'ButtonStyles ModeStyles'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ButtonMap' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
-		'ButtonsForStyle' -> #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11)).
+		'ButtonsForStyle' -> #(#(16r1) #(16r1 16r2) #(16r3 16r4 16r2) #(16r6 16r7 16r2) #(16r6 16r7) #(16r4 16r2) #(16r2 16rA 16rB)).
 		'SuppressibleMask' -> 16r10
 	}!
-MessageBox guid: (GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageBox comment: 'MessageBox provides a convenient wrapping aound the standard Windows Message Box. It can be used to pose questions, and report information, warnings, or errors.
+UI.MessageBox guid: (Core.GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.MessageBox comment: 'MessageBox provides a convenient wrapping aound the standard Windows Message Box. It can be used to pose questions, and report information, warnings, or errors.
 
 Note that MessageBox is deliberately implemented using low-level Windows APIs in order to be independent of the MVP subsystem.
 
@@ -57,8 +57,8 @@ Class Variables:
 	SuppressibleMask	<integer>. Masks in/out the suppressible flag from the flags instance variable.
 
 '!
-!MessageBox categoriesForClass!MVP-Views-Support! !
-!MessageBox methodsFor!
+!UI.MessageBox categoriesForClass!MVP-Views-Support! !
+!UI.MessageBox methodsFor!
 
 assertStylesValid
 	"Private - SHMessageBoxCheck supports only a limited range of the full set of MessageBox
@@ -256,11 +256,11 @@ setStyle: anInteger maskedBy: maskInteger
 
 showIndirect
 	| hInstance iconIdentifier |
-	icon isNil 
+	icon isNil
 		ifFalse: 
 			[iconIdentifier := icon identifier.
 			hInstance := icon instanceHandle asParameter].
-	button := UserLibrary default 
+	button := UserLibrary default
 				messageBox: self ownerHandle
 				text: self text
 				caption: self caption
@@ -302,44 +302,44 @@ uniqueId
 
 	^uniqueId!
 
-uniqueId: anObject 
+uniqueId: anObject
 	uniqueId := anObject displayString: Locale invariant! !
-!MessageBox categoriesFor: #assertStylesValid!helpers!private! !
-!MessageBox categoriesFor: #basicOpen!displaying!private! !
-!MessageBox categoriesFor: #beFatalError!accessing-styles!public! !
-!MessageBox categoriesFor: #beSystemModal!accessing-styles!public! !
-!MessageBox categoriesFor: #beTaskModal!accessing-styles!public! !
-!MessageBox categoriesFor: #buttonIds!accessing!private! !
-!MessageBox categoriesFor: #buttonStyle!accessing-styles!public! !
-!MessageBox categoriesFor: #buttonStyle:!accessing-styles!public! !
-!MessageBox categoriesFor: #buttonStyleValue!accessing!private! !
-!MessageBox categoriesFor: #confirm:!operations!public! !
-!MessageBox categoriesFor: #confirm:onYes:onNo:onCancel:!displaying!public! !
-!MessageBox categoriesFor: #confirmOrCancel:!displaying!public! !
-!MessageBox categoriesFor: #defaultButton!accessing!public! !
-!MessageBox categoriesFor: #defaultButton:!initializing!public! !
-!MessageBox categoriesFor: #globallyUniqueId!helpers!private! !
-!MessageBox categoriesFor: #hasOwner!displaying!private! !
-!MessageBox categoriesFor: #icon:!accessing!public! !
-!MessageBox categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!MessageBox categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBox categoriesFor: #idOfButtonAt:!helpers!private! !
-!MessageBox categoriesFor: #initialize!initializing!private! !
-!MessageBox categoriesFor: #isSuppressible!public!testing! !
-!MessageBox categoriesFor: #isSuppressible:!initializing!public! !
-!MessageBox categoriesFor: #isTaskModal!accessing-styles!public! !
-!MessageBox categoriesFor: #modality!accessing-styles!public! !
-!MessageBox categoriesFor: #modality:!accessing-styles!public! !
-!MessageBox categoriesFor: #open!displaying!public! !
-!MessageBox categoriesFor: #result!accessing!public!wine fix! !
-!MessageBox categoriesFor: #setForeground!accessing-styles!public! !
-!MessageBox categoriesFor: #setStyle:maskedBy:!accessing-styles!private! !
-!MessageBox categoriesFor: #showIndirect!displaying!private! !
-!MessageBox categoriesFor: #showSuppressible!operations!private! !
-!MessageBox categoriesFor: #uniqueId!accessing!public! !
-!MessageBox categoriesFor: #uniqueId:!initializing!public! !
+!UI.MessageBox categoriesFor: #assertStylesValid!helpers!private! !
+!UI.MessageBox categoriesFor: #basicOpen!displaying!private! !
+!UI.MessageBox categoriesFor: #beFatalError!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #beSystemModal!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #beTaskModal!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #buttonIds!accessing!private! !
+!UI.MessageBox categoriesFor: #buttonStyle!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #buttonStyle:!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #buttonStyleValue!accessing!private! !
+!UI.MessageBox categoriesFor: #confirm:!operations!public! !
+!UI.MessageBox categoriesFor: #confirm:onYes:onNo:onCancel:!displaying!public! !
+!UI.MessageBox categoriesFor: #confirmOrCancel:!displaying!public! !
+!UI.MessageBox categoriesFor: #defaultButton!accessing!public! !
+!UI.MessageBox categoriesFor: #defaultButton:!initializing!public! !
+!UI.MessageBox categoriesFor: #globallyUniqueId!helpers!private! !
+!UI.MessageBox categoriesFor: #hasOwner!displaying!private! !
+!UI.MessageBox categoriesFor: #icon:!accessing!public! !
+!UI.MessageBox categoriesFor: #iconStyleFlag!accessing-styles!private! !
+!UI.MessageBox categoriesFor: #iconStyleFlag:!accessing-styles!private! !
+!UI.MessageBox categoriesFor: #idOfButtonAt:!helpers!private! !
+!UI.MessageBox categoriesFor: #initialize!initializing!private! !
+!UI.MessageBox categoriesFor: #isSuppressible!public!testing! !
+!UI.MessageBox categoriesFor: #isSuppressible:!initializing!public! !
+!UI.MessageBox categoriesFor: #isTaskModal!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #modality!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #modality:!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #open!displaying!public! !
+!UI.MessageBox categoriesFor: #result!accessing!public!wine fix! !
+!UI.MessageBox categoriesFor: #setForeground!accessing-styles!public! !
+!UI.MessageBox categoriesFor: #setStyle:maskedBy:!accessing-styles!private! !
+!UI.MessageBox categoriesFor: #showIndirect!displaying!private! !
+!UI.MessageBox categoriesFor: #showSuppressible!operations!private! !
+!UI.MessageBox categoriesFor: #uniqueId!accessing!public! !
+!UI.MessageBox categoriesFor: #uniqueId:!initializing!public! !
 
-!MessageBox class methodsFor!
+!UI.MessageBox class methodsFor!
 
 confirm: promptText
 	"Display a Windows Message Box prompting for confirmation of the 
@@ -415,8 +415,8 @@ initialize
 				at: #system put: MB_SYSTEMMODAL;
 				shrink;
 				yourself! !
-!MessageBox class categoriesFor: #confirm:!instance creation!public! !
-!MessageBox class categoriesFor: #confirm:caption:!instance creation!public! !
-!MessageBox class categoriesFor: #confirm:onYes:onNo:onCancel:!instance creation!public! !
-!MessageBox class categoriesFor: #initialize!development!initializing!private! !
+!UI.MessageBox class categoriesFor: #confirm:!instance creation!public! !
+!UI.MessageBox class categoriesFor: #confirm:caption:!instance creation!public! !
+!UI.MessageBox class categoriesFor: #confirm:onYes:onNo:onCancel:!instance creation!public! !
+!UI.MessageBox class categoriesFor: #initialize!development!initializing!private! !
 

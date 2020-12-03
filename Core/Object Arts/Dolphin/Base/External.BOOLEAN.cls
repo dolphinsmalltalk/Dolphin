@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BYTE subclass: #BOOLEAN
+External.BYTE subclass: #'External.BOOLEAN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BOOLEAN guid: (GUID fromString: '{35efc105-16f9-425a-94d7-298ebbb17d36}')!
-BOOLEAN comment: ''!
-!BOOLEAN categoriesForClass!Unclassified! !
-!BOOLEAN methodsFor!
+External.BOOLEAN guid: (Core.GUID fromString: '{35efc105-16f9-425a-94d7-298ebbb17d36}')!
+External.BOOLEAN comment: ''!
+!External.BOOLEAN categoriesForClass!Unclassified! !
+!External.BOOLEAN methodsFor!
 
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
@@ -20,19 +20,15 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
-!BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
-!BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
+!External.BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
+!External.BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
 
-!BOOLEAN class methodsFor!
+!External.BOOLEAN class methodsFor!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: BOOLEANField new beOverride!
-
-fileOutStem
-	^super fileOutStem , '_struct'! !
-!BOOLEAN class categoriesFor: #defineFields!public!template definition! !
-!BOOLEAN class categoriesFor: #fileOutStem!development!private!source filing! !
+	self defineField: #value type: BOOLEANField new beOverride! !
+!External.BOOLEAN class categoriesFor: #defineFields!public!template definition! !
 

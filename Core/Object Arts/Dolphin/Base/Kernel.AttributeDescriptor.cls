@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AttributeDescriptor
+Core.Object subclass: #'Kernel.AttributeDescriptor'
 	instanceVariableNames: 'flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AccessorMask' -> 16r4.
@@ -15,11 +15,11 @@ Object subclass: #AttributeDescriptor
 		'ReadableMask' -> 16r1.
 		'WriteableMask' -> 16r2
 	}!
-AttributeDescriptor guid: (GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
-AttributeDescriptor isAbstract: true!
-AttributeDescriptor comment: 'AttributeDescriptor is an abstract class of meta-objects that be used to describe the shape of other objects. It has a subclass, Aspect, instances of which describe how to access object''s published ''aspects'' (e.g. instance variables) through getter and setter methods, and a subclass, ExternalField, instances of which describe the fields of C style structures. Note that these objects are all descriptors, and need to be combined with a subject object in order to become "closed".'!
-!AttributeDescriptor categoriesForClass!Attribute-Definition! !
-!AttributeDescriptor methodsFor!
+Kernel.AttributeDescriptor guid: (Core.GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.AttributeDescriptor isNonInstantiable: true!
+Kernel.AttributeDescriptor comment: 'AttributeDescriptor is an abstract class of meta-objects that be used to describe the shape of other objects. It has a subclass, Aspect, instances of which describe how to access object''s published ''aspects'' (e.g. instance variables) through getter and setter methods, and a subclass, ExternalField, instances of which describe the fields of C style structures. Note that these objects are all descriptors, and need to be combined with a subject object in order to become "closed".'!
+!Kernel.AttributeDescriptor categoriesForClass!Attribute-Definition! !
+!Kernel.AttributeDescriptor methodsFor!
 
 beCompiled
 	"Set the receiver's flags to specify it as an compiled attribute
@@ -167,33 +167,33 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^self subclassResponsibility! !
-!AttributeDescriptor categoriesFor: #beCompiled!modes!public! !
-!AttributeDescriptor categoriesFor: #beImmutable!modes!public! !
-!AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
-!AttributeDescriptor categoriesFor: #beMutable!modes!public! !
-!AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
-!AttributeDescriptor categoriesFor: #beOverride!modes!public! !
-!AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
-!AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
-!AttributeDescriptor categoriesFor: #beWriteOnly!modes!public! !
-!AttributeDescriptor categoriesFor: #canGenerateAccessor!private!testing! !
-!AttributeDescriptor categoriesFor: #canGenerateAccessors!private!testing! !
-!AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
-!AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
-!AttributeDescriptor categoriesFor: #initialize!initializing!private! !
-!AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
-!AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
-!AttributeDescriptor categoriesFor: #isMutable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNullable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNullable:!modes!public! !
-!AttributeDescriptor categoriesFor: #isOverride!public!testing! !
-!AttributeDescriptor categoriesFor: #isReadable!public!testing! !
-!AttributeDescriptor categoriesFor: #isWriteable!public!testing! !
-!AttributeDescriptor categoriesFor: #readFrom:!indirect accessing!private! !
-!AttributeDescriptor categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #beCompiled!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beImmutable!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beMutable!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beOverride!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beWriteOnly!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #canGenerateAccessor!private!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #canGenerateAccessors!private!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #initialize!initializing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isMutable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isNullable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isNullable:!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #isOverride!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isReadable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #isWriteable!public!testing! !
+!Kernel.AttributeDescriptor categoriesFor: #readFrom:!indirect accessing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!AttributeDescriptor class methodsFor!
+!Kernel.AttributeDescriptor class methodsFor!
 
 inaccessible
 	"Private - Answer an instance of the receiver which describes an attribute
@@ -224,9 +224,9 @@ writeOnly
 	which cannot be read, only written."
 
 	^self new beWriteOnly! !
-!AttributeDescriptor class categoriesFor: #inaccessible!instance creation!private! !
-!AttributeDescriptor class categoriesFor: #new!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #readOnly!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #uncompiled!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #writeOnly!instance creation!public! !
+!Kernel.AttributeDescriptor class categoriesFor: #inaccessible!instance creation!private! !
+!Kernel.AttributeDescriptor class categoriesFor: #new!instance creation!public! !
+!Kernel.AttributeDescriptor class categoriesFor: #readOnly!instance creation!public! !
+!Kernel.AttributeDescriptor class categoriesFor: #uncompiled!instance creation!public! !
+!Kernel.AttributeDescriptor class categoriesFor: #writeOnly!instance creation!public! !
 

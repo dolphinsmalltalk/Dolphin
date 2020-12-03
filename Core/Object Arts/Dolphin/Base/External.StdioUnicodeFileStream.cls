@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StdioTextFileStream subclass: #StdioUnicodeFileStream
+External.StdioTextFileStream subclass: #'External.StdioUnicodeFileStream'
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StdioUnicodeFileStream guid: (GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
-StdioUnicodeFileStream isAbstract: true!
-StdioUnicodeFileStream comment: ''!
-!StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
-!StdioUnicodeFileStream methodsFor!
+External.StdioUnicodeFileStream guid: (Core.GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
+External.StdioUnicodeFileStream isNonInstantiable: true!
+External.StdioUnicodeFileStream comment: ''!
+!External.StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
+!External.StdioUnicodeFileStream methodsFor!
 
 basicNextAvailable
 	"Private - Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
@@ -70,19 +70,19 @@ setStream: anExternalAddress name: aString flags: anInteger
 
 translationMode
 	^CRTConstants._O_U16TEXT! !
-!StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #bufferClass!constants!private! !
-!StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
-!StdioUnicodeFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
-!StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
+!External.StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
+!External.StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
+!External.StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
+!External.StdioUnicodeFileStream categoriesFor: #bufferClass!constants!private! !
+!External.StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
+!External.StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
+!External.StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
+!External.StdioUnicodeFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
+!External.StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
 
-!StdioUnicodeFileStream class methodsFor!
+!External.StdioUnicodeFileStream class methodsFor!
 
 encodingType
 	^#utf16le! !
-!StdioUnicodeFileStream class categoriesFor: #encodingType!constants!public! !
+!External.StdioUnicodeFileStream class categoriesFor: #encodingType!constants!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object variableSubclass: #ExternalDescriptor
+Core.Object variableSubclass: #'External.Descriptor'
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes Shared TypeNames TypeSizes'
-	poolDictionaries: 'ExtCallArgTypes'
+	classVariableNames: 'CallingConventions ReferenceTypes Shared TypeNames TypeSizes ValueTypes'
+	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'RetClassIndex' -> 16r4.
 		'RetTypeMask' -> 16r3F
 	}!
-ExternalDescriptor guid: (GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalDescriptor comment: 'The argument/return types supported by the primitive DLL call function are:
+External.Descriptor guid: (Core.GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Descriptor comment: 'The argument/return types supported by the primitive DLL call function are:
 
 	void 	Only valid as a return type - the method answers self
 	lpvoid 	General pointer type, accepts byte objects e.g. Strings (pointer to contents 
@@ -101,8 +101,8 @@ ExternalDescriptor comment: 'The argument/return types supported by the primitiv
 	<struct>**Equivalent to lppvoid.
 	
 Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
-!ExternalDescriptor categoriesForClass!System-Support! !
-!ExternalDescriptor methodsFor!
+!External.Descriptor categoriesForClass!System-Support! !
+!External.Descriptor methodsFor!
 
 argumentCount
 	"Private - Answer the argument count of the external function described by the receiver.
@@ -251,25 +251,25 @@ returnType
 	type := self retType.
 	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
-!ExternalDescriptor categoriesFor: #argumentCount!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentIndexFromOffset:!helpers!private! !
-!ExternalDescriptor categoriesFor: #argumentsDo:!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentsSize!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentTypes!accessing!private! !
-!ExternalDescriptor categoriesFor: #calleeCleans!public!testing! !
-!ExternalDescriptor categoriesFor: #callingConvention!accessing!private! !
-!ExternalDescriptor categoriesFor: #convention!accessing!private! !
-!ExternalDescriptor categoriesFor: #description!accessing!private! !
-!ExternalDescriptor categoriesFor: #descriptor:!accessing!private! !
-!ExternalDescriptor categoriesFor: #literals:!accessing!public! !
-!ExternalDescriptor categoriesFor: #name!accessing!public! !
-!ExternalDescriptor categoriesFor: #name:!accessing!public! !
-!ExternalDescriptor categoriesFor: #printDescriptionOn:!accessing!private! !
-!ExternalDescriptor categoriesFor: #printOn:!printing!public! !
-!ExternalDescriptor categoriesFor: #retType!accessing!private! !
-!ExternalDescriptor categoriesFor: #returnType!accessing!private! !
+!External.Descriptor categoriesFor: #argumentCount!accessing!private! !
+!External.Descriptor categoriesFor: #argumentIndexFromOffset:!helpers!private! !
+!External.Descriptor categoriesFor: #argumentsDo:!accessing!private! !
+!External.Descriptor categoriesFor: #argumentsSize!accessing!private! !
+!External.Descriptor categoriesFor: #argumentTypes!accessing!private! !
+!External.Descriptor categoriesFor: #calleeCleans!public!testing! !
+!External.Descriptor categoriesFor: #callingConvention!accessing!private! !
+!External.Descriptor categoriesFor: #convention!accessing!private! !
+!External.Descriptor categoriesFor: #description!accessing!private! !
+!External.Descriptor categoriesFor: #descriptor:!accessing!private! !
+!External.Descriptor categoriesFor: #literals:!accessing!public! !
+!External.Descriptor categoriesFor: #name!accessing!public! !
+!External.Descriptor categoriesFor: #name:!accessing!public! !
+!External.Descriptor categoriesFor: #printDescriptionOn:!accessing!private! !
+!External.Descriptor categoriesFor: #printOn:!printing!public! !
+!External.Descriptor categoriesFor: #retType!accessing!private! !
+!External.Descriptor categoriesFor: #returnType!accessing!private! !
 
-!ExternalDescriptor class methodsFor!
+!External.Descriptor class methodsFor!
 
 argumentTypes: argString
 	"Answer an instance of the receiver instantiated from the argument, which is a String
@@ -301,10 +301,13 @@ descriptor: aByteArray literals: aSequenceableCollection
 		yourself!
 
 fromString: aString
+	^self fromString: aString environment: Smalltalk!
+
+fromString: aString environment: aNamespace
 	"Answer an instance of the receiver instantiated from the argument, which
 	is a Dolphin format external function descriptor, e.g:
 
-		ExternalDescriptor fromString: 'stdcall: hresult Blah GUID* lppvoid'
+		External.Descriptor fromString: 'stdcall: hresult Blah GUID* lppvoid'
 
 	Implementation Note: As ExternalDescriptors are immutable, they can be shared
 	in order to save space. This facility can be turned off by setting the Shared
@@ -312,9 +315,9 @@ fromString: aString
 	quite a lot of space might otherwise be occupied by descriptors if there
 	are a large number of callback functions in the image."
 
-	Shared isNil ifTrue: [^self newFromString: aString].	
-	^Shared at: aString 
-		ifAbsentPut: [self newFromString: aString]!
+	Shared isNil ifTrue: [^self newFromString: aString environment: aNamespace ].	
+	^Shared at: {aString. aNamespace}
+		ifAbsentPut: [self newFromString: aString environment: aNamespace]!
 
 initialize
 	"Private - Initialize the class variables of the receiver.
@@ -333,7 +336,7 @@ initialize
 			[TypeSizes
 				at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
 				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize].
-	self assert: [ExternalValueTypes asSortedCollection last < TypeSizes size].
+	self assert: [ValueTypes asSortedCollection last < TypeSizes size].
 	self initializeCallingConventions.
 	self addClassConstant: 'RetClassIndex' value: 4.
 	Shared isNil ifTrue: [Shared := WeakLookupTable new]!
@@ -347,8 +350,8 @@ initializeExternalRefTypes
 	"Private - Reference types are the types to be used for the value type with one level of indirection, where the name
 	of a struct class appears, this is assumed to be associated with an ExtCallArgLP argument type."
 
-	ExternalReferenceTypes := Array new: ExtCallArgMax + 1.
-	ExternalReferenceTypes
+	ReferenceTypes := Array new: ExtCallArgMax + 1.
+	ReferenceTypes
 		at: ExtCallArgVOID + 1 put: ExtCallArgLPVOID;
 		at: ExtCallArgLPPVOID + 1 put: nil;
 		at: ExtCallArgCHAR + 1 put: ExtCallArgLPSTR;
@@ -381,11 +384,11 @@ initializeExternalRefTypes
 		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
 		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
 		at: ExtCallArgNTSTATUS + 1 put: #SDWORD.
-	ExternalReferenceTypes isImmutable: true!
+	ReferenceTypes isImmutable: true!
 
 initializeExternalTypes
-	ExternalValueTypes := LookupTable new.
-	ExternalValueTypes
+	ValueTypes := LookupTable new.
+	ValueTypes
 		at: 'sdword' put: ExtCallArgSDWORD;
 		at: 'dword' put: ExtCallArgDWORD;
 		at: 'uintptr' put: ExtCallArgUINTPTR;
@@ -415,16 +418,15 @@ initializeExternalTypes
 		at: 'date' put: ExtCallArgDATE;
 		at: 'ntstatus' put: ExtCallArgNTSTATUS.
 	"void is only valid as a return type, not an argument type."
-	ExternalValueTypes at: 'void' put: ExtCallArgVOID.
+	ValueTypes at: 'void' put: ExtCallArgVOID.
 
 	"Init the reverse mapping of the type enumeration to string names"
 	TypeNames := Array new: ExtCallArgMax + 1.
-	ExternalValueTypes 
-		keysAndValuesDo: [:eachKey :eachValue | TypeNames at: eachValue + 1 put: eachKey].
+	ValueTypes keysAndValuesDo: [:eachKey :eachValue | TypeNames at: eachValue + 1 put: eachKey].
 	TypeNames isImmutable: true.
 
 	"Convert a few class types to the special types to save space and time"
-	ExternalValueTypes
+	ValueTypes
 		at: 'ExternalAddress' put: ExtCallArgLPVOID;
 		at: 'ExternalHandle' put: ExtCallArgHANDLE;
 		at: 'BSTR' put: ExtCallArgBSTR;
@@ -462,7 +464,7 @@ nameOf: typeOrdinal type: aClass
 
 	^(self typeHasArgument: typeOrdinal) 
 		ifTrue: 
-			[aClass name , (((self isPointerToStruct: typeOrdinal) and: [aClass isIndirection not]) 
+			[aClass fullName , (((self isPointerToStruct: typeOrdinal) and: [aClass isIndirection not]) 
 						ifTrue: ['*']
 						ifFalse: [''])]
 		ifFalse: [TypeNames at: typeOrdinal + 1]!
@@ -472,7 +474,16 @@ nameOfConvention: anInteger
 
 	^CallingConventions at: anInteger + 1!
 
-newFromString: aString 
+newFromString: aString
+	"Private - Answer a new, unshared, instance of the receiver instantiated from 
+	the argument, which is a Dolphin format external function descriptor, e.g:
+
+		ExternalDescriptor fromString: 'stdcall: hresult GUID* lppvoid'
+	"
+
+	^self newFromString: aString environment: Smalltalk!
+
+newFromString: aString environment: aNamespace
 	"Private - Answer a new, unshared, instance of the receiver instantiated from 
 	the argument, which is a Dolphin format external function descriptor, e.g:
 
@@ -480,10 +491,17 @@ newFromString: aString
 	"
 
 	| array |
-	array := self parseDescriptor: aString.
+	array := self parseDescriptor: aString environment: aNamespace.
 	^self descriptor: array first literals: array second!
 
-parseArgDesc: aString 
+oneStringArg
+	"Answer a shared instance of the receiver describing a standard function
+	with a single string argument."
+
+	#deprecated.
+	^self argumentTypes: 'lpstr'!
+
+parseArgDesc: aString environment: aNamespace
 	"Private - Parse the next argument type from the input stream argument, aStream, answering
 	an association between the type number and an optional argument (a subclass of ExternalStructure)."
 
@@ -492,22 +510,27 @@ parseArgDesc: aString
 	qualifier := aString copyFrom: typeName size + 1 to: aString size.
 
 	"Get an association between a type code for the name and the associated indirection type code or class name"
-	assoc := (self typeFromName: typeName ifAbsent: []) 
+	assoc := (self typeFromName: typeName ifAbsent: [])
 				ifNil: 
 					["Not a built-in type, so try as a class..."
 					ExtCallArgSTRUCT -> typeName asSymbol]
 				ifNotNil: [:code | code -> (self referenceTypeFor: code)].
-	qualifier = '**' ifTrue: [^self parseDoubleIndirection: assoc typeName: typeName].
-	qualifier = '*' ifTrue: [^self parseSingleIndirection: assoc].
-	^self parseValueType: assoc!
+	qualifier = '**'
+		ifTrue: 
+			[^self
+				parseDoubleIndirection: assoc
+				typeName: typeName
+				environment: Smalltalk].
+	qualifier = '*' ifTrue: [^self parseSingleIndirection: assoc environment: aNamespace].
+	^self parseValueType: assoc environment: aNamespace!
 
 parseCallingConvention: aStream
 	"Private - Answer the calling convention number specified by the input stream."
 
 	^self conventionFromName: aStream nextWord!
 
-parseDescriptor: aString
-	"Parse a literal string which describes an external function in the standard
+parseDescriptor: aString environment: aNamespace
+	"Private - Parse a literal string which describes an external function in the standard
 	Dolphin format. This is very simplistic pending Smalltalk compiler support."
 
 	| descriptor literals stream argCount returnType |
@@ -515,7 +538,7 @@ parseDescriptor: aString
 	descriptor := OrderedCollection new: 10.
 	descriptor addLast: (self parseCallingConvention: stream).
 	descriptor addLast: nil.	"Reserve slot for argument count"
-	returnType := self parseArgDesc: stream nextWord.
+	returnType := self parseArgDesc: stream nextWord environment: aNamespace.
 	descriptor addLast: returnType key.
 	descriptor addLast: 0.
 	literals := OrderedCollection new.
@@ -524,7 +547,7 @@ parseDescriptor: aString
 	stream skipSeparators.
 	[stream atEnd] whileFalse: 
 			[| argType |
-			argType := self parseArgDesc: stream nextWord.
+			argType := self parseArgDesc: stream nextWord environment: aNamespace.
 			argCount := argCount + 1.
 			descriptor addLast: argType key.
 			argType value notNil
@@ -534,30 +557,31 @@ parseDescriptor: aString
 	descriptor at: 2 put: argCount.
 	^{descriptor. literals}!
 
-parseDoubleIndirection: assoc typeName: typeName
+parseDoubleIndirection: assoc typeName: typeName environment: aNamespace
 	| pointerType |
 	pointerType := assoc value.
 	"If indirection type is #lppvoid or an indirection class, then cannot doubly indirect it"
 	(pointerType = ExtCallArgLPPVOID or: 
-			[pointerType isInteger not
-				and: [assoc key == ExtCallArgSTRUCT and: [pointerType asQualifiedReference value isIndirection]]])
+			[pointerType isInteger not and: 
+					[assoc key == ExtCallArgSTRUCT
+						and: [(BindingReference pathString: pointerType home: aNamespace) value isIndirection]]])
 		ifTrue: 
 			[^self error: ('<1s>: Only one further level of indirection to an indirection type is possible'
 						expandMacrosWith: typeName)].
 	^ExtCallArgLPPVOID -> nil!
 
-parsePointerToStruct: anAssociation
+parsePointerToStruct: anAssociation environment: aNamespace
 	| structClass |
-	structClass := anAssociation value asQualifiedReference value.
+	structClass := (BindingReference pathString: anAssociation value home: aNamespace) value.
 	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
-			[(#{IUnknown} valueOrNil
+			[(#{Smalltalk.IUnknown} valueOrNil
 				ifNil: [ExtCallArgLP]
 				ifNotNil: [:unkClass | (structClass includesBehavior: unkClass) ifTrue: [ExtCallArgCOMPTR] ifFalse: [ExtCallArgLP]])
 					-> structClass]!
 
-parseSingleIndirection: anAssociation
+parseSingleIndirection: anAssociation environment: aNamespace
 	| pointerType |
 	pointerType := anAssociation value.
 	pointerType isNil
@@ -565,12 +589,12 @@ parseSingleIndirection: anAssociation
 			[^self error: ('<1s> cannot be further indirected'
 						expandMacrosWith: (self nameOf: anAssociation key type: anAssociation value))].
 	^pointerType isInteger not
-		ifTrue: [self parsePointerToStruct: anAssociation]
+		ifTrue: [self parsePointerToStruct: anAssociation environment: aNamespace]
 		ifFalse: [pointerType -> nil]!
 
-parseStructArg: assoc
+parseStructArg: assoc environment: aNamespace
 	| structClass |
-	structClass := assoc value asQualifiedReference value.
+	structClass := (BindingReference pathString: assoc value home: aNamespace) value.
 	^(structClass isIndirection
 		ifTrue: [ExtCallArgLP]
 		ifFalse: 
@@ -581,12 +605,12 @@ parseStructArg: assoc
 				ifFalse: [bytes <= 8 ifTrue: [ExtCallArgSTRUCT8] ifFalse: [ExtCallArgSTRUCT]]])
 			-> structClass!
 
-parseValueType: assoc 
-	assoc key == ExtCallArgSTRUCT ifTrue: [^self parseStructArg: assoc].
+parseValueType: assoc environment: aNamespace
+	assoc key == ExtCallArgSTRUCT ifTrue: [^self parseStructArg: assoc environment: aNamespace].
 	^assoc key -> nil!
 
-referenceTypeFor: valueType 
-	^ExternalReferenceTypes at: valueType + 1!
+referenceTypeFor: valueType
+	^ReferenceTypes at: valueType + 1!
 
 returnType: retString argumentTypes: argString
 	"Answer an instance of the receiver instantiated from the argument, which
@@ -619,44 +643,47 @@ typeFromName: typeName
 
 	^self typeFromName: typeName ifAbsent: [self errorNotFound: typeName]!
 
-typeFromName: typeName ifAbsent: exceptionHandler 
+typeFromName: typeName ifAbsent: exceptionHandler
 	"Answer the type code for the specified <readableString> type name, 
 	or the result of executing the niladic valuable, exceptionHandler, if the
 	type is not recognised."
 
-	^ExternalValueTypes at: typeName ifAbsent: [^exceptionHandler value]!
+	^ValueTypes at: typeName ifAbsent: [^exceptionHandler value]!
 
 typeHasArgument: ordinalType
 	"Private - Answer whether the specified type (identified by ordinal) has an argument
 	accompanying it."
 
 	^ordinalType >= ExtCallArgSTRUCT! !
-!ExternalDescriptor class categoriesFor: #argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #callingConvention:returnType:argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #conventionFromName:!constants!public! !
-!ExternalDescriptor class categoriesFor: #descriptor:literals:!instance creation!private! !
-!ExternalDescriptor class categoriesFor: #fromString:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #initialize!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeCallingConventions!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeExternalRefTypes!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeExternalTypes!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #isPointerToStruct:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #nameOf:type:!constants!public! !
-!ExternalDescriptor class categoriesFor: #nameOfConvention:!constants!public! !
-!ExternalDescriptor class categoriesFor: #newFromString:!instance creation!private! !
-!ExternalDescriptor class categoriesFor: #parseArgDesc:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseCallingConvention:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseDescriptor:!parsing!public! !
-!ExternalDescriptor class categoriesFor: #parseDoubleIndirection:typeName:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #parsePointerToStruct:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseSingleIndirection:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #parseStructArg:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseValueType:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #referenceTypeFor:!parsing!public! !
-!ExternalDescriptor class categoriesFor: #returnType:argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #sizeOf:type:!constants!private! !
-!ExternalDescriptor class categoriesFor: #structTypeForSize:!constants!private! !
-!ExternalDescriptor class categoriesFor: #typeFromName:!constants!public! !
-!ExternalDescriptor class categoriesFor: #typeFromName:ifAbsent:!constants!public! !
-!ExternalDescriptor class categoriesFor: #typeHasArgument:!enquiries!private! !
+!External.Descriptor class categoriesFor: #argumentTypes:!instance creation!public! !
+!External.Descriptor class categoriesFor: #callingConvention:returnType:argumentTypes:!instance creation!public! !
+!External.Descriptor class categoriesFor: #conventionFromName:!constants!public! !
+!External.Descriptor class categoriesFor: #descriptor:literals:!instance creation!private! !
+!External.Descriptor class categoriesFor: #fromString:!instance creation!public! !
+!External.Descriptor class categoriesFor: #fromString:environment:!instance creation!public! !
+!External.Descriptor class categoriesFor: #initialize!development!initializing!private! !
+!External.Descriptor class categoriesFor: #initializeCallingConventions!development!initializing!private! !
+!External.Descriptor class categoriesFor: #initializeExternalRefTypes!development!initializing!private! !
+!External.Descriptor class categoriesFor: #initializeExternalTypes!development!initializing!private! !
+!External.Descriptor class categoriesFor: #isPointerToStruct:!helpers!private! !
+!External.Descriptor class categoriesFor: #nameOf:type:!constants!public! !
+!External.Descriptor class categoriesFor: #nameOfConvention:!constants!public! !
+!External.Descriptor class categoriesFor: #newFromString:!instance creation!private! !
+!External.Descriptor class categoriesFor: #newFromString:environment:!instance creation!private! !
+!External.Descriptor class categoriesFor: #oneStringArg!instance creation!public! !
+!External.Descriptor class categoriesFor: #parseArgDesc:environment:!parsing!private! !
+!External.Descriptor class categoriesFor: #parseCallingConvention:!parsing!private! !
+!External.Descriptor class categoriesFor: #parseDescriptor:environment:!parsing!private! !
+!External.Descriptor class categoriesFor: #parseDoubleIndirection:typeName:environment:!helpers!private! !
+!External.Descriptor class categoriesFor: #parsePointerToStruct:environment:!parsing!private! !
+!External.Descriptor class categoriesFor: #parseSingleIndirection:environment:!helpers!private! !
+!External.Descriptor class categoriesFor: #parseStructArg:environment:!parsing!private! !
+!External.Descriptor class categoriesFor: #parseValueType:environment:!parsing!private! !
+!External.Descriptor class categoriesFor: #referenceTypeFor:!parsing!public! !
+!External.Descriptor class categoriesFor: #returnType:argumentTypes:!instance creation!public! !
+!External.Descriptor class categoriesFor: #sizeOf:type:!constants!private! !
+!External.Descriptor class categoriesFor: #structTypeForSize:!constants!private! !
+!External.Descriptor class categoriesFor: #typeFromName:!constants!public! !
+!External.Descriptor class categoriesFor: #typeFromName:ifAbsent:!constants!public! !
+!External.Descriptor class categoriesFor: #typeHasArgument:!enquiries!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WriteStream subclass: #ReadWriteStream
+Core.WriteStream subclass: #'Core.ReadWriteStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReadWriteStream guid: (GUID fromString: '{87b4c6fd-026e-11d3-9fd7-00a0cc3e4a32}')!
-ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream that represents an accessor that can both read and write elements into its collection. It supports all the protocol of both ReadStream and WriteStream.
+Core.ReadWriteStream guid: (Core.GUID fromString: '{87b4c6fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream that represents an accessor that can both read and write elements into its collection. It supports all the protocol of both ReadStream and WriteStream.
 '!
-!ReadWriteStream categoriesForClass!Collections-Streams! !
-!ReadWriteStream methodsFor!
+!Core.ReadWriteStream categoriesForClass!Collections-Streams! !
+!Core.ReadWriteStream methodsFor!
 
 basicNext
 	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
@@ -81,14 +81,14 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
-!ReadWriteStream categoriesFor: #basicNext!accessing!public! !
-!ReadWriteStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!ReadWriteStream categoriesFor: #contents!accessing!public! !
-!ReadWriteStream categoriesFor: #isReadable!public!testing! !
-!ReadWriteStream categoriesFor: #next!accessing!public! !
-!ReadWriteStream categoriesFor: #nextAvailable!accessing!public! !
+!Core.ReadWriteStream categoriesFor: #basicNext!accessing!public! !
+!Core.ReadWriteStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Core.ReadWriteStream categoriesFor: #contents!accessing!public! !
+!Core.ReadWriteStream categoriesFor: #isReadable!public!testing! !
+!Core.ReadWriteStream categoriesFor: #next!accessing!public! !
+!Core.ReadWriteStream categoriesFor: #nextAvailable!accessing!public! !
 
-ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
+Core.ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
 
-ReadWriteStream class methodProtocol: #'ReadWriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
+Core.ReadWriteStream class methodProtocol: #'ReadWriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
 

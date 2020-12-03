@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Collection variableSubclass: #Set
+Core.Collection variableSubclass: #'Core.Set'
 	instanceVariableNames: 'tally'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MaxOffsetIndex' -> 16r402.
-		'PrimeSizes' -> #(2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101027 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617).
+		'PrimeSizes' -> #(16r815 16r8BD 16r977 16rA39 16rAED 16rBB7 16rC5F 16rD1F 16rDD3 16rE8F 16rF47 16r1159 16r12B3 16r13FF 16r155F 16r16A9 16r17FF 16r1979 16r1AAB 16r1C09 16r1D5D 16r1EAD 16r224F 16r2581 16r2803 16r2A73 16r2D1D 16r2FCF 16r3277 16r356F 16r37D5 16r3AA5 16r3D73 16r44A1 16r4A6B 16r4FDB 16r5507 16r5A77 16r6023 16r64F7 16r6B05 16r6F9B 16r755F 16r7AA5 16r8BBB 16r9539 16r9F89 16rABC5 16rB629 16rBF5D 16rC9AF 16rD463 16rE005 16rEAEB 16rF5F9 16r113BD 16r1293B 16r139DB 16r14F53 16r16249 16r1762F 16r18AA3 16r19F15 16r1B227 16r1C441 16r1D773 16r1ED67 16r2263F 16r24BFB 16r274C9 16r29A3D 16r2C3FB 16r2E8FD 16r313B5 16r33BB3 16r36043 16r38C8F 16r3B4B9 16r3D633 16r44DE9 16r49745 16r4E99D 16r534EB 16r58771 16r5DAC1 16r62003 16r6740F 16r6C35F 16r71837 16r75AF1 16r7B0CB 16r895BD 16r93E53 16r9E1EB 16rA6687 16rB0AA7 16rBA5AB 16rC5545 16rCE3A5 16rD8593 16rE239F 16rEC23D 16rF7B59).
 		'SmallPrimeOffsets' -> #[0 0 0 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 4 2 0 8 6 4 2 0 6 4 2 0 2 0 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 4 2 0 2 0 4 2 0 4 2 0 0 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 10 8 6 4 2 0 2 0 0 2 0 4 2 0 0 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 16 14 12 10 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 10 8 6 4 2 0 10 8 6 4 2 0 4 2 0 12 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 2 0 6 4 2 0 4 2 0 2 0 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 4 2 0 2 0 18 16 14 12 10 8 6 4 2 0 2 0 16 14 12 10 8 6 4 2 0 6 4 2 0 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 8 6 4 2 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 2 0 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 4 2 0 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 10 8 6 4 2 0 6 4 2 0 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 0 2 0 4 2 0 16 14 12 10 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 8 6 4 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 16 14 12 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 4 2 0 8 6 4 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 16 14 12 10 8 6 4 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0]
 	}!
-Set guid: (GUID fromString: '{87b4c50b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Set comment: 'Set is a generic collection class which represents an unordered, extensible/contractible, collection, accessible only by value, not by external keys. Element comparison is by equality (i.e. using #hash and #=).'!
-!Set categoriesForClass!Collections-Unordered! !
-!Set methodsFor!
+Core.Set guid: (Core.GUID fromString: '{87b4c50b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Set comment: 'Set is a generic collection class which represents an unordered, extensible/contractible, collection, accessible only by value, not by external keys. Element comparison is by equality (i.e. using #hash and #=).'!
+!Core.Set categoriesForClass!Collections-Unordered! !
+!Core.Set methodsFor!
 
 - others
 	"Answer a <Set> containing the elements of the receiver that are 
@@ -217,7 +217,7 @@ findElementOrNil: anObject
 
 	| capacity index |
 	index := anObject hash \\ (capacity := self basicSize) + 1.
-	
+
 	[| element |
 	(element := self basicAt: index) isNil or: [anObject = element]]
 			whileFalse: [index := index \\ capacity + 1].
@@ -400,55 +400,55 @@ uncheckedAdd: newObject
 
 	tally := tally + 1.
 	^self basicAt: (self findElementOrNil: newObject) put: newObject! !
-!Set categoriesFor: #-!public!removing! !
-!Set categoriesFor: #_deepCopy:!copying!private! !
-!Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Set categoriesFor: #=!comparing!public! !
-!Set categoriesFor: #add:!adding!public! !
-!Set categoriesFor: #addIfAbsent:!adding!public! !
-!Set categoriesFor: #addNewElement:!adding!public! !
-!Set categoriesFor: #approxSize!accessing!private! !
-!Set categoriesFor: #asSet!converting!public! !
-!Set categoriesFor: #at:!accessing!public! !
-!Set categoriesFor: #at:put:!accessing!public! !
-!Set categoriesFor: #averageProbesPerElement!development!public!statistics! !
-!Set categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Set categoriesFor: #collisions!development!public!statistics! !
-!Set categoriesFor: #copyElementsInto:!mutating!private! !
-!Set categoriesFor: #copyWithoutDuplicates!copying!public! !
-!Set categoriesFor: #distinct!public!set operations! !
-!Set categoriesFor: #do:!enumerating!public! !
-!Set categoriesFor: #elements!accessing!private! !
-!Set categoriesFor: #elements:!initializing!private! !
-!Set categoriesFor: #equals:!comparing!public! !
-!Set categoriesFor: #find:!public!searching! !
-!Set categoriesFor: #find:ifAbsent:!public!searching! !
-!Set categoriesFor: #findElementOrNil:!private!searching! !
-!Set categoriesFor: #fixCollisionsFrom:!private!removing! !
-!Set categoriesFor: #grow!helpers!private! !
-!Set categoriesFor: #hash:max:!private!searching! !
-!Set categoriesFor: #identityIncludes:!public!searching! !
-!Set categoriesFor: #includes:!public!searching! !
-!Set categoriesFor: #initialize!initializing!private! !
-!Set categoriesFor: #isHealthy!public! !
-!Set categoriesFor: #moveFrom:to:!private!removing! !
-!Set categoriesFor: #occurrencesOf:!public!searching! !
-!Set categoriesFor: #postResize:!adding!private! !
-!Set categoriesFor: #preResize:!adding!private! !
-!Set categoriesFor: #privateAt:put:!accessing!private! !
-!Set categoriesFor: #rehash!operations!public! !
-!Set categoriesFor: #remove:ifAbsent:!public!removing! !
-!Set categoriesFor: #removeAll!public! !
-!Set categoriesFor: #removeIndex:!private!removing! !
-!Set categoriesFor: #resize:!mutating!private! !
-!Set categoriesFor: #shrink!mutating!public! !
-!Set categoriesFor: #size!accessing!public! !
-!Set categoriesFor: #stbSaveOn:!binary filing!public! !
-!Set categoriesFor: #uncheckedAdd:!adding!private! !
+!Core.Set categoriesFor: #-!public!removing! !
+!Core.Set categoriesFor: #_deepCopy:!copying!private! !
+!Core.Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
+!Core.Set categoriesFor: #=!comparing!public! !
+!Core.Set categoriesFor: #add:!adding!public! !
+!Core.Set categoriesFor: #addIfAbsent:!adding!public! !
+!Core.Set categoriesFor: #addNewElement:!adding!public! !
+!Core.Set categoriesFor: #approxSize!accessing!private! !
+!Core.Set categoriesFor: #asSet!converting!public! !
+!Core.Set categoriesFor: #at:!accessing!public! !
+!Core.Set categoriesFor: #at:put:!accessing!public! !
+!Core.Set categoriesFor: #averageProbesPerElement!development!public!statistics! !
+!Core.Set categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
+!Core.Set categoriesFor: #collisions!development!public!statistics! !
+!Core.Set categoriesFor: #copyElementsInto:!mutating!private! !
+!Core.Set categoriesFor: #copyWithoutDuplicates!copying!public! !
+!Core.Set categoriesFor: #distinct!public!set operations! !
+!Core.Set categoriesFor: #do:!enumerating!public! !
+!Core.Set categoriesFor: #elements!accessing!private! !
+!Core.Set categoriesFor: #elements:!initializing!private! !
+!Core.Set categoriesFor: #equals:!comparing!public! !
+!Core.Set categoriesFor: #find:!public!searching! !
+!Core.Set categoriesFor: #find:ifAbsent:!public!searching! !
+!Core.Set categoriesFor: #findElementOrNil:!private!searching! !
+!Core.Set categoriesFor: #fixCollisionsFrom:!private!removing! !
+!Core.Set categoriesFor: #grow!helpers!private! !
+!Core.Set categoriesFor: #hash:max:!private!searching! !
+!Core.Set categoriesFor: #identityIncludes:!public!searching! !
+!Core.Set categoriesFor: #includes:!public!searching! !
+!Core.Set categoriesFor: #initialize!initializing!private! !
+!Core.Set categoriesFor: #isHealthy!public! !
+!Core.Set categoriesFor: #moveFrom:to:!private!removing! !
+!Core.Set categoriesFor: #occurrencesOf:!public!searching! !
+!Core.Set categoriesFor: #postResize:!adding!private! !
+!Core.Set categoriesFor: #preResize:!adding!private! !
+!Core.Set categoriesFor: #privateAt:put:!accessing!private! !
+!Core.Set categoriesFor: #rehash!operations!public! !
+!Core.Set categoriesFor: #remove:ifAbsent:!public!removing! !
+!Core.Set categoriesFor: #removeAll!public! !
+!Core.Set categoriesFor: #removeIndex:!private!removing! !
+!Core.Set categoriesFor: #resize:!mutating!private! !
+!Core.Set categoriesFor: #shrink!mutating!public! !
+!Core.Set categoriesFor: #size!accessing!public! !
+!Core.Set categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Set categoriesFor: #uncheckedAdd:!adding!private! !
 
-Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
+Core.Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
-!Set class methodsFor!
+!Core.Set class methodsFor!
 
 defaultCapacity
 	^2!
@@ -465,7 +465,7 @@ initialize
 	byte array limits the table size since at some point the offset to the next prime will be
 	greater than 255."
 	max := 2053.
-	primes := self preferredSizesFrom: (Integer primesUpTo: max + 255) .
+	primes := self preferredSizesFrom: (Integer primesUpTo: max + 255).
 	count := max bitShift: -1.
 	smallPrimeOffsets := ByteArray new: count.
 	last := 1.
@@ -474,7 +474,7 @@ initialize
 			[:i |
 			| n p |
 			n := (i bitShift: 1) bitOr: 1.
-			[(p := primes at: last) >= n ] whileFalse: [last := last + 1].
+			[(p := primes at: last) >= n] whileFalse: [last := last + 1].
 			smallPrimeOffsets at: i put: p - n].	"Good prime sizes for larger tables"
 	largePrimeSizes := #(1129 1151 1543 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101027 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)
 				select: [:each | each > (primes at: last)].
@@ -514,7 +514,7 @@ preferredSizesFrom: aCollection
 				addAll: #(431 1609 101051);
 				addAll: #(11 13 83 1123 5333);
 				yourself) includes: each)
-				or: [each > 256 and: [avoidFactorsOf anySatisfy: [:m | m \\ each == 0]]]]!
+				or: [each > 256 and: [avoidFactorsOf anySatisfy: [:m | m \\ each == 0]]]	"Some primes to avoid as they nearly divide into one of our hash multipliers, 48271, or 16777619"]!
 
 sizeFor: anInteger
 	"Private - Answer the size of Set that should be created to hold anInteger elements.
@@ -542,12 +542,12 @@ sizeFor: anInteger
 	low > high]
 			whileFalse: [(PrimeSizes at: index) < n ifTrue: [low := index + 1] ifFalse: [high := index - 1]].
 	^PrimeSizes at: low! !
-!Set class categoriesFor: #defaultCapacity!constants!private! !
-!Set class categoriesFor: #initialize!development!initializing!private! !
-!Set class categoriesFor: #new!instance creation!public! !
-!Set class categoriesFor: #new:!instance creation!public! !
-!Set class categoriesFor: #preferredSizesFrom:!development!initializing!private! !
-!Set class categoriesFor: #sizeFor:!instance creation!private! !
+!Core.Set class categoriesFor: #defaultCapacity!constants!private! !
+!Core.Set class categoriesFor: #initialize!development!initializing!private! !
+!Core.Set class categoriesFor: #new!instance creation!public! !
+!Core.Set class categoriesFor: #new:!instance creation!public! !
+!Core.Set class categoriesFor: #preferredSizesFrom:!development!initializing!private! !
+!Core.Set class categoriesFor: #sizeFor:!instance creation!private! !
 
-Set class methodProtocol: #'Set factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.Set class methodProtocol: #'Set factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

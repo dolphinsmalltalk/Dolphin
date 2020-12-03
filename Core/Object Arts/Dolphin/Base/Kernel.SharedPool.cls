@@ -1,46 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Namespace subclass: #SharedPool
+Kernel.Namespace subclass: #'Kernel.SharedPool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SharedPool guid: (GUID fromString: '{bcc094b0-f447-4e0c-a96b-884f8324757d}')!
-SharedPool comment: '`Namespace` for shared pool variables.
+Kernel.SharedPool guid: (Core.GUID fromString: '{bcc094b0-f447-4e0c-a96b-884f8324757d}')!
+Kernel.SharedPool isNonInstantiable: true!
+Kernel.SharedPool comment: 'Abstract base for the special `Namespace`s that contain only shared pool constants. These classes replace `PoolConstantsDictionary` instances.
 
-Functionality here will be pushed up. It may disappear.'!
-!SharedPool categoriesForClass!Kernel-Objects! !
-!SharedPool class methodsFor!
+Shared pool variables that are not constant are no longer explicitly supported. Public class variables are recommended for this purpose, although mutable variables can be added to SharedPools from the class initialize method (for example).
 
-add: anAssociation
-	self at: anAssociation key put: anAssociation value.
-	^anAssociation!
-
-associationAt: key
-	"Answer the association named by the argument, key.  If key is not found,
-	raise an exception."
-
-	^self classPool associationAt: key!
-
-associationAt: key ifAbsent: aNiladicValuable
-	^self classPool associationAt: key ifAbsent: aNiladicValuable!
-
-associationsDo: aMonadicValuable 
-	self classPool associationsDo: aMonadicValuable!
-
-at: aString
-	^self classPool at: (self keyString: aString)!
-
-at: aString ifAbsent: aNiladicValuable
-	^self classPool at: (self keyString: aString) ifAbsent: aNiladicValuable!
+In most cases, the shared pool constants will have a literal form (or at least a self-evaluating form), so they can be represented directly in the pool class definition. Where this is not the case, the constants must be added and initialized from the class initialize method. If this is not done, the values will not be preserved by file-out/file-in.'!
+!Kernel.SharedPool categoriesForClass!Kernel-Objects! !
+!Kernel.SharedPool class methodsFor!
 
 at: aString ifAbsentPut: operation
 	"Answer the value of the receiver's named binding. If aString does not name one of the receiver's bindings, then a new constant binding of that name with the value that is the result of evaluating the <niladicValuable>, operation, and answer the value."
 
 	| keyString |
 	keyString := self keyString: aString.
-	^self classPool at: keyString
+	^classPool at: keyString
 		ifAbsent: [(self addClassConstant: keyString value: operation value) value]!
 
 at: aString put: anObject
@@ -49,19 +30,15 @@ at: aString put: anObject
 	self addClassConstant: (self keyString: aString) value: anObject.
 	^anObject!
 
-bindingsDo: aMonadicValuable 
-	self classPool associationsDo: aMonadicValuable!
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	^Smalltalk!
 
 classesReferencing
 	| ref |
 	ref := self instanceClass asQualifiedReference.
 	^Smalltalk allClasses select: [:c | c allImports includes: ref]!
-
-includesKey: aString 
-	^self classPool includesKey: (self keyString: aString)!
-
-isEmpty
-	^self classPool isEmpty!
 
 isValidKey: aString
 	^aString notEmpty and: 
@@ -70,57 +47,28 @@ isValidKey: aString
 			(initial == $_ or: [initial isLetter])
 				and: [aString allSatisfy: [:each | each == $_ or: [each isAlphaNumeric]]]]!
 
-keyAtValue: anObject
-	^self classPool keyAtValue: anObject!
-
-keys
-	^self classPool keys!
-
 keyString: anObject
 	| answer |
 	answer := anObject asString.
 	(self isValidKey: answer) ifFalse: [^self error: ('Invalid key: <1p>' expandMacrosWith: answer)].
 	^answer!
 
-localEnvironment
-	"Answer the nearest Namespace scope."
-
-	^self!
-
-newAssociation: aString value: anObject
-	^self classPool newAssociation: aString value: anObject!
-
-removeKey: aString 
-	^self classPool removeKey: aString!
-
-size
-	^self classPool size!
-
 subclass: aSymbol
 	^self
 		subclass: aSymbol
 		instanceVariableNames: ''
 		classVariableNames: ''
-		imports: #()! !
-!SharedPool class categoriesFor: #add:!adding!public! !
-!SharedPool class categoriesFor: #associationAt:!accessing!public! !
-!SharedPool class categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!SharedPool class categoriesFor: #associationsDo:!enumerating!public! !
-!SharedPool class categoriesFor: #at:!accessing!public! !
-!SharedPool class categoriesFor: #at:ifAbsent:!accessing!public! !
-!SharedPool class categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
-!SharedPool class categoriesFor: #at:put:!adding!development!public! !
-!SharedPool class categoriesFor: #bindingsDo:!enumerating!public! !
-!SharedPool class categoriesFor: #classesReferencing!development!private! !
-!SharedPool class categoriesFor: #includesKey:!testing!public! !
-!SharedPool class categoriesFor: #isEmpty!testing|public! !
-!SharedPool class categoriesFor: #isValidKey:!adding!private! !
-!SharedPool class categoriesFor: #keyAtValue:!accessing!public! !
-!SharedPool class categoriesFor: #keys!accessing!public! !
-!SharedPool class categoriesFor: #keyString:!adding!private! !
-!SharedPool class categoriesFor: #localEnvironment!accessing!public! !
-!SharedPool class categoriesFor: #newAssociation:value:!public! !
-!SharedPool class categoriesFor: #removeKey:!public!removing! !
-!SharedPool class categoriesFor: #size!accessing!public! !
-!SharedPool class categoriesFor: #subclass:!class hierarchy-adding!public! !
+		imports: #()!
+
+variableAdded: aVariableBinding
+	aVariableBinding isImmutable: true.
+	super variableAdded: aVariableBinding! !
+!Kernel.SharedPool class categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
+!Kernel.SharedPool class categoriesFor: #at:put:!adding!development!public! !
+!Kernel.SharedPool class categoriesFor: #baseEnvironment!constants!private! !
+!Kernel.SharedPool class categoriesFor: #classesReferencing!development!private! !
+!Kernel.SharedPool class categoriesFor: #isValidKey:!adding!private! !
+!Kernel.SharedPool class categoriesFor: #keyString:!adding!private! !
+!Kernel.SharedPool class categoriesFor: #subclass:!class hierarchy-adding!public! !
+!Kernel.SharedPool class categoriesFor: #variableAdded:!class hierarchy-mutating!class variables!private! !
 

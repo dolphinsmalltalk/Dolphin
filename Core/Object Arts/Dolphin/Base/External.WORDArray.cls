@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #WORDArray
+External.ExternalArray subclass: #'External.WORDArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WORDArray guid: (GUID fromString: '{87b4c5a6-026e-11d3-9fd7-00a0cc3e4a32}')!
-WORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 16-bit unsigned integers.'!
-!WORDArray categoriesForClass!External-Data-Structured! !
-!WORDArray methodsFor!
+External.WORDArray guid: (Core.GUID fromString: '{87b4c5a6-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.WORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 16-bit unsigned integers.'!
+!External.WORDArray categoriesForClass!External-Data-Structured! !
+!External.WORDArray methodsFor!
 
 uncheckedAt: anInteger 
 	"Private - Answer an 16-bit unsigned <SmallInteger> representing the element of the 
@@ -22,14 +22,14 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes wordAtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
-!WORDArray categoriesFor: #uncheckedAt:!accessing!private! !
-!WORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.WORDArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.WORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!WORDArray class methodsFor!
+!External.WORDArray class methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^WORD! !
-!WORDArray class categoriesFor: #elementClass!constants!public! !
+!External.WORDArray class categoriesFor: #elementClass!constants!public! !
 

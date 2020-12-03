@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StackFrame subclass: #BlockFrame
+Kernel.StackFrame subclass: #'Kernel.BlockFrame'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockFrame guid: (GUID fromString: '{87b4c6e5-026e-11d3-9fd7-00a0cc3e4a32}')!
-BlockFrame comment: ''!
-!BlockFrame categoriesForClass!Kernel-Methods! !
-!BlockFrame methodsFor!
+Kernel.BlockFrame guid: (Core.GUID fromString: '{87b4c6e5-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.BlockFrame comment: ''!
+!Kernel.BlockFrame categoriesForClass!Kernel-Methods! !
+!Kernel.BlockFrame methodsFor!
 
 argumentCount
 	"Private - Answer the number of arguments to the receivers stack frame, this will 
@@ -23,7 +23,7 @@ block
 	^context class == BlockClosure ifTrue: [context] ifFalse: [context block]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: '[] in '.
 	super displayOn: aPuttableStream!
@@ -50,9 +50,9 @@ method: aCompiledMethod
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
-!BlockFrame categoriesFor: #argumentCount!accessing!public! !
-!BlockFrame categoriesFor: #block!accessing!private! !
-!BlockFrame categoriesFor: #displayOn:!printing!public! !
-!BlockFrame categoriesFor: #isBlockFrame!private!testing! !
-!BlockFrame categoriesFor: #method:!accessing!private! !
+!Kernel.BlockFrame categoriesFor: #argumentCount!accessing!public! !
+!Kernel.BlockFrame categoriesFor: #block!accessing!private! !
+!Kernel.BlockFrame categoriesFor: #displayOn:!printing!public! !
+!Kernel.BlockFrame categoriesFor: #isBlockFrame!private!testing! !
+!Kernel.BlockFrame categoriesFor: #method:!accessing!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-EventsCollection variableSubclass: #NullEventsCollection
+Kernel.EventsCollection variableSubclass: #'Kernel.NullEventsCollection'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NullEventsCollection guid: (GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
-NullEventsCollection comment: 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
-!NullEventsCollection categoriesForClass!Kernel-Objects! !
-!NullEventsCollection methodsFor!
+Kernel.NullEventsCollection guid: (Core.GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
+Kernel.NullEventsCollection comment: 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
+!Kernel.NullEventsCollection categoriesForClass!Kernel-Objects! !
+!Kernel.NullEventsCollection methodsFor!
 
 asMinimumRepresentation
 	"Private - Answers nil if the receiver is empty, otherwise self."
@@ -64,24 +64,24 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^nil! !
-!NullEventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
-!NullEventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
-!NullEventsCollection categoriesFor: #initialize!initializing!private! !
-!NullEventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
-!NullEventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
-!NullEventsCollection categoriesFor: #shrink!private!removing! !
-!NullEventsCollection categoriesFor: #triggerEvent:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:with:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:with:with:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:withArguments:!private!triggering! !
+!Kernel.NullEventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
+!Kernel.NullEventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
+!Kernel.NullEventsCollection categoriesFor: #initialize!initializing!private! !
+!Kernel.NullEventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
+!Kernel.NullEventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
+!Kernel.NullEventsCollection categoriesFor: #shrink!private!removing! !
+!Kernel.NullEventsCollection categoriesFor: #triggerEvent:!private!triggering! !
+!Kernel.NullEventsCollection categoriesFor: #triggerEvent:with:!private!triggering! !
+!Kernel.NullEventsCollection categoriesFor: #triggerEvent:with:with:!private!triggering! !
+!Kernel.NullEventsCollection categoriesFor: #triggerEvent:withArguments:!private!triggering! !
 
-!NullEventsCollection class methodsFor!
+!Kernel.NullEventsCollection class methodsFor!
 
 current
 	^Current!
 
 initialize
 	Current := self new! !
-!NullEventsCollection class categoriesFor: #current!accessing!public! !
-!NullEventsCollection class categoriesFor: #initialize!initializing!public! !
+!Kernel.NullEventsCollection class categoriesFor: #current!accessing!public! !
+!Kernel.NullEventsCollection class categoriesFor: #initialize!initializing!public! !
 

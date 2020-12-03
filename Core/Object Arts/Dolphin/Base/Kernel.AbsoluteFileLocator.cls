@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FileLocator subclass: #AbsoluteFileLocator
+Core.FileLocator subclass: #'Kernel.AbsoluteFileLocator'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbsoluteFileLocator guid: (GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
-AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
+Kernel.AbsoluteFileLocator guid: (Core.GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
+Kernel.AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.
 
 Try the following examples:
 
 relativePath := FileLocator absolute relativePathTo: SessionManager current imageFileName. "Display It"
 FileLocator absolute localFileSpecFor: relativePath. "Display It"'!
-!AbsoluteFileLocator categoriesForClass!System-Support! !
-!AbsoluteFileLocator methodsFor!
+!Kernel.AbsoluteFileLocator categoriesForClass!System-Support! !
+!Kernel.AbsoluteFileLocator methodsFor!
 
 localFileSpecFor: aStringFilename
 	"Answer a filespec for aStringFilename, which is expected to be an absolute path already."
@@ -29,18 +29,17 @@ relativePathTo: aFilename
 	specified <readableString> path, which the receiver can map back to a full
 	path via its #localFileSpecFor: method. In this case we need an absolute path."
 
-	^File fullPathOf: aFilename
-!
+	^File fullPathOf: aFilename!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!AbsoluteFileLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!AbsoluteFileLocator categoriesFor: #relativePathTo:!accessing!public! !
-!AbsoluteFileLocator categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.AbsoluteFileLocator categoriesFor: #localFileSpecFor:!accessing!public! !
+!Kernel.AbsoluteFileLocator categoriesFor: #relativePathTo:!accessing!public! !
+!Kernel.AbsoluteFileLocator categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!AbsoluteFileLocator class methodsFor!
+!Kernel.AbsoluteFileLocator class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver"
@@ -66,8 +65,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!AbsoluteFileLocator class categoriesFor: #current!accessing!public! !
-!AbsoluteFileLocator class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!AbsoluteFileLocator class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!AbsoluteFileLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.AbsoluteFileLocator class categoriesFor: #current!accessing!public! !
+!Kernel.AbsoluteFileLocator class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Kernel.AbsoluteFileLocator class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Kernel.AbsoluteFileLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

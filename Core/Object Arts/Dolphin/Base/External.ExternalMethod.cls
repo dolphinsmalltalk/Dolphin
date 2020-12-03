@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompiledMethod variableSubclass: #ExternalMethod
+Kernel.CompiledMethod variableSubclass: #'External.ExternalMethod'
 	instanceVariableNames: ''
 	classVariableNames: 'ArgsLenIndex ArgumentStartIndex CallingConventionIndex ReturnParmIndex ReturnTypeIndex'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalMethod guid: (GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
+External.ExternalMethod guid: (Core.GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
 
 The first literal of each ExternalMethod holds a <ByteArray> which contains a descriptor for the function call. The byte array format is understood by the <ExternalDescriptor> class, but essentially there are details of the return and argument types, the name of function, and space to cache the procedure address.
 '!
-!ExternalMethod categoriesForClass!Kernel-Methods! !
-!ExternalMethod methodsFor!
+!External.ExternalMethod categoriesForClass!Kernel-Methods! !
+!External.ExternalMethod methodsFor!
 
 argsLen
 	"Private - Answer the size of the argument description bytes in the receivers descriptor."
@@ -55,7 +55,7 @@ descriptor
 			[| type |
 			type := typeinfo at: i.
 			i := i - 1.
-			(descriptorClass typeHasArgument: type) 
+			(descriptorClass typeHasArgument: type)
 				ifTrue: 
 					[typeinfo at: i + 1 put: (typeinfo at: i).
 					typeinfo at: i put: type.
@@ -71,7 +71,7 @@ descriptorLiteral at: 11
 descriptorClass
 	"Private - Answer the class of descriptor to use for the receiver."
 
-	^ExternalDescriptor!
+	^Descriptor!
 
 descriptorLiteral
 	"Private - Answer the argument type descriptor literal from the receiver's 'literal frame'.
@@ -129,21 +129,21 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler.
 
 ! !
-!ExternalMethod categoriesFor: #argsLen!accessing!private! !
-!ExternalMethod categoriesFor: #argumentTypes!accessing!private! !
-!ExternalMethod categoriesFor: #clear!operations!private! !
-!ExternalMethod categoriesFor: #descriptor!accessing!private! !
-!ExternalMethod categoriesFor: #descriptorClass!constants!private! !
-!ExternalMethod categoriesFor: #descriptorLiteral!accessing!private! !
-!ExternalMethod categoriesFor: #functionName!accessing!private! !
-!ExternalMethod categoriesFor: #isExternalCall!private!testing! !
-!ExternalMethod categoriesFor: #isVirtualFunction!private!testing! !
-!ExternalMethod categoriesFor: #printOn:!development!printing!public! !
-!ExternalMethod categoriesFor: #procAddress!accessing!private! !
-!ExternalMethod categoriesFor: #returnType!accessing!private! !
-!ExternalMethod categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.ExternalMethod categoriesFor: #argsLen!accessing!private! !
+!External.ExternalMethod categoriesFor: #argumentTypes!accessing!private! !
+!External.ExternalMethod categoriesFor: #clear!operations!private! !
+!External.ExternalMethod categoriesFor: #descriptor!accessing!private! !
+!External.ExternalMethod categoriesFor: #descriptorClass!constants!private! !
+!External.ExternalMethod categoriesFor: #descriptorLiteral!accessing!private! !
+!External.ExternalMethod categoriesFor: #functionName!accessing!private! !
+!External.ExternalMethod categoriesFor: #isExternalCall!private!testing! !
+!External.ExternalMethod categoriesFor: #isVirtualFunction!private!testing! !
+!External.ExternalMethod categoriesFor: #printOn:!development!printing!public! !
+!External.ExternalMethod categoriesFor: #procAddress!accessing!private! !
+!External.ExternalMethod categoriesFor: #returnType!accessing!private! !
+!External.ExternalMethod categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!ExternalMethod class methodsFor!
+!External.ExternalMethod class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -171,5 +171,5 @@ initialize
 	ReturnTypeIndex := 8.
 	ReturnParmIndex := 7.
 	ArgumentStartIndex := 9! !
-!ExternalMethod class categoriesFor: #initialize!development!initializing!private! !
+!External.ExternalMethod class categoriesFor: #initialize!development!initializing!private! !
 

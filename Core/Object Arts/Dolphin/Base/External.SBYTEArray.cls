@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #SBYTEArray
+External.ExternalArray subclass: #'External.SBYTEArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SBYTEArray guid: (GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
-SBYTEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
-!SBYTEArray categoriesForClass!External-Data-Structured! !
-!SBYTEArray methodsFor!
+External.SBYTEArray guid: (Core.GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
+External.SBYTEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
+!External.SBYTEArray categoriesForClass!External-Data-Structured! !
+!External.SBYTEArray methodsFor!
 
 uncheckedAt: anInteger
 	"Private - Answer an 8-bit signed <SmallInteger> representing the element of the 
@@ -22,14 +22,14 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes sbyteAtOffset: indexInteger - 1 put: valueInteger! !
-!SBYTEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!SBYTEArray categoriesFor: #uncheckedAt:put:!private! !
+!External.SBYTEArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.SBYTEArray categoriesFor: #uncheckedAt:put:!private! !
 
-!SBYTEArray class methodsFor!
+!External.SBYTEArray class methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^BYTE! !
-!SBYTEArray class categoriesFor: #elementClass!constants!public! !
+!External.SBYTEArray class categoriesFor: #elementClass!constants!public! !
 

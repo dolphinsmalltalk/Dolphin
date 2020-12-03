@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Exception
+Core.Object subclass: #'Core.Exception'
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
-	imports: #(#{MessageBoxConstants} #{Win32Constants} #{Win32Errors})
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Exception guid: (GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
-Exception isAbstract: true!
-Exception comment: ''!
-!Exception categoriesForClass!Kernel-Exception Handling! !
-!Exception methodsFor!
+Core.Exception guid: (Core.GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Exception isNonInstantiable: true!
+Core.Exception comment: ''!
+!Core.Exception categoriesForClass!Kernel-Exception Handling! !
+!Core.Exception methodsFor!
 
 _descriptionArguments
 	"Answer a <sequencedReadableCollection> of the  arguments to be substitued 
@@ -185,7 +185,7 @@ description
 	^desc isEmpty ifTrue: ['An unknown <1p> has occurred' expandMacrosWith: self class] ifFalse: [desc]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| signallerText |
 	aPuttableStream nextPutAll: ((signallerText := self messageText) notNil
@@ -212,7 +212,7 @@ hresult
 	"Answer the <HRESULT> error code associated with the receiver.
 	Overridden by subclasses to answer more specified HRESULT codes."
 
-	^HRESULT fail!
+	^OS.HRESULT fail!
 
 ignore
 	"Perform the receiver's #resume action."
@@ -351,7 +351,7 @@ raisingFrame
 	
 	[| receiver |
 	receiver := frame receiver.
-	(receiver isKindOf: Exception) or: [receiver isKindOf: Exception class]] 
+	(receiver isKindOf: Exception) or: [receiver isKindOf: Exception class]]
 			whileTrue: [frame := frame sender].
 	^frame!
 
@@ -422,7 +422,7 @@ showMessage: aString style: anInteger
 	"Implementation Note: Avoid creating a dependency on MessageBox, as this class will always be required in an application even if MessageBox is not."
 
 	^#(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore)
-		at: (UserLibrary default
+		at: (OS.UserLibrary default
 				messageBox: nil
 				text: aString
 				caption: SessionManager current applicationName
@@ -517,65 +517,65 @@ toTrace: anInteger
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
 	traceStream flush! !
-!Exception categoriesFor: #_descriptionArguments!displaying!public! !
-!Exception categoriesFor: #_descriptionFormat!displaying!public! !
-!Exception categoriesFor: #_evaluateHandler:in:!debugger-step through!handling!private! !
-!Exception categoriesFor: #_propagate!debugger-step through!handling!private! !
-!Exception categoriesFor: #_propagateFrom:!debugger-step through!handling!private! !
-!Exception categoriesFor: #abort!handler responses!public! !
-!Exception categoriesFor: #abortRetryIgnore!handler responses!public! !
-!Exception categoriesFor: #abortRetryOrIgnore!handling!public! !
-!Exception categoriesFor: #beep!parping!public! !
-!Exception categoriesFor: #defaultAction!handling!public! !
-!Exception categoriesFor: #description!displaying!public! !
-!Exception categoriesFor: #displayOn:!printing!public! !
-!Exception categoriesFor: #exit:!handler responses!public! !
-!Exception categoriesFor: #hasTag!public!testing! !
-!Exception categoriesFor: #hresult!accessing!public! !
-!Exception categoriesFor: #ignore!handler responses!public! !
-!Exception categoriesFor: #isNested!public!testing! !
-!Exception categoriesFor: #isResumable!public!testing! !
-!Exception categoriesFor: #isSuppressible!accessing!public! !
-!Exception categoriesFor: #isUserResumable!public!testing! !
-!Exception categoriesFor: #messageText!accessing!public! !
-!Exception categoriesFor: #messageText:!accessing!debugger-step over!public! !
-!Exception categoriesFor: #okCancel!handler responses!public! !
-!Exception categoriesFor: #okToContinue!public!testing! !
-!Exception categoriesFor: #outer!handler responses!public! !
-!Exception categoriesFor: #pass!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #postCopy!copying!public! !
-!Exception categoriesFor: #printOn:!printing!public! !
-!Exception categoriesFor: #printTraceOn:!printing!public! !
-!Exception categoriesFor: #printTraceOn:depth:!printing!public! !
-!Exception categoriesFor: #raisingFrame!accessing!private! !
-!Exception categoriesFor: #resignalAs:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #resume!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #resume:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #retry!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #retryUsing:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #return!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #return:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #severityClass!constants!public! !
-!Exception categoriesFor: #showMessage:style:!helpers!private! !
-!Exception categoriesFor: #signal!debugger-step through!public!signalling! !
-!Exception categoriesFor: #signal:!debugger-step through!public!signalling! !
-!Exception categoriesFor: #signal:with:!public!signalling! !
-!Exception categoriesFor: #signalFrame!accessing!private! !
-!Exception categoriesFor: #signalType!accessing!private! !
-!Exception categoriesFor: #signalWith:!public!signalling! !
-!Exception categoriesFor: #stackTrace:!accessing!private! !
-!Exception categoriesFor: #tag!accessing!public! !
-!Exception categoriesFor: #tag:!accessing!private! !
-!Exception categoriesFor: #toTrace!accessing!public! !
-!Exception categoriesFor: #toTrace:!accessing!public! !
+!Core.Exception categoriesFor: #_descriptionArguments!displaying!public! !
+!Core.Exception categoriesFor: #_descriptionFormat!displaying!public! !
+!Core.Exception categoriesFor: #_evaluateHandler:in:!debugger-step through!handling!private! !
+!Core.Exception categoriesFor: #_propagate!debugger-step through!handling!private! !
+!Core.Exception categoriesFor: #_propagateFrom:!debugger-step through!handling!private! !
+!Core.Exception categoriesFor: #abort!handler responses!public! !
+!Core.Exception categoriesFor: #abortRetryIgnore!handler responses!public! !
+!Core.Exception categoriesFor: #abortRetryOrIgnore!handling!public! !
+!Core.Exception categoriesFor: #beep!parping!public! !
+!Core.Exception categoriesFor: #defaultAction!handling!public! !
+!Core.Exception categoriesFor: #description!displaying!public! !
+!Core.Exception categoriesFor: #displayOn:!printing!public! !
+!Core.Exception categoriesFor: #exit:!handler responses!public! !
+!Core.Exception categoriesFor: #hasTag!public!testing! !
+!Core.Exception categoriesFor: #hresult!accessing!public! !
+!Core.Exception categoriesFor: #ignore!handler responses!public! !
+!Core.Exception categoriesFor: #isNested!public!testing! !
+!Core.Exception categoriesFor: #isResumable!public!testing! !
+!Core.Exception categoriesFor: #isSuppressible!accessing!public! !
+!Core.Exception categoriesFor: #isUserResumable!public!testing! !
+!Core.Exception categoriesFor: #messageText!accessing!public! !
+!Core.Exception categoriesFor: #messageText:!accessing!debugger-step over!public! !
+!Core.Exception categoriesFor: #okCancel!handler responses!public! !
+!Core.Exception categoriesFor: #okToContinue!public!testing! !
+!Core.Exception categoriesFor: #outer!handler responses!public! !
+!Core.Exception categoriesFor: #pass!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #postCopy!copying!public! !
+!Core.Exception categoriesFor: #printOn:!printing!public! !
+!Core.Exception categoriesFor: #printTraceOn:!printing!public! !
+!Core.Exception categoriesFor: #printTraceOn:depth:!printing!public! !
+!Core.Exception categoriesFor: #raisingFrame!accessing!private! !
+!Core.Exception categoriesFor: #resignalAs:!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #resume!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #resume:!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #retry!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #retryUsing:!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #return!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #return:!debugger-step through!handler responses!public! !
+!Core.Exception categoriesFor: #severityClass!constants!public! !
+!Core.Exception categoriesFor: #showMessage:style:!helpers!private! !
+!Core.Exception categoriesFor: #signal!debugger-step through!public!signalling! !
+!Core.Exception categoriesFor: #signal:!debugger-step through!public!signalling! !
+!Core.Exception categoriesFor: #signal:with:!public!signalling! !
+!Core.Exception categoriesFor: #signalFrame!accessing!private! !
+!Core.Exception categoriesFor: #signalType!accessing!private! !
+!Core.Exception categoriesFor: #signalWith:!public!signalling! !
+!Core.Exception categoriesFor: #stackTrace:!accessing!private! !
+!Core.Exception categoriesFor: #tag!accessing!public! !
+!Core.Exception categoriesFor: #tag:!accessing!private! !
+!Core.Exception categoriesFor: #toTrace!accessing!public! !
+!Core.Exception categoriesFor: #toTrace:!accessing!public! !
 
-Exception methodProtocol: #Exception attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
-Exception methodProtocol: #exceptionBuilder attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #messageText: #signal #signal: #tag)!
-Exception methodProtocol: #exceptionDescription attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #signal #signal: #tag)!
-Exception methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
-Exception methodProtocol: #signaledException attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
+Core.Exception methodProtocol: #Exception attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
+Core.Exception methodProtocol: #exceptionBuilder attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #messageText: #signal #signal: #tag)!
+Core.Exception methodProtocol: #exceptionDescription attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #signal #signal: #tag)!
+Core.Exception methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
+Core.Exception methodProtocol: #signaledException attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
-!Exception class methodsFor!
+!Core.Exception class methodsFor!
 
 , anotherException
 	"Answer a new <exceptionSet> containing the receiver and the <exceptionSelector> 
@@ -589,7 +589,7 @@ beep
 
 	"Implementation Note: Use the MessageBeep() API directly to avoid creating a dependency on the Sound class."
 
-	UserLibrary default messageBeep: self mbIconId!
+	OS.UserLibrary default messageBeep: self mbIconId!
 
 handles: exception
 	"Answer whether the receiver matches the <exceptionDescription>, exception, and 
@@ -645,18 +645,18 @@ signalWith: signallerTag
 	resumable, and the handler which catches it directs that it should be resumed."
 
 	^self signal: nil with: signallerTag! !
-!Exception class categoriesFor: #,!filtering!public! !
-!Exception class categoriesFor: #beep!parping!public! !
-!Exception class categoriesFor: #handles:!filtering!public! !
-!Exception class categoriesFor: #mbIconId!constants!private! !
-!Exception class categoriesFor: #new!debugger-step through!instance creation!public! !
-!Exception class categoriesFor: #signal!instance creation!public! !
-!Exception class categoriesFor: #signal:!debugger-step through!instance creation!public! !
-!Exception class categoriesFor: #signal:with:!instance creation!public! !
-!Exception class categoriesFor: #signalWith:!instance creation!public! !
+!Core.Exception class categoriesFor: #,!filtering!public! !
+!Core.Exception class categoriesFor: #beep!parping!public! !
+!Core.Exception class categoriesFor: #handles:!filtering!public! !
+!Core.Exception class categoriesFor: #mbIconId!constants!private! !
+!Core.Exception class categoriesFor: #new!debugger-step through!instance creation!public! !
+!Core.Exception class categoriesFor: #signal!instance creation!public! !
+!Core.Exception class categoriesFor: #signal:!debugger-step through!instance creation!public! !
+!Core.Exception class categoriesFor: #signal:with:!instance creation!public! !
+!Core.Exception class categoriesFor: #signalWith:!instance creation!public! !
 
-Exception class methodProtocol: #'Exception class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
-Exception class methodProtocol: #exceptionInstantiator attributes: #(#ansi #readOnly) selectors: #(#, #handles: #new #signal #signal:)!
-Exception class methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
-Exception class methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
+Core.Exception class methodProtocol: #'Exception class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
+Core.Exception class methodProtocol: #exceptionInstantiator attributes: #(#ansi #readOnly) selectors: #(#, #handles: #new #signal #signal:)!
+Core.Exception class methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
+Core.Exception class methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #UtfEncodedString
+Core.String variableByteSubclass: #'Core.UtfEncodedString'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UtfEncodedString guid: (GUID fromString: '{f19f0843-d636-4c39-8815-afe452d16cb0}')!
-UtfEncodedString isNullTerminated: true!
-UtfEncodedString isAbstract: true!
-UtfEncodedString comment: '`UtfEncodedString` is the abstract class of variable-width UTF-encoded strings. It has specialised subclasses for UTF-8, and UTF-16.
+Core.UtfEncodedString guid: (Core.GUID fromString: '{f19f0843-d636-4c39-8815-afe452d16cb0}')!
+Core.UtfEncodedString isNullTerminated: true!
+Core.UtfEncodedString isNonInstantiable: true!
+Core.UtfEncodedString comment: '`UtfEncodedString` is the abstract class of variable-width UTF-encoded strings. It has specialised subclasses for UTF-8, and UTF-16.
 
 Like `AnsiString` and (as yet hypothetical) `Utf32String`, the elements of a `UtfEncodedString` are represented by `Character` instances when enumerating or accessing _by index_, but unlike those fixed-width encodings the values of the underlying elements are really code units rather than whole code points. Consequently the `Character` instances may represent surrogate (partial) characters from the encoding. This is a compromise required to represent the variable-width UTF encodings within the Smalltalk `SequenceableCollection` hierarchy, which was designed for fixed-width elements long before UTF-8 and UTF-16 were imagined, yet which also requires that the elements of `String`s be `Character`s. ANSI Smalltalk did nothing to address this issue; the `<readableString>` protocol is a sub-protocol of `<sequencedReadableCollection>` and contains many indexed access messages that cannot really be implemented efficiently against a variable width string. Even calculating the result for `#size` would require counting the characters and the count could be invalidated by any `#at:put:` operation, which might also require the string to be resized and its contents shuffled. Given the difficulty of squaring this circle, and the limited scenarios that really require direct indexing into strings, we have opted to interpret the requirement that the elements of strings be `Character`s by including surrogate characters as valid elements.
 
@@ -46,8 +46,8 @@ The fact that `Character`s may actually occupy more than one code unit element o
  - Enumerations passed an index (e.g. `from:do:`) or a range of indices (e.g. `from:to:do:`) are expecting code unit indices, but will enumerate code points between those indices. In other words it cannot be relied upon that number of elements enumerated will be `stop - start + 1`, although it will always be less than or equal to that.
  - Sequenceable collection operations that are passed an element count are expecting a code point count, not a code unit count. This is deliberately not consistent with indices being code unit indices.
  - When working with the `PositionableStream` hierarchy one must be careful when recording or adjusting the position, and remember that relative positioning (e.g. with `#skip:`) always works in terms of the code-unit elements of the streamed over collection, not necessarily whole characters. In the case of `UtfEncodeString`s the underlying elements are code unit integers of 8 or 16 bits for UTF-8 and UTF-16 respectively. The position of a stream over a UtfEncodedString is the position in terms of code units, not Characters. The use of relative positioning either through `#skip:` or by directly adjusting the position to a point calculated without regard to the encoding is likely to lead to positioning errors. It is safe to reset the position to step back (for example) by using a previously recorded position. To advance the stream the next and peek family of messagess should be used unless to a previously recorded position at the start of an encoded character. It is generally not a good idea to mix position or size calculations based on the fixed width code units used as indices and sizes for the collection itself and for the stream position with the variable width code points read and written by the streams. '!
-!UtfEncodedString categoriesForClass!Collections-Text! !
-!UtfEncodedString methodsFor!
+!Core.UtfEncodedString categoriesForClass!Collections-Text! !
+!Core.UtfEncodedString methodsFor!
 
 after: aCharacter ifAbsent: aNiladicValuable
 	"Answer the <Character> after the <Character> argument or if not present the result of evaluating the <niladicValuable>."
@@ -443,58 +443,58 @@ with: otherCollection do: aDyadicValuable
 				ifNil: [self errorCollectionsOfDifferentSizes]
 				ifNotNil: [:ch | aDyadicValuable value: ch value: each]].
 	stream atEnd ifFalse: [^self errorCollectionsOfDifferentSizes]! !
-!UtfEncodedString categoriesFor: #after:ifAbsent:!public!searching! !
-!UtfEncodedString categoriesFor: #allButFirst:!copying!public! !
-!UtfEncodedString categoriesFor: #allButLast:!copying!public! !
-!UtfEncodedString categoriesFor: #allSatisfy:!enumerating!public! !
-!UtfEncodedString categoriesFor: #anySatisfy:!enumerating!public! !
-!UtfEncodedString categoriesFor: #asArray!converting!public! !
-!UtfEncodedString categoriesFor: #before:ifAbsent:!public!searching! !
-!UtfEncodedString categoriesFor: #bom!constants!encode/decode!private! !
-!UtfEncodedString categoriesFor: #codePointAt:!debugger-step through!enumerating!public! !
-!UtfEncodedString categoriesFor: #codePointsDo:!debugger-step through!enumerating!public! !
-!UtfEncodedString categoriesFor: #codeUnitsDo:!debugger-step through!enumerating!public! !
-!UtfEncodedString categoriesFor: #collect:!enumerating!public! !
-!UtfEncodedString categoriesFor: #copyWith:!copying!public! !
-!UtfEncodedString categoriesFor: #copyWith:atIndex:!copying!public! !
-!UtfEncodedString categoriesFor: #copyWithoutIndex:!copying!public! !
-!UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
-!UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
-!UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
-!UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
-!UtfEncodedString categoriesFor: #errorIntraCharacterIndex:!encode/decode!private! !
-!UtfEncodedString categoriesFor: #fifth!accessing!public! !
-!UtfEncodedString categoriesFor: #findFirst:!public!searching! !
-!UtfEncodedString categoriesFor: #findLast:!public!searching! !
-!UtfEncodedString categoriesFor: #first!accessing!public! !
-!UtfEncodedString categoriesFor: #first:!copying!public! !
-!UtfEncodedString categoriesFor: #fourth!accessing!public! !
-!UtfEncodedString categoriesFor: #growSize!accessing!private! !
-!UtfEncodedString categoriesFor: #indexOfLast:!accessing!encode/decode!private! !
-!UtfEncodedString categoriesFor: #indexOfNth:!accessing!encode/decode!private! !
-!UtfEncodedString categoriesFor: #inject:into:!enumerating!public! !
-!UtfEncodedString categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
-!UtfEncodedString categoriesFor: #keys!accessing!public! !
-!UtfEncodedString categoriesFor: #keysAndValuesDo:!debugger-step through!enumerating!public! !
-!UtfEncodedString categoriesFor: #last!accessing!public! !
-!UtfEncodedString categoriesFor: #last:!copying!public! !
-!UtfEncodedString categoriesFor: #leftString:!copying!public! !
-!UtfEncodedString categoriesFor: #length!accessing!public! !
-!UtfEncodedString categoriesFor: #maxEncoding!constants!private! !
-!UtfEncodedString categoriesFor: #midString:from:!copying!public! !
-!UtfEncodedString categoriesFor: #pairsDo:!enumerating!public! !
-!UtfEncodedString categoriesFor: #reverseDo:!enumerating!public! !
-!UtfEncodedString categoriesFor: #second!accessing!public! !
-!UtfEncodedString categoriesFor: #select:!enumerating!public! !
-!UtfEncodedString categoriesFor: #sixth!accessing!public! !
-!UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!UtfEncodedString categoriesFor: #third!accessing!public! !
-!UtfEncodedString categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
-!UtfEncodedString categoriesFor: #with:do:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #after:ifAbsent:!public!searching! !
+!Core.UtfEncodedString categoriesFor: #allButFirst:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #allButLast:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #allSatisfy:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #asArray!converting!public! !
+!Core.UtfEncodedString categoriesFor: #before:ifAbsent:!public!searching! !
+!Core.UtfEncodedString categoriesFor: #bom!constants!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #codePointAt:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #codePointsDo:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #codeUnitsDo:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #collect:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #copyWith:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #copyWith:atIndex:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #copyWithoutIndex:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #errorIntraCharacterIndex:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #fifth!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #findFirst:!public!searching! !
+!Core.UtfEncodedString categoriesFor: #findLast:!public!searching! !
+!Core.UtfEncodedString categoriesFor: #first!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #first:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #fourth!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #growSize!accessing!private! !
+!Core.UtfEncodedString categoriesFor: #indexOfLast:!accessing!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #indexOfNth:!accessing!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #inject:into:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
+!Core.UtfEncodedString categoriesFor: #keys!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #keysAndValuesDo:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #last!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #last:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #leftString:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #length!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #maxEncoding!constants!private! !
+!Core.UtfEncodedString categoriesFor: #midString:from:!copying!public! !
+!Core.UtfEncodedString categoriesFor: #pairsDo:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #reverseDo:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #second!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #select:!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #sixth!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #third!accessing!public! !
+!Core.UtfEncodedString categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!Core.UtfEncodedString categoriesFor: #with:do:!enumerating!public! !
 
-!UtfEncodedString class methodsFor!
+!Core.UtfEncodedString class methodsFor!
 
 codePage
 	"Answer the Windows code page constant for the receiver's encoding."
@@ -509,6 +509,6 @@ new: anInteger withAll: aCharacter
 	stream := self writeStream: anInteger.
 	anInteger timesRepeat: [stream nextPut: aCharacter].
 	^stream contents! !
-!UtfEncodedString class categoriesFor: #codePage!constants!public! !
-!UtfEncodedString class categoriesFor: #new:withAll:!instance creation!public! !
+!Core.UtfEncodedString class categoriesFor: #codePage!constants!public! !
+!Core.UtfEncodedString class categoriesFor: #new:withAll:!instance creation!public! !
 

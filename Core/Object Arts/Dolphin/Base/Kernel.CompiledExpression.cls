@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompiledCode variableSubclass: #CompiledExpression
+Kernel.CompiledCode variableSubclass: #'Kernel.CompiledExpression'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompiledExpression guid: (GUID fromString: '{87b4c543-026e-11d3-9fd7-00a0cc3e4a32}')!
-CompiledExpression comment: 'CompiledExpression is the class of CompiledCode objects representing unbound compiled expressions, i.e. compiled code resulting from the compilation of arbitrary code segments, rather than actual methods of objects (see also CompiledMethod).
+Kernel.CompiledExpression guid: (Core.GUID fromString: '{87b4c543-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.CompiledExpression comment: 'CompiledExpression is the class of CompiledCode objects representing unbound compiled expressions, i.e. compiled code resulting from the compilation of arbitrary code segments, rather than actual methods of objects (see also CompiledMethod).
 
 '!
-!CompiledExpression categoriesForClass!Kernel-Methods! !
-!CompiledExpression methodsFor!
+!Kernel.CompiledExpression categoriesForClass!Kernel-Methods! !
+!Kernel.CompiledExpression methodsFor!
 
 evaluate: aString for: anObject evaluationPools: anArrayOfPools
 	"Evaluate the receiver (whose source is aString), with the receiver, anObject, 
@@ -29,6 +29,11 @@ evaluationPools
 	descrip := self sourceDescriptor.
 	^descrip isString ifFalse: [descrip at: 2]!
 
+expressionClass
+	| exprClass |
+	exprClass := self methodClass.
+	^exprClass == UndefinedObject ifFalse: [exprClass]!
+
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
 	recompilation of the receiver, a map between IP ranges and expressions 
@@ -38,7 +43,7 @@ getDebugInfo
 
 	^self compilerClass 
 		debugInfoForExpression: self getSource 
-		in: self methodClass
+		in: self expressionClass
 		evaluationPools: self evaluationPools
 		debug: self isDebugMethod!
 
@@ -80,13 +85,14 @@ value: anObject
 	as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
-!CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
-!CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
-!CompiledExpression categoriesFor: #getDebugInfo!development!private! !
-!CompiledExpression categoriesFor: #getSource!accessing!development!public! !
-!CompiledExpression categoriesFor: #isExpression!private!testing! !
-!CompiledExpression categoriesFor: #owningPackage!accessing!public! !
-!CompiledExpression categoriesFor: #storeSourceString:evaluationPools:!accessing!private! !
-!CompiledExpression categoriesFor: #value!evaluating!public! !
-!CompiledExpression categoriesFor: #value:!evaluating!public! !
+!Kernel.CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
+!Kernel.CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
+!Kernel.CompiledExpression categoriesFor: #expressionClass!accessing!private! !
+!Kernel.CompiledExpression categoriesFor: #getDebugInfo!development!private! !
+!Kernel.CompiledExpression categoriesFor: #getSource!accessing!development!public! !
+!Kernel.CompiledExpression categoriesFor: #isExpression!private!testing! !
+!Kernel.CompiledExpression categoriesFor: #owningPackage!accessing!public! !
+!Kernel.CompiledExpression categoriesFor: #storeSourceString:evaluationPools:!accessing!private! !
+!Kernel.CompiledExpression categoriesFor: #value!evaluating!public! !
+!Kernel.CompiledExpression categoriesFor: #value:!evaluating!public! !
 

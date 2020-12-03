@@ -1,0 +1,82 @@
+﻿| package |
+package := Package name: 'Dolphin Base (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Base System (Pre-namespace Names).
+
+This package includes legacy aliases for base classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.
+The names are deprecated, but will be referenced by many pre-7.2 packages.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.ExternalAddress}
+	#{Smalltalk.ExternalCallback}
+	#{Smalltalk.ExternalDescriptor}
+	#{Smalltalk.ExternalField}
+	#{Smalltalk.ExternalHandle}
+	#{Smalltalk.ExternalInteger}
+	#{Smalltalk.ExternalIntegerBytes}
+	#{Smalltalk.ExternalLibrary}
+	#{Smalltalk.ExternalMemory}
+	#{Smalltalk.ExternalPointer}
+	#{Smalltalk.ExternalResourceLibrary}
+	#{Smalltalk.ExternalScalar}
+	#{Smalltalk.ExternalStructure}
+	#{Smalltalk.SmalltalkParseErrorCodes}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.ExternalAddress}
+	#{Smalltalk.ExternalCallback}
+	#{Smalltalk.ExternalDescriptor}
+	#{Smalltalk.ExternalField}
+	#{Smalltalk.ExternalHandle}
+	#{Smalltalk.ExternalInteger}
+	#{Smalltalk.ExternalIntegerBytes}
+	#{Smalltalk.ExternalLibrary}
+	#{Smalltalk.ExternalMemory}
+	#{Smalltalk.ExternalPointer}
+	#{Smalltalk.ExternalResourceLibrary}
+	#{Smalltalk.ExternalScalar}
+	#{Smalltalk.ExternalStructure}
+	#{Smalltalk.SmalltalkParseErrorCodes}
+).
+
+package setPrerequisites: #(
+	'..\Dolphin'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.ExternalAddress := External.Address!
+
+Smalltalk.ExternalCallback := External.Callback!
+
+Smalltalk.ExternalDescriptor := External.Descriptor!
+
+Smalltalk.ExternalField := External.Field!
+
+Smalltalk.ExternalHandle := External.Handle!
+
+Smalltalk.ExternalInteger := External.INTEGER!
+
+Smalltalk.ExternalIntegerBytes := External.IntegerBytes!
+
+Smalltalk.ExternalLibrary := External.Library!
+
+Smalltalk.ExternalMemory := External.Memory!
+
+Smalltalk.ExternalPointer := External.Pointer!
+
+Smalltalk.ExternalResourceLibrary := External.ResourceLibrary!
+
+Smalltalk.ExternalScalar := External.SCALAR!
+
+Smalltalk.ExternalStructure := External.Structure!
+
+Smalltalk.SmalltalkParseErrorCodes := Kernel.ParseErrorCodes!
+
+
+"End of package definition"!
+

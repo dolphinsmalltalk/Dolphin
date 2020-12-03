@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STBPrefix
+Core.Object subclass: #'Kernel.STBPrefix'
 	instanceVariableNames: 'dword'
 	classVariableNames: 'DataPrefix ProxyPrefix'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BytesMask' -> 16r10.
@@ -21,8 +21,8 @@ Object subclass: #STBPrefix
 		'SmallIntegerMask' -> 16r1.
 		'VariableMask' -> 16r20
 	}!
-STBPrefix guid: (GUID fromString: '{87b4c4c2-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBPrefix comment: 'STBPrefix represents the object prefix encoding used in an STB binary file stream. It encapsulates much of the complexity of the data encoding performed by the STBOutFiler and STBInFiler classes. As the data encoding has been designed to achieve a reasonably compact format there are some restrictions on the order in which the methods can be called.
+Kernel.STBPrefix guid: (Core.GUID fromString: '{87b4c4c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBPrefix comment: 'STBPrefix represents the object prefix encoding used in an STB binary file stream. It encapsulates much of the complexity of the data encoding performed by the STBOutFiler and STBInFiler classes. As the data encoding has been designed to achieve a reasonably compact format there are some restrictions on the order in which the methods can be called.
 
 Instance Variables:
 
@@ -90,8 +90,8 @@ When testing an instance of this class the tests should be performed in the foll
 						ifTrue: [
 							The object represented is a proxy for the real one and should be sent a #fixup:at: message
 							to yeild the real object]]]."'!
-!STBPrefix categoriesForClass!System-Binary storage! !
-!STBPrefix methodsFor!
+!Kernel.STBPrefix categoriesForClass!System-Binary storage! !
+!Kernel.STBPrefix methodsFor!
 
 character
 	"Answer the Character represented by the receiver."
@@ -208,25 +208,25 @@ smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
 	^dword bitShift: -1! !
-!STBPrefix categoriesFor: #character!accessing!public! !
-!STBPrefix categoriesFor: #dword!accessing!public! !
-!STBPrefix categoriesFor: #dword:!accessing!public! !
-!STBPrefix categoriesFor: #encodeClass:locator:!accessing!public! !
-!STBPrefix categoriesFor: #encodeClassRef:!accessing!public! !
-!STBPrefix categoriesFor: #instSize!accessing!public! !
-!STBPrefix categoriesFor: #isBytes!public!testing! !
-!STBPrefix categoriesFor: #isCharacter!public!testing! !
-!STBPrefix categoriesFor: #isClassPrefix!public!testing! !
-!STBPrefix categoriesFor: #isDataPrefix!public!testing! !
-!STBPrefix categoriesFor: #isNonZeroVersion!public!testing! !
-!STBPrefix categoriesFor: #isProxy!public!testing! !
-!STBPrefix categoriesFor: #isSmallInteger!public!testing! !
-!STBPrefix categoriesFor: #isVariable!public!testing! !
-!STBPrefix categoriesFor: #printOn:!development!printing!public! !
-!STBPrefix categoriesFor: #refIndex!accessing!public! !
-!STBPrefix categoriesFor: #smallInteger!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #character!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #dword!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #dword:!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #encodeClass:locator:!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #encodeClassRef:!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #instSize!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #isBytes!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isCharacter!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isClassPrefix!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isDataPrefix!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isNonZeroVersion!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isProxy!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isSmallInteger!public!testing! !
+!Kernel.STBPrefix categoriesFor: #isVariable!public!testing! !
+!Kernel.STBPrefix categoriesFor: #printOn:!development!printing!public! !
+!Kernel.STBPrefix categoriesFor: #refIndex!accessing!public! !
+!Kernel.STBPrefix categoriesFor: #smallInteger!accessing!public! !
 
-!STBPrefix class methodsFor!
+!Kernel.STBPrefix class methodsFor!
 
 encodeCharacter: aCharacter
 	^(aCharacter codePoint bitShift: ##(IndexShift negated)) bitOr: CharacterMask!
@@ -263,12 +263,12 @@ initialize
 
 uninitialize
 	DataPrefix := ProxyPrefix := nil! !
-!STBPrefix class categoriesFor: #encodeCharacter:!operations!public! !
-!STBPrefix class categoriesFor: #encodeObjectRef:!operations!public! !
-!STBPrefix class categoriesFor: #encodeSmallInteger:!operations!public! !
-!STBPrefix class categoriesFor: #forData!instance creation!public! !
-!STBPrefix class categoriesFor: #forProxy!instance creation!public! !
-!STBPrefix class categoriesFor: #fromInteger:!instance creation!public! !
-!STBPrefix class categoriesFor: #initialize!development!initializing!public! !
-!STBPrefix class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.STBPrefix class categoriesFor: #encodeCharacter:!operations!public! !
+!Kernel.STBPrefix class categoriesFor: #encodeObjectRef:!operations!public! !
+!Kernel.STBPrefix class categoriesFor: #encodeSmallInteger:!operations!public! !
+!Kernel.STBPrefix class categoriesFor: #forData!instance creation!public! !
+!Kernel.STBPrefix class categoriesFor: #forProxy!instance creation!public! !
+!Kernel.STBPrefix class categoriesFor: #fromInteger:!instance creation!public! !
+!Kernel.STBPrefix class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.STBPrefix class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

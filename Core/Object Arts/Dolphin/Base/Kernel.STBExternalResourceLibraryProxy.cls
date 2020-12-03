@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBExternalResourceLibraryProxy
+Kernel.STBProxy subclass: #'Kernel.STBExternalResourceLibraryProxy'
 	instanceVariableNames: 'fileName _reserved1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBExternalResourceLibraryProxy guid: (GUID fromString: '{87b4c6ec-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBExternalResourceLibraryProxy comment: 'STBExternalResourceLibraryProxy is the class of <STBProxy>s used to save the state necessary to re-open an <ExternalResourceLibrary> from an STB stream. We use a special proxy in order to share a common instance so that each resource library need only be opened once.'!
-!STBExternalResourceLibraryProxy categoriesForClass!System-Binary storage! !
-!STBExternalResourceLibraryProxy methodsFor!
+Kernel.STBExternalResourceLibraryProxy guid: (Core.GUID fromString: '{87b4c6ec-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBExternalResourceLibraryProxy comment: 'STBExternalResourceLibraryProxy is the class of <STBProxy>s used to save the state necessary to re-open an <ExternalResourceLibrary> from an STB stream. We use a special proxy in order to share a common instance so that each resource library need only be opened once.'!
+!Kernel.STBExternalResourceLibraryProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBExternalResourceLibraryProxy methodsFor!
 
 fileName: path
 	"Private - Set the file name of the library represented by the receiver
@@ -30,15 +30,15 @@ stbFixup: inFiler at: id
 	^anObject!
 
 value
-	"Answer an <ExternalResourceLibrary> opened on the receiver's
+	"Answer an <External.ResourceLibrary> opened on the receiver's
 	file path name."
 
-	^ExternalResourceLibrary open: fileName! !
-!STBExternalResourceLibraryProxy categoriesFor: #fileName:!accessing!private! !
-!STBExternalResourceLibraryProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBExternalResourceLibraryProxy categoriesFor: #value!converting!public! !
+	^External.ResourceLibrary open: fileName! !
+!Kernel.STBExternalResourceLibraryProxy categoriesFor: #fileName:!accessing!private! !
+!Kernel.STBExternalResourceLibraryProxy categoriesFor: #stbFixup:at:!converting!public! !
+!Kernel.STBExternalResourceLibraryProxy categoriesFor: #value!converting!public! !
 
-!STBExternalResourceLibraryProxy class methodsFor!
+!Kernel.STBExternalResourceLibraryProxy class methodsFor!
 
 forLibrary: lib
 	"Answer a new instance representing the <ExternalResourceLibrary>, lib."
@@ -46,5 +46,5 @@ forLibrary: lib
 	^self basicNew
 		fileName: lib fileName;
 		yourself! !
-!STBExternalResourceLibraryProxy class categoriesFor: #forLibrary:!instance creation!public! !
+!Kernel.STBExternalResourceLibraryProxy class categoriesFor: #forLibrary:!instance creation!public! !
 

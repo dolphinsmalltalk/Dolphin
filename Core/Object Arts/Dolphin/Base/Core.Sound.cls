@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Sound
+Core.Object subclass: #'Core.Sound'
 	instanceVariableNames: 'name location type fileLocator'
 	classVariableNames: 'Registry'
-	poolDictionaries: 'MessageBoxConstants Win32Constants'
+	imports: #(#{OS.Win32Constants} #{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Sound guid: (GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
-Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
+Core.Sound guid: (Core.GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
 
 Instance Variables:
 	name		<String> identifier (e.g. filename or resource identifier)
@@ -19,8 +19,8 @@ Class Variables:
 	Registry		<IdentityDictionary>. Registry of standard named sounds.
 
 "test"'!
-!Sound categoriesForClass!Multimedia! !
-!Sound methodsFor!
+!Core.Sound categoriesForClass!Multimedia! !
+!Core.Sound methodsFor!
 
 fileLocator: aFileLocator	
 	"Private - Set the file locator used to locate the receiver's WAV file.
@@ -43,7 +43,7 @@ play: anInteger
 
 	| soundName |
 	soundName := fileLocator ifNotNil: [fileLocator localFileSpecFor: name] ifNil: [name].
-	^WinMMLibrary default
+	^OS.WinMMLibrary default
 		playSound: soundName asResourceId
 		hmod: location asParameter
 		fdwSound: anInteger!
@@ -69,16 +69,16 @@ woofAndWait
 	| flags |
 	flags := (type bitAnd: ##(SND_ASYNC bitInvert)) bitOr: SND_SYNC.
 	self play: flags! !
-!Sound categoriesFor: #fileLocator:!accessing!private! !
-!Sound categoriesFor: #location:!accessing!private! !
-!Sound categoriesFor: #name:!accessing!private! !
-!Sound categoriesFor: #play:!private!woofing! !
-!Sound categoriesFor: #type!accessing!public! !
-!Sound categoriesFor: #type:!initializing!private! !
-!Sound categoriesFor: #woof!public!woofing! !
-!Sound categoriesFor: #woofAndWait!public!woofing! !
+!Core.Sound categoriesFor: #fileLocator:!accessing!private! !
+!Core.Sound categoriesFor: #location:!accessing!private! !
+!Core.Sound categoriesFor: #name:!accessing!private! !
+!Core.Sound categoriesFor: #play:!private!woofing! !
+!Core.Sound categoriesFor: #type!accessing!public! !
+!Core.Sound categoriesFor: #type:!initializing!private! !
+!Core.Sound categoriesFor: #woof!public!woofing! !
+!Core.Sound categoriesFor: #woofAndWait!public!woofing! !
 
-!Sound class methodsFor!
+!Core.Sound class methodsFor!
 
 beep
 	"Generate the standard system parp."
@@ -88,12 +88,12 @@ beep
 beep: anInteger
 	"Generate a parp of the specified type (see Win32 documentation) from the system speaker."
 
-	UserLibrary default messageBeep: anInteger!
+	OS.UserLibrary default messageBeep: anInteger!
 
 beep: freqInteger duration: durationInteger
 	"Generate a parp of the specified frequency and duration from the system speaker."
 
-	KernelLibrary default beep: freqInteger dwDuration: durationInteger!
+	OS.KernelLibrary default beep: freqInteger dwDuration: durationInteger!
 
 bell
 	"Generate a very short parp using the computer speaker - useful for debugging.
@@ -105,8 +105,7 @@ bell
 clearRegistry
 	"Create the standard sound registry"
 
-	Registry := IdentityDictionary new.
-!
+	Registry := IdentityDictionary new!
 
 defaultBeep
 	"Generate the default system beep."
@@ -205,25 +204,25 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	| sound |
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
-!Sound class categoriesFor: #beep!parping!public! !
-!Sound class categoriesFor: #beep:!not an aspect!parping!public! !
-!Sound class categoriesFor: #beep:duration:!parping!public! !
-!Sound class categoriesFor: #bell!parping!public! !
-!Sound class categoriesFor: #clearRegistry!development!initializing!public! !
-!Sound class categoriesFor: #defaultBeep!parping!public! !
-!Sound class categoriesFor: #errorBeep!parping!public! !
-!Sound class categoriesFor: #for:ifAbsent:!accessing!public! !
-!Sound class categoriesFor: #for:put:!accessing!public! !
-!Sound class categoriesFor: #fromAlias:!instance creation!public! !
-!Sound class categoriesFor: #fromFile:!instance creation!public! !
-!Sound class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Sound class categoriesFor: #fromId:in:!instance creation!public! !
-!Sound class categoriesFor: #informationBeep!parping!public! !
-!Sound class categoriesFor: #initialize!development!initializing!private! !
-!Sound class categoriesFor: #promptBeep!parping!public! !
-!Sound class categoriesFor: #warningBeep!parping!public! !
-!Sound class categoriesFor: #woofAndWaitFor:!public!woofing! !
-!Sound class categoriesFor: #woofAndWaitFor:ifAbsent:!public!woofing! !
-!Sound class categoriesFor: #woofFor:!public!woofing! !
-!Sound class categoriesFor: #woofFor:ifAbsent:!public!woofing! !
+!Core.Sound class categoriesFor: #beep!parping!public! !
+!Core.Sound class categoriesFor: #beep:!not an aspect!parping!public! !
+!Core.Sound class categoriesFor: #beep:duration:!parping!public! !
+!Core.Sound class categoriesFor: #bell!parping!public! !
+!Core.Sound class categoriesFor: #clearRegistry!development!initializing!public! !
+!Core.Sound class categoriesFor: #defaultBeep!parping!public! !
+!Core.Sound class categoriesFor: #errorBeep!parping!public! !
+!Core.Sound class categoriesFor: #for:ifAbsent:!accessing!public! !
+!Core.Sound class categoriesFor: #for:put:!accessing!public! !
+!Core.Sound class categoriesFor: #fromAlias:!instance creation!public! !
+!Core.Sound class categoriesFor: #fromFile:!instance creation!public! !
+!Core.Sound class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
+!Core.Sound class categoriesFor: #fromId:in:!instance creation!public! !
+!Core.Sound class categoriesFor: #informationBeep!parping!public! !
+!Core.Sound class categoriesFor: #initialize!development!initializing!private! !
+!Core.Sound class categoriesFor: #promptBeep!parping!public! !
+!Core.Sound class categoriesFor: #warningBeep!parping!public! !
+!Core.Sound class categoriesFor: #woofAndWaitFor:!public!woofing! !
+!Core.Sound class categoriesFor: #woofAndWaitFor:ifAbsent:!public!woofing! !
+!Core.Sound class categoriesFor: #woofFor:!public!woofing! !
+!Core.Sound class categoriesFor: #woofFor:ifAbsent:!public!woofing! !
 

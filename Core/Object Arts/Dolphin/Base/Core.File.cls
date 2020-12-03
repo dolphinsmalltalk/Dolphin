@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #File
+Core.Object subclass: #'Core.File'
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: 'CheckModes NoCheckModes ShareModes'
-	poolDictionaries: ''
+	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AccessFlagsMask' -> -16r8.
 		'OpenFlagsMask' -> 16r7
 	}!
-File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
-File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
+Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 
 Instance Variables:
 	handle		<ExternalHandle>. The Win32 file handle.
@@ -27,8 +27,8 @@ Class Variables:
 	ShareModes		<IdentityDictionary>
 
 '!
-!File categoriesForClass!System-Support! !
-!File methodsFor!
+!Core.File categoriesForClass!System-Support! !
+!Core.File methodsFor!
 
 accessFlags
 	"Private - Answer the Win32 access mode flags."
@@ -62,10 +62,10 @@ beSparse
 	does not support sparse files, or if the file has not been opened with write permissions."
 
 	| bytesReturnedBuf |
-	bytesReturnedBuf := DWORDBytes new.
+	bytesReturnedBuf := External.DWORDBytes new.
 	(KernelLibrary default
 		deviceIoControl: self asParameter
-		dwIoControlCode: Win32Constants.FSCTL_SET_SPARSE
+		dwIoControlCode: FSCTL_SET_SPARSE
 		lpInBuffer: nil
 		nInBufferSize: 0
 		lpOutBuffer: nil
@@ -94,7 +94,7 @@ creationTime
 
 	| answer |
 	answer := FILETIME new.
-	self 
+	self
 		getTimes: answer
 		atime: nil
 		mtime: nil.
@@ -134,7 +134,8 @@ getTimes: ctime atime: atime mtime: mtime
 	all answered through the FILETIME arguments (which are treated as value holders
 	and updated directly)."
 
-	(KernelLibrary default getFileTime: self asParameter
+	(KernelLibrary default
+		getFileTime: self asParameter
 		lpCreationTime: ctime
 		lpLastAccessTime: atime
 		lpLastWriteTime: mtime) ifFalse: [KernelLibrary default systemError]!
@@ -147,12 +148,12 @@ handle
 isReadable
 	"Answer true if the file is readable."
 
-	^flags anyMask: Win32Constants.GENERIC_READ!
+	^flags anyMask: GENERIC_READ!
 
 isWriteable
 	"Answer whether the receiver can be written to."
 
-	^flags anyMask: Win32Constants.GENERIC_WRITE!
+	^flags anyMask: GENERIC_WRITE!
 
 lastAccessTime
 	"Answer a <FILETIME> identifying the point in time at which some data was
@@ -160,7 +161,7 @@ lastAccessTime
 
 	| answer |
 	answer := FILETIME new.
-	self 
+	self
 		getTimes: nil
 		atime: answer
 		mtime: nil.
@@ -172,7 +173,7 @@ lastWriteTime
 
 	| answer |
 	answer := FILETIME new.
-	self 
+	self
 		getTimes: nil
 		atime: nil
 		mtime: answer.
@@ -193,15 +194,16 @@ open
 	functionality."
 
 	| fh |
-	[fh := KernelLibrary default 
+	
+	[fh := KernelLibrary default
 				createFile: spec
 				dwDesiredAccess: self accessFlags
 				dwSharedMode: shareFlags
 				lpSecurityAttributes: self securityAttributes
 				dwCreationDistribution: self openFlags
-				dwFlagsAndAttributes: Win32Constants.FILE_ATTRIBUTE_NORMAL
+				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
 				hTemplateFile: nil.
-	fh asSignedInteger == -1] 
+	fh asSignedInteger == -1]
 			whileTrue: [self signalOsError: true].
 	handle := fh.
 	self beFinalizable!
@@ -271,16 +273,24 @@ pathName
 
 	| kernel size buf |
 	kernel := KernelLibrary default.
-	size := kernel getFinalPathNameByHandle: handle lpszFilePath: nil cchFilePath: 0 dwFlags: 0.
+	size := kernel
+				getFinalPathNameByHandle: handle
+				lpszFilePath: nil
+				cchFilePath: 0
+				dwFlags: 0.
 	buf := Utf16String newFixed: size - 1.
-	kernel getFinalPathNameByHandle: handle lpszFilePath: buf cchFilePath: size dwFlags: 0.
+	kernel
+		getFinalPathNameByHandle: handle
+		lpszFilePath: buf
+		cchFilePath: size
+		dwFlags: 0.
 	^buf!
 
 position
 	"Answer the absolute Integer position of the reciver's file pointer
 	or signal a FileException if the operation fails."
 
-	^self seek: 0 sense: Win32Constants.FILE_CURRENT
+	^self seek: 0 sense: FILE_CURRENT
 !
 
 position: anInteger 
@@ -289,7 +299,7 @@ position: anInteger
 	Answer the <integer> offset achieved or signal a <FileException> 
 	if the operation fails."
 
-	^self seek: anInteger sense: Win32Constants.FILE_BEGIN!
+	^self seek: anInteger sense: FILE_BEGIN!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
@@ -349,11 +359,7 @@ readByte
 
 	| buffer |
 	buffer := ByteArray new: 1.
-	^(self read: buffer count: 1) == 0
-		ifTrue: [nil]
-		ifFalse: [buffer at: 1]
-
-!
+	^(self read: buffer count: 1) == 0 ifTrue: [nil] ifFalse: [buffer at: 1]!
 
 readWriteStream
 	"Answer a FileStream on the receiver initially configured to read/write text."
@@ -407,7 +413,7 @@ setToEnd
 	Answer the absolute integer position achieved or
 	signal a FileException if the operation fails."
 
-	^self seek: 0 sense: Win32Constants.FILE_END
+	^self seek: 0 sense: FILE_END
 !
 
 shareFlags: anInteger
@@ -415,7 +421,7 @@ shareFlags: anInteger
 
 	shareFlags := anInteger!
 
-signalOsError: aBoolean 
+signalOsError: aBoolean
 	"Private - Signal a FileException on this file with the current OS error.
 	The <boolean> argument indicates whether the exception should be 
 	resumable or not."
@@ -429,7 +435,7 @@ size
 		ifTrue: [intBuffer qwordAtOffset: 0]
 		ifFalse: [self signalOsError: false]!
 
-size: anInteger 
+size: anInteger
 	"Set the size of the file to the <integer> argument number of bytes
 	(can be used to truncate or extend a file)."
 
@@ -450,12 +456,12 @@ sniffEncoding
 		iSize: count
 		lpiResult: ituResult) and: 
 				[ituResult := ituResult dwordAtOffset: 0.
-				(ituResult anyMask: Win32Constants.IS_TEXT_UNICODE_REVERSE_MASK)
+				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
 					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
-				count > 128 or: [(ituResult bitAnd: Win32Constants.IS_TEXT_UNICODE_UNICODE_MASK) ~= Win32Constants.IS_TEXT_UNICODE_STATISTICS]])
+				count > 128 or: [(ituResult bitAnd: IS_TEXT_UNICODE_UNICODE_MASK) ~= IS_TEXT_UNICODE_STATISTICS]])
 		ifTrue: 
-			[self position: ((ituResult allMask: Win32Constants.IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
+			[self position: ((ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
 			String.EncodingUtf16]
 		ifFalse: 
 			["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
@@ -508,70 +514,68 @@ write: aStringOrByteArray startingAt: startIndex count: bytesToWriteInteger
 
 	^self
 		checkBoundsOf: aStringOrByteArray
-		startingAt: startIndex
-		for: bytesToWriteInteger;
-
-		write: (ExternalAddress fromInteger: aStringOrByteArray yourAddress + startIndex - 1)
-		count: bytesToWriteInteger.
-!
+			startingAt: startIndex
+			for: bytesToWriteInteger;
+		write: (External.Address fromInteger: aStringOrByteArray yourAddress + startIndex - 1)
+			count: bytesToWriteInteger!
 
 writeByte: anIntegerOrCharacter
 	"Write the given byte to the file.
 	Answer 1 or signal a FileException if the operation fails."
 
 	^self write: (ByteArray with: anIntegerOrCharacter asInteger) count: 1! !
-!File categoriesFor: #accessFlags!accessing!private! !
-!File categoriesFor: #asParameter!converting!public! !
-!File categoriesFor: #atEnd!public!testing! !
-!File categoriesFor: #basicFree!private!realizing/unrealizing! !
-!File categoriesFor: #beSparse!converting!public! !
-!File categoriesFor: #checkBoundsOf:startingAt:for:!helpers!private! !
-!File categoriesFor: #close!operations!public! !
-!File categoriesFor: #creationTime!accessing!public! !
-!File categoriesFor: #delete!operations!private! !
-!File categoriesFor: #fileType!accessing!public! !
-!File categoriesFor: #flags:!accessing!private! !
-!File categoriesFor: #flush!operations!public! !
-!File categoriesFor: #free!private!realizing/unrealizing! !
-!File categoriesFor: #getTimes:atime:mtime:!accessing!private! !
-!File categoriesFor: #handle!accessing!public! !
-!File categoriesFor: #isReadable!public!testing! !
-!File categoriesFor: #isWriteable!public!testing! !
-!File categoriesFor: #lastAccessTime!accessing!public! !
-!File categoriesFor: #lastWriteTime!accessing!public! !
-!File categoriesFor: #name!accessing!public! !
-!File categoriesFor: #open!operations!public! !
-!File categoriesFor: #open:flags:share:!operations!private! !
-!File categoriesFor: #open:mode:check:share:!operations!public! !
-!File categoriesFor: #openFlags!accessing!private! !
-!File categoriesFor: #pathName!accessing!public! !
-!File categoriesFor: #position!positioning!public! !
-!File categoriesFor: #position:!operations!positioning!public! !
-!File categoriesFor: #printOn:!printing!public! !
-!File categoriesFor: #read:!operations!public! !
-!File categoriesFor: #read:count:!operations!public! !
-!File categoriesFor: #read:startingAt:count:!operations!public! !
-!File categoriesFor: #readByte!operations!public! !
-!File categoriesFor: #readWriteStream!public!streaming! !
-!File categoriesFor: #reset!positioning!public! !
-!File categoriesFor: #securityAttributes!accessing!public! !
-!File categoriesFor: #seek:sense:!positioning!public! !
-!File categoriesFor: #setHandle:flags:!initializing!private! !
-!File categoriesFor: #setToEnd!positioning!public! !
-!File categoriesFor: #shareFlags:!accessing!private! !
-!File categoriesFor: #signalOsError:!exceptions!private! !
-!File categoriesFor: #size!accessing!public! !
-!File categoriesFor: #size:!operations!public! !
-!File categoriesFor: #sniffEncoding!helpers!private! !
-!File categoriesFor: #spec:!accessing!private! !
-!File categoriesFor: #write:!operations!public! !
-!File categoriesFor: #write:count:!operations!public! !
-!File categoriesFor: #write:startingAt:count:!operations!public! !
-!File categoriesFor: #writeByte:!operations!public! !
+!Core.File categoriesFor: #accessFlags!accessing!private! !
+!Core.File categoriesFor: #asParameter!converting!public! !
+!Core.File categoriesFor: #atEnd!public!testing! !
+!Core.File categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Core.File categoriesFor: #beSparse!converting!public! !
+!Core.File categoriesFor: #checkBoundsOf:startingAt:for:!helpers!private! !
+!Core.File categoriesFor: #close!operations!public! !
+!Core.File categoriesFor: #creationTime!accessing!public! !
+!Core.File categoriesFor: #delete!operations!private! !
+!Core.File categoriesFor: #fileType!accessing!public! !
+!Core.File categoriesFor: #flags:!accessing!private! !
+!Core.File categoriesFor: #flush!operations!public! !
+!Core.File categoriesFor: #free!private!realizing/unrealizing! !
+!Core.File categoriesFor: #getTimes:atime:mtime:!accessing!private! !
+!Core.File categoriesFor: #handle!accessing!public! !
+!Core.File categoriesFor: #isReadable!public!testing! !
+!Core.File categoriesFor: #isWriteable!public!testing! !
+!Core.File categoriesFor: #lastAccessTime!accessing!public! !
+!Core.File categoriesFor: #lastWriteTime!accessing!public! !
+!Core.File categoriesFor: #name!accessing!public! !
+!Core.File categoriesFor: #open!operations!public! !
+!Core.File categoriesFor: #open:flags:share:!operations!private! !
+!Core.File categoriesFor: #open:mode:check:share:!operations!public! !
+!Core.File categoriesFor: #openFlags!accessing!private! !
+!Core.File categoriesFor: #pathName!accessing!public! !
+!Core.File categoriesFor: #position!positioning!public! !
+!Core.File categoriesFor: #position:!operations!positioning!public! !
+!Core.File categoriesFor: #printOn:!printing!public! !
+!Core.File categoriesFor: #read:!operations!public! !
+!Core.File categoriesFor: #read:count:!operations!public! !
+!Core.File categoriesFor: #read:startingAt:count:!operations!public! !
+!Core.File categoriesFor: #readByte!operations!public! !
+!Core.File categoriesFor: #readWriteStream!public!streaming! !
+!Core.File categoriesFor: #reset!positioning!public! !
+!Core.File categoriesFor: #securityAttributes!accessing!public! !
+!Core.File categoriesFor: #seek:sense:!positioning!public! !
+!Core.File categoriesFor: #setHandle:flags:!initializing!private! !
+!Core.File categoriesFor: #setToEnd!positioning!public! !
+!Core.File categoriesFor: #shareFlags:!accessing!private! !
+!Core.File categoriesFor: #signalOsError:!exceptions!private! !
+!Core.File categoriesFor: #size!accessing!public! !
+!Core.File categoriesFor: #size:!operations!public! !
+!Core.File categoriesFor: #sniffEncoding!helpers!private! !
+!Core.File categoriesFor: #spec:!accessing!private! !
+!Core.File categoriesFor: #write:!operations!public! !
+!Core.File categoriesFor: #write:count:!operations!public! !
+!Core.File categoriesFor: #write:startingAt:count:!operations!public! !
+!Core.File categoriesFor: #writeByte:!operations!public! !
 
-File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
+Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
 
-!File class methodsFor!
+!Core.File class methodsFor!
 
 appendPathDelimiter: aString 
 	"Answer a <readableString> that is the argument with a path separator appended to create the correct syntax for
@@ -648,9 +652,12 @@ copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the copy fails."
 
-	#todo. "Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
-	(KernelLibrary default copyFile: oldFileNameString asUtf16String lpNewFileName: newFileNameString asUtf16String bfailIfExists: false)
-		ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
+	#todo.	"Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
+	(KernelLibrary default
+		copyFile: oldFileNameString asUtf16String
+		lpNewFileName: newFileNameString asUtf16String
+		bfailIfExists: false)
+			ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
 
 createDirectory: path
 	"Create a directory with the specified path.
@@ -659,15 +666,14 @@ createDirectory: path
 	directory already exists."
 
 	| kernel |
-	kernel := KernelLibrary default. 
-	^(kernel createDirectory: path lpSecurityAttributes: nil)
-		or: [ | err |
+	kernel := KernelLibrary default.
+	^(kernel createDirectory: path lpSecurityAttributes: nil) or: 
+			[| err |
 			err := kernel getLastError.
-			err = Win32Errors.ERROR_ALREADY_EXISTS
-				ifFalse: [^kernel systemError: err].
-			false "already existed"]!
+			err = Win32Errors.ERROR_ALREADY_EXISTS ifFalse: [^kernel systemError: err].
+			false	"already existed"]!
 
-createDirectoryPath: path 
+createDirectoryPath: path
 	"Create a directory tree with the specified path - i.e. this will create a nested set of directories
 	to any depth. Answer true if the final directory 	was actually created, or false if it already existed. 
 	Raise a Win32Error if the call fails for any other reason than that the directory already exists.
@@ -678,12 +684,11 @@ createDirectoryPath: path
 	created := false.
 	len := path size.
 	delims := self pathDelimiters.
-	(path beginsWith: '\\') 
+	(path beginsWith: '\\')
 		ifTrue: 
 			[pos := 3.
 			2 timesRepeat: 
 					["Skip UNC machine name and share"
-
 					pos := path indexOfAnyOf: delims startingAt: pos.
 					pos == 0 ifTrue: [^Win32Error signalWith: Win32Errors.ERROR_INVALID_NAME].
 					pos := pos + 1]]
@@ -692,13 +697,12 @@ createDirectoryPath: path
 			[| end |
 			end := path indexOfAnyOf: delims startingAt: pos.
 			end == 0 ifTrue: [end := len + 1].
-			end == 1 
+			end == 1
 				ifFalse: 
 					[| part |
-					(part := path copyFrom: 1 to: end - 1) last == $: 
+					(part := path copyFrom: 1 to: end - 1) last == $:
 						ifFalse: 
 							["Don't attempt to create the drive!!"
-
 							created := self createDirectory: part]].
 			pos := end + 1].
 	^created!
@@ -740,8 +744,7 @@ delete: aFileNameString
 	"Deletes the file whose name is specified by aFileNameString.
 	Signal a Win32Error if the operation fails."
 
-	(KernelLibrary default deleteFile: aFileNameString) 
-		ifFalse: [KernelLibrary default systemError]!
+	(KernelLibrary default deleteFile: aFileNameString) ifFalse: [KernelLibrary default systemError]!
 
 deleteDirectory: aString
 	"Recursively delete all files and folders within the specified directory, and
@@ -790,7 +793,7 @@ for: aString do: operation
 	evaluate the monadic valuable, operation, with a WIN32_FIND_DATA describing 
 	the file/directory as the argument."
 
-	^self 
+	^self
 		for: aString
 		in: (File splitPathFrom: aString)
 		do: operation!
@@ -806,7 +809,7 @@ for: matchString in: dirString do: operation
 	findStruct directory: dirString.
 	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
 				lpFindFileData: findStruct.
-	handle = Win32Constants.INVALID_HANDLE_VALUE
+	handle = INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
 			err := lib getLastError.
@@ -902,7 +905,7 @@ fromHandle: aHandle
 	it does not own it)."
 
 	^(super new)
-		setHandle: aHandle asExternalHandle flags: ##(Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE);
+		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ | GENERIC_WRITE);
 		yourself!
 
 fullPathOf: aPathnameString
@@ -949,56 +952,57 @@ initialize
 						with error checking.
 		NoCheckModes		Ditto, without error checking."
 
-	self addClassConstant: 'ShareModes' value: ##(
-		IdentityDictionary new
-			at: #read			put: Win32Constants.FILE_SHARE_READ;
-			at: #write			put: Win32Constants.FILE_SHARE_WRITE;
-			at: #readWrite		put: Win32Constants.FILE_SHARE_READ | Win32Constants.FILE_SHARE_WRITE;
-			at: #exclusive		put: 0;
-			shrink;
-			yourself).
-	
-	self addClassConstant: 'CheckModes' value: ##(
-		IdentityDictionary new
-			at: #read			put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ;
-			at: #create		put: Win32Constants.CREATE_NEW | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			"open will only ever open an existing file"
-			at: #open			put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			at: #append		put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			at: #truncate		put: Win32Constants.TRUNCATE_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			shrink;
-			yourself).
-
-	self addClassConstant: 'NoCheckModes' value: ##(
-		IdentityDictionary new
-			"No check read is a bit of a nonsense, but ..."
-			at: #read			put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ;
-			at: #create		put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			at: #open			put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			at: #append		put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			at: #truncate		put: Win32Constants.CREATE_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
-			shrink;
-			yourself)!
+	self addClassConstant: 'ShareModes'
+		value: ##(IdentityDictionary new
+				at: #read put: FILE_SHARE_READ;
+				at: #write put: FILE_SHARE_WRITE;
+				at: #readWrite put: FILE_SHARE_READ | FILE_SHARE_WRITE;
+				at: #exclusive put: 0;
+				shrink;
+				yourself).
+	self addClassConstant: 'CheckModes'
+		value: ##(IdentityDictionary new
+				at: #read put: OPEN_EXISTING | GENERIC_READ;
+				at: #create put: CREATE_NEW | GENERIC_READ | GENERIC_WRITE;
+				at: #open put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
+				at: #append put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
+				at: #truncate put: TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE;
+				shrink;
+				yourself
+			"open will only ever open an existing file").
+	"open will only ever open an existing file"
+	"open will only ever open an existing file"
+	self addClassConstant: 'NoCheckModes'
+		value: ##(IdentityDictionary new
+				at: #read put: OPEN_ALWAYS | GENERIC_READ;
+				at: #create put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+				at: #open put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+				at: #append put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+				at: #truncate put: CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+				shrink;
+				yourself
+			"No check read is a bit of a nonsense, but ...")
+	"No check read is a bit of a nonsense, but ..."
+	"No check read is a bit of a nonsense, but ..."!
 
 isDirectory: aString
 	"Answer true if there is a directory whose path is given by aString."
 
 	| attribs |
 	attribs := self attributes: aString.
-	^attribs ~= -1 and: [attribs allMask: Win32Constants.FILE_ATTRIBUTE_DIRECTORY]!
+	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
 
 isRelativePath: aFileNameString
 	"Answers true if aFileNameString is a relative path with no absolute components"
 
-	^ShlwapiLibrary default pathIsRelative: aFileNameString
-!
+	^ShlwapiLibrary default pathIsRelative: aFileNameString!
 
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
 
 	^ShlwapiLibrary default pathIsRoot: aString!
 
-isWriteable: aString 
+isWriteable: aString
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
 	the answer will be true. If there file exists then the answer is based on file's attributes
 	- i.e. whether or not it has the read-only flag set. Note that file permissions are not
@@ -1007,23 +1011,23 @@ isWriteable: aString
 
 	| attributes |
 	attributes := KernelLibrary default getFileAttributes: aString.
-	^(attributes ~= -1 and: [attributes allMask: Win32Constants.FILE_ATTRIBUTE_READONLY]) not!
+	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
 
 isWriteable: aFileNameString set: aBoolean
 	"Set the writeable state of aFileNameString to aBoolean. Answers true if the
 	operation succeeds"
 
 	| mode |
-	mode := aBoolean ifTrue: [CRTConstants._S_IWRITE ] ifFalse: [CRTConstants._S_IREAD ].
-	^(CRTLibrary default _chmod: aFileNameString pmode: mode)=0!
+	mode := aBoolean ifTrue: [CRTConstants._S_IWRITE] ifFalse: [CRTConstants._S_IREAD].
+	^(CRTLibrary default _chmod: aFileNameString pmode: mode) = 0!
 
-lastWriteTime: aString 
+lastWriteTime: aString
 	"Answer a <FILETIME> representing the time when the file with the specified filename was
 	last modified, or nil if no such file exists."
 
 	| file |
 	(self exists: aString) ifFalse: [^nil].
-	file := File 
+	file := File
 				open: aString
 				mode: #read
 				check: true
@@ -1232,8 +1236,7 @@ relativePathOf: aPathString to: aBasePathString
 		ifFalse: [relPath trimNulls]!
 
 removeDirectory: aString
-	(KernelLibrary default removeDirectory: aString) 
-		ifFalse: [KernelLibrary default systemError]!
+	(KernelLibrary default removeDirectory: aString) ifFalse: [KernelLibrary default systemError]!
 
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
@@ -1277,7 +1280,7 @@ rename: oldFileNameString to: newFileNameString
 	Signal a HostSystemError if the operation fails."
 
 	(KernelLibrary default moveFile: oldFileNameString lpNewFileName: newFileNameString)
-		ifFalse: [ KernelLibrary default systemError ]!
+		ifFalse: [KernelLibrary default systemError]!
 
 replacePath: filePath with: newPath
 	"Replace the path component of the full path name, filePath, with the new path name,
@@ -1463,6 +1466,7 @@ splitPathFrom: aPathnameString
 	| drive dir errno path len |
 	path := aPathnameString asUtf8String.
 	len := path size.
+	"Deliberately allocate extra space for the drive letter buffer so we can strcat to it later."
 	(errno := CRTLibrary default
 				_splitpath_s: path
 				drive: (drive := Utf8String new: len)
@@ -1566,73 +1570,73 @@ workingDirectory: aString
 	"Set the current working directory."
 
 	^CRTLibrary default _chdir: aString! !
-!File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
-!File class categoriesFor: #attributes:!file operations!public! !
-!File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !
-!File class categoriesFor: #composePath:stem:extension:!filename manipulation!public! !
-!File class categoriesFor: #composePath:subPath:!filename manipulation!public! !
-!File class categoriesFor: #composeShortStem:extension:!filename manipulation!public! !
-!File class categoriesFor: #composeStem:extension:!filename manipulation!public! !
-!File class categoriesFor: #copy:to:!file operations!public! !
-!File class categoriesFor: #createDirectory:!file operations!public! !
-!File class categoriesFor: #createDirectoryPath:!file operations!public! !
-!File class categoriesFor: #default:extension:!filename manipulation!public! !
-!File class categoriesFor: #delete:!file operations!public! !
-!File class categoriesFor: #deleteDirectory:!file operations!public! !
-!File class categoriesFor: #exists:!file operations!public! !
-!File class categoriesFor: #extensionDelimiter!constants!public! !
-!File class categoriesFor: #find:!public!searching! !
-!File class categoriesFor: #for:do:!enumerating!public! !
-!File class categoriesFor: #for:in:do:!enumerating!public! !
-!File class categoriesFor: #forAll:in:do:!enumerating!public! !
-!File class categoriesFor: #forAllDirectories:in:do:!enumerating!public! !
-!File class categoriesFor: #forAllDirectoriesIn:do:!enumerating!public! !
-!File class categoriesFor: #forDirectories:in:do:!enumerating!public! !
-!File class categoriesFor: #forDirectoriesIn:do:!enumerating!public! !
-!File class categoriesFor: #fromHandle:!instance creation!public! !
-!File class categoriesFor: #fullPathOf:!filename manipulation!public! !
-!File class categoriesFor: #fullPathOf:relativeTo:!filename manipulation!public! !
-!File class categoriesFor: #initialize!development!initializing!public! !
-!File class categoriesFor: #isDirectory:!public!testing! !
-!File class categoriesFor: #isRelativePath:!filename manipulation!public!testing! !
-!File class categoriesFor: #isRootPath:!filename manipulation!public! !
-!File class categoriesFor: #isWriteable:!public!testing! !
-!File class categoriesFor: #isWriteable:set:!file operations!public! !
-!File class categoriesFor: #lastWriteTime:!enquiries!public! !
-!File class categoriesFor: #locateFilename:in:!filename manipulation!public! !
-!File class categoriesFor: #makePath:!filename manipulation!public! !
-!File class categoriesFor: #maxPath!constants!public! !
-!File class categoriesFor: #new!instance creation!public! !
-!File class categoriesFor: #open:!instance creation!public! !
-!File class categoriesFor: #open:mode:!instance creation!public! !
-!File class categoriesFor: #open:mode:check:!instance creation!public! !
-!File class categoriesFor: #open:mode:check:share:!instance creation!public! !
-!File class categoriesFor: #path:extension:!filename manipulation!public! !
-!File class categoriesFor: #pathBuffer!helpers!public! !
-!File class categoriesFor: #pathDelimiter!constants!public! !
-!File class categoriesFor: #pathDelimiters!constants!public! !
-!File class categoriesFor: #readAllBytes:!file operations!public! !
-!File class categoriesFor: #readAllText:!file operations!public! !
-!File class categoriesFor: #relativePathOf:to:!filename manipulation!public! !
-!File class categoriesFor: #removeDirectory:!file operations!public! !
-!File class categoriesFor: #removeExtension:!filename manipulation!public! !
-!File class categoriesFor: #removePathDelimiter:!filename manipulation!public!testing! !
-!File class categoriesFor: #rename:to:!file operations!public! !
-!File class categoriesFor: #replacePath:with:!filename manipulation!public! !
-!File class categoriesFor: #shortenComponent:max:!helpers!private! !
-!File class categoriesFor: #shortPathOf:!filename manipulation!public! !
-!File class categoriesFor: #sniffEncoding:!public! !
-!File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
-!File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
-!File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
-!File class categoriesFor: #splitPath:!filename manipulation!public! !
-!File class categoriesFor: #splitPathFrom:!filename manipulation!public! !
-!File class categoriesFor: #splitStemFrom:!filename manipulation!public! !
-!File class categoriesFor: #temporary!instance creation!public! !
-!File class categoriesFor: #temporaryFilename!filename manipulation!public! !
-!File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
-!File class categoriesFor: #tempPath!filename manipulation!public! !
-!File class categoriesFor: #windowsDirectory!accessing!public! !
-!File class categoriesFor: #workingDirectory!file operations!public! !
-!File class categoriesFor: #workingDirectory:!file operations!public! !
+!Core.File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
+!Core.File class categoriesFor: #attributes:!file operations!public! !
+!Core.File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !
+!Core.File class categoriesFor: #composePath:stem:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #composePath:subPath:!filename manipulation!public! !
+!Core.File class categoriesFor: #composeShortStem:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #composeStem:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #copy:to:!file operations!public! !
+!Core.File class categoriesFor: #createDirectory:!file operations!public! !
+!Core.File class categoriesFor: #createDirectoryPath:!file operations!public! !
+!Core.File class categoriesFor: #default:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #delete:!file operations!public! !
+!Core.File class categoriesFor: #deleteDirectory:!file operations!public! !
+!Core.File class categoriesFor: #exists:!file operations!public! !
+!Core.File class categoriesFor: #extensionDelimiter!constants!public! !
+!Core.File class categoriesFor: #find:!public!searching! !
+!Core.File class categoriesFor: #for:do:!enumerating!public! !
+!Core.File class categoriesFor: #for:in:do:!enumerating!public! !
+!Core.File class categoriesFor: #forAll:in:do:!enumerating!public! !
+!Core.File class categoriesFor: #forAllDirectories:in:do:!enumerating!public! !
+!Core.File class categoriesFor: #forAllDirectoriesIn:do:!enumerating!public! !
+!Core.File class categoriesFor: #forDirectories:in:do:!enumerating!public! !
+!Core.File class categoriesFor: #forDirectoriesIn:do:!enumerating!public! !
+!Core.File class categoriesFor: #fromHandle:!instance creation!public! !
+!Core.File class categoriesFor: #fullPathOf:!filename manipulation!public! !
+!Core.File class categoriesFor: #fullPathOf:relativeTo:!filename manipulation!public! !
+!Core.File class categoriesFor: #initialize!development!initializing!public! !
+!Core.File class categoriesFor: #isDirectory:!public!testing! !
+!Core.File class categoriesFor: #isRelativePath:!filename manipulation!public!testing! !
+!Core.File class categoriesFor: #isRootPath:!filename manipulation!public! !
+!Core.File class categoriesFor: #isWriteable:!public!testing! !
+!Core.File class categoriesFor: #isWriteable:set:!file operations!public! !
+!Core.File class categoriesFor: #lastWriteTime:!enquiries!public! !
+!Core.File class categoriesFor: #locateFilename:in:!filename manipulation!public! !
+!Core.File class categoriesFor: #makePath:!filename manipulation!public! !
+!Core.File class categoriesFor: #maxPath!constants!public! !
+!Core.File class categoriesFor: #new!instance creation!public! !
+!Core.File class categoriesFor: #open:!instance creation!public! !
+!Core.File class categoriesFor: #open:mode:!instance creation!public! !
+!Core.File class categoriesFor: #open:mode:check:!instance creation!public! !
+!Core.File class categoriesFor: #open:mode:check:share:!instance creation!public! !
+!Core.File class categoriesFor: #path:extension:!filename manipulation!public! !
+!Core.File class categoriesFor: #pathBuffer!helpers!public! !
+!Core.File class categoriesFor: #pathDelimiter!constants!public! !
+!Core.File class categoriesFor: #pathDelimiters!constants!public! !
+!Core.File class categoriesFor: #readAllBytes:!file operations!public! !
+!Core.File class categoriesFor: #readAllText:!file operations!public! !
+!Core.File class categoriesFor: #relativePathOf:to:!filename manipulation!public! !
+!Core.File class categoriesFor: #removeDirectory:!file operations!public! !
+!Core.File class categoriesFor: #removeExtension:!filename manipulation!public! !
+!Core.File class categoriesFor: #removePathDelimiter:!filename manipulation!public!testing! !
+!Core.File class categoriesFor: #rename:to:!file operations!public! !
+!Core.File class categoriesFor: #replacePath:with:!filename manipulation!public! !
+!Core.File class categoriesFor: #shortenComponent:max:!helpers!private! !
+!Core.File class categoriesFor: #shortPathOf:!filename manipulation!public! !
+!Core.File class categoriesFor: #sniffEncoding:!public! !
+!Core.File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
+!Core.File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
+!Core.File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
+!Core.File class categoriesFor: #splitPath:!filename manipulation!public! !
+!Core.File class categoriesFor: #splitPathFrom:!filename manipulation!public! !
+!Core.File class categoriesFor: #splitStemFrom:!filename manipulation!public! !
+!Core.File class categoriesFor: #temporary!instance creation!public! !
+!Core.File class categoriesFor: #temporaryFilename!filename manipulation!public! !
+!Core.File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
+!Core.File class categoriesFor: #tempPath!filename manipulation!public! !
+!Core.File class categoriesFor: #windowsDirectory!accessing!public! !
+!Core.File class categoriesFor: #workingDirectory!file operations!public! !
+!Core.File class categoriesFor: #workingDirectory:!file operations!public! !
 

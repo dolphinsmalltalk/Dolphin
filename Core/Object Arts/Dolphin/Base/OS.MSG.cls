@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MSG
+OS.Win32Structure subclass: #'OS.MSG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hwnd' -> 16r0.
@@ -14,12 +14,12 @@ Win32Structure subclass: #MSG
 		'_OffsetOf_x' -> 16r14.
 		'_OffsetOf_y' -> 16r18
 	}!
-MSG guid: (GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
+OS.MSG guid: (Core.GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
 
 MSG is an represents the state associated with a Windows message retrieved via GetMessage().'!
-!MSG categoriesForClass!External-Data-Structured-Win32! !
-!MSG methodsFor!
+!OS.MSG categoriesForClass!External-Data-Structured-Win32! !
+!OS.MSG methodsFor!
 
 hwnd
 	"Answer the <Integer> value of the receiver's 'hwnd' field."
@@ -84,19 +84,19 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!MSG categoriesFor: #hwnd!**compiled accessors**!public! !
-!MSG categoriesFor: #isInput!public!testing! !
-!MSG categoriesFor: #isKeyboardInput!public!testing! !
-!MSG categoriesFor: #isMouseInput!public!testing! !
-!MSG categoriesFor: #lParam!**compiled accessors**!public! !
-!MSG categoriesFor: #message!**compiled accessors**!public! !
-!MSG categoriesFor: #swParam!accessing!public! !
-!MSG categoriesFor: #time!**compiled accessors**!public! !
-!MSG categoriesFor: #wParam!**compiled accessors**!public! !
-!MSG categoriesFor: #x!**compiled accessors**!public! !
-!MSG categoriesFor: #y!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #hwnd!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #isInput!public!testing! !
+!OS.MSG categoriesFor: #isKeyboardInput!public!testing! !
+!OS.MSG categoriesFor: #isMouseInput!public!testing! !
+!OS.MSG categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #message!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #swParam!accessing!public! !
+!OS.MSG categoriesFor: #time!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #wParam!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #x!**compiled accessors**!public! !
+!OS.MSG categoriesFor: #y!**compiled accessors**!public! !
 
-!MSG class methodsFor!
+!OS.MSG class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 MSG structure.
@@ -109,7 +109,7 @@ defineFields
 			ULONG_PTR wParam;
 			LONG_PTR lParam;
 			ULONG time;
-			POINT pt;
+			POINTL pt;
 		} MSG;
 	"
 
@@ -125,6 +125,6 @@ defineFields
 
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
-!MSG class categoriesFor: #defineFields!public!template definition! !
-!MSG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MSG class categoriesFor: #defineFields!public!template definition! !
+!OS.MSG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

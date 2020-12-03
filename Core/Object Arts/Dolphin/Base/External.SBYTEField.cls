@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScalarField subclass: #SBYTEField
+External.ScalarField subclass: #'External.SBYTEField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SBYTEField guid: (GUID fromString: '{d9145096-c1d5-4c8d-b640-605d284b0c42}')!
-SBYTEField comment: ''!
-!SBYTEField categoriesForClass!External-Data-Types! !
-!SBYTEField methodsFor!
+External.SBYTEField guid: (Core.GUID fromString: '{d9145096-c1d5-4c8d-b640-605d284b0c42}')!
+External.SBYTEField comment: ''!
+!External.SBYTEField categoriesForClass!External-Data-Types! !
+!External.SBYTEField methodsFor!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
@@ -27,15 +27,15 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sbyteAtOffset: offset put: anInteger! !
-!SBYTEField categoriesFor: #accessorMessage!initializing!private! !
-!SBYTEField categoriesFor: #readFrom:!indirect accessing!private! !
-!SBYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SBYTEField categoriesFor: #accessorMessage!initializing!private! !
+!External.SBYTEField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.SBYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!SBYTEField class methodsFor!
+!External.SBYTEField class methodsFor!
 
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!SBYTEField class categoriesFor: #byteSize!constants!private! !
+!External.SBYTEField class categoriesFor: #byteSize!constants!private! !
 

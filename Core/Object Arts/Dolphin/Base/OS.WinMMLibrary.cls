@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #WinMMLibrary
+External.Library subclass: #'OS.WinMMLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WinMMLibrary guid: (GUID fromString: '{6467404e-3a82-101b-8181-00aa003743d3}')!
-WinMMLibrary comment: ''!
-!WinMMLibrary categoriesForClass!External-Libraries-Win32! !
-!WinMMLibrary methodsFor!
+OS.WinMMLibrary guid: (Core.GUID fromString: '{6467404e-3a82-101b-8181-00aa003743d3}')!
+OS.WinMMLibrary comment: ''!
+!OS.WinMMLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.WinMMLibrary methodsFor!
 
 mciGetErrorString: code lpszErrorText: returnString cchErrorText: retsize
 	"Convert an MCI error code into a String.
@@ -44,16 +44,16 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 
 	<stdcall: bool PlaySoundW lpvoid handle dword>
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
+!OS.WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
+!OS.WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !
+!OS.WinMMLibrary categoriesFor: #mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
+!OS.WinMMLibrary categoriesFor: #playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
 
-!WinMMLibrary class methodsFor!
+!OS.WinMMLibrary class methodsFor!
 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinMM'! !
-!WinMMLibrary class categoriesFor: #fileName!constants!public! !
+!OS.WinMMLibrary class categoriesFor: #fileName!constants!public! !
 

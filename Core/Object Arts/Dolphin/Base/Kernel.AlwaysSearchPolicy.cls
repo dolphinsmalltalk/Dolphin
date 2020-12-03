@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SingletonSearchPolicy subclass: #AlwaysSearchPolicy
+Kernel.SingletonSearchPolicy subclass: #'Kernel.AlwaysSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AlwaysSearchPolicy guid: (GUID fromString: '{2e18d23b-3270-41b5-8abe-acaaf5d21a3c}')!
-AlwaysSearchPolicy comment: ''!
-!AlwaysSearchPolicy categoriesForClass!Collections-Support! !
-!AlwaysSearchPolicy methodsFor!
+Kernel.AlwaysSearchPolicy guid: (Core.GUID fromString: '{2e18d23b-3270-41b5-8abe-acaaf5d21a3c}')!
+Kernel.AlwaysSearchPolicy comment: ''!
+!Kernel.AlwaysSearchPolicy categoriesForClass!Collections-Support! !
+!Kernel.AlwaysSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -28,7 +28,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#always! !
-!AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
-!AlwaysSearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!Kernel.AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
+!Kernel.AlwaysSearchPolicy categoriesFor: #name!accessing!public! !
 

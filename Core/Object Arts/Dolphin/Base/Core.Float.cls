@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Number variableByteSubclass: #Float
+Core.Number variableByteSubclass: #'Core.Float'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultDecimalExponents FMinDenormalized Infinity NaN NegativeInfinity'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EMax' -> 16r3FF.
@@ -26,10 +26,10 @@ Number variableByteSubclass: #Float
 		'Precision' -> 16r35.
 		'SignificantDifference' -> 1.0e-9
 	}!
-Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
-Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
-!Float categoriesForClass!Magnitude-Numbers! !
-!Float methodsFor!
+Core.Float guid: (Core.GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
+!Core.Float categoriesForClass!Magnitude-Numbers! !
+!Core.Float methodsFor!
 
 - aNumber
 	"Answer the result of subtracting the argument, aNumber, from the receiver."
@@ -202,8 +202,8 @@ absPrintExactlyOn: aStream base: base
 	fixedFormat
 		ifFalse: 
 			[aStream
-				nextPut: $e;
-				print: baseExpEstimate - 1]!
+				nextPut: $e.
+			baseExpEstimate - 1 printOn: aStream base: 10]!
 
 absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingFractionalZeros: showtrailingZeros
 	"Private - Print the receiver's value on a stream in the given base with fixed number of digits after floating point.
@@ -366,7 +366,7 @@ addToFloat: aFloat
 	"Perform the FP addition again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
 	^[aFloat + self] ensure: [Float exceptionMask: mask]!
 
 addToFraction: aFraction
@@ -433,12 +433,12 @@ asApproximateFraction
 			denominator2 := denominator1.
 			denominator1 := integerPart * denominator1 + temp.
 			"Is ratio past float precision?"
-			1.0e14 < denominator1 
+			1.0e14 < denominator1
 				ifTrue: 
-					[^numerator2 = 0.0 
+					[^numerator2 = 0.0
 						ifTrue: [Fraction numerator: numerator1 denominator: denominator1]
 						ifFalse: [Fraction numerator: numerator2 denominator: denominator2]]].
-	^denominator1 = 1 
+	^denominator1 = 1
 		ifTrue: [numerator1]
 		ifFalse: [Fraction numerator: numerator1 denominator: denominator1]!
 
@@ -465,7 +465,8 @@ asTrueFraction
 	" Extract the bits of an IEEE double float "
 
 	| shifty sign expPart exp fraction fractionPart |
-	self isFinite ifFalse: [ArithmeticError signal: ('Cannot represent <1p> as a fraction' expandMacrosWith: self)].
+	self isFinite
+		ifFalse: [ArithmeticError signal: ('Cannot represent <1p> as a fraction' expandMacrosWith: self)].
 	shifty := self qwordAtOffset: 0.
 	" Extract the sign and the biased exponent "
 	sign := (shifty bitShift: -63) == 0 ifTrue: [1] ifFalse: [-1].
@@ -526,7 +527,7 @@ cos
 	^NaN!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	This will be the Smalltalk literal format for floating point numbers if the stream is configured for the Smalltalk locale, but it could be in a <WindowsLocale> specific format."
 
 	aPuttableStream locale displayFloat: self on: aPuttableStream!
@@ -746,7 +747,7 @@ multiplyByFloat: aFloat
 	"Perform the multiplication again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
 	^[aFloat * self] ensure: [Float exceptionMask: mask]!
 
 multiplyByFraction: aFraction
@@ -905,7 +906,7 @@ raisedTo: aNumber
 		ifTrue: 
 			[| mask |
 			"FP exception must have been continued - repeat with exceptions masked to get correct continuation value"
-			mask := self class exceptionMask: CRTConstants._MCW_EM.
+			mask := self class exceptionMask: OS.CRTConstants._MCW_EM.
 			[self raisedTo: aNumber] ensure: [self class exceptionMask: mask]]
 		ifFalse: [self raisedTo: aNumber asFloat]!
 
@@ -969,7 +970,7 @@ subtractFromFloat: aFloat
 	"Perform the FP subtraction again with exceptions masked to get a continuation value"
 
 	| mask |
-	mask := Float exceptionMask: CRTConstants._MCW_EM.
+	mask := Float exceptionMask: OS.CRTConstants._MCW_EM.
 	^[aFloat - self] ensure: [Float exceptionMask: mask]!
 
 subtractFromFraction: aFraction
@@ -1006,92 +1007,92 @@ truncated
 	"Implementation Note: Rather than calculate the integer approximation by a series of divisions (as in versions of Dolphin prior to 3.02), a process which was both very slow for large Floats and also prone to error, we use precise #asTrueFraction."
 	^self asTrueFraction truncated
 ! !
-!Float categoriesFor: #-!arithmetic!public! !
-!Float categoriesFor: #*!arithmetic!public! !
-!Float categoriesFor: #/!arithmetic!public! !
-!Float categoriesFor: #+!arithmetic!public! !
-!Float categoriesFor: #<!comparing!public! !
-!Float categoriesFor: #<=!comparing!public! !
-!Float categoriesFor: #=!comparing!public! !
-!Float categoriesFor: #>!comparing!public! !
-!Float categoriesFor: #>=!comparing!public! !
-!Float categoriesFor: #abs!mathematical!public! !
-!Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
-!Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
-!Float categoriesFor: #absPrintOn:base:digitCount:decimalExponents:!printing!private! !
-!Float categoriesFor: #addToFloat:!double dispatch!private! !
-!Float categoriesFor: #addToFraction:!double dispatch!private! !
-!Float categoriesFor: #addToInteger:!double dispatch!private! !
-!Float categoriesFor: #arcCos!mathematical!public! !
-!Float categoriesFor: #arcSin!mathematical!public! !
-!Float categoriesFor: #arcTan!mathematical!public! !
-!Float categoriesFor: #arcTan:!mathematical!public! !
-!Float categoriesFor: #asApproximateFraction!converting!public! !
-!Float categoriesFor: #asFloat!converting!public! !
-!Float categoriesFor: #asFraction!converting!public! !
-!Float categoriesFor: #asTrueFraction!converting!public! !
-!Float categoriesFor: #bitRepresentation!accessing!private! !
-!Float categoriesFor: #ceiling!public!truncation and round off! !
-!Float categoriesFor: #coerce:!coercing!private! !
-!Float categoriesFor: #cos!mathematical!public! !
-!Float categoriesFor: #displayOn:!printing!public! !
-!Float categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!Float categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!Float categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!Float categoriesFor: #equals:!comparing!public! !
-!Float categoriesFor: #equalToFraction:!double dispatch!private! !
-!Float categoriesFor: #equalToInteger:!double dispatch!private! !
-!Float categoriesFor: #exp!mathematical!public! !
-!Float categoriesFor: #exponent!accessing!public! !
-!Float categoriesFor: #floor!public!truncation and round off! !
-!Float categoriesFor: #floorLog:!mathematical!public! !
-!Float categoriesFor: #floorLog10!mathematical!public! !
-!Float categoriesFor: #fpClass!helpers!private! !
-!Float categoriesFor: #fractionPart!accessing!public! !
-!Float categoriesFor: #generality!coercing!private! !
-!Float categoriesFor: #greaterOrEquals:!comparing!public! !
-!Float categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Float categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!Float categoriesFor: #hash!comparing!public! !
-!Float categoriesFor: #integerPart!accessing!public! !
-!Float categoriesFor: #isDenormal!public!testing! !
-!Float categoriesFor: #isFinite!public!testing! !
-!Float categoriesFor: #isFloat!public!testing! !
-!Float categoriesFor: #isInfinite!public!testing! !
-!Float categoriesFor: #isLiteral!public!testing! !
-!Float categoriesFor: #isNaN!public!testing! !
-!Float categoriesFor: #isZero!public!testing! !
-!Float categoriesFor: #lessOrEquals:!comparing!public! !
-!Float categoriesFor: #ln!mathematical!public! !
-!Float categoriesFor: #log!mathematical!public! !
-!Float categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!Float categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!Float categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Float categoriesFor: #negated!arithmetic!public! !
-!Float categoriesFor: #negative!public!testing! !
-!Float categoriesFor: #printOn:!printing!public! !
-!Float categoriesFor: #printOn:base:!printing!public! !
-!Float categoriesFor: #printOn:base:decimalPlaces:!printing!public! !
-!Float categoriesFor: #printOn:base:significantFigures:!printing!public! !
-!Float categoriesFor: #printOn:base:significantFigures:decimalExponents:!printing!public! !
-!Float categoriesFor: #printOn:decimalPlaces:!printing!public! !
-!Float categoriesFor: #printOn:significantFigures:!printing!public! !
-!Float categoriesFor: #qwordAtOffset:!accessing!private! !
-!Float categoriesFor: #raisedTo:!mathematical!public! !
-!Float categoriesFor: #reciprocalLogBase2!mathematical!public! !
-!Float categoriesFor: #rounded!public!truncation and round off! !
-!Float categoriesFor: #sign!public!testing! !
-!Float categoriesFor: #significandAsInteger!accessing!public! !
-!Float categoriesFor: #sin!mathematical!public! !
-!Float categoriesFor: #sqrt!mathematical!public! !
-!Float categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!Float categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!Float categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!Float categoriesFor: #tan!mathematical!public! !
-!Float categoriesFor: #timesTwoPower:!mathematical!public! !
-!Float categoriesFor: #truncated!public!truncation and round off! !
+!Core.Float categoriesFor: #-!arithmetic!public! !
+!Core.Float categoriesFor: #*!arithmetic!public! !
+!Core.Float categoriesFor: #/!arithmetic!public! !
+!Core.Float categoriesFor: #+!arithmetic!public! !
+!Core.Float categoriesFor: #<!comparing!public! !
+!Core.Float categoriesFor: #<=!comparing!public! !
+!Core.Float categoriesFor: #=!comparing!public! !
+!Core.Float categoriesFor: #>!comparing!public! !
+!Core.Float categoriesFor: #>=!comparing!public! !
+!Core.Float categoriesFor: #abs!mathematical!public! !
+!Core.Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
+!Core.Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
+!Core.Float categoriesFor: #absPrintOn:base:digitCount:decimalExponents:!printing!private! !
+!Core.Float categoriesFor: #addToFloat:!double dispatch!private! !
+!Core.Float categoriesFor: #addToFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #addToInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #arcCos!mathematical!public! !
+!Core.Float categoriesFor: #arcSin!mathematical!public! !
+!Core.Float categoriesFor: #arcTan!mathematical!public! !
+!Core.Float categoriesFor: #arcTan:!mathematical!public! !
+!Core.Float categoriesFor: #asApproximateFraction!converting!public! !
+!Core.Float categoriesFor: #asFloat!converting!public! !
+!Core.Float categoriesFor: #asFraction!converting!public! !
+!Core.Float categoriesFor: #asTrueFraction!converting!public! !
+!Core.Float categoriesFor: #bitRepresentation!accessing!private! !
+!Core.Float categoriesFor: #ceiling!public!truncation and round off! !
+!Core.Float categoriesFor: #coerce:!coercing!private! !
+!Core.Float categoriesFor: #cos!mathematical!public! !
+!Core.Float categoriesFor: #displayOn:!printing!public! !
+!Core.Float categoriesFor: #divideIntoFloat:!double dispatch!private! !
+!Core.Float categoriesFor: #divideIntoFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #equals:!comparing!public! !
+!Core.Float categoriesFor: #equalToFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #equalToInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #exp!mathematical!public! !
+!Core.Float categoriesFor: #exponent!accessing!public! !
+!Core.Float categoriesFor: #floor!public!truncation and round off! !
+!Core.Float categoriesFor: #floorLog:!mathematical!public! !
+!Core.Float categoriesFor: #floorLog10!mathematical!public! !
+!Core.Float categoriesFor: #fpClass!helpers!private! !
+!Core.Float categoriesFor: #fractionPart!accessing!public! !
+!Core.Float categoriesFor: #generality!coercing!private! !
+!Core.Float categoriesFor: #greaterOrEquals:!comparing!public! !
+!Core.Float categoriesFor: #greaterThanFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #greaterThanInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #hash!comparing!public! !
+!Core.Float categoriesFor: #integerPart!accessing!public! !
+!Core.Float categoriesFor: #isDenormal!public!testing! !
+!Core.Float categoriesFor: #isFinite!public!testing! !
+!Core.Float categoriesFor: #isFloat!public!testing! !
+!Core.Float categoriesFor: #isInfinite!public!testing! !
+!Core.Float categoriesFor: #isLiteral!public!testing! !
+!Core.Float categoriesFor: #isNaN!public!testing! !
+!Core.Float categoriesFor: #isZero!public!testing! !
+!Core.Float categoriesFor: #lessOrEquals:!comparing!public! !
+!Core.Float categoriesFor: #ln!mathematical!public! !
+!Core.Float categoriesFor: #log!mathematical!public! !
+!Core.Float categoriesFor: #multiplyByFloat:!double dispatch!private! !
+!Core.Float categoriesFor: #multiplyByFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #negated!arithmetic!public! !
+!Core.Float categoriesFor: #negative!public!testing! !
+!Core.Float categoriesFor: #printOn:!printing!public! !
+!Core.Float categoriesFor: #printOn:base:!printing!public! !
+!Core.Float categoriesFor: #printOn:base:decimalPlaces:!printing!public! !
+!Core.Float categoriesFor: #printOn:base:significantFigures:!printing!public! !
+!Core.Float categoriesFor: #printOn:base:significantFigures:decimalExponents:!printing!public! !
+!Core.Float categoriesFor: #printOn:decimalPlaces:!printing!public! !
+!Core.Float categoriesFor: #printOn:significantFigures:!printing!public! !
+!Core.Float categoriesFor: #qwordAtOffset:!accessing!private! !
+!Core.Float categoriesFor: #raisedTo:!mathematical!public! !
+!Core.Float categoriesFor: #reciprocalLogBase2!mathematical!public! !
+!Core.Float categoriesFor: #rounded!public!truncation and round off! !
+!Core.Float categoriesFor: #sign!public!testing! !
+!Core.Float categoriesFor: #significandAsInteger!accessing!public! !
+!Core.Float categoriesFor: #sin!mathematical!public! !
+!Core.Float categoriesFor: #sqrt!mathematical!public! !
+!Core.Float categoriesFor: #subtractFromFloat:!double dispatch!private! !
+!Core.Float categoriesFor: #subtractFromFraction:!double dispatch!private! !
+!Core.Float categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!Core.Float categoriesFor: #tan!mathematical!public! !
+!Core.Float categoriesFor: #timesTwoPower:!mathematical!public! !
+!Core.Float categoriesFor: #truncated!public!truncation and round off! !
 
-!Float class methodsFor!
+!Core.Float class methodsFor!
 
 defaultDecimalExponents
 	"Answer an <Interval> that specifies the range of exponents over which Floats are (by default) printed in decimal (as opposed to scientific) format by printing methods."
@@ -1107,8 +1108,8 @@ denormalized
 	"Answer whether the characterized floating point representation allows denormalized
 	values."
 
-	^(Processor activeProcess fpControl bitAnd: ##(CRTConstants._MCW_DN | CRTConstants._EM_DENORMAL))
-		= CRTConstants._EM_DENORMAL!
+	^(Processor activeProcess fpControl bitAnd: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._EM_DENORMAL))
+		= OS.CRTConstants._EM_DENORMAL!
 
 e
 	"Answer a <Float> representing the irrational number, 'e'
@@ -1162,13 +1163,13 @@ exceptionMask
 
 	See Process class>>#initialize for a description of the default exception mask, and the class comment of <FloatingPointException> for further background information."
 
-	^Processor activeProcess fpControl bitAnd: CRTConstants._MCW_EM!
+	^Processor activeProcess fpControl bitAnd: OS.CRTConstants._MCW_EM!
 
 exceptionMask: anInteger
 	"Set the floating point exception mask which is active in the currently executing
 	<Process>. See #exceptionMask for further information. Answers the previous mask."
 
-	^Processor activeProcess setFpControl: anInteger mask: CRTConstants._MCW_EM!
+	^Processor activeProcess setFpControl: anInteger mask: OS.CRTConstants._MCW_EM!
 
 fmax
 	"Answer a <Float> representing the largest value
@@ -1207,7 +1208,7 @@ initialize
 	"
 
 	| fpeMask fmax emin eminDenorm mantissaBits mantissaHighBit |
-	#(#FloatD #FloatE #FloatQ) do: [:each | Smalltalk at: each ifAbsentPut: [self]].
+	#(#FloatD #FloatE #FloatQ) do: [:each | (Core declareVariable: each) value: self].
 	emin := -1022.
 	self addClassConstant: 'EMin' value: emin.
 	self addClassConstant: 'EMax' value: 1023.
@@ -1228,7 +1229,7 @@ initialize
 	self addClassVariable: 'FMinDenormalized' value: (1.0 timesTwoPower: eminDenorm).
 	"Mask out overflow/invalid while we generate the infinity/NaN constants."
 	fpeMask := self exceptionMask.
-	self exceptionMask: (fpeMask maskSet: CRTConstants._EM_OVERFLOW | CRTConstants._EM_INVALID).
+	self exceptionMask: (fpeMask maskSet: OS.CRTConstants._EM_OVERFLOW | OS.CRTConstants._EM_INVALID).
 	
 	[| infinity |
 	infinity := fmax * fmax.
@@ -1238,23 +1239,27 @@ initialize
 			ensure: [self exceptionMask: fpeMask].
 	"Classification groups"
 	self addClassConstant: 'FpClassInfinite'
-		value: CRTConstants._FPCLASS_NINF | CRTConstants._FPCLASS_PINF.
+		value: OS.CRTConstants._FPCLASS_NINF | OS.CRTConstants._FPCLASS_PINF.
 	self addClassConstant: 'FpClassStrictlyPositive'
-		value: CRTConstants._FPCLASS_PD | CRTConstants._FPCLASS_PN | CRTConstants._FPCLASS_PINF.
+		value: OS.CRTConstants._FPCLASS_PD | OS.CRTConstants._FPCLASS_PN | OS.CRTConstants._FPCLASS_PINF.
 	self addClassConstant: 'FpClassNegative'
-		value: CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_NINF
-				| CRTConstants._FPCLASS_NZ.
-	self addClassConstant: 'FpClassZero' value: CRTConstants._FPCLASS_NZ | CRTConstants._FPCLASS_PZ.
-	self addClassConstant: 'FpClassNaN' value: CRTConstants._FPCLASS_QNAN | CRTConstants._FPCLASS_SNAN.
+		value: OS.CRTConstants._FPCLASS_ND | OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_NINF
+				| OS.CRTConstants._FPCLASS_NZ.
+	self addClassConstant: 'FpClassZero'
+		value: OS.CRTConstants._FPCLASS_NZ | OS.CRTConstants._FPCLASS_PZ.
+	self addClassConstant: 'FpClassNaN'
+		value: OS.CRTConstants._FPCLASS_QNAN | OS.CRTConstants._FPCLASS_SNAN.
 	"Denormalized numbers - non-zero but with leading zeroes in the mantissa"
-	self addClassConstant: 'FpClassDenormal' value: CRTConstants._FPCLASS_PD | CRTConstants._FPCLASS_ND.
+	self addClassConstant: 'FpClassDenormal'
+		value: OS.CRTConstants._FPCLASS_PD | OS.CRTConstants._FPCLASS_ND.
 	"Non-zero, normals"
-	self addClassConstant: 'FpClassNormal' value: CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_PN.
+	self addClassConstant: 'FpClassNormal'
+		value: OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_PN.
 	"Finite numbers (anything other than infinites or NaNs)"
 	self addClassConstant: 'FpClassFinite'
-		value: CRTConstants._FPCLASS_NN | CRTConstants._FPCLASS_ND | CRTConstants._FPCLASS_NZ
-				| CRTConstants._FPCLASS_PZ | CRTConstants._FPCLASS_PD
-				| CRTConstants._FPCLASS_PN.
+		value: OS.CRTConstants._FPCLASS_NN | OS.CRTConstants._FPCLASS_ND | OS.CRTConstants._FPCLASS_NZ
+				| OS.CRTConstants._FPCLASS_PZ | OS.CRTConstants._FPCLASS_PD
+				| OS.CRTConstants._FPCLASS_PN.
 	DefaultDecimalExponents := -3 to: 6!
 
 maxExponent
@@ -1333,42 +1338,42 @@ reset
 	Processor activeProcess resetFloatingPoint!
 
 statusFlags
-	^CRTLibrary default _statusfp!
+	^OS.CRTLibrary default _statusfp!
 
 zero
 	"Answer the receiver's representation of zero."
 
 	^0.0! !
-!Float class categoriesFor: #defaultDecimalExponents!accessing!public! !
-!Float class categoriesFor: #defaultDecimalExponents:!accessing!public! !
-!Float class categoriesFor: #denormalized!public!testing! !
-!Float class categoriesFor: #e!constants!public! !
-!Float class categoriesFor: #emax!constants!public! !
-!Float class categoriesFor: #emin!constants!public! !
-!Float class categoriesFor: #epsilon!constants!public! !
-!Float class categoriesFor: #exceptionMask!accessing!public! !
-!Float class categoriesFor: #exceptionMask:!accessing!public! !
-!Float class categoriesFor: #fmax!constants!public! !
-!Float class categoriesFor: #fmin!constants!public! !
-!Float class categoriesFor: #fminDenormalized!constants!public! !
-!Float class categoriesFor: #fminNormalized!constants!public! !
-!Float class categoriesFor: #infinity!constants!public! !
-!Float class categoriesFor: #initialize!development!initializing!private! !
-!Float class categoriesFor: #maxExponent!constants!private! !
-!Float class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
-!Float class categoriesFor: #nan!constants!public! !
-!Float class categoriesFor: #negativeInfinity!constants!public! !
-!Float class categoriesFor: #negativeZero!constants!public! !
-!Float class categoriesFor: #new!instance creation!public! !
-!Float class categoriesFor: #one!instance creation!public! !
-!Float class categoriesFor: #onStartup!event handling!private! !
-!Float class categoriesFor: #pi!constants!public! !
-!Float class categoriesFor: #precision!constants!public! !
-!Float class categoriesFor: #radix!constants!public! !
-!Float class categoriesFor: #readFrom:!instance creation!public! !
-!Float class categoriesFor: #reset!initializing!public! !
-!Float class categoriesFor: #statusFlags!accessing!public! !
-!Float class categoriesFor: #zero!instance creation!public! !
+!Core.Float class categoriesFor: #defaultDecimalExponents!accessing!public! !
+!Core.Float class categoriesFor: #defaultDecimalExponents:!accessing!public! !
+!Core.Float class categoriesFor: #denormalized!public!testing! !
+!Core.Float class categoriesFor: #e!constants!public! !
+!Core.Float class categoriesFor: #emax!constants!public! !
+!Core.Float class categoriesFor: #emin!constants!public! !
+!Core.Float class categoriesFor: #epsilon!constants!public! !
+!Core.Float class categoriesFor: #exceptionMask!accessing!public! !
+!Core.Float class categoriesFor: #exceptionMask:!accessing!public! !
+!Core.Float class categoriesFor: #fmax!constants!public! !
+!Core.Float class categoriesFor: #fmin!constants!public! !
+!Core.Float class categoriesFor: #fminDenormalized!constants!public! !
+!Core.Float class categoriesFor: #fminNormalized!constants!public! !
+!Core.Float class categoriesFor: #infinity!constants!public! !
+!Core.Float class categoriesFor: #initialize!development!initializing!private! !
+!Core.Float class categoriesFor: #maxExponent!constants!private! !
+!Core.Float class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
+!Core.Float class categoriesFor: #nan!constants!public! !
+!Core.Float class categoriesFor: #negativeInfinity!constants!public! !
+!Core.Float class categoriesFor: #negativeZero!constants!public! !
+!Core.Float class categoriesFor: #new!instance creation!public! !
+!Core.Float class categoriesFor: #one!instance creation!public! !
+!Core.Float class categoriesFor: #onStartup!event handling!private! !
+!Core.Float class categoriesFor: #pi!constants!public! !
+!Core.Float class categoriesFor: #precision!constants!public! !
+!Core.Float class categoriesFor: #radix!constants!public! !
+!Core.Float class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Float class categoriesFor: #reset!initializing!public! !
+!Core.Float class categoriesFor: #statusFlags!accessing!public! !
+!Core.Float class categoriesFor: #zero!instance creation!public! !
 
-Float class methodProtocol: #floatCharacterization attributes: #(#ansi #readOnly) selectors: #(#denormalized #e #emax #emin #epsilon #fmax #fmin #fminDenormalized #fminNormalized #pi #precision #radix)!
+Core.Float class methodProtocol: #floatCharacterization attributes: #(#ansi #readOnly) selectors: #(#denormalized #e #emax #emin #epsilon #fmax #fmin #fminDenormalized #fminNormalized #pi #precision #radix)!
 

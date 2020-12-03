@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #PermanentLibrary
+External.Library subclass: #'External.PermanentLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PermanentLibrary guid: (GUID fromString: '{87b4c583-026e-11d3-9fd7-00a0cc3e4a32}')!
-PermanentLibrary isAbstract: true!
-PermanentLibrary comment: 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
-!PermanentLibrary categoriesForClass!External-Libraries! !
-!PermanentLibrary methodsFor!
+External.PermanentLibrary guid: (Core.GUID fromString: '{87b4c583-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.PermanentLibrary isNonInstantiable: true!
+External.PermanentLibrary comment: 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
+!External.PermanentLibrary categoriesForClass!External-Libraries! !
+!External.PermanentLibrary methodsFor!
 
 close
 	"Release the reference the receiver has to the External Library it represents. This may
@@ -19,9 +19,9 @@ close
 	because it will break the VM and everything else."
 
 	^self ~~ self class default and: [super close]! !
-!PermanentLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!External.PermanentLibrary categoriesFor: #close!public!realizing/unrealizing! !
 
-!PermanentLibrary class methodsFor!
+!External.PermanentLibrary class methodsFor!
 
 clear
 	"Private - Clear down cached external function addresses from previous runs."
@@ -50,9 +50,8 @@ onStartup
 	before they are re-opened, otherwise invalid function addresses
 	may get called."
 
-	KernelLibrary clear.			"This has to be opened first"
-	self allSubclassesDo: [:s |
-		s == KernelLibrary ifFalse: [s clear]]!
+	KernelLibrary clear.	"This has to be opened first"
+	self allSubclassesDo: [:s | s == KernelLibrary ifFalse: [s clear]]!
 
 onStartup2
 	"Private - Perform system startup processing for all subclasses.
@@ -61,10 +60,10 @@ onStartup2
 	may get called."
 
 	self allSubclassesDo: [:c | c openDefault]! !
-!PermanentLibrary class categoriesFor: #clear!initializing!private! !
-!PermanentLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!PermanentLibrary class categoriesFor: #default!accessing!public! !
-!PermanentLibrary class categoriesFor: #default:!accessing!public! !
-!PermanentLibrary class categoriesFor: #onStartup!event handling!private! !
-!PermanentLibrary class categoriesFor: #onStartup2!event handling!private! !
+!External.PermanentLibrary class categoriesFor: #clear!initializing!private! !
+!External.PermanentLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
+!External.PermanentLibrary class categoriesFor: #default!accessing!public! !
+!External.PermanentLibrary class categoriesFor: #default:!accessing!public! !
+!External.PermanentLibrary class categoriesFor: #onStartup!event handling!private! !
+!External.PermanentLibrary class categoriesFor: #onStartup2!event handling!private! !
 

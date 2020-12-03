@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #ClassRemovalError
+Core.Error subclass: #'Kernel.ClassRemovalError'
 	instanceVariableNames: 'originalError'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassRemovalError guid: (GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
-ClassRemovalError comment: ''!
-!ClassRemovalError categoriesForClass!System-Support! !
-!ClassRemovalError methodsFor!
+Kernel.ClassRemovalError guid: (Core.GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
+Kernel.ClassRemovalError comment: ''!
+!Kernel.ClassRemovalError categoriesForClass!System-Support! !
+!Kernel.ClassRemovalError methodsFor!
 
 isResumable
 	"Answer whether the receiver represents a resumable error. 
@@ -28,7 +28,7 @@ originalError: anError
 	in the receivers tag field."
 
 	originalError := anError! !
-!ClassRemovalError categoriesFor: #isResumable!public!testing! !
-!ClassRemovalError categoriesFor: #originalError!accessing!public! !
-!ClassRemovalError categoriesFor: #originalError:!accessing!public! !
+!Kernel.ClassRemovalError categoriesFor: #isResumable!public!testing! !
+!Kernel.ClassRemovalError categoriesFor: #originalError!accessing!public! !
+!Kernel.ClassRemovalError categoriesFor: #originalError:!accessing!public! !
 

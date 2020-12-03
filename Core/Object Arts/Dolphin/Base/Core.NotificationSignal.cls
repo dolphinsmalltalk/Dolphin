@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Signal subclass: #NotificationSignal
+Core.Signal subclass: #'Core.NotificationSignal'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NotificationSignal guid: (GUID fromString: '{87b4c6de-026e-11d3-9fd7-00a0cc3e4a32}')!
-NotificationSignal comment: ''!
-!NotificationSignal categoriesForClass!Kernel-Exception Handling! !
-!NotificationSignal methodsFor!
+Core.NotificationSignal guid: (Core.GUID fromString: '{87b4c6de-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.NotificationSignal comment: ''!
+!Core.NotificationSignal categoriesForClass!Kernel-Exception Handling! !
+!Core.NotificationSignal methodsFor!
 
 defaultAction: exception
 	"Private - Perform the default action for the raised incarnation of the receiver,
@@ -28,7 +28,7 @@ exceptionClass
 	is signalled."
 
 	^RaisedNotificationSignal! !
-!NotificationSignal categoriesFor: #defaultAction:!handling!private! !
-!NotificationSignal categoriesFor: #defaultResumption!constants!private! !
-!NotificationSignal categoriesFor: #exceptionClass!constants!private! !
+!Core.NotificationSignal categoriesFor: #defaultAction:!handling!private! !
+!Core.NotificationSignal categoriesFor: #defaultResumption!constants!private! !
+!Core.NotificationSignal categoriesFor: #exceptionClass!constants!private! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalInteger subclass: #DWORD
+External.INTEGER subclass: #'External.DWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DWORD guid: (GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
-DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
+External.DWORD guid: (Core.GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 DWORD is used to represent unsigned 32-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**32)-1'!
-!DWORD categoriesForClass!External-Data-Unstructured! !
-!DWORD methodsFor!
+!External.DWORD categoriesForClass!External-Data-Unstructured! !
+!External.DWORD methodsFor!
 
 asSignedInteger
 	"Answer the signed 32-bit <Integer> value of the receiver."
@@ -83,20 +83,20 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
-!DWORD categoriesFor: #asSignedInteger!converting!public! !
-!DWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!DWORD categoriesFor: #highSWord!accessing!public! !
-!DWORD categoriesFor: #highSWord:!accessing!public! !
-!DWORD categoriesFor: #highWord!accessing!public! !
-!DWORD categoriesFor: #highWord:!accessing!public! !
-!DWORD categoriesFor: #lowSWord!accessing!public! !
-!DWORD categoriesFor: #lowSWord:!accessing!public! !
-!DWORD categoriesFor: #lowWord!accessing!public! !
-!DWORD categoriesFor: #lowWord:!accessing!public! !
-!DWORD categoriesFor: #value!**compiled accessors**!public! !
-!DWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.DWORD categoriesFor: #asSignedInteger!converting!public! !
+!External.DWORD categoriesFor: #asUnsignedInteger!converting!public! !
+!External.DWORD categoriesFor: #highSWord!accessing!public! !
+!External.DWORD categoriesFor: #highSWord:!accessing!public! !
+!External.DWORD categoriesFor: #highWord!accessing!public! !
+!External.DWORD categoriesFor: #highWord:!accessing!public! !
+!External.DWORD categoriesFor: #lowSWord!accessing!public! !
+!External.DWORD categoriesFor: #lowSWord:!accessing!public! !
+!External.DWORD categoriesFor: #lowWord!accessing!public! !
+!External.DWORD categoriesFor: #lowWord:!accessing!public! !
+!External.DWORD categoriesFor: #value!**compiled accessors**!public! !
+!External.DWORD categoriesFor: #value:!**compiled accessors**!public! !
 
-!DWORD class methodsFor!
+!External.DWORD class methodsFor!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
@@ -115,7 +115,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DWORD class categoriesFor: #defineFields!public!template definition! !
-!DWORD class categoriesFor: #initialize!development!initializing!private! !
-!DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.DWORD class categoriesFor: #defineFields!public!template definition! !
+!External.DWORD class categoriesFor: #initialize!development!initializing!private! !
+!External.DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

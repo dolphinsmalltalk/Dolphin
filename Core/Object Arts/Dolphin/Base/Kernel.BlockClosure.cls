@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object variableSubclass: #BlockClosure
+Core.Object variableSubclass: #'Kernel.BlockClosure'
 	instanceVariableNames: 'outer method initialIP info receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockClosure guid: (GUID fromString: '{9f8fdcd4-036d-4d00-b781-623ce474a835}')!
-BlockClosure comment: 'BlockClosure is the class of objects that represent "blocks" in Smalltalk. Blocks encapsulate a sequence of statements to be performed at a later time. Blocks may capture (or "close over") runtime state, such as the values of temporary variables, from the enclosing lexical scope at the point where they are created. When evaluated a block executes as if in the lexical scope in which it was defined, except that blocks may have arguments that are bound at the time of evaluation. Blocks may be passed as arguments with messages to other objects and evaluated by those objects when appropriate, and thus form a very powerful and generic "pluggability" mechanism that is a core feature which provides much of the power of Smalltalk. 
+Kernel.BlockClosure guid: (Core.GUID fromString: '{9f8fdcd4-036d-4d00-b781-623ce474a835}')!
+Kernel.BlockClosure comment: 'BlockClosure is the class of objects that represent "blocks" in Smalltalk. Blocks encapsulate a sequence of statements to be performed at a later time. Blocks may capture (or "close over") runtime state, such as the values of temporary variables, from the enclosing lexical scope at the point where they are created. When evaluated a block executes as if in the lexical scope in which it was defined, except that blocks may have arguments that are bound at the time of evaluation. Blocks may be passed as arguments with messages to other objects and evaluated by those objects when appropriate, and thus form a very powerful and generic "pluggability" mechanism that is a core feature which provides much of the power of Smalltalk. 
 
 BlockClosures in Dolphin 6.0 and later are substantially revised from in earlier versions of Dolphin. Dolphin 6.0 now supports true lexical closures, and implements all advanced optimizations. Block arguments now always reside on the stack, and their lifetime is limited to the duration of the activation of the block. This means that blocks can be used recursively, and even shared between processes (e.g. a sort block can now safely be shared). It also means that blocks no longer retain a reference to their last arguments, and so previous problems with blocks in (for example) MVP views keeping object trees from being garbage collected are no longer an issue. Furthermore block activation is now exactly the same as method activation, and can be no more expensive.
 
@@ -111,8 +111,8 @@ Info word usage:
 	16..23	stack temp count
 	24..31	env temp count (Context size, 0 if no Context needed).
 '!
-!BlockClosure categoriesForClass!Kernel-Methods! !
-!BlockClosure methodsFor!
+!Kernel.BlockClosure categoriesForClass!Kernel-Methods! !
+!Kernel.BlockClosure methodsFor!
 
 = aBlockClosure
 	^aBlockClosure class == self class and: 
@@ -120,7 +120,7 @@ Info word usage:
 					[initialIP = aBlockClosure initialIP and: 
 							[outer = aBlockClosure outer and: 
 									[self size = aBlockClosure size
-										and: [(1 to: self size) allSatisfy: [:i | (self at: i) = (aBlockClosure at: i)]]]]]].!
+										and: [(1 to: self size) allSatisfy: [:i | (self at: i) = (aBlockClosure at: i)]]]]]]!
 
 argumentCount
 	"Answer the <integer> number of arguments expected by the receiver."
@@ -397,15 +397,15 @@ newProcess: anIntegerOrNil
 	(e.g. Process name getSource) to determine what the process is doing. The integer argument
 	specifies the maximum stack size in bytes. If nil, then the default maximum stack size is used."
 
-	^(Process forContext: [ 
-			self on: ProcessTermination do: [:e | e return].
+	^(Process
+		forContext: 
+			[self on: ProcessTermination do: [:e | e return].
 			"^-return catches attempt to drop off bottom of process stack (which would cause a GPF)"
 			^Processor activeProcess shutdown]
 		priority: Processor activePriority
 		maxStack: anIntegerOrNil)
 		name: self method;
-		yourself
-!
+		yourself!
 
 newProcessWithArguments: anArray
 	"Answer a new process which will evaluate the receiver with arguments
@@ -767,82 +767,82 @@ whileTrue: iterationBlock
 	the definition below, so this method is not actually recursive."
 
 	^[self value] whileTrue: [iterationBlock value]! !
-!BlockClosure categoriesFor: #=!comparing!public! !
-!BlockClosure categoriesFor: #argumentCount!accessing!public! !
-!BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
-!BlockClosure categoriesFor: #atPriority:!evaluating!public! !
-!BlockClosure categoriesFor: #copiedValues!private! !
-!BlockClosure categoriesFor: #critical!private!scheduling! !
-!BlockClosure categoriesFor: #cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #deferredValue!evaluating!public! !
-!BlockClosure categoriesFor: #deferredValueAt:!evaluating!public! !
-!BlockClosure categoriesFor: #ensure:!debugger-step through!not restartable!public!unwinding! !
-!BlockClosure categoriesFor: #envTempCount!accessing!private! !
-!BlockClosure categoriesFor: #envTempCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #fork!public!scheduling! !
-!BlockClosure categoriesFor: #forkAt:!public!scheduling! !
-!BlockClosure categoriesFor: #forkAt:maxStack:!public!scheduling! !
-!BlockClosure categoriesFor: #forkMaxStack:!public!scheduling! !
-!BlockClosure categoriesFor: #frameClass!constants!private! !
-!BlockClosure categoriesFor: #home!accessing!private! !
-!BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
-!BlockClosure categoriesFor: #info!accessing!private! !
-!BlockClosure categoriesFor: #info:!accessing!development!private! !
-!BlockClosure categoriesFor: #initialIP!accessing!public! !
-!BlockClosure categoriesFor: #initialIP:!accessing!development!private! !
-!BlockClosure categoriesFor: #isClean!private!testing! !
-!BlockClosure categoriesFor: #localCount!accessing!private! !
-!BlockClosure categoriesFor: #method!accessing!private! !
-!BlockClosure categoriesFor: #method:!accessing!private! !
-!BlockClosure categoriesFor: #newProcess!public!scheduling! !
-!BlockClosure categoriesFor: #newProcess:!public!scheduling! !
-!BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
-!BlockClosure categoriesFor: #numArgs!accessing!public! !
-!BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #onDo:!exceptions!public! !
-!BlockClosure categoriesFor: #outer!accessing!private! !
-!BlockClosure categoriesFor: #outer:!accessing!development!private! !
-!BlockClosure categoriesFor: #postToInputQueue!event handling!public! !
-!BlockClosure categoriesFor: #postToMessageQueue!event handling!public! !
-!BlockClosure categoriesFor: #printOn:!development!printing!public! !
-!BlockClosure categoriesFor: #receiver!accessing!private! !
-!BlockClosure categoriesFor: #receiver:!accessing!private! !
-!BlockClosure categoriesFor: #repeat!evaluating!public! !
-!BlockClosure categoriesFor: #replaceElementsOf:from:to:startingAt:!public!replacing! !
-!BlockClosure categoriesFor: #stackTempCount!accessing!private! !
-!BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #tempCount!accessing!public! !
-!BlockClosure categoriesFor: #ticksToRun!operations!private! !
-!BlockClosure categoriesFor: #timeToRepeat:!event handling!public! !
-!BlockClosure categoriesFor: #timeToRun!evaluating!public! !
-!BlockClosure categoriesFor: #value!evaluating!public! !
-!BlockClosure categoriesFor: #value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #valueFailed:argumentCount:!exceptions!private! !
-!BlockClosure categoriesFor: #valueOnUnwind:!private!unwinding! !
-!BlockClosure categoriesFor: #valueWithArguments:!evaluating!public! !
-!BlockClosure categoriesFor: #valueWithArgumentsAt:descriptor:!evaluating!private! !
-!BlockClosure categoriesFor: #whileFalse!evaluating!public! !
-!BlockClosure categoriesFor: #whileFalse:!evaluating!public! !
-!BlockClosure categoriesFor: #whileTrue!evaluating!public! !
-!BlockClosure categoriesFor: #whileTrue:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #=!comparing!public! !
+!Kernel.BlockClosure categoriesFor: #argumentCount!accessing!public! !
+!Kernel.BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
+!Kernel.BlockClosure categoriesFor: #atPriority:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #copiedValues!private! !
+!Kernel.BlockClosure categoriesFor: #critical!private!scheduling! !
+!Kernel.BlockClosure categoriesFor: #cull:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #cull:cull:cull:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #deferredValue!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #deferredValueAt:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #ensure:!debugger-step through!not restartable!public!unwinding! !
+!Kernel.BlockClosure categoriesFor: #envTempCount!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #envTempCount:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #fork!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #forkAt:!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #forkAt:maxStack:!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #forkMaxStack:!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #frameClass!constants!private! !
+!Kernel.BlockClosure categoriesFor: #home!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
+!Kernel.BlockClosure categoriesFor: #info!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #info:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #initialIP!accessing!public! !
+!Kernel.BlockClosure categoriesFor: #initialIP:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #isClean!private!testing! !
+!Kernel.BlockClosure categoriesFor: #localCount!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #method!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #method:!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #newProcess!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #newProcess:!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
+!Kernel.BlockClosure categoriesFor: #numArgs!accessing!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:on:do:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #onDo:!exceptions!public! !
+!Kernel.BlockClosure categoriesFor: #outer!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #outer:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #postToInputQueue!event handling!public! !
+!Kernel.BlockClosure categoriesFor: #postToMessageQueue!event handling!public! !
+!Kernel.BlockClosure categoriesFor: #printOn:!development!printing!public! !
+!Kernel.BlockClosure categoriesFor: #receiver!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #receiver:!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #repeat!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #replaceElementsOf:from:to:startingAt:!public!replacing! !
+!Kernel.BlockClosure categoriesFor: #stackTempCount!accessing!private! !
+!Kernel.BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
+!Kernel.BlockClosure categoriesFor: #tempCount!accessing!public! !
+!Kernel.BlockClosure categoriesFor: #ticksToRun!operations!private! !
+!Kernel.BlockClosure categoriesFor: #timeToRepeat:!event handling!public! !
+!Kernel.BlockClosure categoriesFor: #timeToRun!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #value!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #value:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #value:value:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #value:value:value:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #value:value:value:value:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #valueFailed:argumentCount:!exceptions!private! !
+!Kernel.BlockClosure categoriesFor: #valueOnUnwind:!private!unwinding! !
+!Kernel.BlockClosure categoriesFor: #valueWithArguments:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #valueWithArgumentsAt:descriptor:!evaluating!private! !
+!Kernel.BlockClosure categoriesFor: #whileFalse!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #whileFalse:!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #whileTrue!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #whileTrue:!evaluating!public! !
 
-BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
-BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
-BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
+Kernel.BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
+Kernel.BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
+Kernel.BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
 
-!BlockClosure class methodsFor!
+!Kernel.BlockClosure class methodsFor!
 
 attemptToRecompile: aBlockClosure
 	| oldMethod result newBlock newMethod receiver |
@@ -893,7 +893,7 @@ stbVersion
 	"
 
 	^3! !
-!BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
+!Kernel.BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
+!Kernel.BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
 

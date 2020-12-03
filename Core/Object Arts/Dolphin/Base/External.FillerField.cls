@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalField subclass: #FillerField
+External.Field subclass: #'External.FillerField'
 	instanceVariableNames: 'byteSize'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FillerField guid: (GUID fromString: '{87b4c4db-026e-11d3-9fd7-00a0cc3e4a32}')!
-FillerField comment: 'FillerField is an <ExternalField> type for describing spacing or padding in <ExternalStructure>s. Note that it is not normally necessary to account for padding added for memory alignment reasons - the infrastructure for defining structures is able to calculate the correct field offsets taking account of various padding algorithms. Sometimes however custom padding may be required, or <FillerField>s can be used to describe fields where there is never any need to get or set the value (although in that case it is better to use the correct <ExternalField> type and mark the instance as a filler).'!
-!FillerField categoriesForClass!External-Data-Types! !
-!FillerField methodsFor!
+External.FillerField guid: (Core.GUID fromString: '{87b4c4db-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.FillerField comment: 'FillerField is an <ExternalField> type for describing spacing or padding in <ExternalStructure>s. Note that it is not normally necessary to account for padding added for memory alignment reasons - the infrastructure for defining structures is able to calculate the correct field offsets taking account of various padding algorithms. Sometimes however custom padding may be required, or <FillerField>s can be used to describe fields where there is never any need to get or set the value (although in that case it is better to use the correct <ExternalField> type and mark the instance as a filler).'!
+!External.FillerField categoriesForClass!External-Data-Types! !
+!External.FillerField methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -48,19 +48,19 @@ writeInto: anExternal value: anObject
 	appropriate format for the receiver"
 
 	^self shouldNotImplement! !
-!FillerField categoriesFor: #alignment!constants!public! !
-!FillerField categoriesFor: #byteSize!accessing!private! !
-!FillerField categoriesFor: #byteSize:!accessing!private! !
-!FillerField categoriesFor: #canGenerateAccessors!private!testing! !
-!FillerField categoriesFor: #initialize!initializing!private! !
-!FillerField categoriesFor: #readFrom:!indirect accessing!private! !
-!FillerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.FillerField categoriesFor: #alignment!constants!public! !
+!External.FillerField categoriesFor: #byteSize!accessing!private! !
+!External.FillerField categoriesFor: #byteSize:!accessing!private! !
+!External.FillerField categoriesFor: #canGenerateAccessors!private!testing! !
+!External.FillerField categoriesFor: #initialize!initializing!private! !
+!External.FillerField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.FillerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!FillerField class methodsFor!
+!External.FillerField class methodsFor!
 
 byteSize: anInteger
 	"Answer a FillerField of the specified number of bytes"
 
 	^(self new) byteSize: anInteger; yourself! !
-!FillerField class categoriesFor: #byteSize:!instance creation!public! !
+!External.FillerField class categoriesFor: #byteSize:!instance creation!public! !
 

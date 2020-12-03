@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #HRESULTError
+Core.Error subclass: #'OS.HRESULTError'
 	instanceVariableNames: 'errorInfo osErrorMessage'
 	classVariableNames: 'FacilityClasses'
-	poolDictionaries: 'FacilityCodes'
+	imports: #(#{OS.FacilityCodes private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HRESULTError guid: (GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
-HRESULTError comment: ''!
-!HRESULTError categoriesForClass!System-Exception Handling! !
-!HRESULTError methodsFor!
+OS.HRESULTError guid: (Core.GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.HRESULTError comment: ''!
+!OS.HRESULTError categoriesForClass!System-Exception Handling! !
+!OS.HRESULTError methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
@@ -72,19 +72,19 @@ statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
-!HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
-!HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
-!HRESULTError categoriesFor: #errorInfo!accessing!private! !
-!HRESULTError categoriesFor: #errorInfo:!accessing!private! !
-!HRESULTError categoriesFor: #hasMessageText!private!testing! !
-!HRESULTError categoriesFor: #hresult!accessing!public! !
-!HRESULTError categoriesFor: #hresult:!accessing!public! !
-!HRESULTError categoriesFor: #messageText!accessing!public! !
-!HRESULTError categoriesFor: #osErrorMessage!displaying!public! !
-!HRESULTError categoriesFor: #source!accessing!public! !
-!HRESULTError categoriesFor: #statusCode!accessing!public! !
+!OS.HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
+!OS.HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
+!OS.HRESULTError categoriesFor: #errorInfo!accessing!private! !
+!OS.HRESULTError categoriesFor: #errorInfo:!accessing!private! !
+!OS.HRESULTError categoriesFor: #hasMessageText!private!testing! !
+!OS.HRESULTError categoriesFor: #hresult!accessing!public! !
+!OS.HRESULTError categoriesFor: #hresult:!accessing!public! !
+!OS.HRESULTError categoriesFor: #messageText!accessing!public! !
+!OS.HRESULTError categoriesFor: #osErrorMessage!displaying!public! !
+!OS.HRESULTError categoriesFor: #source!accessing!public! !
+!OS.HRESULTError categoriesFor: #statusCode!accessing!public! !
 
-!HRESULTError class methodsFor!
+!OS.HRESULTError class methodsFor!
 
 fromHRESULT: anHRESULT
 	^(FacilityClasses at: anHRESULT facilityCode ifAbsent: [self]) new
@@ -99,11 +99,10 @@ initialize
 		HRESULTError initialize
 	"
 
-	FacilityClasses := 
-		IdentityDictionary new
-			at: FACILITY_NULL put: Win32Error;
-			at: FACILITY_WIN32 put: Win32Error;
-			yourself!
+	FacilityClasses := IdentityDictionary new
+				at: FACILITY_NULL put: Win32Error;
+				at: FACILITY_WIN32 put: Win32Error;
+				yourself!
 
 registerFacility: anInteger class: anExceptionClass
 	"Register the specified exception class as the exception type
@@ -145,14 +144,14 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
-!HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
-!HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
-!HRESULTError class categoriesFor: #initialize!development!initializing!private! !
-!HRESULTError class categoriesFor: #registerFacility:class:!initializing!public! !
-!HRESULTError class categoriesFor: #signal:with:!instance creation!public! !
-!HRESULTError class categoriesFor: #signal:withFailureCode:!instance creation!public! !
-!HRESULTError class categoriesFor: #signalCode:facility:!instance creation!public! !
-!HRESULTError class categoriesFor: #signalFailureCode:!instance creation!private! !
-!HRESULTError class categoriesFor: #signalHRESULT:!instance creation!public! !
-!HRESULTError class categoriesFor: #unregisterFacilityClass:!initializing!public! !
+!OS.HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #initialize!development!initializing!private! !
+!OS.HRESULTError class categoriesFor: #registerFacility:class:!initializing!public! !
+!OS.HRESULTError class categoriesFor: #signal:with:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #signal:withFailureCode:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #signalCode:facility:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #signalFailureCode:!instance creation!private! !
+!OS.HRESULTError class categoriesFor: #signalHRESULT:!instance creation!public! !
+!OS.HRESULTError class categoriesFor: #unregisterFacilityClass:!initializing!public! !
 

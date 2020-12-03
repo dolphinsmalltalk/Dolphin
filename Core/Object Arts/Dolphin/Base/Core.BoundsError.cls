@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #BoundsError
+Core.Error subclass: #'Core.BoundsError'
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BoundsError guid: (GUID fromString: '{87b4c558-026e-11d3-9fd7-00a0cc3e4a32}')!
-BoundsError comment: ''!
-!BoundsError categoriesForClass!Kernel-Exception Handling! !
-!BoundsError methodsFor!
+Core.BoundsError guid: (Core.GUID fromString: '{87b4c558-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.BoundsError comment: ''!
+!Core.BoundsError categoriesForClass!Kernel-Exception Handling! !
+!Core.BoundsError methodsFor!
 
 _descriptionFormat
 	"Answer the description format string for the receiver."
@@ -25,7 +25,7 @@ receiver: anObject
 	"Set the object which generated the bounds error to be anObject"
 	
 	receiver := anObject! !
-!BoundsError categoriesFor: #_descriptionFormat!displaying!public! !
-!BoundsError categoriesFor: #receiver!accessing!public! !
-!BoundsError categoriesFor: #receiver:!accessing!public! !
+!Core.BoundsError categoriesFor: #_descriptionFormat!displaying!public! !
+!Core.BoundsError categoriesFor: #receiver!accessing!public! !
+!Core.BoundsError categoriesFor: #receiver:!accessing!public! !
 

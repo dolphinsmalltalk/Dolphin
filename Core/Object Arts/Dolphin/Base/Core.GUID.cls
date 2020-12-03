@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object variableByteSubclass: #GUID
+Core.Object variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
 	classVariableNames: 'Null'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GUID guid: (GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
-GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
+Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 
 You can easily allocate a new GUID by sending #newUnique to this class. Note that this process is very fast, so there is no particular reason not to use GUIDs for other purposes requiring unique identifiers such as records in a database.
 
@@ -18,8 +18,8 @@ Instance Variables:
 
 Class Variables:
 	Null	- The null <GUID>.'!
-!GUID categoriesForClass!External-Data-Structured-COM! !
-!GUID methodsFor!
+!Core.GUID categoriesForClass!External-Data-Structured-COM! !
+!Core.GUID methodsFor!
 
 <=> aGUID
 	"Answer the ordering relationship between the receiver and the argument.
@@ -27,12 +27,12 @@ Class Variables:
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := RPCLibrary default
+	answer := OS.RPCLibrary default
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.
 	status := status dwordAtOffset: 0.
-	status == 0 ifFalse: [RPCError signalWith: status].
+	status == 0 ifFalse: [OS.RPCError signalWith: status].
 	^answer!
 
 = comperand
@@ -81,7 +81,7 @@ asString
 		yourself!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	GUIDs are a fairly technical concept, but they do appear in the registry in a certain format, which we use here."
 
 	aPuttableStream nextPutAll: self asString!
@@ -105,12 +105,12 @@ idlString
 	"
 
 	| pSz answer status |
-	pSz := ExternalAddress new.
-	(status := RPCLibrary default uuidToString: self stringUuid: pSz) == 0 ifFalse: [RPCError signal: status].
+	pSz := External.Address new.
+	(status := OS.RPCLibrary default uuidToString: self stringUuid: pSz) == 0
+		ifFalse: [OS.RPCError signal: status].
 	answer := AnsiString fromAddress: pSz.
-	RPCLibrary default rpcStringFree: pSz.
-	^answer
-!
+	OS.RPCLibrary default rpcStringFree: pSz.
+	^answer!
 
 isNull
 	"Answer whether the receiver is a null external data item
@@ -184,25 +184,25 @@ value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
 	guidBytes replaceBytesOf: self from: 1 to: self class byteSize startingAt: 1! !
-!GUID categoriesFor: #<=>!comparing!public! !
-!GUID categoriesFor: #=!comparing!public! !
-!GUID categoriesFor: #asByteArray!converting!public! !
-!GUID categoriesFor: #asInteger!converting!public! !
-!GUID categoriesFor: #asObject!accessing!public! !
-!GUID categoriesFor: #asString!converting!public! !
-!GUID categoriesFor: #displayOn:!printing!public! !
-!GUID categoriesFor: #hash!comparing!public! !
-!GUID categoriesFor: #idlString!converting!public! !
-!GUID categoriesFor: #isNull!public!testing! !
-!GUID categoriesFor: #isSelfEvaluating!public!testing! !
-!GUID categoriesFor: #notNull!public!testing! !
-!GUID categoriesFor: #printOn:!development!printing!public! !
-!GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!GUID categoriesFor: #species!accessing!public! !
-!GUID categoriesFor: #stringSize!constants!public! !
-!GUID categoriesFor: #value:!accessing!public! !
+!Core.GUID categoriesFor: #<=>!comparing!public! !
+!Core.GUID categoriesFor: #=!comparing!public! !
+!Core.GUID categoriesFor: #asByteArray!converting!public! !
+!Core.GUID categoriesFor: #asInteger!converting!public! !
+!Core.GUID categoriesFor: #asObject!accessing!public! !
+!Core.GUID categoriesFor: #asString!converting!public! !
+!Core.GUID categoriesFor: #displayOn:!printing!public! !
+!Core.GUID categoriesFor: #hash!comparing!public! !
+!Core.GUID categoriesFor: #idlString!converting!public! !
+!Core.GUID categoriesFor: #isNull!public!testing! !
+!Core.GUID categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.GUID categoriesFor: #notNull!public!testing! !
+!Core.GUID categoriesFor: #printOn:!development!printing!public! !
+!Core.GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+!Core.GUID categoriesFor: #species!accessing!public! !
+!Core.GUID categoriesFor: #stringSize!constants!public! !
+!Core.GUID categoriesFor: #value:!accessing!public! !
 
-!GUID class methodsFor!
+!Core.GUID class methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -295,19 +295,18 @@ fromIdlString: aString
 
 	| answer status |
 	answer := self newNull.
-	(status := RPCLibrary default uuidFromString: aString uuid: answer) == 0
-		ifFalse: [RPCError signalWith: status].
+	(status := OS.RPCLibrary default uuidFromString: aString uuid: answer) == 0
+		ifFalse: [OS.RPCError signalWith: status].
 	^answer!
 
 fromString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format.
-	Implementation Note: Subclasses override this because OLE defines more specific functions for that purpose, which we use to be good boys, even though it appears not to be necessary (i.e. if we drop down a level and use the underlying RPC library function, it works anyway)."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format."
 
 	| answer status |
 	answer := self newNull.
-	(status := RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1)
-				uuid: answer) == 0
-		ifFalse: [RPCError signalWith: status].
+	status := OS.RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1)
+				uuid: answer.
+	status == 0 ifFalse: [OS.RPCError signalWith: status].
 	^answer!
 
 init: addressOrBytes
@@ -318,7 +317,8 @@ initialize
 	"Private - Initialize the receiver's class variables.
 		GUID initialize
 	"
-	self extraInstanceSpec: self byteSize!
+	self extraInstanceSpec: self byteSize.
+	VMLibrary default registryAt: self name put: self!
 
 new
 	"Answer a new, null, instance of the receiver."
@@ -342,7 +342,7 @@ newUnique
 
 	| answer |
 	answer := self newNull.
-	RPCLibrary default uuidCreate: answer.
+	OS.RPCLibrary default uuidCreate: answer.
 	^answer!
 
 null
@@ -360,27 +360,27 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	Null := nil.
-	VMLibrary default registryAt: #GUID put: nil! !
-!GUID class categoriesFor: #alignment!constants!private! !
-!GUID class categoriesFor: #atAddress:!instance creation!public! !
-!GUID class categoriesFor: #basicByteSize!public! !
-!GUID class categoriesFor: #byteSize!constants!public! !
-!GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!GUID class categoriesFor: #defineFields!public!template definition! !
-!GUID class categoriesFor: #elementSize!accessing!private! !
-!GUID class categoriesFor: #fromAddress:!instance creation!public! !
-!GUID class categoriesFor: #fromBytes:!instance creation!public! !
-!GUID class categoriesFor: #fromIdlString:!instance creation!public! !
-!GUID class categoriesFor: #fromString:!instance creation!public! !
-!GUID class categoriesFor: #init:!initializing!public! !
-!GUID class categoriesFor: #initialize!development!initializing!private! !
-!GUID class categoriesFor: #new!instance creation!public! !
-!GUID class categoriesFor: #newBuffer!instance creation!public! !
-!GUID class categoriesFor: #newNull!instance creation!public! !
-!GUID class categoriesFor: #newUnique!instance creation!public! !
-!GUID class categoriesFor: #null!constants!public! !
-!GUID class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GUID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+	VMLibrary default registryAt: self name put: nil! !
+!Core.GUID class categoriesFor: #alignment!constants!private! !
+!Core.GUID class categoriesFor: #atAddress:!instance creation!public! !
+!Core.GUID class categoriesFor: #basicByteSize!public! !
+!Core.GUID class categoriesFor: #byteSize!constants!public! !
+!Core.GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
+!Core.GUID class categoriesFor: #defineFields!public!template definition! !
+!Core.GUID class categoriesFor: #elementSize!accessing!private! !
+!Core.GUID class categoriesFor: #fromAddress:!instance creation!public! !
+!Core.GUID class categoriesFor: #fromBytes:!instance creation!public! !
+!Core.GUID class categoriesFor: #fromIdlString:!instance creation!public! !
+!Core.GUID class categoriesFor: #fromString:!instance creation!public! !
+!Core.GUID class categoriesFor: #init:!initializing!public! !
+!Core.GUID class categoriesFor: #initialize!development!initializing!private! !
+!Core.GUID class categoriesFor: #new!instance creation!public! !
+!Core.GUID class categoriesFor: #newBuffer!instance creation!public! !
+!Core.GUID class categoriesFor: #newNull!instance creation!public! !
+!Core.GUID class categoriesFor: #newUnique!instance creation!public! !
+!Core.GUID class categoriesFor: #null!constants!public! !
+!Core.GUID class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Core.GUID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
-GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
+Core.GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 

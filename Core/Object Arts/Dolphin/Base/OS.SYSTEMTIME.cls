@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #SYSTEMTIME
+OS.Win32Structure subclass: #'OS.SYSTEMTIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_wDay' -> 16r6.
@@ -15,10 +15,10 @@ Win32Structure subclass: #SYSTEMTIME
 		'_OffsetOf_wSecond' -> 16rC.
 		'_OffsetOf_wYear' -> 16r0
 	}!
-SYSTEMTIME guid: (GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
-SYSTEMTIME comment: ''!
-!SYSTEMTIME categoriesForClass!Win32-Structs! !
-!SYSTEMTIME methodsFor!
+OS.SYSTEMTIME guid: (Core.GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SYSTEMTIME comment: ''!
+!OS.SYSTEMTIME categoriesForClass!Win32-Structs! !
+!OS.SYSTEMTIME methodsFor!
 
 asDateAndTime
 	"Answer a <DateAndTime> corresponding to the receiver."
@@ -40,7 +40,7 @@ dayOfWeek
 	^self wDayOfWeek + 1!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream locale displayDateTime: self on: aPuttableStream!
 
@@ -146,37 +146,37 @@ wYear: anInteger
 
 year
 	^self wYear! !
-!SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
-!SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
-!SYSTEMTIME categoriesFor: #asSYSTEMTIME!public! !
-!SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
-!SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
-!SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
-!SYSTEMTIME categoriesFor: #hour!accessing!public! !
-!SYSTEMTIME categoriesFor: #hour12!accessing!public! !
-!SYSTEMTIME categoriesFor: #hour24!accessing!public! !
-!SYSTEMTIME categoriesFor: #minute!accessing!public! !
-!SYSTEMTIME categoriesFor: #month!accessing!public! !
-!SYSTEMTIME categoriesFor: #second!accessing!public! !
-!SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDayOfWeek:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wHour!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wHour:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMilliseconds!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMilliseconds:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMinute!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMinute:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMonth!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMonth:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wSecond!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wSecond:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wYear!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wYear:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #year!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
+!OS.SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
+!OS.SYSTEMTIME categoriesFor: #asSYSTEMTIME!public! !
+!OS.SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
+!OS.SYSTEMTIME categoriesFor: #hour!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #hour12!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #hour24!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #minute!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #month!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #second!accessing!public! !
+!OS.SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wDayOfWeek:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wHour!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wHour:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMilliseconds!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMilliseconds:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMinute!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMinute:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMonth!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wMonth:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wSecond!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wSecond:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wYear!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #wYear:!**compiled accessors**!public! !
+!OS.SYSTEMTIME categoriesFor: #year!accessing!public! !
 
-!SYSTEMTIME class methodsFor!
+!OS.SYSTEMTIME class methodsFor!
 
 day: day month: month year: year
 	"Private - Answer a new instance of the receiver for the specified day, month, and year."
@@ -189,14 +189,15 @@ defineFields
 		SYSTEMTIME compileDefinition
 	"
 
-	self defineField: #wYear type: WORDField new;
+	self
+		defineField: #wYear type: WORDField new;
 		defineField: #wMonth type: WORDField new;
 		defineField: #wDayOfWeek type: WORDField new;
 		defineField: #wDay type: WORDField new;
 		defineField: #wHour type: WORDField new;
 		defineField: #wMinute type: WORDField new;
 		defineField: #wSecond type: WORDField new;
-		defineField: #wMilliseconds type: WORDField new	!
+		defineField: #wMilliseconds type: WORDField new!
 
 fromFILETIME: aFILETIME
 	"Answer a new instance of the receiver instantiated from aFILETIME (which may be
@@ -211,7 +212,7 @@ getFieldNames
 
 now
 	"Private - Answer the current Windows local time"
-	
+
 	| answer |
 	answer := self new.
 	KernelLibrary default getLocalTime: answer.
@@ -224,10 +225,10 @@ nowUTC
 	answer := self new.
 	KernelLibrary default getSystemTime: answer.
 	^answer! !
-!SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
-!SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !
-!SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
-!SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!SYSTEMTIME class categoriesFor: #now!instance creation!private! !
-!SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
+!OS.SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
+!OS.SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !
+!OS.SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
+!OS.SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SYSTEMTIME class categoriesFor: #now!instance creation!private! !
+!OS.SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
 

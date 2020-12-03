@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayPointerField subclass: #StructureArrayPointerField
+External.ArrayPointerField subclass: #'External.StructureArrayPointerField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureArrayPointerField guid: (GUID fromString: '{87b4c4e4-026e-11d3-9fd7-00a0cc3e4a32}')!
-StructureArrayPointerField comment: 'StructureArrayPointerField is an <ExternalField> type to represent <ExternalStructure> members which are pointers to arrays of structures.'!
-!StructureArrayPointerField categoriesForClass!External-Data-Types! !
-!StructureArrayPointerField methodsFor!
+External.StructureArrayPointerField guid: (Core.GUID fromString: '{87b4c4e4-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.StructureArrayPointerField comment: 'StructureArrayPointerField is an <ExternalField> type to represent <ExternalStructure> members which are pointers to arrays of structures.'!
+!External.StructureArrayPointerField categoriesForClass!External-Data-Types! !
+!External.StructureArrayPointerField methodsFor!
 
 elementClass
 	"Private - Answer the class of Smalltalk object embedded in the structure
@@ -23,16 +23,14 @@ pointerClass
 
 	^StructureArray!
 
-readFrom: anExternalStructure
-	"Private - Answer a <StructureArray> of the receiver's element class that is a reference to
-	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
-	at the receiver's offset, and which is of the length described by the receiver."
+readFrom: aStructure
+	"Private - Answer a <StructureArray> of the receiver's element class that is a reference to the data pointed at by the corresponding pointer field of the <External.Structure> argument at the receiver's offset, and which is of the length described by the receiver."
 
 	^self pointerClass
-		fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
-		length: (arrayLength getElementCountOf: self in: anExternalStructure)
+		fromAddress: (aStructure bytes sdwordAtOffset: offset)
+		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self elementClass! !
-!StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
-!StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !
-!StructureArrayPointerField categoriesFor: #readFrom:!accessing!private! !
+!External.StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
+!External.StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !
+!External.StructureArrayPointerField categoriesFor: #readFrom:!accessing!private! !
 

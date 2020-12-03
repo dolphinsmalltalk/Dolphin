@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StructureArrayField subclass: #PointerArrayField
+External.StructureArrayField subclass: #'External.PointerArrayField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointerArrayField guid: (GUID fromString: '{23c14350-68ab-4481-a095-5c4f9654d211}')!
-PointerArrayField comment: 'PointerArrayField is the class of <ExternalField>s used to describe fields that are fixed-size arrays of pointers to structures.'!
-!PointerArrayField categoriesForClass!External-Data-Types! !
-!PointerArrayField methodsFor!
+External.PointerArrayField guid: (Core.GUID fromString: '{23c14350-68ab-4481-a095-5c4f9654d211}')!
+External.PointerArrayField comment: 'PointerArrayField is the class of <ExternalField>s used to describe fields that are fixed-size arrays of pointers to structures.'!
+!External.PointerArrayField categoriesForClass!External-Data-Types! !
+!External.PointerArrayField methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -28,7 +28,7 @@ elementSize
 	All pointers are 32-bits."
 
 	^VMConstants.IntPtrSize! !
-!PointerArrayField categoriesFor: #alignment!constants!public! !
-!PointerArrayField categoriesFor: #arrayClass!constants!private! !
-!PointerArrayField categoriesFor: #elementSize!accessing!private! !
+!External.PointerArrayField categoriesFor: #alignment!constants!public! !
+!External.PointerArrayField categoriesFor: #arrayClass!constants!private! !
+!External.PointerArrayField categoriesFor: #elementSize!accessing!private! !
 

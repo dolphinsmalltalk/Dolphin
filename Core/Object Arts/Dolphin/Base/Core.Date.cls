@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Magnitude subclass: #Date
+Core.Magnitude subclass: #'Core.Date'
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Date guid: (GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
-Date comment: '`Date` is a class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
+Core.Date guid: (Core.GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Date comment: '`Date` is a class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
 
 Instance Variables:
 	days				`<integer>`. Days since 1st Jan 1901
@@ -19,8 +19,8 @@ Class Variables:
 	DaysInMonth		`Array` with elements representing the number of days in the month with the corresponding index.
 
 '!
-!Date categoriesForClass!Magnitude-General! !
-!Date methodsFor!
+!Core.Date categoriesForClass!Magnitude-General! !
+!Core.Date methodsFor!
 
 < aDate 
 	"Answer whether the receiver precedes the argument, aDate"
@@ -96,7 +96,7 @@ addYears: yearCount desiredDay: desiredDay
 
 asDateAndTime
 	"Answer a new <DateAndTime> representing the midnight, local time, on the same date as the receiver."
-	
+
 	^DateAndTime year: self year day: self dayOfYear!
 
 asDays
@@ -129,7 +129,7 @@ asSYSTEMTIME
 	"Answer a <SYSTEMTIME > representing midnight at the start of the same date as the receiver."
 
 	| struct |
-	struct := SYSTEMTIME new.
+	struct := OS.SYSTEMTIME new.
 	self dayMonthYearDo: 
 			[:dd :mm :yy |
 			struct
@@ -259,7 +259,7 @@ printOn: aStream longPicture: aBoolean
 		on: aStream
 		format: (aBoolean ifTrue: [locale longDateFormat] ifFalse: [locale dateFormat])!
 
-printStringFormat: aString 
+printStringFormat: aString
 	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>#dateFormat method comment.
 	Settings from the default locale are used."
 
@@ -336,47 +336,47 @@ yyyymmdd
 	stream locale: Locale invariant.
 	self printOn: stream format: 'yyyy-MM-dd'.
 	^stream grabContents! !
-!Date categoriesFor: #<!comparing!public! !
-!Date categoriesFor: #=!comparing!public! !
-!Date categoriesFor: #addDays:!arithmetic!public! !
-!Date categoriesFor: #addMonths:!arithmetic!public! !
-!Date categoriesFor: #addMonths:desiredDay:!arithmetic!public! !
-!Date categoriesFor: #addYears:!arithmetic!public! !
-!Date categoriesFor: #addYears:desiredDay:!arithmetic!public! !
-!Date categoriesFor: #asDateAndTime!converting!public! !
-!Date categoriesFor: #asDays!converting!public! !
-!Date categoriesFor: #asMilliseconds!converting!public! !
-!Date categoriesFor: #asParameter!converting!public! !
-!Date categoriesFor: #asSeconds!converting!public! !
-!Date categoriesFor: #asSYSTEMTIME!converting!public! !
-!Date categoriesFor: #asTimeStamp!converting!public! !
-!Date categoriesFor: #day!accessing!public! !
-!Date categoriesFor: #dayMonthYearDo:!accessing!public! !
-!Date categoriesFor: #dayOfMonth!accessing!public! !
-!Date categoriesFor: #dayOfWeek!accessing!public! !
-!Date categoriesFor: #dayOfYear!accessing!public! !
-!Date categoriesFor: #displayOn:!printing!public! !
-!Date categoriesFor: #firstDayOfMonth!operations!public! !
-!Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
-!Date categoriesFor: #hash!comparing!public! !
-!Date categoriesFor: #isLeapYear!public!testing! !
-!Date categoriesFor: #month!accessing!public! !
-!Date categoriesFor: #monthName!accessing!public! !
-!Date categoriesFor: #monthsSince:!arithmetic!public! !
-!Date categoriesFor: #printOn:!printing!public! !
-!Date categoriesFor: #printOn:format:!printing!public! !
-!Date categoriesFor: #printOn:longPicture:!printing!public! !
-!Date categoriesFor: #printStringFormat:!printing!public! !
-!Date categoriesFor: #seconds!accessing!public! !
-!Date categoriesFor: #setDays:!accessing!private! !
-!Date categoriesFor: #storeOn:!printing!public! !
-!Date categoriesFor: #subtractDate:!arithmetic!public! !
-!Date categoriesFor: #subtractDays:!arithmetic!public! !
-!Date categoriesFor: #year!accessing!public! !
-!Date categoriesFor: #yearsSince:!arithmetic!public! !
-!Date categoriesFor: #yyyymmdd!accessing!public! !
+!Core.Date categoriesFor: #<!comparing!public! !
+!Core.Date categoriesFor: #=!comparing!public! !
+!Core.Date categoriesFor: #addDays:!arithmetic!public! !
+!Core.Date categoriesFor: #addMonths:!arithmetic!public! !
+!Core.Date categoriesFor: #addMonths:desiredDay:!arithmetic!public! !
+!Core.Date categoriesFor: #addYears:!arithmetic!public! !
+!Core.Date categoriesFor: #addYears:desiredDay:!arithmetic!public! !
+!Core.Date categoriesFor: #asDateAndTime!converting!public! !
+!Core.Date categoriesFor: #asDays!converting!public! !
+!Core.Date categoriesFor: #asMilliseconds!converting!public! !
+!Core.Date categoriesFor: #asParameter!converting!public! !
+!Core.Date categoriesFor: #asSeconds!converting!public! !
+!Core.Date categoriesFor: #asSYSTEMTIME!converting!public! !
+!Core.Date categoriesFor: #asTimeStamp!converting!public! !
+!Core.Date categoriesFor: #day!accessing!public! !
+!Core.Date categoriesFor: #dayMonthYearDo:!accessing!public! !
+!Core.Date categoriesFor: #dayOfMonth!accessing!public! !
+!Core.Date categoriesFor: #dayOfWeek!accessing!public! !
+!Core.Date categoriesFor: #dayOfYear!accessing!public! !
+!Core.Date categoriesFor: #displayOn:!printing!public! !
+!Core.Date categoriesFor: #firstDayOfMonth!operations!public! !
+!Core.Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
+!Core.Date categoriesFor: #hash!comparing!public! !
+!Core.Date categoriesFor: #isLeapYear!public!testing! !
+!Core.Date categoriesFor: #month!accessing!public! !
+!Core.Date categoriesFor: #monthName!accessing!public! !
+!Core.Date categoriesFor: #monthsSince:!arithmetic!public! !
+!Core.Date categoriesFor: #printOn:!printing!public! !
+!Core.Date categoriesFor: #printOn:format:!printing!public! !
+!Core.Date categoriesFor: #printOn:longPicture:!printing!public! !
+!Core.Date categoriesFor: #printStringFormat:!printing!public! !
+!Core.Date categoriesFor: #seconds!accessing!public! !
+!Core.Date categoriesFor: #setDays:!accessing!private! !
+!Core.Date categoriesFor: #storeOn:!printing!public! !
+!Core.Date categoriesFor: #subtractDate:!arithmetic!public! !
+!Core.Date categoriesFor: #subtractDays:!arithmetic!public! !
+!Core.Date categoriesFor: #year!accessing!public! !
+!Core.Date categoriesFor: #yearsSince:!arithmetic!public! !
+!Core.Date categoriesFor: #yyyymmdd!accessing!public! !
 
-!Date class methodsFor!
+!Core.Date class methodsFor!
 
 dateOrderFromFormat: aFormatString
 	"Private - Answers a String giving the component order in aFormatString (e.g. 'DMY' or 'MDY')"
@@ -567,10 +567,10 @@ newDay: dayCount year: yearInteger
 	^self fromDays: dayCount + (self yearAsDays: yearInteger) - 1
 !
 
-readDayFrom: aStream 
+readDayFrom: aStream
 	"Private - Answer a day index read from aStream"
 
-	aStream peek isDigit 
+	aStream peek isDigit
 		ifTrue: 
 			[| day |
 			day := Integer readFrom: aStream radix: 10.
@@ -602,11 +602,11 @@ readFrom: aStream format: aFormatStringOrNil
 		monthIndex: mm
 		year: yy!
 
-readMonthFrom: aStream 
+readMonthFrom: aStream
 	"Private - Answer a month index read from aStream. The stream may be positioned at,
 	either a month number or a month name"
 
-	aStream peek isDigit 
+	aStream peek isDigit
 		ifTrue: 
 			[| month |
 			month := Integer readFrom: aStream radix: 10.
@@ -614,27 +614,26 @@ readMonthFrom: aStream
 			^month].
 	1 to: 12
 		do: 
-			[:mm | 
+			[:mm |
 			| shortName |
 			shortName := (self monthAbbreviation: mm) copyWithout: $..
-			(shortName skipOver: aStream ignoreCase: true) 
+			(shortName skipOver: aStream ignoreCase: true)
 				ifTrue: 
 					[aStream skipWhile: [:c | c isLetter].
 					^mm]].
 	^self errorInvalidFormat!
 
-readYearFrom: aStream 
+readYearFrom: aStream
 	"Private - Answer a year read from aStream"
 
-	aStream peek isDigit 
+	aStream peek isDigit
 		ifTrue: 
 			[| yy |
 			yy := Integer readFrom: aStream radix: 10.
-			yy < 100 
+			yy < 100
 				ifTrue: 
-					["Two digit date"
-
-					| offset |
+					[| offset |
+					"Two digit date"
 					offset := Date today year roundTo: 100.
 					yy >= self yearPivot ifTrue: [offset := offset - 100].
 					yy := yy + offset].
@@ -690,44 +689,44 @@ yearPivot: anInteger
 
 yesterday
 	^self today subtractDays: 1! !
-!Date class categoriesFor: #dateOrderFromFormat:!helpers!private! !
-!Date class categoriesFor: #day:inYear:!enquiries!private! !
-!Date class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
-!Date class categoriesFor: #daysInMonthIndex:forYear:!enquiries!private! !
-!Date class categoriesFor: #daysInYear:!enquiries!public! !
-!Date class categoriesFor: #daysUntilMonth:inYear:!enquiries!private! !
-!Date class categoriesFor: #defaultLongFormat!enquiries!public! !
-!Date class categoriesFor: #defaultLongPicture:!printing!private! !
-!Date class categoriesFor: #defaultShortFormat!enquiries!public! !
-!Date class categoriesFor: #defaultYearPivot!constants!public! !
-!Date class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Date class categoriesFor: #fromDays:!instance creation!public! !
-!Date class categoriesFor: #fromSeconds:!instance creation!public! !
-!Date class categoriesFor: #fromString:!instance creation!public! !
-!Date class categoriesFor: #fromString:format:!instance creation!public! !
-!Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Date class categoriesFor: #indexOfMonth:!enquiries!public! !
-!Date class categoriesFor: #initialize!development!initializing!private! !
-!Date class categoriesFor: #leapYear:!operations!public! !
-!Date class categoriesFor: #longFormats!enquiries!public! !
-!Date class categoriesFor: #monthAbbreviation:!enquiries!public! !
-!Date class categoriesFor: #monthIndexOfDay:inYear:!enquiries!private! !
-!Date class categoriesFor: #new!instance creation!public! !
-!Date class categoriesFor: #newDay:month:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:monthIndex:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:monthNumber:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:year:!instance creation!public! !
-!Date class categoriesFor: #readDayFrom:!helpers!private! !
-!Date class categoriesFor: #readFrom:!instance creation!public! !
-!Date class categoriesFor: #readFrom:format:!instance creation!public! !
-!Date class categoriesFor: #readMonthFrom:!helpers!private! !
-!Date class categoriesFor: #readYearFrom:!helpers!private! !
-!Date class categoriesFor: #shortFormats!enquiries!private! !
-!Date class categoriesFor: #today!instance creation!public! !
-!Date class categoriesFor: #tomorrow!instance creation!public! !
-!Date class categoriesFor: #year:month:day:!instance creation!public! !
-!Date class categoriesFor: #yearAsDays:!converting!private! !
-!Date class categoriesFor: #yearPivot!accessing!public! !
-!Date class categoriesFor: #yearPivot:!accessing!not an aspect!public! !
-!Date class categoriesFor: #yesterday!instance creation!public! !
+!Core.Date class categoriesFor: #dateOrderFromFormat:!helpers!private! !
+!Core.Date class categoriesFor: #day:inYear:!enquiries!private! !
+!Core.Date class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
+!Core.Date class categoriesFor: #daysInMonthIndex:forYear:!enquiries!private! !
+!Core.Date class categoriesFor: #daysInYear:!enquiries!public! !
+!Core.Date class categoriesFor: #daysUntilMonth:inYear:!enquiries!private! !
+!Core.Date class categoriesFor: #defaultLongFormat!enquiries!public! !
+!Core.Date class categoriesFor: #defaultLongPicture:!printing!private! !
+!Core.Date class categoriesFor: #defaultShortFormat!enquiries!public! !
+!Core.Date class categoriesFor: #defaultYearPivot!constants!public! !
+!Core.Date class categoriesFor: #errorInvalidFormat!exceptions!private! !
+!Core.Date class categoriesFor: #fromDays:!instance creation!public! !
+!Core.Date class categoriesFor: #fromSeconds:!instance creation!public! !
+!Core.Date class categoriesFor: #fromString:!instance creation!public! !
+!Core.Date class categoriesFor: #fromString:format:!instance creation!public! !
+!Core.Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
+!Core.Date class categoriesFor: #indexOfMonth:!enquiries!public! !
+!Core.Date class categoriesFor: #initialize!development!initializing!private! !
+!Core.Date class categoriesFor: #leapYear:!operations!public! !
+!Core.Date class categoriesFor: #longFormats!enquiries!public! !
+!Core.Date class categoriesFor: #monthAbbreviation:!enquiries!public! !
+!Core.Date class categoriesFor: #monthIndexOfDay:inYear:!enquiries!private! !
+!Core.Date class categoriesFor: #new!instance creation!public! !
+!Core.Date class categoriesFor: #newDay:month:year:!instance creation!public! !
+!Core.Date class categoriesFor: #newDay:monthIndex:year:!instance creation!public! !
+!Core.Date class categoriesFor: #newDay:monthNumber:year:!instance creation!public! !
+!Core.Date class categoriesFor: #newDay:year:!instance creation!public! !
+!Core.Date class categoriesFor: #readDayFrom:!helpers!private! !
+!Core.Date class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Date class categoriesFor: #readFrom:format:!instance creation!public! !
+!Core.Date class categoriesFor: #readMonthFrom:!helpers!private! !
+!Core.Date class categoriesFor: #readYearFrom:!helpers!private! !
+!Core.Date class categoriesFor: #shortFormats!enquiries!private! !
+!Core.Date class categoriesFor: #today!instance creation!public! !
+!Core.Date class categoriesFor: #tomorrow!instance creation!public! !
+!Core.Date class categoriesFor: #year:month:day:!instance creation!public! !
+!Core.Date class categoriesFor: #yearAsDays:!converting!private! !
+!Core.Date class categoriesFor: #yearPivot!accessing!public! !
+!Core.Date class categoriesFor: #yearPivot:!accessing!not an aspect!public! !
+!Core.Date class categoriesFor: #yesterday!instance creation!public! !
 

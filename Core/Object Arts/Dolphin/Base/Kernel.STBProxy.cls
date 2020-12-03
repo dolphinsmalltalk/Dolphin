@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STBProxy
+Core.Object subclass: #'Kernel.STBProxy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBProxy guid: (GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBProxy isAbstract: true!
-STBProxy comment: ''!
-!STBProxy categoriesForClass!System-Binary storage!System-Binary storage! !
-!STBProxy methodsFor!
+Kernel.STBProxy guid: (Core.GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBProxy isNonInstantiable: true!
+Kernel.STBProxy comment: ''!
+!Kernel.STBProxy categoriesForClass!System-Binary storage!System-Binary storage! !
+!Kernel.STBProxy methodsFor!
 
 stbFixup: inFiler at: anInteger
 	"Answer the object that this one represents.
@@ -22,14 +22,14 @@ value
 	"Answer the object that this one represents."
 
 	^self subclassResponsibility! !
-!STBProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBProxy categoriesFor: #value!converting!public! !
+!Kernel.STBProxy categoriesFor: #stbFixup:at:!converting!public! !
+!Kernel.STBProxy categoriesFor: #value!converting!public! !
 
-!STBProxy class methodsFor!
+!Kernel.STBProxy class methodsFor!
 
 new
 	"Private - Use specialized instance creation methods"
 
 	^self shouldNotImplement! !
-!STBProxy class categoriesFor: #new!instance creation!private! !
+!Kernel.STBProxy class categoriesFor: #new!instance creation!private! !
 

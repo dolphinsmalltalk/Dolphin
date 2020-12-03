@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Set variableSubclass: #SharedSet
+Core.Set variableSubclass: #'Core.SharedSet'
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SharedSet guid: (GUID fromString: '{87b4c528-026e-11d3-9fd7-00a0cc3e4a32}')!
-SharedSet comment: 'SharedSet is a process safe subclass of <Set>, which has the same behavior. It''s instances make use of a <Mutex> (a mutual exclusion lock) to prevent more than one process from accessing their elements at the same time. Although process safe to the extent   that the invariants of the data structure are maintained, further synchronisation mechanisms will almost certainly be required if a <SharedSet> is used to buffer information between processes (e.g. see <SharedQueue>).
+Core.SharedSet guid: (Core.GUID fromString: '{87b4c528-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SharedSet comment: 'SharedSet is a process safe subclass of <Set>, which has the same behavior. It''s instances make use of a <Mutex> (a mutual exclusion lock) to prevent more than one process from accessing their elements at the same time. Although process safe to the extent   that the invariants of the data structure are maintained, further synchronisation mechanisms will almost certainly be required if a <SharedSet> is used to buffer information between processes (e.g. see <SharedQueue>).
 
 The following methods of Set are, or are not, overridden for the reasons given:
 
@@ -56,8 +56,8 @@ Class Variables:
 	AbsentCookie	<Object>. Unique cookie used internally to signal element absence.
 
 '!
-!SharedSet categoriesForClass!Collections-Unordered! !
-!SharedSet methodsFor!
+!Core.SharedSet categoriesForClass!Collections-Unordered! !
+!Core.SharedSet methodsFor!
 
 add: newObject
 	"Include newObject as one of the elements of the receiver. Answer newObject."
@@ -184,22 +184,22 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
-!SharedSet categoriesFor: #add:!adding!public! !
-!SharedSet categoriesFor: #addAll:!adding!public! !
-!SharedSet categoriesFor: #asArray!converting!public! !
-!SharedSet categoriesFor: #asByteArray!converting!public! !
-!SharedSet categoriesFor: #do:!enumerating!public! !
-!SharedSet categoriesFor: #find:ifAbsent:!public!searching! !
-!SharedSet categoriesFor: #identityIncludes:!public!searching! !
-!SharedSet categoriesFor: #includes:!public!searching! !
-!SharedSet categoriesFor: #initialize!initializing!public! !
-!SharedSet categoriesFor: #mutex!accessing!private! !
-!SharedSet categoriesFor: #mutex:!initializing!private! !
-!SharedSet categoriesFor: #postCopy!copying!public! !
-!SharedSet categoriesFor: #preResize:!adding!public! !
-!SharedSet categoriesFor: #printOn:!printing!public! !
-!SharedSet categoriesFor: #remove:ifAbsent:!public!removing! !
-!SharedSet categoriesFor: #resize:!mutating!private! !
-!SharedSet categoriesFor: #shrink!mutating!public! !
-!SharedSet categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.SharedSet categoriesFor: #add:!adding!public! !
+!Core.SharedSet categoriesFor: #addAll:!adding!public! !
+!Core.SharedSet categoriesFor: #asArray!converting!public! !
+!Core.SharedSet categoriesFor: #asByteArray!converting!public! !
+!Core.SharedSet categoriesFor: #do:!enumerating!public! !
+!Core.SharedSet categoriesFor: #find:ifAbsent:!public!searching! !
+!Core.SharedSet categoriesFor: #identityIncludes:!public!searching! !
+!Core.SharedSet categoriesFor: #includes:!public!searching! !
+!Core.SharedSet categoriesFor: #initialize!initializing!public! !
+!Core.SharedSet categoriesFor: #mutex!accessing!private! !
+!Core.SharedSet categoriesFor: #mutex:!initializing!private! !
+!Core.SharedSet categoriesFor: #postCopy!copying!public! !
+!Core.SharedSet categoriesFor: #preResize:!adding!public! !
+!Core.SharedSet categoriesFor: #printOn:!printing!public! !
+!Core.SharedSet categoriesFor: #remove:ifAbsent:!public!removing! !
+!Core.SharedSet categoriesFor: #resize:!mutating!private! !
+!Core.SharedSet categoriesFor: #shrink!mutating!public! !
+!Core.SharedSet categoriesFor: #stbSaveOn:!binary filing!public! !
 

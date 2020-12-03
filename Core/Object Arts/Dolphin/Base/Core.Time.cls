@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Magnitude subclass: #Time
+Core.Magnitude subclass: #'Core.Time'
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Time guid: (GUID fromString: '{87b4c655-026e-11d3-9fd7-00a0cc3e4a32}')!
-Time comment: '`Time` is the class whose instances represent a time of day as the number of seconds since midnight with infinite precision.
+Core.Time guid: (Core.GUID fromString: '{87b4c655-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Time comment: '`Time` is the class whose instances represent a time of day as the number of seconds since midnight with infinite precision.
 
 Time is a legacy Smalltalk class that represents only a time of day, without any awareness of timezone offset. They are generally assumed to represent a local time. For most purposes you will want to use a `DateAndTime` instead.'!
-!Time categoriesForClass!Magnitude-General! !
-!Time methodsFor!
+!Core.Time categoriesForClass!Magnitude-General! !
+!Core.Time methodsFor!
 
 < aTime
 	"Answer whether the receiver precedes (assuming the same date and timezone) the <Time> argument."
@@ -30,7 +30,7 @@ addTime: aTimeOrDate
 
 asDateAndTime
 	"Answer a new <DateAndTime> representing the the same local time as the receiver on the current day."
-	
+
 	^DateAndTime today + self!
 
 asMilliseconds
@@ -98,7 +98,7 @@ minute
 	^seconds // 60 \\ 60!
 
 printOn: aStream
-	"Append, to the <puttableStream>, aStream, a string whose characters are those that a developer might expect to see for this <Time>" 
+	"Append, to the <puttableStream>, aStream, a string whose characters are those that a developer might expect to see for this <Time>"
 
 	Locale smalltalk displayTime: self on: aStream!
 
@@ -112,7 +112,7 @@ printOn: aStream format: aString
 		on: aStream
 		format: aString!
 
-printStringFormat: aString 
+printStringFormat: aString
 	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>#timeFormat method comment.
 	Settings from the default locale are used."
 
@@ -149,32 +149,32 @@ subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."
 
 	^self class fromSeconds: self seconds - aTimeOrDate seconds! !
-!Time categoriesFor: #<!comparing!public! !
-!Time categoriesFor: #=!comparing!public! !
-!Time categoriesFor: #addTime:!arithmetic!public! !
-!Time categoriesFor: #asDateAndTime!converting!public! !
-!Time categoriesFor: #asMilliseconds!converting!public! !
-!Time categoriesFor: #asParameter!converting!public! !
-!Time categoriesFor: #asSeconds!converting!public! !
-!Time categoriesFor: #asSYSTEMTIME!converting!public! !
-!Time categoriesFor: #asTimeStamp!converting!public! !
-!Time categoriesFor: #displayOn:!printing!public! !
-!Time categoriesFor: #hash!comparing!public! !
-!Time categoriesFor: #hour!accessing!public! !
-!Time categoriesFor: #hour12!accessing!public! !
-!Time categoriesFor: #hour24!accessing!public! !
-!Time categoriesFor: #millisecond!accessing!public! !
-!Time categoriesFor: #minute!accessing!public! !
-!Time categoriesFor: #printOn:!printing!public! !
-!Time categoriesFor: #printOn:format:!printing!public! !
-!Time categoriesFor: #printStringFormat:!printing!public! !
-!Time categoriesFor: #second!accessing!public! !
-!Time categoriesFor: #seconds!accessing!public! !
-!Time categoriesFor: #seconds:!accessing!private! !
-!Time categoriesFor: #storeOn:!printing!public! !
-!Time categoriesFor: #subtractTime:!arithmetic!public! !
+!Core.Time categoriesFor: #<!comparing!public! !
+!Core.Time categoriesFor: #=!comparing!public! !
+!Core.Time categoriesFor: #addTime:!arithmetic!public! !
+!Core.Time categoriesFor: #asDateAndTime!converting!public! !
+!Core.Time categoriesFor: #asMilliseconds!converting!public! !
+!Core.Time categoriesFor: #asParameter!converting!public! !
+!Core.Time categoriesFor: #asSeconds!converting!public! !
+!Core.Time categoriesFor: #asSYSTEMTIME!converting!public! !
+!Core.Time categoriesFor: #asTimeStamp!converting!public! !
+!Core.Time categoriesFor: #displayOn:!printing!public! !
+!Core.Time categoriesFor: #hash!comparing!public! !
+!Core.Time categoriesFor: #hour!accessing!public! !
+!Core.Time categoriesFor: #hour12!accessing!public! !
+!Core.Time categoriesFor: #hour24!accessing!public! !
+!Core.Time categoriesFor: #millisecond!accessing!public! !
+!Core.Time categoriesFor: #minute!accessing!public! !
+!Core.Time categoriesFor: #printOn:!printing!public! !
+!Core.Time categoriesFor: #printOn:format:!printing!public! !
+!Core.Time categoriesFor: #printStringFormat:!printing!public! !
+!Core.Time categoriesFor: #second!accessing!public! !
+!Core.Time categoriesFor: #seconds!accessing!public! !
+!Core.Time categoriesFor: #seconds:!accessing!private! !
+!Core.Time categoriesFor: #storeOn:!printing!public! !
+!Core.Time categoriesFor: #subtractTime:!arithmetic!public! !
 
-!Time class methodsFor!
+!Core.Time class methodsFor!
 
 amMarker
 	"Answer the marker used to signify AM when using 12 hour format"
@@ -347,27 +347,27 @@ stbVersion
 
 totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
-	
+
 	^DateAndTime now localSeconds truncated! !
-!Time class categoriesFor: #amMarker!accessing!public! !
-!Time class categoriesFor: #defaultFormat!enquiries!private! !
-!Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Time class categoriesFor: #formats!enquiries!private! !
-!Time class categoriesFor: #fromDuration:!instance creation!public! !
-!Time class categoriesFor: #fromMilliseconds:!instance creation!public! !
-!Time class categoriesFor: #fromSeconds:!instance creation!public! !
-!Time class categoriesFor: #fromString:!instance creation!public! !
-!Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Time class categoriesFor: #microsecondClockValue!enquiries!public! !
-!Time class categoriesFor: #millisecondClockValue!accessing!public! !
-!Time class categoriesFor: #millisecondsToRun:!operations!public! !
-!Time class categoriesFor: #new!instance creation!public! !
-!Time class categoriesFor: #now!instance creation!public! !
-!Time class categoriesFor: #pmMarker!accessing!public! !
-!Time class categoriesFor: #readFrom:!instance creation!public! !
-!Time class categoriesFor: #secondClock!accessing!private! !
-!Time class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Time class categoriesFor: #stbVersion!binary filing!public! !
-!Time class categoriesFor: #totalSeconds!accessing!public! !
+!Core.Time class categoriesFor: #amMarker!accessing!public! !
+!Core.Time class categoriesFor: #defaultFormat!enquiries!private! !
+!Core.Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
+!Core.Time class categoriesFor: #formats!enquiries!private! !
+!Core.Time class categoriesFor: #fromDuration:!instance creation!public! !
+!Core.Time class categoriesFor: #fromMilliseconds:!instance creation!public! !
+!Core.Time class categoriesFor: #fromSeconds:!instance creation!public! !
+!Core.Time class categoriesFor: #fromString:!instance creation!public! !
+!Core.Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
+!Core.Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
+!Core.Time class categoriesFor: #microsecondClockValue!enquiries!public! !
+!Core.Time class categoriesFor: #millisecondClockValue!accessing!public! !
+!Core.Time class categoriesFor: #millisecondsToRun:!operations!public! !
+!Core.Time class categoriesFor: #new!instance creation!public! !
+!Core.Time class categoriesFor: #now!instance creation!public! !
+!Core.Time class categoriesFor: #pmMarker!accessing!public! !
+!Core.Time class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Time class categoriesFor: #secondClock!accessing!private! !
+!Core.Time class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!Core.Time class categoriesFor: #stbVersion!binary filing!public! !
+!Core.Time class categoriesFor: #totalSeconds!accessing!public! !
 

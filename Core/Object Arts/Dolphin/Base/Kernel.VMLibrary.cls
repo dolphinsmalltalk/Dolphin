@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PermanentLibrary subclass: #VMLibrary
+External.PermanentLibrary subclass: #'Kernel.VMLibrary'
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
-	classVariableNames: 'Registry RegistryKeys WinVerOrGreaterMask'
-	poolDictionaries: ''
+	classVariableNames: 'Registry RegistryKeys'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VMLibrary guid: (GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
-VMLibrary comment: 'VMLibrary is an <ExternalLibrary> to represent the Dolphin Smalltalk Virtual Machine (VM). 
+Kernel.VMLibrary guid: (Core.GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.VMLibrary comment: 'VMLibrary is an <ExternalLibrary> to represent the Dolphin Smalltalk Virtual Machine (VM). 
 
 The VM contains, for example, a number of exports to implement pseudo-primitive operations, in particular to simplify the interface to other external library functions, and external call methods to access these exported functions are implemented here.
 
@@ -21,8 +21,8 @@ Class Variables:
 	Registry		- <Array> of <Object>s shared between the VM and the image. 	N.B. It is not possible to modify this object directly, as it is read-only.
 	RegistryKeys	- <LookupTable> mapping symbolic names to the <Integer> indices of objects in the VM registry.
 '!
-!VMLibrary categoriesForClass!External-Libraries! !
-!VMLibrary methodsFor!
+!Kernel.VMLibrary categoriesForClass!External-Libraries! !
+!Kernel.VMLibrary methodsFor!
 
 _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg
 	"Private - Write data formatted by the format string into the buffer.
@@ -141,9 +141,9 @@ defaultProductDetails
 		at: 4 put: version specialBuild;
 		at: 5 put: self basePatchLevel;
 		at: 6 put: 'D7';
-		at: 7 put: nil; "Serial #"
-		at: 8 put: nil; "Boot info"
-		yourself!
+		at: 7 put: nil;
+		at: 8 put: nil;
+		yourself	"Serial #"	"Boot info"!
 
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
 	"Write a VM state log to the file with <readableString> path, pathString, with the 
@@ -192,9 +192,10 @@ getDlgProc
 getGenericCallback
 	"Private - Answer a pointer to the VM's generic callback function."
 
-	genericCallback isNil ifTrue: [ 
-		genericCallback := KernelLibrary default 
-				getProcAddressDWORD: self asParameter lpProcName: 'GenericCallback'].
+	genericCallback isNil
+		ifTrue: 
+			[genericCallback := KernelLibrary default getProcAddressDWORD: self asParameter
+						lpProcName: 'GenericCallback'].
 	^genericCallback!
 
 getVTable
@@ -211,9 +212,9 @@ getWndProc
 	or the DefWindowProc if a Dolphin Window) if a non-integer value is returned to it."
 
 	"There is not point throwing an error here if it fails, because that will be terminal anyway."
-	wndProc isNil ifTrue: [ 
-		wndProc := KernelLibrary default 
-			getProcAddressDWORD: self asParameter lpProcName: 'WndProc' ].
+
+	wndProc isNil
+		ifTrue: [wndProc := KernelLibrary default getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
 	^wndProc!
 
 handleFromInteger: anInteger
@@ -224,7 +225,7 @@ handleFromInteger: anInteger
 	conversions very quickly."
 
 	<stdcall: handle AnswerDWORD dword>
-	^ExternalHandle new value: anInteger asInteger!
+	^External.Handle new value: anInteger asInteger!
 
 hashBytes: aByteObject count: anInteger
 	"Private - Hash the specified number of bytes at the specified address using the function
@@ -255,28 +256,12 @@ indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index - specialSelectorStart + 1]!
 
-inputQueueMask
-	"Private - Answer the 16-bit <integer> mask to be used when querying for Windows message queue
-	input on the host platform. This may vary depending on the version of Windows on which
-	Dolphin is running."
-
-	"Implementation Note: See the WinUser.h header file in the Windows SDK"
-
-	| qs_Input |
-	qs_Input := self isWindows8OrGreater
-				ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER)]
-				ifFalse: 
-					[self isWindowsXPOrGreater
-						ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)]
-						ifFalse: [##(QS_MOUSE | QS_KEY)]].
-	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
-
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
 	^(UserLibrary default getSystemMetrics: SM_SLOWMACHINE) ~~ 0
 
-"
+	"
 	VMLibrary default isSlowMachine
 "!
 
@@ -287,36 +272,6 @@ isUserBreakRequested
 
 	<cdecl: bool IsUserBreakRequested>
 	^self invalidCall: _failureCode!
-
-isWindows10OrGreater
-	^self
-		isWindowsVersionOrGreater: 10
-		wMinorVersion: 0
-		wServicePackMajor: 0!
-
-isWindows7OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 1
-		wServicePackMajor: 0!
-
-isWindows7SP1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 1
-		wServicePackMajor: 1!
-
-isWindows8OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 2
-		wServicePackMajor: 0!
-
-isWindows8Point1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 3
-		wServicePackMajor: 0!
 
 isWindowsServer
 	"Answers whether the current OS is a Windows Server release."
@@ -336,59 +291,6 @@ isWindowsServer
 				typeMask: VER_PRODUCT_TYPE
 				condition: VER_EQUAL))
 			not!
-
-isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
-	"Answers whether the current OS version matches, or is greater than, the provided version information."
-
-	"Implementation Note: This is the equivalent of the IsWindowsVersionOrGreater() version
-	helper function, which is provided as an inline function in VersionHelpers.h in the Windows
-	SDK."
-
-	| osvi |
-	osvi := (OSVERSIONINFOEXW new)
-				dwMajorVersion: wMajorVersion;
-				dwMinorVersion: wMinorVersion;
-				wServicePackMajor: wServicePackMajor;
-				yourself.
-	^KernelLibrary default
-		verifyVersionInfo: osvi
-		dwTypeMask: ##(VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR)
-		dwlConditionMask: (WinVerOrGreaterMask
-				ifNil: 
-					[WinVerOrGreaterMask := KernelLibrary default
-								verSetConditionMask: (KernelLibrary default
-										verSetConditionMask: (KernelLibrary default
-												verSetConditionMask: 0
-												typeMask: VER_MAJORVERSION
-												condition: VER_GREATER_EQUAL)
-										typeMask: VER_MINORVERSION
-										condition: VER_GREATER_EQUAL)
-								typeMask: VER_SERVICEPACKMAJOR
-								condition: VER_GREATER_EQUAL])!
-
-isWindowsVistaOrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 0!
-
-isWindowsVistaSP1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 1!
-
-isWindowsVistaSP2OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 2!
-
-isWindowsXPOrGreater
-	^self
-		isWindowsVersionOrGreater: 5
-		wMinorVersion: 1
-		wServicePackMajor: 0!
 
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
@@ -449,8 +351,7 @@ onStartup
 
 	handle := Registry at: 122.
 	specialSelectorStart := RegistryKeys at: #arithmeticSelectors.
-	wndProc := dlgProc := vtable := genericCallback := nil.
-	WinVerOrGreaterMask := nil!
+	wndProc := dlgProc := vtable := genericCallback := nil!
 
 productName
 	"Answer the localised name for Dolphin."
@@ -589,74 +490,63 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%3!!d!!.%4!!d!!%5!!d!!'! !
-!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
-!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
-!VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
-!VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
-!VMLibrary categoriesFor: #argc!accessing!private! !
-!VMLibrary categoriesFor: #argv!accessing!private! !
-!VMLibrary categoriesFor: #basePatchLevel!constants!patching!private! !
-!VMLibrary categoriesFor: #bytecodeVersion!accessing-version!public! !
-!VMLibrary categoriesFor: #compilerFileName!accessing!private! !
-!VMLibrary categoriesFor: #crashDump:!exceptions!private! !
-!VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
-!VMLibrary categoriesFor: #debugDump:!exceptions!private! !
-!VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
-!VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
-!VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
-!VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
-!VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
-!VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getGenericCallback!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getVTable!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getWndProc!accessing-callbacks!public! !
-!VMLibrary categoriesFor: #handleFromInteger:!helpers!private! !
-!VMLibrary categoriesFor: #hashBytes:count:!hash algorithms!helpers!private! !
-!VMLibrary categoriesFor: #highBit:!arithmetic!public! !
-!VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
-!VMLibrary categoriesFor: #inputQueueMask!constants!private! !
-!VMLibrary categoriesFor: #isSlowMachine!environment!public! !
-!VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
-!VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
-!VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeSigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeSigned:highPart:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeUnsigned:highPart:!helpers!private! !
-!VMLibrary categoriesFor: #onStartup!event handling!public! !
-!VMLibrary categoriesFor: #productName!accessing!public! !
-!VMLibrary categoriesFor: #registerEventSource:!arithmetic!public! !
-!VMLibrary categoriesFor: #registry!accessing!private! !
-!VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
-!VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
-!VMLibrary categoriesFor: #shortName!accessing!public! !
-!VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
-!VMLibrary categoriesFor: #stderr!accessing-handles!private! !
-!VMLibrary categoriesFor: #stdin!accessing-handles!private! !
-!VMLibrary categoriesFor: #stdout!accessing-handles!private! !
-!VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
-!VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
-!VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
-!VMLibrary categoriesFor: #utf16StringFromAddress:!helpers!private! !
-!VMLibrary categoriesFor: #versionFormatString!constants!private! !
+!Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
+!Kernel.VMLibrary categoriesFor: #argc!accessing!private! !
+!Kernel.VMLibrary categoriesFor: #argv!accessing!private! !
+!Kernel.VMLibrary categoriesFor: #basePatchLevel!constants!patching!private! !
+!Kernel.VMLibrary categoriesFor: #bytecodeVersion!accessing-version!public! !
+!Kernel.VMLibrary categoriesFor: #compilerFileName!accessing!private! !
+!Kernel.VMLibrary categoriesFor: #crashDump:!exceptions!private! !
+!Kernel.VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #debugDump:!exceptions!private! !
+!Kernel.VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
+!Kernel.VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
+!Kernel.VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
+!Kernel.VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
+!Kernel.VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !
+!Kernel.VMLibrary categoriesFor: #getGenericCallback!accessing-callbacks!private! !
+!Kernel.VMLibrary categoriesFor: #getVTable!accessing-callbacks!private! !
+!Kernel.VMLibrary categoriesFor: #getWndProc!accessing-callbacks!public! !
+!Kernel.VMLibrary categoriesFor: #handleFromInteger:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #hashBytes:count:!hash algorithms!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #highBit:!arithmetic!public! !
+!Kernel.VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #isSlowMachine!environment!public! !
+!Kernel.VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #makeLargeSigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #makeLargeSigned:highPart:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #makeLargeUnsigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #makeLargeUnsigned:highPart:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #onStartup!event handling!public! !
+!Kernel.VMLibrary categoriesFor: #productName!accessing!public! !
+!Kernel.VMLibrary categoriesFor: #registerEventSource:!arithmetic!public! !
+!Kernel.VMLibrary categoriesFor: #registry!accessing!private! !
+!Kernel.VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
+!Kernel.VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
+!Kernel.VMLibrary categoriesFor: #shortName!accessing!public! !
+!Kernel.VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #stderr!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #stdin!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #stdout!accessing-handles!private! !
+!Kernel.VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
+!Kernel.VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #utf16StringFromAddress:!helpers!private! !
+!Kernel.VMLibrary categoriesFor: #versionFormatString!constants!private! !
 
-!VMLibrary class methodsFor!
+!Kernel.VMLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name of the library. This may vary."
@@ -705,12 +595,13 @@ initialize
 				at: #UndefinedObject put: 97;
 				at: #VariableBinding put: 98;
 				at: #Semaphore put: 99;
-				at: #ExternalAddress put: 100;
-				at: #ExternalHandle put: 101;
+				at: #Address put: 100;
+				at: #Handle put: 101;
 				at: #Dispatcher put: 102;
 				at: #LPVOID put: 103;
 				at: #Utf8String put: 104;
 				at: #BindingReference put: 105;
+				at: #ArrayBinding put: 106;
 				at: #LargeInteger put: 107;
 				at: #VARIANT put: 108;
 				at: #BSTR put: 109;
@@ -774,13 +665,13 @@ registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
 
 	^RegistryKeys! !
-!VMLibrary class categoriesFor: #fileName!constants!public! !
-!VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
-!VMLibrary class categoriesFor: #initialize!development!initializing!private! !
-!VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
-!VMLibrary class categoriesFor: #maxLiterals!limits!public! !
-!VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
-!VMLibrary class categoriesFor: #maxTemps!limits!public! !
-!VMLibrary class categoriesFor: #open!instance creation!public! !
-!VMLibrary class categoriesFor: #registryKeys!constants!private! !
+!Kernel.VMLibrary class categoriesFor: #fileName!constants!public! !
+!Kernel.VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
+!Kernel.VMLibrary class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
+!Kernel.VMLibrary class categoriesFor: #maxLiterals!limits!public! !
+!Kernel.VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
+!Kernel.VMLibrary class categoriesFor: #maxTemps!limits!public! !
+!Kernel.VMLibrary class categoriesFor: #open!instance creation!public! !
+!Kernel.VMLibrary class categoriesFor: #registryKeys!constants!private! !
 

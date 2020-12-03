@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Warning subclass: #ConfirmationRequiredWarning
+Core.Warning subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ConfirmationRequiredWarning guid: (GUID fromString: '{6cbf0500-f796-4979-8f8d-3285e012aa94}')!
-ConfirmationRequiredWarning comment: 'ConfirmationRequiredWarnings can be signalled when an operation requires user consent. The default action is to show a Yes/No[/Cancel] message box. When the user has responded, execution is continued from the signalling point answering true, false or nil, for Yes, No and Cancel (respectively) responses. The signaller can then act accordingly to proceed with the operation as appropriate. The actions to be taken (or values to be returned) when the buttons are pressed can be overridden individually by providing suitable <niladicValuable>s, e.g. blocks. The cancel button can be suppressed by setting the cancel block to nil.
+UI.ConfirmationRequiredWarning guid: (Core.GUID fromString: '{6cbf0500-f796-4979-8f8d-3285e012aa94}')!
+UI.ConfirmationRequiredWarning comment: 'ConfirmationRequiredWarnings can be signalled when an operation requires user consent. The default action is to show a Yes/No[/Cancel] message box. When the user has responded, execution is continued from the signalling point answering true, false or nil, for Yes, No and Cancel (respectively) responses. The signaller can then act accordingly to proceed with the operation as appropriate. The actions to be taken (or values to be returned) when the buttons are pressed can be overridden individually by providing suitable <niladicValuable>s, e.g. blocks. The cancel button can be suppressed by setting the cancel block to nil.
 
 Examples:
 	ConfirmationRequiredWarning signal: ''Are you well?''. "By default, no Cancel option"
 	ConfirmationRequiredWarning signal: ''Sugar?'' onYes: [''Two lumps''] onNo: [''No sugar''] onCancel: [''Tea refused''].'!
-!ConfirmationRequiredWarning categoriesForClass!Kernel-Exception Handling! !
-!ConfirmationRequiredWarning methodsFor!
+!UI.ConfirmationRequiredWarning categoriesForClass!Kernel-Exception Handling! !
+!UI.ConfirmationRequiredWarning methodsFor!
 
 cancel
 	"Answer the the result of evaluating the <niladicValuable>, cancelBlock, as the value of the
@@ -44,11 +44,11 @@ confirmBlock: aNiladicValuable
 defaultAction
 	^cancelBlock isNil
 		ifTrue: 
-			[(MessageBox confirm: self messageText)
+			[(UI.MessageBox confirm: self messageText)
 				ifTrue: [self confirmBlock value]
 				ifFalse: [self refuseBlock value]]
 		ifFalse: 
-			[MessageBox
+			[UI.MessageBox
 				confirm: self messageText
 				onYes: self confirmBlock
 				onNo: self refuseBlock
@@ -66,18 +66,18 @@ refuseBlock
 
 refuseBlock: aNiladicValuable
 	refuseBlock := aNiladicValuable! !
-!ConfirmationRequiredWarning categoriesFor: #cancel!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #cancelBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #cancelBlock:!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirm!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirmBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirmBlock:!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #defaultAction!handling!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuse!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuseBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuseBlock:!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #cancel!handler responses!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #cancelBlock!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #cancelBlock:!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #confirm!handler responses!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #confirmBlock!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #confirmBlock:!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #defaultAction!handling!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #refuse!handler responses!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #refuseBlock!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesFor: #refuseBlock:!accessing!public! !
 
-!ConfirmationRequiredWarning class methodsFor!
+!UI.ConfirmationRequiredWarning class methodsFor!
 
 signal: aString onYes: confirmValuable onNo: refuseValuable onCancel: cancelValuable
 	"Signal a <Warning>, the default action for which is to prompt the user with a Yes/No/Cancel
@@ -89,5 +89,5 @@ signal: aString onYes: confirmValuable onNo: refuseValuable onCancel: cancelValu
 		refuseBlock: refuseValuable;
 		cancelBlock: cancelValuable;
 		signal: aString! !
-!ConfirmationRequiredWarning class categoriesFor: #signal:onYes:onNo:onCancel:!instance creation!public! !
+!UI.ConfirmationRequiredWarning class categoriesFor: #signal:onYes:onNo:onCancel:!instance creation!public! !
 

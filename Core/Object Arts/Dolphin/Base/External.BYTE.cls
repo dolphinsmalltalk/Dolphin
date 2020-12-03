@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalInteger subclass: #BYTE
+External.INTEGER subclass: #'External.BYTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BYTE guid: (GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
-BYTE comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
+External.BYTE guid: (Core.GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.BYTE comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 BYTE is used to represent unsigned 8-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**8)-1	(i.e. 0 to: 255).'!
-!BYTE categoriesForClass!External-Data-Unstructured! !
-!BYTE methodsFor!
+!External.BYTE categoriesForClass!External-Data-Unstructured! !
+!External.BYTE methodsFor!
 
 asSignedInteger
 	"Answer the signed 8-bit <Integer> value of the receiver."
@@ -40,13 +40,13 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_value put: anInteger! !
-!BYTE categoriesFor: #asSignedInteger!converting!public! !
-!BYTE categoriesFor: #asUnsignedInteger!converting!public! !
-!BYTE categoriesFor: #unsignedValue:!accessing!public! !
-!BYTE categoriesFor: #value!**compiled accessors**!public! !
-!BYTE categoriesFor: #value:!**compiled accessors**!public! !
+!External.BYTE categoriesFor: #asSignedInteger!converting!public! !
+!External.BYTE categoriesFor: #asUnsignedInteger!converting!public! !
+!External.BYTE categoriesFor: #unsignedValue:!accessing!public! !
+!External.BYTE categoriesFor: #value!**compiled accessors**!public! !
+!External.BYTE categoriesFor: #value:!**compiled accessors**!public! !
 
-!BYTE class methodsFor!
+!External.BYTE class methodsFor!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
@@ -65,7 +65,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!BYTE class categoriesFor: #defineFields!public!template definition! !
-!BYTE class categoriesFor: #initialize!development!initializing!private! !
-!BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.BYTE class categoriesFor: #defineFields!public!template definition! !
+!External.BYTE class categoriesFor: #initialize!development!initializing!private! !
+!External.BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

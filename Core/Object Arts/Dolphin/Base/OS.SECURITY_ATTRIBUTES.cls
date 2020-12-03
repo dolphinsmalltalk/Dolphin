@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #SECURITY_ATTRIBUTES
+OS.Win32Structure subclass: #'OS.SECURITY_ATTRIBUTES'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bInheritHandle' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_lpSecurityDescriptor' -> 16r4
 	}!
-SECURITY_ATTRIBUTES guid: (GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
-SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
+OS.SECURITY_ATTRIBUTES guid: (Core.GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
+OS.SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains the security descriptor for an object and specifies whether the handle retrieved by specifying this structure is inheritable."
@@ -27,8 +27,8 @@ struct tagSECURITY_ATTRIBUTES {
 	[helpstring("Specifies whether the returned handle is inherited when a new process is created. If this member is TRUE, the new process inherits the handle.")] BOOL bInheritHandle;
 } SECURITY_ATTRIBUTES;
 '!
-!SECURITY_ATTRIBUTES categoriesForClass!Win32-Structs! !
-!SECURITY_ATTRIBUTES methodsFor!
+!OS.SECURITY_ATTRIBUTES categoriesForClass!Win32-Structs! !
+!OS.SECURITY_ATTRIBUTES methodsFor!
 
 bInheritHandle
 	"Answer the <Boolean> value of the receiver's 'bInheritHandle' field."
@@ -54,13 +54,13 @@ lpSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
-!SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor:!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor:!**compiled accessors**!public! !
 
-!SECURITY_ATTRIBUTES class methodsFor!
+!OS.SECURITY_ATTRIBUTES class methodsFor!
 
 defineFields
 	"Define the fields of the SECURITY_ATTRIBUTES structure.
@@ -82,6 +82,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
-!SECURITY_ATTRIBUTES class categoriesFor: #defineFields!public!template definition! !
-!SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SECURITY_ATTRIBUTES class categoriesFor: #defineFields!public!template definition! !
+!OS.SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

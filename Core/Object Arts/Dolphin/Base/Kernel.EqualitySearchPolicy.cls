@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SingletonSearchPolicy subclass: #EqualitySearchPolicy
+Kernel.SingletonSearchPolicy subclass: #'Kernel.EqualitySearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EqualitySearchPolicy guid: (GUID fromString: '{1086b60a-da69-4d8d-82df-be610ba9d062}')!
-EqualitySearchPolicy comment: 'EqualitySearchPolicy is for configuring pluggable collections and models to use equality based search and comparisons, i.e. using #= and #hash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as a <Set>.'!
-!EqualitySearchPolicy categoriesForClass!Collections-Support! !
-!EqualitySearchPolicy methodsFor!
+Kernel.EqualitySearchPolicy guid: (Core.GUID fromString: '{1086b60a-da69-4d8d-82df-be610ba9d062}')!
+Kernel.EqualitySearchPolicy comment: 'EqualitySearchPolicy is for configuring pluggable collections and models to use equality based search and comparisons, i.e. using #= and #hash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as a <Set>.'!
+!Kernel.EqualitySearchPolicy categoriesForClass!Collections-Support! !
+!Kernel.EqualitySearchPolicy methodsFor!
 
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -24,6 +24,11 @@ hash: operand max: maximum
 	of search policies can be important)."
 
 	^operand hash \\ maximum + 1!
+
+isEquality
+	"Answer whether or not the receiver is a search policy that compares by object equality (i.e. uses #= for comparison and #hash for hashing)."
+
+	^true!
 
 keyAtValue: value in: collection ifAbsent: operation
 	"Answer the <Object> key of the <Object> argument, value in the keyed
@@ -56,11 +61,12 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIndexOf: anElement from: start to: stop! !
-!EqualitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!EqualitySearchPolicy categoriesFor: #name!accessing!public! !
-!EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!EqualitySearchPolicy categoriesFor: #newSet!operations!public! !
-!EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!Kernel.EqualitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!Kernel.EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!Kernel.EqualitySearchPolicy categoriesFor: #isEquality!public!testing! !
+!Kernel.EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!Kernel.EqualitySearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!Kernel.EqualitySearchPolicy categoriesFor: #newSet!operations!public! !
+!Kernel.EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 

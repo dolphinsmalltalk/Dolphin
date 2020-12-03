@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Boolean subclass: #False
+Core.Boolean subclass: #'Core.False'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-False guid: (GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
-False comment: 'The False class implements the behaviour of the false (logical false) object.
+Core.False guid: (Core.GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.False comment: 'The False class implements the behaviour of the false (logical false) object.
 
 False is a singleton whose sole instance is the object represented by the reserved word, false. (i.e. any reference to false will always answer true when compared with any other using the #== message).
 
 False implement the ANSI protocols <Object> and <boolean>.'!
-!False categoriesForClass!Kernel-Objects! !
-!False methodsFor!
+!Core.False categoriesForClass!Kernel-Objects! !
+!Core.False methodsFor!
 
 and: operand 
 	"Answer whether the receiver and the result of evaluating the <niladicValuable>,
@@ -118,16 +118,16 @@ xor: operand
 	Since the receiver is false, the answer depends entirely on the argument."
 
 	^operand! !
-!False categoriesFor: #and:!control flow!public! !
-!False categoriesFor: #asDword!converting!public! !
-!False categoriesFor: #asParameter!converting!public! !
-!False categoriesFor: #asUIntPtr!converting!public! !
-!False categoriesFor: #ifFalse:!control flow!public! !
-!False categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!False categoriesFor: #ifTrue:!control flow!public! !
-!False categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!False categoriesFor: #not!logical operations!public! !
-!False categoriesFor: #or:!control flow!public! !
-!False categoriesFor: #printOn:!printing!public! !
-!False categoriesFor: #xor:!logical operations!public! !
+!Core.False categoriesFor: #and:!control flow!public! !
+!Core.False categoriesFor: #asDword!converting!public! !
+!Core.False categoriesFor: #asParameter!converting!public! !
+!Core.False categoriesFor: #asUIntPtr!converting!public! !
+!Core.False categoriesFor: #ifFalse:!control flow!public! !
+!Core.False categoriesFor: #ifFalse:ifTrue:!control flow!public! !
+!Core.False categoriesFor: #ifTrue:!control flow!public! !
+!Core.False categoriesFor: #ifTrue:ifFalse:!control flow!public! !
+!Core.False categoriesFor: #not!logical operations!public! !
+!Core.False categoriesFor: #or:!control flow!public! !
+!Core.False categoriesFor: #printOn:!printing!public! !
+!Core.False categoriesFor: #xor:!logical operations!public! !
 

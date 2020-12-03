@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Collection subclass: #Bag
+Core.Collection subclass: #'Core.Bag'
 	instanceVariableNames: 'contents'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Bag guid: (GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
-Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
+Core.Bag guid: (Core.GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
 
 Bag conforms to the ANSI protocols:
 	Object
 	collection
 	extensibleCollection
 	Bag'!
-!Bag categoriesForClass!Collections-Unordered! !
-!Bag methodsFor!
+!Core.Bag categoriesForClass!Collections-Unordered! !
+!Core.Bag methodsFor!
 
 = anObject
 	"Answer whether the receiver and the <Object> comparand, are considered equivalent (in whatever respect is appropriate for the class of the receiver)."
@@ -159,29 +159,29 @@ size
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
-!Bag categoriesFor: #=!comparing!public! !
-!Bag categoriesFor: #add:!adding!public! !
-!Bag categoriesFor: #add:withOccurrences:!adding!public! !
-!Bag categoriesFor: #asBag!converting!public! !
-!Bag categoriesFor: #asSet!converting!public! !
-!Bag categoriesFor: #at:!accessing!public! !
-!Bag categoriesFor: #at:put:!accessing!public! !
-!Bag categoriesFor: #contents:!accessing!private! !
-!Bag categoriesFor: #do:!enumerating!public! !
-!Bag categoriesFor: #elements!accessing!private! !
-!Bag categoriesFor: #elements:!accessing!private! !
-!Bag categoriesFor: #includes:!public!searching! !
-!Bag categoriesFor: #occurrencesOf:!public!searching! !
-!Bag categoriesFor: #postCopy!copying!public! !
-!Bag categoriesFor: #remove:ifAbsent:!public!removing! !
-!Bag categoriesFor: #removeAll!public! !
-!Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
-!Bag categoriesFor: #size!accessing!public! !
-!Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !
+!Core.Bag categoriesFor: #=!comparing!public! !
+!Core.Bag categoriesFor: #add:!adding!public! !
+!Core.Bag categoriesFor: #add:withOccurrences:!adding!public! !
+!Core.Bag categoriesFor: #asBag!converting!public! !
+!Core.Bag categoriesFor: #asSet!converting!public! !
+!Core.Bag categoriesFor: #at:!accessing!public! !
+!Core.Bag categoriesFor: #at:put:!accessing!public! !
+!Core.Bag categoriesFor: #contents:!accessing!private! !
+!Core.Bag categoriesFor: #do:!enumerating!public! !
+!Core.Bag categoriesFor: #elements!accessing!private! !
+!Core.Bag categoriesFor: #elements:!accessing!private! !
+!Core.Bag categoriesFor: #includes:!public!searching! !
+!Core.Bag categoriesFor: #occurrencesOf:!public!searching! !
+!Core.Bag categoriesFor: #postCopy!copying!public! !
+!Core.Bag categoriesFor: #remove:ifAbsent:!public!removing! !
+!Core.Bag categoriesFor: #removeAll!public! !
+!Core.Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
+!Core.Bag categoriesFor: #size!accessing!public! !
+!Core.Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !
 
-Bag methodProtocol: #Bag attributes: #(#ansi #readOnly) selectors: #(#add: #add:withOccurrences: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
+Core.Bag methodProtocol: #Bag attributes: #(#ansi #readOnly) selectors: #(#add: #add:withOccurrences: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
-!Bag class methodsFor!
+!Core.Bag class methodsFor!
 
 identityNew
 	"Answer a new instance of the receiver with default initial capacity, which uses identity 
@@ -194,8 +194,7 @@ identityNew: anInteger
 	"Answer a new instance of the receiver with sufficient initial capacity for anInteger unique
 	elements, which uses identity as the comparison for identifying duplicate elements."
 
-	^super new contents: (IdentityDictionary new: anInteger)
-!
+	^super new contents: (IdentityDictionary new: anInteger)!
 
 new
 	"Answer a new instance of the receiver with default initial capacity, 
@@ -208,12 +207,11 @@ new: count
 	the number of elements specified by the <integer> argument, count,
 	which uses equality as the comparison for identifying duplicate elements."
 
-	^super new 
-		contents: (LookupTable new: count)! !
-!Bag class categoriesFor: #identityNew!instance creation!public! !
-!Bag class categoriesFor: #identityNew:!instance creation!public! !
-!Bag class categoriesFor: #new!instance creation!public! !
-!Bag class categoriesFor: #new:!instance creation!public! !
+	^super new contents: (LookupTable new: count)! !
+!Core.Bag class categoriesFor: #identityNew!instance creation!public! !
+!Core.Bag class categoriesFor: #identityNew:!instance creation!public! !
+!Core.Bag class categoriesFor: #new!instance creation!public! !
+!Core.Bag class categoriesFor: #new:!instance creation!public! !
 
-Bag class methodProtocol: #'Bag factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.Bag class methodProtocol: #'Bag factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

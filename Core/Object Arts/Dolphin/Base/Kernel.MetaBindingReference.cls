@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractBindingReference subclass: #MetaBindingReference
+Kernel.AbstractBindingReference subclass: #'Kernel.MetaBindingReference'
 	instanceVariableNames: 'instance'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MetaBindingReference guid: (GUID fromString: '{c54304a7-5aa9-404b-a969-27501f25f612}')!
-MetaBindingReference comment: '`BindingReference` wrapper that resolves to the class of the referenced binding''s value. Used to construct `MethodName`s refering to class methods.'!
-!MetaBindingReference categoriesForClass!System-Namespaces! !
-!MetaBindingReference methodsFor!
+Kernel.MetaBindingReference guid: (Core.GUID fromString: '{c54304a7-5aa9-404b-a969-27501f25f612}')!
+Kernel.MetaBindingReference comment: '`BindingReference` wrapper that resolves to the class of the referenced binding''s value. Used to construct `MethodName`s refering to class methods.'!
+!Kernel.MetaBindingReference categoriesForClass!System-Namespaces! !
+!Kernel.MetaBindingReference methodsFor!
 
 asString
 	"Answer a <readableString> that describes the receiver as a qualified name expression in the context of the home namespace."
@@ -24,15 +24,21 @@ bindingOrNil
 context
 	"The name context in which resolution of the binding should be initiated."
 
-	^nil!
+	^instance context!
+
+context: anObject
+	instance context: anObject!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: self pathString;
 		space;
 		nextPutAll: #class!
+
+flags
+	^instance flags!
 
 hash
 	"Answer the <integer> hash value for the receiver."
@@ -54,6 +60,14 @@ isMeta
 
 	^true!
 
+isPrivate
+	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
+
+	^self instance isPrivate!
+
+isPrivate: aBoolean
+	self instance isPrivate: aBoolean!
+
 meta
 	"Answer a <BindingReference> that resolves to the class of the value of the binding to which the receiver resolves."
 
@@ -74,21 +88,25 @@ setInstance: aBindingReference
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
-!MetaBindingReference categoriesFor: #asString!converting!public! !
-!MetaBindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!MetaBindingReference categoriesFor: #context!constants!public! !
-!MetaBindingReference categoriesFor: #displayOn:!converting!displaying!public! !
-!MetaBindingReference categoriesFor: #hash!comparing!public! !
-!MetaBindingReference categoriesFor: #home!accessing!public! !
-!MetaBindingReference categoriesFor: #instance!converting!public! !
-!MetaBindingReference categoriesFor: #isMeta!public!testing! !
-!MetaBindingReference categoriesFor: #meta!converting!displaying!public! !
-!MetaBindingReference categoriesFor: #path!accessing!public! !
-!MetaBindingReference categoriesFor: #pathString!accessing!public! !
-!MetaBindingReference categoriesFor: #setInstance:!converting!private! !
-!MetaBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
+!Kernel.MetaBindingReference categoriesFor: #asString!converting!public! !
+!Kernel.MetaBindingReference categoriesFor: #bindingOrNil!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #context!constants!public! !
+!Kernel.MetaBindingReference categoriesFor: #context:!public! !
+!Kernel.MetaBindingReference categoriesFor: #displayOn:!converting!displaying!public! !
+!Kernel.MetaBindingReference categoriesFor: #flags!accessing!private! !
+!Kernel.MetaBindingReference categoriesFor: #hash!comparing!public! !
+!Kernel.MetaBindingReference categoriesFor: #home!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #instance!converting!public! !
+!Kernel.MetaBindingReference categoriesFor: #isMeta!public!testing! !
+!Kernel.MetaBindingReference categoriesFor: #isPrivate!public!testing! !
+!Kernel.MetaBindingReference categoriesFor: #isPrivate:!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #meta!converting!displaying!public! !
+!Kernel.MetaBindingReference categoriesFor: #path!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #pathString!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #setInstance:!converting!private! !
+!Kernel.MetaBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
 
-!MetaBindingReference class methodsFor!
+!Kernel.MetaBindingReference class methodsFor!
 
 instance: aBindingReference
 	^self basicNew
@@ -100,13 +118,11 @@ newPath: anArray context: anObject
 	^self instance: (BindingReference newPath: anArray context: anObject)!
 
 pathString: aString context: anObject
-	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument,
-	which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method),
-	and the new instance will be a ContextualBindingReference with that object as its starting point for resolving the binding."
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
+	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self instance: (BindingReference pathString: aString context: anObject)! !
-!MetaBindingReference class categoriesFor: #instance:!instance creation!public! !
-!MetaBindingReference class categoriesFor: #newPath:context:!instance creation!private! !
-!MetaBindingReference class categoriesFor: #pathString:context:!instance creation!public! !
+!Kernel.MetaBindingReference class categoriesFor: #instance:!instance creation!public! !
+!Kernel.MetaBindingReference class categoriesFor: #newPath:context:!instance creation!private! !
+!Kernel.MetaBindingReference class categoriesFor: #pathString:context:!instance creation!public! !
 

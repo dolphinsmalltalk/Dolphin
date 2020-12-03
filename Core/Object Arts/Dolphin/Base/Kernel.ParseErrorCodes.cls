@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #SmalltalkParseErrorCodes
+Kernel.SharedPool subclass: #'Kernel.ParseErrorCodes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,6 +15,7 @@ SharedPool subclass: #SmalltalkParseErrorCodes
 		'CErrBadPools' -> 16r53.
 		'CErrBadPrimCallType' -> 16r2F.
 		'CErrBadPrimIdx' -> 16r2D.
+		'CErrBadQualifiedRefModifier' -> 16r5A.
 		'CErrBadSelector' -> 16r4A.
 		'CErrBadTokenInArray' -> 16r3C.
 		'CErrBadValueInByteArray' -> 16r3E.
@@ -42,7 +43,7 @@ SharedPool subclass: #SmalltalkParseErrorCodes
 		'CErrInternal' -> 16r42.
 		'CErrInvalExprStart' -> 16r22.
 		'CErrInvalidStructArg' -> 16r36.
-		'CErrLast' -> 16r58.
+		'CErrLast' -> 16r5A.
 		'CErrMethodTooLarge' -> 16r4F.
 		'CErrNonsenseAtExprEnd' -> 16r24.
 		'CErrNonsenseAtMethodEnd' -> 16r23.
@@ -59,7 +60,6 @@ SharedPool subclass: #SmalltalkParseErrorCodes
 		'CErrTooManyLiterals' -> 16r50.
 		'CErrTooManyTemps' -> 16r45.
 		'CErrUndeclared' -> 16r47.
-		'CErrUndefinedClass' -> 16r35.
 		'CErrUnsupportedCallConv' -> 16r30.
 		'CErrUnterminatedStatement' -> 16r28.
 		'CInfoFirst' -> 16r7D0.
@@ -101,6 +101,7 @@ SharedPool subclass: #SmalltalkParseErrorCodes
 		'LErrLast' -> 16rA.
 		'LErrStringNotClosed' -> 16r3
 	}!
-SmalltalkParseErrorCodes guid: (GUID fromString: '{92e9d5ba-56ff-4b1b-b75c-85b983481e11}')!
-SmalltalkParseErrorCodes comment: ''!
-!SmalltalkParseErrorCodes categoriesForClass!System-Compiler! !
+Kernel.ParseErrorCodes guid: (Core.GUID fromString: '{92e9d5ba-56ff-4b1b-b75c-85b983481e11}')!
+Kernel.ParseErrorCodes isNonInstantiable: true!
+Kernel.ParseErrorCodes comment: ''!
+!Kernel.ParseErrorCodes categoriesForClass!System-Compiler! !

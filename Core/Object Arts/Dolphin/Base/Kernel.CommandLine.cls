@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CommandLine
+Core.Object subclass: #'Kernel.CommandLine'
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandLine guid: (GUID fromString: '{4e9d5c42-1049-4f31-862c-cb56225aa08a}')!
-CommandLine comment: 'Instances of CommandLine can be used to parse command line options and arguments. 
+Kernel.CommandLine guid: (Core.GUID fromString: '{4e9d5c42-1049-4f31-862c-cb56225aa08a}')!
+Kernel.CommandLine comment: 'Instances of CommandLine can be used to parse command line options and arguments. 
 
 The basic implementation is guided by and modeled on getopt() in Unix (http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html), but also has a simpler API. 
 
@@ -49,8 +49,8 @@ commandLine := CommandLine new
 options := commandLine options.	"a Dictionary(''noArg'' -> nil ''reg'' -> ''arg1'' ''equal'' -> ''arg2'' ''optA'' -> nil ''optB'' -> ''arg3'')"
 arguments := commandLine arguments. "#(''arg4'')"
 '!
-!CommandLine categoriesForClass!Kernel-Objects! !
-!CommandLine methodsFor!
+!Kernel.CommandLine categoriesForClass!Kernel-Objects! !
+!Kernel.CommandLine methodsFor!
 
 addOption: aString 
 	parsingRules add: (CommandLineOption named: aString)!
@@ -71,12 +71,9 @@ addOptionRequiringArgument: aString whenPresentDo: aBlock
 	parsingRules add: (CommandLineOption requiringArgument: aString block: aBlock)!
 
 addRulesFrom: aString
-
 	| optionsStream |
 	optionsStream := ReadStream on: aString.
-	[optionsStream atEnd] whileFalse: [
-		parsingRules add: (CommandLineOption fromStream: optionsStream).
-	].!
+	[optionsStream atEnd] whileFalse: [parsingRules add: (CommandLineOption fromStream: optionsStream)]!
 
 arguments
 
@@ -114,11 +111,10 @@ getOpt: aString
 	^option key name!
 
 initialize: anArray
-
 	argv := anArray.
 	optIndex := 1.
 	optionPrefixChars := '-/'.
-	parsingRules := OrderedCollection new.!
+	parsingRules := OrderedCollection new!
 
 optArg
 
@@ -134,11 +130,7 @@ options
 	options ifNil: [self parse].
 	self checkForErrors.
 	dict := Dictionary new.
-	options do: [:each | 
-		each key ifNotNil: [
-			dict at: each key name put: each value.
-		].
-	].
+	options do: [:each | each key ifNotNil: [dict at: each key name put: each value]].
 	^dict!
 
 options: aString
@@ -152,18 +144,16 @@ optOpt
 	^optOpt!
 
 parse
-
 	arguments := OrderedCollection new.
 	options := OrderedCollection new.
 	parsingErrors := WriteStream on: String new.
-	parsingArgStream := (ReadStream on: argv) 
-		next; 	"exe"
-		yourself.
-	[parsingArgStream atEnd] whileFalse: [	"iterate over the argv array"
-		self parseNextArg.
-	].
-	arguments := arguments asArray.
-!
+	parsingArgStream := (ReadStream on: argv)
+				next;
+				yourself.	"exe"
+	[parsingArgStream atEnd] whileFalse: 
+			["iterate over the argv array"
+			self parseNextArg].
+	arguments := arguments asArray!
 
 parseLongOption: aString
 
@@ -221,27 +211,28 @@ parseLongOption: aString
 !
 
 parseNextArg
-
 	parsingArg := parsingArgStream next.
-	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- by itself is a signal to treat everything following as arguments, not options"
-		arguments addAll: parsingArgStream upToEnd.
-		^self
-	].
-	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first]) ifFalse: [	"no prefix means treat as an argument rather than as an option"
-		arguments add: parsingArg.
-		^self
-	].
-	(2 < parsingArg size and: [(parsingArg at: 1) == (parsingArg at: 2)]) ifTrue: [	"-- is lead-in to long argument"
-		self parseLongOption: (parsingArg copyFrom: 3 to: parsingArg size).
-		^self
-	].
-	parsingOptionStream := (ReadStream on: parsingArg) 
-		next; 	"Prefix character ($/ or $-)"
-		yourself.
-	[parsingOptionStream atEnd] whileFalse: [	"one argv can have multiple options (-ab is equivalent to -a -b)"
-		self parseNextOption.
-	].
-!
+	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)])
+		ifTrue: 
+			["-- by itself is a signal to treat everything following as arguments, not options"
+			arguments addAll: parsingArgStream upToEnd.
+			^self].
+	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first])
+		ifFalse: 
+			["no prefix means treat as an argument rather than as an option"
+			arguments add: parsingArg.
+			^self].
+	(2 < parsingArg size and: [(parsingArg at: 1) == (parsingArg at: 2)])
+		ifTrue: 
+			["-- is lead-in to long argument"
+			self parseLongOption: (parsingArg copyFrom: 3 to: parsingArg size).
+			^self].
+	parsingOptionStream := (ReadStream on: parsingArg)
+				next;
+				yourself.	"Prefix character ($/ or $-)"
+	[parsingOptionStream atEnd] whileFalse: 
+			["one argv can have multiple options (-ab is equivalent to -a -b)"
+			self parseNextOption]!
 
 parseNextOption
 
@@ -279,28 +270,28 @@ parseNextOption
 processOptions
 	options ifNil: [self parse].
 	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
-!CommandLine categoriesFor: #addOption:!public! !
-!CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
-!CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addRulesFrom:!private! !
-!CommandLine categoriesFor: #arguments!accessing!public! !
-!CommandLine categoriesFor: #checkForErrors!private! !
-!CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
-!CommandLine categoriesFor: #initialize:!initializing!private! !
-!CommandLine categoriesFor: #optArg!getopt protocol!public! !
-!CommandLine categoriesFor: #options!accessing!public! !
-!CommandLine categoriesFor: #options:!public! !
-!CommandLine categoriesFor: #optOpt!getopt protocol!public! !
-!CommandLine categoriesFor: #parse!private! !
-!CommandLine categoriesFor: #parseLongOption:!private! !
-!CommandLine categoriesFor: #parseNextArg!private! !
-!CommandLine categoriesFor: #parseNextOption!private! !
-!CommandLine categoriesFor: #processOptions!public! !
+!Kernel.CommandLine categoriesFor: #addOption:!public! !
+!Kernel.CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
+!Kernel.CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
+!Kernel.CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
+!Kernel.CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
+!Kernel.CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
+!Kernel.CommandLine categoriesFor: #addRulesFrom:!private! !
+!Kernel.CommandLine categoriesFor: #arguments!accessing!public! !
+!Kernel.CommandLine categoriesFor: #checkForErrors!private! !
+!Kernel.CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
+!Kernel.CommandLine categoriesFor: #initialize:!initializing!private! !
+!Kernel.CommandLine categoriesFor: #optArg!getopt protocol!public! !
+!Kernel.CommandLine categoriesFor: #options!accessing!public! !
+!Kernel.CommandLine categoriesFor: #options:!public! !
+!Kernel.CommandLine categoriesFor: #optOpt!getopt protocol!public! !
+!Kernel.CommandLine categoriesFor: #parse!private! !
+!Kernel.CommandLine categoriesFor: #parseLongOption:!private! !
+!Kernel.CommandLine categoriesFor: #parseNextArg!private! !
+!Kernel.CommandLine categoriesFor: #parseNextOption!private! !
+!Kernel.CommandLine categoriesFor: #processOptions!public! !
 
-!CommandLine class methodsFor!
+!Kernel.CommandLine class methodsFor!
 
 argv: anArray
 	"Constructor called directly only in testing"
@@ -320,7 +311,7 @@ options: aString
 	^(self argv: SessionManager current argv)
 		options: aString;
 		yourself! !
-!CommandLine class categoriesFor: #argv:!public! !
-!CommandLine class categoriesFor: #new!public! !
-!CommandLine class categoriesFor: #options:!public! !
+!Kernel.CommandLine class categoriesFor: #argv:!public! !
+!Kernel.CommandLine class categoriesFor: #new!public! !
+!Kernel.CommandLine class categoriesFor: #options:!public! !
 

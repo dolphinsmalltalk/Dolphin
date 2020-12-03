@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AbstractBindingReference
+Core.Object subclass: #'Kernel.AbstractBindingReference'
 	instanceVariableNames: ''
 	classVariableNames: 'Undeclared'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractBindingReference guid: (GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
-AbstractBindingReference isAbstract: true!
-AbstractBindingReference comment: 'Abstract superclass of binding references.'!
-!AbstractBindingReference categoriesForClass!System-Namespaces! !
-!AbstractBindingReference methodsFor!
+Kernel.AbstractBindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
+Kernel.AbstractBindingReference isNonInstantiable: true!
+Kernel.AbstractBindingReference comment: 'Abstract superclass of binding references.'!
+!Kernel.AbstractBindingReference categoriesForClass!System-Namespaces! !
+!Kernel.AbstractBindingReference methodsFor!
 
 <= aBindingReference
 	"Answer whether the receiver should sort before the argument."
@@ -34,6 +34,11 @@ append: aString
 	"Answer a new <BindingReference> that refers to the nested name identified by the <readableString> argument within the receiver's scope."
 
 	^self class path: (self path copyWith: aString) context: self context!
+
+asFullyQualifiedReference
+	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
+
+	^BindingReference path: (self namespace fullPath copyWith: self unqualifiedName)!
 
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
@@ -86,9 +91,38 @@ declare: anObject
 	self declare value: anObject!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self pathString!
+
+environment
+	"Answer the in namespace which the referenced binding should be found, or nil if any of the namespaces on the path do not exist."
+
+	| parts |
+	parts := self path.
+	^parts size > 1
+		ifTrue: [(self home resolveBindingPath: parts allButLast) ifNotNil: [:ns | ns value]]
+		ifFalse: [self home]!
+
+environmentName
+	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the home context."
+
+	| stream parts first |
+	parts := self path.
+	stream := String writeStream: 32.
+	first := false.
+	self context
+		ifNil: [
+			parts size <= 1
+				ifTrue: [Smalltalk printFullNameOn: stream]
+				ifFalse: [first := true]]
+		ifNotNil: [:ctxt | ctxt localEnvironment printFullNameOn: stream].
+	1 to: parts size - 1
+		do: 
+			[:i |
+			first ifTrue: [first := false] ifFalse: [stream nextPut: $.].
+			stream nextPutAll: (parts at: i)].
+	^stream contents!
 
 hash
 	"Answer the <integer> hash value for the receiver."
@@ -146,12 +180,10 @@ isMeta
 isPrivate
 	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
 
-	^false!
+	^self subclassResponsibility!
 
-isWildcard
-	"Answer whether the receiver represents a wildcard reference to match all the names in a namespace."
-
-	^false!
+isPrivate: aBoolean
+	self subclassResponsibility!
 
 literalTextStyle
 	^#literalBindingReference!
@@ -160,6 +192,27 @@ meta
 	"Answer a `MetaBindingReference` that resolves to the class of the value of the binding to which the receiver resolves."
 
 	^self subclassResponsibility!
+
+namespace
+	"Answer the <Namespace> in which the referenced binding should be found, or nil if the namespace path is incomplete."
+
+	| p |
+	p := self path.
+	^p size > 1
+		ifTrue: [(self home resolveBindingPath: p allButLast) value]
+		ifFalse: [self home localEnvironment]!
+
+namespaceBinding
+	"Answer the namespace in which the referenced binding should be found (if it exists). If any of the namespaces on the binding path do not exist, an error will be thrown."
+
+	| p |
+	p := self path.
+	^p size > 1
+		ifTrue: [self home resolveBindingPath: p allButLast]
+		ifFalse: [self home localEnvironment binding]!
+
+owningPackage: aPackage 
+	^self instance value owningPackage: aPackage!
 
 path
 	"Answer a <sequencedReadableCollection> of <String>, being the component parts of the qualified name in order from the home namespace."
@@ -176,8 +229,9 @@ printOn: aStream
 
 	aStream
 		nextPutAll: '#{';
-		display: self;
-		nextPut: $}!
+		display: self.
+	self isPrivate ifTrue: [aStream nextPutAll: ' private'].
+	aStream nextPut: $}!
 
 refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
@@ -187,10 +241,16 @@ refersToLiteral: anObject
 			[anObject notNil
 				and: [self bindingOrNil ifNil: [false] ifNotNil: [:binding | binding refersToLiteral: anObject]]]!
 
-simpleName
-	"Answer the unqualified name part of the receiver (the final component of the name)."
+shortName
+	"Answer the shorted <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^self path last!
+	^Smalltalk shortNameFor: self unqualifiedName in: self namespace!
+
+simpleName
+	"Answer the unqualified name part of the receiver (the final component of the name).
+	This is defined for compatibility. Use #unqualifiedName by preference."
+
+	^self unqualifiedName!
 
 species
 	^BindingReference!
@@ -199,6 +259,25 @@ storeOn: aStream
 	"This should probably store the full path."
 
 	self printOn: aStream!
+
+undeclare
+	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
+
+	| p nsPath ns |
+	p := self path.
+	nsPath := p allButLast.
+	ns := self home.
+	nsPath isEmpty
+		ifFalse: 
+			[(self home resolveBindingPath: nsPath)
+				ifNil: [^self]
+				ifNotNil: [:nsBinding | ns := nsBinding targetVariable value]].
+	^ns removeLocalBindingFor: p last!
+
+unqualifiedName
+	"Answer the unqualified name part of the receiver (the final component of the name)."
+
+	^self path last!
 
 value
 	"Answer the value of the variable named by the receiver. Raise an error if the variable is not defined."
@@ -218,45 +297,54 @@ valueOrNil
 	Note that it will not be possible to define the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
-!AbstractBindingReference categoriesFor: #<=!comparing!public! !
-!AbstractBindingReference categoriesFor: #=!comparing!public! !
-!AbstractBindingReference categoriesFor: #append:!copying!public! !
-!AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
-!AbstractBindingReference categoriesFor: #asString!converting!public! !
-!AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
-!AbstractBindingReference categoriesFor: #binding!accessing!public! !
-!AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!AbstractBindingReference categoriesFor: #context!constants!public! !
-!AbstractBindingReference categoriesFor: #declare!operations!public! !
-!AbstractBindingReference categoriesFor: #declare:!operations!public! !
-!AbstractBindingReference categoriesFor: #displayOn:!displaying!public! !
-!AbstractBindingReference categoriesFor: #hash!comparing!public! !
-!AbstractBindingReference categoriesFor: #home!accessing!public! !
-!AbstractBindingReference categoriesFor: #ifDefined:!evaluating!public! !
-!AbstractBindingReference categoriesFor: #ifDefined:ifNotDefined:!evaluating!public! !
-!AbstractBindingReference categoriesFor: #ifDefinedDo:!evaluating!public! !
-!AbstractBindingReference categoriesFor: #ifDefinedDo:elseDo:!evaluating!public! !
-!AbstractBindingReference categoriesFor: #instance!converting!public! !
-!AbstractBindingReference categoriesFor: #isDefined!public!testing! !
-!AbstractBindingReference categoriesFor: #isLiteral!public!testing! !
-!AbstractBindingReference categoriesFor: #isMeta!public!testing! !
-!AbstractBindingReference categoriesFor: #isPrivate!public!testing! !
-!AbstractBindingReference categoriesFor: #isWildcard!public!testing! !
-!AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
-!AbstractBindingReference categoriesFor: #meta!converting!public! !
-!AbstractBindingReference categoriesFor: #path!accessing!public! !
-!AbstractBindingReference categoriesFor: #pathString!accessing!public! !
-!AbstractBindingReference categoriesFor: #printOn:!printing!public! !
-!AbstractBindingReference categoriesFor: #refersToLiteral:!private!testing! !
-!AbstractBindingReference categoriesFor: #simpleName!accessing!public! !
-!AbstractBindingReference categoriesFor: #species!comparing!public! !
-!AbstractBindingReference categoriesFor: #storeOn:!public!storing! !
-!AbstractBindingReference categoriesFor: #value!accessing!public! !
-!AbstractBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
-!AbstractBindingReference categoriesFor: #valueOrDo:!accessing!public! !
-!AbstractBindingReference categoriesFor: #valueOrNil!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #<=!comparing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #=!comparing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #append:!copying!public! !
+!Kernel.AbstractBindingReference categoriesFor: #asFullyQualifiedReference!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #asString!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #binding!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #context!constants!public! !
+!Kernel.AbstractBindingReference categoriesFor: #declare!operations!public! !
+!Kernel.AbstractBindingReference categoriesFor: #declare:!operations!public! !
+!Kernel.AbstractBindingReference categoriesFor: #displayOn:!displaying!public! !
+!Kernel.AbstractBindingReference categoriesFor: #environment!operations!public! !
+!Kernel.AbstractBindingReference categoriesFor: #environmentName!public! !
+!Kernel.AbstractBindingReference categoriesFor: #hash!comparing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #home!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #ifDefined:!evaluating!public! !
+!Kernel.AbstractBindingReference categoriesFor: #ifDefined:ifNotDefined:!evaluating!public! !
+!Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:!evaluating!public! !
+!Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:elseDo:!evaluating!public! !
+!Kernel.AbstractBindingReference categoriesFor: #instance!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #isDefined!public!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #isLiteral!public!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #isMeta!public!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #isPrivate!public!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #isPrivate:!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
+!Kernel.AbstractBindingReference categoriesFor: #meta!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #namespace!operations!public! !
+!Kernel.AbstractBindingReference categoriesFor: #namespaceBinding!public! !
+!Kernel.AbstractBindingReference categoriesFor: #owningPackage:!accessing!development!private! !
+!Kernel.AbstractBindingReference categoriesFor: #path!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #pathString!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #printOn:!printing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #refersToLiteral:!private!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #shortName!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #simpleName!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #species!comparing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #storeOn:!public!storing! !
+!Kernel.AbstractBindingReference categoriesFor: #undeclare!operations!public! !
+!Kernel.AbstractBindingReference categoriesFor: #unqualifiedName!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #value!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
+!Kernel.AbstractBindingReference categoriesFor: #valueOrDo:!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #valueOrNil!accessing!public! !
 
-!AbstractBindingReference class methodsFor!
+!Kernel.AbstractBindingReference class methodsFor!
 
 errorInvalidIdentifier: aString
 	^self error: ('Invalid identifier: ''<s>''' expandMacrosWith: aString)!
@@ -317,10 +405,8 @@ pathString: aString
 	^self pathString: aString context: nil!
 
 pathString: aString context: anObject
-	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument,
-	which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method),
-	and the new instance will be a ContextualBindingReference with that object as its starting point for resolving the binding."
+	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
+	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self subclassResponsibility!
 
@@ -342,20 +428,20 @@ simpleName: aString in: aNamespace
 
 splitQualifiedName: aString
 	^$. split: aString! !
-!AbstractBindingReference class categoriesFor: #errorInvalidIdentifier:!exceptions!private! !
-!AbstractBindingReference class categoriesFor: #initialize!class initialization!public! !
-!AbstractBindingReference class categoriesFor: #isQualifiedName:!enquiries!public! !
-!AbstractBindingReference class categoriesFor: #isValidQualifiedName:!enquiries!public! !
-!AbstractBindingReference class categoriesFor: #isValidUnqualifiedName:!enquiries!public! !
-!AbstractBindingReference class categoriesFor: #new!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #newPath:context:!instance creation!private! !
-!AbstractBindingReference class categoriesFor: #path:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #path:context:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #path:home:!compatibility!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #pathString:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #pathString:context:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #pathString:home:!compatibility!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #simpleName:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #simpleName:in:!instance creation!public! !
-!AbstractBindingReference class categoriesFor: #splitQualifiedName:!helpers!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #errorInvalidIdentifier:!exceptions!private! !
+!Kernel.AbstractBindingReference class categoriesFor: #initialize!class initialization!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #isQualifiedName:!enquiries!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #isValidQualifiedName:!enquiries!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #isValidUnqualifiedName:!enquiries!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #new!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #newPath:context:!instance creation!private! !
+!Kernel.AbstractBindingReference class categoriesFor: #path:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #path:context:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #path:home:!compatibility!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #pathString:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #pathString:context:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #pathString:home:!compatibility!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #simpleName:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #simpleName:in:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #splitQualifiedName:!helpers!public! !
 

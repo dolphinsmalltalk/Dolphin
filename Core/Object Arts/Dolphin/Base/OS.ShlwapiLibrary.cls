@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #ShlwapiLibrary
+External.Library subclass: #'OS.ShlwapiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ShlwapiLibrary guid: (GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
-ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
-!ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
-!ShlwapiLibrary methodsFor!
+OS.ShlwapiLibrary guid: (Core.GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
+OS.ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
+!OS.ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.ShlwapiLibrary methodsFor!
 
 pathCombine: szDest lpszDir: lpszDir lpszFile: lpszFile
 	"Invoke the PathCombine() function of the module wrapped by the receiver.
@@ -135,23 +135,23 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCompactPath:pszPath:dx:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathFindNextComponent:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsRelative:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsRoot:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathCompactPath:pszPath:dx:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathFindNextComponent:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathIsRelative:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathIsRoot:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
 
-!ShlwapiLibrary class methodsFor!
+!OS.ShlwapiLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library"
 
 	^'SHLWAPI'! !
-!ShlwapiLibrary class categoriesFor: #fileName!constants!public! !
+!OS.ShlwapiLibrary class categoriesFor: #fileName!constants!public! !
 

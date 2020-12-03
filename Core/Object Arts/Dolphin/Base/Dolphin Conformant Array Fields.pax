@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Conformant Array Fields'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Conformant Array Fields Package.
 
@@ -8,12 +8,12 @@ Contains support for conformant array fields in structures. Conformant array fie
 
 
 package setClassNames: #(
-	#{ConformantArrayFieldLength}
+	#{External.ConformantArrayFieldLength}
 ).
 
 package setMethodNames: #(
-	#(#{ArrayField class} #type:lengthField:)
-	#(#{ArrayPointerField class} #type:lengthField:)
+	#(#{External.ArrayField class} #type:lengthField:)
+	#(#{External.ArrayPointerField class} #type:lengthField:)
 ).
 
 package setPrerequisites: #(
@@ -24,16 +24,16 @@ package!
 
 "Class Definitions"!
 
-ArrayFieldLength subclass: #ConformantArrayFieldLength
+External.ArrayFieldLength subclass: #'External.ConformantArrayFieldLength'
 	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!ArrayField class methodsFor!
+!External.ArrayField class methodsFor!
 
 type: aClass lengthField: aSymbol
 	"Answer a new instance of the receiver which is used for describing embedded conformant
@@ -41,9 +41,9 @@ type: aClass lengthField: aSymbol
 	structure being described with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ArrayField class categoriesFor: #type:lengthField:!instance creation!public! !
+!External.ArrayField class categoriesFor: #type:lengthField:!instance creation!public! !
 
-!ArrayPointerField class methodsFor!
+!External.ArrayPointerField class methodsFor!
 
 type: aClass lengthField: aSymbol
 	"Answer a new instance of the receiver which is used for dereferencing pointers to
@@ -51,7 +51,7 @@ type: aClass lengthField: aSymbol
 	of the structure with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ArrayPointerField class categoriesFor: #type:lengthField:!instance creation!public! !
+!External.ArrayPointerField class categoriesFor: #type:lengthField:!instance creation!public! !
 
 "End of package definition"!
 

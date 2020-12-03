@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #AnsiString
+Core.String variableByteSubclass: #'Core.AnsiString'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnsiString guid: (GUID fromString: '{5b59aa2a-fc01-4424-95aa-9ffb62e6af03}')!
-AnsiString isNullTerminated: true!
-AnsiString comment: '`AnsiString` is the class of `Strings`s that use a single-byte encoding based on the current ANSI code page (e.g. Windows 1252). "ANSI" is a bit of a misnomer, but is used because it is common parlance in the Windows API documentation for APIs that expect strings encoded with the "ANSI" code page. 
+Core.AnsiString guid: (Core.GUID fromString: '{5b59aa2a-fc01-4424-95aa-9ffb62e6af03}')!
+Core.AnsiString isNullTerminated: true!
+Core.AnsiString comment: '`AnsiString` is the class of `Strings`s that use a single-byte encoding based on the current ANSI code page (e.g. Windows 1252). "ANSI" is a bit of a misnomer, but is used because it is common parlance in the Windows API documentation for APIs that expect strings encoded with the "ANSI" code page. 
 
 Note that Ansi code pages that require multiple bytes to represent each character are not supported properly in Dolphin.
 
 In all but limited circumstances `Utf8String`s should be used in preference as these can contain any Unicode character and are independent of code page. Consequently the default string type in Dolphin as of 7.1 is `Utf8String` rather than `AnsiString`.'!
-!AnsiString categoriesForClass!Collections-Text! !
-!AnsiString methodsFor!
+!Core.AnsiString categoriesForClass!Collections-Text! !
+!Core.AnsiString methodsFor!
 
 _beginsString: aString
 	| size comperand |
 	comperand := aString asAnsiString.
 	size := self size.
 	^size <= comperand size
-		and: [(CRTLibrary default
+		and: [(OS.CRTLibrary default
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -39,7 +39,7 @@ asLowercase
 
 	| copy |
 	copy := self shallowCopy.
-	UserLibrary default charLowerBuffA: copy cchLength: copy size.
+	OS.UserLibrary default charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -51,7 +51,7 @@ asUppercase
 
 	| copy |
 	copy := self shallowCopy.
-	UserLibrary default charUpperBuffA: copy cchLength: copy size.
+	OS.UserLibrary default charUpperBuffA: copy cchLength: copy size.
 	^copy!
 
 codePointsDo: operation
@@ -60,11 +60,11 @@ codePointsDo: operation
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
 copyToBuffer: anAddress ofSize: anInteger
-	CRTLibrary default
+	OS.CRTLibrary default
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
-		count: CRTConstants._TRUNCATE!
+		count: OS.CRTConstants._TRUNCATE!
 
 decodeAt: anInteger
 	"Private - Answer the <Character> with code point beginning at the specified position in the receiver."
@@ -115,7 +115,7 @@ reverse
 
 	| copy |
 	copy := self copy.
-	CRTLibrary default _strrev: copy.
+	OS.CRTLibrary default _strrev: copy.
 	^copy!
 
 skipEncodingMarkerFrom: aGettableStream
@@ -129,7 +129,7 @@ skipEncodingMarkerFrom: aGettableStream
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^CRTLibrary default strlen: self!
+	^OS.CRTLibrary default strlen: self!
 
 trimNulls
 	"Answer a copy of the receiver with trailing nulls removed.
@@ -168,25 +168,25 @@ urlDecoded
 									^self].
 							unescaped basicNextPut: ch]]].
 	^unescaped contents! !
-!AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!AnsiString categoriesFor: #asAnsiString!converting!public! !
-!AnsiString categoriesFor: #asLowercase!converting!public! !
-!AnsiString categoriesFor: #asUppercase!converting!public! !
-!AnsiString categoriesFor: #codePointsDo:!enumerating!public! !
-!AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
-!AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!AnsiString categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
-!AnsiString categoriesFor: #first:!copying!public! !
-!AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!AnsiString categoriesFor: #reverse!copying!public! !
-!AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!AnsiString categoriesFor: #strlen!accessing!private! !
-!AnsiString categoriesFor: #trimNulls!copying!public! !
-!AnsiString categoriesFor: #urlDecoded!operations!public! !
+!Core.AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
+!Core.AnsiString categoriesFor: #asAnsiString!converting!public! !
+!Core.AnsiString categoriesFor: #asLowercase!converting!public! !
+!Core.AnsiString categoriesFor: #asUppercase!converting!public! !
+!Core.AnsiString categoriesFor: #codePointsDo:!enumerating!public! !
+!Core.AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!Core.AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
+!Core.AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.AnsiString categoriesFor: #encodedSizeAt:!encode/decode!private! !
+!Core.AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Core.AnsiString categoriesFor: #first:!copying!public! !
+!Core.AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
+!Core.AnsiString categoriesFor: #reverse!copying!public! !
+!Core.AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
+!Core.AnsiString categoriesFor: #strlen!accessing!private! !
+!Core.AnsiString categoriesFor: #trimNulls!copying!public! !
+!Core.AnsiString categoriesFor: #urlDecoded!operations!public! !
 
-!AnsiString class methodsFor!
+!Core.AnsiString class methodsFor!
 
 characterForCodeUnit: anInteger
 	^Character ansiValue: anInteger!
@@ -246,13 +246,13 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 		at: 4 put: fourthCharacter;
 		at: 5 put: fifthCharacter;
 		yourself! !
-!AnsiString class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!AnsiString class categoriesFor: #coerceString:!instance creation!public! !
-!AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
-!AnsiString class categoriesFor: #initialize!class initialization!development!public! !
-!AnsiString class categoriesFor: #with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #characterForCodeUnit:!enquiries!public! !
+!Core.AnsiString class categoriesFor: #coerceString:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #initialize!class initialization!development!public! !
+!Core.AnsiString class categoriesFor: #with:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #with:with:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #with:with:with:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #with:with:with:with:!instance creation!public! !
+!Core.AnsiString class categoriesFor: #with:with:with:with:with:!instance creation!public! !
 

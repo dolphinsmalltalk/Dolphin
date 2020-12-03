@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ExceptionSet
+Core.Object subclass: #'Kernel.ExceptionSet'
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExceptionSet guid: (GUID fromString: '{87b4c485-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphin exception handling system''s implementation. It is used to collect together multiple <exceptionSelector>s specified in a comma separated list as the first argument to a #on:do: message to a <niladicBlock>.'!
-!ExceptionSet categoriesForClass!Kernel-Exception Handling! !
-!ExceptionSet methodsFor!
+Kernel.ExceptionSet guid: (Core.GUID fromString: '{87b4c485-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphin exception handling system''s implementation. It is used to collect together multiple <exceptionSelector>s specified in a comma separated list as the first argument to a #on:do: message to a <niladicBlock>.'!
+!Kernel.ExceptionSet categoriesForClass!Kernel-Exception Handling! !
+!Kernel.ExceptionSet methodsFor!
 
 , anotherException
 	"Add the <exceptionSelector>, anotherException, to the group of 
@@ -42,16 +42,16 @@ selectors: anObject
 	This method was automatically generated, but may be modified."
 
 	selectors := anObject! !
-!ExceptionSet categoriesFor: #,!adding!public! !
-!ExceptionSet categoriesFor: #handles:!accessing!public! !
-!ExceptionSet categoriesFor: #initialize!initializing!public! !
-!ExceptionSet categoriesFor: #selectors!accessing!public! !
-!ExceptionSet categoriesFor: #selectors:!accessing!public! !
+!Kernel.ExceptionSet categoriesFor: #,!adding!public! !
+!Kernel.ExceptionSet categoriesFor: #handles:!accessing!public! !
+!Kernel.ExceptionSet categoriesFor: #initialize!initializing!public! !
+!Kernel.ExceptionSet categoriesFor: #selectors!accessing!public! !
+!Kernel.ExceptionSet categoriesFor: #selectors:!accessing!public! !
 
-ExceptionSet methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
-ExceptionSet methodProtocol: #exceptionSet attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
+Kernel.ExceptionSet methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
+Kernel.ExceptionSet methodProtocol: #exceptionSet attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 
-!ExceptionSet class methodsFor!
+!Kernel.ExceptionSet class methodsFor!
 
 new
 	"Answer a new instance of the receiver."
@@ -65,6 +65,6 @@ selectors: anArray
 	^self basicNew
 		selectors: anArray;
 		yourself! !
-!ExceptionSet class categoriesFor: #new!instance creation!public! !
-!ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
+!Kernel.ExceptionSet class categoriesFor: #new!instance creation!public! !
+!Kernel.ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Category
+Core.Object subclass: #'Core.Category'
 	instanceVariableNames: 'name'
 	classVariableNames: 'PermanentCategories'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Category guid: (GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
-Category isAbstract: true!
-Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.
+Core.Category guid: (Core.GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Category isNonInstantiable: true!
+Core.Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.
 
 Instance Variables:
 	name	<String> name of the receiver, unique in the system.
@@ -17,8 +17,8 @@ Instance Variables:
 Class Variables:
 	PermanentCategories		<Set> of all categories which are always available, even if empty
 	'!
-!Category categoriesForClass!System-Support! !
-!Category methodsFor!
+!Core.Category categoriesForClass!System-Support! !
+!Core.Category methodsFor!
 
 <= comperand
 	"Answer whether the receiver is less than or equal to the <Category>,
@@ -54,7 +54,7 @@ contents
 	^self subclassResponsibility!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self name!
 
@@ -142,29 +142,29 @@ subNames
 	on category separator."
 
 	^self class separator split: self name! !
-!Category categoriesFor: #<=!comparing!public! !
-!Category categoriesFor: #=!comparing!public! !
-!Category categoriesFor: #acceptsAdditions!public!testing! !
-!Category categoriesFor: #addClass:!adding!public! !
-!Category categoriesFor: #asString!converting!public! !
-!Category categoriesFor: #contents!enumerating!public! !
-!Category categoriesFor: #displayOn:!displaying!public! !
-!Category categoriesFor: #hash!comparing!public! !
-!Category categoriesFor: #isEmpty!public!testing! !
-!Category categoriesFor: #isIntermediate!private!testing! !
-!Category categoriesFor: #isPermanent!accessing!public! !
-!Category categoriesFor: #isPermanent:!accessing!public! !
-!Category categoriesFor: #isPseud!public!testing! !
-!Category categoriesFor: #isVirtual!public!testing! !
-!Category categoriesFor: #localName!accessing!public! !
-!Category categoriesFor: #name!accessing!public! !
-!Category categoriesFor: #permanentCategories!accessing!public! !
-!Category categoriesFor: #printOn:!printing!public! !
-!Category categoriesFor: #removeClass:!public!removing! !
-!Category categoriesFor: #setName:!initializing!private! !
-!Category categoriesFor: #subNames!accessing!public! !
+!Core.Category categoriesFor: #<=!comparing!public! !
+!Core.Category categoriesFor: #=!comparing!public! !
+!Core.Category categoriesFor: #acceptsAdditions!public!testing! !
+!Core.Category categoriesFor: #addClass:!adding!public! !
+!Core.Category categoriesFor: #asString!converting!public! !
+!Core.Category categoriesFor: #contents!enumerating!public! !
+!Core.Category categoriesFor: #displayOn:!displaying!public! !
+!Core.Category categoriesFor: #hash!comparing!public! !
+!Core.Category categoriesFor: #isEmpty!public!testing! !
+!Core.Category categoriesFor: #isIntermediate!private!testing! !
+!Core.Category categoriesFor: #isPermanent!accessing!public! !
+!Core.Category categoriesFor: #isPermanent:!accessing!public! !
+!Core.Category categoriesFor: #isPseud!public!testing! !
+!Core.Category categoriesFor: #isVirtual!public!testing! !
+!Core.Category categoriesFor: #localName!accessing!public! !
+!Core.Category categoriesFor: #name!accessing!public! !
+!Core.Category categoriesFor: #permanentCategories!accessing!public! !
+!Core.Category categoriesFor: #printOn:!printing!public! !
+!Core.Category categoriesFor: #removeClass:!public!removing! !
+!Core.Category categoriesFor: #setName:!initializing!private! !
+!Core.Category categoriesFor: #subNames!accessing!public! !
 
-!Category class methodsFor!
+!Core.Category class methodsFor!
 
 name: categoryName
 	"Answer the subinstance of the receiver with the 
@@ -206,11 +206,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
-!Category class categoriesFor: #name:!instance creation!public! !
-!Category class categoriesFor: #new!instance creation!public! !
-!Category class categoriesFor: #newNamed:!instance creation!private! !
-!Category class categoriesFor: #separator!constants!private! !
-!Category class categoriesFor: #unclassified!instance creation!public! !
-!Category class categoriesFor: #unclassifiedName!constants!private! !
-!Category class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.Category class categoriesFor: #name:!instance creation!public! !
+!Core.Category class categoriesFor: #new!instance creation!public! !
+!Core.Category class categoriesFor: #newNamed:!instance creation!private! !
+!Core.Category class categoriesFor: #separator!constants!private! !
+!Core.Category class categoriesFor: #unclassified!instance creation!public! !
+!Core.Category class categoriesFor: #unclassifiedName!constants!private! !
+!Core.Category class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

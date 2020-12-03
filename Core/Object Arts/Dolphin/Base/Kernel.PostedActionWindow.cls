@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #PostedActionWindow
+Core.Object subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PostedActionWindow guid: (GUID fromString: '{426dfeaf-6677-40d5-b9ce-713b6f048cc8}')!
-PostedActionWindow comment: 'PostedActionWindow is a private class used by <InputState> to represent the special message only window created by the VM. This window is used to synchronise with the message queue.
+Kernel.PostedActionWindow guid: (Core.GUID fromString: '{426dfeaf-6677-40d5-b9ce-713b6f048cc8}')!
+Kernel.PostedActionWindow comment: 'PostedActionWindow is a private class used by <InputState> to represent the special message only window created by the VM. This window is used to synchronise with the message queue.
 
 A queue of niladic valuable actions is maintained. When a new action is posted to this queue, a windows message is posted to the message window. When this is picked up by the message pump, it sends #preTranslateMessage:, and if the message was a posted action (and there are posted actions in the queue) then the next posted action is processed. The effect is that posted actions are processed in synchronisation with the message queue by the main UI thread. The mechanism is unlike the old deferred actions mechanism in that it will work even when a modal message loop implemented outside Dolphin is active (e.g. the menu processing loop), and that it will fire actions interspersed with windows messages in the queue on a FIFO basis, rather than processing all windows messages before processing all deferred actions.'!
-!PostedActionWindow categoriesForClass!System-Support! !
-!PostedActionWindow methodsFor!
+!Kernel.PostedActionWindow categoriesForClass!System-Support! !
+!Kernel.PostedActionWindow methodsFor!
 
 asParameter
 	^handle!
@@ -57,7 +57,7 @@ isView
 
 	^false!
 
-killTimer: anInteger 
+killTimer: anInteger
 	^UserLibrary default killTimer: handle uIDEvent: anInteger!
 
 onStartup
@@ -65,13 +65,13 @@ onStartup
 
 	handle := nil!
 
-postAction: aNiladicValuable 
+postAction: aNiladicValuable
 	"Post the <niladicValuable> argument to the queue, to be evaluated in sync with the Windows
 	message queue (after any Windows messages currently in the queue), and by the main UI
 	thread."
 
 	actions nextPut: aNiladicValuable.
-	UserLibrary default 
+	UserLibrary default
 		postMessage: handle
 		msg: WM_USER
 		wParam: 0
@@ -90,7 +90,7 @@ preTranslateMessage: aMSG
 			^true].
 	msg == WM_TIMER
 		ifTrue: 
-			[ | timerId |
+			[| timerId |
 			timerId := aMSG wParam.
 			self killTimer: timerId.
 			SessionManager current onTimer: timerId.
@@ -103,16 +103,16 @@ setTimer: idInteger interval: intervalInteger
 		nIDEvent: idInteger
 		uElapse: intervalInteger
 		lpTimerFunc: nil! !
-!PostedActionWindow categoriesFor: #asParameter!converting!public! !
-!PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
-!PostedActionWindow categoriesFor: #evaluateNextAction!helpers!private! !
-!PostedActionWindow categoriesFor: #evaluatePendingActions!helpers!private! !
-!PostedActionWindow categoriesFor: #handle:!accessing!private! !
-!PostedActionWindow categoriesFor: #isPersistentView!private!testing! !
-!PostedActionWindow categoriesFor: #isView!accessing!private!testing! !
-!PostedActionWindow categoriesFor: #killTimer:!private!timers! !
-!PostedActionWindow categoriesFor: #onStartup!event handling!private! !
-!PostedActionWindow categoriesFor: #postAction:!operations!private! !
-!PostedActionWindow categoriesFor: #preTranslateMessage:!dispatching!private! !
-!PostedActionWindow categoriesFor: #setTimer:interval:!private!timers! !
+!Kernel.PostedActionWindow categoriesFor: #asParameter!converting!public! !
+!Kernel.PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
+!Kernel.PostedActionWindow categoriesFor: #evaluateNextAction!helpers!private! !
+!Kernel.PostedActionWindow categoriesFor: #evaluatePendingActions!helpers!private! !
+!Kernel.PostedActionWindow categoriesFor: #handle:!accessing!private! !
+!Kernel.PostedActionWindow categoriesFor: #isPersistentView!private!testing! !
+!Kernel.PostedActionWindow categoriesFor: #isView!accessing!private!testing! !
+!Kernel.PostedActionWindow categoriesFor: #killTimer:!private!timers! !
+!Kernel.PostedActionWindow categoriesFor: #onStartup!event handling!private! !
+!Kernel.PostedActionWindow categoriesFor: #postAction:!operations!private! !
+!Kernel.PostedActionWindow categoriesFor: #preTranslateMessage:!dispatching!private! !
+!Kernel.PostedActionWindow categoriesFor: #setTimer:interval:!private!timers! !
 

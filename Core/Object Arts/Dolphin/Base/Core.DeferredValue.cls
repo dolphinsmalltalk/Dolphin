@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DeferredValue
+Core.Object subclass: #'Core.DeferredValue'
 	instanceVariableNames: 'valueAvailable value exception'
 	classVariableNames: 'ValuePending'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DeferredValue guid: (GUID fromString: '{b2986be9-3666-4cd8-8d87-c7e456f6dd95}')!
-DeferredValue comment: 'A DeferredValue is a <niladicValuable> which is evaluated asynchronously in a background process, but which supplies its value synchronously on request, i.e. it blocks any sender of #value until the value is available.
+Core.DeferredValue guid: (Core.GUID fromString: '{b2986be9-3666-4cd8-8d87-c7e456f6dd95}')!
+Core.DeferredValue comment: 'A DeferredValue is a <niladicValuable> which is evaluated asynchronously in a background process, but which supplies its value synchronously on request, i.e. it blocks any sender of #value until the value is available.
 
 Instances of DeferredValue are typically created by sending the #deferredValue (calculate in background process forked at same priority as active process) and #deferredValueAt: (calculate in a background process at the specified priority) messages, but there is a class side instance creation protocol (#evaluate:[|with|#with:with:|withArguments:]at: which can be used to defer the calculation of other valuables.
 
@@ -19,8 +19,8 @@ To suppress exceptions in the asynchronous process wrap the deferred operation i
 		on: Error do: [:e | e]] deferredValue
 
 Alternatively create a subclass which overrides #_evaluate:withArguments: which includes such a generic error trap.'!
-!DeferredValue categoriesForClass!Unclassified! !
-!DeferredValue methodsFor!
+!Core.DeferredValue categoriesForClass!Unclassified! !
+!Core.DeferredValue methodsFor!
 
 _evaluate: operation withArguments: args
 	"Private - Evaluate the <valuable>, operation with the <Array> of arguments, args.
@@ -47,16 +47,20 @@ evaluate: operation withArguments: args at: priority
 	This message must only be sent when the deferred value is first created."
 
 	self initialize.
-	[
-		[self setValue: (self _evaluate: operation withArguments: args)]
-			on: Error do: [ :e | self exception: e. e pass]
-			on: ProcessTermination do: [:e |
-				self exception: 
-					(Error new 
+	
+	[[self setValue: (self _evaluate: operation withArguments: args)]
+		on: Error
+		do: 
+			[:e |
+			self exception: e.
+			e pass]
+		on: ProcessTermination
+		do: 
+			[:e |
+			self exception: (Error new
 						tag: self;
-						messageText: 'DeferredValue terminated prematurely')]
-	] forkAt: priority
-!
+						messageText: 'DeferredValue terminated prematurely')]]
+			forkAt: priority!
 
 exception: anError
 	"Private - Record the <Error>, anError, as the unhandled exception which
@@ -90,13 +94,11 @@ setValue: result
 	store the exception in a separate instance variable to avoid the necessity for
 	an isKindOf test on every access to the value."
 
-	(result isKindOf: Error) 
-		ifTrue: [
-			exception := result. 
+	(result isKindOf: Error)
+		ifTrue: 
+			[exception := result.
 			value := nil]
-		ifFalse: [
-			value := result].
-
+		ifFalse: [value := result].
 	valueAvailable signal!
 
 value
@@ -108,17 +110,17 @@ value
 	valueAvailable wait; signal.
 	exception == nil ifFalse: [exception copy signal].
 	^value! !
-!DeferredValue categoriesFor: #_evaluate:withArguments:!evaluating!private! !
-!DeferredValue categoriesFor: #deferredValue!evaluating!public! !
-!DeferredValue categoriesFor: #deferredValueAt:!evaluating!public! !
-!DeferredValue categoriesFor: #evaluate:withArguments:at:!evaluating!private! !
-!DeferredValue categoriesFor: #exception:!accessing!private! !
-!DeferredValue categoriesFor: #hasValue!public!testing! !
-!DeferredValue categoriesFor: #initialize!initializing!private! !
-!DeferredValue categoriesFor: #setValue:!accessing!private! !
-!DeferredValue categoriesFor: #value!evaluating!public! !
+!Core.DeferredValue categoriesFor: #_evaluate:withArguments:!evaluating!private! !
+!Core.DeferredValue categoriesFor: #deferredValue!evaluating!public! !
+!Core.DeferredValue categoriesFor: #deferredValueAt:!evaluating!public! !
+!Core.DeferredValue categoriesFor: #evaluate:withArguments:at:!evaluating!private! !
+!Core.DeferredValue categoriesFor: #exception:!accessing!private! !
+!Core.DeferredValue categoriesFor: #hasValue!public!testing! !
+!Core.DeferredValue categoriesFor: #initialize!initializing!private! !
+!Core.DeferredValue categoriesFor: #setValue:!accessing!private! !
+!Core.DeferredValue categoriesFor: #value!evaluating!public! !
 
-!DeferredValue class methodsFor!
+!Core.DeferredValue class methodsFor!
 
 evaluate: operation at: priority
 	"Answer a <niladicValuable> that begins evaluating the <niladicValuable>, operation,
@@ -166,10 +168,10 @@ new
 	"Answer a instance of the receiver."
 
 	^self shouldNotImplement! !
-!DeferredValue class categoriesFor: #evaluate:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:with:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:with:with:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:withArguments:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #initialize!development!initializing!private! !
-!DeferredValue class categoriesFor: #new!instance creation!public! !
+!Core.DeferredValue class categoriesFor: #evaluate:at:!instance creation!public! !
+!Core.DeferredValue class categoriesFor: #evaluate:with:at:!instance creation!public! !
+!Core.DeferredValue class categoriesFor: #evaluate:with:with:at:!instance creation!public! !
+!Core.DeferredValue class categoriesFor: #evaluate:withArguments:at:!instance creation!public! !
+!Core.DeferredValue class categoriesFor: #initialize!development!initializing!private! !
+!Core.DeferredValue class categoriesFor: #new!instance creation!public! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Model
+Core.Object subclass: #'Core.Model'
 	instanceVariableNames: 'events'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model guid: (GUID fromString: '{87b4c4a3-026e-11d3-9fd7-00a0cc3e4a32}')!
-Model isAbstract: true!
-Model comment: 'Model is an abstract class whose subclasses implement the <model> protocol and represent domain level data that is likely to be observed by other objects. The Model hierarchy is part of the MVP framework although <model> classes may well be used outside of this framework. 
+Core.Model guid: (Core.GUID fromString: '{87b4c4a3-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Model isNonInstantiable: true!
+Core.Model comment: 'Model is an abstract class whose subclasses implement the <model> protocol and represent domain level data that is likely to be observed by other objects. The Model hierarchy is part of the MVP framework although <model> classes may well be used outside of this framework. 
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
 
@@ -22,8 +22,8 @@ Instance Variables:
 
 
 '!
-!Model categoriesForClass!MVP-Models! !
-!Model methodsFor!
+!Core.Model categoriesForClass!MVP-Models! !
+!Core.Model methodsFor!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -50,14 +50,14 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!Model categoriesFor: #getEvents!events!private! !
-!Model categoriesFor: #postCopy!copying!public! !
-!Model categoriesFor: #setEvents:!events!private! !
-!Model categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Model categoriesFor: #getEvents!events!private! !
+!Core.Model categoriesFor: #postCopy!copying!public! !
+!Core.Model categoriesFor: #setEvents:!events!private! !
+!Core.Model categoriesFor: #stbSaveOn:!binary filing!public! !
 
-Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
+Core.Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
-!Model class methodsFor!
+!Core.Model class methodsFor!
 
 new
 	"Answer a new initialize instance of the receiver."
@@ -88,7 +88,7 @@ stbConvertFrom: anSTBClassFormat
 	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
 	answer]!
 
-stbConvertFromVersion0: anArray 
+stbConvertFromVersion0: anArray
 	"Private - Perform an STB conversion from a version 0 <Model> to version 1.
 	i.e. insert 'events' instance variable (which should always be nil in an STB stream)."
 
@@ -115,11 +115,11 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Model class categoriesFor: #new!instance creation!public! !
-!Model class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Model class categoriesFor: #stbVersion!binary filing!public! !
+!Core.Model class categoriesFor: #new!instance creation!public! !
+!Core.Model class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
+!Core.Model class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!Core.Model class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!Core.Model class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
+!Core.Model class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+!Core.Model class categoriesFor: #stbVersion!binary filing!public! !
 

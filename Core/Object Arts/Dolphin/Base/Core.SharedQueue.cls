@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SharedQueue
+Core.Object subclass: #'Core.SharedQueue'
 	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SharedQueue guid: (GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
-SharedQueue comment: ''!
-!SharedQueue categoriesForClass!Kernel-Objects! !
-!SharedQueue methodsFor!
+Core.SharedQueue guid: (Core.GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SharedQueue comment: ''!
+!Core.SharedQueue categoriesForClass!Kernel-Objects! !
+!Core.SharedQueue methodsFor!
 
 errorOutOfSync
 	"Private - An internal synchronisation error (between the valueAvailable
@@ -24,8 +24,7 @@ initialize: anInteger
 
 	contents := OrderedCollection new.
 	accessProtect := Semaphore forMutualExclusion.
-	valueAvailable := Semaphore new
-!
+	valueAvailable := Semaphore new!
 
 next
 	"Answer the first item in the queue. If the queue is empty, make the current active 
@@ -87,16 +86,16 @@ size
 	"Answer the number of objects currently in the queue"
 
 	^accessProtect critical: [contents size]! !
-!SharedQueue categoriesFor: #errorOutOfSync!exceptions!private! !
-!SharedQueue categoriesFor: #initialize:!initializing!private! !
-!SharedQueue categoriesFor: #next!accessing!public! !
-!SharedQueue categoriesFor: #nextNoWait!accessing!public! !
-!SharedQueue categoriesFor: #nextPut:!accessing!public! !
-!SharedQueue categoriesFor: #peek!accessing!public! !
-!SharedQueue categoriesFor: #removeAll!public!removing! !
-!SharedQueue categoriesFor: #size!accessing!public! !
+!Core.SharedQueue categoriesFor: #errorOutOfSync!exceptions!private! !
+!Core.SharedQueue categoriesFor: #initialize:!initializing!private! !
+!Core.SharedQueue categoriesFor: #next!accessing!public! !
+!Core.SharedQueue categoriesFor: #nextNoWait!accessing!public! !
+!Core.SharedQueue categoriesFor: #nextPut:!accessing!public! !
+!Core.SharedQueue categoriesFor: #peek!accessing!public! !
+!Core.SharedQueue categoriesFor: #removeAll!public!removing! !
+!Core.SharedQueue categoriesFor: #size!accessing!public! !
 
-!SharedQueue class methodsFor!
+!Core.SharedQueue class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -117,7 +116,7 @@ new: anInteger
 	^(self basicNew)
 		initialize: anInteger;
 		yourself! !
-!SharedQueue class categoriesFor: #initialize!development!initializing!private! !
-!SharedQueue class categoriesFor: #new!instance creation!public! !
-!SharedQueue class categoriesFor: #new:!instance creation!public! !
+!Core.SharedQueue class categoriesFor: #initialize!development!initializing!private! !
+!Core.SharedQueue class categoriesFor: #new!instance creation!public! !
+!Core.SharedQueue class categoriesFor: #new:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassDescription subclass: #Metaclass
+Core.ClassDescription subclass: #'Core.Metaclass'
 	instanceVariableNames: 'instanceClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Metaclass guid: (GUID fromString: '{87b4c4fc-026e-11d3-9fd7-00a0cc3e4a32}')!
-Metaclass comment: 'Metaclass is the class of objects which represent the classes of the Classes of the system.
+Core.Metaclass guid: (Core.GUID fromString: '{87b4c4fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Metaclass comment: 'Metaclass is the class of objects which represent the classes of the Classes of the system.
 In other words, every class in the system (e.g. Integer) is the sole instance of an instance of Metaclass
 (e.g. Integer class), they are not instances of Class (which, in fact, has no instances). A class object''s 
 class (a Metaclass) provides the instance specific behavior of that class (i.e. it is where the class 
@@ -24,14 +24,27 @@ Please see the Blue Book for further explanation.
 
 Metaclass has the following instance variables:
 	instanceClass	- the single instance of the Metaclass which is a Class object'!
-!Metaclass categoriesForClass!Kernel-Classes! !
-!Metaclass methodsFor!
+!Core.Metaclass categoriesForClass!Kernel-Classes! !
+!Core.Metaclass methodsFor!
+
+absoluteReference
+	^self instanceClass absoluteReference meta!
+
+asQualifiedReference
+	"Answer a <BindingReference> to this class."
+
+	^self instanceClass fullyQualifiedReference meta!
 
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
 
 	^self instanceClass bindingFor: aString!
+
+classBindingNames
+	"Answer a Set of the class variable names of the receiver."
+
+	^Set new!
 
 classPool
 	"Answer the dictionary of class variables."
@@ -42,11 +55,6 @@ classVariables
 	"Answer the dictionary of class variables."
 
 	^instanceClass classVariables!
-
-classVarNames
-	"Answer a Set of the class variable names of the receiver."
-
-	^Set new!
 
 comment
 	"Answer the class comment for the receiver."
@@ -66,12 +74,14 @@ environment
 	^self instanceClass environment!
 
 fullName
-	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path from (but not including) Smalltalk."
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
+	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^self instanceClass fullName , ' class'!
+	^self instanceClass fullName, ' class'!
 
 fullyQualifiedReference
-	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference.
+	This will be a meta-binding reference, the value of which is this Metaclass."
 
 	^self instanceClass fullyQualifiedReference meta!
 
@@ -84,6 +94,9 @@ imports
 	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
 
 	^self instanceClass imports!
+
+imports: anArray
+	self instanceClass imports: anArray!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
@@ -98,26 +111,36 @@ instanceClass: aClass
 	instanceClass := aClass
 !
 
-instanceVariableNames: aString 
+instanceVariableNames: aString
 	"Set the instance variables of the receiver (the class instance variables
 	of its instance class) to those in aString - a space separated name list."
 
 	| classInstVars |
 	classInstVars := aString trimBlanks.
-	^self instanceVariableString trimBlanks = classInstVars 
+	^self instanceVariableString trimBlanks = classInstVars
 		ifTrue: [self]
-		ifFalse: [
-			ClassBuilder new
+		ifFalse: 
+			[ClassBuilder new
 				class: self;
 				superclass: superclass;
 				instanceSpec: instanceSpec;
 				instanceVariableString: classInstVars;
 				modifyExistingClass]!
 
+isAnonymous
+	"Answer whether this is an anonymous (unbound) class."
+
+	^self instanceClass isAnonymous!
+
 isMeta
 	"Answer whether the receiver is a <Metaclass>."
 
 	^true!
+
+localBindingFor: aString
+	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
+
+	^self instanceClass localBindingFor: aString!
 
 name
 	"Answer a String containing the receiver name. 
@@ -138,15 +161,29 @@ new
 owningPackage
 	^self instanceClass owningPackage!
 
+packageManager
+	^self instanceClass packageManager!
+
 printDefinitionOn: target
 	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
 
+	self printFullNameOn: target.
 	target
-		nextPutAll: self name;
 		space;
 		display: #instanceVariableNames:;
 		space;
 		print: self instanceVariableString!
+
+printFullNameOn: aPuttableStream
+	self instanceClass printFullNameOn: aPuttableStream.
+	aPuttableStream nextPutAll: ' class'!
+
+printOn: aStream
+	"Append the name of the receiver to aStream."
+
+	aStream
+		print: self instanceClass;
+		nextPutAll: ' class'!
 
 removeClassVarName: aString 
 	"Remove the class variable from the receiver with the specified <readableString> name."
@@ -158,9 +195,10 @@ removeFromSuper
 	Root Metaclasses will have a superclass of Class - we do not put such
 	classes into Class's subclass collection."
 
-	^superclass ~~ Class
-		ifTrue: [super removeFromSuper]
-!
+	^superclass ~~ Class ifTrue: [super removeFromSuper]!
+
+shortName
+	^self instanceClass shortName, ' class'!
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -171,27 +209,36 @@ subclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
 
 	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
-!Metaclass categoriesFor: #bindingFor:!binding!public! !
-!Metaclass categoriesFor: #classPool!class variables!public! !
-!Metaclass categoriesFor: #classVariables!class variables!public! !
-!Metaclass categoriesFor: #classVarNames!class variables!public! !
-!Metaclass categoriesFor: #comment!accessing!public! !
-!Metaclass categoriesFor: #comment:!accessing!public! !
-!Metaclass categoriesFor: #environment!accessing!public! !
-!Metaclass categoriesFor: #fullName!accessing!public! !
-!Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
-!Metaclass categoriesFor: #importedNamespacesDo:!pool variables!public! !
-!Metaclass categoriesFor: #imports!pool variables!public! !
-!Metaclass categoriesFor: #instanceClass!accessing!public! !
-!Metaclass categoriesFor: #instanceClass:!accessing!private! !
-!Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
-!Metaclass categoriesFor: #isMeta!public!testing! !
-!Metaclass categoriesFor: #name!accessing!public! !
-!Metaclass categoriesFor: #new!instance creation!public! !
-!Metaclass categoriesFor: #owningPackage!accessing!development!public! !
-!Metaclass categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
-!Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
-!Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
-!Metaclass categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
+!Core.Metaclass categoriesFor: #absoluteReference!public! !
+!Core.Metaclass categoriesFor: #asQualifiedReference!converting!public! !
+!Core.Metaclass categoriesFor: #bindingFor:!binding!public! !
+!Core.Metaclass categoriesFor: #classBindingNames!class variables!public! !
+!Core.Metaclass categoriesFor: #classPool!class variables!public! !
+!Core.Metaclass categoriesFor: #classVariables!class variables!public! !
+!Core.Metaclass categoriesFor: #comment!accessing!public! !
+!Core.Metaclass categoriesFor: #comment:!accessing!public! !
+!Core.Metaclass categoriesFor: #environment!accessing!public! !
+!Core.Metaclass categoriesFor: #fullName!accessing!namespaces!public! !
+!Core.Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
+!Core.Metaclass categoriesFor: #importedNamespacesDo:!pool variables!public! !
+!Core.Metaclass categoriesFor: #imports!pool variables!public! !
+!Core.Metaclass categoriesFor: #imports:!pool variables!public! !
+!Core.Metaclass categoriesFor: #instanceClass!accessing!public! !
+!Core.Metaclass categoriesFor: #instanceClass:!accessing!private! !
+!Core.Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
+!Core.Metaclass categoriesFor: #isAnonymous!public!testing! !
+!Core.Metaclass categoriesFor: #isMeta!public!testing! !
+!Core.Metaclass categoriesFor: #localBindingFor:!binding!public! !
+!Core.Metaclass categoriesFor: #name!accessing!public! !
+!Core.Metaclass categoriesFor: #new!instance creation!public! !
+!Core.Metaclass categoriesFor: #owningPackage!accessing!development!public! !
+!Core.Metaclass categoriesFor: #packageManager!development!public!source filing! !
+!Core.Metaclass categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
+!Core.Metaclass categoriesFor: #printFullNameOn:!helpers!private! !
+!Core.Metaclass categoriesFor: #printOn:!printing!public! !
+!Core.Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
+!Core.Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
+!Core.Metaclass categoriesFor: #shortName!public! !
+!Core.Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Metaclass categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
 

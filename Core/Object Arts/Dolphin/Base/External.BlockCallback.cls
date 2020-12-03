@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalCallback subclass: #BlockCallback
+External.Callback subclass: #'External.BlockCallback'
 	instanceVariableNames: 'block'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockCallback guid: (GUID fromString: '{87b4c577-026e-11d3-9fd7-00a0cc3e4a32}')!
-BlockCallback comment: ''!
-!BlockCallback categoriesForClass!System-Support! !
-!BlockCallback methodsFor!
+External.BlockCallback guid: (Core.GUID fromString: '{87b4c577-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.BlockCallback comment: ''!
+!External.BlockCallback categoriesForClass!System-Support! !
+!External.BlockCallback methodsFor!
 
 block: aBlockClosure
 	"Private - Record the block to be evaluated when the callback represented
@@ -39,7 +39,7 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^block valueWithArgumentsAt: anAddress descriptor: descriptor! !
-!BlockCallback categoriesFor: #block:!accessing!private! !
-!BlockCallback categoriesFor: #printOn:!development!printing!public! !
-!BlockCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.BlockCallback categoriesFor: #block:!accessing!private! !
+!External.BlockCallback categoriesFor: #printOn:!development!printing!public! !
+!External.BlockCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
 

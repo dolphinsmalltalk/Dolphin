@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ByteArray variableByteSubclass: #ExternalIntegerBytes
+Core.ByteArray variableByteSubclass: #'External.IntegerBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalIntegerBytes guid: (GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
-ExternalIntegerBytes isAbstract: true!
-ExternalIntegerBytes comment: ''!
-!ExternalIntegerBytes categoriesForClass!External-Data-Unstructured! !
-!ExternalIntegerBytes methodsFor!
+External.IntegerBytes guid: (Core.GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
+External.IntegerBytes isNonInstantiable: true!
+External.IntegerBytes comment: ''!
+!External.IntegerBytes categoriesForClass!External-Data-Unstructured! !
+!External.IntegerBytes methodsFor!
 
 = anObject
 	"Answer whether the receiver is equivalent to anObject."
@@ -47,7 +47,7 @@ clear
 	self value: 0!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	self asInteger
 		printOn: aPuttableStream
@@ -87,22 +87,22 @@ value
 
 value: anObject 
 	^self subclassResponsibility! !
-!ExternalIntegerBytes categoriesFor: #=!comparing!public! !
-!ExternalIntegerBytes categoriesFor: #asInteger!converting!public! !
-!ExternalIntegerBytes categoriesFor: #asObject!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #asSignedInteger!converting!public! !
-!ExternalIntegerBytes categoriesFor: #asUIntPtr!converting!public! !
-!ExternalIntegerBytes categoriesFor: #byteSize!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #clear!initializing!public! !
-!ExternalIntegerBytes categoriesFor: #displayOn:!displaying!public! !
-!ExternalIntegerBytes categoriesFor: #hash!comparing!public! !
-!ExternalIntegerBytes categoriesFor: #isNull!public!testing! !
-!ExternalIntegerBytes categoriesFor: #printOn:!printing!public! !
-!ExternalIntegerBytes categoriesFor: #species!constants!public! !
-!ExternalIntegerBytes categoriesFor: #value!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #value:!accessing!public! !
+!External.IntegerBytes categoriesFor: #=!comparing!public! !
+!External.IntegerBytes categoriesFor: #asInteger!converting!public! !
+!External.IntegerBytes categoriesFor: #asObject!accessing!public! !
+!External.IntegerBytes categoriesFor: #asSignedInteger!converting!public! !
+!External.IntegerBytes categoriesFor: #asUIntPtr!converting!public! !
+!External.IntegerBytes categoriesFor: #byteSize!accessing!public! !
+!External.IntegerBytes categoriesFor: #clear!initializing!public! !
+!External.IntegerBytes categoriesFor: #displayOn:!displaying!public! !
+!External.IntegerBytes categoriesFor: #hash!comparing!public! !
+!External.IntegerBytes categoriesFor: #isNull!public!testing! !
+!External.IntegerBytes categoriesFor: #printOn:!printing!public! !
+!External.IntegerBytes categoriesFor: #species!constants!public! !
+!External.IntegerBytes categoriesFor: #value!accessing!public! !
+!External.IntegerBytes categoriesFor: #value:!accessing!public! !
 
-!ExternalIntegerBytes class methodsFor!
+!External.IntegerBytes class methodsFor!
 
 atAddress: anAddress 
 	"Answer a new instance of the receiver with contents copied from
@@ -134,12 +134,16 @@ new
 
 	^self newFixed: self elementSize!
 
+pointerFieldType
+	^PointerField!
+
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
-!ExternalIntegerBytes class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #fromInteger:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #initialize!development!initializing!private! !
-!ExternalIntegerBytes class categoriesFor: #new!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #valueAtAddress:!helpers!private! !
+!External.IntegerBytes class categoriesFor: #atAddress:!instance creation!public! !
+!External.IntegerBytes class categoriesFor: #fromAddress:!instance creation!public! !
+!External.IntegerBytes class categoriesFor: #fromInteger:!instance creation!public! !
+!External.IntegerBytes class categoriesFor: #initialize!development!initializing!private! !
+!External.IntegerBytes class categoriesFor: #new!instance creation!public! !
+!External.IntegerBytes class categoriesFor: #pointerFieldType!constants!private! !
+!External.IntegerBytes class categoriesFor: #valueAtAddress:!helpers!private! !
 

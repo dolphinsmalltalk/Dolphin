@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Fault subclass: #GPFault
+OS.Win32Fault subclass: #'OS.GPFault'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GPFault guid: (GUID fromString: '{87b4c567-026e-11d3-9fd7-00a0cc3e4a32}')!
-GPFault comment: ''!
-!GPFault categoriesForClass!System-Exception Handling! !
-!GPFault methodsFor!
+OS.GPFault guid: (Core.GUID fromString: '{87b4c567-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.GPFault comment: ''!
+!OS.GPFault categoriesForClass!System-Exception Handling! !
+!OS.GPFault methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
@@ -31,8 +31,8 @@ isReading
 	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
 
 	^(exceptionRecord information at: 1) == 0! !
-!GPFault categoriesFor: #_descriptionArguments!displaying!public! !
-!GPFault categoriesFor: #_descriptionFormat!displaying!public! !
-!GPFault categoriesFor: #inaccessibleAddress!accessing!public! !
-!GPFault categoriesFor: #isReading!accessing!public! !
+!OS.GPFault categoriesFor: #_descriptionArguments!displaying!public! !
+!OS.GPFault categoriesFor: #_descriptionFormat!displaying!public! !
+!OS.GPFault categoriesFor: #inaccessibleAddress!accessing!public! !
+!OS.GPFault categoriesFor: #isReading!accessing!public! !
 

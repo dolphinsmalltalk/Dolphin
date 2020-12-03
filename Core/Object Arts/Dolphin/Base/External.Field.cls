@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AttributeDescriptor subclass: #ExternalField
+Kernel.AttributeDescriptor subclass: #'External.Field'
 	instanceVariableNames: 'offset structClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalField guid: (GUID fromString: '{87b4c4d8-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalField isAbstract: true!
-ExternalField comment: 'ExternalField is the abstract class of metadata objects that describe the fields of <ExternalStructure>s, including such attributes as the byte offset of the field, the type of the field, and potentially the size of the field.
+External.Field guid: (Core.GUID fromString: '{87b4c4d8-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Field isNonInstantiable: true!
+External.Field comment: 'ExternalField is the abstract class of metadata objects that describe the fields of <ExternalStructure>s, including such attributes as the byte offset of the field, the type of the field, and potentially the size of the field.
 
 Instance Variables:
 	offset		<SmallInteger>. Fixed offset, in bytes, of the field described in any instance of structClass.
 	structClass	<ExternalStructure class> of which the instance is describing a field.
 
 '!
-!ExternalField categoriesForClass!External-Data-Types! !
-!ExternalField methodsFor!
+!External.Field categoriesForClass!External-Data-Types! !
+!External.Field methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -83,25 +83,25 @@ structClass
 
 structClass: anExternalStructureClass
 	structClass := anExternalStructureClass! !
-!ExternalField categoriesFor: #alignment!constants!public! !
-!ExternalField categoriesFor: #beFiller!modes!public! !
-!ExternalField categoriesFor: #byteSize!accessing!private! !
-!ExternalField categoriesFor: #emitStaticExpression:on:!automatic generation!private! !
-!ExternalField categoriesFor: #fieldClassName!automatic generation!constants!private! !
-!ExternalField categoriesFor: #isFiller!private!testing! !
-!ExternalField categoriesFor: #isFixedSize!private!testing! !
-!ExternalField categoriesFor: #offset!accessing!private! !
-!ExternalField categoriesFor: #offset:!accessing!private! !
-!ExternalField categoriesFor: #printOn:!printing!public! !
-!ExternalField categoriesFor: #structClass!accessing!private! !
-!ExternalField categoriesFor: #structClass:!accessing!private! !
+!External.Field categoriesFor: #alignment!constants!public! !
+!External.Field categoriesFor: #beFiller!modes!public! !
+!External.Field categoriesFor: #byteSize!accessing!private! !
+!External.Field categoriesFor: #emitStaticExpression:on:!automatic generation!private! !
+!External.Field categoriesFor: #fieldClassName!automatic generation!constants!private! !
+!External.Field categoriesFor: #isFiller!private!testing! !
+!External.Field categoriesFor: #isFixedSize!private!testing! !
+!External.Field categoriesFor: #offset!accessing!private! !
+!External.Field categoriesFor: #offset:!accessing!private! !
+!External.Field categoriesFor: #printOn:!printing!public! !
+!External.Field categoriesFor: #structClass!accessing!private! !
+!External.Field categoriesFor: #structClass:!accessing!private! !
 
-!ExternalField class methodsFor!
+!External.Field class methodsFor!
 
 filler
 	"Answer an instance of the receiver which describes a field which will not be used
 	(it cannot be read or written)."
 
 	^self new beFiller! !
-!ExternalField class categoriesFor: #filler!instance creation!public! !
+!External.Field class categoriesFor: #filler!instance creation!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #VOID
+External.Structure subclass: #'External.VOID'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VOID guid: (GUID fromString: '{3bd81eba-d20d-4ba1-aa22-fabae10ec3b6}')!
-VOID comment: 'VOID is an <ExternalStructure> class to represent unspecified, null, or opaque types. 
+External.VOID guid: (Core.GUID fromString: '{3bd81eba-d20d-4ba1-aa22-fabae10ec3b6}')!
+External.VOID comment: 'VOID is an <ExternalStructure> class to represent unspecified, null, or opaque types. 
 
 VOID is only useful in pointer form, and mainly intended to provided a unified type scheme for auto-generation of structures from type libraries.'!
-!VOID categoriesForClass!External-Data-Unstructured! !
-!VOID class methodsFor!
+!External.VOID categoriesForClass!External-Data-Unstructured! !
+!External.VOID class methodsFor!
 
 getFieldNames
 	^#()!
@@ -22,6 +22,6 @@ new
 	thus a reference is always required."
 
 	^self newPointer! !
-!VOID class categoriesFor: #getFieldNames!constants!private! !
-!VOID class categoriesFor: #new!instance creation!public! !
+!External.VOID class categoriesFor: #getFieldNames!constants!private! !
+!External.VOID class categoriesFor: #new!instance creation!public! !
 

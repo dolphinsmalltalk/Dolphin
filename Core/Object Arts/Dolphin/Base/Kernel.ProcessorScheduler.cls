@@ -1,32 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ProcessorScheduler
+Core.Object subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProcessorScheduler guid: (GUID fromString: '{87b4c4aa-026e-11d3-9fd7-00a0cc3e4a32}')!
-ProcessorScheduler comment: 'The singleton instance of ProcessorScheduler (the global, Processor) manages the set of live, ready to run, processes, scheduling the interpreter in a round-robin fashion but in strict priority order.
+Kernel.ProcessorScheduler guid: (Core.GUID fromString: '{87b4c4aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ProcessorScheduler comment: 'The singleton instance of `Kernel.ProcessorScheduler` (the global, `Core.Processor`) manages the set of live, ready to run, processes, scheduling the interpreter in a round-robin fashion but in strict priority order. The class and its singleton instance are in split across Core and Kernel namespaces respectively because in general, and along with other members of `Kernel`, it is unlikely than an application will need to refer to the class directly but quite likely that a reference to the instance may be needed.
 
-Processor is the destination for all asynchronous interrupts from the VM, and also manages ''callbacks'' (i.e. invocations of Smalltalk code from external systems, such as the dispatching of windows messages to the window procedure). In particular the Processor ensures that processes return from callbacks in strict LIFO order so that synchronization with the native machine stack is maintained.
+`Processor` is the destination for all asynchronous interrupts from the VM, and also manages ''callbacks'' (i.e. invocations of Smalltalk code from external systems, such as the dispatching of windows messages to the window procedure). In particular the processor ensures that processes return from callbacks in strict LIFO order so that synchronization with the native machine stack is maintained.
 
-Asynchronous interrupts may be delivered to a process at any time including when the process is suspended, e.g. waiting on a Semaphore. The only exceptions are that any interrupts queued to terminated processes are discarded, and that interrupts will not be delivered while asynchronous events are disabled (see #(enable|disable)Interrupts). Interrupts may be sent by the VM to notify of certain conditions, such as the weak loss or finalization queues exceeding their high water marks, but they can also be used to ''inject'' code from one process into another (see Process>>#interruptWith:). A similar mechanism is used when one Process explicitly terminates another (i.e. murder rather than suicide) to inject a terminate signal which is then used to raise an exception caught by a handler at the very base of the Process entry point. This has the effect of running all unwind blocks (set up by #ifCurtailed: and #ensure:) so that a Process can shut down cleanly.
+Asynchronous interrupts may be delivered to a process at any time including when the process is suspended, e.g. waiting on a `Semaphore`. The only exceptions are that any interrupts queued to terminated processes are discarded, and that interrupts will not be delivered while asynchronous events are disabled (see #(enable|disable)Interrupts). Interrupts may be sent by the VM to notify of certain conditions, such as the weak loss or finalization queues exceeding their high water marks, but they can also be used to ''inject'' code from one process into another (see Process>>#interruptWith:). A similar mechanism is used when one Process explicitly terminates another (i.e. murder rather than suicide) to inject a terminate signal which is then used to raise an exception caught by a handler at the very base of the Process entry point. This has the effect of running all unwind blocks (set up by `ifCurtailed:` and `ensure:`) so that a Process can shut down cleanly.
 
 Note that much of the behaviour of the ''processor'' is actually implemented in the process subsystem of the VM. This is partly for performance reasons, and partly because primitives are atomic.
 
 Instance Variables:
-	processLists 	<Array> of <LinkedList>s of processes which are ready to run and awaiting scheduling.
-	activeProcess 	The <Process> which is currently executing
-	pendingReturns	<Semaphore> on which out-of-order callback exit attempts wait their turn to exit.
-	comStubs		<PermanentRegistry> of currently registered COM server stub object. Used to map virtual callbacks to their destination object.
-	_reserved		nil. Reserved for future use.
-	pendingTerminations	<Semaphore> on which processes being terminated wait until any outstanding overlapped calls have been terminated.
+	`processLists` 		`Array` of `LinkedList`s of processes which are ready to run and awaiting scheduling.
+	`activeProcess` 	The `Process` which is currently executing
+	`pendingReturns`	`Semaphore` on which out-of-order callback exit attempts wait their turn to exit.
+	`comStubs`		`PermanentRegistry` of currently registered COM server stub object. Used to map virtual callbacks to their destination object.
+	`_reserved`		nil. Reserved for future use.
+	`pendingTerminations`	`Semaphore` on which processes being terminated wait until any outstanding overlapped calls have been terminated.
 		
 Class Variables:
-	InterruptSelectors	<Array> of <Symbol> selectors for each of the interrupt numbers sent by the VM.'!
-!ProcessorScheduler categoriesForClass!Kernel-Processes! !
-!ProcessorScheduler methodsFor!
+	InterruptSelectors	`Array` of `Symbol` selectors for each of the interrupt numbers sent by the VM.'!
+!Kernel.ProcessorScheduler categoriesForClass!Kernel-Processes! !
+!Kernel.ProcessorScheduler methodsFor!
 
 activePriority
 	"Answer the priority of the current active process."
@@ -38,7 +38,7 @@ activeProcess
 
 	^activeProcess!
 
-bereavedOverflow: interruptArg 
+bereavedOverflow: interruptArg
 	"Private - The VM has detected that the bereavement queue has reached its high water mark.
 	Inform the memory manager."
 
@@ -138,13 +138,13 @@ callback: cookie return: result
 			pendingReturns wait].
 	^result	"Will not get this far unless in restarted image"!
 
-callback: anInteger withArgumentsAt: anAddress cookie: cookie 
+callback: anInteger withArgumentsAt: anAddress cookie: cookie
 	"Private - Entry point from the VM. Suspend whatever the receiver is doing and evaluate
 	the callback message or block with magic cookie, anInteger, whose arguments are stored in 
 	the VM's stack at the address, anAddress."
 
 	^self callback: cookie
-		return: ([(ExternalCallback callback: anInteger withArgumentsAt: anAddress) asUIntPtr] 
+		return: ([(External.Callback callback: anInteger withArgumentsAt: anAddress) asUIntPtr]
 				ifCurtailed: [self unwindCallback: cookie])!
 
 cannotReturn: anObject
@@ -160,7 +160,7 @@ cannotReturn: anObject
 
 	^CannotReturnError signalWith: anObject!
 
-constWrite: exceptionRecordBytes 
+constWrite: exceptionRecordBytes
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
 	EXCEPTION_RECORD."
 
@@ -172,7 +172,7 @@ constWrite: exceptionRecordBytes
 constWriteSignal
 	^ConstWriteSignal!
 
-crtFault: aByteArray 
+crtFault: aByteArray
 	"Private - The VM generated a CRT Fault interrupt. The argument is the relevant exception
 	record, the first argument of which is the fault code. An example of where this is fired is
 	when an invalid parameter is passed to any CRT function, e.g. attempting to close an invalid
@@ -223,14 +223,14 @@ forkMainIfMain
 	wasMain ifTrue: [self forkMain].
 	^wasMain!
 
-fpException: ieeeExceptionBytes 
+fpException: ieeeExceptionBytes
 	"Private - The active process has caused an IEEE floating point exception, whose details
 	are the argument. Raise a matching Smalltalk exception."
 
 	| ieeeRecord |
 	self enableInterrupts.
 	ieeeRecord := _FPIEEE_RECORD fromBytes: ieeeExceptionBytes.
-	ieeeRecord isZeroDivide 
+	ieeeRecord isZeroDivide
 		ifTrue: [ZeroDivide dividend: ieeeRecord operand1 value]
 		ifFalse: [FloatingPointException signalWith: ieeeRecord]!
 
@@ -254,7 +254,7 @@ genericInterrupt
 
 	^7!
 
-gpFault: exceptionRecordBytes 
+gpFault: exceptionRecordBytes
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
 	EXCEPTION_RECORD.
 	Notes: 
@@ -285,7 +285,7 @@ highIOPriority
 
 	^9!
 
-hospiceOverflow: interruptArg 
+hospiceOverflow: interruptArg
 	"Private - The VM has detected that the finalization queue has reached its high water mark.
 	Inform the memory manager."
 
@@ -293,7 +293,7 @@ hospiceOverflow: interruptArg
 
 	MemoryManager current hospiceOverflow: interruptArg!
 
-idlePanic: interruptArg 
+idlePanic: interruptArg
 	"Private - The processor has determined that there are no processes ready to run - i.e. it
 	is in a state of 'idle panic'. The argument is the interrupt enable/disable status. We take
 	the remedial action of starting another idle process."
@@ -362,7 +362,7 @@ mainProcess
 
 	^self systemProcessOwner main!
 
-noMemory: interruptArg 
+noMemory: interruptArg
 	"Private - The VM was unable to allocate or commit some virtual memory. In some cases this
 	is not fatal, and Dolphin can continue. In other cases the VM will have no choice but to
 	call FatalAppExit()."
@@ -378,7 +378,7 @@ onBreak: interruptArg
 	debugger := activeProcess debugger.
 	debugger isNil ifTrue: [self enableInterrupts] ifFalse: [debugger onBreak: interruptArg]!
 
-onStartup: args 
+onStartup: args
 	"Private - Interrupt sent by the VM after the image has been loaded. Interrupts are disabled.
 	N.B. DO NOT REMOVE THIS METHOD OR YOUR SYSTEM WILL NOT START."
 
@@ -447,7 +447,7 @@ returnValue: anObject toFrame: frameAddress
 	<primitive: 78>
 	^self!
 
-setHighestPriority: priority activeProcess: aProcess 
+setHighestPriority: priority activeProcess: aProcess
 	"Private - Construct the process lists, and set the active process to aProcess.
 	Used only during bootstrap to generate the singleton instance of the
 	ProcessorScheduler class - Processor"
@@ -464,7 +464,7 @@ sleep: anIntegerOrDuration
 				ifFalse: [anIntegerOrDuration]))
 		wait!
 
-stackOverflow: interruptArg 
+stackOverflow: interruptArg
 	"Private - The active process overflowed its maximum stack. This is most commonly caused by 
 	failing to terminate a recursion. The default maximum stack should be sufficient for a 
 	depth of several thousand message sends, but can be increased if necessary."
@@ -553,7 +553,7 @@ userBackgroundPriority
 
 	^3!
 
-userBreak: interruptArg 
+userBreak: interruptArg
 	"Private - The user pressed the interrupt key combination (e.g. CTRL+BREAK) to interrupt the
 	active process. Forward to the SessionManager as the response will depend on the application
 	requirements."
@@ -600,7 +600,7 @@ vmi: frameOffset list: suspendingList no: interruptNumber with: arg
 		ifCurtailed: [self primUnwindInterrupt].
 	self iret: frameOffset list: suspendingList!
 
-win32Fault: exceptionRecordBytes 
+win32Fault: exceptionRecordBytes
 	"Private - The VM generated an unhandled Win32 Exception interrupt. The argument is the relevant 
 	EXCEPTION_RECORD."
 
@@ -623,85 +623,85 @@ yield
 
 	"Sleeping, for whatever duration, yields the processor."!
 
-zeroDivide: interruptArg 
+zeroDivide: interruptArg
 	"Private - The VM generated a Integer Divide by Zero interrupt. This will happen if any attempt is
 	made to divide by zero, either in the execution of Dolphin code, in a Dolphin primitive, OR in
 	an external library function."
 
 	self enableInterrupts.
 	ZeroDivide dividend: interruptArg! !
-!ProcessorScheduler categoriesFor: #activePriority!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #activeProcess!debugger-step over!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #callback:evaluate:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:withArguments:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:return:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #callback:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #cannotReturn:!exceptions!not restartable!private! !
-!ProcessorScheduler categoriesFor: #constWrite:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #constWriteSignal!accessing!private! !
-!ProcessorScheduler categoriesFor: #crtFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #enableAsyncEvents:!interrupts-status!private! !
-!ProcessorScheduler categoriesFor: #enableInterrupts!interrupts-status!private! !
-!ProcessorScheduler categoriesFor: #forkMain!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #forkMainIfMain!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #fpException:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #fpStackFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #genericInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #gpFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #highestPriority!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #highIOPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #idlePanic:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #idleProcess!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #interruptWith:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #iret:list:!interrupts!private! !
-!ProcessorScheduler categoriesFor: #isActiveMain!public!testing! !
-!ProcessorScheduler categoriesFor: #isAtomic!public!testing! !
-!ProcessorScheduler categoriesFor: #kill:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #killInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #lowIOPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #mainProcess!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #noMemory:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #onBreak:!development!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #onStartup:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #otOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #pendingTerminations!accessing!private! !
-!ProcessorScheduler categoriesFor: #primReturn:callback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #primUnwindCallback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #primUnwindInterrupt!interrupts!private! !
-!ProcessorScheduler categoriesFor: #processesAt:!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #returnValue:toFrame:!callbacks!must not strip!private! !
-!ProcessorScheduler categoriesFor: #setHighestPriority:activeProcess:!development!initializing!private! !
-!ProcessorScheduler categoriesFor: #sleep:!processes-synchronising!public! !
-!ProcessorScheduler categoriesFor: #stackOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #suspendActive!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #systemBackgroundPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #systemBasePriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #systemProcessOwner!accessing!private! !
-!ProcessorScheduler categoriesFor: #terminate:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #terminateActive!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #terminateInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #timingPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #unregisterCOMStubs!callbacks!initializing!private! !
-!ProcessorScheduler categoriesFor: #unusedInterrupt:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #unwindCallback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #unwindCallbacks!callbacks!private! !
-!ProcessorScheduler categoriesFor: #userBackgroundPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #userBreak:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #userBreakInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #userInterruptPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #userSchedulingPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #vmi:list:no:with:!interrupts!interrupts-handling!must not strip!not restartable!private! !
-!ProcessorScheduler categoriesFor: #win32Fault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #yield!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #zeroDivide:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #activePriority!processes-accessing!public! !
+!Kernel.ProcessorScheduler categoriesFor: #activeProcess!debugger-step over!processes-accessing!public! !
+!Kernel.ProcessorScheduler categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:evaluate:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:perform:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:perform:with:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:perform:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:perform:with:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:perform:withArguments:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:return:!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesFor: #callback:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #cannotReturn:!exceptions!not restartable!private! !
+!Kernel.ProcessorScheduler categoriesFor: #constWrite:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #constWriteSignal!accessing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #crtFault:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #enableAsyncEvents:!interrupts-status!private! !
+!Kernel.ProcessorScheduler categoriesFor: #enableInterrupts!interrupts-status!private! !
+!Kernel.ProcessorScheduler categoriesFor: #forkMain!private!processes-accessing! !
+!Kernel.ProcessorScheduler categoriesFor: #forkMainIfMain!private!processes-accessing! !
+!Kernel.ProcessorScheduler categoriesFor: #fpException:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #fpStackFault:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #genericInterrupt!interrupts-names!private! !
+!Kernel.ProcessorScheduler categoriesFor: #gpFault:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #highestPriority!processes-accessing!public! !
+!Kernel.ProcessorScheduler categoriesFor: #highIOPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #idlePanic:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #idleProcess!private!processes-accessing! !
+!Kernel.ProcessorScheduler categoriesFor: #interruptWith:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #iret:list:!interrupts!private! !
+!Kernel.ProcessorScheduler categoriesFor: #isActiveMain!public!testing! !
+!Kernel.ProcessorScheduler categoriesFor: #isAtomic!public!testing! !
+!Kernel.ProcessorScheduler categoriesFor: #kill:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #killInterrupt!interrupts-names!private! !
+!Kernel.ProcessorScheduler categoriesFor: #lowIOPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #mainProcess!private!processes-accessing! !
+!Kernel.ProcessorScheduler categoriesFor: #noMemory:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #onBreak:!development!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #onStartup:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #otOverflow:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #pendingTerminations!accessing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #primReturn:callback:!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesFor: #primUnwindCallback:!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesFor: #primUnwindInterrupt!interrupts!private! !
+!Kernel.ProcessorScheduler categoriesFor: #processesAt:!processes-accessing!public! !
+!Kernel.ProcessorScheduler categoriesFor: #returnValue:toFrame:!callbacks!must not strip!private! !
+!Kernel.ProcessorScheduler categoriesFor: #setHighestPriority:activeProcess:!development!initializing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #sleep:!processes-synchronising!public! !
+!Kernel.ProcessorScheduler categoriesFor: #stackOverflow:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #suspendActive!processes-changing state!public! !
+!Kernel.ProcessorScheduler categoriesFor: #systemBackgroundPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #systemBasePriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #systemProcessOwner!accessing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #terminate:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #terminateActive!processes-changing state!public! !
+!Kernel.ProcessorScheduler categoriesFor: #terminateInterrupt!interrupts-names!private! !
+!Kernel.ProcessorScheduler categoriesFor: #timingPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #unregisterCOMStubs!callbacks!initializing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #unusedInterrupt:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #unwindCallback:!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesFor: #unwindCallbacks!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesFor: #userBackgroundPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #userBreak:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #userBreakInterrupt!interrupts-names!private! !
+!Kernel.ProcessorScheduler categoriesFor: #userInterruptPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #userSchedulingPriority!priority names!public! !
+!Kernel.ProcessorScheduler categoriesFor: #vmi:list:no:with:!interrupts!interrupts-handling!must not strip!not restartable!private! !
+!Kernel.ProcessorScheduler categoriesFor: #win32Fault:!interrupts-handling!private! !
+!Kernel.ProcessorScheduler categoriesFor: #yield!processes-changing state!public! !
+!Kernel.ProcessorScheduler categoriesFor: #zeroDivide:!interrupts-handling!private! !
 
-!ProcessorScheduler class methodsFor!
+!Kernel.ProcessorScheduler class methodsFor!
 
 initialize
 	"Initialize the receiver's class variables:
@@ -732,9 +732,9 @@ newPriorities: highestPriority activeProcess: aProcess
 	"Private - Create Processor during boot."
 
 	^self basicNew setHighestPriority: highestPriority activeProcess: aProcess! !
-!ProcessorScheduler class categoriesFor: #initialize!development!initializing!public! !
-!ProcessorScheduler class categoriesFor: #initializeInterruptSelectors!initializing!must not strip!private! !
-!ProcessorScheduler class categoriesFor: #interruptSelectors!accessing!private! !
-!ProcessorScheduler class categoriesFor: #new!instance creation!public! !
-!ProcessorScheduler class categoriesFor: #newPriorities:activeProcess:!development!instance creation!private! !
+!Kernel.ProcessorScheduler class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.ProcessorScheduler class categoriesFor: #initializeInterruptSelectors!initializing!must not strip!private! !
+!Kernel.ProcessorScheduler class categoriesFor: #interruptSelectors!accessing!private! !
+!Kernel.ProcessorScheduler class categoriesFor: #new!instance creation!public! !
+!Kernel.ProcessorScheduler class categoriesFor: #newPriorities:activeProcess:!development!instance creation!private! !
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Notification subclass: #RaisedNotificationSignal
+Core.Notification subclass: #'Kernel.RaisedNotificationSignal'
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RaisedNotificationSignal guid: (GUID fromString: '{586eb660-437d-11d3-97aa-0080c8d59432}')!
-RaisedNotificationSignal comment: 'RaisedNotificationSignal is the class of Error whose instances are used to represent NotificationSignal instances when raised. That is it enables instance based notifications (NotificationSignals) to be raised within Dolphin''s class based exception framework.
+Kernel.RaisedNotificationSignal guid: (Core.GUID fromString: '{586eb660-437d-11d3-97aa-0080c8d59432}')!
+Kernel.RaisedNotificationSignal comment: 'RaisedNotificationSignal is the class of Error whose instances are used to represent NotificationSignal instances when raised. That is it enables instance based notifications (NotificationSignals) to be raised within Dolphin''s class based exception framework.
 
 Instances Variables:
 	signalType		<Signal>. The signal instance which originated this exception.'!
-!RaisedNotificationSignal categoriesForClass!Kernel-Exception Handling! !
-!RaisedNotificationSignal methodsFor!
+!Kernel.RaisedNotificationSignal categoriesForClass!Kernel-Exception Handling! !
+!Kernel.RaisedNotificationSignal methodsFor!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver -
@@ -42,9 +42,9 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
-!RaisedNotificationSignal categoriesFor: #_descriptionFormat!displaying!public! !
-!RaisedNotificationSignal categoriesFor: #defaultAction!handling!public! !
-!RaisedNotificationSignal categoriesFor: #isResumable!public!testing! !
-!RaisedNotificationSignal categoriesFor: #signalType!accessing!private! !
-!RaisedNotificationSignal categoriesFor: #signalType:!accessing!private! !
+!Kernel.RaisedNotificationSignal categoriesFor: #_descriptionFormat!displaying!public! !
+!Kernel.RaisedNotificationSignal categoriesFor: #defaultAction!handling!public! !
+!Kernel.RaisedNotificationSignal categoriesFor: #isResumable!public!testing! !
+!Kernel.RaisedNotificationSignal categoriesFor: #signalType!accessing!private! !
+!Kernel.RaisedNotificationSignal categoriesFor: #signalType:!accessing!private! !
 

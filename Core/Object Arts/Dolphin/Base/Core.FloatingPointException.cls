@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArithmeticError subclass: #FloatingPointException
+Core.ArithmeticError subclass: #'Core.FloatingPointException'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FloatingPointException guid: (GUID fromString: '{87b4c562-026e-11d3-9fd7-00a0cc3e4a32}')!
-FloatingPointException comment: '`FloatingPointException` is the class of `ArithmeticError` raised when a floating point operation in a primitive or external library call encounters an unmasked error condition. Each such exception carries information as to the operands involved, the operation that faulted, and the error cause(s). The possible error causes are:
+Core.FloatingPointException guid: (Core.GUID fromString: '{87b4c562-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.FloatingPointException comment: '`FloatingPointException` is the class of `ArithmeticError` raised when a floating point operation in a primitive or external library call encounters an unmasked error condition. Each such exception carries information as to the operands involved, the operation that faulted, and the error cause(s). The possible error causes are:
 	`#Inexact`			- the operation resulted in a loss of precision (quite likely with FP arithmetic)
 	`#Underflow` 			- the operation underflowed the normal representable range (i.e. the absolute value was less than `Float fminNormalized`)
 	`#Overflow` 			- the operation overflowed the representable range (i.e. the absolute value was greater than `Float fmax`)
@@ -40,8 +40,8 @@ We still provide notification through alteration of control flow (i.e. the raisi
 	[-1.0 sqrt] on: FloatingPointException do: [:ex | ex resume]	"=> Float.NaN"
 ```
 '!
-!FloatingPointException categoriesForClass!Kernel-Exception Handling! !
-!FloatingPointException methodsFor!
+!Core.FloatingPointException categoriesForClass!Kernel-Exception Handling! !
+!Core.FloatingPointException methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be subsituted into the receiver's description 
@@ -72,9 +72,9 @@ isUnderflow
 
 	^self tag isUnderflow
 ! !
-!FloatingPointException categoriesFor: #_descriptionArguments!displaying!public! !
-!FloatingPointException categoriesFor: #_descriptionFormat!displaying!public! !
-!FloatingPointException categoriesFor: #_ieeeRecord!accessing!private! !
-!FloatingPointException categoriesFor: #isOverflow!public!testing! !
-!FloatingPointException categoriesFor: #isUnderflow!public!testing! !
+!Core.FloatingPointException categoriesFor: #_descriptionArguments!displaying!public! !
+!Core.FloatingPointException categoriesFor: #_descriptionFormat!displaying!public! !
+!Core.FloatingPointException categoriesFor: #_ieeeRecord!accessing!private! !
+!Core.FloatingPointException categoriesFor: #isOverflow!public!testing! !
+!Core.FloatingPointException categoriesFor: #isUnderflow!public!testing! !
 

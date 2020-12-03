@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Exception subclass: #StackOverflow
+Core.Exception subclass: #'Kernel.StackOverflow'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StackOverflow guid: (GUID fromString: '{8d4d9414-edd2-4a90-a4fb-2886ec495d39}')!
-StackOverflow comment: 'Exception signalled when the VM detects an unrecoverable stack overflow in a process. Note that this is not a subclass of <Error> in order that it is not trapped by generic error handlers.'!
-!StackOverflow categoriesForClass!Kernel-Exception Handling! !
-!StackOverflow methodsFor!
+Kernel.StackOverflow guid: (Core.GUID fromString: '{8d4d9414-edd2-4a90-a4fb-2886ec495d39}')!
+Kernel.StackOverflow comment: 'Exception signalled when the VM detects an unrecoverable stack overflow in a process. Note that this is not a subclass of <Error> in order that it is not trapped by generic error handlers.'!
+!Kernel.StackOverflow categoriesForClass!Kernel-Exception Handling! !
+!Kernel.StackOverflow methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
@@ -26,7 +26,7 @@ hresult
 	"Answer the <HRESULT> error/status code associated with the receiver."
 
 	^HRESULT win32Error: ERROR_STACK_OVERFLOW! !
-!StackOverflow categoriesFor: #_descriptionArguments!displaying!public! !
-!StackOverflow categoriesFor: #defaultAction!handling!public! !
-!StackOverflow categoriesFor: #hresult!accessing!public! !
+!Kernel.StackOverflow categoriesFor: #_descriptionArguments!displaying!public! !
+!Kernel.StackOverflow categoriesFor: #defaultAction!handling!public! !
+!Kernel.StackOverflow categoriesFor: #hresult!accessing!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayFieldLength subclass: #SizeIsArrayFieldLength
+External.ArrayFieldLength subclass: #'External.SizeIsArrayFieldLength'
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SizeIsArrayFieldLength guid: (GUID fromString: '{3f017262-aded-499e-9c07-da6937249262}')!
-SizeIsArrayFieldLength comment: ''!
-!SizeIsArrayFieldLength categoriesForClass!Kernel-Objects! !
-!SizeIsArrayFieldLength methodsFor!
+External.SizeIsArrayFieldLength guid: (Core.GUID fromString: '{3f017262-aded-499e-9c07-da6937249262}')!
+External.SizeIsArrayFieldLength comment: ''!
+!External.SizeIsArrayFieldLength categoriesForClass!Kernel-Objects! !
+!External.SizeIsArrayFieldLength methodsFor!
 
 buildLengthReader: anExternalField
 	| expr blockArg structClass |
@@ -39,7 +39,7 @@ buildLengthWriter: anExternalField
 	^expr isEmpty
 		ifTrue: [[:struct :value | value]]
 		ifFalse: 
-			[expr := (String writeStream)
+			[expr := String writeStream
 						nextPutAll: '[:';
 						nextPutAll: varName;
 						nextPutAll: ' :';
@@ -113,19 +113,19 @@ sizeIs: aString
 	sizeIs := aString!
 
 sizeIsExpression
-	^SmalltalkParser parseExpression: sizeIs! !
-!SizeIsArrayFieldLength categoriesFor: #buildLengthReader:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #buildLengthWriter:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #invertSizeIsExpression:paramName:!private! !
-!SizeIsArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!SizeIsArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!SizeIsArrayFieldLength categoriesFor: #printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
-!SizeIsArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #sizeIs:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #sizeIsExpression!automatic generation!private! !
+	^Parser parseExpression: sizeIs! !
+!External.SizeIsArrayFieldLength categoriesFor: #buildLengthReader:!accessing!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #buildLengthWriter:!accessing!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #invertSizeIsExpression:paramName:!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #sizeIs:!accessing!private! !
+!External.SizeIsArrayFieldLength categoriesFor: #sizeIsExpression!automatic generation!private! !
 
-!SizeIsArrayFieldLength class methodsFor!
+!External.SizeIsArrayFieldLength class methodsFor!
 
 sizeIs: aString
 	"Answer a new instance of the receiver to describe a conformant (sized) array length
@@ -134,5 +134,5 @@ sizeIs: aString
 	a field."
 
 	^self new sizeIs: aString! !
-!SizeIsArrayFieldLength class categoriesFor: #sizeIs:!instance creation!public! !
+!External.SizeIsArrayFieldLength class categoriesFor: #sizeIs:!instance creation!public! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SessionManager subclass: #ConsoleSessionManager
+Core.SessionManager subclass: #'Kernel.ConsoleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ConsoleSessionManager guid: (GUID fromString: '{b41feb01-21e0-4ad4-998e-ac8529155bee}')!
-ConsoleSessionManager isAbstract: true!
-ConsoleSessionManager comment: 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.
+Kernel.ConsoleSessionManager guid: (Core.GUID fromString: '{b41feb01-21e0-4ad4-998e-ac8529155bee}')!
+Kernel.ConsoleSessionManager isNonInstantiable: true!
+Kernel.ConsoleSessionManager comment: 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.
 
 The main entry point hook is the #main method. The program logic can be implemented entirely in #main in the case of simple applications, but it is recommended that a separate application class be constructed, with additional support classes as required. A console application normally exits when the #main method returns.
 
@@ -18,8 +18,8 @@ A simple example of a console application is the command line version of the Hel
 
 	CommandLineHelloWorld run    "Watch out for the appearance of the console, and press ENTER to continue"
 '!
-!ConsoleSessionManager categoriesForClass!System-Support! !
-!ConsoleSessionManager methodsFor!
+!Kernel.ConsoleSessionManager categoriesForClass!System-Support! !
+!Kernel.ConsoleSessionManager methodsFor!
 
 allocConsole
 	"Private - Open a console for this session."
@@ -74,7 +74,7 @@ onCloseConsole
 	self quit: -1!
 
 openStdErr
-	^StdioUtf8FileStream fromHandle: VMLibrary default stderr!
+	^External.StdioUtf8FileStream fromHandle: VMLibrary default stderr!
 
 openStdIn
 	^self attachFd: 0 stream: VMLibrary default stdin!
@@ -119,22 +119,22 @@ unhandledException: anException
 	anException isUserResumable ifFalse: [
 		self quit: -1].
 	^anException! !
-!ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
-!ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
-!ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
-!ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
-!ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
-!ConsoleSessionManager categoriesFor: #openStdErr!helpers!private! !
-!ConsoleSessionManager categoriesFor: #openStdIn!helpers!private! !
-!ConsoleSessionManager categoriesFor: #openStdOut!helpers!private! !
-!ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
-!ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
-!ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!Kernel.ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
+!Kernel.ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
+!Kernel.ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #openStdErr!helpers!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #openStdIn!helpers!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #openStdOut!helpers!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
+!Kernel.ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
+!Kernel.ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
+!Kernel.ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
 
-!ConsoleSessionManager class methodsFor!
+!Kernel.ConsoleSessionManager class methodsFor!
 
 isRuntime
 	"Answer whether the sessions managed by instances of the receiver are for a run-time applications 
@@ -161,7 +161,7 @@ run
 	consoleAlreadyOpen := self current openConsole.
 	self new main.
 	consoleAlreadyOpen ifFalse: [self current closeConsole]! !
-!ConsoleSessionManager class categoriesFor: #isRuntime!public!testing! !
-!ConsoleSessionManager class categoriesFor: #new!development!instance creation!public! !
-!ConsoleSessionManager class categoriesFor: #run!development!public! !
+!Kernel.ConsoleSessionManager class categoriesFor: #isRuntime!public!testing! !
+!Kernel.ConsoleSessionManager class categoriesFor: #new!development!instance creation!public! !
+!Kernel.ConsoleSessionManager class categoriesFor: #run!development!public! !
 

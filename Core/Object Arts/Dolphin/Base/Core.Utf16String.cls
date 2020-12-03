@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UtfEncodedString variableByteSubclass: #Utf16String
+Core.UtfEncodedString variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Bom' -> #[255 254].
 		'LeadOffset' -> 16rD7C0.
 		'SurrogateOffset' -> 16r35FDC00
 	}!
-Utf16String guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Utf16String isNullTerminated: true!
-Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
+Core.Utf16String guid: (Core.GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Utf16String isNullTerminated: true!
+Core.Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
 
 When considering a `Utf16String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-16 code units, *not* Unicode code points. Most common code points for mainstream languages are represented by a single UTF-16 code unit, but it is unwise to ignore the code-point/code-unit distinction. Code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point for those characters outside the Unicode basic plane. UTF-16 surrogate characters can be inserted into other `Utf16String`s (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf8String`s. To enumerate a `Utf16String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
 
@@ -25,15 +25,15 @@ It should also be noted that the `size` of a `Utf16String` is a count of the num
 ''🐬'' asUtf16String size	"=> 2"
 ```
 To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
-!Utf16String categoriesForClass!Collections-Text! !
-!Utf16String methodsFor!
+!Core.Utf16String categoriesForClass!Collections-Text! !
+!Core.Utf16String methodsFor!
 
 _beginsString: aString
 	| size comperand |
 	comperand := aString asUtf16String.
 	size := self size.
 	^size <= comperand size
-		and: [(CRTLibrary default
+		and: [(OS.CRTLibrary default
 				memcmp: comperand
 				buf2: self
 				count: size * 2) == 0]!
@@ -44,7 +44,7 @@ asByteString: aClass
 	| bytes buf size |
 	(size := self size) == 0 ifTrue: [^aClass empty].	"Avoid 'The Parameter is Incorrect' error"
 	buf := aClass new: size * 4.
-	bytes := KernelLibrary default
+	bytes := OS.KernelLibrary default
 				wideCharToMultiByte: aClass codePage
 				dwFlags: 0
 				lpWideCharStr: self
@@ -53,7 +53,7 @@ asByteString: aClass
 				cchMultiByte: buf size
 				lpDefaultChar: nil
 				lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^KernelLibrary default systemError].
+	bytes == 0 ifTrue: [^OS.KernelLibrary default systemError].
 	buf resize: bytes.
 	^buf!
 
@@ -63,7 +63,7 @@ asLowercase
 
 	| copy |
 	copy := self shallowCopy.
-	UserLibrary default charLowerBuffW: copy cchLength: copy size.
+	OS.UserLibrary default charLowerBuffW: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -72,7 +72,7 @@ asUppercase
 
 	| copy |
 	copy := self shallowCopy.
-	UserLibrary default charUpperBuffW: copy cchLength: copy size.
+	OS.UserLibrary default charUpperBuffW: copy cchLength: copy size.
 	^copy!
 
 asUtf16String
@@ -105,11 +105,11 @@ byteSize
 	^self basicSize + 1 bitShift: 1!
 
 copyToBuffer: anAddress ofSize: anInteger
-	CRTLibrary default
+	OS.CRTLibrary default
 		wcsncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
-		count: CRTConstants._TRUNCATE!
+		count: OS.CRTConstants._TRUNCATE!
 
 countElements
 	| length |
@@ -184,7 +184,7 @@ encodedAt: anInteger put: aCharacter
 			[self basicAt: anInteger put: codePoint.
 			anInteger]
 		ifFalse: 
-			[codePoint <= Win32Constants.MAX_UCSCHAR
+			[codePoint <= OS.Win32Constants.MAX_UCSCHAR
 				ifTrue: 
 					[codePoint := codePoint - 16r10000.
 					self
@@ -221,7 +221,7 @@ encodeOn: aPuttableStream put: aCharacter
 	^codePoint <= 16rFFFF
 		ifTrue: [aPuttableStream basicNextPut: codePoint]
 		ifFalse: 
-			[codePoint <= Win32Constants.MAX_UCSCHAR
+			[codePoint <= OS.Win32Constants.MAX_UCSCHAR
 				ifTrue: 
 					[#todo.	"http://www.unicode.org/faq/utf_bom.html suggests there might be a simpler (more efficient) calculation, but it looks incorrect to me"
 					codePoint := codePoint - 16r10000.
@@ -330,13 +330,13 @@ stbSaveOn: anSTBOutFiler
 	^self asUtf8String stbSaveOn: anSTBOutFiler!
 
 strcspn: aString start: anInteger
-	^CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
+	^OS.CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
 		strCharSet: aString asUtf16String!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^KernelLibrary default lstrlenW: self!
+	^OS.KernelLibrary default lstrlenW: self!
 
 wordAtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
@@ -367,39 +367,39 @@ wordAtOffset: anInteger put: anObject
 
 	<primitive: 125>
 	^self primitiveFailed: _failureCode! !
-!Utf16String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Utf16String categoriesFor: #asByteString:!converting!private! !
-!Utf16String categoriesFor: #asLowercase!converting!public! !
-!Utf16String categoriesFor: #asUppercase!converting!public! !
-!Utf16String categoriesFor: #asUtf16String!converting!public! !
-!Utf16String categoriesFor: #at:!accessing!public! !
-!Utf16String categoriesFor: #before:ifAbsent:!public!searching! !
-!Utf16String categoriesFor: #bom!constants!encode/decode!private! !
-!Utf16String categoriesFor: #byteSize!accessing!private! !
-!Utf16String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Utf16String categoriesFor: #countElements!accessing!public! !
-!Utf16String categoriesFor: #decodeAt:!encode/decode!private! !
-!Utf16String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Utf16String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Utf16String categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Utf16String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Utf16String categoriesFor: #findString:startingAt:!public!searching! !
-!Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!Utf16String categoriesFor: #isLeadCodeUnit:!encode/decode!private!testing! !
-!Utf16String categoriesFor: #maxEncoding!constants!private! !
-!Utf16String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Utf16String categoriesFor: #resize:!mutating!public! !
-!Utf16String categoriesFor: #reversedFrom:to:!copying!public! !
-!Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
-!Utf16String categoriesFor: #strcspn:start:!private!searching! !
-!Utf16String categoriesFor: #strlen!accessing!private! !
-!Utf16String categoriesFor: #wordAtOffset:!accessing!primitives!private! !
-!Utf16String categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
+!Core.Utf16String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
+!Core.Utf16String categoriesFor: #asByteString:!converting!private! !
+!Core.Utf16String categoriesFor: #asLowercase!converting!public! !
+!Core.Utf16String categoriesFor: #asUppercase!converting!public! !
+!Core.Utf16String categoriesFor: #asUtf16String!converting!public! !
+!Core.Utf16String categoriesFor: #at:!accessing!public! !
+!Core.Utf16String categoriesFor: #before:ifAbsent:!public!searching! !
+!Core.Utf16String categoriesFor: #bom!constants!encode/decode!private! !
+!Core.Utf16String categoriesFor: #byteSize!accessing!private! !
+!Core.Utf16String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!Core.Utf16String categoriesFor: #countElements!accessing!public! !
+!Core.Utf16String categoriesFor: #decodeAt:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Core.Utf16String categoriesFor: #encodedSizeAt:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #findString:startingAt:!public!searching! !
+!Core.Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!Core.Utf16String categoriesFor: #isLeadCodeUnit:!encode/decode!private!testing! !
+!Core.Utf16String categoriesFor: #maxEncoding!constants!private! !
+!Core.Utf16String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
+!Core.Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.Utf16String categoriesFor: #resize:!mutating!public! !
+!Core.Utf16String categoriesFor: #reversedFrom:to:!copying!public! !
+!Core.Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
+!Core.Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Utf16String categoriesFor: #strcspn:start:!private!searching! !
+!Core.Utf16String categoriesFor: #strlen!accessing!private! !
+!Core.Utf16String categoriesFor: #wordAtOffset:!accessing!primitives!private! !
+!Core.Utf16String categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
 
-!Utf16String class methodsFor!
+!Core.Utf16String class methodsFor!
 
 characterForCodeUnit: anInteger
 	^Character utf16Value: anInteger!
@@ -410,7 +410,7 @@ codePage
 	"Note: This is not a real code page, and cannot be used with most APIs expecting a code page
 	identifier. It's main purpose is to distinguish UTF-16 in some circumstances."
 
-	^WinNlsConstants.CP_UNICODE!
+	^OS.NlsConstants.CP_UNICODE!
 
 coerceString: aString
 	"Answer an instance of the receiver containing the same characters as the <String> argument."
@@ -426,7 +426,7 @@ fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
 	| len |
-	len := KernelLibrary default lstrlenW: anAddress.
+	len := OS.KernelLibrary default lstrlenW: anAddress.
 	^self fromAddress: anAddress length: len!
 
 fromAddress: anAddress length: anInteger
@@ -448,14 +448,16 @@ fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
 
 	| atomName |
-	^(atomName := self new: 255)
-		leftString: (KernelLibrary default getAtomName: anInteger lpBuffer: atomName nSize: atomName size)!
+	^(atomName := self new: 255) leftString: (OS.KernelLibrary default
+				getAtomName: anInteger
+				lpBuffer: atomName
+				nSize: atomName size)!
 
 fromBytes: aByteArray codePage: anInteger
 	"Answer an instance of the receiver constructed from the specified byte-string assumed to be encoded per the specified code page."
 
 	| kernel cch cb answer |
-	kernel := KernelLibrary default.
+	kernel := OS.KernelLibrary default.
 	cb := aByteArray size.
 	cb = 0 ifTrue: [^self empty].
 	cch := kernel
@@ -505,15 +507,15 @@ with: aCharacter
 			[(self new: 2)
 				encodedAt: 1 put: aCharacter;
 				yourself]! !
-!Utf16String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Utf16String class categoriesFor: #codePage!constants!public! !
-!Utf16String class categoriesFor: #coerceString:!instance creation!public! !
-!Utf16String class categoriesFor: #elementSize!constants!public! !
-!Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
-!Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
-!Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
-!Utf16String class categoriesFor: #fromBytes:codePage:!instance creation!public! !
-!Utf16String class categoriesFor: #fromUtf16String:!instance creation!public! !
-!Utf16String class categoriesFor: #initialize!development!initializing!public! !
-!Utf16String class categoriesFor: #with:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
+!Core.Utf16String class categoriesFor: #codePage!constants!public! !
+!Core.Utf16String class categoriesFor: #coerceString:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #elementSize!constants!public! !
+!Core.Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #fromBytes:codePage:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #fromUtf16String:!instance creation!public! !
+!Core.Utf16String class categoriesFor: #initialize!development!initializing!public! !
+!Core.Utf16String class categoriesFor: #with:!instance creation!public! !
 

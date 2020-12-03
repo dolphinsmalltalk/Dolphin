@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #GenericExternalArray
+External.ExternalArray subclass: #'External.GenericExternalArray'
 	instanceVariableNames: 'elementClass owner'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GenericExternalArray guid: (GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
-GenericExternalArray isAbstract: true!
-GenericExternalArray comment: 'GenericExternalArray is an abstract class of <ExternalArray>s that can be used to represent single-dimensioned arrays of more than one type.
+External.GenericExternalArray guid: (Core.GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
+External.GenericExternalArray isNonInstantiable: true!
+External.GenericExternalArray comment: 'GenericExternalArray is an abstract class of <ExternalArray>s that can be used to represent single-dimensioned arrays of more than one type.
 
 Instance Variables:
 	elementClass	<Class> of element, typically an <ExternalStructure>.
 	owner		<Object>. Object responsible for freeing the underlying array. Typically nil, in which case the receiver is responsible.
 '!
-!GenericExternalArray categoriesForClass!External-Data-Structured! !
-!GenericExternalArray methodsFor!
+!External.GenericExternalArray categoriesForClass!External-Data-Structured! !
+!External.GenericExternalArray methodsFor!
 
 asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
@@ -82,17 +82,17 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 			[:i | 
 			operation value: i value: (self newElementAt: address).
 			address := address + spacing]! !
-!GenericExternalArray categoriesFor: #asArray!converting!public! !
-!GenericExternalArray categoriesFor: #base!accessing!private! !
-!GenericExternalArray categoriesFor: #elementClass!accessing!public! !
-!GenericExternalArray categoriesFor: #elementClass:!accessing!private! !
-!GenericExternalArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!GenericExternalArray categoriesFor: #newElementAt:!helpers!private! !
-!GenericExternalArray categoriesFor: #owner:!accessing!private! !
-!GenericExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
-!GenericExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!External.GenericExternalArray categoriesFor: #asArray!converting!public! !
+!External.GenericExternalArray categoriesFor: #base!accessing!private! !
+!External.GenericExternalArray categoriesFor: #elementClass!accessing!public! !
+!External.GenericExternalArray categoriesFor: #elementClass:!accessing!private! !
+!External.GenericExternalArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
+!External.GenericExternalArray categoriesFor: #newElementAt:!helpers!private! !
+!External.GenericExternalArray categoriesFor: #owner:!accessing!private! !
+!External.GenericExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.GenericExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
-!GenericExternalArray class methodsFor!
+!External.GenericExternalArray class methodsFor!
 
 length: length elementClass: elementClass 
 	"Answer a new vector (single dimensioned) array that 
@@ -113,6 +113,6 @@ withAll: aCollection elementClass: structClass
 			answer at: i put: elem.
 			i + 1].
 	^answer! !
-!GenericExternalArray class categoriesFor: #length:elementClass:!instance creation!public! !
-!GenericExternalArray class categoriesFor: #withAll:elementClass:!instance creation!public! !
+!External.GenericExternalArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!External.GenericExternalArray class categoriesFor: #withAll:elementClass:!instance creation!public! !
 

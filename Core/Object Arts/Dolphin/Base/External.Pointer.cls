@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LPVOID subclass: #ExternalPointer
+External.LPVOID subclass: #'External.Pointer'
 	instanceVariableNames: 'byteSize'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalPointer guid: (GUID fromString: '{87b4c5b0-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalPointer comment: 'ExternalPointer is a class to represent pointers to arbitrary blocks of externally allocated memory where the size of the block is known and can be associated with the pointer.'!
-!ExternalPointer categoriesForClass!External-Data-Unstructured! !
-!ExternalPointer methodsFor!
+External.Pointer guid: (Core.GUID fromString: '{87b4c5b0-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Pointer comment: 'ExternalPointer is a class to represent pointers to arbitrary blocks of externally allocated memory where the size of the block is known and can be associated with the pointer.'!
+!External.Pointer categoriesForClass!External-Data-Unstructured! !
+!External.Pointer methodsFor!
 
 byteSize
 	"Answer the size of the memory block at which the receiver is pointing."
@@ -34,8 +34,8 @@ size
 
 	^byteSize
 	! !
-!ExternalPointer categoriesFor: #byteSize!accessing!public! !
-!ExternalPointer categoriesFor: #byteSize:!accessing!public! !
-!ExternalPointer categoriesFor: #initialize:!initializing!public! !
-!ExternalPointer categoriesFor: #size!accessing!public! !
+!External.Pointer categoriesFor: #byteSize!accessing!public! !
+!External.Pointer categoriesFor: #byteSize:!accessing!public! !
+!External.Pointer categoriesFor: #initialize:!initializing!public! !
+!External.Pointer categoriesFor: #size!accessing!public! !
 

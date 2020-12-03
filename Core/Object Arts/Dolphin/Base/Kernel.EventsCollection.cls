@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedIdentityDictionary variableSubclass: #EventsCollection
+Core.SharedIdentityDictionary variableSubclass: #'Kernel.EventsCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EventsCollection guid: (GUID fromString: '{87b4c533-026e-11d3-9fd7-00a0cc3e4a32}')!
-EventsCollection comment: ''!
-!EventsCollection categoriesForClass!Collections-Unordered!System-Support! !
-!EventsCollection methodsFor!
+Kernel.EventsCollection guid: (Core.GUID fromString: '{87b4c533-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.EventsCollection comment: ''!
+!Kernel.EventsCollection categoriesForClass!Collections-Unordered!System-Support! !
+!Kernel.EventsCollection methodsFor!
 
-addEvent: aSymbol action: aValuable 
+addEvent: aSymbol action: aValuable
 	"Private - Adds the <valuable> argument as the action for 
 	aSymbol, but only if it is not already present."
 
@@ -19,7 +19,7 @@ addEvent: aSymbol action: aValuable
 			[| messages |
 			messages := self at: aSymbol ifAbsent: [EventMessageSequence new].
 			"Check for existing registration"
-			(messages includes: aValuable) 
+			(messages includes: aValuable)
 				ifFalse: 
 					[messages add: aValuable.
 					self at: aSymbol put: messages]]!
@@ -35,7 +35,7 @@ hasActionsForEvent: aSymbol
 removeActionsForEvent: aSymbol 
 	^mutex critical: [self removeKey: aSymbol ifAbsent: []]!
 
-removeEventsTriggeredFor: anObject 
+removeEventsTriggeredFor: anObject
 	"Private - Removes all events where the target is anObject. If the receiver becomes empty,
 	answers nil, otherwise answers self."
 
@@ -43,8 +43,8 @@ removeEventsTriggeredFor: anObject
 			[| empty |
 			empty := IdentitySet new.
 			self keysAndValuesDo: 
-					[:eachKey :eachValue | 
-					eachValue isNil 
+					[:eachKey :eachValue |
+					eachValue isNil
 						ifFalse: 
 							[eachValue removeMessagesFor: anObject.
 							eachValue isEmpty ifTrue: [empty add: eachKey]]].
@@ -88,14 +88,14 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^(self lookup: aSymbol) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
-!EventsCollection categoriesFor: #addEvent:action:!adding!private! !
-!EventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
-!EventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
-!EventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
-!EventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
-!EventsCollection categoriesFor: #shrink!private!removing! !
-!EventsCollection categoriesFor: #triggerEvent:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:with:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:with:with:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:withArguments:!debugger-step through!private!triggering! !
+!Kernel.EventsCollection categoriesFor: #addEvent:action:!adding!private! !
+!Kernel.EventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
+!Kernel.EventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
+!Kernel.EventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
+!Kernel.EventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
+!Kernel.EventsCollection categoriesFor: #shrink!private!removing! !
+!Kernel.EventsCollection categoriesFor: #triggerEvent:!debugger-step through!private!triggering! !
+!Kernel.EventsCollection categoriesFor: #triggerEvent:with:!debugger-step through!private!triggering! !
+!Kernel.EventsCollection categoriesFor: #triggerEvent:with:with:!debugger-step through!private!triggering! !
+!Kernel.EventsCollection categoriesFor: #triggerEvent:withArguments:!debugger-step through!private!triggering! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PermanentLibrary subclass: #NTLibrary
+External.PermanentLibrary subclass: #'OS.NTLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'IsWine'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NTLibrary guid: (GUID fromString: '{8293e458-7d81-4aba-97a5-c1001c4b2153}')!
-NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+OS.NTLibrary guid: (Core.GUID fromString: '{8293e458-7d81-4aba-97a5-c1001c4b2153}')!
+OS.NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring For this Module
 	"Windows NT Runtime Library"
 
 Warning: This comment was automatically generated from the Module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 '!
-!NTLibrary categoriesForClass!External-Libraries! !
-!NTLibrary methodsFor!
+!OS.NTLibrary categoriesForClass!External-Libraries! !
+!OS.NTLibrary methodsFor!
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
 	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
@@ -42,12 +42,12 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
-!NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
-!NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
-!NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
-!NTLibrary categoriesFor: #wineGetVersion!public! !
+!OS.NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
+!OS.NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
+!OS.NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
+!OS.NTLibrary categoriesFor: #wineGetVersion!public! !
 
-!NTLibrary class methodsFor!
+!OS.NTLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the external library the 
@@ -67,7 +67,7 @@ openDefault
 	lib := super openDefault.
 	IsWine := lib wineGetVersion notNil.
 	^lib! !
-!NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!NTLibrary class categoriesFor: #isWine!public!testing! !
-!NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!OS.NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!OS.NTLibrary class categoriesFor: #isWine!public!testing! !
+!OS.NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 

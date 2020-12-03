@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalScalar subclass: #ExternalInteger
+External.SCALAR subclass: #'External.INTEGER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalInteger guid: (GUID fromString: '{87b4c594-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalInteger isAbstract: true!
-ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStructures to represent machine native integer formats. Various subclasses are defined to represent the signed and unsigned forms with varying numbers of bits:
+External.INTEGER guid: (Core.GUID fromString: '{87b4c594-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.INTEGER isNonInstantiable: true!
+External.INTEGER comment: 'ExternalInteger is an abstract class of ExternalStructures to represent machine native integer formats. Various subclasses are defined to represent the signed and unsigned forms with varying numbers of bits:
 
 8-bit
 	signed	SBYTE
@@ -23,8 +23,8 @@ ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStruct
 	signed	LARGE_INTEGER
 	unsigned	ULARGE_INTEGER
 '!
-!ExternalInteger categoriesForClass!External-Data-Unstructured! !
-!ExternalInteger methodsFor!
+!External.INTEGER categoriesForClass!External-Data-Unstructured! !
+!External.INTEGER methodsFor!
 
 asInteger
 	"Answer the Integer value of the receiver, signed or
@@ -71,16 +71,21 @@ isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
 
 	^false! !
-!ExternalInteger categoriesFor: #asInteger!converting!public! !
-!ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
-!ExternalInteger categoriesFor: #asString!converting!public! !
-!ExternalInteger categoriesFor: #asUIntPtr!converting!public! !
-!ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
-!ExternalInteger categoriesFor: #hash!comparing!public! !
-!ExternalInteger categoriesFor: #isNull!public!testing! !
-!ExternalInteger categoriesFor: #isSigned!public!testing! !
+!External.INTEGER categoriesFor: #asInteger!converting!public! !
+!External.INTEGER categoriesFor: #asSignedInteger!converting!public! !
+!External.INTEGER categoriesFor: #asString!converting!public! !
+!External.INTEGER categoriesFor: #asUIntPtr!converting!public! !
+!External.INTEGER categoriesFor: #asUnsignedInteger!converting!public! !
+!External.INTEGER categoriesFor: #hash!comparing!public! !
+!External.INTEGER categoriesFor: #isNull!public!testing! !
+!External.INTEGER categoriesFor: #isSigned!public!testing! !
 
-!ExternalInteger class methodsFor!
+!External.INTEGER class methodsFor!
+
+decompileDefinition
+	"Don't allow the receiver and its subclasses to be decompiled since they are
+	required by fundamental aspects of the system such as streaming"
+	!
 
 defineTemplate
 	"Initialize the receiver class' structure template."
@@ -92,6 +97,7 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
-!ExternalInteger class categoriesFor: #defineTemplate!public!template definition! !
-!ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
+!External.INTEGER class categoriesFor: #decompileDefinition!public! !
+!External.INTEGER class categoriesFor: #defineTemplate!public!template definition! !
+!External.INTEGER class categoriesFor: #fromInteger:!instance creation!public! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #_FPIEEE_VALUE
+External.Structure subclass: #'OS._FPIEEE_VALUE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_filler' -> 16r14.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_value' -> 16r0
 	}!
-_FPIEEE_VALUE guid: (GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
-_FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
-!_FPIEEE_VALUE categoriesForClass!Unclassified! !
-!_FPIEEE_VALUE methodsFor!
+OS._FPIEEE_VALUE guid: (Core.GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
+OS._FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
+!OS._FPIEEE_VALUE categoriesForClass!Unclassified! !
+!OS._FPIEEE_VALUE methodsFor!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -56,13 +56,13 @@ value
 			dwordAtOffset: "string?")
 				at: (self format + 1))
 		with: 0]! !
-!_FPIEEE_VALUE categoriesFor: #flags!**compiled accessors**!public! !
-!_FPIEEE_VALUE categoriesFor: #format!accessing!public! !
-!_FPIEEE_VALUE categoriesFor: #formatName!accessing!public! !
-!_FPIEEE_VALUE categoriesFor: #isValid!public!testing! !
-!_FPIEEE_VALUE categoriesFor: #value!accessing!public! !
+!OS._FPIEEE_VALUE categoriesFor: #flags!**compiled accessors**!public! !
+!OS._FPIEEE_VALUE categoriesFor: #format!accessing!public! !
+!OS._FPIEEE_VALUE categoriesFor: #formatName!accessing!public! !
+!OS._FPIEEE_VALUE categoriesFor: #isValid!public!testing! !
+!OS._FPIEEE_VALUE categoriesFor: #value!accessing!public! !
 
-!_FPIEEE_VALUE class methodsFor!
+!OS._FPIEEE_VALUE class methodsFor!
 
 defineFields
 	"Define the fields of the _FPIEEE_VALUE 'structure'.
@@ -80,7 +80,7 @@ formatCodes
 
 getFieldNames
 	^#(#flags)! !
-!_FPIEEE_VALUE class categoriesFor: #defineFields!public!template definition! !
-!_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
-!_FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS._FPIEEE_VALUE class categoriesFor: #defineFields!public!template definition! !
+!OS._FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
+!OS._FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

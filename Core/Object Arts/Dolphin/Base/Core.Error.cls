@@ -1,21 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Exception subclass: #Error
+Core.Exception subclass: #'Core.Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error guid: (GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
-Error comment: ''!
-!Error categoriesForClass!Kernel-Exception Handling! !
-!Error methodsFor!
+Core.Error guid: (Core.GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
+Core.Error comment: ''!
+!Core.Error categoriesForClass!Kernel-Exception Handling! !
+!Core.Error methodsFor!
 
 asWarning
 	"Private - Answer the receiver as a generic Warning message."
 
-	^Warning new 
-		messageText: self description!
+	^Warning new messageText: self description!
 
 defaultAction
 	"Perform the default action for the receiver if it is not handled
@@ -37,7 +36,7 @@ notify
 	"Signal a <Notification> with the receiver's description. Generally used to provide
 	a trace showing that an error has been suppressed."
 
-	^Notification signal: 'Error: ', self description!
+	^Notification signal: 'Error: ' , self description!
 
 resignalAsWarning
 	"Private - Resignal the receiver as if it had originally been raised as a generic Warning.
@@ -47,18 +46,18 @@ resignalAsWarning
 
 warningClass
 	"Private - Answer the class of Warning to which the receiver is converted by #asWarning."
-	
+
 	^Warning! !
-!Error categoriesFor: #asWarning!converting!private! !
-!Error categoriesFor: #defaultAction!handling!public! !
-!Error categoriesFor: #isUserResumable!public!testing! !
-!Error categoriesFor: #notify!converting!public! !
-!Error categoriesFor: #resignalAsWarning!handler responses!private! !
-!Error categoriesFor: #warningClass!constants!private! !
+!Core.Error categoriesFor: #asWarning!converting!private! !
+!Core.Error categoriesFor: #defaultAction!handling!public! !
+!Core.Error categoriesFor: #isUserResumable!public!testing! !
+!Core.Error categoriesFor: #notify!converting!public! !
+!Core.Error categoriesFor: #resignalAsWarning!handler responses!private! !
+!Core.Error categoriesFor: #warningClass!constants!private! !
 
-Error methodProtocol: #Error attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
+Core.Error methodProtocol: #Error attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
-!Error class methodsFor!
+!Core.Error class methodsFor!
 
 mbIconId
 	^MB_ICONERROR!
@@ -104,14 +103,14 @@ severityClass
 subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
-	^SubclassResponsibilityError signal: selector printString, ' is the responsibility of the subclass'! !
-!Error class categoriesFor: #mbIconId!parping!public! !
-!Error class categoriesFor: #nonIntegerIndex:!instance creation!private! !
-!Error class categoriesFor: #notIndexable:!instance creation!private! !
-!Error class categoriesFor: #notYetImplemented!instance creation!private! !
-!Error class categoriesFor: #performFailed:of:for:withArgs:!instance creation!private! !
-!Error class categoriesFor: #severityClass!constants!public! !
-!Error class categoriesFor: #subclassResponsibility:!instance creation!private! !
+	^SubclassResponsibilityError signal: selector printString , ' is the responsibility of the subclass'! !
+!Core.Error class categoriesFor: #mbIconId!parping!public! !
+!Core.Error class categoriesFor: #nonIntegerIndex:!instance creation!private! !
+!Core.Error class categoriesFor: #notIndexable:!instance creation!private! !
+!Core.Error class categoriesFor: #notYetImplemented!instance creation!private! !
+!Core.Error class categoriesFor: #performFailed:of:for:withArgs:!instance creation!private! !
+!Core.Error class categoriesFor: #severityClass!constants!public! !
+!Core.Error class categoriesFor: #subclassResponsibility:!instance creation!private! !
 
-Error class methodProtocol: #'Error class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
+Core.Error class methodProtocol: #'Error class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 

@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithm subclass: #PluggableSortAlgorithm
+Core.SortAlgorithm subclass: #'Kernel.PluggableSortAlgorithm'
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableSortAlgorithm guid: (GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
-PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
+Kernel.PluggableSortAlgorithm guid: (Core.GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
+Kernel.PluggableSortAlgorithm isNonInstantiable: true!
+Kernel.PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
 
 Instance Variables:
 	sortBlock		<dyadicValuable> defines the sort-order relationship.
 
 '!
-!PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
-!PluggableSortAlgorithm methodsFor!
+!Kernel.PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
+!Kernel.PluggableSortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
 	"Answer whether the <Object>, operand1, should sort before the <Object> argument, operand2,
@@ -29,11 +30,11 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
-!PluggableSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
-!PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!Kernel.PluggableSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
+!Kernel.PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
+!Kernel.PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
 
-!PluggableSortAlgorithm class methodsFor!
+!Kernel.PluggableSortAlgorithm class methodsFor!
 
 new
 	"Answer a new instance of the receiver with the default sort block."
@@ -47,6 +48,6 @@ newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
-!PluggableSortAlgorithm class categoriesFor: #new!public! !
-!PluggableSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!Kernel.PluggableSortAlgorithm class categoriesFor: #new!public! !
+!Kernel.PluggableSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
 

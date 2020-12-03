@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedSet variableSubclass: #WeakSet
+Core.SharedSet variableSubclass: #'Core.WeakSet'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakSet guid: (GUID fromString: '{87b4c538-026e-11d3-9fd7-00a0cc3e4a32}')!
-WeakSet comment: 'A WeakSet is a <Set> which only weakly references the elements that it contains. That is, subject to the <MemoryManager>s intervention, if any of a weak set''s elements have only weak references remaining, then they may be garbage collected, in which case that weak set will receive a bereavement notification, and be given a chance to adjust to it''s loss(es), which it does by nilling out the corpses
+Core.WeakSet guid: (Core.GUID fromString: '{87b4c538-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakSet comment: 'A WeakSet is a <Set> which only weakly references the elements that it contains. That is, subject to the <MemoryManager>s intervention, if any of a weak set''s elements have only weak references remaining, then they may be garbage collected, in which case that weak set will receive a bereavement notification, and be given a chance to adjust to it''s loss(es), which it does by nilling out the corpses
 and rehashing. Bereavement notification is performed asynchronously by separate (high priority) process, and WeakSet is accordingly a subclass of <SharedSet>.'!
-!WeakSet categoriesForClass!Collections-Unordered!Collections-Weak! !
-!WeakSet methodsFor!
+!Core.WeakSet categoriesForClass!Collections-Unordered!Collections-Weak! !
+!Core.WeakSet methodsFor!
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver, with enough space for anInteger
@@ -39,7 +39,7 @@ do: operation
 			mask := self beStrong.
 			[super do: operation] ensure: [self setSpecialBehavior: mask]]!
 
-elementsExpired: anInteger 
+elementsExpired: anInteger
 	"Private - Handle the bereavement(s) that the receiver suffered by maintaing 
 	the <Set> invariants (mainly that collision chains are terminated by nils)."
 
@@ -48,28 +48,26 @@ elementsExpired: anInteger
 			corpse := DeadObject current.
 			capacity := self basicSize.
 			tally := tally - anInteger.
-			deathAt := self 
+			deathAt := self
 						basicIdentityIndexOf: corpse
 						from: 1
 						to: capacity.
-			anInteger > (self size // 4) 
+			anInteger > (self size // 4)
 				ifTrue: 
 					["Rehash the collection if a large number of losses..."
-
 					[deathAt > 0] whileTrue: 
 							[self basicAt: deathAt put: nil.
-							deathAt := self 
+							deathAt := self
 										basicIdentityIndexOf: corpse
 										from: deathAt + 1
 										to: capacity].
 					self rehash]
 				ifFalse: 
 					["... otherwise remove the losses individually"
-
 					[deathAt > 0] whileTrue: 
 							[self basicAt: deathAt put: nil.
 							self fixCollisionsIgnoringCorpsesFrom: deathAt.
-							deathAt := self 
+							deathAt := self
 										basicIdentityIndexOf: corpse
 										from: deathAt + 1
 										to: capacity]]].
@@ -77,7 +75,7 @@ elementsExpired: anInteger
 	"Inform any dependents"
 	self trigger: #elementsExpired: with: anInteger!
 
-fixCollisionsIgnoringCorpsesFrom: index 
+fixCollisionsIgnoringCorpsesFrom: index
 	"Private - Rehashes objects in the collection after index to see if any of
 	them hash to index.  If so, that object is copied to index, and the
 	process repeats with that object's index, until a nil is encountered.
@@ -90,9 +88,8 @@ fixCollisionsIgnoringCorpsesFrom: index
 	corpse := DeadObject current.
 	
 	[slotIndex := slotIndex \\ capacity + 1.
-	(element := self basicAt: slotIndex) isNil] 
-			whileFalse: 
-				[element == corpse 
+	(element := self basicAt: slotIndex) isNil] whileFalse: 
+				[element == corpse
 					ifFalse: 
 						[| hashIndex |
 						hashIndex := self findElementOrNil: element.
@@ -110,14 +107,14 @@ species
 	which is less than useful, so we answer <Set>."
 
 	^Set! !
-!WeakSet categoriesFor: #copyEmpty:!copying!private! !
-!WeakSet categoriesFor: #do:!enumerating!public! !
-!WeakSet categoriesFor: #elementsExpired:!finalizing!private! !
-!WeakSet categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!WeakSet categoriesFor: #initialize!initializing!private! !
-!WeakSet categoriesFor: #species!accessing!public! !
+!Core.WeakSet categoriesFor: #copyEmpty:!copying!private! !
+!Core.WeakSet categoriesFor: #do:!enumerating!public! !
+!Core.WeakSet categoriesFor: #elementsExpired:!finalizing!private! !
+!Core.WeakSet categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+!Core.WeakSet categoriesFor: #initialize!initializing!private! !
+!Core.WeakSet categoriesFor: #species!accessing!public! !
 
-!WeakSet class methodsFor!
+!Core.WeakSet class methodsFor!
 
 initialize
 	"Initialize the receiver.
@@ -125,5 +122,5 @@ initialize
 	effect repairs."
 
 	self makeMourner! !
-!WeakSet class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakSet class categoriesFor: #initialize!development!initializing!public! !
 

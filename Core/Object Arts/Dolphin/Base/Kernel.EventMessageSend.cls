@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MessageSendAbstract variableSubclass: #EventMessageSend
+Core.MessageSendAbstract variableSubclass: #'Kernel.EventMessageSend'
 	instanceVariableNames: 'expectedArgCount'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EventMessageSend guid: (GUID fromString: '{87b4c663-026e-11d3-9fd7-00a0cc3e4a32}')!
-EventMessageSend comment: 'An EventMessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments, however the receiver is referenced weakly.
+Kernel.EventMessageSend guid: (Core.GUID fromString: '{87b4c663-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.EventMessageSend comment: 'An EventMessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments, however the receiver is referenced weakly.
 
 When evaluate with extra arguments, an EventMessageSend merges its own argument with those supplied at evaluation time with the latter taking precedence from the left. For example if the message requires two arguments, and one is supplied at evaluation time, then the first argument sent will be that one, and the second the second of the arguments stored in the EventMessageSend itself.'!
-!EventMessageSend categoriesForClass!System-Support! !
-!EventMessageSend methodsFor!
+!Kernel.EventMessageSend categoriesForClass!System-Support! !
+!Kernel.EventMessageSend methodsFor!
 
 asMessageSend
-	^MessageSend 
+	^MessageSend
 		receiver: self receiver
 		selector: selector
 		arguments: (Array withAll: self arguments)!
@@ -76,19 +76,19 @@ value
 	receiver's arguments, and answers the result."
 
 	^self forwardTo: self receiver withArguments: #()! !
-!EventMessageSend categoriesFor: #asMessageSend!public! !
-!EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
-!EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
-!EventMessageSend categoriesFor: #postCopy!copying!public! !
-!EventMessageSend categoriesFor: #receiver!accessing!debugger-step over!public! !
-!EventMessageSend categoriesFor: #receiver:!accessing!public! !
-!EventMessageSend categoriesFor: #selector:!accessing!public! !
-!EventMessageSend categoriesFor: #setSelector:arguments:!initializing!private! !
-!EventMessageSend categoriesFor: #value!evaluating!public! !
+!Kernel.EventMessageSend categoriesFor: #asMessageSend!public! !
+!Kernel.EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
+!Kernel.EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
+!Kernel.EventMessageSend categoriesFor: #postCopy!copying!public! !
+!Kernel.EventMessageSend categoriesFor: #receiver!accessing!debugger-step over!public! !
+!Kernel.EventMessageSend categoriesFor: #receiver:!accessing!public! !
+!Kernel.EventMessageSend categoriesFor: #selector:!accessing!public! !
+!Kernel.EventMessageSend categoriesFor: #setSelector:arguments:!initializing!private! !
+!Kernel.EventMessageSend categoriesFor: #value!evaluating!public! !
 
-!EventMessageSend class methodsFor!
+!Kernel.EventMessageSend class methodsFor!
 
 new
 	^(self new: 1) beWeak; yourself! !
-!EventMessageSend class categoriesFor: #new!instance creation!public! !
+!Kernel.EventMessageSend class categoriesFor: #new!instance creation!public! !
 

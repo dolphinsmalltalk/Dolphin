@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FileLocator subclass: #ClassLocator
+Core.FileLocator subclass: #'Kernel.ClassLocator'
 	instanceVariableNames: 'packageName codeBase key'
 	classVariableNames: 'Aliases DefaultFileLocator ImportedClasses ImportedClassesMutex InstallationFileLocator'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassLocator guid: (GUID fromString: '{87b4c462-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassLocator comment: 'A ClassLocator is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
+Kernel.ClassLocator guid: (Core.GUID fromString: '{87b4c462-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ClassLocator comment: 'A ClassLocator is used to find a class for an object being read from an external serialized stream (such as STB). The locator first tries to match an exsiting class already in the image and, if this fails, it is then used to indicate the location of an external binary class that may be loaded into the image. To do this, the locator holds the code base where the external BinaryPackage file resides and a key (usually the class name) that can be used to identify a particular class within the package.  The standard ClassLocator is used when the binary package file can be found on a UNC file system.  If the class is part of an applet and is to be located by a URL then a URLClassLocator should be used instead.
 
 Instance Variables:
 	packageName 	<readableString> indicating the name of the package containing the required class.
@@ -21,8 +21,8 @@ Class Variables:
 	Aliases			<WeakLookupTable> mapping old class names to existing class.
 
 '!
-!ClassLocator categoriesForClass!System-Binary class loading! !
-!ClassLocator methodsFor!
+!Kernel.ClassLocator categoriesForClass!System-Binary class loading! !
+!Kernel.ClassLocator methodsFor!
 
 codeBase
 	"Answer the receiver's codeBase. This is used to complete a relative key."
@@ -117,10 +117,8 @@ localFileSpecFor: aStringFilename
 
 	| filename |
 	filename := aStringFilename.
-	self codeBase notNil ifTrue: [
-		filename := File composePath: codeBase subPath: filename ].
-	^super localFileSpecFor: filename
-!
+	self codeBase notNil ifTrue: [filename := File composePath: codeBase subPath: filename].
+	^super localFileSpecFor: filename!
 
 locateClass
 	"Answer the class referred to by the receiver."
@@ -153,27 +151,27 @@ printOn: aStream
 		nextPutAll: ', ';
 		print: key;
 		nextPut: $)! !
-!ClassLocator categoriesFor: #codeBase!accessing!public! !
-!ClassLocator categoriesFor: #codeBase:!initializing!private! !
-!ClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
-!ClassLocator categoriesFor: #errorClassCircularityDetected!exceptions!private! !
-!ClassLocator categoriesFor: #errorClassNotFound!exceptions!private! !
-!ClassLocator categoriesFor: #findAvailableClass!operations!public! !
-!ClassLocator categoriesFor: #findResidentClass!operations!private! !
-!ClassLocator categoriesFor: #fullClassKey!helpers!private! !
-!ClassLocator categoriesFor: #fullPackageKey!accessing!public! !
-!ClassLocator categoriesFor: #hasPackageName!accessing!private! !
-!ClassLocator categoriesFor: #initialize!initializing!private! !
-!ClassLocator categoriesFor: #installImportedClass:!operations!private! !
-!ClassLocator categoriesFor: #key!accessing!public! !
-!ClassLocator categoriesFor: #key:!initializing!private! !
-!ClassLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!ClassLocator categoriesFor: #locateClass!operations!public! !
-!ClassLocator categoriesFor: #packageName!accessing!public! !
-!ClassLocator categoriesFor: #packageName:!initializing!private! !
-!ClassLocator categoriesFor: #printOn:!printing!public! !
+!Kernel.ClassLocator categoriesFor: #codeBase!accessing!public! !
+!Kernel.ClassLocator categoriesFor: #codeBase:!initializing!private! !
+!Kernel.ClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
+!Kernel.ClassLocator categoriesFor: #errorClassCircularityDetected!exceptions!private! !
+!Kernel.ClassLocator categoriesFor: #errorClassNotFound!exceptions!private! !
+!Kernel.ClassLocator categoriesFor: #findAvailableClass!operations!public! !
+!Kernel.ClassLocator categoriesFor: #findResidentClass!operations!private! !
+!Kernel.ClassLocator categoriesFor: #fullClassKey!helpers!private! !
+!Kernel.ClassLocator categoriesFor: #fullPackageKey!accessing!public! !
+!Kernel.ClassLocator categoriesFor: #hasPackageName!accessing!private! !
+!Kernel.ClassLocator categoriesFor: #initialize!initializing!private! !
+!Kernel.ClassLocator categoriesFor: #installImportedClass:!operations!private! !
+!Kernel.ClassLocator categoriesFor: #key!accessing!public! !
+!Kernel.ClassLocator categoriesFor: #key:!initializing!private! !
+!Kernel.ClassLocator categoriesFor: #localFileSpecFor:!accessing!public! !
+!Kernel.ClassLocator categoriesFor: #locateClass!operations!public! !
+!Kernel.ClassLocator categoriesFor: #packageName!accessing!public! !
+!Kernel.ClassLocator categoriesFor: #packageName:!initializing!private! !
+!Kernel.ClassLocator categoriesFor: #printOn:!printing!public! !
 
-!ClassLocator class methodsFor!
+!Kernel.ClassLocator class methodsFor!
 
 addAlias: aSymbol forClass: aClass
 	"Record the symbolic name, aSymbol, as an alias for the class name, aClass.
@@ -229,7 +227,7 @@ initialize
 	"
 
 	ImportedClassesMutex := Mutex new.
-	SessionManager current 
+	SessionManager current
 		when: #sessionStarted
 		send: #onStartup
 		to: self.
@@ -278,22 +276,20 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	ImportedClasses := ImportedClassesMutex := nil.
-	SessionManager current removeEventsTriggeredFor: self.
-
-! !
-!ClassLocator class categoriesFor: #addAlias:forClass:!accessing!public! !
-!ClassLocator class categoriesFor: #binaryPackageExtension!constants!public! !
-!ClassLocator class categoriesFor: #codeBase:!instance creation!public! !
-!ClassLocator class categoriesFor: #codeBase:packageName:!instance creation!public! !
-!ClassLocator class categoriesFor: #codeBase:packageName:key:!instance creation!public! !
-!ClassLocator class categoriesFor: #default!accessing!public! !
-!ClassLocator class categoriesFor: #importedClassesMutex!accessing!private! !
-!ClassLocator class categoriesFor: #initialize!development!initializing!private! !
-!ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
-!ClassLocator class categoriesFor: #new!instance creation!public! !
-!ClassLocator class categoriesFor: #onStartup!events-session!private! !
-!ClassLocator class categoriesFor: #removeAlias:!accessing!public! !
-!ClassLocator class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ClassLocator class categoriesFor: #stbVersion!binary filing!public! !
-!ClassLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+	SessionManager current removeEventsTriggeredFor: self! !
+!Kernel.ClassLocator class categoriesFor: #addAlias:forClass:!accessing!public! !
+!Kernel.ClassLocator class categoriesFor: #binaryPackageExtension!constants!public! !
+!Kernel.ClassLocator class categoriesFor: #codeBase:!instance creation!public! !
+!Kernel.ClassLocator class categoriesFor: #codeBase:packageName:!instance creation!public! !
+!Kernel.ClassLocator class categoriesFor: #codeBase:packageName:key:!instance creation!public! !
+!Kernel.ClassLocator class categoriesFor: #default!accessing!public! !
+!Kernel.ClassLocator class categoriesFor: #importedClassesMutex!accessing!private! !
+!Kernel.ClassLocator class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
+!Kernel.ClassLocator class categoriesFor: #new!instance creation!public! !
+!Kernel.ClassLocator class categoriesFor: #onStartup!events-session!private! !
+!Kernel.ClassLocator class categoriesFor: #removeAlias:!accessing!public! !
+!Kernel.ClassLocator class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Kernel.ClassLocator class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.ClassLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

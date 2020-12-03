@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MSGBOXPARAMSW
+OS.Win32Structure subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
 	classVariableNames: ''
-	poolDictionaries: 'MessageBoxConstants'
+	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwContextHelpId' -> 16r1C.
@@ -17,8 +17,8 @@ Win32Structure subclass: #MSGBOXPARAMSW
 		'_OffsetOf_lpszIcon' -> 16r18.
 		'_OffsetOf_lpszText' -> 16rC
 	}!
-MSGBOXPARAMSW guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
-MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
+OS.MSGBOXPARAMSW guid: (Core.GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.
 
@@ -27,8 +27,8 @@ Instance Variables:
 	text	<String> Text to be display in box (address stored in struct, so need to prevent premature GC)
 	caption 	<String> Caption of box (ditto)
 	owner	<ExternalHandle>. Handle of owner view'!
-!MSGBOXPARAMSW categoriesForClass!External-Data-Structured-Win32! !
-!MSGBOXPARAMSW methodsFor!
+!OS.MSGBOXPARAMSW categoriesForClass!External-Data-Structured-Win32! !
+!OS.MSGBOXPARAMSW methodsFor!
 
 caption: aString
 	"Set the text to be displayed as the message box title."
@@ -82,17 +82,17 @@ text: aString
 
 	text := aString asUtf16String.
 	self lpszText: text! !
-!MSGBOXPARAMSW categoriesFor: #caption:!accessing!public! !
-!MSGBOXPARAMSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszCaption:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszIcon:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #text:!accessing!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #caption:!accessing!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #dwStyle:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #hInstance:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #lpszCaption:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #lpszIcon:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #lpszText:!**compiled accessors**!public! !
+!OS.MSGBOXPARAMSW categoriesFor: #text:!accessing!public! !
 
-!MSGBOXPARAMSW class methodsFor!
+!OS.MSGBOXPARAMSW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 MSGBOXPARAMSW structure.
@@ -129,6 +129,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
-!MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
-!MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
+!OS.MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

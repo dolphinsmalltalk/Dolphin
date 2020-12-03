@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #Interval
+Core.SequenceableCollection subclass: #'Core.Interval'
 	instanceVariableNames: 'start stop step'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Interval guid: (GUID fromString: '{87b4c50d-026e-11d3-9fd7-00a0cc3e4a32}')!
-Interval comment: '<Interval>s represent a finite arithmetic progressions, that is a <sequencedReadableCollection> of numbers across a specified range and with a specified step between each element.
+Core.Interval guid: (Core.GUID fromString: '{87b4c50d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Interval comment: '<Interval>s represent a finite arithmetic progressions, that is a <sequencedReadableCollection> of numbers across a specified range and with a specified step between each element.
 
 Instance Variables:
 	start	<number>. First element in the collection.
 	stop	<number>. Last element in the collection.
 	step	<number>. Difference between elements of the collection (approximate where the elements are Floats)
 '!
-!Interval categoriesForClass!Collections-Sequenceable! !
-!Interval methodsFor!
+!Core.Interval categoriesForClass!Collections-Sequenceable! !
+!Core.Interval methodsFor!
 
 - delta
 	"Answer a new Interval the same as the receiver, but negatively offset by the specified delta."
@@ -73,7 +73,7 @@ collect: transformer
 	^answer!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		display: self start;
@@ -232,37 +232,37 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	enumerators."
 
 	startInteger to: stopInteger do: [:i | aDyadicValuable value: i value: start + (step * (i - 1))]! !
-!Interval categoriesFor: #-!arithmetic!public! !
-!Interval categoriesFor: #+!arithmetic!public! !
-!Interval categoriesFor: #=!comparing!public! !
-!Interval categoriesFor: #add:!adding!public! !
-!Interval categoriesFor: #at:!accessing!public! !
-!Interval categoriesFor: #at:put:!accessing!public! !
-!Interval categoriesFor: #collect:!enumerating!public! !
-!Interval categoriesFor: #displayOn:!printing!public! !
-!Interval categoriesFor: #first!accessing!public! !
-!Interval categoriesFor: #hash!comparing!public! !
-!Interval categoriesFor: #includes:!public!testing! !
-!Interval categoriesFor: #inject:into:!enumerating!public! !
-!Interval categoriesFor: #isEmpty!public!testing! !
-!Interval categoriesFor: #isSelfEvaluating!public!testing! !
-!Interval categoriesFor: #last!accessing!public! !
-!Interval categoriesFor: #printOn:!printing!public! !
-!Interval categoriesFor: #setFrom:to:by:!accessing!private! !
-!Interval categoriesFor: #size!accessing!public! !
-!Interval categoriesFor: #species!accessing!public! !
-!Interval categoriesFor: #start!accessing!public! !
-!Interval categoriesFor: #start:!accessing!public! !
-!Interval categoriesFor: #step!accessing!public! !
-!Interval categoriesFor: #step:!accessing!public! !
-!Interval categoriesFor: #stop!accessing!public! !
-!Interval categoriesFor: #stop:!accessing!public! !
-!Interval categoriesFor: #storeOn:!printing!public! !
-!Interval categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!Core.Interval categoriesFor: #-!arithmetic!public! !
+!Core.Interval categoriesFor: #+!arithmetic!public! !
+!Core.Interval categoriesFor: #=!comparing!public! !
+!Core.Interval categoriesFor: #add:!adding!public! !
+!Core.Interval categoriesFor: #at:!accessing!public! !
+!Core.Interval categoriesFor: #at:put:!accessing!public! !
+!Core.Interval categoriesFor: #collect:!enumerating!public! !
+!Core.Interval categoriesFor: #displayOn:!printing!public! !
+!Core.Interval categoriesFor: #first!accessing!public! !
+!Core.Interval categoriesFor: #hash!comparing!public! !
+!Core.Interval categoriesFor: #includes:!public!testing! !
+!Core.Interval categoriesFor: #inject:into:!enumerating!public! !
+!Core.Interval categoriesFor: #isEmpty!public!testing! !
+!Core.Interval categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.Interval categoriesFor: #last!accessing!public! !
+!Core.Interval categoriesFor: #printOn:!printing!public! !
+!Core.Interval categoriesFor: #setFrom:to:by:!accessing!private! !
+!Core.Interval categoriesFor: #size!accessing!public! !
+!Core.Interval categoriesFor: #species!accessing!public! !
+!Core.Interval categoriesFor: #start!accessing!public! !
+!Core.Interval categoriesFor: #start:!accessing!public! !
+!Core.Interval categoriesFor: #step!accessing!public! !
+!Core.Interval categoriesFor: #step:!accessing!public! !
+!Core.Interval categoriesFor: #stop!accessing!public! !
+!Core.Interval categoriesFor: #stop:!accessing!public! !
+!Core.Interval categoriesFor: #storeOn:!printing!public! !
+!Core.Interval categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
 
-Interval methodProtocol: #Interval attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
+Core.Interval methodProtocol: #Interval attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
 
-!Interval class methodsFor!
+!Core.Interval class methodsFor!
 
 from: fromNumber to: toNumber 
 	"Answer a new instance of the receiver representing the interval 
@@ -288,9 +288,9 @@ new
 	"Use #from:to:[by:]"
 
 	^self shouldNotImplement! !
-!Interval class categoriesFor: #from:to:!instance creation!public! !
-!Interval class categoriesFor: #from:to:by:!instance creation!public! !
-!Interval class categoriesFor: #new!instance creation!private! !
+!Core.Interval class categoriesFor: #from:to:!instance creation!public! !
+!Core.Interval class categoriesFor: #from:to:by:!instance creation!public! !
+!Core.Interval class categoriesFor: #new!instance creation!private! !
 
-Interval class methodProtocol: #'Interval factory' attributes: #(#ansi #readOnly) selectors: #(#from:to: #from:to:by:)!
+Core.Interval class methodProtocol: #'Interval factory' attributes: #(#ansi #readOnly) selectors: #(#from:to: #from:to:by:)!
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Error subclass: #Win32Fault
+OS.Win32Error subclass: #'OS.Win32Fault'
 	instanceVariableNames: 'exceptionRecord'
 	classVariableNames: 'ExceptionNames'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Fault guid: (GUID fromString: '{3b2fccea-10b3-4da2-9932-179927f451a2}')!
-Win32Fault comment: ''!
-!Win32Fault categoriesForClass!System-Exception Handling! !
-!Win32Fault methodsFor!
+OS.Win32Fault guid: (Core.GUID fromString: '{3b2fccea-10b3-4da2-9932-179927f451a2}')!
+OS.Win32Fault comment: ''!
+!OS.Win32Fault categoriesForClass!System-Exception Handling! !
+!OS.Win32Fault methodsFor!
 
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
@@ -63,18 +63,18 @@ tagFromExceptionCode: anInteger
 	code, anInteger."
 
 	^HRESULT ntStatusCode: anInteger! !
-!Win32Fault categoriesFor: #_descriptionArguments!displaying!public! !
-!Win32Fault categoriesFor: #_descriptionFormat!displaying!public! !
-!Win32Fault categoriesFor: #exceptionAddress!accessing!public! !
-!Win32Fault categoriesFor: #exceptionCode!accessing!public! !
-!Win32Fault categoriesFor: #exceptionName!accessing!public! !
-!Win32Fault categoriesFor: #exceptionRecord!accessing!public! !
-!Win32Fault categoriesFor: #exceptionRecord:!accessing!private! !
-!Win32Fault categoriesFor: #initialize!initializing!public! !
-!Win32Fault categoriesFor: #moduleFileName!accessing!public! !
-!Win32Fault categoriesFor: #tagFromExceptionCode:!accessing!private! !
+!OS.Win32Fault categoriesFor: #_descriptionArguments!displaying!public! !
+!OS.Win32Fault categoriesFor: #_descriptionFormat!displaying!public! !
+!OS.Win32Fault categoriesFor: #exceptionAddress!accessing!public! !
+!OS.Win32Fault categoriesFor: #exceptionCode!accessing!public! !
+!OS.Win32Fault categoriesFor: #exceptionName!accessing!public! !
+!OS.Win32Fault categoriesFor: #exceptionRecord!accessing!public! !
+!OS.Win32Fault categoriesFor: #exceptionRecord:!accessing!private! !
+!OS.Win32Fault categoriesFor: #initialize!initializing!public! !
+!OS.Win32Fault categoriesFor: #moduleFileName!accessing!public! !
+!OS.Win32Fault categoriesFor: #tagFromExceptionCode:!accessing!private! !
 
-!Win32Fault class methodsFor!
+!OS.Win32Fault class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -82,7 +82,7 @@ initialize
 	"
 
 	ExceptionNames := LookupTable new.
-	ExceptionNames 
+	ExceptionNames
 		at: 16rC0000005 put: (HRESULT fromInteger: ERROR_NOACCESS) displayString;
 		at: 16r80000002 put: (ExceptionNames at: 16rC0000005);
 		at: 16rC0000017 put: (HRESULT fromInteger: 8) displayString;
@@ -103,6 +103,6 @@ signal: messageText with: anEXCEPTION_RECORD
 	^self new 
 		exceptionRecord: anEXCEPTION_RECORD;
 		signal! !
-!Win32Fault class categoriesFor: #initialize!development!initializing!private! !
-!Win32Fault class categoriesFor: #signal:with:!instance creation!public! !
+!OS.Win32Fault class categoriesFor: #initialize!development!initializing!private! !
+!OS.Win32Fault class categoriesFor: #signal:with:!instance creation!public! !
 

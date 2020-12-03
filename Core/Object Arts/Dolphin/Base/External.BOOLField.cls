@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScalarField subclass: #BOOLField
+External.ScalarField subclass: #'External.BOOLField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BOOLField guid: (GUID fromString: '{87b4c4e6-026e-11d3-9fd7-00a0cc3e4a32}')!
-BOOLField comment: '<BOOLField> is a <ScalarField> class to represent <ExternalStructure> fields that are boolean values encoded as 32-bit integers, where 0 is False, and any other value is True.'!
-!BOOLField categoriesForClass!External-Data-Types! !
-!BOOLField methodsFor!
+External.BOOLField guid: (Core.GUID fromString: '{87b4c4e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.BOOLField comment: '<BOOLField> is a <ScalarField> class to represent <ExternalStructure> fields that are boolean values encoded as 32-bit integers, where 0 is False, and any other value is True.'!
+!External.BOOLField categoriesForClass!External-Data-Types! !
+!External.BOOLField methodsFor!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
@@ -42,9 +42,9 @@ writeInto: anExternalStructure value: anObject
 	<Boolean> argument, anObject."
 
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
-!BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
-!BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
-!BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
-!BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
+!External.BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!External.BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!External.BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

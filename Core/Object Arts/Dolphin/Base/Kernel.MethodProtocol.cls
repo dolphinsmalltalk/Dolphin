@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MethodProtocol
+Core.Object subclass: #'Kernel.MethodProtocol'
 	instanceVariableNames: 'name comment selectors flags'
 	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodProtocol guid: (GUID fromString: '{87b4c503-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodProtocol comment: 'MethodProtocol is a meta-information class which groups a set of selectors to form a cohesive unit of behavior which is independent of the class hierarchy. A class is said to conform to a MethodProtocol if it implements each of the selectors in the protocol, and if it claims to support the protocol, i.e. implementation of the set of selectors is a necessary but not sufficient condition because the implementation of the selectors must be as specified by the protocol. The precise semantics of the protocol are not formally specified by instances of this class, and cannot be tested by it, therefore if the programmer asserts that a class conforms to a protocol and it implements all the necessary selectors, that is deemed sufficient for conformance. A class automatically conforms to any protocols to which its superclasses conform.
+Kernel.MethodProtocol guid: (Core.GUID fromString: '{87b4c503-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.MethodProtocol comment: 'MethodProtocol is a meta-information class which groups a set of selectors to form a cohesive unit of behavior which is independent of the class hierarchy. A class is said to conform to a MethodProtocol if it implements each of the selectors in the protocol, and if it claims to support the protocol, i.e. implementation of the set of selectors is a necessary but not sufficient condition because the implementation of the selectors must be as specified by the protocol. The precise semantics of the protocol are not formally specified by instances of this class, and cannot be tested by it, therefore if the programmer asserts that a class conforms to a protocol and it implements all the necessary selectors, that is deemed sufficient for conformance. A class automatically conforms to any protocols to which its superclasses conform.
 
 If a method implementing a required protocol selector is removed from a class then the system automatically removes the protocol from the list supported by that class. Conversely if a protocol is extended by the addition of new selectors then this may result in the addition of stub method implementations to all conforming classes which do not currently respond to that selector. These stub methods raise an error when invoked and may be located by browsing the ''not yet implemented'' pseudo-category.
 
@@ -30,8 +30,8 @@ Class Variables
 	ANSIMask	<integer> Masks ANSI flag from flags instance variable
 
 '!
-!MethodProtocol categoriesForClass!System-Support! !
-!MethodProtocol methodsFor!
+!Kernel.MethodProtocol categoriesForClass!System-Support! !
+!Kernel.MethodProtocol methodsFor!
 
 <= comperand
 	"Answer whether the receiver is less than or equal to the <MethodProtocol>,
@@ -44,7 +44,7 @@ Class Variables
 
 	^self species == comperand species and: [self asSymbol == comperand asSymbol]!
 
-addAllSelectors: newSelectors 
+addAllSelectors: newSelectors
 	"Add the <collection> of <Symbol>s, newSelectors, to the set of method selectors 
 	included in the receiver's protocol. Then ensure that the MethodProtocol invariants are
 	maintained by ensuring that all conforming classes can understand the new selectors
@@ -53,16 +53,15 @@ addAllSelectors: newSelectors
 
 	| extras |
 	extras := newSelectors difference: selectors.
-	extras notEmpty 
+	extras notEmpty
 		ifTrue: 
 			["Record the additional selectors in the protocol"
-
 			selectors addAll: extras.
 
 			"Ensure all conforming classes implement the newly expanded protocols.
 		 Note that it is very important that #behaviors orders superclasses before subclasses"
 			self baseBehaviors do: 
-					[:e | 
+					[:e |
 					extras do: [:selector | self addClass: e selector: selector].
 					"Ensure class marked as changed even if no stub methods added"
 					e isChanged: true].
@@ -76,13 +75,14 @@ addClass: class
 	order to be sure that such is true, we generate default implementations for any
 	messages the class does not currently implement."
 
-	(class conformsToProtocol: self) ifFalse: [
-		self selectors do: [:s | self addClass: class selector: s].
-		class addProtocol: self.
+	(class conformsToProtocol: self)
+		ifFalse: 
+			[self selectors do: [:s | self addClass: class selector: s].
+			class addProtocol: self.
 
-		"We don't need to mark the base classes as having been changed
-		in this situation." 
-		Smalltalk trigger: #protocolUpdated: with: self ]!
+			"We don't need to mark the base classes as having been changed
+		in this situation."
+			Smalltalk trigger: #protocolUpdated: with: self]!
 
 addClass: behavior selector: selector
 	"Private - Add the <symbol>, selector, to the receiver's protocol in the <Behavior>, 
@@ -158,10 +158,8 @@ baseBehaviors
 
 	| conformers |
 	conformers := OrderedCollection new.
-	Smalltalk allBehaviorsDo: [:c | 
-		(c protocolNames includes: name) ifTrue: [conformers add: c]].
-	^conformers
-!
+	Smalltalk allBehaviorsDo: [:c | (c protocolNames includes: name) ifTrue: [conformers add: c]].
+	^conformers!
 
 behaviors
 	"Answer a <sequencedReadableCollection> of all the <ClassDescription> objects which conform
@@ -169,7 +167,7 @@ behaviors
 
 	| answer |
 	answer := OrderedCollection new: 10.
-	Smalltalk allBehaviorsDo:  [:c | (c conformsToProtocol: self) ifTrue: [answer addLast: c]].
+	Smalltalk allBehaviorsDo: [:c | (c conformsToProtocol: self) ifTrue: [answer addLast: c]].
 	^answer!
 
 comment
@@ -238,12 +236,11 @@ contents
 
 	| foundMethods |
 	foundMethods := Set new.
-	self behaviors do: [:aBehavior |
-		foundMethods addAll: (self methodsInBehavior: aBehavior)].
+	self behaviors do: [:aBehavior | foundMethods addAll: (self methodsInBehavior: aBehavior)].
 	^foundMethods!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPut: $<;
@@ -329,7 +326,7 @@ protocolUpdated
 	"Private - Flag the receiver as updated and inform any observers."
 
 	Smalltalk trigger: #protocolUpdated: with: self.
-	self updateBaseClasses.!
+	self updateBaseClasses!
 
 readOnly
 	"Set the receiver to be a read-only protocol (i.e. one which has a fixed set of selectors.
@@ -346,8 +343,7 @@ removeAllSelectors: selectorsToRemove
 	missing := IdentitySet new.
 	selectorsToRemove do: [:s | selectors remove: s ifAbsent: [missing add: s]].
 	selectorsToRemove size > missing size ifTrue: [self protocolUpdated].
-	^selectorsToRemove
-!
+	^selectorsToRemove!
 
 removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver.
@@ -381,11 +377,15 @@ rename: newName
 	sym := newName asSymbol.
 	(Protocols includesKey: sym) ifTrue: [self error: 'Duplicate protocol name'].
 	implementors do: [:i | i removeProtocol: self].
-	Protocols 
+	Protocols
 		removeKey: name;
 		at: sym put: self.
 	name := sym.
-	implementors do: [:i | i addProtocol: self; isChanged: true].
+	implementors do: 
+			[:i |
+			i
+				addProtocol: self;
+				isChanged: true].
 	Smalltalk trigger: #protocolUpdated: with: self!
 
 selectors
@@ -406,48 +406,48 @@ updateBaseClasses
 
 	self baseBehaviors do: [:each | each isChanged: true]
 ! !
-!MethodProtocol categoriesFor: #<=!comparing!public! !
-!MethodProtocol categoriesFor: #=!comparing!public! !
-!MethodProtocol categoriesFor: #addAllSelectors:!adding!public! !
-!MethodProtocol categoriesFor: #addClass:!adding!public! !
-!MethodProtocol categoriesFor: #addClass:selector:!adding!private! !
-!MethodProtocol categoriesFor: #addMethodSilently:!adding!private! !
-!MethodProtocol categoriesFor: #addProtocol:!adding!public! !
-!MethodProtocol categoriesFor: #addSelector:!adding!public! !
-!MethodProtocol categoriesFor: #ansi!modes!public! !
-!MethodProtocol categoriesFor: #asSymbol!converting!public! !
-!MethodProtocol categoriesFor: #attributes!accessing!public! !
-!MethodProtocol categoriesFor: #attributes:!accessing!private! !
-!MethodProtocol categoriesFor: #baseBehaviors!accessing!public! !
-!MethodProtocol categoriesFor: #behaviors!accessing!public! !
-!MethodProtocol categoriesFor: #comment!accessing!public! !
-!MethodProtocol categoriesFor: #comment:!accessing!public! !
-!MethodProtocol categoriesFor: #compileStub:into:!adding!private! !
-!MethodProtocol categoriesFor: #contents!enumerating!public! !
-!MethodProtocol categoriesFor: #displayOn:!displaying!public! !
-!MethodProtocol categoriesFor: #hash!comparing!public! !
-!MethodProtocol categoriesFor: #includesMethod:!public!testing! !
-!MethodProtocol categoriesFor: #includesSelector:!public!testing! !
-!MethodProtocol categoriesFor: #initialize!initializing!private! !
-!MethodProtocol categoriesFor: #isANSI!public!testing! !
-!MethodProtocol categoriesFor: #isANSI:!modes!public! !
-!MethodProtocol categoriesFor: #isReadOnly!public!testing! !
-!MethodProtocol categoriesFor: #isReadOnly:!modes!public! !
-!MethodProtocol categoriesFor: #methodsInBehavior:!enumerating!public! !
-!MethodProtocol categoriesFor: #name!accessing!public! !
-!MethodProtocol categoriesFor: #printOn:!printing!public! !
-!MethodProtocol categoriesFor: #protocolUpdated!private!updating! !
-!MethodProtocol categoriesFor: #readOnly!modes!public! !
-!MethodProtocol categoriesFor: #removeAllSelectors:!public!removing! !
-!MethodProtocol categoriesFor: #removeClass:!public!removing! !
-!MethodProtocol categoriesFor: #removeSelector:!public!removing! !
-!MethodProtocol categoriesFor: #removeSelector:ifAbsent:!public!removing! !
-!MethodProtocol categoriesFor: #rename:!operations!public! !
-!MethodProtocol categoriesFor: #selectors!accessing!public! !
-!MethodProtocol categoriesFor: #setName:!accessing!private! !
-!MethodProtocol categoriesFor: #updateBaseClasses!private!updating! !
+!Kernel.MethodProtocol categoriesFor: #<=!comparing!public! !
+!Kernel.MethodProtocol categoriesFor: #=!comparing!public! !
+!Kernel.MethodProtocol categoriesFor: #addAllSelectors:!adding!public! !
+!Kernel.MethodProtocol categoriesFor: #addClass:!adding!public! !
+!Kernel.MethodProtocol categoriesFor: #addClass:selector:!adding!private! !
+!Kernel.MethodProtocol categoriesFor: #addMethodSilently:!adding!private! !
+!Kernel.MethodProtocol categoriesFor: #addProtocol:!adding!public! !
+!Kernel.MethodProtocol categoriesFor: #addSelector:!adding!public! !
+!Kernel.MethodProtocol categoriesFor: #ansi!modes!public! !
+!Kernel.MethodProtocol categoriesFor: #asSymbol!converting!public! !
+!Kernel.MethodProtocol categoriesFor: #attributes!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #attributes:!accessing!private! !
+!Kernel.MethodProtocol categoriesFor: #baseBehaviors!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #behaviors!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #comment!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #comment:!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #compileStub:into:!adding!private! !
+!Kernel.MethodProtocol categoriesFor: #contents!enumerating!public! !
+!Kernel.MethodProtocol categoriesFor: #displayOn:!displaying!public! !
+!Kernel.MethodProtocol categoriesFor: #hash!comparing!public! !
+!Kernel.MethodProtocol categoriesFor: #includesMethod:!public!testing! !
+!Kernel.MethodProtocol categoriesFor: #includesSelector:!public!testing! !
+!Kernel.MethodProtocol categoriesFor: #initialize!initializing!private! !
+!Kernel.MethodProtocol categoriesFor: #isANSI!public!testing! !
+!Kernel.MethodProtocol categoriesFor: #isANSI:!modes!public! !
+!Kernel.MethodProtocol categoriesFor: #isReadOnly!public!testing! !
+!Kernel.MethodProtocol categoriesFor: #isReadOnly:!modes!public! !
+!Kernel.MethodProtocol categoriesFor: #methodsInBehavior:!enumerating!public! !
+!Kernel.MethodProtocol categoriesFor: #name!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #printOn:!printing!public! !
+!Kernel.MethodProtocol categoriesFor: #protocolUpdated!private!updating! !
+!Kernel.MethodProtocol categoriesFor: #readOnly!modes!public! !
+!Kernel.MethodProtocol categoriesFor: #removeAllSelectors:!public!removing! !
+!Kernel.MethodProtocol categoriesFor: #removeClass:!public!removing! !
+!Kernel.MethodProtocol categoriesFor: #removeSelector:!public!removing! !
+!Kernel.MethodProtocol categoriesFor: #removeSelector:ifAbsent:!public!removing! !
+!Kernel.MethodProtocol categoriesFor: #rename:!operations!public! !
+!Kernel.MethodProtocol categoriesFor: #selectors!accessing!public! !
+!Kernel.MethodProtocol categoriesFor: #setName:!accessing!private! !
+!Kernel.MethodProtocol categoriesFor: #updateBaseClasses!private!updating! !
 
-!MethodProtocol class methodsFor!
+!Kernel.MethodProtocol class methodsFor!
 
 allMethodProtocols
 	"Answer the a <collection> of all <MethodProtocols>s current registered in the system.
@@ -475,9 +475,8 @@ initialize
 
 	StubAddedSignal := NotificationSignal description: '%1'.
 	Protocols isNil ifTrue: [self initializeProtocols].
-
 	ReadOnlyMask := 1.
-	ANSIMask := 2.!
+	ANSIMask := 2!
 
 initializeProtocols
 	"Private - Discard all existing protocols."
@@ -507,12 +506,10 @@ purgeUnused
 	| allUsed |
 	allUsed := IdentitySet new.
 	Smalltalk allBehaviorsDo: [:c | allUsed addAll: c protocols].
-	(Protocols difference: allUsed) do: [:p | 
-		self assert: [p behaviors isEmpty].
-		Protocols removeKey: p name]
-
-		
-		!
+	(Protocols difference: allUsed) do: 
+			[:p |
+			self assert: [p behaviors isEmpty].
+			Protocols removeKey: p name]!
 
 removeProtocol: protocolName
 	"Remove the <MethodProtocol>, named by the <symbol>, protocolName, from the system."
@@ -535,15 +532,15 @@ stubAddedSignal
 	automatically in order to keep a class' protocol implementation complete."
 
 	^StubAddedSignal! !
-!MethodProtocol class categoriesFor: #allMethodProtocols!accessing!public! !
-!MethodProtocol class categoriesFor: #existing:!instance creation!public! !
-!MethodProtocol class categoriesFor: #exists:!public!testing! !
-!MethodProtocol class categoriesFor: #initialize!development!initializing!private! !
-!MethodProtocol class categoriesFor: #initializeProtocols!initializing!private! !
-!MethodProtocol class categoriesFor: #name:!instance creation!public! !
-!MethodProtocol class categoriesFor: #new!instance creation!public! !
-!MethodProtocol class categoriesFor: #purgeUnused!operations!public! !
-!MethodProtocol class categoriesFor: #removeProtocol:!public!removing! !
-!MethodProtocol class categoriesFor: #separator!constants!private! !
-!MethodProtocol class categoriesFor: #stubAddedSignal!accessing!private! !
+!Kernel.MethodProtocol class categoriesFor: #allMethodProtocols!accessing!public! !
+!Kernel.MethodProtocol class categoriesFor: #existing:!instance creation!public! !
+!Kernel.MethodProtocol class categoriesFor: #exists:!public!testing! !
+!Kernel.MethodProtocol class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.MethodProtocol class categoriesFor: #initializeProtocols!initializing!private! !
+!Kernel.MethodProtocol class categoriesFor: #name:!instance creation!public! !
+!Kernel.MethodProtocol class categoriesFor: #new!instance creation!public! !
+!Kernel.MethodProtocol class categoriesFor: #purgeUnused!operations!public! !
+!Kernel.MethodProtocol class categoriesFor: #removeProtocol:!public!removing! !
+!Kernel.MethodProtocol class categoriesFor: #separator!constants!private! !
+!Kernel.MethodProtocol class categoriesFor: #stubAddedSignal!accessing!private! !
 

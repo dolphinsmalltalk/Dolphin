@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SourceFiler
+Core.Object subclass: #'Kernel.SourceFiler'
 	instanceVariableNames: 'stream evaluationContext flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SourceOnlyMask' -> 16r1
 	}!
-SourceFiler guid: (GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
-SourceFiler isAbstract: true!
-SourceFiler comment: ''!
-!SourceFiler categoriesForClass!Development!System-Support! !
-!SourceFiler methodsFor!
+Kernel.SourceFiler guid: (Core.GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
+Kernel.SourceFiler isNonInstantiable: true!
+Kernel.SourceFiler comment: ''!
+!Kernel.SourceFiler categoriesForClass!Development!System-Support! !
+!Kernel.SourceFiler methodsFor!
 
 atEnd
 	"Answer whether the receiver is at the end of its source stream."
@@ -110,27 +110,27 @@ stream
 	"Private - Answer the value of the receiver's ''stream'' instance variable."
 
 	^stream! !
-!SourceFiler categoriesFor: #atEnd!public!testing! !
-!SourceFiler categoriesFor: #close!operations!public! !
-!SourceFiler categoriesFor: #cr!accessing!public! !
-!SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
-!SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
-!SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
-!SourceFiler categoriesFor: #evaluationContext!accessing!public! !
-!SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
-!SourceFiler categoriesFor: #fileIn!public!source filing! !
-!SourceFiler categoriesFor: #flush!operations!public! !
-!SourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
-!SourceFiler categoriesFor: #isSourceOnly!accessing!public! !
-!SourceFiler categoriesFor: #isSourceOnly:!accessing!public! !
-!SourceFiler categoriesFor: #setStream:!initializing!private! !
-!SourceFiler categoriesFor: #setToEnd!positioning!public! !
-!SourceFiler categoriesFor: #sourcePositionFromDescriptor:!private!source filing! !
-!SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
-!SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
-!SourceFiler categoriesFor: #stream!accessing!private! !
+!Kernel.SourceFiler categoriesFor: #atEnd!public!testing! !
+!Kernel.SourceFiler categoriesFor: #close!operations!public! !
+!Kernel.SourceFiler categoriesFor: #cr!accessing!public! !
+!Kernel.SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #evaluationContext!accessing!public! !
+!Kernel.SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
+!Kernel.SourceFiler categoriesFor: #fileIn!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #flush!operations!public! !
+!Kernel.SourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #isSourceOnly!accessing!public! !
+!Kernel.SourceFiler categoriesFor: #isSourceOnly:!accessing!public! !
+!Kernel.SourceFiler categoriesFor: #setStream:!initializing!private! !
+!Kernel.SourceFiler categoriesFor: #setToEnd!positioning!public! !
+!Kernel.SourceFiler categoriesFor: #sourcePositionFromDescriptor:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #stream!accessing!private! !
 
-!SourceFiler class methodsFor!
+!Kernel.SourceFiler class methodsFor!
 
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 
@@ -139,5 +139,5 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
-!SourceFiler class categoriesFor: #on:!instance creation!public! !
+!Kernel.SourceFiler class categoriesFor: #on:!instance creation!public! !
 

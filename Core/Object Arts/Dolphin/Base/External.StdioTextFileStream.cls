@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StdioFileStream subclass: #StdioTextFileStream
+External.StdioFileStream subclass: #'External.StdioTextFileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StdioTextFileStream guid: (GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
-StdioTextFileStream isAbstract: true!
-StdioTextFileStream comment: ''!
-!StdioTextFileStream categoriesForClass!Collections-Streams! !
-!StdioTextFileStream methodsFor!
+External.StdioTextFileStream guid: (Core.GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
+External.StdioTextFileStream isNonInstantiable: true!
+External.StdioTextFileStream comment: ''!
+!External.StdioTextFileStream categoriesForClass!Collections-Streams! !
+!External.StdioTextFileStream methodsFor!
 
 cr
 	"Store the line delimiter character sequence (as required by
@@ -125,24 +125,24 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
-!StdioTextFileStream categoriesFor: #cr!accessing!public! !
-!StdioTextFileStream categoriesFor: #externalType!accessing!public! !
-!StdioTextFileStream categoriesFor: #getString:!accessing!private! !
-!StdioTextFileStream categoriesFor: #isText!public!testing! !
-!StdioTextFileStream categoriesFor: #next!accessing!public! !
-!StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
-!StdioTextFileStream categoriesFor: #peek!accessing!public! !
-!StdioTextFileStream categoriesFor: #peekFor:!accessing!public! !
-!StdioTextFileStream categoriesFor: #upToEnd!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #cr!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #externalType!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #getString:!accessing!private! !
+!External.StdioTextFileStream categoriesFor: #isText!public!testing! !
+!External.StdioTextFileStream categoriesFor: #next!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #peek!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #peekFor:!accessing!public! !
+!External.StdioTextFileStream categoriesFor: #upToEnd!accessing!public! !
 
-StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
+External.StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+External.StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
-!StdioTextFileStream class methodsFor!
+!External.StdioTextFileStream class methodsFor!
 
 encodingMode
 	^$t! !
-!StdioTextFileStream class categoriesFor: #encodingMode!constants!private! !
+!External.StdioTextFileStream class categoriesFor: #encodingMode!constants!private! !
 

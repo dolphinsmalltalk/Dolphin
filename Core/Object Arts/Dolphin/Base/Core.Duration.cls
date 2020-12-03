@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Magnitude subclass: #Duration
+Core.Magnitude subclass: #'Core.Duration'
 	instanceVariableNames: 'seconds'
 	classVariableNames: 'Zero'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SecondsPerDay' -> 16r15180.
 		'SecondsPerHour' -> 16rE10
 	}!
-Duration guid: (GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
-Duration comment: '`Duration` is an implementation of the ANSI Smalltalk protocols `<Duration>` (instance side) and `<Duration factory>` (class side).
+Core.Duration guid: (Core.GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Duration comment: '`Duration` is an implementation of the ANSI Smalltalk protocols `<Duration>` (instance side) and `<Duration factory>` (class side).
 
 A `Duration` represents a length of time, at any resolution, and is independent of any start or end point. `Duration`s are immutable.
 
@@ -34,8 +34,8 @@ A `Duration` represents a length of time, at any resolution, and is independent 
   `Zero`				Constant for <Duration factory> zero
 
 '!
-!Duration categoriesForClass!Kernel-Chronology! !
-!Duration methodsFor!
+!Core.Duration categoriesForClass!Kernel-Chronology! !
+!Core.Duration methodsFor!
 
 - aDuration
 	"Answer a <Duration> whose value is the result of subtracting the <Duration> operand from the receiver"
@@ -107,7 +107,7 @@ days
 	^seconds quo: SecondsPerDay!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream locale displayDuration: self on: aPuttableStream!
 
@@ -231,43 +231,43 @@ subtractFromDateAndTime: aDateAndTime
 	<DateAndTime> representing the receiver subtracted from the argument"
 
 	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds! !
-!Duration categoriesFor: #-!arithmetic!public! !
-!Duration categoriesFor: #*!arithmetic!public! !
-!Duration categoriesFor: #/!arithmetic!public! !
-!Duration categoriesFor: #+!arithmetic!public! !
-!Duration categoriesFor: #<!comparing!public! !
-!Duration categoriesFor: #=!comparing!public! !
-!Duration categoriesFor: #abs!arithmetic!public! !
-!Duration categoriesFor: #asMicroseconds!converting!public! !
-!Duration categoriesFor: #asMilliseconds!converting!public! !
-!Duration categoriesFor: #asNanoseconds!converting!public! !
-!Duration categoriesFor: #asSeconds!converting!public! !
-!Duration categoriesFor: #days!accessing!public! !
-!Duration categoriesFor: #displayOn:!printing!public! !
-!Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
-!Duration categoriesFor: #hash!comparing!public! !
-!Duration categoriesFor: #hours!accessing!public! !
-!Duration categoriesFor: #humanReadablePrintString!printing!public! !
-!Duration categoriesFor: #isZero!public!testing! !
-!Duration categoriesFor: #microseconds!accessing!public! !
-!Duration categoriesFor: #milliseconds!accessing!public! !
-!Duration categoriesFor: #minutes!accessing!public! !
-!Duration categoriesFor: #nanoseconds!accessing!public! !
-!Duration categoriesFor: #negated!arithmetic!public! !
-!Duration categoriesFor: #negative!public!testing! !
-!Duration categoriesFor: #positive!public!testing! !
-!Duration categoriesFor: #printHumanReadableOn:!printing!public! !
-!Duration categoriesFor: #printOn:!printing!public! !
-!Duration categoriesFor: #printOn:format:!printing!public! !
-!Duration categoriesFor: #printStringFormat:!printing!public! !
-!Duration categoriesFor: #seconds!accessing!public! !
-!Duration categoriesFor: #setSeconds:!initializing!private! !
-!Duration categoriesFor: #storeOn:!printing!public! !
-!Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
+!Core.Duration categoriesFor: #-!arithmetic!public! !
+!Core.Duration categoriesFor: #*!arithmetic!public! !
+!Core.Duration categoriesFor: #/!arithmetic!public! !
+!Core.Duration categoriesFor: #+!arithmetic!public! !
+!Core.Duration categoriesFor: #<!comparing!public! !
+!Core.Duration categoriesFor: #=!comparing!public! !
+!Core.Duration categoriesFor: #abs!arithmetic!public! !
+!Core.Duration categoriesFor: #asMicroseconds!converting!public! !
+!Core.Duration categoriesFor: #asMilliseconds!converting!public! !
+!Core.Duration categoriesFor: #asNanoseconds!converting!public! !
+!Core.Duration categoriesFor: #asSeconds!converting!public! !
+!Core.Duration categoriesFor: #days!accessing!public! !
+!Core.Duration categoriesFor: #displayOn:!printing!public! !
+!Core.Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
+!Core.Duration categoriesFor: #hash!comparing!public! !
+!Core.Duration categoriesFor: #hours!accessing!public! !
+!Core.Duration categoriesFor: #humanReadablePrintString!printing!public! !
+!Core.Duration categoriesFor: #isZero!public!testing! !
+!Core.Duration categoriesFor: #microseconds!accessing!public! !
+!Core.Duration categoriesFor: #milliseconds!accessing!public! !
+!Core.Duration categoriesFor: #minutes!accessing!public! !
+!Core.Duration categoriesFor: #nanoseconds!accessing!public! !
+!Core.Duration categoriesFor: #negated!arithmetic!public! !
+!Core.Duration categoriesFor: #negative!public!testing! !
+!Core.Duration categoriesFor: #positive!public!testing! !
+!Core.Duration categoriesFor: #printHumanReadableOn:!printing!public! !
+!Core.Duration categoriesFor: #printOn:!printing!public! !
+!Core.Duration categoriesFor: #printOn:format:!printing!public! !
+!Core.Duration categoriesFor: #printStringFormat:!printing!public! !
+!Core.Duration categoriesFor: #seconds!accessing!public! !
+!Core.Duration categoriesFor: #setSeconds:!initializing!private! !
+!Core.Duration categoriesFor: #storeOn:!printing!public! !
+!Core.Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
 
-Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
+Core.Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
 
-!Duration class methodsFor!
+!Core.Duration class methodsFor!
 
 days: aNumber
 	"Answer a <Duration> representing the specified <number> of days.
@@ -287,7 +287,7 @@ errorInvalidFormat
 
 	^InvalidFormat signalWith: self!
 
-fromString: aString 
+fromString: aString
 	"Answer an instance of the receiver constructed from the <String> argument, assumed to be expressed in the same format used for the printString of the receiver's instances."
 
 	^self readFrom: (ReadStream on: aString)!
@@ -399,22 +399,22 @@ zero
 	"Answer a <Duration> representing an empty interval of time."
 
 	^Zero ifNil: [Zero := self seconds: 0]! !
-!Duration class categoriesFor: #days:!instance creation!public! !
-!Duration class categoriesFor: #days:hours:minutes:seconds:!instance creation!public! !
-!Duration class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Duration class categoriesFor: #fromString:!instance creation!public! !
-!Duration class categoriesFor: #hours:!instance creation!public! !
-!Duration class categoriesFor: #hours:minutes:!instance creation!public! !
-!Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Duration class categoriesFor: #microseconds:!instance creation!public! !
-!Duration class categoriesFor: #milliseconds:!instance creation!public! !
-!Duration class categoriesFor: #minutes:!instance creation!public! !
-!Duration class categoriesFor: #nanoseconds:!instance creation!public! !
-!Duration class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Duration class categoriesFor: #readFrom:!instance creation!public! !
-!Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
-!Duration class categoriesFor: #seconds:!instance creation!public! !
-!Duration class categoriesFor: #zero!instance creation!public! !
+!Core.Duration class categoriesFor: #days:!instance creation!public! !
+!Core.Duration class categoriesFor: #days:hours:minutes:seconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #errorInvalidFormat!exceptions!private! !
+!Core.Duration class categoriesFor: #fromString:!instance creation!public! !
+!Core.Duration class categoriesFor: #hours:!instance creation!public! !
+!Core.Duration class categoriesFor: #hours:minutes:!instance creation!public! !
+!Core.Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #microseconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #milliseconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #minutes:!instance creation!public! !
+!Core.Duration class categoriesFor: #nanoseconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Core.Duration class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
+!Core.Duration class categoriesFor: #seconds:!instance creation!public! !
+!Core.Duration class categoriesFor: #zero!instance creation!public! !
 
-Duration class methodProtocol: #'Duration factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #days:hours:minutes:seconds: #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #seconds: #yourself #zero)!
+Core.Duration class methodProtocol: #'Duration factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #days:hours:minutes:seconds: #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #seconds: #yourself #zero)!
 

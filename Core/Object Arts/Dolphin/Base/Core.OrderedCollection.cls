@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequencedGrowableCollection variableSubclass: #OrderedCollection
+Core.SequencedGrowableCollection variableSubclass: #'Core.OrderedCollection'
 	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OrderedCollection guid: (GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
-OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
-!OrderedCollection categoriesForClass!Collections-Sequenceable! !
-!OrderedCollection methodsFor!
+Core.OrderedCollection guid: (Core.GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
+!Core.OrderedCollection categoriesForClass!Collections-Sequenceable! !
+!Core.OrderedCollection methodsFor!
 
 add: newElement afterIndex: index
 	"Add newElement to the receiver immediately after the element currently at the
@@ -19,7 +19,7 @@ add: newElement afterIndex: index
 	| basicIndex |
 	basicIndex := index + firstIndex.
 	(basicIndex > (lastIndex + 1) or: [basicIndex < firstIndex]) ifTrue: [^self errorSubscriptBounds: index].
-	lastIndex == self basicSize ifTrue: [  
+	lastIndex == self basicSize ifTrue: [ 
 		self makeRoomAtEndFor: 1.
 		basicIndex := index + firstIndex].
 	"Slide the elements down the collection toward the new end to make room for the insertion"
@@ -526,54 +526,54 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 
 	startInteger to: stopInteger
 		do: [:i | aDyadicValuable value: i value: (self basicAt: i + firstIndex - 1)]! !
-!OrderedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!OrderedCollection categoriesFor: #addAllFirst:!adding!public! !
-!OrderedCollection categoriesFor: #addAllLast:!adding!public! !
-!OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!OrderedCollection categoriesFor: #addFirst:!adding!public! !
-!OrderedCollection categoriesFor: #addLast:!adding!public! !
-!OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!OrderedCollection categoriesFor: #at:!accessing!public! !
-!OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!OrderedCollection categoriesFor: #at:put:!accessing!public! !
-!OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
-!OrderedCollection categoriesFor: #copyWith:!copying!public! !
-!OrderedCollection categoriesFor: #copyWithout:!copying!public! !
-!OrderedCollection categoriesFor: #copyWithoutIndex:!copying!public! !
-!OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
-!OrderedCollection categoriesFor: #do:!enumerating!public! !
-!OrderedCollection categoriesFor: #findFirst:!public!searching! !
-!OrderedCollection categoriesFor: #first!accessing!public! !
-!OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
-!OrderedCollection categoriesFor: #includes:!public!searching! !
-!OrderedCollection categoriesFor: #initialize!initializing!public! !
-!OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
-!OrderedCollection categoriesFor: #insert:before:!adding!private! !
-!OrderedCollection categoriesFor: #isEmpty!public!testing! !
-!OrderedCollection categoriesFor: #last!accessing!public! !
-!OrderedCollection categoriesFor: #lookup:!accessing!public! !
-!OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
-!OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
-!OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!OrderedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!OrderedCollection categoriesFor: #removeAll!public!removing! !
-!OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
-!OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
-!OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!OrderedCollection categoriesFor: #resize:!mutating!private! !
-!OrderedCollection categoriesFor: #reversedFrom:to:!copying!public! !
-!OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
-!OrderedCollection categoriesFor: #select:!enumerating!public! !
-!OrderedCollection categoriesFor: #setSize:!accessing!public! !
-!OrderedCollection categoriesFor: #size!accessing!public! !
-!OrderedCollection categoriesFor: #sortUsing:!public!sorting! !
-!OrderedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
-!OrderedCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!Core.OrderedCollection categoriesFor: #add:afterIndex:!adding!public! !
+!Core.OrderedCollection categoriesFor: #addAllFirst:!adding!public! !
+!Core.OrderedCollection categoriesFor: #addAllLast:!adding!public! !
+!Core.OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
+!Core.OrderedCollection categoriesFor: #addFirst:!adding!public! !
+!Core.OrderedCollection categoriesFor: #addLast:!adding!public! !
+!Core.OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
+!Core.OrderedCollection categoriesFor: #at:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #at:put:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
+!Core.OrderedCollection categoriesFor: #copyWith:!copying!public! !
+!Core.OrderedCollection categoriesFor: #copyWithout:!copying!public! !
+!Core.OrderedCollection categoriesFor: #copyWithoutIndex:!copying!public! !
+!Core.OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
+!Core.OrderedCollection categoriesFor: #do:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #findFirst:!public!searching! !
+!Core.OrderedCollection categoriesFor: #first!accessing!public! !
+!Core.OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
+!Core.OrderedCollection categoriesFor: #includes:!public!searching! !
+!Core.OrderedCollection categoriesFor: #initialize!initializing!public! !
+!Core.OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #insert:before:!adding!private! !
+!Core.OrderedCollection categoriesFor: #isEmpty!public!testing! !
+!Core.OrderedCollection categoriesFor: #last!accessing!public! !
+!Core.OrderedCollection categoriesFor: #lookup:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
+!Core.OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
+!Core.OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!Core.OrderedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Core.OrderedCollection categoriesFor: #removeAll!public!removing! !
+!Core.OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
+!Core.OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
+!Core.OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.OrderedCollection categoriesFor: #resize:!mutating!private! !
+!Core.OrderedCollection categoriesFor: #reversedFrom:to:!copying!public! !
+!Core.OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #select:!enumerating!public! !
+!Core.OrderedCollection categoriesFor: #setSize:!accessing!public! !
+!Core.OrderedCollection categoriesFor: #size!accessing!public! !
+!Core.OrderedCollection categoriesFor: #sortUsing:!public!sorting! !
+!Core.OrderedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.OrderedCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
-!OrderedCollection class methodsFor!
+!Core.OrderedCollection class methodsFor!
 
 new
 	"Answer a new instance of the receiver with sufficient capacity (initially)
@@ -600,7 +600,7 @@ ofSize: count
 	^(self basicNew: count)
 		firstIndex: 1
 		lastIndex: count! !
-!OrderedCollection class categoriesFor: #new!instance creation!public! !
-!OrderedCollection class categoriesFor: #new:!instance creation!public! !
-!OrderedCollection class categoriesFor: #ofSize:!instance creation!private! !
+!Core.OrderedCollection class categoriesFor: #new!instance creation!public! !
+!Core.OrderedCollection class categoriesFor: #new:!instance creation!public! !
+!Core.OrderedCollection class categoriesFor: #ofSize:!instance creation!private! !
 

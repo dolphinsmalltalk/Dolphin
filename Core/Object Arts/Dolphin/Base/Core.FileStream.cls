@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ReadWriteStream subclass: #FileStream
+Core.ReadWriteStream subclass: #'Core.FileStream'
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
 	classVariableNames: 'BufferClasses'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BufferUpdatedMask' -> 16r3.
@@ -12,8 +12,8 @@ ReadWriteStream subclass: #FileStream
 		'OwnsFileMask' -> 16r100.
 		'PageSize' -> 16r2000
 	}!
-FileStream guid: (GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
+Core.FileStream guid: (Core.GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
 
 The collection instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
 
@@ -40,8 +40,8 @@ FileStream can read and write files as binary or text. It supports a number of i
 
 
 '!
-!FileStream categoriesForClass!Collections-Streams!I/O-Streams! !
-!FileStream methodsFor!
+!Core.FileStream categoriesForClass!Collections-Streams!I/O-Streams! !
+!Core.FileStream methodsFor!
 
 absolutePosition
 	"Private - Answer the absolute (zero-based) position of the file pointer from the start of
@@ -201,7 +201,8 @@ beBinary
 	"Treat the elements of the stream as bytes (Integers)."
 
 	Notification deprecated.	"Only works correctly for switching from AnsiString"
-	(collection isKindOf: UtfEncodedString) ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
+	(collection isKindOf: UtfEncodedString)
+		ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
 	collection := collection asByteArray!
 
 beText
@@ -502,10 +503,16 @@ readPageFor: anInteger
 			 previously visited page. This is necessary in case we position beyond the
 			 current end of file and write some data - we don't want stale data from the
 			 previous page showing through."
-			KernelLibrary default zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
+			OS.KernelLibrary default zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
 
 reset
 	self position: 0!
+
+reverseContents
+	"Answer a copy of the receiver's contents in reverse order.
+	Override back to the SequencedStream implementation because the receiver's collection is not necessarily the entire file content."
+
+	^self contents reverse!
 
 setToEnd
 	"Set the file pointer to the end of the file. The current page is flushed and the last page in the file
@@ -543,58 +550,59 @@ writePage
 		position: pageBase - 1;
 		write: collection count: readLimit.
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
-!FileStream categoriesFor: #absolutePosition!accessing!private! !
-!FileStream categoriesFor: #atEnd!public!testing! !
-!FileStream categoriesFor: #basicNext!accessing!public! !
-!FileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!FileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!FileStream categoriesFor: #basicNextPut:!accessing!private! !
-!FileStream categoriesFor: #basicUpTo:!accessing!private! !
-!FileStream categoriesFor: #beBinary!modes!public! !
-!FileStream categoriesFor: #beText!modes!public! !
-!FileStream categoriesFor: #bufferClassFor:mode:type:!instance creation!private! !
-!FileStream categoriesFor: #close!operations!public! !
-!FileStream categoriesFor: #contents!accessing!public! !
-!FileStream categoriesFor: #externalType!accessing!public! !
-!FileStream categoriesFor: #file!accessing!public! !
-!FileStream categoriesFor: #file:mode:type:!instance creation!private! !
-!FileStream categoriesFor: #flush!buffer!public! !
-!FileStream categoriesFor: #free!operations!public! !
-!FileStream categoriesFor: #fullFlush!buffer!public! !
-!FileStream categoriesFor: #growCollection!operations!private! !
-!FileStream categoriesFor: #initialRead!buffer!private! !
-!FileStream categoriesFor: #isBinary!public!testing! !
-!FileStream categoriesFor: #isBufferDirty!buffer!private! !
-!FileStream categoriesFor: #isText!public!testing! !
-!FileStream categoriesFor: #isWriteable!public!testing! !
-!FileStream categoriesFor: #lastPosition!accessing!private! !
-!FileStream categoriesFor: #makeBufferOfSize:!buffer!private! !
-!FileStream categoriesFor: #name!accessing!private! !
-!FileStream categoriesFor: #next!accessing!public! !
-!FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!FileStream categoriesFor: #nextAvailable!accessing!public! !
-!FileStream categoriesFor: #nextPut:!accessing!public! !
-!FileStream categoriesFor: #nextPutAll:!accessing!public! !
-!FileStream categoriesFor: #on:file:!initializing!private! !
-!FileStream categoriesFor: #ownsFile!accessing!public! !
-!FileStream categoriesFor: #ownsFile:!accessing!public! !
-!FileStream categoriesFor: #position!accessing!public! !
-!FileStream categoriesFor: #position:!accessing!positioning!public! !
-!FileStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
-!FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!FileStream categoriesFor: #readPageFor:!buffer!private! !
-!FileStream categoriesFor: #reset!positioning!public! !
-!FileStream categoriesFor: #setToEnd!positioning!public! !
-!FileStream categoriesFor: #size!accessing!public! !
-!FileStream categoriesFor: #skip:!positioning!public! !
-!FileStream categoriesFor: #updateLimits!accessing!positioning!private! !
-!FileStream categoriesFor: #writePage!helpers!private! !
+!Core.FileStream categoriesFor: #absolutePosition!accessing!private! !
+!Core.FileStream categoriesFor: #atEnd!public!testing! !
+!Core.FileStream categoriesFor: #basicNext!accessing!public! !
+!Core.FileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Core.FileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
+!Core.FileStream categoriesFor: #basicNextPut:!accessing!private! !
+!Core.FileStream categoriesFor: #basicUpTo:!accessing!private! !
+!Core.FileStream categoriesFor: #beBinary!modes!public! !
+!Core.FileStream categoriesFor: #beText!modes!public! !
+!Core.FileStream categoriesFor: #bufferClassFor:mode:type:!instance creation!private! !
+!Core.FileStream categoriesFor: #close!operations!public! !
+!Core.FileStream categoriesFor: #contents!accessing!public! !
+!Core.FileStream categoriesFor: #externalType!accessing!public! !
+!Core.FileStream categoriesFor: #file!accessing!public! !
+!Core.FileStream categoriesFor: #file:mode:type:!instance creation!private! !
+!Core.FileStream categoriesFor: #flush!buffer!public! !
+!Core.FileStream categoriesFor: #free!operations!public! !
+!Core.FileStream categoriesFor: #fullFlush!buffer!public! !
+!Core.FileStream categoriesFor: #growCollection!operations!private! !
+!Core.FileStream categoriesFor: #initialRead!buffer!private! !
+!Core.FileStream categoriesFor: #isBinary!public!testing! !
+!Core.FileStream categoriesFor: #isBufferDirty!buffer!private! !
+!Core.FileStream categoriesFor: #isText!public!testing! !
+!Core.FileStream categoriesFor: #isWriteable!public!testing! !
+!Core.FileStream categoriesFor: #lastPosition!accessing!private! !
+!Core.FileStream categoriesFor: #makeBufferOfSize:!buffer!private! !
+!Core.FileStream categoriesFor: #name!accessing!private! !
+!Core.FileStream categoriesFor: #next!accessing!public! !
+!Core.FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!Core.FileStream categoriesFor: #nextAvailable!accessing!public! !
+!Core.FileStream categoriesFor: #nextPut:!accessing!public! !
+!Core.FileStream categoriesFor: #nextPutAll:!accessing!public! !
+!Core.FileStream categoriesFor: #on:file:!initializing!private! !
+!Core.FileStream categoriesFor: #ownsFile!accessing!public! !
+!Core.FileStream categoriesFor: #ownsFile:!accessing!public! !
+!Core.FileStream categoriesFor: #position!accessing!public! !
+!Core.FileStream categoriesFor: #position:!accessing!positioning!public! !
+!Core.FileStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
+!Core.FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
+!Core.FileStream categoriesFor: #readPageFor:!buffer!private! !
+!Core.FileStream categoriesFor: #reset!positioning!public! !
+!Core.FileStream categoriesFor: #reverseContents!accessing!public! !
+!Core.FileStream categoriesFor: #setToEnd!positioning!public! !
+!Core.FileStream categoriesFor: #size!accessing!public! !
+!Core.FileStream categoriesFor: #skip:!positioning!public! !
+!Core.FileStream categoriesFor: #updateLimits!accessing!positioning!private! !
+!Core.FileStream categoriesFor: #writePage!helpers!private! !
 
-FileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
-FileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #externalType #isBinary #isEmpty #isText #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
-FileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
+Core.FileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
+Core.FileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #externalType #isBinary #isEmpty #isText #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
+Core.FileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
-!FileStream class methodsFor!
+!Core.FileStream class methodsFor!
 
 bufferSize
 	"Answer the size of the buffer to be used."
@@ -796,25 +804,25 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
-!FileStream class categoriesFor: #bufferSize!constants!public! !
-!FileStream class categoriesFor: #file:mode:type:!instance creation!private! !
-!FileStream class categoriesFor: #initialize!development!initializing!private! !
-!FileStream class categoriesFor: #on:!instance creation!public! !
-!FileStream class categoriesFor: #on:text:!instance creation!public! !
-!FileStream class categoriesFor: #on:type:!instance creation!public! !
-!FileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
-!FileStream class categoriesFor: #read:!instance creation!public! !
-!FileStream class categoriesFor: #read:text:!instance creation!public! !
-!FileStream class categoriesFor: #read:type:!instance creation!public! !
-!FileStream class categoriesFor: #readWrite:!instance creation!public! !
-!FileStream class categoriesFor: #readWrite:text:!instance creation!public! !
-!FileStream class categoriesFor: #write:!instance creation!public! !
-!FileStream class categoriesFor: #write:mode:!instance creation!public! !
-!FileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
-!FileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
-!FileStream class categoriesFor: #write:mode:type:!instance creation!public! !
-!FileStream class categoriesFor: #write:text:!instance creation!public! !
-!FileStream class categoriesFor: #write:type:!public! !
+!Core.FileStream class categoriesFor: #bufferSize!constants!public! !
+!Core.FileStream class categoriesFor: #file:mode:type:!instance creation!private! !
+!Core.FileStream class categoriesFor: #initialize!development!initializing!private! !
+!Core.FileStream class categoriesFor: #on:!instance creation!public! !
+!Core.FileStream class categoriesFor: #on:text:!instance creation!public! !
+!Core.FileStream class categoriesFor: #on:type:!instance creation!public! !
+!Core.FileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
+!Core.FileStream class categoriesFor: #read:!instance creation!public! !
+!Core.FileStream class categoriesFor: #read:text:!instance creation!public! !
+!Core.FileStream class categoriesFor: #read:type:!instance creation!public! !
+!Core.FileStream class categoriesFor: #readWrite:!instance creation!public! !
+!Core.FileStream class categoriesFor: #readWrite:text:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:mode:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:mode:type:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:text:!instance creation!public! !
+!Core.FileStream class categoriesFor: #write:type:!public! !
 
-FileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
+Core.FileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
 

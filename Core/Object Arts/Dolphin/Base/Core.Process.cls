@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Link variableSubclass: #Process
+Core.Link variableSubclass: #'Core.Process'
 	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
 	classVariableNames: 'DefaultMaxStack'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultFpControl' -> 16r80007.
 		'DefaultStack' -> 16r1
 	}!
-Process guid: (GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Process comment: 'A Process represents an individual thread of execution in the image.
+Core.Process guid: (Core.GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Process comment: 'A Process represents an individual thread of execution in the image.
 
 Note that the name "Process" is historic - a Smalltalk Process is much more similar to a "thread" than a true process, since all Processes share the same execution context (the image). Dolphin''s processes do not map directly onto native threads, but are "green" threads. The multi-threading system is implemented internally by the VM and image, with all "green" threads running within a single Win32 thread. This means that a call to a long running (or blocking) external API call will block the entire system, so a facility is provided to "overlap" such calls. This is done by marking the external method with the "overlap" annotation, in which case the VM will perform the call on a separate native thread. For the duration of the overlapped operation the calling Process is blocked, but other Processes in the image will continue to run. 
 
@@ -50,8 +50,8 @@ Class Variables:
 	DefaultFpControl		<Integer> default floating point control flags to initialize fpControl instance variable.
 	DefaultMaxStack 		<Integer> maximum stack depth (size up to which a Process may grow - virtual memory reserved).
 	DefaultStack			<Integer> initial stack depth (initial virtual memory committed).'!
-!Process categoriesForClass!Kernel-Processes! !
-!Process methodsFor!
+!Core.Process categoriesForClass!Kernel-Processes! !
+!Core.Process methodsFor!
 
 at: anInteger ifAbsent: exceptionBlock 
 	"Answer an <Object> which is the element of the receiver 
@@ -141,7 +141,7 @@ errno
 	"Answer the value of the C runtime 'errno' global variable saved on completion of the last
 	overlapped call made from the receiver."
 
-	^CRTLibrary nonblocking errno!
+	^OS.CRTLibrary nonblocking errno!
 
 exceptionEnvironment
 	"Private - Answer the receiver's exception environment (a LIFO stack of ExceptionHandlers).
@@ -263,8 +263,7 @@ isMain
 	"Answer whether the receiver is the main user I/F process (i.e. it
 	manages the input queue)."
 
-	^SessionManager inputState main == self	
-	!
+	^SessionManager inputState main == self!
 
 isReady
 	"Answer whether the receiver is Ready to run but inactive"
@@ -309,7 +308,7 @@ lastError
 	"Answer the value of the Win32 error code (i.e. the result of GetLastError()) run in the
 	context of the overlapped external call thread associated with the receiver."
 
-	^KernelLibrary default threadGetLastError!
+	^OS.KernelLibrary default threadGetLastError!
 
 name
 	"Answer the 'name' of the Process. This is usually defined by the creator of the process.
@@ -406,11 +405,12 @@ queueInterrupt: anInteger with: anObject
 	^self primitiveFailed: _failureCode!
 
 resetFloatingPoint
-	CRTLibrary default
+	OS.CRTLibrary default
 		_clearfp;
 		_control87: fpControl
-			mask: ##(CRTConstants._MCW_DN | CRTConstants._MCW_EM | CRTConstants._MCW_IC | CRTConstants._MCW_PC
-					| CRTConstants._MCW_RC)!
+			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM
+					| OS.CRTConstants._MCW_IC | OS.CRTConstants._MCW_PC
+					| OS.CRTConstants._MCW_RC)!
 
 resume
 	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."
@@ -530,17 +530,16 @@ stackTrace: anInteger
 state
 	"Private - Answer a symbol identifying the receiver's state."
 
-	^self isActive 
+	^self isActive
 		ifTrue: [#running]
 		ifFalse: 
-			["The state may change, so minimize chance of getting
+			[| list |
+			"The state may change, so minimize chance of getting
 			it wrong by storing suspendingList in a temporary"
-
-			| list |
 			list := self suspendingList.
-			list isNil 
+			list isNil
 				ifTrue: 
-					[self isDebuggee 
+					[self isDebuggee
 						ifTrue: [#debug]
 						ifFalse: [self basicSuspendedFrame isNil ifTrue: [#dead] ifFalse: [#suspended]]]
 				ifFalse: [(list isKindOf: Semaphore) ifTrue: [#waiting] ifFalse: [#ready]]]!
@@ -615,7 +614,7 @@ terminate
 	block sends #shutdown message to the Process for final cleanup."
 
 	self isDead ifTrue: [^self].
-	self isActive 
+	self isActive
 		ifTrue: 
 			[ProcessTermination signalWith: self.
 			"Won't get this far unless the process hasn't completed its initialization,
@@ -625,7 +624,6 @@ terminate
 			["Exceptions can only be raised in active processes (and a process must be active
 			 to terminate itself), so as the receiver is not active, we must queue an interrupt 
 			 which will cause the VM to activate the receiver (even if Waiting or Suspended)."
-
 			self queueInterrupt: Processor terminateInterrupt]!
 
 threadSync
@@ -641,71 +639,71 @@ topFrame
 	^self isActive 
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
-!Process categoriesFor: #at:ifAbsent:!accessing!public! !
-!Process categoriesFor: #at:put:!accessing!public! !
-!Process categoriesFor: #basicAt:put:!accessing!private! !
-!Process categoriesFor: #basicSuspendedFrame!private!stack frames! !
-!Process categoriesFor: #callbackDepth!accessing!private! !
-!Process categoriesFor: #canDebug!development!public!testing! !
-!Process categoriesFor: #debugger!accessing!development!private! !
-!Process categoriesFor: #debugger:!accessing!development!private! !
-!Process categoriesFor: #debugStream!accessing!public! !
-!Process categoriesFor: #errno!accessing!public! !
-!Process categoriesFor: #exceptionEnvironment!accessing!debugger-step over!public! !
-!Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
-!Process categoriesFor: #finalize!finalizing!private! !
-!Process categoriesFor: #fpControl!accessing!public! !
-!Process categoriesFor: #fpControl:!accessing!private! !
-!Process categoriesFor: #frameAtAddress:!private!stack frames! !
-!Process categoriesFor: #frameAtIndex:!private!stack frames! !
-!Process categoriesFor: #frameClass!private!stack frames! !
-!Process categoriesFor: #id!accessing!public! !
-!Process categoriesFor: #indexOfSP:!private!stack frames! !
-!Process categoriesFor: #interruptWith:!interrupts!private! !
-!Process categoriesFor: #isActive!public!states-testing! !
-!Process categoriesFor: #isAlive!public!states-testing! !
-!Process categoriesFor: #isAlive:!private!states-testing! !
-!Process categoriesFor: #isDead!public!states-testing! !
-!Process categoriesFor: #isDebuggee!private!states-testing! !
-!Process categoriesFor: #isInCallback!private!testing! !
-!Process categoriesFor: #isMain!public!testing! !
-!Process categoriesFor: #isReady!public!states-testing! !
-!Process categoriesFor: #isSuspended!public!states-testing! !
-!Process categoriesFor: #isTerminated!public!states-testing! !
-!Process categoriesFor: #isWaiting!public!states-testing! !
-!Process categoriesFor: #kill!public!states-changing! !
-!Process categoriesFor: #lastError!accessing!public! !
-!Process categoriesFor: #name!accessing!public! !
-!Process categoriesFor: #name:!accessing!public! !
-!Process categoriesFor: #primTerminate!private!states-changing! !
-!Process categoriesFor: #printOn:!printing!public! !
-!Process categoriesFor: #priority!accessing!public! !
-!Process categoriesFor: #priority:!accessing!public! !
-!Process categoriesFor: #queueInterrupt:!interrupts!public! !
-!Process categoriesFor: #queueInterrupt:with:!interrupts!public! !
-!Process categoriesFor: #resetFloatingPoint!helpers!private! !
-!Process categoriesFor: #resume!public!states-changing! !
-!Process categoriesFor: #resume:!public!states-changing! !
-!Process categoriesFor: #resumeUnconditionally!public!states-changing! !
-!Process categoriesFor: #setFpControl:mask:!accessing!public! !
-!Process categoriesFor: #setLaunchBlock:!initializing!private! !
-!Process categoriesFor: #setPriority:!accessing!private! !
-!Process categoriesFor: #shutdown!private!states-changing! !
-!Process categoriesFor: #size!accessing!public! !
-!Process categoriesFor: #spOfIndex:!private!stack frames! !
-!Process categoriesFor: #stackTrace:!helpers!private! !
-!Process categoriesFor: #state!private!states-changing! !
-!Process categoriesFor: #stbSaveOn:!binary filing!public! !
-!Process categoriesFor: #suspend!public!states-changing! !
-!Process categoriesFor: #suspendedFrame!private!stack frames! !
-!Process categoriesFor: #suspendedFrame:!private!stack frames! !
-!Process categoriesFor: #suspendingList!accessing!private! !
-!Process categoriesFor: #suspendUnconditionally!public!states-changing! !
-!Process categoriesFor: #terminate!public!states-changing! !
-!Process categoriesFor: #threadSync!accessing!private! !
-!Process categoriesFor: #topFrame!private!stack frames! !
+!Core.Process categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.Process categoriesFor: #at:put:!accessing!public! !
+!Core.Process categoriesFor: #basicAt:put:!accessing!private! !
+!Core.Process categoriesFor: #basicSuspendedFrame!private!stack frames! !
+!Core.Process categoriesFor: #callbackDepth!accessing!private! !
+!Core.Process categoriesFor: #canDebug!development!public!testing! !
+!Core.Process categoriesFor: #debugger!accessing!development!private! !
+!Core.Process categoriesFor: #debugger:!accessing!development!private! !
+!Core.Process categoriesFor: #debugStream!accessing!public! !
+!Core.Process categoriesFor: #errno!accessing!public! !
+!Core.Process categoriesFor: #exceptionEnvironment!accessing!debugger-step over!public! !
+!Core.Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
+!Core.Process categoriesFor: #finalize!finalizing!private! !
+!Core.Process categoriesFor: #fpControl!accessing!public! !
+!Core.Process categoriesFor: #fpControl:!accessing!private! !
+!Core.Process categoriesFor: #frameAtAddress:!private!stack frames! !
+!Core.Process categoriesFor: #frameAtIndex:!private!stack frames! !
+!Core.Process categoriesFor: #frameClass!private!stack frames! !
+!Core.Process categoriesFor: #id!accessing!public! !
+!Core.Process categoriesFor: #indexOfSP:!private!stack frames! !
+!Core.Process categoriesFor: #interruptWith:!interrupts!private! !
+!Core.Process categoriesFor: #isActive!public!states-testing! !
+!Core.Process categoriesFor: #isAlive!public!states-testing! !
+!Core.Process categoriesFor: #isAlive:!private!states-testing! !
+!Core.Process categoriesFor: #isDead!public!states-testing! !
+!Core.Process categoriesFor: #isDebuggee!private!states-testing! !
+!Core.Process categoriesFor: #isInCallback!private!testing! !
+!Core.Process categoriesFor: #isMain!public!testing! !
+!Core.Process categoriesFor: #isReady!public!states-testing! !
+!Core.Process categoriesFor: #isSuspended!public!states-testing! !
+!Core.Process categoriesFor: #isTerminated!public!states-testing! !
+!Core.Process categoriesFor: #isWaiting!public!states-testing! !
+!Core.Process categoriesFor: #kill!public!states-changing! !
+!Core.Process categoriesFor: #lastError!accessing!public! !
+!Core.Process categoriesFor: #name!accessing!public! !
+!Core.Process categoriesFor: #name:!accessing!public! !
+!Core.Process categoriesFor: #primTerminate!private!states-changing! !
+!Core.Process categoriesFor: #printOn:!printing!public! !
+!Core.Process categoriesFor: #priority!accessing!public! !
+!Core.Process categoriesFor: #priority:!accessing!public! !
+!Core.Process categoriesFor: #queueInterrupt:!interrupts!public! !
+!Core.Process categoriesFor: #queueInterrupt:with:!interrupts!public! !
+!Core.Process categoriesFor: #resetFloatingPoint!helpers!private! !
+!Core.Process categoriesFor: #resume!public!states-changing! !
+!Core.Process categoriesFor: #resume:!public!states-changing! !
+!Core.Process categoriesFor: #resumeUnconditionally!public!states-changing! !
+!Core.Process categoriesFor: #setFpControl:mask:!accessing!public! !
+!Core.Process categoriesFor: #setLaunchBlock:!initializing!private! !
+!Core.Process categoriesFor: #setPriority:!accessing!private! !
+!Core.Process categoriesFor: #shutdown!private!states-changing! !
+!Core.Process categoriesFor: #size!accessing!public! !
+!Core.Process categoriesFor: #spOfIndex:!private!stack frames! !
+!Core.Process categoriesFor: #stackTrace:!helpers!private! !
+!Core.Process categoriesFor: #state!private!states-changing! !
+!Core.Process categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Process categoriesFor: #suspend!public!states-changing! !
+!Core.Process categoriesFor: #suspendedFrame!private!stack frames! !
+!Core.Process categoriesFor: #suspendedFrame:!private!stack frames! !
+!Core.Process categoriesFor: #suspendingList!accessing!private! !
+!Core.Process categoriesFor: #suspendUnconditionally!public!states-changing! !
+!Core.Process categoriesFor: #terminate!public!states-changing! !
+!Core.Process categoriesFor: #threadSync!accessing!private! !
+!Core.Process categoriesFor: #topFrame!private!stack frames! !
 
-!Process class methodsFor!
+!Core.Process class methodsFor!
 
 forContext: aBlockClosure priority: priorityInteger maxStack: slotsInteger
 	"Private - Answer a suspended instance of the receiver that will execute the block,
@@ -757,15 +755,15 @@ initialize
 
 	"See FloatingPointException for an explanation of the default FP exception mask"
 	self addClassConstant: 'DefaultFpControl'
-		value: CRTConstants._RC_NEAR | CRTConstants._IC_PROJECTIVE | CRTConstants._DN_SAVE
-				| CRTConstants._PC_64
-					| (CRTConstants._MCW_EM maskClear: CRTConstants._EM_ZERODIVIDE | CRTConstants._EM_INVALID)!
+		value: OS.CRTConstants._RC_NEAR | OS.CRTConstants._IC_PROJECTIVE | OS.CRTConstants._DN_SAVE
+				| OS.CRTConstants._PC_64
+					| (OS.CRTConstants._MCW_EM maskClear: OS.CRTConstants._EM_ZERODIVIDE | OS.CRTConstants._EM_INVALID)!
 
 new
 	"Processes should be created by sending one of the #fork family of messages to a block."
 
 	^self shouldNotImplement! !
-!Process class categoriesFor: #forContext:priority:maxStack:!instance creation!private! !
-!Process class categoriesFor: #initialize!development!initializing!public! !
-!Process class categoriesFor: #new!instance creation!public! !
+!Core.Process class categoriesFor: #forContext:priority:maxStack:!instance creation!private! !
+!Core.Process class categoriesFor: #initialize!development!initializing!public! !
+!Core.Process class categoriesFor: #new!instance creation!public! !
 

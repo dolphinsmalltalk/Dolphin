@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #RPCLibrary
+External.Library subclass: #'OS.RPCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RPCLibrary guid: (GUID fromString: '{87b4c584-026e-11d3-9fd7-00a0cc3e4a32}')!
-RPCLibrary comment: ''!
-!RPCLibrary categoriesForClass!External-Libraries-Win32! !
-!RPCLibrary methodsFor!
+OS.RPCLibrary guid: (Core.GUID fromString: '{87b4c584-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RPCLibrary comment: ''!
+!OS.RPCLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.RPCLibrary methodsFor!
 
 rpcStringFree: lppstr
 	"Free a character string allocated by the RPC library.
@@ -72,18 +72,18 @@ uuidToString: uuid stringUuid: lppstr
 
 	<stdcall: sdword UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
-!RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidHash:status:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #uuidHash:status:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesFor: #uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
 
-!RPCLibrary class methodsFor!
+!OS.RPCLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'RPCRT4'! !
-!RPCLibrary class categoriesFor: #fileName!constants!public! !
+!OS.RPCLibrary class categoriesFor: #fileName!constants!public! !
 

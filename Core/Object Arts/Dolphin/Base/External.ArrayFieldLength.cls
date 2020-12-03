@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ArrayFieldLength
+Core.Object subclass: #'External.ArrayFieldLength'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayFieldLength guid: (GUID fromString: '{aaa1c03f-5efe-4d73-8a05-b9ea12144883}')!
-ArrayFieldLength isAbstract: true!
-ArrayFieldLength comment: ''!
-!ArrayFieldLength categoriesForClass!Kernel-Objects! !
-!ArrayFieldLength methodsFor!
+External.ArrayFieldLength guid: (Core.GUID fromString: '{aaa1c03f-5efe-4d73-8a05-b9ea12144883}')!
+External.ArrayFieldLength isNonInstantiable: true!
+External.ArrayFieldLength comment: ''!
+!External.ArrayFieldLength categoriesForClass!Kernel-Objects! !
+!External.ArrayFieldLength methodsFor!
 
 allocationLength
 	^1!
@@ -38,10 +38,10 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
-!ArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
-!ArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!ArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
-!ArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!ArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!ArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!External.ArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
+!External.ArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
+!External.ArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
+!External.ArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
+!External.ArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
+!External.ArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
 

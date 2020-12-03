@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Stream subclass: #SequencedStream
+Core.Stream subclass: #'Core.SequencedStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequencedStream guid: (GUID fromString: '{9b6a5665-c80e-457c-b384-f716399f271d}')!
-SequencedStream isAbstract: true!
-SequencedStream comment: 'SequencedStream is an class of <Stream>s that stream over a finite number of past and future sequence values, maintaining a current position among those sequence values and allowing that position to be altered. Sub-instances of <SequencedStream> conform to the ANSI <sequencedStream> protocol.'!
-!SequencedStream categoriesForClass!Collections-Streams! !
-!SequencedStream methodsFor!
+Core.SequencedStream guid: (Core.GUID fromString: '{9b6a5665-c80e-457c-b384-f716399f271d}')!
+Core.SequencedStream isNonInstantiable: true!
+Core.SequencedStream comment: 'SequencedStream is an class of <Stream>s that stream over a finite number of past and future sequence values, maintaining a current position among those sequence values and allowing that position to be altered. Sub-instances of <SequencedStream> conform to the ANSI <sequencedStream> protocol.'!
+!Core.SequencedStream categoriesForClass!Collections-Streams! !
+!Core.SequencedStream methodsFor!
 
 contents
 	"Answer a <sequencedReadableCollection> that contains the receiver's past and future
@@ -231,30 +231,30 @@ upToAll: aCollection
 		ifFalse: 
 			[self position: start.
 			self upToEnd]! !
-!SequencedStream categoriesFor: #contents!accessing!public! !
-!SequencedStream categoriesFor: #copyFrom:to:!copying!public! !
-!SequencedStream categoriesFor: #flush!accessing!public! !
-!SequencedStream categoriesFor: #isEmpty!public!testing! !
-!SequencedStream categoriesFor: #isPositionable!public!testing! !
-!SequencedStream categoriesFor: #locale:!accessing!public! !
-!SequencedStream categoriesFor: #nextLine!accessing!public! !
-!SequencedStream categoriesFor: #nextWord!accessing!public! !
-!SequencedStream categoriesFor: #notEmpty!public!testing! !
-!SequencedStream categoriesFor: #peek!accessing!public! !
-!SequencedStream categoriesFor: #peekFor:!accessing!public! !
-!SequencedStream categoriesFor: #pop!positioning!public! !
-!SequencedStream categoriesFor: #position!positioning!public! !
-!SequencedStream categoriesFor: #position:!positioning!public! !
-!SequencedStream categoriesFor: #reset!positioning!public! !
-!SequencedStream categoriesFor: #reverseContents!accessing!public! !
-!SequencedStream categoriesFor: #setToEnd!positioning!public! !
-!SequencedStream categoriesFor: #skip:!positioning!public! !
-!SequencedStream categoriesFor: #skipSeparators!positioning!public! !
-!SequencedStream categoriesFor: #skipToAll:!positioning!public! !
-!SequencedStream categoriesFor: #skipWhile:!positioning!public! !
-!SequencedStream categoriesFor: #skipWhileMatchAll:!positioning!public! !
-!SequencedStream categoriesFor: #upToAll:!positioning!public! !
+!Core.SequencedStream categoriesFor: #contents!accessing!public! !
+!Core.SequencedStream categoriesFor: #copyFrom:to:!copying!public! !
+!Core.SequencedStream categoriesFor: #flush!accessing!public! !
+!Core.SequencedStream categoriesFor: #isEmpty!public!testing! !
+!Core.SequencedStream categoriesFor: #isPositionable!public!testing! !
+!Core.SequencedStream categoriesFor: #locale:!accessing!public! !
+!Core.SequencedStream categoriesFor: #nextLine!accessing!public! !
+!Core.SequencedStream categoriesFor: #nextWord!accessing!public! !
+!Core.SequencedStream categoriesFor: #notEmpty!public!testing! !
+!Core.SequencedStream categoriesFor: #peek!accessing!public! !
+!Core.SequencedStream categoriesFor: #peekFor:!accessing!public! !
+!Core.SequencedStream categoriesFor: #pop!positioning!public! !
+!Core.SequencedStream categoriesFor: #position!positioning!public! !
+!Core.SequencedStream categoriesFor: #position:!positioning!public! !
+!Core.SequencedStream categoriesFor: #reset!positioning!public! !
+!Core.SequencedStream categoriesFor: #reverseContents!accessing!public! !
+!Core.SequencedStream categoriesFor: #setToEnd!positioning!public! !
+!Core.SequencedStream categoriesFor: #skip:!positioning!public! !
+!Core.SequencedStream categoriesFor: #skipSeparators!positioning!public! !
+!Core.SequencedStream categoriesFor: #skipToAll:!positioning!public! !
+!Core.SequencedStream categoriesFor: #skipWhile:!positioning!public! !
+!Core.SequencedStream categoriesFor: #skipWhileMatchAll:!positioning!public! !
+!Core.SequencedStream categoriesFor: #upToAll:!positioning!public! !
 
-SequencedStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
-SequencedStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
+Core.SequencedStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
+Core.SequencedStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 

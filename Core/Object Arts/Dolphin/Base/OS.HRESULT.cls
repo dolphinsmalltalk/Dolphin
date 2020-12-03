@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalInteger subclass: #HRESULT
+External.INTEGER subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
 	classVariableNames: 'Facilities Fail'
-	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
+	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FACILITY_NT_BIT' -> 16r10000000
 	}!
-HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
-HRESULT comment: ''!
-!HRESULT categoriesForClass!External-Data-Unstructured! !
-!HRESULT methodsFor!
+OS.HRESULT guid: (Core.GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.HRESULT comment: ''!
+!OS.HRESULT categoriesForClass!External-Data-Unstructured! !
+!OS.HRESULT methodsFor!
 
 asSignedInteger
 	"Answer the signed 32-bit <Integer> value of the receiver."
@@ -24,7 +24,7 @@ asUnsignedInteger
 	^bytes dwordAtOffset: 0!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	"Implementation note: We have to reduce the provided Locale to its primary because the system message text is only available in a limited range of languages, and for most locale's the FormatMessage from system operation will fail."
 
@@ -151,25 +151,25 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
-!HRESULT categoriesFor: #asSignedInteger!converting!public! !
-!HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
-!HRESULT categoriesFor: #displayOn:!displaying!public! !
-!HRESULT categoriesFor: #errorCode!accessing!public! !
-!HRESULT categoriesFor: #facility!accessing!public! !
-!HRESULT categoriesFor: #facilityCode!accessing!public! !
-!HRESULT categoriesFor: #failed!public!testing! !
-!HRESULT categoriesFor: #isNtStatus!public!testing! !
-!HRESULT categoriesFor: #isSeverityError!public!testing! !
-!HRESULT categoriesFor: #isSigned!public!testing! !
-!HRESULT categoriesFor: #printOn:!displaying!public! !
-!HRESULT categoriesFor: #severity!accessing!public! !
-!HRESULT categoriesFor: #statusCode!accessing!public! !
-!HRESULT categoriesFor: #succeeded!public!testing! !
-!HRESULT categoriesFor: #unsignedValue:!accessing!public! !
-!HRESULT categoriesFor: #value!**compiled accessors**!public! !
-!HRESULT categoriesFor: #value:!**compiled accessors**!public! !
+!OS.HRESULT categoriesFor: #asSignedInteger!converting!public! !
+!OS.HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
+!OS.HRESULT categoriesFor: #displayOn:!displaying!public! !
+!OS.HRESULT categoriesFor: #errorCode!accessing!public! !
+!OS.HRESULT categoriesFor: #facility!accessing!public! !
+!OS.HRESULT categoriesFor: #facilityCode!accessing!public! !
+!OS.HRESULT categoriesFor: #failed!public!testing! !
+!OS.HRESULT categoriesFor: #isNtStatus!public!testing! !
+!OS.HRESULT categoriesFor: #isSeverityError!public!testing! !
+!OS.HRESULT categoriesFor: #isSigned!public!testing! !
+!OS.HRESULT categoriesFor: #printOn:!displaying!public! !
+!OS.HRESULT categoriesFor: #severity!accessing!public! !
+!OS.HRESULT categoriesFor: #statusCode!accessing!public! !
+!OS.HRESULT categoriesFor: #succeeded!public!testing! !
+!OS.HRESULT categoriesFor: #unsignedValue:!accessing!public! !
+!OS.HRESULT categoriesFor: #value!**compiled accessors**!public! !
+!OS.HRESULT categoriesFor: #value:!**compiled accessors**!public! !
 
-!HRESULT class methodsFor!
+!OS.HRESULT class methodsFor!
 
 decodePrimitiveFailureCode: anInteger
 	"Private - Answer an <integer> instantiated from the NTSTATUS/HRESULT code packed into a primitive failure code.
@@ -206,8 +206,7 @@ initialize
 
 	Fail := self fromInteger: E_FAIL.
 	Facilities := LookupTable new.
-	FacilityCodes
-		bindingsDo: [:each | self registerFacility: each value name: each key].
+	FacilityCodes bindingsDo: [:each | self registerFacility: each value name: each key].
 	self registerFacility: FACILITY_NT_BIT >> 16 name: 'NTSTATUS'!
 
 notImplemented
@@ -253,18 +252,18 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
-!HRESULT class categoriesFor: #decodePrimitiveFailureCode:!private!utilities! !
-!HRESULT class categoriesFor: #defineFields!public!template definition! !
-!HRESULT class categoriesFor: #fail!constants!instance creation!public! !
-!HRESULT class categoriesFor: #fromPrimitiveFailureCode:!instance creation!public! !
-!HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
-!HRESULT class categoriesFor: #initialize!development!initializing!private! !
-!HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !
-!HRESULT class categoriesFor: #ntStatusCode:!instance creation!public! !
-!HRESULT class categoriesFor: #ok!constants!instance creation!public! !
-!HRESULT class categoriesFor: #registerFacility:name:!public! !
-!HRESULT class categoriesFor: #severity:facility:code:!instance creation!private! !
-!HRESULT class categoriesFor: #status:facility:!instance creation!private! !
-!HRESULT class categoriesFor: #unregisterFacility:!public! !
-!HRESULT class categoriesFor: #win32Error:!instance creation!public! !
+!OS.HRESULT class categoriesFor: #decodePrimitiveFailureCode:!private!utilities! !
+!OS.HRESULT class categoriesFor: #defineFields!public!template definition! !
+!OS.HRESULT class categoriesFor: #fail!constants!instance creation!public! !
+!OS.HRESULT class categoriesFor: #fromPrimitiveFailureCode:!instance creation!public! !
+!OS.HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
+!OS.HRESULT class categoriesFor: #initialize!development!initializing!private! !
+!OS.HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !
+!OS.HRESULT class categoriesFor: #ntStatusCode:!instance creation!public! !
+!OS.HRESULT class categoriesFor: #ok!constants!instance creation!public! !
+!OS.HRESULT class categoriesFor: #registerFacility:name:!public! !
+!OS.HRESULT class categoriesFor: #severity:facility:code:!instance creation!private! !
+!OS.HRESULT class categoriesFor: #status:facility:!instance creation!private! !
+!OS.HRESULT class categoriesFor: #unregisterFacility:!public! !
+!OS.HRESULT class categoriesFor: #win32Error:!instance creation!public! !
 

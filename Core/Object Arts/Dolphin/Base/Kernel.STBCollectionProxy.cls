@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBCollectionProxy
+Kernel.STBProxy subclass: #'Kernel.STBCollectionProxy'
 	instanceVariableNames: 'class array'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBCollectionProxy guid: (GUID fromString: '{87b4c6eb-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBCollectionProxy comment: ''!
-!STBCollectionProxy categoriesForClass!System-Binary storage! !
-!STBCollectionProxy methodsFor!
+Kernel.STBCollectionProxy guid: (Core.GUID fromString: '{87b4c6eb-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBCollectionProxy comment: ''!
+!Kernel.STBCollectionProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBCollectionProxy methodsFor!
 
 array: anArray
 	"Private - Set the array inst var to anArray, the elements of the collection represented by the receiver.
@@ -31,11 +31,11 @@ value
 	"Answer a new collection of class class and elements array."
 
 	^class withAll: array! !
-!STBCollectionProxy categoriesFor: #array:!accessing!private! !
-!STBCollectionProxy categoriesFor: #class:!accessing!private! !
-!STBCollectionProxy categoriesFor: #value!converting!public! !
+!Kernel.STBCollectionProxy categoriesFor: #array:!accessing!private! !
+!Kernel.STBCollectionProxy categoriesFor: #class:!accessing!private! !
+!Kernel.STBCollectionProxy categoriesFor: #value!converting!public! !
 
-!STBCollectionProxy class methodsFor!
+!Kernel.STBCollectionProxy class methodsFor!
 
 class: aClass array: anArray
 	"Answer a new instance containing the class and elements of
@@ -51,6 +51,6 @@ forCollection: aCollection
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection class array: aCollection asArray! !
-!STBCollectionProxy class categoriesFor: #class:array:!instance creation!public! !
-!STBCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
+!Kernel.STBCollectionProxy class categoriesFor: #class:array:!instance creation!public! !
+!Kernel.STBCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
 

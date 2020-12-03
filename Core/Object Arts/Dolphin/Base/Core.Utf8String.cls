@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UtfEncodedString variableByteSubclass: #Utf8String
+Core.UtfEncodedString variableByteSubclass: #'Core.Utf8String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Bom' -> #[239 187 191].
@@ -12,9 +12,9 @@ UtfEncodedString variableByteSubclass: #Utf8String
 		'LeadByteMask4' -> 16rF0.
 		'TrailByteMask' -> 16r80
 	}!
-Utf8String guid: (GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
-Utf8String isNullTerminated: true!
-Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
+Core.Utf8String guid: (Core.GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
+Core.Utf8String isNullTerminated: true!
+Core.Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
 
 When considering a `Utf8String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-8 code units, not Unicode code points. These code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point. UTF-8 surrogate characters can be inserted into other Utf8Strings (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf16String`s. To enumerate a `Utf8String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
 ```
@@ -25,15 +25,15 @@ It should also be noted that the `size` of a `Utf8String` is a count of the numb
 ''🐬'' size "=> 4"
 ```
 To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
-!Utf8String categoriesForClass!Collections-Text! !
-!Utf8String methodsFor!
+!Core.Utf8String categoriesForClass!Collections-Text! !
+!Core.Utf8String methodsFor!
 
 _beginsString: aString
 	| size comperand |
 	comperand := aString asUtf8String.
 	size := self size.
 	^size <= comperand size
-		and: [(CRTLibrary default
+		and: [(OS.CRTLibrary default
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -44,7 +44,7 @@ asLowercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	UserLibrary default charLowerBuffW: utf16 cchLength: utf16 size.
+	OS.UserLibrary default charLowerBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUppercase
@@ -53,7 +53,7 @@ asUppercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	UserLibrary default charUpperBuffW: utf16 cchLength: utf16 size.
+	OS.UserLibrary default charUpperBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUtf8String
@@ -78,11 +78,11 @@ bom
 	^Bom!
 
 copyToBuffer: anAddress ofSize: anInteger
-	CRTLibrary default
+	OS.CRTLibrary default
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
-		count: CRTConstants._TRUNCATE!
+		count: OS.CRTConstants._TRUNCATE!
 
 countElements
 	| length |
@@ -287,7 +287,7 @@ encodedAt: anInteger put: aCharacter
 							anInteger + 2]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= Win32Constants.MAX_UCSCHAR
+							codePoint <= OS.Win32Constants.MAX_UCSCHAR
 								ifTrue: 
 									[self
 										basicAt: anInteger put: (LeadByteMask4 bitOr: (codePoint bitShift: -18));
@@ -364,7 +364,7 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]]
 						ifFalse: 
 							["4-byte encoding"
-							codePoint <= Win32Constants.MAX_UCSCHAR
+							codePoint <= OS.Win32Constants.MAX_UCSCHAR
 								ifTrue: 
 									[aPuttableStream
 										basicNextPut: (16rF0 bitOr: (codePoint bitShift: -18));
@@ -451,7 +451,7 @@ reversedFrom: startInteger to: stopInteger
 strlen
 	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^CRTLibrary default strlen: self!
+	^OS.CRTLibrary default strlen: self!
 
 urlEncoded
 	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
@@ -471,28 +471,28 @@ urlEncoded
 						base: 16
 						nDigits: 2]].
 	^encodedStream grabContents! !
-!Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Utf8String categoriesFor: #asLowercase!converting!public! !
-!Utf8String categoriesFor: #asUppercase!converting!public! !
-!Utf8String categoriesFor: #asUtf8String!converting!public! !
-!Utf8String categoriesFor: #before:ifAbsent:!public!searching! !
-!Utf8String categoriesFor: #bom!constants!encode/decode!private! !
-!Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Utf8String categoriesFor: #countElements!accessing!public! !
-!Utf8String categoriesFor: #decodeAt:!encode/decode!private! !
-!Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Utf8String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Utf8String categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
-!Utf8String categoriesFor: #maxEncoding!constants!private! !
-!Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Utf8String categoriesFor: #reversedFrom:to:!copying!public! !
-!Utf8String categoriesFor: #strlen!accessing!private! !
-!Utf8String categoriesFor: #urlEncoded!public! !
+!Core.Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
+!Core.Utf8String categoriesFor: #asLowercase!converting!public! !
+!Core.Utf8String categoriesFor: #asUppercase!converting!public! !
+!Core.Utf8String categoriesFor: #asUtf8String!converting!public! !
+!Core.Utf8String categoriesFor: #before:ifAbsent:!public!searching! !
+!Core.Utf8String categoriesFor: #bom!constants!encode/decode!private! !
+!Core.Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!Core.Utf8String categoriesFor: #countElements!accessing!public! !
+!Core.Utf8String categoriesFor: #decodeAt:!encode/decode!private! !
+!Core.Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Core.Utf8String categoriesFor: #encodedSizeAt:!encode/decode!private! !
+!Core.Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!Core.Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Core.Utf8String categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
+!Core.Utf8String categoriesFor: #maxEncoding!constants!private! !
+!Core.Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
+!Core.Utf8String categoriesFor: #reversedFrom:to:!copying!public! !
+!Core.Utf8String categoriesFor: #strlen!accessing!private! !
+!Core.Utf8String categoriesFor: #urlEncoded!public! !
 
-!Utf8String class methodsFor!
+!Core.Utf8String class methodsFor!
 
 characterForCodeUnit: anInteger
 	^Character utf8Value: anInteger!
@@ -500,20 +500,20 @@ characterForCodeUnit: anInteger
 codePage
 	"Answer the Windows code page constants for the receiver's encoding."
 
-	^WinNlsConstants.CP_UTF8!
+	^OS.NlsConstants.CP_UTF8!
 
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
 	^anAddress isNull
-		ifFalse: [self fromAddress: anAddress length: (CRTLibrary default strlen: anAddress)]!
+		ifFalse: [self fromAddress: anAddress length: (OS.CRTLibrary default strlen: anAddress)]!
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
 	VMLibrary default registryAt: #Utf8String put: self! !
-!Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Utf8String class categoriesFor: #codePage!instance creation!public! !
-!Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
-!Utf8String class categoriesFor: #initialize!development!initializing!public! !
+!Core.Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
+!Core.Utf8String class categoriesFor: #codePage!instance creation!public! !
+!Core.Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
+!Core.Utf8String class categoriesFor: #initialize!development!initializing!public! !
 

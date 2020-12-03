@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
+Kernel.PluggableSortAlgorithm subclass: #'Kernel.InsertionSortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InsertionSortAlgorithm guid: (GUID fromString: '{7d2cd205-0902-49b4-8198-38602100293d}')!
-InsertionSortAlgorithm comment: 'InsertionSortAlgorithm implements the simple Insertion Sort algorithm as a pluggable sorting strategy  for use in conjunction with <SortedCollection>s. 
+Kernel.InsertionSortAlgorithm guid: (Core.GUID fromString: '{7d2cd205-0902-49b4-8198-38602100293d}')!
+Kernel.InsertionSortAlgorithm comment: 'InsertionSortAlgorithm implements the simple Insertion Sort algorithm as a pluggable sorting strategy  for use in conjunction with <SortedCollection>s. 
 
 Insertion sort is slow for anything but very small collections, or those which are already nearly sorted, where it is the sorting algorithm of choice.'!
-!InsertionSortAlgorithm categoriesForClass!Kernel-Objects! !
-!InsertionSortAlgorithm methodsFor!
+!Kernel.InsertionSortAlgorithm categoriesForClass!Kernel-Objects! !
+!Kernel.InsertionSortAlgorithm methodsFor!
 
 sort: anObject from: startInteger to: stopInteger 
 	"Sort elements in the range of indexable instance variables of the <Object> argument from
@@ -22,5 +22,5 @@ sort: anObject from: startInteger to: stopInteger
 		insertionSort: anObject
 		from: startInteger
 		to: stopInteger! !
-!InsertionSortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!Kernel.InsertionSortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
 

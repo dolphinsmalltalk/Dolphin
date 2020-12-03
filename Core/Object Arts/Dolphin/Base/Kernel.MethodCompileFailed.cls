@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Notification subclass: #MethodCompileFailed
+Core.Notification subclass: #'Kernel.MethodCompileFailed'
 	instanceVariableNames: 'compilerErrorNotification'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodCompileFailed guid: (GUID fromString: '{87b4c56f-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodCompileFailed comment: 'A MethodCompileFailed notification is signalled when a method compilation fails. Handlers can trap this if they wish to replace the original failed compilation with a stub method. This is useful so that the failed method source can be seen in the browsers or to retain category information. To install a stub method the handler should call #resumeWithStubMethod.'!
-!MethodCompileFailed categoriesForClass!System-Compiler! !
-!MethodCompileFailed methodsFor!
+Kernel.MethodCompileFailed guid: (Core.GUID fromString: '{87b4c56f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.MethodCompileFailed comment: 'A MethodCompileFailed notification is signalled when a method compilation fails. Handlers can trap this if they wish to replace the original failed compilation with a stub method. This is useful so that the failed method source can be seen in the browsers or to retain category information. To install a stub method the handler should call #resumeWithStubMethod.'!
+!Kernel.MethodCompileFailed categoriesForClass!System-Compiler! !
+!Kernel.MethodCompileFailed methodsFor!
 
 compilerErrorNotification: aCompilerErrorNotification
 	"Private - Set the value of the receiver's instance variable compilerErrorNotification to 
@@ -32,7 +32,7 @@ resumeWithStubMethod
 	selector := compilerErrorNotification selector asSymbol.
 	selector isEmpty ifTrue: [^nil].
 	methodClass := compilerErrorNotification methodClass.
-	result := methodClass compilerClass 
+	result := methodClass compilerClass
 				compile: (CompileFailedMethod buildSourceForSelector: selector class: methodClass)
 				in: methodClass
 				flags: methodClass defaultCompilationFlags.
@@ -40,11 +40,11 @@ resumeWithStubMethod
 
 	"Resume with this stub"
 	self resume: result! !
-!MethodCompileFailed categoriesFor: #compilerErrorNotification:!accessing!private! !
-!MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
-!MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!public! !
+!Kernel.MethodCompileFailed categoriesFor: #compilerErrorNotification:!accessing!private! !
+!Kernel.MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
+!Kernel.MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!public! !
 
-!MethodCompileFailed class methodsFor!
+!Kernel.MethodCompileFailed class methodsFor!
 
 new
 	"Private - Use #with:"
@@ -57,6 +57,6 @@ with: aCompilerErrorNotification
 
 	^super new compilerErrorNotification: aCompilerErrorNotification
 ! !
-!MethodCompileFailed class categoriesFor: #new!instance creation!private! !
-!MethodCompileFailed class categoriesFor: #with:!instance creation!public! !
+!Kernel.MethodCompileFailed class categoriesFor: #new!instance creation!private! !
+!Kernel.MethodCompileFailed class categoriesFor: #with:!instance creation!public! !
 

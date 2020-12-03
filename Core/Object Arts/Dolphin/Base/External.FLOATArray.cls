@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #FLOATArray
+External.ExternalArray subclass: #'External.FLOATArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FLOATArray guid: (GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
-FLOATArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
-!FLOATArray categoriesForClass!External-Data-Structured! !
-!FLOATArray methodsFor!
+External.FLOATArray guid: (Core.GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.FLOATArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
+!External.FLOATArray categoriesForClass!External-Data-Structured! !
+!External.FLOATArray methodsFor!
 
 uncheckedAt: anInteger 
 	"Private - Answer a <Float> representing the 32-bit single-precision 
@@ -23,14 +23,14 @@ uncheckedAt: anInteger put: aFloat
 	with the Float argument."
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
-!FLOATArray categoriesFor: #uncheckedAt:!accessing!private! !
-!FLOATArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.FLOATArray categoriesFor: #uncheckedAt:!accessing!private! !
+!External.FLOATArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!FLOATArray class methodsFor!
+!External.FLOATArray class methodsFor!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^FLOAT! !
-!FLOATArray class categoriesFor: #elementClass!constants!public! !
+!External.FLOATArray class categoriesFor: #elementClass!constants!public! !
 

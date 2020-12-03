@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #VersionLibrary
+External.Library subclass: #'OS.VersionLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VersionLibrary guid: (GUID fromString: '{64674068-3a82-101b-8181-00aa003743d3}')!
-VersionLibrary comment: 'VersionLibrary is the <ExternalLibrary> class to represent the Win32 version library, VERSION.DLL.
+OS.VersionLibrary guid: (Core.GUID fromString: '{64674068-3a82-101b-8181-00aa003743d3}')!
+OS.VersionLibrary comment: 'VersionLibrary is the <ExternalLibrary> class to represent the Win32 version library, VERSION.DLL.
 
 The version libraries API is somewhat esoteric and best accessed via the services of the VersionInfo class.
 '!
-!VersionLibrary categoriesForClass!External-Libraries! !
-!VersionLibrary methodsFor!
+!OS.VersionLibrary categoriesForClass!External-Libraries! !
+!OS.VersionLibrary methodsFor!
 
-getFileVersionInfo: lpstrFilename 
+getFileVersionInfo: lpstrFilename
 	"Private - Answer file version info for the specified file."
 
 	| dwHandle size buf |
@@ -22,7 +22,7 @@ getFileVersionInfo: lpstrFilename
 	size := self getFileVersionInfoSize: lpstrFilename lpdwHandle: dwHandle.
 	size == 0 ifTrue: [^self systemError].
 	buf := ByteArray newFixed: size.
-	(self 
+	(self
 		getFileVersionInfo: lpstrFilename
 		dwHandle: dwHandle asParameter
 		dwLen: size
@@ -63,17 +63,17 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 
 	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid dword*>
 	^self invalidCall: _failureCode! !
-!VersionLibrary categoriesFor: #getFileVersionInfo:!helpers!private! !
-!VersionLibrary categoriesFor: #getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
-!VersionLibrary categoriesFor: #getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
-!VersionLibrary categoriesFor: #verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
+!OS.VersionLibrary categoriesFor: #getFileVersionInfo:!helpers!private! !
+!OS.VersionLibrary categoriesFor: #getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
+!OS.VersionLibrary categoriesFor: #getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
+!OS.VersionLibrary categoriesFor: #verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
 
-!VersionLibrary class methodsFor!
+!OS.VersionLibrary class methodsFor!
 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'Version'
 ! !
-!VersionLibrary class categoriesFor: #fileName!constants!public! !
+!OS.VersionLibrary class categoriesFor: #fileName!constants!public! !
 

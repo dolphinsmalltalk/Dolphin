@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ExternalLibrary
+Core.Object subclass: #'External.Library'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants Win32Errors'
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
-ExternalLibrary guid: (GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalLibrary comment: 'ExternalLibrary is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
+External.Library guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Library comment: 'ExternalLibrary is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
 
 External library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class #default method. The libraries are loaded lazily, on demand (but see <PermanentLibrary>).
 
@@ -116,8 +116,8 @@ The argument/return types (and coercions) supported are:
 		externally stored value as its first instance variable.
 	
 Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
-!ExternalLibrary categoriesForClass!External-Libraries! !
-!ExternalLibrary methodsFor!
+!External.Library categoriesForClass!External-Libraries! !
+!External.Library methodsFor!
 
 asParameter
 	"Answer the receiver in a form appropriate for passing to an external
@@ -156,8 +156,10 @@ formatMessage: anIntegerId with: arguments
 	"Answer a message formatted from the Win32 format string with the specified
 	id in the receiver, with substitutions from the collection, arguments."
 
-
-	^String formatMessage: anIntegerId in: self asParameter withArguments: arguments!
+	^String
+		formatMessage: anIntegerId
+		in: self asParameter
+		withArguments: arguments!
 
 getProcAddress: aStringOrWord
 	"Private - Answer the address of the receiver's procedure identified by the <AnsiString> name or <integer> ordinal parameter."
@@ -171,9 +173,7 @@ getProcAddress: nameOrOrdinal ifAbsent: exceptionHandler
 
 	| address |
 	address := KernelLibrary default getProcAddress: self asParameter lpProcName: nameOrOrdinal.
-	^address = 0
-		ifTrue: [exceptionHandler value]
-		ifFalse: [address]!
+	^address = 0 ifTrue: [exceptionHandler value] ifFalse: [address]!
 
 handle
 	^handle!
@@ -204,22 +204,21 @@ invalidCall: anInteger
 	descriptor := method descriptor.
 	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
 	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
-	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1
-		and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
-			ifTrue: 
-				[| arg i |
-				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
-				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-				self invalidArgErrorClass
-					invalidArgument: arg
-					got: (frame arguments at: arg)
-					expected: (descriptor argumentTypes at: i)]
-			ifFalse: 
-				[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-					ifTrue: 
-						[HRESULTError
-							signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
-					ifFalse: [HRESULTError signalFailureCode: anInteger]]!
+	^(anInteger >= InvalidParameter1 and: [anInteger <= InvalidParameter12])
+		ifTrue: 
+			[| arg i |
+			i := descriptor argumentIndexFromOffset: anInteger - InvalidParameter1.
+			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			self invalidArgErrorClass
+				invalidArgument: arg
+				got: (frame arguments at: arg)
+				expected: (descriptor argumentTypes at: i)]
+		ifFalse: 
+			[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+				ifTrue: 
+					[HRESULTError
+						signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
+				ifFalse: [HRESULTError signalFailureCode: anInteger]]!
 
 isOpen
 	"Answer whether the external library represented by the receiver is open."
@@ -300,32 +299,32 @@ versionString
 	(typically N.N Build N, but see #versionFormatString)."
 
 	^self versionInfo formatVersionString: self versionFormatString! !
-!ExternalLibrary categoriesFor: #asParameter!converting!public! !
-!ExternalLibrary categoriesFor: #basicOpen:!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #fileName!accessing!public! !
-!ExternalLibrary categoriesFor: #formatMessage:with:!accessing!public! !
-!ExternalLibrary categoriesFor: #getProcAddress:!accessing!private! !
-!ExternalLibrary categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
-!ExternalLibrary categoriesFor: #handle!accessing!private! !
-!ExternalLibrary categoriesFor: #handle:!accessing!private! !
-!ExternalLibrary categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalLibrary categoriesFor: #invalidCall:!exceptions!public! !
-!ExternalLibrary categoriesFor: #isOpen!public!testing! !
-!ExternalLibrary categoriesFor: #loadFlags!constants!private! !
-!ExternalLibrary categoriesFor: #loadString:!accessing!public! !
-!ExternalLibrary categoriesFor: #moduleFileName!accessing!private! !
-!ExternalLibrary categoriesFor: #open!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #printOn:!printing!public! !
-!ExternalLibrary categoriesFor: #stbSaveOn:!binary filing!public! !
-!ExternalLibrary categoriesFor: #systemError!exceptions!public! !
-!ExternalLibrary categoriesFor: #systemError:!exceptions!public! !
-!ExternalLibrary categoriesFor: #versionFormatString!constants!private! !
-!ExternalLibrary categoriesFor: #versionInfo!accessing-version!public! !
-!ExternalLibrary categoriesFor: #versionString!accessing-version!public! !
+!External.Library categoriesFor: #asParameter!converting!public! !
+!External.Library categoriesFor: #basicOpen:!private!realizing/unrealizing! !
+!External.Library categoriesFor: #close!public!realizing/unrealizing! !
+!External.Library categoriesFor: #fileName!accessing!public! !
+!External.Library categoriesFor: #formatMessage:with:!accessing!public! !
+!External.Library categoriesFor: #getProcAddress:!accessing!private! !
+!External.Library categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
+!External.Library categoriesFor: #handle!accessing!private! !
+!External.Library categoriesFor: #handle:!accessing!private! !
+!External.Library categoriesFor: #invalidArgErrorClass!constants!private! !
+!External.Library categoriesFor: #invalidCall:!exceptions!public! !
+!External.Library categoriesFor: #isOpen!public!testing! !
+!External.Library categoriesFor: #loadFlags!constants!private! !
+!External.Library categoriesFor: #loadString:!accessing!public! !
+!External.Library categoriesFor: #moduleFileName!accessing!private! !
+!External.Library categoriesFor: #open!private!realizing/unrealizing! !
+!External.Library categoriesFor: #open:!private!realizing/unrealizing! !
+!External.Library categoriesFor: #printOn:!printing!public! !
+!External.Library categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.Library categoriesFor: #systemError!exceptions!public! !
+!External.Library categoriesFor: #systemError:!exceptions!public! !
+!External.Library categoriesFor: #versionFormatString!constants!private! !
+!External.Library categoriesFor: #versionInfo!accessing-version!public! !
+!External.Library categoriesFor: #versionString!accessing-version!public! !
 
-!ExternalLibrary class methodsFor!
+!External.Library class methodsFor!
 
 clear
 	"Private - Clear down cached external function addresses from previous runs. 
@@ -380,13 +379,13 @@ initializeAfterBinaryLoad
 
 	self clear!
 
-load: aString flags: anInteger 
+load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
 	and answer the handle."
 
 	| hLibrary klib |
 	klib := KernelLibrary default.
-	hLibrary := klib 
+	hLibrary := klib
 				loadLibraryEx: aString
 				hFile: nil
 				dwFlags: anInteger.
@@ -478,25 +477,25 @@ versionInfo
 	"Answer a <VersionInfo> containing the version details from the receiver."
 
 	^VersionInfo forPath: self fileName! !
-!ExternalLibrary class categoriesFor: #clear!initializing!private! !
-!ExternalLibrary class categoriesFor: #closeAllDefaults!finalizing!private! !
-!ExternalLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #default!accessing!instance creation!public! !
-!ExternalLibrary class categoriesFor: #default:!accessing!public! !
-!ExternalLibrary class categoriesFor: #fileName!constants!public! !
-!ExternalLibrary class categoriesFor: #fromHandle:!instance creation!public! !
-!ExternalLibrary class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
-!ExternalLibrary class categoriesFor: #load:flags:!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #moduleFileName:!helpers!private! !
-!ExternalLibrary class categoriesFor: #onExit!finalizing!private! !
-!ExternalLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #onStartup!event handling!private! !
-!ExternalLibrary class categoriesFor: #onStartup2!event handling!private! !
-!ExternalLibrary class categoriesFor: #open!instance creation!public! !
-!ExternalLibrary class categoriesFor: #open:!instance creation!public! !
-!ExternalLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ExternalLibrary class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #versionInfo!accessing-version!public! !
+!External.Library class categoriesFor: #clear!initializing!private! !
+!External.Library class categoriesFor: #closeAllDefaults!finalizing!private! !
+!External.Library class categoriesFor: #closeDefault!private!realizing/unrealizing! !
+!External.Library class categoriesFor: #default!accessing!instance creation!public! !
+!External.Library class categoriesFor: #default:!accessing!public! !
+!External.Library class categoriesFor: #fileName!constants!public! !
+!External.Library class categoriesFor: #fromHandle:!instance creation!public! !
+!External.Library class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
+!External.Library class categoriesFor: #load:flags:!private!realizing/unrealizing! !
+!External.Library class categoriesFor: #moduleFileName:!helpers!private! !
+!External.Library class categoriesFor: #onExit!finalizing!private! !
+!External.Library class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!External.Library class categoriesFor: #onStartup!event handling!private! !
+!External.Library class categoriesFor: #onStartup2!event handling!private! !
+!External.Library class categoriesFor: #open!instance creation!public! !
+!External.Library class categoriesFor: #open:!instance creation!public! !
+!External.Library class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!External.Library class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!External.Library class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.Library class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!External.Library class categoriesFor: #versionInfo!accessing-version!public! !
 

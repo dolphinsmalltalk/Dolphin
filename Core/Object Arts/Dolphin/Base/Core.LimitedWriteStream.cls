@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequencedStream subclass: #LimitedWriteStream
+Core.SequencedStream subclass: #'Core.LimitedWriteStream'
 	instanceVariableNames: 'stream limit limitBlock start visited visitedBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LimitedWriteStream guid: (GUID fromString: '{559e9343-8db5-45dd-bf26-68644d392dcb}')!
-LimitedWriteStream comment: ''!
-!LimitedWriteStream categoriesForClass!Collections-Streams! !
-!LimitedWriteStream methodsFor!
+Core.LimitedWriteStream guid: (Core.GUID fromString: '{559e9343-8db5-45dd-bf26-68644d392dcb}')!
+Core.LimitedWriteStream comment: ''!
+!Core.LimitedWriteStream categoriesForClass!Collections-Streams! !
+!Core.LimitedWriteStream methodsFor!
 
 alreadyVisited: aCompositeObject
 	self visitedBlock
@@ -144,33 +144,33 @@ visitedBlock
 
 visitedBlock: anObject
 	visitedBlock := anObject! !
-!LimitedWriteStream categoriesFor: #alreadyVisited:!private! !
-!LimitedWriteStream categoriesFor: #atEnd!public!testing! !
-!LimitedWriteStream categoriesFor: #checkLimit!helpers!private! !
-!LimitedWriteStream categoriesFor: #contents!accessing!public! !
-!LimitedWriteStream categoriesFor: #contentsSpecies!constants!private! !
-!LimitedWriteStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!LimitedWriteStream categoriesFor: #isWriteable!public!testing! !
-!LimitedWriteStream categoriesFor: #limit!accessing!public! !
-!LimitedWriteStream categoriesFor: #limit:!public! !
-!LimitedWriteStream categoriesFor: #limitBlock!accessing!public! !
-!LimitedWriteStream categoriesFor: #limitBlock:!accessing!public! !
-!LimitedWriteStream categoriesFor: #locale!accessing!public! !
-!LimitedWriteStream categoriesFor: #locale:!accessing!public! !
-!LimitedWriteStream categoriesFor: #moveToEnd!public! !
-!LimitedWriteStream categoriesFor: #next:put:!public! !
-!LimitedWriteStream categoriesFor: #nextPut:!accessing!public! !
-!LimitedWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!LimitedWriteStream categoriesFor: #originalContents!accessing!public! !
-!LimitedWriteStream categoriesFor: #peekFor:!accessing!public! !
-!LimitedWriteStream categoriesFor: #position!public! !
-!LimitedWriteStream categoriesFor: #reset!public! !
-!LimitedWriteStream categoriesFor: #setStream:limit:limitBlock:!initializing!private! !
-!LimitedWriteStream categoriesFor: #visit:do:!public! !
-!LimitedWriteStream categoriesFor: #visitedBlock!public! !
-!LimitedWriteStream categoriesFor: #visitedBlock:!public! !
+!Core.LimitedWriteStream categoriesFor: #alreadyVisited:!private! !
+!Core.LimitedWriteStream categoriesFor: #atEnd!public!testing! !
+!Core.LimitedWriteStream categoriesFor: #checkLimit!helpers!private! !
+!Core.LimitedWriteStream categoriesFor: #contents!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #contentsSpecies!constants!private! !
+!Core.LimitedWriteStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
+!Core.LimitedWriteStream categoriesFor: #isWriteable!public!testing! !
+!Core.LimitedWriteStream categoriesFor: #limit!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #limit:!public! !
+!Core.LimitedWriteStream categoriesFor: #limitBlock!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #limitBlock:!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #locale!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #locale:!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #moveToEnd!public! !
+!Core.LimitedWriteStream categoriesFor: #next:put:!public! !
+!Core.LimitedWriteStream categoriesFor: #nextPut:!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #nextPutAll:!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #originalContents!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #peekFor:!accessing!public! !
+!Core.LimitedWriteStream categoriesFor: #position!public! !
+!Core.LimitedWriteStream categoriesFor: #reset!public! !
+!Core.LimitedWriteStream categoriesFor: #setStream:limit:limitBlock:!initializing!private! !
+!Core.LimitedWriteStream categoriesFor: #visit:do:!public! !
+!Core.LimitedWriteStream categoriesFor: #visitedBlock!public! !
+!Core.LimitedWriteStream categoriesFor: #visitedBlock:!public! !
 
-!LimitedWriteStream class methodsFor!
+!Core.LimitedWriteStream class methodsFor!
 
 defaultLimit
 	^1000!
@@ -241,14 +241,14 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
-!LimitedWriteStream class categoriesFor: #defaultLimit!constants!private! !
-!LimitedWriteStream class categoriesFor: #defaultLimitBlock!constants!private! !
-!LimitedWriteStream class categoriesFor: #on:!instance creation!public! !
-!LimitedWriteStream class categoriesFor: #on:from:to:!instance creation!public! !
-!LimitedWriteStream class categoriesFor: #on:limit:!accessing!public! !
-!LimitedWriteStream class categoriesFor: #on:limit:limitBlock:!instance creation!public! !
-!LimitedWriteStream class categoriesFor: #over:limit:!accessing!public! !
-!LimitedWriteStream class categoriesFor: #over:limit:limitBlock:!instance creation!public! !
-!LimitedWriteStream class categoriesFor: #with:!instance creation!public! !
-!LimitedWriteStream class categoriesFor: #with:from:to:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #defaultLimit!constants!private! !
+!Core.LimitedWriteStream class categoriesFor: #defaultLimitBlock!constants!private! !
+!Core.LimitedWriteStream class categoriesFor: #on:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #on:from:to:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #on:limit:!accessing!public! !
+!Core.LimitedWriteStream class categoriesFor: #on:limit:limitBlock:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #over:limit:!accessing!public! !
+!Core.LimitedWriteStream class categoriesFor: #over:limit:limitBlock:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #with:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesFor: #with:from:to:!instance creation!public! !
 

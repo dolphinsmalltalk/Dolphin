@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Set variableSubclass: #Dictionary
+Core.Set variableSubclass: #'Core.Dictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dictionary guid: (GUID fromString: '{87b4c526-026e-11d3-9fd7-00a0cc3e4a32}')!
-Dictionary comment: 'Class Dictionary represents a set of associations between keys and values. The values can be randomly accessed using the associated key. 
+Core.Dictionary guid: (Core.GUID fromString: '{87b4c526-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Dictionary comment: 'Class Dictionary represents a set of associations between keys and values. The values can be randomly accessed using the associated key. 
 
 The elements of a Dictionary are instances of <Association>, a simple data structure for storing and retrieving the members of a key-value pair.
 
@@ -15,8 +15,8 @@ Conforms to the following ANSI protocols:
 	collection
 	abstractDictionary
 	Dictionary'!
-!Dictionary categoriesForClass!Collections-Unordered! !
-!Dictionary methodsFor!
+!Core.Dictionary categoriesForClass!Collections-Unordered! !
+!Core.Dictionary methodsFor!
 
 _deepCopyElementsInto: aDictionary trail: anIdentityDictionary 
 	self 
@@ -46,13 +46,28 @@ add: anAssociation
 		ifFalse: [element value: anAssociation value].
 	^anAssociation!
 
+addNewElement: anAssociation
+	"Include the <Association> newElement as one of the elements of the receiver, or update the value of the existing association with the same key.
+	Answer true if the association was not already a member of the set (i.e. it was really added), else false (the existing association was updated)."
+
+	| index |
+	index := self findKeyOrNil: anAssociation key.
+	^(self basicAt: index)
+		ifNil: 
+			[self privateAt: index put: anAssociation.
+			true]
+		ifNotNil: 
+			[:element |
+			element value: anAssociation value.
+			false]!
+
 asSet
 	"Answer a Set whose elements are the values stored in the receiver (any 
 	duplicates are therefore eliminated).
 	Revert to the Collection implementation."
 
-	^(Set new: self size) 
-		addAll: self; 
+	^(Set new: self size)
+		addAll: self;
 		yourself!
 
 associationAt: key
@@ -80,7 +95,7 @@ associationAt: key ifPresent: operation
 associationClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
-	
+
 	^Association!
 
 associations
@@ -88,12 +103,13 @@ associations
 
 	| answer |
 	answer := OrderedCollection new: self size.
-	self associationsDo: [:assoc | answer add: assoc].
+	self associationsDo: [:assoc | answer addLast: assoc].
 	^answer!
 
 associationsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, for each of the receiver's key/value mappings."
 
+	tally == 0 ifTrue: [^self].
 	1 to: self basicSize
 		do: [:i | (self basicAt: i) ifNotNil: [:element | aMonadicValuable value: element]]!
 
@@ -182,11 +198,13 @@ atAll: keys put: newElement
 bestSlotFor: element boundedBy: capacity
 	^self hash: element key max: capacity!
 
-bindingFor: asString 
-	"Answer the association whose key is equal to the argument in
-	the receiver, or nil if the key is not present. Used by the Compiler"
+bindingFor: aString
+	"Answer the association in the receiver whose key is equal to the argument, or nil if there is no association with that key."
 
-	^self associationAt: asString ifAbsent: []!
+	^self basicAt: (self findKeyOrNil: aString)!
+
+bindingsDo: aMonadicValuable
+	self associationsDo: aMonadicValuable!
 
 changeKey: key to: newKey 
 	"Private - Change the key of the element of the receiver with key, key, to
@@ -241,11 +259,6 @@ errorKeyNotFound: aKey
 	^self errorNotFound: aKey
 !
 
-errorModify: key value: value
-	"Private - An attempt was made to modify the value of the constant named, key."
-
-	self error: 'Cannot modify read-only value associated with key ', key printString!
-
 findElementOrNil: anAssociation
 	"Private - Answer the index of the element with the a key equivalent to that
 	of anAssociation. The elements of the receiver are Associations, so we look up
@@ -265,11 +278,6 @@ findKeyOrNil: anObject
 	(element := self basicAt: index) isNil or: [anObject = element key]] 
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
-
-fullBindingFor: aString
-	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
-
-	^self resolveBindingPath: ($. split: aString)!
 
 identityIncludes: anObject 
 	"Answer whether the argument, anObject, is one of the receiver's elements."
@@ -296,8 +304,7 @@ includesAssociation: anAssociation
 	^assoc ~~ AbsentCookie and: [assoc value = anAssociation value]!
 
 includesKey: anObject 
-	"Answer whether the receiver has a key equal to the <Object>
-	argument."
+	"Answer whether the receiver has a key equal to the <Object> argument."
 
 	^(self basicAt: (self findKeyOrNil: anObject)) notNil!
 
@@ -356,7 +363,7 @@ keysAndValuesDo: operation
 
 keysClass
 	"Private - Answer the class of Collection to be used for collecting the keys of the receiver"
-	
+
 	^Set!
 
 keysDo: operation
@@ -439,9 +446,9 @@ removeAssociation: anAssociation ifAbsent: aNiladicValuable
 	Answer anAssociation. If there is no such association in the receiver, answer the result of
 	evaluating the <niladicValuable>, operation."
 
-	self removeKey: anAssociation key ifAbsent: [^aNiladicValuable value].
-	^anAssociation
-!
+	^(self removeKey: anAssociation key ifAbsent: [AbsentCookie]) == AbsentCookie
+		ifTrue: [aNiladicValuable value]
+		ifFalse: [anAssociation]!
 
 removeKey: key 
 	"Remove the <Object> key (and its associated value), from the receiver. 
@@ -466,14 +473,6 @@ removeKey: key ifAbsent: operation
 			self removeIndex: index.
 			element value]!
 
-resolveBindingPath: anArrayOfString
-	| count env |
-	env := self.
-	count := anArrayOfString size.
-	1 to: count - 1
-		do: [:i | (env bindingFor: (anArrayOfString at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
-	^env bindingFor: (anArrayOfString at: count)!
-
 searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
@@ -496,11 +495,8 @@ select: discriminator
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler
-		saveObject: self
-		as: (STBCollectionProxy
-			class: self class
-			array: self associations asArray)!
+	anSTBOutFiler saveObject: self
+		as: (STBCollectionProxy class: self class array: self associations asArray)!
 
 storeOn: aStream 
 	"Append to the <puttableStream> argument, target, an expression which when 
@@ -529,67 +525,66 @@ values
 	answer := OrderedCollection new: self size.
 	self do: [:value | answer addLast: value].
 	^answer! !
-!Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Dictionary categoriesFor: #=!comparing!public! !
-!Dictionary categoriesFor: #add:!adding!public! !
-!Dictionary categoriesFor: #asSet!converting!public! !
-!Dictionary categoriesFor: #associationAt:!accessing!public! !
-!Dictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #associationAt:ifPresent:!accessing!public! !
-!Dictionary categoriesFor: #associationClass!constants!private! !
-!Dictionary categoriesFor: #associations!accessing!public! !
-!Dictionary categoriesFor: #associationsDo:!enumerating!public! !
-!Dictionary categoriesFor: #associationsDo:separatedBy:!enumerating!public! !
-!Dictionary categoriesFor: #at:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
-!Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
-!Dictionary categoriesFor: #at:put:!accessing!public! !
-!Dictionary categoriesFor: #atAll:put:!accessing!public! !
-!Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Dictionary categoriesFor: #bindingFor:!binding!public! !
-!Dictionary categoriesFor: #changeKey:to:!accessing!private! !
-!Dictionary categoriesFor: #collect:!enumerating!public! !
-!Dictionary categoriesFor: #copyElementsInto:!adding!private! !
-!Dictionary categoriesFor: #do:!enumerating!public! !
-!Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!Dictionary categoriesFor: #errorModify:value:!exceptions!private! !
-!Dictionary categoriesFor: #findElementOrNil:!private!searching! !
-!Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!Dictionary categoriesFor: #fullBindingFor:!binding!public! !
-!Dictionary categoriesFor: #identityIncludes:!public!searching! !
-!Dictionary categoriesFor: #includes:!public!searching! !
-!Dictionary categoriesFor: #includesAssociation:!public!searching! !
-!Dictionary categoriesFor: #includesKey:!public!searching! !
-!Dictionary categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #keyAtValue:!accessing!public! !
-!Dictionary categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #keys!accessing!public! !
-!Dictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Dictionary categoriesFor: #keysClass!constants!private! !
-!Dictionary categoriesFor: #keysDo:!enumerating!public! !
-!Dictionary categoriesFor: #lookup:!accessing!public! !
-!Dictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!Dictionary categoriesFor: #occurrencesOf:!public!searching! !
-!Dictionary categoriesFor: #postCopy!copying!public! !
-!Dictionary categoriesFor: #printOn:!printing!public! !
-!Dictionary categoriesFor: #remove:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeAllKeys:!public!removing! !
-!Dictionary categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeAssociation:!public!removing! !
-!Dictionary categoriesFor: #removeAssociation:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeKey:!public!removing! !
-!Dictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #resolveBindingPath:!binding!public! !
-!Dictionary categoriesFor: #searchPolicy!constants!public! !
-!Dictionary categoriesFor: #select:!enumerating!public! !
-!Dictionary categoriesFor: #stbSaveOn:!binary filing!public! !
-!Dictionary categoriesFor: #storeOn:!printing!public! !
-!Dictionary categoriesFor: #values!accessing!public! !
+!Core.Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
+!Core.Dictionary categoriesFor: #=!comparing!public! !
+!Core.Dictionary categoriesFor: #add:!adding!public! !
+!Core.Dictionary categoriesFor: #addNewElement:!adding!public! !
+!Core.Dictionary categoriesFor: #asSet!converting!public! !
+!Core.Dictionary categoriesFor: #associationAt:!accessing!public! !
+!Core.Dictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!Core.Dictionary categoriesFor: #associationAt:ifPresent:!accessing!public! !
+!Core.Dictionary categoriesFor: #associationClass!constants!private! !
+!Core.Dictionary categoriesFor: #associations!accessing!public! !
+!Core.Dictionary categoriesFor: #associationsDo:!enumerating!public! !
+!Core.Dictionary categoriesFor: #associationsDo:separatedBy:!enumerating!public! !
+!Core.Dictionary categoriesFor: #at:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
+!Core.Dictionary categoriesFor: #at:put:!accessing!public! !
+!Core.Dictionary categoriesFor: #atAll:put:!accessing!public! !
+!Core.Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
+!Core.Dictionary categoriesFor: #bindingFor:!binding!public! !
+!Core.Dictionary categoriesFor: #bindingsDo:!enumerating!public! !
+!Core.Dictionary categoriesFor: #changeKey:to:!accessing!private! !
+!Core.Dictionary categoriesFor: #collect:!enumerating!public! !
+!Core.Dictionary categoriesFor: #copyElementsInto:!adding!private! !
+!Core.Dictionary categoriesFor: #do:!enumerating!public! !
+!Core.Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
+!Core.Dictionary categoriesFor: #findElementOrNil:!private!searching! !
+!Core.Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
+!Core.Dictionary categoriesFor: #identityIncludes:!public!searching! !
+!Core.Dictionary categoriesFor: #includes:!public!searching! !
+!Core.Dictionary categoriesFor: #includesAssociation:!public!searching! !
+!Core.Dictionary categoriesFor: #includesKey:!public!searching! !
+!Core.Dictionary categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
+!Core.Dictionary categoriesFor: #keyAtValue:!accessing!public! !
+!Core.Dictionary categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!Core.Dictionary categoriesFor: #keys!accessing!public! !
+!Core.Dictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!Core.Dictionary categoriesFor: #keysClass!constants!private! !
+!Core.Dictionary categoriesFor: #keysDo:!enumerating!public! !
+!Core.Dictionary categoriesFor: #lookup:!accessing!public! !
+!Core.Dictionary categoriesFor: #newAssociation:value:!helpers!private! !
+!Core.Dictionary categoriesFor: #occurrencesOf:!public!searching! !
+!Core.Dictionary categoriesFor: #postCopy!copying!public! !
+!Core.Dictionary categoriesFor: #printOn:!printing!public! !
+!Core.Dictionary categoriesFor: #remove:ifAbsent:!public!removing! !
+!Core.Dictionary categoriesFor: #removeAllKeys:!public!removing! !
+!Core.Dictionary categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
+!Core.Dictionary categoriesFor: #removeAssociation:!public!removing! !
+!Core.Dictionary categoriesFor: #removeAssociation:ifAbsent:!public!removing! !
+!Core.Dictionary categoriesFor: #removeKey:!public!removing! !
+!Core.Dictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!Core.Dictionary categoriesFor: #searchPolicy!constants!public! !
+!Core.Dictionary categoriesFor: #select:!enumerating!public! !
+!Core.Dictionary categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Dictionary categoriesFor: #storeOn:!printing!public! !
+!Core.Dictionary categoriesFor: #values!accessing!public! !
 
-Dictionary methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
-Dictionary methodProtocol: #Dictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
+Core.Dictionary methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
+Core.Dictionary methodProtocol: #Dictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 
-Dictionary class methodProtocol: #'Dictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
+Core.Dictionary class methodProtocol: #'Dictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

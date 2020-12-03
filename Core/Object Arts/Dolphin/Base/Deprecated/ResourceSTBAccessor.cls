@@ -3,10 +3,10 @@
 ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceSTBAccessor guid: (GUID fromString: '{0cc7574b-24f8-4714-9068-6c282e7bf1f1}')!
+ResourceSTBAccessor guid: (Core.GUID fromString: '{0cc7574b-24f8-4714-9068-6c282e7bf1f1}')!
 ResourceSTBAccessor comment: ''!
 !ResourceSTBAccessor categoriesForClass!MVP-Resources! !
 !ResourceSTBAccessor methodsFor!
@@ -46,7 +46,7 @@ initialize
 	super initialize.
 	self classLocator: ClassLocator new!
 
-loadWithContext: anObject forEdit: isLoadingForEdit 
+loadWithContext: anObject forEdit: isLoadingForEdit
 	"Answer an instance of the resource held in the STB file associated with the receiver.
 	If the new instance requires a context in which to live, this is provided by context."
 
@@ -57,13 +57,13 @@ loadWithContext: anObject forEdit: isLoadingForEdit
 		classLocator: classLocator copyWithCodeBase;
 		isUpgrading: isLoadingForEdit;
 		context: anObject;
-		next] 
+		next]
 			ensure: [stream close]!
 
 readStream
 	^self subclassResponsibility!
 
-save: anObject as: aResourceClass on: stream 
+save: anObject as: aResourceClass on: stream
 	aResourceClass save: anObject toFiler: (STBOutFiler on: stream)! !
 !ResourceSTBAccessor categoriesFor: #byteArray!accessing!private! !
 !ResourceSTBAccessor categoriesFor: #classLocator!accessing!private! !

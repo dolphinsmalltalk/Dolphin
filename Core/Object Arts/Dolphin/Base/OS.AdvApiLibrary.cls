@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #AdvApiLibrary
+External.Library subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AdvApiLibrary guid: (GUID fromString: '{64674054-3a82-101b-8181-00aa003743d3}')!
-AdvApiLibrary comment: 'AdvApiLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, ADVAPI32.DLL.
+OS.AdvApiLibrary guid: (Core.GUID fromString: '{64674054-3a82-101b-8181-00aa003743d3}')!
+OS.AdvApiLibrary comment: 'AdvApiLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, ADVAPI32.DLL.
 
 This DLL contains functions mainly to do with accessing the registry, high-level access to which is available via Dolphin''s Registry Access package.
 '!
-!AdvApiLibrary categoriesForClass!External-Libraries-Win32! !
-!AdvApiLibrary methodsFor!
+!OS.AdvApiLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.AdvApiLibrary methodsFor!
 
 deregisterEventSource: anExternalHandle
 	<stdcall: bool DeregisterEventSource handle>
@@ -57,16 +57,16 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 
 	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
 	^self invalidCall: _failureCode! !
-!AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
-!AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
-!AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
-!AdvApiLibrary categoriesFor: #reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
+!OS.AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
+!OS.AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
+!OS.AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
+!OS.AdvApiLibrary categoriesFor: #reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
 
-!AdvApiLibrary class methodsFor!
+!OS.AdvApiLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library"
 
 	^'ADVAPI32'! !
-!AdvApiLibrary class categoriesFor: #fileName!constants!public! !
+!OS.AdvApiLibrary class categoriesFor: #fileName!constants!public! !
 

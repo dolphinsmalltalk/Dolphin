@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Message subclass: #MessageSendAbstract
+Core.Message subclass: #'Core.MessageSendAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageSendAbstract guid: (GUID fromString: '{16bfd17c-2ce8-4b61-b09a-9d012256d971}')!
-MessageSendAbstract isAbstract: true!
-MessageSendAbstract comment: 'A MessageSendAbstract is the abstract base class of fully closed <Message>s, that include a receiver object, a message selector, and an array of sufficient arguments. As a fully closed valuable, Message Sends can be evaluated by sending them the #value message, and they can frequently be employed where a <BlockClosure> might otherwise be used.
+Core.MessageSendAbstract guid: (Core.GUID fromString: '{16bfd17c-2ce8-4b61-b09a-9d012256d971}')!
+Core.MessageSendAbstract isNonInstantiable: true!
+Core.MessageSendAbstract comment: 'A MessageSendAbstract is the abstract base class of fully closed <Message>s, that include a receiver object, a message selector, and an array of sufficient arguments. As a fully closed valuable, Message Sends can be evaluated by sending them the #value message, and they can frequently be employed where a <BlockClosure> might otherwise be used.
 
 Athough Message Sends are complete in themselves, they also respond to the valuable messages which take arguments. The general principle is that the supplied arguments supplant those stored in the Message Send according to some algorithm determined by the particular subclass.'!
-!MessageSendAbstract categoriesForClass!Kernel-Methods! !
-!MessageSendAbstract methodsFor!
+!Core.MessageSendAbstract categoriesForClass!Kernel-Methods! !
+!Core.MessageSendAbstract methodsFor!
 
 = aMessageSend
 	"Answer true if the receiver and aMessage are equal.
@@ -144,28 +144,28 @@ valueWithArguments: triggerArguments
 	than that required, then the subclass determines which take precedence."
 
 	^self forwardTo: self receiver withArguments: triggerArguments! !
-!MessageSendAbstract categoriesFor: #=!comparing!public! !
-!MessageSendAbstract categoriesFor: #cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #deferredValue!evaluating!public! !
-!MessageSendAbstract categoriesFor: #deferredValueAt:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #forwardTo:!operations!public! !
-!MessageSendAbstract categoriesFor: #hash!comparing!public! !
-!MessageSendAbstract categoriesFor: #printOn:!printing!public! !
-!MessageSendAbstract categoriesFor: #receiver!accessing!public! !
-!MessageSendAbstract categoriesFor: #receiver:!accessing!public! !
-!MessageSendAbstract categoriesFor: #value!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #=!comparing!public! !
+!Core.MessageSendAbstract categoriesFor: #cull:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #cull:cull:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #cull:cull:cull:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #deferredValue!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #deferredValueAt:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #forwardTo:!operations!public! !
+!Core.MessageSendAbstract categoriesFor: #hash!comparing!public! !
+!Core.MessageSendAbstract categoriesFor: #printOn:!printing!public! !
+!Core.MessageSendAbstract categoriesFor: #receiver!accessing!public! !
+!Core.MessageSendAbstract categoriesFor: #receiver:!accessing!public! !
+!Core.MessageSendAbstract categoriesFor: #value!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #value:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #value:value:value:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
+!Core.MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
 
-MessageSendAbstract methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
+Core.MessageSendAbstract methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
 
-!MessageSendAbstract class methodsFor!
+!Core.MessageSendAbstract class methodsFor!
 
 receiver: anObject selector: aSymbol
 	"Answer a new instance of the receiver with the receiver, anObject, and selector, 
@@ -201,8 +201,8 @@ selector: aSymbol arguments: anArray
 		receiver: nil
 		selector: aSymbol
 		arguments: anArray! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:argument:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #selector:arguments:!instance creation!public! !
+!Core.MessageSendAbstract class categoriesFor: #receiver:selector:!instance creation!public! !
+!Core.MessageSendAbstract class categoriesFor: #receiver:selector:argument:!instance creation!public! !
+!Core.MessageSendAbstract class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
+!Core.MessageSendAbstract class categoriesFor: #selector:arguments:!instance creation!public! !
 

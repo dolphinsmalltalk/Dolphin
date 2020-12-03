@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArithmeticValue subclass: #Number
+Core.ArithmeticValue subclass: #'Core.Number'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Number guid: (GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
-Number isAbstract: true!
-Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.
+Core.Number guid: (Core.GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Number isNonInstantiable: true!
+Core.Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.
 
 Its messages support standard arithmetic operations and comparisons, which are mostly implemented by subclasses.'!
-!Number categoriesForClass!Magnitude-Numbers! !
-!Number methodsFor!
+!Core.Number categoriesForClass!Magnitude-Numbers! !
+!Core.Number methodsFor!
 
 arcCos
 	"Answer a <Float> which is the inverse cosine of the receiver in radians"
@@ -76,10 +76,7 @@ asScaledDecimal: scale
 	specified by the <integer>, scale, which most nearly approximates
 	the receiver."
 
-	^ScaledDecimal
-		newFromNumber: self
-		scale: scale
-!
+	^ScaledDecimal newFromNumber: self scale: scale!
 
 asTrueFraction
 	"Answer a <rational> that precisely represents the same value as the receiver."
@@ -113,7 +110,7 @@ days
 
 degreesToRadians
 	"Answer a <Float> representing the receiver converted from degrees to radians."
-	
+
 	^self * ##(Float pi / 180.0)!
 
 denominator
@@ -273,13 +270,19 @@ to: stop
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 1 
 	between elements."
 
-	^Interval from: self to: stop by: 1!
+	^Interval
+		from: self
+		to: stop
+		by: 1!
 
 to: stop by: step
 	"Answer an <interval> from the receiver up to the argument, stop, with an interval of 
 	the argument, step, between elements."
 
-	^Interval from: self to: stop by: step!
+	^Interval
+		from: self
+		to: stop
+		by: step!
 
 to: stop by: step do: operation
 	"Evaluate the <monadicBlock> argument, operation, for each <number> between the 
@@ -298,62 +301,62 @@ to: stop do: operation
 	the compiler, so this implementation is used only when #perform:'ed."
 
 	(self to: stop) do: operation! !
-!Number categoriesFor: #arcCos!mathematical!public! !
-!Number categoriesFor: #arcSin!mathematical!public! !
-!Number categoriesFor: #arcTan!mathematical!public! !
-!Number categoriesFor: #arcTan:!mathematical!public! !
-!Number categoriesFor: #asFloat!converting!public! !
-!Number categoriesFor: #asFloatD!converting!public! !
-!Number categoriesFor: #asFloatE!converting!public! !
-!Number categoriesFor: #asFloatQ!converting!public! !
-!Number categoriesFor: #asFraction!converting!public! !
-!Number categoriesFor: #asInteger!converting!public! !
-!Number categoriesFor: #asScaledDecimal:!converting!public! !
-!Number categoriesFor: #asTrueFraction!converting!public! !
-!Number categoriesFor: #closeTo:!comparing!public! !
-!Number categoriesFor: #closeTo:precision:!comparing!public! !
-!Number categoriesFor: #copy!copying!public! !
-!Number categoriesFor: #cos!mathematical!public! !
-!Number categoriesFor: #days!converting!durations!public! !
-!Number categoriesFor: #degreesToRadians!converting!public! !
-!Number categoriesFor: #denominator!accessing!public! !
-!Number categoriesFor: #divideByZero!exceptions!private! !
-!Number categoriesFor: #divideIntoDuration:!double dispatch!durations!private! !
-!Number categoriesFor: #even!public!testing! !
-!Number categoriesFor: #exp!mathematical!public! !
-!Number categoriesFor: #floorLog:!mathematical!public! !
-!Number categoriesFor: #fractionPart!accessing!public! !
-!Number categoriesFor: #hour!converting!durations!public! !
-!Number categoriesFor: #hours!converting!durations!public! !
-!Number categoriesFor: #integerPart!accessing!public! !
-!Number categoriesFor: #isFloat!public!testing! !
-!Number categoriesFor: #isFraction!public!testing! !
-!Number categoriesFor: #isLiteral!public!testing! !
-!Number categoriesFor: #isNumber!public!testing! !
-!Number categoriesFor: #ln!mathematical!public! !
-!Number categoriesFor: #log!mathematical!public! !
-!Number categoriesFor: #log:!mathematical!public! !
-!Number categoriesFor: #microseconds!converting!durations!public! !
-!Number categoriesFor: #milliseconds!converting!durations!public! !
-!Number categoriesFor: #minutes!converting!durations!public! !
-!Number categoriesFor: #nanoseconds!converting!durations!public! !
-!Number categoriesFor: #numerator!accessing!public! !
-!Number categoriesFor: #odd!public!testing! !
-!Number categoriesFor: #radiansToDegrees!converting!public! !
-!Number categoriesFor: #raisedTo:!mathematical!public! !
-!Number categoriesFor: #seconds!converting!durations!public! !
-!Number categoriesFor: #sin!mathematical!public! !
-!Number categoriesFor: #sqrt!mathematical!public! !
-!Number categoriesFor: #tan!mathematical!public! !
-!Number categoriesFor: #to:!enumerating!public! !
-!Number categoriesFor: #to:by:!enumerating!public! !
-!Number categoriesFor: #to:by:do:!enumerating!public! !
-!Number categoriesFor: #to:do:!enumerating!public! !
+!Core.Number categoriesFor: #arcCos!mathematical!public! !
+!Core.Number categoriesFor: #arcSin!mathematical!public! !
+!Core.Number categoriesFor: #arcTan!mathematical!public! !
+!Core.Number categoriesFor: #arcTan:!mathematical!public! !
+!Core.Number categoriesFor: #asFloat!converting!public! !
+!Core.Number categoriesFor: #asFloatD!converting!public! !
+!Core.Number categoriesFor: #asFloatE!converting!public! !
+!Core.Number categoriesFor: #asFloatQ!converting!public! !
+!Core.Number categoriesFor: #asFraction!converting!public! !
+!Core.Number categoriesFor: #asInteger!converting!public! !
+!Core.Number categoriesFor: #asScaledDecimal:!converting!public! !
+!Core.Number categoriesFor: #asTrueFraction!converting!public! !
+!Core.Number categoriesFor: #closeTo:!comparing!public! !
+!Core.Number categoriesFor: #closeTo:precision:!comparing!public! !
+!Core.Number categoriesFor: #copy!copying!public! !
+!Core.Number categoriesFor: #cos!mathematical!public! !
+!Core.Number categoriesFor: #days!converting!durations!public! !
+!Core.Number categoriesFor: #degreesToRadians!converting!public! !
+!Core.Number categoriesFor: #denominator!accessing!public! !
+!Core.Number categoriesFor: #divideByZero!exceptions!private! !
+!Core.Number categoriesFor: #divideIntoDuration:!double dispatch!durations!private! !
+!Core.Number categoriesFor: #even!public!testing! !
+!Core.Number categoriesFor: #exp!mathematical!public! !
+!Core.Number categoriesFor: #floorLog:!mathematical!public! !
+!Core.Number categoriesFor: #fractionPart!accessing!public! !
+!Core.Number categoriesFor: #hour!converting!durations!public! !
+!Core.Number categoriesFor: #hours!converting!durations!public! !
+!Core.Number categoriesFor: #integerPart!accessing!public! !
+!Core.Number categoriesFor: #isFloat!public!testing! !
+!Core.Number categoriesFor: #isFraction!public!testing! !
+!Core.Number categoriesFor: #isLiteral!public!testing! !
+!Core.Number categoriesFor: #isNumber!public!testing! !
+!Core.Number categoriesFor: #ln!mathematical!public! !
+!Core.Number categoriesFor: #log!mathematical!public! !
+!Core.Number categoriesFor: #log:!mathematical!public! !
+!Core.Number categoriesFor: #microseconds!converting!durations!public! !
+!Core.Number categoriesFor: #milliseconds!converting!durations!public! !
+!Core.Number categoriesFor: #minutes!converting!durations!public! !
+!Core.Number categoriesFor: #nanoseconds!converting!durations!public! !
+!Core.Number categoriesFor: #numerator!accessing!public! !
+!Core.Number categoriesFor: #odd!public!testing! !
+!Core.Number categoriesFor: #radiansToDegrees!converting!public! !
+!Core.Number categoriesFor: #raisedTo:!mathematical!public! !
+!Core.Number categoriesFor: #seconds!converting!durations!public! !
+!Core.Number categoriesFor: #sin!mathematical!public! !
+!Core.Number categoriesFor: #sqrt!mathematical!public! !
+!Core.Number categoriesFor: #tan!mathematical!public! !
+!Core.Number categoriesFor: #to:!enumerating!public! !
+!Core.Number categoriesFor: #to:by:!enumerating!public! !
+!Core.Number categoriesFor: #to:by:do:!enumerating!public! !
+!Core.Number categoriesFor: #to:do:!enumerating!public! !
 
-Number methodProtocol: #number attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
-Number methodProtocol: #rational attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #denominator #floor #fractionPart #integerPart #max: #min: #negated #negative #numerator #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
+Core.Number methodProtocol: #number attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
+Core.Number methodProtocol: #rational attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #denominator #floor #fractionPart #integerPart #max: #min: #negated #negative #numerator #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 
-!Number class methodsFor!
+!Core.Number class methodsFor!
 
 errorExponentTooLarge: anInteger
 	^InvalidFormat signal: ('Exponent <1p> is too large' expandMacrosWith: anInteger) with: self!
@@ -432,13 +435,13 @@ readExponentIntegerFrom: aStream initialInteger: anInteger
 				ifTrue: [self errorExponentTooLarge: exponent]
 				ifFalse: [anInteger * exponent exp10]]!
 
-readFractionFrom: aStream initialInteger: anInteger 
+readFractionFrom: aStream initialInteger: anInteger
 	"Private - A partially recognised Fraction has been read from the <gettableStream>, aStream,
 	which is positioned immediate after the $/. Read the rest of the Fraction and answer its value,
 	or if not a Fraction (determined by the immediate presence of an integer denominator), pop the 
 	$/ and answer anInteger."
 
-	^(self readDecimalIntegerFrom: aStream allowPlus: false) 
+	^(self readDecimalIntegerFrom: aStream allowPlus: false)
 		ifNil: 
 			[aStream pop.
 			anInteger]
@@ -622,20 +625,20 @@ zero
 	is the SmallInteger 0"
 
 	^0! !
-!Number class categoriesFor: #errorExponentTooLarge:!parsing!private! !
-!Number class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Number class categoriesFor: #fromString:!instance creation!public! !
-!Number class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
-!Number class categoriesFor: #new!instance creation!public! !
-!Number class categoriesFor: #one!instance creation!public! !
-!Number class categoriesFor: #readDecimalIntegerFrom:allowPlus:!parsing!private! !
-!Number class categoriesFor: #readExponentIntegerFrom:initialInteger:!parsing!private! !
-!Number class categoriesFor: #readFractionFrom:initialInteger:!parsing!private! !
-!Number class categoriesFor: #readFrom:!instance creation!public! !
-!Number class categoriesFor: #readIntegerFrom:radix:!parsing!private! !
-!Number class categoriesFor: #readRadixIntegerFrom:initialInteger:!parsing!private! !
-!Number class categoriesFor: #readScaledDecimalFrom:mantissa:precision:!parsing!private! !
-!Number class categoriesFor: #readSmalltalkRealFrom:initialInteger:!parsing!public! !
-!Number class categoriesFor: #readSmalltalkSyntaxFrom:!parsing!private! !
-!Number class categoriesFor: #zero!instance creation!public! !
+!Core.Number class categoriesFor: #errorExponentTooLarge:!parsing!private! !
+!Core.Number class categoriesFor: #errorInvalidFormat!exceptions!private! !
+!Core.Number class categoriesFor: #fromString:!instance creation!public! !
+!Core.Number class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
+!Core.Number class categoriesFor: #new!instance creation!public! !
+!Core.Number class categoriesFor: #one!instance creation!public! !
+!Core.Number class categoriesFor: #readDecimalIntegerFrom:allowPlus:!parsing!private! !
+!Core.Number class categoriesFor: #readExponentIntegerFrom:initialInteger:!parsing!private! !
+!Core.Number class categoriesFor: #readFractionFrom:initialInteger:!parsing!private! !
+!Core.Number class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Number class categoriesFor: #readIntegerFrom:radix:!parsing!private! !
+!Core.Number class categoriesFor: #readRadixIntegerFrom:initialInteger:!parsing!private! !
+!Core.Number class categoriesFor: #readScaledDecimalFrom:mantissa:precision:!parsing!private! !
+!Core.Number class categoriesFor: #readSmalltalkRealFrom:initialInteger:!parsing!public! !
+!Core.Number class categoriesFor: #readSmalltalkSyntaxFrom:!parsing!private! !
+!Core.Number class categoriesFor: #zero!instance creation!public! !
 

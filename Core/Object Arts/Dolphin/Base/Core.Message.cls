@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Message
+Core.Object subclass: #'Core.Message'
 	instanceVariableNames: 'selector args'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Message guid: (GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Message comment: ''!
-!Message categoriesForClass!Kernel-Methods! !
-!Message methodsFor!
+Core.Message guid: (Core.GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Message comment: ''!
+!Core.Message categoriesForClass!Kernel-Methods! !
+!Core.Message methodsFor!
 
 = aMessage
 	"Answer true if the receiver and aMessage are equal.
@@ -134,33 +134,33 @@ valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"
 
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
-!Message categoriesFor: #=!comparing!public! !
-!Message categoriesFor: #argumentCount!accessing!public! !
-!Message categoriesFor: #arguments!accessing!public! !
-!Message categoriesFor: #arguments:!accessing!public! !
-!Message categoriesFor: #asSymbol!converting!public! !
-!Message categoriesFor: #forwardTo:!operations!public! !
-!Message categoriesFor: #forwardTo:with:!operations!private! !
-!Message categoriesFor: #forwardTo:withArguments:!operations!private! !
-!Message categoriesFor: #hash!comparing!public! !
-!Message categoriesFor: #messages!enquiries!public! !
-!Message categoriesFor: #numArgs!accessing!public! !
-!Message categoriesFor: #printOn:!printing!public! !
-!Message categoriesFor: #selector!accessing!public! !
-!Message categoriesFor: #selector:!accessing!public! !
-!Message categoriesFor: #setSelector:arguments:!accessing!private! !
-!Message categoriesFor: #value:!evaluating!public! !
-!Message categoriesFor: #value:value:!evaluating!public! !
-!Message categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.Message categoriesFor: #=!comparing!public! !
+!Core.Message categoriesFor: #argumentCount!accessing!public! !
+!Core.Message categoriesFor: #arguments!accessing!public! !
+!Core.Message categoriesFor: #arguments:!accessing!public! !
+!Core.Message categoriesFor: #asSymbol!converting!public! !
+!Core.Message categoriesFor: #forwardTo:!operations!public! !
+!Core.Message categoriesFor: #forwardTo:with:!operations!private! !
+!Core.Message categoriesFor: #forwardTo:withArguments:!operations!private! !
+!Core.Message categoriesFor: #hash!comparing!public! !
+!Core.Message categoriesFor: #messages!enquiries!public! !
+!Core.Message categoriesFor: #numArgs!accessing!public! !
+!Core.Message categoriesFor: #printOn:!printing!public! !
+!Core.Message categoriesFor: #selector!accessing!public! !
+!Core.Message categoriesFor: #selector:!accessing!public! !
+!Core.Message categoriesFor: #setSelector:arguments:!accessing!private! !
+!Core.Message categoriesFor: #value:!evaluating!public! !
+!Core.Message categoriesFor: #value:value:!evaluating!public! !
+!Core.Message categoriesFor: #valueWithArguments:!evaluating!public! !
 
-Message methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
-Message methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
-Message methodProtocol: #failedMessage attributes: #(#ansi #readOnly) selectors: #(#arguments #selector)!
-Message methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
-Message methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
-Message methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
+Core.Message methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
+Core.Message methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
+Core.Message methodProtocol: #failedMessage attributes: #(#ansi #readOnly) selectors: #(#arguments #selector)!
+Core.Message methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
+Core.Message methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
+Core.Message methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
-!Message class methodsFor!
+!Core.Message class methodsFor!
 
 selector: aSymbol 
 	"Answer a new instance of the receiver with the selector, aSymbol"
@@ -178,7 +178,7 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new setSelector: aSymbol arguments: anArray! !
-!Message class categoriesFor: #selector:!instance creation!public! !
-!Message class categoriesFor: #selector:argument:!instance creation!public! !
-!Message class categoriesFor: #selector:arguments:!instance creation!public! !
+!Core.Message class categoriesFor: #selector:!instance creation!public! !
+!Core.Message class categoriesFor: #selector:argument:!instance creation!public! !
+!Core.Message class categoriesFor: #selector:arguments:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollection variableSubclass: #Array
+Core.ArrayedCollection variableSubclass: #'Core.Array'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Array guid: (GUID fromString: '{87b4c510-026e-11d3-9fd7-00a0cc3e4a32}')!
-Array comment: 'Array is the class of <ArrayedCollection>s whose elements are arbitraty <Object>s.
+Core.Array guid: (Core.GUID fromString: '{87b4c510-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Array comment: 'Array is the class of <ArrayedCollection>s whose elements are arbitraty <Object>s.
 
 Array complies with the ANSI protocols:
 	Object
@@ -15,8 +15,8 @@ Array complies with the ANSI protocols:
 	sequencedReadableCollection
 	sequencedCollection
 	Array'!
-!Array categoriesForClass!Collections-Arrayed! !
-!Array methodsFor!
+!Core.Array categoriesForClass!Collections-Arrayed! !
+!Core.Array methodsFor!
 
 addAnsweringIndex: newElement
 	"Add newElement to the receiver by overwriting the first nil. If there are no nils
@@ -31,7 +31,7 @@ asArray
 	^self!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
 
 	self printOn: aPuttableStream do: [:each | each displayOn: aPuttableStream]!
@@ -151,28 +151,31 @@ storeOn: aStream
 			aStream nextPut: ${.
 			self do: [:each | each storeOn: aStream] separatedBy: [aStream nextPutAll: '. '].
 			aStream nextPut: $}]! !
-!Array categoriesFor: #addAnsweringIndex:!adding!public! !
-!Array categoriesFor: #asArray!converting!public! !
-!Array categoriesFor: #displayOn:!printing!public! !
-!Array categoriesFor: #isLiteral!public!testing! !
-!Array categoriesFor: #isLiteral:!public!testing! !
-!Array categoriesFor: #isSelfEvaluating!public!testing! !
-!Array categoriesFor: #isSelfEvaluating:!public!testing! !
-!Array categoriesFor: #printOn:!printing!public! !
-!Array categoriesFor: #printOn:do:!printing!private! !
-!Array categoriesFor: #refersToLiteral:!private!testing! !
-!Array categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!Array categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Array categoriesFor: #storeOn:!printing!public! !
+!Core.Array categoriesFor: #addAnsweringIndex:!adding!public! !
+!Core.Array categoriesFor: #asArray!converting!public! !
+!Core.Array categoriesFor: #displayOn:!printing!public! !
+!Core.Array categoriesFor: #isLiteral!public!testing! !
+!Core.Array categoriesFor: #isLiteral:!public!testing! !
+!Core.Array categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.Array categoriesFor: #isSelfEvaluating:!public!testing! !
+!Core.Array categoriesFor: #printOn:!printing!public! !
+!Core.Array categoriesFor: #printOn:do:!printing!private! !
+!Core.Array categoriesFor: #refersToLiteral:!private!testing! !
+!Core.Array categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
+!Core.Array categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.Array categoriesFor: #storeOn:!printing!public! !
 
-Array methodProtocol: #Array attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
+Core.Array methodProtocol: #Array attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
 
-!Array class methodsFor!
+!Core.Array class methodsFor!
 
 empty
 	"Answer an empty (zero length) instance of the receiver."
 
 	^#()!
+
+initialize
+	VMLibrary default registryAt: #ArrayBinding put: self binding!
 
 newFromStack: aSmallInteger
 	"Private - Answer an instance of the receiver with the specified number of instance
@@ -222,11 +225,12 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 
 	<primitive: 157>
 	^{element1. element2. element3. element4. element5}! !
-!Array class categoriesFor: #empty!instance creation!public! !
-!Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
-!Array class categoriesFor: #with:!instance creation!public! !
-!Array class categoriesFor: #with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.Array class categoriesFor: #empty!instance creation!public! !
+!Core.Array class categoriesFor: #initialize!private! !
+!Core.Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
+!Core.Array class categoriesFor: #with:!instance creation!public! !
+!Core.Array class categoriesFor: #with:with:!instance creation!public! !
+!Core.Array class categoriesFor: #with:with:with:!instance creation!public! !
+!Core.Array class categoriesFor: #with:with:with:with:!instance creation!public! !
+!Core.Array class categoriesFor: #with:with:with:with:with:!instance creation!public! !
 

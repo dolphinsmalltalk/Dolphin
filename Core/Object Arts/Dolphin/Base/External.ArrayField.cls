@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-EmbeddedField subclass: #ArrayField
+External.EmbeddedField subclass: #'External.ArrayField'
 	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayField guid: (GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
-ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
+External.ArrayField guid: (Core.GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
 
 Instance Variables:
 	arrayLength		<ArrayFieldLength> describing the length of the array.'!
-!ArrayField categoriesForClass!External-Data-Types! !
-!ArrayField methodsFor!
+!External.ArrayField categoriesForClass!External-Data-Types! !
+!External.ArrayField methodsFor!
 
 alignment
 	"Answer the alignment requirements for the receiver.
@@ -88,26 +88,22 @@ printStaticElementSizeExpressionOn: aWriteStream
 	self emitStaticExpression: [:stream | self printElementSizeExpressionBodyOn: stream]
 		on: aWriteStream!
 
-readFrom: anExternalStructure
-	"Private - Answer a byte-object array of the type described by the receiver, and of the size
-	described by the receiver. Normally this will be an <ExternalArray> reference to the data in
-	the <ExternalStructure> argument at the receiver's offset, but it can be an object of any
-	class that responds to the #fromAddress:length: instance creation message, e.g. a
-	<ByteArray> or a <String>, which both create a copy of the data."
+readFrom: aStructure
+	"Private - Answer a byte-object array of the type described by the receiver, and of the size described by the receiver. Normally this will be an <ExternalArray> reference to the data in the <Structure> argument at the receiver's offset, but it can be an object of any class that responds to the #fromAddress:length: instance creation message, e.g. a <ByteArray> or a <String>, which both create a copy of the data."
 
-	^self arrayClass fromAddress: anExternalStructure yourAddress + offset
-		length: (arrayLength getElementCountOf: self in: anExternalStructure)!
+	^self arrayClass fromAddress: aStructure yourAddress + offset
+		length: (arrayLength getElementCountOf: self in: aStructure)!
 
-writeInto: anExternalStructure value: aByteObject
-	"Private - Write the bytes of aByteObject into anExternalStructure."
+writeInto: aStructure value: aByteObject
+	"Private - Write the bytes of aByteObject into the <External.Structure> first argument."
 
 	| byteSize |
 	byteSize := self isFixedSize
 				ifTrue: 
 					[aByteObject byteSize
-						min: (arrayLength getElementCountOf: self in: anExternalStructure) * self elementSize]
+						min: (arrayLength getElementCountOf: self in: aStructure) * self elementSize]
 				ifFalse: [aByteObject byteSize].
-	anExternalStructure bytes
+	aStructure bytes
 		replaceFrom: offset + 1
 		to: offset + byteSize
 		with: aByteObject
@@ -115,25 +111,25 @@ writeInto: anExternalStructure value: aByteObject
 	arrayLength
 		setElementCount: aByteObject
 		of: self
-		in: anExternalStructure! !
-!ArrayField categoriesFor: #alignment!constants!public! !
-!ArrayField categoriesFor: #allocationLength!accessing!private! !
-!ArrayField categoriesFor: #arrayClass!constants!private! !
-!ArrayField categoriesFor: #arrayLength:!accessing!private! !
-!ArrayField categoriesFor: #byteSize!accessing!private! !
-!ArrayField categoriesFor: #elementClass!accessing!private! !
-!ArrayField categoriesFor: #elementSize!accessing!private! !
-!ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
-!ArrayField categoriesFor: #isFixedSize!private!testing! !
-!ArrayField categoriesFor: #length!accessing!private! !
-!ArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printFieldSizeExpressionBodyOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
-!ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
+		in: aStructure! !
+!External.ArrayField categoriesFor: #alignment!constants!public! !
+!External.ArrayField categoriesFor: #allocationLength!accessing!private! !
+!External.ArrayField categoriesFor: #arrayClass!constants!private! !
+!External.ArrayField categoriesFor: #arrayLength:!accessing!private! !
+!External.ArrayField categoriesFor: #byteSize!accessing!private! !
+!External.ArrayField categoriesFor: #elementClass!accessing!private! !
+!External.ArrayField categoriesFor: #elementSize!accessing!private! !
+!External.ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
+!External.ArrayField categoriesFor: #isFixedSize!private!testing! !
+!External.ArrayField categoriesFor: #length!accessing!private! !
+!External.ArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
+!External.ArrayField categoriesFor: #printFieldSizeExpressionBodyOn:!automatic generation!private! !
+!External.ArrayField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
+!External.ArrayField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
+!External.ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!ArrayField class methodsFor!
+!External.ArrayField class methodsFor!
 
 type: aClass arrayLength: anArrayFieldLength
 	"Answer a new instance of the receiver which is used for describing embedded array objects
@@ -151,6 +147,6 @@ type: aClass length: anInteger
 	embedded arrays of type aClass, with anInteger elements."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
-!ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
-!ArrayField class categoriesFor: #type:length:!instance creation!public! !
+!External.ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
+!External.ArrayField class categoriesFor: #type:length:!instance creation!public! !
 

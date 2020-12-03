@@ -1,20 +1,18 @@
 ﻿| package |
 package := Package name: 'Dolphin Anonymous Classes'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Anonymous Classes
 Copyright (c) Object Arts Ltd. 2019.'.
 
 
 package setClassNames: #(
-	#{AnonymousClassBuilder}
+	#{Kernel.AnonymousClassBuilder}
 ).
 
 package setMethodNames: #(
-	#(#{Class} #newAnonymousSubclass)
-	#(#{ClassBuilder class} #forAnonymousSubclassOf:)
-	#(#{ClassDescription} #isAnonymous)
-	#(#{Metaclass} #isAnonymous)
+	#(#{Core.Class} #newAnonymousSubclass)
+	#(#{Kernel.ClassBuilder class} #forAnonymousSubclassOf:)
 ).
 
 package setPrerequisites: #(
@@ -25,7 +23,7 @@ package!
 
 "Class Definitions"!
 
-ClassBuilder subclass: #AnonymousClassBuilder
+Kernel.ClassBuilder subclass: #'Kernel.AnonymousClassBuilder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -34,36 +32,19 @@ ClassBuilder subclass: #AnonymousClassBuilder
 
 "Loose Methods"!
 
-!Class methodsFor!
+!Core.Class methodsFor!
 
 newAnonymousSubclass
-	^(ClassBuilder forAnonymousSubclassOf: self)
-		createNewClass! !
-!Class categoriesFor: #newAnonymousSubclass!class hierarchy-adding!public! !
+	^(ClassBuilder forAnonymousSubclassOf: self) createNewClass! !
+!Core.Class categoriesFor: #newAnonymousSubclass!class hierarchy-adding!public! !
 
-!ClassBuilder class methodsFor!
+!Kernel.ClassBuilder class methodsFor!
 
 forAnonymousSubclassOf: aClass
 	^AnonymousClassBuilder new
 		superclass: aClass;
 		yourself! !
-!ClassBuilder class categoriesFor: #forAnonymousSubclassOf:!instance creation!public! !
-
-!ClassDescription methodsFor!
-
-isAnonymous
-	"Answer whether this is an anonymous (unbound) class."
-
-	^self subclassResponsibility! !
-!ClassDescription categoriesFor: #isAnonymous!public!testing! !
-
-!Metaclass methodsFor!
-
-isAnonymous
-	"Answer whether this is an anonymous (unbound) class."
-
-	^self instanceClass isAnonymous! !
-!Metaclass categoriesFor: #isAnonymous!public!testing! !
+!Kernel.ClassBuilder class categoriesFor: #forAnonymousSubclassOf:!instance creation!public! !
 
 "End of package definition"!
 

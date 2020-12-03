@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VersionInfo
+Core.Object subclass: #'OS.VersionInfo'
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VersionInfo guid: (GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
-VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
+OS.VersionInfo guid: (Core.GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
 
 For example:
 
@@ -17,14 +17,14 @@ Instance Variables:
 	fileInfo		<ByteArray>. Buffer containing the raw version information resource.
 	prefix		<String>. Prefix used to access language specific information from the version info. string table.
 	fixedInfo		<VS_FIXEDFILEINFO>. The basic version information which is always present.'!
-!VersionInfo categoriesForClass!System-Support! !
-!VersionInfo methodsFor!
+!OS.VersionInfo categoriesForClass!System-Support! !
+!OS.VersionInfo methodsFor!
 
 at: valueName
 	"Answer the named version information from the receiver."
 
 	| lpstr len |
-	lpstr := ExternalAddress new.
+	lpstr := External.Address new.
 	len := self queryValue: self prefix , valueName into: lpstr.
 	^len == 0 ifTrue: [''] ifFalse: [Utf16String fromAddress: lpstr]!
 
@@ -80,15 +80,17 @@ getFixedInfo
 	dwLen := DWORDBytes new.
 	info := VS_FIXEDFILEINFO newPointer.
 	lib := VersionLibrary default.
-	^(lib verQueryValue: fileInfo lpSubBlock: '\' lplpBuffer: info puLen: dwLen)
-		ifTrue: [info]
-		ifFalse: [lib systemError]!
+	^(lib
+		verQueryValue: fileInfo
+		lpSubBlock: '\'
+		lplpBuffer: info
+		puLen: dwLen) ifTrue: [info] ifFalse: [lib systemError]!
 
 getTranslationInfo
 	"Private - Get the language/code-page id from the version info block."
 
 	| lpvi len |
-	lpvi := ExternalAddress new.
+	lpvi := External.Address new.
 	len := self queryValue: '\VarFileInfo\Translation' into: lpvi.
 	self assert: [len >= 4].
 	^'%04x%04x' sprintfWith: (lpvi wordAtOffset: 0) with: (lpvi wordAtOffset: 2)!
@@ -131,33 +133,37 @@ queryValue: name into: buf
 
 	| dwLen |
 	dwLen := DWORDBytes fromInteger: 123.
-	VersionLibrary default verQueryValue: fileInfo lpSubBlock: name lplpBuffer: buf puLen: dwLen.
+	VersionLibrary default
+		verQueryValue: fileInfo
+		lpSubBlock: name
+		lplpBuffer: buf
+		puLen: dwLen.
 	^dwLen asInteger!
 
 specialBuild
 	"Answer the <readableString> product name from the receiver."
 
 	^self at: 'SpecialBuild'! !
-!VersionInfo categoriesFor: #at:!accessing!public! !
-!VersionInfo categoriesFor: #comments!accessing!public! !
-!VersionInfo categoriesFor: #fileDescription!accessing!public! !
-!VersionInfo categoriesFor: #fileInfo:!accessing!private! !
-!VersionInfo categoriesFor: #fileVersion!public! !
-!VersionInfo categoriesFor: #fileVersionString!accessing!public! !
-!VersionInfo categoriesFor: #fixedInfo!accessing!public! !
-!VersionInfo categoriesFor: #formatVersionString:!operations!public! !
-!VersionInfo categoriesFor: #getFixedInfo!accessing!private! !
-!VersionInfo categoriesFor: #getTranslationInfo!accessing!private! !
-!VersionInfo categoriesFor: #legalCopyright!accessing!public! !
-!VersionInfo categoriesFor: #prefix!accessing!private! !
-!VersionInfo categoriesFor: #productMajor!accessing!public! !
-!VersionInfo categoriesFor: #productMinor!accessing!public! !
-!VersionInfo categoriesFor: #productName!accessing!public! !
-!VersionInfo categoriesFor: #productVersionString!accessing!public! !
-!VersionInfo categoriesFor: #queryValue:into:!accessing!private! !
-!VersionInfo categoriesFor: #specialBuild!accessing!public! !
+!OS.VersionInfo categoriesFor: #at:!accessing!public! !
+!OS.VersionInfo categoriesFor: #comments!accessing!public! !
+!OS.VersionInfo categoriesFor: #fileDescription!accessing!public! !
+!OS.VersionInfo categoriesFor: #fileInfo:!accessing!private! !
+!OS.VersionInfo categoriesFor: #fileVersion!public! !
+!OS.VersionInfo categoriesFor: #fileVersionString!accessing!public! !
+!OS.VersionInfo categoriesFor: #fixedInfo!accessing!public! !
+!OS.VersionInfo categoriesFor: #formatVersionString:!operations!public! !
+!OS.VersionInfo categoriesFor: #getFixedInfo!accessing!private! !
+!OS.VersionInfo categoriesFor: #getTranslationInfo!accessing!private! !
+!OS.VersionInfo categoriesFor: #legalCopyright!accessing!public! !
+!OS.VersionInfo categoriesFor: #prefix!accessing!private! !
+!OS.VersionInfo categoriesFor: #productMajor!accessing!public! !
+!OS.VersionInfo categoriesFor: #productMinor!accessing!public! !
+!OS.VersionInfo categoriesFor: #productName!accessing!public! !
+!OS.VersionInfo categoriesFor: #productVersionString!accessing!public! !
+!OS.VersionInfo categoriesFor: #queryValue:into:!accessing!private! !
+!OS.VersionInfo categoriesFor: #specialBuild!accessing!public! !
 
-!VersionInfo class methodsFor!
+!OS.VersionInfo class methodsFor!
 
 forPath: path
 	"Answer a new instance of the receiver which can be used to query the version
@@ -165,12 +171,12 @@ forPath: path
 
 	^self new
 		fileInfo: (VersionLibrary default getFileVersionInfo: path);
-		yourself		!
+		yourself!
 
 uninitialize
 	"Assist the version library in departing this world"
 
 	#{VersionLibrary} ifDefined: [:lib | lib closeDefault]! !
-!VersionInfo class categoriesFor: #forPath:!instance creation!public! !
-!VersionInfo class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!OS.VersionInfo class categoriesFor: #forPath:!instance creation!public! !
+!OS.VersionInfo class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

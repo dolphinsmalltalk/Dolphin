@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GenericExternalArray subclass: #StructureArray
+External.GenericExternalArray subclass: #'External.StructureArray'
 	instanceVariableNames: 'elementSpacing'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureArray guid: (GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
-StructureArray comment: 'Generic <ExternalArray> class which can represent single-dimensioned arrays of any class of <ExternalStructure>. Packing and alignment rules are respected.
+External.StructureArray guid: (Core.GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.StructureArray comment: 'Generic <ExternalArray> class which can represent single-dimensioned arrays of any class of <ExternalStructure>. Packing and alignment rules are respected.
 
 Note that although StructureArray is capable of fulfilling the tasks of other more specialized <ExternalArray> classes such as <DWORDArray> and <FLOATArray>, it is far less efficient and marginally more inconvenient as indexed access always yields an <ExternalStructure> rather than a fundamental Smalltalk object.
 
@@ -15,8 +15,8 @@ Instance Variables:
 	elementSpacing	<integer>. Distance (in bytes) between adjacent elements, there may be padding.
 
 '!
-!StructureArray categoriesForClass!External-Data-Structured! !
-!StructureArray methodsFor!
+!External.StructureArray categoriesForClass!External-Data-Structured! !
+!External.StructureArray methodsFor!
 
 alignment
 	"Answer the alignment required for instances of the receiver when 
@@ -80,15 +80,15 @@ uncheckedAt: anInteger put: anObject
 		to: offset + self elementSize
 		startingAt: 1.
 	^anObject! !
-!StructureArray categoriesFor: #alignment!constants!public! !
-!StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
-!StructureArray categoriesFor: #elementClass:!accessing!private! !
-!StructureArray categoriesFor: #initialize!initializing!private! !
-!StructureArray categoriesFor: #initializePointer!initializing!private! !
-!StructureArray categoriesFor: #packing!constants!private! !
-!StructureArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.StructureArray categoriesFor: #alignment!constants!public! !
+!External.StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
+!External.StructureArray categoriesFor: #elementClass:!accessing!private! !
+!External.StructureArray categoriesFor: #initialize!initializing!private! !
+!External.StructureArray categoriesFor: #initializePointer!initializing!private! !
+!External.StructureArray categoriesFor: #packing!constants!private! !
+!External.StructureArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!StructureArray class methodsFor!
+!External.StructureArray class methodsFor!
 
 fromAddress: anAddress length: anInteger elementClass: elementClass
 	"Answer a new instance of the receiver that points at an
@@ -146,11 +146,11 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 	answer := self length: aCollection size elementClass: anExternalStructureClass.
 	answer with: aCollection do: aDyadicValuable.
 	^answer! !
-!StructureArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
-!StructureArray class categoriesFor: #length:elementClass:!instance creation!public! !
-!StructureArray class categoriesFor: #length:elementClass:initializer:!instance creation!public! !
-!StructureArray class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!StructureArray class categoriesFor: #stbVersion!binary filing!public! !
-!StructureArray class categoriesFor: #with:!instance creation!public! !
-!StructureArray class categoriesFor: #withAll:elementClass:initializer:!instance creation!public! !
+!External.StructureArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
+!External.StructureArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!External.StructureArray class categoriesFor: #length:elementClass:initializer:!instance creation!public! !
+!External.StructureArray class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!External.StructureArray class categoriesFor: #stbVersion!binary filing!public! !
+!External.StructureArray class categoriesFor: #with:!instance creation!public! !
+!External.StructureArray class categoriesFor: #withAll:elementClass:initializer:!instance creation!public! !
 

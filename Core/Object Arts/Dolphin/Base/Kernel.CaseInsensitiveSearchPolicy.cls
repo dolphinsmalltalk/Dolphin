@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SingletonSearchPolicy subclass: #CaseInsensitiveSearchPolicy
+Kernel.SingletonSearchPolicy subclass: #'Kernel.CaseInsensitiveSearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CaseInsensitiveSearchPolicy guid: (GUID fromString: '{46f9c2fc-d025-11d3-93da-00a024ca708a}')!
-CaseInsensitiveSearchPolicy comment: 'CaseInsensitiveSearchPolicy is for configuring pluggable collections and models of strings to use case-insensitive equality based search and comparisons, i.e. using #sameAs: and the #hash of the lowercased equivalent of the string.
+Kernel.CaseInsensitiveSearchPolicy guid: (Core.GUID fromString: '{46f9c2fc-d025-11d3-93da-00a024ca708a}')!
+Kernel.CaseInsensitiveSearchPolicy comment: 'CaseInsensitiveSearchPolicy is for configuring pluggable collections and models of strings to use case-insensitive equality based search and comparisons, i.e. using #sameAs: and the #hash of the lowercased equivalent of the string.
 
 N.B. Unlike other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of strings, or objects which can be represented as strings (i.e. implementors of #asString).
 '!
-!CaseInsensitiveSearchPolicy categoriesForClass!Collections-Support! !
-!CaseInsensitiveSearchPolicy methodsFor!
+!Kernel.CaseInsensitiveSearchPolicy categoriesForClass!Collections-Support! !
+!Kernel.CaseInsensitiveSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -43,8 +43,8 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#caseInsensitive! !
-!CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
-!CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!CaseInsensitiveSearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
+!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #name!accessing!public! !
 

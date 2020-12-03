@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OrderedCollection variableSubclass: #SortedCollection
+Core.OrderedCollection variableSubclass: #'Core.SortedCollection'
 	instanceVariableNames: 'algorithm'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SortedCollection guid: (GUID fromString: '{87b4c525-026e-11d3-9fd7-00a0cc3e4a32}')!
-SortedCollection comment: 'SortedCollection is a class of <SequencedGrowableCollection>s whose elements are ordered in the sequence specified by a user-definable sort order function (the sort "block", actually a <dyadicValuable>). Note that unlike traditional Smalltalk implementations of SortedCollection, Dolphin''s implementation (as of D6) holds a <SortAlgorithm> instance rather than a <dyadicValuable> sort-order block. This allows the sorting algorithm to be pluggable, as well as the sort ordering. Another advantage is that the default sort order need not use a block at all, allowing for improved performance of the default sort by avoiding the need for block activations to perform element comparisons.
+Core.SortedCollection guid: (Core.GUID fromString: '{87b4c525-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SortedCollection comment: 'SortedCollection is a class of <SequencedGrowableCollection>s whose elements are ordered in the sequence specified by a user-definable sort order function (the sort "block", actually a <dyadicValuable>). Note that unlike traditional Smalltalk implementations of SortedCollection, Dolphin''s implementation (as of D6) holds a <SortAlgorithm> instance rather than a <dyadicValuable> sort-order block. This allows the sorting algorithm to be pluggable, as well as the sort ordering. Another advantage is that the default sort order need not use a block at all, allowing for improved performance of the default sort by avoiding the need for block activations to perform element comparisons.
 
 SortedCollection complies with the ANSI protocols:
 	Object
@@ -23,8 +23,8 @@ Elements can be added, removed or inserted, and can be accessed using external i
 Instance Variables:
 	sortBlock		<dyadicValuable>
 	algorithm		<SortAlgorithm>'!
-!SortedCollection categoriesForClass!Collections-Sequenceable! !
-!SortedCollection methodsFor!
+!Core.SortedCollection categoriesForClass!Collections-Sequenceable! !
+!Core.SortedCollection methodsFor!
 
 , operand
 	"This is the concatenation operation. Answer a copy of the receiver with each element of the
@@ -323,47 +323,44 @@ stbSaveOn: anSTBOutFiler
 
 	algorithm ~~ self class defaultSortAlgorithm
 		ifTrue: [^anSTBOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
+	super stbSaveOn: anSTBOutFiler! !
+!Core.SortedCollection categoriesFor: #,!copying!public! !
+!Core.SortedCollection categoriesFor: #add:!adding!public! !
+!Core.SortedCollection categoriesFor: #add:afterIndex:!adding!public! !
+!Core.SortedCollection categoriesFor: #add:beforeIndex:!adding!public! !
+!Core.SortedCollection categoriesFor: #addAll:!adding!public! !
+!Core.SortedCollection categoriesFor: #addAllFirst:!adding!public! !
+!Core.SortedCollection categoriesFor: #addAllLast:!adding!public! !
+!Core.SortedCollection categoriesFor: #addAllWithoutSorting:!adding!public! !
+!Core.SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
+!Core.SortedCollection categoriesFor: #addFirst:!adding!public! !
+!Core.SortedCollection categoriesFor: #addLast:!adding!public! !
+!Core.SortedCollection categoriesFor: #algorithm!accessing!non browsable!public! !
+!Core.SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
+!Core.SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
+!Core.SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
+!Core.SortedCollection categoriesFor: #asSortedCollection!converting!public! !
+!Core.SortedCollection categoriesFor: #at:put:!accessing!public! !
+!Core.SortedCollection categoriesFor: #binaryIncludes:!adding!public! !
+!Core.SortedCollection categoriesFor: #collect:!enumerating!public! !
+!Core.SortedCollection categoriesFor: #copyEmpty:!copying!private! !
+!Core.SortedCollection categoriesFor: #copyFrom:to:!copying!public! !
+!Core.SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
+!Core.SortedCollection categoriesFor: #indexForInserting:!adding!private! !
+!Core.SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.SortedCollection categoriesFor: #resize:!mutating!private! !
+!Core.SortedCollection categoriesFor: #reSort!operations!public! !
+!Core.SortedCollection categoriesFor: #reverse!copying!public! !
+!Core.SortedCollection categoriesFor: #select:!enumerating!public! !
+!Core.SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
+!Core.SortedCollection categoriesFor: #sortBlock!accessing!public! !
+!Core.SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
+!Core.SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
+!Core.SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
 
-	super stbSaveOn: anSTBOutFiler
+Core.SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!
 
-	! !
-!SortedCollection categoriesFor: #,!copying!public! !
-!SortedCollection categoriesFor: #add:!adding!public! !
-!SortedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!SortedCollection categoriesFor: #add:beforeIndex:!adding!public! !
-!SortedCollection categoriesFor: #addAll:!adding!public! !
-!SortedCollection categoriesFor: #addAllFirst:!adding!public! !
-!SortedCollection categoriesFor: #addAllLast:!adding!public! !
-!SortedCollection categoriesFor: #addAllWithoutSorting:!adding!public! !
-!SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!SortedCollection categoriesFor: #addFirst:!adding!public! !
-!SortedCollection categoriesFor: #addLast:!adding!public! !
-!SortedCollection categoriesFor: #algorithm!accessing!non browsable!public! !
-!SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
-!SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
-!SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!SortedCollection categoriesFor: #asSortedCollection!converting!public! !
-!SortedCollection categoriesFor: #at:put:!accessing!public! !
-!SortedCollection categoriesFor: #binaryIncludes:!adding!public! !
-!SortedCollection categoriesFor: #collect:!enumerating!public! !
-!SortedCollection categoriesFor: #copyEmpty:!copying!private! !
-!SortedCollection categoriesFor: #copyFrom:to:!copying!public! !
-!SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
-!SortedCollection categoriesFor: #indexForInserting:!adding!private! !
-!SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!SortedCollection categoriesFor: #resize:!mutating!private! !
-!SortedCollection categoriesFor: #reSort!operations!public! !
-!SortedCollection categoriesFor: #reverse!copying!public! !
-!SortedCollection categoriesFor: #select:!enumerating!public! !
-!SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
-!SortedCollection categoriesFor: #sortBlock!accessing!public! !
-!SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
-!SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
-!SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
-
-SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!
-
-!SortedCollection class methodsFor!
+!Core.SortedCollection class methodsFor!
 
 caseSensitiveSortBlock
 	"Answer a <dyadicValuable> which can be used to sort <String>s into ascending order on a
@@ -410,12 +407,12 @@ sortBlock: aDyadicValuable
 withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
-!SortedCollection class categoriesFor: #caseSensitiveSortBlock!constants!public! !
-!SortedCollection class categoriesFor: #defaultSortBlock!constants!public! !
-!SortedCollection class categoriesFor: #new:!instance creation!public! !
-!SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
-!SortedCollection class categoriesFor: #sortBlock:!instance creation!public! !
-!SortedCollection class categoriesFor: #withNilsSortBlock!instance creation!public! !
+!Core.SortedCollection class categoriesFor: #caseSensitiveSortBlock!constants!public! !
+!Core.SortedCollection class categoriesFor: #defaultSortBlock!constants!public! !
+!Core.SortedCollection class categoriesFor: #new:!instance creation!public! !
+!Core.SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
+!Core.SortedCollection class categoriesFor: #sortBlock:!instance creation!public! !
+!Core.SortedCollection class categoriesFor: #withNilsSortBlock!instance creation!public! !
 
-SortedCollection class methodProtocol: #'SortedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #sortBlock: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.SortedCollection class methodProtocol: #'SortedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #sortBlock: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

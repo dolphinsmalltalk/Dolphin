@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScalarField subclass: #AbstractCHARField
+External.ScalarField subclass: #'External.AbstractCHARField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractCHARField guid: (GUID fromString: '{225e024e-8ea6-493f-ad47-82a47ac5cb5c}')!
-AbstractCHARField comment: ''!
-!AbstractCHARField categoriesForClass!Unclassified! !
-!AbstractCHARField methodsFor!
+External.AbstractCHARField guid: (Core.GUID fromString: '{225e024e-8ea6-493f-ad47-82a47ac5cb5c}')!
+External.AbstractCHARField comment: ''!
+!External.AbstractCHARField categoriesForClass!Unclassified! !
+!External.AbstractCHARField methodsFor!
 
 basicWriteInto: anExternalStructure value: anInteger
 	^self subclassResponsibility!
@@ -31,8 +31,8 @@ writeInto: anExternalStructure value: aCharacter
 	"Private - Write the code point of the <Character>, aCharacter, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^self basicWriteInto: anExternalStructure value: aCharacter codePoint! !
-!AbstractCHARField categoriesFor: #basicWriteInto:value:!accessing!public! !
-!AbstractCHARField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!AbstractCHARField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
-!AbstractCHARField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.AbstractCHARField categoriesFor: #basicWriteInto:value:!accessing!public! !
+!External.AbstractCHARField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!External.AbstractCHARField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!External.AbstractCHARField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

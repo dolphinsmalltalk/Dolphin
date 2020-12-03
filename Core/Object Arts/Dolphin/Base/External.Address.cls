@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UIntPtrBytes variableByteSubclass: #ExternalAddress
+External.UIntPtrBytes variableByteSubclass: #'External.Address'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalAddress guid: (GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalAddress isIndirection: true!
-ExternalAddress comment: ''!
-!ExternalAddress categoriesForClass!External-Data-Unstructured! !
-!ExternalAddress methodsFor!
+External.Address guid: (Core.GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.Address isIndirection: true!
+External.Address comment: ''!
+!External.Address categoriesForClass!External-Data-Unstructured! !
+!External.Address methodsFor!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -109,7 +109,7 @@ detach
 	^address asExternalAddress!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	self isNull ifTrue: [aPuttableStream nextPutAll: 'NULL'] ifFalse: [super displayOn: aPuttableStream]!
 
@@ -321,37 +321,37 @@ yourAddress
 	the receiver's bytes"
 
 	^self asInteger! !
-!ExternalAddress categoriesFor: #approxSize!accessing!private! !
-!ExternalAddress categoriesFor: #asExternalAddress!converting!public! !
-!ExternalAddress categoriesFor: #asInteger!accessing!public! !
-!ExternalAddress categoriesFor: #at:!accessing!public! !
-!ExternalAddress categoriesFor: #at:put:!accessing!public! !
-!ExternalAddress categoriesFor: #byteAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #byteAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #copyFrom:to:!copying!public! !
-!ExternalAddress categoriesFor: #deepCopy!copying!public! !
-!ExternalAddress categoriesFor: #detach!public!realizing/unrealizing! !
-!ExternalAddress categoriesFor: #displayOn:!displaying!public! !
-!ExternalAddress categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
-!ExternalAddress categoriesFor: #resize:!mutating!public! !
-!ExternalAddress categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #stbSaveOn:!binary filing!public! !
-!ExternalAddress categoriesFor: #swordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #value!accessing!public! !
-!ExternalAddress categoriesFor: #value:!accessing!public! !
-!ExternalAddress categoriesFor: #wordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #yourAddress!accessing!public! !
+!External.Address categoriesFor: #approxSize!accessing!private! !
+!External.Address categoriesFor: #asExternalAddress!converting!public! !
+!External.Address categoriesFor: #asInteger!accessing!public! !
+!External.Address categoriesFor: #at:!accessing!public! !
+!External.Address categoriesFor: #at:put:!accessing!public! !
+!External.Address categoriesFor: #byteAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #byteAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #copyFrom:to:!copying!public! !
+!External.Address categoriesFor: #deepCopy!copying!public! !
+!External.Address categoriesFor: #detach!public!realizing/unrealizing! !
+!External.Address categoriesFor: #displayOn:!displaying!public! !
+!External.Address categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
+!External.Address categoriesFor: #resize:!mutating!public! !
+!External.Address categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.Address categoriesFor: #swordAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #value!accessing!public! !
+!External.Address categoriesFor: #value:!accessing!public! !
+!External.Address categoriesFor: #wordAtOffset:!accessing!primitives!public! !
+!External.Address categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
+!External.Address categoriesFor: #yourAddress!accessing!public! !
 
-!ExternalAddress class methodsFor!
+!External.Address class methodsFor!
 
 alignment
 	"Answer the natural alignment for instances of the receiver when 
@@ -377,8 +377,8 @@ fromInteger: anInteger
 	primitive coercion trick."
 
 	^VMLibrary default addressFromInteger: anInteger! !
-!ExternalAddress class categoriesFor: #alignment!constants!public! !
-!ExternalAddress class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalAddress class categoriesFor: #fromBytes:!instance creation!public! !
-!ExternalAddress class categoriesFor: #fromInteger:!instance creation!public! !
+!External.Address class categoriesFor: #alignment!constants!public! !
+!External.Address class categoriesFor: #fromAddress:!instance creation!public! !
+!External.Address class categoriesFor: #fromBytes:!instance creation!public! !
+!External.Address class categoriesFor: #fromInteger:!instance creation!public! !
 

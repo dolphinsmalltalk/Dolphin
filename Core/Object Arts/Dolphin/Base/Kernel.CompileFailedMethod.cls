@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompiledMethod variableSubclass: #CompileFailedMethod
+Kernel.CompiledMethod variableSubclass: #'Kernel.CompileFailedMethod'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompileFailedMethod guid: (GUID fromString: '{87b4c545-026e-11d3-9fd7-00a0cc3e4a32}')!
-CompileFailedMethod comment: 'In certain situations (package loading, method dropping etc) a method compilation will fail and yet a stub CompileFailedMethod is still installed in the class. This stub is useful since it allows the original method source to be accessible via the browsers and allows category information to be maintained for the failed method.
+Kernel.CompileFailedMethod guid: (Core.GUID fromString: '{87b4c545-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.CompileFailedMethod comment: 'In certain situations (package loading, method dropping etc) a method compilation will fail and yet a stub CompileFailedMethod is still installed in the class. This stub is useful since it allows the original method source to be accessible via the browsers and allows category information to be maintained for the failed method.
 
 If you want to locate all of these compilation failures remaining in your image siimply evaluate:
 
 SmalltalkSystem current browseCompileFailedMethods'!
-!CompileFailedMethod categoriesForClass!System-Compiler! !
-!CompileFailedMethod methodsFor!
+!Kernel.CompileFailedMethod categoriesForClass!System-Compiler! !
+!Kernel.CompileFailedMethod methodsFor!
 
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
@@ -31,10 +31,10 @@ getDebugInfo
 
 isCompilationFailure
 	^true! !
-!CompileFailedMethod categoriesFor: #getDebugInfo!development!private! !
-!CompileFailedMethod categoriesFor: #isCompilationFailure!public!testing! !
+!Kernel.CompileFailedMethod categoriesFor: #getDebugInfo!development!private! !
+!Kernel.CompileFailedMethod categoriesFor: #isCompilationFailure!public!testing! !
 
-!CompileFailedMethod class methodsFor!
+!Kernel.CompileFailedMethod class methodsFor!
 
 buildSourceForSelector: aSymbol class: aBehavior
 	"Private - Construct a method with a correct message pattern for the <Symbol>, aSelector, in the
@@ -74,5 +74,5 @@ buildSourceForSelector: aSymbol class: aBehavior
 		crtab;
 		nextPutAll: ' self error: ''This method did not compile'''.
 	^stream contents! !
-!CompileFailedMethod class categoriesFor: #buildSourceForSelector:class:!helpers!private! !
+!Kernel.CompileFailedMethod class categoriesFor: #buildSourceForSelector:class:!helpers!private! !
 

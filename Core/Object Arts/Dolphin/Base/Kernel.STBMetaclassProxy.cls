@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBClassProxy subclass: #STBMetaclassProxy
+Kernel.STBClassProxy subclass: #'Kernel.STBMetaclassProxy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBMetaclassProxy guid: (GUID fromString: '{87b4c6f5-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBMetaclassProxy comment: ''!
-!STBMetaclassProxy categoriesForClass!System-Binary storage! !
-!STBMetaclassProxy methodsFor!
+Kernel.STBMetaclassProxy guid: (Core.GUID fromString: '{87b4c6f5-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBMetaclassProxy comment: ''!
+!Kernel.STBMetaclassProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBMetaclassProxy methodsFor!
 
 resolveWithClassLocator: aClassLocator 
 	"Private - If the class represented by the <ClassLocator> argument is a resident class or a
@@ -22,14 +22,14 @@ resolveWithClassLocator: aClassLocator
 
 withClassLocator: aClassLocator
 	^#{MetaclassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
-!STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !
+!Kernel.STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
+!Kernel.STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !
 
-!STBMetaclassProxy class methodsFor!
+!Kernel.STBMetaclassProxy class methodsFor!
 
 forClass: aMetaclass
 	"Answer a new instance representing aMetaclass."
 
 	^super forClass: aMetaclass instanceClass! !
-!STBMetaclassProxy class categoriesFor: #forClass:!instance creation!public! !
+!Kernel.STBMetaclassProxy class categoriesFor: #forClass:!instance creation!public! !
 

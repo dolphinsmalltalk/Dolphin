@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SourceManager
+Core.Object subclass: #'Kernel.SourceManager'
 	instanceVariableNames: 'mutex'
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SourceManager guid: (GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
-SourceManager comment: ''!
-!SourceManager categoriesForClass!Development!System-Support! !
-!SourceManager methodsFor!
+Kernel.SourceManager guid: (Core.GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.SourceManager comment: ''!
+!Kernel.SourceManager categoriesForClass!Development!System-Support! !
+!Kernel.SourceManager methodsFor!
 
 basicChangesFiler
 	^SourceFiles at: ChangesIndex!
@@ -149,7 +149,7 @@ fileInFrom: aStream normalizeLineEndings: aBoolean
 		normalizeLineEndings: aBoolean;
 		fileIn!
 
-fileInHere: aFileName 
+fileInHere: aFileName
 	"File in the chunk format file named, aFileName, into the system but with
 	the working directory set to the location of the file. The original directory
 	is restored on completion."
@@ -269,16 +269,17 @@ onExit
 	SourceFiles do: [:f | f notNil ifTrue: [f close]]
 !
 
-openChangesFile: filePath 
+openChangesFile: filePath
 	"Private - Open the change log file and record it in SourceFiles at: 2."
 
 	| stream |
 	stream := FileStream readWrite: (self changesFileNameFromPath: filePath).
-	SourceFiles 
-		at: ChangesIndex 
-			put: ((self chunkFilerOn: stream) sourceFileIndex: ChangesIndex; yourself)!
+	SourceFiles at: ChangesIndex
+		put: ((self chunkFilerOn: stream)
+				sourceFileIndex: ChangesIndex;
+				yourself)!
 
-openNewChangesFile: aString 
+openNewChangesFile: aString
 	| changesFileName |
 	changesFileName := self changesFileName.
 	self closeChangesFile.
@@ -297,18 +298,21 @@ openSources: aString
 	This should be done very early on in the startup."
 
 	self closeSources.
-	[self basicOpenSources: aString] on: FileException do: [:aFileException |
-		aFileException notify.
-		self ignoreSources]!
+	[self basicOpenSources: aString] on: FileException
+		do: 
+			[:aFileException |
+			aFileException notify.
+			self ignoreSources]!
 
-openSourcesFile: filePath 
+openSourcesFile: filePath
 	"Private - Opens a big sources file and record it in SourceFiles at: 1."
 
 	| stream |
 	stream := FileStream read: (self sourcesFileNameFromPath: filePath).
-	SourceFiles 
-		at: SourcesIndex 
-		put: ((self sourceFilerOn: stream) sourceFileIndex: SourcesIndex; yourself)!
+	SourceFiles at: SourcesIndex
+		put: ((self sourceFilerOn: stream)
+				sourceFileIndex: SourcesIndex;
+				yourself)!
 
 packageManager
 	"Private - Answer the package manager to be used by the receiver."
@@ -333,6 +337,7 @@ sourceFilerClass
 sourceFilerOn: aStream
 	"Answer a <SourceFiler> on the <puttableStream>, aWriteStream."
 
+	aStream locale: SmalltalkLocale.Hex.
 	^self sourceFilerClass on: aStream!
 
 sourceIndexFromDescriptor: sourceObject 
@@ -422,67 +427,67 @@ truncateChanges
 			self closeChangesFile.
 			(FileStream write: chgFile) close.	"truncate it"
 			self openChangesFile: chgFile]! !
-!SourceManager categoriesFor: #basicChangesFiler!accessing!private! !
-!SourceManager categoriesFor: #basicOpenSources:!operations-source files!private! !
-!SourceManager categoriesFor: #changePositionFromDescriptor:!private!source filing! !
-!SourceManager categoriesFor: #changePositionOf:!development!private!testing! !
-!SourceManager categoriesFor: #changesExtension!constants!private! !
-!SourceManager categoriesFor: #changesFileName!accessing!public! !
-!SourceManager categoriesFor: #changesFileNameFromPath:!public!source filing! !
-!SourceManager categoriesFor: #changesFiler!accessing!private! !
-!SourceManager categoriesFor: #changesFileSize!accessing!public! !
-!SourceManager categoriesFor: #changesStream!accessing!private! !
-!SourceManager categoriesFor: #chunkFilerOn:!accessing!public! !
-!SourceManager categoriesFor: #closeChangesFile!operations-source files!private! !
-!SourceManager categoriesFor: #closeSourceAt:!operations-source files!private! !
-!SourceManager categoriesFor: #closeSources!operations-source files!private! !
-!SourceManager categoriesFor: #closeSourcesFile!operations-source files!private! !
-!SourceManager categoriesFor: #copySourceFilesTo:!operations-source files!private! !
-!SourceManager categoriesFor: #errorNotPackaged:!exceptions!private! !
-!SourceManager categoriesFor: #fileIn:!public!source filing! !
-!SourceManager categoriesFor: #fileIn:normalizeLineEndings:!public!source filing! !
-!SourceManager categoriesFor: #fileInFrom:!private!source filing! !
-!SourceManager categoriesFor: #fileInFrom:normalizeLineEndings:!private!source filing! !
-!SourceManager categoriesFor: #fileInHere:!public!source filing! !
-!SourceManager categoriesFor: #fileInPackagedClass:!development!public!source filing! !
-!SourceManager categoriesFor: #fileInPackagedClass:from:!public!source filing! !
-!SourceManager categoriesFor: #fileItIn:!public!source filing! !
-!SourceManager categoriesFor: #flushChanges!operations-source files!private! !
-!SourceManager categoriesFor: #getSourceFromDescriptor:!public!source filing! !
-!SourceManager categoriesFor: #getSourceOfMethod:!public!source filing! !
-!SourceManager categoriesFor: #hasMethodChanged:!private!testing! !
-!SourceManager categoriesFor: #hasSources!private!testing! !
-!SourceManager categoriesFor: #ignoreSources!operations-source files!private! !
-!SourceManager categoriesFor: #initialize!initializing!private! !
-!SourceManager categoriesFor: #isMethodChanged:!development!private!testing! !
-!SourceManager categoriesFor: #logEvaluate:!operations-logging!public! !
-!SourceManager categoriesFor: #onExit!event handling!private! !
-!SourceManager categoriesFor: #openChangesFile:!operations-source files!private! !
-!SourceManager categoriesFor: #openNewChangesFile:!helpers!private! !
-!SourceManager categoriesFor: #openSources!operations-source files!private! !
-!SourceManager categoriesFor: #openSources:!operations-source files!private! !
-!SourceManager categoriesFor: #openSourcesFile:!operations-source files!private! !
-!SourceManager categoriesFor: #packageManager!accessing!must strip!private! !
-!SourceManager categoriesFor: #sourceFileFromDescriptor:!private!source filing! !
-!SourceManager categoriesFor: #sourceFilerClass!constants!public! !
-!SourceManager categoriesFor: #sourceFilerOn:!helpers!public! !
-!SourceManager categoriesFor: #sourceIndexFromDescriptor:!private!source filing! !
-!SourceManager categoriesFor: #sourcesExtension!constants!private! !
-!SourceManager categoriesFor: #sourcesFileName!accessing!public! !
-!SourceManager categoriesFor: #sourcesFileNameFromPath:!private!source filing! !
-!SourceManager categoriesFor: #sourcesFileStream!accessing!private! !
-!SourceManager categoriesFor: #storeCommentString:forClass:!private!source filing! !
-!SourceManager categoriesFor: #storeCommentString:forPackage:!private!source filing! !
-!SourceManager categoriesFor: #storeGUIDForClass:!private!source filing! !
-!SourceManager categoriesFor: #storeSourceString:forMethod:!private!source filing! !
-!SourceManager categoriesFor: #truncateChanges!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #basicChangesFiler!accessing!private! !
+!Kernel.SourceManager categoriesFor: #basicOpenSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #changePositionFromDescriptor:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #changePositionOf:!development!private!testing! !
+!Kernel.SourceManager categoriesFor: #changesExtension!constants!private! !
+!Kernel.SourceManager categoriesFor: #changesFileName!accessing!public! !
+!Kernel.SourceManager categoriesFor: #changesFileNameFromPath:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #changesFiler!accessing!private! !
+!Kernel.SourceManager categoriesFor: #changesFileSize!accessing!public! !
+!Kernel.SourceManager categoriesFor: #changesStream!accessing!private! !
+!Kernel.SourceManager categoriesFor: #chunkFilerOn:!accessing!public! !
+!Kernel.SourceManager categoriesFor: #closeChangesFile!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #closeSourceAt:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #closeSources!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #closeSourcesFile!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #copySourceFilesTo:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #errorNotPackaged:!exceptions!private! !
+!Kernel.SourceManager categoriesFor: #fileIn:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileIn:normalizeLineEndings:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileInFrom:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #fileInFrom:normalizeLineEndings:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #fileInHere:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileInPackagedClass:!development!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileInPackagedClass:from:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileItIn:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #flushChanges!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #getSourceFromDescriptor:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #getSourceOfMethod:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #hasMethodChanged:!private!testing! !
+!Kernel.SourceManager categoriesFor: #hasSources!private!testing! !
+!Kernel.SourceManager categoriesFor: #ignoreSources!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #initialize!initializing!private! !
+!Kernel.SourceManager categoriesFor: #isMethodChanged:!development!private!testing! !
+!Kernel.SourceManager categoriesFor: #logEvaluate:!operations-logging!public! !
+!Kernel.SourceManager categoriesFor: #onExit!event handling!private! !
+!Kernel.SourceManager categoriesFor: #openChangesFile:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #openNewChangesFile:!helpers!private! !
+!Kernel.SourceManager categoriesFor: #openSources!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #openSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #openSourcesFile:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #packageManager!accessing!must strip!private! !
+!Kernel.SourceManager categoriesFor: #sourceFileFromDescriptor:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #sourceFilerClass!constants!public! !
+!Kernel.SourceManager categoriesFor: #sourceFilerOn:!helpers!public! !
+!Kernel.SourceManager categoriesFor: #sourceIndexFromDescriptor:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #sourcesExtension!constants!private! !
+!Kernel.SourceManager categoriesFor: #sourcesFileName!accessing!public! !
+!Kernel.SourceManager categoriesFor: #sourcesFileNameFromPath:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #sourcesFileStream!accessing!private! !
+!Kernel.SourceManager categoriesFor: #storeCommentString:forClass:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #storeCommentString:forPackage:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #storeGUIDForClass:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #storeSourceString:forMethod:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #truncateChanges!operations-source files!private! !
 
-!SourceManager class methodsFor!
+!Kernel.SourceManager class methodsFor!
 
 default
 	"Answer the default SourceManager to use."
 
-	DefaultInstance isNil ifTrue: [ SourceManager newDefault ].
+	DefaultInstance isNil ifTrue: [SourceManager newDefault].
 	^DefaultInstance!
 
 default: aSourceManager
@@ -520,11 +525,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
-!SourceManager class categoriesFor: #default!accessing!public! !
-!SourceManager class categoriesFor: #default:!accessing!public! !
-!SourceManager class categoriesFor: #initialize!initializing!public! !
-!SourceManager class categoriesFor: #new!instance creation!public! !
-!SourceManager class categoriesFor: #newDefault!instance creation!public! !
-!SourceManager class categoriesFor: #reset!initializing!private! !
-!SourceManager class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
+!Kernel.SourceManager class categoriesFor: #default!accessing!public! !
+!Kernel.SourceManager class categoriesFor: #default:!accessing!public! !
+!Kernel.SourceManager class categoriesFor: #initialize!initializing!public! !
+!Kernel.SourceManager class categoriesFor: #new!instance creation!public! !
+!Kernel.SourceManager class categoriesFor: #newDefault!instance creation!public! !
+!Kernel.SourceManager class categoriesFor: #reset!initializing!private! !
+!Kernel.SourceManager class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
 

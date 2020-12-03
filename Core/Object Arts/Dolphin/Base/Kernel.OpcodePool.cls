@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #OpcodePool
+Kernel.SharedPool subclass: #'Kernel.OpcodePool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -108,6 +108,7 @@ SharedPool subclass: #OpcodePool
 		'StoreTemp' -> 16rD1.
 		'Supersend' -> 16rD9
 	}!
-OpcodePool guid: (GUID fromString: '{1913f573-a07c-4ca8-8ab7-8afbd024a785}')!
-OpcodePool comment: ''!
-!OpcodePool categoriesForClass!Unclassified! !
+Kernel.OpcodePool guid: (Core.GUID fromString: '{1913f573-a07c-4ca8-8ab7-8afbd024a785}')!
+Kernel.OpcodePool isNonInstantiable: true!
+Kernel.OpcodePool comment: ''!
+!Kernel.OpcodePool categoriesForClass!Unclassified! !

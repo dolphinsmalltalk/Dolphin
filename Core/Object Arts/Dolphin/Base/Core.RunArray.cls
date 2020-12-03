@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollection subclass: #RunArray
+Core.ArrayedCollection subclass: #'Core.RunArray'
 	instanceVariableNames: 'values runs'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RunArray guid: (GUID fromString: '{87b4c513-026e-11d3-9fd7-00a0cc3e4a32}')!
-RunArray comment: ''!
-!RunArray categoriesForClass!Collections-Arrayed! !
-!RunArray methodsFor!
+Core.RunArray guid: (Core.GUID fromString: '{87b4c513-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.RunArray comment: ''!
+!Core.RunArray categoriesForClass!Collections-Arrayed! !
+!Core.RunArray methodsFor!
 
 allSatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
@@ -132,23 +132,23 @@ size
 
 species
 	^Array! !
-!RunArray categoriesFor: #allSatisfy:!enumerating!public! !
-!RunArray categoriesFor: #anySatisfy:!enumerating!public! !
-!RunArray categoriesFor: #asRunArray!converting!public! !
-!RunArray categoriesFor: #at:!accessing!public! !
-!RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
-!RunArray categoriesFor: #at:put:!accessing!public! !
-!RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!RunArray categoriesFor: #postCopy!copying!public! !
-!RunArray categoriesFor: #resize:!mutating!public! !
-!RunArray categoriesFor: #runs:values:!accessing!private! !
-!RunArray categoriesFor: #runsAndValuesDo:!enumerating!public! !
-!RunArray categoriesFor: #runStartAndValueAt:!accessing!private! !
-!RunArray categoriesFor: #runStartAt:!accessing!public! !
-!RunArray categoriesFor: #size!accessing!public! !
-!RunArray categoriesFor: #species!accessing!public! !
+!Core.RunArray categoriesFor: #allSatisfy:!enumerating!public! !
+!Core.RunArray categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.RunArray categoriesFor: #asRunArray!converting!public! !
+!Core.RunArray categoriesFor: #at:!accessing!public! !
+!Core.RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.RunArray categoriesFor: #at:put:!accessing!public! !
+!Core.RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.RunArray categoriesFor: #postCopy!copying!public! !
+!Core.RunArray categoriesFor: #resize:!mutating!public! !
+!Core.RunArray categoriesFor: #runs:values:!accessing!private! !
+!Core.RunArray categoriesFor: #runsAndValuesDo:!enumerating!public! !
+!Core.RunArray categoriesFor: #runStartAndValueAt:!accessing!private! !
+!Core.RunArray categoriesFor: #runStartAt:!accessing!public! !
+!Core.RunArray categoriesFor: #size!accessing!public! !
+!Core.RunArray categoriesFor: #species!accessing!public! !
 
-!RunArray class methodsFor!
+!Core.RunArray class methodsFor!
 
 new
 	"Answer a new, empty, instance of the receiver."
@@ -214,14 +214,14 @@ withAll: aCollection
 			[runs nextPut: runLength.
 			values nextPut: current].
 	^self runs: runs contents values: values contents! !
-!RunArray class categoriesFor: #new!instance creation!public! !
-!RunArray class categoriesFor: #new:!instance creation!public! !
-!RunArray class categoriesFor: #new:withAll:!instance creation!public! !
-!RunArray class categoriesFor: #runs:values:!instance creation!public! !
-!RunArray class categoriesFor: #with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #withAll:!instance creation!public! !
+!Core.RunArray class categoriesFor: #new!instance creation!public! !
+!Core.RunArray class categoriesFor: #new:!instance creation!public! !
+!Core.RunArray class categoriesFor: #new:withAll:!instance creation!public! !
+!Core.RunArray class categoriesFor: #runs:values:!instance creation!public! !
+!Core.RunArray class categoriesFor: #with:!instance creation!public! !
+!Core.RunArray class categoriesFor: #with:with:!instance creation!public! !
+!Core.RunArray class categoriesFor: #with:with:with:!instance creation!public! !
+!Core.RunArray class categoriesFor: #with:with:with:with:!instance creation!public! !
+!Core.RunArray class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.RunArray class categoriesFor: #withAll:!instance creation!public! !
 

@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #FILETIME
+OS.Win32Structure subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
 	classVariableNames: 'UnixEpoch'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHighDateTime' -> 16r4.
 		'_OffsetOf_dwLowDateTime' -> 16r0
 	}!
-FILETIME guid: (GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
-FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
+OS.FILETIME guid: (Core.GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 
 A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).
 
 FILETIMEs are typically used to mark file creation/modification/access times with very high accurracy in a time zone independent manner.'!
-!FILETIME categoriesForClass!External-Data-Structured-Win32! !
-!FILETIME methodsFor!
+!OS.FILETIME categoriesForClass!External-Data-Structured-Win32! !
+!OS.FILETIME methodsFor!
 
 asFILETIME
 	"Answer the receiver as a FILETIME (which it is already)."
@@ -49,7 +49,7 @@ asSYSTEMTIME
 
 	| local |
 	local := self class new.
-	(KernelLibrary default fileTimeToLocalTime: self lpLocalFileTime: local) 
+	(KernelLibrary default fileTimeToLocalTime: self lpLocalFileTime: local)
 		ifFalse: [^KernelLibrary default systemError].
 	^local basicAsSYSTEMTIME!
 
@@ -68,7 +68,7 @@ basicAsSYSTEMTIME
 	^answer!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	self asSYSTEMTIME displayOn: aPuttableStream!
 
@@ -77,16 +77,16 @@ integerValue: anInteger
 	FILETIME epoch."
 
 	bytes qwordAtOffset: 0 put: anInteger! !
-!FILETIME categoriesFor: #asFILETIME!converting!public! !
-!FILETIME categoriesFor: #asInteger!converting!public! !
-!FILETIME categoriesFor: #asLocalTime!converting!public! !
-!FILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
-!FILETIME categoriesFor: #asUTC!converting!public! !
-!FILETIME categoriesFor: #basicAsSYSTEMTIME!converting!public! !
-!FILETIME categoriesFor: #displayOn:!printing!public! !
-!FILETIME categoriesFor: #integerValue:!accessing!public! !
+!OS.FILETIME categoriesFor: #asFILETIME!converting!public! !
+!OS.FILETIME categoriesFor: #asInteger!converting!public! !
+!OS.FILETIME categoriesFor: #asLocalTime!converting!public! !
+!OS.FILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
+!OS.FILETIME categoriesFor: #asUTC!converting!public! !
+!OS.FILETIME categoriesFor: #basicAsSYSTEMTIME!converting!public! !
+!OS.FILETIME categoriesFor: #displayOn:!printing!public! !
+!OS.FILETIME categoriesFor: #integerValue:!accessing!public! !
 
-!FILETIME class methodsFor!
+!OS.FILETIME class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 FILETIME structure.
@@ -109,16 +109,16 @@ fromInteger: anInteger
 
 	^self new integerValue: anInteger!
 
-fromLocalTime: aLocalFILETIME 
+fromLocalTime: aLocalFILETIME
 	"Answer a UTC file time from the specified local file time."
 
 	| answer |
 	answer := self new.
-	(KernelLibrary default localFileTimeToFileTime: aLocalFILETIME lpFileTime: answer) 
+	(KernelLibrary default localFileTimeToFileTime: aLocalFILETIME lpFileTime: answer)
 		ifFalse: [^KernelLibrary default systemError].
 	^answer!
 
-fromSYSTEMTIME: aSYSTEMTIME 
+fromSYSTEMTIME: aSYSTEMTIME
 	"Answer a file time from the specified SYSTEMTIME (assumed to be in
 	local time)."
 
@@ -140,7 +140,7 @@ initialize
 	"
 
 	| baseFiletime |
-	baseFiletime := (SYSTEMTIME 
+	baseFiletime := (SYSTEMTIME
 				day: 1
 				month: 1
 				year: 1970) asFILETIME.
@@ -156,12 +156,12 @@ now
 	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
 	KernelLibrary default getSystemTimeAsFileTime: answer.
 	^answer! !
-!FILETIME class categoriesFor: #defineFields!public!template definition! !
-!FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
-!FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
-!FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!FILETIME class categoriesFor: #fromUnixTime:!instance creation!public! !
-!FILETIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!FILETIME class categoriesFor: #initialize!development!initializing!private! !
-!FILETIME class categoriesFor: #now!instance creation!public! !
+!OS.FILETIME class categoriesFor: #defineFields!public!template definition! !
+!OS.FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
+!OS.FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
+!OS.FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
+!OS.FILETIME class categoriesFor: #fromUnixTime:!instance creation!public! !
+!OS.FILETIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FILETIME class categoriesFor: #initialize!development!initializing!private! !
+!OS.FILETIME class categoriesFor: #now!instance creation!public! !
 

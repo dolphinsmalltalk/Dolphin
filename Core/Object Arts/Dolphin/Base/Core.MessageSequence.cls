@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MessageSequenceAbstract subclass: #MessageSequence
+Core.MessageSequenceAbstract subclass: #'Core.MessageSequence'
 	instanceVariableNames: 'list'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageSequence guid: (GUID fromString: '{87b4c665-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageSequence comment: ''!
-!MessageSequence categoriesForClass!Kernel-Methods! !
-!MessageSequence methodsFor!
+Core.MessageSequence guid: (Core.GUID fromString: '{87b4c665-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MessageSequence comment: ''!
+!Core.MessageSequence categoriesForClass!Kernel-Methods! !
+!Core.MessageSequence methodsFor!
 
 add: aMessage
 	"Adds aMessage to the end of this sequence. Answers aMessage"
@@ -56,16 +56,16 @@ size
 	"Answers the number of messages in the sequence"
 
 	^list size! !
-!MessageSequence categoriesFor: #add:!adding!public! !
-!MessageSequence categoriesFor: #add:afterIndex:!adding!public! !
-!MessageSequence categoriesFor: #addAll:afterIndex:!adding!public! !
-!MessageSequence categoriesFor: #initialize!initializing!private! !
-!MessageSequence categoriesFor: #list!accessing!private! !
-!MessageSequence categoriesFor: #messagesDo:!enumerating!private! !
-!MessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!MessageSequence categoriesFor: #size!public!testing! !
+!Core.MessageSequence categoriesFor: #add:!adding!public! !
+!Core.MessageSequence categoriesFor: #add:afterIndex:!adding!public! !
+!Core.MessageSequence categoriesFor: #addAll:afterIndex:!adding!public! !
+!Core.MessageSequence categoriesFor: #initialize!initializing!private! !
+!Core.MessageSequence categoriesFor: #list!accessing!private! !
+!Core.MessageSequence categoriesFor: #messagesDo:!enumerating!private! !
+!Core.MessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
+!Core.MessageSequence categoriesFor: #size!public!testing! !
 
-!MessageSequence class methodsFor!
+!Core.MessageSequence class methodsFor!
 
 withMessages: aSequencedReadableCollection
 	"Answer a new instance of the receiver with the specified sequence of <MessageSend>s."
@@ -74,5 +74,5 @@ withMessages: aSequencedReadableCollection
 	answer := self new.
 	answer list addAll: aSequencedReadableCollection.
 	^answer! !
-!MessageSequence class categoriesFor: #withMessages:!instance creation!public! !
+!Core.MessageSequence class categoriesFor: #withMessages:!instance creation!public! !
 

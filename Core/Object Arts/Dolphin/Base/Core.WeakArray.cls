@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollection variableSubclass: #WeakArray
+Core.ArrayedCollection variableSubclass: #'Core.WeakArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakArray guid: (GUID fromString: '{87b4c515-026e-11d3-9fd7-00a0cc3e4a32}')!
-WeakArray comment: ''!
-!WeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
-!WeakArray methodsFor!
+Core.WeakArray guid: (Core.GUID fromString: '{87b4c515-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakArray comment: ''!
+!Core.WeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+!Core.WeakArray methodsFor!
 
 add: newElement
 	"Add newElement to the receiver by replacing any available Corpses, or failing that by
@@ -24,24 +24,28 @@ addAnsweringIndex: newElement
 	then append it. This is a very useful method in many system support tasks (e.g. the Dependency 
 	mechanism)."
 
-	^self replaceIdentity: DeadObject current with: newElement
-!
+	^self replaceIdentity: DeadObject current with: newElement!
 
-corpsesDo: aBlock 
+corpsesDo: aBlock
 	"Locate each indexable variable of the receiver which formally housed an Object
 	which has sadly expired, and pass its index to aBlock for evaluation. This
 	method is non-destructive and may be evaluated repeatedly. Should you require
 	to clear the slots formerly occuppied by corpses so that they are not
 	subsequently treated as deaths, use the #nilCorpsesAndDo: message"
 
-
 	| deathAt size corpse |
 	size := self basicSize.
 	corpse := DeadObject current.
-	deathAt := self basicIdentityIndexOf: corpse from: 1 to: size.
-	[deathAt > 0] whileTrue: [
-		aBlock value: deathAt.
-		deathAt := self basicIdentityIndexOf: corpse from: deathAt+1 to: size]!
+	deathAt := self
+				basicIdentityIndexOf: corpse
+				from: 1
+				to: size.
+	[deathAt > 0] whileTrue: 
+			[aBlock value: deathAt.
+			deathAt := self
+						basicIdentityIndexOf: corpse
+						from: deathAt + 1
+						to: size]!
 
 initialize
 	"Initialize the receiver's state.
@@ -49,7 +53,7 @@ initialize
 
 	self beWeak!
 
-nilCorpsesAndDo: aBlock 
+nilCorpsesAndDo: aBlock
 	"Locate each indexable variable of the receiver which formally housed an Object
 	which has sadly expired, nil the slot, and pass its index to aBlock for evaluation.
 	This is destructive, and is suitable for use where each death is to be processed only
@@ -61,20 +65,26 @@ nilCorpsesAndDo: aBlock
 	| deathAt size corpse |
 	size := self basicSize.
 	corpse := DeadObject current.
-	deathAt := self basicIdentityIndexOf: corpse from: 1 to: size.
-	[deathAt > 0] whileTrue: [
-		self at: deathAt put: nil.
-		aBlock value: deathAt.
-		deathAt := self basicIdentityIndexOf: corpse from: deathAt to: size]!
+	deathAt := self
+				basicIdentityIndexOf: corpse
+				from: 1
+				to: size.
+	[deathAt > 0] whileTrue: 
+			[self at: deathAt put: nil.
+			aBlock value: deathAt.
+			deathAt := self
+						basicIdentityIndexOf: corpse
+						from: deathAt
+						to: size]!
 
-nonCorpsesDo: aBlock 
+nonCorpsesDo: aBlock
 	"Evaluate aBlock for all non-Corpse elements of the receiver. Answer the receiver."
 
 	| corpse |
 	corpse := DeadObject current.
 	1 to: self basicSize
 		do: 
-			[:index | 
+			[:index |
 			| element |
 			element := self at: index.
 			element == corpse ifFalse: [aBlock value: element]]!
@@ -85,31 +95,36 @@ remove: oldElement ifAbsent: exceptionHandler
 	answer the result of evaluating the niladic valuable, exceptionHandler."
 
 	| index |
-	index := self basicIdentityIndexOf: oldElement from: 1 to: self basicSize.
-	^index == 0 
+	index := self
+				basicIdentityIndexOf: oldElement
+				from: 1
+				to: self basicSize.
+	^index == 0
 		ifTrue: [exceptionHandler value]
-		ifFalse: [self basicAt: index put: DeadObject current. oldElement]!
+		ifFalse: 
+			[self basicAt: index put: DeadObject current.
+			oldElement]!
 
 species
 	"Answer the kind of Collection that should result from enumerations such as #collect:
 	and #select: when applied against the receiver"
 
 	^Array! !
-!WeakArray categoriesFor: #add:!adding!public! !
-!WeakArray categoriesFor: #addAnsweringIndex:!adding!public! !
-!WeakArray categoriesFor: #corpsesDo:!enumerating!public! !
-!WeakArray categoriesFor: #initialize!initializing!public! !
-!WeakArray categoriesFor: #nilCorpsesAndDo:!enumerating!public! !
-!WeakArray categoriesFor: #nonCorpsesDo:!enumerating!public! !
-!WeakArray categoriesFor: #remove:ifAbsent:!private!removing! !
-!WeakArray categoriesFor: #species!accessing!public! !
+!Core.WeakArray categoriesFor: #add:!adding!public! !
+!Core.WeakArray categoriesFor: #addAnsweringIndex:!adding!public! !
+!Core.WeakArray categoriesFor: #corpsesDo:!enumerating!public! !
+!Core.WeakArray categoriesFor: #initialize!initializing!public! !
+!Core.WeakArray categoriesFor: #nilCorpsesAndDo:!enumerating!public! !
+!Core.WeakArray categoriesFor: #nonCorpsesDo:!enumerating!public! !
+!Core.WeakArray categoriesFor: #remove:ifAbsent:!private!removing! !
+!Core.WeakArray categoriesFor: #species!accessing!public! !
 
-!WeakArray class methodsFor!
+!Core.WeakArray class methodsFor!
 
 new: anInteger
 	"Answer a new instance of the receiver with anInteger indexed instance variables
 	The new instance is registered with the memory manager as a weakling"
 
 	^(super new: anInteger) initialize! !
-!WeakArray class categoriesFor: #new:!instance creation!public! !
+!Core.WeakArray class categoriesFor: #new:!instance creation!public! !
 

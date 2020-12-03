@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Locale subclass: #SmalltalkLocale
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
-	poolDictionaries: ''
+Core.Locale subclass: #'Kernel.SmalltalkLocale'
+	instanceVariableNames: 'integerBase'
+	classVariableNames: 'Current Hex'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkLocale guid: (GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
-SmalltalkLocale comment: ''!
-!SmalltalkLocale categoriesForClass!Unclassified! !
-!SmalltalkLocale methodsFor!
+Kernel.SmalltalkLocale guid: (Core.GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
+Kernel.SmalltalkLocale comment: ''!
+!Kernel.SmalltalkLocale categoriesForClass!Unclassified! !
+!Kernel.SmalltalkLocale methodsFor!
 
 amDesignator
 	"Answer the String used in the receiver locale to designate AM (morning)."
@@ -118,13 +118,24 @@ displayFloat: aFloat on: aStream
 									aFloat abs]
 								ifFalse: [aFloat]) absPrintExactlyOn: aStream base: 10]]]!
 
+displayInteger: anInteger on: aStream
+	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a Smalltalk user would want to see it."
+
+	integerBase == 10
+		ifTrue: [anInteger printOn: aStream base: 10]
+		ifFalse: 
+			[anInteger
+				printOn: aStream
+				base: integerBase
+				showRadix: true]!
+
 displayName
 	"The name of the locale in its native language."
 
 	^'Smalltalk'!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self displayName!
 
@@ -187,6 +198,12 @@ infinity
 	"Answer the <String> representation for positive infinity in this locale (e.g the '∞' symbol)"
 
 	^'Float.Infinity'!
+
+integerBase
+	^integerBase!
+
+integerBase: anInteger
+	integerBase := anInteger!
 
 isInstalled
 	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
@@ -390,70 +407,82 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
-!SmalltalkLocale categoriesFor: #amDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #code!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeek:!mapping!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekName:!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #decimalPlaces!constants!public! !
-!SmalltalkLocale categoriesFor: #decimalSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #displayDuration:on:!printing!public! !
-!SmalltalkLocale categoriesFor: #displayFloat:on:!printing!public! !
-!SmalltalkLocale categoriesFor: #displayName!displaying!public! !
-!SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
-!SmalltalkLocale categoriesFor: #englishLanguageName!constants!public! !
-!SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !
-!SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
-!SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #infinity!constants!public! !
-!SmalltalkLocale categoriesFor: #isInstalled!public!testing! !
-!SmalltalkLocale categoriesFor: #iso639LanguageName!constants!public! !
-!SmalltalkLocale categoriesFor: #isValid!public!testing! !
-!SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
-!SmalltalkLocale categoriesFor: #lcid!accessing!public! !
-!SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #localizedDisplayName!constants!public! !
-!SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #monthName:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #monthNames!constants!public! !
-!SmalltalkLocale categoriesFor: #name!constants!public! !
-!SmalltalkLocale categoriesFor: #nameOfDay:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #nan!constants!public! !
-!SmalltalkLocale categoriesFor: #nativeDigits!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeInfinity!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeNumberMode!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeSign!constants!public! !
-!SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
-!SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
-!SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #primary!accessing!public! !
-!SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
-!SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
-!SmalltalkLocale categoriesFor: #printOn:!printing!public! !
-!SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #shortTimeFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #tag!constants!public! !
-!SmalltalkLocale categoriesFor: #thousandSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #yearMonthFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #amDesignator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #code!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #dayOfWeek:!mapping!public! !
+!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekName:!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #decimalPlaces!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #decimalSeparator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #displayDuration:on:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #displayFloat:on:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #displayInteger:on:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #displayName!displaying!public! !
+!Kernel.SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
+!Kernel.SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #englishLanguageName!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
+!Kernel.SmalltalkLocale categoriesFor: #infinity!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #integerBase!accessing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #integerBase:!accessing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #isInstalled!public!testing! !
+!Kernel.SmalltalkLocale categoriesFor: #iso639LanguageName!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #isValid!public!testing! !
+!Kernel.SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #lcid!accessing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #localizedDisplayName!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #monthName:!enquiries!public! !
+!Kernel.SmalltalkLocale categoriesFor: #monthNames!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #name!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #nameOfDay:!enquiries!public! !
+!Kernel.SmalltalkLocale categoriesFor: #nan!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #nativeDigits!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #negativeInfinity!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #negativeNumberMode!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #negativeSign!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #primary!accessing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #printOn:!printing!public! !
+!Kernel.SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #shortTimeFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #tag!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #thousandSeparator!constants!public! !
+!Kernel.SmalltalkLocale categoriesFor: #yearMonthFormat!constants!public! !
 
-!SmalltalkLocale class methodsFor!
+!Kernel.SmalltalkLocale class methodsFor!
 
 current
 	^Current!
 
 initialize
-	Current := self new!
+	Current := self new
+				integerBase: 10;
+				numberFormat;
+				isImmutable: true;
+				yourself.
+	Hex := self new
+				integerBase: 16;
+				numberFormat;
+				isImmutable: true;
+				yourself!
 
 reset
 	Current numberFormat: nil! !
-!SmalltalkLocale class categoriesFor: #current!instance creation!public! !
-!SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
-!SmalltalkLocale class categoriesFor: #reset!initializing!private! !
+!Kernel.SmalltalkLocale class categoriesFor: #current!instance creation!public! !
+!Kernel.SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
+!Kernel.SmalltalkLocale class categoriesFor: #reset!initializing!private! !
 

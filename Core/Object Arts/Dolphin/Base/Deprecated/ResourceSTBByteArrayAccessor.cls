@@ -3,10 +3,10 @@
 ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceSTBByteArrayAccessor guid: (GUID fromString: '{87b4c6d9-026e-11d3-9fd7-00a0cc3e4a32}')!
+ResourceSTBByteArrayAccessor guid: (Core.GUID fromString: '{87b4c6d9-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceSTBByteArrayAccessor comment: ''!
 !ResourceSTBByteArrayAccessor categoriesForClass!MVP-Resources! !
 !ResourceSTBByteArrayAccessor methodsFor!
@@ -35,12 +35,8 @@ makeFile: aString class: aResourceClass usingContext: context
 
 	| stream |
 	stream := FileStream write: aString text: false.
-	[
-		stream nextPutAll: byteArray
-	] ensure: [stream close].
-
-	self become: (ResourceSTBFileAccessor onFileName: aString)
-!
+	[stream nextPutAll: byteArray] ensure: [stream close].
+	self become: (ResourceSTBFileAccessor onFileName: aString)!
 
 postCopy
 	super postCopy.
@@ -50,12 +46,12 @@ postCopy
 readStream
 	^byteArray readStream!
 
-save: anObject as: aResourceClass 
+save: anObject as: aResourceClass
 	"Save out anObject in the format dictated by aResourceClass."
 
 	| stream |
 	stream := ByteArray writeStream: 256.
-	self 
+	self
 		save: anObject
 		as: aResourceClass
 		on: stream.
@@ -97,7 +93,7 @@ stbConvertFromVersion1: version1Array
 		2		classLocator	byteArray
 		3		byteArray"
 
-	^{version1Array at: 1. ClassLocator new. version1Array at: 2}!
+	^{version1Array at: 1. Kernel.ClassLocator new. version1Array at: 2}!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedLookupTable variableSubclass: #DeferredValueTable
+Core.SharedLookupTable variableSubclass: #'Core.DeferredValueTable'
 	instanceVariableNames: 'priority'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DeferredValueTable guid: (GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
-DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
-!DeferredValueTable categoriesForClass!Unclassified! !
-!DeferredValueTable methodsFor!
+Core.DeferredValueTable guid: (Core.GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
+Core.DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
+!Core.DeferredValueTable categoriesForClass!Unclassified! !
+!Core.DeferredValueTable methodsFor!
 
 at: key ifAbsent: exceptionHandler
 	"Answer the value named by the argument, key.  If key is not found,
@@ -83,15 +83,15 @@ priority: anInteger
 	"Set the <Process> priority at which the deferred values will be calculated."
 
 	priority := anInteger! !
-!DeferredValueTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!DeferredValueTable categoriesFor: #at:put:!accessing!public! !
-!DeferredValueTable categoriesFor: #do:!enumerating!public! !
-!DeferredValueTable categoriesFor: #initialize!initializing!private! !
-!DeferredValueTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!DeferredValueTable categoriesFor: #lookup:!accessing!public! !
-!DeferredValueTable categoriesFor: #priority!accessing!public! !
-!DeferredValueTable categoriesFor: #priority:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #at:put:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #do:!enumerating!public! !
+!Core.DeferredValueTable categoriesFor: #initialize!initializing!private! !
+!Core.DeferredValueTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!Core.DeferredValueTable categoriesFor: #lookup:!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #priority!accessing!public! !
+!Core.DeferredValueTable categoriesFor: #priority:!accessing!public! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #WinNlsConstants
+Kernel.SharedPool subclass: #'OS.NlsConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -193,6 +193,7 @@ SharedPool subclass: #WinNlsConstants
 		'NORM_IGNOREWIDTH' -> 16r20000.
 		'NORM_LINGUISTIC_CASING' -> 16r8000000
 	}!
-WinNlsConstants guid: (GUID fromString: '{6d273e59-fb86-438c-9db3-004a0114bb19}')!
-WinNlsConstants comment: ''!
-!WinNlsConstants categoriesForClass!Kernel-Objects! !
+OS.NlsConstants guid: (Core.GUID fromString: '{6d273e59-fb86-438c-9db3-004a0114bb19}')!
+OS.NlsConstants isNonInstantiable: true!
+OS.NlsConstants comment: ''!
+!OS.NlsConstants categoriesForClass!Kernel-Objects! !

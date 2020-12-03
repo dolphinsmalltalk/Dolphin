@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STBClassConversion
+Core.Object subclass: #'Kernel.STBClassConversion'
 	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBClassConversion guid: (GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBClassConversion comment: ''!
-!STBClassConversion categoriesForClass!System-Binary storage! !
-!STBClassConversion methodsFor!
+Kernel.STBClassConversion guid: (Core.GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBClassConversion comment: ''!
+!Kernel.STBClassConversion categoriesForClass!System-Binary storage! !
+!Kernel.STBClassConversion methodsFor!
 
 converterBlock
 	"Answer the receiver's converterBlock.
@@ -79,19 +79,19 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
 	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
-!STBClassConversion categoriesFor: #converterBlock!accessing!public! !
-!STBClassConversion categoriesFor: #converterBlock:!accessing!public! !
-!STBClassConversion categoriesFor: #dataClass!accessing!public! !
-!STBClassConversion categoriesFor: #instSize!accessing!public! !
-!STBClassConversion categoriesFor: #isBytes!public!testing! !
-!STBClassConversion categoriesFor: #isBytes:!accessing!public! !
-!STBClassConversion categoriesFor: #isUpgrading!public!testing! !
-!STBClassConversion categoriesFor: #isVariable!public!testing! !
-!STBClassConversion categoriesFor: #prefix:!accessing!public! !
-!STBClassConversion categoriesFor: #version!accessing!public! !
-!STBClassConversion categoriesFor: #version:prefix:filer:!accessing!private! !
+!Kernel.STBClassConversion categoriesFor: #converterBlock!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #converterBlock:!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #dataClass!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #instSize!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #isBytes!public!testing! !
+!Kernel.STBClassConversion categoriesFor: #isBytes:!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #isUpgrading!public!testing! !
+!Kernel.STBClassConversion categoriesFor: #isVariable!public!testing! !
+!Kernel.STBClassConversion categoriesFor: #prefix:!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #version!accessing!public! !
+!Kernel.STBClassConversion categoriesFor: #version:prefix:filer:!accessing!private! !
 
-!STBClassConversion class methodsFor!
+!Kernel.STBClassConversion class methodsFor!
 
 forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger 
 	"Answer a new instance representing the STB format of oldVersion of aClass."
@@ -103,5 +103,5 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
-!STBClassConversion class categoriesFor: #forFiler:class:version:prefix:!instance creation!public! !
+!Kernel.STBClassConversion class categoriesFor: #forFiler:class:version:prefix:!instance creation!public! !
 

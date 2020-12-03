@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ChunkReader
+Core.Object subclass: #'Kernel.ChunkReader'
 	instanceVariableNames: 'chunkBlock endAction context'
 	classVariableNames: 'Null'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChunkReader guid: (GUID fromString: '{87b4c460-026e-11d3-9fd7-00a0cc3e4a32}')!
-ChunkReader comment: '
+Kernel.ChunkReader guid: (Core.GUID fromString: '{87b4c460-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ChunkReader comment: '
 	The source reader is delegated the task of reading chunks
 	from the input stream, and so can impose its own format.'!
-!ChunkReader categoriesForClass!Kernel-Support! !
-!ChunkReader methodsFor!
+!Kernel.ChunkReader categoriesForClass!Kernel-Support! !
+!Kernel.ChunkReader methodsFor!
 
 chunk: chunkString
 	"Private - Evaluate the receivers chunkBlock with chunkString."
@@ -47,13 +47,13 @@ setChunkBlock: perChunk context: contextObject endAction: finalOperation
 	chunkBlock := perChunk.
 	endAction := finalOperation.
 	context := contextObject! !
-!ChunkReader categoriesFor: #chunk:!operations!private! !
-!ChunkReader categoriesFor: #chunkBlock!accessing!public! !
-!ChunkReader categoriesFor: #context!accessing!public! !
-!ChunkReader categoriesFor: #fileInFrom:!private!source filing! !
-!ChunkReader categoriesFor: #setChunkBlock:context:endAction:!accessing!private! !
+!Kernel.ChunkReader categoriesFor: #chunk:!operations!private! !
+!Kernel.ChunkReader categoriesFor: #chunkBlock!accessing!public! !
+!Kernel.ChunkReader categoriesFor: #context!accessing!public! !
+!Kernel.ChunkReader categoriesFor: #fileInFrom:!private!source filing! !
+!Kernel.ChunkReader categoriesFor: #setChunkBlock:context:endAction:!accessing!private! !
 
-!ChunkReader class methodsFor!
+!Kernel.ChunkReader class methodsFor!
 
 do: operation 
 	"Answer a new instance of the reciever which will evaluate
@@ -99,9 +99,9 @@ onPreStripImage
 	any lazily initialized class variables in order to assist the stripping process."
 
 	Null := nil! !
-!ChunkReader class categoriesFor: #do:!instance creation!public! !
-!ChunkReader class categoriesFor: #do:atEnd:!instance creation!public! !
-!ChunkReader class categoriesFor: #do:inContext:atEnd:!instance creation!public! !
-!ChunkReader class categoriesFor: #null!instance creation!public! !
-!ChunkReader class categoriesFor: #onPreStripImage!initializing!private! !
+!Kernel.ChunkReader class categoriesFor: #do:!instance creation!public! !
+!Kernel.ChunkReader class categoriesFor: #do:atEnd:!instance creation!public! !
+!Kernel.ChunkReader class categoriesFor: #do:inContext:atEnd:!instance creation!public! !
+!Kernel.ChunkReader class categoriesFor: #null!instance creation!public! !
+!Kernel.ChunkReader class categoriesFor: #onPreStripImage!initializing!private! !
 

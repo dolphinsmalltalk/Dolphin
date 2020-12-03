@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LookupTable variableSubclass: #SharedLookupTable
+Core.LookupTable variableSubclass: #'Core.SharedLookupTable'
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SharedLookupTable guid: (GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
-SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
+Core.SharedLookupTable guid: (Core.GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
 
 Instance Variables:
 	mutex			<Mutex>. Protection lock to guard contents.
@@ -86,8 +86,8 @@ Certain methods are not overridden for the following reasons:
 	uncheckedAt:put:		Private, used only within critical sections
 	values			Implemented in terms of #do:
 	valuesClass	`	Answers constant'!
-!SharedLookupTable categoriesForClass!Collections-Unordered! !
-!SharedLookupTable methodsFor!
+!Core.SharedLookupTable categoriesForClass!Collections-Unordered! !
+!Core.SharedLookupTable methodsFor!
 
 anySatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
@@ -183,7 +183,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	mutex := Mutex new.
-	super initialize.!
+	super initialize!
 
 keyAtEqualValue: value ifAbsent: exceptionHandler
 	"Answer the name of the argument, value. If there is no such value, answer
@@ -303,32 +303,32 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
-!SharedLookupTable categoriesFor: #anySatisfy:!enumerating!public! !
-!SharedLookupTable categoriesFor: #asArray!converting!public! !
-!SharedLookupTable categoriesFor: #asByteArray!converting!public! !
-!SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!SharedLookupTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!SharedLookupTable categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
-!SharedLookupTable categoriesFor: #at:put:!accessing!public! !
-!SharedLookupTable categoriesFor: #changeKey:to:!accessing!private! !
-!SharedLookupTable categoriesFor: #do:!enumerating!public! !
-!SharedLookupTable categoriesFor: #identityIncludes:!public!searching! !
-!SharedLookupTable categoriesFor: #includesAssociation:!public!searching! !
-!SharedLookupTable categoriesFor: #includesKey:!public!searching! !
-!SharedLookupTable categoriesFor: #initialize!initializing!private! !
-!SharedLookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!SharedLookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!SharedLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!SharedLookupTable categoriesFor: #keysDo:!enumerating!public! !
-!SharedLookupTable categoriesFor: #lookup:!accessing!public! !
-!SharedLookupTable categoriesFor: #mutex!accessing!private! !
-!SharedLookupTable categoriesFor: #mutex:!initializing!private! !
-!SharedLookupTable categoriesFor: #postCopy!copying!public! !
-!SharedLookupTable categoriesFor: #preResize:!adding!public! !
-!SharedLookupTable categoriesFor: #printOn:!printing!public! !
-!SharedLookupTable categoriesFor: #removeAllKeys:!public!removing! !
-!SharedLookupTable categoriesFor: #removeKey:ifAbsent:!accessing!public! !
-!SharedLookupTable categoriesFor: #resize:!mutating!private! !
-!SharedLookupTable categoriesFor: #shrink!operations!public! !
-!SharedLookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.SharedLookupTable categoriesFor: #anySatisfy:!enumerating!public! !
+!Core.SharedLookupTable categoriesFor: #asArray!converting!public! !
+!Core.SharedLookupTable categoriesFor: #asByteArray!converting!public! !
+!Core.SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #at:put:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #changeKey:to:!accessing!private! !
+!Core.SharedLookupTable categoriesFor: #do:!enumerating!public! !
+!Core.SharedLookupTable categoriesFor: #identityIncludes:!public!searching! !
+!Core.SharedLookupTable categoriesFor: #includesAssociation:!public!searching! !
+!Core.SharedLookupTable categoriesFor: #includesKey:!public!searching! !
+!Core.SharedLookupTable categoriesFor: #initialize!initializing!private! !
+!Core.SharedLookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!Core.SharedLookupTable categoriesFor: #keysDo:!enumerating!public! !
+!Core.SharedLookupTable categoriesFor: #lookup:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #mutex!accessing!private! !
+!Core.SharedLookupTable categoriesFor: #mutex:!initializing!private! !
+!Core.SharedLookupTable categoriesFor: #postCopy!copying!public! !
+!Core.SharedLookupTable categoriesFor: #preResize:!adding!public! !
+!Core.SharedLookupTable categoriesFor: #printOn:!printing!public! !
+!Core.SharedLookupTable categoriesFor: #removeAllKeys:!public!removing! !
+!Core.SharedLookupTable categoriesFor: #removeKey:ifAbsent:!accessing!public! !
+!Core.SharedLookupTable categoriesFor: #resize:!mutating!private! !
+!Core.SharedLookupTable categoriesFor: #shrink!operations!public! !
+!Core.SharedLookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
 

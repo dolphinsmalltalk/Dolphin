@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollection variableByteSubclass: #ByteArray
+Core.ArrayedCollection variableByteSubclass: #'Core.ByteArray'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ByteArray guid: (GUID fromString: '{87b4c511-026e-11d3-9fd7-00a0cc3e4a32}')!
-ByteArray comment: 'ByteArray is the class of <ArrayedCollection>s whose elements are bytes (i.e. <integer>s in the range 0..255).
+Core.ByteArray guid: (Core.GUID fromString: '{87b4c511-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ByteArray comment: 'ByteArray is the class of <ArrayedCollection>s whose elements are bytes (i.e. <integer>s in the range 0..255).
 
 ByteArray complies with the ANSI protocols:
 	Object
@@ -15,8 +15,8 @@ ByteArray complies with the ANSI protocols:
 	sequencedReadableCollection
 	sequencedCollection
 	ByteArray'!
-!ByteArray categoriesForClass!Collections-Arrayed! !
-!ByteArray methodsFor!
+!Core.ByteArray categoriesForClass!Collections-Arrayed! !
+!Core.ByteArray methodsFor!
 
 _sameAsString: aString
 	"Private - Answer whether the receiver collates the same as <readableString> argument.
@@ -202,7 +202,10 @@ copyStringFrom: start to: stop
 	"Answer a copy of the bytes of the receiver starting at index start, 
 	until index stop, inclusive, as a String."
 
-	^self copy: String from: start to: stop!
+	^self
+		copy: String
+		from: start
+		to: stop!
 
 doubleAtOffset: anInteger
 	"Answer the double precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision)."
@@ -715,71 +718,71 @@ wordAtOffset: anInteger put: anObject
 		retryWordAtOffset: anInteger
 		put: anObject
 		failureCode: _failureCode! !
-!ByteArray categoriesFor: #_sameAsString:!comparing!private! !
-!ByteArray categoriesFor: #=!comparing!primitives!public! !
-!ByteArray categoriesFor: #addressAtOffset:!accessing!public! !
-!ByteArray categoriesFor: #asAnsiString!public! !
-!ByteArray categoriesFor: #asByteArray!converting!public! !
-!ByteArray categoriesFor: #asHexString!converting!public! !
-!ByteArray categoriesFor: #asString!converting!public! !
-!ByteArray categoriesFor: #basicDwordAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #basicDwordAtOffset:put:!accessing!primitives!private! !
-!ByteArray categoriesFor: #basicUIntPtrAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #basicUIntPtrAtOffset:put:!accessing!primitives!private! !
-!ByteArray categoriesFor: #byteAt:!accessing!public! !
-!ByteArray categoriesFor: #byteAt:put:!accessing!public! !
-!ByteArray categoriesFor: #byteAtOffset:!accessing!public! !
-!ByteArray categoriesFor: #byteAtOffset:put:!accessing!public! !
-!ByteArray categoriesFor: #bytesAtOffset:put:!accessing!public! !
-!ByteArray categoriesFor: #byteSize!accessing!private! !
-!ByteArray categoriesFor: #copy:from:to:!copying!private! !
-!ByteArray categoriesFor: #copyStringFrom:to:!copying!public! !
-!ByteArray categoriesFor: #doubleAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #hash!comparing!primitives!public! !
-!ByteArray categoriesFor: #hexStoreOn:!printing!public! !
-!ByteArray categoriesFor: #includes:!public!searching! !
-!ByteArray categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!ByteArray categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #isLiteral!public!testing! !
-!ByteArray categoriesFor: #isNull!public!testing! !
-!ByteArray categoriesFor: #longDoubleAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #notNull!public!testing! !
-!ByteArray categoriesFor: #printHexOn:!printing!public! !
-!ByteArray categoriesFor: #printHexString!printing!public! !
-!ByteArray categoriesFor: #printOn:!printing!public! !
-!ByteArray categoriesFor: #qwordAtOffset:!accessing!public! !
-!ByteArray categoriesFor: #qwordAtOffset:put:!accessing!public! !
-!ByteArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!ByteArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!ByteArray categoriesFor: #retryDwordAtOffset:put:failureCode:!accessing!private! !
-!ByteArray categoriesFor: #retrySWordAtOffset:put:failureCode:!accessing!private! !
-!ByteArray categoriesFor: #retryUIntPtrAtOffset:put:failureCode:!accessing!helpers!private! !
-!ByteArray categoriesFor: #retryWordAtOffset:put:failureCode:!accessing!private! !
-!ByteArray categoriesFor: #sbyteAtOffset:!accessing!public! !
-!ByteArray categoriesFor: #sbyteAtOffset:put:!accessing!public! !
-!ByteArray categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #sqwordAtOffset:!accessing!public! !
-!ByteArray categoriesFor: #sqwordAtOffset:put:!accessing!public! !
-!ByteArray categoriesFor: #stbSaveOn:!binary filing!public! !
-!ByteArray categoriesFor: #storeOn:!printing!public! !
-!ByteArray categoriesFor: #swordAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #updatePrimitiveFailed:atOffset:!accessing!private! !
-!ByteArray categoriesFor: #validOffset:failureCode:!accessing!private! !
-!ByteArray categoriesFor: #wordAtOffset:!accessing!primitives!public! !
-!ByteArray categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #_sameAsString:!comparing!private! !
+!Core.ByteArray categoriesFor: #=!comparing!primitives!public! !
+!Core.ByteArray categoriesFor: #addressAtOffset:!accessing!public! !
+!Core.ByteArray categoriesFor: #asAnsiString!public! !
+!Core.ByteArray categoriesFor: #asByteArray!converting!public! !
+!Core.ByteArray categoriesFor: #asHexString!converting!public! !
+!Core.ByteArray categoriesFor: #asString!converting!public! !
+!Core.ByteArray categoriesFor: #basicDwordAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #basicDwordAtOffset:put:!accessing!primitives!private! !
+!Core.ByteArray categoriesFor: #basicUIntPtrAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #basicUIntPtrAtOffset:put:!accessing!primitives!private! !
+!Core.ByteArray categoriesFor: #byteAt:!accessing!public! !
+!Core.ByteArray categoriesFor: #byteAt:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #byteAtOffset:!accessing!public! !
+!Core.ByteArray categoriesFor: #byteAtOffset:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #bytesAtOffset:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #byteSize!accessing!private! !
+!Core.ByteArray categoriesFor: #copy:from:to:!copying!private! !
+!Core.ByteArray categoriesFor: #copyStringFrom:to:!copying!public! !
+!Core.ByteArray categoriesFor: #doubleAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Core.ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #hash!comparing!primitives!public! !
+!Core.ByteArray categoriesFor: #hexStoreOn:!printing!public! !
+!Core.ByteArray categoriesFor: #includes:!public!searching! !
+!Core.ByteArray categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!Core.ByteArray categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #isLiteral!public!testing! !
+!Core.ByteArray categoriesFor: #isNull!public!testing! !
+!Core.ByteArray categoriesFor: #longDoubleAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #notNull!public!testing! !
+!Core.ByteArray categoriesFor: #printHexOn:!printing!public! !
+!Core.ByteArray categoriesFor: #printHexString!printing!public! !
+!Core.ByteArray categoriesFor: #printOn:!printing!public! !
+!Core.ByteArray categoriesFor: #qwordAtOffset:!accessing!public! !
+!Core.ByteArray categoriesFor: #qwordAtOffset:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+!Core.ByteArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Core.ByteArray categoriesFor: #retryDwordAtOffset:put:failureCode:!accessing!private! !
+!Core.ByteArray categoriesFor: #retrySWordAtOffset:put:failureCode:!accessing!private! !
+!Core.ByteArray categoriesFor: #retryUIntPtrAtOffset:put:failureCode:!accessing!helpers!private! !
+!Core.ByteArray categoriesFor: #retryWordAtOffset:put:failureCode:!accessing!private! !
+!Core.ByteArray categoriesFor: #sbyteAtOffset:!accessing!public! !
+!Core.ByteArray categoriesFor: #sbyteAtOffset:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #sqwordAtOffset:!accessing!public! !
+!Core.ByteArray categoriesFor: #sqwordAtOffset:put:!accessing!public! !
+!Core.ByteArray categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.ByteArray categoriesFor: #storeOn:!printing!public! !
+!Core.ByteArray categoriesFor: #swordAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #updatePrimitiveFailed:atOffset:!accessing!private! !
+!Core.ByteArray categoriesFor: #validOffset:failureCode:!accessing!private! !
+!Core.ByteArray categoriesFor: #wordAtOffset:!accessing!primitives!public! !
+!Core.ByteArray categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
 
-!ByteArray class methodsFor!
+!Core.ByteArray class methodsFor!
 
 elementSize
 	"Private - Answer the size of the receiver's constituent elements in bytes."
@@ -809,10 +812,10 @@ fromGlobalHandle: anExternalHandle
 	specified handle."
 
 	| bytes len |
-	bytes := KernelLibrary default globalLock: anExternalHandle.
-	len := ExternalMemory GetSize: bytes.
+	bytes := OS.KernelLibrary default globalLock: anExternalHandle.
+	len := External.Memory GetSize: bytes.
 	bytes := self fromAddress: bytes length: len.
-	KernelLibrary default globalUnlock: anExternalHandle.
+	OS.KernelLibrary default globalUnlock: anExternalHandle.
 	^bytes!
 
 fromHexString: aString
@@ -846,11 +849,11 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := stream next: size.
 	anSTBInFiler register: answer.
 	^answer! !
-!ByteArray class categoriesFor: #elementSize!constants!private! !
-!ByteArray class categoriesFor: #empty!instance creation!public! !
-!ByteArray class categoriesFor: #encoding!constants!public! !
-!ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
-!ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
-!ByteArray class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Core.ByteArray class categoriesFor: #elementSize!constants!private! !
+!Core.ByteArray class categoriesFor: #empty!instance creation!public! !
+!Core.ByteArray class categoriesFor: #encoding!constants!public! !
+!Core.ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Core.ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
+!Core.ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
+!Core.ByteArray class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

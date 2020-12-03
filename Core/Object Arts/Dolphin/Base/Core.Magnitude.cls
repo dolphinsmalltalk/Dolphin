@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Magnitude
+Core.Object subclass: #'Core.Magnitude'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Magnitude guid: (GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Magnitude isAbstract: true!
-Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared
+Core.Magnitude guid: (Core.GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Magnitude isNonInstantiable: true!
+Core.Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared
 along a linear dimension, e.g. Numbers, Dates, Times.
 
 Subclasses of Magnitude must implement the following comparing protocol (at the very least):
 #<, #=, #hash'!
-!Magnitude categoriesForClass!Magnitude-General! !
-!Magnitude methodsFor!
+!Core.Magnitude categoriesForClass!Magnitude-General! !
+!Core.Magnitude methodsFor!
 
 < operand
 	"Answer whether the receiver is less than the <magnitude>, operand.
@@ -97,18 +97,18 @@ printString
 	stream := String smalltalkWriteStream: 32.
 	self printOn: stream.
 	^stream contents! !
-!Magnitude categoriesFor: #<!comparing!public! !
-!Magnitude categoriesFor: #<=!comparing!public! !
-!Magnitude categoriesFor: #=!comparing!public! !
-!Magnitude categoriesFor: #>!comparing!public! !
-!Magnitude categoriesFor: #>=!comparing!public! !
-!Magnitude categoriesFor: #between:and:!comparing!public! !
-!Magnitude categoriesFor: #clampBetween:and:!comparing!public! !
-!Magnitude categoriesFor: #hash!comparing!public! !
-!Magnitude categoriesFor: #isNaN!public!testing! !
-!Magnitude categoriesFor: #max:!comparing!public! !
-!Magnitude categoriesFor: #min:!comparing!public! !
-!Magnitude categoriesFor: #printString!public! !
+!Core.Magnitude categoriesFor: #<!comparing!public! !
+!Core.Magnitude categoriesFor: #<=!comparing!public! !
+!Core.Magnitude categoriesFor: #=!comparing!public! !
+!Core.Magnitude categoriesFor: #>!comparing!public! !
+!Core.Magnitude categoriesFor: #>=!comparing!public! !
+!Core.Magnitude categoriesFor: #between:and:!comparing!public! !
+!Core.Magnitude categoriesFor: #clampBetween:and:!comparing!public! !
+!Core.Magnitude categoriesFor: #hash!comparing!public! !
+!Core.Magnitude categoriesFor: #isNaN!public!testing! !
+!Core.Magnitude categoriesFor: #max:!comparing!public! !
+!Core.Magnitude categoriesFor: #min:!comparing!public! !
+!Core.Magnitude categoriesFor: #printString!public! !
 
-Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!
+Core.Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!
 

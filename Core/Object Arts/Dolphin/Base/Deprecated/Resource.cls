@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Resource
+Core.Object subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Resource guid: (GUID fromString: '{87b4c4af-026e-11d3-9fd7-00a0cc3e4a32}')!
-Resource isAbstract: true!
+Resource guid: (Core.GUID fromString: '{87b4c4af-026e-11d3-9fd7-00a0cc3e4a32}')!
+Resource isNonInstantiable: true!
 Resource comment: ''!
 !Resource categoriesForClass!MVP-Resources! !
 !Resource methodsFor!
@@ -164,30 +164,29 @@ show: aResourceIdentifier
 
 !Resource class methodsFor!
 
-copyAllToClipboard: aCollection 
+copyAllToClipboard: aCollection
 	"Create new instances of the receiver for each of the elements of aCollection.
     	with a ResourceSTBByteArrayAccessor and save it to the ResourceManager's clipboard."
 
 	| resourceManager |
 	(resourceManager := SessionManager current resourceManager) clearClipboard.
 	aCollection do: 
-			[:each | 
+			[:each |
 			| res |
 			(res := self inSTBByteArray) save: each.
 			resourceManager addToClipboard: (InternalDragDropObject object: res)]!
 
 copyToClipboard: anObject
-    	"Create a new instance of the receiver with a ResourceSTBByteArrayAccessor and save it to the
+	"Create a new instance of the receiver with a ResourceSTBByteArrayAccessor and save it to the
     	ResourceManager's clipboard."
-    
-    	| res |
-    	res := self inSTBByteArray
-    		save: anObject;
-    		yourself.
-    	SessionManager current resourceManager
-    		clearClipboard;
-    		addToClipboard: (InternalDragDropObject object: res).
-    !
+
+	| res |
+	res := self inSTBByteArray
+				save: anObject;
+				yourself.
+	SessionManager current resourceManager
+		clearClipboard;
+		addToClipboard: (InternalDragDropObject object: res)!
 
 createdFromClass: aClass selector: selector
 	"Answer an instance of the receiver which will create new object on each call to #load
@@ -217,17 +216,17 @@ fileExtension
 
 	^'stb'!
 
-generateFileNameFrom: aResourceIdentifier 
+generateFileNameFrom: aResourceIdentifier
 	"Private - Answer a file name suitable for holding the resource identified by aResourceIdentifier."
 
 	| package |
 	package := Package manager packageOfResourceIdentifierOrItsClass: aResourceIdentifier.
 	^self generateFilenameFrom: aResourceIdentifier inPackage: package!
 
-generateFilenameFrom: aResourceIdentifier inPackage: package 
+generateFilenameFrom: aResourceIdentifier inPackage: package
 	| path |
 	path := package isNil ifTrue: [''] ifFalse: [package path].
-	^File 
+	^File
 		composePath: path
 		stem: aResourceIdentifier displayString
 		extension: self fileExtension!

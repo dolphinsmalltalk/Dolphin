@@ -1,21 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #BytecodeRewriter
+Core.Object subclass: #'Kernel.BytecodeRewriter'
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
-	poolDictionaries: 'OpcodePool'
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BytecodeRewriter guid: (GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
-BytecodeRewriter comment: 'BytecodeRewrite is a private system utility class for upgrading Dolphin 5 methods stored in STB files to be compatible with Dolphin 6. Note that the translation is not optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
-!BytecodeRewriter categoriesForClass!Unclassified! !
-!BytecodeRewriter methodsFor!
+Kernel.BytecodeRewriter guid: (Core.GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
+Kernel.BytecodeRewriter comment: 'BytecodeRewrite is a private system utility class for upgrading Dolphin 5 methods stored in STB files to be compatible with Dolphin 6. Note that the translation is not optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
+!Kernel.BytecodeRewriter categoriesForClass!Unclassified! !
+!Kernel.BytecodeRewriter methodsFor!
 
 assemble
 	| bytestream |
 	bytestream := ByteArray writeStream: instructions size * 3.
-	instructions do: [:each | 
-		bytestream nextPut: each instruction; nextPutAll: each args].
+	instructions do: 
+			[:each |
+			bytestream
+				nextPut: each instruction;
+				nextPutAll: each args].
 	^bytestream contents!
 
 atEnd
@@ -35,7 +38,7 @@ blockCopy
 		at: 2 put: 0;
 		at: 3 put: 1;
 		at: 4 put: 1.	"No extra stack temps will be used, as we store all in home context"	"7 bits for env slots, and bottom bit for outer ref required flag"	"7 bits for copied value count, and bottom bit for requires receiver flag"
-	instruction := Bytecode 
+	instruction := Bytecode
 				instruction: BlockCopy
 				arguments: args
 				ip: ip - 4.
@@ -43,8 +46,7 @@ blockCopy
 	self assert: 
 			[| ret |
 			ret := bytecodes at: instruction jumpTarget.
-			ret == ReturnFromBlock 
-				or: [ret == ReturnFromMessage or: [ret between: ReturnSelf and: ReturnNil]]].
+			ret == ReturnFromBlock or: [ret == ReturnFromMessage or: [ret between: ReturnSelf and: ReturnNil]]].
 	blockStack addLast: instruction jumpTarget - 1.
 	self emitInstruction: instruction.
 	blockMap at: originalIP + 1 put: newIP + 1.
@@ -72,28 +74,28 @@ convertHeader: aSmallInteger
 				ifFalse: [aSmallInteger & ##(16rFFFFFF << 7)]) 
 		| privacy!
 
-copyMethodArgs: aCompiledMethod 
+copyMethodArgs: aCompiledMethod
 	| argc |
 	argc := aCompiledMethod argumentCount.
 	0 to: (argc - 1 min: 11)
 		do: 
-			[:i | 
-			self emitInstruction: (Bytecode 
+			[:i |
+			self emitInstruction: (Bytecode
 						instruction: ShortPushTemp + i
 						arguments: #[]
 						ip: nil).
-			self emitInstruction: (Bytecode 
+			self emitInstruction: (Bytecode
 						instruction: PopOuterTemp
 						arguments: (ByteArray with: i)
 						ip: nil)].
 	12 to: argc - 1
 		do: 
-			[:i | 
-			self emitInstruction: (Bytecode 
+			[:i |
+			self emitInstruction: (Bytecode
 						instruction: PushTemp
 						arguments: (ByteArray with: i)
 						ip: nil).
-			self emitInstruction: (Bytecode 
+			self emitInstruction: (Bytecode
 						instruction: PopOuterTemp
 						arguments: (ByteArray with: i)
 						ip: nil)]!
@@ -112,38 +114,38 @@ emitInstruction: aBytecode
 	newIP := newIP + 1 + aBytecode args size.
 	instructions addLast: aBytecode!
 
-emitJumpOnNil: aBoolean 
+emitJumpOnNil: aBoolean
 	| offset instruction |
 	offset := self fetchNearJumpOffset.
-	instruction := offset abs > 64 
+	instruction := offset abs > 64
 				ifTrue: 
-					[self emitInstruction: (Bytecode 
+					[self emitInstruction: (Bytecode
 								instruction: (aBoolean ifTrue: [ShortSendIsNil] ifFalse: [ShortSendNotNil])
 								arguments: #[]
 								ip: ip - 2).
-					Bytecode 
+					Bytecode
 						instruction: LongJumpIfTrue
 						arguments: (ByteArray with: 0 with: 0)
 						ip: nil]
 				ifFalse: 
-					[Bytecode 
+					[Bytecode
 						instruction: bytecode
 						arguments: (ByteArray with: 0)
 						ip: ip - 2].
 	instruction jumpTarget: offset + ip.
 	self emitInstruction: instruction!
 
-emitNearJump: offsetInteger asLongJump: jumpInteger 
+emitNearJump: offsetInteger asLongJump: jumpInteger
 	| instruction |
 	#todo.	"Determine whether near or long needed in a more intelligent way"
-	instruction := offsetInteger abs > 64 
+	instruction := offsetInteger abs > 64
 				ifTrue: 
-					[Bytecode 
+					[Bytecode
 						instruction: jumpInteger
 						arguments: (ByteArray with: 0 with: 0)
 						ip: ip - 2]
 				ifFalse: 
-					[Bytecode 
+					[Bytecode
 						instruction: bytecode
 						arguments: (ByteArray with: 0)
 						ip: ip - 2].
@@ -155,9 +157,9 @@ emitNearJumpAsLongJump: anInteger
 
 	self emitNearJump: self fetchNearJumpOffset asLongJump: anInteger!
 
-emitShortJump: offsetInteger asNearJump: instructionInteger 
+emitShortJump: offsetInteger asNearJump: instructionInteger
 	| instruction |
-	instruction := Bytecode 
+	instruction := Bytecode
 				instruction: instructionInteger
 				arguments: (ByteArray with: 0)
 				ip: ip - 1.
@@ -171,11 +173,11 @@ exLongSend
 	large methods (such as auto-generated ones)."
 
 	| args |
-	args := ByteArray 
+	args := ByteArray
 				with: self fetch
 				with: self fetch
 				with: self fetch.
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: ExLongSend
 				arguments: args
 				ip: ip - 4)!
@@ -186,11 +188,11 @@ exLongSupersend
 	large methods (such as auto-generated ones)"
 
 	| args |
-	args := ByteArray 
+	args := ByteArray
 				with: self fetch
 				with: self fetch
 				with: self fetch.
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: ExLongSupersend
 				arguments: args
 				ip: ip - 4)!
@@ -211,7 +213,7 @@ longJump
 	| byte1 byte2 instruction |
 	byte1 := self fetch.
 	byte2 := self fetch.
-	instruction := Bytecode 
+	instruction := Bytecode
 				instruction: bytecode
 				arguments: (ByteArray with: byte1 with: byte2)
 				ip: ip - 3.
@@ -239,40 +241,40 @@ popStoreTemp
 	self assert: [temp < 31].
 	outer := blockStack size.
 	self assert: [outer < 8].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: PopOuterTemp
 				arguments: (ByteArray with: (outer << 5 bitOr: temp))
 				ip: ip - 2)!
 
 pushActiveFrame
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: PushActiveFrame
 				arguments: #[]
 				ip: ip - 1)!
 
-pushBlockArgs: anInteger 
+pushBlockArgs: anInteger
 	self assert: [needsContext].
 	0 to: (anInteger - 1 min: 11)
 		do: 
-			[:i | 
-			self emitInstruction: (Bytecode 
+			[:i |
+			self emitInstruction: (Bytecode
 						instruction: ShortPushTemp + i
 						arguments: #[]
 						ip: nil)].
 	12 to: anInteger - 1
 		do: 
-			[:i | 
-			self emitInstruction: (Bytecode 
+			[:i |
+			self emitInstruction: (Bytecode
 						instruction: PushTemp
 						arguments: (ByteArray with: i)
 						ip: nil)]!
 
 pushSelfAndTemp
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: PushSelf
 				arguments: #()
 				ip: ip - 1).
-	self 
+	self
 		tempInstr: PushTemp
 		outerInstr: PushOuterTemp
 		ip: nil!
@@ -285,11 +287,11 @@ pushTemp
 
 quadByte
 	| args |
-	args := ByteArray 
+	args := ByteArray
 				with: self fetch
 				with: self fetch
 				with: self fetch.
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: bytecode
 				arguments: args
 				ip: ip - 4)!
@@ -306,20 +308,20 @@ returnFromMessage
 	self singleByte!
 
 returnPseudo
-	self isInBlock 
+	self isInBlock
 		ifTrue: 
 			[| which |
 			self assert: [needsContext].
 			which := bytecode - 16r65.
 			bytecode := PushSelf + which.
 			self singleByte.
-			self emitInstruction: (Bytecode 
+			self emitInstruction: (Bytecode
 						instruction: ReturnFromBlockHome
 						arguments: #()
 						ip: nil)]
 		ifFalse: [self singleByte]!
 
-rewriteBytecodesOf: aCompiledMethod 
+rewriteBytecodesOf: aCompiledMethod
 	bytecodes := aCompiledMethod byteCodes.
 	blockStack := OrderedCollection new.
 	instructions := OrderedCollection new.
@@ -365,7 +367,7 @@ shortSendNoArgs
 
 	| index code args |
 	index := bytecode - 158.
-	index < 12 
+	index < 12
 		ifTrue: 
 			[code := ShortSendZeroArgs + index.
 			args := #[]]
@@ -373,7 +375,7 @@ shortSendNoArgs
 			[self assert: [index < 32].
 			code := Send.
 			args := ByteArray with: index	"0 << 5 | "].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: code
 				arguments: args
 				ip: ip - 1)!
@@ -389,7 +391,7 @@ shortSendOneArg
 			[self assert: [index < 32].
 			code := Send.
 			args := ByteArray with: 1 << 5 | index].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: code
 				arguments: args
 				ip: ip - 1)!
@@ -397,7 +399,7 @@ shortSendOneArg
 shortSendTwoArgs
 	| index code args |
 	index := bytecode - 190.
-	index < 8 
+	index < 8
 		ifTrue: 
 			[code := ShortSendTwoArgs + index.
 			args := #[]]
@@ -405,12 +407,12 @@ shortSendTwoArgs
 			[self assert: [index < 32].
 			code := Send.
 			args := ByteArray with: 2 << 5 | index].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: code
 				arguments: args
 				ip: ip - 1)!
 
-shortTempInstr: shortInteger outerInstr: outerInteger 
+shortTempInstr: shortInteger outerInstr: outerInteger
 	"Note: New instruction set has only twelve short push temps, used to be 16, with the remainder being 
 	used for short pushes of context temps"
 
@@ -418,7 +420,7 @@ shortTempInstr: shortInteger outerInstr: outerInteger
 	temp := bytecode - shortInteger.
 	#todo.	"Handle conversion of more than 12 temps"
 	self assert: [temp < 12].
-	byte := needsContext 
+	byte := needsContext
 				ifTrue: 
 					[| outer |
 					outer := blockStack size.
@@ -428,13 +430,13 @@ shortTempInstr: shortInteger outerInstr: outerInteger
 				ifFalse: 
 					[args := #[].
 					bytecode].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: byte
 				arguments: args
 				ip: ip - 1)!
 
 singleByte
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: bytecode
 				arguments: #[]
 				ip: ip - 1)!
@@ -445,10 +447,10 @@ storeTemp
 		outerInstr: StoreOuterTemp
 		ip: ip - 1!
 
-tempInstr: codeInteger outerInstr: outerInteger ip: ipInteger 
+tempInstr: codeInteger outerInstr: outerInteger ip: ipInteger
 	| pushTemp temp |
 	temp := self fetch.
-	pushTemp := needsContext 
+	pushTemp := needsContext
 				ifTrue: 
 					[| outer |
 					self assert: [temp < 32].
@@ -457,22 +459,21 @@ tempInstr: codeInteger outerInstr: outerInteger ip: ipInteger
 					temp := outer << 5 bitOr: temp.
 					outerInteger]
 				ifFalse: [codeInteger].
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: pushTemp
 				arguments: (ByteArray with: temp)
 				ip: ipInteger)!
 
 testIsZero
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: IsZero
 				arguments: #[]
-				ip: ip - 1)
-!
+				ip: ip - 1)!
 
 trebleByte
 	| args |
 	args := ByteArray with: self fetch with: self fetch.
-	self emitInstruction: (Bytecode 
+	self emitInstruction: (Bytecode
 				instruction: bytecode
 				arguments: args
 				ip: ip - 3)!
@@ -494,61 +495,61 @@ updateJumps
 			[:each | 
 			each jumpTarget notNil 
 				ifTrue: [each jumpOffset: (ipMap at: each jumpTarget) ip - (each ip + 1 + each args size)]]! !
-!BytecodeRewriter categoriesFor: #assemble!operations!public! !
-!BytecodeRewriter categoriesFor: #atEnd!private!testing! !
-!BytecodeRewriter categoriesFor: #blockCopy!interpreting!private! !
-!BytecodeRewriter categoriesFor: #blockDepth!accessing!private! !
-!BytecodeRewriter categoriesFor: #blockMap!accessing!public! !
-!BytecodeRewriter categoriesFor: #convertHeader:!helpers!private! !
-!BytecodeRewriter categoriesFor: #copyMethodArgs:!helpers!private! !
-!BytecodeRewriter categoriesFor: #doubleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #emitInstruction:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitJumpOnNil:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitNearJump:asLongJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitNearJumpAsLongJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitShortJump:asNearJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #exLongSend!interpreting!private! !
-!BytecodeRewriter categoriesFor: #exLongSupersend!interpreting!private! !
-!BytecodeRewriter categoriesFor: #fetch!helpers!interpreting!private! !
-!BytecodeRewriter categoriesFor: #fetchNearJumpOffset!helpers!private! !
-!BytecodeRewriter categoriesFor: #isInBlock!private!testing! !
-!BytecodeRewriter categoriesFor: #longJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfFalse!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfNil!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfNotNil!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfTrue!interpreting!private! !
-!BytecodeRewriter categoriesFor: #popStoreTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushActiveFrame!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushBlockArgs:!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushSelfAndTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #quadByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnFromBlock!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnFromMessage!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnPseudo!interpreting!private! !
-!BytecodeRewriter categoriesFor: #rewriteBytecodesOf:!initializing!private! !
-!BytecodeRewriter categoriesFor: #rewriteMethod:!initializing!private! !
-!BytecodeRewriter categoriesFor: #shortJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortJumpIfFalse!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortPopStoreTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortPushTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendNoArgs!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendOneArg!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendTwoArgs!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortTempInstr:outerInstr:!helpers!private! !
-!BytecodeRewriter categoriesFor: #singleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #storeTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #tempInstr:outerInstr:ip:!helpers!private! !
-!BytecodeRewriter categoriesFor: #testIsZero!interpreting!private! !
-!BytecodeRewriter categoriesFor: #trebleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #unusedDoubleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedQuadByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedSingleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedTrebleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #updateJumps!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #assemble!operations!public! !
+!Kernel.BytecodeRewriter categoriesFor: #atEnd!private!testing! !
+!Kernel.BytecodeRewriter categoriesFor: #blockCopy!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #blockDepth!accessing!private! !
+!Kernel.BytecodeRewriter categoriesFor: #blockMap!accessing!public! !
+!Kernel.BytecodeRewriter categoriesFor: #convertHeader:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #copyMethodArgs:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #doubleByte!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #emitInstruction:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #emitJumpOnNil:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #emitNearJump:asLongJump:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #emitNearJumpAsLongJump:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #emitShortJump:asNearJump:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #exLongSend!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #exLongSupersend!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #fetch!helpers!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #fetchNearJumpOffset!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #isInBlock!private!testing! !
+!Kernel.BytecodeRewriter categoriesFor: #longJump!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #nearJump!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #nearJumpIfFalse!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #nearJumpIfNil!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #nearJumpIfNotNil!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #nearJumpIfTrue!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #popStoreTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #pushActiveFrame!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #pushBlockArgs:!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #pushSelfAndTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #pushTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #quadByte!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #returnFromBlock!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #returnFromMessage!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #returnPseudo!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #rewriteBytecodesOf:!initializing!private! !
+!Kernel.BytecodeRewriter categoriesFor: #rewriteMethod:!initializing!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortJump!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortJumpIfFalse!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortPopStoreTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortPushTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortSendNoArgs!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortSendOneArg!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortSendTwoArgs!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #shortTempInstr:outerInstr:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #singleByte!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #storeTemp!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #tempInstr:outerInstr:ip:!helpers!private! !
+!Kernel.BytecodeRewriter categoriesFor: #testIsZero!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #trebleByte!interpreting!private! !
+!Kernel.BytecodeRewriter categoriesFor: #unusedDoubleByte!exceptions!private! !
+!Kernel.BytecodeRewriter categoriesFor: #unusedQuadByte!exceptions!private! !
+!Kernel.BytecodeRewriter categoriesFor: #unusedSingleByte!exceptions!private! !
+!Kernel.BytecodeRewriter categoriesFor: #unusedTrebleByte!exceptions!private! !
+!Kernel.BytecodeRewriter categoriesFor: #updateJumps!helpers!private! !
 
-!BytecodeRewriter class methodsFor!
+!Kernel.BytecodeRewriter class methodsFor!
 
 initialize
 	"
@@ -559,71 +560,13 @@ initialize
 
 	| instructions |
 	instructions := OrderedCollection new.
-	#(
-		#(1 #singleByte)		"break"
-		#(16 #singleByte)		"short push inst var"
-		#(12 #shortPushTemp)
-		#(16 #singleByte)		"short push const"
-		#(12 #singleByte)		"short push static"
-		#(4 #singleByte)		"push pseudo var"
-		#(4 #singleByte)		"short push immediate"
-		#(16 #singleByte)		"unused"
-		#(8 #singleByte)		"pop store inst var"
-		#(8 #shortPopStoreTemp)
-		#(1 #singleByte) 		"pop"
-		#(1 #singleByte) 		"inc"
-		#(1 #singleByte) 		"dec"
-		#(1 #singleByte) 		"dup"
-		#(4 #returnPseudo)
-		#(1 #returnFromMessage)
-		#(1 #returnFromBlock)
-		#(1 #returnFromBlockHome)
-		#(1 #pushActiveFrame)
-		#(1 #singleByte)		"nop"
-		#(8 #shortJump)
-		#(8 #shortJumpIfFalse)
-		#(32 #singleByte)		"short special send"
-		#(16 #shortSendNoArgs)
-		#(16 #shortSendOneArg)
-		#(8 #shortSendTwoArgs)
-		#(1 #testIsZero)
-		#(5 #singleByte)		"unused"
-		#(1 #doubleByte)		"push inst var"
-		#(1 #pushTemp)
-		#(1 #doubleByte)		"push const"
-		#(1 #doubleByte)		"push static"
-		#(1 #doubleByte)		"store inst var"
-		#(1 #storeTemp)
-		#(1 #doubleByte)		"store static"
-		#(1 #doubleByte)		"pop store inst var"
-		#(1 #popStoreTemp)
-		#(1 #doubleByte)		"pop store static"
-		#(1 #doubleByte)		"push immediate"
-		#(1 #doubleByte)		"push char"
-		#(1 #doubleByte)		"send"
-		#(1 #doubleByte)		"supersend"
-		#(1 #doubleByte)		"special send (reserved)"
-		#(1 #nearJump)
-		#(1 #nearJumpIfTrue)
-		#(1 #nearJumpIfFalse)
-		#(1 #nearJumpIfNil)
-		#(1 #nearJumpIfNotNil)
-		#(3 #unusedDoubleByte)
-		#(1 #pushSelfAndTemp)
-		#(6 #unusedDoubleByte)
-		#(7 #trebleByte)		"long pushes and stores, pop store static, send and supersend"
-		#(3 #longJump)
-		#(7 #unusedTrebleByte)
-		#(1 #blockCopy)
-		#(1 #exLongSend)
-		#(1 #exLongSupersend)
-		#(2 #unusedQuadByte)) do: [:each | each first timesRepeat: [instructions add: each last]].
+	#(#(1 #singleByte) #(16 #singleByte) #(12 #shortPushTemp) #(16 #singleByte) #(12 #singleByte) #(4 #singleByte) #(4 #singleByte) #(16 #singleByte) #(8 #singleByte) #(8 #shortPopStoreTemp) #(1 #singleByte) #(1 #singleByte) #(1 #singleByte) #(1 #singleByte) #(4 #returnPseudo) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #pushActiveFrame) #(1 #singleByte) #(8 #shortJump) #(8 #shortJumpIfFalse) #(32 #singleByte) #(16 #shortSendNoArgs) #(16 #shortSendOneArg) #(8 #shortSendTwoArgs) #(1 #testIsZero) #(5 #singleByte) #(1 #doubleByte) #(1 #pushTemp) #(1 #doubleByte) #(1 #doubleByte) #(1 #doubleByte) #(1 #storeTemp) #(1 #doubleByte) #(1 #doubleByte) #(1 #popStoreTemp) #(1 #doubleByte) #(1 #doubleByte) #(1 #doubleByte) #(1 #doubleByte) #(1 #doubleByte) #(1 #doubleByte) #(1 #nearJump) #(1 #nearJumpIfTrue) #(1 #nearJumpIfFalse) #(1 #nearJumpIfNil) #(1 #nearJumpIfNotNil) #(3 #unusedDoubleByte) #(1 #pushSelfAndTemp) #(6 #unusedDoubleByte) #(7 #trebleByte) #(3 #longJump) #(7 #unusedTrebleByte) #(1 #blockCopy) #(1 #exLongSend) #(1 #exLongSupersend) #(2 #unusedQuadByte))
+		do: [:each | each first timesRepeat: [instructions add: each last]].	"break"	"short push inst var"	"short push const"	"short push static"	"push pseudo var"	"short push immediate"	"unused"	"pop store inst var"	"pop"	"inc"	"dec"	"dup"	"nop"	"short special send"	"unused"	"push inst var"	"push const"	"push static"	"store inst var"	"store static"	"pop store inst var"	"pop store static"	"push immediate"	"push char"	"send"	"supersend"	"special send (reserved)"	"long pushes and stores, pop store static, send and supersend"
 	self assert: [instructions size = 256].
-	DispatchMap := instructions asArray. 
-!
+	DispatchMap := instructions asArray!
 
 rewriteMethod: aCompiledMethod 
 	^self new rewriteMethod: aCompiledMethod! !
-!BytecodeRewriter class categoriesFor: #initialize!initializing!public! !
-!BytecodeRewriter class categoriesFor: #rewriteMethod:!operations!public! !
+!Kernel.BytecodeRewriter class categoriesFor: #initialize!initializing!public! !
+!Kernel.BytecodeRewriter class categoriesFor: #rewriteMethod:!operations!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalInteger subclass: #UINT_PTR
+External.INTEGER subclass: #'External.UINT_PTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
-UINT_PTR comment: ''!
-!UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
-!UINT_PTR methodsFor!
+External.UINT_PTR guid: (Core.GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
+External.UINT_PTR comment: ''!
+!External.UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
+!External.UINT_PTR methodsFor!
 
 asSignedInteger
 	"Answer the signed pointer-sized <Integer> value of the receiver."
@@ -65,23 +65,23 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
-!UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
-!UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
-!UINT_PTR categoriesFor: #highPart!accessing!public! !
-!UINT_PTR categoriesFor: #highPart:!accessing!public! !
-!UINT_PTR categoriesFor: #highPartSigned!accessing!public! !
-!UINT_PTR categoriesFor: #lowPart!accessing!public! !
-!UINT_PTR categoriesFor: #lowPart:!accessing!public! !
-!UINT_PTR categoriesFor: #lowPartSigned!accessing!public! !
-!UINT_PTR categoriesFor: #value!**compiled accessors**!public! !
-!UINT_PTR categoriesFor: #value:!**compiled accessors**!public! !
+!External.UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
+!External.UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
+!External.UINT_PTR categoriesFor: #highPart!accessing!public! !
+!External.UINT_PTR categoriesFor: #highPart:!accessing!public! !
+!External.UINT_PTR categoriesFor: #highPartSigned!accessing!public! !
+!External.UINT_PTR categoriesFor: #lowPart!accessing!public! !
+!External.UINT_PTR categoriesFor: #lowPart:!accessing!public! !
+!External.UINT_PTR categoriesFor: #lowPartSigned!accessing!public! !
+!External.UINT_PTR categoriesFor: #value!**compiled accessors**!public! !
+!External.UINT_PTR categoriesFor: #value:!**compiled accessors**!public! !
 
-!UINT_PTR class methodsFor!
+!External.UINT_PTR class methodsFor!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
-!UINT_PTR class categoriesFor: #defineFields!public!template definition! !
+!External.UINT_PTR class categoriesFor: #defineFields!public!template definition! !
 

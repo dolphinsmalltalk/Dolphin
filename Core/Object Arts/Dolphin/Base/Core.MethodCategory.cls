@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Category subclass: #MethodCategory
+Core.Category subclass: #'Core.MethodCategory'
 	instanceVariableNames: ''
 	classVariableNames: 'Private Pseuds Public Table'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodCategory guid: (GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
+Core.MethodCategory guid: (Core.GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
 
 Instance Variables: (None)
 
 Class Variables:
 	Pseuds		<Set> of <VirtualMethodCategory>s. The pseudo-categories.
 	Table		<WeakLookupTable> mapping <String> names to <MethodCategory> instances.'!
-!MethodCategory categoriesForClass!System-Support! !
-!MethodCategory methodsFor!
+!Core.MethodCategory categoriesForClass!System-Support! !
+!Core.MethodCategory methodsFor!
 
 addClass: class
 	"Add the <Class>, class, to the collection of classes associated with the receiver.
@@ -26,10 +26,10 @@ addClass: class
 addMethod: method
 	"Add the <CompiledMethod>, method, to the collection of methods within the receiver."
 
-	(self includesMethod: method) ifFalse: [
-		self addMethodSilently: method.
-		Smalltalk trigger: #methodCategorized: with: method]
-!
+	(self includesMethod: method)
+		ifFalse: 
+			[self addMethodSilently: method.
+			Smalltalk trigger: #methodCategorized: with: method]!
 
 addMethods: aCollection 
 	aCollection do: [:each | self addMethod: each]!
@@ -52,8 +52,8 @@ behaviors
 	self behaviorsDo: [:each | answer addLast: each].
 	^answer!
 
-behaviorsDo: aMonadicValuable 
-	Smalltalk 
+behaviorsDo: aMonadicValuable
+	Smalltalk
 		allBehaviorsDo: [:each | (each includesCategory: self) ifTrue: [aMonadicValuable value: each]]!
 
 contents
@@ -86,7 +86,7 @@ methods
 
 	| foundMethods |
 	foundMethods := IdentitySet new.
-	self class environment
+	Smalltalk
 		allBehaviorsDo: [:each | self methodsInBehavior: each do: [:method | foundMethods add: method]].
 	^foundMethods!
 
@@ -142,28 +142,28 @@ selectorsInBehavior: aBehavior
 	"Answer a <sequencedReadableCollection> of <Symbol>s being the selectors of methods in the <Behavior> argument which are members of the receiver."
 
 	^aBehavior selectorsInCategory: self! !
-!MethodCategory categoriesFor: #addClass:!adding!public! !
-!MethodCategory categoriesFor: #addMethod:!adding!public! !
-!MethodCategory categoriesFor: #addMethods:!adding!public! !
-!MethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!MethodCategory categoriesFor: #asMethodCategory!converting!public! !
-!MethodCategory categoriesFor: #behaviors!enumerating!private! !
-!MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
-!MethodCategory categoriesFor: #contents!enumerating!public! !
-!MethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
-!MethodCategory categoriesFor: #includesMethod:!public!testing! !
-!MethodCategory categoriesFor: #isEmpty!public!testing! !
-!MethodCategory categoriesFor: #isPrivacy!private!testing! !
-!MethodCategory categoriesFor: #methods!enumerating!public! !
-!MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!MethodCategory categoriesFor: #removeClass:!public!removing! !
-!MethodCategory categoriesFor: #removeMethod:!public!removing! !
-!MethodCategory categoriesFor: #removeMethods:!public!removing! !
-!MethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
-!MethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #addClass:!adding!public! !
+!Core.MethodCategory categoriesFor: #addMethod:!adding!public! !
+!Core.MethodCategory categoriesFor: #addMethods:!adding!public! !
+!Core.MethodCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Core.MethodCategory categoriesFor: #asMethodCategory!converting!public! !
+!Core.MethodCategory categoriesFor: #behaviors!enumerating!private! !
+!Core.MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #contents!enumerating!public! !
+!Core.MethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #includesMethod:!public!testing! !
+!Core.MethodCategory categoriesFor: #isEmpty!public!testing! !
+!Core.MethodCategory categoriesFor: #isPrivacy!private!testing! !
+!Core.MethodCategory categoriesFor: #methods!enumerating!public! !
+!Core.MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #removeClass:!public!removing! !
+!Core.MethodCategory categoriesFor: #removeMethod:!public!removing! !
+!Core.MethodCategory categoriesFor: #removeMethods:!public!removing! !
+!Core.MethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Core.MethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
 
-!MethodCategory class methodsFor!
+!Core.MethodCategory class methodsFor!
 
 addPseud: category
 	"Add the virtual method category, category, to the global list of virtual categories
@@ -237,10 +237,11 @@ removeCategory: category
 	| catName |
 	catName := category asString.
 	"Make absolutely sure any standard category of the same name has been removed"
-	Smalltalk allBehaviorsDo: [:c | | catalogue |
-		catalogue := c methodsCatalogue.
-		(catalogue keys select: [:e | e name = catName]) 
-			do: [:k | catalogue removeKey: k]].
+	Smalltalk allBehaviorsDo: 
+			[:c |
+			| catalogue |
+			catalogue := c methodsCatalogue.
+			(catalogue keys select: [:e | e name = catName]) do: [:k | catalogue removeKey: k]].
 	Pseuds remove: (Table removeKey: catName ifAbsent: []) ifAbsent: []!
 
 removePseud: pseud
@@ -278,19 +279,19 @@ uninitialize
 
 	Pseuds := Set new.
 	Table := WeakLookupTable new! !
-!MethodCategory class categoriesFor: #addPseud:!adding!public! !
-!MethodCategory class categoriesFor: #allMethodCategories!accessing!public! !
-!MethodCategory class categoriesFor: #deprecatedMethods!instance creation!public! !
-!MethodCategory class categoriesFor: #initialize!initializing!private! !
-!MethodCategory class categoriesFor: #name:!instance creation!public! !
-!MethodCategory class categoriesFor: #primitives!instance creation!public! !
-!MethodCategory class categoriesFor: #private!instance creation!public! !
-!MethodCategory class categoriesFor: #pseudoCategories!constants!public! !
-!MethodCategory class categoriesFor: #pseudPrefix!constants!private! !
-!MethodCategory class categoriesFor: #public!instance creation!public! !
-!MethodCategory class categoriesFor: #removeCategory:!public!removing! !
-!MethodCategory class categoriesFor: #removePseud:!public!removing! !
-!MethodCategory class categoriesFor: #setMethod:categories:!helpers!private! !
-!MethodCategory class categoriesFor: #unclassifiedName!constants!private! !
-!MethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.MethodCategory class categoriesFor: #addPseud:!adding!public! !
+!Core.MethodCategory class categoriesFor: #allMethodCategories!accessing!public! !
+!Core.MethodCategory class categoriesFor: #deprecatedMethods!instance creation!public! !
+!Core.MethodCategory class categoriesFor: #initialize!initializing!private! !
+!Core.MethodCategory class categoriesFor: #name:!instance creation!public! !
+!Core.MethodCategory class categoriesFor: #primitives!instance creation!public! !
+!Core.MethodCategory class categoriesFor: #private!instance creation!public! !
+!Core.MethodCategory class categoriesFor: #pseudoCategories!constants!public! !
+!Core.MethodCategory class categoriesFor: #pseudPrefix!constants!private! !
+!Core.MethodCategory class categoriesFor: #public!instance creation!public! !
+!Core.MethodCategory class categoriesFor: #removeCategory:!public!removing! !
+!Core.MethodCategory class categoriesFor: #removePseud:!public!removing! !
+!Core.MethodCategory class categoriesFor: #setMethod:categories:!helpers!private! !
+!Core.MethodCategory class categoriesFor: #unclassifiedName!constants!private! !
+!Core.MethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

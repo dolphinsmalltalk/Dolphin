@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBClassProxy
+Kernel.STBProxy subclass: #'Kernel.STBClassProxy'
 	instanceVariableNames: 'packageName locatorKey'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBClassProxy guid: (GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBClassProxy comment: ''!
-!STBClassProxy categoriesForClass!System-Binary storage! !
-!STBClassProxy methodsFor!
+Kernel.STBClassProxy guid: (Core.GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBClassProxy comment: ''!
+!Kernel.STBClassProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBClassProxy methodsFor!
 
 locatorKey: aString
 	"Private - Set the receiver's locatorKey inst var to aString."
@@ -44,20 +44,20 @@ stbFixup: inFiler at: anInteger
 
 withClassLocator: aClassLocator
 	^#{ClassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
-!STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
-!STBClassProxy categoriesFor: #packageName:!accessing!private! !
-!STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!STBClassProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBClassProxy categoriesFor: #withClassLocator:!converting!private! !
+!Kernel.STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
+!Kernel.STBClassProxy categoriesFor: #packageName:!accessing!private! !
+!Kernel.STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
+!Kernel.STBClassProxy categoriesFor: #stbFixup:at:!converting!public! !
+!Kernel.STBClassProxy categoriesFor: #withClassLocator:!converting!private! !
 
-!STBClassProxy class methodsFor!
+!Kernel.STBClassProxy class methodsFor!
 
 forClass: aClass
 	"Answer a new instance with its locator key representing aClass."
 
 	| answer |
 	answer := self basicNew.
-	answer locatorKey: aClass name asString.
+	answer locatorKey: aClass fullName asString.
 	aClass owningPackage ifNotNil: [:package | answer packageName: package name].
 	^answer!
 
@@ -76,7 +76,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!STBClassProxy class categoriesFor: #forClass:!instance creation!public! !
-!STBClassProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!STBClassProxy class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.STBClassProxy class categoriesFor: #forClass:!instance creation!public! !
+!Kernel.STBClassProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Kernel.STBClassProxy class categoriesFor: #stbVersion!binary filing!public! !
 

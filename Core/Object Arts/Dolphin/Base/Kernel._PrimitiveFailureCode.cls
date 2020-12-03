@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #_PrimitiveFailureCode
+Kernel.SharedPool subclass: #'Kernel._PrimitiveFailureCode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -50,6 +50,7 @@ SharedPool subclass: #_PrimitiveFailureCode
 		'Unsuccessful' -> -16r17FFFFFF.
 		'WrongNumberOfArgs' -> -16r3FFD735F
 	}!
-_PrimitiveFailureCode guid: (GUID fromString: '{b79a3b29-49ef-44d7-832f-ad83fb4b2097}')!
-_PrimitiveFailureCode comment: ''!
-!_PrimitiveFailureCode categoriesForClass!Kernel-Methods! !
+Kernel._PrimitiveFailureCode guid: (Core.GUID fromString: '{b79a3b29-49ef-44d7-832f-ad83fb4b2097}')!
+Kernel._PrimitiveFailureCode isNonInstantiable: true!
+Kernel._PrimitiveFailureCode comment: ''!
+!Kernel._PrimitiveFailureCode categoriesForClass!Kernel-Methods! !

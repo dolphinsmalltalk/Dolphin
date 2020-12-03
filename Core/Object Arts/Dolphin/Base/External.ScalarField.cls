@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalField subclass: #ScalarField
+External.Field subclass: #'External.ScalarField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScalarField guid: (GUID fromString: '{87b4c4dd-026e-11d3-9fd7-00a0cc3e4a32}')!
-ScalarField isAbstract: true!
-ScalarField comment: '<ScalarField> is the abstract class of <ExternalField>s to describe <ExternalStructure> fields of simple scalar types, e.g. ints, boolean, etc.'!
-!ScalarField categoriesForClass!External-Data-Types! !
-!ScalarField methodsFor!
+External.ScalarField guid: (Core.GUID fromString: '{87b4c4dd-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.ScalarField isNonInstantiable: true!
+External.ScalarField comment: '<ScalarField> is the abstract class of <ExternalField>s to describe <ExternalStructure> fields of simple scalar types, e.g. ints, boolean, etc.'!
+!External.ScalarField categoriesForClass!External-Data-Types! !
+!External.ScalarField methodsFor!
 
 accessorMessage
 	"Private - Answer the stem of the accessor message used to access the value of the field
@@ -33,17 +33,17 @@ printMutatorValueOn: aWriteStream parameter: aString
 	compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aWriteStream nextPutAll: aString! !
-!ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
-!ScalarField categoriesFor: #byteSize!constants!private! !
-!ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!External.ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
+!External.ScalarField categoriesFor: #byteSize!constants!private! !
+!External.ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
+!External.ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 
-!ScalarField class methodsFor!
+!External.ScalarField class methodsFor!
 
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes.
 	A large number of fields are the same size as an integer."
 
 	^VMConstants.IntSize! !
-!ScalarField class categoriesFor: #byteSize!constants!private! !
+!External.ScalarField class categoriesFor: #byteSize!constants!private! !
 

@@ -1,57 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dictionary variableSubclass: #SystemDictionary
-	instanceVariableNames: 'events allClasses allRoots'
+Kernel.Namespace subclass: #Smalltalk
+	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
+	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External})
+	classInstanceVariableNames: 'events allRoots allClasses'
 	classConstants: {}!
-SystemDictionary guid: (GUID fromString: '{87b4c52c-026e-11d3-9fd7-00a0cc3e4a32}')!
-SystemDictionary comment: 'Class of the root of the system. SystemDictionary''s single instance (Smalltalk) 
-provides associative access to all global objects in the system.'!
-!SystemDictionary categoriesForClass!Collections-Unordered! !
-!SystemDictionary methodsFor!
+Smalltalk guid: (Core.GUID fromString: '{4c8d0eb7-6d0e-4467-aea6-e6f1107faf7d}')!
+Smalltalk isNonInstantiable: true!
+Smalltalk comment: '`Smalltalk` represents the distinguished namespace of the same name. Historically Smalltalk was a global variable holding an instance of the `SystemDictionary` class, although the `SystemDictionary` class no longer exists in Dolphin from 7.2 and Smalltalk is now a namespace class.
 
-_deepCopy: anIdentityDictionary 
-	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
-	in the <IdentityDictionary> argument."
-
-	^self!
-
-absoluteNameOfIdentifier: aString
-	#todo.	"Temporary definition"
-	^'Root.Smalltalk.' , aString!
-
-add: aVariableBinding
-	"Add the <VariableBinding> argument to the receiver. Answer aVariableBinding.
-	Although very similar to at:put:, we store the actual <VariableBinding> passed
-	as an argument here in order to maintain its references."
-
-	(aVariableBinding class == self associationClass
-		and: [(aVariableBinding key isKindOf: Symbol) and: [aVariableBinding key notEmpty]])
-			ifFalse: [self error: 'Invalid global binding ' , aVariableBinding printString].
-	super add: aVariableBinding.
-	self bindingsChanged.
-	^aVariableBinding!
-
-allBehaviors
-	"Private - Answer a <sequencedReadableCollection> of all of the Behaviors 
-	contained in the system in breadth first order, with instance classes preceeding
-	metaclasses."
-
-	| answer |
-	answer := OrderedCollection new: 5000.
-	self allBehaviorsDo: [:behavior | answer addLast: behavior].
-	^answer!
-
-allBehaviorsDo: operation
-	"Private - Evaluate the monadic valuable, operation, for each of the Behaviors in the system.
-	N.B. No guarantee is made about ordering, except that the operation is evaluated
-	for a subclass after its superclass."
-
-	self allClasses do: [ :class |
-		operation value: class.
-		operation value: class class]!
+The primary purpose of the Smalltalk namespace is to support loading of old packages that pre-date namespace support. It can also be used to continue to work in a flat namespace if that is your preference. It imports all the namespaces that contain parts of the original Dolphin image, and aliases some specifc classes, so the effect is that almost all the classes are globally bindable.  This means that older packages can be loaded and should continue to function, however loose methods added to classes that have been moved to other namespaces may fail to compile due to former global names no longer being in scope. Such compilation failures can be easily corrected by qualifying global names as necessary in the loose methods.
+'!
+!Smalltalk categoriesForClass!Kernel-Objects! !
+!Smalltalk class methodsFor!
 
 allClasses
 	"Answer a <sequencedReadableCollection> of all of the classes in the system, in breadth-first order.
@@ -59,56 +21,21 @@ allClasses
 
 	allClasses isNil
 		ifTrue: 
-			[allClasses := (Class allClasses)
+			[allClasses := Class allClasses
 						isImmutable: true;
 						yourself].
 	^allClasses!
+
+allClassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
+
+	self allClasses do: aMonadicValuable!
 
 allRoots
 	"Answer a <sequencedReadableCollection> of all global root classes - ie. those that are subclasses of nil."
 
 	allRoots isNil ifTrue: [allRoots := Class allRoots].
 	^allRoots!
-
-associationClass
-	"Private - Answer the class of association to be used for holding
-	key-value pairs in the receiver. Must respond to the Association protocol."
-	
-	^VariableBinding!
-
-at: key put: anObject
-	"Store the argument anObject with the external key, aKey,
-	in the receiver. Answer anObject. Ensure the key is a String."
-
-	| index keyObject |
-	key isEmpty ifTrue: [self error: 'Invalid global name'].
-	keyObject := key asSymbol.
-	index := self findKeyOrNil: keyObject.
-	(self basicAt: index)
-		ifNil: 
-			[self privateAt: index put: (self newAssociation: keyObject value: anObject).
-			self bindingsChanged]
-		ifNotNil: [:assoc | assoc value: anObject].
-	^anObject!
-
-atAll: keys put: newElement
-	"Replace the elements of the receiver at each of the keys in the <collection> 
-	argument, keys, with the <Object> argument, newElement."
-
-	keys do: [:key | super at: key put: newElement].
-	self bindingsChanged!
-
-bindingAt: aString 
-	^self associationAt: aString asSymbol!
-
-bindingAt: aString ifAbsent: aNiladicValuable
-	^self associationAt: aString asSymbol ifAbsent: []!
-
-bindingsChanged
-	BindingReference clearCachedBindings!
-
-bindingsDo: aMonadicValuable
-	self associationsDo: aMonadicValuable!
 
 classAdded: class
 	"Private - The new <Class>, class, has been added to the receiver.
@@ -138,29 +65,14 @@ clearCachedClasses
 	allRoots := allClasses := nil!
 
 declareVariable: aString
-	| key index |
-	key := aString asSymbol.
-	index := self findKeyOrNil: key.
-	^(self basicAt: index) ifNil: [self basicAt: index put: (self newAssociation: key value: nil)]!
+	"For historical reasons the names of variables in the system namespace are always Symbols. This isn't strictly necessary in most cases as in Dolphin Symbols and Strings for the same character sequence are equivalent, but they are not identical and so some code may be broken if we don't stick with Symbols."
+
+	^super declareVariable: aString asSymbol!
 
 developmentSystem
-	"Answer the current instance of <SmalltalkSystem> if installed, otherwise 
-	a <DeafObject>."
+	"Answer the current instance of <SmalltalkSystem> if installed, otherwise a <DeafObject>."
 
-	| devSys |
-	devSys := self at: #SmalltalkSystem ifPresent: [:c | c current].
-	^devSys ifNil: [DeafObject current]!
-
-environment
-	^self!
-
-fullNameOfIdentifier: aString
-	#todo.	"Temporary definition until SystemDictionary is made into a (type of) Namespace"
-	^aString!
-
-fullyQualifiedReferenceFrom: anUndefinedObject
-	#todo.	"Temporary"
-	^BindingReference path: #('Root' 'Smalltalk')!
+	^#{SmalltalkSystem} valueOrNil ifNil: [DeafObject current] ifNotNil: [:devSys | devSys current]!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -168,86 +80,10 @@ getEvents
 
 	^events!
 
-isAtomic
-	"Answer whether or not the receiver is the single unique instance of its class that can
-	represents its value."
-
-	"There can only be one ProcessorScheduler instance."
-
-	^true!
-
-localEnvironment
-	"Private - Answer the nearest <Namespace> scope."
-
-	^self
-!
-
-newAssociation: keyObject value: valueObject
-	^(super newAssociation: keyObject value: valueObject)
-		environment: self;
-		yourself!
-
-postResize: oldMe
-	"Private - This message is sent by the receiver when resizing, after the
-	receiver's elements have been added to a new collection and the
-	receiver has become that collection. It is a chance for the receiver
-	to perform any final state changes needed."
-
-	self setEvents: oldMe getEvents!
-
-printNameOn: aWriteStream relativeTo: anUndefinedObject
-	#todo.	"Temporary definition"
-	aWriteStream nextPutAll: 'Root.Smalltalk'!
-
 removeClass: aClass
-	"Private - Remove aClass from the receiver. Report an error if there are any subclasses or
-	instances of the receiver, or if the class is a standard system class."
-
-	self removeKey: aClass name asSymbol ifAbsent: [].
-	aClass removeFromSuper.
-	"At this point it would be a good idea to make the class become:
-	a special error reporting class"
+	aClass environment removeLocalBindingFor: aClass unqualifiedName.
+	aClass removeFromSuper.	"At this point it would be a good idea to make the class become: a special error reporting class"
 	self classRemoved: aClass!
-
-removeGlobalNamed: aSymbol
-	"Remove the global identified by the <Symbol> argument 
-	from this system dictionary."
-
-	^self removeKey: aSymbol!
-
-removeKey: key ifAbsent: exceptionHandler
-	"Remove the key (and its associated value), from the receiver. If key is
-	not in the receiver, answer the result of evaluating the niladic valuable,
-	exceptionHandler. Otherwise, answer the value named by key.
-	Implementation Note:  	Override in order to accept Symbols/Strings,
-	and to trigger an event so that observers know that the global has been
-	removed. Also #unitialize it if it directly implements #uninitialize and
-	is not a class (or alias for a class)."
-
-	| index element |
-	index := self findKeyOrNil: key.
-	^(element := self basicAt: index) isNil
-		ifTrue: [exceptionHandler value]
-		ifFalse: 
-			[| global isClass |
-			self removeIndex: index.
-			self bindingsChanged.
-			global := element value.
-			isClass := global class isMeta.
-			(isClass not or: [global name ~= key])
-				ifTrue: 
-					[self trigger: #variableRemoved: with: element.
-					"Uninitialize any global which is not a class name alias"
-					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global perform: #uninitialize]].
-			global]!
-
-renameGlobal: oldName to: newName
-	"Rename the global, informing the system of the change."
-
-	| oldSymbol binding |
-	oldSymbol := oldName asSymbol.
-	self noEventsDo: [binding := self changeKey: oldSymbol to: newName asSymbol].
-	self triggerVariableRenamed: binding from: oldSymbol!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -255,11 +91,14 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
-shallowCopy
-	"Answer a copy of the receiver which shares the receiver's instance variables. 
-	Implementation Note: The system dictionary is unique and should not be copied."
-
-	^self!
+shortNameFor: aString in: aNamespace
+	^(aNamespace isNil or: 
+			[aNamespace == self or: 
+					[(self bindingFor: aString)
+						ifNil: [self imports anySatisfy: [:each | each value == aNamespace]]
+						ifNotNil: [:binding | binding environment == aNamespace]]])
+		ifTrue: [aString]
+		ifFalse: [aNamespace fullNameFor: aString]!
 
 triggerVariableRenamed: aVariableBinding from: oldSymbol
 	"Private - Inform observers that a  system global object has been renamed."
@@ -268,40 +107,18 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 		trigger: #variableRenamed:from:
 		with: aVariableBinding
 		with: oldSymbol asQualifiedReference! !
-!SystemDictionary categoriesFor: #_deepCopy:!copying!private! !
-!SystemDictionary categoriesFor: #absoluteNameOfIdentifier:!public! !
-!SystemDictionary categoriesFor: #add:!adding!public! !
-!SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
-!SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
-!SystemDictionary categoriesFor: #allClasses!accessing!public! !
-!SystemDictionary categoriesFor: #allRoots!accessing!public! !
-!SystemDictionary categoriesFor: #associationClass!constants!private! !
-!SystemDictionary categoriesFor: #at:put:!accessing!public! !
-!SystemDictionary categoriesFor: #atAll:put:!accessing!public! !
-!SystemDictionary categoriesFor: #bindingAt:!public! !
-!SystemDictionary categoriesFor: #bindingAt:ifAbsent:!public! !
-!SystemDictionary categoriesFor: #bindingsChanged!adding!private! !
-!SystemDictionary categoriesFor: #bindingsDo:!enumerating!public! !
-!SystemDictionary categoriesFor: #classAdded:!event handling!private! !
-!SystemDictionary categoriesFor: #classRemoved:!private!removing! !
-!SystemDictionary categoriesFor: #classUpdated:!event handling!private! !
-!SystemDictionary categoriesFor: #clearCachedClasses!accessing!private! !
-!SystemDictionary categoriesFor: #declareVariable:!adding!private! !
-!SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
-!SystemDictionary categoriesFor: #environment!public! !
-!SystemDictionary categoriesFor: #fullNameOfIdentifier:!public! !
-!SystemDictionary categoriesFor: #fullyQualifiedReferenceFrom:!public! !
-!SystemDictionary categoriesFor: #getEvents!events!private! !
-!SystemDictionary categoriesFor: #isAtomic!public!testing! !
-!SystemDictionary categoriesFor: #localEnvironment!accessing!private! !
-!SystemDictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!SystemDictionary categoriesFor: #postResize:!adding!private! !
-!SystemDictionary categoriesFor: #printNameOn:relativeTo:!public! !
-!SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
-!SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
-!SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !
-!SystemDictionary categoriesFor: #setEvents:!events!private! !
-!SystemDictionary categoriesFor: #shallowCopy!copying!public! !
-!SystemDictionary categoriesFor: #triggerVariableRenamed:from:!events!private! !
+!Smalltalk class categoriesFor: #allClasses!accessing!public! !
+!Smalltalk class categoriesFor: #allClassesDo:!binding!public! !
+!Smalltalk class categoriesFor: #allRoots!accessing!public! !
+!Smalltalk class categoriesFor: #classAdded:!event handling!private! !
+!Smalltalk class categoriesFor: #classRemoved:!private!removing! !
+!Smalltalk class categoriesFor: #classUpdated:!event handling!private! !
+!Smalltalk class categoriesFor: #clearCachedClasses!private! !
+!Smalltalk class categoriesFor: #declareVariable:!public! !
+!Smalltalk class categoriesFor: #developmentSystem!accessing!public! !
+!Smalltalk class categoriesFor: #getEvents!events!private! !
+!Smalltalk class categoriesFor: #removeClass:!class hierarchy-removing!public! !
+!Smalltalk class categoriesFor: #setEvents:!events!private! !
+!Smalltalk class categoriesFor: #shortNameFor:in:!helpers!private! !
+!Smalltalk class categoriesFor: #triggerVariableRenamed:from:!events!private! !
 

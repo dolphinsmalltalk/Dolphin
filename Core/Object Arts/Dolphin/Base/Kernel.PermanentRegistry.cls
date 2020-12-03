@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ObjectRegistry subclass: #PermanentRegistry
+Kernel.ObjectRegistry subclass: #'Kernel.PermanentRegistry'
 	instanceVariableNames: 'freeHead'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PermanentRegistry guid: (GUID fromString: '{87b4c67e-026e-11d3-9fd7-00a0cc3e4a32}')!
-PermanentRegistry comment: 'PermanentRegistry is a specialized class of <ObjectRegistry>s which maintain a strong reference to registered objects, preventing them from being garbage collected. They are useful where the objects may only be referenced ''externally'' (e.g. COM server objects).
+Kernel.PermanentRegistry guid: (Core.GUID fromString: '{87b4c67e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.PermanentRegistry comment: 'PermanentRegistry is a specialized class of <ObjectRegistry>s which maintain a strong reference to registered objects, preventing them from being garbage collected. They are useful where the objects may only be referenced ''externally'' (e.g. COM server objects).
 
 The superclass instance variable ''registry'' is initialized to an <Array> in instances of this class. The slots of the array are populated either with registered objects, or linked onto a free list by index (the content of the slot being the next free entry). The last element of the <Array> is always zero to mark the end of the free list. When a new object is registered the first slot on the free list is used, unless there are no free slots in which case the array is resized to increase its capacity.
 
@@ -15,8 +15,8 @@ Note: The implementation of the free list in this class using integer indices me
 
 Instance Variables:
 	freeHead		<integer> index of the first free slot in the registry.'!
-!PermanentRegistry categoriesForClass!System-Support! !
-!PermanentRegistry methodsFor!
+!Kernel.PermanentRegistry categoriesForClass!System-Support! !
+!Kernel.PermanentRegistry methodsFor!
 
 addAnsweringIndex: anObject
 	"Register the argument, anObject, answering a unique SmallInteger id which can be used
@@ -53,8 +53,8 @@ removeAtIndex: anInteger
 	(registry basicAt: anInteger) isInteger ifFalse: [
 		registry basicAt: anInteger put: freeHead.
 		freeHead := anInteger]! !
-!PermanentRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!PermanentRegistry categoriesFor: #grow!mutating!private! !
-!PermanentRegistry categoriesFor: #initialize:!initializing!private! !
-!PermanentRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!Kernel.PermanentRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
+!Kernel.PermanentRegistry categoriesFor: #grow!mutating!private! !
+!Kernel.PermanentRegistry categoriesFor: #initialize:!initializing!private! !
+!Kernel.PermanentRegistry categoriesFor: #removeAtIndex:!public!removing! !
 

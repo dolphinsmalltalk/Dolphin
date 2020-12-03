@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBGlobalObjectProxy
+Kernel.STBProxy subclass: #'Kernel.STBGlobalObjectProxy'
 	instanceVariableNames: 'symbol object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBGlobalObjectProxy guid: (GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBGlobalObjectProxy comment: ''!
-!STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
-!STBGlobalObjectProxy methodsFor!
+Kernel.STBGlobalObjectProxy guid: (Core.GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBGlobalObjectProxy comment: ''!
+!Kernel.STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBGlobalObjectProxy methodsFor!
 
 object: anObject
 	"Private - Set the receiver's object inst var."
@@ -46,14 +46,15 @@ symbol: aSymbol
 value
 	"Install object as a global in the Smalltalk System Dictionary and answer it."
 
+	#namespaceToDo.	"Need to place with qualified name here and current untested"
 	^Smalltalk at: symbol put: object! !
-!STBGlobalObjectProxy categoriesFor: #object:!accessing!private! !
-!STBGlobalObjectProxy categoriesFor: #stbFixup:at:!accessing!public! !
-!STBGlobalObjectProxy categoriesFor: #stbSaveOn:!binary filing!public! !
-!STBGlobalObjectProxy categoriesFor: #symbol:!accessing!private! !
-!STBGlobalObjectProxy categoriesFor: #value!converting!public! !
+!Kernel.STBGlobalObjectProxy categoriesFor: #object:!accessing!private! !
+!Kernel.STBGlobalObjectProxy categoriesFor: #stbFixup:at:!accessing!public! !
+!Kernel.STBGlobalObjectProxy categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.STBGlobalObjectProxy categoriesFor: #symbol:!accessing!private! !
+!Kernel.STBGlobalObjectProxy categoriesFor: #value!converting!public! !
 
-!STBGlobalObjectProxy class methodsFor!
+!Kernel.STBGlobalObjectProxy class methodsFor!
 
 for: anObject name: aSymbol
 	"Answer an instance of the receiver representing the global anObject
@@ -63,5 +64,5 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
-!STBGlobalObjectProxy class categoriesFor: #for:name:!instance creation!public! !
+!Kernel.STBGlobalObjectProxy class categoriesFor: #for:name:!instance creation!public! !
 

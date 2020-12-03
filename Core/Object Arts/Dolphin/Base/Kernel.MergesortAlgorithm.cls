@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PluggableSortAlgorithm subclass: #MergesortAlgorithm
+Kernel.PluggableSortAlgorithm subclass: #'Kernel.MergesortAlgorithm'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MergesortAlgorithm guid: (GUID fromString: '{cc7f696a-5bc0-4ad0-a342-d93af7cca0a3}')!
-MergesortAlgorithm comment: 'MergesortAlgorithm implements the Mergesort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
+Kernel.MergesortAlgorithm guid: (Core.GUID fromString: '{cc7f696a-5bc0-4ad0-a342-d93af7cca0a3}')!
+Kernel.MergesortAlgorithm comment: 'MergesortAlgorithm implements the Mergesort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 
 Mergesort is a simple, recursive, divide-and-conquer sort that works by dividing the range to sort in half, recursively sorting the two halves, and then merging the two halves. It requires auxiliary storage of the same size as the range to be sorted.
 
 Mergesort is a fast O(n log n) algorithm with no worst cases that has the additional advantage of preserving the existing positions of sort-equal elements (i.e. it is stable). Although theoretically slower than Quicksort, in Smalltalk there is not a great deal of difference because Quicksort will typically perform more comparisons, and the speed of evaluation of the comparison block can become dominant in all but simple cases. Mergesort''s only significant disadvantage is that it requires auxiliary storage of a size sufficient to hold the sorted interval, typically doubling a collections space requirement while it is being sorted.'!
-!MergesortAlgorithm categoriesForClass!Kernel-Objects! !
-!MergesortAlgorithm methodsFor!
+!Kernel.MergesortAlgorithm categoriesForClass!Kernel-Objects! !
+!Kernel.MergesortAlgorithm methodsFor!
 
 merge: anObject aux: anArray from: startInteger to: stopInteger pivot: midInteger 
 	| i j k a cmp |
@@ -35,16 +35,16 @@ merge: anObject aux: anArray from: startInteger to: stopInteger pivot: midIntege
 	"Copy the merged data back into the source object"
 	1 to: k do: [:each | anObject basicAt: startInteger + each - 1 put: (anArray at: each)]!
 
-sort: anObject from: startInteger to: stopInteger 
+sort: anObject from: startInteger to: stopInteger
 	"Sort elements in the range of indexable instance variables of the <Object> argument
 	(usually a <SequenceableCollection>) from startInteger through stopInteger to be
 	non-descending according to the receiver's sortBlock."
 
-	self 
+	self
 		sort: anObject
 		from: startInteger
 		to: stopInteger
-		aux: (Array new: (stopInteger - startInteger) + 1)!
+		aux: (Array new: stopInteger - startInteger + 1)!
 
 sort: anObject from: startInteger to: stopInteger aux: anArray 
 	"Private - "
@@ -83,7 +83,7 @@ sort: anObject from: startInteger to: stopInteger aux: anArray
 		from: startInteger
 		to: stopInteger
 		pivot: mid! !
-!MergesortAlgorithm categoriesFor: #merge:aux:from:to:pivot:!operations!private! !
-!MergesortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!MergesortAlgorithm categoriesFor: #sort:from:to:aux:!operations!private! !
+!Kernel.MergesortAlgorithm categoriesFor: #merge:aux:from:to:pivot:!operations!private! !
+!Kernel.MergesortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!Kernel.MergesortAlgorithm categoriesFor: #sort:from:to:aux:!operations!private! !
 

@@ -1,26 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Behavior subclass: #ClassDescription
+Core.Behavior subclass: #'Core.ClassDescription'
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassDescription guid: (GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassDescription isAbstract: true!
-ClassDescription comment: 'ClassDescription is an abstract class which adds descriptive information such as instance variable names and method categories to Behavior. This additional state and behaviour is generally not required or used by the VM, but is important for the development environment, the compiler in particular.
+Core.ClassDescription guid: (Core.GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.ClassDescription isNonInstantiable: true!
+Core.ClassDescription comment: 'ClassDescription is an abstract class which adds descriptive information such as instance variable names and method categories to Behavior. This additional state and behaviour is generally not required or used by the VM, but is important for the development environment, the compiler in particular.
 
 Instance Variables:
 	instanceVariables		<String>. A space separated list of instance variable names.
 	methodsCatalogue		<IdentityDictionary> mapping <MethodCategory>s to <Array>s of <Symbol>
 	protocols			<Set> of <MethodProtocol>s implemented by (sub-)instances.'!
-!ClassDescription categoriesForClass!Kernel-Classes! !
-!ClassDescription methodsFor!
+!Core.ClassDescription categoriesForClass!Kernel-Classes! !
+!Core.ClassDescription methodsFor!
 
 <= aClassDescription
-	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block."
+	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block. We use a case sensitive comparison for stability. The class name is the primary sort order, but for equal names the namespace is then used."
 
-	^self name <=> aClassDescription name <= 0!
+	| cmp |
+	cmp := self name <==> aClassDescription name.
+	^cmp == 0 ifTrue: [self fullName <= aClassDescription fullName] ifFalse: [cmp < 0]!
 
 >> aSymbol
 	^self compiledMethodAt: aSymbol!
@@ -48,26 +50,6 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
 
-addSelector: aSymbol withMethod: aCompiledMethod
-	"Private - Add the message selector, aSymbol, with the corresponding
-	CompiledMethod, to the receiver's method dictionary.
-	Implementation Note: Clears down the VM method cache in case a previous 
-	version of the method is cached, or it overrides a superclass method."
-
-	| selector |
-	selector := aSymbol asSymbol.
-	aCompiledMethod
-		methodClass: self;
-		selector: selector.
-	(methodDictionary ifNil: [methodDictionary := MethodDictionary new]) at: selector
-		put: aCompiledMethod.
-
-	"One might expect to be able to trigger a #methodAdded: event here,
-	 to be symetrical with Behavior>>removeSelector:. However, the 
-	 method source is not yet set up (logged) so in fact we have to do
-	 this later."
-	self flushMethodCache!
-
 addSharedPool: aPoolDictionary
 	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the
 	receiver, but lower in precedence than any previously added pools. It is an error if the
@@ -87,7 +69,7 @@ allClassVarNames
 
 	| answer |
 	answer := Set new.
-	self withAllSuperclassesDo: [:c | answer addAll: c classVarNames].
+	self withAllSuperclassesDo: [:c | answer addAll: c classBindingNames].
 	^answer!
 
 allGetters
@@ -126,7 +108,7 @@ allProtocols
 
 	| answer |
 	answer := IdentitySet new.
-	self withAllSuperclassesDo: [ :c | answer addAll: c protocols].
+	self withAllSuperclassesDo: [:c | answer addAll: c protocols].
 	^answer!
 
 allSelectors
@@ -151,10 +133,18 @@ allSubclasses
 	^answer!
 
 allSubclassesBreadthFirstDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice)."
+	"Evaluate the <monadicValuable> argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice).
+	We also enumerate the subclasses in name order."
 
-	self subclassesDo: aMonadicValuable.
-	self subclassesDo: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]!
+	| subbies size |
+	subbies := self subclasses.
+	size := subbies size.
+	"~70% of classes are leaves"
+	size == 0 ifTrue: [^self].
+	"~40% of non-leaf classes have only one subclass"
+	size > 1 ifTrue: [subbies := (subbies copyFrom: 1 to: size) sort].
+	subbies do: aMonadicValuable.
+	subbies do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]!
 
 allSubclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses using a pre-order depth first traversal."
@@ -188,22 +178,23 @@ asQualifiedReference
 
 	^self instanceClass fullyQualifiedReference!
 
-bindingAt: aString
-	"Answer a variable binding for the named variable directly in the scope of this class (i.e. a class variable). 
-	If there is no such variable, then raise an error."
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
 
-	^self classPool associationAt: aString!
+	^Smalltalk!
 
-bindingAt: aString ifAbsent: aNiladicValuable
-	"Answer a variable binding for the named variable directly in the scope of this class (i.e. a class variable). 
-	If there is no such variable, then raise an error."
+bindingNames
+	"Answer a Set of the the names of all the bindings in the receiver. The answer will include constant names, if any."
 
-	^self classPool associationAt: aString ifAbsent: aNiladicValuable!
+	^self classPool keys!
 
 bindings
 	"Answer the receiver's localled defined <VariableBinding>s."
 
 	^self classPool associations!
+
+bindingsChanged
+	BindingReference clearCachedBindings!
 
 bindingsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
@@ -267,6 +258,11 @@ changeIndex
 changeIndexValue: aBlock 
 	"Ignored"!
 
+classBindingNames
+	"Answer a <Set> of <String>s, being the names of all the class variables of the receiver, including constants."
+
+	^self subclassResponsibility!
+
 classCategoryClass
 	"Private - Answer the class of object used to categorize classes.
 	Answer nil if the category system is not present."
@@ -277,6 +273,11 @@ classPool
 	"Answer the dictionary of class variables."
 
 	^self subclassResponsibility!
+
+classVariableNames
+	"Answer a <collection> of <String>s, being the names of the receiver's class variables (not including class constants)."
+
+	^self classVariables collect: [:each | each key]!
 
 classVariables
 	"Answer a <collection> of <VariableBindings>s, being the class variables of the receiver, but not including class constants."
@@ -291,11 +292,6 @@ classVariableString
 	self classPool keys asSortedCollection do: [:key | aStream nextPutAll: key]
 		separatedBy: [aStream space].
 	^aStream contents!
-
-classVarNames
-	"Answer a <Set> of <String>s, being the class variable names of the receiver."
-
-	^self subclassResponsibility!
 
 comment
 	"Answer the class comment for the receiver"
@@ -408,9 +404,9 @@ conformsToProtocol: protocol
 !
 
 defaultIconName
-	"Answer a filename to use for an icon of this class."
+	"Answer a filename to use to find an icon for this class."
 
-	^File composeStem: self name extension: '.ico'.!
+	^File composeStem: self name extension: '.ico'!
 
 defaultResourceIcon
 	"Answer a suitable default icon resource to use for this class. Note that this method differs
@@ -428,14 +424,16 @@ definition
 	receiver."
 
 	| strm |
-	strm := String smalltalkWriteStream: 256.
+	strm := (WriteStream on: (Utf8String new: 256))
+				locale: SmalltalkLocale.Hex;
+				yourself.
 	self printDefinitionOn: strm.
 	^strm contents!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: self name!
+	self printFullNameOn: aPuttableStream!
 
 environment
 	"Answer the receiver's name space."
@@ -445,18 +443,16 @@ environment
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	#todo.	"Temporary definition."
-	^(BindingReference isQualifiedName: aString)
-		ifTrue: [self environment resolveBindingPath: ($. split: aString)]
-		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
+	^(self instanceClass resolvePathString: aString) ifNotNil: [:binding | binding targetVariable]!
 
 fullName
-	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path from (but not including) Smalltalk."
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
+	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^self subclassResponsibility!
+	^'a subclass of ' , (superclass ifNil: ['nil'] ifNotNil: [superclass fullName])!
 
 fullyQualifiedReference
-	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference."
 
 	^self subclassResponsibility!
 
@@ -465,6 +461,11 @@ hasCompilationFailures
 
 	^(self methodDictionary anySatisfy: [:each | each isCompilationFailure])
 		or: [self subclasses anySatisfy: [:each | each hasCompilationFailures]]!
+
+hierarchyBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses. The imported namespaces and enclosing environment are not searched. If there is no such variable defined in the hierarchy answer nil."
+
+	^(self localBindingFor: aString) ifNil: [super hierarchyBindingFor: aString]!
 
 importedNamespacesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
@@ -475,6 +476,9 @@ imports
 	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
 
 	^self subclassResponsibility!
+
+imports: anArray
+	self subclassResponsibility!
 
 includesCategory: category
 	"Answer whether the receiver includes the named category."
@@ -528,7 +532,7 @@ instanceVariableString
 	| aStream |
 	instanceVariables isNil ifTrue: [^''].
 	instanceVariables isString ifTrue: [^instanceVariables].
-	aStream := String smalltalkWriteStream: 64.
+	aStream := String smalltalkWriteStream: instanceVariables size * 11.
 	instanceVariables do: [:instVarName | aStream nextPutAll: instVarName] separatedBy: [aStream space].
 	^aStream contents!
 
@@ -538,13 +542,17 @@ instanceVariableString: aString
 	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
 instVarNames
-	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
-	names."
+	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
 
 	instanceVariables isNil ifTrue: [^#()].
 	^instanceVariables isString
 		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
 		ifFalse: [instanceVariables]!
+
+isAnonymous
+	"Answer whether this is an anonymous (unbound) class."
+
+	^self subclassResponsibility!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -558,10 +566,15 @@ isChanged: aBoolean
 
 	"When not running in a development system, changes are not tracked"!
 
+localBindingFor: aString
+	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
+
+	^self subclassResponsibility!
+
 localEnvironment
 	"Private - Answer the nearest <Namespace> scope."
 
-	^self environment
+	^self instanceClass
 !
 
 logDefinition
@@ -639,7 +652,7 @@ methodsFor
 	"Answer a chunk reader to read and compile method chunks for the receiver.
 	New methods are classified into the default category (''unclassified'')."
 
-	^ChunkReader 
+	^ChunkReader
 		do: [:chunkString | self compile: chunkString]
 		inContext: self
 		atEnd: []!
@@ -652,16 +665,16 @@ name
 owningPackage
 	^nil!
 
+packageManager
+	^self subclassResponsibility!
+
 printDefinitionOn: target
 	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
 
 	^self subclassResponsibility!
 
-printOn: aStream
-	"Append the name of the receiver to aStream."
-
-	aStream nextPutAll: self name.
-!
+printFullNameOn: aPuttableStream
+	self subclassResponsibility!
 
 protocolNames
 	"Private - Answer a <collection> of <Symbol>s, being the names of the
@@ -676,7 +689,8 @@ protocols
 
 	^protocols isNil
 		ifTrue: [IdentitySet new]
-		ifFalse: [ | mpc |
+		ifFalse: 
+			[| mpc |
 			mpc := self methodProtocolClass.
 			protocols collect: [:p | mpc name: p]]!
 
@@ -768,7 +782,7 @@ removeSelector: aSelector fromCategory: category
 			sels isEmpty ifTrue: [catalogue removeKey: category].
 			self methodsCatalogue: catalogue]!
 
-removeSelector: aSymbol ifAbsent: aBlock 
+removeSelector: aSymbol ifAbsent: aBlock
 	"Remove the method with selector, selector, from the receiver's method dictionary, answering
 	the removed method. If it is not in the receiver's method dictionary, then answer the 
 	result of evaluating aBlock."
@@ -776,12 +790,12 @@ removeSelector: aSymbol ifAbsent: aBlock
 	| method |
 	method := super removeSelector: aSymbol ifAbsent: [^aBlock value].
 	self logRemoveSelector: aSymbol.
-	(self canUnderstand: aSymbol) 
+	(self canUnderstand: aSymbol)
 		ifFalse: [self removeUnsupportedProtocols: IdentitySet new selector: aSymbol].
 	self removeMethodFromNonVirtualCategories: method.
 	^method!
 
-removeSelectors: aCollection 
+removeSelectors: aCollection
 	"Remove each of the <Symbol> selectors in the <collection> argument from the receiver's
 	message dictionary. If any of the selectors are not present, they are simply ignored. Answer
 	a <collection> of the methods which were actually removed."
@@ -790,8 +804,8 @@ removeSelectors: aCollection
 	methods := super removeSelectors: aCollection.
 	self logRemoveSelectors: aCollection.
 	aCollection do: 
-			[:each | 
-			(self canUnderstand: each) 
+			[:each |
+			(self canUnderstand: each)
 				ifFalse: [self removeUnsupportedProtocols: IdentitySet new selector: each]].
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
@@ -825,12 +839,12 @@ resourceIdentifiers
 
 resourceIdentifiersDo: aMonadicValuable
 	self
-		resourceSelectorsDo: [:each | aMonadicValuable value: (ResourceIdentifier class: self selector: each)]!
+		resourceSelectorsDo: [:each | aMonadicValuable value: (UI.ResourceIdentifier class: self selector: each)]!
 
 resourceNames
 	| names |
 	names := OrderedCollection new.
-	self resourceSelectorsDo: [:each | names add: (ResourceIdentifier nameFromSelector: each)].
+	self resourceSelectorsDo: [:each | names add: (UI.ResourceIdentifier nameFromSelector: each)].
 	^names asSortedCollection!
 
 resources
@@ -841,7 +855,7 @@ resources
 
 resourceSelectorsDo: aMonadicValuable
 	| prefix |
-	prefix := ResourceIdentifier.SelectorPrefix.
+	prefix := UI.ResourceIdentifier.SelectorPrefix.
 	self instanceClass class
 		selectorsDo: [:each | (each beginsWith: prefix) ifTrue: [aMonadicValuable value: each]]!
 
@@ -865,6 +879,11 @@ setShapeFlags: anIntegerMask to: aBoolean
 	super setShapeFlags: anIntegerMask to: aBoolean.
 	oldSpec = instanceSpec ifFalse: [self isChanged: true]!
 
+shortName
+	"Answer the shorted <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+
+	^self subclassResponsibility!
+
 sourceManager
 	"Answer the receiver's source manager. Answer a DeafObject if none is available."
 
@@ -884,6 +903,12 @@ storeClassCategories
 	"Private - Record the categories of the receiver to the change log."
 
 	"Ignored in the absence of the development system"!
+
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	self printFullNameOn: aStream!
 
 subclasses
 	"Answer a <collection> containing the receiver's immediate subclasses."
@@ -910,6 +935,12 @@ suggestedPrivacyFor: aCompiledMethod
 	^#{MethodCategorizationPolicy}
 		ifDefined: [:policy | policy default suggestedPrivacyFor: aCompiledMethod]!
 
+variableAdded: aVariableBinding
+	self bindingsChanged!
+
+variableRemoved: aVariableBinding
+	self bindingsChanged!
+
 whichCategoriesIncludeSelector: aSelector
 	"Private - Answer a <collection> of the 'real' (i.e. non-pseudo or virtual) categories in the 
 	receiver's method catalogue which include the specified selector."
@@ -925,14 +956,13 @@ whichClassDefinesClassVar: aString
 	"Answer which <Class> in the receiver's inheritance chain, including the receiver,
 	defines the named class variable."
 
-	^self whichClassSatisfies: [:each | each classVarNames includes: aString]!
+	^self whichClassSatisfies: [:each | each classBindingNames includes: aString]!
 
-whichNonVirtualCategoriesIncludeSelector: aSelector 
+whichNonVirtualCategoriesIncludeSelector: aSelector
 	| answer |
 	answer := IdentitySet new: 5.
-	self methodsCatalogue keysAndValuesDo: 
-			[:eachCategory :eachSelectors | 
-			(eachSelectors identityIncludes: aSelector) ifTrue: [answer add: eachCategory]].
+	self methodsCatalogue
+		keysAndValuesDo: [:eachCategory :eachSelectors | (eachSelectors identityIncludes: aSelector) ifTrue: [answer add: eachCategory]].
 	^answer!
 
 withAllSubclasses
@@ -947,123 +977,133 @@ withAllSubclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubclassesDo: aMonadicValuable! !
-!ClassDescription categoriesFor: #<=!comparing!public! !
-!ClassDescription categoriesFor: #>>!accessing!public! !
-!ClassDescription categoriesFor: #addInstVarName:!class hierarchy-mutating!instance variables!public! !
-!ClassDescription categoriesFor: #addProtocol:!private!protocols! !
-!ClassDescription categoriesFor: #addSelector:withMethod:!methods-accessing!private! !
-!ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
-!ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
-!ClassDescription categoriesFor: #allGetters!accessing!private! !
-!ClassDescription categoriesFor: #allInstances!instances!public! !
-!ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
-!ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
-!ClassDescription categoriesFor: #allProtocols!protocols!public! !
-!ClassDescription categoriesFor: #allSelectors!methods-accessing!public! !
-!ClassDescription categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
-!ClassDescription categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
-!ClassDescription categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
-!ClassDescription categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
-!ClassDescription categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
-!ClassDescription categoriesFor: #allSubinstances!instances!public! !
-!ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
-!ClassDescription categoriesFor: #bindingAt:!binding!public! !
-!ClassDescription categoriesFor: #bindingAt:ifAbsent:!binding!public! !
-!ClassDescription categoriesFor: #bindings!accessing!public! !
-!ClassDescription categoriesFor: #bindingsDo:!enumerating!public! !
-!ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
-!ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
-!ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
-!ClassDescription categoriesFor: #changeIndex!accessing!private! !
-!ClassDescription categoriesFor: #changeIndexValue:!accessing!private! !
-!ClassDescription categoriesFor: #classCategoryClass!constants!private! !
-!ClassDescription categoriesFor: #classPool!class variables!public! !
-!ClassDescription categoriesFor: #classVariables!class variables!public! !
-!ClassDescription categoriesFor: #classVariableString!accessing!public! !
-!ClassDescription categoriesFor: #classVarNames!class variables!public! !
-!ClassDescription categoriesFor: #comment!accessing!public! !
-!ClassDescription categoriesFor: #comment:!accessing!public! !
-!ClassDescription categoriesFor: #compile:categories:!compiling!development!public! !
-!ClassDescription categoriesFor: #compile:categories:package:!compiling!development!public! !
-!ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
-!ClassDescription categoriesFor: #compile:classified:!compiling!public! !
-!ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
-!ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
-!ClassDescription categoriesFor: #defaultIconName!constants!public! !
-!ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
-!ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
-!ClassDescription categoriesFor: #definition!public!source filing-class definition! !
-!ClassDescription categoriesFor: #displayOn:!displaying!public! !
-!ClassDescription categoriesFor: #environment!accessing!public! !
-!ClassDescription categoriesFor: #fullBindingFor:!binding!public! !
-!ClassDescription categoriesFor: #fullName!accessing!public! !
-!ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
-!ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
-!ClassDescription categoriesFor: #importedNamespacesDo:!pool variables!public! !
-!ClassDescription categoriesFor: #imports!pool variables!public! !
-!ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
-!ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
-!ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
-!ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
-!ClassDescription categoriesFor: #instanceClass!accessing!public! !
-!ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
-!ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
-!ClassDescription categoriesFor: #instVarNames!instance variables!public! !
-!ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
-!ClassDescription categoriesFor: #isChanged:!public!source filing! !
-!ClassDescription categoriesFor: #localEnvironment!accessing!private! !
-!ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
-!ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
-!ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !
-!ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
-!ClassDescription categoriesFor: #methodChanged:!helpers!private! !
-!ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
-!ClassDescription categoriesFor: #methodProtocolClass!constants!private! !
-!ClassDescription categoriesFor: #methods!public!source filing-methods! !
-!ClassDescription categoriesFor: #methodsCatalogue!categories-accessing!private! !
-!ClassDescription categoriesFor: #methodsCatalogue:!categories-accessing!private! !
-!ClassDescription categoriesFor: #methodsFor!public!source filing-methods! !
-!ClassDescription categoriesFor: #name!accessing!public! !
-!ClassDescription categoriesFor: #owningPackage!accessing!public! !
-!ClassDescription categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!ClassDescription categoriesFor: #printOn:!printing!public! !
-!ClassDescription categoriesFor: #protocolNames!private!protocols! !
-!ClassDescription categoriesFor: #protocols!private!protocols! !
-!ClassDescription categoriesFor: #protocols:!private!protocols! !
-!ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
-!ClassDescription categoriesFor: #recompileAll!compiling!development!public! !
-!ClassDescription categoriesFor: #recompileAllReferencesToLiteral:!development!private! !
-!ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
-!ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
-!ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !
-!ClassDescription categoriesFor: #removeProtocol:!private!protocols! !
-!ClassDescription categoriesFor: #removeProtocol:ifAbsent:!private!protocols! !
-!ClassDescription categoriesFor: #removeSelector:fromCategory:!categories-removing!private! !
-!ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
-!ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
-!ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
-!ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
-!ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
-!ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !
-!ClassDescription categoriesFor: #resourceNames!accessing!public! !
-!ClassDescription categoriesFor: #resources!accessing!public! !
-!ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
-!ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
-!ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
-!ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
-!ClassDescription categoriesFor: #sourceManager!accessing!public! !
-!ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !
-!ClassDescription categoriesFor: #subclasses!class hierarchy-accessing!public! !
-!ClassDescription categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
-!ClassDescription categoriesFor: #subclassInstVarNames!instance variables!public! !
-!ClassDescription categoriesFor: #suggestedPrivacyFor:!compiling!private! !
-!ClassDescription categoriesFor: #whichCategoriesIncludeSelector:!categories-accessing!private! !
-!ClassDescription categoriesFor: #whichClassDefinesClassVar:!class variables!public! !
-!ClassDescription categoriesFor: #whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
-!ClassDescription categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
-!ClassDescription categoriesFor: #withAllSubclassesDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #<=!comparing!public! !
+!Core.ClassDescription categoriesFor: #>>!accessing!public! !
+!Core.ClassDescription categoriesFor: #addInstVarName:!class hierarchy-mutating!instance variables!public! !
+!Core.ClassDescription categoriesFor: #addProtocol:!private!protocols! !
+!Core.ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
+!Core.ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
+!Core.ClassDescription categoriesFor: #allGetters!accessing!private! !
+!Core.ClassDescription categoriesFor: #allInstances!instances!public! !
+!Core.ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
+!Core.ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #allProtocols!protocols!public! !
+!Core.ClassDescription categoriesFor: #allSelectors!methods-accessing!public! !
+!Core.ClassDescription categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
+!Core.ClassDescription categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
+!Core.ClassDescription categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
+!Core.ClassDescription categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
+!Core.ClassDescription categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
+!Core.ClassDescription categoriesFor: #allSubinstances!instances!public! !
+!Core.ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
+!Core.ClassDescription categoriesFor: #baseEnvironment!constants!private! !
+!Core.ClassDescription categoriesFor: #bindingNames!bindings!public! !
+!Core.ClassDescription categoriesFor: #bindings!accessing!public! !
+!Core.ClassDescription categoriesFor: #bindingsChanged!adding!private! !
+!Core.ClassDescription categoriesFor: #bindingsDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
+!Core.ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
+!Core.ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
+!Core.ClassDescription categoriesFor: #changeIndex!accessing!private! !
+!Core.ClassDescription categoriesFor: #changeIndexValue:!accessing!private! !
+!Core.ClassDescription categoriesFor: #classBindingNames!class variables!public! !
+!Core.ClassDescription categoriesFor: #classCategoryClass!constants!private! !
+!Core.ClassDescription categoriesFor: #classPool!class variables!public! !
+!Core.ClassDescription categoriesFor: #classVariableNames!class variables!public! !
+!Core.ClassDescription categoriesFor: #classVariables!class variables!public! !
+!Core.ClassDescription categoriesFor: #classVariableString!accessing!public! !
+!Core.ClassDescription categoriesFor: #comment!accessing!public! !
+!Core.ClassDescription categoriesFor: #comment:!accessing!public! !
+!Core.ClassDescription categoriesFor: #compile:categories:!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #compile:categories:package:!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #compile:classified:!compiling!public! !
+!Core.ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
+!Core.ClassDescription categoriesFor: #defaultIconName!constants!public! !
+!Core.ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
+!Core.ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
+!Core.ClassDescription categoriesFor: #definition!public!source filing-class definition! !
+!Core.ClassDescription categoriesFor: #displayOn:!displaying!public! !
+!Core.ClassDescription categoriesFor: #environment!accessing!public! !
+!Core.ClassDescription categoriesFor: #fullBindingFor:!binding!public! !
+!Core.ClassDescription categoriesFor: #fullName!accessing!namespaces!public! !
+!Core.ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
+!Core.ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
+!Core.ClassDescription categoriesFor: #hierarchyBindingFor:!binding!public! !
+!Core.ClassDescription categoriesFor: #importedNamespacesDo:!pool variables!public! !
+!Core.ClassDescription categoriesFor: #imports!pool variables!public! !
+!Core.ClassDescription categoriesFor: #imports:!pool variables!public! !
+!Core.ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
+!Core.ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
+!Core.ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
+!Core.ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
+!Core.ClassDescription categoriesFor: #instanceClass!accessing!public! !
+!Core.ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
+!Core.ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
+!Core.ClassDescription categoriesFor: #instVarNames!instance variables!public! !
+!Core.ClassDescription categoriesFor: #isAnonymous!public!testing! !
+!Core.ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
+!Core.ClassDescription categoriesFor: #isChanged:!public!source filing! !
+!Core.ClassDescription categoriesFor: #localBindingFor:!binding!public! !
+!Core.ClassDescription categoriesFor: #localEnvironment!accessing!private! !
+!Core.ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
+!Core.ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
+!Core.ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !
+!Core.ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
+!Core.ClassDescription categoriesFor: #methodChanged:!helpers!private! !
+!Core.ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
+!Core.ClassDescription categoriesFor: #methodProtocolClass!constants!private! !
+!Core.ClassDescription categoriesFor: #methods!public!source filing-methods! !
+!Core.ClassDescription categoriesFor: #methodsCatalogue!categories-accessing!private! !
+!Core.ClassDescription categoriesFor: #methodsCatalogue:!categories-accessing!private! !
+!Core.ClassDescription categoriesFor: #methodsFor!public!source filing-methods! !
+!Core.ClassDescription categoriesFor: #name!accessing!public! !
+!Core.ClassDescription categoriesFor: #owningPackage!accessing!public! !
+!Core.ClassDescription categoriesFor: #packageManager!development!public!source filing! !
+!Core.ClassDescription categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
+!Core.ClassDescription categoriesFor: #printFullNameOn:!helpers!private! !
+!Core.ClassDescription categoriesFor: #protocolNames!private!protocols! !
+!Core.ClassDescription categoriesFor: #protocols!private!protocols! !
+!Core.ClassDescription categoriesFor: #protocols:!private!protocols! !
+!Core.ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
+!Core.ClassDescription categoriesFor: #recompileAll!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #recompileAllReferencesToLiteral:!development!private! !
+!Core.ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
+!Core.ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
+!Core.ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !
+!Core.ClassDescription categoriesFor: #removeProtocol:!private!protocols! !
+!Core.ClassDescription categoriesFor: #removeProtocol:ifAbsent:!private!protocols! !
+!Core.ClassDescription categoriesFor: #removeSelector:fromCategory:!categories-removing!private! !
+!Core.ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
+!Core.ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
+!Core.ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
+!Core.ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
+!Core.ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
+!Core.ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #resourceNames!accessing!public! !
+!Core.ClassDescription categoriesFor: #resources!accessing!public! !
+!Core.ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
+!Core.ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
+!Core.ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
+!Core.ClassDescription categoriesFor: #shortName!accessing!public! !
+!Core.ClassDescription categoriesFor: #sourceManager!accessing!public! !
+!Core.ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Core.ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !
+!Core.ClassDescription categoriesFor: #storeOn:!printing!public! !
+!Core.ClassDescription categoriesFor: #subclasses!class hierarchy-accessing!public! !
+!Core.ClassDescription categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
+!Core.ClassDescription categoriesFor: #subclassInstVarNames!instance variables!public! !
+!Core.ClassDescription categoriesFor: #suggestedPrivacyFor:!compiling!private! !
+!Core.ClassDescription categoriesFor: #variableAdded:!class variables!private! !
+!Core.ClassDescription categoriesFor: #variableRemoved:!class variables!private! !
+!Core.ClassDescription categoriesFor: #whichCategoriesIncludeSelector:!categories-accessing!private! !
+!Core.ClassDescription categoriesFor: #whichClassDefinesClassVar:!class variables!public! !
+!Core.ClassDescription categoriesFor: #whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
+!Core.ClassDescription categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
+!Core.ClassDescription categoriesFor: #withAllSubclassesDo:!enumerating!public! !
 
-ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
-ClassDescription methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!
+Core.ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
+Core.ClassDescription methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!
 

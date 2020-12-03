@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IdentityDictionary variableSubclass: #MethodDictionary
+Core.IdentityDictionary variableSubclass: #'Kernel.MethodDictionary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodDictionary guid: (GUID fromString: '{87b4c530-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodDictionary comment: 'MethodDictionary is a specialized form of <IdentityDictionary> designed for ease and speed of access by the execution machinery. As the name implies, method dictionaries are used to map method selectors to the corresponding compiled method in a particular class.
+Kernel.MethodDictionary guid: (Core.GUID fromString: '{87b4c530-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.MethodDictionary comment: 'MethodDictionary is a specialized form of <IdentityDictionary> designed for ease and speed of access by the execution machinery. As the name implies, method dictionaries are used to map method selectors to the corresponding compiled method in a particular class.
 
 The primary difference from an ordinary identity dictionary in the current implementation is that method dictionaries are a power of 2 in size to speed up the masking of hash values to the permissible range during method lookup.
 
 You should not rely on the implementation details of this class, and nor should you change them or the instance shape.'!
-!MethodDictionary categoriesForClass!Collections-Unordered!Kernel-Support! !
-!MethodDictionary methodsFor!
+!Kernel.MethodDictionary categoriesForClass!Collections-Unordered!Kernel-Support! !
+!Kernel.MethodDictionary methodsFor!
 
 findKeyOrNil: anObject
 	"Private - Answer the index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes."
@@ -65,12 +65,12 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
-!MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!MethodDictionary categoriesFor: #hash:max:!private!searching! !
-!MethodDictionary categoriesFor: #privateAt:put:!accessing!private! !
-!MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!Kernel.MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
+!Kernel.MethodDictionary categoriesFor: #hash:max:!private!searching! !
+!Kernel.MethodDictionary categoriesFor: #privateAt:put:!accessing!private! !
+!Kernel.MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 
-!MethodDictionary class methodsFor!
+!Kernel.MethodDictionary class methodsFor!
 
 defaultCapacity
 	^1!
@@ -83,6 +83,6 @@ sizeFor: anInteger
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
 	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
-!MethodDictionary class categoriesFor: #defaultCapacity!constants!private! !
-!MethodDictionary class categoriesFor: #sizeFor:!instance creation!private! !
+!Kernel.MethodDictionary class categoriesFor: #defaultCapacity!constants!private! !
+!Kernel.MethodDictionary class categoriesFor: #sizeFor:!instance creation!private! !
 

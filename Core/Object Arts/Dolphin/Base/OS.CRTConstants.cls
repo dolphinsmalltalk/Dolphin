@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #CRTConstants
+Kernel.SharedPool subclass: #'OS.CRTConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -80,6 +80,7 @@ SharedPool subclass: #CRTConstants
 		'SEEK_END' -> 16r2.
 		'SEEK_SET' -> 16r0
 	}!
-CRTConstants guid: (GUID fromString: '{25d19e14-d8b9-4e6b-b84b-bc169d311bcc}')!
-CRTConstants comment: ''!
-!CRTConstants categoriesForClass!Unclassified! !
+OS.CRTConstants guid: (Core.GUID fromString: '{25d19e14-d8b9-4e6b-b84b-bc169d311bcc}')!
+OS.CRTConstants isNonInstantiable: true!
+OS.CRTConstants comment: ''!
+!OS.CRTConstants categoriesForClass!Unclassified! !

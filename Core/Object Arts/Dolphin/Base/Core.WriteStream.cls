@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PositionableStream subclass: #WriteStream
+Core.PositionableStream subclass: #'Core.WriteStream'
 	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WriteStream guid: (GUID fromString: '{87b4c6fb-026e-11d3-9fd7-00a0cc3e4a32}')!
-WriteStream comment: 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
+Core.WriteStream guid: (Core.GUID fromString: '{87b4c6fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WriteStream comment: 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
 
 Instance Variables:
 	writeLimit		<Integer>. Current maximum position up to which the stream may be positioned for writing.'!
-!WriteStream categoriesForClass!Collections-Streams! !
-!WriteStream methodsFor!
+!Core.WriteStream categoriesForClass!Collections-Streams! !
+!Core.WriteStream methodsFor!
 
 basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Private - Append countInteger elements of aSequenceableCollection from startInteger
@@ -66,7 +66,7 @@ contents
 	the contents we have 'read' all the elements in the receiver.
 	The readLimit is mostly of use to readable subclasses."
 
-	readLimit := readLimit max: position.
+	readLimit < position ifTrue: [readLimit := position].
 	^collection copyFrom: 1 to: position!
 
 grabContents
@@ -152,10 +152,9 @@ nextPutAll: aCollection
 		ifFalse: [aCollection appendToStream: self]!
 
 on: aCollection
-	collection := aCollection.
-	writeLimit := collection size.
+	writeLimit := (collection := aCollection) size.
 	position := readLimit := 0.
-!
+	locale := Locale.UserDefault!
 
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
@@ -195,35 +194,32 @@ setToEnd
 	updating the readLimit if necessary."
 
 	position := self size! !
-!WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!WriteStream categoriesFor: #basicNextPut:!accessing!private! !
-!WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
-!WriteStream categoriesFor: #contents!accessing!public! !
-!WriteStream categoriesFor: #grabContents!accessing!public! !
-!WriteStream categoriesFor: #growCollection!operations!private! !
-!WriteStream categoriesFor: #initialize!initializing!private! !
-!WriteStream categoriesFor: #isWriteable!public!testing! !
-!WriteStream categoriesFor: #locale!accessing!public! !
-!WriteStream categoriesFor: #locale:!accessing!public! !
-!WriteStream categoriesFor: #locale1!accessing!private! !
-!WriteStream categoriesFor: #moveToEnd!positioning!private! !
-!WriteStream categoriesFor: #next!accessing!public! !
-!WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!WriteStream categoriesFor: #nextPut:!accessing!public! !
-!WriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!WriteStream categoriesFor: #on:!initializing!private! !
-!WriteStream categoriesFor: #padTo:put:!positioning!public! !
-!WriteStream categoriesFor: #position:!positioning!public! !
-!WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
-!WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!WriteStream categoriesFor: #primitiveNextPutAll:!accessing!private! !
-!WriteStream categoriesFor: #reset!positioning!public! !
-!WriteStream categoriesFor: #setToEnd!positioning!public! !
+!Core.WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
+!Core.WriteStream categoriesFor: #basicNextPut:!accessing!private! !
+!Core.WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
+!Core.WriteStream categoriesFor: #contents!accessing!public! !
+!Core.WriteStream categoriesFor: #grabContents!accessing!public! !
+!Core.WriteStream categoriesFor: #growCollection!operations!private! !
+!Core.WriteStream categoriesFor: #initialize!initializing!private! !
+!Core.WriteStream categoriesFor: #isWriteable!public!testing! !
+!Core.WriteStream categoriesFor: #moveToEnd!positioning!private! !
+!Core.WriteStream categoriesFor: #next!accessing!public! !
+!Core.WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!Core.WriteStream categoriesFor: #nextPut:!accessing!public! !
+!Core.WriteStream categoriesFor: #nextPutAll:!accessing!public! !
+!Core.WriteStream categoriesFor: #on:!initializing!private! !
+!Core.WriteStream categoriesFor: #padTo:put:!positioning!public! !
+!Core.WriteStream categoriesFor: #position:!positioning!public! !
+!Core.WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
+!Core.WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
+!Core.WriteStream categoriesFor: #primitiveNextPutAll:!accessing!private! !
+!Core.WriteStream categoriesFor: #reset!positioning!public! !
+!Core.WriteStream categoriesFor: #setToEnd!positioning!public! !
 
-WriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-WriteStream methodProtocol: #WriteStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #flush #isEmpty #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
+Core.WriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+Core.WriteStream methodProtocol: #WriteStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #flush #isEmpty #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
 
-!WriteStream class methodsFor!
+!Core.WriteStream class methodsFor!
 
 with: aCollection
 	"Answer a new instance of the receiver accessing the <collection>, aCollection,
@@ -243,8 +239,8 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
-!WriteStream class categoriesFor: #with:!instance creation!public! !
-!WriteStream class categoriesFor: #with:from:to:!instance creation!public! !
+!Core.WriteStream class categoriesFor: #with:!instance creation!public! !
+!Core.WriteStream class categoriesFor: #with:from:to:!instance creation!public! !
 
-WriteStream class methodProtocol: #'WriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
+Core.WriteStream class methodProtocol: #'WriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
 

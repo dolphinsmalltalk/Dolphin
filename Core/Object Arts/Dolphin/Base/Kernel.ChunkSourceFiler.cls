@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SourceFiler subclass: #ChunkSourceFiler
+Kernel.SourceFiler subclass: #'Kernel.ChunkSourceFiler'
 	instanceVariableNames: 'sourceFileIndex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NormalizeEolsMask' -> 16r2
 	}!
-ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
-ChunkSourceFiler comment: ''!
-!ChunkSourceFiler categoriesForClass!Development!System-Support! !
-!ChunkSourceFiler methodsFor!
+Kernel.ChunkSourceFiler guid: (Core.GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
+Kernel.ChunkSourceFiler comment: ''!
+!Kernel.ChunkSourceFiler categoriesForClass!Development!System-Support! !
+!Kernel.ChunkSourceFiler methodsFor!
 
 emitChunk: aString
 	"Private - Output the specified text with a trailing end of chunk marker to the argument,
@@ -21,33 +21,42 @@ emitChunk: aString
 		nextChunkPut: aString;
 		cr!
 
+emitClassName: aClass
+	aClass environment == aClass baseEnvironment
+		ifTrue: [stream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: stream]!
+
 emitFooterForMethodsOf: aClass 
 	"Private - Ends the method definition chunks for aClass onto
 	the source stream."
 
 	self endChunk!
 
-emitGUIDOfClass: aClass 
+emitGUIDOfClass: aClass
 	"Private - Emit a GUID definition chunk for the <Class>, aClass, onto the <puttableStream>, aWriteStream."
 
 	| guid |
 	guid := aClass guid.
+	self emitClassName: aClass.
 	stream
-		nextPutAll: aClass name;
-		nextPutAll: ' guid: (';
-		nextPutAll: guid class name;
-		nextPutAll: ' fromString: ';
+		space;
+		nextPutAll: #guid:;
+		nextPutAll: ' ('.
+	self emitClassName: guid class.
+	stream
+		space;
+		nextPutAll: #fromString:;
+		space;
 		print: guid asString;
-		nextPut: $);
-		nextPut: $!!;
+		nextPutAll: ')!!';
 		cr!
 
-emitHeaderForMethodsOf: aClass 
+emitHeaderForMethodsOf: aClass
 	"Private - Emits a category header for the class, aClass, to the source stream."
 
+	stream nextPut: $!!.
+	self emitClassName: aClass.
 	stream
-		nextPut: $!!;
-		nextPutAll: aClass name;
 		space;
 		nextPutAll: #methodsFor;
 		nextPut: $!!!
@@ -87,8 +96,8 @@ fileIn
 			[stream skipSeparators.
 			(stream peekFor: $!!)
 				ifTrue: 
-					["#methodsFor: expression (we hope) - don't log evaluation"
-					| chunk reader |
+					[| chunk reader |
+					"#methodsFor: expression (we hope) - don't log evaluation"
 					chunk := self nextChunk.
 					reader := Compiler evaluate: chunk for: self evaluationContext.
 					reader isNil
@@ -99,8 +108,8 @@ fileIn
 							reader := ChunkReader null].
 					reader fileInFrom: self]
 				ifFalse: 
-					["Normal expression evaluation - log it"
-					| chunk |
+					[| chunk |
+					"Normal expression evaluation - log it"
 					chunk := self nextChunk.
 					Compiler
 						evaluate: chunk
@@ -195,24 +204,25 @@ storeSourceString: aString forMethod: aCompiledMethod
 		emitFooterForMethodsOf: methodClass;
 		flush
 ! !
-!ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #nextChunk!private!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #nextChunkPut:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #normalizeLineEndings!accessing!public! !
-!ChunkSourceFiler categoriesFor: #normalizeLineEndings:!accessing!public! !
-!ChunkSourceFiler categoriesFor: #sourceDescriptorForIndex:position:!private!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
-!ChunkSourceFiler categoriesFor: #storeSourceString:forMethod:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
+!Kernel.ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !
+!Kernel.ChunkSourceFiler categoriesFor: #nextChunk!private!source filing-file in! !
+!Kernel.ChunkSourceFiler categoriesFor: #nextChunkPut:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesFor: #normalizeLineEndings!accessing!public! !
+!Kernel.ChunkSourceFiler categoriesFor: #normalizeLineEndings:!accessing!public! !
+!Kernel.ChunkSourceFiler categoriesFor: #sourceDescriptorForIndex:position:!private!source filing-file in! !
+!Kernel.ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
+!Kernel.ChunkSourceFiler categoriesFor: #storeSourceString:forMethod:!private!source filing-file out! !
 
-!ChunkSourceFiler class methodsFor!
+!Kernel.ChunkSourceFiler class methodsFor!
 
 on: aWriteStream sourceFileIndex: anInteger
 	"Answer a new instance of the receiver for filing out source code onto the 
@@ -223,5 +233,5 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
-!ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
+!Kernel.ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
 

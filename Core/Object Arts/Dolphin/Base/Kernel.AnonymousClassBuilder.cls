@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassBuilder subclass: #AnonymousClassBuilder
+Kernel.ClassBuilder subclass: #'Kernel.AnonymousClassBuilder'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnonymousClassBuilder guid: (GUID fromString: '{cd7cc2b6-31a1-41e9-ad2d-50f3f9b109ab}')!
-AnonymousClassBuilder comment: ''!
-!AnonymousClassBuilder categoriesForClass!System-Support! !
-!AnonymousClassBuilder methodsFor!
+Kernel.AnonymousClassBuilder guid: (Core.GUID fromString: '{cd7cc2b6-31a1-41e9-ad2d-50f3f9b109ab}')!
+Kernel.AnonymousClassBuilder comment: ''!
+!Kernel.AnonymousClassBuilder categoriesForClass!System-Support! !
+!Kernel.AnonymousClassBuilder methodsFor!
 
 installInSuperclass: aClass
 	"Anonymous classes are not included among their superclass' subclasses"
@@ -21,16 +21,17 @@ installNewClass
 
 superclass: aClass
 	super superclass: aClass.
-	self instanceSpec: (aClass instanceSpec bitAnd: Behavior._ShapeMask)!
+	self instanceSpec: (aClass instanceSpec bitAnd: Behavior._ShapeMask).
+	environment := aClass environment!
 
 validateClassName
 	className isNil ifFalse: [self error: 'An anonymous class cannot have a name']!
 
 validateSuperclassChainForCreate
 	"The superclass just validates that no superclass has the same name, which is not relevant for the unnamed."! !
-!AnonymousClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
-!AnonymousClassBuilder categoriesFor: #installNewClass!environment!private! !
-!AnonymousClassBuilder categoriesFor: #superclass:!accessing!private! !
-!AnonymousClassBuilder categoriesFor: #validateClassName!public! !
-!AnonymousClassBuilder categoriesFor: #validateSuperclassChainForCreate!public! !
+!Kernel.AnonymousClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
+!Kernel.AnonymousClassBuilder categoriesFor: #installNewClass!environment!private! !
+!Kernel.AnonymousClassBuilder categoriesFor: #superclass:!accessing!private! !
+!Kernel.AnonymousClassBuilder categoriesFor: #validateClassName!public! !
+!Kernel.AnonymousClassBuilder categoriesFor: #validateSuperclassChainForCreate!public! !
 

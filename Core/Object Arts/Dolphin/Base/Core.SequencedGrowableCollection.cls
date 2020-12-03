@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #SequencedGrowableCollection
+Core.SequenceableCollection subclass: #'Core.SequencedGrowableCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequencedGrowableCollection guid: (GUID fromString: '{87b4c50f-026e-11d3-9fd7-00a0cc3e4a32}')!
-SequencedGrowableCollection isAbstract: true!
-SequencedGrowableCollection comment: 'SequencedGrowableCollection is the abstract class of sequenceable, contractible, and extensible collections.
+Core.SequencedGrowableCollection guid: (Core.GUID fromString: '{87b4c50f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.SequencedGrowableCollection isNonInstantiable: true!
+Core.SequencedGrowableCollection comment: 'SequencedGrowableCollection is the abstract class of sequenceable, contractible, and extensible collections.
 
 SequencedGrowableCollections comply with the ANSI protocols:
 	Object
@@ -18,8 +18,8 @@ SequencedGrowableCollections comply with the ANSI protocols:
 	sequencedContractibleCollection
 	sequencedCollection
 	sequencedExtensibleCollection'!
-!SequencedGrowableCollection categoriesForClass!Collections-Sequenceable! !
-!SequencedGrowableCollection methodsFor!
+!Core.SequencedGrowableCollection categoriesForClass!Collections-Sequenceable! !
+!Core.SequencedGrowableCollection methodsFor!
 
 add: newElement
 	"Append, and answer, newElement as the last element of the receiver."
@@ -173,30 +173,30 @@ removeLastIfAbsent: exceptionHandler
 
 	self isEmpty ifTrue: [^exceptionHandler value].
 	^self removeAtIndex: self size! !
-!SequencedGrowableCollection categoriesFor: #add:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #add:after:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #add:afterIndex:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #add:before:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #add:beforeIndex:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAll:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAll:after:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAll:afterIndex:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAll:before:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAll:beforeIndex:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAllFirst:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addAllLast:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addFirst:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #addLast:!adding!public! !
-!SequencedGrowableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeAll!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeAtIndex:!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeFirst!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeFirstIfAbsent:!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeLast!public!removing! !
-!SequencedGrowableCollection categoriesFor: #removeLastIfAbsent:!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #add:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #add:after:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #add:afterIndex:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #add:before:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #add:beforeIndex:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAll:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAll:after:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAll:afterIndex:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAll:before:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAll:beforeIndex:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAllFirst:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addAllLast:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addFirst:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #addLast:!adding!public! !
+!Core.SequencedGrowableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeAll!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeAtIndex:!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeFirst!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeFirstIfAbsent:!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeLast!public!removing! !
+!Core.SequencedGrowableCollection categoriesFor: #removeLastIfAbsent:!public!removing! !
 
-SequencedGrowableCollection methodProtocol: #OrderedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #add:after: #add:afterIndex: #add:before: #add:beforeIndex: #addAll: #addAll:after: #addAll:afterIndex: #addAll:before: #addAll:beforeIndex: #addAllFirst: #addAllLast: #addFirst: #addLast: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
-SequencedGrowableCollection methodProtocol: #sequencedContractibleCollection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #removeAtIndex: #removeFirst #removeLast #select: #size)!
+Core.SequencedGrowableCollection methodProtocol: #OrderedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #add:after: #add:afterIndex: #add:before: #add:beforeIndex: #addAll: #addAll:after: #addAll:afterIndex: #addAll:before: #addAll:beforeIndex: #addAllFirst: #addAllLast: #addFirst: #addLast: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
+Core.SequencedGrowableCollection methodProtocol: #sequencedContractibleCollection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #removeAtIndex: #removeFirst #removeLast #select: #size)!
 
-SequencedGrowableCollection class methodProtocol: #'OrderedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
+Core.SequencedGrowableCollection class methodProtocol: #'OrderedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

@@ -1,14 +1,14 @@
 ﻿| package |
 package := Package name: 'Dolphin Command-line Parser'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{CommandLine}
-	#{CommandLineError}
-	#{CommandLineOption}
+	#{Kernel.CommandLine}
+	#{Kernel.CommandLineError}
+	#{Kernel.CommandLineOption}
 ).
 
 package setPrerequisites: #(
@@ -19,19 +19,19 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #CommandLine
+Core.Object subclass: #'Kernel.CommandLine'
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #CommandLineOption
+Core.Object subclass: #'Kernel.CommandLineOption'
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Notification subclass: #CommandLineError
+Core.Notification subclass: #'Kernel.CommandLineError'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

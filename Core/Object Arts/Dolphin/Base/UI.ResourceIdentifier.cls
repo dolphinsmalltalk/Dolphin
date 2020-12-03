@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ResourceIdentifier
+Core.Object subclass: #'UI.ResourceIdentifier'
 	instanceVariableNames: 'owningClass selector'
 	classVariableNames: 'SelectorPrefix'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceIdentifier guid: (GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
-ResourceIdentifier comment: ''!
-!ResourceIdentifier categoriesForClass!MVP-Resources! !
-!ResourceIdentifier methodsFor!
+UI.ResourceIdentifier guid: (Core.GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
+UI.ResourceIdentifier comment: ''!
+!UI.ResourceIdentifier categoriesForClass!MVP-Resources! !
+!UI.ResourceIdentifier methodsFor!
 
 <= aResourceIdentifier
 	"Answer whether the receiver is 'less than' aResourceIdentifier.
@@ -38,8 +38,10 @@ copy
 editExpression
 	"Private - Answer a String that can be evaluated to edit an emitted resource"
 
-	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)'
-		expandMacrosWith: self selector!
+	^'Tools.ViewComposer openOn: (<1d> class: self selector: <2p>)'
+		expandMacrosWith: self class fullName with: self selector
+
+!
 
 emitMethodHeaderFor: aSymbol on: stream
 	stream
@@ -59,7 +61,7 @@ exportedFileName
 	| package path |
 	package := self owningPackage.
 	path := package isNil ifTrue: [''] ifFalse: [package path].
-	^File 
+	^File
 		composePath: path
 		stem: self displayString
 		extension: self class exportFileExtension!
@@ -77,7 +79,7 @@ hiddenObjects
 	| stlInFilerClass resource |
 	stlInFilerClass := #{STLInFiler} value.
 	resource := self resource.
-	resource ifNil: [^self error: ('Resource [', owningClass name, '>>', selector, '] does not exist')].
+	resource ifNil: [^self error: ('Resource [', owningClass fullName, '>>#', selector, '] does not exist')].
 	^(stlInFilerClass on: resource readStream)
 		basicNext;
 		readMap!
@@ -170,35 +172,35 @@ storeOn: aStream
 		nextPutAll: ' name: ';
 		print: self name;
 		nextPut: $)! !
-!ResourceIdentifier categoriesFor: #<=!comparing!public! !
-!ResourceIdentifier categoriesFor: #=!comparing!public! !
-!ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
-!ResourceIdentifier categoriesFor: #copy!copying!public! !
-!ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
-!ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
-!ResourceIdentifier categoriesFor: #exists!public!testing! !
-!ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
-!ResourceIdentifier categoriesFor: #hash!comparing!public! !
-!ResourceIdentifier categoriesFor: #hiddenObjects!accessing!private! !
-!ResourceIdentifier categoriesFor: #icon:!accessing!public! !
-!ResourceIdentifier categoriesFor: #isChanged!development!public!source filing!testing! !
-!ResourceIdentifier categoriesFor: #isChanged:!development!public!source filing! !
-!ResourceIdentifier categoriesFor: #load!operations!public! !
-!ResourceIdentifier categoriesFor: #name!accessing!public! !
-!ResourceIdentifier categoriesFor: #name:!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningClass!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningClass:!initializing!public! !
-!ResourceIdentifier categoriesFor: #owningPackage!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningPackage:!accessing!development!public! !
-!ResourceIdentifier categoriesFor: #printOn:!printing!public! !
-!ResourceIdentifier categoriesFor: #resource!accessing!public! !
-!ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
-!ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
-!ResourceIdentifier categoriesFor: #selector!accessing!public! !
-!ResourceIdentifier categoriesFor: #selector:!initializing!public! !
-!ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
+!UI.ResourceIdentifier categoriesFor: #<=!comparing!public! !
+!UI.ResourceIdentifier categoriesFor: #=!comparing!public! !
+!UI.ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #copy!copying!public! !
+!UI.ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
+!UI.ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
+!UI.ResourceIdentifier categoriesFor: #exists!public!testing! !
+!UI.ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
+!UI.ResourceIdentifier categoriesFor: #hash!comparing!public! !
+!UI.ResourceIdentifier categoriesFor: #hiddenObjects!accessing!private! !
+!UI.ResourceIdentifier categoriesFor: #icon:!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #isChanged!development!public!source filing!testing! !
+!UI.ResourceIdentifier categoriesFor: #isChanged:!development!public!source filing! !
+!UI.ResourceIdentifier categoriesFor: #load!operations!public! !
+!UI.ResourceIdentifier categoriesFor: #name!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #name:!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #owningClass!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #owningClass:!initializing!public! !
+!UI.ResourceIdentifier categoriesFor: #owningPackage!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #owningPackage:!accessing!development!public! !
+!UI.ResourceIdentifier categoriesFor: #printOn:!printing!public! !
+!UI.ResourceIdentifier categoriesFor: #resource!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
+!UI.ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #selector!accessing!public! !
+!UI.ResourceIdentifier categoriesFor: #selector:!initializing!public! !
+!UI.ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
 
-!ResourceIdentifier class methodsFor!
+!UI.ResourceIdentifier class methodsFor!
 
 allResourceIdentifiers
 	| rids |
@@ -309,20 +311,20 @@ value: a value: b
 
 viewResourceCategoryName
 	^'resources-views'! !
-!ResourceIdentifier class categoriesFor: #allResourceIdentifiers!accessing!public! !
-!ResourceIdentifier class categoriesFor: #allResourceIdentifiersDo:!accessing!enumerating!public! !
-!ResourceIdentifier class categoriesFor: #class:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #class:name:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #exportFileExtension!constants!public! !
-!ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #initialize!class initialization!public! !
-!ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
-!ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
-!ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
-!ResourceIdentifier class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ResourceIdentifier class categoriesFor: #stbVersion!binary filing!public! !
-!ResourceIdentifier class categoriesFor: #value:value:!helpers!private! !
-!ResourceIdentifier class categoriesFor: #viewResourceCategoryName!constants!private! !
+!UI.ResourceIdentifier class categoriesFor: #allResourceIdentifiers!accessing!public! !
+!UI.ResourceIdentifier class categoriesFor: #allResourceIdentifiersDo:!accessing!enumerating!public! !
+!UI.ResourceIdentifier class categoriesFor: #class:!instance creation!public! !
+!UI.ResourceIdentifier class categoriesFor: #class:name:!instance creation!public! !
+!UI.ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !
+!UI.ResourceIdentifier class categoriesFor: #exportFileExtension!constants!public! !
+!UI.ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
+!UI.ResourceIdentifier class categoriesFor: #initialize!class initialization!public! !
+!UI.ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
+!UI.ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
+!UI.ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
+!UI.ResourceIdentifier class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.ResourceIdentifier class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ResourceIdentifier class categoriesFor: #value:value:!helpers!private! !
+!UI.ResourceIdentifier class categoriesFor: #viewResourceCategoryName!constants!private! !
 

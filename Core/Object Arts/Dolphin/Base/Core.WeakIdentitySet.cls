@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WeakSet variableSubclass: #WeakIdentitySet
+Core.WeakSet variableSubclass: #'Core.WeakIdentitySet'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakIdentitySet guid: (GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
-WeakIdentitySet comment: ''!
-!WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
-!WeakIdentitySet methodsFor!
+Core.WeakIdentitySet guid: (Core.GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakIdentitySet comment: ''!
+!Core.WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
+!Core.WeakIdentitySet methodsFor!
 
 findElementOrNil: anObject
 	"Private - This method is a copy of IdentitySet>>findElementOrNil:"
@@ -24,10 +24,10 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
-!WeakIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!WeakIdentitySet categoriesFor: #hash:max:!private!searching! !
+!Core.WeakIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
+!Core.WeakIdentitySet categoriesFor: #hash:max:!private!searching! !
 
-!WeakIdentitySet class methodsFor!
+!Core.WeakIdentitySet class methodsFor!
 
 initialize
 	"Initialize the receiver.
@@ -35,5 +35,5 @@ initialize
 	so we must implement to get the bereavement notifications."
 
 	super initialize! !
-!WeakIdentitySet class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakIdentitySet class categoriesFor: #initialize!development!initializing!public! !
 

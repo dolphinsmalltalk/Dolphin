@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBFiler subclass: #STBInFiler
+Kernel.STBFiler subclass: #'Kernel.STBInFiler'
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'UpgradingMask' -> 16r1
 	}!
-STBInFiler guid: (GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBInFiler comment: ''!
-!STBInFiler categoriesForClass!System-Binary storage! !
-!STBInFiler methodsFor!
+Kernel.STBInFiler guid: (Core.GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBInFiler comment: ''!
+!Kernel.STBInFiler categoriesForClass!System-Binary storage! !
+!Kernel.STBInFiler methodsFor!
 
 basicNext
 	"Private - Answer the next object from the receiver's stream."
@@ -44,8 +44,7 @@ contents
 
 	| writeStream |
 	writeStream := Array writeStream: 16.
-	[self atEnd]
-		whileFalse: [writeStream nextPut: self next].
+	[self atEnd] whileFalse: [writeStream nextPut: self next].
 	^writeStream contents!
 
 defaultClassLocatorClass
@@ -102,23 +101,25 @@ objectAt: anInteger
 
 	^readMap at: anInteger!
 
-readClassData: anInteger 
+readClassData: anInteger
 	"Private - Answer the class whose details are prefixed by the specified <integer> flags
 	in <STBPrefix> format."
 
 	| versionBeingRead class |
-	versionBeingRead := (anInteger allMask: STBPrefix.NonZeroVersionMask) ifTrue: [self readInteger] ifFalse: [0].
+	versionBeingRead := (anInteger allMask: STBPrefix.NonZeroVersionMask)
+				ifTrue: [self readInteger]
+				ifFalse: [0].
 	class := self readClassLocator: anInteger.
 	self register: class.
-	versionBeingRead = class stbVersion 
+	versionBeingRead = class stbVersion
 		ifFalse: 
 			[| format |
-			format := STBClassConversion 
+			format := STBClassConversion
 						forFiler: self
 						class: class
 						version: versionBeingRead
 						prefix: anInteger.
-			format converterBlock isNil 
+			format converterBlock isNil
 				ifTrue: [^self class errorUnrecognisedClass: class version: versionBeingRead].
 			converters at: class put: format].
 	^class!
@@ -187,7 +188,6 @@ readObjectWithPrefix: anInteger
 
 	"SmallInteger?"
 	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-
 	(anInteger allMask: STBPrefix.DataPrefixMask)
 		ifFalse: 
 			[^(anInteger allMask: STBPrefix.CharacterMask)
@@ -242,34 +242,34 @@ resetAndValidateStream
 
 setRefOffset: anInteger
 	readMap setSize: anInteger! !
-!STBInFiler categoriesFor: #basicNext!accessing!private! !
-!STBInFiler categoriesFor: #classAt:!accessing!private! !
-!STBInFiler categoriesFor: #classLocator!accessing!public! !
-!STBInFiler categoriesFor: #classLocator:!accessing!public! !
-!STBInFiler categoriesFor: #contents!enumerating!public! !
-!STBInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
-!STBInFiler categoriesFor: #deferAction:!deferred actions!public! !
-!STBInFiler categoriesFor: #evaluateDeferredActions!deferred actions!private! !
-!STBInFiler categoriesFor: #fixup:to:!operations!public! !
-!STBInFiler categoriesFor: #initialize!initializing!private! !
-!STBInFiler categoriesFor: #isUpgrading!public!testing! !
-!STBInFiler categoriesFor: #isUpgrading:!accessing!public! !
-!STBInFiler categoriesFor: #next!operations!public! !
-!STBInFiler categoriesFor: #objectAt:!accessing!private! !
-!STBInFiler categoriesFor: #readClassData:!helpers!private! !
-!STBInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!STBInFiler categoriesFor: #readInteger!helpers!private! !
-!STBInFiler categoriesFor: #readMap!accessing!private! !
-!STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
-!STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !
-!STBInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!STBInFiler categoriesFor: #readVersion!initializing!private! !
-!STBInFiler categoriesFor: #register:!helpers!private! !
-!STBInFiler categoriesFor: #reset!initializing!private! !
-!STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
-!STBInFiler categoriesFor: #setRefOffset:!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #basicNext!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #classAt:!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #classLocator!accessing!public! !
+!Kernel.STBInFiler categoriesFor: #classLocator:!accessing!public! !
+!Kernel.STBInFiler categoriesFor: #contents!enumerating!public! !
+!Kernel.STBInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
+!Kernel.STBInFiler categoriesFor: #deferAction:!deferred actions!public! !
+!Kernel.STBInFiler categoriesFor: #evaluateDeferredActions!deferred actions!private! !
+!Kernel.STBInFiler categoriesFor: #fixup:to:!operations!public! !
+!Kernel.STBInFiler categoriesFor: #initialize!initializing!private! !
+!Kernel.STBInFiler categoriesFor: #isUpgrading!public!testing! !
+!Kernel.STBInFiler categoriesFor: #isUpgrading:!accessing!public! !
+!Kernel.STBInFiler categoriesFor: #next!operations!public! !
+!Kernel.STBInFiler categoriesFor: #objectAt:!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #readClassData:!helpers!private! !
+!Kernel.STBInFiler categoriesFor: #readClassLocator:!helpers!private! !
+!Kernel.STBInFiler categoriesFor: #readInteger!helpers!private! !
+!Kernel.STBInFiler categoriesFor: #readMap!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !
+!Kernel.STBInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
+!Kernel.STBInFiler categoriesFor: #readVersion!initializing!private! !
+!Kernel.STBInFiler categoriesFor: #register:!helpers!private! !
+!Kernel.STBInFiler categoriesFor: #reset!initializing!private! !
+!Kernel.STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
+!Kernel.STBInFiler categoriesFor: #setRefOffset:!accessing!private! !
 
-!STBInFiler class methodsFor!
+!Kernel.STBInFiler class methodsFor!
 
 peekForSignatureIn: aReadStream
 	"Answer whether the <readableStream> argument, aReadStream, appears to
@@ -281,5 +281,5 @@ peekForSignatureIn: aReadStream
 	position := aReadStream position.
 	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
-!STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
+!Kernel.STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
 

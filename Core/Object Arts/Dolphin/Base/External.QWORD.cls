@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalInteger subclass: #QWORD
+External.INTEGER subclass: #'External.QWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_highPart' -> 16r4.
 		'_OffsetOf_lowPart' -> 16r0
 	}!
-QWORD guid: (GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
-QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
+External.QWORD guid: (Core.GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format 2''s complement).'!
-!QWORD categoriesForClass!External-Data-Unstructured! !
-!QWORD methodsFor!
+!External.QWORD categoriesForClass!External-Data-Unstructured! !
+!External.QWORD methodsFor!
 
 asSignedInteger
 	"Answer the signed 64-bit <Integer> value of the receiver."
@@ -28,7 +28,7 @@ asUnsignedInteger
 	^bytes qwordAtOffset: 0!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	self value displayOn: aPuttableStream!
 
@@ -61,17 +61,17 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_value put: anInteger! !
-!QWORD categoriesFor: #asSignedInteger!converting!public! !
-!QWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!QWORD categoriesFor: #displayOn:!displaying!public! !
-!QWORD categoriesFor: #highPart!**compiled accessors**!public! !
-!QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
-!QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #value!**compiled accessors**!public! !
-!QWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #asSignedInteger!converting!public! !
+!External.QWORD categoriesFor: #asUnsignedInteger!converting!public! !
+!External.QWORD categoriesFor: #displayOn:!displaying!public! !
+!External.QWORD categoriesFor: #highPart!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #value!**compiled accessors**!public! !
+!External.QWORD categoriesFor: #value:!**compiled accessors**!public! !
 
-!QWORD class methodsFor!
+!External.QWORD class methodsFor!
 
 defineFields
 	"Define the fields of the QWORD/ULARGE_INTEGER 'structure'.
@@ -103,6 +103,6 @@ defineTemplate
 
 	super defineTemplate.
 	self assert: [self alignment = 8]! !
-!QWORD class categoriesFor: #defineFields!public!template definition! !
-!QWORD class categoriesFor: #defineTemplate!public!template definition! !
+!External.QWORD class categoriesFor: #defineFields!public!template definition! !
+!External.QWORD class categoriesFor: #defineTemplate!public!template definition! !
 

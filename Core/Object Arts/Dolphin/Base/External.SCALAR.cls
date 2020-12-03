@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ExternalScalar
+External.Structure subclass: #'External.SCALAR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_value' -> 16r0
 	}!
-ExternalScalar guid: (GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
-ExternalScalar isAbstract: true!
-ExternalScalar comment: ''!
-!ExternalScalar categoriesForClass!External-Data-Structured! !
-!ExternalScalar methodsFor!
+External.SCALAR guid: (Core.GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
+External.SCALAR isNonInstantiable: true!
+External.SCALAR comment: ''!
+!External.SCALAR categoriesForClass!External-Data-Structured! !
+!External.SCALAR methodsFor!
 
 = anObject
 	"Answer whether the receiver is equivalent to anObject."
@@ -20,7 +20,7 @@ ExternalScalar comment: ''!
 	^anObject = self value!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	(self isNull ifFalse: [self value]) displayOn: aPuttableStream!
 
@@ -33,18 +33,18 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	^self subclassResponsibility! !
-!ExternalScalar categoriesFor: #=!comparing!public! !
-!ExternalScalar categoriesFor: #displayOn:!printing!public! !
-!ExternalScalar categoriesFor: #value!converting!public! !
-!ExternalScalar categoriesFor: #value:!public! !
+!External.SCALAR categoriesFor: #=!comparing!public! !
+!External.SCALAR categoriesFor: #displayOn:!printing!public! !
+!External.SCALAR categoriesFor: #value!converting!public! !
+!External.SCALAR categoriesFor: #value:!public! !
 
-!ExternalScalar class methodsFor!
+!External.SCALAR class methodsFor!
 
 defineFields
 	self defineField: #value type: (FillerField byteSize: 0)!
 
 getFieldNames
 	^#(#value)! !
-!ExternalScalar class categoriesFor: #defineFields!public!template definition! !
-!ExternalScalar class categoriesFor: #getFieldNames!constants!private! !
+!External.SCALAR class categoriesFor: #defineFields!public!template definition! !
+!External.SCALAR class categoriesFor: #getFieldNames!constants!private! !
 

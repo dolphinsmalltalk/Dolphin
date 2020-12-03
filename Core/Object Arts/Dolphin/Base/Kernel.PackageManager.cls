@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #PackageManager
+Core.Object subclass: #'Kernel.PackageManager'
 	instanceVariableNames: 'packages processEvents packagedVariables looseMethods events defaultPackage basePackages'
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageManager guid: (GUID fromString: '{87b4c4a7-026e-11d3-9fd7-00a0cc3e4a32}')!
-PackageManager comment: 'The `PackageManager` class contains a collection of all the `Package`s currently loaded into the system. The class obeys the Singleton pattern.
+Kernel.PackageManager guid: (Core.GUID fromString: '{87b4c4a7-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.PackageManager comment: 'The `PackageManager` class contains a collection of all the `Package`s currently loaded into the system. The class obeys the Singleton pattern.
 
 All the packages known by the package manager must have unique names.
 
@@ -29,8 +29,8 @@ triggers generated
 	loadedChanged	The collection of loaded packages has changed
 	ownedChanged	The owned objects of a package have been changed, ie added to/removed.
 	resetPrerequisites	The lazily generated prerequisites data for each of the packages has been invalidated. This will happen quite often, for example compiling a method. The next time you request the prerequisites of a package it will calculate them.'!
-!PackageManager categoriesForClass!Development! !
-!PackageManager methodsFor!
+!Kernel.PackageManager categoriesForClass!Development! !
+!Kernel.PackageManager methodsFor!
 
 addClass: aClass to: aPackageOrNil
 	"Add the <Class>, aClass, to the <Package>, destination, after first 
@@ -70,7 +70,7 @@ addManagedPackage: aPackage
 
 	self addPackage: aPackage; observePackage: aPackage!
 
-addMethod: aCompiledMethod to: aPackageOrNil 
+addMethod: aCompiledMethod to: aPackageOrNil
 	"Add the <CompiledMethod>, method, to the <Package>, destination,
 	after first removing it from any existing package. Note that this is a
 	composite operation with 4 possible cases:
@@ -87,19 +87,19 @@ addMethod: aCompiledMethod to: aPackageOrNil
 
 	| source destination classPackage moved indexValue |
 	classPackage := self packageOfClass: aCompiledMethod methodClass.
-	destination := (aPackageOrNil isNil or: [aPackageOrNil == Package uncommitted]) 
+	destination := (aPackageOrNil isNil or: [aPackageOrNil == Package uncommitted])
 				ifTrue: [classPackage]
 				ifFalse: [aPackageOrNil].
 	source := self packageOfMethod: aCompiledMethod.
 	source == destination ifTrue: [^self].
-	moved := source isNil 
+	moved := source isNil
 				ifTrue: 
-					[self 
+					[self
 						moveMethod: aCompiledMethod
 						from: classPackage
 						to: destination]
 				ifFalse: 
-					[self 
+					[self
 						moveLooseMethod: aCompiledMethod
 						from: source
 						to: destination].
@@ -110,20 +110,20 @@ addMethod: aCompiledMethod to: aPackageOrNil
 	changed, but the objects it lists as owned has not changed. Where a method is/was loose in a
 	package, then the owning package has changed its owned contents."
 	indexValue := [aCompiledMethod changePosition].
-	source isNil 
+	source isNil
 		ifTrue: 
 			[source := classPackage.
 			self memberOf: classPackage updatedAt: indexValue]
 		ifFalse: [source membershipChangedAt: indexValue].
-	aPackageOrNil isNil 
+	aPackageOrNil isNil
 		ifTrue: [self memberOf: destination updatedAt: indexValue]
 		ifFalse: [self membershipChanged: destination at: indexValue].
-	self 
+	self
 		methodRepackaged: aCompiledMethod
 		from: source
 		to: destination!
 
-addPackage: aPackage 
+addPackage: aPackage
 	"Private - Add the <Package> argument to the collection of packages held by the receiver. 
 	Each package must have a unique name. Answer the argument, or raise an error if either
 	a package with the same name already exists or there is some clash between the
@@ -147,7 +147,7 @@ addPackagedMethod: aCompiledMethod to: aPackageOrNil
 		ifTrue: [aCompiledMethod methodClass methodChanged: aCompiledMethod]
 		ifFalse: [aPackageOrNil addPackagedMethod: aCompiledMethod]!
 
-addResourceIdentifier: aResourceIdentifier to: aPackageOrNil 
+addResourceIdentifier: aResourceIdentifier to: aPackageOrNil
 	"Add the <ResourceIdentifier>, aResourceIdentifier, to the <Package>, destination,
 	after first removing it from any existing package."
 
@@ -156,7 +156,7 @@ addResourceIdentifier: aResourceIdentifier to: aPackageOrNil
 	source := self packageOfResourceIdentifierOrItsClass: aResourceIdentifier.
 	source == destination ifTrue: [^self].
 	self addMethod: aResourceIdentifier compiledMethod to: aPackageOrNil.
-	self 
+	self
 		resourceRepackaged: aResourceIdentifier
 		from: source
 		to: destination!
@@ -165,7 +165,7 @@ addVariableNamed: variableName to: aPackageOrNil
 	"Add the shared variable named, variableName, to the <Package>, aPackageOrNil, after first removing it from any existing package."
 
 	| source destination ref |
-	ref := variableName asQualifiedReference.
+	ref := variableName asQualifiedReference binding fullyQualifiedReference.
 	source := self packageOfVariableNamed: ref.
 	destination := aPackageOrNil == Package uncommitted ifFalse: [aPackageOrNil].
 	source == destination ifTrue: [^self].
@@ -217,8 +217,7 @@ allSourceObjects
 
 	| answer |
 	answer := OrderedCollection new: 2000.
-	self packages 
-		do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
+	self packages do: [:eachPackage | eachPackage allSourceObjectsDo: [:each | answer addLast: each]].
 	^answer!
 
 allVariableAliases
@@ -229,8 +228,7 @@ allVariableAliases
 			all]!
 
 basePackages
-	^basePackages ifNil: [basePackages := IdentitySet new].
-!
+	^basePackages ifNil: [basePackages := IdentitySet new]!
 
 basicAddPackage: aPackage
 	self packages at: aPackage name put: aPackage!
@@ -288,7 +286,7 @@ buildVariablesMap
 	globals to the owning package. This is used during the tracing of package prerequisites.
 	"
 
-	packagedVariables := LookupTable new: Smalltalk size.
+	packagedVariables := LookupTable new: 3000.
 	self packages do: 
 			[:package |
 			package variableNames do: [:each | packagedVariables at: each put: package].
@@ -309,7 +307,8 @@ changeProcessEventsBy: countChange
 	processing."
 
 	processEvents := processEvents + countChange.
-	processEvents < 0 ifTrue: 
+	processEvents < 0
+		ifTrue: 
 			[Notification signal: 'PackageManager processEvents became corrupt and has been reset.'.
 			processEvents := 0].
 	^processEvents!
@@ -426,10 +425,9 @@ initialize
 
 	packages := PluggableLookupTable searchPolicy: SearchPolicy caseInsensitive.
 	processEvents := 0.
-	packagedVariables := LookupTable new.
-!
+	packagedVariables := LookupTable new!
 
-install: aString 
+install: aString
 	"Install the package file at the specified <readableString> path, and any pre-requisite
 	packages, and any of the their pre-requisites, and so on. Answer a
 	<sequencedReadableCollection> of packages in the installation order (i.e. the target package
@@ -447,39 +445,39 @@ install: aString
 
 	| newPackages startPackage |
 	startPackage := self loadPackage: aString.
-	(self includesPackageNamed: startPackage name) 
+	(self includesPackageNamed: startPackage name)
 		ifTrue: [^self errorNameIsNotUnique: startPackage name].
 	
 	[| filename |
 	filename := startPackage packageFileName.
-	newPackages := self 
+	newPackages := self
 				loadPrereqsForPackage: startPackage
 				relativeTo: startPackage path
 				extension: (File splitExtensionFrom: filename)
 				loaded: (PluggableSet searchPolicy: SearchPolicy caseInsensitive)
-				trail: OrderedCollection new] 
+				trail: OrderedCollection new]
 			on: PackageNotFoundSignal
 			do: 
-				[:ex | 
+				[:ex |
 				"Installation aborted"
 				^#()].
 	self assert: [newPackages last == startPackage].
 	self beNotProcessingEvents.
 	
 	[newPackages do: 
-			[:each | 
+			[:each |
 			self addPackage: each.
-			[
-				self basicInstall: each.
-				self trigger: #packageInstalled: with: each.
-			] ifCurtailed: [self basicUninstall: each].
-			self observePackage: each]] 
+			
+			[self basicInstall: each.
+			self trigger: #packageInstalled: with: each]
+					ifCurtailed: [self basicUninstall: each].
+			self observePackage: each]]
 			ensure: 
 				[self beProcessingEvents.
 				self loadedChanged].
 	^newPackages!
 
-installHere: aString 
+installHere: aString
 	"Same as #install: except that aString is seen as being relative to the current directory
 	rather than the image base."
 
@@ -512,14 +510,15 @@ loadCompatibilityCheck: aPackage
 	the overlappingObjects collection which is raised with the error. Refer to its contents if
 	you have any problems."
 
-	| overlappingObjects vars |
+	| overlappingObjects vars filter |
 	overlappingObjects := Set new.
-	aPackage classNames do: [:each | each ifDefined: [:class | overlappingObjects add: class]].
 	vars := self packagedVariables.
-	aPackage variableNames do: 
+	filter := 
 			[:each |
 			(vars includesKey: each)
 				ifTrue: [each bindingOrNil ifNotNil: [:binding | overlappingObjects add: binding]]].
+	aPackage classNames do: filter.
+	aPackage variableNames do: filter.
 	"The methods accessor answers a collection of those methods named in the package that can
 	be found in the image, since the package is not yet loaded, this will only include the clashing methods"
 	overlappingObjects addAll: aPackage methods.
@@ -534,14 +533,14 @@ loadedChanged
 	self isProcessingEvents ifTrue: [
 		self trigger: #loadedChanged]!
 
-loadPackage: aString 
+loadPackage: aString
 	"Private - Answer the Package object stored in the package file at the specified path. Note that the
 	loaded package's contents are NOT loaded and the package is NOT inserted into the receiver's
 	collection of packages at this stage."
 
 	^Package fromFile: aString!
 
-loadPrereq: prereqPathString relativeTo: basePathString extension: extensionString loaded: loadedCollection trail: trailCollection 
+loadPrereq: prereqPathString relativeTo: basePathString extension: extensionString loaded: loadedCollection trail: trailCollection
 	"Private - Answer a Collection of Packages which have had to be loaded in for the
 	pre-requisite package at the <readableString> path, prereqPath, which is relative to the
 	<readableString> path, pathString. The collection also includes the contents of
@@ -550,27 +549,27 @@ loadPrereq: prereqPathString relativeTo: basePathString extension: extensionStri
 	| package expectedPathname actualPathname prereqName |
 	prereqName := File splitFilenameFrom: prereqPathString.
 	"Already installed or already visited?"
-	((self includesPackageNamed: prereqName) or: [loadedCollection includes: prereqName]) 
+	((self includesPackageNamed: prereqName) or: [loadedCollection includes: prereqName])
 		ifTrue: [^trailCollection].
 	"First look using relative path from base"
 	expectedPathname := File default: (File fullPathOf: prereqPathString relativeTo: basePathString)
 				extension: extensionString.
-	actualPathname := (File exists: expectedPathname) 
+	actualPathname := (File exists: expectedPathname)
 				ifTrue: [expectedPathname]
 				ifFalse: 
-					["Try directly in the base folder"
-					| localPathname |
-					localPathname := File 
+					[| localPathname |
+					"Try directly in the base folder"
+					localPathname := File
 								composePath: basePathString
 								stem: prereqName
 								extension: extensionString.
-					(File exists: localPathname) 
+					(File exists: localPathname)
 						ifTrue: [localPathname]
 						ifFalse: [self errorPrerequisiteNotFound: expectedPathname]].
-	actualPathname notNil 
+	actualPathname notNil
 		ifTrue: [package := self loadPackage: actualPathname]
 		ifFalse: [self errorPackageNotFound: prereqPathString].
-	^self 
+	^self
 		loadPrereqsForPackage: package
 		relativeTo: package path
 		extension: extensionString
@@ -641,28 +640,28 @@ markAllPackagesAsBase
 
 	self basePackages addAll: self packages!
 
-memberOf: aPackage updatedAt: aNiladicValuable 
+memberOf: aPackage updatedAt: aNiladicValuable
 	"Private - Inform the <Package> argument that it has been changed and needs to reset its
 	prerequisites, but not that its membership has changed. The <niladicValuable> argument is
 	evaluated (if needed) to determine the position in the change log from which the package
 	should be considered to have changed. This is used to distinguish between owned objects that
 	were modified since the last package save from those which were modified before it."
 
-	aPackage isNil 
+	aPackage isNil
 		ifTrue: [Package uncommitted resetPrerequisites]
 		ifFalse: [aPackage memberUpdatedAt: aNiladicValuable]!
 
-membershipChanged: aPackage 
+membershipChanged: aPackage
 	"Private - Trigger an ownership notification off the <Package> argument."
 
 	self membershipChanged: aPackage at: [Package sourceManager changesFileSize]!
 
-membershipChanged: aPackage at: aNiladicValuable 
-	aPackage isNil 
+membershipChanged: aPackage at: aNiladicValuable
+	aPackage isNil
 		ifTrue: [Package uncommitted resetPrerequisites]
 		ifFalse: [aPackage membershipChangedAt: aNiladicValuable]!
 
-memberUpdatedIn: aPackage 
+memberUpdatedIn: aPackage
 	self memberOf: aPackage updatedAt: [Package sourceManager changesFileSize]!
 
 methodRepackaged: aCompiledMethod from: sourcePackage to: destinationPackage
@@ -701,7 +700,7 @@ moveMethod: method from: source to: destination
 	source notNil ifTrue: [source removePackagedMethod: method].
 	^true!
 
-newPackage: aString 
+newPackage: aString
 	"Private - Add a new <Package> to the collection of packages held by the receiver,
 	with the specified <readableString> package filename. Answer the new package."
 
@@ -895,9 +894,7 @@ onPreStripImage
 	packagedVariables := nil.
 	self release.
 	self beNotProcessingEvents.
-	self forgetLooseMethods.
-	"Allow the search policy used for the loose methods cache to be stripped if not used elsewhere"
-	AssociationSearchPolicy uninitialize!
+	self forgetLooseMethods!
 
 onVariableRemoved: aVariableBinding
 	"Private - React to a variable being removed from the Dolphin system. Ensure that none of the packages held by the receiver refer to the variable now it has departed."
@@ -914,17 +911,16 @@ onVariableRemoved: aVariableBinding
 onVariableRenamed: aVariableBinding from: aBindingReference
 	"Private - A shared variable has been renamed. Ensure that all the receiver's packages are aware of this change. Note that pre-requisites should be unaffected."
 
-	| ref global pkg newName oldName |
-	ref := aBindingReference asQualifiedReference.
-	pkg := packagedVariables lookup: ref.
+	| oldName global pkg newName |
+	oldName := aBindingReference asQualifiedReference.
+	pkg := packagedVariables lookup: oldName.
 	newName := aVariableBinding fullyQualifiedReference.
-	pkg notNil ifTrue: [packagedVariables changeKey: ref to: newName].
+	pkg notNil ifTrue: [packagedVariables changeKey: oldName to: newName].
 	self isProcessingEvents ifFalse: [^self].
 
 	"Unfortunately we get the same event for classes as other globals, so we must test,
 	also we must be careful not to act on the rename of global aliases."
 	global := aVariableBinding value.
-	oldName := aBindingReference asQualifiedReference.
 	(global class isMeta and: [global fullyQualifiedReference = newName])
 		ifTrue: 
 			[self
@@ -934,7 +930,7 @@ onVariableRenamed: aVariableBinding from: aBindingReference
 		ifFalse: [pkg notNil ifTrue: [pkg onVariableRenamed: aVariableBinding from: oldName]]!
 
 packagedVariables
-	"Private - Answer an <LookupTable> which maps the <BindingReference> names of all packaged globals to the owning package. This is used during the tracing of package prerequisites."
+	"Private - Answer an <LookupTable> which maps the <BindingReference> names of all packaged variables (including classes) to the owning package. This is used during the tracing of package prerequisites, for example."
 
 	^packagedVariables!
 
@@ -1002,16 +998,16 @@ packageOfResourceIdentifierOrItsClass: aResourceIdentifier
 	^aResourceIdentifier owningPackage!
 
 packageOfVariableNamed: aBindingReference
-	"Answer the package held by the receiver which owns the named shared variable (excluding
-	classes) or nil if there isn't one."
+	"Answer the package held by the receiver which owns the named shared variable (including classes) or nil if there isn't one."
 
-	| package |
-	package := self packagedVariables at: aBindingReference
-				ifAbsentPut: 
-					["Fall back on enumerating the packages."
-					self packages detect: [:each | each includesVariableNamed: aBindingReference] ifNone: [^nil]].
-	self assert: [package includesVariableNamed: aBindingReference].
-	^package!
+	^self isProcessingEvents
+		ifTrue: [self packagedVariables lookup: aBindingReference]
+		ifFalse: 
+			["The packaged variables may be inaccurate, so we have to enumerate the packages - this will not be fast"
+			self packages detect: 
+					[:each |
+					(each includesClassNamed: aBindingReference) or: [each includesVariableNamed: aBindingReference]]
+				ifNone: []]!
 
 packages
 	"Answer the <collection> of <Package>s held by the receiver, note that this excluded the
@@ -1060,14 +1056,14 @@ removePackage: aPackage
 	self loadedChanged.
 	^aPackage!
 
-renamePackage: aPackage to: aStringPathname 
+renamePackage: aPackage to: aStringPathname
 	"Attempts to rename aPackage held by the receiver to aStringName."
 
 	| existing newName |
 	newName := File splitStemFrom: aStringPathname.
 	existing := self packageNamed: newName ifNone: [].
 	(existing isNil or: [existing == aPackage]) ifFalse: [^self error: 'Package already exists'].
-	(self packages)
+	self packages
 		removeKey: aPackage name ifAbsent: [];
 		at: newName put: aPackage.
 	aPackage packageFileName: aStringPathname.
@@ -1076,12 +1072,10 @@ renamePackage: aPackage to: aStringPathname
 		loadedChanged!
 
 resetPrerequisites
-	"Private - Inform all packages that their prerequisites may have
-	changed, and trigger the generic event announcing that to the world."
+	"Private - Inform all packages that their prerequisites may have changed, and trigger the generic event announcing that to the world."
 
-	self packages do: [:aPackage | aPackage resetPrerequisites].
-	self isProcessingEvents ifTrue: [
-		self trigger: #prerequisitesReset]!
+	self packages do: [:aPackage | aPackage basicResetPrerequisites].
+	self isProcessingEvents ifTrue: [self trigger: #prerequisitesReset]!
 
 resourceRepackaged: aResourceIdentifier from: source to: destination
 	"Private - Trigger resource repackaging notifications."
@@ -1138,6 +1132,18 @@ uninstall: aPackage
 unpackagedClasses
 	^Smalltalk allClasses asIdentitySet difference: self allPackagedClasses asIdentitySet!
 
+unpackagedVariables
+	| unpackaged |
+	unpackaged := Set new.
+	Root allBindingsDo: 
+			[:var |
+			(var isClassVariable not and: 
+					[(var value class isMeta not
+						or: [var key ~= var value name or: [var environment ~~ var value environment]])
+							and: [var owningPackage isNil]])
+				ifTrue: [unpackaged add: var fullName]].
+	^unpackaged!
+
 variableRepackaged: aBindingReference from: source to: destination
 	"Private - The static variable named by the <BindingReference> first argument has been repackaged. The operation is now complete and the package system is in a consistent state so this is an appropriate point to update change flags for all objects affected by the move and to trigger various notifications."
 
@@ -1165,115 +1171,116 @@ youShouldBeProcessingEvents
 	Change monitoring will be enabled if you ignore this warning (recommended)'.
 	[self isProcessingEvents] whileFalse: [self beProcessingEvents].
 	self clearCachedInformation! !
-!PackageManager categoriesFor: #addClass:to:!adding!public! !
-!PackageManager categoriesFor: #addLooseMethod:to:!helpers!private! !
-!PackageManager categoriesFor: #addManagedPackage:!adding!private! !
-!PackageManager categoriesFor: #addMethod:to:!adding!public! !
-!PackageManager categoriesFor: #addPackage:!adding!private! !
-!PackageManager categoriesFor: #addPackagedMethod:to:!helpers!private! !
-!PackageManager categoriesFor: #addResourceIdentifier:to:!adding!public! !
-!PackageManager categoriesFor: #addVariableNamed:to:!adding!public! !
-!PackageManager categoriesFor: #allDependentPackagesOf:visited:!accessing!private! !
-!PackageManager categoriesFor: #allPackagedClasses!accessing!public! !
-!PackageManager categoriesFor: #allPackagedVariableNames!accessing!private! !
-!PackageManager categoriesFor: #allSourceObjects!public!source filing! !
-!PackageManager categoriesFor: #allVariableAliases!enquiries!public! !
-!PackageManager categoriesFor: #basePackages!accessing!public! !
-!PackageManager categoriesFor: #basicAddPackage:!adding!private! !
-!PackageManager categoriesFor: #basicInstall:!operations!private! !
-!PackageManager categoriesFor: #basicRemovePackage:!private!removing! !
-!PackageManager categoriesFor: #basicUninstall:!private!removing! !
-!PackageManager categoriesFor: #beNotProcessingEvents!modes!private! !
-!PackageManager categoriesFor: #beProcessingEvents!modes!private! !
-!PackageManager categoriesFor: #buildVariablesMap!helpers!private! !
-!PackageManager categoriesFor: #changedPackages!accessing!public! !
-!PackageManager categoriesFor: #changeProcessEventsBy:!operations!private! !
-!PackageManager categoriesFor: #classRepackaged:from:to:!events!private! !
-!PackageManager categoriesFor: #clearCachedInformation!helpers!private! !
-!PackageManager categoriesFor: #defaultPackage!accessing!public! !
-!PackageManager categoriesFor: #defaultPackage:!accessing!public! !
-!PackageManager categoriesFor: #dependentPackagesOf:!private!testing! !
-!PackageManager categoriesFor: #duplicatePackageSignal!accessing!private! !
-!PackageManager categoriesFor: #errorFileInCompatibilityCheck:overlap:!exceptions!private! !
-!PackageManager categoriesFor: #errorNameIsNotUnique:!exceptions!private! !
-!PackageManager categoriesFor: #errorPackageNotFound:!exceptions!private! !
-!PackageManager categoriesFor: #errorPrerequisiteNotFound:!exceptions!private! !
-!PackageManager categoriesFor: #errorRemovingSystemPackage!exceptions!private! !
-!PackageManager categoriesFor: #forgetLooseMethods!operations!public! !
-!PackageManager categoriesFor: #getEvents!events!private! !
-!PackageManager categoriesFor: #getLooseMethods!helpers!private! !
-!PackageManager categoriesFor: #includesPackage:!public!searching! !
-!PackageManager categoriesFor: #includesPackageNamed:!public!searching! !
-!PackageManager categoriesFor: #initialize!initializing!private! !
-!PackageManager categoriesFor: #install:!operations!public! !
-!PackageManager categoriesFor: #installHere:!operations!public! !
-!PackageManager categoriesFor: #isLooseMethod:!public!testing! !
-!PackageManager categoriesFor: #isLooseResource:!public!testing! !
-!PackageManager categoriesFor: #isProcessingEvents!private!testing! !
-!PackageManager categoriesFor: #loadCompatibilityCheck:!helpers!private! !
-!PackageManager categoriesFor: #loadedChanged!private!updating! !
-!PackageManager categoriesFor: #loadPackage:!binary filing!private! !
-!PackageManager categoriesFor: #loadPrereq:relativeTo:extension:loaded:trail:!helpers!private! !
-!PackageManager categoriesFor: #loadPrereqsForPackage:relativeTo:extension:loaded:trail:!helpers!private! !
-!PackageManager categoriesFor: #looseMethodRemoved:!helpers!private! !
-!PackageManager categoriesFor: #looseMethods!accessing!public! !
-!PackageManager categoriesFor: #looseMethodUpdated:!helpers!private! !
-!PackageManager categoriesFor: #looseResourceIdentifiers!accessing!private! !
-!PackageManager categoriesFor: #markAllPackagesAsBase!operations!public! !
-!PackageManager categoriesFor: #memberOf:updatedAt:!events!private! !
-!PackageManager categoriesFor: #membershipChanged:!events!private! !
-!PackageManager categoriesFor: #membershipChanged:at:!events!private! !
-!PackageManager categoriesFor: #memberUpdatedIn:!event handling!private! !
-!PackageManager categoriesFor: #methodRepackaged:from:to:!events!private! !
-!PackageManager categoriesFor: #moveLooseMethod:from:to:!helpers!private! !
-!PackageManager categoriesFor: #moveMethod:from:to:!helpers!private! !
-!PackageManager categoriesFor: #newPackage:!adding!private! !
-!PackageManager categoriesFor: #noEventsDo:!helpers!private! !
-!PackageManager categoriesFor: #observePackage:!private!updating! !
-!PackageManager categoriesFor: #onClassAdded:!event handling!private! !
-!PackageManager categoriesFor: #onClassDirtied:!helpers!private! !
-!PackageManager categoriesFor: #onClassRemoved:!event handling!private! !
-!PackageManager categoriesFor: #onClassRenamed:from:to:!event handling!private! !
-!PackageManager categoriesFor: #onClassUpdated:!event handling!private! !
-!PackageManager categoriesFor: #onMethodAdded:!event handling!private! !
-!PackageManager categoriesFor: #onMethodCategorized:!event handling!private! !
-!PackageManager categoriesFor: #onMethodRemoved:!event handling!private! !
-!PackageManager categoriesFor: #onMethodUpdated:!event handling!private! !
-!PackageManager categoriesFor: #onOwnedChanged:!event handling!private! !
-!PackageManager categoriesFor: #onPackageChanged:!event handling!private! !
-!PackageManager categoriesFor: #onPrerequisitesReset:!event handling!private! !
-!PackageManager categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!PackageManager categoriesFor: #onVariableRemoved:!event handling!private! !
-!PackageManager categoriesFor: #onVariableRenamed:from:!event handling!private! !
-!PackageManager categoriesFor: #packagedVariables!public! !
-!PackageManager categoriesFor: #packageNamed:!accessing!public! !
-!PackageManager categoriesFor: #packageNamed:ifNone:!accessing!public! !
-!PackageManager categoriesFor: #packageNames!accessing!public! !
-!PackageManager categoriesFor: #packageOfClass:!public!searching! !
-!PackageManager categoriesFor: #packageOfMethod:!public!searching! !
-!PackageManager categoriesFor: #packageOfMethodOrItsClass:!public!searching! !
-!PackageManager categoriesFor: #packageOfResourceIdentifier:!public!searching! !
-!PackageManager categoriesFor: #packageOfResourceIdentifierOrItsClass:!public!searching! !
-!PackageManager categoriesFor: #packageOfVariableNamed:!public!searching! !
-!PackageManager categoriesFor: #packages!accessing!public! !
-!PackageManager categoriesFor: #prerequisiteNotFoundSignal!constants!public! !
-!PackageManager categoriesFor: #rebaseBasePackagesTo:!public!removing! !
-!PackageManager categoriesFor: #release!initializing!private! !
-!PackageManager categoriesFor: #removePackage:!public!removing! !
-!PackageManager categoriesFor: #renamePackage:to:!public!removing! !
-!PackageManager categoriesFor: #resetPrerequisites!private!updating! !
-!PackageManager categoriesFor: #resourceRepackaged:from:to:!events!private! !
-!PackageManager categoriesFor: #setEvents:!events!private! !
-!PackageManager categoriesFor: #sortedPackages!accessing!public! !
-!PackageManager categoriesFor: #sourceManager!accessing!public! !
-!PackageManager categoriesFor: #systemPackage!constants!private! !
-!PackageManager categoriesFor: #uninstall:!public!removing! !
-!PackageManager categoriesFor: #unpackagedClasses!enquiries!private! !
-!PackageManager categoriesFor: #variableRepackaged:from:to:!events!private! !
-!PackageManager categoriesFor: #versionPackageIfRequired:!public! !
-!PackageManager categoriesFor: #youShouldBeProcessingEvents!helpers!private! !
+!Kernel.PackageManager categoriesFor: #addClass:to:!adding!public! !
+!Kernel.PackageManager categoriesFor: #addLooseMethod:to:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #addManagedPackage:!adding!private! !
+!Kernel.PackageManager categoriesFor: #addMethod:to:!adding!public! !
+!Kernel.PackageManager categoriesFor: #addPackage:!adding!private! !
+!Kernel.PackageManager categoriesFor: #addPackagedMethod:to:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #addResourceIdentifier:to:!adding!public! !
+!Kernel.PackageManager categoriesFor: #addVariableNamed:to:!adding!public! !
+!Kernel.PackageManager categoriesFor: #allDependentPackagesOf:visited:!accessing!private! !
+!Kernel.PackageManager categoriesFor: #allPackagedClasses!accessing!public! !
+!Kernel.PackageManager categoriesFor: #allPackagedVariableNames!accessing!private! !
+!Kernel.PackageManager categoriesFor: #allSourceObjects!public!source filing! !
+!Kernel.PackageManager categoriesFor: #allVariableAliases!enquiries!public! !
+!Kernel.PackageManager categoriesFor: #basePackages!accessing!public! !
+!Kernel.PackageManager categoriesFor: #basicAddPackage:!adding!private! !
+!Kernel.PackageManager categoriesFor: #basicInstall:!operations!private! !
+!Kernel.PackageManager categoriesFor: #basicRemovePackage:!private!removing! !
+!Kernel.PackageManager categoriesFor: #basicUninstall:!private!removing! !
+!Kernel.PackageManager categoriesFor: #beNotProcessingEvents!modes!private! !
+!Kernel.PackageManager categoriesFor: #beProcessingEvents!modes!private! !
+!Kernel.PackageManager categoriesFor: #buildVariablesMap!helpers!private! !
+!Kernel.PackageManager categoriesFor: #changedPackages!accessing!public! !
+!Kernel.PackageManager categoriesFor: #changeProcessEventsBy:!operations!private! !
+!Kernel.PackageManager categoriesFor: #classRepackaged:from:to:!events!private! !
+!Kernel.PackageManager categoriesFor: #clearCachedInformation!helpers!private! !
+!Kernel.PackageManager categoriesFor: #defaultPackage!accessing!public! !
+!Kernel.PackageManager categoriesFor: #defaultPackage:!accessing!public! !
+!Kernel.PackageManager categoriesFor: #dependentPackagesOf:!private!testing! !
+!Kernel.PackageManager categoriesFor: #duplicatePackageSignal!accessing!private! !
+!Kernel.PackageManager categoriesFor: #errorFileInCompatibilityCheck:overlap:!exceptions!private! !
+!Kernel.PackageManager categoriesFor: #errorNameIsNotUnique:!exceptions!private! !
+!Kernel.PackageManager categoriesFor: #errorPackageNotFound:!exceptions!private! !
+!Kernel.PackageManager categoriesFor: #errorPrerequisiteNotFound:!exceptions!private! !
+!Kernel.PackageManager categoriesFor: #errorRemovingSystemPackage!exceptions!private! !
+!Kernel.PackageManager categoriesFor: #forgetLooseMethods!operations!public! !
+!Kernel.PackageManager categoriesFor: #getEvents!events!private! !
+!Kernel.PackageManager categoriesFor: #getLooseMethods!helpers!private! !
+!Kernel.PackageManager categoriesFor: #includesPackage:!public!searching! !
+!Kernel.PackageManager categoriesFor: #includesPackageNamed:!public!searching! !
+!Kernel.PackageManager categoriesFor: #initialize!initializing!private! !
+!Kernel.PackageManager categoriesFor: #install:!operations!public! !
+!Kernel.PackageManager categoriesFor: #installHere:!operations!public! !
+!Kernel.PackageManager categoriesFor: #isLooseMethod:!public!testing! !
+!Kernel.PackageManager categoriesFor: #isLooseResource:!public!testing! !
+!Kernel.PackageManager categoriesFor: #isProcessingEvents!private!testing! !
+!Kernel.PackageManager categoriesFor: #loadCompatibilityCheck:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #loadedChanged!private!updating! !
+!Kernel.PackageManager categoriesFor: #loadPackage:!binary filing!private! !
+!Kernel.PackageManager categoriesFor: #loadPrereq:relativeTo:extension:loaded:trail:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #loadPrereqsForPackage:relativeTo:extension:loaded:trail:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #looseMethodRemoved:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #looseMethods!accessing!public! !
+!Kernel.PackageManager categoriesFor: #looseMethodUpdated:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #looseResourceIdentifiers!accessing!private! !
+!Kernel.PackageManager categoriesFor: #markAllPackagesAsBase!operations!public! !
+!Kernel.PackageManager categoriesFor: #memberOf:updatedAt:!events!private! !
+!Kernel.PackageManager categoriesFor: #membershipChanged:!events!private! !
+!Kernel.PackageManager categoriesFor: #membershipChanged:at:!events!private! !
+!Kernel.PackageManager categoriesFor: #memberUpdatedIn:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #methodRepackaged:from:to:!events!private! !
+!Kernel.PackageManager categoriesFor: #moveLooseMethod:from:to:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #moveMethod:from:to:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #newPackage:!adding!private! !
+!Kernel.PackageManager categoriesFor: #noEventsDo:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #observePackage:!private!updating! !
+!Kernel.PackageManager categoriesFor: #onClassAdded:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onClassDirtied:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #onClassRemoved:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onClassRenamed:from:to:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onClassUpdated:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onMethodAdded:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onMethodCategorized:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onMethodRemoved:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onMethodUpdated:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onOwnedChanged:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onPackageChanged:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onPrerequisitesReset:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Kernel.PackageManager categoriesFor: #onVariableRemoved:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #onVariableRenamed:from:!event handling!private! !
+!Kernel.PackageManager categoriesFor: #packagedVariables!public! !
+!Kernel.PackageManager categoriesFor: #packageNamed:!accessing!public! !
+!Kernel.PackageManager categoriesFor: #packageNamed:ifNone:!accessing!public! !
+!Kernel.PackageManager categoriesFor: #packageNames!accessing!public! !
+!Kernel.PackageManager categoriesFor: #packageOfClass:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packageOfMethod:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packageOfMethodOrItsClass:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packageOfResourceIdentifier:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packageOfResourceIdentifierOrItsClass:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packageOfVariableNamed:!public!searching! !
+!Kernel.PackageManager categoriesFor: #packages!accessing!public! !
+!Kernel.PackageManager categoriesFor: #prerequisiteNotFoundSignal!constants!public! !
+!Kernel.PackageManager categoriesFor: #rebaseBasePackagesTo:!public!removing! !
+!Kernel.PackageManager categoriesFor: #release!initializing!private! !
+!Kernel.PackageManager categoriesFor: #removePackage:!public!removing! !
+!Kernel.PackageManager categoriesFor: #renamePackage:to:!public!removing! !
+!Kernel.PackageManager categoriesFor: #resetPrerequisites!private!updating! !
+!Kernel.PackageManager categoriesFor: #resourceRepackaged:from:to:!events!private! !
+!Kernel.PackageManager categoriesFor: #setEvents:!events!private! !
+!Kernel.PackageManager categoriesFor: #sortedPackages!accessing!public! !
+!Kernel.PackageManager categoriesFor: #sourceManager!accessing!public! !
+!Kernel.PackageManager categoriesFor: #systemPackage!constants!private! !
+!Kernel.PackageManager categoriesFor: #uninstall:!public!removing! !
+!Kernel.PackageManager categoriesFor: #unpackagedClasses!enquiries!private! !
+!Kernel.PackageManager categoriesFor: #unpackagedVariables!enquiries!private! !
+!Kernel.PackageManager categoriesFor: #variableRepackaged:from:to:!events!private! !
+!Kernel.PackageManager categoriesFor: #versionPackageIfRequired:!public! !
+!Kernel.PackageManager categoriesFor: #youShouldBeProcessingEvents!helpers!private! !
 
-!PackageManager class methodsFor!
+!Kernel.PackageManager class methodsFor!
 
 buildSingletonInstance
 	| dolphin |
@@ -1296,12 +1303,9 @@ initialize
 		self initialize.
 	"
 
-	DuplicatePackageSignal := Signal 
-				description: 'Package ''%1'' already installed'.
-	PackageNotFoundSignal := Signal 
-				description: 'Failed to locate Package ''%1'''.
-	PrerequisiteNotFoundSignal := NotificationSignal 
-				description: 'Package ''%1'' cannot be found'!
+	DuplicatePackageSignal := Signal description: 'Package ''%1'' already installed'.
+	PackageNotFoundSignal := Signal description: 'Failed to locate Package ''%1'''.
+	PrerequisiteNotFoundSignal := NotificationSignal description: 'Package ''%1'' cannot be found'!
 
 new
 	"The receiver is a singleton class"
@@ -1313,7 +1317,7 @@ newSystemPackage
 	assigned to the package. It is assumed that there are no other packages currently defined.
 	N.B. This should only ever be used during the boot process."
 
-	| dolphin globalNames all inst |
+	| dolphin all inst |
 	Notification signal: 'Creating new system package'.
 	inst := self current.
 	self assert: [inst packages isEmpty].
@@ -1322,10 +1326,9 @@ newSystemPackage
 		basicScriptAt: #preinstall put: 'Error signal: ''Cannot replace the system package'''.
 	all := Smalltalk allClasses.
 	all do: [:aClass | dolphin addClass: aClass].
-	globalNames := Smalltalk keys.
-	globalNames removeAll: (all collect: [:aClass | aClass name]).
-	globalNames do: [:globalName | inst addVariableNamed: globalName to: dolphin].
-	dolphin setUntracedVariables: {#Transcript asQualifiedReference}.
+	(Root allBindings reject: [:each | each isClassVariable or: [each value class isMeta and: [each key = each value name]]]) do: [:each |
+		inst addVariableNamed: each fullyQualifiedReference to: dolphin].
+	dolphin setUntracedVariables: {'Core.Transcript' asQualifiedReference}.
 	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
 				ifNil: [0]
 				ifNotNil: [:filetime | filetime asInteger]).
@@ -1359,14 +1362,14 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
-!PackageManager class categoriesFor: #buildSingletonInstance!instance creation!private! !
-!PackageManager class categoriesFor: #current!instance creation!public! !
-!PackageManager class categoriesFor: #initialize!initializing!private! !
-!PackageManager class categoriesFor: #new!instance creation!public! !
-!PackageManager class categoriesFor: #newSystemPackage!operations!private! !
-!PackageManager class categoriesFor: #reset!operations!public! !
-!PackageManager class categoriesFor: #systemPackage!instance creation!public! !
-!PackageManager class categoriesFor: #systemPackageComment!constants!private! !
-!PackageManager class categoriesFor: #systemPackageName!constants!private! !
-!PackageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.PackageManager class categoriesFor: #buildSingletonInstance!instance creation!private! !
+!Kernel.PackageManager class categoriesFor: #current!instance creation!public! !
+!Kernel.PackageManager class categoriesFor: #initialize!initializing!private! !
+!Kernel.PackageManager class categoriesFor: #new!instance creation!public! !
+!Kernel.PackageManager class categoriesFor: #newSystemPackage!operations!private! !
+!Kernel.PackageManager class categoriesFor: #reset!operations!public! !
+!Kernel.PackageManager class categoriesFor: #systemPackage!instance creation!public! !
+!Kernel.PackageManager class categoriesFor: #systemPackageComment!constants!private! !
+!Kernel.PackageManager class categoriesFor: #systemPackageName!constants!private! !
+!Kernel.PackageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

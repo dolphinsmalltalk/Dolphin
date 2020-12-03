@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #CPINFOEXW
+External.Structure subclass: #'OS.CPINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_codepage' -> 16r14.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #CPINFOEXW
 		'_OffsetOf_MaxCharSize' -> 16r0.
 		'_OffsetOf_UnicodeDefaultChar' -> 16r12
 	}!
-CPINFOEXW guid: (GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
-CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
+OS.CPINFOEXW guid: (Core.GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
+OS.CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains information about a code page. This structure is used by the GetCPInfoExW function."
@@ -33,8 +33,8 @@ struct tagCPINFOEXW {
 	[readonly, helpstring("code page name (Unicode)"), string] unsigned short CodePageName[260];
 } CPINFOEXW;
 '!
-!CPINFOEXW categoriesForClass!Win32-Structs! !
-!CPINFOEXW methodsFor!
+!OS.CPINFOEXW categoriesForClass!Win32-Structs! !
+!OS.CPINFOEXW methodsFor!
 
 codepage
 	"Answer the <Integer> value of the receiver's 'codepage' field."
@@ -85,16 +85,16 @@ UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
 	^bytes wordAtOffset: _OffsetOf_UnicodeDefaultChar! !
-!CPINFOEXW categoriesFor: #codepage!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #CodePageName!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #DefaultChar!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #defaultCharacter!accessing!public! !
-!CPINFOEXW categoriesFor: #LeadByte!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #MaxCharSize!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #unicodeDefaultChar!accessing!public! !
-!CPINFOEXW categoriesFor: #UnicodeDefaultChar!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #codepage!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #CodePageName!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #DefaultChar!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #defaultCharacter!accessing!public! !
+!OS.CPINFOEXW categoriesFor: #LeadByte!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #MaxCharSize!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesFor: #unicodeDefaultChar!accessing!public! !
+!OS.CPINFOEXW categoriesFor: #UnicodeDefaultChar!**compiled accessors**!public! !
 
-!CPINFOEXW class methodsFor!
+!OS.CPINFOEXW class methodsFor!
 
 codePage: anInteger
 	| cpinfo |
@@ -122,17 +122,29 @@ defineFields
 "
 
 	self
-		defineField: #MaxCharSize type: DWORDField new beReadOnly offset: 0;
-		defineField: #DefaultChar type: (ArrayField type: ExternalArray length: 2) beReadOnly offset: 4;
-		defineField: #LeadByte type: (ArrayField type: ExternalArray length: 12) beReadOnly offset: 6;
-		defineField: #UnicodeDefaultChar type: WORDField new beReadOnly offset: 18;
-		defineField: #codepage type: DWORDField new beReadOnly offset: 20;
-		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
+		defineField: #MaxCharSize
+			type: DWORDField new beReadOnly
+			offset: 0;
+		defineField: #DefaultChar
+			type: (ArrayField type: ExternalArray length: 2) beReadOnly
+			offset: 4;
+		defineField: #LeadByte
+			type: (ArrayField type: ExternalArray length: 12) beReadOnly
+			offset: 6;
+		defineField: #UnicodeDefaultChar
+			type: WORDField new beReadOnly
+			offset: 18;
+		defineField: #codepage
+			type: DWORDField new beReadOnly
+			offset: 20;
+		defineField: #CodePageName
+			type: (StringField type: Utf16String length: 260) beReadOnly
+			offset: 24.
 	self byteSize: 544!
 
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
-!CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
-!CPINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
+!OS.CPINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

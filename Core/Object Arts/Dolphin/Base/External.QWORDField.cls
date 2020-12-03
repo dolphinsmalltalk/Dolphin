@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScalarField subclass: #QWORDField
+External.ScalarField subclass: #'External.QWORDField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-QWORDField guid: (GUID fromString: '{87b4c4eb-026e-11d3-9fd7-00a0cc3e4a32}')!
-QWORDField comment: '<QWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit unsigned integers.'!
-!QWORDField categoriesForClass!External-Data-Types! !
-!QWORDField methodsFor!
+External.QWORDField guid: (Core.GUID fromString: '{87b4c4eb-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.QWORDField comment: '<QWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit unsigned integers.'!
+!External.QWORDField categoriesForClass!External-Data-Types! !
+!External.QWORDField methodsFor!
 
 accessorMessage
 	"Private - Answer the receiver's 'accessorStem'."
@@ -27,16 +27,16 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes qwordAtOffset: offset put: anInteger! !
-!QWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!QWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!QWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.QWORDField categoriesFor: #accessorMessage!automatic generation!private! !
+!External.QWORDField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.QWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!QWORDField class methodsFor!
+!External.QWORDField class methodsFor!
 
 byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes.
 	A QWORD is always 8 bytes."
 
 	^8! !
-!QWORDField class categoriesFor: #byteSize!constants!private! !
+!External.QWORDField class categoriesFor: #byteSize!constants!private! !
 

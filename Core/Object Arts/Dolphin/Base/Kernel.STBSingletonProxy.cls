@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBSingletonProxy
+Kernel.STBProxy subclass: #'Kernel.STBSingletonProxy'
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBSingletonProxy guid: (GUID fromString: '{87b4c6f2-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBSingletonProxy comment: ''!
-!STBSingletonProxy categoriesForClass!System-Binary storage! !
-!STBSingletonProxy methodsFor!
+Kernel.STBSingletonProxy guid: (Core.GUID fromString: '{87b4c6f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBSingletonProxy comment: ''!
+!Kernel.STBSingletonProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBSingletonProxy methodsFor!
 
 class: aClass
 	"Set the receiver's class inst var."
@@ -30,11 +30,11 @@ stbFixup: inFiler at: anInteger
 	anObject := class perform: selector.
 	inFiler fixup: anInteger to: anObject.
 	^anObject! !
-!STBSingletonProxy categoriesFor: #class:!accessing!public! !
-!STBSingletonProxy categoriesFor: #selector:!accessing!public! !
-!STBSingletonProxy categoriesFor: #stbFixup:at:!converting!public! !
+!Kernel.STBSingletonProxy categoriesFor: #class:!accessing!public! !
+!Kernel.STBSingletonProxy categoriesFor: #selector:!accessing!public! !
+!Kernel.STBSingletonProxy categoriesFor: #stbFixup:at:!converting!public! !
 
-!STBSingletonProxy class methodsFor!
+!Kernel.STBSingletonProxy class methodsFor!
 
 forClass: aClass 
 	"Answers an instance of the receiver that represents the singleton class, aClass.
@@ -52,6 +52,6 @@ forClass: aClass using: aSelectorSymbol
 		class: aClass;
 		selector: aSelectorSymbol;
 		yourself! !
-!STBSingletonProxy class categoriesFor: #forClass:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #forClass:using:!instance creation!public! !
+!Kernel.STBSingletonProxy class categoriesFor: #forClass:!instance creation!public! !
+!Kernel.STBSingletonProxy class categoriesFor: #forClass:using:!instance creation!public! !
 

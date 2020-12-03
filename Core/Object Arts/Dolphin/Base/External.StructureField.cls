@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-EmbeddedField subclass: #StructureField
+External.EmbeddedField subclass: #'External.StructureField'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureField guid: (GUID fromString: '{87b4c4df-026e-11d3-9fd7-00a0cc3e4a32}')!
-StructureField comment: 'StructureField is an <ExternalField> type  for described <ExternalStructure> fields that are themselves instances of <ExternalStructure>s.'!
-!StructureField categoriesForClass!External-Data-Types! !
-!StructureField methodsFor!
+External.StructureField guid: (Core.GUID fromString: '{87b4c4df-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.StructureField comment: 'StructureField is an <ExternalField> type  for described <ExternalStructure> fields that are themselves instances of <ExternalStructure>s.'!
+!External.StructureField categoriesForClass!External-Data-Types! !
+!External.StructureField methodsFor!
 
 readFrom: anExternalStructure
 	"Private - Answer an <ExternalStructure> of the receiver's field class that is a reference
@@ -25,10 +25,10 @@ writeInto: anExternal value: anExternalStructure
 		from: offset+1
 		to: offset+self byteSize
 		startingAt: 1! !
-!StructureField categoriesFor: #readFrom:!indirect accessing!private! !
-!StructureField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.StructureField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.StructureField categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!StructureField class methodsFor!
+!External.StructureField class methodsFor!
 
 type: aClass
 	"Answer a new instance of the receiver which is used for describing
@@ -37,5 +37,5 @@ type: aClass
 	^self basicNew
 		initialize;
 		fieldClass: aClass! !
-!StructureField class categoriesFor: #type:!instance creation!public! !
+!External.StructureField class categoriesFor: #type:!instance creation!public! !
 

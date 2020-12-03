@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Number subclass: #ScaledDecimal
+Core.Number subclass: #'Core.ScaledDecimal'
 	instanceVariableNames: 'fraction scale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScaledDecimal guid: (GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
-ScaledDecimal comment: 'ScaledDecimal is a Number class to represent fixed point decimal numbers. It supports unbounded precision, with no practical limit to the number of digits before and after the decimal point.
+Core.ScaledDecimal guid: (Core.GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
+Core.ScaledDecimal comment: 'ScaledDecimal is a Number class to represent fixed point decimal numbers. It supports unbounded precision, with no practical limit to the number of digits before and after the decimal point.
 
 ScaledDecimal conforms to the following ANSI protocols:
 	Float
@@ -21,8 +21,8 @@ A ScaledDecimal represents a value as a Fraction and the number of digits after 
 
 We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledDecimal implementation from which this class was derived.
 '!
-!ScaledDecimal categoriesForClass!Magnitude-Numbers! !
-!ScaledDecimal methodsFor!
+!Core.ScaledDecimal categoriesForClass!Magnitude-Numbers! !
+!Core.ScaledDecimal methodsFor!
 
 - operand
 	"Answer the difference between the receiver and the <number>
@@ -102,7 +102,7 @@ denominator
 !
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| scaler quo num denom scaled |
 	scaler := scale exp10.
@@ -273,42 +273,42 @@ truncated
 
 	^fraction truncated
 ! !
-!ScaledDecimal categoriesFor: #-!arithmetic!public! !
-!ScaledDecimal categoriesFor: #*!arithmetic!public! !
-!ScaledDecimal categoriesFor: #/!arithmetic!public! !
-!ScaledDecimal categoriesFor: #//!arithmetic!public! !
-!ScaledDecimal categoriesFor: #+!arithmetic!public! !
-!ScaledDecimal categoriesFor: #<!comparing!public! !
-!ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #asFloat!converting!public! !
-!ScaledDecimal categoriesFor: #asFraction!converting!public! !
-!ScaledDecimal categoriesFor: #asScaledDecimal:!converting!public! !
-!ScaledDecimal categoriesFor: #coerce:!coercing!private! !
-!ScaledDecimal categoriesFor: #denominator!accessing!public! !
-!ScaledDecimal categoriesFor: #displayOn:!printing!public! !
-!ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
-!ScaledDecimal categoriesFor: #generality!coercing!private! !
-!ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #hash!comparing!public! !
-!ScaledDecimal categoriesFor: #integerPart!accessing!public! !
-!ScaledDecimal categoriesFor: #isLiteral!public!testing! !
-!ScaledDecimal categoriesFor: #isZero!public!testing! !
-!ScaledDecimal categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #negated!arithmetic!public! !
-!ScaledDecimal categoriesFor: #numerator!accessing!public! !
-!ScaledDecimal categoriesFor: #printOn:!printing!public! !
-!ScaledDecimal categoriesFor: #raisedToInteger:!mathematical!public! !
-!ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
-!ScaledDecimal categoriesFor: #scale!accessing!public! !
-!ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
-!ScaledDecimal categoriesFor: #storeOn:!public! !
-!ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
+!Core.ScaledDecimal categoriesFor: #-!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #*!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #/!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #//!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #+!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #<!comparing!public! !
+!Core.ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #asFloat!converting!public! !
+!Core.ScaledDecimal categoriesFor: #asFraction!converting!public! !
+!Core.ScaledDecimal categoriesFor: #asScaledDecimal:!converting!public! !
+!Core.ScaledDecimal categoriesFor: #coerce:!coercing!private! !
+!Core.ScaledDecimal categoriesFor: #denominator!accessing!public! !
+!Core.ScaledDecimal categoriesFor: #displayOn:!printing!public! !
+!Core.ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
+!Core.ScaledDecimal categoriesFor: #generality!coercing!private! !
+!Core.ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #hash!comparing!public! !
+!Core.ScaledDecimal categoriesFor: #integerPart!accessing!public! !
+!Core.ScaledDecimal categoriesFor: #isLiteral!public!testing! !
+!Core.ScaledDecimal categoriesFor: #isZero!public!testing! !
+!Core.ScaledDecimal categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #negated!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #numerator!accessing!public! !
+!Core.ScaledDecimal categoriesFor: #printOn:!printing!public! !
+!Core.ScaledDecimal categoriesFor: #raisedToInteger:!mathematical!public! !
+!Core.ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
+!Core.ScaledDecimal categoriesFor: #scale!accessing!public! !
+!Core.ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
+!Core.ScaledDecimal categoriesFor: #storeOn:!public! !
+!Core.ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
 
-ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #scale #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
+Core.ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #scale #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 
-!ScaledDecimal class methodsFor!
+!Core.ScaledDecimal class methodsFor!
 
 maxPrecision
 	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
@@ -340,8 +340,8 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
-!ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
-!ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
-!ScaledDecimal class categoriesFor: #one!instance creation!public! !
-!ScaledDecimal class categoriesFor: #zero!instance creation!public! !
+!Core.ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
+!Core.ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
+!Core.ScaledDecimal class categoriesFor: #one!instance creation!public! !
+!Core.ScaledDecimal class categoriesFor: #zero!instance creation!public! !
 

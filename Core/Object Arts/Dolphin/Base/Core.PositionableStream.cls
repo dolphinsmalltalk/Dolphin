@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequencedStream subclass: #PositionableStream
+Core.SequencedStream subclass: #'Core.PositionableStream'
 	instanceVariableNames: 'collection position readLimit locale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PositionableStream guid: (GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
-PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
+Core.PositionableStream guid: (Core.GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
 
 Note that some inconsistencies arise when streaming over multi-byte string encodings, such as UTF-8. The position reported by the stream, and that to which it can be set, is always expressed as a code unit position. This has a number of consequences to be aware of:
 - Reading a single character may advance the position by more than one code unit position. In the case of UTF-8 characters are represented by 1 to 4 code units, so ReadStream>>next will increment the position between 1 and 4 bytes.
@@ -16,8 +16,8 @@ Note that some inconsistencies arise when streaming over multi-byte string encod
 Instance Variables
 	position		<Integer> 0 based offset of the current code unit position in the stream
 	readLimit		<Integer> Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).'!
-!PositionableStream categoriesForClass!Collections-Streams! !
-!PositionableStream methodsFor!
+!Core.PositionableStream categoriesForClass!Collections-Streams! !
+!Core.PositionableStream methodsFor!
 
 advancePosition
 	^position := position + 1!
@@ -112,9 +112,9 @@ lastPosition
 	^readLimit!
 
 locale
-"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
+	"Answer the <Locale> to be used when emitting or reaading localisable data to/from this stream."
 
-	^locale ?? Locale.UserDefault!
+	^locale!
 
 locale: aLocale
 "Set the <Locale> to be used when emitting or reaading localisable data to/from this stream."
@@ -192,6 +192,7 @@ on: aCollection
 	collection := aCollection.
 	readLimit := collection size.
 	position := 0.
+	locale := Locale.UserDefault
 !
 
 originalContents
@@ -219,8 +220,20 @@ positionAfterNext: anInteger
 	stop > self lastPosition ifTrue: [^self errorEndOfStream].
 	^stop!
 
+readLimit: anInteger
+	(anInteger >= 0 and: [anInteger <= collection size])
+		ifTrue: 
+			[readLimit := anInteger.
+			position := position min: readLimit]
+		ifFalse: [^self errorSubscriptBounds: anInteger]!
+
 reset
 	position := 0!
+
+reverseContents
+	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream, but in reverse order."
+
+	^collection reversedFrom: 1 to: self size!
 
 setToEnd
 	"Set the position of the receiver to be past the last value in the stream."
@@ -251,40 +264,42 @@ upToEnd
 	 particular streams, and which counts by raw elements regardless of encoding."
 
 	^self basicNext: self lastPosition - self position! !
-!PositionableStream categoriesFor: #advancePosition!positioning!private! !
-!PositionableStream categoriesFor: #atEnd!public!testing! !
-!PositionableStream categoriesFor: #basicNext:!accessing!private! !
-!PositionableStream categoriesFor: #basicNextAvailable!accessing!private! !
-!PositionableStream categoriesFor: #basicNextAvailable:!private! !
-!PositionableStream categoriesFor: #basicUpTo:!accessing!private! !
-!PositionableStream categoriesFor: #collection!accessing!private! !
-!PositionableStream categoriesFor: #contents!accessing!public! !
-!PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
-!PositionableStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!PositionableStream categoriesFor: #lastPosition!accessing!private! !
-!PositionableStream categoriesFor: #locale!accessing!public! !
-!PositionableStream categoriesFor: #locale:!accessing!public! !
-!PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
-!PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
-!PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
-!PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextWORD!binary filing!public! !
-!PositionableStream categoriesFor: #on:!initializing!private! !
-!PositionableStream categoriesFor: #originalContents!accessing!public! !
-!PositionableStream categoriesFor: #position!positioning!public! !
-!PositionableStream categoriesFor: #position:!positioning!public! !
-!PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
-!PositionableStream categoriesFor: #reset!positioning!public! !
-!PositionableStream categoriesFor: #setToEnd!positioning!public! !
-!PositionableStream categoriesFor: #size!accessing!public! !
-!PositionableStream categoriesFor: #upTo:!accessing!public! !
-!PositionableStream categoriesFor: #upToEnd!accessing!public! !
+!Core.PositionableStream categoriesFor: #advancePosition!positioning!private! !
+!Core.PositionableStream categoriesFor: #atEnd!public!testing! !
+!Core.PositionableStream categoriesFor: #basicNext:!accessing!private! !
+!Core.PositionableStream categoriesFor: #basicNextAvailable!accessing!private! !
+!Core.PositionableStream categoriesFor: #basicNextAvailable:!private! !
+!Core.PositionableStream categoriesFor: #basicUpTo:!accessing!private! !
+!Core.PositionableStream categoriesFor: #collection!accessing!private! !
+!Core.PositionableStream categoriesFor: #contents!accessing!public! !
+!Core.PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
+!Core.PositionableStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
+!Core.PositionableStream categoriesFor: #lastPosition!accessing!private! !
+!Core.PositionableStream categoriesFor: #locale!accessing!public! !
+!Core.PositionableStream categoriesFor: #locale:!accessing!public! !
+!Core.PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
+!Core.PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
+!Core.PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
+!Core.PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
+!Core.PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
+!Core.PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
+!Core.PositionableStream categoriesFor: #nextWORD!binary filing!public! !
+!Core.PositionableStream categoriesFor: #on:!initializing!private! !
+!Core.PositionableStream categoriesFor: #originalContents!accessing!public! !
+!Core.PositionableStream categoriesFor: #position!positioning!public! !
+!Core.PositionableStream categoriesFor: #position:!positioning!public! !
+!Core.PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
+!Core.PositionableStream categoriesFor: #readLimit:!accessing!public! !
+!Core.PositionableStream categoriesFor: #reset!positioning!public! !
+!Core.PositionableStream categoriesFor: #reverseContents!accessing!public! !
+!Core.PositionableStream categoriesFor: #setToEnd!positioning!public! !
+!Core.PositionableStream categoriesFor: #size!accessing!public! !
+!Core.PositionableStream categoriesFor: #upTo:!accessing!public! !
+!Core.PositionableStream categoriesFor: #upToEnd!accessing!public! !
 
-PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
+Core.PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
-!PositionableStream class methodsFor!
+!Core.PositionableStream class methodsFor!
 
 on: aCollection
 	"Answer an instance of a kind of the receiver that streams over the 
@@ -303,6 +318,6 @@ on: aCollection from: firstIndex to: lastIndex
 
 	^self on: (aCollection copyFrom: firstIndex to: lastIndex)
 ! !
-!PositionableStream class categoriesFor: #on:!instance creation!public! !
-!PositionableStream class categoriesFor: #on:from:to:!instance creation!public! !
+!Core.PositionableStream class categoriesFor: #on:!instance creation!public! !
+!Core.PositionableStream class categoriesFor: #on:from:to:!instance creation!public! !
 

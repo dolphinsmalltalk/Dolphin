@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #StructurePointer
+External.Structure subclass: #'External.StructurePointer'
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructurePointer guid: (GUID fromString: '{e3b2fb6a-4ea0-48f6-bd97-5f65c176fb00}')!
-StructurePointer comment: ''!
-!StructurePointer categoriesForClass!External-Data-Structured! !
-!StructurePointer methodsFor!
+External.StructurePointer guid: (Core.GUID fromString: '{e3b2fb6a-4ea0-48f6-bd97-5f65c176fb00}')!
+External.StructurePointer comment: ''!
+!External.StructurePointer categoriesForClass!External-Data-Structured! !
+!External.StructurePointer methodsFor!
 
 elementClass
 	"Private - Answer the value of the receiver's ''elementClass'' instance variable."
@@ -25,11 +25,11 @@ value
 	"Answer the receiver's value field as a Smalltalk object."
 
 	^self elementClass fromAddress: bytes! !
-!StructurePointer categoriesFor: #elementClass!accessing!private! !
-!StructurePointer categoriesFor: #elementClass:!accessing!private! !
-!StructurePointer categoriesFor: #value!accessing!public! !
+!External.StructurePointer categoriesFor: #elementClass!accessing!private! !
+!External.StructurePointer categoriesFor: #elementClass:!accessing!private! !
+!External.StructurePointer categoriesFor: #value!accessing!public! !
 
-!StructurePointer class methodsFor!
+!External.StructurePointer class methodsFor!
 
 byteSize
 	^VMConstants.IntPtrSize!
@@ -64,9 +64,9 @@ newNull: pointerClass elementClass: elementClass
 		initializeAtAddress: pointerClass new;
 		elementClass: elementClass;
 		yourself! !
-!StructurePointer class categoriesFor: #byteSize!accessing!public! !
-!StructurePointer class categoriesFor: #elementClass:!instance creation!public! !
-!StructurePointer class categoriesFor: #fromAddress:elementClass:!instance creation!public! !
-!StructurePointer class categoriesFor: #getFieldNames!constants!private! !
-!StructurePointer class categoriesFor: #newNull:elementClass:!instance creation!public! !
+!External.StructurePointer class categoriesFor: #byteSize!accessing!public! !
+!External.StructurePointer class categoriesFor: #elementClass:!instance creation!public! !
+!External.StructurePointer class categoriesFor: #fromAddress:elementClass:!instance creation!public! !
+!External.StructurePointer class categoriesFor: #getFieldNames!constants!private! !
+!External.StructurePointer class categoriesFor: #newNull:elementClass:!instance creation!public! !
 

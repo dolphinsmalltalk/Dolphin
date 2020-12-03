@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-nil subclass: #ProtoObject
+nil subclass: #'Kernel.ProtoObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtoObject guid: (GUID fromString: '{30771b7b-8bf6-4c81-8d54-7ed3b247a81d}')!
-ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
-!ProtoObject categoriesForClass!System-Support! !
-!ProtoObject methodsFor!
+Kernel.ProtoObject guid: (Core.GUID fromString: '{30771b7b-8bf6-4c81-8d54-7ed3b247a81d}')!
+Kernel.ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
+!Kernel.ProtoObject categoriesForClass!System-Support! !
+!Kernel.ProtoObject methodsFor!
 
 ~~ comparand
 	"Answer whether the <Object>, comparand,  is NOT identical to the receiver."
@@ -98,8 +98,7 @@ doesNotUnderstand: failedMessage
 	Signal a <MessageNotUnderstood> exception corresponding to the <failedMessage> argument,
 	message."
 
-	^MessageNotUnderstood receiver: self message: failedMessage
-!
+	^MessageNotUnderstood receiver: self message: failedMessage!
 
 error: signalerText
 	"Raise an <Error> exception reporting the error message contained in the
@@ -124,7 +123,9 @@ instVarAt: index
 		OutOfBounds		- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	_failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^(BoundsError new)
+	_failureCode == _PrimitiveFailureCode.OutOfBounds
+		ifTrue: 
+			[^BoundsError new
 				receiver: self;
 				signalWith: index].
 	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
@@ -158,20 +159,20 @@ primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
 	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger! !
-!ProtoObject categoriesFor: #~~!comparing!public! !
-!ProtoObject categoriesFor: #==!comparing!public! !
-!ProtoObject categoriesFor: #allReferences!enumerating!public! !
-!ProtoObject categoriesFor: #basicClass!accessing!public! !
-!ProtoObject categoriesFor: #basicIdentityHash!comparing!public! !
-!ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
-!ProtoObject categoriesFor: #basicPrintString!printing!public! !
-!ProtoObject categoriesFor: #basicSize!accessing!private! !
-!ProtoObject categoriesFor: #become:!mutating!public! !
-!ProtoObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!ProtoObject categoriesFor: #error:!exceptions!public! !
-!ProtoObject categoriesFor: #identityHash!comparing!public! !
-!ProtoObject categoriesFor: #instVarAt:!accessing!private! !
-!ProtoObject categoriesFor: #isKindOf:!public!testing! !
-!ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
-!ProtoObject categoriesFor: #primitiveFailed:!exceptions!public! !
+!Kernel.ProtoObject categoriesFor: #~~!comparing!public! !
+!Kernel.ProtoObject categoriesFor: #==!comparing!public! !
+!Kernel.ProtoObject categoriesFor: #allReferences!enumerating!public! !
+!Kernel.ProtoObject categoriesFor: #basicClass!accessing!public! !
+!Kernel.ProtoObject categoriesFor: #basicIdentityHash!comparing!public! !
+!Kernel.ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
+!Kernel.ProtoObject categoriesFor: #basicPrintString!printing!public! !
+!Kernel.ProtoObject categoriesFor: #basicSize!accessing!private! !
+!Kernel.ProtoObject categoriesFor: #become:!mutating!public! !
+!Kernel.ProtoObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!Kernel.ProtoObject categoriesFor: #error:!exceptions!public! !
+!Kernel.ProtoObject categoriesFor: #identityHash!comparing!public! !
+!Kernel.ProtoObject categoriesFor: #instVarAt:!accessing!private! !
+!Kernel.ProtoObject categoriesFor: #isKindOf:!public!testing! !
+!Kernel.ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
+!Kernel.ProtoObject categoriesFor: #primitiveFailed:!exceptions!public! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Boolean subclass: #True
+Core.Boolean subclass: #'Core.True'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-True guid: (GUID fromString: '{87b4c4fe-026e-11d3-9fd7-00a0cc3e4a32}')!
-True comment: 'The True class implements the behavior of the true (logical truth) object.
+Core.True guid: (Core.GUID fromString: '{87b4c4fe-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.True comment: 'The True class implements the behavior of the true (logical truth) object.
 
 Trueis a singleton whose sole instance is the object represented by the reserved word, true. true is an identity object (i.e. any reference to true will always answer true when compared with any other using the #== message).
 
 True implement the ANSI protocols <Object> and <boolean>.'!
-!True categoriesForClass!Kernel-Objects! !
-!True methodsFor!
+!Core.True categoriesForClass!Kernel-Objects! !
+!Core.True methodsFor!
 
 and: operand 
 	"Answer whether the receiver and the result of evaluating the <niladicValuable>,
@@ -119,16 +119,16 @@ xor: operand
 	is false."
 
 	^operand not! !
-!True categoriesFor: #and:!control flow!public! !
-!True categoriesFor: #asDword!converting!public! !
-!True categoriesFor: #asParameter!converting!public! !
-!True categoriesFor: #asUIntPtr!converting!public! !
-!True categoriesFor: #ifFalse:!control flow!public! !
-!True categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!True categoriesFor: #ifTrue:!control flow!public! !
-!True categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!True categoriesFor: #not!logical operations!public! !
-!True categoriesFor: #or:!control flow!public! !
-!True categoriesFor: #printOn:!printing!public! !
-!True categoriesFor: #xor:!logical operations!public! !
+!Core.True categoriesFor: #and:!control flow!public! !
+!Core.True categoriesFor: #asDword!converting!public! !
+!Core.True categoriesFor: #asParameter!converting!public! !
+!Core.True categoriesFor: #asUIntPtr!converting!public! !
+!Core.True categoriesFor: #ifFalse:!control flow!public! !
+!Core.True categoriesFor: #ifFalse:ifTrue:!control flow!public! !
+!Core.True categoriesFor: #ifTrue:!control flow!public! !
+!Core.True categoriesFor: #ifTrue:ifFalse:!control flow!public! !
+!Core.True categoriesFor: #not!logical operations!public! !
+!Core.True categoriesFor: #or:!control flow!public! !
+!Core.True categoriesFor: #printOn:!printing!public! !
+!Core.True categoriesFor: #xor:!logical operations!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBCollectionProxy subclass: #STBSortedCollectionProxy
+Kernel.STBCollectionProxy subclass: #'Kernel.STBSortedCollectionProxy'
 	instanceVariableNames: 'sortAlgorithm'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBSortedCollectionProxy guid: (GUID fromString: '{87b4c6f7-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBSortedCollectionProxy comment: ''!
-!STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
-!STBSortedCollectionProxy methodsFor!
+Kernel.STBSortedCollectionProxy guid: (Core.GUID fromString: '{87b4c6f7-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBSortedCollectionProxy comment: ''!
+!Kernel.STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
+!Kernel.STBSortedCollectionProxy methodsFor!
 
 sortAlgorithm
 	^sortAlgorithm!
@@ -31,11 +31,11 @@ value
 		setSortAlgorithm: sortAlgorithm;
 		addAllWithoutSorting: array;
 		yourself! !
-!STBSortedCollectionProxy categoriesFor: #sortAlgorithm!accessing!private! !
-!STBSortedCollectionProxy categoriesFor: #sortAlgorithm:!accessing!private! !
-!STBSortedCollectionProxy categoriesFor: #value!converting!public! !
+!Kernel.STBSortedCollectionProxy categoriesFor: #sortAlgorithm!accessing!private! !
+!Kernel.STBSortedCollectionProxy categoriesFor: #sortAlgorithm:!accessing!private! !
+!Kernel.STBSortedCollectionProxy categoriesFor: #value!converting!public! !
 
-!STBSortedCollectionProxy class methodsFor!
+!Kernel.STBSortedCollectionProxy class methodsFor!
 
 forCollection: aSortedCollection 
 	"Answer a new instance representing aSortedCollection."
@@ -44,17 +44,17 @@ forCollection: aSortedCollection
 		sortAlgorithm: aSortedCollection algorithm;
 		yourself!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 proxy - the sort algorithm is lost."
 
-	anSTBClassFormat version > self stbVersion 
-		ifTrue: [^super stbConvertFrom: anSTBClassFormat].
+	anSTBClassFormat version > self stbVersion ifTrue: [^super stbConvertFrom: anSTBClassFormat].
 	^
-	[:data | 
+	[:data |
 	| convertedProxy |
 	convertedProxy := self basicNew.
 	1 to: data size do: [:i | convertedProxy instVarAt: i put: (data at: i)].
-	convertedProxy sortAlgorithm: (SortedCollection defaultSortAlgorithmClass sortBlock: convertedProxy sortAlgorithm).
+	convertedProxy
+		sortAlgorithm: (SortedCollection defaultSortAlgorithmClass sortBlock: convertedProxy sortAlgorithm).
 	convertedProxy]!
 
 stbVersion
@@ -62,7 +62,7 @@ stbVersion
 		1 - sortBlock becomes sortAlgorithm"
 
 	^1! !
-!STBSortedCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
-!STBSortedCollectionProxy class categoriesFor: #stbConvertFrom:!instance creation!public! !
-!STBSortedCollectionProxy class categoriesFor: #stbVersion!instance creation!public! !
+!Kernel.STBSortedCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
+!Kernel.STBSortedCollectionProxy class categoriesFor: #stbConvertFrom:!instance creation!public! !
+!Kernel.STBSortedCollectionProxy class categoriesFor: #stbVersion!instance creation!public! !
 

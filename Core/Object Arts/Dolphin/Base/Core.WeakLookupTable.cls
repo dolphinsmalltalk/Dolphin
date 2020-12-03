@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedLookupTable variableSubclass: #WeakLookupTable
+Core.SharedLookupTable variableSubclass: #'Core.WeakLookupTable'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakLookupTable guid: (GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
-WeakLookupTable comment: ''!
-!WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
-!WeakLookupTable methodsFor!
+Core.WeakLookupTable guid: (Core.GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.WeakLookupTable comment: ''!
+!Core.WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
+!Core.WeakLookupTable methodsFor!
 
 copyEmpty: anInteger
 	"Private - Answer an empty copy of the receiver, with enough space for anInteger
@@ -37,7 +37,7 @@ do: operation
 				self setSpecialBehavior: keysMask.
 				self basicValues setSpecialBehavior: valuesMask]]!
 
-elementsExpired: losses 
+elementsExpired: losses
 	"Private - Handle the loss of <integer>, losses, keys from the receiver. We must repair the hash 
 	table to maintain the set invariants, and we also nil out the corresponding values to allow them 
 	to expire if they've no other references. Similar to WeakSet>>elementsExpired:.
@@ -50,31 +50,29 @@ elementsExpired: losses
 			[| deathAt capacity corpse |
 			corpse := DeadObject current.
 			capacity := self basicSize.
-			deathAt := self 
+			deathAt := self
 						basicIdentityIndexOf: corpse
 						from: 1
 						to: capacity.
-			losses > (self size // 4) 
+			losses > (self size // 4)
 				ifTrue: 
 					["Rehash the collection if a large number of losses (don't need to nil values)..."
-
 					[deathAt > 0] whileTrue: 
 							[tally := tally - 1.
 							self basicAt: deathAt put: nil.
-							deathAt := self 
+							deathAt := self
 										basicIdentityIndexOf: corpse
 										from: deathAt + 1
 										to: capacity].
 					self rehash]
 				ifFalse: 
 					["... otherwise remove the losses individually"
-
 					[deathAt > 0] whileTrue: 
 							[tally := tally - 1.
 							self basicAt: deathAt put: nil.
 							values basicAt: deathAt put: nil.	"nil the corresponding value too"
 							self fixCollisionsIgnoringCorpsesFrom: deathAt.
-							deathAt := self 
+							deathAt := self
 										basicIdentityIndexOf: corpse
 										from: deathAt + 1
 										to: capacity]]]!
@@ -209,25 +207,25 @@ valuesClass
 	is configured to inform the receiver when it suffers losses."
 
 	^MourningWeakArray! !
-!WeakLookupTable categoriesFor: #copyEmpty:!copying!private! !
-!WeakLookupTable categoriesFor: #do:!enumerating!public! !
-!WeakLookupTable categoriesFor: #elementsExpired:!finalizing!private! !
-!WeakLookupTable categoriesFor: #elementsExpired:of:!finalizing!private! !
-!WeakLookupTable categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!WeakLookupTable categoriesFor: #hasWeakKeys!public!testing! !
-!WeakLookupTable categoriesFor: #hasWeakValues!public!testing! !
-!WeakLookupTable categoriesFor: #haveStrongKeys!accessing!public! !
-!WeakLookupTable categoriesFor: #haveStrongValues!accessing!public! !
-!WeakLookupTable categoriesFor: #haveWeakKeys!accessing!public! !
-!WeakLookupTable categoriesFor: #haveWeakValues!accessing!public! !
-!WeakLookupTable categoriesFor: #initialize!initializing!private! !
-!WeakLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!WeakLookupTable categoriesFor: #keysDo:!enumerating!public! !
-!WeakLookupTable categoriesFor: #postResize:!adding!private! !
-!WeakLookupTable categoriesFor: #species!accessing!public! !
-!WeakLookupTable categoriesFor: #valuesClass!constants!public! !
+!Core.WeakLookupTable categoriesFor: #copyEmpty:!copying!private! !
+!Core.WeakLookupTable categoriesFor: #do:!enumerating!public! !
+!Core.WeakLookupTable categoriesFor: #elementsExpired:!finalizing!private! !
+!Core.WeakLookupTable categoriesFor: #elementsExpired:of:!finalizing!private! !
+!Core.WeakLookupTable categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+!Core.WeakLookupTable categoriesFor: #hasWeakKeys!public!testing! !
+!Core.WeakLookupTable categoriesFor: #hasWeakValues!public!testing! !
+!Core.WeakLookupTable categoriesFor: #haveStrongKeys!accessing!public! !
+!Core.WeakLookupTable categoriesFor: #haveStrongValues!accessing!public! !
+!Core.WeakLookupTable categoriesFor: #haveWeakKeys!accessing!public! !
+!Core.WeakLookupTable categoriesFor: #haveWeakValues!accessing!public! !
+!Core.WeakLookupTable categoriesFor: #initialize!initializing!private! !
+!Core.WeakLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!Core.WeakLookupTable categoriesFor: #keysDo:!enumerating!public! !
+!Core.WeakLookupTable categoriesFor: #postResize:!adding!private! !
+!Core.WeakLookupTable categoriesFor: #species!accessing!public! !
+!Core.WeakLookupTable categoriesFor: #valuesClass!constants!public! !
 
-!WeakLookupTable class methodsFor!
+!Core.WeakLookupTable class methodsFor!
 
 initialize
 	"Initialize the receiver.
@@ -259,8 +257,8 @@ newWithWeakValues: anInteger
 
 	^super new: anInteger
 ! !
-!WeakLookupTable class categoriesFor: #initialize!development!initializing!public! !
-!WeakLookupTable class categoriesFor: #new:!instance creation!public! !
-!WeakLookupTable class categoriesFor: #newWithWeakKeys:!instance creation!public! !
-!WeakLookupTable class categoriesFor: #newWithWeakValues:!instance creation!public! !
+!Core.WeakLookupTable class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakLookupTable class categoriesFor: #new:!instance creation!public! !
+!Core.WeakLookupTable class categoriesFor: #newWithWeakKeys:!instance creation!public! !
+!Core.WeakLookupTable class categoriesFor: #newWithWeakValues:!instance creation!public! !
 

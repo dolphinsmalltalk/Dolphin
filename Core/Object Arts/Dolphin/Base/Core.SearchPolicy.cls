@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SearchPolicy
+Core.Object subclass: #'Core.SearchPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SearchPolicy guid: (GUID fromString: '{123a1501-7cb8-11d3-93ca-00a024ca708a}')!
-SearchPolicy isAbstract: true!
-SearchPolicy comment: 'SearchPolicy is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity. SearchPolicy itself implements an equality based policy using #= and #hash, etc.
+Core.SearchPolicy guid: (Core.GUID fromString: '{123a1501-7cb8-11d3-93ca-00a024ca708a}')!
+Core.SearchPolicy isNonInstantiable: true!
+Core.SearchPolicy comment: 'SearchPolicy is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity. SearchPolicy itself implements an equality based policy using #= and #hash, etc.
 
 SearchPolicy is the canonical implementation of the <searchPolicy> and <comparisonPolicy> protocols (the latter is really a subset of the former).
 
@@ -23,8 +23,8 @@ Class Variables:
 	Never		<NeverSearchPolicy>. Maintains that two objects are never equal.
 
 '!
-!SearchPolicy categoriesForClass!Collections-Support! !
-!SearchPolicy methodsFor!
+!Core.SearchPolicy categoriesForClass!Collections-Support! !
+!Core.SearchPolicy methodsFor!
 
 compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
@@ -46,6 +46,16 @@ hash: operand max: maximum
 	the low end of the range."
 
 	^(self hash: operand) \\ maximum + 1!
+
+isEquality
+	"Answer whether or not the receiver is a search policy that compares by object equality (i.e. uses #= for comparison and #hash for hashing)."
+
+	^false!
+
+isIdentity
+	"Answer whether or not the receiver is a search policy that compares by object identity (i.e. uses #== for comparison and #identityHash for hashing)."
+
+	^false!
 
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
@@ -94,21 +104,23 @@ printOn: aPuttableStream
 				space;
 				display: symbol]
 		ifNil: [super printOn: aPuttableStream]! !
-!SearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!SearchPolicy categoriesFor: #hash:!comparing!public! !
-!SearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!SearchPolicy categoriesFor: #isSelfEvaluating!public!testing! !
-!SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!SearchPolicy categoriesFor: #name!accessing!public! !
-!SearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!SearchPolicy categoriesFor: #newSet!operations!public! !
-!SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
-!SearchPolicy categoriesFor: #printOn:!public! !
+!Core.SearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!Core.SearchPolicy categoriesFor: #hash:!comparing!public! !
+!Core.SearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!Core.SearchPolicy categoriesFor: #isEquality!public!testing! !
+!Core.SearchPolicy categoriesFor: #isIdentity!public!testing! !
+!Core.SearchPolicy categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!Core.SearchPolicy categoriesFor: #name!accessing!public! !
+!Core.SearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!Core.SearchPolicy categoriesFor: #newSet!operations!public! !
+!Core.SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!Core.SearchPolicy categoriesFor: #printOn:!public! !
 
-SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
-SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
+Core.SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
+Core.SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
 
-!SearchPolicy class methodsFor!
+!Core.SearchPolicy class methodsFor!
 
 always
 	"Answers the singleton instance of the receiver that always answers 
@@ -117,17 +129,11 @@ always
 
 	^AlwaysSearchPolicy current!
 
-association
-	"Answer the singleton sub-instance of the receiver which supports a search policy based appropriate for Associations."
-
-	^AssociationSearchPolicy current!
-
 caseInsensitive
 	"Answer the singleton sub-instance of the receiver which supports a search policy
 	based on case-insensitive string comparisons."
 
-	^CaseInsensitiveSearchPolicy current
-!
+	^CaseInsensitiveSearchPolicy current!
 
 equality
 	"Answer the singleton sub-instance of the receiver which supports a search policy
@@ -147,10 +153,9 @@ never
 	are never considered equal)."
 
 	^NeverSearchPolicy current! !
-!SearchPolicy class categoriesFor: #always!instance creation!public! !
-!SearchPolicy class categoriesFor: #association!instance creation!public! !
-!SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
-!SearchPolicy class categoriesFor: #equality!instance creation!public! !
-!SearchPolicy class categoriesFor: #identity!instance creation!public! !
-!SearchPolicy class categoriesFor: #never!instance creation!public! !
+!Core.SearchPolicy class categoriesFor: #always!instance creation!public! !
+!Core.SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
+!Core.SearchPolicy class categoriesFor: #equality!instance creation!public! !
+!Core.SearchPolicy class categoriesFor: #identity!instance creation!public! !
+!Core.SearchPolicy class categoriesFor: #never!instance creation!public! !
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STBFiler
+Core.Object subclass: #'Kernel.STBFiler'
 	instanceVariableNames: 'stream context version'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MaxPredefinedRef' -> 16r18
 	}!
-STBFiler guid: (GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBFiler isAbstract: true!
-STBFiler comment: ''!
-!STBFiler categoriesForClass!System-Binary storage! !
-!STBFiler methodsFor!
+Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STBFiler isNonInstantiable: true!
+Kernel.STBFiler comment: ''!
+!Kernel.STBFiler categoriesForClass!System-Binary storage! !
+!Kernel.STBFiler methodsFor!
 
 atEnd
 	"Answer true if the receiver is positioned at end of its stream."
@@ -87,22 +87,22 @@ version
 
 version: anInteger
 	version := anInteger! !
-!STBFiler categoriesFor: #atEnd!public!testing! !
-!STBFiler categoriesFor: #context!accessing!public! !
-!STBFiler categoriesFor: #context:!accessing!public! !
-!STBFiler categoriesFor: #initialize!initializing!private! !
-!STBFiler categoriesFor: #position:!operations!public! !
-!STBFiler categoriesFor: #register:!helpers!public! !
-!STBFiler categoriesFor: #registerPredefinedClasses!initializing!private! !
-!STBFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!STBFiler categoriesFor: #reset!initializing!private! !
-!STBFiler categoriesFor: #setRefOffset:!initializing!private! !
-!STBFiler categoriesFor: #stream!accessing!public! !
-!STBFiler categoriesFor: #stream:!accessing!public! !
-!STBFiler categoriesFor: #version!accessing!public! !
-!STBFiler categoriesFor: #version:!accessing!public! !
+!Kernel.STBFiler categoriesFor: #atEnd!public!testing! !
+!Kernel.STBFiler categoriesFor: #context!accessing!public! !
+!Kernel.STBFiler categoriesFor: #context:!accessing!public! !
+!Kernel.STBFiler categoriesFor: #initialize!initializing!private! !
+!Kernel.STBFiler categoriesFor: #position:!operations!public! !
+!Kernel.STBFiler categoriesFor: #register:!helpers!public! !
+!Kernel.STBFiler categoriesFor: #registerPredefinedClasses!initializing!private! !
+!Kernel.STBFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
+!Kernel.STBFiler categoriesFor: #reset!initializing!private! !
+!Kernel.STBFiler categoriesFor: #setRefOffset:!initializing!private! !
+!Kernel.STBFiler categoriesFor: #stream!accessing!public! !
+!Kernel.STBFiler categoriesFor: #stream:!accessing!public! !
+!Kernel.STBFiler categoriesFor: #version!accessing!public! !
+!Kernel.STBFiler categoriesFor: #version:!accessing!public! !
 
-!STBFiler class methodsFor!
+!Kernel.STBFiler class methodsFor!
 
 errorInconsistentSTB: anObject
 	"Private - Signal an STBError indicating that the stream being
@@ -112,12 +112,12 @@ errorInconsistentSTB: anObject
 				expandMacrosWith: anObject
 				with: self signature)!
 
-errorUnrecognisedClass: aClass version: version 
+errorUnrecognisedClass: aClass version: version
 	"Private - Signal an STBError indicating that the STB data contains
 	instances of aClass of version that we don't know how to convert."
 
-	STBError 
-		signal: self signature , ' contains a version ' , version displayString , ' instance of ' 
+	STBError
+		signal: self signature , ' contains a version ' , version displayString , ' instance of '
 				, aClass name , ' and is unable to convert it.'!
 
 fixedClasses
@@ -170,10 +170,10 @@ version
 
 	^4
 ! !
-!STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
-!STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
-!STBFiler class categoriesFor: #fixedClasses!constants!public! !
-!STBFiler class categoriesFor: #on:!instance creation!public! !
-!STBFiler class categoriesFor: #signature!constants!private! !
-!STBFiler class categoriesFor: #version!constants!private! !
+!Kernel.STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
+!Kernel.STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
+!Kernel.STBFiler class categoriesFor: #fixedClasses!constants!public! !
+!Kernel.STBFiler class categoriesFor: #on:!instance creation!public! !
+!Kernel.STBFiler class categoriesFor: #signature!constants!private! !
+!Kernel.STBFiler class categoriesFor: #version!constants!private! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #Win32Errors
+Kernel.SharedPool subclass: #'OS.Win32Errors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -49,6 +49,7 @@ SharedPool subclass: #Win32Errors
 		'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 		'WCODE_HRESULT_LAST' -> -16r7FFB0001
 	}!
-Win32Errors guid: (GUID fromString: '{ebf1ffcb-3db7-4be5-bc6e-4f922ed6d1b8}')!
-Win32Errors comment: ''!
-!Win32Errors categoriesForClass!Unclassified! !
+OS.Win32Errors guid: (Core.GUID fromString: '{ebf1ffcb-3db7-4be5-bc6e-4f922ed6d1b8}')!
+OS.Win32Errors isNonInstantiable: true!
+OS.Win32Errors comment: ''!
+!OS.Win32Errors categoriesForClass!Unclassified! !

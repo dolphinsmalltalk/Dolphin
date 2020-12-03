@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #EXCEPTION_RECORD
+OS.Win32Structure subclass: #'OS.EXCEPTION_RECORD'
 	instanceVariableNames: 'info'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ExceptionAddress' -> 16rC.
@@ -13,8 +13,8 @@ Win32Structure subclass: #EXCEPTION_RECORD
 		'_OffsetOf_ExceptionRecord' -> 16r8.
 		'_OffsetOf_NumberParameters' -> 16r10
 	}!
-EXCEPTION_RECORD guid: (GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
-EXCEPTION_RECORD comment: '<EXCEPTION_RECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EXCEPTION_RECORD'' from type information in the ''Win32 API'' library.
+OS.EXCEPTION_RECORD guid: (Core.GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.EXCEPTION_RECORD comment: '<EXCEPTION_RECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EXCEPTION_RECORD'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Describes a Win32 exception; the parameter block passed to Win32 exception handlers."
@@ -33,8 +33,8 @@ struct tagEXCEPTION_RECORD {
 	[hidden, readonly, helpstring("An array of additional arguments that describe the exception. The RaiseException function can specify this array of arguments. For most exception codes, the array elements are undefined.")] ULONG_PTR ExceptionInformation[15];
 } EXCEPTION_RECORD;
 '!
-!EXCEPTION_RECORD categoriesForClass!Win32-Structs! !
-!EXCEPTION_RECORD methodsFor!
+!OS.EXCEPTION_RECORD categoriesForClass!Win32-Structs! !
+!OS.EXCEPTION_RECORD methodsFor!
 
 ExceptionAddress
 	"Answer the <ExternalAddress> value of the receiver's 'ExceptionAddress' field."
@@ -83,21 +83,21 @@ moduleFileName
 		virtualQuery: self ExceptionAddress
 		lpBuffer: buf
 		dwLength: buf size) == 0
-		ifFalse: [ExternalLibrary moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
+		ifFalse: [External.Library moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
 
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumberParameters! !
-!EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
-!EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
-!EXCEPTION_RECORD categoriesFor: #ExceptionFlags!**compiled accessors**!public! !
-!EXCEPTION_RECORD categoriesFor: #ExceptionRecord!**compiled accessors**!public! !
-!EXCEPTION_RECORD categoriesFor: #information!accessing!public! !
-!EXCEPTION_RECORD categoriesFor: #moduleFileName!accessing!public! !
-!EXCEPTION_RECORD categoriesFor: #NumberParameters!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #ExceptionFlags!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #ExceptionRecord!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #information!accessing!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #moduleFileName!accessing!public! !
+!OS.EXCEPTION_RECORD categoriesFor: #NumberParameters!**compiled accessors**!public! !
 
-!EXCEPTION_RECORD class methodsFor!
+!OS.EXCEPTION_RECORD class methodsFor!
 
 defineFields
 	"Define the fields of the EXCEPTION_RECORD structure.
@@ -116,16 +116,28 @@ defineFields
 "
 
 	self
-		defineField: #ExceptionCode type: DWORDField new beReadOnly offset: 0;
-		defineField: #ExceptionFlags type: DWORDField new beReadOnly offset: 4;
-		defineField: #ExceptionRecord type: (PointerField type: EXCEPTION_RECORD) beReadOnly offset: 8;
-		defineField: #ExceptionAddress type: LPVOIDField new beReadOnly offset: 12;
-		defineField: #NumberParameters type: DWORDField new beReadOnly offset: 16;
-		defineField: #ExceptionInformation type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller offset: 20.
+		defineField: #ExceptionCode
+			type: DWORDField new beReadOnly
+			offset: 0;
+		defineField: #ExceptionFlags
+			type: DWORDField new beReadOnly
+			offset: 4;
+		defineField: #ExceptionRecord
+			type: (PointerField type: EXCEPTION_RECORD) beReadOnly
+			offset: 8;
+		defineField: #ExceptionAddress
+			type: LPVOIDField new beReadOnly
+			offset: 12;
+		defineField: #NumberParameters
+			type: DWORDField new beReadOnly
+			offset: 16;
+		defineField: #ExceptionInformation
+			type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller
+			offset: 20.
 	self byteSize: 80!
 
 getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
-!EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

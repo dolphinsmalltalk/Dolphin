@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Number subclass: #Fraction
+Core.Number subclass: #'Core.Fraction'
 	instanceVariableNames: 'numerator denominator'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Fraction guid: (GUID fromString: '{87b4c65b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Fraction comment: 'Instances of class Fraction represent rational numbers which are not integers, e.g. 3/4. They are always represented in the most reduced form possible. Fractions are usually created by a division operation between two integers where the numerator cannot be divided exactly the denominator. Unlike Float, Fraction has effectively limitless precision, and thus calculations involving Fractions do not suffer from rounding errors. This can be useful where absolute accuracy is required, but Fraction arithmetic is not supported directly by the CPU, and thus calculations are orders of magnitude slower.
+Core.Fraction guid: (Core.GUID fromString: '{87b4c65b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Core.Fraction comment: 'Instances of class Fraction represent rational numbers which are not integers, e.g. 3/4. They are always represented in the most reduced form possible. Fractions are usually created by a division operation between two integers where the numerator cannot be divided exactly the denominator. Unlike Float, Fraction has effectively limitless precision, and thus calculations involving Fractions do not suffer from rounding errors. This can be useful where absolute accuracy is required, but Fraction arithmetic is not supported directly by the CPU, and thus calculations are orders of magnitude slower.
 
 Instance Variables:
 	numerator		<integer>
 	denominator	<integer>
 
 '!
-!Fraction categoriesForClass!Magnitude-Numbers! !
-!Fraction methodsFor!
+!Core.Fraction categoriesForClass!Magnitude-Numbers! !
+!Core.Fraction methodsFor!
 
 - aNumber
 	"Answer the difference between the receiver and aNumber."
@@ -66,22 +66,17 @@ addToFraction: aFraction
 	if the receiver and aFraction have the same denominator"
 
 	^denominator = aFraction denominator
-		ifTrue: [ 
-			Fraction
-				rationalisedNumerator: numerator + aFraction numerator
-				denominator: denominator ]
-		ifFalse: [
-			Fraction
+		ifTrue: [Fraction rationalisedNumerator: numerator + aFraction numerator denominator: denominator]
+		ifFalse: 
+			[Fraction
 				rationalisedNumerator: numerator * aFraction denominator + (aFraction numerator * denominator)
-				denominator: denominator * aFraction denominator ]!
+				denominator: denominator * aFraction denominator]!
 
-addToInteger: anInteger 
+addToInteger: anInteger
 	"Private - Add the known integer, anInteger, to the receiver. There is no need
 	to rationalise the result."
 
-	^Fraction
-		numerator: anInteger * denominator + numerator
-		denominator: denominator!
+	^Fraction numerator: anInteger * denominator + numerator denominator: denominator!
 
 asFloat
 	"Answer a Float that closely approximates the value of the receiver. This implementation
@@ -139,8 +134,7 @@ coerce: anArithmeticValue
 	"Private - Answer the lower generality <ArithmeticValue>, anArithmeticValue,
 	converted to a Fraction"
 
-	^Fraction numerator: anArithmeticValue denominator: 1
-!
+	^Fraction numerator: anArithmeticValue denominator: 1!
 
 denominator
 	"Answer the smallest <integer> denominator of the receiver."
@@ -148,7 +142,7 @@ denominator
 	^denominator!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		print: numerator;
@@ -165,17 +159,14 @@ divideIntoFraction: aFraction
 	"Private - Divide the receiver into the known Fraction, aFraction.
 	Answer the result."
 
-	^Fraction
-		rationalisedNumerator: denominator * aFraction numerator
+	^Fraction rationalisedNumerator: denominator * aFraction numerator
 		denominator: numerator * aFraction denominator!
 
 divideIntoInteger: anInteger
 	"Private - Divide the receiver into the known integer, anInteger.
 	Answer the result."
 
-	^Fraction
-		rationalisedNumerator: anInteger * denominator
-		denominator: numerator!
+	^Fraction rationalisedNumerator: anInteger * denominator denominator: numerator!
 
 equalToFloat: aFloat
 	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. We are careful to avoid any loss of precision."
@@ -263,26 +254,19 @@ multiplyByFraction: aFraction
 	"Private - Multiply the receiver by the known Fraction, aFraction.
 	Answer the result."
 
-	^Fraction
-		rationalisedNumerator: numerator * aFraction numerator
-		denominator: denominator * aFraction denominator
-!
+	^Fraction rationalisedNumerator: numerator * aFraction numerator
+		denominator: denominator * aFraction denominator!
 
 multiplyByInteger: anInteger
 	"Private - Multiply the receiver by the known integer, anInteger.
 	Answer the result."
 
-	^Fraction
-		rationalisedNumerator: anInteger * numerator
-		denominator: denominator!
+	^Fraction rationalisedNumerator: anInteger * numerator denominator: denominator!
 
 negated
 	"Answer an instance of class Fraction which is the negative of the receiver."
 
-	^Fraction
-		numerator: self numerator negated
-		denominator: self denominator
-!
+	^Fraction numerator: self numerator negated denominator: self denominator!
 
 numerator
 	"Answer the <integer> numerator of the receiver reduced to its lowest common denominator."
@@ -348,72 +332,67 @@ subtractFromFraction: aFraction
 	if the receiver and aFraction have the same denominator"
 
 	^denominator = aFraction denominator
-		ifTrue: [ 
-			Fraction
-				rationalisedNumerator: aFraction numerator - numerator
-				denominator: denominator ]
-		ifFalse: [
-			Fraction
+		ifTrue: [Fraction rationalisedNumerator: aFraction numerator - numerator denominator: denominator]
+		ifFalse: 
+			[Fraction
 				rationalisedNumerator: aFraction numerator * denominator - (numerator * aFraction denominator)
-				denominator: denominator * aFraction denominator ]!
+				denominator: denominator * aFraction denominator]!
 
-subtractFromInteger: anInteger 
+subtractFromInteger: anInteger
 	"Private - Subtract the receiver from the known integer, anInteger.
 	There is no need to rationalise the result."
 
-	^Fraction
-		numerator: anInteger * denominator - numerator
-		denominator: denominator!
+	^Fraction numerator: anInteger * denominator - numerator denominator: denominator!
 
 truncated
 	"Answer the receiver as a kind of Integer truncating the fraction part."
 
 	^numerator quo: denominator! !
-!Fraction categoriesFor: #-!arithmetic!public! !
-!Fraction categoriesFor: #*!arithmetic!public! !
-!Fraction categoriesFor: #/!arithmetic!public! !
-!Fraction categoriesFor: #//!arithmetic!public! !
-!Fraction categoriesFor: #+!arithmetic!public! !
-!Fraction categoriesFor: #<!comparing!public! !
-!Fraction categoriesFor: #=!comparing!public! !
-!Fraction categoriesFor: #addToFloat:!double dispatch!private! !
-!Fraction categoriesFor: #addToFraction:!double dispatch!private! !
-!Fraction categoriesFor: #addToInteger:!double dispatch!private! !
-!Fraction categoriesFor: #asFloat!converting!public! !
-!Fraction categoriesFor: #asFraction!converting!public! !
-!Fraction categoriesFor: #coerce:!coercing!private! !
-!Fraction categoriesFor: #denominator!accessing!public! !
-!Fraction categoriesFor: #displayOn:!printing!public! !
-!Fraction categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!Fraction categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!Fraction categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!Fraction categoriesFor: #equalToFloat:!double dispatch!private! !
-!Fraction categoriesFor: #equalToFraction:!double dispatch!private! !
-!Fraction categoriesFor: #equalToInteger:!double dispatch!private! !
-!Fraction categoriesFor: #generality!coercing!private! !
-!Fraction categoriesFor: #greaterThanFloat:!double dispatch!private! !
-!Fraction categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Fraction categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!Fraction categoriesFor: #hash!comparing!public! !
-!Fraction categoriesFor: #isFraction!public!testing! !
-!Fraction categoriesFor: #isLiteral!public!testing! !
-!Fraction categoriesFor: #isSelfEvaluating!public!testing! !
-!Fraction categoriesFor: #isZero!public!testing! !
-!Fraction categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!Fraction categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!Fraction categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Fraction categoriesFor: #negated!arithmetic!public! !
-!Fraction categoriesFor: #numerator!accessing!public! !
-!Fraction categoriesFor: #numerator:denominator:!accessing!private! !
-!Fraction categoriesFor: #printOn:!printing!public! !
-!Fraction categoriesFor: #reciprocal!arithmetic!public! !
-!Fraction categoriesFor: #squared!mathematical!public! !
-!Fraction categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!Fraction categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!Fraction categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!Fraction categoriesFor: #truncated!public!truncation and round off! !
+!Core.Fraction categoriesFor: #-!arithmetic!public! !
+!Core.Fraction categoriesFor: #*!arithmetic!public! !
+!Core.Fraction categoriesFor: #/!arithmetic!public! !
+!Core.Fraction categoriesFor: #//!arithmetic!public! !
+!Core.Fraction categoriesFor: #+!arithmetic!public! !
+!Core.Fraction categoriesFor: #<!comparing!public! !
+!Core.Fraction categoriesFor: #=!comparing!public! !
+!Core.Fraction categoriesFor: #addToFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #addToFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #addToInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #asFloat!converting!public! !
+!Core.Fraction categoriesFor: #asFraction!converting!public! !
+!Core.Fraction categoriesFor: #coerce:!coercing!private! !
+!Core.Fraction categoriesFor: #denominator!accessing!public! !
+!Core.Fraction categoriesFor: #displayOn:!printing!public! !
+!Core.Fraction categoriesFor: #divideIntoFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #divideIntoFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #equalToFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #equalToFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #equalToInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #generality!coercing!private! !
+!Core.Fraction categoriesFor: #greaterThanFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #greaterThanFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #greaterThanInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #hash!comparing!public! !
+!Core.Fraction categoriesFor: #isFraction!public!testing! !
+!Core.Fraction categoriesFor: #isLiteral!public!testing! !
+!Core.Fraction categoriesFor: #isSelfEvaluating!public!testing! !
+!Core.Fraction categoriesFor: #isZero!public!testing! !
+!Core.Fraction categoriesFor: #multiplyByFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #multiplyByFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #negated!arithmetic!public! !
+!Core.Fraction categoriesFor: #numerator!accessing!public! !
+!Core.Fraction categoriesFor: #numerator:denominator:!accessing!private! !
+!Core.Fraction categoriesFor: #printOn:!printing!public! !
+!Core.Fraction categoriesFor: #reciprocal!arithmetic!public! !
+!Core.Fraction categoriesFor: #squared!mathematical!public! !
+!Core.Fraction categoriesFor: #subtractFromFloat:!double dispatch!private! !
+!Core.Fraction categoriesFor: #subtractFromFraction:!double dispatch!private! !
+!Core.Fraction categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!Core.Fraction categoriesFor: #truncated!public!truncation and round off! !
 
-!Fraction class methodsFor!
+!Core.Fraction class methodsFor!
 
 numerator: top denominator: bottom
 	"Answer a <Fraction> with numerator and denominator,
@@ -446,9 +425,9 @@ readFrom: aStream
 	Does not handle NLS characters (e.g. thousand separators)"
 
 	^(super readFrom: aStream) asFraction! !
-!Fraction class categoriesFor: #numerator:denominator:!instance creation!public! !
-!Fraction class categoriesFor: #rationalisedNumerator:denominator:!instance creation!public! !
-!Fraction class categoriesFor: #readFrom:!instance creation!public! !
+!Core.Fraction class categoriesFor: #numerator:denominator:!instance creation!public! !
+!Core.Fraction class categoriesFor: #rationalisedNumerator:denominator:!instance creation!public! !
+!Core.Fraction class categoriesFor: #readFrom:!instance creation!public! !
 
-Fraction class methodProtocol: #'Fraction factory' attributes: #(#ansi #readOnly) selectors: #(#numerator:denominator:)!
+Core.Fraction class methodProtocol: #'Fraction factory' attributes: #(#ansi #readOnly) selectors: #(#numerator:denominator:)!
 

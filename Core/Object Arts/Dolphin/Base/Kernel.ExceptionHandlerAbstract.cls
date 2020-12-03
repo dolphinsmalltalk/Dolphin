@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ExceptionHandlerAbstract
+Core.Object subclass: #'Kernel.ExceptionHandlerAbstract'
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
 	classVariableNames: 'RetryCookie'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExceptionHandlerAbstract guid: (GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExceptionHandlerAbstract isAbstract: true!
-ExceptionHandlerAbstract comment: ''!
-!ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
-!ExceptionHandlerAbstract methodsFor!
+Kernel.ExceptionHandlerAbstract guid: (Core.GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.ExceptionHandlerAbstract isNonInstantiable: true!
+Kernel.ExceptionHandlerAbstract comment: ''!
+!Kernel.ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
+!Kernel.ExceptionHandlerAbstract methodsFor!
 
 actionFor: exception
 	"Private - Answer a <monadicBlock> handler for the <exceptionDescription> 
@@ -90,21 +90,21 @@ try: niladicBlock
 			ensure: [process exceptionEnvironment: old].
 	returnContinuation := nil.
 	^answer! !
-!ExceptionHandlerAbstract categoriesFor: #actionFor:!helpers!private! !
-!ExceptionHandlerAbstract categoriesFor: #markAndTry!debugger-step through!evaluating!private! !
-!ExceptionHandlerAbstract categoriesFor: #on:do:!initializing!private! !
-!ExceptionHandlerAbstract categoriesFor: #outer!debugger-step over!private! !
-!ExceptionHandlerAbstract categoriesFor: #printOn:!development!printing!public! !
-!ExceptionHandlerAbstract categoriesFor: #retry!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #retryUsing:!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #return:!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #try:!debugger-step through!evaluating!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #actionFor:!helpers!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #markAndTry!debugger-step through!evaluating!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #on:do:!initializing!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #outer!debugger-step over!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #printOn:!development!printing!public! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #retry!debugger-step through!handler responses!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #retryUsing:!debugger-step through!handler responses!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #return:!debugger-step through!handler responses!private! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #try:!debugger-step through!evaluating!private! !
 
-!ExceptionHandlerAbstract class methodsFor!
+!Kernel.ExceptionHandlerAbstract class methodsFor!
 
 initialize
 	"Initialize the receiver's class instance variable."
 
 	RetryCookie := Object new! !
-!ExceptionHandlerAbstract class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.ExceptionHandlerAbstract class categoriesFor: #initialize!development!initializing!public! !
 

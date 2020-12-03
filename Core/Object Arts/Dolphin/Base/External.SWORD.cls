@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WORD subclass: #SWORD
+External.WORD subclass: #'External.SWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SWORD guid: (GUID fromString: '{87b4c5ac-026e-11d3-9fd7-00a0cc3e4a32}')!
-SWORD comment: '<SWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
+External.SWORD guid: (Core.GUID fromString: '{87b4c5ac-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.SWORD comment: '<SWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SWORD is used to represent signed 16-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**15) to: (2**15)-1'!
-!SWORD categoriesForClass!External-Data-Structured! !
-!SWORD methodsFor!
+!External.SWORD categoriesForClass!External-Data-Structured! !
+!External.SWORD methodsFor!
 
 isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
@@ -30,11 +30,11 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
-!SWORD categoriesFor: #isSigned!public!testing! !
-!SWORD categoriesFor: #value!**compiled accessors**!public! !
-!SWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.SWORD categoriesFor: #isSigned!public!testing! !
+!External.SWORD categoriesFor: #value!**compiled accessors**!public! !
+!External.SWORD categoriesFor: #value:!**compiled accessors**!public! !
 
-!SWORD class methodsFor!
+!External.SWORD class methodsFor!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
@@ -53,7 +53,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SWORD class categoriesFor: #defineFields!public!template definition! !
-!SWORD class categoriesFor: #initialize!development!initializing!private! !
-!SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.SWORD class categoriesFor: #defineFields!public!template definition! !
+!External.SWORD class categoriesFor: #initialize!development!initializing!private! !
+!External.SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
