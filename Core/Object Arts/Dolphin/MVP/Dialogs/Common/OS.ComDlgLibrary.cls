@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #ComDlgLibrary
+External.Library subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ComDlgLibrary guid: (GUID fromString: '{6467405a-3a82-101b-8181-00aa003743d3}')!
-ComDlgLibrary comment: 'ComDlgLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, COMDLG32.DLL.
+OS.ComDlgLibrary guid: (Core.GUID fromString: '{6467405a-3a82-101b-8181-00aa003743d3}')!
+OS.ComDlgLibrary comment: 'ComDlgLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, COMDLG32.DLL.
 
 This DLL implements Windows'' standard "common" dialogs, such as the File Open/Save, Find, Find/Replace, Font, Color and Print dialogs. See subclasses of <CommonDialog>, which wrap these behind a Smalltalk API in Dolphin.'!
-!ComDlgLibrary categoriesForClass!External-Libraries-Win32! !
-!ComDlgLibrary methodsFor!
+!OS.ComDlgLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.ComDlgLibrary methodsFor!
 
 chooseColor: aWinCHOOSECOLOR
 	"Create a Color common dialog box that enables the user to select a color.
@@ -103,21 +103,21 @@ systemError
 	"Generate an error based on the last recorded host system error."
 
 	^self systemError: self commDlgExtendedError! !
-!ComDlgLibrary categoriesFor: #chooseColor:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #chooseFont:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #findText:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
-!ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
+!OS.ComDlgLibrary categoriesFor: #chooseColor:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #chooseFont:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #findText:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
+!OS.ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
 
-!ComDlgLibrary class methodsFor!
+!OS.ComDlgLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library"
 
 	^'COMDLG32'! !
-!ComDlgLibrary class categoriesFor: #fileName!constants!public! !
+!OS.ComDlgLibrary class categoriesFor: #fileName!constants!public! !
 

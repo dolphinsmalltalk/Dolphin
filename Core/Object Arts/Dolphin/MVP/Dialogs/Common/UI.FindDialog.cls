@@ -1,28 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #FindDialog
+UI.CommonDialog subclass: #'UI.FindDialog'
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FindDialog guid: (GUID fromString: '{87b4c6b2-026e-11d3-9fd7-00a0cc3e4a32}')!
-FindDialog comment: 'FindDialog is a <valueDialogPresenter> implementing the Windows FindText common dialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
+UI.FindDialog guid: (Core.GUID fromString: '{87b4c6b2-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FindDialog comment: 'FindDialog is a <valueDialogPresenter> implementing the Windows FindText common dialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
 
 Instance Variables:
 	findWhat		<readableString> or nil, specifying the text to search for.
 
 '!
-!FindDialog categoriesForClass!MVP-Presenters! !
-!FindDialog methodsFor!
+!UI.FindDialog categoriesForClass!MVP-Presenters! !
+!UI.FindDialog methodsFor!
 
 basicShowModal
 	"Private - Create and show a new FindText dialog."
 
-	^ComDlgLibrary default findText: self winStruct asParameter
-!
+	^ComDlgLibrary default findText: self winStruct asParameter!
 
-extractResult: anExternalHandle 
+extractResult: anExternalHandle
 	"Private - Extract and apply the result from the parameter structure passed to the Win32 API
 	associated with this common dialog, immediately after the call to that API."
 
@@ -83,17 +82,17 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^FINDREPLACEW! !
-!FindDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FindDialog categoriesFor: #extractResult:!helpers!private! !
-!FindDialog categoriesFor: #fdFlags!accessing!private! !
-!FindDialog categoriesFor: #findWhat!accessing!private! !
-!FindDialog categoriesFor: #findWhat:!accessing!private! !
-!FindDialog categoriesFor: #initialize!initializing!private! !
-!FindDialog categoriesFor: #prepareStruct!helpers!private! !
-!FindDialog categoriesFor: #setFindDetails:!accessing!private! !
-!FindDialog categoriesFor: #winStructClass!constants!private! !
+!UI.FindDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.FindDialog categoriesFor: #extractResult:!helpers!private! !
+!UI.FindDialog categoriesFor: #fdFlags!accessing!private! !
+!UI.FindDialog categoriesFor: #findWhat!accessing!private! !
+!UI.FindDialog categoriesFor: #findWhat:!accessing!private! !
+!UI.FindDialog categoriesFor: #initialize!initializing!private! !
+!UI.FindDialog categoriesFor: #prepareStruct!helpers!private! !
+!UI.FindDialog categoriesFor: #setFindDetails:!accessing!private! !
+!UI.FindDialog categoriesFor: #winStructClass!constants!private! !
 
-!FindDialog class methodsFor!
+!UI.FindDialog class methodsFor!
 
 defaultModel
 	^FindDetails new!
@@ -134,9 +133,9 @@ showModeless: aView on: aFindDetails
 				ownerView: aView.
 	"N.B. Doesn't really show as a modal dialog"
 	dialog showModal! !
-!FindDialog class categoriesFor: #defaultModel!public! !
-!FindDialog class categoriesFor: #initialize!development!initializing!private! !
-!FindDialog class categoriesFor: #ownerView:!instance creation!public! !
-!FindDialog class categoriesFor: #ownerView:findWhat:!instance creation!public! !
-!FindDialog class categoriesFor: #showModeless:on:!public! !
+!UI.FindDialog class categoriesFor: #defaultModel!public! !
+!UI.FindDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FindDialog class categoriesFor: #ownerView:!instance creation!public! !
+!UI.FindDialog class categoriesFor: #ownerView:findWhat:!instance creation!public! !
+!UI.FindDialog class categoriesFor: #showModeless:on:!public! !
 

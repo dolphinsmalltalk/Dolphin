@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #OPENFILENAMEW
+OS.CommonDialogStructure subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved' -> 16r50.
@@ -30,8 +30,8 @@ CommonDialogStructure subclass: #OPENFILENAMEW
 		'_OffsetOf_nMaxFileTitle' -> 16r28.
 		'_OffsetOf_pvReserved' -> 16r4C
 	}!
-OPENFILENAMEW guid: (GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
-OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represent the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
+OS.OPENFILENAMEW guid: (Core.GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represent the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 
 The following instance variables hold <String> objects whose addresses have been stored into the structure. This is necessary to prevent premature garbage collection of these objects occurring during an external API call.
 
@@ -42,8 +42,8 @@ Instance Variables:
 	defExt 		<String>
 	fileTitle		<String>
 	initialDir		<String>'!
-!OPENFILENAMEW categoriesForClass!Win32-Structs! !
-!OPENFILENAMEW methodsFor!
+!OS.OPENFILENAMEW categoriesForClass!Win32-Structs! !
+!OS.OPENFILENAMEW methodsFor!
 
 defaultExtension
 	"Answer the default extension for the file open/save, or nil if none is set."
@@ -196,36 +196,36 @@ title: aString
 
 	title := aString asUtf16String.
 	self lpstrTitle: title! !
-!OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
-!OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #fileName!accessing!public! !
-!OPENFILENAMEW categoriesFor: #fileName:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #fileTypes:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #flags!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flags:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flagsEx!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flagsEx:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #hookFlag!accessing!public! !
-!OPENFILENAMEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #initialDirectory:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrDefExt:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFile!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFile:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFileTitle!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFileTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFilter:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrInitialDir:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nFilterIndex!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nFilterIndex:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nMaxFile:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nMaxFileTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #ownerView:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #title:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #fileName!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #fileName:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #fileTypes:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #flagsEx!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #flagsEx:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #hookFlag!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #initialDirectory:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrDefExt:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrFile!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrFile:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrFileTitle!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrFileTitle:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrFilter:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrInitialDir:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #lpstrTitle:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #nFilterIndex!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #nFilterIndex:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #nMaxFile:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #nMaxFileTitle:!**compiled accessors**!public! !
+!OS.OPENFILENAMEW categoriesFor: #ownerView:!accessing!public! !
+!OS.OPENFILENAMEW categoriesFor: #title:!accessing!public! !
 
-!OPENFILENAMEW class methodsFor!
+!OS.OPENFILENAMEW class methodsFor!
 
 defineFields
 	"Define the fields of the OPENFILENAME structure.
@@ -287,6 +287,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
-!OPENFILENAMEW class categoriesFor: #defineFields!public!template definition! !
-!OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OPENFILENAMEW class categoriesFor: #defineFields!public!template definition! !
+!OS.OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

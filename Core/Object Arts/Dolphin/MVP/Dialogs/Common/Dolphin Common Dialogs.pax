@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Common Dialogs'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,30 +11,30 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{CHOOSECOLORW}
-	#{CHOOSEFONTW}
-	#{ColorDialog}
-	#{ComDlgLibrary}
-	#{CommonDialog}
-	#{CommonDialogConstants}
-	#{CommonDialogStructure}
-	#{FileDialog}
-	#{FileOpenDialog}
-	#{FileSaveDialog}
-	#{FindDialog}
-	#{FindReplaceDialog}
-	#{FINDREPLACEW}
-	#{FontDialog}
-	#{OFNOTIFYEXW}
-	#{OFNOTIFYW}
-	#{OPENFILENAMEW}
+	#{OS.CHOOSECOLORW}
+	#{OS.CHOOSEFONTW}
+	#{OS.ComDlgLibrary}
+	#{OS.CommonDialogConstants}
+	#{OS.CommonDialogStructure}
+	#{OS.FINDREPLACEW}
+	#{OS.OFNOTIFYEXW}
+	#{OS.OFNOTIFYW}
+	#{OS.OPENFILENAMEW}
+	#{UI.ColorDialog}
+	#{UI.CommonDialog}
+	#{UI.FileDialog}
+	#{UI.FileOpenDialog}
+	#{UI.FileSaveDialog}
+	#{UI.FindDialog}
+	#{UI.FindReplaceDialog}
+	#{UI.FontDialog}
 ).
 
 package setMethodNames: #(
-	#(#{Color class} #choose)
-	#(#{File} #title)
-	#(#{File class} #titleOf:)
-	#(#{Font class} #choose)
+	#(#{Core.File} #title)
+	#(#{Core.File class} #titleOf:)
+	#(#{Graphics.Color class} #choose)
+	#(#{Graphics.Font class} #choose)
 ).
 
 package setPrerequisites: #(
@@ -46,7 +46,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #CommonDialogConstants
+Kernel.SharedPool subclass: #'OS.CommonDialogConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -150,22 +150,70 @@ SharedPool subclass: #CommonDialogConstants
 		'OFN_SHAREWARN' -> 16r0.
 		'OFN_SHOWHELP' -> 16r10
 	}!
-ExternalLibrary subclass: #ComDlgLibrary
+External.Library subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #CommonDialogStructure
-	instanceVariableNames: ''
+UI.ValueDialog subclass: #'UI.CommonDialog'
+	instanceVariableNames: 'winStruct hook'
 	classVariableNames: ''
-	imports: #(#{CommonDialogConstants})
+	imports: #(#{OS.CommonDialogConstants})
+	classInstanceVariableNames: 'hookHandlers'
+	classConstants: {}!
+UI.CommonDialog subclass: #'UI.ColorDialog'
+	instanceVariableNames: 'validationBlock'
+	classVariableNames: 'CustomColors WM_COLOROK'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommonDialogStructure subclass: #CHOOSECOLORW
+UI.CommonDialog subclass: #'UI.FileDialog'
+	instanceVariableNames: 'style fileTypes validationBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.CommonDialog subclass: #'UI.FindDialog'
+	instanceVariableNames: 'findWhatBuf findDetails'
+	classVariableNames: 'HookHandlers'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.CommonDialog subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CommonDialogConstants})
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.FileDialog subclass: #'UI.FileOpenDialog'
+	instanceVariableNames: 'maxFileCount'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.FileDialog subclass: #'UI.FileSaveDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.FindDialog subclass: #'UI.FindReplaceDialog'
+	instanceVariableNames: 'replaceWith'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Win32Structure subclass: #'OS.CommonDialogStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.CommonDialogConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.CommonDialogStructure subclass: #'OS.CHOOSECOLORW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -178,10 +226,10 @@ CommonDialogStructure subclass: #CHOOSECOLORW
 		'_OffsetOf_lpTemplateName' -> 16r20.
 		'_OffsetOf_rgbResult' -> 16rC
 	}!
-CommonDialogStructure subclass: #CHOOSEFONTW
+OS.CommonDialogStructure subclass: #'OS.CHOOSEFONTW'
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
-	imports: #(#{CommonDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -200,10 +248,10 @@ CommonDialogStructure subclass: #CHOOSEFONTW
 		'_OffsetOf_nSizeMin' -> 16r34.
 		'_OffsetOf_rgbColors' -> 16r18
 	}!
-CommonDialogStructure subclass: #FINDREPLACEW
+OS.CommonDialogStructure subclass: #'OS.FINDREPLACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CommonDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -218,7 +266,7 @@ CommonDialogStructure subclass: #FINDREPLACEW
 		'_OffsetOf_wFindWhatLen' -> 16r18.
 		'_OffsetOf_wReplaceWithLen' -> 16r1A
 	}!
-CommonDialogStructure subclass: #OPENFILENAMEW
+OS.CommonDialogStructure subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
 	imports: #()
@@ -248,7 +296,7 @@ CommonDialogStructure subclass: #OPENFILENAMEW
 		'_OffsetOf_nMaxFileTitle' -> 16r28.
 		'_OffsetOf_pvReserved' -> 16r4C
 	}!
-NMHDR subclass: #OFNOTIFYEXW
+OS.NMHDR subclass: #'OS.OFNOTIFYEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -258,7 +306,7 @@ NMHDR subclass: #OFNOTIFYEXW
 		'_OffsetOf_pidl' -> 16r14.
 		'_OffsetOf_psf' -> 16r10
 	}!
-NMHDR subclass: #OFNOTIFYW
+OS.NMHDR subclass: #'OS.OFNOTIFYW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -267,74 +315,18 @@ NMHDR subclass: #OFNOTIFYW
 		'_OffsetOf_lpOFN' -> 16rC.
 		'_OffsetOf_pszFile' -> 16r10
 	}!
-ValueDialog subclass: #CommonDialog
-	instanceVariableNames: 'winStruct hook'
-	classVariableNames: ''
-	imports: #(#{CommonDialogConstants} #{Win32Constants})
-	classInstanceVariableNames: 'hookHandlers'
-	classConstants: {}!
-CommonDialog subclass: #ColorDialog
-	instanceVariableNames: 'validationBlock'
-	classVariableNames: 'CustomColors WM_COLOROK'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-CommonDialog subclass: #FileDialog
-	instanceVariableNames: 'style fileTypes validationBlock'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-CommonDialog subclass: #FindDialog
-	instanceVariableNames: 'findWhatBuf findDetails'
-	classVariableNames: 'HookHandlers'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-CommonDialog subclass: #FontDialog
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-FileDialog subclass: #FileOpenDialog
-	instanceVariableNames: 'maxFileCount'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-FileDialog subclass: #FileSaveDialog
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-FindDialog subclass: #FindReplaceDialog
-	instanceVariableNames: 'replaceWith'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!Color class methodsFor!
-
-choose
-	"Answer a new instance of the receiver chosen from the common color dialog."
-
-	^ColorDialog showModal! !
-!Color class categoriesFor: #choose!instance creation!public! !
-
-!File methodsFor!
+!Core.File methodsFor!
 
 title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
 	^self class titleOf: self name! !
-!File categoriesFor: #title!accessing!public! !
+!Core.File categoriesFor: #title!accessing!public! !
 
-!File class methodsFor!
+!Core.File class methodsFor!
 
 titleOf: aString
 	"Answer the 'title' (i.e. the display name) of a file with the specified path name.
@@ -354,16 +346,24 @@ titleOf: aString
 		lpszTitle: buf
 		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
 	^buf! !
-!File class categoriesFor: #titleOf:!filename manipulation!public! !
+!Core.File class categoriesFor: #titleOf:!filename manipulation!public! !
 
-!Font class methodsFor!
+!Graphics.Color class methodsFor!
+
+choose
+	"Answer a new instance of the receiver chosen from the common color dialog."
+
+	^UI.ColorDialog showModal! !
+!Graphics.Color class categoriesFor: #choose!instance creation!public! !
+
+!Graphics.Font class methodsFor!
 
 choose
 	"Answer an instance of the receiver chosen by the user from the common
 	font dialog."
 
-	^FontDialog showModal! !
-!Font class categoriesFor: #choose!instance creation!public! !
+	^UI.FontDialog showModal! !
+!Graphics.Font class categoriesFor: #choose!instance creation!public! !
 
 "End of package definition"!
 

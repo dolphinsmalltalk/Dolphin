@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PRINTPAGERANGE
+OS.Win32Structure subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nFromPage' -> 16r0.
 		'_OffsetOf_nToPage' -> 16r4
 	}!
-PRINTPAGERANGE guid: (GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
-PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.PRINTPAGERANGE guid: (Core.GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
+OS.PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagPRINTPAGERANGE {
 	DWORD nToPage;
 } PRINTPAGERANGE;
 '!
-!PRINTPAGERANGE categoriesForClass!Win32-Structs! !
-!PRINTPAGERANGE methodsFor!
+!OS.PRINTPAGERANGE categoriesForClass!Win32-Structs! !
+!OS.PRINTPAGERANGE methodsFor!
 
 nFromPage
 	"Answer the <Integer> value of the receiver's 'nFromPage' field."
@@ -46,12 +46,12 @@ nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nToPage put: anInteger! !
-!PRINTPAGERANGE categoriesFor: #nFromPage!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nFromPage:!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nToPage!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nToPage:!**compiled accessors**!public! !
+!OS.PRINTPAGERANGE categoriesFor: #nFromPage!**compiled accessors**!public! !
+!OS.PRINTPAGERANGE categoriesFor: #nFromPage:!**compiled accessors**!public! !
+!OS.PRINTPAGERANGE categoriesFor: #nToPage!**compiled accessors**!public! !
+!OS.PRINTPAGERANGE categoriesFor: #nToPage:!**compiled accessors**!public! !
 
-!PRINTPAGERANGE class methodsFor!
+!OS.PRINTPAGERANGE class methodsFor!
 
 defineFields
 	"Define the fields of the PRINTPAGERANGE structure.
@@ -71,6 +71,6 @@ defineFields
 
 getFieldNames
 	^#(#nFromPage #nToPage)! !
-!PRINTPAGERANGE class categoriesFor: #defineFields!public!template definition! !
-!PRINTPAGERANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PRINTPAGERANGE class categoriesFor: #defineFields!public!template definition! !
+!OS.PRINTPAGERANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

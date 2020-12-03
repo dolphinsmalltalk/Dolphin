@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #FileDialog
+UI.CommonDialog subclass: #'UI.FileDialog'
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileDialog guid: (GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
-FileDialog isAbstract: true!
-FileDialog comment: 'FileDialog is an abstract superclass for <valueDialogPresenter>s implementing the Windows common file dialogs. 
+UI.FileDialog guid: (Core.GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FileDialog isNonInstantiable: true!
+UI.FileDialog comment: 'FileDialog is an abstract superclass for <valueDialogPresenter>s implementing the Windows common file dialogs. 
 
 '!
-!FileDialog categoriesForClass!MVP-Presenters! !
-!FileDialog methodsFor!
+!UI.FileDialog categoriesForClass!MVP-Presenters! !
+!UI.FileDialog methodsFor!
 
 allFilesType
 	"Private - Answer a file spec. pair suitable for adding to the FileDialog
@@ -335,44 +335,44 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
-!FileDialog categoriesFor: #allFilesType!constants!private! !
-!FileDialog categoriesFor: #averageFilenameLength!constants!private! !
-!FileDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileDialog categoriesFor: #caption:!accessing!public! !
-!FileDialog categoriesFor: #cdnFileOk:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnFolderChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnHelp:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnIncludeItem:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnInitDone:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnSelChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnShareViolation:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnTypeChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #commonDialogSelector!constants!private! !
-!FileDialog categoriesFor: #defaultExtension!accessing!public! !
-!FileDialog categoriesFor: #defaultExtension:!accessing!public! !
-!FileDialog categoriesFor: #defaultStyle!constants!public! !
-!FileDialog categoriesFor: #extractPathNames:!helpers!private! !
-!FileDialog categoriesFor: #extractResult:!helpers!private! !
-!FileDialog categoriesFor: #fileTypes!accessing!public! !
-!FileDialog categoriesFor: #fileTypes:!accessing!public! !
-!FileDialog categoriesFor: #fileTypesStringFromSpecs:!helpers!private! !
-!FileDialog categoriesFor: #filterIndex!accessing!public! !
-!FileDialog categoriesFor: #filterIndex:!accessing!public! !
-!FileDialog categoriesFor: #getFilePath!operations!private! !
-!FileDialog categoriesFor: #getFileSpec!operations!private! !
-!FileDialog categoriesFor: #initialDirectory:!accessing!public! !
-!FileDialog categoriesFor: #initialize!initializing!private! !
-!FileDialog categoriesFor: #maxFileCount!accessing!public! !
-!FileDialog categoriesFor: #prepareStruct!helpers!private! !
-!FileDialog categoriesFor: #style!accessing!public! !
-!FileDialog categoriesFor: #style:!accessing!public! !
-!FileDialog categoriesFor: #validationBlock!accessing!public! !
-!FileDialog categoriesFor: #validationBlock:!initializing!public! !
-!FileDialog categoriesFor: #winStructClass!accessing!private! !
-!FileDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
-!FileDialog categoriesFor: #wmNotify:wParam:lParam:!private! !
+!UI.FileDialog categoriesFor: #allFilesType!constants!private! !
+!UI.FileDialog categoriesFor: #averageFilenameLength!constants!private! !
+!UI.FileDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.FileDialog categoriesFor: #caption:!accessing!public! !
+!UI.FileDialog categoriesFor: #cdnFileOk:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnFolderChange:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnHelp:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnIncludeItem:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnInitDone:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnSelChange:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnShareViolation:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #cdnTypeChange:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #commonDialogSelector!constants!private! !
+!UI.FileDialog categoriesFor: #defaultExtension!accessing!public! !
+!UI.FileDialog categoriesFor: #defaultExtension:!accessing!public! !
+!UI.FileDialog categoriesFor: #defaultStyle!constants!public! !
+!UI.FileDialog categoriesFor: #extractPathNames:!helpers!private! !
+!UI.FileDialog categoriesFor: #extractResult:!helpers!private! !
+!UI.FileDialog categoriesFor: #fileTypes!accessing!public! !
+!UI.FileDialog categoriesFor: #fileTypes:!accessing!public! !
+!UI.FileDialog categoriesFor: #fileTypesStringFromSpecs:!helpers!private! !
+!UI.FileDialog categoriesFor: #filterIndex!accessing!public! !
+!UI.FileDialog categoriesFor: #filterIndex:!accessing!public! !
+!UI.FileDialog categoriesFor: #getFilePath!operations!private! !
+!UI.FileDialog categoriesFor: #getFileSpec!operations!private! !
+!UI.FileDialog categoriesFor: #initialDirectory:!accessing!public! !
+!UI.FileDialog categoriesFor: #initialize!initializing!private! !
+!UI.FileDialog categoriesFor: #maxFileCount!accessing!public! !
+!UI.FileDialog categoriesFor: #prepareStruct!helpers!private! !
+!UI.FileDialog categoriesFor: #style!accessing!public! !
+!UI.FileDialog categoriesFor: #style:!accessing!public! !
+!UI.FileDialog categoriesFor: #validationBlock!accessing!public! !
+!UI.FileDialog categoriesFor: #validationBlock:!initializing!public! !
+!UI.FileDialog categoriesFor: #winStructClass!accessing!private! !
+!UI.FileDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
+!UI.FileDialog categoriesFor: #wmNotify:wParam:lParam:!private! !
 
-!FileDialog class methodsFor!
+!UI.FileDialog class methodsFor!
 
 allFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -383,8 +383,7 @@ allFilesType
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
 
-	^Utf16String empty
-!
+	^Utf16String empty!
 
 icon
 	^##(self) defaultIcon!
@@ -395,9 +394,9 @@ initializeDefaultHooks
 
 textFilesType
 	^#('Text Files (*.txt)' '*.txt')! !
-!FileDialog class categoriesFor: #allFilesType!constants!private! !
-!FileDialog class categoriesFor: #defaultModel!models!public! !
-!FileDialog class categoriesFor: #icon!constants!public! !
-!FileDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
-!FileDialog class categoriesFor: #textFilesType!public! !
+!UI.FileDialog class categoriesFor: #allFilesType!constants!private! !
+!UI.FileDialog class categoriesFor: #defaultModel!models!public! !
+!UI.FileDialog class categoriesFor: #icon!constants!public! !
+!UI.FileDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
+!UI.FileDialog class categoriesFor: #textFilesType!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FileDialog subclass: #FileOpenDialog
+UI.FileDialog subclass: #'UI.FileOpenDialog'
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileOpenDialog guid: (GUID fromString: '{87b4c6b5-026e-11d3-9fd7-00a0cc3e4a32}')!
-FileOpenDialog comment: 'FileOpenDialog is a <valueDialogPresenter> implementing the Windows GetOpenFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.
+UI.FileOpenDialog guid: (Core.GUID fromString: '{87b4c6b5-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FileOpenDialog comment: 'FileOpenDialog is a <valueDialogPresenter> implementing the Windows GetOpenFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.
 
 The following example illustrates the use of a validation block to limit the choice of file that the user can make:
 
@@ -21,8 +21,8 @@ dialog
 					[MessageBox errorMsg: ''Sorry but that file is not writeable. Please choose another.''.
 					false]];
 	showModal'!
-!FileOpenDialog categoriesForClass!MVP-Presenters! !
-!FileOpenDialog methodsFor!
+!UI.FileOpenDialog categoriesForClass!MVP-Presenters! !
+!UI.FileOpenDialog methodsFor!
 
 basicShowModal
 	"Private - Show a Open File dialog for the receiver."
@@ -52,14 +52,14 @@ style
 	"Answers the style flags to be used when the receiver is opened."
 
 	^self maxFileCount > 1 ifTrue: [style | ##(OFN_ALLOWMULTISELECT | OFN_EXPLORER)] ifFalse: [style]! !
-!FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileOpenDialog categoriesFor: #defaultMaxFileCount!constants!private! !
-!FileOpenDialog categoriesFor: #defaultStyle!constants!private! !
-!FileOpenDialog categoriesFor: #maxFileCount!accessing!public! !
-!FileOpenDialog categoriesFor: #maxFileCount:!accessing!public! !
-!FileOpenDialog categoriesFor: #style!accessing!public! !
+!UI.FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.FileOpenDialog categoriesFor: #defaultMaxFileCount!constants!private! !
+!UI.FileOpenDialog categoriesFor: #defaultStyle!constants!private! !
+!UI.FileOpenDialog categoriesFor: #maxFileCount!accessing!public! !
+!UI.FileOpenDialog categoriesFor: #maxFileCount:!accessing!public! !
+!UI.FileOpenDialog categoriesFor: #style!accessing!public! !
 
-!FileOpenDialog class methodsFor!
+!UI.FileOpenDialog class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -67,5 +67,5 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!FileOpenDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FileOpenDialog class categoriesFor: #initialize!development!initializing!private! !
 

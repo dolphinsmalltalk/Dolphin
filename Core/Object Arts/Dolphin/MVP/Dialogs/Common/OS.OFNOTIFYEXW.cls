@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #OFNOTIFYEXW
+OS.NMHDR subclass: #'OS.OFNOTIFYEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lpOFN' -> 16rC.
 		'_OffsetOf_pidl' -> 16r14.
 		'_OffsetOf_psf' -> 16r10
 	}!
-OFNOTIFYEXW guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
-OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.OFNOTIFYEXW guid: (Core.GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
+OS.OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,8 +27,8 @@ struct tagOFNOTIFYEX {
 	LPVOID pidl;
 } OFNOTIFYEX;
 '!
-!OFNOTIFYEXW categoriesForClass!Win32-Structs! !
-!OFNOTIFYEXW methodsFor!
+!OS.OFNOTIFYEXW categoriesForClass!Win32-Structs! !
+!OS.OFNOTIFYEXW methodsFor!
 
 lpOFN
 	"Answer the <OPENFILENAMEW> value of the receiver's 'lpOFN' field."
@@ -44,11 +44,11 @@ psf
 	"Answer the <ExternalAddress> value of the receiver's 'psf' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_psf) asExternalAddress! !
-!OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
-!OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !
+!OS.OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
+!OS.OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
+!OS.OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !
 
-!OFNOTIFYEXW class methodsFor!
+!OS.OFNOTIFYEXW class methodsFor!
 
 defineFields
 	"Define the fields of the OFNOTIFYEX structure.
@@ -72,6 +72,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #psf #pidl)! !
-!OFNOTIFYEXW class categoriesFor: #defineFields!public!template definition! !
-!OFNOTIFYEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OFNOTIFYEXW class categoriesFor: #defineFields!public!template definition! !
+!OS.OFNOTIFYEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

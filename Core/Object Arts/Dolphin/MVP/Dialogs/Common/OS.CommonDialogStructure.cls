@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #CommonDialogStructure
+OS.Win32Structure subclass: #'OS.CommonDialogStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommonDialogStructure guid: (GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
-CommonDialogStructure isAbstract: true!
-CommonDialogStructure comment: ''!
-!CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
-!CommonDialogStructure methodsFor!
+OS.CommonDialogStructure guid: (Core.GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
+OS.CommonDialogStructure isNonInstantiable: true!
+OS.CommonDialogStructure comment: ''!
+!OS.CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
+!OS.CommonDialogStructure methodsFor!
 
 flags
 	^self subclassResponsibility!
@@ -32,10 +32,10 @@ lpfnHook: anExternalAddress
 
 maskIn: anInteger 
 	self flags: (self flags maskSet: anInteger)! !
-!CommonDialogStructure categoriesFor: #flags!accessing!public! !
-!CommonDialogStructure categoriesFor: #flags:!accessing!public! !
-!CommonDialogStructure categoriesFor: #hook:!accessing!public! !
-!CommonDialogStructure categoriesFor: #hookFlag!constants!public! !
-!CommonDialogStructure categoriesFor: #lpfnHook:!public! !
-!CommonDialogStructure categoriesFor: #maskIn:!accessing!public! !
+!OS.CommonDialogStructure categoriesFor: #flags!accessing!public! !
+!OS.CommonDialogStructure categoriesFor: #flags:!accessing!public! !
+!OS.CommonDialogStructure categoriesFor: #hook:!accessing!public! !
+!OS.CommonDialogStructure categoriesFor: #hookFlag!constants!public! !
+!OS.CommonDialogStructure categoriesFor: #lpfnHook:!public! !
+!OS.CommonDialogStructure categoriesFor: #maskIn:!accessing!public! !
 

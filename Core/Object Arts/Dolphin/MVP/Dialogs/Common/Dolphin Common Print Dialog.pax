@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Common Print Dialog'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,21 +11,22 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{PrintDialog}
-	#{PrintDialogConstants}
-	#{PRINTDLGEXW}
-	#{PRINTDLGW}
-	#{PRINTPAGERANGE}
+	#{OS.PrintDialogConstants}
+	#{OS.PRINTDLGEXW}
+	#{OS.PRINTDLGW}
+	#{OS.PRINTPAGERANGE}
+	#{UI.PrintDialog}
 ).
 
 package setMethodNames: #(
-	#(#{ComDlgLibrary} #printDlg:)
-	#(#{ComDlgLibrary} #printDlgEx:)
-	#(#{PrinterCanvas class} #choose)
+	#(#{Graphics.PrinterCanvas class} #choose)
+	#(#{OS.ComDlgLibrary} #printDlg:)
+	#(#{OS.ComDlgLibrary} #printDlgEx:)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'Dolphin Common Dialogs'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\..\ActiveX\COM\OLE COM'
@@ -35,7 +36,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #PrintDialogConstants
+Kernel.SharedPool subclass: #'OS.PrintDialogConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -66,7 +67,13 @@ SharedPool subclass: #PrintDialogConstants
 		'PD_USEDEVMODECOPIES' -> 16r40000.
 		'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000
 	}!
-Win32Structure subclass: #PRINTPAGERANGE
+UI.CommonDialog subclass: #'UI.PrintDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.PrintDialogConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Win32Structure subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -75,7 +82,7 @@ Win32Structure subclass: #PRINTPAGERANGE
 		'_OffsetOf_nFromPage' -> 16r0.
 		'_OffsetOf_nToPage' -> 16r4
 	}!
-CommonDialogStructure subclass: #PRINTDLGEXW
+OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -103,10 +110,10 @@ CommonDialogStructure subclass: #PRINTDLGEXW
 		'_OffsetOf_nPropertyPages' -> 16r44.
 		'_OffsetOf_nStartPage' -> 16r4C
 	}!
-CommonDialogStructure subclass: #PRINTDLGW
+OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{PrintDialogConstants})
+	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -129,16 +136,21 @@ CommonDialogStructure subclass: #PRINTDLGW
 		'_OffsetOf_nMinPage' -> 16r1C.
 		'_OffsetOf_nToPage' -> 16r1A
 	}!
-CommonDialog subclass: #PrintDialog
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{PrintDialogConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!ComDlgLibrary methodsFor!
+!Graphics.PrinterCanvas class methodsFor!
+
+choose
+	"Answers a new instance of the receiver created with a non-owned hDC to a printer
+	chosen by the user with the PrintDialog. If the user cancels out of the dialog
+	then we answer nil."
+
+	| hDC |
+	^(hDC := UI.PrintDialog showModal) isNil ifFalse: [self withOwnedDC: hDC]! !
+!Graphics.PrinterCanvas class categoriesFor: #choose!instance creation!public! !
+
+!OS.ComDlgLibrary methodsFor!
 
 printDlg: aWinPRINTDLG
 	"Displays a Print dialog box or a Print Setup dialog box. The Print dialog box enables the user to 
@@ -160,20 +172,8 @@ printDlgEx: lppd
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
-!ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
-
-!PrinterCanvas class methodsFor!
-
-choose
-	"Answers a new instance of the receiver created with a non-owned hDC to a printer
-	chosen by the user with the PrintDialog. If the user cancels out of the dialog
-	then we answer nil."
-
-	| hDC |
-	^(hDC := PrintDialog showModal) isNil
-		ifFalse: [self withOwnedDC: hDC]! !
-!PrinterCanvas class categoriesFor: #choose!instance creation!public! !
+!OS.ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
+!OS.ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
 
 "End of package definition"!
 

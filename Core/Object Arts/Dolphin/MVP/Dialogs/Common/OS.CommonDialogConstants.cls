@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #CommonDialogConstants
+Kernel.SharedPool subclass: #'OS.CommonDialogConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -104,6 +104,7 @@ SharedPool subclass: #CommonDialogConstants
 		'OFN_SHAREWARN' -> 16r0.
 		'OFN_SHOWHELP' -> 16r10
 	}!
-CommonDialogConstants guid: (GUID fromString: '{ed2934fa-9bfe-4b32-a7c2-12deba52b3a6}')!
-CommonDialogConstants comment: ''!
-!CommonDialogConstants categoriesForClass!Unclassified! !
+OS.CommonDialogConstants guid: (Core.GUID fromString: '{ed2934fa-9bfe-4b32-a7c2-12deba52b3a6}')!
+OS.CommonDialogConstants isNonInstantiable: true!
+OS.CommonDialogConstants comment: ''!
+!OS.CommonDialogConstants categoriesForClass!Unclassified! !

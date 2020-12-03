@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #ColorDialog
+UI.CommonDialog subclass: #'UI.ColorDialog'
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorDialog guid: (GUID fromString: '{87b4c6b0-026e-11d3-9fd7-00a0cc3e4a32}')!
-ColorDialog comment: 'ColorDialog is a <valueDialogPresenter> implementing the Windows ChooseColor common dialog. The associated <valueModel> contains the <color> chosen.
+UI.ColorDialog guid: (Core.GUID fromString: '{87b4c6b0-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ColorDialog comment: 'ColorDialog is a <valueDialogPresenter> implementing the Windows ChooseColor common dialog. The associated <valueModel> contains the <color> chosen.
 
 Instance Variables:
 	hook			<BlockCallback>
@@ -19,8 +19,8 @@ Class Variables:
 
 
 '!
-!ColorDialog categoriesForClass!MVP-Presenters! !
-!ColorDialog methodsFor!
+!UI.ColorDialog categoriesForClass!MVP-Presenters! !
+!UI.ColorDialog methodsFor!
 
 basicShowModal
 	"Private - Create and show a new Colour dialog. Hang it off the receiver's parentView.
@@ -56,7 +56,7 @@ prepareStruct
 	customColors at: customColors size put: self defaultColor asCOLORREF.
 	color := self value.
 	(color isNil or: [color isDefault]) ifTrue: [color := self defaultColor].
-	(self winStruct)
+	self winStruct
 		hInstance: VMLibrary default applicationHandle;
 		rgbResult: color rgbCode;
 		maskIn: CC_RGBINIT;
@@ -85,24 +85,24 @@ wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger
 	"Private - The user has pressed the OK button."
 
 	^(self validationBlock value: winStruct color) ifTrue: [0] ifFalse: [1]! !
-!ColorDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!ColorDialog categoriesFor: #defaultColor!helpers!private! !
-!ColorDialog categoriesFor: #extractResult:!helpers!private! !
-!ColorDialog categoriesFor: #initialize!accessing!initializing!private! !
-!ColorDialog categoriesFor: #prepareStruct!helpers!private! !
-!ColorDialog categoriesFor: #validationBlock!accessing!public! !
-!ColorDialog categoriesFor: #validationBlock:!initializing!public! !
-!ColorDialog categoriesFor: #winStructClass!constants!private! !
-!ColorDialog categoriesFor: #wmColorOk:wParam:lParam:!event handling-win32!private! !
+!UI.ColorDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.ColorDialog categoriesFor: #defaultColor!helpers!private! !
+!UI.ColorDialog categoriesFor: #extractResult:!helpers!private! !
+!UI.ColorDialog categoriesFor: #initialize!accessing!initializing!private! !
+!UI.ColorDialog categoriesFor: #prepareStruct!helpers!private! !
+!UI.ColorDialog categoriesFor: #validationBlock!accessing!public! !
+!UI.ColorDialog categoriesFor: #validationBlock:!initializing!public! !
+!UI.ColorDialog categoriesFor: #winStructClass!constants!private! !
+!UI.ColorDialog categoriesFor: #wmColorOk:wParam:lParam:!event handling-win32!private! !
 
-!ColorDialog class methodsFor!
+!UI.ColorDialog class methodsFor!
 
 customColors
 	"Answer sufficient static object to hold the 16 COLORREFS to store the custom
 	colours across uses of the color dialog. Note that the 16th custom colour is 
 	used to hold the default colour and will be installed on each invocation."
 
-	CustomColors isNil 
+	CustomColors isNil
 		ifTrue: 
 			[| white |
 			CustomColors := DWORDArray new: 16.
@@ -127,7 +127,7 @@ initialize
 
 	self initializeDefaultHooks.
 	self registerColorOkMessage.
-	SessionManager current 
+	SessionManager current
 		when: #sessionStarted
 		send: #onStartup
 		to: self!
@@ -153,12 +153,12 @@ uninitialize
 	"
 
 	SessionManager current removeEventsTriggeredFor: self! !
-!ColorDialog class categoriesFor: #customColors!accessing!public! !
-!ColorDialog class categoriesFor: #defaultModel!models!public! !
-!ColorDialog class categoriesFor: #icon!constants!public! !
-!ColorDialog class categoriesFor: #initialize!development!initializing!private! !
-!ColorDialog class categoriesFor: #onStartup!events-session!public! !
-!ColorDialog class categoriesFor: #registerColorOkMessage!events-session!private! !
-!ColorDialog class categoriesFor: #resetCustomColors!accessing!public! !
-!ColorDialog class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.ColorDialog class categoriesFor: #customColors!accessing!public! !
+!UI.ColorDialog class categoriesFor: #defaultModel!models!public! !
+!UI.ColorDialog class categoriesFor: #icon!constants!public! !
+!UI.ColorDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.ColorDialog class categoriesFor: #onStartup!events-session!public! !
+!UI.ColorDialog class categoriesFor: #registerColorOkMessage!events-session!private! !
+!UI.ColorDialog class categoriesFor: #resetCustomColors!accessing!public! !
+!UI.ColorDialog class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

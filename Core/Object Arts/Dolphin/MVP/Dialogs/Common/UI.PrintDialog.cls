@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #PrintDialog
+UI.CommonDialog subclass: #'UI.PrintDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'PrintDialogConstants'
+	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PrintDialog guid: (GUID fromString: '{87b4c6b4-026e-11d3-9fd7-00a0cc3e4a32}')!
-PrintDialog comment: 'PrintDialog is a <valueDialogPresenter> implementing the Windows PrintDlg common dialog. The associated <valueModel> contains an <integer> representing the device context handle (HDC) for the chosen printer.'!
-!PrintDialog categoriesForClass!MVP-Presenters! !
-!PrintDialog methodsFor!
+UI.PrintDialog guid: (Core.GUID fromString: '{87b4c6b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.PrintDialog comment: 'PrintDialog is a <valueDialogPresenter> implementing the Windows PrintDlg common dialog. The associated <valueModel> contains an <integer> representing the device context handle (HDC) for the chosen printer.'!
+!UI.PrintDialog categoriesForClass!MVP-Presenters! !
+!UI.PrintDialog methodsFor!
 
 basicShowModal
 	"Private - Create and show a new Print dialog. Hang it off the receiver's parent view.
@@ -68,13 +68,13 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PRINTDLGW! !
-!PrintDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!PrintDialog categoriesFor: #copies!accessing!public! !
-!PrintDialog categoriesFor: #copies:!accessing!public! !
-!PrintDialog categoriesFor: #extractResult:!helpers!private! !
-!PrintDialog categoriesFor: #initialize!public! !
-!PrintDialog categoriesFor: #pageRange:!accessing!public! !
-!PrintDialog categoriesFor: #printRange!accessing!public! !
-!PrintDialog categoriesFor: #printRange:!accessing!public! !
-!PrintDialog categoriesFor: #winStructClass!constants!private! !
+!UI.PrintDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.PrintDialog categoriesFor: #copies!accessing!public! !
+!UI.PrintDialog categoriesFor: #copies:!accessing!public! !
+!UI.PrintDialog categoriesFor: #extractResult:!helpers!private! !
+!UI.PrintDialog categoriesFor: #initialize!public! !
+!UI.PrintDialog categoriesFor: #pageRange:!accessing!public! !
+!UI.PrintDialog categoriesFor: #printRange!accessing!public! !
+!UI.PrintDialog categoriesFor: #printRange:!accessing!public! !
+!UI.PrintDialog categoriesFor: #winStructClass!constants!private! !
 

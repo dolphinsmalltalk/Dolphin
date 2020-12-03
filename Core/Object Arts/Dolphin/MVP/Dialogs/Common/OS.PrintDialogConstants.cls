@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #PrintDialogConstants
+Kernel.SharedPool subclass: #'OS.PrintDialogConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -31,6 +31,7 @@ SharedPool subclass: #PrintDialogConstants
 		'PD_USEDEVMODECOPIES' -> 16r40000.
 		'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000
 	}!
-PrintDialogConstants guid: (GUID fromString: '{79306617-0b72-4010-83fd-e228cde8f379}')!
-PrintDialogConstants comment: ''!
-!PrintDialogConstants categoriesForClass!Unclassified! !
+OS.PrintDialogConstants guid: (Core.GUID fromString: '{79306617-0b72-4010-83fd-e228cde8f379}')!
+OS.PrintDialogConstants isNonInstantiable: true!
+OS.PrintDialogConstants comment: ''!
+!OS.PrintDialogConstants categoriesForClass!Unclassified! !

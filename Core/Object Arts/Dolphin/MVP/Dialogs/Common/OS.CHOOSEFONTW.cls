@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #CHOOSEFONTW
+OS.CommonDialogStructure subclass: #'OS.CHOOSEFONTW'
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -22,16 +22,16 @@ CommonDialogStructure subclass: #CHOOSEFONTW
 		'_OffsetOf_nSizeMin' -> 16r34.
 		'_OffsetOf_rgbColors' -> 16r18
 	}!
-CHOOSEFONTW guid: (GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
+OS.CHOOSEFONTW guid: (Core.GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.
 '!
-!CHOOSEFONTW categoriesForClass!External-Data-Structured-Win32! !
-!CHOOSEFONTW methodsFor!
+!OS.CHOOSEFONTW categoriesForClass!External-Data-Structured-Win32! !
+!OS.CHOOSEFONTW methodsFor!
 
 color
-	^Color fromCOLORREF: self rgbColors!
+	^Graphics.Color fromCOLORREF: self rgbColors!
 
 color: aColor 
 	self rgbColors: aColor asCOLORREF!
@@ -107,25 +107,25 @@ rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
-!CHOOSEFONTW categoriesFor: #color!public! !
-!CHOOSEFONTW categoriesFor: #color:!public! !
-!CHOOSEFONTW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #flags!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #flags:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #hDC:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #hookFlag!accessing!public! !
-!CHOOSEFONTW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #iPointSize!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #logFont!private! !
-!CHOOSEFONTW categoriesFor: #logFont:!private! !
-!CHOOSEFONTW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #lpLogFont!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #lpLogFont:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #ownerView:!accessing!public! !
-!CHOOSEFONTW categoriesFor: #rgbColors!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #rgbColors:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #color!public! !
+!OS.CHOOSEFONTW categoriesFor: #color:!public! !
+!OS.CHOOSEFONTW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #hDC:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #hookFlag!accessing!public! !
+!OS.CHOOSEFONTW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #iPointSize!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #logFont!private! !
+!OS.CHOOSEFONTW categoriesFor: #logFont:!private! !
+!OS.CHOOSEFONTW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #lpLogFont!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #lpLogFont:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #ownerView:!accessing!public! !
+!OS.CHOOSEFONTW categoriesFor: #rgbColors!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesFor: #rgbColors:!**compiled accessors**!public! !
 
-!CHOOSEFONTW class methodsFor!
+!OS.CHOOSEFONTW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 CHOOSEFONTW structure.
@@ -169,6 +169,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
-!CHOOSEFONTW class categoriesFor: #defineFields!public!template definition! !
-!CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CHOOSEFONTW class categoriesFor: #defineFields!public!template definition! !
+!OS.CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

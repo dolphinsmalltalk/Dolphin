@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #FINDREPLACEW
+OS.CommonDialogStructure subclass: #'OS.FINDREPLACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -18,11 +18,11 @@ CommonDialogStructure subclass: #FINDREPLACEW
 		'_OffsetOf_wFindWhatLen' -> 16r18.
 		'_OffsetOf_wReplaceWithLen' -> 16r1A
 	}!
-FINDREPLACEW guid: (GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
-FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
+OS.FINDREPLACEW guid: (Core.GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!
-!FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
-!FINDREPLACEW methodsFor!
+!OS.FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+!OS.FINDREPLACEW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -30,13 +30,13 @@ dwSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 findDetails
-	^(FindDetails new)
+	^UI.FindDetails new
 		pattern: self findWhat;
 		replaceWith: self replaceWith;
 		isForwards: self isForwards;
 		isCaseSensitive: self isCaseSensitive;
 		isWholeWord: self isWholeWord;
-		action: (self isReplaceAll 
+		action: (self isReplaceAll
 					ifTrue: [#replaceAll]
 					ifFalse: [self isReplace ifTrue: [#replace] ifFalse: [#findNext]]);
 		yourself!
@@ -142,30 +142,30 @@ wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
-!FINDREPLACEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #findDetails!event handling!public! !
-!FINDREPLACEW categoriesFor: #findWhat!accessing!public! !
-!FINDREPLACEW categoriesFor: #flags!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #flags:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #hookFlag!accessing!public! !
-!FINDREPLACEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #isCaseSensitive!public!testing! !
-!FINDREPLACEW categoriesFor: #isClosing!public!testing! !
-!FINDREPLACEW categoriesFor: #isForwards!public!testing! !
-!FINDREPLACEW categoriesFor: #isReplace!public!testing! !
-!FINDREPLACEW categoriesFor: #isReplaceAll!public!testing! !
-!FINDREPLACEW categoriesFor: #isWholeWord!public!testing! !
-!FINDREPLACEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #lpstrFindWhat!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #lpstrFindWhat:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #lpstrReplaceWith!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #lpstrReplaceWith:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #ownerView:!accessing!public! !
-!FINDREPLACEW categoriesFor: #replaceWith!accessing!public! !
-!FINDREPLACEW categoriesFor: #wFindWhatLen:!**compiled accessors**!public! !
-!FINDREPLACEW categoriesFor: #wReplaceWithLen:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #findDetails!event handling!public! !
+!OS.FINDREPLACEW categoriesFor: #findWhat!accessing!public! !
+!OS.FINDREPLACEW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #hookFlag!accessing!public! !
+!OS.FINDREPLACEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #isCaseSensitive!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #isClosing!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #isForwards!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #isReplace!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #isReplaceAll!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #isWholeWord!public!testing! !
+!OS.FINDREPLACEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #lpstrFindWhat!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #lpstrFindWhat:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #lpstrReplaceWith!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #lpstrReplaceWith:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #ownerView:!accessing!public! !
+!OS.FINDREPLACEW categoriesFor: #replaceWith!accessing!public! !
+!OS.FINDREPLACEW categoriesFor: #wFindWhatLen:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesFor: #wReplaceWithLen:!**compiled accessors**!public! !
 
-!FINDREPLACEW class methodsFor!
+!OS.FINDREPLACEW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 FINDREPLACE structure.
@@ -201,6 +201,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
-!FINDREPLACEW class categoriesFor: #defineFields!public!template definition! !
-!FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FINDREPLACEW class categoriesFor: #defineFields!public!template definition! !
+!OS.FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #PRINTDLGW
+OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'PrintDialogConstants'
+	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -26,10 +26,10 @@ CommonDialogStructure subclass: #PRINTDLGW
 		'_OffsetOf_nMinPage' -> 16r1C.
 		'_OffsetOf_nToPage' -> 16r1A
 	}!
-PRINTDLGW guid: (GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
-PRINTDLGW comment: ''!
-!PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !
-!PRINTDLGW methodsFor!
+OS.PRINTDLGW guid: (Core.GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.PRINTDLGW comment: ''!
+!OS.PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !
+!OS.PRINTDLGW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -115,25 +115,25 @@ ownerView: aView
 	| hWnd |
 	hWnd := aView asParameter.
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].! !
-!PRINTDLGW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #flags!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #flags:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hDC!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hDC:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hookFlag!accessing!public! !
-!PRINTDLGW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nCopies!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nFromPage!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nFromPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nToPage!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nToPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #ownerView:!accessing!public! !
+!OS.PRINTDLGW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #hDC!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #hDC:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #hookFlag!accessing!public! !
+!OS.PRINTDLGW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nCopies!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nCopies:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nFromPage!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nFromPage:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nMinPage:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nToPage!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #nToPage:!**compiled accessors**!public! !
+!OS.PRINTDLGW categoriesFor: #ownerView:!accessing!public! !
 
-!PRINTDLGW class methodsFor!
+!OS.PRINTDLGW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 PRINTDLGW structure.
@@ -177,7 +177,7 @@ defineFields
 		defineField: #hInstance type: DWORDField filler;
 		defineField: #lCustData type: DWORDField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
-		defineField: #lpfnSetupHook type: (PointerField type: ExternalAddress) beFiller;
+		defineField: #lpfnSetupHook type: (PointerField type: External.Address) beFiller;
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #lpSetupTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #hPrintTemplate type: DWORDField filler;
@@ -196,7 +196,7 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
-!PRINTDLGW class categoriesFor: #defineFields!public!template definition! !
-!PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PRINTDLGW class categoriesFor: #packing!constants!public! !
+!OS.PRINTDLGW class categoriesFor: #defineFields!public!template definition! !
+!OS.PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PRINTDLGW class categoriesFor: #packing!constants!public! !
 

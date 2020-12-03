@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #FontDialog
+UI.CommonDialog subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FontDialog guid: (GUID fromString: '{87b4c6b3-026e-11d3-9fd7-00a0cc3e4a32}')!
-FontDialog comment: 'FontDialog is a <valueDialogPresenter> implementing the Windows ChooseFont common dialog. The associated <valueModel> contains the <Font> chosen.
+UI.FontDialog guid: (Core.GUID fromString: '{87b4c6b3-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FontDialog comment: 'FontDialog is a <valueDialogPresenter> implementing the Windows ChooseFont common dialog. The associated <valueModel> contains the <Font> chosen.
 
 Instance Variables:
 	logFont		<LOGFONT> holding the logical font information for the font chosen.
 
 
 '!
-!FontDialog categoriesForClass!MVP-Presenters! !
-!FontDialog methodsFor!
+!UI.FontDialog categoriesForClass!MVP-Presenters! !
+!UI.FontDialog methodsFor!
 
 basicShowModal
 	"Private - Show the common Font dialog."
@@ -46,7 +46,11 @@ model: aValueModel
 	"Might be a legacy Font instance with a LOGFONTA description, but we need a LOGFONTW"
 	lf := font logFont.
 	lfw := LOGFONTW new.
-	lfw replaceFrom: 1 to: lf byteSize with: lf bytes startingAt: 1.
+	lfw
+		replaceFrom: 1
+		to: lf byteSize
+		with: lf bytes
+		startingAt: 1.
 	lfw faceName: lf faceName.
 	self winStruct logFont: lfw!
 
@@ -54,13 +58,13 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^CHOOSEFONTW! !
-!FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FontDialog categoriesFor: #extractResult:!helpers!private! !
-!FontDialog categoriesFor: #initialize!public! !
-!FontDialog categoriesFor: #model:!public! !
-!FontDialog categoriesFor: #winStructClass!constants!private! !
+!UI.FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.FontDialog categoriesFor: #extractResult:!helpers!private! !
+!UI.FontDialog categoriesFor: #initialize!public! !
+!UI.FontDialog categoriesFor: #model:!public! !
+!UI.FontDialog categoriesFor: #winStructClass!constants!private! !
 
-!FontDialog class methodsFor!
+!UI.FontDialog class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -79,7 +83,7 @@ initialize
 
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
-!FontDialog class categoriesFor: #defaultModel!models!public! !
-!FontDialog class categoriesFor: #icon!constants!public! !
-!FontDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FontDialog class categoriesFor: #defaultModel!models!public! !
+!UI.FontDialog class categoriesFor: #icon!constants!public! !
+!UI.FontDialog class categoriesFor: #initialize!development!initializing!private! !
 

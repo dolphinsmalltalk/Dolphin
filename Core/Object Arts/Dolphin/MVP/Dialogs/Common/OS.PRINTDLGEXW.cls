@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #PRINTDLGEXW
+OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwResultAction' -> 16r50.
@@ -28,8 +28,8 @@ CommonDialogStructure subclass: #PRINTDLGEXW
 		'_OffsetOf_nPropertyPages' -> 16r44.
 		'_OffsetOf_nStartPage' -> 16r4C
 	}!
-PRINTDLGEXW guid: (GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
-PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.PRINTDLGEXW guid: (Core.GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
+OS.PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -62,8 +62,8 @@ struct tagPRINTDLGEX {
 	DWORD dwResultAction;
 } PRINTDLGEX;
 '!
-!PRINTDLGEXW categoriesForClass!Win32-Structs! !
-!PRINTDLGEXW methodsFor!
+!OS.PRINTDLGEXW categoriesForClass!Win32-Structs! !
+!OS.PRINTDLGEXW methodsFor!
 
 dwResultAction
 	"Answer the <Integer> value of the receiver's 'dwResultAction' field."
@@ -158,7 +158,7 @@ hwndOwner: anExternalHandle
 lpCallback
 	"Answer the <IUnknown> value of the receiver's 'lpCallback' field."
 
-	^IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
+	^Smalltalk.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
 
 lpCallback: anIUnknown
 	"Set the receiver's 'lpCallback' field to the value of the argument, anIUnknown"
@@ -168,7 +168,7 @@ lpCallback: anIUnknown
 lphPropertyPages
 	"Answer the <ExternalHandle> value of the receiver's 'lphPropertyPages' field."
 
-	^ExternalHandle fromAddress: (bytes intPtrAtOffset: _OffsetOf_lphPropertyPages)!
+	^Handle fromAddress: (bytes intPtrAtOffset: _OffsetOf_lphPropertyPages)!
 
 lphPropertyPages: anExternalHandle
 	"Set the receiver's 'lphPropertyPages' field to the value of the argument, anExternalHandle"
@@ -274,50 +274,50 @@ nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
-!PRINTDLGEXW categoriesFor: #dwResultAction!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #dwResultAction:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #ExclusionFlags!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #ExclusionFlags:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #flags!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #flags:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #Flags2!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #Flags2:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDC!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDC:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevMode!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevMode:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevNames!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevNames:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hInstance!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hwndOwner!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpCallback!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpCallback:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lphPropertyPages!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lphPropertyPages:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPrintTemplateName!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPrintTemplateName:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lStructSize!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lStructSize:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nCopies!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMinPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPropertyPages!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPropertyPages:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nStartPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nStartPage:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #dwResultAction!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #dwResultAction:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #ExclusionFlags!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #ExclusionFlags:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #Flags2!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #Flags2:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDC!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDC:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDevMode!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDevMode:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDevNames!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hDevNames:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hInstance!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hInstance:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hwndOwner!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpCallback!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpCallback:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lphPropertyPages!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lphPropertyPages:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpPageRanges!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpPageRanges:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpPrintTemplateName!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lpPrintTemplateName:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lStructSize!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #lStructSize:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nCopies!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nCopies:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMaxPage!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMaxPageRanges!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMaxPageRanges:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMinPage!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nMinPage:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nPageRanges!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nPageRanges:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nPropertyPages!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nPropertyPages:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nStartPage!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesFor: #nStartPage:!**compiled accessors**!public! !
 
-!PRINTDLGEXW class methodsFor!
+!OS.PRINTDLGEXW class methodsFor!
 
 defineFields
 	"Define the fields of the PRINTDLGEX structure.
@@ -367,14 +367,14 @@ defineFields
 		defineField: #nCopies type: DWORDField new;
 		defineField: #hInstance type: HANDLEField new;
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String);
-		defineField: #lpCallback type: (PointerField type: IUnknown);
+		defineField: #lpCallback type: (PointerField type: Smalltalk.IUnknown);
 		defineField: #nPropertyPages type: DWORDField new;
-		defineField: #lphPropertyPages type: (PointerField type: ExternalHandle);
+		defineField: #lphPropertyPages type: (PointerField type: Smalltalk.ExternalHandle);
 		defineField: #nStartPage type: DWORDField new;
 		defineField: #dwResultAction type: DWORDField new!
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
-!PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
