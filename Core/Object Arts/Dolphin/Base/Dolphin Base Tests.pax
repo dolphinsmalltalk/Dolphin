@@ -33,6 +33,7 @@ package classNames
 	add: #DateAndTimeTest;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
+	add: #DelayTest;
 	add: #DictionaryTest;
 	add: #DiskVolumeInformationTest;
 	add: #DolphinCollectionTest;
@@ -248,6 +249,11 @@ DolphinTest subclass: #DateAndTimeTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #DateTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #DelayTest
+	instanceVariableNames: 'delay startTime'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
