@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TextTileIcon
+Core.Object subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
 	classVariableNames: 'StringFormat'
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 		'RotationMask' -> 16r3
 	}!
-TextTileIcon guid: (GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
-TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background, which can be `Color none` for a transparent background. The text can contain any Unicode characters (including symbols, emoticons, etc), although there is limited font support for extended characters (if the text renders as an empty box, try using the ''Segoe UI Symbol'' font).
+Graphics.TextTileIcon guid: (Core.GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
+Graphics.TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background, which can be `Color none` for a transparent background. The text can contain any Unicode characters (including symbols, emoticons, etc), although there is limited font support for extended characters (if the text renders as an empty box, try using the ''Segoe UI Symbol'' font).
 
 The text colour can be specified, but if not then either white or black will be chosen depending on the luminance of the background colour. When drawn on a transparent background the text is black by default.
 
@@ -31,8 +31,8 @@ Examples:
 	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'' color: Color darkGreen) fontStyle: #bold) bitmapWithExtent: 128@128.
 
 	'!
-!TextTileIcon categoriesForClass!Unclassified! !
-!TextTileIcon methodsFor!
+!Graphics.TextTileIcon categoriesForClass!Unclassified! !
+!Graphics.TextTileIcon methodsFor!
 
 = comperand
 	^self == comperand or: 
@@ -72,7 +72,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 	(i := flags bitAnd: RotationMask) == 0 ifTrue: [^self].
 	matrix := (##({
 				[:x :y |
-				GdiplusMatrix
+				Gdiplus.Matrix
 					m11: 0.0
 					m12: 1.0
 					m21: -1.0
@@ -81,7 +81,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m32: (y - x) / 2.0].
 				
 				[:x :y |
-				GdiplusMatrix
+				Gdiplus.Matrix
 					m11: -1.0
 					m12: 0.0
 					m21: 0.0
@@ -90,7 +90,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m32: y].
 				
 				[:x :y |
-				GdiplusMatrix
+				Gdiplus.Matrix
 					m11: 0.0
 					m12: -1.0
 					m21: 1.0
@@ -101,18 +101,18 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 	aGdiplusGraphics transform: matrix.
 	matrix free!
 
-asAlphaBitmap: aPoint 
+asAlphaBitmap: aPoint
 	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's
 	image rendered at the specified size."
 
 	| bmp |
-	bmp := DIBSection 
+	bmp := DIBSection
 				width: aPoint x
 				height: aPoint y
 				depth: 32.
 	"Use the services of an ImageList to get the correct sized icon automagically, and to
 	provide an alpha channel even if the original icon had no more than a simple mask."
-	(self imageManager imageListWithExtent: aPoint) 
+	(self imageManager imageListWithExtent: aPoint)
 		draw: self imageIndex
 		on: bmp canvas
 		at: Point.Zero
@@ -144,7 +144,7 @@ basicFontStyle
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
-	bitmap := GdiplusBitmap
+	bitmap := Gdiplus.Bitmap
 				width: aPoint x
 				height: aPoint y
 				format: PixelFormat32bppPARGB.
@@ -166,7 +166,7 @@ drawOn: aCanvas
 	"Draw the receiver to aCanvas at position aPoint (no stretching).
 	Answer whether the operation succeeded."
 
-	^self drawOn: aCanvas at: Point zero!
+	^self drawOn: aCanvas at: Point.Zero!
 
 drawOn: aCanvas at: aPoint
 	"Draw the receiver to aCanvas at position aPoint (no stretching).
@@ -179,8 +179,11 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	The receiver is stretched to fit the destination rectangle."
 
 	| graphics |
-	graphics := GdiplusGraphics fromCanvas: aCanvas.
-	self drawOnGraphics: graphics at: dstOrigin extent: dstExtent.
+	graphics := Gdiplus.GdiplusGraphics fromCanvas: aCanvas.
+	self
+		drawOnGraphics: graphics
+		at: dstOrigin
+		extent: dstExtent.
 	graphics free!
 
 drawOnGraphics: graphics at: originPoint extent: aPoint
@@ -191,7 +194,7 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	back
 		ifNotNil: 
 			[| backbrush |
-			backbrush := GdiplusSolidBrush color: back.
+			backbrush := Gdiplus.SolidBrush color: back.
 			graphics fillRectangle: rect brush: backbrush.
 			backbrush free.
 			rect := rect insetBy: 1 @ 0].
@@ -205,7 +208,7 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	"Work out a suitable font size to best fit the space"
 	faceName := self actualFontName.
 	style := self actualFontStyle.
-	f := GdiplusFont
+	f := Gdiplus.Font
 				name: faceName
 				pixelSize: height
 				style: style.
@@ -213,16 +216,16 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	textExtent := (graphics
 				measureString: utf16
 				font: f
-				rect: RECTF new
-				format: GdiplusStringFormat genericTypographic) extent.
+				rect: Gdiplus.RECTF new
+				format: Gdiplus.StringFormat genericTypographic) extent.
 	f free.
 	scale := width asFloat / textExtent x.
 	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
-	f := GdiplusFont
+	f := Gdiplus.Font
 				name: faceName
 				pixelSize: (height * scale max: 1)
 				style: style.
-	textBrush := GdiplusSolidBrush color: self actualTextcolor.
+	textBrush := Gdiplus.SolidBrush color: self actualTextcolor.
 	graphics
 		drawString: utf16
 		font: f
@@ -268,7 +271,7 @@ hash
 	^(text hash bitXor: tilecolor hash) bitXor: fontName hash!
 
 hotspot
-	^Point zero!
+	^Point.Zero!
 
 icon
 	"Answer the receiver's icon (well, itself)."
@@ -294,7 +297,8 @@ isRealized
 largeIcon
 	"Answer a 'large' (32x32) <Icon> equivalent of the receiver. This is sometimes needed, e.g. to set the icon for a Window."
 
-	(icon isNil or: [icon isRealized not]) ifTrue: [icon := (self bitmapWithExtent: SystemMetrics current largeIconExtent) asIcon].
+	(icon isNil or: [icon isRealized not])
+		ifTrue: [icon := (self bitmapWithExtent: SystemMetrics current largeIconExtent) asIcon].
 	^icon!
 
 printOn: aStream
@@ -377,7 +381,8 @@ storeOn: aStream
 stringFormat
 	(StringFormat isNil or: [StringFormat isRealized not])
 		ifTrue: 
-			[StringFormat := (GdiplusStringFormat flags: ##(StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
+			[StringFormat := (Gdiplus.StringFormat
+						flags: ##(StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
 						trimming: StringTrimmingNone;
 						lineAlignment: StringAlignmentCenter;
 						alignment: StringAlignmentCenter;
@@ -402,53 +407,53 @@ tilecolor
 	"Answer the tile background colour, or nil for transparent."
 
 	^tilecolor! !
-!TextTileIcon categoriesFor: #=!comparison!public! !
-!TextTileIcon categoriesFor: #actualFontName!accessing!private! !
-!TextTileIcon categoriesFor: #actualFontStyle!accessing!private! !
-!TextTileIcon categoriesFor: #actualTextcolor!accessing!private! !
-!TextTileIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!TextTileIcon categoriesFor: #applyTransforms:rect:!drawing-bitmaps!private! !
-!TextTileIcon categoriesFor: #asAlphaBitmap:!converting!public! !
-!TextTileIcon categoriesFor: #asBitmap!converting!public! !
-!TextTileIcon categoriesFor: #asMenuBitmap!converting!public! !
-!TextTileIcon categoriesFor: #asParameter!converting!public! !
-!TextTileIcon categoriesFor: #basicFontStyle!accessing!private! !
-!TextTileIcon categoriesFor: #bitmapWithExtent:!converting!private! !
-!TextTileIcon categoriesFor: #defaultFontName!accessing!constants!public! !
-!TextTileIcon categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOnGraphics:at:extent:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #extent!accessing!public! !
-!TextTileIcon categoriesFor: #flags!accessing!private! !
-!TextTileIcon categoriesFor: #flags:!accessing!private! !
-!TextTileIcon categoriesFor: #fontName!accessing!public! !
-!TextTileIcon categoriesFor: #fontStyle!accessing!public! !
-!TextTileIcon categoriesFor: #fontStyle:!accessing!public! !
-!TextTileIcon categoriesFor: #freeDC!public! !
-!TextTileIcon categoriesFor: #hash!comparison!public! !
-!TextTileIcon categoriesFor: #hotspot!accessing!public! !
-!TextTileIcon categoriesFor: #icon!accessing!public! !
-!TextTileIcon categoriesFor: #imageIndex!image management!private! !
-!TextTileIcon categoriesFor: #imageManager!image management!private! !
-!TextTileIcon categoriesFor: #imageType!constants!public! !
-!TextTileIcon categoriesFor: #isRealized!public!testing! !
-!TextTileIcon categoriesFor: #largeIcon!converting!public! !
-!TextTileIcon categoriesFor: #printOn:!printing!public! !
-!TextTileIcon categoriesFor: #realize!public!realizing/unrealizing! !
-!TextTileIcon categoriesFor: #rotation!accessing!public! !
-!TextTileIcon categoriesFor: #rotation:!accessing!public! !
-!TextTileIcon categoriesFor: #setText:fontName:color:!initializing!private! !
-!TextTileIcon categoriesFor: #stbSaveOn:!binary filing!public! !
-!TextTileIcon categoriesFor: #storeOn:!printing!public! !
-!TextTileIcon categoriesFor: #stringFormat!drawing-bitmaps!private! !
-!TextTileIcon categoriesFor: #text!accessing!public! !
-!TextTileIcon categoriesFor: #textcolor!accessing!public! !
-!TextTileIcon categoriesFor: #textcolor:!accessing!public! !
-!TextTileIcon categoriesFor: #tilecolor!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #=!comparison!public! !
+!Graphics.TextTileIcon categoriesFor: #actualFontName!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #actualFontStyle!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #actualTextcolor!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Graphics.TextTileIcon categoriesFor: #applyTransforms:rect:!drawing-bitmaps!private! !
+!Graphics.TextTileIcon categoriesFor: #asAlphaBitmap:!converting!public! !
+!Graphics.TextTileIcon categoriesFor: #asBitmap!converting!public! !
+!Graphics.TextTileIcon categoriesFor: #asMenuBitmap!converting!public! !
+!Graphics.TextTileIcon categoriesFor: #asParameter!converting!public! !
+!Graphics.TextTileIcon categoriesFor: #basicFontStyle!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #bitmapWithExtent:!converting!private! !
+!Graphics.TextTileIcon categoriesFor: #defaultFontName!accessing!constants!public! !
+!Graphics.TextTileIcon categoriesFor: #drawOn:!drawing-bitmaps!public! !
+!Graphics.TextTileIcon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
+!Graphics.TextTileIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.TextTileIcon categoriesFor: #drawOnGraphics:at:extent:!drawing-bitmaps!public! !
+!Graphics.TextTileIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
+!Graphics.TextTileIcon categoriesFor: #extent!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #flags!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #flags:!accessing!private! !
+!Graphics.TextTileIcon categoriesFor: #fontName!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #fontStyle!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #fontStyle:!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #freeDC!public! !
+!Graphics.TextTileIcon categoriesFor: #hash!comparison!public! !
+!Graphics.TextTileIcon categoriesFor: #hotspot!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #icon!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #imageIndex!image management!private! !
+!Graphics.TextTileIcon categoriesFor: #imageManager!image management!private! !
+!Graphics.TextTileIcon categoriesFor: #imageType!constants!public! !
+!Graphics.TextTileIcon categoriesFor: #isRealized!public!testing! !
+!Graphics.TextTileIcon categoriesFor: #largeIcon!converting!public! !
+!Graphics.TextTileIcon categoriesFor: #printOn:!printing!public! !
+!Graphics.TextTileIcon categoriesFor: #realize!public!realizing/unrealizing! !
+!Graphics.TextTileIcon categoriesFor: #rotation!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #rotation:!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #setText:fontName:color:!initializing!private! !
+!Graphics.TextTileIcon categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.TextTileIcon categoriesFor: #storeOn:!printing!public! !
+!Graphics.TextTileIcon categoriesFor: #stringFormat!drawing-bitmaps!private! !
+!Graphics.TextTileIcon categoriesFor: #text!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #textcolor!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #textcolor:!accessing!public! !
+!Graphics.TextTileIcon categoriesFor: #tilecolor!accessing!public! !
 
-!TextTileIcon class methodsFor!
+!Graphics.TextTileIcon class methodsFor!
 
 defaultExtent
 	^SystemMetrics current largeIconExtent!
@@ -501,13 +506,13 @@ text: labelString fontName: fontString color: aColor
 		setText: labelString
 		fontName: fontString
 		color: aColor! !
-!TextTileIcon class categoriesFor: #defaultExtent!constants!private! !
-!TextTileIcon class categoriesFor: #icon!public! !
-!TextTileIcon class categoriesFor: #new!instance creation!private! !
-!TextTileIcon class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!TextTileIcon class categoriesFor: #stbVersion!binary filing!public! !
-!TextTileIcon class categoriesFor: #text:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:color:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:fontName:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:fontName:color:!instance creation!public! !
+!Graphics.TextTileIcon class categoriesFor: #defaultExtent!constants!private! !
+!Graphics.TextTileIcon class categoriesFor: #icon!public! !
+!Graphics.TextTileIcon class categoriesFor: #new!instance creation!private! !
+!Graphics.TextTileIcon class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!Graphics.TextTileIcon class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.TextTileIcon class categoriesFor: #text:!instance creation!public! !
+!Graphics.TextTileIcon class categoriesFor: #text:color:!instance creation!public! !
+!Graphics.TextTileIcon class categoriesFor: #text:fontName:!instance creation!public! !
+!Graphics.TextTileIcon class categoriesFor: #text:fontName:color:!instance creation!public! !
 

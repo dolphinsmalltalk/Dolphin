@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Internal Bitmaps and Icons'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'One of the most common reasons why Dolphin applications need to use external files is to make use of icon and bitmap resources. These may be required solely to present your Dolphin classes with an icon inside the browsers or for more functional reasons such as toolbar buttons etc. 
 
@@ -36,18 +36,18 @@ package basicPackageVersion: '0.010'.
 
 
 package setClassNames: #(
-	#{InternalBitmap}
-	#{InternalIcon}
+	#{Graphics.InternalBitmap}
+	#{Graphics.InternalIcon}
 ).
 
 package setMethodNames: #(
-	#(#{ClassDescription} #createBadgeMethod)
-	#(#{ClassDescription} #createIconMethod)
-	#(#{ClassDescription} #createIconMethod:fromIcon:)
-	#(#{ClassDescription} #createIconMethod:OfSize:)
-	#(#{ClassDescription} #createIconMethod:ofSize:fromFile:)
-	#(#{GdiplusImage} #addToImageList:mask:)
-	#(#{GdiplusImage} #internalize)
+	#(#{Core.ClassDescription} #createBadgeMethod)
+	#(#{Core.ClassDescription} #createIconMethod)
+	#(#{Core.ClassDescription} #createIconMethod:fromIcon:)
+	#(#{Core.ClassDescription} #createIconMethod:OfSize:)
+	#(#{Core.ClassDescription} #createIconMethod:ofSize:fromFile:)
+	#(#{Graphics.Gdiplus.Image} #addToImageList:mask:)
+	#(#{Graphics.Gdiplus.Image} #internalize)
 ).
 
 package setPrerequisites: #(
@@ -63,22 +63,22 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #InternalBitmap
+Core.Object subclass: #'Graphics.InternalBitmap'
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternalBitmap subclass: #InternalIcon
+Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
 createBadgeMethod
 	"Prompts the user for an image or icon file and builds and compiles a #badge method from it for this class"
@@ -100,12 +100,12 @@ createIconMethod: methodName fromIcon: anInternalIcon
 	anInternalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}!
 
-createIconMethod: methodName OfSize: pixelSize 
+createIconMethod: methodName OfSize: pixelSize
 	| extent imageFileName |
 	extent := pixelSize asPoint.
-	imageFileName := FileOpenDialog showModal.
+	imageFileName := UI.FileOpenDialog showModal.
 	imageFileName ifNil: [^self].
-	^self 
+	^self
 		createIconMethod: methodName
 		ofSize: extent
 		fromFile: imageFileName!
@@ -116,7 +116,7 @@ createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName
 	(File splitExtensionFrom: imageFileName) asLowercase = 'ico'
 		ifTrue: 
 			[#todo.	"Anyone care to fix this?"
-			MessageBox
+			UI.MessageBox
 				warning: 'Can''t currently compile from ICO files. 
 
 Why not use: 
@@ -125,7 +125,7 @@ to convert to PNG format first?'.
 			^self].
 
 	"Let GDI+ do the image load"
-	internalIcon := InternalIcon fromFile: imageFileName extent: extent.
+	internalIcon := Graphics.InternalIcon fromFile: imageFileName extent: extent.
 	methodSourceStream := String writeStream.
 	methodSourceStream
 		nextPutAll: methodName;
@@ -143,13 +143,13 @@ to convert to PNG format first?'.
 	^'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
-!ClassDescription categoriesFor: #createBadgeMethod!development!public! !
-!ClassDescription categoriesFor: #createIconMethod!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
+!Core.ClassDescription categoriesFor: #createBadgeMethod!development!public! !
+!Core.ClassDescription categoriesFor: #createIconMethod!development!public! !
+!Core.ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
+!Core.ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
+!Core.ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
 
-!GdiplusImage methodsFor!
+!Graphics.Gdiplus.Image methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
@@ -174,8 +174,8 @@ internalize
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
-!GdiplusImage categoriesFor: #addToImageList:mask:!private! !
-!GdiplusImage categoriesFor: #internalize!public! !
+!Graphics.Gdiplus.Image categoriesFor: #addToImageList:mask:!private! !
+!Graphics.Gdiplus.Image categoriesFor: #internalize!public! !
 
 "End of package definition"!
 

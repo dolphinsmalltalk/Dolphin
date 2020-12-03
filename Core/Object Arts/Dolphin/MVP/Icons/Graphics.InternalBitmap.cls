@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #InternalBitmap
+Core.Object subclass: #'Graphics.InternalBitmap'
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternalBitmap guid: (GUID fromString: '{b9454399-94c0-4572-bc54-802ff110731f}')!
-InternalBitmap comment: 'An InternalBitmap is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of bitmap resources. This has several advantages, including the ability to version InternalBitmap resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application. 
+Graphics.InternalBitmap guid: (Core.GUID fromString: '{b9454399-94c0-4572-bc54-802ff110731f}')!
+Graphics.InternalBitmap comment: 'An InternalBitmap is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of bitmap resources. This has several advantages, including the ability to version InternalBitmap resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application. 
 
 A word of caution, however. InternalBitmaps will display their full byte array initializers if you use #displayString or #printString. If you choose to load a huge bitmap into one of these objects (which is not a good idea anyway) this could cause problems if you "Display It" in a workspace. It is for this reason that InternalIcons forcibly reformat any supplied image to a default size of 48@48 pixels. Thus, InternalIcons should never be too large to "Display It". Indeed, this is the only difference between InternalIcons and InternalBitmaps; the latter are not resized on load and so can be arbitrarily large.
 
 InternalBitmaps can now be used for toolbar images, but the source image will need an alpha channel to work correctly as the mapping of standard colors to theme colors is not supported. It is recommended that 32bpp PNGs are used as these support an alpha channel and are compressed.
 '!
-!InternalBitmap categoriesForClass!Kernel-Objects! !
-!InternalBitmap methodsFor!
+!Graphics.InternalBitmap categoriesForClass!Kernel-Objects! !
+!Graphics.InternalBitmap methodsFor!
 
 = comperand 
 	"Gdiplus images comapre equal if their initializers are equal. This allows GdiplusImages to be added to ImageManagers"
@@ -44,7 +44,7 @@ asByteArray
 	test here. If the receiver has been created from a GdiplusFromBytesInitializer then we
 	can just answer the original bytes"
 
-	(gdiplusBitmap initializer isKindOf: GdiplusFromBytesInitializer) 
+	(gdiplusBitmap initializer isKindOf: Gdiplus.FromBytesInitializer) 
 		ifTrue: [^gdiplusBitmap initializer bytes].
 
 	"Otherwise ask GDI+ to yield the PNG bytes for the image"
@@ -159,40 +159,40 @@ printOn: aStream
 
 setBitmap: aGdiplusBitmap 
 	gdiplusBitmap := aGdiplusBitmap! !
-!InternalBitmap categoriesFor: #=!comparing!comparison!public! !
-!InternalBitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!InternalBitmap categoriesFor: #asBitmap!public! !
-!InternalBitmap categoriesFor: #asByteArray!converting!public! !
-!InternalBitmap categoriesFor: #asIcon!public! !
-!InternalBitmap categoriesFor: #asSharedCopy!converting!public! !
-!InternalBitmap categoriesFor: #bitmap!accessing!public! !
-!InternalBitmap categoriesFor: #bounds!accessing!public! !
-!InternalBitmap categoriesFor: #doDrawWithCanvas:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!InternalBitmap categoriesFor: #extent!accessing!public! !
-!InternalBitmap categoriesFor: #fullIdentifier!public! !
-!InternalBitmap categoriesFor: #gdiplusBitmap!initializing!private! !
-!InternalBitmap categoriesFor: #graphics!accessing!drawing-gdiplus!public! !
-!InternalBitmap categoriesFor: #handle!public! !
-!InternalBitmap categoriesFor: #hash!comparing!comparison!public! !
-!InternalBitmap categoriesFor: #imageType!public! !
-!InternalBitmap categoriesFor: #internalize!public! !
-!InternalBitmap categoriesFor: #isShared:!public! !
-!InternalBitmap categoriesFor: #printOn:!printing!public! !
-!InternalBitmap categoriesFor: #setBitmap:!initializing!private! !
+!Graphics.InternalBitmap categoriesFor: #=!comparing!comparison!public! !
+!Graphics.InternalBitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Graphics.InternalBitmap categoriesFor: #asBitmap!public! !
+!Graphics.InternalBitmap categoriesFor: #asByteArray!converting!public! !
+!Graphics.InternalBitmap categoriesFor: #asIcon!public! !
+!Graphics.InternalBitmap categoriesFor: #asSharedCopy!converting!public! !
+!Graphics.InternalBitmap categoriesFor: #bitmap!accessing!public! !
+!Graphics.InternalBitmap categoriesFor: #bounds!accessing!public! !
+!Graphics.InternalBitmap categoriesFor: #doDrawWithCanvas:!drawing-bitmaps!public! !
+!Graphics.InternalBitmap categoriesFor: #drawOn:!drawing-bitmaps!public! !
+!Graphics.InternalBitmap categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
+!Graphics.InternalBitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.InternalBitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!Graphics.InternalBitmap categoriesFor: #extent!accessing!public! !
+!Graphics.InternalBitmap categoriesFor: #fullIdentifier!public! !
+!Graphics.InternalBitmap categoriesFor: #gdiplusBitmap!initializing!private! !
+!Graphics.InternalBitmap categoriesFor: #graphics!accessing!drawing-gdiplus!public! !
+!Graphics.InternalBitmap categoriesFor: #handle!public! !
+!Graphics.InternalBitmap categoriesFor: #hash!comparing!comparison!public! !
+!Graphics.InternalBitmap categoriesFor: #imageType!public! !
+!Graphics.InternalBitmap categoriesFor: #internalize!public! !
+!Graphics.InternalBitmap categoriesFor: #isShared:!public! !
+!Graphics.InternalBitmap categoriesFor: #printOn:!printing!public! !
+!Graphics.InternalBitmap categoriesFor: #setBitmap:!initializing!private! !
 
-!InternalBitmap class methodsFor!
+!Graphics.InternalBitmap class methodsFor!
 
 chooseFile
 	| filename |
-	filename := FileOpenDialog showModal.
+	filename := UI.FileOpenDialog showModal.
 	(File splitExtensionFrom: filename) asLowercase = 'ico' 
 		ifTrue: 
 			[#todo.	"Anyone care to fix this?"
-			MessageBox 
+			UI.MessageBox 
 				warning: 'Can''t currently internalize ICO files. 
 
 Why not use: 
@@ -203,10 +203,10 @@ to convert to PNG format first?'.
 	^self fromFile: filename!
 
 fromBytes: aByteArray 
-	^self fromGdiplusBitmap: (GdiplusBitmap fromByteArray: aByteArray)!
+	^self fromGdiplusBitmap: (Gdiplus.Bitmap fromByteArray: aByteArray)!
 
 fromFile: aFilename 
-	^self fromGdiplusBitmap: (GdiplusBitmap fromFile: aFilename) internalize!
+	^self fromGdiplusBitmap: (Gdiplus.Bitmap fromFile: aFilename) internalize!
 
 fromGdiplusBitmap: gdipBitmap 
 	^(super new)
@@ -214,7 +214,7 @@ fromGdiplusBitmap: gdipBitmap
 		yourself!
 
 icon
-	^GdiplusBitmap icon!
+	^Gdiplus.Bitmap icon!
 
 imageManager
 	"Private - Answer an image manager to use for storing images"
@@ -227,13 +227,13 @@ new
 	self shouldNotImplement!
 
 withExtent: aPointExtent 
-	^self fromGdiplusBitmap: (GdiplusBitmap extent: aPointExtent) internalize! !
-!InternalBitmap class categoriesFor: #chooseFile!public! !
-!InternalBitmap class categoriesFor: #fromBytes:!instance creation!public! !
-!InternalBitmap class categoriesFor: #fromFile:!instance creation!public! !
-!InternalBitmap class categoriesFor: #fromGdiplusBitmap:!instance creation!public! !
-!InternalBitmap class categoriesFor: #icon!public! !
-!InternalBitmap class categoriesFor: #imageManager!accessing!private! !
-!InternalBitmap class categoriesFor: #new!private! !
-!InternalBitmap class categoriesFor: #withExtent:!instance creation!public! !
+	^self fromGdiplusBitmap: (Gdiplus.Bitmap extent: aPointExtent) internalize! !
+!Graphics.InternalBitmap class categoriesFor: #chooseFile!public! !
+!Graphics.InternalBitmap class categoriesFor: #fromBytes:!instance creation!public! !
+!Graphics.InternalBitmap class categoriesFor: #fromFile:!instance creation!public! !
+!Graphics.InternalBitmap class categoriesFor: #fromGdiplusBitmap:!instance creation!public! !
+!Graphics.InternalBitmap class categoriesFor: #icon!public! !
+!Graphics.InternalBitmap class categoriesFor: #imageManager!accessing!private! !
+!Graphics.InternalBitmap class categoriesFor: #new!private! !
+!Graphics.InternalBitmap class categoriesFor: #withExtent:!instance creation!public! !
 

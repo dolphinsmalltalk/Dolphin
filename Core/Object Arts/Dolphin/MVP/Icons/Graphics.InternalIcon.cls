@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-InternalBitmap subclass: #InternalIcon
+Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternalIcon guid: (GUID fromString: '{7446a3c1-e3ae-45b8-bca2-bbd493a5c7d3}')!
-InternalIcon comment: 'An InternalIcon is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
+Graphics.InternalIcon guid: (Core.GUID fromString: '{7446a3c1-e3ae-45b8-bca2-bbd493a5c7d3}')!
+Graphics.InternalIcon comment: 'An InternalIcon is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
 
 USAGE:
 
@@ -24,8 +24,8 @@ InternalIcon chooseFile
 This will prompt you for a suitable image file (again PNG files work best) and will load the image bytes into a literal byte array from which the InternalIcon can be instantiated when required. 
 
 '!
-!InternalIcon categoriesForClass!Kernel-Objects! !
-!InternalIcon methodsFor!
+!Graphics.InternalIcon categoriesForClass!Kernel-Objects! !
+!Graphics.InternalIcon methodsFor!
 
 = comperand 
 	^super = comperand and: [self tileColor = comperand tileColor]!
@@ -79,7 +79,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	tileColor
 		ifNotNil: 
-			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (GdiplusSolidBrush color: tileColor)].
+			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (Gdiplus.SolidBrush color: tileColor)].
 	^self gdiplusBitmap
 		drawOnGraphics: aGraphics
 		at: dstOrigin
@@ -106,7 +106,7 @@ imageType
 
 tileBitmapWithExtent: extent 
 	| tileBitmap graphics |
-	tileBitmap := GdiplusBitmap extent: extent.
+	tileBitmap := Gdiplus.Bitmap extent: extent.
 	graphics := tileBitmap graphics.
 	
 	[graphics interpolationMode: InterpolationModeHighQualityBicubic.
@@ -126,24 +126,24 @@ tileColor
 
 tileColor: aColor 
 	tileColor := aColor! !
-!InternalIcon categoriesFor: #=!comparing!comparison!public! !
-!InternalIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!InternalIcon categoriesFor: #asAlphaBitmap:!converting!public! !
-!InternalIcon categoriesFor: #asMenuBitmap!converting!public! !
-!InternalIcon categoriesFor: #asParameter!converting!public! !
-!InternalIcon categoriesFor: #bitmap!accessing!public! !
-!InternalIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!InternalIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!InternalIcon categoriesFor: #hash!comparing!comparison!public! !
-!InternalIcon categoriesFor: #hotspot!accessing!public! !
-!InternalIcon categoriesFor: #imageIndex!accessing!public! !
-!InternalIcon categoriesFor: #imageManager!public! !
-!InternalIcon categoriesFor: #imageType!constants!public! !
-!InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
-!InternalIcon categoriesFor: #tileColor!accessing!private! !
-!InternalIcon categoriesFor: #tileColor:!accessing!private! !
+!Graphics.InternalIcon categoriesFor: #=!comparing!comparison!public! !
+!Graphics.InternalIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Graphics.InternalIcon categoriesFor: #asAlphaBitmap:!converting!public! !
+!Graphics.InternalIcon categoriesFor: #asMenuBitmap!converting!public! !
+!Graphics.InternalIcon categoriesFor: #asParameter!converting!public! !
+!Graphics.InternalIcon categoriesFor: #bitmap!accessing!public! !
+!Graphics.InternalIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.InternalIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!Graphics.InternalIcon categoriesFor: #hash!comparing!comparison!public! !
+!Graphics.InternalIcon categoriesFor: #hotspot!accessing!public! !
+!Graphics.InternalIcon categoriesFor: #imageIndex!accessing!public! !
+!Graphics.InternalIcon categoriesFor: #imageManager!public! !
+!Graphics.InternalIcon categoriesFor: #imageType!constants!public! !
+!Graphics.InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
+!Graphics.InternalIcon categoriesFor: #tileColor!accessing!private! !
+!Graphics.InternalIcon categoriesFor: #tileColor:!accessing!private! !
 
-!InternalIcon class methodsFor!
+!Graphics.InternalIcon class methodsFor!
 
 badgeTile: anIconBadge color: aColor 
 	"Answer an instance of the receiver that is anIconBadge superimposed on a square tile of
@@ -176,7 +176,7 @@ fromFile: aFilename
 
 fromFile: aFilename extent: aPoint 
 	| bitmap |
-	bitmap := GdiplusBitmap fromFile: aFilename.
+	bitmap := Gdiplus.Bitmap fromFile: aFilename.
 	bitmap := (bitmap thumbnailWithExtent: aPoint asPoint) internalize.
 	^self fromGdiplusBitmap: bitmap!
 
@@ -216,17 +216,17 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
-!InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
-!InternalIcon class categoriesFor: #defaultExtent!constants!private! !
-!InternalIcon class categoriesFor: #defaultTileExtent!constants!private! !
-!InternalIcon class categoriesFor: #filesType!constants!private! !
-!InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
-!InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
-!InternalIcon class categoriesFor: #icon!public! !
-!InternalIcon class categoriesFor: #imageManager!accessing!private! !
-!InternalIcon class categoriesFor: #new!instance creation!public! !
-!InternalIcon class categoriesFor: #newTile!instance creation!public! !
-!InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!InternalIcon class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #defaultExtent!constants!private! !
+!Graphics.InternalIcon class categoriesFor: #defaultTileExtent!constants!private! !
+!Graphics.InternalIcon class categoriesFor: #filesType!constants!private! !
+!Graphics.InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #icon!public! !
+!Graphics.InternalIcon class categoriesFor: #imageManager!accessing!private! !
+!Graphics.InternalIcon class categoriesFor: #new!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #newTile!instance creation!public! !
+!Graphics.InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Graphics.InternalIcon class categoriesFor: #stbVersion!binary filing!public! !
 

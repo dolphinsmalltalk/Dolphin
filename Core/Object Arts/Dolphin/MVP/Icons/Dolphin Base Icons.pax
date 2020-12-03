@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
@@ -10,106 +10,107 @@ This package extends base system classes to add icons.
 
 
 package setMethodNames: #(
-	#(#{AbstractBindingReference class} #icon)
-	#(#{AbstractCardContainer class} #icon)
-	#(#{Announcement class} #icon)
-	#(#{ArithmeticValue class} #icon)
-	#(#{Array class} #icon)
-	#(#{Association class} #icon)
-	#(#{Bag class} #icon)
-	#(#{Behavior class} #icon)
-	#(#{BindingReference class} #icon)
-	#(#{BlockClosure class} #icon)
-	#(#{BOOL class} #icon)
-	#(#{Boolean class} #icon)
-	#(#{BOOLEAN class} #icon)
-	#(#{BooleanPresenter class} #icon)
-	#(#{ByteArray class} #icon)
-	#(#{CardLabel class} #icon)
-	#(#{Character class} #icon)
-	#(#{CheckButton class} #icon)
-	#(#{Collection class} #icon)
-	#(#{Color} #icon)
-	#(#{ColorDefault} #icon)
-	#(#{CompiledCode class} #icon)
-	#(#{CompileFailedMethod} #icon)
-	#(#{CompileFailedMethod class} #icon)
-	#(#{Compiler class} #icon)
-	#(#{CompilerNotification class} #icon)
-	#(#{Date class} #icon)
-	#(#{DateAndTime class} #icon)
-	#(#{DeadObject class} #icon)
-	#(#{DeafObject class} #icon)
-	#(#{Delay class} #icon)
-	#(#{Dictionary class} #icon)
-	#(#{DiskVolumeInformation class} #icon)
-	#(#{DOUBLE class} #icon)
-	#(#{Duration class} #icon)
-	#(#{Error class} #icon)
-	#(#{Exception class} #icon)
-	#(#{ExternalArray class} #icon)
-	#(#{ExternalCallback class} #icon)
-	#(#{ExternalInteger class} #icon)
-	#(#{ExternalLibrary class} #icon)
-	#(#{ExternalStructure class} #icon)
-	#(#{False class} #icon)
-	#(#{File class} #icon)
-	#(#{Float class} #icon)
-	#(#{FLOAT class} #icon)
-	#(#{Fraction class} #icon)
-	#(#{FramingLayout class} #icon)
-	#(#{GUID class} #icon)
-	#(#{InputState class} #icon)
-	#(#{Integer class} #icon)
-	#(#{Interval class} #icon)
-	#(#{Keyboard class} #icon)
-	#(#{LargeInteger class} #icon)
-	#(#{LayoutManager class} #icon)
-	#(#{Link class} #icon)
-	#(#{Locale class} #icon)
-	#(#{Magnitude class} #icon)
-	#(#{MemoryManager class} #icon)
-	#(#{Message class} #icon)
-	#(#{MessageSendAbstract class} #icon)
-	#(#{MessageSequenceAbstract class} #icon)
-	#(#{MetaBindingReference class} #icon)
-	#(#{Metaclass class} #icon)
-	#(#{MethodProtocol class} #icon)
-	#(#{Model class} #icon)
-	#(#{Mutex class} #icon)
-	#(#{Notification class} #icon)
-	#(#{NotificationSignal class} #icon)
-	#(#{Number class} #icon)
-	#(#{Package class} #icon)
-	#(#{PackageManager class} #icon)
-	#(#{Point class} #icon)
-	#(#{Process class} #icon)
-	#(#{ProcessorScheduler class} #icon)
-	#(#{RadioButton class} #icon)
-	#(#{RadioButtonSetPresenter class} #icon)
-	#(#{Rectangle class} #icon)
-	#(#{ResourceIdentifier class} #icon)
-	#(#{ScaledDecimal class} #icon)
-	#(#{SearchPolicy class} #icon)
-	#(#{Semaphore class} #icon)
-	#(#{Set class} #icon)
-	#(#{SharedPool class} #icon)
-	#(#{Signal class} #icon)
-	#(#{SortAlgorithm class} #icon)
-	#(#{Sound class} #icon)
-	#(#{SourceManager class} #icon)
-	#(#{String class} #icon)
-	#(#{Symbol class} #icon)
-	#(#{SystemDictionary class} #icon)
-	#(#{Time class} #icon)
-	#(#{TIME_ZONE_INFORMATION class} #icon)
-	#(#{True class} #icon)
-	#(#{UndefinedObject class} #icon)
-	#(#{UtfEncodedString class} #icon)
-	#(#{VariableBinding} #icon)
-	#(#{Warning class} #icon)
-	#(#{WarningSignal class} #icon)
-	#(#{WeakArray class} #icon)
+	#(#{Core.ArithmeticValue class} #icon)
+	#(#{Core.Array class} #icon)
+	#(#{Core.Association class} #icon)
+	#(#{Core.Bag class} #icon)
+	#(#{Core.Behavior class} #icon)
+	#(#{Core.Boolean class} #icon)
+	#(#{Core.ByteArray class} #icon)
+	#(#{Core.Character class} #icon)
+	#(#{Core.Collection class} #icon)
+	#(#{Core.Date class} #icon)
+	#(#{Core.DateAndTime class} #icon)
+	#(#{Core.Delay class} #icon)
+	#(#{Core.Dictionary class} #icon)
+	#(#{Core.Duration class} #icon)
+	#(#{Core.Error class} #icon)
+	#(#{Core.Exception class} #icon)
+	#(#{Core.False class} #icon)
+	#(#{Core.File class} #icon)
+	#(#{Core.Float class} #icon)
+	#(#{Core.Fraction class} #icon)
+	#(#{Core.GUID class} #icon)
+	#(#{Core.Integer class} #icon)
+	#(#{Core.Interval class} #icon)
+	#(#{Core.LargeInteger class} #icon)
+	#(#{Core.Link class} #icon)
+	#(#{Core.Locale class} #icon)
+	#(#{Core.Magnitude class} #icon)
+	#(#{Core.Message class} #icon)
+	#(#{Core.MessageSendAbstract class} #icon)
+	#(#{Core.MessageSequenceAbstract class} #icon)
+	#(#{Core.Metaclass class} #icon)
+	#(#{Core.Model class} #icon)
+	#(#{Core.Mutex class} #icon)
+	#(#{Core.Notification class} #icon)
+	#(#{Core.NotificationSignal class} #icon)
+	#(#{Core.Number class} #icon)
+	#(#{Core.Process class} #icon)
+	#(#{Core.ScaledDecimal class} #icon)
+	#(#{Core.SearchPolicy class} #icon)
+	#(#{Core.Semaphore class} #icon)
+	#(#{Core.Set class} #icon)
+	#(#{Core.Signal class} #icon)
+	#(#{Core.SortAlgorithm class} #icon)
+	#(#{Core.Sound class} #icon)
+	#(#{Core.String class} #icon)
+	#(#{Core.Symbol class} #icon)
+	#(#{Core.Time class} #icon)
+	#(#{Core.True class} #icon)
+	#(#{Core.UndefinedObject class} #icon)
+	#(#{Core.UtfEncodedString class} #icon)
+	#(#{Core.Warning class} #icon)
+	#(#{Core.WarningSignal class} #icon)
+	#(#{Core.WeakArray class} #icon)
+	#(#{External.BOOL class} #icon)
+	#(#{External.BOOLEAN class} #icon)
+	#(#{External.Callback class} #icon)
+	#(#{External.DOUBLE class} #icon)
+	#(#{External.ExternalArray class} #icon)
+	#(#{External.FLOAT class} #icon)
+	#(#{External.INTEGER class} #icon)
+	#(#{External.Library class} #icon)
+	#(#{External.Structure class} #icon)
+	#(#{Graphics.Color} #icon)
+	#(#{Graphics.ColorDefault} #icon)
+	#(#{Graphics.Point class} #icon)
+	#(#{Graphics.Rectangle class} #icon)
+	#(#{Kernel.AbstractBindingReference class} #icon)
+	#(#{Kernel.Announcement class} #icon)
+	#(#{Kernel.BindingReference class} #icon)
+	#(#{Kernel.BlockClosure class} #icon)
+	#(#{Kernel.CompiledCode class} #icon)
+	#(#{Kernel.CompileFailedMethod} #icon)
+	#(#{Kernel.CompileFailedMethod class} #icon)
+	#(#{Kernel.Compiler class} #icon)
+	#(#{Kernel.CompilerNotification class} #icon)
+	#(#{Kernel.DeadObject class} #icon)
+	#(#{Kernel.DeafObject class} #icon)
+	#(#{Kernel.InputState class} #icon)
+	#(#{Kernel.MemoryManager class} #icon)
+	#(#{Kernel.MetaBindingReference class} #icon)
+	#(#{Kernel.MethodProtocol class} #icon)
+	#(#{Kernel.Namespace class} #icon)
+	#(#{Kernel.Package class} #icon)
+	#(#{Kernel.PackageManager class} #icon)
+	#(#{Kernel.ProcessorScheduler class} #icon)
+	#(#{Kernel.SourceManager class} #icon)
+	#(#{Kernel.VariableBinding} #icon)
+	#(#{OS.DiskVolumeInformation class} #icon)
+	#(#{OS.TIME_ZONE_INFORMATION class} #icon)
+	#(#{Smalltalk class} #icon)
+	#(#{UI class} #icon)
+	#(#{UI.AbstractCardContainer class} #icon)
+	#(#{UI.BooleanPresenter class} #icon)
+	#(#{UI.CardLabel class} #icon)
+	#(#{UI.CheckButton class} #icon)
+	#(#{UI.FramingLayout class} #icon)
+	#(#{UI.Keyboard class} #icon)
+	#(#{UI.LayoutManager class} #icon)
+	#(#{UI.RadioButton class} #icon)
+	#(#{UI.RadioButtonSetPresenter class} #icon)
+	#(#{UI.ResourceIdentifier class} #icon)
 ).
 
 package setPrerequisites: #(
@@ -118,6 +119,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\Views\Cards\Dolphin Card Containers'
+	'..\..\System\Win32\Dolphin File System Info'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
@@ -128,18 +130,833 @@ package!
 
 "Loose Methods"!
 
-!AbstractBindingReference class methodsFor!
+!Core.ArithmeticValue class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+	^##((Graphics.TextTileIcon text: $\x2182 fontName: 'Segoe UI')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.ArithmeticValue class categoriesFor: #icon!constants!public! !
+
+!Core.Array class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Array class categoriesFor: #icon!constants!public! !
+
+!Core.Association class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: $\x1F86A)
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Association class categoriesFor: #icon!constants!public! !
+
+!Core.Bag class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Bag class categoriesFor: #icon!constants!public! !
+
+!Core.Behavior class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(self) defaultIcon! !
+!Core.Behavior class categoriesFor: #icon!constants!public! !
+
+!Core.Boolean class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Boolean class categoriesFor: #icon!constants!public! !
+
+!Core.ByteArray class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#[]' fontName: 'Arial')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.ByteArray class categoriesFor: #icon!constants!public! !
+
+!Core.Character class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '$b' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Character class categoriesFor: #icon!constants!public! !
+
+!Core.Collection class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Collection class categoriesFor: #icon!constants!public! !
+
+!Core.Date class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Date class categoriesFor: #icon!constants!public! !
+
+!Core.DateAndTime class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.DateAndTime class categoriesFor: #icon!constants!public! !
+
+!Core.Delay class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Core.Delay class categoriesFor: #icon!constants!development!public! !
+
+!Core.Dictionary class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Dictionary class categoriesFor: #icon!constants!public! !
+
+!Core.Duration class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Duration class categoriesFor: #icon!constants!public! !
+
+!Core.Error class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+	
+	^Graphics.Icon error! !
+!Core.Error class categoriesFor: #icon!constants!public! !
+
+!Core.Exception class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Core.Exception class categoriesFor: #icon!constants!public! !
+
+!Core.False class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: $\x2716)
+		textcolor: Graphics.Color red;
+		yourself)! !
+!Core.False class categoriesFor: #icon!constants!public! !
+
+!Core.File class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. "
+
+	^##(self) defaultIcon! !
+!Core.File class categoriesFor: #icon!constants!development!public! !
+
+!Core.Float class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '0.8' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Float class categoriesFor: #icon!constants!public! !
+
+!Core.Fraction class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '⅞' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Fraction class categoriesFor: #icon!constants!public! !
+
+!Core.GUID class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.GUID class categoriesFor: #icon!constants!public! !
+
+!Core.Integer class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '42' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Integer class categoriesFor: #icon!constants!public! !
+
+!Core.Interval class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '1..5' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Interval class categoriesFor: #icon!constants!public! !
+
+!Core.LargeInteger class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: $\x221E fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.LargeInteger class categoriesFor: #icon!constants!public! !
+
+!Core.Link class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(Graphics.TextTileIcon text: $\x1F517)! !
+!Core.Link class categoriesFor: #icon!public! !
+
+!Core.Locale class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Locale class categoriesFor: #icon!constants!public! !
+
+!Core.Magnitude class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '|x|' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Magnitude class categoriesFor: #icon!constants!public! !
+
+!Core.Message class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Message class categoriesFor: #icon!constants!public! !
+
+!Core.MessageSendAbstract class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.MessageSendAbstract class categoriesFor: #icon!constants!public! !
+
+!Core.MessageSequenceAbstract class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.MessageSequenceAbstract class categoriesFor: #icon!constants!public! !
+
+!Core.Metaclass class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Core.Metaclass class categoriesFor: #icon!constants!public! !
+
+!Core.Model class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Model class categoriesFor: #icon!constants!public! !
+
+!Core.Mutex class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Mutex class categoriesFor: #icon!constants!public! !
+
+!Core.Notification class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Graphics.Icon information! !
+!Core.Notification class categoriesFor: #icon!constants!public! !
+
+!Core.NotificationSignal class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Notification icon! !
+!Core.NotificationSignal class categoriesFor: #icon!constants!public! !
+
+!Core.Number class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: $\x2116 fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Number class categoriesFor: #icon!constants!public! !
+
+!Core.Process class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Process class categoriesFor: #icon!constants!public! !
+
+!Core.ScaledDecimal class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.ScaledDecimal class categoriesFor: #icon!constants!public! !
+
+!Core.SearchPolicy class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: $\x227E fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.SearchPolicy class categoriesFor: #icon!constants!public! !
+
+!Core.Semaphore class methodsFor!
+
+icon
+	^##((Graphics.TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
+		textcolor: Graphics.Color red;
+		yourself)! !
+!Core.Semaphore class categoriesFor: #icon!public! !
+
+!Core.Set class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '{ }' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Set class categoriesFor: #icon!constants!public! !
+
+!Core.Signal class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Error icon! !
+!Core.Signal class categoriesFor: #icon!constants!public! !
+
+!Core.SortAlgorithm class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Core.SortAlgorithm class categoriesFor: #icon!constants!public! !
+
+!Core.Sound class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Core.Sound class categoriesFor: #icon!constants!public! !
+
+!Core.String class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Graphics.Color darkBlue)! !
+!Core.String class categoriesFor: #icon!constants!public! !
+
+!Core.Symbol class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#S' fontName: 'Cambria')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Core.Symbol class categoriesFor: #icon!constants!public! !
+
+!Core.Time class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Core.Time class categoriesFor: #icon!constants!public! !
+
+!Core.True class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	"Another potential choice here is ☑'"
+
+	^##((Graphics.TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
+		textcolor: Graphics.Color darkGreen;
+		yourself)! !
+!Core.True class categoriesFor: #icon!constants!public! !
+
+!Core.UndefinedObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(Graphics.TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
+!Core.UndefinedObject class categoriesFor: #icon!constants!public! !
+
+!Core.UtfEncodedString class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##((Graphics.TextTileIcon text: '‘U’' fontName: 'Cambria') textcolor: Graphics.Color darkBlue; yourself)! !
+!Core.UtfEncodedString class categoriesFor: #icon!constants!public! !
+
+!Core.Warning class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Graphics.Icon warning! !
+!Core.Warning class categoriesFor: #icon!constants!public! !
+
+!Core.WarningSignal class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Warning icon! !
+!Core.WarningSignal class categoriesFor: #icon!constants!public! !
+
+!Core.WeakArray class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Graphics.Color skyBlue;
+		yourself)! !
+!Core.WeakArray class categoriesFor: #icon!constants!public! !
+
+!External.BOOL class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Boolean icon! !
+!External.BOOL class categoriesFor: #icon!constants!public! !
+
+!External.BOOLEAN class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Boolean icon! !
+!External.BOOLEAN class categoriesFor: #icon!constants!public! !
+
+!External.Callback class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!External.Callback class categoriesFor: #icon!constants!public! !
+
+!External.DOUBLE class methodsFor!
+
+icon
+	"Answer a suitable iconic representation for the receiver."
+
+	^Float icon! !
+!External.DOUBLE class categoriesFor: #icon!constants!public! !
+
+!External.ExternalArray class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Array icon! !
+!External.ExternalArray class categoriesFor: #icon!constants!public! !
+
+!External.FLOAT class methodsFor!
+
+icon
+	"Answer a suitable iconic representation for the receiver."
+
+	^Float icon! !
+!External.FLOAT class categoriesFor: #icon!constants!public! !
+
+!External.INTEGER class methodsFor!
+
+icon
+ 	"Answers an Icon that can be used to represent this class"
+ 
+	^Integer icon! !
+!External.INTEGER class categoriesFor: #icon!constants!public! !
+
+!External.Library class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!External.Library class categoriesFor: #icon!constants!public! !
+
+!External.Structure class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!External.Structure class categoriesFor: #icon!constants!public! !
+
+!Graphics.Color methodsFor!
+
+icon
+	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
+	typically placed into the IconImageManager, generating a large number of unique dynamic
+	icons will inflate the size of the image manager. Should be okay to do this for Colors
+	though."
+
+	^TextTileIcon text: '' color: self! !
+!Graphics.Color categoriesFor: #icon!accessing!public! !
+
+!Graphics.ColorDefault methodsFor!
+
+icon
+	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
+	typically placed into the IconImageManager, generating a large number of unique dynamic
+	icons will inflate the size of the image manager. Should be okay to do this for Colors
+	though."
+
+	^TextTileIcon text: '' color: ColorRef defaultColorRepresentation! !
+!Graphics.ColorDefault categoriesFor: #icon!public! !
+
+!Graphics.Point class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: $\x2316 fontName: 'Georgia')
 		textcolor: Color darkBlue;
+		yourself)! !
+!Graphics.Point class categoriesFor: #icon!constants!public! !
+
+!Graphics.Rectangle class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\x25AD)! !
+!Graphics.Rectangle class categoriesFor: #icon!constants!public! !
+
+!Kernel.AbstractBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Graphics.Color darkBlue;
 		fontStyle: #italic;
 		yourself)! !
-!AbstractBindingReference class categoriesFor: #icon!constants!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #icon!constants!public! !
 
-!AbstractCardContainer class methodsFor!
+!Kernel.Announcement class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##((Graphics.TextTileIcon text: $\x1F4E2)
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Kernel.Announcement class categoriesFor: #icon!constants!public! !
+
+!Kernel.BindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Kernel.BindingReference class categoriesFor: #icon!constants!public! !
+
+!Kernel.BlockClosure class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.BlockClosure class categoriesFor: #icon!constants!public! !
+
+!Kernel.CompiledCode class methodsFor!
+
+icon
+	"Answer an Icon representing the receiver."
+
+	^##(self) defaultIcon! !
+!Kernel.CompiledCode class categoriesFor: #icon!constants!public! !
+
+!Kernel.CompileFailedMethod methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^self class icon
+! !
+!Kernel.CompileFailedMethod categoriesFor: #icon!constants!public! !
+
+!Kernel.CompileFailedMethod class methodsFor!
+
+icon
+	"Answer an Icon representing the receiver."
+
+	^##(self) defaultIcon! !
+!Kernel.CompileFailedMethod class categoriesFor: #icon!constants!public! !
+
+!Kernel.Compiler class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.Compiler class categoriesFor: #icon!constants!development!public! !
+
+!Kernel.CompilerNotification class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^self severityClass icon! !
+!Kernel.CompilerNotification class categoriesFor: #icon!constants!public! !
+
+!Kernel.DeadObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.DeadObject class categoriesFor: #icon!constants!development!public! !
+
+!Kernel.DeafObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.DeafObject class categoriesFor: #icon!constants!development!public! !
+
+!Kernel.InputState class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.InputState class categoriesFor: #icon!constants!public! !
+
+!Kernel.MemoryManager class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.MemoryManager class categoriesFor: #icon!constants!development!public! !
+
+!Kernel.MetaBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((Graphics.TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
+		textcolor: Graphics.Color darkBlue;
+		yourself)! !
+!Kernel.MetaBindingReference class categoriesFor: #icon!constants!public! !
+
+!Kernel.MethodProtocol class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Kernel.MethodProtocol class categoriesFor: #icon!constants!public! !
+
+!Kernel.Namespace class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Graphics.Icon fromId: 'Namespace.ico'! !
+!Kernel.Namespace class categoriesFor: #icon!constants!public! !
+
+!Kernel.Package class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(self) defaultIcon! !
+!Kernel.Package class categoriesFor: #icon!constants!public! !
+
+!Kernel.PackageManager class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^Package icon! !
+!Kernel.PackageManager class categoriesFor: #icon!constants!public! !
+
+!Kernel.ProcessorScheduler class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Kernel.ProcessorScheduler class categoriesFor: #icon!constants!public! !
+
+!Kernel.SourceManager class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Kernel.SourceManager class categoriesFor: #icon!constants!public! !
+
+!Kernel.VariableBinding methodsFor!
+
+icon
+	^value icon! !
+!Kernel.VariableBinding categoriesFor: #icon!constants!public! !
+
+!OS.DiskVolumeInformation class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!OS.DiskVolumeInformation class categoriesFor: #icon!constants!development!public! !
+
+!OS.TIME_ZONE_INFORMATION class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!OS.TIME_ZONE_INFORMATION class categoriesFor: #icon!constants!public! !
+
+!Smalltalk class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Smalltalk class categoriesFor: #icon!constants!public! !
+
+!UI class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^View icon! !
+!UI class categoriesFor: #icon!constants!public! !
+
+!UI.AbstractCardContainer class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -150,109 +967,9 @@ icon
 		color: nil)
 		textcolor: Color royalBlue;
 		yourself)! !
-!AbstractCardContainer class categoriesFor: #icon!constants!public! !
+!UI.AbstractCardContainer class categoriesFor: #icon!constants!public! !
 
-!Announcement class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##((TextTileIcon text: $\x1F4E2)
-		textcolor: Color darkBlue;
-		yourself)! !
-!Announcement class categoriesFor: #icon!constants!public! !
-
-!ArithmeticValue class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x2182 fontName: 'Segoe UI')
-		textcolor: Color darkBlue;
-		yourself)! !
-!ArithmeticValue class categoriesFor: #icon!constants!public! !
-
-!Array class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#()' fontName: 'Arial')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Array class categoriesFor: #icon!constants!public! !
-
-!Association class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x1F86A)
-		textcolor: Color darkBlue;
-		yourself)! !
-!Association class categoriesFor: #icon!constants!public! !
-
-!Bag class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Bag class categoriesFor: #icon!constants!public! !
-
-!Behavior class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##(self) defaultIcon! !
-!Behavior class categoriesFor: #icon!constants!public! !
-
-!BindingReference class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
-		textcolor: Color darkBlue;
-		yourself)! !
-!BindingReference class categoriesFor: #icon!constants!public! !
-
-!BlockClosure class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!BlockClosure class categoriesFor: #icon!constants!public! !
-
-!BOOL class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Boolean icon! !
-!BOOL class categoriesFor: #icon!constants!public! !
-
-!Boolean class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Boolean class categoriesFor: #icon!constants!public! !
-
-!BOOLEAN class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Boolean icon! !
-!BOOLEAN class categoriesFor: #icon!constants!public! !
-
-!BooleanPresenter class methodsFor!
+!UI.BooleanPresenter class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -260,19 +977,9 @@ icon
 	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
 		textcolor: Color forestGreen;
 		yourself)! !
-!BooleanPresenter class categoriesFor: #icon!constants!public! !
+!UI.BooleanPresenter class categoriesFor: #icon!constants!public! !
 
-!ByteArray class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#[]' fontName: 'Arial')
-		textcolor: Color darkBlue;
-		yourself)! !
-!ByteArray class categoriesFor: #icon!constants!public! !
-
-!CardLabel class methodsFor!
+!UI.CardLabel class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class."
@@ -280,758 +987,61 @@ icon
 	^##((TextTileIcon text: $\x1F3F7 fontName: 'Segoe UI Emoji')
 		textcolor: Color darkBlue;
 		yourself)! !
-!CardLabel class categoriesFor: #icon!constants!public! !
+!UI.CardLabel class categoriesFor: #icon!constants!public! !
 
-!Character class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '$b' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Character class categoriesFor: #icon!constants!public! !
-
-!CheckButton class methodsFor!
+!UI.CheckButton class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
-!CheckButton class categoriesFor: #icon!constants!public! !
+!UI.CheckButton class categoriesFor: #icon!constants!public! !
 
-!Collection class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Collection class categoriesFor: #icon!constants!public! !
-
-!Color methodsFor!
-
-icon
-	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
-	typically placed into the IconImageManager, generating a large number of unique dynamic
-	icons will inflate the size of the image manager. Should be okay to do this for Colors
-	though."
-
-	^TextTileIcon text: '' color: self! !
-!Color categoriesFor: #icon!accessing!public! !
-
-!ColorDefault methodsFor!
-
-icon
-	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
-	typically placed into the IconImageManager, generating a large number of unique dynamic
-	icons will inflate the size of the image manager. Should be okay to do this for Colors
-	though."
-
-	^TextTileIcon text: '' color: ColorRef defaultColorRepresentation! !
-!ColorDefault categoriesFor: #icon!public! !
-
-!CompiledCode class methodsFor!
-
-icon
-	"Answer an Icon representing the receiver."
-
-	^##(self) defaultIcon! !
-!CompiledCode class categoriesFor: #icon!constants!public! !
-
-!CompileFailedMethod methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^self class icon
-! !
-!CompileFailedMethod categoriesFor: #icon!constants!public! !
-
-!CompileFailedMethod class methodsFor!
-
-icon
-	"Answer an Icon representing the receiver."
-
-	^##(self) defaultIcon! !
-!CompileFailedMethod class categoriesFor: #icon!constants!public! !
-
-!Compiler class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Compiler class categoriesFor: #icon!constants!development!public! !
-
-!CompilerNotification class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^self severityClass icon! !
-!CompilerNotification class categoriesFor: #icon!constants!public! !
-
-!Date class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Date class categoriesFor: #icon!constants!public! !
-
-!DateAndTime class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!DateAndTime class categoriesFor: #icon!constants!public! !
-
-!DeadObject class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!DeadObject class categoriesFor: #icon!constants!development!public! !
-
-!DeafObject class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!DeafObject class categoriesFor: #icon!constants!development!public! !
-
-!Delay class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!Delay class categoriesFor: #icon!constants!development!public! !
-
-!Dictionary class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Dictionary class categoriesFor: #icon!constants!public! !
-
-!DiskVolumeInformation class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!DiskVolumeInformation class categoriesFor: #icon!constants!development!public! !
-
-!DOUBLE class methodsFor!
-
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Float icon! !
-!DOUBLE class categoriesFor: #icon!constants!public! !
-
-!Duration class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Duration class categoriesFor: #icon!constants!public! !
-
-!Error class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-	
-	^Icon error! !
-!Error class categoriesFor: #icon!constants!public! !
-
-!Exception class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!Exception class categoriesFor: #icon!constants!public! !
-
-!ExternalArray class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Array icon! !
-!ExternalArray class categoriesFor: #icon!constants!public! !
-
-!ExternalCallback class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!ExternalCallback class categoriesFor: #icon!constants!public! !
-
-!ExternalInteger class methodsFor!
-
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Integer icon! !
-!ExternalInteger class categoriesFor: #icon!constants!public! !
-
-!ExternalLibrary class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!ExternalLibrary class categoriesFor: #icon!constants!public! !
-
-!ExternalStructure class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!ExternalStructure class categoriesFor: #icon!constants!public! !
-
-!False class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x2716)
-		textcolor: Color red;
-		yourself)! !
-!False class categoriesFor: #icon!constants!public! !
-
-!File class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. "
-
-	^##(self) defaultIcon! !
-!File class categoriesFor: #icon!constants!development!public! !
-
-!Float class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '0.8' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Float class categoriesFor: #icon!constants!public! !
-
-!FLOAT class methodsFor!
-
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Float icon! !
-!FLOAT class categoriesFor: #icon!constants!public! !
-
-!Fraction class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '⅞' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Fraction class categoriesFor: #icon!constants!public! !
-
-!FramingLayout class methodsFor!
+!UI.FramingLayout class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^(TextTileIcon text: $\x1F5BD)! !
-!FramingLayout class categoriesFor: #icon!constants!public! !
+!UI.FramingLayout class categoriesFor: #icon!constants!public! !
 
-!GUID class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!GUID class categoriesFor: #icon!constants!public! !
-
-!InputState class methodsFor!
+!UI.Keyboard class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!InputState class categoriesFor: #icon!constants!public! !
+!UI.Keyboard class categoriesFor: #icon!constants!public! !
 
-!Integer class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '42' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Integer class categoriesFor: #icon!constants!public! !
-
-!Interval class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '1..5' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Interval class categoriesFor: #icon!constants!public! !
-
-!Keyboard class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Keyboard class categoriesFor: #icon!constants!public! !
-
-!LargeInteger class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x221E fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!LargeInteger class categoriesFor: #icon!constants!public! !
-
-!LayoutManager class methodsFor!
+!UI.LayoutManager class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
-!LayoutManager class categoriesFor: #icon!constants!public! !
+!UI.LayoutManager class categoriesFor: #icon!constants!public! !
 
-!Link class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(TextTileIcon text: $\x1F517)! !
-!Link class categoriesFor: #icon!public! !
-
-!Locale class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Locale class categoriesFor: #icon!constants!public! !
-
-!Magnitude class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '|x|' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Magnitude class categoriesFor: #icon!constants!public! !
-
-!MemoryManager class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!MemoryManager class categoriesFor: #icon!constants!development!public! !
-
-!Message class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Message class categoriesFor: #icon!constants!public! !
-
-!MessageSendAbstract class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!MessageSendAbstract class categoriesFor: #icon!constants!public! !
-
-!MessageSequenceAbstract class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!MessageSequenceAbstract class categoriesFor: #icon!constants!public! !
-
-!MetaBindingReference class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
-		textcolor: Color darkBlue;
-		yourself)! !
-!MetaBindingReference class categoriesFor: #icon!constants!public! !
-
-!Metaclass class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!Metaclass class categoriesFor: #icon!constants!public! !
-
-!MethodProtocol class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!MethodProtocol class categoriesFor: #icon!constants!public! !
-
-!Model class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Model class categoriesFor: #icon!constants!public! !
-
-!Mutex class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Mutex class categoriesFor: #icon!constants!public! !
-
-!Notification class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Icon information! !
-!Notification class categoriesFor: #icon!constants!public! !
-
-!NotificationSignal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Notification icon! !
-!NotificationSignal class categoriesFor: #icon!constants!public! !
-
-!Number class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x2116 fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Number class categoriesFor: #icon!constants!public! !
-
-!Package class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##(self) defaultIcon! !
-!Package class categoriesFor: #icon!constants!public! !
-
-!PackageManager class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^Package icon! !
-!PackageManager class categoriesFor: #icon!constants!public! !
-
-!Point class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x2316 fontName: 'Georgia')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Point class categoriesFor: #icon!constants!public! !
-
-!Process class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Process class categoriesFor: #icon!constants!public! !
-
-!ProcessorScheduler class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!ProcessorScheduler class categoriesFor: #icon!constants!public! !
-
-!RadioButton class methodsFor!
+!UI.RadioButton class methodsFor!
 
 icon
 	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
-!RadioButton class categoriesFor: #icon!constants!public! !
+!UI.RadioButton class categoriesFor: #icon!constants!public! !
 
-!RadioButtonSetPresenter class methodsFor!
+!UI.RadioButtonSetPresenter class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##((TextTileIcon text: $\x29BF fontName: 'Cambria') textcolor: Color forestGreen; yourself)! !
-!RadioButtonSetPresenter class categoriesFor: #icon!constants!public! !
+!UI.RadioButtonSetPresenter class categoriesFor: #icon!constants!public! !
 
-!Rectangle class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(TextTileIcon text: $\x25AD)! !
-!Rectangle class categoriesFor: #icon!constants!public! !
-
-!ResourceIdentifier class methodsFor!
+!UI.ResourceIdentifier class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ResourceIdentifier class categoriesFor: #icon!constants!development!public! !
-
-!ScaledDecimal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
-		textcolor: Color darkBlue;
-		yourself)! !
-!ScaledDecimal class categoriesFor: #icon!constants!public! !
-
-!SearchPolicy class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: $\x227E fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!SearchPolicy class categoriesFor: #icon!constants!public! !
-
-!Semaphore class methodsFor!
-
-icon
-	^##((TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
-		textcolor: Color red;
-		yourself)! !
-!Semaphore class categoriesFor: #icon!public! !
-
-!Set class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '{ }' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Set class categoriesFor: #icon!constants!public! !
-
-!SharedPool class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Collection icon! !
-!SharedPool class categoriesFor: #icon!constants!public! !
-
-!Signal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Error icon! !
-!Signal class categoriesFor: #icon!constants!public! !
-
-!SortAlgorithm class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!SortAlgorithm class categoriesFor: #icon!constants!public! !
-
-!Sound class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!Sound class categoriesFor: #icon!constants!public! !
-
-!SourceManager class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!SourceManager class categoriesFor: #icon!constants!public! !
-
-!String class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Color darkBlue)! !
-!String class categoriesFor: #icon!constants!public! !
-
-!Symbol class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#S' fontName: 'Cambria')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Symbol class categoriesFor: #icon!constants!public! !
-
-!SystemDictionary class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!SystemDictionary class categoriesFor: #icon!constants!public! !
-
-!Time class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!Time class categoriesFor: #icon!constants!public! !
-
-!TIME_ZONE_INFORMATION class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!TIME_ZONE_INFORMATION class categoriesFor: #icon!constants!public! !
-
-!True class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	"Another potential choice here is ☑'"
-
-	^##((TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
-		textcolor: Color darkGreen;
-		yourself)! !
-!True class categoriesFor: #icon!constants!public! !
-
-!UndefinedObject class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##(TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
-!UndefinedObject class categoriesFor: #icon!constants!public! !
-
-!UtfEncodedString class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##((TextTileIcon text: '‘U’' fontName: 'Cambria') textcolor: Color darkBlue; yourself)! !
-!UtfEncodedString class categoriesFor: #icon!constants!public! !
-
-!VariableBinding methodsFor!
-
-icon
-	^value icon! !
-!VariableBinding categoriesFor: #icon!constants!public! !
-
-!Warning class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Icon warning! !
-!Warning class categoriesFor: #icon!constants!public! !
-
-!WarningSignal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Warning icon! !
-!WarningSignal class categoriesFor: #icon!constants!public! !
-
-!WeakArray class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#()' fontName: 'Arial')
-		textcolor: Color skyBlue;
-		yourself)! !
-!WeakArray class categoriesFor: #icon!constants!public! !
+!UI.ResourceIdentifier class categoriesFor: #icon!constants!development!public! !
 
 "End of package definition"!
 

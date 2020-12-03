@@ -1,14 +1,14 @@
 ﻿| package |
 package := Package name: 'Dolphin Text Tile Icons'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Text Tile Icons
-Copyright (c) Object Arts Ltd. 2018.
+Copyright © Object Arts Ltd. 2018.
 '.
 
 
 package setClassNames: #(
-	#{TextTileIcon}
+	#{Graphics.TextTileIcon}
 ).
 
 package setPrerequisites: #(
@@ -22,10 +22,10 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #TextTileIcon
+Core.Object subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
 	classVariableNames: 'StringFormat'
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
