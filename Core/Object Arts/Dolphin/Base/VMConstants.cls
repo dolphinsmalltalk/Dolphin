@@ -1,27 +1,35 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{VMConstants} declare: (PoolConstantsDictionary named: #VMConstants)!
-VMConstants at: 'DoubleSize' put: 16r8!
-VMConstants at: 'FloatSize' put: 16r4!
-VMConstants at: 'HalfPtrBits' put: 16r10!
-VMConstants at: 'HalfPtrMask' put: 16rFFFF!
-VMConstants at: 'HalfPtrMax' put: 16r7FFF!
-VMConstants at: 'HashBits' put: 16r1E!
-VMConstants at: 'IntMax' put: 16r7FFFFFFF!
-VMConstants at: 'IntPtrBits' put: 16r20!
-VMConstants at: 'IntPtrMask' put: 16rFFFFFFFF!
-VMConstants at: 'IntPtrMax' put: 16r7FFFFFFF!
-VMConstants at: 'IntPtrSize' put: 16r4!
-VMConstants at: 'IntSize' put: 16r4!
-VMConstants at: 'IsWin64' put: false!
-VMConstants at: 'MaxBlockNesting' put: 16rFF!
-VMConstants at: 'MaxLiterals' put: 16r10000!
-VMConstants at: 'MaxMessageArgs' put: 16rFF!
-VMConstants at: 'MaxPrimitive' put: 16rFF!
-VMConstants at: 'MaxTemps' put: 16rFF!
-VMConstants at: 'MaxVirtualFunction' put: 16r400!
-VMConstants at: 'SmallIntegerMax' put: 16r3FFFFFFF!
-VMConstants at: 'SmallIntegerMin' put: -16r40000000!
-VMConstants at: 'UIntMax' put: 16rFFFFFFFF!
-VMConstants at: 'UIntPtrMax' put: 16rFFFFFFFF!
-VMConstants shrink!
+SharedPool subclass: #VMConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'DoubleSize' -> 16r8.
+		'FloatSize' -> 16r4.
+		'HalfPtrBits' -> 16r10.
+		'HalfPtrMask' -> 16rFFFF.
+		'HalfPtrMax' -> 16r7FFF.
+		'HashBits' -> 16r1E.
+		'IntMax' -> 16r7FFFFFFF.
+		'IntPtrBits' -> 16r20.
+		'IntPtrMask' -> 16rFFFFFFFF.
+		'IntPtrMax' -> 16r7FFFFFFF.
+		'IntPtrSize' -> 16r4.
+		'IntSize' -> 16r4.
+		'IsWin64' -> false.
+		'MaxBlockNesting' -> 16rFF.
+		'MaxLiterals' -> 16r10000.
+		'MaxMessageArgs' -> 16rFF.
+		'MaxPrimitive' -> 16rFF.
+		'MaxTemps' -> 16rFF.
+		'MaxVirtualFunction' -> 16r400.
+		'SmallIntegerMax' -> 16r3FFFFFFF.
+		'SmallIntegerMin' -> -16r40000000.
+		'UIntMax' -> 16rFFFFFFFF.
+		'UIntPtrMax' -> 16rFFFFFFFF
+	}!
+VMConstants guid: (GUID fromString: '{0ce3edb9-a86f-4a2e-b743-3de1e198c6ff}')!
+VMConstants comment: ''!
+!VMConstants categoriesForClass!Unclassified! !

@@ -3,7 +3,7 @@
 nil subclass: #Object
 	instanceVariableNames: ''
 	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
-	poolDictionaries: '_InstanceBehaviorMasks'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Object guid: (GUID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -439,21 +439,21 @@ beFinalizable
 	"Mark the receiver as an object requiring finalization.
 	Answers the previous value of the special behavior mask."
 
-	^self setSpecialBehavior: ##(_GetSpecialMask bitOr: _FinalizeMask)!
+	^self setSpecialBehavior: ##(Behavior._GetSpecialMask bitOr: Behavior._IsFinalizableMask)!
 
 beStrong
 	"Revoke the receiver's status as an object whose indexable pointer variables hold
 	only weak references to their contents. Has no effect on objects which are already strong.
 	Answers the previous value of the special behavior mask."
 
-	^self setSpecialBehavior: ##(_GetSpecialMask bitXor: (_WeakMask bitShift: 8))!
+	^self setSpecialBehavior: ##(Behavior._GetSpecialMask bitXor: (Behavior._IsWeakMask bitShift: 8))!
 
 beUnfinalizable
 	"Mark the receiver as an object that does not require finalization. This is the default
 	so sending this message is only necessary to reverse a previous #beFinalizable message.
 	Answers the previous value of the special behavior mask."
 
-	^self setSpecialBehavior: ##(_GetSpecialMask bitXor: (_FinalizeMask bitShift: 8))!
+	^self setSpecialBehavior: ##(Behavior._GetSpecialMask bitXor: (Behavior._IsFinalizableMask bitShift: 8))!
 
 beWeak
 	"Mark the receiver as an object whose indexable variables hold only weak references to
@@ -468,7 +468,7 @@ beWeak
 	against all newly created instances."
 
 	^self class isPointers
-		ifTrue: [self setSpecialBehavior: ##(_GetSpecialMask bitOr: _WeakMask)]
+		ifTrue: [self setSpecialBehavior: ##(Behavior._GetSpecialMask bitOr: Behavior._IsWeakMask)]
 		ifFalse: [self error: 'byte objects cannot be weak']!
 
 binaryStoreBytes
@@ -684,7 +684,7 @@ getSpecialBehavior
 	"Private - Answer the receiver's complete special behavior mask,
 	useful for transferring to copies, etc."
 
-	^self setSpecialBehavior: _GetSpecialMask!
+	^self setSpecialBehavior: Behavior._GetSpecialMask!
 
 hash
 	"Answer the <integer> hash value for the receiver. By default use the identity hash assigned
@@ -810,7 +810,7 @@ isFinalizable
 	to the object, however the delivery of the message is asynchronous
 	and an arbitrary interval may elapse before it is delivered."
 
-	^self getSpecialBehavior allMask: _FinalizeMask!
+	^self getSpecialBehavior allMask: Behavior._IsFinalizableMask!
 
 isImmediate
 	"Private - Answer whether the receiver has an immediate representation (that is it is entirely
@@ -895,7 +895,7 @@ isWeak
 	"Answer whether the receiver is an object whose indexable pointer variables hold only weak references
 	to their contents."
 
-	^self getSpecialBehavior allMask: _WeakMask!
+	^self getSpecialBehavior allMask: Behavior._IsWeakMask!
 
 mustBeBoolean
 	"Private - Sent to the receiver by the VM when an attempt was made to test it for its

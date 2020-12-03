@@ -199,7 +199,7 @@ initialize
 	Fail := self fromInteger: E_FAIL.
 	Facilities := LookupTable new.
 	FacilityCodes
-		keysAndValuesDo: [:eachKey :eachValue | self registerFacility: eachValue name: eachKey].
+		bindingsDo: [:each | self registerFacility: each value name: each key].
 	self registerFacility: FACILITY_NT_BIT >> 16 name: 'NTSTATUS'!
 
 notImplemented

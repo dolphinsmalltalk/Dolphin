@@ -20,12 +20,12 @@ a key and a value. It is used for the elements of Dictionaries.'!
 <= operand
 	^key <= operand key!
 
-= anAssociation 
+= anAssociation
 	"Answer whether the receiver is equal to the argument."
 
-	^self species == anAssociation species 
-		and: [key = anAssociation key
-		and: [value = anAssociation value]]!
+	^self == anAssociation or: 
+			[self species == anAssociation species
+				and: [key = anAssociation key and: [value = anAssociation value]]]!
 
 displayOn: aStream
 	"Append a short textual description of the receiver to aStream."

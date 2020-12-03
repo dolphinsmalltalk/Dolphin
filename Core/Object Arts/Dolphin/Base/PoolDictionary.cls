@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #PoolDictionary
-	instanceVariableNames: ''
+	instanceVariableNames: 'bindingEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
@@ -16,6 +16,37 @@ associationClass
 	key-value pairs in the receiver. Must respond to the Association protocol."
 	
 	^VariableBinding!
+
+bindingEnvironment
+	"Answer the environment of the receiver's bindings."
+
+	^bindingEnvironment!
+
+bindingEnvironment: aNamespace
+	"Set the environment to be used for new bindings in the receiver. This should be set on initialization, and not changed subsequently."
+
+	bindingEnvironment := aNamespace!
+
+bindingsDo: aMonadicValuable
+	self associationsDo: aMonadicValuable!
+
+convertToSharedPool
+	| package name tempName poolClass pool |
+	package := self owningPackage.
+	name := self name.
+	self owningPackage: nil.
+	tempName := (name , '_newPool') asSymbol.
+	poolClass := SharedPool subclass: tempName.
+	pool := poolClass classPool.
+	self bindingsDo: 
+			[:each |
+			each environment: poolClass.
+			pool add: each].
+	poolClass basicClassPool: pool.
+	(Smalltalk associationAt: name) value: poolClass.
+	Smalltalk removeKey: tempName.
+	poolClass setName: name.
+	poolClass owningPackage: package!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -48,6 +79,11 @@ fullName
 
 fullyQualifiedReference
 	^self fullName asQualifiedReference!
+
+initialize
+	super initialize.
+	bindingEnvironment := self.
+!
 
 initializerFor: aString
 	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
@@ -111,6 +147,11 @@ name
 name: aSymbol 
 	!
 
+newAssociation: keyObject value: valueObject
+	^(super newAssociation: keyObject value: valueObject)
+		environment: self bindingEnvironment;
+		yourself!
+
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned by any package"
 
@@ -119,19 +160,25 @@ owningPackage
 owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
-	aPackage addVariableNamed: self fullyQualifiedReference! !
+	Package manager addVariableNamed: self fullyQualifiedReference to: aPackage! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
-!PoolDictionary categoriesFor: #displayOn:!displaying!public! !
+!PoolDictionary categoriesFor: #bindingEnvironment!accessing!public! !
+!PoolDictionary categoriesFor: #bindingEnvironment:!initializing!public! !
+!PoolDictionary categoriesFor: #bindingsDo:!enumerating!public! !
+!PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
+!PoolDictionary categoriesFor: #displayOn:!public! !
 !PoolDictionary categoriesFor: #environment!accessing!public! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolDictionary categoriesFor: #fullName!accessing!public! !
 !PoolDictionary categoriesFor: #fullyQualifiedReference!accessing!public! !
+!PoolDictionary categoriesFor: #initialize!initializing!private! !
 !PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
 !PoolDictionary categoriesFor: #localEnvironment!accessing!private! !
 !PoolDictionary categoriesFor: #name!accessing!public! !
 !PoolDictionary categoriesFor: #name:!accessing!private! !
+!PoolDictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !
 !PoolDictionary categoriesFor: #owningPackage:!accessing!development!public! !
 

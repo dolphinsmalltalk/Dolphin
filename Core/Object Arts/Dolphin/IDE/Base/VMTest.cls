@@ -2437,15 +2437,15 @@ testPrimitiveSetSpecialBehavior
 	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
 	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
 	"The per-object flags contain a number of bits that the VM will not allow to be modified - in fact only the weak & finalize bits can be set or unset."
-	after := before | _WeakMask | _FinalizeMask.
+	after := before | Behavior._IsWeakMask | Behavior._IsFinalizableMask.
 	self assert: subject getSpecialBehavior equals: after.
 	self assert: subject isWeak.
 	self assert: subject isFinalizable.
-	self assert: (method value: subject withArguments: {_WeakMask}) equals: after.
-	self assert: subject getSpecialBehavior equals: before | _WeakMask.
+	self assert: (method value: subject withArguments: {Behavior._IsWeakMask}) equals: after.
+	self assert: subject getSpecialBehavior equals: before | Behavior._IsWeakMask.
 	self assert: subject isWeak.
 	self deny: subject isFinalizable.
-	self assert: (method value: subject withArguments: #(0)) equals: before | _WeakMask.
+	self assert: (method value: subject withArguments: #(0)) equals: before | Behavior._IsWeakMask.
 	self assert: subject getSpecialBehavior equals: before.
 	self deny: subject isWeak.
 	self deny: subject isFinalizable.
@@ -2453,8 +2453,8 @@ testPrimitiveSetSpecialBehavior
 	before := subject getSpecialBehavior.
 	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
 	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
-	nullTermMask := _WeakMask bitXor: _PointersMask.
-	after := before | _FinalizeMask.
+	nullTermMask := Behavior._IsWeakMask bitXor: Behavior._IsPointersMask.
+	after := before | Behavior._IsFinalizableMask.
 	self assert: subject getSpecialBehavior equals: after.
 	self deny: subject isWeak.
 	self assert: subject isFinalizable.

@@ -442,9 +442,6 @@ package setMethodNames: #(
 	#(#{Point3D class} #publishedAspectsOfInstances)
 	#(#{PointerField} #printAccessorExpression:on:)
 	#(#{PointerField} #printMutatorBody:on:)
-	#(#{PoolConstantsDictionary} #browse)
-	#(#{PoolConstantsDictionary} #errorModify:value:)
-	#(#{PoolConstantsDictionary} #referencesTo:)
 	#(#{PoolDictionary} #aspectDisplayOn:)
 	#(#{Presenter class} #addView:asResource:)
 	#(#{Presenter class} #editNewDefaultView)
@@ -517,6 +514,10 @@ package setMethodNames: #(
 	#(#{SessionManager class} #publishedEventsOfInstances)
 	#(#{Set} #newBatchAccessor)
 	#(#{Set class} #newInstanceAspect:class:)
+	#(#{SharedPool class} #newInstanceAspect:class:)
+	#(#{SharedPool class} #publishedAspects)
+	#(#{SharedPool class} #publishedKeyedAspects)
+	#(#{SharedPool class} #referencesTo:)
 	#(#{Shell class} #registerAsToolWith:)
 	#(#{Shell class} #unregisterAsToolWith:)
 	#(#{ShellView class} #publishedAspectsOfInstances)
@@ -4902,45 +4903,6 @@ printMutatorBody: aSymbol on: aWriteStream
 !PointerField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
 !PointerField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
 
-!PoolConstantsDictionary methodsFor!
-
-browse
-    	"Open a browser on the receiver"
-    
-    	Smalltalk developmentSystem browsePoolConstantsDictionary: self!
-
-errorModify: key value: value
-	"Private - An attempt was made to modify the value of the constant named, key."
-
-	| recompile var |
-	recompile := ConfirmationRequiredWarning
-				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
-						expandMacrosWith: key
-						with: value
-						with: (self at: key)).
-	recompile isNil ifTrue: [^self].
-	var := self associationAt: key.
-	var setValue: value.
-	self isChanged: true.
-	recompile ifTrue: [self recompileReferencesToVarNamed: key]
-
-!
-
-referencesTo: keyString
-	"Answer the collection of any methods which references the named key, assumed to
-	be a variable name from the receiver."
-
-	| env var classes |
-	var := self associationAt: keyString.
-	classes := self classesReferencing.
-	env := BrowserEnvironment new forClasses: classes , (classes collect: [:each | each class]).
-	^(env referencesTo: var)
-		label: ('Methods referencing <1d>.<2s>' expandMacrosWith: self with: keyString);
-		yourself! !
-!PoolConstantsDictionary categoriesFor: #browse!operations-browsing!public! !
-!PoolConstantsDictionary categoriesFor: #errorModify:value:!exceptions!private! !
-!PoolConstantsDictionary categoriesFor: #referencesTo:!private! !
-
 !PoolDictionary methodsFor!
 
 aspectDisplayOn: aStream
@@ -5883,6 +5845,46 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^aspectClass set: aSymbol! !
 !Set class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+
+!SharedPool class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass dictionary: aSymbol!
+
+publishedAspects
+    	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
+    	Implementation Note: By adding superclass aspects to the keyed aspect
+    	table we get much better performance because it reduces the number 
+    	of rehashes that are necessary due to resizing."
+    
+    	^(self publishedKeyedAspects)
+    		addAll: super publishedAspects;
+    		yourself!
+
+publishedKeyedAspects
+	"Answers a <LookupTable> of the published aspects of the 
+    	receiver's keyed contents."
+    
+	^self classPool publishedAspects!
+
+referencesTo: keyString
+	"Answer the collection of any methods which references the named key, assumed to
+	be a variable name from the receiver."
+
+	| env var classes |
+	var := self associationAt: keyString.
+	classes := self classesReferencing.
+	env := BrowserEnvironment new forClasses: classes , (classes collect: [:each | each class]).
+	^(env referencesTo: var)
+		label: ('Methods referencing <1d>.<2s>' expandMacrosWith: self with: keyString);
+		yourself! !
+!SharedPool class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+!SharedPool class categoriesFor: #publishedAspects!constants!public! !
+!SharedPool class categoriesFor: #publishedKeyedAspects!public! !
+!SharedPool class categoriesFor: #referencesTo:!private! !
 
 !Shell class methodsFor!
 

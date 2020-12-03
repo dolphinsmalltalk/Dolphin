@@ -34,7 +34,7 @@ Class Variables:
 !SmalltalkWorkspace methodsFor!
 
 allDefinedVariablesDo: aMonadicValuable 
-	workspacePool associationsDo: aMonadicValuable!
+	workspacePool bindingsDo: aMonadicValuable!
 
 allPools
 	"Private - Answers an Array of all the PoolDictionaries used during evaluations in the
@@ -746,10 +746,10 @@ identifiersStartingWith: aString maxItems: anInteger
 			class := self selfClass instanceClass.
 			class withAllSuperclassesDo: 
 					[:eachClass |
-					eachClass classPool associationsDo: selectVars.
-					eachClass sharedPoolsDo: [:eachPool | eachPool associationsDo: selectVars]].
+					eachClass classPool bindingsDo: selectVars.
+					eachClass sharedPoolsDo: [:eachPool | eachPool bindingsDo: selectVars]].
 			evaluationPools do: [:eachPool | eachPool associationsDo: selectVars].
-			class environment associationsDo: selectVars].
+			class environment bindingsDo: selectVars].
 	^variables!
 
 indicatorStyles

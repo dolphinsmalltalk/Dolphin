@@ -3464,10 +3464,10 @@ addClassToPackage: class
 
 	Package manager addClass: class to: self package!
 
-addGlobalToPackage: anAssociation 
+addGlobalToPackage: anAssociation
 	"Private - Add the specified global to the package associated with the receiver."
 
-	Package manager addGlobalNamed: anAssociation key to: self package!
+	Package manager addVariableNamed: anAssociation key asQualifiedReference to: self package!
 
 checkConformanceOfExistingPool: binding
 	"Private - Check that the existing global with the specified binding is suitable
@@ -3501,8 +3501,7 @@ constantsPoolBinding
 	binding := self resolveExistingPool: constantsPoolName.
 	binding value isNil 
 		ifTrue: 
-			[binding value: (PoolConstantsDictionary named: binding key).
-			self environment add: binding.
+			[binding value: (SharedPool subclass: binding key).
 			self addGlobalToPackage: binding "key"].
 	constantsPoolName := binding key.
 	^binding!
@@ -3686,20 +3685,20 @@ idlHelpAttributes: docs
 idlKeyword
 	^'library'!
 
-isPoolCheck: binding 
+isPoolCheck: binding
 	"Private - Check that the global binding represented by the <Association>, binding, refers to a 
 	pool dictionary, and if not prompt for user action."
 
 	| global resp mb |
 	global := binding value.
-	(global isKindOf: PoolConstantsDictionary) ifTrue: [^true].
+	(global isBehavior and: [global inheritsFrom: SharedPool]) ifTrue: [^true].
 	mb := MessageBox new.
 	mb iconStyle: #warning.
-	mb 
-		text: ('Pool name <1p> clashes with an existing global which is not a PoolConstantsDictionary.<n><n>Press OK to suggest an alternative name for the constants pool, or Cancel to abort.' 
+	mb
+		text: ('Pool name <1p> clashes with an existing global which is not a SharedPool.<n><n>Press OK to suggest an alternative name for the constants pool, or Cancel to abort.'
 				expandMacrosWith: binding key).
-	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' 
-				expandMacrosWith: self name).
+	mb
+		caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' expandMacrosWith: self name).
 	mb buttonStyle: #okCancel.
 	resp := mb open.
 	resp == #cancel ifTrue: [self abortGeneration].
@@ -3746,7 +3745,7 @@ packageCheck: anAssociation
 				iconStyle: #warning;
 				buttonStyle: #yesNoCancel.
 			mb 
-				text: ('The constants pool <1s> already exists in the <2p> package.
+				text: ('The shared pool <1s> already exists in the <2p> package.
 
 Would you like to move it to the <3p> package?
 
@@ -3900,7 +3899,7 @@ printOn: aStream
 		ifFalse: [aStream print: self name].
 	aStream nextPut: $)!
 
-resolveExistingPool: poolName 
+resolveExistingPool: poolName
 	"Private - Attempt to locate an existing constants pool which belongs to the receiver
 	starting with the <readableString> name, poolName, but prompting the user for further
 	global names if necessary. Answer an <Association> which is either an existing global
@@ -3911,10 +3910,10 @@ resolveExistingPool: poolName
 	newName := poolName.
 	
 	[newName := newName asSymbol.
-	binding := env associationAt: newName ifAbsent: [^newName -> nil].
-	self checkConformanceOfExistingPool: binding] 
+	binding := (env bindingFor: newName) ifNil: [^newName -> nil].
+	self checkConformanceOfExistingPool: binding]
 			whileFalse: 
-				[newName := Prompter 
+				[newName := Prompter
 							on: newName , '_'
 							prompt: 'Please enter a new global name for the pool'
 							caption: ('Generating <1s> constants pool' expandMacrosWith: self name)].

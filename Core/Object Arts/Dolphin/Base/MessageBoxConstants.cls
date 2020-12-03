@@ -1,30 +1,38 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{MessageBoxConstants} declare: (PoolConstantsDictionary named: #MessageBoxConstants)!
-MessageBoxConstants at: 'IDTIMEOUT' put: 16r7D00!
-MessageBoxConstants at: 'MB_ABORTRETRYIGNORE' put: 16r2!
-MessageBoxConstants at: 'MB_APPLMODAL' put: 16r0!
-MessageBoxConstants at: 'MB_CANCELTRYCONTINUE' put: 16r6!
-MessageBoxConstants at: 'MB_DEFBUTTON1' put: 16r0!
-MessageBoxConstants at: 'MB_DEFBUTTON2' put: 16r100!
-MessageBoxConstants at: 'MB_DEFBUTTON3' put: 16r200!
-MessageBoxConstants at: 'MB_DEFBUTTON4' put: 16r300!
-MessageBoxConstants at: 'MB_DEFMASK' put: 16rF00!
-MessageBoxConstants at: 'MB_ICONERROR' put: 16r10!
-MessageBoxConstants at: 'MB_ICONINFORMATION' put: 16r40!
-MessageBoxConstants at: 'MB_ICONMASK' put: 16rF0!
-MessageBoxConstants at: 'MB_ICONQUESTION' put: 16r20!
-MessageBoxConstants at: 'MB_ICONWARNING' put: 16r30!
-MessageBoxConstants at: 'MB_MISCMASK' put: 16rC000!
-MessageBoxConstants at: 'MB_MODEMASK' put: 16r3000!
-MessageBoxConstants at: 'MB_OK' put: 16r0!
-MessageBoxConstants at: 'MB_OKCANCEL' put: 16r1!
-MessageBoxConstants at: 'MB_RETRYCANCEL' put: 16r5!
-MessageBoxConstants at: 'MB_SETFOREGROUND' put: 16r10000!
-MessageBoxConstants at: 'MB_SYSTEMMODAL' put: 16r1000!
-MessageBoxConstants at: 'MB_TASKMODAL' put: 16r2000!
-MessageBoxConstants at: 'MB_TYPEMASK' put: 16rF!
-MessageBoxConstants at: 'MB_USERICON' put: 16r80!
-MessageBoxConstants at: 'MB_YESNO' put: 16r4!
-MessageBoxConstants at: 'MB_YESNOCANCEL' put: 16r3!
-MessageBoxConstants shrink!
+SharedPool subclass: #MessageBoxConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IDTIMEOUT' -> 16r7D00.
+		'MB_ABORTRETRYIGNORE' -> 16r2.
+		'MB_APPLMODAL' -> 16r0.
+		'MB_CANCELTRYCONTINUE' -> 16r6.
+		'MB_DEFBUTTON1' -> 16r0.
+		'MB_DEFBUTTON2' -> 16r100.
+		'MB_DEFBUTTON3' -> 16r200.
+		'MB_DEFBUTTON4' -> 16r300.
+		'MB_DEFMASK' -> 16rF00.
+		'MB_ICONERROR' -> 16r10.
+		'MB_ICONINFORMATION' -> 16r40.
+		'MB_ICONMASK' -> 16rF0.
+		'MB_ICONQUESTION' -> 16r20.
+		'MB_ICONWARNING' -> 16r30.
+		'MB_MISCMASK' -> 16rC000.
+		'MB_MODEMASK' -> 16r3000.
+		'MB_OK' -> 16r0.
+		'MB_OKCANCEL' -> 16r1.
+		'MB_RETRYCANCEL' -> 16r5.
+		'MB_SETFOREGROUND' -> 16r10000.
+		'MB_SYSTEMMODAL' -> 16r1000.
+		'MB_TASKMODAL' -> 16r2000.
+		'MB_TYPEMASK' -> 16rF.
+		'MB_USERICON' -> 16r80.
+		'MB_YESNO' -> 16r4.
+		'MB_YESNOCANCEL' -> 16r3
+	}!
+MessageBoxConstants guid: (GUID fromString: '{ae2717d5-7d5d-4625-aed8-d9b721d4e019}')!
+MessageBoxConstants comment: ''!
+!MessageBoxConstants categoriesForClass!Unclassified! !

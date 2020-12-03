@@ -1,15 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{FacilityCodes} declare: (PoolConstantsDictionary named: #FacilityCodes)!
-FacilityCodes at: 'FACILITY_CERT' put: 16rB!
-FacilityCodes at: 'FACILITY_CONTROL' put: 16rA!
-FacilityCodes at: 'FACILITY_DIRECTDRAW' put: 16r876!
-FacilityCodes at: 'FACILITY_DISPATCH' put: 16r2!
-FacilityCodes at: 'FACILITY_ITF' put: 16r4!
-FacilityCodes at: 'FACILITY_NULL' put: 16r0!
-FacilityCodes at: 'FACILITY_RPC' put: 16r1!
-FacilityCodes at: 'FACILITY_SSPI' put: 16r9!
-FacilityCodes at: 'FACILITY_STORAGE' put: 16r3!
-FacilityCodes at: 'FACILITY_WIN32' put: 16r7!
-FacilityCodes at: 'FACILITY_WINDOWS' put: 16r8!
-FacilityCodes shrink!
+SharedPool subclass: #FacilityCodes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FACILITY_CERT' -> 16rB.
+		'FACILITY_CONTROL' -> 16rA.
+		'FACILITY_DIRECTDRAW' -> 16r876.
+		'FACILITY_DISPATCH' -> 16r2.
+		'FACILITY_ITF' -> 16r4.
+		'FACILITY_NULL' -> 16r0.
+		'FACILITY_RPC' -> 16r1.
+		'FACILITY_SSPI' -> 16r9.
+		'FACILITY_STORAGE' -> 16r3.
+		'FACILITY_WIN32' -> 16r7.
+		'FACILITY_WINDOWS' -> 16r8
+	}!
+FacilityCodes guid: (GUID fromString: '{c29edf9c-e9d8-4309-b214-7a3dae1c1a01}')!
+FacilityCodes comment: ''!
+!FacilityCodes categoriesForClass!Unclassified! !

@@ -403,6 +403,12 @@ convertOldNamesProperty: aSymbol
 			aCollectionOfBindingReferences := self convertOldNames: names.
 			self propertyAt: aSymbol put: aCollectionOfBindingReferences]!
 
+convertPoolDictionariesToSharedPools
+	#{PoolDictionary} ifDefined: 
+			[:pcClass |
+			((self variableNames collect: [:each | each value]) select: [:each | each isKindOf: pcClass])
+				do: [:each | each convertToSharedPool]]!
+
 declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes
 	being loaded. Only required for PAX (not PAC) loading"
@@ -787,6 +793,7 @@ loadPAX
 		ifTrue: 
 			["Initialize old style (pre D6) binary resources"
 			self initializeOldSourcePackage].
+	self convertPoolDictionariesToSharedPools.
 	self fileInScript: #postinstall]
 			ensure: [filer close]!
 
@@ -1726,6 +1733,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #convertOldMethodNames!helpers!private! !
 !Package categoriesFor: #convertOldNames:!helpers!private! !
 !Package categoriesFor: #convertOldNamesProperty:!helpers!private! !
+!Package categoriesFor: #convertPoolDictionariesToSharedPools!accessing!public! !
 !Package categoriesFor: #declareClasses!helpers!private! !
 !Package categoriesFor: #declareVariables!helpers!private! !
 !Package categoriesFor: #dependentPackages!accessing!public! !

@@ -1,77 +1,85 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{CRTConstants} declare: (PoolConstantsDictionary named: #CRTConstants)!
-CRTConstants at: '_DN_FLUSH' put: 16r1000000!
-CRTConstants at: '_DN_FLUSH_OPERANDS_SAVE_RESULTS' put: 16r2000000!
-CRTConstants at: '_DN_SAVE' put: 16r0!
-CRTConstants at: '_DN_SAVE_OPERANDS_FLUSH_RESULTS' put: 16r3000000!
-CRTConstants at: '_EM_DENORMAL' put: 16r80000!
-CRTConstants at: '_EM_INEXACT' put: 16r1!
-CRTConstants at: '_EM_INVALID' put: 16r10!
-CRTConstants at: '_EM_OVERFLOW' put: 16r4!
-CRTConstants at: '_EM_UNDERFLOW' put: 16r2!
-CRTConstants at: '_EM_ZERODIVIDE' put: 16r8!
-CRTConstants at: '_FPCLASS_ND' put: 16r10!
-CRTConstants at: '_FPCLASS_NINF' put: 16r4!
-CRTConstants at: '_FPCLASS_NN' put: 16r8!
-CRTConstants at: '_FPCLASS_NZ' put: 16r20!
-CRTConstants at: '_FPCLASS_PD' put: 16r80!
-CRTConstants at: '_FPCLASS_PINF' put: 16r200!
-CRTConstants at: '_FPCLASS_PN' put: 16r100!
-CRTConstants at: '_FPCLASS_PZ' put: 16r40!
-CRTConstants at: '_FPCLASS_QNAN' put: 16r2!
-CRTConstants at: '_FPCLASS_SNAN' put: 16r1!
-CRTConstants at: '_IC_AFFINE' put: 16r40000!
-CRTConstants at: '_IC_PROJECTIVE' put: 16r0!
-CRTConstants at: '_MAX_DIR' put: 16r100!
-CRTConstants at: '_MAX_DRIVE' put: 16r3!
-CRTConstants at: '_MAX_EXT' put: 16r100!
-CRTConstants at: '_MAX_FNAME' put: 16r100!
-CRTConstants at: '_MAX_PATH' put: 16r104!
-CRTConstants at: '_MCW_DN' put: 16r3000000!
-CRTConstants at: '_MCW_EM' put: 16r8001F!
-CRTConstants at: '_MCW_IC' put: 16r40000!
-CRTConstants at: '_MCW_PC' put: 16r30000!
-CRTConstants at: '_MCW_RC' put: 16r300!
-CRTConstants at: '_O_APPEND' put: 16r8!
-CRTConstants at: '_O_BINARY' put: 16r8000!
-CRTConstants at: '_O_CREAT' put: 16r100!
-CRTConstants at: '_O_EXCL' put: 16r400!
-CRTConstants at: '_O_NOINHERIT' put: 16r80!
-CRTConstants at: '_O_OBTAIN_DIR' put: 16r2000!
-CRTConstants at: '_O_RANDOM' put: 16r10!
-CRTConstants at: '_O_RDONLY' put: 16r0!
-CRTConstants at: '_O_RDWR' put: 16r2!
-CRTConstants at: '_O_SEQUENTIAL' put: 16r20!
-CRTConstants at: '_O_SHORT_LIVED' put: 16r1000!
-CRTConstants at: '_O_TEMPORARY' put: 16r40!
-CRTConstants at: '_O_TEXT' put: 16r4000!
-CRTConstants at: '_O_TRUNC' put: 16r200!
-CRTConstants at: '_O_U16TEXT' put: 16r20000!
-CRTConstants at: '_O_U8TEXT' put: 16r40000!
-CRTConstants at: '_O_WRONLY' put: 16r1!
-CRTConstants at: '_O_WTEXT' put: 16r10000!
-CRTConstants at: '_PC_24' put: 16r20000!
-CRTConstants at: '_PC_53' put: 16r10000!
-CRTConstants at: '_PC_64' put: 16r0!
-CRTConstants at: '_RC_CHOP' put: 16r300!
-CRTConstants at: '_RC_DOWN' put: 16r100!
-CRTConstants at: '_RC_NEAR' put: 16r0!
-CRTConstants at: '_RC_UP' put: 16r200!
-CRTConstants at: '_S_IEXEC' put: 16r40!
-CRTConstants at: '_S_IREAD' put: 16r100!
-CRTConstants at: '_S_IWRITE' put: 16r80!
-CRTConstants at: '_SW_DENORMAL' put: 16r80000!
-CRTConstants at: '_SW_INEXACT' put: 16r1!
-CRTConstants at: '_SW_INVALID' put: 16r10!
-CRTConstants at: '_SW_OVERFLOW' put: 16r4!
-CRTConstants at: '_SW_UNDERFLOW' put: 16r1!
-CRTConstants at: '_SW_ZERODIVIDE' put: 16r8!
-CRTConstants at: '_TRUNCATE' put: -16r1!
-CRTConstants at: 'EBADF' put: 16r9!
-CRTConstants at: 'EINVAL' put: 16r16!
-CRTConstants at: 'RAND_MAX' put: 16r7FFF!
-CRTConstants at: 'SEEK_CUR' put: 16r1!
-CRTConstants at: 'SEEK_END' put: 16r2!
-CRTConstants at: 'SEEK_SET' put: 16r0!
-CRTConstants shrink!
+SharedPool subclass: #CRTConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_DN_FLUSH' -> 16r1000000.
+		'_DN_FLUSH_OPERANDS_SAVE_RESULTS' -> 16r2000000.
+		'_DN_SAVE' -> 16r0.
+		'_DN_SAVE_OPERANDS_FLUSH_RESULTS' -> 16r3000000.
+		'_EM_DENORMAL' -> 16r80000.
+		'_EM_INEXACT' -> 16r1.
+		'_EM_INVALID' -> 16r10.
+		'_EM_OVERFLOW' -> 16r4.
+		'_EM_UNDERFLOW' -> 16r2.
+		'_EM_ZERODIVIDE' -> 16r8.
+		'_FPCLASS_ND' -> 16r10.
+		'_FPCLASS_NINF' -> 16r4.
+		'_FPCLASS_NN' -> 16r8.
+		'_FPCLASS_NZ' -> 16r20.
+		'_FPCLASS_PD' -> 16r80.
+		'_FPCLASS_PINF' -> 16r200.
+		'_FPCLASS_PN' -> 16r100.
+		'_FPCLASS_PZ' -> 16r40.
+		'_FPCLASS_QNAN' -> 16r2.
+		'_FPCLASS_SNAN' -> 16r1.
+		'_IC_AFFINE' -> 16r40000.
+		'_IC_PROJECTIVE' -> 16r0.
+		'_MAX_DIR' -> 16r100.
+		'_MAX_DRIVE' -> 16r3.
+		'_MAX_EXT' -> 16r100.
+		'_MAX_FNAME' -> 16r100.
+		'_MAX_PATH' -> 16r104.
+		'_MCW_DN' -> 16r3000000.
+		'_MCW_EM' -> 16r8001F.
+		'_MCW_IC' -> 16r40000.
+		'_MCW_PC' -> 16r30000.
+		'_MCW_RC' -> 16r300.
+		'_O_APPEND' -> 16r8.
+		'_O_BINARY' -> 16r8000.
+		'_O_CREAT' -> 16r100.
+		'_O_EXCL' -> 16r400.
+		'_O_NOINHERIT' -> 16r80.
+		'_O_OBTAIN_DIR' -> 16r2000.
+		'_O_RANDOM' -> 16r10.
+		'_O_RDONLY' -> 16r0.
+		'_O_RDWR' -> 16r2.
+		'_O_SEQUENTIAL' -> 16r20.
+		'_O_SHORT_LIVED' -> 16r1000.
+		'_O_TEMPORARY' -> 16r40.
+		'_O_TEXT' -> 16r4000.
+		'_O_TRUNC' -> 16r200.
+		'_O_U16TEXT' -> 16r20000.
+		'_O_U8TEXT' -> 16r40000.
+		'_O_WRONLY' -> 16r1.
+		'_O_WTEXT' -> 16r10000.
+		'_PC_24' -> 16r20000.
+		'_PC_53' -> 16r10000.
+		'_PC_64' -> 16r0.
+		'_RC_CHOP' -> 16r300.
+		'_RC_DOWN' -> 16r100.
+		'_RC_NEAR' -> 16r0.
+		'_RC_UP' -> 16r200.
+		'_S_IEXEC' -> 16r40.
+		'_S_IREAD' -> 16r100.
+		'_S_IWRITE' -> 16r80.
+		'_SW_DENORMAL' -> 16r80000.
+		'_SW_INEXACT' -> 16r1.
+		'_SW_INVALID' -> 16r10.
+		'_SW_OVERFLOW' -> 16r4.
+		'_SW_UNDERFLOW' -> 16r1.
+		'_SW_ZERODIVIDE' -> 16r8.
+		'_TRUNCATE' -> -16r1.
+		'EBADF' -> 16r9.
+		'EINVAL' -> 16r16.
+		'RAND_MAX' -> 16r7FFF.
+		'SEEK_CUR' -> 16r1.
+		'SEEK_END' -> 16r2.
+		'SEEK_SET' -> 16r0
+	}!
+CRTConstants guid: (GUID fromString: '{25d19e14-d8b9-4e6b-b84b-bc169d311bcc}')!
+CRTConstants comment: ''!
+!CRTConstants categoriesForClass!Unclassified! !

@@ -1,47 +1,55 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{_PrimitiveFailureCode} declare: (PoolConstantsDictionary named: #_PrimitiveFailureCode)!
-_PrimitiveFailureCode at: 'AccessViolation' put: -16r3FF8FC1A!
-_PrimitiveFailureCode at: 'AssertionFailure' put: -16r17FFFBE0!
-_PrimitiveFailureCode at: 'ClassNotRegistered' put: -16r3FFBFEAC!
-_PrimitiveFailureCode at: 'Completed' put: 16r80000FF!
-_PrimitiveFailureCode at: 'Failed' put: -16r3FFFBFFB!
-_PrimitiveFailureCode at: 'FloatInvalidOperation' put: -16r17FFFF70!
-_PrimitiveFailureCode at: 'IllegalCharacter' put: -16r17FFFE9F!
-_PrimitiveFailureCode at: 'IllegalStateChange' put: -16r3FFFFFF3!
-_PrimitiveFailureCode at: 'IntegerOutOfRange' put: -16r3FCDFFD8!
-_PrimitiveFailureCode at: 'IntegerOverflow' put: -16r17FFFF6B!
-_PrimitiveFailureCode at: 'InternalError' put: -16r17FFFF1B!
-_PrimitiveFailureCode at: 'InvalidParameter' put: -16r17FFFFF3!
-_PrimitiveFailureCode at: 'InvalidParameter1' put: -16r17FFFF11!
-_PrimitiveFailureCode at: 'InvalidParameter10' put: -16r17FFFF08!
-_PrimitiveFailureCode at: 'InvalidParameter11' put: -16r17FFFF07!
-_PrimitiveFailureCode at: 'InvalidParameter12' put: -16r17FFFF06!
-_PrimitiveFailureCode at: 'InvalidParameter2' put: -16r17FFFF10!
-_PrimitiveFailureCode at: 'InvalidParameter3' put: -16r17FFFF0F!
-_PrimitiveFailureCode at: 'InvalidParameter4' put: -16r17FFFF0E!
-_PrimitiveFailureCode at: 'InvalidParameter5' put: -16r17FFFF0D!
-_PrimitiveFailureCode at: 'InvalidParameter6' put: -16r17FFFF0C!
-_PrimitiveFailureCode at: 'InvalidParameter7' put: -16r17FFFF0B!
-_PrimitiveFailureCode at: 'InvalidParameter8' put: -16r17FFFF0A!
-_PrimitiveFailureCode at: 'InvalidParameter9' put: -16r17FFFF09!
-_PrimitiveFailureCode at: 'InvalidParameterMix' put: -16r17FFFFD0!
-_PrimitiveFailureCode at: 'InvalidPointer' put: -16r3FFFBFFD!
-_PrimitiveFailureCode at: 'InvalidVariant' put: -16r17FFFDCE!
-_PrimitiveFailureCode at: 'NoCallbackActive' put: -16r3FF8FD9A!
-_PrimitiveFailureCode at: 'NoMemory' put: -16r3FF8FFF8!
-_PrimitiveFailureCode at: 'NonInstantiable' put: -16r3FF8DF59!
-_PrimitiveFailureCode at: 'NotImplemented' put: -16r3FFFBFFF!
-_PrimitiveFailureCode at: 'NotSupported' put: -16r17FFFF45!
-_PrimitiveFailureCode at: 'ObjectTypeMismatch' put: -16r17FFFFDC!
-_PrimitiveFailureCode at: 'OutOfBounds' put: -16r3FFFFFF5!
-_PrimitiveFailureCode at: 'Pending' put: -16r3FFFFFF6!
-_PrimitiveFailureCode at: 'Retry' put: -16r17FFFDD3!
-_PrimitiveFailureCode at: 'SignalPending' put: -16r3FF8FF5E!
-_PrimitiveFailureCode at: 'ThreadIsTerminating' put: -16r17FFFFB5!
-_PrimitiveFailureCode at: 'Timeout' put: -16r3FF8FA4C!
-_PrimitiveFailureCode at: 'UndefinedCharacter' put: -16r17FFFE9D!
-_PrimitiveFailureCode at: 'UnmappableCharacter' put: -16r17FFFE9E!
-_PrimitiveFailureCode at: 'Unsuccessful' put: -16r17FFFFFF!
-_PrimitiveFailureCode at: 'WrongNumberOfArgs' put: -16r3FFD735F!
-_PrimitiveFailureCode shrink!
+SharedPool subclass: #_PrimitiveFailureCode
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AccessViolation' -> -16r3FF8FC1A.
+		'AssertionFailure' -> -16r17FFFBE0.
+		'ClassNotRegistered' -> -16r3FFBFEAC.
+		'Completed' -> 16r80000FF.
+		'Failed' -> -16r3FFFBFFB.
+		'FloatInvalidOperation' -> -16r17FFFF70.
+		'IllegalCharacter' -> -16r17FFFE9F.
+		'IllegalStateChange' -> -16r3FFFFFF3.
+		'IntegerOutOfRange' -> -16r3FCDFFD8.
+		'IntegerOverflow' -> -16r17FFFF6B.
+		'InternalError' -> -16r17FFFF1B.
+		'InvalidParameter' -> -16r17FFFFF3.
+		'InvalidParameter1' -> -16r17FFFF11.
+		'InvalidParameter10' -> -16r17FFFF08.
+		'InvalidParameter11' -> -16r17FFFF07.
+		'InvalidParameter12' -> -16r17FFFF06.
+		'InvalidParameter2' -> -16r17FFFF10.
+		'InvalidParameter3' -> -16r17FFFF0F.
+		'InvalidParameter4' -> -16r17FFFF0E.
+		'InvalidParameter5' -> -16r17FFFF0D.
+		'InvalidParameter6' -> -16r17FFFF0C.
+		'InvalidParameter7' -> -16r17FFFF0B.
+		'InvalidParameter8' -> -16r17FFFF0A.
+		'InvalidParameter9' -> -16r17FFFF09.
+		'InvalidParameterMix' -> -16r17FFFFD0.
+		'InvalidPointer' -> -16r3FFFBFFD.
+		'InvalidVariant' -> -16r17FFFDCE.
+		'NoCallbackActive' -> -16r3FF8FD9A.
+		'NoMemory' -> -16r3FF8FFF8.
+		'NonInstantiable' -> -16r3FF8DF59.
+		'NotImplemented' -> -16r3FFFBFFF.
+		'NotSupported' -> -16r17FFFF45.
+		'ObjectTypeMismatch' -> -16r17FFFFDC.
+		'OutOfBounds' -> -16r3FFFFFF5.
+		'Pending' -> -16r3FFFFFF6.
+		'Retry' -> -16r17FFFDD3.
+		'SignalPending' -> -16r3FF8FF5E.
+		'ThreadIsTerminating' -> -16r17FFFFB5.
+		'Timeout' -> -16r3FF8FA4C.
+		'UndefinedCharacter' -> -16r17FFFE9D.
+		'UnmappableCharacter' -> -16r17FFFE9E.
+		'Unsuccessful' -> -16r17FFFFFF.
+		'WrongNumberOfArgs' -> -16r3FFD735F
+	}!
+_PrimitiveFailureCode guid: (GUID fromString: '{b79a3b29-49ef-44d7-832f-ad83fb4b2097}')!
+_PrimitiveFailureCode comment: ''!
+!_PrimitiveFailureCode categoriesForClass!Kernel-Methods! !

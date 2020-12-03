@@ -1,98 +1,106 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{SmalltalkParseErrorCodes} declare: (PoolConstantsDictionary named: #SmalltalkParseErrorCodes)!
-SmalltalkParseErrorCodes at: 'CErrArgTypeCannotBeVoid' put: 16r33!
-SmalltalkParseErrorCodes at: 'CErrArrayNotClosed' put: 16r3D!
-SmalltalkParseErrorCodes at: 'CErrAssignConstant' put: 16r48!
-SmalltalkParseErrorCodes at: 'CErrAssignmentToArgument' put: 16r43!
-SmalltalkParseErrorCodes at: 'CErrBadContext' put: 16r4C!
-SmalltalkParseErrorCodes at: 'CErrBadExtTypeQualifier' put: 16r37!
-SmalltalkParseErrorCodes at: 'CErrBadPools' put: 16r53!
-SmalltalkParseErrorCodes at: 'CErrBadPrimCallType' put: 16r2F!
-SmalltalkParseErrorCodes at: 'CErrBadPrimIdx' put: 16r2D!
-SmalltalkParseErrorCodes at: 'CErrBadSelector' put: 16r4A!
-SmalltalkParseErrorCodes at: 'CErrBadTokenInArray' put: 16r3C!
-SmalltalkParseErrorCodes at: 'CErrBadValueInByteArray' put: 16r3E!
-SmalltalkParseErrorCodes at: 'CErrBadVfn' put: 16r3B!
-SmalltalkParseErrorCodes at: 'CErrBlockArgListNotClosed' put: 16r2A!
-SmalltalkParseErrorCodes at: 'CErrBlockNestingTooDeep' put: 16r51!
-SmalltalkParseErrorCodes at: 'CErrBlockNotClosed' put: 16r2B!
-SmalltalkParseErrorCodes at: 'CErrBraceNotClosed' put: 16r25!
-SmalltalkParseErrorCodes at: 'CErrByteArrayNotClosed' put: 16r3F!
-SmalltalkParseErrorCodes at: 'CErrDuplicateArgName' put: 16r56!
-SmalltalkParseErrorCodes at: 'CErrDuplicateTempName' put: 16r55!
-SmalltalkParseErrorCodes at: 'CErrEmptyConditionBlock' put: 16r58!
-SmalltalkParseErrorCodes at: 'CErrErrorInStaticExpression' put: 16r40!
-SmalltalkParseErrorCodes at: 'CErrExpectCloseTag' put: 16r2E!
-SmalltalkParseErrorCodes at: 'CErrExpectExtType' put: 16r32!
-SmalltalkParseErrorCodes at: 'CErrExpectFnName' put: 16r31!
-SmalltalkParseErrorCodes at: 'CErrExpectLiteralBlock' put: 16r4E!
-SmalltalkParseErrorCodes at: 'CErrExpectMessage' put: 16r27!
-SmalltalkParseErrorCodes at: 'CErrExpectPrimIdx' put: 16r2C!
-SmalltalkParseErrorCodes at: 'CErrExpectVariable' put: 16r29!
-SmalltalkParseErrorCodes at: 'CErrExpectVfn' put: 16r3A!
-SmalltalkParseErrorCodes at: 'CErrFirst' put: 16r21!
-SmalltalkParseErrorCodes at: 'CErrIncorrectBlockArgCount' put: 16r4D!
-SmalltalkParseErrorCodes at: 'CErrInsufficientArgTypes' put: 16r38!
-SmalltalkParseErrorCodes at: 'CErrInternal' put: 16r42!
-SmalltalkParseErrorCodes at: 'CErrInvalExprStart' put: 16r22!
-SmalltalkParseErrorCodes at: 'CErrInvalidStructArg' put: 16r36!
-SmalltalkParseErrorCodes at: 'CErrLast' put: 16r58!
-SmalltalkParseErrorCodes at: 'CErrMethodTooLarge' put: 16r4F!
-SmalltalkParseErrorCodes at: 'CErrNonsenseAtExprEnd' put: 16r24!
-SmalltalkParseErrorCodes at: 'CErrNonsenseAtMethodEnd' put: 16r23!
-SmalltalkParseErrorCodes at: 'CErrNotIndirectable' put: 16r34!
-SmalltalkParseErrorCodes at: 'CErrParenNotClosed' put: 16r26!
-SmalltalkParseErrorCodes at: 'CErrQualifiedRefNotClosed' put: 16r59!
-SmalltalkParseErrorCodes at: 'CErrRedefiningArg' put: 16r57!
-SmalltalkParseErrorCodes at: 'CErrRedefiningPseudoVar' put: 16r46!
-SmalltalkParseErrorCodes at: 'CErrStaticExprNotClosed' put: 16r49!
-SmalltalkParseErrorCodes at: 'CErrTempListNotClosed' put: 16r21!
-SmalltalkParseErrorCodes at: 'CErrTooManyArgs' put: 16r44!
-SmalltalkParseErrorCodes at: 'CErrTooManyArgTypes' put: 16r39!
-SmalltalkParseErrorCodes at: 'CErrTooManyIfNotNilBlockArgs' put: 16r41!
-SmalltalkParseErrorCodes at: 'CErrTooManyLiterals' put: 16r50!
-SmalltalkParseErrorCodes at: 'CErrTooManyTemps' put: 16r45!
-SmalltalkParseErrorCodes at: 'CErrUndeclared' put: 16r47!
-SmalltalkParseErrorCodes at: 'CErrUndefinedClass' put: 16r35!
-SmalltalkParseErrorCodes at: 'CErrUnsupportedCallConv' put: 16r30!
-SmalltalkParseErrorCodes at: 'CErrUnterminatedStatement' put: 16r28!
-SmalltalkParseErrorCodes at: 'CInfoFirst' put: 16r7D0!
-SmalltalkParseErrorCodes at: 'CInfoHardBreakpoint' put: 16r7D2!
-SmalltalkParseErrorCodes at: 'CInfoLast' put: 16r7D2!
-SmalltalkParseErrorCodes at: 'CInfoSupersendsOther' put: 16r7D1!
-SmalltalkParseErrorCodes at: 'CInfoUnreferencedArg' put: 16r7D0!
-SmalltalkParseErrorCodes at: 'CWarnExpectMonadicBlockArg' put: 16r3F4!
-SmalltalkParseErrorCodes at: 'CWarnExpectMonadicOrNiladicBlockArg' put: 16r3F5!
-SmalltalkParseErrorCodes at: 'CWarnExpectNiladicBlockArg' put: 16r3F3!
-SmalltalkParseErrorCodes at: 'CWarnExpectNiladicBlockReceiver' put: 16r3F6!
-SmalltalkParseErrorCodes at: 'CWarnFirst' put: 16r3E8!
-SmalltalkParseErrorCodes at: 'CWarnLast' put: 16r3F9!
-SmalltalkParseErrorCodes at: 'CWarnMsgUnimplemented' put: 16r3EC!
-SmalltalkParseErrorCodes at: 'CWarnMutableIgnored' put: 16r3FA!
-SmalltalkParseErrorCodes at: 'CWarnReadBeforeWritten' put: 16r3F1!
-SmalltalkParseErrorCodes at: 'CWarnReadNotWritten' put: 16r3F0!
-SmalltalkParseErrorCodes at: 'CWarnRedefiningArg' put: 16r3E8!
-SmalltalkParseErrorCodes at: 'CWarnRedefiningInstVar' put: 16r3EA!
-SmalltalkParseErrorCodes at: 'CWarnRedefiningStatic' put: 16r3EB!
-SmalltalkParseErrorCodes at: 'CWarnRedefiningTemp' put: 16r3E9!
-SmalltalkParseErrorCodes at: 'CWarnRestrictedSelector' put: 16r3EE!
-SmalltalkParseErrorCodes at: 'CWarnUndefinedSelector' put: 16r3ED!
-SmalltalkParseErrorCodes at: 'CWarnUnimplementedAbstractMethod' put: 16r3F8!
-SmalltalkParseErrorCodes at: 'CWarnUnreachable' put: 16r3F7!
-SmalltalkParseErrorCodes at: 'CWarnUnreferencedTemp' put: 16r3EF!
-SmalltalkParseErrorCodes at: 'CWarnUsesBooleanClass' put: 16r3F9!
-SmalltalkParseErrorCodes at: 'CWarnWrittenNotRead' put: 16r3F2!
-SmalltalkParseErrorCodes at: 'LErrBadChar' put: 16r1!
-SmalltalkParseErrorCodes at: 'LErrBadCodePoint' put: 16rC!
-SmalltalkParseErrorCodes at: 'LErrBadNumber' put: 16rA!
-SmalltalkParseErrorCodes at: 'LErrCommentNotClosed' put: 16r2!
-SmalltalkParseErrorCodes at: 'LErrExpectChar' put: 16r7!
-SmalltalkParseErrorCodes at: 'LErrExpectCodePoint' put: 16rB!
-SmalltalkParseErrorCodes at: 'LErrExpectConst' put: 16r4!
-SmalltalkParseErrorCodes at: 'LErrExpectExtendedLiteral' put: 16r5!
-SmalltalkParseErrorCodes at: 'LErrExpectMetaVariable' put: 16r6!
-SmalltalkParseErrorCodes at: 'LErrFirst' put: 16r1!
-SmalltalkParseErrorCodes at: 'LErrLast' put: 16rA!
-SmalltalkParseErrorCodes at: 'LErrStringNotClosed' put: 16r3!
-SmalltalkParseErrorCodes shrink!
+SharedPool subclass: #SmalltalkParseErrorCodes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CErrArgTypeCannotBeVoid' -> 16r33.
+		'CErrArrayNotClosed' -> 16r3D.
+		'CErrAssignConstant' -> 16r48.
+		'CErrAssignmentToArgument' -> 16r43.
+		'CErrBadContext' -> 16r4C.
+		'CErrBadExtTypeQualifier' -> 16r37.
+		'CErrBadPools' -> 16r53.
+		'CErrBadPrimCallType' -> 16r2F.
+		'CErrBadPrimIdx' -> 16r2D.
+		'CErrBadSelector' -> 16r4A.
+		'CErrBadTokenInArray' -> 16r3C.
+		'CErrBadValueInByteArray' -> 16r3E.
+		'CErrBadVfn' -> 16r3B.
+		'CErrBlockArgListNotClosed' -> 16r2A.
+		'CErrBlockNestingTooDeep' -> 16r51.
+		'CErrBlockNotClosed' -> 16r2B.
+		'CErrBraceNotClosed' -> 16r25.
+		'CErrByteArrayNotClosed' -> 16r3F.
+		'CErrDuplicateArgName' -> 16r56.
+		'CErrDuplicateTempName' -> 16r55.
+		'CErrEmptyConditionBlock' -> 16r58.
+		'CErrErrorInStaticExpression' -> 16r40.
+		'CErrExpectCloseTag' -> 16r2E.
+		'CErrExpectExtType' -> 16r32.
+		'CErrExpectFnName' -> 16r31.
+		'CErrExpectLiteralBlock' -> 16r4E.
+		'CErrExpectMessage' -> 16r27.
+		'CErrExpectPrimIdx' -> 16r2C.
+		'CErrExpectVariable' -> 16r29.
+		'CErrExpectVfn' -> 16r3A.
+		'CErrFirst' -> 16r21.
+		'CErrIncorrectBlockArgCount' -> 16r4D.
+		'CErrInsufficientArgTypes' -> 16r38.
+		'CErrInternal' -> 16r42.
+		'CErrInvalExprStart' -> 16r22.
+		'CErrInvalidStructArg' -> 16r36.
+		'CErrLast' -> 16r58.
+		'CErrMethodTooLarge' -> 16r4F.
+		'CErrNonsenseAtExprEnd' -> 16r24.
+		'CErrNonsenseAtMethodEnd' -> 16r23.
+		'CErrNotIndirectable' -> 16r34.
+		'CErrParenNotClosed' -> 16r26.
+		'CErrQualifiedRefNotClosed' -> 16r59.
+		'CErrRedefiningArg' -> 16r57.
+		'CErrRedefiningPseudoVar' -> 16r46.
+		'CErrStaticExprNotClosed' -> 16r49.
+		'CErrTempListNotClosed' -> 16r21.
+		'CErrTooManyArgs' -> 16r44.
+		'CErrTooManyArgTypes' -> 16r39.
+		'CErrTooManyIfNotNilBlockArgs' -> 16r41.
+		'CErrTooManyLiterals' -> 16r50.
+		'CErrTooManyTemps' -> 16r45.
+		'CErrUndeclared' -> 16r47.
+		'CErrUndefinedClass' -> 16r35.
+		'CErrUnsupportedCallConv' -> 16r30.
+		'CErrUnterminatedStatement' -> 16r28.
+		'CInfoFirst' -> 16r7D0.
+		'CInfoHardBreakpoint' -> 16r7D2.
+		'CInfoLast' -> 16r7D2.
+		'CInfoSupersendsOther' -> 16r7D1.
+		'CInfoUnreferencedArg' -> 16r7D0.
+		'CWarnExpectMonadicBlockArg' -> 16r3F4.
+		'CWarnExpectMonadicOrNiladicBlockArg' -> 16r3F5.
+		'CWarnExpectNiladicBlockArg' -> 16r3F3.
+		'CWarnExpectNiladicBlockReceiver' -> 16r3F6.
+		'CWarnFirst' -> 16r3E8.
+		'CWarnLast' -> 16r3F9.
+		'CWarnMsgUnimplemented' -> 16r3EC.
+		'CWarnMutableIgnored' -> 16r3FA.
+		'CWarnReadBeforeWritten' -> 16r3F1.
+		'CWarnReadNotWritten' -> 16r3F0.
+		'CWarnRedefiningArg' -> 16r3E8.
+		'CWarnRedefiningInstVar' -> 16r3EA.
+		'CWarnRedefiningStatic' -> 16r3EB.
+		'CWarnRedefiningTemp' -> 16r3E9.
+		'CWarnRestrictedSelector' -> 16r3EE.
+		'CWarnUndefinedSelector' -> 16r3ED.
+		'CWarnUnimplementedAbstractMethod' -> 16r3F8.
+		'CWarnUnreachable' -> 16r3F7.
+		'CWarnUnreferencedTemp' -> 16r3EF.
+		'CWarnUsesBooleanClass' -> 16r3F9.
+		'CWarnWrittenNotRead' -> 16r3F2.
+		'LErrBadChar' -> 16r1.
+		'LErrBadCodePoint' -> 16rC.
+		'LErrBadNumber' -> 16rA.
+		'LErrCommentNotClosed' -> 16r2.
+		'LErrExpectChar' -> 16r7.
+		'LErrExpectCodePoint' -> 16rB.
+		'LErrExpectConst' -> 16r4.
+		'LErrExpectExtendedLiteral' -> 16r5.
+		'LErrExpectMetaVariable' -> 16r6.
+		'LErrFirst' -> 16r1.
+		'LErrLast' -> 16rA.
+		'LErrStringNotClosed' -> 16r3
+	}!
+SmalltalkParseErrorCodes guid: (GUID fromString: '{92e9d5ba-56ff-4b1b-b75c-85b983481e11}')!
+SmalltalkParseErrorCodes comment: ''!
+!SmalltalkParseErrorCodes categoriesForClass!System-Compiler! !

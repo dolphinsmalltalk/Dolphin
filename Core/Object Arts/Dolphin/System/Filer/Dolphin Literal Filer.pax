@@ -27,7 +27,6 @@ package setMethodNames: #(
 	#(#{Object class} #fromLiteralStoreArray:context:)
 	#(#{Object class} #literalReadFrom:)
 	#(#{Object class} #literalReadFrom:context:)
-	#(#{PoolConstantsDictionary} #literalPrintOn:)
 	#(#{ProcessorScheduler} #literalPrintOn:)
 	#(#{String} #literalPrintOn:)
 	#(#{Symbol} #literalPrintOn:)
@@ -186,15 +185,6 @@ literalReadFrom: aStream context: anObject
 !Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
 !Object class categoriesFor: #literalReadFrom:!literal filing!public! !
 !Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
-
-!PoolConstantsDictionary methodsFor!
-
-literalPrintOn: aWriteStream 
-	aWriteStream
-		nextPutAll: '##(Smalltalk.';
-		display: self name;
-		nextPutAll: ') '! !
-!PoolConstantsDictionary categoriesFor: #literalPrintOn:!public! !
 
 !ProcessorScheduler methodsFor!
 

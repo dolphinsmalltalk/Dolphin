@@ -1287,7 +1287,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		ifFalse: 
 			[| referencedGlobals |
 			referencedGlobals := SortedCollection new.
-			Smalltalk associationsDo: 
+			Smalltalk bindingsDo: 
 					[:each | 
 					(each value class isMeta not and: [aStMethodNode references: each key asString]) 
 						ifTrue: [referencedGlobals add: each key]].

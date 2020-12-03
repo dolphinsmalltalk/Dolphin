@@ -18,6 +18,7 @@ package setClassNames: #(
 	#{ConformantStructureArrayPointerField}
 	#{MEMORY_BASIC_INFORMATION}
 	#{OSVERSIONINFO}
+	#{PoolConstantsDictionary}
 	#{STBSymbolProxy}
 ).
 
@@ -209,6 +210,12 @@ ArrayPointerField subclass: #ConformantArrayPointerField
 	classConstants: {}!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
+PoolDictionary variableSubclass: #PoolConstantsDictionary
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''

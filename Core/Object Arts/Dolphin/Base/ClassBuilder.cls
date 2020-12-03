@@ -540,6 +540,7 @@ mutateInstances: anArray of: oldClass toBeInstancesOf: newClass
 						via: mappingArray.
 			"We need to manually move the special behavior as #become: does not"
 			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 16rFF00).
+			newInst isImmutable: oldInst isImmutable.
 			oldInst become: newInst]!
 
 mutateMetaclass: oldMetaclass toBeASubclassOf: newSuperclass
@@ -893,9 +894,11 @@ validateInstanceVarsForModify
 		ifFalse: 
 			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray])
 				ifTrue: [self error: 'You must not change the instance variable layout of ' , currentClass name].
-			(self isFixedInitialLayout
-				and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1])
-					ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
+			(self isFixedInitialLayout and: 
+					[| existing |
+					existing := currentClass instVarNames.
+					existing notEmpty and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1]])
+				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
 	currentClass allSubclasses
 		do: [:cls | cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
 
@@ -912,7 +915,7 @@ validatePoolNames
 					[Warning
 						signal: ('Pool dictionary <1p> does not exist.<n>Proceed to create it as an empty constants pool.'
 								expandMacrosWith: poolName).
-					ref declare value: (PoolConstantsDictionary named: poolName)].
+					ref declare value: (SharedPool subclass: poolName asSymbol)].
 			firstChar := poolName first.
 			(firstChar isUppercase or: [firstChar == $_])
 				ifFalse: 
@@ -1121,41 +1124,34 @@ initialize
 	"
 
 	self addClassConstant: 'Unsubclassable'
-		value: ((Set new)
-				add: Character;
-				add: SmallInteger;
-				shrink;
+		value: ({Character. SmallInteger} asSet
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'FixedLayout'
-		value: ((Set new)
-				add: true class;
-				add: false class;
-				add: Array;
-				add: VariableBinding;
-				add: Character;
-				add: SmallInteger;
-				add: BlockClosure;
-				add: Context;
-				add: ExternalMethod;
-				add: ExternalAddress;
-				add: Message;
-				add: MethodDictionary;
-				add: UndefinedObject;
-				add: Object;
-				shrink;
+		value: ({true class.
+				false class.
+				Array.
+				Character.
+				SmallInteger.
+				BlockClosure.
+				Context.
+				ExternalMethod.
+				ExternalAddress.
+				Message.
+				MethodDictionary.
+				UndefinedObject.
+				Object} asSet
 				isImmutable: true;
 				yourself).
 	"add: ProtoObject;"
 	self addClassConstant: 'FixedInitialLayout'
-		value: ((Set new)
-				add: Class;
-				add: Metaclass;
-				add: PositionableStream;
-				add: Semaphore;
-				add: Process;
-				add: ProcessorScheduler;
-				shrink;
+		value: ({Class.
+				Metaclass.
+				PositionableStream.
+				Semaphore.
+				Process.
+				ProcessorScheduler.
+				VariableBinding} asSet
 				isImmutable: true;
 				yourself)!
 

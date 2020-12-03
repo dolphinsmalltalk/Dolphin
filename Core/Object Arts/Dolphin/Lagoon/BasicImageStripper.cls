@@ -153,7 +153,7 @@ emptySystemDictionary
 	| globals |
 	self startElement: 'EmptySystemDictionary' attributes: #().
 	globals := OrderedCollection new.
-	Smalltalk associationsDo: 
+	Smalltalk bindingsDo: 
 			[:each |
 			(each value class isMeta not or: [each value name ~~ each key]) ifTrue: [globals add: each key]].
 	globals do: 

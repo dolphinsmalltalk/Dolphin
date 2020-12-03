@@ -398,6 +398,7 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Command-line Parser'
 	'..\..\Base\Dolphin Conformant Array Fields'

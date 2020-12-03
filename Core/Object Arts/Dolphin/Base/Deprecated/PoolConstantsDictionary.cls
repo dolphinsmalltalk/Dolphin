@@ -28,23 +28,6 @@ at: key ifAbsentPut: operation
 			[self isChanged: true.
 			operation value]!
 
-at: key put: anObject 
-	"Store the argument anObject with the external key, aKey,
-	in the receiver. Answer anObject. Ensure the key is a String.
-	If the key already exists in the receiver, raise an exception
-	because the receiver is supposed to contain constants."
-
-	| value keyString |
-	keyString := self keyString: key.
-	value := self at: keyString
-				ifAbsent: 
-					["New element added"
-					self isChanged: true.
-					^super at: keyString put: anObject].
-	^value = anObject 
-		ifTrue: [anObject	"No attempt was made to change the value"]
-		ifFalse: [self errorModify: keyString value: anObject]!
-
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
 
@@ -102,7 +85,6 @@ removeIndex: anInteger
 	self isChanged: true! !
 !PoolConstantsDictionary categoriesFor: #add:!adding!public! !
 !PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
-!PoolConstantsDictionary categoriesFor: #at:put:!adding!development!public! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
 !PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !

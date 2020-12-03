@@ -1,12 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{CompilerFlags} declare: (PoolConstantsDictionary named: #CompilerFlags)!
-CompilerFlags at: 'DebugMethod' put: 16r40!
-CompilerFlags at: 'Interactive' put: 16r200!
-CompilerFlags at: 'NoOptimize' put: 16r8!
-CompilerFlags at: 'NotLogged' put: 16r1!
-CompilerFlags at: 'SendYourself' put: 16r400!
-CompilerFlags at: 'SyntaxCheckOnly' put: 16r2!
-CompilerFlags at: 'TempsMap' put: 16r20!
-CompilerFlags at: 'TextMap' put: 16r10!
-CompilerFlags shrink!
+SharedPool subclass: #CompilerFlags
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'DebugMethod' -> 16r40.
+		'Interactive' -> 16r200.
+		'NoOptimize' -> 16r8.
+		'NotLogged' -> 16r1.
+		'SendYourself' -> 16r400.
+		'SyntaxCheckOnly' -> 16r2.
+		'TempsMap' -> 16r20.
+		'TextMap' -> 16r10
+	}!
+CompilerFlags guid: (GUID fromString: '{45a06e12-fe26-49ce-ac75-97b052644c90}')!
+CompilerFlags comment: ''!
+!CompilerFlags categoriesForClass!System-Compiler! !

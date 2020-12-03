@@ -91,6 +91,9 @@ atAll: keys put: newElement
 bindingsChanged
 	BindingReference clearCachedBindings!
 
+bindingsDo: aMonadicValuable
+	self associationsDo: aMonadicValuable!
+
 classAdded: class
 	"Private - The new <Class>, class, has been added to the receiver.
 	Clear down the all class cache and inform observers."
@@ -154,6 +157,11 @@ localEnvironment
 
 	^self
 !
+
+newAssociation: keyObject value: valueObject
+	^(super newAssociation: keyObject value: valueObject)
+		environment: self;
+		yourself!
 
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
@@ -235,6 +243,7 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !SystemDictionary categoriesFor: #at:put:!accessing!public! !
 !SystemDictionary categoriesFor: #atAll:put:!accessing!public! !
 !SystemDictionary categoriesFor: #bindingsChanged!adding!private! !
+!SystemDictionary categoriesFor: #bindingsDo:!enumerating!public! !
 !SystemDictionary categoriesFor: #classAdded:!event handling!private! !
 !SystemDictionary categoriesFor: #classRemoved:!private!removing! !
 !SystemDictionary categoriesFor: #classUpdated:!event handling!private! !
@@ -245,6 +254,7 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
 !SystemDictionary categoriesFor: #localEnvironment!accessing!private! !
+!SystemDictionary categoriesFor: #newAssociation:value:!helpers!private! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !

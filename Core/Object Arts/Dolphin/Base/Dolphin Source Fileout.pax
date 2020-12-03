@@ -8,8 +8,7 @@ package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
 	addAllSelectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage);
 	addClass: Class;
 	addClass: Package;
-	addClass: PoolDictionary;
-	addClass: PoolConstantsDictionary'.
+	addClass: PoolDictionary'.
 
 package setMethodNames: #(
 	#(#{BootSessionManager} #saveImageTo:)
@@ -83,9 +82,6 @@ package setMethodNames: #(
 	#(#{Package} #saveSingleFilePackage)
 	#(#{Package} #toggleUsingPAX)
 	#(#{Package} #updateTimestamp)
-	#(#{PoolConstantsDictionary} #canFileOut)
-	#(#{PoolConstantsDictionary} #fileOut)
-	#(#{PoolConstantsDictionary} #fileOutOn:)
 	#(#{PoolDictionary} #canFileOut)
 	#(#{PoolDictionary} #fileOut)
 	#(#{PoolDictionary} #fileOutOn:)
@@ -683,7 +679,11 @@ fileOutClassDefinitionsOn: aSourceFiler
 	aSourceFiler
 		emitComment: 'Class Definitions';
 		cr.
-	classes do: [:aClass | aSourceFiler fileOutBasicDefinitionOfClass: aClass].
+	"The shared pools should be defined first as these may be referenced by other class definitions."
+	classes
+		do: [:each | (each inheritsFrom: SharedPool) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+	classes
+		do: [:each | (each inheritsFrom: SharedPool) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	aSourceFiler cr!
 
 fileOutClassesOn: aSourceFiler
@@ -1137,26 +1137,6 @@ updateTimestamp
 !Package categoriesFor: #saveSingleFilePackage!public!source filing! !
 !Package categoriesFor: #toggleUsingPAX!commands!public! !
 !Package categoriesFor: #updateTimestamp!helpers!private! !
-
-!PoolConstantsDictionary methodsFor!
-
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
-fileOut
-	"File out the receiver to <name>.st"
-
-	self class sourceManager fileOut: self.
-	self isChanged: false!
-
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutPoolDictionary: self! !
-!PoolConstantsDictionary categoriesFor: #canFileOut!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #fileOut!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #fileOutOn:!development!public! !
 
 !PoolDictionary methodsFor!
 

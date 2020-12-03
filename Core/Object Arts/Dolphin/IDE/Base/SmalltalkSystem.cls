@@ -369,20 +369,11 @@ autoFormatMethodSource: aBoolean
 	MethodBrowser autoFormat: aBoolean!
 
 availablePools
-	"Answers a <sequencedReadableCollection> of all available pools in
-	ascending name order.
+	"Answers a <sequencedReadableCollection> of all available pools in ascending name order.
 		SmalltalkSystem current availablePools
-	Implementation Note: The system pools (identified by a name that starts
-	with an underscore) are specifically excluded. Note that we sort the 
-	associations rather than the pools, as the latter must establish their
-	global name by a reverse lookup in the system dictionary, which is
-	very slow."
+	The system pools (identified by a name that starts with an underscore) are specifically excluded."
 
-	^(Smalltalk associations select: [:each |
-		each key first ~~ $_ and: [
-			(each value isKindOf: PoolDictionary) or: [
-				each value isKindOf: PoolConstantsDictionary]]])
-		asSortedCollection asArray collect: [:each | each value]!
+	^(SharedPool allSubclasses reject: [:each | each name first == $_]) asArray sort!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -442,10 +433,7 @@ beNotChanged
 	"Private - Reset all of the changed flags for the entire system"
 
 	Class allClasses do: [:c | c isChanged: false].
-	PoolConstantsDictionary allInstances do: [:p | p isChanged: false].
-	self packageManager packages do: [:p | p isChanged: false].
-
-!
+	self packageManager packages do: [:p | p isChanged: false]!
 
 binaryClassFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -857,11 +845,6 @@ browsePackages: aPackageCollection
 	^self packageBrowserClass show
 		packages: aPackageCollection;
 		yourself!
-
-browsePoolConstantsDictionary: aPoolConstantsDictionary
-	"Open a browser onto aRespourceIdentifier."
-
-	^aPoolConstantsDictionary inspect!
 
 browseProtocols
 	"Open a new protocol browser."
@@ -3414,6 +3397,7 @@ referencesTo: anObject in: aBrowserEnvironment
 		yourself!
 
 referencesToBinding: aBindingReference in: aBrowserEnvironment
+	self halt.
 	^(self selectMethods: [:each | each refersToLiteral: aBindingReference] in: aBrowserEnvironment)
 		label: ('References to <1p> in <2d>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
 		addSearchString: aBindingReference printString;
@@ -4320,7 +4304,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseMethodsWithNewBytecodes!browsing!public! !
 !SmalltalkSystem categoriesFor: #browsePackages!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browsePackages:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browsePoolConstantsDictionary:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseProtocols!browsing!commands!protocols!public! !
 !SmalltalkSystem categoriesFor: #browseReferencesMatching:in:!browsing!private! !
 !SmalltalkSystem categoriesFor: #browseReferencesTo:!browsing!public! !

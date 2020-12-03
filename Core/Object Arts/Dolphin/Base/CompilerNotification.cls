@@ -199,7 +199,7 @@ initialize
 	self initialize
 	"
 
-	| formats codes |
+	| formats codesPool codes |
 	formats := LookupTable new.
 	formats
 		at: LErrBadChar put: 'illegal character ''<2d>''';
@@ -298,8 +298,9 @@ initialize
 		at: CInfoSupersendsOther put: 'supersends other message <2p>';
 		at: CInfoHardBreakpoint put: 'contains hardcoded breakpoint';
 		yourself.
-	codes := #{SmalltalkParseErrorCodes} value.
-	codes keysAndValuesDo:  [:eachKey :each | self assert: [formats includesKey: each]].
+	codesPool := #{SmalltalkParseErrorCodes} value.
+	codes := Set new.
+	codesPool bindingsDo:  [:binding | self assert: [formats includesKey: binding value]. codes add: binding value].
 	formats keysDo:  [:each | self assert: [codes includes: each]].
 	self addClassConstant: 'ErrorFormats' value: formats!
 

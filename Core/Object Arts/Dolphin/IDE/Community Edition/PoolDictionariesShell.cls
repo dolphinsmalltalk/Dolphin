@@ -30,15 +30,14 @@ addEntry
 
 addPool
 	| name newPool |
-	name := Prompter prompt: 'Enter Name of PoolConstantsDictionary to Create: ' caption: self caption.
+	name := Prompter prompt: 'Enter name of SharedPool to create: ' caption: self caption.
 	name ifNil: [^self].
 	name := name trimBlanks capitalized asSymbol.
 	name asQualifiedReference ifDefined: 
 			[:existingPool |
 			self selectionOrNil: existingPool.
-			^MessageBox warning: 'There is already a global called ' , name , '.' caption: self caption].
-	newPool := PoolConstantsDictionary named: name.
-	Smalltalk at: name put: newPool.
+			^MessageBox warning: 'The identifier is already in use: ' , name caption: self caption].
+	newPool := SharedPool subclass: name.
 	self model add: newPool.
 	self selectionOrNil: newPool!
 

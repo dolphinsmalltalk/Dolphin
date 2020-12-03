@@ -32,7 +32,7 @@ resetStream
 		nextPut: self class version!
 
 serializeObject: anObject
-	(anObject isAtomic or: [anObject class == PoolConstantsDictionary])
+	anObject isAtomic
 		ifTrue: [stream nextPut: anObject]
 		ifFalse: 
 			["Certain other objects with literal representations can also be saved to the stream directly, but need to be registered in case they are shared in the object graph being serialized. Note that with the exception of LargeInteger, these are literal collections of atomic objects (e.g. Strings are collections of Characters)."

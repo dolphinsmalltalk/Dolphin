@@ -40,7 +40,7 @@ createPackage
 
 createPool: aSymbol
 	| pool |
-	pool := Smalltalk at: aSymbol put: PoolConstantsDictionary new.
+	pool := SharedPool subclass: aSymbol.
 	pool owningPackage: package.
 	^pool!
 

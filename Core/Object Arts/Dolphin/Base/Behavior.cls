@@ -9,7 +9,11 @@ Object subclass: #Behavior
 		'_BasicSpecMask' -> 16r7FFF.
 		'_BytesSubMask' -> 16r4800.
 		'_FundamentalShapeMask' -> 16r30FF.
+		'_GetSpecialMask' -> 16rFF00.
 		'_IndirectMask' -> 16r800.
+		'_IsFinalizableMask' -> 16r8.
+		'_IsPointersMask' -> 16r2.
+		'_IsWeakMask' -> 16r12.
 		'_MournerMask' -> 16r400.
 		'_NonInstantiableMask' -> 16r200.
 		'_NullTermMask' -> 16r4000.

@@ -1,1372 +1,1380 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{Win32Constants} declare: (PoolConstantsDictionary named: #Win32Constants)!
-Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!
-Win32Constants at: 'AC_SRC_ALPHA' put: 16r1!
-Win32Constants at: 'AC_SRC_OVER' put: 16r0!
-Win32Constants at: 'ASPECTX' put: 16r28!
-Win32Constants at: 'ASPECTXY' put: 16r2C!
-Win32Constants at: 'ASPECTY' put: 16r2A!
-Win32Constants at: 'ATTACH_PARENT_PROCESS' put: 16rFFFFFFFF!
-Win32Constants at: 'AW_ACTIVATE' put: 16r20000!
-Win32Constants at: 'AW_BLEND' put: 16r80000!
-Win32Constants at: 'AW_CENTER' put: 16r10!
-Win32Constants at: 'AW_HIDE' put: 16r10000!
-Win32Constants at: 'AW_HOR_NEGATIVE' put: 16r2!
-Win32Constants at: 'AW_HOR_POSITIVE' put: 16r1!
-Win32Constants at: 'AW_SLIDE' put: 16r40000!
-Win32Constants at: 'AW_VER_NEGATIVE' put: 16r8!
-Win32Constants at: 'AW_VER_POSITIVE' put: 16r4!
-Win32Constants at: 'BELOW_NORMAL_PRIORITY_CLASS' put: 16r4000!
-Win32Constants at: 'BF_ADJUST' put: 16r2000!
-Win32Constants at: 'BF_BOTTOM' put: 16r8!
-Win32Constants at: 'BF_BOTTOMLEFT' put: 16r9!
-Win32Constants at: 'BF_BOTTOMRIGHT' put: 16rC!
-Win32Constants at: 'BF_DIAGONAL' put: 16r10!
-Win32Constants at: 'BF_DIAGONAL_ENDBOTTOMLEFT' put: 16r19!
-Win32Constants at: 'BF_DIAGONAL_ENDBOTTOMRIGHT' put: 16r1C!
-Win32Constants at: 'BF_DIAGONAL_ENDTOPLEFT' put: 16r13!
-Win32Constants at: 'BF_DIAGONAL_ENDTOPRIGHT' put: 16r16!
-Win32Constants at: 'BF_FLAT' put: 16r4000!
-Win32Constants at: 'BF_LEFT' put: 16r1!
-Win32Constants at: 'BF_MIDDLE' put: 16r800!
-Win32Constants at: 'BF_MONO' put: 16r8000!
-Win32Constants at: 'BF_RECT' put: 16rF!
-Win32Constants at: 'BF_RIGHT' put: 16r4!
-Win32Constants at: 'BF_SOFT' put: 16r1000!
-Win32Constants at: 'BF_TOP' put: 16r2!
-Win32Constants at: 'BF_TOPLEFT' put: 16r3!
-Win32Constants at: 'BF_TOPRIGHT' put: 16r6!
-Win32Constants at: 'BI_RGB' put: 16r0!
-Win32Constants at: 'BITSPIXEL' put: 16rC!
-Win32Constants at: 'BLACK_BRUSH' put: 16r4!
-Win32Constants at: 'BLACK_PEN' put: 16r7!
-Win32Constants at: 'BS_CHECKBOX' put: 16r2!
-Win32Constants at: 'BS_DIBPATTERN' put: 16r5!
-Win32Constants at: 'BS_DIBPATTERN8X8' put: 16r8!
-Win32Constants at: 'BS_DIBPATTERNPT' put: 16r6!
-Win32Constants at: 'BS_HATCHED' put: 16r2!
-Win32Constants at: 'BS_HOLLOW' put: 16r1!
-Win32Constants at: 'BS_INDEXED' put: 16r4!
-Win32Constants at: 'BS_NULL' put: 16r1!
-Win32Constants at: 'BS_PATTERN' put: 16r3!
-Win32Constants at: 'BS_PATTERN8X8' put: 16r7!
-Win32Constants at: 'BS_SOLID' put: 16r0!
-Win32Constants at: 'C1_ALPHA' put: 16r100!
-Win32Constants at: 'C1_BLANK' put: 16r40!
-Win32Constants at: 'C1_CNTRL' put: 16r20!
-Win32Constants at: 'C1_DEFINED' put: 16r200!
-Win32Constants at: 'C1_DIGIT' put: 16r4!
-Win32Constants at: 'C1_LOWER' put: 16r2!
-Win32Constants at: 'C1_PUNCT' put: 16r10!
-Win32Constants at: 'C1_SPACE' put: 16r8!
-Win32Constants at: 'C1_UPPER' put: 16r1!
-Win32Constants at: 'C1_XDIGIT' put: 16r80!
-Win32Constants at: 'CAL_ITWODIGITYEARMAX' put: 16r30!
-Win32Constants at: 'CAL_IYEAROFFSETRANGE' put: 16r3!
-Win32Constants at: 'CAL_RETURN_NUMBER' put: 16r20000000!
-Win32Constants at: 'CAL_SABBREVERASTRING' put: 16r39!
-Win32Constants at: 'CAL_SERASTRING' put: 16r4!
-Win32Constants at: 'CAL_SNAME' put: 16r2!
-Win32Constants at: 'CAL_SRELATIVELONGDATE' put: 16r3A!
-Win32Constants at: 'CBM_INIT' put: 16r4!
-Win32Constants at: 'CF_BITMAP' put: 16r2!
-Win32Constants at: 'CF_DIB' put: 16r8!
-Win32Constants at: 'CF_DIBV5' put: 16r11!
-Win32Constants at: 'CF_DIF' put: 16r5!
-Win32Constants at: 'CF_DSPBITMAP' put: 16r82!
-Win32Constants at: 'CF_DSPENHMETAFILE' put: 16r8E!
-Win32Constants at: 'CF_DSPMETAFILEPICT' put: 16r83!
-Win32Constants at: 'CF_DSPTEXT' put: 16r81!
-Win32Constants at: 'CF_ENHMETAFILE' put: 16rE!
-Win32Constants at: 'CF_HDROP' put: 16rF!
-Win32Constants at: 'CF_LOCALE' put: 16r10!
-Win32Constants at: 'CF_METAFILEPICT' put: 16r3!
-Win32Constants at: 'CF_OEMTEXT' put: 16r7!
-Win32Constants at: 'CF_OWNERDISPLAY' put: 16r80!
-Win32Constants at: 'CF_PALETTE' put: 16r9!
-Win32Constants at: 'CF_PENDATA' put: 16rA!
-Win32Constants at: 'CF_RIFF' put: 16rB!
-Win32Constants at: 'CF_SYLK' put: 16r4!
-Win32Constants at: 'CF_TEXT' put: 16r1!
-Win32Constants at: 'CF_TIFF' put: 16r6!
-Win32Constants at: 'CF_UNICODETEXT' put: 16rD!
-Win32Constants at: 'CF_WAVE' put: 16rC!
-Win32Constants at: 'CLR_DEFAULT' put: 16rFF000000!
-Win32Constants at: 'CLR_INVALID' put: 16rFFFFFFFF!
-Win32Constants at: 'CLR_NONE' put: 16rFFFFFFFF!
-Win32Constants at: 'COLOR_3DDKSHADOW' put: 16r15!
-Win32Constants at: 'COLOR_3DFACE' put: 16rF!
-Win32Constants at: 'COLOR_3DHIGHLIGHT' put: 16r14!
-Win32Constants at: 'COLOR_3DLIGHT' put: 16r16!
-Win32Constants at: 'COLOR_3DSHADOW' put: 16r10!
-Win32Constants at: 'COLOR_ACTIVEBORDER' put: 16rA!
-Win32Constants at: 'COLOR_ACTIVECAPTION' put: 16r2!
-Win32Constants at: 'COLOR_APPWORKSPACE' put: 16rC!
-Win32Constants at: 'COLOR_BTNHIGHLIGHT' put: 16r14!
-Win32Constants at: 'COLOR_BTNTEXT' put: 16r12!
-Win32Constants at: 'COLOR_CAPTIONTEXT' put: 16r9!
-Win32Constants at: 'COLOR_DESKTOP' put: 16r1!
-Win32Constants at: 'COLOR_GRADIENTACTIVECAPTION' put: 16r1B!
-Win32Constants at: 'COLOR_GRADIENTINACTIVECAPTION' put: 16r1C!
-Win32Constants at: 'COLOR_GRAYTEXT' put: 16r11!
-Win32Constants at: 'COLOR_HIGHLIGHT' put: 16rD!
-Win32Constants at: 'COLOR_HIGHLIGHTTEXT' put: 16rE!
-Win32Constants at: 'COLOR_HOTLIGHT' put: 16r1A!
-Win32Constants at: 'COLOR_INACTIVEBORDER' put: 16rB!
-Win32Constants at: 'COLOR_INACTIVECAPTION' put: 16r3!
-Win32Constants at: 'COLOR_INACTIVECAPTIONTEXT' put: 16r13!
-Win32Constants at: 'COLOR_INFOBK' put: 16r18!
-Win32Constants at: 'COLOR_INFOTEXT' put: 16r17!
-Win32Constants at: 'COLOR_MENU' put: 16r4!
-Win32Constants at: 'COLOR_MENUBAR' put: 16r1E!
-Win32Constants at: 'COLOR_MENUHILIGHT' put: 16r1D!
-Win32Constants at: 'COLOR_MENUTEXT' put: 16r7!
-Win32Constants at: 'COLOR_SCROLLBAR' put: 16r0!
-Win32Constants at: 'COLOR_WINDOW' put: 16r5!
-Win32Constants at: 'COLOR_WINDOWFRAME' put: 16r6!
-Win32Constants at: 'COLOR_WINDOWTEXT' put: 16r8!
-Win32Constants at: 'CP_ACP' put: 16r0!
-Win32Constants at: 'CP_INSTALLED' put: 16r1!
-Win32Constants at: 'CP_SUPPORTED' put: 16r2!
-Win32Constants at: 'CP_UNICODE' put: 16r4B0!
-Win32Constants at: 'CP_UTF7' put: 16rFDE8!
-Win32Constants at: 'CP_UTF8' put: 16rFDE9!
-Win32Constants at: 'CREATE_ALWAYS' put: 16r2!
-Win32Constants at: 'CREATE_DEFAULT_ERROR_MODE' put: 16r4000000!
-Win32Constants at: 'CREATE_FORCEDOS' put: 16r2000!
-Win32Constants at: 'CREATE_NEW' put: 16r1!
-Win32Constants at: 'CREATE_NEW_CONSOLE' put: 16r10!
-Win32Constants at: 'CREATE_NEW_PROCESS_GROUP' put: 16r200!
-Win32Constants at: 'CREATE_NO_WINDOW' put: 16r8000000!
-Win32Constants at: 'CREATE_SEPARATE_WOW_VDM' put: 16r800!
-Win32Constants at: 'CREATE_SHARED_WOW_VDM' put: 16r1000!
-Win32Constants at: 'CREATE_SUSPENDED' put: 16r4!
-Win32Constants at: 'CREATE_UNICODE_ENVIRONMENT' put: 16r400!
-Win32Constants at: 'CREATEPROCESS_MANIFEST_RESOURCE_ID' put: 16r1!
-Win32Constants at: 'CS_BYTEALIGNCLIENT' put: 16r1000!
-Win32Constants at: 'CS_BYTEALIGNWINDOW' put: 16r2000!
-Win32Constants at: 'CS_CLASSDC' put: 16r40!
-Win32Constants at: 'CS_DBLCLKS' put: 16r8!
-Win32Constants at: 'CS_GLOBALCLASS' put: 16r4000!
-Win32Constants at: 'CS_HREDRAW' put: 16r2!
-Win32Constants at: 'CS_KEYCVTWINDOW' put: 16r4!
-Win32Constants at: 'CS_NOCLOSE' put: 16r200!
-Win32Constants at: 'CS_NOKEYCVT' put: 16r100!
-Win32Constants at: 'CS_OWNDC' put: 16r20!
-Win32Constants at: 'CS_PARENTDC' put: 16r80!
-Win32Constants at: 'CS_SAVEBITS' put: 16r800!
-Win32Constants at: 'CS_VREDRAW' put: 16r1!
-Win32Constants at: 'CSTR_EQUAL' put: 16r2!
-Win32Constants at: 'CSTR_GREATER_THAN' put: 16r3!
-Win32Constants at: 'CSTR_LESS_THAN' put: 16r1!
-Win32Constants at: 'CTRL_BREAK_EVENT' put: 16r1!
-Win32Constants at: 'CTRL_C_EVENT' put: 16r0!
-Win32Constants at: 'CTRL_CLOSE_EVENT' put: 16r2!
-Win32Constants at: 'CTRL_LOGOFF_EVENT' put: 16r5!
-Win32Constants at: 'CTRL_SHUTDOWN_EVENT' put: 16r6!
-Win32Constants at: 'CW_USEDEFAULT' put: -16r80000000!
-Win32Constants at: 'CWP_ALL' put: 16r0!
-Win32Constants at: 'CWP_SKIPDISABLED' put: 16r2!
-Win32Constants at: 'CWP_SKIPINVISIBLE' put: 16r1!
-Win32Constants at: 'CWP_SKIPTRANSPARENT' put: 16r4!
-Win32Constants at: 'DATE_LONGDATE' put: 16r2!
-Win32Constants at: 'DATE_MONTHDAY' put: 16r80!
-Win32Constants at: 'DATE_SHORTDATE' put: 16r1!
-Win32Constants at: 'DATE_USE_ALT_CALENDAR' put: 16r4!
-Win32Constants at: 'DATE_YEARMONTH' put: 16r8!
-Win32Constants at: 'DC_HASDEFID' put: 16r534B!
-Win32Constants at: 'DCX_INTERSECTRGN' put: 16r80!
-Win32Constants at: 'DCX_WINDOW' put: 16r1!
-Win32Constants at: 'DEFAULT_GUI_FONT' put: 16r11!
-Win32Constants at: 'DEFAULT_PALETTE' put: 16rF!
-Win32Constants at: 'DESKTOPVERTRES' put: 16r76!
-Win32Constants at: 'DETACHED_PROCESS' put: 16r8!
-Win32Constants at: 'DEVICE_DEFAULT_FONT' put: 16rE!
-Win32Constants at: 'DFC_BUTTON' put: 16r4!
-Win32Constants at: 'DFC_CAPTION' put: 16r1!
-Win32Constants at: 'DFC_MENU' put: 16r2!
-Win32Constants at: 'DFC_POPUPMENU' put: 16r5!
-Win32Constants at: 'DFC_SCROLL' put: 16r3!
-Win32Constants at: 'DFCS_ADJUSTRECT' put: 16r2000!
-Win32Constants at: 'DFCS_BUTTON3STATE' put: 16r8!
-Win32Constants at: 'DFCS_BUTTONCHECK' put: 16r0!
-Win32Constants at: 'DFCS_BUTTONPUSH' put: 16r10!
-Win32Constants at: 'DFCS_BUTTONRADIO' put: 16r4!
-Win32Constants at: 'DFCS_BUTTONRADIOIMAGE' put: 16r1!
-Win32Constants at: 'DFCS_BUTTONRADIOMASK' put: 16r2!
-Win32Constants at: 'DFCS_CAPTIONCLOSE' put: 16r0!
-Win32Constants at: 'DFCS_CAPTIONHELP' put: 16r4!
-Win32Constants at: 'DFCS_CAPTIONMAX' put: 16r2!
-Win32Constants at: 'DFCS_CAPTIONMIN' put: 16r1!
-Win32Constants at: 'DFCS_CAPTIONRESTORE' put: 16r3!
-Win32Constants at: 'DFCS_CHECKED' put: 16r400!
-Win32Constants at: 'DFCS_FLAT' put: 16r4000!
-Win32Constants at: 'DFCS_INACTIVE' put: 16r100!
-Win32Constants at: 'DFCS_MENUARROW' put: 16r0!
-Win32Constants at: 'DFCS_MENUARROWRIGHT' put: 16r4!
-Win32Constants at: 'DFCS_MENUBULLET' put: 16r2!
-Win32Constants at: 'DFCS_MENUCHECK' put: 16r1!
-Win32Constants at: 'DFCS_MONO' put: 16r8000!
-Win32Constants at: 'DFCS_PUSHED' put: 16r200!
-Win32Constants at: 'DFCS_SCROLLCOMBOBOX' put: 16r5!
-Win32Constants at: 'DFCS_SCROLLDOWN' put: 16r1!
-Win32Constants at: 'DFCS_SCROLLLEFT' put: 16r2!
-Win32Constants at: 'DFCS_SCROLLRIGHT' put: 16r3!
-Win32Constants at: 'DFCS_SCROLLSIZEGRIP' put: 16r8!
-Win32Constants at: 'DFCS_SCROLLSIZEGRIPRIGHT' put: 16r10!
-Win32Constants at: 'DFCS_SCROLLUP' put: 16r0!
-Win32Constants at: 'DI_COMPAT' put: 16r4!
-Win32Constants at: 'DI_DEFAULTSIZE' put: 16r8!
-Win32Constants at: 'DI_IMAGE' put: 16r2!
-Win32Constants at: 'DI_MASK' put: 16r1!
-Win32Constants at: 'DI_NORMAL' put: 16r3!
-Win32Constants at: 'DIB_PAL_COLORS' put: 16r1!
-Win32Constants at: 'DIB_RGB_COLORS' put: 16r0!
-Win32Constants at: 'DKGRAY_BRUSH' put: 16r3!
-Win32Constants at: 'DLGC_BUTTON' put: 16r2000!
-Win32Constants at: 'DLGC_DEFPUSHBUTTON' put: 16r10!
-Win32Constants at: 'DLGC_HASSETSEL' put: 16r8!
-Win32Constants at: 'DLGC_RADIOBUTTON' put: 16r40!
-Win32Constants at: 'DLGC_STATIC' put: 16r100!
-Win32Constants at: 'DLGC_UNDEFPUSHBUTTON' put: 16r20!
-Win32Constants at: 'DLGC_WANTALLKEYS' put: 16r4!
-Win32Constants at: 'DLGC_WANTARROWS' put: 16r1!
-Win32Constants at: 'DLGC_WANTCHARS' put: 16r80!
-Win32Constants at: 'DLGC_WANTMESSAGE' put: 16r4!
-Win32Constants at: 'DLGC_WANTTAB' put: 16r2!
-Win32Constants at: 'DM_GETDEFID' put: 16r400!
-Win32Constants at: 'DM_SETDEFID' put: 16r401!
-Win32Constants at: 'DONT_RESOLVE_DLL_REFERENCES' put: 16r1!
-Win32Constants at: 'DS_3DLOOK' put: 16r4!
-Win32Constants at: 'DSS_DISABLED' put: 16r20!
-Win32Constants at: 'DSS_HIDEPREFIX' put: 16r200!
-Win32Constants at: 'DSS_MONO' put: 16r80!
-Win32Constants at: 'DSS_NORMAL' put: 16r0!
-Win32Constants at: 'DSS_PREFIXONLY' put: 16r400!
-Win32Constants at: 'DSS_RIGHT' put: 16r8000!
-Win32Constants at: 'DSS_UNION' put: 16r10!
-Win32Constants at: 'DST_BITMAP' put: 16r4!
-Win32Constants at: 'DST_COMPLEX' put: 16r0!
-Win32Constants at: 'DST_ICON' put: 16r3!
-Win32Constants at: 'DST_PREFIXTEXT' put: 16r2!
-Win32Constants at: 'DST_TEXT' put: 16r1!
-Win32Constants at: 'DSTINVERT' put: 16r550009!
-Win32Constants at: 'DT_BOTTOM' put: 16r8!
-Win32Constants at: 'DT_CALCRECT' put: 16r400!
-Win32Constants at: 'DT_CENTER' put: 16r1!
-Win32Constants at: 'DT_EDITCONTROL' put: 16r2000!
-Win32Constants at: 'DT_END_ELLIPSIS' put: 16r8000!
-Win32Constants at: 'DT_EXPANDTABS' put: 16r40!
-Win32Constants at: 'DT_EXTERNALLEADING' put: 16r200!
-Win32Constants at: 'DT_HIDEPREFIX' put: 16r100000!
-Win32Constants at: 'DT_INTERNAL' put: 16r1000!
-Win32Constants at: 'DT_LEFT' put: 16r0!
-Win32Constants at: 'DT_MODIFYSTRING' put: 16r10000!
-Win32Constants at: 'DT_NOCLIP' put: 16r100!
-Win32Constants at: 'DT_NOFULLWIDTHCHARBREAK' put: 16r80000!
-Win32Constants at: 'DT_NOPREFIX' put: 16r800!
-Win32Constants at: 'DT_PATH_ELLIPSIS' put: 16r4000!
-Win32Constants at: 'DT_PREFIXONLY' put: 16r200000!
-Win32Constants at: 'DT_RIGHT' put: 16r2!
-Win32Constants at: 'DT_RTLREADING' put: 16r20000!
-Win32Constants at: 'DT_SINGLELINE' put: 16r20!
-Win32Constants at: 'DT_TABSTOP' put: 16r80!
-Win32Constants at: 'DT_TOP' put: 16r0!
-Win32Constants at: 'DT_VCENTER' put: 16r4!
-Win32Constants at: 'DT_WORD_ELLIPSIS' put: 16r40000!
-Win32Constants at: 'DT_WORDBREAK' put: 16r10!
-Win32Constants at: 'DUPLICATE_SAME_ACCESS' put: 16r2!
-Win32Constants at: 'DWL_MSGRESULT' put: 16r0!
-Win32Constants at: 'EDGE_BUMP' put: 16r9!
-Win32Constants at: 'EDGE_ETCHED' put: 16r6!
-Win32Constants at: 'EDGE_RAISED' put: 16r5!
-Win32Constants at: 'EDGE_SUNKEN' put: 16rA!
-Win32Constants at: 'ELF_VENDOR_SIZE' put: 16r4!
-Win32Constants at: 'EM_LINESCROLL' put: 16rB6!
-Win32Constants at: 'EM_SCROLL' put: 16rB5!
-Win32Constants at: 'EVENTLOG_ERROR_TYPE' put: 16r1!
-Win32Constants at: 'EVENTLOG_INFORMATION_TYPE' put: 16r4!
-Win32Constants at: 'EVENTLOG_SUCCESS' put: 16r0!
-Win32Constants at: 'EVENTLOG_WARNING_TYPE' put: 16r2!
-Win32Constants at: 'EXCEPTION_MAXIMUM_PARAMETERS' put: 16rF!
-Win32Constants at: 'FALT' put: 16r10!
-Win32Constants at: 'FCONTROL' put: 16r8!
-Win32Constants at: 'FILE_ATTRIBUTE_DIRECTORY' put: 16r10!
-Win32Constants at: 'FILE_ATTRIBUTE_NORMAL' put: 16r80!
-Win32Constants at: 'FILE_ATTRIBUTE_READONLY' put: 16r1!
-Win32Constants at: 'FILE_BEGIN' put: 16r0!
-Win32Constants at: 'FILE_CURRENT' put: 16r1!
-Win32Constants at: 'FILE_END' put: 16r2!
-Win32Constants at: 'FILE_FLAG_BACKUP_SEMANTICS' put: 16r2000000!
-Win32Constants at: 'FILE_FLAG_OVERLAPPED' put: 16r40000000!
-Win32Constants at: 'FILE_LIST_DIRECTORY' put: 16r1!
-Win32Constants at: 'FILE_SHARE_DELETE' put: 16r4!
-Win32Constants at: 'FILE_SHARE_READ' put: 16r1!
-Win32Constants at: 'FILE_SHARE_WRITE' put: 16r2!
-Win32Constants at: 'FILE_SUPPORTS_SPARSE_FILES' put: 16r40!
-Win32Constants at: 'FILE_TYPE_CHAR' put: 16r2!
-Win32Constants at: 'FILE_TYPE_DISK' put: 16r1!
-Win32Constants at: 'FILE_TYPE_PIPE' put: 16r3!
-Win32Constants at: 'FILE_TYPE_REMOTE' put: 16r8000!
-Win32Constants at: 'FILE_TYPE_UNKNOWN' put: 16r0!
-Win32Constants at: 'FLASHW_ALL' put: 16r3!
-Win32Constants at: 'FLASHW_CAPTION' put: 16r1!
-Win32Constants at: 'FLASHW_STOP' put: 16r0!
-Win32Constants at: 'FLASHW_TIMER' put: 16r4!
-Win32Constants at: 'FLASHW_TIMERNOFG' put: 16rC!
-Win32Constants at: 'FLASHW_TRAY' put: 16r2!
-Win32Constants at: 'FNOINVERT' put: 16r2!
-Win32Constants at: 'FORMAT_MESSAGE_ALLOCATE_BUFFER' put: 16r100!
-Win32Constants at: 'FORMAT_MESSAGE_ARGUMENT_ARRAY' put: 16r2000!
-Win32Constants at: 'FORMAT_MESSAGE_FROM_HMODULE' put: 16r800!
-Win32Constants at: 'FORMAT_MESSAGE_FROM_STRING' put: 16r400!
-Win32Constants at: 'FORMAT_MESSAGE_FROM_SYSTEM' put: 16r1000!
-Win32Constants at: 'FORMAT_MESSAGE_IGNORE_INSERTS' put: 16r200!
-Win32Constants at: 'FSCTL_SET_SPARSE' put: 16r900C4!
-Win32Constants at: 'FSHIFT' put: 16r4!
-Win32Constants at: 'FVIRTKEY' put: 16r1!
-Win32Constants at: 'FW_BOLD' put: 16r2BC!
-Win32Constants at: 'FW_DONTCARE' put: 16r0!
-Win32Constants at: 'FW_EXTRABOLD' put: 16r320!
-Win32Constants at: 'FW_EXTRALIGHT' put: 16rC8!
-Win32Constants at: 'FW_HEAVY' put: 16r384!
-Win32Constants at: 'FW_LIGHT' put: 16r12C!
-Win32Constants at: 'FW_MEDIUM' put: 16r1F4!
-Win32Constants at: 'FW_NORMAL' put: 16r190!
-Win32Constants at: 'FW_SEMIBOLD' put: 16r258!
-Win32Constants at: 'FW_THIN' put: 16r64!
-Win32Constants at: 'GA_PARENT' put: 16r1!
-Win32Constants at: 'GA_ROOT' put: 16r2!
-Win32Constants at: 'GA_ROOTOWNER' put: 16r3!
-Win32Constants at: 'GCL_WNDPROC' put: -16r18!
-Win32Constants at: 'GENERIC_READ' put: 16r80000000!
-Win32Constants at: 'GENERIC_WRITE' put: 16r40000000!
-Win32Constants at: 'GHND' put: 16r42!
-Win32Constants at: 'GMEM_DDESHARE' put: 16r2000!
-Win32Constants at: 'GMEM_MOVEABLE' put: 16r2!
-Win32Constants at: 'GMEM_ZEROINIT' put: 16r40!
-Win32Constants at: 'GRADIENT_FILL_OP_FLAG' put: 16rFF!
-Win32Constants at: 'GRADIENT_FILL_RECT_H' put: 16r0!
-Win32Constants at: 'GRADIENT_FILL_RECT_V' put: 16r1!
-Win32Constants at: 'GRADIENT_FILL_TRIANGLE' put: 16r2!
-Win32Constants at: 'GRAY_BRUSH' put: 16r2!
-Win32Constants at: 'GW_HWNDCHILD' put: 16r5!
-Win32Constants at: 'GW_HWNDFIRST' put: 16r0!
-Win32Constants at: 'GW_HWNDLAST' put: 16r1!
-Win32Constants at: 'GW_HWNDNEXT' put: 16r2!
-Win32Constants at: 'GW_HWNDOWNER' put: 16r4!
-Win32Constants at: 'GW_HWNDPREV' put: 16r3!
-Win32Constants at: 'GWL_EXSTYLE' put: -16r14!
-Win32Constants at: 'GWL_ID' put: -16rC!
-Win32Constants at: 'GWL_STYLE' put: -16r10!
-Win32Constants at: 'GWL_WNDPROC' put: -16r4!
-Win32Constants at: 'GWLP_HINSTANCE' put: -16r6!
-Win32Constants at: 'GWLP_HWNDPARENT' put: -16r8!
-Win32Constants at: 'GWLP_ID' put: -16rC!
-Win32Constants at: 'GWLP_WNDPROC' put: -16r4!
-Win32Constants at: 'HBMMENU_CALLBACK' put: -16r1!
-Win32Constants at: 'HELP_COMMAND' put: 16r102!
-Win32Constants at: 'HELP_CONTENTS' put: 16r3!
-Win32Constants at: 'HELP_CONTEXT' put: 16r1!
-Win32Constants at: 'HELP_CONTEXTPOPUP' put: 16r8!
-Win32Constants at: 'HELP_FORCEFILE' put: 16r9!
-Win32Constants at: 'HELP_HELPONHELP' put: 16r4!
-Win32Constants at: 'HELP_INDEX' put: 16r3!
-Win32Constants at: 'HELP_KEY' put: 16r101!
-Win32Constants at: 'HELP_PARTIALKEY' put: 16r105!
-Win32Constants at: 'HELP_QUIT' put: 16r2!
-Win32Constants at: 'HELP_SETCONTENTS' put: 16r5!
-Win32Constants at: 'HELP_SETINDEX' put: 16r5!
-Win32Constants at: 'HELP_SETPOPUP_POS' put: 16rD!
-Win32Constants at: 'HIGH_PRIORITY_CLASS' put: 16r80!
-Win32Constants at: 'HINST_COMMCTRL' put: -16r1!
-Win32Constants at: 'HOLLOW_BRUSH' put: 16r5!
-Win32Constants at: 'HORZRES' put: 16r8!
-Win32Constants at: 'HORZSIZE' put: 16r4!
-Win32Constants at: 'HOVER_DEFAULT' put: -16r1!
-Win32Constants at: 'HS_BDIAGONAL' put: 16r3!
-Win32Constants at: 'HS_CROSS' put: 16r4!
-Win32Constants at: 'HS_DIAGCROSS' put: 16r5!
-Win32Constants at: 'HS_FDIAGONAL' put: 16r2!
-Win32Constants at: 'HS_HORIZONTAL' put: 16r0!
-Win32Constants at: 'HS_VERTICAL' put: 16r1!
-Win32Constants at: 'HTBORDER' put: 16r12!
-Win32Constants at: 'HTBOTTOM' put: 16rF!
-Win32Constants at: 'HTBOTTOMLEFT' put: 16r10!
-Win32Constants at: 'HTBOTTOMRIGHT' put: 16r11!
-Win32Constants at: 'HTCAPTION' put: 16r2!
-Win32Constants at: 'HTCLIENT' put: 16r1!
-Win32Constants at: 'HTERROR' put: -16r2!
-Win32Constants at: 'HTLEFT' put: 16rA!
-Win32Constants at: 'HTRIGHT' put: 16rB!
-Win32Constants at: 'HTTOP' put: 16rC!
-Win32Constants at: 'HTTOPLEFT' put: 16rD!
-Win32Constants at: 'HTTOPRIGHT' put: 16rE!
-Win32Constants at: 'HTTRANSPARENT' put: -16r1!
-Win32Constants at: 'HWND_BOTTOM' put: 16r1!
-Win32Constants at: 'HWND_MESSAGE' put: -16r3!
-Win32Constants at: 'HWND_NOTOPMOST' put: -16r2!
-Win32Constants at: 'HWND_TOP' put: 16r0!
-Win32Constants at: 'HWND_TOPMOST' put: -16r1!
-Win32Constants at: 'I_IMAGECALLBACK' put: -16r1!
-Win32Constants at: 'I_IMAGENONE' put: -16r2!
-Win32Constants at: 'ICON_BIG' put: 16r1!
-Win32Constants at: 'ICON_SMALL' put: 16r0!
-Win32Constants at: 'IDABORT' put: 16r3!
-Win32Constants at: 'IDC_APPSTARTING' put: 16r7F8A!
-Win32Constants at: 'IDC_ARROW' put: 16r7F00!
-Win32Constants at: 'IDC_CROSS' put: 16r7F03!
-Win32Constants at: 'IDC_HAND' put: 16r7F89!
-Win32Constants at: 'IDC_HELP' put: 16r7F8B!
-Win32Constants at: 'IDC_IBEAM' put: 16r7F01!
-Win32Constants at: 'IDC_ICON' put: 16r7F81!
-Win32Constants at: 'IDC_NO' put: 16r7F88!
-Win32Constants at: 'IDC_SIZE' put: 16r7F80!
-Win32Constants at: 'IDC_SIZEALL' put: 16r7F86!
-Win32Constants at: 'IDC_SIZENESW' put: 16r7F83!
-Win32Constants at: 'IDC_SIZENS' put: 16r7F85!
-Win32Constants at: 'IDC_SIZENWSE' put: 16r7F82!
-Win32Constants at: 'IDC_SIZEWE' put: 16r7F84!
-Win32Constants at: 'IDC_UPARROW' put: 16r7F04!
-Win32Constants at: 'IDC_WAIT' put: 16r7F02!
-Win32Constants at: 'IDCANCEL' put: 16r2!
-Win32Constants at: 'IDCLOSE' put: 16r8!
-Win32Constants at: 'IDCONTINUE' put: 16rB!
-Win32Constants at: 'IDHELP' put: 16r9!
-Win32Constants at: 'IDI_APPLICATION' put: 16r7F00!
-Win32Constants at: 'IDI_ERROR' put: 16r7F01!
-Win32Constants at: 'IDI_INFORMATION' put: 16r7F04!
-Win32Constants at: 'IDI_QUESTION' put: 16r7F02!
-Win32Constants at: 'IDI_WARNING' put: 16r7F03!
-Win32Constants at: 'IDI_WINLOGO' put: 16r7F05!
-Win32Constants at: 'IDIGNORE' put: 16r5!
-Win32Constants at: 'IDLE_PRIORITY_CLASS' put: 16r40!
-Win32Constants at: 'IDNO' put: 16r7!
-Win32Constants at: 'IDOK' put: 16r1!
-Win32Constants at: 'IDRETRY' put: 16r4!
-Win32Constants at: 'IDTRYAGAIN' put: 16rA!
-Win32Constants at: 'IDYES' put: 16r6!
-Win32Constants at: 'IMAGE_BITMAP' put: 16r0!
-Win32Constants at: 'IMAGE_CURSOR' put: 16r2!
-Win32Constants at: 'IMAGE_ENHMETAFILE' put: 16r3!
-Win32Constants at: 'IMAGE_ICON' put: 16r1!
-Win32Constants at: 'INFINITE' put: -16r1!
-Win32Constants at: 'INVALID_HANDLE_VALUE' put: 16rFFFFFFFF!
-Win32Constants at: 'IS_TEXT_UNICODE_REVERSE_MASK' put: 16rF0!
-Win32Constants at: 'IS_TEXT_UNICODE_REVERSE_STATISTICS' put: 16r20!
-Win32Constants at: 'IS_TEXT_UNICODE_SIGNATURE' put: 16r8!
-Win32Constants at: 'IS_TEXT_UNICODE_STATISTICS' put: 16r2!
-Win32Constants at: 'IS_TEXT_UNICODE_UNICODE_MASK' put: 16rF!
-Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
-Win32Constants at: 'KF_EXTENDED' put: 16r100!
-Win32Constants at: 'KL_NAMELENGTH' put: 16r9!
-Win32Constants at: 'KLF_ACTIVATE' put: 16r1!
-Win32Constants at: 'KLF_NOTELLSHELL' put: 16r80!
-Win32Constants at: 'KLF_REORDER' put: 16r8!
-Win32Constants at: 'KLF_REPLACELANG' put: 16r10!
-Win32Constants at: 'KLF_RESET' put: 16r40000000!
-Win32Constants at: 'KLF_SETFORPROCESS' put: 16r100!
-Win32Constants at: 'KLF_SHIFTLOCK' put: 16r10000!
-Win32Constants at: 'KLF_SUBSTITUTE_OK' put: 16r2!
-Win32Constants at: 'LCMAP_TITLECASE' put: 16r300!
-Win32Constants at: 'LF_FACESIZE' put: 16r20!
-Win32Constants at: 'LF_FULLFACESIZE' put: 16r40!
-Win32Constants at: 'LIM_LARGE' put: 16r1!
-Win32Constants at: 'LIM_SMALL' put: 16r1!
-Win32Constants at: 'LINGUISTIC_IGNORECASE' put: 16r10!
-Win32Constants at: 'LINGUISTIC_IGNOREDIACRITIC' put: 16r20!
-Win32Constants at: 'LOAD_LIBRARY_AS_DATAFILE' put: 16r2!
-Win32Constants at: 'LOCALE_ALLOW_NEUTRAL_NAMES' put: 16r8000000!
-Win32Constants at: 'LOCALE_FONTSIGNATURE' put: 16r58!
-Win32Constants at: 'LOCALE_ICALENDARTYPE' put: 16r1009!
-Win32Constants at: 'LOCALE_ICURRDIGITS' put: 16r19!
-Win32Constants at: 'LOCALE_ICURRENCY' put: 16r1B!
-Win32Constants at: 'LOCALE_IDATE' put: 16r21!
-Win32Constants at: 'LOCALE_IDIALINGCODE' put: 16r5!
-Win32Constants at: 'LOCALE_IDIGITS' put: 16r11!
-Win32Constants at: 'LOCALE_IDIGITSUBSTITUTION' put: 16r1014!
-Win32Constants at: 'LOCALE_IFIRSTDAYOFWEEK' put: 16r100C!
-Win32Constants at: 'LOCALE_IFIRSTWEEKOFYEAR' put: 16r100D!
-Win32Constants at: 'LOCALE_ILZERO' put: 16r12!
-Win32Constants at: 'LOCALE_IMEASURE' put: 16rD!
-Win32Constants at: 'LOCALE_INEGATIVEPERCENT' put: 16r74!
-Win32Constants at: 'LOCALE_INEGCURR' put: 16r1C!
-Win32Constants at: 'LOCALE_INEGNUMBER' put: 16r1010!
-Win32Constants at: 'LOCALE_INEGSEPBYSPACE' put: 16r57!
-Win32Constants at: 'LOCALE_INEGSIGNPOSN' put: 16r53!
-Win32Constants at: 'LOCALE_INEGSYMPRECEDES' put: 16r56!
-Win32Constants at: 'LOCALE_INEUTRAL' put: 16r71!
-Win32Constants at: 'LOCALE_INVARIANT' put: 16r7F!
-Win32Constants at: 'LOCALE_IOPTIONALCALENDAR' put: 16r100B!
-Win32Constants at: 'LOCALE_IPAPERSIZE' put: 16r100A!
-Win32Constants at: 'LOCALE_IPOSITIVEPERCENT' put: 16r75!
-Win32Constants at: 'LOCALE_IPOSSEPBYSPACE' put: 16r55!
-Win32Constants at: 'LOCALE_IPOSSIGNPOSN' put: 16r52!
-Win32Constants at: 'LOCALE_IPOSSYMPRECEDES' put: 16r54!
-Win32Constants at: 'LOCALE_IREADINGLAYOUT' put: 16r70!
-Win32Constants at: 'LOCALE_NEUTRAL' put: 16r0!
-Win32Constants at: 'LOCALE_NOUSEROVERRIDE' put: -16r80000000!
-Win32Constants at: 'LOCALE_RETURN_GENITIVE_NAMES' put: 16r10000000!
-Win32Constants at: 'LOCALE_RETURN_NUMBER' put: 16r20000000!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME1' put: 16r31!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME2' put: 16r32!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME3' put: 16r33!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME4' put: 16r34!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME5' put: 16r35!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME6' put: 16r36!
-Win32Constants at: 'LOCALE_SABBREVDAYNAME7' put: 16r37!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME1' put: 16r44!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME10' put: 16r4D!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME11' put: 16r4E!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME12' put: 16r4F!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME13' put: 16r100F!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME2' put: 16r45!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME3' put: 16r46!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME4' put: 16r47!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME5' put: 16r48!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME6' put: 16r49!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME7' put: 16r4A!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME8' put: 16r4B!
-Win32Constants at: 'LOCALE_SABBREVMONTHNAME9' put: 16r4C!
-Win32Constants at: 'LOCALE_SAM' put: 16r28!
-Win32Constants at: 'LOCALE_SCONSOLEFALLBACKNAME' put: 16r6E!
-Win32Constants at: 'LOCALE_SCURRENCY' put: 16r14!
-Win32Constants at: 'LOCALE_SDATE' put: 16r1D!
-Win32Constants at: 'LOCALE_SDAYNAME1' put: 16r2A!
-Win32Constants at: 'LOCALE_SDAYNAME2' put: 16r2B!
-Win32Constants at: 'LOCALE_SDAYNAME3' put: 16r2C!
-Win32Constants at: 'LOCALE_SDAYNAME4' put: 16r2D!
-Win32Constants at: 'LOCALE_SDAYNAME5' put: 16r2E!
-Win32Constants at: 'LOCALE_SDAYNAME6' put: 16r2F!
-Win32Constants at: 'LOCALE_SDAYNAME7' put: 16r30!
-Win32Constants at: 'LOCALE_SDECIMAL' put: 16rE!
-Win32Constants at: 'LOCALE_SDURATION' put: 16r5D!
-Win32Constants at: 'LOCALE_SENGCURRNAME' put: 16r1007!
-Win32Constants at: 'LOCALE_SENGLISHCOUNTRYNAME' put: 16r1002!
-Win32Constants at: 'LOCALE_SENGLISHDISPLAYNAME' put: 16r72!
-Win32Constants at: 'LOCALE_SENGLISHLANGUAGENAME' put: 16r1001!
-Win32Constants at: 'LOCALE_SGROUPING' put: 16r10!
-Win32Constants at: 'LOCALE_SINTLSYMBOL' put: 16r15!
-Win32Constants at: 'LOCALE_SISO3166CTRYNAME' put: 16r5A!
-Win32Constants at: 'LOCALE_SISO3166CTRYNAME2' put: 16r68!
-Win32Constants at: 'LOCALE_SISO639LANGNAME' put: 16r59!
-Win32Constants at: 'LOCALE_SISO639LANGNAME2' put: 16r67!
-Win32Constants at: 'LOCALE_SLIST' put: 16rC!
-Win32Constants at: 'LOCALE_SLOCALIZEDCOUNTRYNAME' put: 16r6!
-Win32Constants at: 'LOCALE_SLOCALIZEDDISPLAYNAME' put: 16r2!
-Win32Constants at: 'LOCALE_SLOCALIZEDLANGUAGENAME' put: 16r6F!
-Win32Constants at: 'LOCALE_SLONGDATE' put: 16r20!
-Win32Constants at: 'LOCALE_SMONDECIMALSEP' put: 16r16!
-Win32Constants at: 'LOCALE_SMONGROUPING' put: 16r18!
-Win32Constants at: 'LOCALE_SMONTHDAY' put: 16r78!
-Win32Constants at: 'LOCALE_SMONTHNAME1' put: 16r38!
-Win32Constants at: 'LOCALE_SMONTHNAME10' put: 16r41!
-Win32Constants at: 'LOCALE_SMONTHNAME11' put: 16r42!
-Win32Constants at: 'LOCALE_SMONTHNAME12' put: 16r43!
-Win32Constants at: 'LOCALE_SMONTHNAME13' put: 16r100E!
-Win32Constants at: 'LOCALE_SMONTHNAME2' put: 16r39!
-Win32Constants at: 'LOCALE_SMONTHNAME3' put: 16r3A!
-Win32Constants at: 'LOCALE_SMONTHNAME4' put: 16r3B!
-Win32Constants at: 'LOCALE_SMONTHNAME5' put: 16r3C!
-Win32Constants at: 'LOCALE_SMONTHNAME6' put: 16r3D!
-Win32Constants at: 'LOCALE_SMONTHNAME7' put: 16r3E!
-Win32Constants at: 'LOCALE_SMONTHNAME8' put: 16r3F!
-Win32Constants at: 'LOCALE_SMONTHNAME9' put: 16r40!
-Win32Constants at: 'LOCALE_SMONTHOUSANDSEP' put: 16r17!
-Win32Constants at: 'LOCALE_SNAME' put: 16r5C!
-Win32Constants at: 'LOCALE_SNAN' put: 16r69!
-Win32Constants at: 'LOCALE_SNATIVECOUNTRYNAME' put: 16r8!
-Win32Constants at: 'LOCALE_SNATIVECURRNAME' put: 16r1008!
-Win32Constants at: 'LOCALE_SNATIVEDIGITS' put: 16r13!
-Win32Constants at: 'LOCALE_SNATIVEDISPLAYNAME' put: 16r73!
-Win32Constants at: 'LOCALE_SNATIVELANGUAGENAME' put: 16r4!
-Win32Constants at: 'LOCALE_SNEGATIVESIGN' put: 16r51!
-Win32Constants at: 'LOCALE_SNEGINFINITY' put: 16r6B!
-Win32Constants at: 'LOCALE_SOPENTYPELANGUAGETAG' put: 16r7A!
-Win32Constants at: 'LOCALE_SPARENT' put: 16r6D!
-Win32Constants at: 'LOCALE_SPERCENT' put: 16r76!
-Win32Constants at: 'LOCALE_SPERMILLE' put: 16r77!
-Win32Constants at: 'LOCALE_SPM' put: 16r29!
-Win32Constants at: 'LOCALE_SPOSINFINITY' put: 16r6A!
-Win32Constants at: 'LOCALE_SPOSITIVESIGN' put: 16r50!
-Win32Constants at: 'LOCALE_SRELATIVELONGDATE' put: 16r7C!
-Win32Constants at: 'LOCALE_SSCRIPTS' put: 16r6C!
-Win32Constants at: 'LOCALE_SSHORTDATE' put: 16r1F!
-Win32Constants at: 'LOCALE_SSHORTESTAM' put: 16r7E!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME1' put: 16r60!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME2' put: 16r61!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME3' put: 16r62!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME4' put: 16r63!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME5' put: 16r64!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME6' put: 16r65!
-Win32Constants at: 'LOCALE_SSHORTESTDAYNAME7' put: 16r66!
-Win32Constants at: 'LOCALE_SSHORTESTPM' put: 16r7F!
-Win32Constants at: 'LOCALE_SSHORTTIME' put: 16r79!
-Win32Constants at: 'LOCALE_SSORTLOCALE' put: 16r7B!
-Win32Constants at: 'LOCALE_SSORTNAME' put: 16r1013!
-Win32Constants at: 'LOCALE_STHOUSAND' put: 16rF!
-Win32Constants at: 'LOCALE_STIME' put: 16r1E!
-Win32Constants at: 'LOCALE_STIMEFORMAT' put: 16r1003!
-Win32Constants at: 'LOCALE_SYEARMONTH' put: 16r1006!
-Win32Constants at: 'LOCALE_SYSTEM_DEFAULT' put: 16r800!
-Win32Constants at: 'LOCALE_USER_DEFAULT' put: 16r400!
-Win32Constants at: 'LOGPIXELSX' put: 16r58!
-Win32Constants at: 'LOGPIXELSY' put: 16r5A!
-Win32Constants at: 'LPSTR_TEXTCALLBACK' put: -16r1!
-Win32Constants at: 'LR_COLOR' put: 16r2!
-Win32Constants at: 'LR_COPYDELETEORG' put: 16r8!
-Win32Constants at: 'LR_COPYFROMRESOURCE' put: 16r4000!
-Win32Constants at: 'LR_COPYRETURNORG' put: 16r4!
-Win32Constants at: 'LR_CREATEDIBSECTION' put: 16r2000!
-Win32Constants at: 'LR_DEFAULTCOLOR' put: 16r0!
-Win32Constants at: 'LR_DEFAULTSIZE' put: 16r40!
-Win32Constants at: 'LR_LOADFROMFILE' put: 16r10!
-Win32Constants at: 'LR_LOADMAP3DCOLORS' put: 16r1000!
-Win32Constants at: 'LR_LOADTRANSPARENT' put: 16r20!
-Win32Constants at: 'LR_MONOCHROME' put: 16r1!
-Win32Constants at: 'LR_SHARED' put: 16r8000!
-Win32Constants at: 'LR_VGACOLOR' put: 16r80!
-Win32Constants at: 'LTGRAY_BRUSH' put: 16r1!
-Win32Constants at: 'LWA_ALPHA' put: 16r2!
-Win32Constants at: 'LWA_COLORKEY' put: 16r1!
-Win32Constants at: 'MAPVK_VK_TO_VSC' put: 16r0!
-Win32Constants at: 'MAPVK_VSC_TO_VK' put: 16r1!
-Win32Constants at: 'MAPVK_VSC_TO_VK_CHAR' put: 16r2!
-Win32Constants at: 'MAPVK_VSC_TO_VK_EX' put: 16r3!
-Win32Constants at: 'MAX_COMPUTERNAME_LENGTH' put: 16rF!
-Win32Constants at: 'MAX_UCSCHAR' put: 16r10FFFF!
-Win32Constants at: 'MB_ERR_INVALID_CHARS' put: 16r8!
-Win32Constants at: 'MEM_COMMIT' put: 16r1000!
-Win32Constants at: 'MEM_DECOMMIT' put: 16r4000!
-Win32Constants at: 'MEM_FREE' put: 16r10000!
-Win32Constants at: 'MEM_IMAGE' put: 16r1000000!
-Win32Constants at: 'MEM_MAPPED' put: 16r40000!
-Win32Constants at: 'MEM_PRIVATE' put: 16r20000!
-Win32Constants at: 'MEM_RELEASE' put: 16r8000!
-Win32Constants at: 'MEM_RESERVE' put: 16r2000!
-Win32Constants at: 'MEM_TOP_DOWN' put: 16r100000!
-Win32Constants at: 'MERGECOPY' put: 16rC000CA!
-Win32Constants at: 'MF_BYCOMMAND' put: 16r0!
-Win32Constants at: 'MF_BYPOSITION' put: 16r400!
-Win32Constants at: 'MF_POPUP' put: 16r10!
-Win32Constants at: 'MFS_CHECKED' put: 16r8!
-Win32Constants at: 'MFS_DEFAULT' put: 16r1000!
-Win32Constants at: 'MFS_DISABLED' put: 16r1!
-Win32Constants at: 'MFS_ENABLED' put: 16r0!
-Win32Constants at: 'MFS_UNCHECKED' put: 16r0!
-Win32Constants at: 'MFT_MENUBARBREAK' put: 16r20!
-Win32Constants at: 'MFT_MENUBREAK' put: 16r40!
-Win32Constants at: 'MFT_RADIOCHECK' put: 16r200!
-Win32Constants at: 'MFT_SEPARATOR' put: 16r800!
-Win32Constants at: 'MFT_STRING' put: 16r0!
-Win32Constants at: 'MIIM_BITMAP' put: 16r80!
-Win32Constants at: 'MIIM_CHECKMARKS' put: 16r8!
-Win32Constants at: 'MIIM_DATA' put: 16r20!
-Win32Constants at: 'MIIM_FTYPE' put: 16r100!
-Win32Constants at: 'MIIM_ID' put: 16r2!
-Win32Constants at: 'MIIM_STATE' put: 16r1!
-Win32Constants at: 'MIIM_STRING' put: 16r40!
-Win32Constants at: 'MIIM_SUBMENU' put: 16r4!
-Win32Constants at: 'MIIM_TYPE' put: 16r10!
-Win32Constants at: 'MIM_APPLYTOSUBMENUS' put: 16r80000000!
-Win32Constants at: 'MIM_BACKGROUND' put: 16r2!
-Win32Constants at: 'MIM_HELPID' put: 16r4!
-Win32Constants at: 'MIM_MAXHEIGHT' put: 16r1!
-Win32Constants at: 'MIM_MENUDATA' put: 16r8!
-Win32Constants at: 'MIM_STYLE' put: 16r10!
-Win32Constants at: 'MK_CONTROL' put: 16r8!
-Win32Constants at: 'MK_LBUTTON' put: 16r1!
-Win32Constants at: 'MK_MBUTTON' put: 16r10!
-Win32Constants at: 'MK_RBUTTON' put: 16r2!
-Win32Constants at: 'MK_SHIFT' put: 16r4!
-Win32Constants at: 'MK_XBUTTON1' put: 16r20!
-Win32Constants at: 'MK_XBUTTON2' put: 16r40!
-Win32Constants at: 'MM_ANISOTROPIC' put: 16r8!
-Win32Constants at: 'MM_HIENGLISH' put: 16r5!
-Win32Constants at: 'MM_HIMETRIC' put: 16r3!
-Win32Constants at: 'MM_ISOTROPIC' put: 16r7!
-Win32Constants at: 'MM_LOENGLISH' put: 16r4!
-Win32Constants at: 'MM_LOMETRIC' put: 16r2!
-Win32Constants at: 'MM_TEXT' put: 16r1!
-Win32Constants at: 'MM_TWIPS' put: 16r6!
-Win32Constants at: 'MNS_AUTODISMISS' put: 16r10000000!
-Win32Constants at: 'MNS_CHECKORBMP' put: 16r4000000!
-Win32Constants at: 'MNS_DRAGDROP' put: 16r20000000!
-Win32Constants at: 'MNS_MODELESS' put: 16r40000000!
-Win32Constants at: 'MNS_NOCHECK' put: 16r80000000!
-Win32Constants at: 'MNS_NOTIFYBYPOS' put: 16r8000000!
-Win32Constants at: 'MOD_ALT' put: 16r1!
-Win32Constants at: 'MOD_CONTROL' put: 16r2!
-Win32Constants at: 'MOD_SHIFT' put: 16r4!
-Win32Constants at: 'MOD_WIN' put: 16r8!
-Win32Constants at: 'MSGF_MENU' put: 16r2!
-Win32Constants at: 'MWMO_ALERTABLE' put: 16r2!
-Win32Constants at: 'MWMO_INPUTAVAILABLE' put: 16r4!
-Win32Constants at: 'MWMO_WAITALL' put: 16r1!
-Win32Constants at: 'NIF_ICON' put: 16r2!
-Win32Constants at: 'NIF_MESSAGE' put: 16r1!
-Win32Constants at: 'NIF_TIP' put: 16r4!
-Win32Constants at: 'NIM_ADD' put: 16r0!
-Win32Constants at: 'NIM_DELETE' put: 16r2!
-Win32Constants at: 'NIM_MODIFY' put: 16r1!
-Win32Constants at: 'NORM_IGNORECASE' put: 16r1!
-Win32Constants at: 'NORM_IGNOREKANATYPE' put: 16r10000!
-Win32Constants at: 'NORM_IGNORENONCASE' put: 16r2!
-Win32Constants at: 'NORM_IGNORESYMBOLS' put: 16r4!
-Win32Constants at: 'NORM_IGNOREWIDTH' put: 16r20000!
-Win32Constants at: 'NORM_LINGUISTIC_CASING' put: 16r8000000!
-Win32Constants at: 'NORMAL_PRIORITY_CLASS' put: 16r20!
-Win32Constants at: 'NOTSRCCOPY' put: 16r330008!
-Win32Constants at: 'NULL_BRUSH' put: 16r5!
-Win32Constants at: 'NULL_PEN' put: 16r8!
-Win32Constants at: 'OBJ_BRUSH' put: 16r2!
-Win32Constants at: 'OBJ_FONT' put: 16r6!
-Win32Constants at: 'OBJ_PEN' put: 16r1!
-Win32Constants at: 'ODS_GRAYED' put: 16r2!
-Win32Constants at: 'ODS_SELECTED' put: 16r1!
-Win32Constants at: 'ODT_BUTTON' put: 16r4!
-Win32Constants at: 'ODT_COMBOBOX' put: 16r3!
-Win32Constants at: 'ODT_LISTBOX' put: 16r2!
-Win32Constants at: 'ODT_MENU' put: 16r1!
-Win32Constants at: 'ODT_STATIC' put: 16r5!
-Win32Constants at: 'OEM_FIXED_FONT' put: 16rA!
-Win32Constants at: 'OPAQUE' put: 16r2!
-Win32Constants at: 'OPEN_ALWAYS' put: 16r4!
-Win32Constants at: 'OPEN_EXISTING' put: 16r3!
-Win32Constants at: 'PAGE_EXECUTE' put: 16r10!
-Win32Constants at: 'PAGE_EXECUTE_READ' put: 16r20!
-Win32Constants at: 'PAGE_EXECUTE_READWRITE' put: 16r40!
-Win32Constants at: 'PAGE_EXECUTE_WRITECOPY' put: 16r80!
-Win32Constants at: 'PAGE_GUARD' put: 16r100!
-Win32Constants at: 'PAGE_NOACCESS' put: 16r1!
-Win32Constants at: 'PAGE_NOCACHE' put: 16r200!
-Win32Constants at: 'PAGE_READONLY' put: 16r2!
-Win32Constants at: 'PAGE_READWRITE' put: 16r4!
-Win32Constants at: 'PAGE_WRITECOPY' put: 16r8!
-Win32Constants at: 'PLANES' put: 16rE!
-Win32Constants at: 'PM_NOREMOVE' put: 16r0!
-Win32Constants at: 'PM_REMOVE' put: 16r1!
-Win32Constants at: 'PRF_CHECKVISIBLE' put: 16r1!
-Win32Constants at: 'PRF_CHILDREN' put: 16r10!
-Win32Constants at: 'PRF_CLIENT' put: 16r4!
-Win32Constants at: 'PRF_ERASEBKGND' put: 16r8!
-Win32Constants at: 'PRF_NONCLIENT' put: 16r2!
-Win32Constants at: 'PRF_OWNED' put: 16r20!
-Win32Constants at: 'PROCESS_TERMINATE' put: 16r1!
-Win32Constants at: 'PS_ALTERNATE' put: 16r8!
-Win32Constants at: 'PS_COSMETIC' put: 16r0!
-Win32Constants at: 'PS_DASH' put: 16r1!
-Win32Constants at: 'PS_DASHDOT' put: 16r3!
-Win32Constants at: 'PS_DASHDOTDOT' put: 16r4!
-Win32Constants at: 'PS_DOT' put: 16r2!
-Win32Constants at: 'PS_ENDCAPFLAT' put: 16r200!
-Win32Constants at: 'PS_ENDCAPMASK' put: 16rF00!
-Win32Constants at: 'PS_ENDCAPROUND' put: 16r0!
-Win32Constants at: 'PS_ENDCAPSQUARE' put: 16r100!
-Win32Constants at: 'PS_GEOMETRIC' put: 16r10000!
-Win32Constants at: 'PS_INSIDEFRAME' put: 16r6!
-Win32Constants at: 'PS_JOINBEVEL' put: 16r1000!
-Win32Constants at: 'PS_JOINMASK' put: 16rF000!
-Win32Constants at: 'PS_JOINMITER' put: 16r2000!
-Win32Constants at: 'PS_JOINROUND' put: 16r0!
-Win32Constants at: 'PS_NULL' put: 16r5!
-Win32Constants at: 'PS_SOLID' put: 16r0!
-Win32Constants at: 'PS_STYLEMASK' put: 16rF!
-Win32Constants at: 'PS_TYPEMASK' put: 16rF0000!
-Win32Constants at: 'PS_USERSTYLE' put: 16r7!
-Win32Constants at: 'QS_ALLPOSTMESSAGE' put: 16r100!
-Win32Constants at: 'QS_HOTKEY' put: 16r80!
-Win32Constants at: 'QS_KEY' put: 16r1!
-Win32Constants at: 'QS_MOUSE' put: 16r6!
-Win32Constants at: 'QS_MOUSEBUTTON' put: 16r4!
-Win32Constants at: 'QS_MOUSEMOVE' put: 16r2!
-Win32Constants at: 'QS_PAINT' put: 16r20!
-Win32Constants at: 'QS_POINTER' put: 16r1000!
-Win32Constants at: 'QS_POSTMESSAGE' put: 16r8!
-Win32Constants at: 'QS_RAWINPUT' put: 16r400!
-Win32Constants at: 'QS_SENDMESSAGE' put: 16r40!
-Win32Constants at: 'QS_TIMER' put: 16r10!
-Win32Constants at: 'QS_TOUCH' put: 16r800!
-Win32Constants at: 'RDW_ALLCHILDREN' put: 16r80!
-Win32Constants at: 'RDW_ERASE' put: 16r4!
-Win32Constants at: 'RDW_ERASENOW' put: 16r200!
-Win32Constants at: 'RDW_FRAME' put: 16r400!
-Win32Constants at: 'RDW_INTERNALPAINT' put: 16r2!
-Win32Constants at: 'RDW_INVALIDATE' put: 16r1!
-Win32Constants at: 'RDW_NOCHILDREN' put: 16r40!
-Win32Constants at: 'RDW_NOERASE' put: 16r20!
-Win32Constants at: 'RDW_NOFRAME' put: 16r800!
-Win32Constants at: 'RDW_NOINTERNALPAINT' put: 16r10!
-Win32Constants at: 'RDW_UPDATENOW' put: 16r100!
-Win32Constants at: 'RDW_VALIDATE' put: 16r8!
-Win32Constants at: 'REALTIME_PRIORITY_CLASS' put: 16r100!
-Win32Constants at: 'RGN_AND' put: 16r1!
-Win32Constants at: 'RGN_DIFF' put: 16r4!
-Win32Constants at: 'RGN_OR' put: 16r2!
-Win32Constants at: 'RGN_XOR' put: 16r3!
-Win32Constants at: 'RT_ICON' put: 16r3!
-Win32Constants at: 'RT_MANIFEST' put: 16r18!
-Win32Constants at: 'RT_RCDATA' put: 16rA!
-Win32Constants at: 'RT_STRING' put: 16r6!
-Win32Constants at: 'RT_VERSION' put: 16r10!
-Win32Constants at: 'SB_BOTH' put: 16r3!
-Win32Constants at: 'SB_BOTTOM' put: 16r7!
-Win32Constants at: 'SB_CTL' put: 16r2!
-Win32Constants at: 'SB_ENDSCROLL' put: 16r8!
-Win32Constants at: 'SB_HORZ' put: 16r0!
-Win32Constants at: 'SB_LEFT' put: 16r6!
-Win32Constants at: 'SB_LINEDOWN' put: 16r1!
-Win32Constants at: 'SB_LINELEFT' put: 16r0!
-Win32Constants at: 'SB_LINERIGHT' put: 16r1!
-Win32Constants at: 'SB_LINEUP' put: 16r0!
-Win32Constants at: 'SB_PAGEDOWN' put: 16r3!
-Win32Constants at: 'SB_PAGELEFT' put: 16r2!
-Win32Constants at: 'SB_PAGERIGHT' put: 16r3!
-Win32Constants at: 'SB_PAGEUP' put: 16r2!
-Win32Constants at: 'SB_RIGHT' put: 16r7!
-Win32Constants at: 'SB_THUMBPOSITION' put: 16r4!
-Win32Constants at: 'SB_THUMBTRACK' put: 16r5!
-Win32Constants at: 'SB_TOP' put: 16r6!
-Win32Constants at: 'SB_VERT' put: 16r1!
-Win32Constants at: 'SC_CLOSE' put: 16rF060!
-Win32Constants at: 'SIF_ALL' put: 16r17!
-Win32Constants at: 'SIF_DISABLENOSCROLL' put: 16r8!
-Win32Constants at: 'SIF_PAGE' put: 16r2!
-Win32Constants at: 'SIF_POS' put: 16r4!
-Win32Constants at: 'SIF_RANGE' put: 16r1!
-Win32Constants at: 'SIF_TRACKPOS' put: 16r10!
-Win32Constants at: 'SIZE_MAXHIDE' put: 16r4!
-Win32Constants at: 'SIZE_MAXIMIZED' put: 16r2!
-Win32Constants at: 'SIZE_MAXSHOW' put: 16r3!
-Win32Constants at: 'SIZE_MINIMIZED' put: 16r1!
-Win32Constants at: 'SIZE_RESTORED' put: 16r0!
-Win32Constants at: 'SM_CXBORDER' put: 16r5!
-Win32Constants at: 'SM_CXCURSOR' put: 16rD!
-Win32Constants at: 'SM_CXDLGFRAME' put: 16r7!
-Win32Constants at: 'SM_CXDRAG' put: 16r44!
-Win32Constants at: 'SM_CXEDGE' put: 16r2D!
-Win32Constants at: 'SM_CXHTHUMB' put: 16rA!
-Win32Constants at: 'SM_CXICON' put: 16rB!
-Win32Constants at: 'SM_CXMENUCHECK' put: 16r47!
-Win32Constants at: 'SM_CXMENUSIZE' put: 16r36!
-Win32Constants at: 'SM_CXSIZEFRAME' put: 16r20!
-Win32Constants at: 'SM_CXSMICON' put: 16r31!
-Win32Constants at: 'SM_CXVIRTUALSCREEN' put: 16r4E!
-Win32Constants at: 'SM_CYBORDER' put: 16r6!
-Win32Constants at: 'SM_CYCURSOR' put: 16rE!
-Win32Constants at: 'SM_CYDLGFRAME' put: 16r7!
-Win32Constants at: 'SM_CYDRAG' put: 16r45!
-Win32Constants at: 'SM_CYEDGE' put: 16r2E!
-Win32Constants at: 'SM_CYICON' put: 16rC!
-Win32Constants at: 'SM_CYMENU' put: 16rF!
-Win32Constants at: 'SM_CYMENUCHECK' put: 16r48!
-Win32Constants at: 'SM_CYMENUSIZE' put: 16r37!
-Win32Constants at: 'SM_CYSIZEFRAME' put: 16r21!
-Win32Constants at: 'SM_CYSMICON' put: 16r32!
-Win32Constants at: 'SM_CYVIRTUALSCREEN' put: 16r4F!
-Win32Constants at: 'SM_CYVTHUMB' put: 16r9!
-Win32Constants at: 'SM_SLOWMACHINE' put: 16r49!
-Win32Constants at: 'SM_XVIRTUALSCREEN' put: 16r4C!
-Win32Constants at: 'SM_YVIRTUALSCREEN' put: 16r4D!
-Win32Constants at: 'SND_ALIAS' put: 16r10000!
-Win32Constants at: 'SND_ASYNC' put: 16r1!
-Win32Constants at: 'SND_FILENAME' put: 16r20000!
-Win32Constants at: 'SND_LOOP' put: 16r8!
-Win32Constants at: 'SND_MEMORY' put: 16r4!
-Win32Constants at: 'SND_NODEFAULT' put: 16r2!
-Win32Constants at: 'SND_NOSTOP' put: 16r10!
-Win32Constants at: 'SND_NOWAIT' put: 16r2000!
-Win32Constants at: 'SND_RESERVED' put: 16rFF000000!
-Win32Constants at: 'SND_RESOURCE' put: 16r40004!
-Win32Constants at: 'SND_SYNC' put: 16r0!
-Win32Constants at: 'SND_TYPEMASK' put: 16r170007!
-Win32Constants at: 'SND_VALIDFLAGS' put: 16r17201F!
-Win32Constants at: 'SORT_DIGITSASNUMBERS' put: 16r8!
-Win32Constants at: 'SORT_STRINGSORT' put: 16r1000!
-Win32Constants at: 'SPI_GETFLATMENU' put: 16r1022!
-Win32Constants at: 'SPI_GETICONTITLELOGFONT' put: 16r1F!
-Win32Constants at: 'SPI_GETLISTBOXSMOOTHSCROLLING' put: 16r1006!
-Win32Constants at: 'SPI_GETMOUSEHOVERTIME' put: 16r66!
-Win32Constants at: 'SPI_GETNONCLIENTMETRICS' put: 16r29!
-Win32Constants at: 'SPI_GETWHEELSCROLLLINES' put: 16r68!
-Win32Constants at: 'SPI_GETWORKAREA' put: 16r30!
-Win32Constants at: 'SPI_SETFLATMENU' put: 16r1023!
-Win32Constants at: 'SPI_SETICONTITLELOGFONT' put: 16r22!
-Win32Constants at: 'SPI_SETLISTBOXSMOOTHSCROLLING' put: 16r1007!
-Win32Constants at: 'SPI_SETNONCLIENTMETRICS' put: 16r2A!
-Win32Constants at: 'SPIF_SENDCHANGE' put: 16r2!
-Win32Constants at: 'SPIF_UPDATEINIFILE' put: 16r1!
-Win32Constants at: 'SRCAND' put: 16r8800C6!
-Win32Constants at: 'SRCCOPY' put: 16rCC0020!
-Win32Constants at: 'SRCINVERT' put: 16r660046!
-Win32Constants at: 'SRCPAINT' put: 16rEE0086!
-Win32Constants at: 'SS_BITMAP' put: 16rE!
-Win32Constants at: 'SS_BLACKFRAME' put: 16r7!
-Win32Constants at: 'SS_BLACKRECT' put: 16r4!
-Win32Constants at: 'SS_CENTER' put: 16r1!
-Win32Constants at: 'SS_CENTERIMAGE' put: 16r200!
-Win32Constants at: 'SS_ENHMETAFILE' put: 16rF!
-Win32Constants at: 'SS_ETCHEDFRAME' put: 16r12!
-Win32Constants at: 'SS_ETCHEDHORZ' put: 16r10!
-Win32Constants at: 'SS_ETCHEDVERT' put: 16r11!
-Win32Constants at: 'SS_GRAYFRAME' put: 16r8!
-Win32Constants at: 'SS_GRAYRECT' put: 16r5!
-Win32Constants at: 'SS_ICON' put: 16r3!
-Win32Constants at: 'SS_LEFT' put: 16r0!
-Win32Constants at: 'SS_LEFTNOWORDWRAP' put: 16rC!
-Win32Constants at: 'SS_NOPREFIX' put: 16r80!
-Win32Constants at: 'SS_NOTIFY' put: 16r100!
-Win32Constants at: 'SS_OWNERDRAW' put: 16rD!
-Win32Constants at: 'SS_REALSIZEIMAGE' put: 16r800!
-Win32Constants at: 'SS_RIGHT' put: 16r2!
-Win32Constants at: 'SS_RIGHTJUST' put: 16r400!
-Win32Constants at: 'SS_SIMPLE' put: 16rB!
-Win32Constants at: 'SS_SUNKEN' put: 16r1000!
-Win32Constants at: 'SS_TYPEMASK' put: 16r1F!
-Win32Constants at: 'SS_USERITEM' put: 16rA!
-Win32Constants at: 'SS_WHITEFRAME' put: 16r9!
-Win32Constants at: 'SS_WHITERECT' put: 16r6!
-Win32Constants at: 'STARTF_FORCEOFFFEEDBACK' put: 16r80!
-Win32Constants at: 'STARTF_FORCEONFEEDBACK' put: 16r40!
-Win32Constants at: 'STARTF_RUNFULLSCREEN' put: 16r20!
-Win32Constants at: 'STARTF_USECOUNTCHARS' put: 16r8!
-Win32Constants at: 'STARTF_USEFILLATTRIBUTE' put: 16r10!
-Win32Constants at: 'STARTF_USEPOSITION' put: 16r4!
-Win32Constants at: 'STARTF_USESHOWWINDOW' put: 16r1!
-Win32Constants at: 'STARTF_USESIZE' put: 16r2!
-Win32Constants at: 'STARTF_USESTDHANDLES' put: 16r100!
-Win32Constants at: 'STATUS_ABANDONED_WAIT_0' put: 16r80!
-Win32Constants at: 'STATUS_TIMEOUT' put: 16r102!
-Win32Constants at: 'STATUS_WAIT_0' put: 16r0!
-Win32Constants at: 'STD_ERROR_HANDLE' put: -16rC!
-Win32Constants at: 'STD_INPUT_HANDLE' put: -16rA!
-Win32Constants at: 'STD_OUTPUT_HANDLE' put: -16rB!
-Win32Constants at: 'STILL_ACTIVE' put: 16r103!
-Win32Constants at: 'STM_GETICON' put: 16r171!
-Win32Constants at: 'STM_GETIMAGE' put: 16r173!
-Win32Constants at: 'STM_SETICON' put: 16r170!
-Win32Constants at: 'STM_SETIMAGE' put: 16r172!
-Win32Constants at: 'STN_CLICKED' put: 16r0!
-Win32Constants at: 'STN_DBLCLK' put: 16r1!
-Win32Constants at: 'STN_DISABLE' put: 16r3!
-Win32Constants at: 'STN_ENABLE' put: 16r2!
-Win32Constants at: 'SW_ERASE' put: 16r4!
-Win32Constants at: 'SW_HIDE' put: 16r0!
-Win32Constants at: 'SW_INVALIDATE' put: 16r2!
-Win32Constants at: 'SW_MAX' put: 16rA!
-Win32Constants at: 'SW_MAXIMIZE' put: 16r3!
-Win32Constants at: 'SW_MINIMIZE' put: 16r6!
-Win32Constants at: 'SW_NORMAL' put: 16r1!
-Win32Constants at: 'SW_RESTORE' put: 16r9!
-Win32Constants at: 'SW_SCROLLCHILDREN' put: 16r1!
-Win32Constants at: 'SW_SHOW' put: 16r5!
-Win32Constants at: 'SW_SHOWDEFAULT' put: 16rA!
-Win32Constants at: 'SW_SHOWMAXIMIZED' put: 16r3!
-Win32Constants at: 'SW_SHOWMINIMIZED' put: 16r2!
-Win32Constants at: 'SW_SHOWMINNOACTIVE' put: 16r7!
-Win32Constants at: 'SW_SHOWNA' put: 16r8!
-Win32Constants at: 'SW_SHOWNOACTIVATE' put: 16r4!
-Win32Constants at: 'SW_SHOWNORMAL' put: 16r1!
-Win32Constants at: 'SWP_FRAMECHANGED' put: 16r20!
-Win32Constants at: 'SWP_HIDEWINDOW' put: 16r80!
-Win32Constants at: 'SWP_NOACTIVATE' put: 16r10!
-Win32Constants at: 'SWP_NOCOPYBITS' put: 16r100!
-Win32Constants at: 'SWP_NOMOVE' put: 16r2!
-Win32Constants at: 'SWP_NOOWNERZORDER' put: 16r200!
-Win32Constants at: 'SWP_NOREDRAW' put: 16r8!
-Win32Constants at: 'SWP_NOSIZE' put: 16r1!
-Win32Constants at: 'SWP_NOZORDER' put: 16r4!
-Win32Constants at: 'SWP_SHOWWINDOW' put: 16r40!
-Win32Constants at: 'SYSTEM_FIXEDFONT' put: 16r10!
-Win32Constants at: 'SYSTEM_FONT' put: 16rD!
-Win32Constants at: 'TA_BASELINE' put: 16r18!
-Win32Constants at: 'TA_BOTTOM' put: 16r8!
-Win32Constants at: 'TA_CENTER' put: 16r6!
-Win32Constants at: 'TA_LEFT' put: 16r0!
-Win32Constants at: 'TA_NOUPDATECP' put: 16r0!
-Win32Constants at: 'TA_RIGHT' put: 16r2!
-Win32Constants at: 'TA_TOP' put: 16r0!
-Win32Constants at: 'TA_UPDATECP' put: 16r1!
-Win32Constants at: 'TEST' put: 16r59!
-Win32Constants at: 'TIME_ZONE_ID_DAYLIGHT' put: 16r2!
-Win32Constants at: 'TIME_ZONE_ID_STANDARD' put: 16r1!
-Win32Constants at: 'TIME_ZONE_ID_UNKNOWN' put: 16r0!
-Win32Constants at: 'TME_CANCEL' put: -16r80000000!
-Win32Constants at: 'TME_HOVER' put: 16r1!
-Win32Constants at: 'TME_LEAVE' put: 16r2!
-Win32Constants at: 'TME_QUERY' put: 16r40000000!
-Win32Constants at: 'TPM_BOTTOMALIGN' put: 16r20!
-Win32Constants at: 'TPM_CENTERALIGN' put: 16r4!
-Win32Constants at: 'TPM_HORIZONTAL' put: 16r0!
-Win32Constants at: 'TPM_LEFTALIGN' put: 16r0!
-Win32Constants at: 'TPM_LEFTBUTTON' put: 16r0!
-Win32Constants at: 'TPM_NONOTIFY' put: 16r80!
-Win32Constants at: 'TPM_RETURNCMD' put: 16r100!
-Win32Constants at: 'TPM_RIGHTALIGN' put: 16r8!
-Win32Constants at: 'TPM_RIGHTBUTTON' put: 16r2!
-Win32Constants at: 'TPM_TOPALIGN' put: 16r0!
-Win32Constants at: 'TPM_VCENTERALIGN' put: 16r10!
-Win32Constants at: 'TPM_VERTICAL' put: 16r40!
-Win32Constants at: 'TRANSPARENT' put: 16r1!
-Win32Constants at: 'TRUE' put: 16r1!
-Win32Constants at: 'TRUNCATE_EXISTING' put: 16r5!
-Win32Constants at: 'UIS_CLEAR' put: 16r2!
-Win32Constants at: 'UIS_INITIALIZE' put: 16r3!
-Win32Constants at: 'UIS_SET' put: 16r1!
-Win32Constants at: 'UISF_ACTIVE' put: 16r4!
-Win32Constants at: 'UISF_HIDEACCEL' put: 16r2!
-Win32Constants at: 'UISF_HIDEFOCUS' put: 16r1!
-Win32Constants at: 'VER_AND' put: 16r6!
-Win32Constants at: 'VER_BUILDNUMBER' put: 16r4!
-Win32Constants at: 'VER_EQUAL' put: 16r1!
-Win32Constants at: 'VER_GREATER' put: 16r2!
-Win32Constants at: 'VER_GREATER_EQUAL' put: 16r3!
-Win32Constants at: 'VER_LESS' put: 16r4!
-Win32Constants at: 'VER_LESS_EQUAL' put: 16r5!
-Win32Constants at: 'VER_MAJORVERSION' put: 16r2!
-Win32Constants at: 'VER_MINORVERSION' put: 16r1!
-Win32Constants at: 'VER_NT_DOMAIN_CONTROLLER' put: 16r2!
-Win32Constants at: 'VER_NT_SERVER' put: 16r3!
-Win32Constants at: 'VER_NT_WORKSTATION' put: 16r1!
-Win32Constants at: 'VER_OR' put: 16r7!
-Win32Constants at: 'VER_PLATFORM_WIN32_NT' put: 16r2!
-Win32Constants at: 'VER_PLATFORM_WIN32_WINDOWS' put: 16r1!
-Win32Constants at: 'VER_PLATFORM_WIN32s' put: 16r0!
-Win32Constants at: 'VER_PLATFORMID' put: 16r8!
-Win32Constants at: 'VER_PRODUCT_TYPE' put: 16r80!
-Win32Constants at: 'VER_SERVICEPACKMAJOR' put: 16r20!
-Win32Constants at: 'VER_SERVICEPACKMINOR' put: 16r10!
-Win32Constants at: 'VER_SUITENAME' put: 16r40!
-Win32Constants at: 'VERTRES' put: 16rA!
-Win32Constants at: 'VERTSIZE' put: 16r6!
-Win32Constants at: 'VK_ADD' put: 16r6B!
-Win32Constants at: 'VK_APPS' put: 16r5D!
-Win32Constants at: 'VK_BACK' put: 16r8!
-Win32Constants at: 'VK_CANCEL' put: 16r3!
-Win32Constants at: 'VK_CAPITAL' put: 16r14!
-Win32Constants at: 'VK_CLEAR' put: 16rC!
-Win32Constants at: 'VK_CONTROL' put: 16r11!
-Win32Constants at: 'VK_DECIMAL' put: 16r6E!
-Win32Constants at: 'VK_DELETE' put: 16r2E!
-Win32Constants at: 'VK_DIVIDE' put: 16r6F!
-Win32Constants at: 'VK_DOWN' put: 16r28!
-Win32Constants at: 'VK_END' put: 16r23!
-Win32Constants at: 'VK_ESCAPE' put: 16r1B!
-Win32Constants at: 'VK_EXECUTE' put: 16r2B!
-Win32Constants at: 'VK_F1' put: 16r70!
-Win32Constants at: 'VK_F10' put: 16r79!
-Win32Constants at: 'VK_F11' put: 16r7A!
-Win32Constants at: 'VK_F12' put: 16r7B!
-Win32Constants at: 'VK_F2' put: 16r71!
-Win32Constants at: 'VK_F3' put: 16r72!
-Win32Constants at: 'VK_F4' put: 16r73!
-Win32Constants at: 'VK_F5' put: 16r74!
-Win32Constants at: 'VK_F6' put: 16r75!
-Win32Constants at: 'VK_F7' put: 16r76!
-Win32Constants at: 'VK_F8' put: 16r77!
-Win32Constants at: 'VK_F9' put: 16r78!
-Win32Constants at: 'VK_HOME' put: 16r24!
-Win32Constants at: 'VK_INSERT' put: 16r2D!
-Win32Constants at: 'VK_LBUTTON' put: 16r1!
-Win32Constants at: 'VK_LEFT' put: 16r25!
-Win32Constants at: 'VK_LSHIFT' put: 16rA0!
-Win32Constants at: 'VK_LWIN' put: 16r5B!
-Win32Constants at: 'VK_MBUTTON' put: 16r4!
-Win32Constants at: 'VK_MENU' put: 16r12!
-Win32Constants at: 'VK_MULTIPLY' put: 16r6A!
-Win32Constants at: 'VK_NEXT' put: 16r22!
-Win32Constants at: 'VK_NUMLOCK' put: 16r90!
-Win32Constants at: 'VK_NUMPAD0' put: 16r60!
-Win32Constants at: 'VK_NUMPAD1' put: 16r61!
-Win32Constants at: 'VK_NUMPAD2' put: 16r62!
-Win32Constants at: 'VK_NUMPAD3' put: 16r63!
-Win32Constants at: 'VK_NUMPAD4' put: 16r64!
-Win32Constants at: 'VK_NUMPAD5' put: 16r65!
-Win32Constants at: 'VK_NUMPAD6' put: 16r66!
-Win32Constants at: 'VK_NUMPAD7' put: 16r67!
-Win32Constants at: 'VK_NUMPAD8' put: 16r68!
-Win32Constants at: 'VK_NUMPAD9' put: 16r69!
-Win32Constants at: 'VK_OEM_1' put: 16rBA!
-Win32Constants at: 'VK_OEM_2' put: 16rBF!
-Win32Constants at: 'VK_OEM_3' put: 16rC0!
-Win32Constants at: 'VK_OEM_4' put: 16rDB!
-Win32Constants at: 'VK_OEM_5' put: 16rDC!
-Win32Constants at: 'VK_OEM_6' put: 16rDD!
-Win32Constants at: 'VK_OEM_7' put: 16rDE!
-Win32Constants at: 'VK_OEM_8' put: 16rDF!
-Win32Constants at: 'VK_OEM_COMMA' put: 16rBC!
-Win32Constants at: 'VK_OEM_MINUS' put: 16rBD!
-Win32Constants at: 'VK_OEM_PERIOD' put: 16rBE!
-Win32Constants at: 'VK_OEM_PLUS' put: 16rBB!
-Win32Constants at: 'VK_PAUSE' put: 16r13!
-Win32Constants at: 'VK_PRINT' put: 16r2A!
-Win32Constants at: 'VK_PRIOR' put: 16r21!
-Win32Constants at: 'VK_RBUTTON' put: 16r2!
-Win32Constants at: 'VK_RETURN' put: 16rD!
-Win32Constants at: 'VK_RIGHT' put: 16r27!
-Win32Constants at: 'VK_RMENU' put: 16rA5!
-Win32Constants at: 'VK_RWIN' put: 16r5C!
-Win32Constants at: 'VK_SCROLL' put: 16r91!
-Win32Constants at: 'VK_SELECT' put: 16r29!
-Win32Constants at: 'VK_SHIFT' put: 16r10!
-Win32Constants at: 'VK_SNAPSHOT' put: 16r2C!
-Win32Constants at: 'VK_SPACE' put: 16r20!
-Win32Constants at: 'VK_SUBTRACT' put: 16r6D!
-Win32Constants at: 'VK_TAB' put: 16r9!
-Win32Constants at: 'VK_UP' put: 16r26!
-Win32Constants at: 'VK_XBUTTON1' put: 16r5!
-Win32Constants at: 'VK_XBUTTON2' put: 16r6!
-Win32Constants at: 'WA_ACTIVE' put: 16r1!
-Win32Constants at: 'WA_CLICKACTIVE' put: 16r2!
-Win32Constants at: 'WA_INACTIVE' put: 16r0!
-Win32Constants at: 'WAIT_ABANDONED' put: 16r80!
-Win32Constants at: 'WAIT_ABANDONED_0' put: 16r80!
-Win32Constants at: 'WAIT_FAILED' put: -16r1!
-Win32Constants at: 'WAIT_IO_COMPLETION' put: 16rC0!
-Win32Constants at: 'WAIT_OBJECT_0' put: 16r0!
-Win32Constants at: 'WAIT_TIMEOUT' put: 16r102!
-Win32Constants at: 'WC_ERR_INVALID_CHARS' put: 16r80!
-Win32Constants at: 'WHEEL_DELTA' put: 16r78!
-Win32Constants at: 'WHEEL_PAGESCROLL' put: -16r1!
-Win32Constants at: 'WHITE_BRUSH' put: 16r0!
-Win32Constants at: 'WHITE_PEN' put: 16r6!
-Win32Constants at: 'WHITENESS' put: 16rFF0062!
-Win32Constants at: 'WM_ACTIVATE' put: 16r6!
-Win32Constants at: 'WM_ACTIVATEAPP' put: 16r1C!
-Win32Constants at: 'WM_APP' put: 16r8000!
-Win32Constants at: 'WM_ASKCBFORMATNAME' put: 16r30C!
-Win32Constants at: 'WM_BEGINDRAG' put: 16r22C!
-Win32Constants at: 'WM_CANCELJOURNAL' put: 16r4B!
-Win32Constants at: 'WM_CANCELMODE' put: 16r1F!
-Win32Constants at: 'WM_CAPTURECHANGED' put: 16r215!
-Win32Constants at: 'WM_CHANGECBCHAIN' put: 16r30D!
-Win32Constants at: 'WM_CHANGEUISTATE' put: 16r127!
-Win32Constants at: 'WM_CHAR' put: 16r102!
-Win32Constants at: 'WM_CHARTOITEM' put: 16r2F!
-Win32Constants at: 'WM_CHILDACTIVATE' put: 16r22!
-Win32Constants at: 'WM_CLEAR' put: 16r303!
-Win32Constants at: 'WM_CLOSE' put: 16r10!
-Win32Constants at: 'WM_COMMAND' put: 16r111!
-Win32Constants at: 'WM_COMMNOTIFY' put: 16r44!
-Win32Constants at: 'WM_COMPACTING' put: 16r41!
-Win32Constants at: 'WM_COMPAREITEM' put: 16r39!
-Win32Constants at: 'WM_CONTEXTMENU' put: 16r7B!
-Win32Constants at: 'WM_COPY' put: 16r301!
-Win32Constants at: 'WM_COPYDATA' put: 16r4A!
-Win32Constants at: 'WM_CREATE' put: 16r1!
-Win32Constants at: 'WM_CTLCOLORBTN' put: 16r135!
-Win32Constants at: 'WM_CTLCOLORDLG' put: 16r136!
-Win32Constants at: 'WM_CTLCOLOREDIT' put: 16r133!
-Win32Constants at: 'WM_CTLCOLORLISTBOX' put: 16r134!
-Win32Constants at: 'WM_CTLCOLORMSGBOX' put: 16r132!
-Win32Constants at: 'WM_CTLCOLORSCROLLBAR' put: 16r137!
-Win32Constants at: 'WM_CTLCOLORSTATIC' put: 16r138!
-Win32Constants at: 'WM_CUT' put: 16r300!
-Win32Constants at: 'WM_DDE_INITIATE' put: 16r3E0!
-Win32Constants at: 'WM_DEADCHAR' put: 16r103!
-Win32Constants at: 'WM_DELETEITEM' put: 16r2D!
-Win32Constants at: 'WM_DESTROY' put: 16r2!
-Win32Constants at: 'WM_DESTROYCLIPBOARD' put: 16r307!
-Win32Constants at: 'WM_DEVICECHANGE' put: 16r219!
-Win32Constants at: 'WM_DEVMODECHANGE' put: 16r1B!
-Win32Constants at: 'WM_DISPLAYCHANGE' put: 16r7E!
-Win32Constants at: 'WM_DRAWCLIPBOARD' put: 16r308!
-Win32Constants at: 'WM_DRAWITEM' put: 16r2B!
-Win32Constants at: 'WM_DROPFILES' put: 16r233!
-Win32Constants at: 'WM_ENABLE' put: 16rA!
-Win32Constants at: 'WM_ENDSESSION' put: 16r16!
-Win32Constants at: 'WM_ENTERIDLE' put: 16r121!
-Win32Constants at: 'WM_ENTERMENULOOP' put: 16r211!
-Win32Constants at: 'WM_ENTERSIZEMOVE' put: 16r231!
-Win32Constants at: 'WM_ERASEBKGND' put: 16r14!
-Win32Constants at: 'WM_EXITMENULOOP' put: 16r212!
-Win32Constants at: 'WM_EXITSIZEMOVE' put: 16r232!
-Win32Constants at: 'WM_FONTCHANGE' put: 16r1D!
-Win32Constants at: 'WM_GETDLGCODE' put: 16r87!
-Win32Constants at: 'WM_GETFONT' put: 16r31!
-Win32Constants at: 'WM_GETHOTKEY' put: 16r33!
-Win32Constants at: 'WM_GETICON' put: 16r7F!
-Win32Constants at: 'WM_GETMINMAXINFO' put: 16r24!
-Win32Constants at: 'WM_GETTEXT' put: 16rD!
-Win32Constants at: 'WM_GETTEXTLENGTH' put: 16rE!
-Win32Constants at: 'WM_HELP' put: 16r53!
-Win32Constants at: 'WM_HOTKEY' put: 16r312!
-Win32Constants at: 'WM_HSCROLL' put: 16r114!
-Win32Constants at: 'WM_HSCROLLCLIPBOARD' put: 16r30E!
-Win32Constants at: 'WM_ICONERASEBKGND' put: 16r27!
-Win32Constants at: 'WM_IDLEUPDATECMDUI' put: 16r363!
-Win32Constants at: 'WM_INITDIALOG' put: 16r110!
-Win32Constants at: 'WM_INITMENU' put: 16r116!
-Win32Constants at: 'WM_INITMENUPOPUP' put: 16r117!
-Win32Constants at: 'WM_INPUTLANGCHANGE' put: 16r51!
-Win32Constants at: 'WM_INPUTLANGCHANGEREQUEST' put: 16r50!
-Win32Constants at: 'WM_KEYDOWN' put: 16r100!
-Win32Constants at: 'WM_KEYFIRST' put: 16r100!
-Win32Constants at: 'WM_KEYLAST' put: 16r108!
-Win32Constants at: 'WM_KEYUP' put: 16r101!
-Win32Constants at: 'WM_KILLFOCUS' put: 16r8!
-Win32Constants at: 'WM_LBUTTONDBLCLK' put: 16r203!
-Win32Constants at: 'WM_LBUTTONDOWN' put: 16r201!
-Win32Constants at: 'WM_LBUTTONUP' put: 16r202!
-Win32Constants at: 'WM_MBUTTONDBLCLK' put: 16r209!
-Win32Constants at: 'WM_MBUTTONDOWN' put: 16r207!
-Win32Constants at: 'WM_MBUTTONUP' put: 16r208!
-Win32Constants at: 'WM_MEASUREITEM' put: 16r2C!
-Win32Constants at: 'WM_MENUCHAR' put: 16r120!
-Win32Constants at: 'WM_MENUCOMMAND' put: 16r126!
-Win32Constants at: 'WM_MENUSELECT' put: 16r11F!
-Win32Constants at: 'WM_MOUSEACTIVATE' put: 16r21!
-Win32Constants at: 'WM_MOUSEFIRST' put: 16r200!
-Win32Constants at: 'WM_MOUSEHOVER' put: 16r2A1!
-Win32Constants at: 'WM_MOUSEHWHEEL' put: 16r20E!
-Win32Constants at: 'WM_MOUSELAST' put: 16r20E!
-Win32Constants at: 'WM_MOUSELEAVE' put: 16r2A3!
-Win32Constants at: 'WM_MOUSEMOVE' put: 16r200!
-Win32Constants at: 'WM_MOUSEWHEEL' put: 16r20A!
-Win32Constants at: 'WM_MOVE' put: 16r3!
-Win32Constants at: 'WM_MOVING' put: 16r216!
-Win32Constants at: 'WM_NCACTIVATE' put: 16r86!
-Win32Constants at: 'WM_NCCALCSIZE' put: 16r83!
-Win32Constants at: 'WM_NCCREATE' put: 16r81!
-Win32Constants at: 'WM_NCDESTROY' put: 16r82!
-Win32Constants at: 'WM_NCHITTEST' put: 16r84!
-Win32Constants at: 'WM_NCLBUTTONDBLCLK' put: 16rA3!
-Win32Constants at: 'WM_NCLBUTTONDOWN' put: 16rA1!
-Win32Constants at: 'WM_NCLBUTTONUP' put: 16rA2!
-Win32Constants at: 'WM_NCMBUTTONDBLCLK' put: 16rA9!
-Win32Constants at: 'WM_NCMBUTTONDOWN' put: 16rA7!
-Win32Constants at: 'WM_NCMBUTTONUP' put: 16rA8!
-Win32Constants at: 'WM_NCMOUSEMOVE' put: 16rA0!
-Win32Constants at: 'WM_NCPAINT' put: 16r85!
-Win32Constants at: 'WM_NCRBUTTONDBLCLK' put: 16rA6!
-Win32Constants at: 'WM_NCRBUTTONDOWN' put: 16rA4!
-Win32Constants at: 'WM_NCRBUTTONUP' put: 16rA5!
-Win32Constants at: 'WM_NEXTDLGCTL' put: 16r28!
-Win32Constants at: 'WM_NEXTMENU' put: 16r213!
-Win32Constants at: 'WM_NOTIFY' put: 16r4E!
-Win32Constants at: 'WM_NOTIFYFORMAT' put: 16r55!
-Win32Constants at: 'WM_NULL' put: 16r0!
-Win32Constants at: 'WM_PAINT' put: 16rF!
-Win32Constants at: 'WM_PAINTCLIPBOARD' put: 16r309!
-Win32Constants at: 'WM_PAINTICON' put: 16r26!
-Win32Constants at: 'WM_PALETTECHANGED' put: 16r311!
-Win32Constants at: 'WM_PALETTEISCHANGING' put: 16r310!
-Win32Constants at: 'WM_PARENTNOTIFY' put: 16r210!
-Win32Constants at: 'WM_PASTE' put: 16r302!
-Win32Constants at: 'WM_POWER' put: 16r48!
-Win32Constants at: 'WM_POWERBROADCAST' put: 16r218!
-Win32Constants at: 'WM_PRINT' put: 16r317!
-Win32Constants at: 'WM_PRINTCLIENT' put: 16r318!
-Win32Constants at: 'WM_QUERYDRAGICON' put: 16r37!
-Win32Constants at: 'WM_QUERYENDSESSION' put: 16r11!
-Win32Constants at: 'WM_QUERYNEWPALETTE' put: 16r30F!
-Win32Constants at: 'WM_QUERYOPEN' put: 16r13!
-Win32Constants at: 'WM_QUERYUISTATE' put: 16r129!
-Win32Constants at: 'WM_QUEUESYNC' put: 16r23!
-Win32Constants at: 'WM_QUIT' put: 16r12!
-Win32Constants at: 'WM_RBUTTONDBLCLK' put: 16r206!
-Win32Constants at: 'WM_RBUTTONDOWN' put: 16r204!
-Win32Constants at: 'WM_RBUTTONUP' put: 16r205!
-Win32Constants at: 'WM_RENDERALLFORMATS' put: 16r306!
-Win32Constants at: 'WM_RENDERFORMAT' put: 16r305!
-Win32Constants at: 'WM_SETCURSOR' put: 16r20!
-Win32Constants at: 'WM_SETEVENTMASK' put: 16r445!
-Win32Constants at: 'WM_SETFOCUS' put: 16r7!
-Win32Constants at: 'WM_SETFONT' put: 16r30!
-Win32Constants at: 'WM_SETHOTKEY' put: 16r32!
-Win32Constants at: 'WM_SETICON' put: 16r80!
-Win32Constants at: 'WM_SETREDRAW' put: 16rB!
-Win32Constants at: 'WM_SETTEXT' put: 16rC!
-Win32Constants at: 'WM_SETTINGCHANGE' put: 16r1A!
-Win32Constants at: 'WM_SHOWWINDOW' put: 16r18!
-Win32Constants at: 'WM_SIZE' put: 16r5!
-Win32Constants at: 'WM_SIZECLIPBOARD' put: 16r30B!
-Win32Constants at: 'WM_SIZING' put: 16r214!
-Win32Constants at: 'WM_SPOOLERSTATUS' put: 16r2A!
-Win32Constants at: 'WM_STYLECHANGED' put: 16r7D!
-Win32Constants at: 'WM_STYLECHANGING' put: 16r7C!
-Win32Constants at: 'WM_SYSCHAR' put: 16r106!
-Win32Constants at: 'WM_SYSCOLORCHANGE' put: 16r15!
-Win32Constants at: 'WM_SYSCOMMAND' put: 16r112!
-Win32Constants at: 'WM_SYSDEADCHAR' put: 16r107!
-Win32Constants at: 'WM_SYSKEYDOWN' put: 16r104!
-Win32Constants at: 'WM_SYSKEYUP' put: 16r105!
-Win32Constants at: 'WM_TCARD' put: 16r52!
-Win32Constants at: 'WM_THEMECHANGED' put: 16r31A!
-Win32Constants at: 'WM_TIMECHANGE' put: 16r1E!
-Win32Constants at: 'WM_TIMER' put: 16r113!
-Win32Constants at: 'WM_UNDO' put: 16r304!
-Win32Constants at: 'WM_UPDATEUISTATE' put: 16r128!
-Win32Constants at: 'WM_USER' put: 16r400!
-Win32Constants at: 'WM_USER_LAST' put: 16r7FFF!
-Win32Constants at: 'WM_USERCHANGED' put: 16r54!
-Win32Constants at: 'WM_VKEYTOITEM' put: 16r2E!
-Win32Constants at: 'WM_VSCROLL' put: 16r115!
-Win32Constants at: 'WM_VSCROLLCLIPBOARD' put: 16r30A!
-Win32Constants at: 'WM_WINDOWPOSCHANGED' put: 16r47!
-Win32Constants at: 'WM_WINDOWPOSCHANGING' put: 16r46!
-Win32Constants at: 'WM_WININICHANGE' put: 16r1A!
-Win32Constants at: 'WM_XBUTTONDBLCLK' put: 16r20D!
-Win32Constants at: 'WM_XBUTTONDOWN' put: 16r20B!
-Win32Constants at: 'WM_XBUTTONUP' put: 16r20C!
-Win32Constants at: 'WS_BORDER' put: 16r800000!
-Win32Constants at: 'WS_CAPTION' put: 16rC00000!
-Win32Constants at: 'WS_CHILD' put: 16r40000000!
-Win32Constants at: 'WS_CHILDWINDOW' put: 16r40000000!
-Win32Constants at: 'WS_CLIPCHILDREN' put: 16r2000000!
-Win32Constants at: 'WS_CLIPSIBLINGS' put: 16r4000000!
-Win32Constants at: 'WS_DISABLED' put: 16r8000000!
-Win32Constants at: 'WS_DLGFRAME' put: 16r400000!
-Win32Constants at: 'WS_EX_ACCEPTFILES' put: 16r10!
-Win32Constants at: 'WS_EX_APPWINDOW' put: 16r40000!
-Win32Constants at: 'WS_EX_CLIENTEDGE' put: 16r200!
-Win32Constants at: 'WS_EX_COMPOSITED' put: 16r2000000!
-Win32Constants at: 'WS_EX_CONTEXTHELP' put: 16r400!
-Win32Constants at: 'WS_EX_CONTROLPARENT' put: 16r10000!
-Win32Constants at: 'WS_EX_DLGMODALFRAME' put: 16r1!
-Win32Constants at: 'WS_EX_LAYERED' put: 16r80000!
-Win32Constants at: 'WS_EX_LEFT' put: 16r0!
-Win32Constants at: 'WS_EX_LEFTSCROLLBAR' put: 16r4000!
-Win32Constants at: 'WS_EX_LTRREADING' put: 16r0!
-Win32Constants at: 'WS_EX_NOACTIVATE' put: 16r8000000!
-Win32Constants at: 'WS_EX_NOPARENTNOTIFY' put: 16r4!
-Win32Constants at: 'WS_EX_NOTIFYDRAG' put: 16r2!
-Win32Constants at: 'WS_EX_OVERLAPPEDWINDOW' put: 16r300!
-Win32Constants at: 'WS_EX_PALETTEWINDOW' put: 16r188!
-Win32Constants at: 'WS_EX_RIGHT' put: 16r1000!
-Win32Constants at: 'WS_EX_RIGHTSCROLLBAR' put: 16r0!
-Win32Constants at: 'WS_EX_RTLREADING' put: 16r2000!
-Win32Constants at: 'WS_EX_STATICEDGE' put: 16r20000!
-Win32Constants at: 'WS_EX_TOOLWINDOW' put: 16r80!
-Win32Constants at: 'WS_EX_TOPMOST' put: 16r8!
-Win32Constants at: 'WS_EX_TRANSPARENT' put: 16r20!
-Win32Constants at: 'WS_EX_WINDOWEDGE' put: 16r100!
-Win32Constants at: 'WS_GROUP' put: 16r20000!
-Win32Constants at: 'WS_HSCROLL' put: 16r100000!
-Win32Constants at: 'WS_ICONIC' put: 16r20000000!
-Win32Constants at: 'WS_MAXIMIZE' put: 16r1000000!
-Win32Constants at: 'WS_MAXIMIZEBOX' put: 16r10000!
-Win32Constants at: 'WS_MINIMIZE' put: 16r20000000!
-Win32Constants at: 'WS_MINIMIZEBOX' put: 16r20000!
-Win32Constants at: 'WS_OVERLAPPED' put: 16r0!
-Win32Constants at: 'WS_OVERLAPPEDWINDOW' put: 16rCF0000!
-Win32Constants at: 'WS_POPUP' put: 16r80000000!
-Win32Constants at: 'WS_POPUPWINDOW' put: -16r7F780000!
-Win32Constants at: 'WS_SIZEBOX' put: 16r40000!
-Win32Constants at: 'WS_SYSMENU' put: 16r80000!
-Win32Constants at: 'WS_TABSTOP' put: 16r10000!
-Win32Constants at: 'WS_THICKFRAME' put: 16r40000!
-Win32Constants at: 'WS_TILED' put: 16r0!
-Win32Constants at: 'WS_TILEDWINDOW' put: 16rCF0000!
-Win32Constants at: 'WS_VISIBLE' put: 16r10000000!
-Win32Constants at: 'WS_VSCROLL' put: 16r200000!
-Win32Constants at: 'WVR_ALIGNBOTTOM' put: 16r40!
-Win32Constants at: 'WVR_ALIGNLEFT' put: 16r20!
-Win32Constants at: 'WVR_ALIGNRIGHT' put: 16r80!
-Win32Constants at: 'WVR_ALIGNTOP' put: 16r10!
-Win32Constants at: 'WVR_HREDRAW' put: 16r100!
-Win32Constants at: 'WVR_REDRAW' put: 16r300!
-Win32Constants at: 'WVR_VALIDRECTS' put: 16r400!
-Win32Constants at: 'WVR_VREDRAW' put: 16r200!
-Win32Constants shrink!
+SharedPool subclass: #Win32Constants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ABOVE_NORMAL_PRIORITY_CLASS' -> 16r8000.
+		'AC_SRC_ALPHA' -> 16r1.
+		'AC_SRC_OVER' -> 16r0.
+		'ASPECTX' -> 16r28.
+		'ASPECTXY' -> 16r2C.
+		'ASPECTY' -> 16r2A.
+		'ATTACH_PARENT_PROCESS' -> 16rFFFFFFFF.
+		'AW_ACTIVATE' -> 16r20000.
+		'AW_BLEND' -> 16r80000.
+		'AW_CENTER' -> 16r10.
+		'AW_HIDE' -> 16r10000.
+		'AW_HOR_NEGATIVE' -> 16r2.
+		'AW_HOR_POSITIVE' -> 16r1.
+		'AW_SLIDE' -> 16r40000.
+		'AW_VER_NEGATIVE' -> 16r8.
+		'AW_VER_POSITIVE' -> 16r4.
+		'BELOW_NORMAL_PRIORITY_CLASS' -> 16r4000.
+		'BF_ADJUST' -> 16r2000.
+		'BF_BOTTOM' -> 16r8.
+		'BF_BOTTOMLEFT' -> 16r9.
+		'BF_BOTTOMRIGHT' -> 16rC.
+		'BF_DIAGONAL' -> 16r10.
+		'BF_DIAGONAL_ENDBOTTOMLEFT' -> 16r19.
+		'BF_DIAGONAL_ENDBOTTOMRIGHT' -> 16r1C.
+		'BF_DIAGONAL_ENDTOPLEFT' -> 16r13.
+		'BF_DIAGONAL_ENDTOPRIGHT' -> 16r16.
+		'BF_FLAT' -> 16r4000.
+		'BF_LEFT' -> 16r1.
+		'BF_MIDDLE' -> 16r800.
+		'BF_MONO' -> 16r8000.
+		'BF_RECT' -> 16rF.
+		'BF_RIGHT' -> 16r4.
+		'BF_SOFT' -> 16r1000.
+		'BF_TOP' -> 16r2.
+		'BF_TOPLEFT' -> 16r3.
+		'BF_TOPRIGHT' -> 16r6.
+		'BI_RGB' -> 16r0.
+		'BITSPIXEL' -> 16rC.
+		'BLACK_BRUSH' -> 16r4.
+		'BLACK_PEN' -> 16r7.
+		'BS_CHECKBOX' -> 16r2.
+		'BS_DIBPATTERN' -> 16r5.
+		'BS_DIBPATTERN8X8' -> 16r8.
+		'BS_DIBPATTERNPT' -> 16r6.
+		'BS_HATCHED' -> 16r2.
+		'BS_HOLLOW' -> 16r1.
+		'BS_INDEXED' -> 16r4.
+		'BS_NULL' -> 16r1.
+		'BS_PATTERN' -> 16r3.
+		'BS_PATTERN8X8' -> 16r7.
+		'BS_SOLID' -> 16r0.
+		'C1_ALPHA' -> 16r100.
+		'C1_BLANK' -> 16r40.
+		'C1_CNTRL' -> 16r20.
+		'C1_DEFINED' -> 16r200.
+		'C1_DIGIT' -> 16r4.
+		'C1_LOWER' -> 16r2.
+		'C1_PUNCT' -> 16r10.
+		'C1_SPACE' -> 16r8.
+		'C1_UPPER' -> 16r1.
+		'C1_XDIGIT' -> 16r80.
+		'CAL_ITWODIGITYEARMAX' -> 16r30.
+		'CAL_IYEAROFFSETRANGE' -> 16r3.
+		'CAL_RETURN_NUMBER' -> 16r20000000.
+		'CAL_SABBREVERASTRING' -> 16r39.
+		'CAL_SERASTRING' -> 16r4.
+		'CAL_SNAME' -> 16r2.
+		'CAL_SRELATIVELONGDATE' -> 16r3A.
+		'CBM_INIT' -> 16r4.
+		'CF_BITMAP' -> 16r2.
+		'CF_DIB' -> 16r8.
+		'CF_DIBV5' -> 16r11.
+		'CF_DIF' -> 16r5.
+		'CF_DSPBITMAP' -> 16r82.
+		'CF_DSPENHMETAFILE' -> 16r8E.
+		'CF_DSPMETAFILEPICT' -> 16r83.
+		'CF_DSPTEXT' -> 16r81.
+		'CF_ENHMETAFILE' -> 16rE.
+		'CF_HDROP' -> 16rF.
+		'CF_LOCALE' -> 16r10.
+		'CF_METAFILEPICT' -> 16r3.
+		'CF_OEMTEXT' -> 16r7.
+		'CF_OWNERDISPLAY' -> 16r80.
+		'CF_PALETTE' -> 16r9.
+		'CF_PENDATA' -> 16rA.
+		'CF_RIFF' -> 16rB.
+		'CF_SYLK' -> 16r4.
+		'CF_TEXT' -> 16r1.
+		'CF_TIFF' -> 16r6.
+		'CF_UNICODETEXT' -> 16rD.
+		'CF_WAVE' -> 16rC.
+		'CLR_DEFAULT' -> 16rFF000000.
+		'CLR_INVALID' -> 16rFFFFFFFF.
+		'CLR_NONE' -> 16rFFFFFFFF.
+		'COLOR_3DDKSHADOW' -> 16r15.
+		'COLOR_3DFACE' -> 16rF.
+		'COLOR_3DHIGHLIGHT' -> 16r14.
+		'COLOR_3DLIGHT' -> 16r16.
+		'COLOR_3DSHADOW' -> 16r10.
+		'COLOR_ACTIVEBORDER' -> 16rA.
+		'COLOR_ACTIVECAPTION' -> 16r2.
+		'COLOR_APPWORKSPACE' -> 16rC.
+		'COLOR_BTNHIGHLIGHT' -> 16r14.
+		'COLOR_BTNTEXT' -> 16r12.
+		'COLOR_CAPTIONTEXT' -> 16r9.
+		'COLOR_DESKTOP' -> 16r1.
+		'COLOR_GRADIENTACTIVECAPTION' -> 16r1B.
+		'COLOR_GRADIENTINACTIVECAPTION' -> 16r1C.
+		'COLOR_GRAYTEXT' -> 16r11.
+		'COLOR_HIGHLIGHT' -> 16rD.
+		'COLOR_HIGHLIGHTTEXT' -> 16rE.
+		'COLOR_HOTLIGHT' -> 16r1A.
+		'COLOR_INACTIVEBORDER' -> 16rB.
+		'COLOR_INACTIVECAPTION' -> 16r3.
+		'COLOR_INACTIVECAPTIONTEXT' -> 16r13.
+		'COLOR_INFOBK' -> 16r18.
+		'COLOR_INFOTEXT' -> 16r17.
+		'COLOR_MENU' -> 16r4.
+		'COLOR_MENUBAR' -> 16r1E.
+		'COLOR_MENUHILIGHT' -> 16r1D.
+		'COLOR_MENUTEXT' -> 16r7.
+		'COLOR_SCROLLBAR' -> 16r0.
+		'COLOR_WINDOW' -> 16r5.
+		'COLOR_WINDOWFRAME' -> 16r6.
+		'COLOR_WINDOWTEXT' -> 16r8.
+		'CP_ACP' -> 16r0.
+		'CP_INSTALLED' -> 16r1.
+		'CP_SUPPORTED' -> 16r2.
+		'CP_UNICODE' -> 16r4B0.
+		'CP_UTF7' -> 16rFDE8.
+		'CP_UTF8' -> 16rFDE9.
+		'CREATE_ALWAYS' -> 16r2.
+		'CREATE_DEFAULT_ERROR_MODE' -> 16r4000000.
+		'CREATE_FORCEDOS' -> 16r2000.
+		'CREATE_NEW' -> 16r1.
+		'CREATE_NEW_CONSOLE' -> 16r10.
+		'CREATE_NEW_PROCESS_GROUP' -> 16r200.
+		'CREATE_NO_WINDOW' -> 16r8000000.
+		'CREATE_SEPARATE_WOW_VDM' -> 16r800.
+		'CREATE_SHARED_WOW_VDM' -> 16r1000.
+		'CREATE_SUSPENDED' -> 16r4.
+		'CREATE_UNICODE_ENVIRONMENT' -> 16r400.
+		'CREATEPROCESS_MANIFEST_RESOURCE_ID' -> 16r1.
+		'CS_BYTEALIGNCLIENT' -> 16r1000.
+		'CS_BYTEALIGNWINDOW' -> 16r2000.
+		'CS_CLASSDC' -> 16r40.
+		'CS_DBLCLKS' -> 16r8.
+		'CS_GLOBALCLASS' -> 16r4000.
+		'CS_HREDRAW' -> 16r2.
+		'CS_KEYCVTWINDOW' -> 16r4.
+		'CS_NOCLOSE' -> 16r200.
+		'CS_NOKEYCVT' -> 16r100.
+		'CS_OWNDC' -> 16r20.
+		'CS_PARENTDC' -> 16r80.
+		'CS_SAVEBITS' -> 16r800.
+		'CS_VREDRAW' -> 16r1.
+		'CSTR_EQUAL' -> 16r2.
+		'CSTR_GREATER_THAN' -> 16r3.
+		'CSTR_LESS_THAN' -> 16r1.
+		'CTRL_BREAK_EVENT' -> 16r1.
+		'CTRL_C_EVENT' -> 16r0.
+		'CTRL_CLOSE_EVENT' -> 16r2.
+		'CTRL_LOGOFF_EVENT' -> 16r5.
+		'CTRL_SHUTDOWN_EVENT' -> 16r6.
+		'CW_USEDEFAULT' -> -16r80000000.
+		'CWP_ALL' -> 16r0.
+		'CWP_SKIPDISABLED' -> 16r2.
+		'CWP_SKIPINVISIBLE' -> 16r1.
+		'CWP_SKIPTRANSPARENT' -> 16r4.
+		'DATE_LONGDATE' -> 16r2.
+		'DATE_MONTHDAY' -> 16r80.
+		'DATE_SHORTDATE' -> 16r1.
+		'DATE_USE_ALT_CALENDAR' -> 16r4.
+		'DATE_YEARMONTH' -> 16r8.
+		'DC_HASDEFID' -> 16r534B.
+		'DCX_INTERSECTRGN' -> 16r80.
+		'DCX_WINDOW' -> 16r1.
+		'DEFAULT_GUI_FONT' -> 16r11.
+		'DEFAULT_PALETTE' -> 16rF.
+		'DESKTOPVERTRES' -> 16r76.
+		'DETACHED_PROCESS' -> 16r8.
+		'DEVICE_DEFAULT_FONT' -> 16rE.
+		'DFC_BUTTON' -> 16r4.
+		'DFC_CAPTION' -> 16r1.
+		'DFC_MENU' -> 16r2.
+		'DFC_POPUPMENU' -> 16r5.
+		'DFC_SCROLL' -> 16r3.
+		'DFCS_ADJUSTRECT' -> 16r2000.
+		'DFCS_BUTTON3STATE' -> 16r8.
+		'DFCS_BUTTONCHECK' -> 16r0.
+		'DFCS_BUTTONPUSH' -> 16r10.
+		'DFCS_BUTTONRADIO' -> 16r4.
+		'DFCS_BUTTONRADIOIMAGE' -> 16r1.
+		'DFCS_BUTTONRADIOMASK' -> 16r2.
+		'DFCS_CAPTIONCLOSE' -> 16r0.
+		'DFCS_CAPTIONHELP' -> 16r4.
+		'DFCS_CAPTIONMAX' -> 16r2.
+		'DFCS_CAPTIONMIN' -> 16r1.
+		'DFCS_CAPTIONRESTORE' -> 16r3.
+		'DFCS_CHECKED' -> 16r400.
+		'DFCS_FLAT' -> 16r4000.
+		'DFCS_INACTIVE' -> 16r100.
+		'DFCS_MENUARROW' -> 16r0.
+		'DFCS_MENUARROWRIGHT' -> 16r4.
+		'DFCS_MENUBULLET' -> 16r2.
+		'DFCS_MENUCHECK' -> 16r1.
+		'DFCS_MONO' -> 16r8000.
+		'DFCS_PUSHED' -> 16r200.
+		'DFCS_SCROLLCOMBOBOX' -> 16r5.
+		'DFCS_SCROLLDOWN' -> 16r1.
+		'DFCS_SCROLLLEFT' -> 16r2.
+		'DFCS_SCROLLRIGHT' -> 16r3.
+		'DFCS_SCROLLSIZEGRIP' -> 16r8.
+		'DFCS_SCROLLSIZEGRIPRIGHT' -> 16r10.
+		'DFCS_SCROLLUP' -> 16r0.
+		'DI_COMPAT' -> 16r4.
+		'DI_DEFAULTSIZE' -> 16r8.
+		'DI_IMAGE' -> 16r2.
+		'DI_MASK' -> 16r1.
+		'DI_NORMAL' -> 16r3.
+		'DIB_PAL_COLORS' -> 16r1.
+		'DIB_RGB_COLORS' -> 16r0.
+		'DKGRAY_BRUSH' -> 16r3.
+		'DLGC_BUTTON' -> 16r2000.
+		'DLGC_DEFPUSHBUTTON' -> 16r10.
+		'DLGC_HASSETSEL' -> 16r8.
+		'DLGC_RADIOBUTTON' -> 16r40.
+		'DLGC_STATIC' -> 16r100.
+		'DLGC_UNDEFPUSHBUTTON' -> 16r20.
+		'DLGC_WANTALLKEYS' -> 16r4.
+		'DLGC_WANTARROWS' -> 16r1.
+		'DLGC_WANTCHARS' -> 16r80.
+		'DLGC_WANTMESSAGE' -> 16r4.
+		'DLGC_WANTTAB' -> 16r2.
+		'DM_GETDEFID' -> 16r400.
+		'DM_SETDEFID' -> 16r401.
+		'DONT_RESOLVE_DLL_REFERENCES' -> 16r1.
+		'DS_3DLOOK' -> 16r4.
+		'DSS_DISABLED' -> 16r20.
+		'DSS_HIDEPREFIX' -> 16r200.
+		'DSS_MONO' -> 16r80.
+		'DSS_NORMAL' -> 16r0.
+		'DSS_PREFIXONLY' -> 16r400.
+		'DSS_RIGHT' -> 16r8000.
+		'DSS_UNION' -> 16r10.
+		'DST_BITMAP' -> 16r4.
+		'DST_COMPLEX' -> 16r0.
+		'DST_ICON' -> 16r3.
+		'DST_PREFIXTEXT' -> 16r2.
+		'DST_TEXT' -> 16r1.
+		'DSTINVERT' -> 16r550009.
+		'DT_BOTTOM' -> 16r8.
+		'DT_CALCRECT' -> 16r400.
+		'DT_CENTER' -> 16r1.
+		'DT_EDITCONTROL' -> 16r2000.
+		'DT_END_ELLIPSIS' -> 16r8000.
+		'DT_EXPANDTABS' -> 16r40.
+		'DT_EXTERNALLEADING' -> 16r200.
+		'DT_HIDEPREFIX' -> 16r100000.
+		'DT_INTERNAL' -> 16r1000.
+		'DT_LEFT' -> 16r0.
+		'DT_MODIFYSTRING' -> 16r10000.
+		'DT_NOCLIP' -> 16r100.
+		'DT_NOFULLWIDTHCHARBREAK' -> 16r80000.
+		'DT_NOPREFIX' -> 16r800.
+		'DT_PATH_ELLIPSIS' -> 16r4000.
+		'DT_PREFIXONLY' -> 16r200000.
+		'DT_RIGHT' -> 16r2.
+		'DT_RTLREADING' -> 16r20000.
+		'DT_SINGLELINE' -> 16r20.
+		'DT_TABSTOP' -> 16r80.
+		'DT_TOP' -> 16r0.
+		'DT_VCENTER' -> 16r4.
+		'DT_WORD_ELLIPSIS' -> 16r40000.
+		'DT_WORDBREAK' -> 16r10.
+		'DUPLICATE_SAME_ACCESS' -> 16r2.
+		'DWL_MSGRESULT' -> 16r0.
+		'EDGE_BUMP' -> 16r9.
+		'EDGE_ETCHED' -> 16r6.
+		'EDGE_RAISED' -> 16r5.
+		'EDGE_SUNKEN' -> 16rA.
+		'ELF_VENDOR_SIZE' -> 16r4.
+		'EM_LINESCROLL' -> 16rB6.
+		'EM_SCROLL' -> 16rB5.
+		'EVENTLOG_ERROR_TYPE' -> 16r1.
+		'EVENTLOG_INFORMATION_TYPE' -> 16r4.
+		'EVENTLOG_SUCCESS' -> 16r0.
+		'EVENTLOG_WARNING_TYPE' -> 16r2.
+		'EXCEPTION_MAXIMUM_PARAMETERS' -> 16rF.
+		'FALT' -> 16r10.
+		'FCONTROL' -> 16r8.
+		'FILE_ATTRIBUTE_DIRECTORY' -> 16r10.
+		'FILE_ATTRIBUTE_NORMAL' -> 16r80.
+		'FILE_ATTRIBUTE_READONLY' -> 16r1.
+		'FILE_BEGIN' -> 16r0.
+		'FILE_CURRENT' -> 16r1.
+		'FILE_END' -> 16r2.
+		'FILE_FLAG_BACKUP_SEMANTICS' -> 16r2000000.
+		'FILE_FLAG_OVERLAPPED' -> 16r40000000.
+		'FILE_LIST_DIRECTORY' -> 16r1.
+		'FILE_SHARE_DELETE' -> 16r4.
+		'FILE_SHARE_READ' -> 16r1.
+		'FILE_SHARE_WRITE' -> 16r2.
+		'FILE_SUPPORTS_SPARSE_FILES' -> 16r40.
+		'FILE_TYPE_CHAR' -> 16r2.
+		'FILE_TYPE_DISK' -> 16r1.
+		'FILE_TYPE_PIPE' -> 16r3.
+		'FILE_TYPE_REMOTE' -> 16r8000.
+		'FILE_TYPE_UNKNOWN' -> 16r0.
+		'FLASHW_ALL' -> 16r3.
+		'FLASHW_CAPTION' -> 16r1.
+		'FLASHW_STOP' -> 16r0.
+		'FLASHW_TIMER' -> 16r4.
+		'FLASHW_TIMERNOFG' -> 16rC.
+		'FLASHW_TRAY' -> 16r2.
+		'FNOINVERT' -> 16r2.
+		'FORMAT_MESSAGE_ALLOCATE_BUFFER' -> 16r100.
+		'FORMAT_MESSAGE_ARGUMENT_ARRAY' -> 16r2000.
+		'FORMAT_MESSAGE_FROM_HMODULE' -> 16r800.
+		'FORMAT_MESSAGE_FROM_STRING' -> 16r400.
+		'FORMAT_MESSAGE_FROM_SYSTEM' -> 16r1000.
+		'FORMAT_MESSAGE_IGNORE_INSERTS' -> 16r200.
+		'FSCTL_SET_SPARSE' -> 16r900C4.
+		'FSHIFT' -> 16r4.
+		'FVIRTKEY' -> 16r1.
+		'FW_BOLD' -> 16r2BC.
+		'FW_DONTCARE' -> 16r0.
+		'FW_EXTRABOLD' -> 16r320.
+		'FW_EXTRALIGHT' -> 16rC8.
+		'FW_HEAVY' -> 16r384.
+		'FW_LIGHT' -> 16r12C.
+		'FW_MEDIUM' -> 16r1F4.
+		'FW_NORMAL' -> 16r190.
+		'FW_SEMIBOLD' -> 16r258.
+		'FW_THIN' -> 16r64.
+		'GA_PARENT' -> 16r1.
+		'GA_ROOT' -> 16r2.
+		'GA_ROOTOWNER' -> 16r3.
+		'GCL_WNDPROC' -> -16r18.
+		'GENERIC_READ' -> 16r80000000.
+		'GENERIC_WRITE' -> 16r40000000.
+		'GHND' -> 16r42.
+		'GMEM_DDESHARE' -> 16r2000.
+		'GMEM_MOVEABLE' -> 16r2.
+		'GMEM_ZEROINIT' -> 16r40.
+		'GRADIENT_FILL_OP_FLAG' -> 16rFF.
+		'GRADIENT_FILL_RECT_H' -> 16r0.
+		'GRADIENT_FILL_RECT_V' -> 16r1.
+		'GRADIENT_FILL_TRIANGLE' -> 16r2.
+		'GRAY_BRUSH' -> 16r2.
+		'GW_HWNDCHILD' -> 16r5.
+		'GW_HWNDFIRST' -> 16r0.
+		'GW_HWNDLAST' -> 16r1.
+		'GW_HWNDNEXT' -> 16r2.
+		'GW_HWNDOWNER' -> 16r4.
+		'GW_HWNDPREV' -> 16r3.
+		'GWL_EXSTYLE' -> -16r14.
+		'GWL_ID' -> -16rC.
+		'GWL_STYLE' -> -16r10.
+		'GWL_WNDPROC' -> -16r4.
+		'GWLP_HINSTANCE' -> -16r6.
+		'GWLP_HWNDPARENT' -> -16r8.
+		'GWLP_ID' -> -16rC.
+		'GWLP_WNDPROC' -> -16r4.
+		'HBMMENU_CALLBACK' -> -16r1.
+		'HELP_COMMAND' -> 16r102.
+		'HELP_CONTENTS' -> 16r3.
+		'HELP_CONTEXT' -> 16r1.
+		'HELP_CONTEXTPOPUP' -> 16r8.
+		'HELP_FORCEFILE' -> 16r9.
+		'HELP_HELPONHELP' -> 16r4.
+		'HELP_INDEX' -> 16r3.
+		'HELP_KEY' -> 16r101.
+		'HELP_PARTIALKEY' -> 16r105.
+		'HELP_QUIT' -> 16r2.
+		'HELP_SETCONTENTS' -> 16r5.
+		'HELP_SETINDEX' -> 16r5.
+		'HELP_SETPOPUP_POS' -> 16rD.
+		'HIGH_PRIORITY_CLASS' -> 16r80.
+		'HINST_COMMCTRL' -> -16r1.
+		'HOLLOW_BRUSH' -> 16r5.
+		'HORZRES' -> 16r8.
+		'HORZSIZE' -> 16r4.
+		'HOVER_DEFAULT' -> -16r1.
+		'HS_BDIAGONAL' -> 16r3.
+		'HS_CROSS' -> 16r4.
+		'HS_DIAGCROSS' -> 16r5.
+		'HS_FDIAGONAL' -> 16r2.
+		'HS_HORIZONTAL' -> 16r0.
+		'HS_VERTICAL' -> 16r1.
+		'HTBORDER' -> 16r12.
+		'HTBOTTOM' -> 16rF.
+		'HTBOTTOMLEFT' -> 16r10.
+		'HTBOTTOMRIGHT' -> 16r11.
+		'HTCAPTION' -> 16r2.
+		'HTCLIENT' -> 16r1.
+		'HTERROR' -> -16r2.
+		'HTLEFT' -> 16rA.
+		'HTRIGHT' -> 16rB.
+		'HTTOP' -> 16rC.
+		'HTTOPLEFT' -> 16rD.
+		'HTTOPRIGHT' -> 16rE.
+		'HTTRANSPARENT' -> -16r1.
+		'HWND_BOTTOM' -> 16r1.
+		'HWND_MESSAGE' -> -16r3.
+		'HWND_NOTOPMOST' -> -16r2.
+		'HWND_TOP' -> 16r0.
+		'HWND_TOPMOST' -> -16r1.
+		'I_IMAGECALLBACK' -> -16r1.
+		'I_IMAGENONE' -> -16r2.
+		'ICON_BIG' -> 16r1.
+		'ICON_SMALL' -> 16r0.
+		'IDABORT' -> 16r3.
+		'IDC_APPSTARTING' -> 16r7F8A.
+		'IDC_ARROW' -> 16r7F00.
+		'IDC_CROSS' -> 16r7F03.
+		'IDC_HAND' -> 16r7F89.
+		'IDC_HELP' -> 16r7F8B.
+		'IDC_IBEAM' -> 16r7F01.
+		'IDC_ICON' -> 16r7F81.
+		'IDC_NO' -> 16r7F88.
+		'IDC_SIZE' -> 16r7F80.
+		'IDC_SIZEALL' -> 16r7F86.
+		'IDC_SIZENESW' -> 16r7F83.
+		'IDC_SIZENS' -> 16r7F85.
+		'IDC_SIZENWSE' -> 16r7F82.
+		'IDC_SIZEWE' -> 16r7F84.
+		'IDC_UPARROW' -> 16r7F04.
+		'IDC_WAIT' -> 16r7F02.
+		'IDCANCEL' -> 16r2.
+		'IDCLOSE' -> 16r8.
+		'IDCONTINUE' -> 16rB.
+		'IDHELP' -> 16r9.
+		'IDI_APPLICATION' -> 16r7F00.
+		'IDI_ERROR' -> 16r7F01.
+		'IDI_INFORMATION' -> 16r7F04.
+		'IDI_QUESTION' -> 16r7F02.
+		'IDI_WARNING' -> 16r7F03.
+		'IDI_WINLOGO' -> 16r7F05.
+		'IDIGNORE' -> 16r5.
+		'IDLE_PRIORITY_CLASS' -> 16r40.
+		'IDNO' -> 16r7.
+		'IDOK' -> 16r1.
+		'IDRETRY' -> 16r4.
+		'IDTRYAGAIN' -> 16rA.
+		'IDYES' -> 16r6.
+		'IMAGE_BITMAP' -> 16r0.
+		'IMAGE_CURSOR' -> 16r2.
+		'IMAGE_ENHMETAFILE' -> 16r3.
+		'IMAGE_ICON' -> 16r1.
+		'INFINITE' -> -16r1.
+		'INVALID_HANDLE_VALUE' -> 16rFFFFFFFF.
+		'IS_TEXT_UNICODE_REVERSE_MASK' -> 16rF0.
+		'IS_TEXT_UNICODE_REVERSE_STATISTICS' -> 16r20.
+		'IS_TEXT_UNICODE_SIGNATURE' -> 16r8.
+		'IS_TEXT_UNICODE_STATISTICS' -> 16r2.
+		'IS_TEXT_UNICODE_UNICODE_MASK' -> 16rF.
+		'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' -> 16r2.
+		'KF_EXTENDED' -> 16r100.
+		'KL_NAMELENGTH' -> 16r9.
+		'KLF_ACTIVATE' -> 16r1.
+		'KLF_NOTELLSHELL' -> 16r80.
+		'KLF_REORDER' -> 16r8.
+		'KLF_REPLACELANG' -> 16r10.
+		'KLF_RESET' -> 16r40000000.
+		'KLF_SETFORPROCESS' -> 16r100.
+		'KLF_SHIFTLOCK' -> 16r10000.
+		'KLF_SUBSTITUTE_OK' -> 16r2.
+		'LCMAP_TITLECASE' -> 16r300.
+		'LF_FACESIZE' -> 16r20.
+		'LF_FULLFACESIZE' -> 16r40.
+		'LIM_LARGE' -> 16r1.
+		'LIM_SMALL' -> 16r1.
+		'LINGUISTIC_IGNORECASE' -> 16r10.
+		'LINGUISTIC_IGNOREDIACRITIC' -> 16r20.
+		'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
+		'LOCALE_ALLOW_NEUTRAL_NAMES' -> 16r8000000.
+		'LOCALE_FONTSIGNATURE' -> 16r58.
+		'LOCALE_ICALENDARTYPE' -> 16r1009.
+		'LOCALE_ICURRDIGITS' -> 16r19.
+		'LOCALE_ICURRENCY' -> 16r1B.
+		'LOCALE_IDATE' -> 16r21.
+		'LOCALE_IDIALINGCODE' -> 16r5.
+		'LOCALE_IDIGITS' -> 16r11.
+		'LOCALE_IDIGITSUBSTITUTION' -> 16r1014.
+		'LOCALE_IFIRSTDAYOFWEEK' -> 16r100C.
+		'LOCALE_IFIRSTWEEKOFYEAR' -> 16r100D.
+		'LOCALE_ILZERO' -> 16r12.
+		'LOCALE_IMEASURE' -> 16rD.
+		'LOCALE_INEGATIVEPERCENT' -> 16r74.
+		'LOCALE_INEGCURR' -> 16r1C.
+		'LOCALE_INEGNUMBER' -> 16r1010.
+		'LOCALE_INEGSEPBYSPACE' -> 16r57.
+		'LOCALE_INEGSIGNPOSN' -> 16r53.
+		'LOCALE_INEGSYMPRECEDES' -> 16r56.
+		'LOCALE_INEUTRAL' -> 16r71.
+		'LOCALE_INVARIANT' -> 16r7F.
+		'LOCALE_IOPTIONALCALENDAR' -> 16r100B.
+		'LOCALE_IPAPERSIZE' -> 16r100A.
+		'LOCALE_IPOSITIVEPERCENT' -> 16r75.
+		'LOCALE_IPOSSEPBYSPACE' -> 16r55.
+		'LOCALE_IPOSSIGNPOSN' -> 16r52.
+		'LOCALE_IPOSSYMPRECEDES' -> 16r54.
+		'LOCALE_IREADINGLAYOUT' -> 16r70.
+		'LOCALE_NEUTRAL' -> 16r0.
+		'LOCALE_NOUSEROVERRIDE' -> -16r80000000.
+		'LOCALE_RETURN_GENITIVE_NAMES' -> 16r10000000.
+		'LOCALE_RETURN_NUMBER' -> 16r20000000.
+		'LOCALE_SABBREVDAYNAME1' -> 16r31.
+		'LOCALE_SABBREVDAYNAME2' -> 16r32.
+		'LOCALE_SABBREVDAYNAME3' -> 16r33.
+		'LOCALE_SABBREVDAYNAME4' -> 16r34.
+		'LOCALE_SABBREVDAYNAME5' -> 16r35.
+		'LOCALE_SABBREVDAYNAME6' -> 16r36.
+		'LOCALE_SABBREVDAYNAME7' -> 16r37.
+		'LOCALE_SABBREVMONTHNAME1' -> 16r44.
+		'LOCALE_SABBREVMONTHNAME10' -> 16r4D.
+		'LOCALE_SABBREVMONTHNAME11' -> 16r4E.
+		'LOCALE_SABBREVMONTHNAME12' -> 16r4F.
+		'LOCALE_SABBREVMONTHNAME13' -> 16r100F.
+		'LOCALE_SABBREVMONTHNAME2' -> 16r45.
+		'LOCALE_SABBREVMONTHNAME3' -> 16r46.
+		'LOCALE_SABBREVMONTHNAME4' -> 16r47.
+		'LOCALE_SABBREVMONTHNAME5' -> 16r48.
+		'LOCALE_SABBREVMONTHNAME6' -> 16r49.
+		'LOCALE_SABBREVMONTHNAME7' -> 16r4A.
+		'LOCALE_SABBREVMONTHNAME8' -> 16r4B.
+		'LOCALE_SABBREVMONTHNAME9' -> 16r4C.
+		'LOCALE_SAM' -> 16r28.
+		'LOCALE_SCONSOLEFALLBACKNAME' -> 16r6E.
+		'LOCALE_SCURRENCY' -> 16r14.
+		'LOCALE_SDATE' -> 16r1D.
+		'LOCALE_SDAYNAME1' -> 16r2A.
+		'LOCALE_SDAYNAME2' -> 16r2B.
+		'LOCALE_SDAYNAME3' -> 16r2C.
+		'LOCALE_SDAYNAME4' -> 16r2D.
+		'LOCALE_SDAYNAME5' -> 16r2E.
+		'LOCALE_SDAYNAME6' -> 16r2F.
+		'LOCALE_SDAYNAME7' -> 16r30.
+		'LOCALE_SDECIMAL' -> 16rE.
+		'LOCALE_SDURATION' -> 16r5D.
+		'LOCALE_SENGCURRNAME' -> 16r1007.
+		'LOCALE_SENGLISHCOUNTRYNAME' -> 16r1002.
+		'LOCALE_SENGLISHDISPLAYNAME' -> 16r72.
+		'LOCALE_SENGLISHLANGUAGENAME' -> 16r1001.
+		'LOCALE_SGROUPING' -> 16r10.
+		'LOCALE_SINTLSYMBOL' -> 16r15.
+		'LOCALE_SISO3166CTRYNAME' -> 16r5A.
+		'LOCALE_SISO3166CTRYNAME2' -> 16r68.
+		'LOCALE_SISO639LANGNAME' -> 16r59.
+		'LOCALE_SISO639LANGNAME2' -> 16r67.
+		'LOCALE_SLIST' -> 16rC.
+		'LOCALE_SLOCALIZEDCOUNTRYNAME' -> 16r6.
+		'LOCALE_SLOCALIZEDDISPLAYNAME' -> 16r2.
+		'LOCALE_SLOCALIZEDLANGUAGENAME' -> 16r6F.
+		'LOCALE_SLONGDATE' -> 16r20.
+		'LOCALE_SMONDECIMALSEP' -> 16r16.
+		'LOCALE_SMONGROUPING' -> 16r18.
+		'LOCALE_SMONTHDAY' -> 16r78.
+		'LOCALE_SMONTHNAME1' -> 16r38.
+		'LOCALE_SMONTHNAME10' -> 16r41.
+		'LOCALE_SMONTHNAME11' -> 16r42.
+		'LOCALE_SMONTHNAME12' -> 16r43.
+		'LOCALE_SMONTHNAME13' -> 16r100E.
+		'LOCALE_SMONTHNAME2' -> 16r39.
+		'LOCALE_SMONTHNAME3' -> 16r3A.
+		'LOCALE_SMONTHNAME4' -> 16r3B.
+		'LOCALE_SMONTHNAME5' -> 16r3C.
+		'LOCALE_SMONTHNAME6' -> 16r3D.
+		'LOCALE_SMONTHNAME7' -> 16r3E.
+		'LOCALE_SMONTHNAME8' -> 16r3F.
+		'LOCALE_SMONTHNAME9' -> 16r40.
+		'LOCALE_SMONTHOUSANDSEP' -> 16r17.
+		'LOCALE_SNAME' -> 16r5C.
+		'LOCALE_SNAN' -> 16r69.
+		'LOCALE_SNATIVECOUNTRYNAME' -> 16r8.
+		'LOCALE_SNATIVECURRNAME' -> 16r1008.
+		'LOCALE_SNATIVEDIGITS' -> 16r13.
+		'LOCALE_SNATIVEDISPLAYNAME' -> 16r73.
+		'LOCALE_SNATIVELANGUAGENAME' -> 16r4.
+		'LOCALE_SNEGATIVESIGN' -> 16r51.
+		'LOCALE_SNEGINFINITY' -> 16r6B.
+		'LOCALE_SOPENTYPELANGUAGETAG' -> 16r7A.
+		'LOCALE_SPARENT' -> 16r6D.
+		'LOCALE_SPERCENT' -> 16r76.
+		'LOCALE_SPERMILLE' -> 16r77.
+		'LOCALE_SPM' -> 16r29.
+		'LOCALE_SPOSINFINITY' -> 16r6A.
+		'LOCALE_SPOSITIVESIGN' -> 16r50.
+		'LOCALE_SRELATIVELONGDATE' -> 16r7C.
+		'LOCALE_SSCRIPTS' -> 16r6C.
+		'LOCALE_SSHORTDATE' -> 16r1F.
+		'LOCALE_SSHORTESTAM' -> 16r7E.
+		'LOCALE_SSHORTESTDAYNAME1' -> 16r60.
+		'LOCALE_SSHORTESTDAYNAME2' -> 16r61.
+		'LOCALE_SSHORTESTDAYNAME3' -> 16r62.
+		'LOCALE_SSHORTESTDAYNAME4' -> 16r63.
+		'LOCALE_SSHORTESTDAYNAME5' -> 16r64.
+		'LOCALE_SSHORTESTDAYNAME6' -> 16r65.
+		'LOCALE_SSHORTESTDAYNAME7' -> 16r66.
+		'LOCALE_SSHORTESTPM' -> 16r7F.
+		'LOCALE_SSHORTTIME' -> 16r79.
+		'LOCALE_SSORTLOCALE' -> 16r7B.
+		'LOCALE_SSORTNAME' -> 16r1013.
+		'LOCALE_STHOUSAND' -> 16rF.
+		'LOCALE_STIME' -> 16r1E.
+		'LOCALE_STIMEFORMAT' -> 16r1003.
+		'LOCALE_SYEARMONTH' -> 16r1006.
+		'LOCALE_SYSTEM_DEFAULT' -> 16r800.
+		'LOCALE_USER_DEFAULT' -> 16r400.
+		'LOGPIXELSX' -> 16r58.
+		'LOGPIXELSY' -> 16r5A.
+		'LPSTR_TEXTCALLBACK' -> -16r1.
+		'LR_COLOR' -> 16r2.
+		'LR_COPYDELETEORG' -> 16r8.
+		'LR_COPYFROMRESOURCE' -> 16r4000.
+		'LR_COPYRETURNORG' -> 16r4.
+		'LR_CREATEDIBSECTION' -> 16r2000.
+		'LR_DEFAULTCOLOR' -> 16r0.
+		'LR_DEFAULTSIZE' -> 16r40.
+		'LR_LOADFROMFILE' -> 16r10.
+		'LR_LOADMAP3DCOLORS' -> 16r1000.
+		'LR_LOADTRANSPARENT' -> 16r20.
+		'LR_MONOCHROME' -> 16r1.
+		'LR_SHARED' -> 16r8000.
+		'LR_VGACOLOR' -> 16r80.
+		'LTGRAY_BRUSH' -> 16r1.
+		'LWA_ALPHA' -> 16r2.
+		'LWA_COLORKEY' -> 16r1.
+		'MAPVK_VK_TO_VSC' -> 16r0.
+		'MAPVK_VSC_TO_VK' -> 16r1.
+		'MAPVK_VSC_TO_VK_CHAR' -> 16r2.
+		'MAPVK_VSC_TO_VK_EX' -> 16r3.
+		'MAX_COMPUTERNAME_LENGTH' -> 16rF.
+		'MAX_UCSCHAR' -> 16r10FFFF.
+		'MB_ERR_INVALID_CHARS' -> 16r8.
+		'MEM_COMMIT' -> 16r1000.
+		'MEM_DECOMMIT' -> 16r4000.
+		'MEM_FREE' -> 16r10000.
+		'MEM_IMAGE' -> 16r1000000.
+		'MEM_MAPPED' -> 16r40000.
+		'MEM_PRIVATE' -> 16r20000.
+		'MEM_RELEASE' -> 16r8000.
+		'MEM_RESERVE' -> 16r2000.
+		'MEM_TOP_DOWN' -> 16r100000.
+		'MERGECOPY' -> 16rC000CA.
+		'MF_BYCOMMAND' -> 16r0.
+		'MF_BYPOSITION' -> 16r400.
+		'MF_POPUP' -> 16r10.
+		'MFS_CHECKED' -> 16r8.
+		'MFS_DEFAULT' -> 16r1000.
+		'MFS_DISABLED' -> 16r1.
+		'MFS_ENABLED' -> 16r0.
+		'MFS_UNCHECKED' -> 16r0.
+		'MFT_MENUBARBREAK' -> 16r20.
+		'MFT_MENUBREAK' -> 16r40.
+		'MFT_RADIOCHECK' -> 16r200.
+		'MFT_SEPARATOR' -> 16r800.
+		'MFT_STRING' -> 16r0.
+		'MIIM_BITMAP' -> 16r80.
+		'MIIM_CHECKMARKS' -> 16r8.
+		'MIIM_DATA' -> 16r20.
+		'MIIM_FTYPE' -> 16r100.
+		'MIIM_ID' -> 16r2.
+		'MIIM_STATE' -> 16r1.
+		'MIIM_STRING' -> 16r40.
+		'MIIM_SUBMENU' -> 16r4.
+		'MIIM_TYPE' -> 16r10.
+		'MIM_APPLYTOSUBMENUS' -> 16r80000000.
+		'MIM_BACKGROUND' -> 16r2.
+		'MIM_HELPID' -> 16r4.
+		'MIM_MAXHEIGHT' -> 16r1.
+		'MIM_MENUDATA' -> 16r8.
+		'MIM_STYLE' -> 16r10.
+		'MK_CONTROL' -> 16r8.
+		'MK_LBUTTON' -> 16r1.
+		'MK_MBUTTON' -> 16r10.
+		'MK_RBUTTON' -> 16r2.
+		'MK_SHIFT' -> 16r4.
+		'MK_XBUTTON1' -> 16r20.
+		'MK_XBUTTON2' -> 16r40.
+		'MM_ANISOTROPIC' -> 16r8.
+		'MM_HIENGLISH' -> 16r5.
+		'MM_HIMETRIC' -> 16r3.
+		'MM_ISOTROPIC' -> 16r7.
+		'MM_LOENGLISH' -> 16r4.
+		'MM_LOMETRIC' -> 16r2.
+		'MM_TEXT' -> 16r1.
+		'MM_TWIPS' -> 16r6.
+		'MNS_AUTODISMISS' -> 16r10000000.
+		'MNS_CHECKORBMP' -> 16r4000000.
+		'MNS_DRAGDROP' -> 16r20000000.
+		'MNS_MODELESS' -> 16r40000000.
+		'MNS_NOCHECK' -> 16r80000000.
+		'MNS_NOTIFYBYPOS' -> 16r8000000.
+		'MOD_ALT' -> 16r1.
+		'MOD_CONTROL' -> 16r2.
+		'MOD_SHIFT' -> 16r4.
+		'MOD_WIN' -> 16r8.
+		'MSGF_MENU' -> 16r2.
+		'MWMO_ALERTABLE' -> 16r2.
+		'MWMO_INPUTAVAILABLE' -> 16r4.
+		'MWMO_WAITALL' -> 16r1.
+		'NIF_ICON' -> 16r2.
+		'NIF_MESSAGE' -> 16r1.
+		'NIF_TIP' -> 16r4.
+		'NIM_ADD' -> 16r0.
+		'NIM_DELETE' -> 16r2.
+		'NIM_MODIFY' -> 16r1.
+		'NORM_IGNORECASE' -> 16r1.
+		'NORM_IGNOREKANATYPE' -> 16r10000.
+		'NORM_IGNORENONCASE' -> 16r2.
+		'NORM_IGNORESYMBOLS' -> 16r4.
+		'NORM_IGNOREWIDTH' -> 16r20000.
+		'NORM_LINGUISTIC_CASING' -> 16r8000000.
+		'NORMAL_PRIORITY_CLASS' -> 16r20.
+		'NOTSRCCOPY' -> 16r330008.
+		'NULL_BRUSH' -> 16r5.
+		'NULL_PEN' -> 16r8.
+		'OBJ_BRUSH' -> 16r2.
+		'OBJ_FONT' -> 16r6.
+		'OBJ_PEN' -> 16r1.
+		'ODS_GRAYED' -> 16r2.
+		'ODS_SELECTED' -> 16r1.
+		'ODT_BUTTON' -> 16r4.
+		'ODT_COMBOBOX' -> 16r3.
+		'ODT_LISTBOX' -> 16r2.
+		'ODT_MENU' -> 16r1.
+		'ODT_STATIC' -> 16r5.
+		'OEM_FIXED_FONT' -> 16rA.
+		'OPAQUE' -> 16r2.
+		'OPEN_ALWAYS' -> 16r4.
+		'OPEN_EXISTING' -> 16r3.
+		'PAGE_EXECUTE' -> 16r10.
+		'PAGE_EXECUTE_READ' -> 16r20.
+		'PAGE_EXECUTE_READWRITE' -> 16r40.
+		'PAGE_EXECUTE_WRITECOPY' -> 16r80.
+		'PAGE_GUARD' -> 16r100.
+		'PAGE_NOACCESS' -> 16r1.
+		'PAGE_NOCACHE' -> 16r200.
+		'PAGE_READONLY' -> 16r2.
+		'PAGE_READWRITE' -> 16r4.
+		'PAGE_WRITECOPY' -> 16r8.
+		'PLANES' -> 16rE.
+		'PM_NOREMOVE' -> 16r0.
+		'PM_REMOVE' -> 16r1.
+		'PRF_CHECKVISIBLE' -> 16r1.
+		'PRF_CHILDREN' -> 16r10.
+		'PRF_CLIENT' -> 16r4.
+		'PRF_ERASEBKGND' -> 16r8.
+		'PRF_NONCLIENT' -> 16r2.
+		'PRF_OWNED' -> 16r20.
+		'PROCESS_TERMINATE' -> 16r1.
+		'PS_ALTERNATE' -> 16r8.
+		'PS_COSMETIC' -> 16r0.
+		'PS_DASH' -> 16r1.
+		'PS_DASHDOT' -> 16r3.
+		'PS_DASHDOTDOT' -> 16r4.
+		'PS_DOT' -> 16r2.
+		'PS_ENDCAPFLAT' -> 16r200.
+		'PS_ENDCAPMASK' -> 16rF00.
+		'PS_ENDCAPROUND' -> 16r0.
+		'PS_ENDCAPSQUARE' -> 16r100.
+		'PS_GEOMETRIC' -> 16r10000.
+		'PS_INSIDEFRAME' -> 16r6.
+		'PS_JOINBEVEL' -> 16r1000.
+		'PS_JOINMASK' -> 16rF000.
+		'PS_JOINMITER' -> 16r2000.
+		'PS_JOINROUND' -> 16r0.
+		'PS_NULL' -> 16r5.
+		'PS_SOLID' -> 16r0.
+		'PS_STYLEMASK' -> 16rF.
+		'PS_TYPEMASK' -> 16rF0000.
+		'PS_USERSTYLE' -> 16r7.
+		'QS_ALLPOSTMESSAGE' -> 16r100.
+		'QS_HOTKEY' -> 16r80.
+		'QS_KEY' -> 16r1.
+		'QS_MOUSE' -> 16r6.
+		'QS_MOUSEBUTTON' -> 16r4.
+		'QS_MOUSEMOVE' -> 16r2.
+		'QS_PAINT' -> 16r20.
+		'QS_POINTER' -> 16r1000.
+		'QS_POSTMESSAGE' -> 16r8.
+		'QS_RAWINPUT' -> 16r400.
+		'QS_SENDMESSAGE' -> 16r40.
+		'QS_TIMER' -> 16r10.
+		'QS_TOUCH' -> 16r800.
+		'RDW_ALLCHILDREN' -> 16r80.
+		'RDW_ERASE' -> 16r4.
+		'RDW_ERASENOW' -> 16r200.
+		'RDW_FRAME' -> 16r400.
+		'RDW_INTERNALPAINT' -> 16r2.
+		'RDW_INVALIDATE' -> 16r1.
+		'RDW_NOCHILDREN' -> 16r40.
+		'RDW_NOERASE' -> 16r20.
+		'RDW_NOFRAME' -> 16r800.
+		'RDW_NOINTERNALPAINT' -> 16r10.
+		'RDW_UPDATENOW' -> 16r100.
+		'RDW_VALIDATE' -> 16r8.
+		'REALTIME_PRIORITY_CLASS' -> 16r100.
+		'RGN_AND' -> 16r1.
+		'RGN_DIFF' -> 16r4.
+		'RGN_OR' -> 16r2.
+		'RGN_XOR' -> 16r3.
+		'RT_ICON' -> 16r3.
+		'RT_MANIFEST' -> 16r18.
+		'RT_RCDATA' -> 16rA.
+		'RT_STRING' -> 16r6.
+		'RT_VERSION' -> 16r10.
+		'SB_BOTH' -> 16r3.
+		'SB_BOTTOM' -> 16r7.
+		'SB_CTL' -> 16r2.
+		'SB_ENDSCROLL' -> 16r8.
+		'SB_HORZ' -> 16r0.
+		'SB_LEFT' -> 16r6.
+		'SB_LINEDOWN' -> 16r1.
+		'SB_LINELEFT' -> 16r0.
+		'SB_LINERIGHT' -> 16r1.
+		'SB_LINEUP' -> 16r0.
+		'SB_PAGEDOWN' -> 16r3.
+		'SB_PAGELEFT' -> 16r2.
+		'SB_PAGERIGHT' -> 16r3.
+		'SB_PAGEUP' -> 16r2.
+		'SB_RIGHT' -> 16r7.
+		'SB_THUMBPOSITION' -> 16r4.
+		'SB_THUMBTRACK' -> 16r5.
+		'SB_TOP' -> 16r6.
+		'SB_VERT' -> 16r1.
+		'SC_CLOSE' -> 16rF060.
+		'SIF_ALL' -> 16r17.
+		'SIF_DISABLENOSCROLL' -> 16r8.
+		'SIF_PAGE' -> 16r2.
+		'SIF_POS' -> 16r4.
+		'SIF_RANGE' -> 16r1.
+		'SIF_TRACKPOS' -> 16r10.
+		'SIZE_MAXHIDE' -> 16r4.
+		'SIZE_MAXIMIZED' -> 16r2.
+		'SIZE_MAXSHOW' -> 16r3.
+		'SIZE_MINIMIZED' -> 16r1.
+		'SIZE_RESTORED' -> 16r0.
+		'SM_CXBORDER' -> 16r5.
+		'SM_CXCURSOR' -> 16rD.
+		'SM_CXDLGFRAME' -> 16r7.
+		'SM_CXDRAG' -> 16r44.
+		'SM_CXEDGE' -> 16r2D.
+		'SM_CXHTHUMB' -> 16rA.
+		'SM_CXICON' -> 16rB.
+		'SM_CXMENUCHECK' -> 16r47.
+		'SM_CXMENUSIZE' -> 16r36.
+		'SM_CXSIZEFRAME' -> 16r20.
+		'SM_CXSMICON' -> 16r31.
+		'SM_CXVIRTUALSCREEN' -> 16r4E.
+		'SM_CYBORDER' -> 16r6.
+		'SM_CYCURSOR' -> 16rE.
+		'SM_CYDLGFRAME' -> 16r7.
+		'SM_CYDRAG' -> 16r45.
+		'SM_CYEDGE' -> 16r2E.
+		'SM_CYICON' -> 16rC.
+		'SM_CYMENU' -> 16rF.
+		'SM_CYMENUCHECK' -> 16r48.
+		'SM_CYMENUSIZE' -> 16r37.
+		'SM_CYSIZEFRAME' -> 16r21.
+		'SM_CYSMICON' -> 16r32.
+		'SM_CYVIRTUALSCREEN' -> 16r4F.
+		'SM_CYVTHUMB' -> 16r9.
+		'SM_SLOWMACHINE' -> 16r49.
+		'SM_XVIRTUALSCREEN' -> 16r4C.
+		'SM_YVIRTUALSCREEN' -> 16r4D.
+		'SND_ALIAS' -> 16r10000.
+		'SND_ASYNC' -> 16r1.
+		'SND_FILENAME' -> 16r20000.
+		'SND_LOOP' -> 16r8.
+		'SND_MEMORY' -> 16r4.
+		'SND_NODEFAULT' -> 16r2.
+		'SND_NOSTOP' -> 16r10.
+		'SND_NOWAIT' -> 16r2000.
+		'SND_RESERVED' -> 16rFF000000.
+		'SND_RESOURCE' -> 16r40004.
+		'SND_SYNC' -> 16r0.
+		'SND_TYPEMASK' -> 16r170007.
+		'SND_VALIDFLAGS' -> 16r17201F.
+		'SORT_DIGITSASNUMBERS' -> 16r8.
+		'SORT_STRINGSORT' -> 16r1000.
+		'SPI_GETFLATMENU' -> 16r1022.
+		'SPI_GETICONTITLELOGFONT' -> 16r1F.
+		'SPI_GETLISTBOXSMOOTHSCROLLING' -> 16r1006.
+		'SPI_GETMOUSEHOVERTIME' -> 16r66.
+		'SPI_GETNONCLIENTMETRICS' -> 16r29.
+		'SPI_GETWHEELSCROLLLINES' -> 16r68.
+		'SPI_GETWORKAREA' -> 16r30.
+		'SPI_SETFLATMENU' -> 16r1023.
+		'SPI_SETICONTITLELOGFONT' -> 16r22.
+		'SPI_SETLISTBOXSMOOTHSCROLLING' -> 16r1007.
+		'SPI_SETNONCLIENTMETRICS' -> 16r2A.
+		'SPIF_SENDCHANGE' -> 16r2.
+		'SPIF_UPDATEINIFILE' -> 16r1.
+		'SRCAND' -> 16r8800C6.
+		'SRCCOPY' -> 16rCC0020.
+		'SRCINVERT' -> 16r660046.
+		'SRCPAINT' -> 16rEE0086.
+		'SS_BITMAP' -> 16rE.
+		'SS_BLACKFRAME' -> 16r7.
+		'SS_BLACKRECT' -> 16r4.
+		'SS_CENTER' -> 16r1.
+		'SS_CENTERIMAGE' -> 16r200.
+		'SS_ENHMETAFILE' -> 16rF.
+		'SS_ETCHEDFRAME' -> 16r12.
+		'SS_ETCHEDHORZ' -> 16r10.
+		'SS_ETCHEDVERT' -> 16r11.
+		'SS_GRAYFRAME' -> 16r8.
+		'SS_GRAYRECT' -> 16r5.
+		'SS_ICON' -> 16r3.
+		'SS_LEFT' -> 16r0.
+		'SS_LEFTNOWORDWRAP' -> 16rC.
+		'SS_NOPREFIX' -> 16r80.
+		'SS_NOTIFY' -> 16r100.
+		'SS_OWNERDRAW' -> 16rD.
+		'SS_REALSIZEIMAGE' -> 16r800.
+		'SS_RIGHT' -> 16r2.
+		'SS_RIGHTJUST' -> 16r400.
+		'SS_SIMPLE' -> 16rB.
+		'SS_SUNKEN' -> 16r1000.
+		'SS_TYPEMASK' -> 16r1F.
+		'SS_USERITEM' -> 16rA.
+		'SS_WHITEFRAME' -> 16r9.
+		'SS_WHITERECT' -> 16r6.
+		'STARTF_FORCEOFFFEEDBACK' -> 16r80.
+		'STARTF_FORCEONFEEDBACK' -> 16r40.
+		'STARTF_RUNFULLSCREEN' -> 16r20.
+		'STARTF_USECOUNTCHARS' -> 16r8.
+		'STARTF_USEFILLATTRIBUTE' -> 16r10.
+		'STARTF_USEPOSITION' -> 16r4.
+		'STARTF_USESHOWWINDOW' -> 16r1.
+		'STARTF_USESIZE' -> 16r2.
+		'STARTF_USESTDHANDLES' -> 16r100.
+		'STATUS_ABANDONED_WAIT_0' -> 16r80.
+		'STATUS_TIMEOUT' -> 16r102.
+		'STATUS_WAIT_0' -> 16r0.
+		'STD_ERROR_HANDLE' -> -16rC.
+		'STD_INPUT_HANDLE' -> -16rA.
+		'STD_OUTPUT_HANDLE' -> -16rB.
+		'STILL_ACTIVE' -> 16r103.
+		'STM_GETICON' -> 16r171.
+		'STM_GETIMAGE' -> 16r173.
+		'STM_SETICON' -> 16r170.
+		'STM_SETIMAGE' -> 16r172.
+		'STN_CLICKED' -> 16r0.
+		'STN_DBLCLK' -> 16r1.
+		'STN_DISABLE' -> 16r3.
+		'STN_ENABLE' -> 16r2.
+		'SW_ERASE' -> 16r4.
+		'SW_HIDE' -> 16r0.
+		'SW_INVALIDATE' -> 16r2.
+		'SW_MAX' -> 16rA.
+		'SW_MAXIMIZE' -> 16r3.
+		'SW_MINIMIZE' -> 16r6.
+		'SW_NORMAL' -> 16r1.
+		'SW_RESTORE' -> 16r9.
+		'SW_SCROLLCHILDREN' -> 16r1.
+		'SW_SHOW' -> 16r5.
+		'SW_SHOWDEFAULT' -> 16rA.
+		'SW_SHOWMAXIMIZED' -> 16r3.
+		'SW_SHOWMINIMIZED' -> 16r2.
+		'SW_SHOWMINNOACTIVE' -> 16r7.
+		'SW_SHOWNA' -> 16r8.
+		'SW_SHOWNOACTIVATE' -> 16r4.
+		'SW_SHOWNORMAL' -> 16r1.
+		'SWP_FRAMECHANGED' -> 16r20.
+		'SWP_HIDEWINDOW' -> 16r80.
+		'SWP_NOACTIVATE' -> 16r10.
+		'SWP_NOCOPYBITS' -> 16r100.
+		'SWP_NOMOVE' -> 16r2.
+		'SWP_NOOWNERZORDER' -> 16r200.
+		'SWP_NOREDRAW' -> 16r8.
+		'SWP_NOSIZE' -> 16r1.
+		'SWP_NOZORDER' -> 16r4.
+		'SWP_SHOWWINDOW' -> 16r40.
+		'SYSTEM_FIXEDFONT' -> 16r10.
+		'SYSTEM_FONT' -> 16rD.
+		'TA_BASELINE' -> 16r18.
+		'TA_BOTTOM' -> 16r8.
+		'TA_CENTER' -> 16r6.
+		'TA_LEFT' -> 16r0.
+		'TA_NOUPDATECP' -> 16r0.
+		'TA_RIGHT' -> 16r2.
+		'TA_TOP' -> 16r0.
+		'TA_UPDATECP' -> 16r1.
+		'TEST' -> 16r59.
+		'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
+		'TIME_ZONE_ID_STANDARD' -> 16r1.
+		'TIME_ZONE_ID_UNKNOWN' -> 16r0.
+		'TME_CANCEL' -> -16r80000000.
+		'TME_HOVER' -> 16r1.
+		'TME_LEAVE' -> 16r2.
+		'TME_QUERY' -> 16r40000000.
+		'TPM_BOTTOMALIGN' -> 16r20.
+		'TPM_CENTERALIGN' -> 16r4.
+		'TPM_HORIZONTAL' -> 16r0.
+		'TPM_LEFTALIGN' -> 16r0.
+		'TPM_LEFTBUTTON' -> 16r0.
+		'TPM_NONOTIFY' -> 16r80.
+		'TPM_RETURNCMD' -> 16r100.
+		'TPM_RIGHTALIGN' -> 16r8.
+		'TPM_RIGHTBUTTON' -> 16r2.
+		'TPM_TOPALIGN' -> 16r0.
+		'TPM_VCENTERALIGN' -> 16r10.
+		'TPM_VERTICAL' -> 16r40.
+		'TRANSPARENT' -> 16r1.
+		'TRUE' -> 16r1.
+		'TRUNCATE_EXISTING' -> 16r5.
+		'UIS_CLEAR' -> 16r2.
+		'UIS_INITIALIZE' -> 16r3.
+		'UIS_SET' -> 16r1.
+		'UISF_ACTIVE' -> 16r4.
+		'UISF_HIDEACCEL' -> 16r2.
+		'UISF_HIDEFOCUS' -> 16r1.
+		'VER_AND' -> 16r6.
+		'VER_BUILDNUMBER' -> 16r4.
+		'VER_EQUAL' -> 16r1.
+		'VER_GREATER' -> 16r2.
+		'VER_GREATER_EQUAL' -> 16r3.
+		'VER_LESS' -> 16r4.
+		'VER_LESS_EQUAL' -> 16r5.
+		'VER_MAJORVERSION' -> 16r2.
+		'VER_MINORVERSION' -> 16r1.
+		'VER_NT_DOMAIN_CONTROLLER' -> 16r2.
+		'VER_NT_SERVER' -> 16r3.
+		'VER_NT_WORKSTATION' -> 16r1.
+		'VER_OR' -> 16r7.
+		'VER_PLATFORM_WIN32_NT' -> 16r2.
+		'VER_PLATFORM_WIN32_WINDOWS' -> 16r1.
+		'VER_PLATFORM_WIN32s' -> 16r0.
+		'VER_PLATFORMID' -> 16r8.
+		'VER_PRODUCT_TYPE' -> 16r80.
+		'VER_SERVICEPACKMAJOR' -> 16r20.
+		'VER_SERVICEPACKMINOR' -> 16r10.
+		'VER_SUITENAME' -> 16r40.
+		'VERTRES' -> 16rA.
+		'VERTSIZE' -> 16r6.
+		'VK_ADD' -> 16r6B.
+		'VK_APPS' -> 16r5D.
+		'VK_BACK' -> 16r8.
+		'VK_CANCEL' -> 16r3.
+		'VK_CAPITAL' -> 16r14.
+		'VK_CLEAR' -> 16rC.
+		'VK_CONTROL' -> 16r11.
+		'VK_DECIMAL' -> 16r6E.
+		'VK_DELETE' -> 16r2E.
+		'VK_DIVIDE' -> 16r6F.
+		'VK_DOWN' -> 16r28.
+		'VK_END' -> 16r23.
+		'VK_ESCAPE' -> 16r1B.
+		'VK_EXECUTE' -> 16r2B.
+		'VK_F1' -> 16r70.
+		'VK_F10' -> 16r79.
+		'VK_F11' -> 16r7A.
+		'VK_F12' -> 16r7B.
+		'VK_F2' -> 16r71.
+		'VK_F3' -> 16r72.
+		'VK_F4' -> 16r73.
+		'VK_F5' -> 16r74.
+		'VK_F6' -> 16r75.
+		'VK_F7' -> 16r76.
+		'VK_F8' -> 16r77.
+		'VK_F9' -> 16r78.
+		'VK_HOME' -> 16r24.
+		'VK_INSERT' -> 16r2D.
+		'VK_LBUTTON' -> 16r1.
+		'VK_LEFT' -> 16r25.
+		'VK_LSHIFT' -> 16rA0.
+		'VK_LWIN' -> 16r5B.
+		'VK_MBUTTON' -> 16r4.
+		'VK_MENU' -> 16r12.
+		'VK_MULTIPLY' -> 16r6A.
+		'VK_NEXT' -> 16r22.
+		'VK_NUMLOCK' -> 16r90.
+		'VK_NUMPAD0' -> 16r60.
+		'VK_NUMPAD1' -> 16r61.
+		'VK_NUMPAD2' -> 16r62.
+		'VK_NUMPAD3' -> 16r63.
+		'VK_NUMPAD4' -> 16r64.
+		'VK_NUMPAD5' -> 16r65.
+		'VK_NUMPAD6' -> 16r66.
+		'VK_NUMPAD7' -> 16r67.
+		'VK_NUMPAD8' -> 16r68.
+		'VK_NUMPAD9' -> 16r69.
+		'VK_OEM_1' -> 16rBA.
+		'VK_OEM_2' -> 16rBF.
+		'VK_OEM_3' -> 16rC0.
+		'VK_OEM_4' -> 16rDB.
+		'VK_OEM_5' -> 16rDC.
+		'VK_OEM_6' -> 16rDD.
+		'VK_OEM_7' -> 16rDE.
+		'VK_OEM_8' -> 16rDF.
+		'VK_OEM_COMMA' -> 16rBC.
+		'VK_OEM_MINUS' -> 16rBD.
+		'VK_OEM_PERIOD' -> 16rBE.
+		'VK_OEM_PLUS' -> 16rBB.
+		'VK_PAUSE' -> 16r13.
+		'VK_PRINT' -> 16r2A.
+		'VK_PRIOR' -> 16r21.
+		'VK_RBUTTON' -> 16r2.
+		'VK_RETURN' -> 16rD.
+		'VK_RIGHT' -> 16r27.
+		'VK_RMENU' -> 16rA5.
+		'VK_RWIN' -> 16r5C.
+		'VK_SCROLL' -> 16r91.
+		'VK_SELECT' -> 16r29.
+		'VK_SHIFT' -> 16r10.
+		'VK_SNAPSHOT' -> 16r2C.
+		'VK_SPACE' -> 16r20.
+		'VK_SUBTRACT' -> 16r6D.
+		'VK_TAB' -> 16r9.
+		'VK_UP' -> 16r26.
+		'VK_XBUTTON1' -> 16r5.
+		'VK_XBUTTON2' -> 16r6.
+		'WA_ACTIVE' -> 16r1.
+		'WA_CLICKACTIVE' -> 16r2.
+		'WA_INACTIVE' -> 16r0.
+		'WAIT_ABANDONED' -> 16r80.
+		'WAIT_ABANDONED_0' -> 16r80.
+		'WAIT_FAILED' -> -16r1.
+		'WAIT_IO_COMPLETION' -> 16rC0.
+		'WAIT_OBJECT_0' -> 16r0.
+		'WAIT_TIMEOUT' -> 16r102.
+		'WC_ERR_INVALID_CHARS' -> 16r80.
+		'WHEEL_DELTA' -> 16r78.
+		'WHEEL_PAGESCROLL' -> -16r1.
+		'WHITE_BRUSH' -> 16r0.
+		'WHITE_PEN' -> 16r6.
+		'WHITENESS' -> 16rFF0062.
+		'WM_ACTIVATE' -> 16r6.
+		'WM_ACTIVATEAPP' -> 16r1C.
+		'WM_APP' -> 16r8000.
+		'WM_ASKCBFORMATNAME' -> 16r30C.
+		'WM_BEGINDRAG' -> 16r22C.
+		'WM_CANCELJOURNAL' -> 16r4B.
+		'WM_CANCELMODE' -> 16r1F.
+		'WM_CAPTURECHANGED' -> 16r215.
+		'WM_CHANGECBCHAIN' -> 16r30D.
+		'WM_CHANGEUISTATE' -> 16r127.
+		'WM_CHAR' -> 16r102.
+		'WM_CHARTOITEM' -> 16r2F.
+		'WM_CHILDACTIVATE' -> 16r22.
+		'WM_CLEAR' -> 16r303.
+		'WM_CLOSE' -> 16r10.
+		'WM_COMMAND' -> 16r111.
+		'WM_COMMNOTIFY' -> 16r44.
+		'WM_COMPACTING' -> 16r41.
+		'WM_COMPAREITEM' -> 16r39.
+		'WM_CONTEXTMENU' -> 16r7B.
+		'WM_COPY' -> 16r301.
+		'WM_COPYDATA' -> 16r4A.
+		'WM_CREATE' -> 16r1.
+		'WM_CTLCOLORBTN' -> 16r135.
+		'WM_CTLCOLORDLG' -> 16r136.
+		'WM_CTLCOLOREDIT' -> 16r133.
+		'WM_CTLCOLORLISTBOX' -> 16r134.
+		'WM_CTLCOLORMSGBOX' -> 16r132.
+		'WM_CTLCOLORSCROLLBAR' -> 16r137.
+		'WM_CTLCOLORSTATIC' -> 16r138.
+		'WM_CUT' -> 16r300.
+		'WM_DDE_INITIATE' -> 16r3E0.
+		'WM_DEADCHAR' -> 16r103.
+		'WM_DELETEITEM' -> 16r2D.
+		'WM_DESTROY' -> 16r2.
+		'WM_DESTROYCLIPBOARD' -> 16r307.
+		'WM_DEVICECHANGE' -> 16r219.
+		'WM_DEVMODECHANGE' -> 16r1B.
+		'WM_DISPLAYCHANGE' -> 16r7E.
+		'WM_DRAWCLIPBOARD' -> 16r308.
+		'WM_DRAWITEM' -> 16r2B.
+		'WM_DROPFILES' -> 16r233.
+		'WM_ENABLE' -> 16rA.
+		'WM_ENDSESSION' -> 16r16.
+		'WM_ENTERIDLE' -> 16r121.
+		'WM_ENTERMENULOOP' -> 16r211.
+		'WM_ENTERSIZEMOVE' -> 16r231.
+		'WM_ERASEBKGND' -> 16r14.
+		'WM_EXITMENULOOP' -> 16r212.
+		'WM_EXITSIZEMOVE' -> 16r232.
+		'WM_FONTCHANGE' -> 16r1D.
+		'WM_GETDLGCODE' -> 16r87.
+		'WM_GETFONT' -> 16r31.
+		'WM_GETHOTKEY' -> 16r33.
+		'WM_GETICON' -> 16r7F.
+		'WM_GETMINMAXINFO' -> 16r24.
+		'WM_GETTEXT' -> 16rD.
+		'WM_GETTEXTLENGTH' -> 16rE.
+		'WM_HELP' -> 16r53.
+		'WM_HOTKEY' -> 16r312.
+		'WM_HSCROLL' -> 16r114.
+		'WM_HSCROLLCLIPBOARD' -> 16r30E.
+		'WM_ICONERASEBKGND' -> 16r27.
+		'WM_IDLEUPDATECMDUI' -> 16r363.
+		'WM_INITDIALOG' -> 16r110.
+		'WM_INITMENU' -> 16r116.
+		'WM_INITMENUPOPUP' -> 16r117.
+		'WM_INPUTLANGCHANGE' -> 16r51.
+		'WM_INPUTLANGCHANGEREQUEST' -> 16r50.
+		'WM_KEYDOWN' -> 16r100.
+		'WM_KEYFIRST' -> 16r100.
+		'WM_KEYLAST' -> 16r108.
+		'WM_KEYUP' -> 16r101.
+		'WM_KILLFOCUS' -> 16r8.
+		'WM_LBUTTONDBLCLK' -> 16r203.
+		'WM_LBUTTONDOWN' -> 16r201.
+		'WM_LBUTTONUP' -> 16r202.
+		'WM_MBUTTONDBLCLK' -> 16r209.
+		'WM_MBUTTONDOWN' -> 16r207.
+		'WM_MBUTTONUP' -> 16r208.
+		'WM_MEASUREITEM' -> 16r2C.
+		'WM_MENUCHAR' -> 16r120.
+		'WM_MENUCOMMAND' -> 16r126.
+		'WM_MENUSELECT' -> 16r11F.
+		'WM_MOUSEACTIVATE' -> 16r21.
+		'WM_MOUSEFIRST' -> 16r200.
+		'WM_MOUSEHOVER' -> 16r2A1.
+		'WM_MOUSEHWHEEL' -> 16r20E.
+		'WM_MOUSELAST' -> 16r20E.
+		'WM_MOUSELEAVE' -> 16r2A3.
+		'WM_MOUSEMOVE' -> 16r200.
+		'WM_MOUSEWHEEL' -> 16r20A.
+		'WM_MOVE' -> 16r3.
+		'WM_MOVING' -> 16r216.
+		'WM_NCACTIVATE' -> 16r86.
+		'WM_NCCALCSIZE' -> 16r83.
+		'WM_NCCREATE' -> 16r81.
+		'WM_NCDESTROY' -> 16r82.
+		'WM_NCHITTEST' -> 16r84.
+		'WM_NCLBUTTONDBLCLK' -> 16rA3.
+		'WM_NCLBUTTONDOWN' -> 16rA1.
+		'WM_NCLBUTTONUP' -> 16rA2.
+		'WM_NCMBUTTONDBLCLK' -> 16rA9.
+		'WM_NCMBUTTONDOWN' -> 16rA7.
+		'WM_NCMBUTTONUP' -> 16rA8.
+		'WM_NCMOUSEMOVE' -> 16rA0.
+		'WM_NCPAINT' -> 16r85.
+		'WM_NCRBUTTONDBLCLK' -> 16rA6.
+		'WM_NCRBUTTONDOWN' -> 16rA4.
+		'WM_NCRBUTTONUP' -> 16rA5.
+		'WM_NEXTDLGCTL' -> 16r28.
+		'WM_NEXTMENU' -> 16r213.
+		'WM_NOTIFY' -> 16r4E.
+		'WM_NOTIFYFORMAT' -> 16r55.
+		'WM_NULL' -> 16r0.
+		'WM_PAINT' -> 16rF.
+		'WM_PAINTCLIPBOARD' -> 16r309.
+		'WM_PAINTICON' -> 16r26.
+		'WM_PALETTECHANGED' -> 16r311.
+		'WM_PALETTEISCHANGING' -> 16r310.
+		'WM_PARENTNOTIFY' -> 16r210.
+		'WM_PASTE' -> 16r302.
+		'WM_POWER' -> 16r48.
+		'WM_POWERBROADCAST' -> 16r218.
+		'WM_PRINT' -> 16r317.
+		'WM_PRINTCLIENT' -> 16r318.
+		'WM_QUERYDRAGICON' -> 16r37.
+		'WM_QUERYENDSESSION' -> 16r11.
+		'WM_QUERYNEWPALETTE' -> 16r30F.
+		'WM_QUERYOPEN' -> 16r13.
+		'WM_QUERYUISTATE' -> 16r129.
+		'WM_QUEUESYNC' -> 16r23.
+		'WM_QUIT' -> 16r12.
+		'WM_RBUTTONDBLCLK' -> 16r206.
+		'WM_RBUTTONDOWN' -> 16r204.
+		'WM_RBUTTONUP' -> 16r205.
+		'WM_RENDERALLFORMATS' -> 16r306.
+		'WM_RENDERFORMAT' -> 16r305.
+		'WM_SETCURSOR' -> 16r20.
+		'WM_SETEVENTMASK' -> 16r445.
+		'WM_SETFOCUS' -> 16r7.
+		'WM_SETFONT' -> 16r30.
+		'WM_SETHOTKEY' -> 16r32.
+		'WM_SETICON' -> 16r80.
+		'WM_SETREDRAW' -> 16rB.
+		'WM_SETTEXT' -> 16rC.
+		'WM_SETTINGCHANGE' -> 16r1A.
+		'WM_SHOWWINDOW' -> 16r18.
+		'WM_SIZE' -> 16r5.
+		'WM_SIZECLIPBOARD' -> 16r30B.
+		'WM_SIZING' -> 16r214.
+		'WM_SPOOLERSTATUS' -> 16r2A.
+		'WM_STYLECHANGED' -> 16r7D.
+		'WM_STYLECHANGING' -> 16r7C.
+		'WM_SYSCHAR' -> 16r106.
+		'WM_SYSCOLORCHANGE' -> 16r15.
+		'WM_SYSCOMMAND' -> 16r112.
+		'WM_SYSDEADCHAR' -> 16r107.
+		'WM_SYSKEYDOWN' -> 16r104.
+		'WM_SYSKEYUP' -> 16r105.
+		'WM_TCARD' -> 16r52.
+		'WM_THEMECHANGED' -> 16r31A.
+		'WM_TIMECHANGE' -> 16r1E.
+		'WM_TIMER' -> 16r113.
+		'WM_UNDO' -> 16r304.
+		'WM_UPDATEUISTATE' -> 16r128.
+		'WM_USER' -> 16r400.
+		'WM_USER_LAST' -> 16r7FFF.
+		'WM_USERCHANGED' -> 16r54.
+		'WM_VKEYTOITEM' -> 16r2E.
+		'WM_VSCROLL' -> 16r115.
+		'WM_VSCROLLCLIPBOARD' -> 16r30A.
+		'WM_WINDOWPOSCHANGED' -> 16r47.
+		'WM_WINDOWPOSCHANGING' -> 16r46.
+		'WM_WININICHANGE' -> 16r1A.
+		'WM_XBUTTONDBLCLK' -> 16r20D.
+		'WM_XBUTTONDOWN' -> 16r20B.
+		'WM_XBUTTONUP' -> 16r20C.
+		'WS_BORDER' -> 16r800000.
+		'WS_CAPTION' -> 16rC00000.
+		'WS_CHILD' -> 16r40000000.
+		'WS_CHILDWINDOW' -> 16r40000000.
+		'WS_CLIPCHILDREN' -> 16r2000000.
+		'WS_CLIPSIBLINGS' -> 16r4000000.
+		'WS_DISABLED' -> 16r8000000.
+		'WS_DLGFRAME' -> 16r400000.
+		'WS_EX_ACCEPTFILES' -> 16r10.
+		'WS_EX_APPWINDOW' -> 16r40000.
+		'WS_EX_CLIENTEDGE' -> 16r200.
+		'WS_EX_COMPOSITED' -> 16r2000000.
+		'WS_EX_CONTEXTHELP' -> 16r400.
+		'WS_EX_CONTROLPARENT' -> 16r10000.
+		'WS_EX_DLGMODALFRAME' -> 16r1.
+		'WS_EX_LAYERED' -> 16r80000.
+		'WS_EX_LEFT' -> 16r0.
+		'WS_EX_LEFTSCROLLBAR' -> 16r4000.
+		'WS_EX_LTRREADING' -> 16r0.
+		'WS_EX_NOACTIVATE' -> 16r8000000.
+		'WS_EX_NOPARENTNOTIFY' -> 16r4.
+		'WS_EX_NOTIFYDRAG' -> 16r2.
+		'WS_EX_OVERLAPPEDWINDOW' -> 16r300.
+		'WS_EX_PALETTEWINDOW' -> 16r188.
+		'WS_EX_RIGHT' -> 16r1000.
+		'WS_EX_RIGHTSCROLLBAR' -> 16r0.
+		'WS_EX_RTLREADING' -> 16r2000.
+		'WS_EX_STATICEDGE' -> 16r20000.
+		'WS_EX_TOOLWINDOW' -> 16r80.
+		'WS_EX_TOPMOST' -> 16r8.
+		'WS_EX_TRANSPARENT' -> 16r20.
+		'WS_EX_WINDOWEDGE' -> 16r100.
+		'WS_GROUP' -> 16r20000.
+		'WS_HSCROLL' -> 16r100000.
+		'WS_ICONIC' -> 16r20000000.
+		'WS_MAXIMIZE' -> 16r1000000.
+		'WS_MAXIMIZEBOX' -> 16r10000.
+		'WS_MINIMIZE' -> 16r20000000.
+		'WS_MINIMIZEBOX' -> 16r20000.
+		'WS_OVERLAPPED' -> 16r0.
+		'WS_OVERLAPPEDWINDOW' -> 16rCF0000.
+		'WS_POPUP' -> 16r80000000.
+		'WS_POPUPWINDOW' -> -16r7F780000.
+		'WS_SIZEBOX' -> 16r40000.
+		'WS_SYSMENU' -> 16r80000.
+		'WS_TABSTOP' -> 16r10000.
+		'WS_THICKFRAME' -> 16r40000.
+		'WS_TILED' -> 16r0.
+		'WS_TILEDWINDOW' -> 16rCF0000.
+		'WS_VISIBLE' -> 16r10000000.
+		'WS_VSCROLL' -> 16r200000.
+		'WVR_ALIGNBOTTOM' -> 16r40.
+		'WVR_ALIGNLEFT' -> 16r20.
+		'WVR_ALIGNRIGHT' -> 16r80.
+		'WVR_ALIGNTOP' -> 16r10.
+		'WVR_HREDRAW' -> 16r100.
+		'WVR_REDRAW' -> 16r300.
+		'WVR_VALIDRECTS' -> 16r400.
+		'WVR_VREDRAW' -> 16r200
+	}!
+Win32Constants guid: (GUID fromString: '{f9d6e381-277b-4501-bfd5-b9a3513f1bf0}')!
+Win32Constants comment: ''!
+!Win32Constants categoriesForClass!Kernel-Objects! !

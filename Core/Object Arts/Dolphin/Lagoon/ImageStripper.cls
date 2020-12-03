@@ -362,8 +362,7 @@ classRemovingMethods
 clearChangedProperties
 	"Private - Remove development change flags."
 
-	Class allSubinstances do: [:b | b isChanged: false].
-	PoolConstantsDictionary allSubinstances do: [:p | p isChanged: false]!
+	Class allSubinstances do: [:b | b isChanged: false]!
 
 closeAllDevelopmentTools
 	"Private - Forcibly close all development tools so that they may be stripped from the image."

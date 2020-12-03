@@ -210,6 +210,11 @@ loadAndTestPackage: filename
 	loadedPackages := Package manager install: (self filenameFor: filename).
 	self checkTestPackageContents!
 
+loadTestAndUninstallPackage: filename
+	self loadAndTestPackage: filename.
+	self uninstallTestPackages.
+	self checkNoTestPackageContents!
+
 setUp
 	| var |
 	var := Package classPool associationAt: 'CheckTimestamps'.
@@ -217,11 +222,14 @@ setUp
 	var value: true!
 
 tearDown
+	| scribbleClass |
 	Package classPool at: 'CheckTimestamps' put: checkTimestamps.
-	loadedPackages notNil
-		ifTrue: 
-			[loadedPackages do: [:each | Package manager basicUninstall: each].
-			loadedPackages := nil]!
+	self uninstallTestPackages.
+	"Manually remove the test components in case the uninstall failed or the test package didn't load correctly."
+	#{Smalltalk.ScribbleTest} ifDefined: [:class | class removeFromSystem].
+	scribbleClass := #{Smalltalk.Scribble} value.
+	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: []].
+	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: []]!
 
 testBehaviorFromName
 	"Regression test for fix of bug handling class names containing non-ASCII characters. Note that such names are not syntactically valid in ANSI Smalltalk syntax, but they can easily be generated programmatically, and in future we may want to modernise the syntax to allow these."
@@ -242,25 +250,25 @@ testForwardRefLoadPac
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
 testLoad21Pac
-	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
 
 testLoad40Pac
-	self loadAndTestPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pac'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pac'!
 
 testLoad40Pax
-	self loadAndTestPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pax'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\4.0\ScribbleTest4.pax'!
 
 testLoad51Pac
-	self loadAndTestPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pac'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pac'!
 
 testLoad51Pax
-	self loadAndTestPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pax'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\5.1\ScribbleTest51.pax'!
 
 testLoad60Pac
-	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pac'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pac'!
 
 testLoad60Pax
-	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
+	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
 
 testLoad70Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
@@ -273,9 +281,13 @@ testLoad70Pax
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
 	self assert: binaryVariableName value equals: #('Scribble').
 	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
-	self assert: scribbleTestPackage sourceVariableNames asArray equals: {sourceVariableName}.
+
+	"We should still find the class binding among the packaged variables"
+	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
-	self assert: testPool isKindOf: PoolConstantsDictionary!
+	self assert: testPool isKindOf: SharedPool class.
+	self uninstallTestPackages.
+	self checkNoTestPackageContents!
 
 testLoad72Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
@@ -288,9 +300,12 @@ testLoad72Pax
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
 	self assert: binaryVariableName value equals: #('Scribble').
 	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
-	self assert: scribbleTestPackage sourceVariableNames asArray equals: {sourceVariableName}.
+	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
+	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
-	self assert: testPool isKindOf: PoolConstantsDictionary!
+	self assert: testPool isKindOf: SharedPool class.
+	self uninstallTestPackages.
+	self checkNoTestPackageContents!
 
 testLoadedPackagesAreWellFormed
 	Package manager packages do: [:each |
@@ -308,6 +323,12 @@ testLooseResourceIdentifiers
 
 testTimestampInitialized
 	self assert: Package new timestamp asInteger equals: 0!
+
+uninstallTestPackages
+	loadedPackages notNil
+		ifTrue: 
+			[loadedPackages do: [:each | Package manager basicUninstall: each].
+			loadedPackages := nil]!
 
 verifyPackageElementNamesAreAbsolute: aPackage
 	aPackage classNames do: [:each | self assert: each context isNil].
@@ -335,6 +356,7 @@ verifyPackageElementsExist: aPackage
 !PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
 !PackageTest categoriesFor: #filenameFor:!helpers!private! !
 !PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
+!PackageTest categoriesFor: #loadTestAndUninstallPackage:!helpers!private! !
 !PackageTest categoriesFor: #setUp!private!running! !
 !PackageTest categoriesFor: #tearDown!private!running! !
 !PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
@@ -351,6 +373,7 @@ verifyPackageElementsExist: aPackage
 !PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
 !PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
+!PackageTest categoriesFor: #uninstallTestPackages!helpers!public! !
 !PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
 !PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
 

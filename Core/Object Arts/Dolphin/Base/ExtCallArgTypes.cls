@@ -1,40 +1,48 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ExtCallArgTypes} declare: (PoolConstantsDictionary named: #ExtCallArgTypes)!
-ExtCallArgTypes at: 'ExtCallArgBOOL' put: 16r9!
-ExtCallArgTypes at: 'ExtCallArgBSTR' put: 16r15!
-ExtCallArgTypes at: 'ExtCallArgBYTE' put: 16r3!
-ExtCallArgTypes at: 'ExtCallArgCHAR' put: 16r2!
-ExtCallArgTypes at: 'ExtCallArgCOMPTR' put: 16r37!
-ExtCallArgTypes at: 'ExtCallArgDATE' put: 16r17!
-ExtCallArgTypes at: 'ExtCallArgDOUBLE' put: 16rB!
-ExtCallArgTypes at: 'ExtCallArgDWORD' put: 16r7!
-ExtCallArgTypes at: 'ExtCallArgFLOAT' put: 16rE!
-ExtCallArgTypes at: 'ExtCallArgGUID' put: 16r19!
-ExtCallArgTypes at: 'ExtCallArgHANDLE' put: 16rA!
-ExtCallArgTypes at: 'ExtCallArgHRESULT' put: 16r10!
-ExtCallArgTypes at: 'ExtCallArgINTPTR' put: 16r1B!
-ExtCallArgTypes at: 'ExtCallArgLP' put: 16r35!
-ExtCallArgTypes at: 'ExtCallArgLPP' put: 16r36!
-ExtCallArgTypes at: 'ExtCallArgLPPVOID' put: 16rF!
-ExtCallArgTypes at: 'ExtCallArgLPSTR' put: 16rC!
-ExtCallArgTypes at: 'ExtCallArgLPVOID' put: 16r1!
-ExtCallArgTypes at: 'ExtCallArgLPWSTR' put: 16r11!
-ExtCallArgTypes at: 'ExtCallArgMax' put: 16r3F!
-ExtCallArgTypes at: 'ExtCallArgNTSTATUS' put: 16r1C!
-ExtCallArgTypes at: 'ExtCallArgOOP' put: 16rD!
-ExtCallArgTypes at: 'ExtCallArgOTE' put: 16r14!
-ExtCallArgTypes at: 'ExtCallArgQWORD' put: 16r12!
-ExtCallArgTypes at: 'ExtCallArgSBYTE' put: 16r4!
-ExtCallArgTypes at: 'ExtCallArgSDWORD' put: 16r8!
-ExtCallArgTypes at: 'ExtCallArgSQWORD' put: 16r13!
-ExtCallArgTypes at: 'ExtCallArgSTRUCT' put: 16r32!
-ExtCallArgTypes at: 'ExtCallArgSTRUCT4' put: 16r33!
-ExtCallArgTypes at: 'ExtCallArgSTRUCT8' put: 16r34!
-ExtCallArgTypes at: 'ExtCallArgSWORD' put: 16r6!
-ExtCallArgTypes at: 'ExtCallArgUINTPTR' put: 16r1A!
-ExtCallArgTypes at: 'ExtCallArgVARBOOL' put: 16r18!
-ExtCallArgTypes at: 'ExtCallArgVARIANT' put: 16r16!
-ExtCallArgTypes at: 'ExtCallArgVOID' put: 16r0!
-ExtCallArgTypes at: 'ExtCallArgWORD' put: 16r5!
-ExtCallArgTypes shrink!
+SharedPool subclass: #ExtCallArgTypes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ExtCallArgBOOL' -> 16r9.
+		'ExtCallArgBSTR' -> 16r15.
+		'ExtCallArgBYTE' -> 16r3.
+		'ExtCallArgCHAR' -> 16r2.
+		'ExtCallArgCOMPTR' -> 16r37.
+		'ExtCallArgDATE' -> 16r17.
+		'ExtCallArgDOUBLE' -> 16rB.
+		'ExtCallArgDWORD' -> 16r7.
+		'ExtCallArgFLOAT' -> 16rE.
+		'ExtCallArgGUID' -> 16r19.
+		'ExtCallArgHANDLE' -> 16rA.
+		'ExtCallArgHRESULT' -> 16r10.
+		'ExtCallArgINTPTR' -> 16r1B.
+		'ExtCallArgLP' -> 16r35.
+		'ExtCallArgLPP' -> 16r36.
+		'ExtCallArgLPPVOID' -> 16rF.
+		'ExtCallArgLPSTR' -> 16rC.
+		'ExtCallArgLPVOID' -> 16r1.
+		'ExtCallArgLPWSTR' -> 16r11.
+		'ExtCallArgMax' -> 16r3F.
+		'ExtCallArgNTSTATUS' -> 16r1C.
+		'ExtCallArgOOP' -> 16rD.
+		'ExtCallArgOTE' -> 16r14.
+		'ExtCallArgQWORD' -> 16r12.
+		'ExtCallArgSBYTE' -> 16r4.
+		'ExtCallArgSDWORD' -> 16r8.
+		'ExtCallArgSQWORD' -> 16r13.
+		'ExtCallArgSTRUCT' -> 16r32.
+		'ExtCallArgSTRUCT4' -> 16r33.
+		'ExtCallArgSTRUCT8' -> 16r34.
+		'ExtCallArgSWORD' -> 16r6.
+		'ExtCallArgUINTPTR' -> 16r1A.
+		'ExtCallArgVARBOOL' -> 16r18.
+		'ExtCallArgVARIANT' -> 16r16.
+		'ExtCallArgVOID' -> 16r0.
+		'ExtCallArgWORD' -> 16r5
+	}!
+ExtCallArgTypes guid: (GUID fromString: '{653fdbfe-ab01-4733-82d1-8791949ad833}')!
+ExtCallArgTypes comment: ''!
+!ExtCallArgTypes categoriesForClass!External-Libraries! !
