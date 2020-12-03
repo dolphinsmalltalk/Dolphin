@@ -1,10 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ODBCRetCodes} declare: (PoolConstantsDictionary named: #ODBCRetCodes)!
-ODBCRetCodes at: 'SQL_ERROR' put: -16r1!
-ODBCRetCodes at: 'SQL_INVALID_HANDLE' put: -16r2!
-ODBCRetCodes at: 'SQL_NEED_DATA' put: 16r63!
-ODBCRetCodes at: 'SQL_NO_DATA' put: 16r64!
-ODBCRetCodes at: 'SQL_SUCCESS' put: 16r0!
-ODBCRetCodes at: 'SQL_SUCCESS_WITH_INFO' put: 16r1!
-ODBCRetCodes shrink!
+SharedPool subclass: #ODBCRetCodes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SQL_ERROR' -> -16r1.
+		'SQL_INVALID_HANDLE' -> -16r2.
+		'SQL_NEED_DATA' -> 16r63.
+		'SQL_NO_DATA' -> 16r64.
+		'SQL_SUCCESS' -> 16r0.
+		'SQL_SUCCESS_WITH_INFO' -> 16r1
+	}!
+ODBCRetCodes guid: (GUID fromString: '{1d2958b4-30dc-440a-b023-ba7589e87908}')!
+ODBCRetCodes comment: ''!
+!ODBCRetCodes categoriesForClass!Unclassified! !

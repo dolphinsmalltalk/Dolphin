@@ -1,12 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{OLEConstants} declare: (PoolConstantsDictionary named: #OLEConstants)!
-OLEConstants at: 'CLSCTX_INPROC_HANDLER' put: 16r2!
-OLEConstants at: 'CLSCTX_INPROC_SERVER' put: 16r1!
-OLEConstants at: 'CLSCTX_LOCAL_SERVER' put: 16r4!
-OLEConstants at: 'CLSCTX_REMOTE_SERVER' put: 16r10!
-OLEConstants at: 'MEMCTX_SHARED' put: 16r2!
-OLEConstants at: 'MEMCTX_TASK' put: 16r1!
-OLEConstants at: 'REGCLS_MULTI_SEPARATE' put: 16r2!
-OLEConstants at: 'REGCLS_MULTIPLEUSE' put: 16r1!
-OLEConstants shrink!
+SharedPool subclass: #OLEConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CLSCTX_INPROC_HANDLER' -> 16r2.
+		'CLSCTX_INPROC_SERVER' -> 16r1.
+		'CLSCTX_LOCAL_SERVER' -> 16r4.
+		'CLSCTX_REMOTE_SERVER' -> 16r10.
+		'MEMCTX_SHARED' -> 16r2.
+		'MEMCTX_TASK' -> 16r1.
+		'REGCLS_MULTI_SEPARATE' -> 16r2.
+		'REGCLS_MULTIPLEUSE' -> 16r1
+	}!
+OLEConstants guid: (GUID fromString: '{b8d7a4c0-475a-4a59-abad-fd589aef1b2f}')!
+OLEConstants comment: ''!
+!OLEConstants categoriesForClass!Unclassified! !

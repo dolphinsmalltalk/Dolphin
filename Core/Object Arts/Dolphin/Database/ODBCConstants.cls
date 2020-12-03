@@ -1,1368 +1,1376 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ODBCConstants} declare: (PoolConstantsDictionary named: #ODBCConstants)!
-ODBCConstants at: 'ODBC_VS_FLAG_RETCODE' put: 16r4!
-ODBCConstants at: 'ODBC_VS_FLAG_STOP' put: 16r8!
-ODBCConstants at: 'ODBC_VS_FLAG_UNICODE_ARG' put: 16r1!
-ODBCConstants at: 'ODBC_VS_FLAG_UNICODE_COR' put: 16r2!
-ODBCConstants at: 'ODBCVER' put: 16r380!
-ODBCConstants at: 'SQL_AA_FALSE' put: 16r0!
-ODBCConstants at: 'SQL_AA_TRUE' put: 16r1!
-ODBCConstants at: 'SQL_ACCESS_MODE' put: 16r65!
-ODBCConstants at: 'SQL_ACCESSIBLE_PROCEDURES' put: 16r14!
-ODBCConstants at: 'SQL_ACCESSIBLE_TABLES' put: 16r13!
-ODBCConstants at: 'SQL_ACTIVE_CONNECTIONS' put: 16r0!
-ODBCConstants at: 'SQL_ACTIVE_ENVIRONMENTS' put: 16r74!
-ODBCConstants at: 'SQL_ACTIVE_STATEMENTS' put: 16r1!
-ODBCConstants at: 'SQL_AD_ADD_CONSTRAINT_DEFERRABLE' put: 16r80!
-ODBCConstants at: 'SQL_AD_ADD_CONSTRAINT_INITIALLY_DEFERRED' put: 16r20!
-ODBCConstants at: 'SQL_AD_ADD_CONSTRAINT_INITIALLY_IMMEDIATE' put: 16r40!
-ODBCConstants at: 'SQL_AD_ADD_CONSTRAINT_NON_DEFERRABLE' put: 16r100!
-ODBCConstants at: 'SQL_AD_ADD_DOMAIN_CONSTRAINT' put: 16r2!
-ODBCConstants at: 'SQL_AD_ADD_DOMAIN_DEFAULT' put: 16r8!
-ODBCConstants at: 'SQL_AD_CONSTRAINT_NAME_DEFINITION' put: 16r1!
-ODBCConstants at: 'SQL_AD_DROP_DOMAIN_CONSTRAINT' put: 16r4!
-ODBCConstants at: 'SQL_AD_DROP_DOMAIN_DEFAULT' put: 16r10!
-ODBCConstants at: 'SQL_ADD' put: 16r4!
-ODBCConstants at: 'SQL_AF_ALL' put: 16r40!
-ODBCConstants at: 'SQL_AF_AVG' put: 16r1!
-ODBCConstants at: 'SQL_AF_COUNT' put: 16r2!
-ODBCConstants at: 'SQL_AF_DISTINCT' put: 16r20!
-ODBCConstants at: 'SQL_AF_MAX' put: 16r4!
-ODBCConstants at: 'SQL_AF_MIN' put: 16r8!
-ODBCConstants at: 'SQL_AF_SUM' put: 16r10!
-ODBCConstants at: 'SQL_AGGREGATE_FUNCTIONS' put: 16rA9!
-ODBCConstants at: 'SQL_ALL_CATALOGS' put: 16r0!
-ODBCConstants at: 'SQL_ALL_EXCEPT_LIKE' put: 16r2!
-ODBCConstants at: 'SQL_ALL_SCHEMAS' put: 16r0!
-ODBCConstants at: 'SQL_ALL_TABLE_TYPES' put: 16r0!
-ODBCConstants at: 'SQL_ALL_TYPES' put: 16r0!
-ODBCConstants at: 'SQL_ALTER_DOMAIN' put: 16r75!
-ODBCConstants at: 'SQL_ALTER_TABLE' put: 16r56!
-ODBCConstants at: 'SQL_AM_CONNECTION' put: 16r1!
-ODBCConstants at: 'SQL_AM_NONE' put: 16r0!
-ODBCConstants at: 'SQL_AM_STATEMENT' put: 16r2!
-ODBCConstants at: 'SQL_APD_TYPE' put: -16r64!
-ODBCConstants at: 'SQL_API_ALL_FUNCTIONS' put: 16r0!
-ODBCConstants at: 'SQL_API_LOADBYORDINAL' put: 16rC7!
-ODBCConstants at: 'SQL_API_ODBC3_ALL_FUNCTIONS' put: 16r3E7!
-ODBCConstants at: 'SQL_API_ODBC3_ALL_FUNCTIONS_SIZE' put: 16rFA!
-ODBCConstants at: 'SQL_API_SQLALLOCCONNECT' put: 16r1!
-ODBCConstants at: 'SQL_API_SQLALLOCENV' put: 16r2!
-ODBCConstants at: 'SQL_API_SQLALLOCHANDLE' put: 16r3E9!
-ODBCConstants at: 'SQL_API_SQLALLOCHANDLESTD' put: 16r49!
-ODBCConstants at: 'SQL_API_SQLALLOCSTMT' put: 16r3!
-ODBCConstants at: 'SQL_API_SQLBINDCOL' put: 16r4!
-ODBCConstants at: 'SQL_API_SQLBINDPARAM' put: 16r3EA!
-ODBCConstants at: 'SQL_API_SQLBINDPARAMETER' put: 16r48!
-ODBCConstants at: 'SQL_API_SQLBROWSECONNECT' put: 16r37!
-ODBCConstants at: 'SQL_API_SQLBULKOPERATIONS' put: 16r18!
-ODBCConstants at: 'SQL_API_SQLCANCEL' put: 16r5!
-ODBCConstants at: 'SQL_API_SQLCANCELHANDLE' put: 16r60E!
-ODBCConstants at: 'SQL_API_SQLCLOSECURSOR' put: 16r3EB!
-ODBCConstants at: 'SQL_API_SQLCOLATTRIBUTE' put: 16r6!
-ODBCConstants at: 'SQL_API_SQLCOLATTRIBUTES' put: 16r6!
-ODBCConstants at: 'SQL_API_SQLCOLUMNPRIVILEGES' put: 16r38!
-ODBCConstants at: 'SQL_API_SQLCOLUMNS' put: 16r28!
-ODBCConstants at: 'SQL_API_SQLCOMPLETEASYNC' put: 16r60F!
-ODBCConstants at: 'SQL_API_SQLCONNECT' put: 16r7!
-ODBCConstants at: 'SQL_API_SQLCOPYDESC' put: 16r3EC!
-ODBCConstants at: 'SQL_API_SQLDATASOURCES' put: 16r39!
-ODBCConstants at: 'SQL_API_SQLDESCRIBECOL' put: 16r8!
-ODBCConstants at: 'SQL_API_SQLDESCRIBEPARAM' put: 16r3A!
-ODBCConstants at: 'SQL_API_SQLDISCONNECT' put: 16r9!
-ODBCConstants at: 'SQL_API_SQLDRIVERCONNECT' put: 16r29!
-ODBCConstants at: 'SQL_API_SQLDRIVERS' put: 16r47!
-ODBCConstants at: 'SQL_API_SQLENDTRAN' put: 16r3ED!
-ODBCConstants at: 'SQL_API_SQLERROR' put: 16rA!
-ODBCConstants at: 'SQL_API_SQLEXECDIRECT' put: 16rB!
-ODBCConstants at: 'SQL_API_SQLEXECUTE' put: 16rC!
-ODBCConstants at: 'SQL_API_SQLEXTENDEDFETCH' put: 16r3B!
-ODBCConstants at: 'SQL_API_SQLFETCH' put: 16rD!
-ODBCConstants at: 'SQL_API_SQLFETCHSCROLL' put: 16r3FD!
-ODBCConstants at: 'SQL_API_SQLFOREIGNKEYS' put: 16r3C!
-ODBCConstants at: 'SQL_API_SQLFREECONNECT' put: 16rE!
-ODBCConstants at: 'SQL_API_SQLFREEENV' put: 16rF!
-ODBCConstants at: 'SQL_API_SQLFREEHANDLE' put: 16r3EE!
-ODBCConstants at: 'SQL_API_SQLFREESTMT' put: 16r10!
-ODBCConstants at: 'SQL_API_SQLGETCONNECTATTR' put: 16r3EF!
-ODBCConstants at: 'SQL_API_SQLGETCONNECTOPTION' put: 16r2A!
-ODBCConstants at: 'SQL_API_SQLGETCURSORNAME' put: 16r11!
-ODBCConstants at: 'SQL_API_SQLGETDATA' put: 16r2B!
-ODBCConstants at: 'SQL_API_SQLGETDESCFIELD' put: 16r3F0!
-ODBCConstants at: 'SQL_API_SQLGETDESCREC' put: 16r3F1!
-ODBCConstants at: 'SQL_API_SQLGETDIAGFIELD' put: 16r3F2!
-ODBCConstants at: 'SQL_API_SQLGETDIAGREC' put: 16r3F3!
-ODBCConstants at: 'SQL_API_SQLGETENVATTR' put: 16r3F4!
-ODBCConstants at: 'SQL_API_SQLGETFUNCTIONS' put: 16r2C!
-ODBCConstants at: 'SQL_API_SQLGETINFO' put: 16r2D!
-ODBCConstants at: 'SQL_API_SQLGETSTMTATTR' put: 16r3F6!
-ODBCConstants at: 'SQL_API_SQLGETSTMTOPTION' put: 16r2E!
-ODBCConstants at: 'SQL_API_SQLGETTYPEINFO' put: 16r2F!
-ODBCConstants at: 'SQL_API_SQLMORERESULTS' put: 16r3D!
-ODBCConstants at: 'SQL_API_SQLNATIVESQL' put: 16r3E!
-ODBCConstants at: 'SQL_API_SQLNUMPARAMS' put: 16r3F!
-ODBCConstants at: 'SQL_API_SQLNUMRESULTCOLS' put: 16r12!
-ODBCConstants at: 'SQL_API_SQLPARAMDATA' put: 16r30!
-ODBCConstants at: 'SQL_API_SQLPARAMOPTIONS' put: 16r40!
-ODBCConstants at: 'SQL_API_SQLPREPARE' put: 16r13!
-ODBCConstants at: 'SQL_API_SQLPRIMARYKEYS' put: 16r41!
-ODBCConstants at: 'SQL_API_SQLPROCEDURECOLUMNS' put: 16r42!
-ODBCConstants at: 'SQL_API_SQLPROCEDURES' put: 16r43!
-ODBCConstants at: 'SQL_API_SQLPUTDATA' put: 16r31!
-ODBCConstants at: 'SQL_API_SQLROWCOUNT' put: 16r14!
-ODBCConstants at: 'SQL_API_SQLSETCONNECTATTR' put: 16r3F8!
-ODBCConstants at: 'SQL_API_SQLSETCONNECTOPTION' put: 16r32!
-ODBCConstants at: 'SQL_API_SQLSETCURSORNAME' put: 16r15!
-ODBCConstants at: 'SQL_API_SQLSETDESCFIELD' put: 16r3F9!
-ODBCConstants at: 'SQL_API_SQLSETDESCREC' put: 16r3FA!
-ODBCConstants at: 'SQL_API_SQLSETENVATTR' put: 16r3FB!
-ODBCConstants at: 'SQL_API_SQLSETPARAM' put: 16r16!
-ODBCConstants at: 'SQL_API_SQLSETPOS' put: 16r44!
-ODBCConstants at: 'SQL_API_SQLSETSCROLLOPTIONS' put: 16r45!
-ODBCConstants at: 'SQL_API_SQLSETSTMTATTR' put: 16r3FC!
-ODBCConstants at: 'SQL_API_SQLSETSTMTOPTION' put: 16r33!
-ODBCConstants at: 'SQL_API_SQLSPECIALCOLUMNS' put: 16r34!
-ODBCConstants at: 'SQL_API_SQLSTATISTICS' put: 16r35!
-ODBCConstants at: 'SQL_API_SQLTABLEPRIVILEGES' put: 16r46!
-ODBCConstants at: 'SQL_API_SQLTABLES' put: 16r36!
-ODBCConstants at: 'SQL_API_SQLTRANSACT' put: 16r17!
-ODBCConstants at: 'SQL_ARD_TYPE' put: -16r63!
-ODBCConstants at: 'SQL_ASYNC_DBC_CAPABLE' put: 16r1!
-ODBCConstants at: 'SQL_ASYNC_DBC_ENABLE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_ASYNC_DBC_ENABLE_OFF' put: 16r0!
-ODBCConstants at: 'SQL_ASYNC_DBC_ENABLE_ON' put: 16r1!
-ODBCConstants at: 'SQL_ASYNC_DBC_FUNCTIONS' put: 16r2727!
-ODBCConstants at: 'SQL_ASYNC_DBC_NOT_CAPABLE' put: 16r0!
-ODBCConstants at: 'SQL_ASYNC_ENABLE' put: 16r4!
-ODBCConstants at: 'SQL_ASYNC_ENABLE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_ASYNC_ENABLE_OFF' put: 16r0!
-ODBCConstants at: 'SQL_ASYNC_ENABLE_ON' put: 16r1!
-ODBCConstants at: 'SQL_ASYNC_MODE' put: 16r2725!
-ODBCConstants at: 'SQL_ASYNC_NOTIFICATION' put: 16r2729!
-ODBCConstants at: 'SQL_ASYNC_NOTIFICATION_CAPABLE' put: 16r1!
-ODBCConstants at: 'SQL_ASYNC_NOTIFICATION_NOT_CAPABLE' put: 16r0!
-ODBCConstants at: 'SQL_AT_ADD_COLUMN' put: 16r1!
-ODBCConstants at: 'SQL_AT_ADD_COLUMN_COLLATION' put: 16r80!
-ODBCConstants at: 'SQL_AT_ADD_COLUMN_DEFAULT' put: 16r40!
-ODBCConstants at: 'SQL_AT_ADD_COLUMN_SINGLE' put: 16r20!
-ODBCConstants at: 'SQL_AT_ADD_CONSTRAINT' put: 16r8!
-ODBCConstants at: 'SQL_AT_ADD_TABLE_CONSTRAINT' put: 16r1000!
-ODBCConstants at: 'SQL_AT_COLUMN_SINGLE' put: 16r20!
-ODBCConstants at: 'SQL_AT_CONSTRAINT_DEFERRABLE' put: 16r40000!
-ODBCConstants at: 'SQL_AT_CONSTRAINT_INITIALLY_DEFERRED' put: 16r10000!
-ODBCConstants at: 'SQL_AT_CONSTRAINT_INITIALLY_IMMEDIATE' put: 16r20000!
-ODBCConstants at: 'SQL_AT_CONSTRAINT_NAME_DEFINITION' put: 16r8000!
-ODBCConstants at: 'SQL_AT_CONSTRAINT_NON_DEFERRABLE' put: 16r80000!
-ODBCConstants at: 'SQL_AT_DROP_COLUMN' put: 16r2!
-ODBCConstants at: 'SQL_AT_DROP_COLUMN_CASCADE' put: 16r400!
-ODBCConstants at: 'SQL_AT_DROP_COLUMN_DEFAULT' put: 16r200!
-ODBCConstants at: 'SQL_AT_DROP_COLUMN_RESTRICT' put: 16r800!
-ODBCConstants at: 'SQL_AT_DROP_TABLE_CONSTRAINT_CASCADE' put: 16r2000!
-ODBCConstants at: 'SQL_AT_DROP_TABLE_CONSTRAINT_RESTRICT' put: 16r4000!
-ODBCConstants at: 'SQL_AT_SET_COLUMN_DEFAULT' put: 16r100!
-ODBCConstants at: 'SQL_ATTR_ACCESS_MODE' put: 16r65!
-ODBCConstants at: 'SQL_ATTR_ANSI_APP' put: 16r73!
-ODBCConstants at: 'SQL_ATTR_APP_PARAM_DESC' put: 16r271B!
-ODBCConstants at: 'SQL_ATTR_APP_ROW_DESC' put: 16r271A!
-ODBCConstants at: 'SQL_ATTR_APPLICATION_KEY' put: 16rCB!
-ODBCConstants at: 'SQL_ATTR_ASYNC_DBC_EVENT' put: 16r77!
-ODBCConstants at: 'SQL_ATTR_ASYNC_DBC_FUNCTIONS_ENABLE' put: 16r75!
-ODBCConstants at: 'SQL_ATTR_ASYNC_ENABLE' put: 16r4!
-ODBCConstants at: 'SQL_ATTR_ASYNC_STMT_EVENT' put: 16r1D!
-ODBCConstants at: 'SQL_ATTR_AUTO_IPD' put: 16r2711!
-ODBCConstants at: 'SQL_ATTR_AUTOCOMMIT' put: 16r66!
-ODBCConstants at: 'SQL_ATTR_CONCURRENCY' put: 16r7!
-ODBCConstants at: 'SQL_ATTR_CONNECTION_DEAD' put: 16r4B9!
-ODBCConstants at: 'SQL_ATTR_CONNECTION_POOLING' put: 16rC9!
-ODBCConstants at: 'SQL_ATTR_CONNECTION_TIMEOUT' put: 16r71!
-ODBCConstants at: 'SQL_ATTR_CP_MATCH' put: 16rCA!
-ODBCConstants at: 'SQL_ATTR_CURRENT_CATALOG' put: 16r6D!
-ODBCConstants at: 'SQL_ATTR_CURSOR_SCROLLABLE' put: -16r1!
-ODBCConstants at: 'SQL_ATTR_CURSOR_SENSITIVITY' put: -16r2!
-ODBCConstants at: 'SQL_ATTR_CURSOR_TYPE' put: 16r6!
-ODBCConstants at: 'SQL_ATTR_DISCONNECT_BEHAVIOR' put: 16r72!
-ODBCConstants at: 'SQL_ATTR_ENABLE_AUTO_IPD' put: 16rF!
-ODBCConstants at: 'SQL_ATTR_ENLIST_IN_DTC' put: 16r4B7!
-ODBCConstants at: 'SQL_ATTR_ENLIST_IN_XA' put: 16r4B8!
-ODBCConstants at: 'SQL_ATTR_FETCH_BOOKMARK_PTR' put: 16r10!
-ODBCConstants at: 'SQL_ATTR_IMP_PARAM_DESC' put: 16r271D!
-ODBCConstants at: 'SQL_ATTR_IMP_ROW_DESC' put: 16r271C!
-ODBCConstants at: 'SQL_ATTR_KEYSET_SIZE' put: 16r8!
-ODBCConstants at: 'SQL_ATTR_LOGIN_TIMEOUT' put: 16r67!
-ODBCConstants at: 'SQL_ATTR_MAX_LENGTH' put: 16r3!
-ODBCConstants at: 'SQL_ATTR_MAX_ROWS' put: 16r1!
-ODBCConstants at: 'SQL_ATTR_METADATA_ID' put: 16r271E!
-ODBCConstants at: 'SQL_ATTR_NOSCAN' put: 16r2!
-ODBCConstants at: 'SQL_ATTR_ODBC_CURSORS' put: 16r6E!
-ODBCConstants at: 'SQL_ATTR_ODBC_VERSION' put: 16rC8!
-ODBCConstants at: 'SQL_ATTR_OUTPUT_NTS' put: 16r2711!
-ODBCConstants at: 'SQL_ATTR_PACKET_SIZE' put: 16r70!
-ODBCConstants at: 'SQL_ATTR_PARAM_BIND_OFFSET_PTR' put: 16r11!
-ODBCConstants at: 'SQL_ATTR_PARAM_BIND_TYPE' put: 16r12!
-ODBCConstants at: 'SQL_ATTR_PARAM_OPERATION_PTR' put: 16r13!
-ODBCConstants at: 'SQL_ATTR_PARAM_STATUS_PTR' put: 16r14!
-ODBCConstants at: 'SQL_ATTR_PARAMS_PROCESSED_PTR' put: 16r15!
-ODBCConstants at: 'SQL_ATTR_PARAMSET_SIZE' put: 16r16!
-ODBCConstants at: 'SQL_ATTR_QUERY_TIMEOUT' put: 16r0!
-ODBCConstants at: 'SQL_ATTR_QUIET_MODE' put: 16r6F!
-ODBCConstants at: 'SQL_ATTR_READONLY' put: 16r0!
-ODBCConstants at: 'SQL_ATTR_READWRITE_UNKNOWN' put: 16r2!
-ODBCConstants at: 'SQL_ATTR_RESET_CONNECTION' put: 16r74!
-ODBCConstants at: 'SQL_ATTR_RETRIEVE_DATA' put: 16rB!
-ODBCConstants at: 'SQL_ATTR_ROW_ARRAY_SIZE' put: 16r1B!
-ODBCConstants at: 'SQL_ATTR_ROW_BIND_OFFSET_PTR' put: 16r17!
-ODBCConstants at: 'SQL_ATTR_ROW_BIND_TYPE' put: 16r5!
-ODBCConstants at: 'SQL_ATTR_ROW_NUMBER' put: 16rE!
-ODBCConstants at: 'SQL_ATTR_ROW_OPERATION_PTR' put: 16r18!
-ODBCConstants at: 'SQL_ATTR_ROW_STATUS_PTR' put: 16r19!
-ODBCConstants at: 'SQL_ATTR_ROWS_FETCHED_PTR' put: 16r1A!
-ODBCConstants at: 'SQL_ATTR_SIMULATE_CURSOR' put: 16rA!
-ODBCConstants at: 'SQL_ATTR_TRACE' put: 16r68!
-ODBCConstants at: 'SQL_ATTR_TRACEFILE' put: 16r69!
-ODBCConstants at: 'SQL_ATTR_TRANSLATE_LIB' put: 16r6A!
-ODBCConstants at: 'SQL_ATTR_TRANSLATE_OPTION' put: 16r6B!
-ODBCConstants at: 'SQL_ATTR_TXN_ISOLATION' put: 16r6C!
-ODBCConstants at: 'SQL_ATTR_USE_BOOKMARKS' put: 16rC!
-ODBCConstants at: 'SQL_ATTR_WRITE' put: 16r1!
-ODBCConstants at: 'SQL_AUTOCOMMIT' put: 16r66!
-ODBCConstants at: 'SQL_AUTOCOMMIT_DEFAULT' put: 16r1!
-ODBCConstants at: 'SQL_AUTOCOMMIT_OFF' put: 16r0!
-ODBCConstants at: 'SQL_AUTOCOMMIT_ON' put: 16r1!
-ODBCConstants at: 'SQL_BATCH_ROW_COUNT' put: 16r78!
-ODBCConstants at: 'SQL_BATCH_SUPPORT' put: 16r79!
-ODBCConstants at: 'SQL_BEST_ROWID' put: 16r1!
-ODBCConstants at: 'SQL_BIND_BY_COLUMN' put: 16r0!
-ODBCConstants at: 'SQL_BIND_TYPE' put: 16r5!
-ODBCConstants at: 'SQL_BIND_TYPE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_BOOKMARK_PERSISTENCE' put: 16r52!
-ODBCConstants at: 'SQL_BP_CLOSE' put: 16r1!
-ODBCConstants at: 'SQL_BP_DELETE' put: 16r2!
-ODBCConstants at: 'SQL_BP_DROP' put: 16r4!
-ODBCConstants at: 'SQL_BP_OTHER_HSTMT' put: 16r20!
-ODBCConstants at: 'SQL_BP_SCROLL' put: 16r40!
-ODBCConstants at: 'SQL_BP_TRANSACTION' put: 16r8!
-ODBCConstants at: 'SQL_BP_UPDATE' put: 16r10!
-ODBCConstants at: 'SQL_BRC_EXPLICIT' put: 16r2!
-ODBCConstants at: 'SQL_BRC_PROCEDURES' put: 16r1!
-ODBCConstants at: 'SQL_BRC_ROLLED_UP' put: 16r4!
-ODBCConstants at: 'SQL_BS_ROW_COUNT_EXPLICIT' put: 16r2!
-ODBCConstants at: 'SQL_BS_ROW_COUNT_PROC' put: 16r8!
-ODBCConstants at: 'SQL_BS_SELECT_EXPLICIT' put: 16r1!
-ODBCConstants at: 'SQL_BS_SELECT_PROC' put: 16r4!
-ODBCConstants at: 'SQL_C_BINARY' put: -16r2!
-ODBCConstants at: 'SQL_C_BIT' put: -16r7!
-ODBCConstants at: 'SQL_C_CHAR' put: 16r1!
-ODBCConstants at: 'SQL_C_DATE' put: 16r9!
-ODBCConstants at: 'SQL_C_DEFAULT' put: 16r63!
-ODBCConstants at: 'SQL_C_DOUBLE' put: 16r8!
-ODBCConstants at: 'SQL_C_FLOAT' put: 16r7!
-ODBCConstants at: 'SQL_C_GUID' put: -16rB!
-ODBCConstants at: 'SQL_C_INTERVAL_DAY' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_DAY_TO_HOUR' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_DAY_TO_MINUTE' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_DAY_TO_SECOND' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_HOUR' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_HOUR_TO_MINUTE' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_HOUR_TO_SECOND' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_MINUTE' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_MINUTE_TO_SECOND' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_MONTH' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_SECOND' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_YEAR' put: 16r64!
-ODBCConstants at: 'SQL_C_INTERVAL_YEAR_TO_MONTH' put: 16r64!
-ODBCConstants at: 'SQL_C_LONG' put: 16r4!
-ODBCConstants at: 'SQL_C_NUMERIC' put: 16r2!
-ODBCConstants at: 'SQL_C_SHORT' put: 16r5!
-ODBCConstants at: 'SQL_C_TIME' put: 16rA!
-ODBCConstants at: 'SQL_C_TIMESTAMP' put: 16rB!
-ODBCConstants at: 'SQL_C_TINYINT' put: -16r6!
-ODBCConstants at: 'SQL_C_TYPE_DATE' put: 16r5B!
-ODBCConstants at: 'SQL_C_TYPE_TIME' put: 16r5C!
-ODBCConstants at: 'SQL_C_TYPE_TIMESTAMP' put: 16r5D!
-ODBCConstants at: 'SQL_CA_CONSTRAINT_DEFERRABLE' put: 16r40!
-ODBCConstants at: 'SQL_CA_CONSTRAINT_INITIALLY_DEFERRED' put: 16r10!
-ODBCConstants at: 'SQL_CA_CONSTRAINT_INITIALLY_IMMEDIATE' put: 16r20!
-ODBCConstants at: 'SQL_CA_CONSTRAINT_NON_DEFERRABLE' put: 16r80!
-ODBCConstants at: 'SQL_CA_CREATE_ASSERTION' put: 16r1!
-ODBCConstants at: 'SQL_CA1_ABSOLUTE' put: 16r2!
-ODBCConstants at: 'SQL_CA1_BOOKMARK' put: 16r8!
-ODBCConstants at: 'SQL_CA1_BULK_ADD' put: 16r10000!
-ODBCConstants at: 'SQL_CA1_BULK_DELETE_BY_BOOKMARK' put: 16r40000!
-ODBCConstants at: 'SQL_CA1_BULK_FETCH_BY_BOOKMARK' put: 16r80000!
-ODBCConstants at: 'SQL_CA1_BULK_UPDATE_BY_BOOKMARK' put: 16r20000!
-ODBCConstants at: 'SQL_CA1_LOCK_EXCLUSIVE' put: 16r80!
-ODBCConstants at: 'SQL_CA1_LOCK_NO_CHANGE' put: 16r40!
-ODBCConstants at: 'SQL_CA1_LOCK_UNLOCK' put: 16r100!
-ODBCConstants at: 'SQL_CA1_NEXT' put: 16r1!
-ODBCConstants at: 'SQL_CA1_POS_DELETE' put: 16r800!
-ODBCConstants at: 'SQL_CA1_POS_POSITION' put: 16r200!
-ODBCConstants at: 'SQL_CA1_POS_REFRESH' put: 16r1000!
-ODBCConstants at: 'SQL_CA1_POS_UPDATE' put: 16r400!
-ODBCConstants at: 'SQL_CA1_POSITIONED_DELETE' put: 16r4000!
-ODBCConstants at: 'SQL_CA1_POSITIONED_UPDATE' put: 16r2000!
-ODBCConstants at: 'SQL_CA1_RELATIVE' put: 16r4!
-ODBCConstants at: 'SQL_CA1_SELECT_FOR_UPDATE' put: 16r8000!
-ODBCConstants at: 'SQL_CA2_CRC_APPROXIMATE' put: 16r2000!
-ODBCConstants at: 'SQL_CA2_CRC_EXACT' put: 16r1000!
-ODBCConstants at: 'SQL_CA2_LOCK_CONCURRENCY' put: 16r2!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_AFFECTS_ALL' put: 16r80!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_CATALOG' put: 16r800!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_DELETE' put: 16r200!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_INSERT' put: 16r100!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_SELECT' put: 16r80!
-ODBCConstants at: 'SQL_CA2_MAX_ROWS_UPDATE' put: 16r400!
-ODBCConstants at: 'SQL_CA2_OPT_ROWVER_CONCURRENCY' put: 16r4!
-ODBCConstants at: 'SQL_CA2_OPT_VALUES_CONCURRENCY' put: 16r8!
-ODBCConstants at: 'SQL_CA2_READ_ONLY_CONCURRENCY' put: 16r1!
-ODBCConstants at: 'SQL_CA2_SENSITIVITY_ADDITIONS' put: 16r10!
-ODBCConstants at: 'SQL_CA2_SENSITIVITY_DELETIONS' put: 16r20!
-ODBCConstants at: 'SQL_CA2_SENSITIVITY_UPDATES' put: 16r40!
-ODBCConstants at: 'SQL_CA2_SIMULATE_NON_UNIQUE' put: 16r4000!
-ODBCConstants at: 'SQL_CA2_SIMULATE_TRY_UNIQUE' put: 16r8000!
-ODBCConstants at: 'SQL_CA2_SIMULATE_UNIQUE' put: 16r10000!
-ODBCConstants at: 'SQL_CASCADE' put: 16r0!
-ODBCConstants at: 'SQL_CATALOG_LOCATION' put: 16r72!
-ODBCConstants at: 'SQL_CATALOG_NAME' put: 16r2713!
-ODBCConstants at: 'SQL_CATALOG_NAME_SEPARATOR' put: 16r29!
-ODBCConstants at: 'SQL_CATALOG_TERM' put: 16r2A!
-ODBCConstants at: 'SQL_CATALOG_USAGE' put: 16r5C!
-ODBCConstants at: 'SQL_CB_CLOSE' put: 16r1!
-ODBCConstants at: 'SQL_CB_DELETE' put: 16r0!
-ODBCConstants at: 'SQL_CB_NON_NULL' put: 16r1!
-ODBCConstants at: 'SQL_CB_NULL' put: 16r0!
-ODBCConstants at: 'SQL_CB_PRESERVE' put: 16r2!
-ODBCConstants at: 'SQL_CC_CLOSE' put: 16r1!
-ODBCConstants at: 'SQL_CC_DELETE' put: 16r0!
-ODBCConstants at: 'SQL_CC_PRESERVE' put: 16r2!
-ODBCConstants at: 'SQL_CCOL_CREATE_COLLATION' put: 16r1!
-ODBCConstants at: 'SQL_CCS_COLLATE_CLAUSE' put: 16r2!
-ODBCConstants at: 'SQL_CCS_CREATE_CHARACTER_SET' put: 16r1!
-ODBCConstants at: 'SQL_CCS_LIMITED_COLLATION' put: 16r4!
-ODBCConstants at: 'SQL_CD_FALSE' put: 16r0!
-ODBCConstants at: 'SQL_CD_TRUE' put: 16r1!
-ODBCConstants at: 'SQL_CDO_COLLATION' put: 16r8!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT' put: 16r4!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT_DEFERRABLE' put: 16r80!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT_INITIALLY_DEFERRED' put: 16r20!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT_INITIALLY_IMMEDIATE' put: 16r40!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT_NAME_DEFINITION' put: 16r10!
-ODBCConstants at: 'SQL_CDO_CONSTRAINT_NON_DEFERRABLE' put: 16r100!
-ODBCConstants at: 'SQL_CDO_CREATE_DOMAIN' put: 16r1!
-ODBCConstants at: 'SQL_CDO_DEFAULT' put: 16r2!
-ODBCConstants at: 'SQL_CL_END' put: 16r2!
-ODBCConstants at: 'SQL_CL_START' put: 16r1!
-ODBCConstants at: 'SQL_CLOSE' put: 16r0!
-ODBCConstants at: 'SQL_CN_ANY' put: 16r2!
-ODBCConstants at: 'SQL_CN_DIFFERENT' put: 16r1!
-ODBCConstants at: 'SQL_CN_NONE' put: 16r0!
-ODBCConstants at: 'SQL_CODE_DATE' put: 16r1!
-ODBCConstants at: 'SQL_CODE_DAY' put: 16r3!
-ODBCConstants at: 'SQL_CODE_DAY_TO_HOUR' put: 16r8!
-ODBCConstants at: 'SQL_CODE_DAY_TO_MINUTE' put: 16r9!
-ODBCConstants at: 'SQL_CODE_DAY_TO_SECOND' put: 16rA!
-ODBCConstants at: 'SQL_CODE_HOUR' put: 16r4!
-ODBCConstants at: 'SQL_CODE_HOUR_TO_MINUTE' put: 16rB!
-ODBCConstants at: 'SQL_CODE_HOUR_TO_SECOND' put: 16rC!
-ODBCConstants at: 'SQL_CODE_MINUTE' put: 16r5!
-ODBCConstants at: 'SQL_CODE_MINUTE_TO_SECOND' put: 16rD!
-ODBCConstants at: 'SQL_CODE_MONTH' put: 16r2!
-ODBCConstants at: 'SQL_CODE_SECOND' put: 16r6!
-ODBCConstants at: 'SQL_CODE_TIME' put: 16r2!
-ODBCConstants at: 'SQL_CODE_TIMESTAMP' put: 16r3!
-ODBCConstants at: 'SQL_CODE_YEAR' put: 16r1!
-ODBCConstants at: 'SQL_CODE_YEAR_TO_MONTH' put: 16r7!
-ODBCConstants at: 'SQL_COL_PRED_BASIC' put: 16r2!
-ODBCConstants at: 'SQL_COL_PRED_CHAR' put: 16r1!
-ODBCConstants at: 'SQL_COLATT_OPT_MAX' put: 16r12!
-ODBCConstants at: 'SQL_COLATT_OPT_MIN' put: 16r0!
-ODBCConstants at: 'SQL_COLLATION_SEQ' put: 16r2714!
-ODBCConstants at: 'SQL_COLUMN_ALIAS' put: 16r57!
-ODBCConstants at: 'SQL_COLUMN_AUTO_INCREMENT' put: 16rB!
-ODBCConstants at: 'SQL_COLUMN_CASE_SENSITIVE' put: 16rC!
-ODBCConstants at: 'SQL_COLUMN_COUNT' put: 16r0!
-ODBCConstants at: 'SQL_COLUMN_DISPLAY_SIZE' put: 16r6!
-ODBCConstants at: 'SQL_COLUMN_IGNORE' put: -16r6!
-ODBCConstants at: 'SQL_COLUMN_LABEL' put: 16r12!
-ODBCConstants at: 'SQL_COLUMN_LENGTH' put: 16r3!
-ODBCConstants at: 'SQL_COLUMN_MONEY' put: 16r9!
-ODBCConstants at: 'SQL_COLUMN_NAME' put: 16r1!
-ODBCConstants at: 'SQL_COLUMN_NULLABLE' put: 16r7!
-ODBCConstants at: 'SQL_COLUMN_NUMBER_UNKNOWN' put: -16r2!
-ODBCConstants at: 'SQL_COLUMN_OWNER_NAME' put: 16r10!
-ODBCConstants at: 'SQL_COLUMN_PRECISION' put: 16r4!
-ODBCConstants at: 'SQL_COLUMN_QUALIFIER_NAME' put: 16r11!
-ODBCConstants at: 'SQL_COLUMN_SCALE' put: 16r5!
-ODBCConstants at: 'SQL_COLUMN_SEARCHABLE' put: 16rD!
-ODBCConstants at: 'SQL_COLUMN_TABLE_NAME' put: 16rF!
-ODBCConstants at: 'SQL_COLUMN_TYPE' put: 16r2!
-ODBCConstants at: 'SQL_COLUMN_TYPE_NAME' put: 16rE!
-ODBCConstants at: 'SQL_COLUMN_UNSIGNED' put: 16r8!
-ODBCConstants at: 'SQL_COLUMN_UPDATABLE' put: 16rA!
-ODBCConstants at: 'SQL_COMMIT' put: 16r0!
-ODBCConstants at: 'SQL_CONCAT_NULL_BEHAVIOR' put: 16r16!
-ODBCConstants at: 'SQL_CONCUR_DEFAULT' put: 16r1!
-ODBCConstants at: 'SQL_CONCUR_LOCK' put: 16r2!
-ODBCConstants at: 'SQL_CONCUR_READ_ONLY' put: 16r1!
-ODBCConstants at: 'SQL_CONCUR_ROWVER' put: 16r3!
-ODBCConstants at: 'SQL_CONCUR_TIMESTAMP' put: 16r3!
-ODBCConstants at: 'SQL_CONCUR_VALUES' put: 16r4!
-ODBCConstants at: 'SQL_CONCURRENCY' put: 16r7!
-ODBCConstants at: 'SQL_CONVERT_BIGINT' put: 16r35!
-ODBCConstants at: 'SQL_CONVERT_BINARY' put: 16r36!
-ODBCConstants at: 'SQL_CONVERT_BIT' put: 16r37!
-ODBCConstants at: 'SQL_CONVERT_CHAR' put: 16r38!
-ODBCConstants at: 'SQL_CONVERT_DATE' put: 16r39!
-ODBCConstants at: 'SQL_CONVERT_DECIMAL' put: 16r3A!
-ODBCConstants at: 'SQL_CONVERT_DOUBLE' put: 16r3B!
-ODBCConstants at: 'SQL_CONVERT_FLOAT' put: 16r3C!
-ODBCConstants at: 'SQL_CONVERT_FUNCTIONS' put: 16r30!
-ODBCConstants at: 'SQL_CONVERT_GUID' put: 16rAD!
-ODBCConstants at: 'SQL_CONVERT_INTEGER' put: 16r3D!
-ODBCConstants at: 'SQL_CONVERT_INTERVAL_DAY_TIME' put: 16r7B!
-ODBCConstants at: 'SQL_CONVERT_INTERVAL_YEAR_MONTH' put: 16r7C!
-ODBCConstants at: 'SQL_CONVERT_LONGVARBINARY' put: 16r47!
-ODBCConstants at: 'SQL_CONVERT_LONGVARCHAR' put: 16r3E!
-ODBCConstants at: 'SQL_CONVERT_NUMERIC' put: 16r3F!
-ODBCConstants at: 'SQL_CONVERT_REAL' put: 16r40!
-ODBCConstants at: 'SQL_CONVERT_SMALLINT' put: 16r41!
-ODBCConstants at: 'SQL_CONVERT_TIME' put: 16r42!
-ODBCConstants at: 'SQL_CONVERT_TIMESTAMP' put: 16r43!
-ODBCConstants at: 'SQL_CONVERT_TINYINT' put: 16r44!
-ODBCConstants at: 'SQL_CONVERT_VARBINARY' put: 16r45!
-ODBCConstants at: 'SQL_CONVERT_VARCHAR' put: 16r46!
-ODBCConstants at: 'SQL_CONVERT_WCHAR' put: 16r7A!
-ODBCConstants at: 'SQL_CONVERT_WLONGVARCHAR' put: 16r7D!
-ODBCConstants at: 'SQL_CONVERT_WVARCHAR' put: 16r7E!
-ODBCConstants at: 'SQL_CORRELATION_NAME' put: 16r4A!
-ODBCConstants at: 'SQL_CP_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_CP_DRIVER_AWARE' put: 16r3!
-ODBCConstants at: 'SQL_CP_MATCH_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_CP_OFF' put: 16r0!
-ODBCConstants at: 'SQL_CP_ONE_PER_DRIVER' put: 16r1!
-ODBCConstants at: 'SQL_CP_ONE_PER_HENV' put: 16r2!
-ODBCConstants at: 'SQL_CP_RELAXED_MATCH' put: 16r1!
-ODBCConstants at: 'SQL_CP_STRICT_MATCH' put: 16r0!
-ODBCConstants at: 'SQL_CR_CLOSE' put: 16r1!
-ODBCConstants at: 'SQL_CR_DELETE' put: 16r0!
-ODBCConstants at: 'SQL_CR_PRESERVE' put: 16r2!
-ODBCConstants at: 'SQL_CREATE_ASSERTION' put: 16r7F!
-ODBCConstants at: 'SQL_CREATE_CHARACTER_SET' put: 16r80!
-ODBCConstants at: 'SQL_CREATE_COLLATION' put: 16r81!
-ODBCConstants at: 'SQL_CREATE_DOMAIN' put: 16r82!
-ODBCConstants at: 'SQL_CREATE_SCHEMA' put: 16r83!
-ODBCConstants at: 'SQL_CREATE_TABLE' put: 16r84!
-ODBCConstants at: 'SQL_CREATE_TRANSLATION' put: 16r85!
-ODBCConstants at: 'SQL_CREATE_VIEW' put: 16r86!
-ODBCConstants at: 'SQL_CS_AUTHORIZATION' put: 16r2!
-ODBCConstants at: 'SQL_CS_CREATE_SCHEMA' put: 16r1!
-ODBCConstants at: 'SQL_CS_DEFAULT_CHARACTER_SET' put: 16r4!
-ODBCConstants at: 'SQL_CT_COLUMN_COLLATION' put: 16r800!
-ODBCConstants at: 'SQL_CT_COLUMN_CONSTRAINT' put: 16r200!
-ODBCConstants at: 'SQL_CT_COLUMN_DEFAULT' put: 16r400!
-ODBCConstants at: 'SQL_CT_COMMIT_DELETE' put: 16r4!
-ODBCConstants at: 'SQL_CT_COMMIT_PRESERVE' put: 16r2!
-ODBCConstants at: 'SQL_CT_CONSTRAINT_DEFERRABLE' put: 16r80!
-ODBCConstants at: 'SQL_CT_CONSTRAINT_INITIALLY_DEFERRED' put: 16r20!
-ODBCConstants at: 'SQL_CT_CONSTRAINT_INITIALLY_IMMEDIATE' put: 16r40!
-ODBCConstants at: 'SQL_CT_CONSTRAINT_NAME_DEFINITION' put: 16r2000!
-ODBCConstants at: 'SQL_CT_CONSTRAINT_NON_DEFERRABLE' put: 16r100!
-ODBCConstants at: 'SQL_CT_CREATE_TABLE' put: 16r1!
-ODBCConstants at: 'SQL_CT_GLOBAL_TEMPORARY' put: 16r8!
-ODBCConstants at: 'SQL_CT_LOCAL_TEMPORARY' put: 16r10!
-ODBCConstants at: 'SQL_CT_TABLE_CONSTRAINT' put: 16r1000!
-ODBCConstants at: 'SQL_CTR_CREATE_TRANSLATION' put: 16r1!
-ODBCConstants at: 'SQL_CU_DML_STATEMENTS' put: 16r1!
-ODBCConstants at: 'SQL_CU_INDEX_DEFINITION' put: 16r8!
-ODBCConstants at: 'SQL_CU_PRIVILEGE_DEFINITION' put: 16r10!
-ODBCConstants at: 'SQL_CU_PROCEDURE_INVOCATION' put: 16r2!
-ODBCConstants at: 'SQL_CU_TABLE_DEFINITION' put: 16r4!
-ODBCConstants at: 'SQL_CUR_DEFAULT' put: 16r2!
-ODBCConstants at: 'SQL_CUR_USE_DRIVER' put: 16r2!
-ODBCConstants at: 'SQL_CUR_USE_IF_NEEDED' put: 16r0!
-ODBCConstants at: 'SQL_CUR_USE_ODBC' put: 16r1!
-ODBCConstants at: 'SQL_CURRENT_QUALIFIER' put: 16r6D!
-ODBCConstants at: 'SQL_CURSOR_COMMIT_BEHAVIOR' put: 16r17!
-ODBCConstants at: 'SQL_CURSOR_DYNAMIC' put: 16r2!
-ODBCConstants at: 'SQL_CURSOR_FORWARD_ONLY' put: 16r0!
-ODBCConstants at: 'SQL_CURSOR_KEYSET_DRIVEN' put: 16r1!
-ODBCConstants at: 'SQL_CURSOR_ROLLBACK_BEHAVIOR' put: 16r18!
-ODBCConstants at: 'SQL_CURSOR_SENSITIVITY' put: 16r2711!
-ODBCConstants at: 'SQL_CURSOR_STATIC' put: 16r3!
-ODBCConstants at: 'SQL_CURSOR_TYPE' put: 16r6!
-ODBCConstants at: 'SQL_CURSOR_TYPE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_CV_CASCADED' put: 16r4!
-ODBCConstants at: 'SQL_CV_CHECK_OPTION' put: 16r2!
-ODBCConstants at: 'SQL_CV_CREATE_VIEW' put: 16r1!
-ODBCConstants at: 'SQL_CV_LOCAL' put: 16r8!
-ODBCConstants at: 'SQL_CVT_BIGINT' put: 16r4000!
-ODBCConstants at: 'SQL_CVT_BINARY' put: 16r400!
-ODBCConstants at: 'SQL_CVT_BIT' put: 16r1000!
-ODBCConstants at: 'SQL_CVT_CHAR' put: 16r1!
-ODBCConstants at: 'SQL_CVT_DATE' put: 16r8000!
-ODBCConstants at: 'SQL_CVT_DECIMAL' put: 16r4!
-ODBCConstants at: 'SQL_CVT_DOUBLE' put: 16r80!
-ODBCConstants at: 'SQL_CVT_FLOAT' put: 16r20!
-ODBCConstants at: 'SQL_CVT_GUID' put: 16r1000000!
-ODBCConstants at: 'SQL_CVT_INTEGER' put: 16r8!
-ODBCConstants at: 'SQL_CVT_INTERVAL_DAY_TIME' put: 16r100000!
-ODBCConstants at: 'SQL_CVT_INTERVAL_YEAR_MONTH' put: 16r80000!
-ODBCConstants at: 'SQL_CVT_LONGVARBINARY' put: 16r40000!
-ODBCConstants at: 'SQL_CVT_LONGVARCHAR' put: 16r200!
-ODBCConstants at: 'SQL_CVT_NUMERIC' put: 16r2!
-ODBCConstants at: 'SQL_CVT_REAL' put: 16r40!
-ODBCConstants at: 'SQL_CVT_SMALLINT' put: 16r10!
-ODBCConstants at: 'SQL_CVT_TIME' put: 16r10000!
-ODBCConstants at: 'SQL_CVT_TIMESTAMP' put: 16r20000!
-ODBCConstants at: 'SQL_CVT_TINYINT' put: 16r2000!
-ODBCConstants at: 'SQL_CVT_VARBINARY' put: 16r800!
-ODBCConstants at: 'SQL_CVT_VARCHAR' put: 16r100!
-ODBCConstants at: 'SQL_CVT_WCHAR' put: 16r200000!
-ODBCConstants at: 'SQL_CVT_WLONGVARCHAR' put: 16r400000!
-ODBCConstants at: 'SQL_CVT_WVARCHAR' put: 16r800000!
-ODBCConstants at: 'SQL_DA_DROP_ASSERTION' put: 16r1!
-ODBCConstants at: 'SQL_DATA_AT_EXEC' put: -16r2!
-ODBCConstants at: 'SQL_DATA_SOURCE_NAME' put: 16r2!
-ODBCConstants at: 'SQL_DATA_SOURCE_READ_ONLY' put: 16r19!
-ODBCConstants at: 'SQL_DATABASE_NAME' put: 16r10!
-ODBCConstants at: 'SQL_DATE_LEN' put: 16rA!
-ODBCConstants at: 'SQL_DATETIME_LITERALS' put: 16r77!
-ODBCConstants at: 'SQL_DAY' put: 16r3!
-ODBCConstants at: 'SQL_DAY_TO_HOUR' put: 16r8!
-ODBCConstants at: 'SQL_DAY_TO_MINUTE' put: 16r9!
-ODBCConstants at: 'SQL_DAY_TO_SECOND' put: 16rA!
-ODBCConstants at: 'SQL_DB_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_DB_DISCONNECT' put: 16r1!
-ODBCConstants at: 'SQL_DB_RETURN_TO_POOL' put: 16r0!
-ODBCConstants at: 'SQL_DBMS_NAME' put: 16r11!
-ODBCConstants at: 'SQL_DBMS_VER' put: 16r12!
-ODBCConstants at: 'SQL_DC_DROP_COLLATION' put: 16r1!
-ODBCConstants at: 'SQL_DCS_DROP_CHARACTER_SET' put: 16r1!
-ODBCConstants at: 'SQL_DD_CASCADE' put: 16r4!
-ODBCConstants at: 'SQL_DD_DROP_DOMAIN' put: 16r1!
-ODBCConstants at: 'SQL_DD_RESTRICT' put: 16r2!
-ODBCConstants at: 'SQL_DDL_INDEX' put: 16rAA!
-ODBCConstants at: 'SQL_DEFAULT' put: 16r63!
-ODBCConstants at: 'SQL_DEFAULT_PARAM' put: -16r5!
-ODBCConstants at: 'SQL_DEFAULT_TXN_ISOLATION' put: 16r1A!
-ODBCConstants at: 'SQL_DELETE' put: 16r3!
-ODBCConstants at: 'SQL_DELETE_BY_BOOKMARK' put: 16r6!
-ODBCConstants at: 'SQL_DESC_ALLOC_AUTO' put: 16r1!
-ODBCConstants at: 'SQL_DESC_ALLOC_TYPE' put: 16r44B!
-ODBCConstants at: 'SQL_DESC_ALLOC_USER' put: 16r2!
-ODBCConstants at: 'SQL_DESC_ARRAY_SIZE' put: 16r14!
-ODBCConstants at: 'SQL_DESC_ARRAY_STATUS_PTR' put: 16r15!
-ODBCConstants at: 'SQL_DESC_AUTO_UNIQUE_VALUE' put: 16rB!
-ODBCConstants at: 'SQL_DESC_BASE_COLUMN_NAME' put: 16r16!
-ODBCConstants at: 'SQL_DESC_BASE_TABLE_NAME' put: 16r17!
-ODBCConstants at: 'SQL_DESC_BIND_OFFSET_PTR' put: 16r18!
-ODBCConstants at: 'SQL_DESC_BIND_TYPE' put: 16r19!
-ODBCConstants at: 'SQL_DESC_CASE_SENSITIVE' put: 16rC!
-ODBCConstants at: 'SQL_DESC_CATALOG_NAME' put: 16r11!
-ODBCConstants at: 'SQL_DESC_CONCISE_TYPE' put: 16r2!
-ODBCConstants at: 'SQL_DESC_COUNT' put: 16r3E9!
-ODBCConstants at: 'SQL_DESC_DATA_PTR' put: 16r3F2!
-ODBCConstants at: 'SQL_DESC_DATETIME_INTERVAL_CODE' put: 16r3EF!
-ODBCConstants at: 'SQL_DESC_DATETIME_INTERVAL_PRECISION' put: 16r1A!
-ODBCConstants at: 'SQL_DESC_DISPLAY_SIZE' put: 16r6!
-ODBCConstants at: 'SQL_DESC_FIXED_PREC_SCALE' put: 16r9!
-ODBCConstants at: 'SQL_DESC_INDICATOR_PTR' put: 16r3F1!
-ODBCConstants at: 'SQL_DESC_LABEL' put: 16r12!
-ODBCConstants at: 'SQL_DESC_LENGTH' put: 16r3EB!
-ODBCConstants at: 'SQL_DESC_LITERAL_PREFIX' put: 16r1B!
-ODBCConstants at: 'SQL_DESC_LITERAL_SUFFIX' put: 16r1C!
-ODBCConstants at: 'SQL_DESC_LOCAL_TYPE_NAME' put: 16r1D!
-ODBCConstants at: 'SQL_DESC_MAXIMUM_SCALE' put: 16r1E!
-ODBCConstants at: 'SQL_DESC_MINIMUM_SCALE' put: 16r1F!
-ODBCConstants at: 'SQL_DESC_NAME' put: 16r3F3!
-ODBCConstants at: 'SQL_DESC_NULLABLE' put: 16r3F0!
-ODBCConstants at: 'SQL_DESC_NUM_PREC_RADIX' put: 16r20!
-ODBCConstants at: 'SQL_DESC_OCTET_LENGTH' put: 16r3F5!
-ODBCConstants at: 'SQL_DESC_OCTET_LENGTH_PTR' put: 16r3EC!
-ODBCConstants at: 'SQL_DESC_PARAMETER_TYPE' put: 16r21!
-ODBCConstants at: 'SQL_DESC_PRECISION' put: 16r3ED!
-ODBCConstants at: 'SQL_DESC_ROWS_PROCESSED_PTR' put: 16r22!
-ODBCConstants at: 'SQL_DESC_ROWVER' put: 16r23!
-ODBCConstants at: 'SQL_DESC_SCALE' put: 16r3EE!
-ODBCConstants at: 'SQL_DESC_SCHEMA_NAME' put: 16r10!
-ODBCConstants at: 'SQL_DESC_SEARCHABLE' put: 16rD!
-ODBCConstants at: 'SQL_DESC_TABLE_NAME' put: 16rF!
-ODBCConstants at: 'SQL_DESC_TYPE' put: 16r3EA!
-ODBCConstants at: 'SQL_DESC_TYPE_NAME' put: 16rE!
-ODBCConstants at: 'SQL_DESC_UNNAMED' put: 16r3F4!
-ODBCConstants at: 'SQL_DESC_UNSIGNED' put: 16r8!
-ODBCConstants at: 'SQL_DESC_UPDATABLE' put: 16rA!
-ODBCConstants at: 'SQL_DESCRIBE_PARAMETER' put: 16r2712!
-ODBCConstants at: 'SQL_DI_CREATE_INDEX' put: 16r1!
-ODBCConstants at: 'SQL_DI_DROP_INDEX' put: 16r2!
-ODBCConstants at: 'SQL_DIAG_ALTER_DOMAIN' put: 16r3!
-ODBCConstants at: 'SQL_DIAG_ALTER_TABLE' put: 16r4!
-ODBCConstants at: 'SQL_DIAG_CALL' put: 16r7!
-ODBCConstants at: 'SQL_DIAG_CLASS_ORIGIN' put: 16r8!
-ODBCConstants at: 'SQL_DIAG_COLUMN_NUMBER' put: -16r4DF!
-ODBCConstants at: 'SQL_DIAG_CONNECTION_NAME' put: 16rA!
-ODBCConstants at: 'SQL_DIAG_CREATE_ASSERTION' put: 16r6!
-ODBCConstants at: 'SQL_DIAG_CREATE_CHARACTER_SET' put: 16r8!
-ODBCConstants at: 'SQL_DIAG_CREATE_COLLATION' put: 16rA!
-ODBCConstants at: 'SQL_DIAG_CREATE_DOMAIN' put: 16r17!
-ODBCConstants at: 'SQL_DIAG_CREATE_INDEX' put: -16r1!
-ODBCConstants at: 'SQL_DIAG_CREATE_SCHEMA' put: 16r40!
-ODBCConstants at: 'SQL_DIAG_CREATE_TABLE' put: 16r4D!
-ODBCConstants at: 'SQL_DIAG_CREATE_TRANSLATION' put: 16r4F!
-ODBCConstants at: 'SQL_DIAG_CREATE_VIEW' put: 16r54!
-ODBCConstants at: 'SQL_DIAG_CURSOR_ROW_COUNT' put: -16r4E1!
-ODBCConstants at: 'SQL_DIAG_DELETE_WHERE' put: 16r13!
-ODBCConstants at: 'SQL_DIAG_DROP_ASSERTION' put: 16r18!
-ODBCConstants at: 'SQL_DIAG_DROP_CHARACTER_SET' put: 16r19!
-ODBCConstants at: 'SQL_DIAG_DROP_COLLATION' put: 16r1A!
-ODBCConstants at: 'SQL_DIAG_DROP_DOMAIN' put: 16r1B!
-ODBCConstants at: 'SQL_DIAG_DROP_INDEX' put: -16r2!
-ODBCConstants at: 'SQL_DIAG_DROP_SCHEMA' put: 16r1F!
-ODBCConstants at: 'SQL_DIAG_DROP_TABLE' put: 16r20!
-ODBCConstants at: 'SQL_DIAG_DROP_TRANSLATION' put: 16r21!
-ODBCConstants at: 'SQL_DIAG_DROP_VIEW' put: 16r24!
-ODBCConstants at: 'SQL_DIAG_DYNAMIC_DELETE_CURSOR' put: 16r26!
-ODBCConstants at: 'SQL_DIAG_DYNAMIC_FUNCTION' put: 16r7!
-ODBCConstants at: 'SQL_DIAG_DYNAMIC_FUNCTION_CODE' put: 16rC!
-ODBCConstants at: 'SQL_DIAG_DYNAMIC_UPDATE_CURSOR' put: 16r51!
-ODBCConstants at: 'SQL_DIAG_GRANT' put: 16r30!
-ODBCConstants at: 'SQL_DIAG_INSERT' put: 16r32!
-ODBCConstants at: 'SQL_DIAG_MESSAGE_TEXT' put: 16r6!
-ODBCConstants at: 'SQL_DIAG_NATIVE' put: 16r5!
-ODBCConstants at: 'SQL_DIAG_NUMBER' put: 16r2!
-ODBCConstants at: 'SQL_DIAG_RETURNCODE' put: 16r1!
-ODBCConstants at: 'SQL_DIAG_REVOKE' put: 16r3B!
-ODBCConstants at: 'SQL_DIAG_ROW_COUNT' put: 16r3!
-ODBCConstants at: 'SQL_DIAG_ROW_NUMBER' put: -16r4E0!
-ODBCConstants at: 'SQL_DIAG_SELECT_CURSOR' put: 16r55!
-ODBCConstants at: 'SQL_DIAG_SERVER_NAME' put: 16rB!
-ODBCConstants at: 'SQL_DIAG_SQLSTATE' put: 16r4!
-ODBCConstants at: 'SQL_DIAG_SUBCLASS_ORIGIN' put: 16r9!
-ODBCConstants at: 'SQL_DIAG_UNKNOWN_STATEMENT' put: 16r0!
-ODBCConstants at: 'SQL_DIAG_UPDATE_WHERE' put: 16r52!
-ODBCConstants at: 'SQL_DL_SQL92_DATE' put: 16r1!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_DAY' put: 16r20!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_DAY_TO_HOUR' put: 16r400!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_DAY_TO_MINUTE' put: 16r800!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_DAY_TO_SECOND' put: 16r1000!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_HOUR' put: 16r40!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_HOUR_TO_MINUTE' put: 16r2000!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_HOUR_TO_SECOND' put: 16r4000!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_MINUTE' put: 16r80!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_MINUTE_TO_SECOND' put: 16r8000!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_MONTH' put: 16r10!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_SECOND' put: 16r100!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_YEAR' put: 16r8!
-ODBCConstants at: 'SQL_DL_SQL92_INTERVAL_YEAR_TO_MONTH' put: 16r200!
-ODBCConstants at: 'SQL_DL_SQL92_TIME' put: 16r2!
-ODBCConstants at: 'SQL_DL_SQL92_TIMESTAMP' put: 16r4!
-ODBCConstants at: 'SQL_DM_VER' put: 16rAB!
-ODBCConstants at: 'SQL_DRIVER_AWARE_POOLING_CAPABLE' put: 16r1!
-ODBCConstants at: 'SQL_DRIVER_AWARE_POOLING_NOT_CAPABLE' put: 16r0!
-ODBCConstants at: 'SQL_DRIVER_AWARE_POOLING_SUPPORTED' put: 16r2728!
-ODBCConstants at: 'SQL_DRIVER_C_TYPE_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_COMPLETE' put: 16r1!
-ODBCConstants at: 'SQL_DRIVER_COMPLETE_REQUIRED' put: 16r3!
-ODBCConstants at: 'SQL_DRIVER_CONN_ATTR_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_DESC_FIELD_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_DIAG_FIELD_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_HDBC' put: 16r3!
-ODBCConstants at: 'SQL_DRIVER_HDESC' put: 16r87!
-ODBCConstants at: 'SQL_DRIVER_HENV' put: 16r4!
-ODBCConstants at: 'SQL_DRIVER_HLIB' put: 16r4C!
-ODBCConstants at: 'SQL_DRIVER_HSTMT' put: 16r5!
-ODBCConstants at: 'SQL_DRIVER_INFO_TYPE_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_NAME' put: 16r6!
-ODBCConstants at: 'SQL_DRIVER_NOPROMPT' put: 16r0!
-ODBCConstants at: 'SQL_DRIVER_ODBC_VER' put: 16r4D!
-ODBCConstants at: 'SQL_DRIVER_PROMPT' put: 16r2!
-ODBCConstants at: 'SQL_DRIVER_SQL_TYPE_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_STMT_ATTR_BASE' put: 16r4000!
-ODBCConstants at: 'SQL_DRIVER_VER' put: 16r7!
-ODBCConstants at: 'SQL_DROP' put: 16r1!
-ODBCConstants at: 'SQL_DROP_ASSERTION' put: 16r88!
-ODBCConstants at: 'SQL_DROP_CHARACTER_SET' put: 16r89!
-ODBCConstants at: 'SQL_DROP_COLLATION' put: 16r8A!
-ODBCConstants at: 'SQL_DROP_DOMAIN' put: 16r8B!
-ODBCConstants at: 'SQL_DROP_SCHEMA' put: 16r8C!
-ODBCConstants at: 'SQL_DROP_TABLE' put: 16r8D!
-ODBCConstants at: 'SQL_DROP_TRANSLATION' put: 16r8E!
-ODBCConstants at: 'SQL_DROP_VIEW' put: 16r8F!
-ODBCConstants at: 'SQL_DS_CASCADE' put: 16r4!
-ODBCConstants at: 'SQL_DS_DROP_SCHEMA' put: 16r1!
-ODBCConstants at: 'SQL_DS_RESTRICT' put: 16r2!
-ODBCConstants at: 'SQL_DT_CASCADE' put: 16r4!
-ODBCConstants at: 'SQL_DT_DROP_TABLE' put: 16r1!
-ODBCConstants at: 'SQL_DT_RESTRICT' put: 16r2!
-ODBCConstants at: 'SQL_DTC_DONE' put: 16r0!
-ODBCConstants at: 'SQL_DTC_ENLIST_EXPENSIVE' put: 16r1!
-ODBCConstants at: 'SQL_DTC_TRANSITION_COST' put: 16r6D6!
-ODBCConstants at: 'SQL_DTC_UNENLIST_EXPENSIVE' put: 16r2!
-ODBCConstants at: 'SQL_DTR_DROP_TRANSLATION' put: 16r1!
-ODBCConstants at: 'SQL_DV_CASCADE' put: 16r4!
-ODBCConstants at: 'SQL_DV_DROP_VIEW' put: 16r1!
-ODBCConstants at: 'SQL_DV_RESTRICT' put: 16r2!
-ODBCConstants at: 'SQL_DYNAMIC_CURSOR_ATTRIBUTES1' put: 16r90!
-ODBCConstants at: 'SQL_DYNAMIC_CURSOR_ATTRIBUTES2' put: 16r91!
-ODBCConstants at: 'SQL_ENSURE' put: 16r1!
-ODBCConstants at: 'SQL_ENTIRE_ROWSET' put: 16r0!
-ODBCConstants at: 'SQL_EXPRESSIONS_IN_ORDERBY' put: 16r1B!
-ODBCConstants at: 'SQL_FALSE' put: 16r0!
-ODBCConstants at: 'SQL_FD_FETCH_ABSOLUTE' put: 16r10!
-ODBCConstants at: 'SQL_FD_FETCH_BOOKMARK' put: 16r80!
-ODBCConstants at: 'SQL_FD_FETCH_FIRST' put: 16r2!
-ODBCConstants at: 'SQL_FD_FETCH_LAST' put: 16r4!
-ODBCConstants at: 'SQL_FD_FETCH_NEXT' put: 16r1!
-ODBCConstants at: 'SQL_FD_FETCH_PREV' put: 16r8!
-ODBCConstants at: 'SQL_FD_FETCH_PRIOR' put: 16r8!
-ODBCConstants at: 'SQL_FD_FETCH_RELATIVE' put: 16r20!
-ODBCConstants at: 'SQL_FD_FETCH_RESUME' put: 16r40!
-ODBCConstants at: 'SQL_FETCH_ABSOLUTE' put: 16r5!
-ODBCConstants at: 'SQL_FETCH_BOOKMARK' put: 16r8!
-ODBCConstants at: 'SQL_FETCH_BY_BOOKMARK' put: 16r7!
-ODBCConstants at: 'SQL_FETCH_DIRECTION' put: 16r8!
-ODBCConstants at: 'SQL_FETCH_FIRST' put: 16r2!
-ODBCConstants at: 'SQL_FETCH_FIRST_SYSTEM' put: 16r20!
-ODBCConstants at: 'SQL_FETCH_FIRST_USER' put: 16r1F!
-ODBCConstants at: 'SQL_FETCH_LAST' put: 16r3!
-ODBCConstants at: 'SQL_FETCH_NEXT' put: 16r1!
-ODBCConstants at: 'SQL_FETCH_PREV' put: 16r4!
-ODBCConstants at: 'SQL_FETCH_PRIOR' put: 16r4!
-ODBCConstants at: 'SQL_FETCH_RELATIVE' put: 16r6!
-ODBCConstants at: 'SQL_FETCH_RESUME' put: 16r7!
-ODBCConstants at: 'SQL_FILE_CATALOG' put: 16r2!
-ODBCConstants at: 'SQL_FILE_NOT_SUPPORTED' put: 16r0!
-ODBCConstants at: 'SQL_FILE_QUALIFIER' put: 16r2!
-ODBCConstants at: 'SQL_FILE_TABLE' put: 16r1!
-ODBCConstants at: 'SQL_FILE_USAGE' put: 16r54!
-ODBCConstants at: 'SQL_FN_CVT_CAST' put: 16r2!
-ODBCConstants at: 'SQL_FN_CVT_CONVERT' put: 16r1!
-ODBCConstants at: 'SQL_FN_NUM_ABS' put: 16r1!
-ODBCConstants at: 'SQL_FN_NUM_ACOS' put: 16r2!
-ODBCConstants at: 'SQL_FN_NUM_ASIN' put: 16r4!
-ODBCConstants at: 'SQL_FN_NUM_ATAN' put: 16r8!
-ODBCConstants at: 'SQL_FN_NUM_ATAN2' put: 16r10!
-ODBCConstants at: 'SQL_FN_NUM_CEILING' put: 16r20!
-ODBCConstants at: 'SQL_FN_NUM_COS' put: 16r40!
-ODBCConstants at: 'SQL_FN_NUM_COT' put: 16r80!
-ODBCConstants at: 'SQL_FN_NUM_DEGREES' put: 16r40000!
-ODBCConstants at: 'SQL_FN_NUM_EXP' put: 16r100!
-ODBCConstants at: 'SQL_FN_NUM_FLOOR' put: 16r200!
-ODBCConstants at: 'SQL_FN_NUM_LOG' put: 16r400!
-ODBCConstants at: 'SQL_FN_NUM_LOG10' put: 16r80000!
-ODBCConstants at: 'SQL_FN_NUM_MOD' put: 16r800!
-ODBCConstants at: 'SQL_FN_NUM_PI' put: 16r10000!
-ODBCConstants at: 'SQL_FN_NUM_POWER' put: 16r100000!
-ODBCConstants at: 'SQL_FN_NUM_RADIANS' put: 16r200000!
-ODBCConstants at: 'SQL_FN_NUM_RAND' put: 16r20000!
-ODBCConstants at: 'SQL_FN_NUM_ROUND' put: 16r400000!
-ODBCConstants at: 'SQL_FN_NUM_SIGN' put: 16r1000!
-ODBCConstants at: 'SQL_FN_NUM_SIN' put: 16r2000!
-ODBCConstants at: 'SQL_FN_NUM_SQRT' put: 16r4000!
-ODBCConstants at: 'SQL_FN_NUM_TAN' put: 16r8000!
-ODBCConstants at: 'SQL_FN_NUM_TRUNCATE' put: 16r800000!
-ODBCConstants at: 'SQL_FN_STR_ASCII' put: 16r2000!
-ODBCConstants at: 'SQL_FN_STR_BIT_LENGTH' put: 16r80000!
-ODBCConstants at: 'SQL_FN_STR_CHAR' put: 16r4000!
-ODBCConstants at: 'SQL_FN_STR_CHAR_LENGTH' put: 16r100000!
-ODBCConstants at: 'SQL_FN_STR_CHARACTER_LENGTH' put: 16r200000!
-ODBCConstants at: 'SQL_FN_STR_CONCAT' put: 16r1!
-ODBCConstants at: 'SQL_FN_STR_DIFFERENCE' put: 16r8000!
-ODBCConstants at: 'SQL_FN_STR_INSERT' put: 16r2!
-ODBCConstants at: 'SQL_FN_STR_LCASE' put: 16r40!
-ODBCConstants at: 'SQL_FN_STR_LEFT' put: 16r4!
-ODBCConstants at: 'SQL_FN_STR_LENGTH' put: 16r10!
-ODBCConstants at: 'SQL_FN_STR_LOCATE' put: 16r20!
-ODBCConstants at: 'SQL_FN_STR_LOCATE_2' put: 16r10000!
-ODBCConstants at: 'SQL_FN_STR_LTRIM' put: 16r8!
-ODBCConstants at: 'SQL_FN_STR_OCTET_LENGTH' put: 16r400000!
-ODBCConstants at: 'SQL_FN_STR_POSITION' put: 16r800000!
-ODBCConstants at: 'SQL_FN_STR_REPEAT' put: 16r80!
-ODBCConstants at: 'SQL_FN_STR_REPLACE' put: 16r100!
-ODBCConstants at: 'SQL_FN_STR_RIGHT' put: 16r200!
-ODBCConstants at: 'SQL_FN_STR_RTRIM' put: 16r400!
-ODBCConstants at: 'SQL_FN_STR_SOUNDEX' put: 16r20000!
-ODBCConstants at: 'SQL_FN_STR_SPACE' put: 16r40000!
-ODBCConstants at: 'SQL_FN_STR_SUBSTRING' put: 16r800!
-ODBCConstants at: 'SQL_FN_STR_UCASE' put: 16r1000!
-ODBCConstants at: 'SQL_FN_SYS_DBNAME' put: 16r2!
-ODBCConstants at: 'SQL_FN_SYS_IFNULL' put: 16r4!
-ODBCConstants at: 'SQL_FN_SYS_USERNAME' put: 16r1!
-ODBCConstants at: 'SQL_FN_TD_CURDATE' put: 16r2!
-ODBCConstants at: 'SQL_FN_TD_CURRENT_DATE' put: 16r20000!
-ODBCConstants at: 'SQL_FN_TD_CURRENT_TIME' put: 16r40000!
-ODBCConstants at: 'SQL_FN_TD_CURRENT_TIMESTAMP' put: 16r80000!
-ODBCConstants at: 'SQL_FN_TD_CURTIME' put: 16r200!
-ODBCConstants at: 'SQL_FN_TD_DAYNAME' put: 16r8000!
-ODBCConstants at: 'SQL_FN_TD_DAYOFMONTH' put: 16r4!
-ODBCConstants at: 'SQL_FN_TD_DAYOFWEEK' put: 16r8!
-ODBCConstants at: 'SQL_FN_TD_DAYOFYEAR' put: 16r10!
-ODBCConstants at: 'SQL_FN_TD_EXTRACT' put: 16r100000!
-ODBCConstants at: 'SQL_FN_TD_HOUR' put: 16r400!
-ODBCConstants at: 'SQL_FN_TD_MINUTE' put: 16r800!
-ODBCConstants at: 'SQL_FN_TD_MONTH' put: 16r20!
-ODBCConstants at: 'SQL_FN_TD_MONTHNAME' put: 16r10000!
-ODBCConstants at: 'SQL_FN_TD_NOW' put: 16r1!
-ODBCConstants at: 'SQL_FN_TD_QUARTER' put: 16r40!
-ODBCConstants at: 'SQL_FN_TD_SECOND' put: 16r1000!
-ODBCConstants at: 'SQL_FN_TD_TIMESTAMPADD' put: 16r2000!
-ODBCConstants at: 'SQL_FN_TD_TIMESTAMPDIFF' put: 16r4000!
-ODBCConstants at: 'SQL_FN_TD_WEEK' put: 16r80!
-ODBCConstants at: 'SQL_FN_TD_YEAR' put: 16r100!
-ODBCConstants at: 'SQL_FN_TSI_DAY' put: 16r10!
-ODBCConstants at: 'SQL_FN_TSI_FRAC_SECOND' put: 16r1!
-ODBCConstants at: 'SQL_FN_TSI_HOUR' put: 16r8!
-ODBCConstants at: 'SQL_FN_TSI_MINUTE' put: 16r4!
-ODBCConstants at: 'SQL_FN_TSI_MONTH' put: 16r40!
-ODBCConstants at: 'SQL_FN_TSI_QUARTER' put: 16r80!
-ODBCConstants at: 'SQL_FN_TSI_SECOND' put: 16r2!
-ODBCConstants at: 'SQL_FN_TSI_WEEK' put: 16r20!
-ODBCConstants at: 'SQL_FN_TSI_YEAR' put: 16r100!
-ODBCConstants at: 'SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1' put: 16r92!
-ODBCConstants at: 'SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES2' put: 16r93!
-ODBCConstants at: 'SQL_GB_COLLATE' put: 16r4!
-ODBCConstants at: 'SQL_GB_GROUP_BY_CONTAINS_SELECT' put: 16r2!
-ODBCConstants at: 'SQL_GB_GROUP_BY_EQUALS_SELECT' put: 16r1!
-ODBCConstants at: 'SQL_GB_NO_RELATION' put: 16r3!
-ODBCConstants at: 'SQL_GB_NOT_SUPPORTED' put: 16r0!
-ODBCConstants at: 'SQL_GD_ANY_COLUMN' put: 16r1!
-ODBCConstants at: 'SQL_GD_ANY_ORDER' put: 16r2!
-ODBCConstants at: 'SQL_GD_BLOCK' put: 16r4!
-ODBCConstants at: 'SQL_GD_BOUND' put: 16r8!
-ODBCConstants at: 'SQL_GD_OUTPUT_PARAMS' put: 16r10!
-ODBCConstants at: 'SQL_GET_BOOKMARK' put: 16rD!
-ODBCConstants at: 'SQL_GETDATA_EXTENSIONS' put: 16r51!
-ODBCConstants at: 'SQL_GROUP_BY' put: 16r58!
-ODBCConstants at: 'SQL_HANDLE_DBC' put: 16r2!
-ODBCConstants at: 'SQL_HANDLE_DESC' put: 16r4!
-ODBCConstants at: 'SQL_HANDLE_ENV' put: 16r1!
-ODBCConstants at: 'SQL_HANDLE_SENV' put: 16r5!
-ODBCConstants at: 'SQL_HANDLE_STMT' put: 16r3!
-ODBCConstants at: 'SQL_HOUR' put: 16r4!
-ODBCConstants at: 'SQL_HOUR_TO_MINUTE' put: 16rB!
-ODBCConstants at: 'SQL_HOUR_TO_SECOND' put: 16rC!
-ODBCConstants at: 'SQL_IC_LOWER' put: 16r2!
-ODBCConstants at: 'SQL_IC_MIXED' put: 16r4!
-ODBCConstants at: 'SQL_IC_SENSITIVE' put: 16r3!
-ODBCConstants at: 'SQL_IC_UPPER' put: 16r1!
-ODBCConstants at: 'SQL_IDENTIFIER_CASE' put: 16r1C!
-ODBCConstants at: 'SQL_IDENTIFIER_QUOTE_CHAR' put: 16r1D!
-ODBCConstants at: 'SQL_IGNORE' put: -16r6!
-ODBCConstants at: 'SQL_IK_ALL' put: 16r1!
-ODBCConstants at: 'SQL_IK_ASC' put: 16r1!
-ODBCConstants at: 'SQL_IK_DESC' put: 16r2!
-ODBCConstants at: 'SQL_IK_NONE' put: 16r0!
-ODBCConstants at: 'SQL_INDEX_ALL' put: 16r1!
-ODBCConstants at: 'SQL_INDEX_CLUSTERED' put: 16r1!
-ODBCConstants at: 'SQL_INDEX_HASHED' put: 16r2!
-ODBCConstants at: 'SQL_INDEX_KEYWORDS' put: 16r94!
-ODBCConstants at: 'SQL_INDEX_OTHER' put: 16r3!
-ODBCConstants at: 'SQL_INDEX_UNIQUE' put: 16r0!
-ODBCConstants at: 'SQL_INFO_FIRST' put: 16r0!
-ODBCConstants at: 'SQL_INFO_SCHEMA_VIEWS' put: 16r95!
-ODBCConstants at: 'SQL_INITIALLY_DEFERRED' put: 16r5!
-ODBCConstants at: 'SQL_INITIALLY_IMMEDIATE' put: 16r6!
-ODBCConstants at: 'SQL_INSENSITIVE' put: 16r1!
-ODBCConstants at: 'SQL_INSERT_STATEMENT' put: 16rAC!
-ODBCConstants at: 'SQL_INTEGRITY' put: 16r49!
-ODBCConstants at: 'SQL_IS_INSERT_LITERALS' put: 16r1!
-ODBCConstants at: 'SQL_IS_INSERT_SEARCHED' put: 16r2!
-ODBCConstants at: 'SQL_IS_INTEGER' put: -16r6!
-ODBCConstants at: 'SQL_IS_POINTER' put: -16r4!
-ODBCConstants at: 'SQL_IS_SELECT_INTO' put: 16r4!
-ODBCConstants at: 'SQL_IS_SMALLINT' put: -16r8!
-ODBCConstants at: 'SQL_IS_UINTEGER' put: -16r5!
-ODBCConstants at: 'SQL_IS_USMALLINT' put: -16r7!
-ODBCConstants at: 'SQL_ISV_ASSERTIONS' put: 16r1!
-ODBCConstants at: 'SQL_ISV_CHARACTER_SETS' put: 16r2!
-ODBCConstants at: 'SQL_ISV_CHECK_CONSTRAINTS' put: 16r4!
-ODBCConstants at: 'SQL_ISV_COLLATIONS' put: 16r8!
-ODBCConstants at: 'SQL_ISV_COLUMN_DOMAIN_USAGE' put: 16r10!
-ODBCConstants at: 'SQL_ISV_COLUMN_PRIVILEGES' put: 16r20!
-ODBCConstants at: 'SQL_ISV_COLUMNS' put: 16r40!
-ODBCConstants at: 'SQL_ISV_CONSTRAINT_COLUMN_USAGE' put: 16r80!
-ODBCConstants at: 'SQL_ISV_CONSTRAINT_TABLE_USAGE' put: 16r100!
-ODBCConstants at: 'SQL_ISV_DOMAIN_CONSTRAINTS' put: 16r200!
-ODBCConstants at: 'SQL_ISV_DOMAINS' put: 16r400!
-ODBCConstants at: 'SQL_ISV_KEY_COLUMN_USAGE' put: 16r800!
-ODBCConstants at: 'SQL_ISV_REFERENTIAL_CONSTRAINTS' put: 16r1000!
-ODBCConstants at: 'SQL_ISV_SCHEMATA' put: 16r2000!
-ODBCConstants at: 'SQL_ISV_SQL_LANGUAGES' put: 16r4000!
-ODBCConstants at: 'SQL_ISV_TABLE_CONSTRAINTS' put: 16r8000!
-ODBCConstants at: 'SQL_ISV_TABLE_PRIVILEGES' put: 16r10000!
-ODBCConstants at: 'SQL_ISV_TABLES' put: 16r20000!
-ODBCConstants at: 'SQL_ISV_TRANSLATIONS' put: 16r40000!
-ODBCConstants at: 'SQL_ISV_USAGE_PRIVILEGES' put: 16r80000!
-ODBCConstants at: 'SQL_ISV_VIEW_COLUMN_USAGE' put: 16r100000!
-ODBCConstants at: 'SQL_ISV_VIEW_TABLE_USAGE' put: 16r200000!
-ODBCConstants at: 'SQL_ISV_VIEWS' put: 16r400000!
-ODBCConstants at: 'SQL_KEYSET_CURSOR_ATTRIBUTES1' put: 16r96!
-ODBCConstants at: 'SQL_KEYSET_CURSOR_ATTRIBUTES2' put: 16r97!
-ODBCConstants at: 'SQL_KEYSET_SIZE' put: 16r8!
-ODBCConstants at: 'SQL_KEYSET_SIZE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_KEYWORDS' put: 16r59!
-ODBCConstants at: 'SQL_LCK_EXCLUSIVE' put: 16r2!
-ODBCConstants at: 'SQL_LCK_NO_CHANGE' put: 16r1!
-ODBCConstants at: 'SQL_LCK_UNLOCK' put: 16r4!
-ODBCConstants at: 'SQL_LEN_BINARY_ATTR_OFFSET' put: -16r64!
-ODBCConstants at: 'SQL_LEN_DATA_AT_EXEC_OFFSET' put: -16r64!
-ODBCConstants at: 'SQL_LIKE_ESCAPE_CLAUSE' put: 16r71!
-ODBCConstants at: 'SQL_LIKE_ONLY' put: 16r1!
-ODBCConstants at: 'SQL_LOCK_EXCLUSIVE' put: 16r1!
-ODBCConstants at: 'SQL_LOCK_NO_CHANGE' put: 16r0!
-ODBCConstants at: 'SQL_LOCK_TYPES' put: 16r4E!
-ODBCConstants at: 'SQL_LOCK_UNLOCK' put: 16r2!
-ODBCConstants at: 'SQL_LOGIN_TIMEOUT' put: 16r67!
-ODBCConstants at: 'SQL_LOGIN_TIMEOUT_DEFAULT' put: 16rF!
-ODBCConstants at: 'SQL_MAX_ASYNC_CONCURRENT_STATEMENTS' put: 16r2726!
-ODBCConstants at: 'SQL_MAX_BINARY_LITERAL_LEN' put: 16r70!
-ODBCConstants at: 'SQL_MAX_CATALOG_NAME_LEN' put: 16r22!
-ODBCConstants at: 'SQL_MAX_CHAR_LITERAL_LEN' put: 16r6C!
-ODBCConstants at: 'SQL_MAX_COLUMN_NAME_LEN' put: 16r1E!
-ODBCConstants at: 'SQL_MAX_COLUMNS_IN_GROUP_BY' put: 16r61!
-ODBCConstants at: 'SQL_MAX_COLUMNS_IN_INDEX' put: 16r62!
-ODBCConstants at: 'SQL_MAX_COLUMNS_IN_ORDER_BY' put: 16r63!
-ODBCConstants at: 'SQL_MAX_COLUMNS_IN_SELECT' put: 16r64!
-ODBCConstants at: 'SQL_MAX_COLUMNS_IN_TABLE' put: 16r65!
-ODBCConstants at: 'SQL_MAX_CONCURRENT_ACTIVITIES' put: 16r1!
-ODBCConstants at: 'SQL_MAX_CURSOR_NAME_LEN' put: 16r1F!
-ODBCConstants at: 'SQL_MAX_DRIVER_CONNECTIONS' put: 16r0!
-ODBCConstants at: 'SQL_MAX_DSN_LENGTH' put: 16r20!
-ODBCConstants at: 'SQL_MAX_IDENTIFIER_LEN' put: 16r2715!
-ODBCConstants at: 'SQL_MAX_INDEX_SIZE' put: 16r66!
-ODBCConstants at: 'SQL_MAX_LENGTH' put: 16r3!
-ODBCConstants at: 'SQL_MAX_LENGTH_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_MAX_MESSAGE_LENGTH' put: 16r200!
-ODBCConstants at: 'SQL_MAX_OPTION_STRING_LENGTH' put: 16r100!
-ODBCConstants at: 'SQL_MAX_OWNER_NAME_LEN' put: 16r20!
-ODBCConstants at: 'SQL_MAX_PROCEDURE_NAME_LEN' put: 16r21!
-ODBCConstants at: 'SQL_MAX_QUALIFIER_NAME_LEN' put: 16r22!
-ODBCConstants at: 'SQL_MAX_ROW_SIZE' put: 16r68!
-ODBCConstants at: 'SQL_MAX_ROW_SIZE_INCLUDES_LONG' put: 16r67!
-ODBCConstants at: 'SQL_MAX_ROWS' put: 16r1!
-ODBCConstants at: 'SQL_MAX_ROWS_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_MAX_SCHEMA_NAME_LEN' put: 16r20!
-ODBCConstants at: 'SQL_MAX_STATEMENT_LEN' put: 16r69!
-ODBCConstants at: 'SQL_MAX_TABLE_NAME_LEN' put: 16r23!
-ODBCConstants at: 'SQL_MAX_TABLES_IN_SELECT' put: 16r6A!
-ODBCConstants at: 'SQL_MAX_USER_NAME_LEN' put: 16r6B!
-ODBCConstants at: 'SQL_MAXIMUM_CATALOG_NAME_LENGTH' put: 16r22!
-ODBCConstants at: 'SQL_MAXIMUM_COLUMN_NAME_LENGTH' put: 16r1E!
-ODBCConstants at: 'SQL_MAXIMUM_COLUMNS_IN_GROUP_BY' put: 16r61!
-ODBCConstants at: 'SQL_MAXIMUM_COLUMNS_IN_INDEX' put: 16r62!
-ODBCConstants at: 'SQL_MAXIMUM_COLUMNS_IN_ORDER_BY' put: 16r63!
-ODBCConstants at: 'SQL_MAXIMUM_COLUMNS_IN_SELECT' put: 16r64!
-ODBCConstants at: 'SQL_MAXIMUM_CONCURRENT_ACTIVITIES' put: 16r1!
-ODBCConstants at: 'SQL_MAXIMUM_CURSOR_NAME_LENGTH' put: 16r1F!
-ODBCConstants at: 'SQL_MAXIMUM_DRIVER_CONNECTIONS' put: 16r0!
-ODBCConstants at: 'SQL_MAXIMUM_IDENTIFIER_LENGTH' put: 16r2715!
-ODBCConstants at: 'SQL_MAXIMUM_INDEX_SIZE' put: 16r66!
-ODBCConstants at: 'SQL_MAXIMUM_ROW_SIZE' put: 16r68!
-ODBCConstants at: 'SQL_MAXIMUM_SCHEMA_NAME_LENGTH' put: 16r20!
-ODBCConstants at: 'SQL_MAXIMUM_STATEMENT_LENGTH' put: 16r69!
-ODBCConstants at: 'SQL_MAXIMUM_TABLES_IN_SELECT' put: 16r6A!
-ODBCConstants at: 'SQL_MAXIMUM_USER_NAME_LENGTH' put: 16r6B!
-ODBCConstants at: 'SQL_MINUTE' put: 16r5!
-ODBCConstants at: 'SQL_MINUTE_TO_SECOND' put: 16rD!
-ODBCConstants at: 'SQL_MODE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_MODE_READ_ONLY' put: 16r1!
-ODBCConstants at: 'SQL_MODE_READ_WRITE' put: 16r0!
-ODBCConstants at: 'SQL_MONTH' put: 16r2!
-ODBCConstants at: 'SQL_MULT_RESULT_SETS' put: 16r24!
-ODBCConstants at: 'SQL_MULTIPLE_ACTIVE_TXN' put: 16r25!
-ODBCConstants at: 'SQL_NAMED' put: 16r0!
-ODBCConstants at: 'SQL_NC_END' put: 16r4!
-ODBCConstants at: 'SQL_NC_HIGH' put: 16r0!
-ODBCConstants at: 'SQL_NC_LOW' put: 16r1!
-ODBCConstants at: 'SQL_NC_START' put: 16r2!
-ODBCConstants at: 'SQL_NEED_LONG_DATA_LEN' put: 16r6F!
-ODBCConstants at: 'SQL_NNC_NON_NULL' put: 16r1!
-ODBCConstants at: 'SQL_NNC_NULL' put: 16r0!
-ODBCConstants at: 'SQL_NO_ACTION' put: 16r3!
-ODBCConstants at: 'SQL_NO_COLUMN_NUMBER' put: -16r1!
-ODBCConstants at: 'SQL_NO_NULLS' put: 16r0!
-ODBCConstants at: 'SQL_NO_ROW_NUMBER' put: -16r1!
-ODBCConstants at: 'SQL_NO_TOTAL' put: -16r4!
-ODBCConstants at: 'SQL_NON_NULLABLE_COLUMNS' put: 16r4B!
-ODBCConstants at: 'SQL_NONSCROLLABLE' put: 16r0!
-ODBCConstants at: 'SQL_NOSCAN' put: 16r2!
-ODBCConstants at: 'SQL_NOSCAN_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_NOSCAN_OFF' put: 16r0!
-ODBCConstants at: 'SQL_NOSCAN_ON' put: 16r1!
-ODBCConstants at: 'SQL_NOT_DEFERRABLE' put: 16r7!
-ODBCConstants at: 'SQL_NTS' put: -16r3!
-ODBCConstants at: 'SQL_NTSL' put: -16r3!
-ODBCConstants at: 'SQL_NULL_COLLATION' put: 16r55!
-ODBCConstants at: 'SQL_NULL_DATA' put: -16r1!
-ODBCConstants at: 'SQL_NULL_HANDLE' put: 16r0!
-ODBCConstants at: 'SQL_NULL_HDBC' put: 16r0!
-ODBCConstants at: 'SQL_NULL_HDESC' put: 16r0!
-ODBCConstants at: 'SQL_NULL_HENV' put: 16r0!
-ODBCConstants at: 'SQL_NULL_HSTMT' put: 16r0!
-ODBCConstants at: 'SQL_NULLABLE' put: 16r1!
-ODBCConstants at: 'SQL_NULLABLE_UNKNOWN' put: 16r2!
-ODBCConstants at: 'SQL_NUM_TYPES' put: 16r69!
-ODBCConstants at: 'SQL_NUMERIC_FUNCTIONS' put: 16r31!
-ODBCConstants at: 'SQL_OAC_LEVEL1' put: 16r1!
-ODBCConstants at: 'SQL_OAC_LEVEL2' put: 16r2!
-ODBCConstants at: 'SQL_OAC_NONE' put: 16r0!
-ODBCConstants at: 'SQL_ODBC_API_CONFORMANCE' put: 16r9!
-ODBCConstants at: 'SQL_ODBC_CURSORS' put: 16r6E!
-ODBCConstants at: 'SQL_ODBC_INTERFACE_CONFORMANCE' put: 16r98!
-ODBCConstants at: 'SQL_ODBC_KEYWORDS' put: 16r0!
-ODBCConstants at: 'SQL_ODBC_SAG_CLI_CONFORMANCE' put: 16rC!
-ODBCConstants at: 'SQL_ODBC_SQL_CONFORMANCE' put: 16rF!
-ODBCConstants at: 'SQL_ODBC_SQL_OPT_IEF' put: 16r49!
-ODBCConstants at: 'SQL_ODBC_VER' put: 16rA!
-ODBCConstants at: 'SQL_OIC_CORE' put: 16r1!
-ODBCConstants at: 'SQL_OIC_LEVEL1' put: 16r2!
-ODBCConstants at: 'SQL_OIC_LEVEL2' put: 16r3!
-ODBCConstants at: 'SQL_OJ_ALL_COMPARISON_OPS' put: 16r40!
-ODBCConstants at: 'SQL_OJ_CAPABILITIES' put: 16r73!
-ODBCConstants at: 'SQL_OJ_FULL' put: 16r4!
-ODBCConstants at: 'SQL_OJ_INNER' put: 16r20!
-ODBCConstants at: 'SQL_OJ_LEFT' put: 16r1!
-ODBCConstants at: 'SQL_OJ_NESTED' put: 16r8!
-ODBCConstants at: 'SQL_OJ_NOT_ORDERED' put: 16r10!
-ODBCConstants at: 'SQL_OJ_RIGHT' put: 16r2!
-ODBCConstants at: 'SQL_OPT_TRACE' put: 16r68!
-ODBCConstants at: 'SQL_OPT_TRACE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_OPT_TRACE_FILE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_OPT_TRACE_OFF' put: 16r0!
-ODBCConstants at: 'SQL_OPT_TRACE_ON' put: 16r1!
-ODBCConstants at: 'SQL_OPT_TRACEFILE' put: 16r69!
-ODBCConstants at: 'SQL_ORDER_BY_COLUMNS_IN_SELECT' put: 16r5A!
-ODBCConstants at: 'SQL_OSC_CORE' put: 16r1!
-ODBCConstants at: 'SQL_OSC_EXTENDED' put: 16r2!
-ODBCConstants at: 'SQL_OSC_MINIMUM' put: 16r0!
-ODBCConstants at: 'SQL_OSCC_COMPLIANT' put: 16r1!
-ODBCConstants at: 'SQL_OSCC_NOT_COMPLIANT' put: 16r0!
-ODBCConstants at: 'SQL_OU_DML_STATEMENTS' put: 16r1!
-ODBCConstants at: 'SQL_OU_INDEX_DEFINITION' put: 16r8!
-ODBCConstants at: 'SQL_OU_PRIVILEGE_DEFINITION' put: 16r10!
-ODBCConstants at: 'SQL_OU_PROCEDURE_INVOCATION' put: 16r2!
-ODBCConstants at: 'SQL_OU_TABLE_DEFINITION' put: 16r4!
-ODBCConstants at: 'SQL_OUTER_JOIN_CAPABILITIES' put: 16r73!
-ODBCConstants at: 'SQL_OUTER_JOINS' put: 16r26!
-ODBCConstants at: 'SQL_OV_ODBC2' put: 16r2!
-ODBCConstants at: 'SQL_OV_ODBC3' put: 16r3!
-ODBCConstants at: 'SQL_OV_ODBC3_80' put: 16r17C!
-ODBCConstants at: 'SQL_OWNER_TERM' put: 16r27!
-ODBCConstants at: 'SQL_OWNER_USAGE' put: 16r5B!
-ODBCConstants at: 'SQL_PACKET_SIZE' put: 16r70!
-ODBCConstants at: 'SQL_PARAM_ARRAY_ROW_COUNTS' put: 16r99!
-ODBCConstants at: 'SQL_PARAM_ARRAY_SELECTS' put: 16r9A!
-ODBCConstants at: 'SQL_PARAM_BIND_BY_COLUMN' put: 16r0!
-ODBCConstants at: 'SQL_PARAM_BIND_TYPE_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_PARAM_DATA_AVAILABLE' put: 16r65!
-ODBCConstants at: 'SQL_PARAM_DIAG_UNAVAILABLE' put: 16r1!
-ODBCConstants at: 'SQL_PARAM_ERROR' put: 16r5!
-ODBCConstants at: 'SQL_PARAM_IGNORE' put: 16r1!
-ODBCConstants at: 'SQL_PARAM_INPUT' put: 16r1!
-ODBCConstants at: 'SQL_PARAM_INPUT_OUTPUT' put: 16r2!
-ODBCConstants at: 'SQL_PARAM_INPUT_OUTPUT_STREAM' put: 16r8!
-ODBCConstants at: 'SQL_PARAM_OUTPUT' put: 16r4!
-ODBCConstants at: 'SQL_PARAM_OUTPUT_STREAM' put: 16r10!
-ODBCConstants at: 'SQL_PARAM_PROCEED' put: 16r0!
-ODBCConstants at: 'SQL_PARAM_SUCCESS' put: 16r0!
-ODBCConstants at: 'SQL_PARAM_SUCCESS_WITH_INFO' put: 16r6!
-ODBCConstants at: 'SQL_PARAM_TYPE_DEFAULT' put: 16r2!
-ODBCConstants at: 'SQL_PARAM_TYPE_UNKNOWN' put: 16r0!
-ODBCConstants at: 'SQL_PARAM_UNUSED' put: 16r7!
-ODBCConstants at: 'SQL_PARC_BATCH' put: 16r1!
-ODBCConstants at: 'SQL_PARC_NO_BATCH' put: 16r2!
-ODBCConstants at: 'SQL_PAS_BATCH' put: 16r1!
-ODBCConstants at: 'SQL_PAS_NO_BATCH' put: 16r2!
-ODBCConstants at: 'SQL_PAS_NO_SELECT' put: 16r3!
-ODBCConstants at: 'SQL_PC_NON_PSEUDO' put: 16r1!
-ODBCConstants at: 'SQL_PC_NOT_PSEUDO' put: 16r1!
-ODBCConstants at: 'SQL_PC_PSEUDO' put: 16r2!
-ODBCConstants at: 'SQL_PC_UNKNOWN' put: 16r0!
-ODBCConstants at: 'SQL_POS_ADD' put: 16r10!
-ODBCConstants at: 'SQL_POS_DELETE' put: 16r8!
-ODBCConstants at: 'SQL_POS_OPERATIONS' put: 16r4F!
-ODBCConstants at: 'SQL_POS_POSITION' put: 16r1!
-ODBCConstants at: 'SQL_POS_REFRESH' put: 16r2!
-ODBCConstants at: 'SQL_POS_UPDATE' put: 16r4!
-ODBCConstants at: 'SQL_POSITION' put: 16r0!
-ODBCConstants at: 'SQL_POSITIONED_STATEMENTS' put: 16r50!
-ODBCConstants at: 'SQL_PRED_BASIC' put: 16r2!
-ODBCConstants at: 'SQL_PRED_CHAR' put: 16r1!
-ODBCConstants at: 'SQL_PRED_NONE' put: 16r0!
-ODBCConstants at: 'SQL_PRED_SEARCHABLE' put: 16r3!
-ODBCConstants at: 'SQL_PROCEDURE_TERM' put: 16r28!
-ODBCConstants at: 'SQL_PROCEDURES' put: 16r15!
-ODBCConstants at: 'SQL_PS_POSITIONED_DELETE' put: 16r1!
-ODBCConstants at: 'SQL_PS_POSITIONED_UPDATE' put: 16r2!
-ODBCConstants at: 'SQL_PS_SELECT_FOR_UPDATE' put: 16r4!
-ODBCConstants at: 'SQL_PT_FUNCTION' put: 16r2!
-ODBCConstants at: 'SQL_PT_PROCEDURE' put: 16r1!
-ODBCConstants at: 'SQL_PT_UNKNOWN' put: 16r0!
-ODBCConstants at: 'SQL_QL_END' put: 16r2!
-ODBCConstants at: 'SQL_QL_START' put: 16r1!
-ODBCConstants at: 'SQL_QU_DML_STATEMENTS' put: 16r1!
-ODBCConstants at: 'SQL_QU_INDEX_DEFINITION' put: 16r8!
-ODBCConstants at: 'SQL_QU_PRIVILEGE_DEFINITION' put: 16r10!
-ODBCConstants at: 'SQL_QU_PROCEDURE_INVOCATION' put: 16r2!
-ODBCConstants at: 'SQL_QU_TABLE_DEFINITION' put: 16r4!
-ODBCConstants at: 'SQL_QUALIFIER_LOCATION' put: 16r72!
-ODBCConstants at: 'SQL_QUALIFIER_NAME_SEPARATOR' put: 16r29!
-ODBCConstants at: 'SQL_QUALIFIER_TERM' put: 16r2A!
-ODBCConstants at: 'SQL_QUALIFIER_USAGE' put: 16r5C!
-ODBCConstants at: 'SQL_QUERY_TIMEOUT' put: 16r0!
-ODBCConstants at: 'SQL_QUERY_TIMEOUT_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_QUICK' put: 16r0!
-ODBCConstants at: 'SQL_QUIET_MODE' put: 16r6F!
-ODBCConstants at: 'SQL_QUOTED_IDENTIFIER_CASE' put: 16r5D!
-ODBCConstants at: 'SQL_RD_DEFAULT' put: 16r1!
-ODBCConstants at: 'SQL_RD_OFF' put: 16r0!
-ODBCConstants at: 'SQL_RD_ON' put: 16r1!
-ODBCConstants at: 'SQL_REFRESH' put: 16r1!
-ODBCConstants at: 'SQL_RESET_CONNECTION_YES' put: 16r1!
-ODBCConstants at: 'SQL_RESET_PARAMS' put: 16r3!
-ODBCConstants at: 'SQL_RESTRICT' put: 16r1!
-ODBCConstants at: 'SQL_RESULT_COL' put: 16r3!
-ODBCConstants at: 'SQL_RETRIEVE_DATA' put: 16rB!
-ODBCConstants at: 'SQL_RETURN_VALUE' put: 16r5!
-ODBCConstants at: 'SQL_ROLLBACK' put: 16r1!
-ODBCConstants at: 'SQL_ROW_ADDED' put: 16r4!
-ODBCConstants at: 'SQL_ROW_DELETED' put: 16r1!
-ODBCConstants at: 'SQL_ROW_ERROR' put: 16r5!
-ODBCConstants at: 'SQL_ROW_IDENTIFIER' put: 16r1!
-ODBCConstants at: 'SQL_ROW_IGNORE' put: 16r1!
-ODBCConstants at: 'SQL_ROW_NOROW' put: 16r3!
-ODBCConstants at: 'SQL_ROW_NUMBER' put: 16rE!
-ODBCConstants at: 'SQL_ROW_NUMBER_UNKNOWN' put: -16r2!
-ODBCConstants at: 'SQL_ROW_PROCEED' put: 16r0!
-ODBCConstants at: 'SQL_ROW_SUCCESS' put: 16r0!
-ODBCConstants at: 'SQL_ROW_SUCCESS_WITH_INFO' put: 16r6!
-ODBCConstants at: 'SQL_ROW_UPDATED' put: 16r2!
-ODBCConstants at: 'SQL_ROW_UPDATES' put: 16rB!
-ODBCConstants at: 'SQL_ROWSET_SIZE' put: 16r9!
-ODBCConstants at: 'SQL_ROWSET_SIZE_DEFAULT' put: 16r1!
-ODBCConstants at: 'SQL_ROWVER' put: 16r2!
-ODBCConstants at: 'SQL_SC_FIPS127_2_TRANSITIONAL' put: 16r2!
-ODBCConstants at: 'SQL_SC_NON_UNIQUE' put: 16r0!
-ODBCConstants at: 'SQL_SC_SQL92_ENTRY' put: 16r1!
-ODBCConstants at: 'SQL_SC_SQL92_FULL' put: 16r8!
-ODBCConstants at: 'SQL_SC_SQL92_INTERMEDIATE' put: 16r4!
-ODBCConstants at: 'SQL_SC_TRY_UNIQUE' put: 16r1!
-ODBCConstants at: 'SQL_SC_UNIQUE' put: 16r2!
-ODBCConstants at: 'SQL_SCC_ISO92_CLI' put: 16r2!
-ODBCConstants at: 'SQL_SCC_XOPEN_CLI_VERSION1' put: 16r1!
-ODBCConstants at: 'SQL_SCCO_LOCK' put: 16r2!
-ODBCConstants at: 'SQL_SCCO_OPT_ROWVER' put: 16r4!
-ODBCConstants at: 'SQL_SCCO_OPT_TIMESTAMP' put: 16r4!
-ODBCConstants at: 'SQL_SCCO_OPT_VALUES' put: 16r8!
-ODBCConstants at: 'SQL_SCCO_READ_ONLY' put: 16r1!
-ODBCConstants at: 'SQL_SCHEMA_TERM' put: 16r27!
-ODBCConstants at: 'SQL_SCHEMA_USAGE' put: 16r5B!
-ODBCConstants at: 'SQL_SCOPE_CURROW' put: 16r0!
-ODBCConstants at: 'SQL_SCOPE_SESSION' put: 16r2!
-ODBCConstants at: 'SQL_SCOPE_TRANSACTION' put: 16r1!
-ODBCConstants at: 'SQL_SCROLL_CONCURRENCY' put: 16r2B!
-ODBCConstants at: 'SQL_SCROLL_DYNAMIC' put: -16r2!
-ODBCConstants at: 'SQL_SCROLL_FORWARD_ONLY' put: 16r0!
-ODBCConstants at: 'SQL_SCROLL_KEYSET_DRIVEN' put: -16r1!
-ODBCConstants at: 'SQL_SCROLL_OPTIONS' put: 16r2C!
-ODBCConstants at: 'SQL_SCROLL_STATIC' put: -16r3!
-ODBCConstants at: 'SQL_SCROLLABLE' put: 16r1!
-ODBCConstants at: 'SQL_SDF_CURRENT_DATE' put: 16r1!
-ODBCConstants at: 'SQL_SDF_CURRENT_TIME' put: 16r2!
-ODBCConstants at: 'SQL_SDF_CURRENT_TIMESTAMP' put: 16r4!
-ODBCConstants at: 'SQL_SEARCH_PATTERN_ESCAPE' put: 16rE!
-ODBCConstants at: 'SQL_SEARCHABLE' put: 16r3!
-ODBCConstants at: 'SQL_SECOND' put: 16r6!
-ODBCConstants at: 'SQL_SENSITIVE' put: 16r2!
-ODBCConstants at: 'SQL_SERVER_NAME' put: 16rD!
-ODBCConstants at: 'SQL_SET_DEFAULT' put: 16r4!
-ODBCConstants at: 'SQL_SET_NULL' put: 16r2!
-ODBCConstants at: 'SQL_SETPARAM_VALUE_MAX' put: -16r1!
-ODBCConstants at: 'SQL_SETPOS_MAX_LOCK_VALUE' put: 16r2!
-ODBCConstants at: 'SQL_SETPOS_MAX_OPTION_VALUE' put: 16r4!
-ODBCConstants at: 'SQL_SFKD_CASCADE' put: 16r1!
-ODBCConstants at: 'SQL_SFKD_NO_ACTION' put: 16r2!
-ODBCConstants at: 'SQL_SFKD_SET_DEFAULT' put: 16r4!
-ODBCConstants at: 'SQL_SFKD_SET_NULL' put: 16r8!
-ODBCConstants at: 'SQL_SFKU_CASCADE' put: 16r1!
-ODBCConstants at: 'SQL_SFKU_NO_ACTION' put: 16r2!
-ODBCConstants at: 'SQL_SFKU_SET_DEFAULT' put: 16r4!
-ODBCConstants at: 'SQL_SFKU_SET_NULL' put: 16r8!
-ODBCConstants at: 'SQL_SG_DELETE_TABLE' put: 16r20!
-ODBCConstants at: 'SQL_SG_INSERT_COLUMN' put: 16r80!
-ODBCConstants at: 'SQL_SG_INSERT_TABLE' put: 16r40!
-ODBCConstants at: 'SQL_SG_REFERENCES_COLUMN' put: 16r200!
-ODBCConstants at: 'SQL_SG_REFERENCES_TABLE' put: 16r100!
-ODBCConstants at: 'SQL_SG_SELECT_TABLE' put: 16r400!
-ODBCConstants at: 'SQL_SG_UPDATE_COLUMN' put: 16r1000!
-ODBCConstants at: 'SQL_SG_UPDATE_TABLE' put: 16r800!
-ODBCConstants at: 'SQL_SG_USAGE_ON_CHARACTER_SET' put: 16r2!
-ODBCConstants at: 'SQL_SG_USAGE_ON_COLLATION' put: 16r4!
-ODBCConstants at: 'SQL_SG_USAGE_ON_DOMAIN' put: 16r1!
-ODBCConstants at: 'SQL_SG_USAGE_ON_TRANSLATION' put: 16r8!
-ODBCConstants at: 'SQL_SG_WITH_GRANT_OPTION' put: 16r10!
-ODBCConstants at: 'SQL_SIGNED_OFFSET' put: -16r14!
-ODBCConstants at: 'SQL_SIMULATE_CURSOR' put: 16rA!
-ODBCConstants at: 'SQL_SNVF_BIT_LENGTH' put: 16r1!
-ODBCConstants at: 'SQL_SNVF_CHAR_LENGTH' put: 16r2!
-ODBCConstants at: 'SQL_SNVF_CHARACTER_LENGTH' put: 16r4!
-ODBCConstants at: 'SQL_SNVF_EXTRACT' put: 16r8!
-ODBCConstants at: 'SQL_SNVF_OCTET_LENGTH' put: 16r10!
-ODBCConstants at: 'SQL_SNVF_POSITION' put: 16r20!
-ODBCConstants at: 'SQL_SO_DYNAMIC' put: 16r4!
-ODBCConstants at: 'SQL_SO_FORWARD_ONLY' put: 16r1!
-ODBCConstants at: 'SQL_SO_KEYSET_DRIVEN' put: 16r2!
-ODBCConstants at: 'SQL_SO_MIXED' put: 16r8!
-ODBCConstants at: 'SQL_SO_STATIC' put: 16r10!
-ODBCConstants at: 'SQL_SP_BETWEEN' put: 16r800!
-ODBCConstants at: 'SQL_SP_COMPARISON' put: 16r1000!
-ODBCConstants at: 'SQL_SP_EXISTS' put: 16r1!
-ODBCConstants at: 'SQL_SP_IN' put: 16r400!
-ODBCConstants at: 'SQL_SP_ISNOTNULL' put: 16r2!
-ODBCConstants at: 'SQL_SP_ISNULL' put: 16r4!
-ODBCConstants at: 'SQL_SP_LIKE' put: 16r200!
-ODBCConstants at: 'SQL_SP_MATCH_FULL' put: 16r8!
-ODBCConstants at: 'SQL_SP_MATCH_PARTIAL' put: 16r10!
-ODBCConstants at: 'SQL_SP_MATCH_UNIQUE_FULL' put: 16r20!
-ODBCConstants at: 'SQL_SP_MATCH_UNIQUE_PARTIAL' put: 16r40!
-ODBCConstants at: 'SQL_SP_OVERLAPS' put: 16r80!
-ODBCConstants at: 'SQL_SP_QUANTIFIED_COMPARISON' put: 16r2000!
-ODBCConstants at: 'SQL_SP_UNIQUE' put: 16r100!
-ODBCConstants at: 'SQL_SPEC_MAJOR' put: 16r4!
-ODBCConstants at: 'SQL_SPEC_MINOR' put: 16r0!
-ODBCConstants at: 'SQL_SPEC_STRING' put: 16r0!
-ODBCConstants at: 'SQL_SPECIAL_CHARACTERS' put: 16r5E!
-ODBCConstants at: 'SQL_SQ_COMPARISON' put: 16r1!
-ODBCConstants at: 'SQL_SQ_CORRELATED_SUBQUERIES' put: 16r10!
-ODBCConstants at: 'SQL_SQ_EXISTS' put: 16r2!
-ODBCConstants at: 'SQL_SQ_IN' put: 16r4!
-ODBCConstants at: 'SQL_SQ_QUANTIFIED' put: 16r8!
-ODBCConstants at: 'SQL_SQL_CONFORMANCE' put: 16r76!
-ODBCConstants at: 'SQL_SQL92_DATETIME_FUNCTIONS' put: 16r9B!
-ODBCConstants at: 'SQL_SQL92_FOREIGN_KEY_DELETE_RULE' put: 16r9C!
-ODBCConstants at: 'SQL_SQL92_FOREIGN_KEY_UPDATE_RULE' put: 16r9D!
-ODBCConstants at: 'SQL_SQL92_GRANT' put: 16r9E!
-ODBCConstants at: 'SQL_SQL92_NUMERIC_VALUE_FUNCTIONS' put: 16r9F!
-ODBCConstants at: 'SQL_SQL92_PREDICATES' put: 16rA0!
-ODBCConstants at: 'SQL_SQL92_RELATIONAL_JOIN_OPERATORS' put: 16rA1!
-ODBCConstants at: 'SQL_SQL92_REVOKE' put: 16rA2!
-ODBCConstants at: 'SQL_SQL92_ROW_VALUE_CONSTRUCTOR' put: 16rA3!
-ODBCConstants at: 'SQL_SQL92_STRING_FUNCTIONS' put: 16rA4!
-ODBCConstants at: 'SQL_SQL92_VALUE_EXPRESSIONS' put: 16rA5!
-ODBCConstants at: 'SQL_SQLSTATE_SIZE' put: 16r5!
-ODBCConstants at: 'SQL_SR_CASCADE' put: 16r20!
-ODBCConstants at: 'SQL_SR_DELETE_TABLE' put: 16r80!
-ODBCConstants at: 'SQL_SR_GRANT_OPTION_FOR' put: 16r10!
-ODBCConstants at: 'SQL_SR_INSERT_COLUMN' put: 16r200!
-ODBCConstants at: 'SQL_SR_INSERT_TABLE' put: 16r100!
-ODBCConstants at: 'SQL_SR_REFERENCES_COLUMN' put: 16r800!
-ODBCConstants at: 'SQL_SR_REFERENCES_TABLE' put: 16r400!
-ODBCConstants at: 'SQL_SR_RESTRICT' put: 16r40!
-ODBCConstants at: 'SQL_SR_SELECT_TABLE' put: 16r1000!
-ODBCConstants at: 'SQL_SR_UPDATE_COLUMN' put: 16r4000!
-ODBCConstants at: 'SQL_SR_UPDATE_TABLE' put: 16r2000!
-ODBCConstants at: 'SQL_SR_USAGE_ON_CHARACTER_SET' put: 16r2!
-ODBCConstants at: 'SQL_SR_USAGE_ON_COLLATION' put: 16r4!
-ODBCConstants at: 'SQL_SR_USAGE_ON_DOMAIN' put: 16r1!
-ODBCConstants at: 'SQL_SR_USAGE_ON_TRANSLATION' put: 16r8!
-ODBCConstants at: 'SQL_SRJO_CORRESPONDING_CLAUSE' put: 16r1!
-ODBCConstants at: 'SQL_SRJO_CROSS_JOIN' put: 16r2!
-ODBCConstants at: 'SQL_SRJO_EXCEPT_JOIN' put: 16r4!
-ODBCConstants at: 'SQL_SRJO_FULL_OUTER_JOIN' put: 16r8!
-ODBCConstants at: 'SQL_SRJO_INNER_JOIN' put: 16r10!
-ODBCConstants at: 'SQL_SRJO_INTERSECT_JOIN' put: 16r20!
-ODBCConstants at: 'SQL_SRJO_LEFT_OUTER_JOIN' put: 16r40!
-ODBCConstants at: 'SQL_SRJO_NATURAL_JOIN' put: 16r80!
-ODBCConstants at: 'SQL_SRJO_RIGHT_OUTER_JOIN' put: 16r100!
-ODBCConstants at: 'SQL_SRJO_UNION_JOIN' put: 16r200!
-ODBCConstants at: 'SQL_SRVC_DEFAULT' put: 16r4!
-ODBCConstants at: 'SQL_SRVC_NULL' put: 16r2!
-ODBCConstants at: 'SQL_SRVC_ROW_SUBQUERY' put: 16r8!
-ODBCConstants at: 'SQL_SRVC_VALUE_EXPRESSION' put: 16r1!
-ODBCConstants at: 'SQL_SS_ADDITIONS' put: 16r1!
-ODBCConstants at: 'SQL_SS_DELETIONS' put: 16r2!
-ODBCConstants at: 'SQL_SS_UPDATES' put: 16r4!
-ODBCConstants at: 'SQL_SSF_CONVERT' put: 16r1!
-ODBCConstants at: 'SQL_SSF_LOWER' put: 16r2!
-ODBCConstants at: 'SQL_SSF_SUBSTRING' put: 16r8!
-ODBCConstants at: 'SQL_SSF_TRANSLATE' put: 16r10!
-ODBCConstants at: 'SQL_SSF_TRIM_BOTH' put: 16r20!
-ODBCConstants at: 'SQL_SSF_TRIM_LEADING' put: 16r40!
-ODBCConstants at: 'SQL_SSF_TRIM_TRAILING' put: 16r80!
-ODBCConstants at: 'SQL_SSF_UPPER' put: 16r4!
-ODBCConstants at: 'SQL_STANDARD_CLI_CONFORMANCE' put: 16rA6!
-ODBCConstants at: 'SQL_STATIC_CURSOR_ATTRIBUTES1' put: 16rA7!
-ODBCConstants at: 'SQL_STATIC_CURSOR_ATTRIBUTES2' put: 16rA8!
-ODBCConstants at: 'SQL_STATIC_SENSITIVITY' put: 16r53!
-ODBCConstants at: 'SQL_STILL_EXECUTING' put: 16r2!
-ODBCConstants at: 'SQL_STRING_FUNCTIONS' put: 16r32!
-ODBCConstants at: 'SQL_SU_DML_STATEMENTS' put: 16r1!
-ODBCConstants at: 'SQL_SU_INDEX_DEFINITION' put: 16r8!
-ODBCConstants at: 'SQL_SU_PRIVILEGE_DEFINITION' put: 16r10!
-ODBCConstants at: 'SQL_SU_PROCEDURE_INVOCATION' put: 16r2!
-ODBCConstants at: 'SQL_SU_TABLE_DEFINITION' put: 16r4!
-ODBCConstants at: 'SQL_SUBQUERIES' put: 16r5F!
-ODBCConstants at: 'SQL_SVE_CASE' put: 16r1!
-ODBCConstants at: 'SQL_SVE_CAST' put: 16r2!
-ODBCConstants at: 'SQL_SVE_COALESCE' put: 16r4!
-ODBCConstants at: 'SQL_SVE_NULLIF' put: 16r8!
-ODBCConstants at: 'SQL_SYSTEM_FUNCTIONS' put: 16r33!
-ODBCConstants at: 'SQL_TABLE_STAT' put: 16r0!
-ODBCConstants at: 'SQL_TABLE_TERM' put: 16r2D!
-ODBCConstants at: 'SQL_TC_ALL' put: 16r2!
-ODBCConstants at: 'SQL_TC_DDL_COMMIT' put: 16r3!
-ODBCConstants at: 'SQL_TC_DDL_IGNORE' put: 16r4!
-ODBCConstants at: 'SQL_TC_DML' put: 16r1!
-ODBCConstants at: 'SQL_TC_NONE' put: 16r0!
-ODBCConstants at: 'SQL_TIME_LEN' put: 16r8!
-ODBCConstants at: 'SQL_TIMEDATE_ADD_INTERVALS' put: 16r6D!
-ODBCConstants at: 'SQL_TIMEDATE_DIFF_INTERVALS' put: 16r6E!
-ODBCConstants at: 'SQL_TIMEDATE_FUNCTIONS' put: 16r34!
-ODBCConstants at: 'SQL_TIMESTAMP_LEN' put: 16r13!
-ODBCConstants at: 'SQL_TRANSACTION_CAPABLE' put: 16r2E!
-ODBCConstants at: 'SQL_TRANSACTION_ISOLATION_OPTION' put: 16r48!
-ODBCConstants at: 'SQL_TRANSACTION_READ_COMMITTED' put: 16r2!
-ODBCConstants at: 'SQL_TRANSACTION_READ_UNCOMMITTED' put: 16r1!
-ODBCConstants at: 'SQL_TRANSACTION_REPEATABLE_READ' put: 16r4!
-ODBCConstants at: 'SQL_TRANSACTION_SERIALIZABLE' put: 16r8!
-ODBCConstants at: 'SQL_TRANSLATE_DLL' put: 16r6A!
-ODBCConstants at: 'SQL_TRANSLATE_OPTION' put: 16r6B!
-ODBCConstants at: 'SQL_TRUE' put: 16r1!
-ODBCConstants at: 'SQL_TXN_CAPABLE' put: 16r2E!
-ODBCConstants at: 'SQL_TXN_ISOLATION' put: 16r6C!
-ODBCConstants at: 'SQL_TXN_ISOLATION_OPTION' put: 16r48!
-ODBCConstants at: 'SQL_TXN_READ_COMMITTED' put: 16r2!
-ODBCConstants at: 'SQL_TXN_READ_UNCOMMITTED' put: 16r1!
-ODBCConstants at: 'SQL_TXN_REPEATABLE_READ' put: 16r4!
-ODBCConstants at: 'SQL_TXN_SERIALIZABLE' put: 16r8!
-ODBCConstants at: 'SQL_TXN_VERSIONING' put: 16r10!
-ODBCConstants at: 'SQL_TYPE_MAX' put: 16r5D!
-ODBCConstants at: 'SQL_TYPE_MIN' put: -16rB!
-ODBCConstants at: 'SQL_U_UNION' put: 16r1!
-ODBCConstants at: 'SQL_U_UNION_ALL' put: 16r2!
-ODBCConstants at: 'SQL_UB_DEFAULT' put: 16r0!
-ODBCConstants at: 'SQL_UB_FIXED' put: 16r1!
-ODBCConstants at: 'SQL_UB_OFF' put: 16r0!
-ODBCConstants at: 'SQL_UB_ON' put: 16r1!
-ODBCConstants at: 'SQL_UB_VARIABLE' put: 16r2!
-ODBCConstants at: 'SQL_UNBIND' put: 16r2!
-ODBCConstants at: 'SQL_UNION' put: 16r60!
-ODBCConstants at: 'SQL_UNION_STATEMENT' put: 16r60!
-ODBCConstants at: 'SQL_UNNAMED' put: 16r1!
-ODBCConstants at: 'SQL_UNSEARCHABLE' put: 16r0!
-ODBCConstants at: 'SQL_UNSIGNED_OFFSET' put: -16r16!
-ODBCConstants at: 'SQL_UNSPECIFIED' put: 16r0!
-ODBCConstants at: 'SQL_UPDATE' put: 16r2!
-ODBCConstants at: 'SQL_UPDATE_BY_BOOKMARK' put: 16r5!
-ODBCConstants at: 'SQL_US_UNION' put: 16r1!
-ODBCConstants at: 'SQL_US_UNION_ALL' put: 16r2!
-ODBCConstants at: 'SQL_USE_BOOKMARKS' put: 16rC!
-ODBCConstants at: 'SQL_USER_NAME' put: 16r2F!
-ODBCConstants at: 'SQL_XOPEN_CLI_YEAR' put: 16r2710!
-ODBCConstants at: 'SQL_YEAR' put: 16r1!
-ODBCConstants at: 'SQL_YEAR_TO_MONTH' put: 16r7!
-ODBCConstants at: 'TRACE_ON' put: 16r1!
-ODBCConstants at: 'TRACE_VERSION' put: 16r3E8!
-ODBCConstants at: 'TRACE_VS_EVENT_ON' put: 16r2!
-ODBCConstants at: 'TypeOffset' put: 16rC!
-ODBCConstants shrink!
+SharedPool subclass: #ODBCConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ODBC_VS_FLAG_RETCODE' -> 16r4.
+		'ODBC_VS_FLAG_STOP' -> 16r8.
+		'ODBC_VS_FLAG_UNICODE_ARG' -> 16r1.
+		'ODBC_VS_FLAG_UNICODE_COR' -> 16r2.
+		'ODBCVER' -> 16r380.
+		'SQL_AA_FALSE' -> 16r0.
+		'SQL_AA_TRUE' -> 16r1.
+		'SQL_ACCESS_MODE' -> 16r65.
+		'SQL_ACCESSIBLE_PROCEDURES' -> 16r14.
+		'SQL_ACCESSIBLE_TABLES' -> 16r13.
+		'SQL_ACTIVE_CONNECTIONS' -> 16r0.
+		'SQL_ACTIVE_ENVIRONMENTS' -> 16r74.
+		'SQL_ACTIVE_STATEMENTS' -> 16r1.
+		'SQL_AD_ADD_CONSTRAINT_DEFERRABLE' -> 16r80.
+		'SQL_AD_ADD_CONSTRAINT_INITIALLY_DEFERRED' -> 16r20.
+		'SQL_AD_ADD_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r40.
+		'SQL_AD_ADD_CONSTRAINT_NON_DEFERRABLE' -> 16r100.
+		'SQL_AD_ADD_DOMAIN_CONSTRAINT' -> 16r2.
+		'SQL_AD_ADD_DOMAIN_DEFAULT' -> 16r8.
+		'SQL_AD_CONSTRAINT_NAME_DEFINITION' -> 16r1.
+		'SQL_AD_DROP_DOMAIN_CONSTRAINT' -> 16r4.
+		'SQL_AD_DROP_DOMAIN_DEFAULT' -> 16r10.
+		'SQL_ADD' -> 16r4.
+		'SQL_AF_ALL' -> 16r40.
+		'SQL_AF_AVG' -> 16r1.
+		'SQL_AF_COUNT' -> 16r2.
+		'SQL_AF_DISTINCT' -> 16r20.
+		'SQL_AF_MAX' -> 16r4.
+		'SQL_AF_MIN' -> 16r8.
+		'SQL_AF_SUM' -> 16r10.
+		'SQL_AGGREGATE_FUNCTIONS' -> 16rA9.
+		'SQL_ALL_CATALOGS' -> 16r0.
+		'SQL_ALL_EXCEPT_LIKE' -> 16r2.
+		'SQL_ALL_SCHEMAS' -> 16r0.
+		'SQL_ALL_TABLE_TYPES' -> 16r0.
+		'SQL_ALL_TYPES' -> 16r0.
+		'SQL_ALTER_DOMAIN' -> 16r75.
+		'SQL_ALTER_TABLE' -> 16r56.
+		'SQL_AM_CONNECTION' -> 16r1.
+		'SQL_AM_NONE' -> 16r0.
+		'SQL_AM_STATEMENT' -> 16r2.
+		'SQL_APD_TYPE' -> -16r64.
+		'SQL_API_ALL_FUNCTIONS' -> 16r0.
+		'SQL_API_LOADBYORDINAL' -> 16rC7.
+		'SQL_API_ODBC3_ALL_FUNCTIONS' -> 16r3E7.
+		'SQL_API_ODBC3_ALL_FUNCTIONS_SIZE' -> 16rFA.
+		'SQL_API_SQLALLOCCONNECT' -> 16r1.
+		'SQL_API_SQLALLOCENV' -> 16r2.
+		'SQL_API_SQLALLOCHANDLE' -> 16r3E9.
+		'SQL_API_SQLALLOCHANDLESTD' -> 16r49.
+		'SQL_API_SQLALLOCSTMT' -> 16r3.
+		'SQL_API_SQLBINDCOL' -> 16r4.
+		'SQL_API_SQLBINDPARAM' -> 16r3EA.
+		'SQL_API_SQLBINDPARAMETER' -> 16r48.
+		'SQL_API_SQLBROWSECONNECT' -> 16r37.
+		'SQL_API_SQLBULKOPERATIONS' -> 16r18.
+		'SQL_API_SQLCANCEL' -> 16r5.
+		'SQL_API_SQLCANCELHANDLE' -> 16r60E.
+		'SQL_API_SQLCLOSECURSOR' -> 16r3EB.
+		'SQL_API_SQLCOLATTRIBUTE' -> 16r6.
+		'SQL_API_SQLCOLATTRIBUTES' -> 16r6.
+		'SQL_API_SQLCOLUMNPRIVILEGES' -> 16r38.
+		'SQL_API_SQLCOLUMNS' -> 16r28.
+		'SQL_API_SQLCOMPLETEASYNC' -> 16r60F.
+		'SQL_API_SQLCONNECT' -> 16r7.
+		'SQL_API_SQLCOPYDESC' -> 16r3EC.
+		'SQL_API_SQLDATASOURCES' -> 16r39.
+		'SQL_API_SQLDESCRIBECOL' -> 16r8.
+		'SQL_API_SQLDESCRIBEPARAM' -> 16r3A.
+		'SQL_API_SQLDISCONNECT' -> 16r9.
+		'SQL_API_SQLDRIVERCONNECT' -> 16r29.
+		'SQL_API_SQLDRIVERS' -> 16r47.
+		'SQL_API_SQLENDTRAN' -> 16r3ED.
+		'SQL_API_SQLERROR' -> 16rA.
+		'SQL_API_SQLEXECDIRECT' -> 16rB.
+		'SQL_API_SQLEXECUTE' -> 16rC.
+		'SQL_API_SQLEXTENDEDFETCH' -> 16r3B.
+		'SQL_API_SQLFETCH' -> 16rD.
+		'SQL_API_SQLFETCHSCROLL' -> 16r3FD.
+		'SQL_API_SQLFOREIGNKEYS' -> 16r3C.
+		'SQL_API_SQLFREECONNECT' -> 16rE.
+		'SQL_API_SQLFREEENV' -> 16rF.
+		'SQL_API_SQLFREEHANDLE' -> 16r3EE.
+		'SQL_API_SQLFREESTMT' -> 16r10.
+		'SQL_API_SQLGETCONNECTATTR' -> 16r3EF.
+		'SQL_API_SQLGETCONNECTOPTION' -> 16r2A.
+		'SQL_API_SQLGETCURSORNAME' -> 16r11.
+		'SQL_API_SQLGETDATA' -> 16r2B.
+		'SQL_API_SQLGETDESCFIELD' -> 16r3F0.
+		'SQL_API_SQLGETDESCREC' -> 16r3F1.
+		'SQL_API_SQLGETDIAGFIELD' -> 16r3F2.
+		'SQL_API_SQLGETDIAGREC' -> 16r3F3.
+		'SQL_API_SQLGETENVATTR' -> 16r3F4.
+		'SQL_API_SQLGETFUNCTIONS' -> 16r2C.
+		'SQL_API_SQLGETINFO' -> 16r2D.
+		'SQL_API_SQLGETSTMTATTR' -> 16r3F6.
+		'SQL_API_SQLGETSTMTOPTION' -> 16r2E.
+		'SQL_API_SQLGETTYPEINFO' -> 16r2F.
+		'SQL_API_SQLMORERESULTS' -> 16r3D.
+		'SQL_API_SQLNATIVESQL' -> 16r3E.
+		'SQL_API_SQLNUMPARAMS' -> 16r3F.
+		'SQL_API_SQLNUMRESULTCOLS' -> 16r12.
+		'SQL_API_SQLPARAMDATA' -> 16r30.
+		'SQL_API_SQLPARAMOPTIONS' -> 16r40.
+		'SQL_API_SQLPREPARE' -> 16r13.
+		'SQL_API_SQLPRIMARYKEYS' -> 16r41.
+		'SQL_API_SQLPROCEDURECOLUMNS' -> 16r42.
+		'SQL_API_SQLPROCEDURES' -> 16r43.
+		'SQL_API_SQLPUTDATA' -> 16r31.
+		'SQL_API_SQLROWCOUNT' -> 16r14.
+		'SQL_API_SQLSETCONNECTATTR' -> 16r3F8.
+		'SQL_API_SQLSETCONNECTOPTION' -> 16r32.
+		'SQL_API_SQLSETCURSORNAME' -> 16r15.
+		'SQL_API_SQLSETDESCFIELD' -> 16r3F9.
+		'SQL_API_SQLSETDESCREC' -> 16r3FA.
+		'SQL_API_SQLSETENVATTR' -> 16r3FB.
+		'SQL_API_SQLSETPARAM' -> 16r16.
+		'SQL_API_SQLSETPOS' -> 16r44.
+		'SQL_API_SQLSETSCROLLOPTIONS' -> 16r45.
+		'SQL_API_SQLSETSTMTATTR' -> 16r3FC.
+		'SQL_API_SQLSETSTMTOPTION' -> 16r33.
+		'SQL_API_SQLSPECIALCOLUMNS' -> 16r34.
+		'SQL_API_SQLSTATISTICS' -> 16r35.
+		'SQL_API_SQLTABLEPRIVILEGES' -> 16r46.
+		'SQL_API_SQLTABLES' -> 16r36.
+		'SQL_API_SQLTRANSACT' -> 16r17.
+		'SQL_ARD_TYPE' -> -16r63.
+		'SQL_ASYNC_DBC_CAPABLE' -> 16r1.
+		'SQL_ASYNC_DBC_ENABLE_DEFAULT' -> 16r0.
+		'SQL_ASYNC_DBC_ENABLE_OFF' -> 16r0.
+		'SQL_ASYNC_DBC_ENABLE_ON' -> 16r1.
+		'SQL_ASYNC_DBC_FUNCTIONS' -> 16r2727.
+		'SQL_ASYNC_DBC_NOT_CAPABLE' -> 16r0.
+		'SQL_ASYNC_ENABLE' -> 16r4.
+		'SQL_ASYNC_ENABLE_DEFAULT' -> 16r0.
+		'SQL_ASYNC_ENABLE_OFF' -> 16r0.
+		'SQL_ASYNC_ENABLE_ON' -> 16r1.
+		'SQL_ASYNC_MODE' -> 16r2725.
+		'SQL_ASYNC_NOTIFICATION' -> 16r2729.
+		'SQL_ASYNC_NOTIFICATION_CAPABLE' -> 16r1.
+		'SQL_ASYNC_NOTIFICATION_NOT_CAPABLE' -> 16r0.
+		'SQL_AT_ADD_COLUMN' -> 16r1.
+		'SQL_AT_ADD_COLUMN_COLLATION' -> 16r80.
+		'SQL_AT_ADD_COLUMN_DEFAULT' -> 16r40.
+		'SQL_AT_ADD_COLUMN_SINGLE' -> 16r20.
+		'SQL_AT_ADD_CONSTRAINT' -> 16r8.
+		'SQL_AT_ADD_TABLE_CONSTRAINT' -> 16r1000.
+		'SQL_AT_COLUMN_SINGLE' -> 16r20.
+		'SQL_AT_CONSTRAINT_DEFERRABLE' -> 16r40000.
+		'SQL_AT_CONSTRAINT_INITIALLY_DEFERRED' -> 16r10000.
+		'SQL_AT_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r20000.
+		'SQL_AT_CONSTRAINT_NAME_DEFINITION' -> 16r8000.
+		'SQL_AT_CONSTRAINT_NON_DEFERRABLE' -> 16r80000.
+		'SQL_AT_DROP_COLUMN' -> 16r2.
+		'SQL_AT_DROP_COLUMN_CASCADE' -> 16r400.
+		'SQL_AT_DROP_COLUMN_DEFAULT' -> 16r200.
+		'SQL_AT_DROP_COLUMN_RESTRICT' -> 16r800.
+		'SQL_AT_DROP_TABLE_CONSTRAINT_CASCADE' -> 16r2000.
+		'SQL_AT_DROP_TABLE_CONSTRAINT_RESTRICT' -> 16r4000.
+		'SQL_AT_SET_COLUMN_DEFAULT' -> 16r100.
+		'SQL_ATTR_ACCESS_MODE' -> 16r65.
+		'SQL_ATTR_ANSI_APP' -> 16r73.
+		'SQL_ATTR_APP_PARAM_DESC' -> 16r271B.
+		'SQL_ATTR_APP_ROW_DESC' -> 16r271A.
+		'SQL_ATTR_APPLICATION_KEY' -> 16rCB.
+		'SQL_ATTR_ASYNC_DBC_EVENT' -> 16r77.
+		'SQL_ATTR_ASYNC_DBC_FUNCTIONS_ENABLE' -> 16r75.
+		'SQL_ATTR_ASYNC_ENABLE' -> 16r4.
+		'SQL_ATTR_ASYNC_STMT_EVENT' -> 16r1D.
+		'SQL_ATTR_AUTO_IPD' -> 16r2711.
+		'SQL_ATTR_AUTOCOMMIT' -> 16r66.
+		'SQL_ATTR_CONCURRENCY' -> 16r7.
+		'SQL_ATTR_CONNECTION_DEAD' -> 16r4B9.
+		'SQL_ATTR_CONNECTION_POOLING' -> 16rC9.
+		'SQL_ATTR_CONNECTION_TIMEOUT' -> 16r71.
+		'SQL_ATTR_CP_MATCH' -> 16rCA.
+		'SQL_ATTR_CURRENT_CATALOG' -> 16r6D.
+		'SQL_ATTR_CURSOR_SCROLLABLE' -> -16r1.
+		'SQL_ATTR_CURSOR_SENSITIVITY' -> -16r2.
+		'SQL_ATTR_CURSOR_TYPE' -> 16r6.
+		'SQL_ATTR_DISCONNECT_BEHAVIOR' -> 16r72.
+		'SQL_ATTR_ENABLE_AUTO_IPD' -> 16rF.
+		'SQL_ATTR_ENLIST_IN_DTC' -> 16r4B7.
+		'SQL_ATTR_ENLIST_IN_XA' -> 16r4B8.
+		'SQL_ATTR_FETCH_BOOKMARK_PTR' -> 16r10.
+		'SQL_ATTR_IMP_PARAM_DESC' -> 16r271D.
+		'SQL_ATTR_IMP_ROW_DESC' -> 16r271C.
+		'SQL_ATTR_KEYSET_SIZE' -> 16r8.
+		'SQL_ATTR_LOGIN_TIMEOUT' -> 16r67.
+		'SQL_ATTR_MAX_LENGTH' -> 16r3.
+		'SQL_ATTR_MAX_ROWS' -> 16r1.
+		'SQL_ATTR_METADATA_ID' -> 16r271E.
+		'SQL_ATTR_NOSCAN' -> 16r2.
+		'SQL_ATTR_ODBC_CURSORS' -> 16r6E.
+		'SQL_ATTR_ODBC_VERSION' -> 16rC8.
+		'SQL_ATTR_OUTPUT_NTS' -> 16r2711.
+		'SQL_ATTR_PACKET_SIZE' -> 16r70.
+		'SQL_ATTR_PARAM_BIND_OFFSET_PTR' -> 16r11.
+		'SQL_ATTR_PARAM_BIND_TYPE' -> 16r12.
+		'SQL_ATTR_PARAM_OPERATION_PTR' -> 16r13.
+		'SQL_ATTR_PARAM_STATUS_PTR' -> 16r14.
+		'SQL_ATTR_PARAMS_PROCESSED_PTR' -> 16r15.
+		'SQL_ATTR_PARAMSET_SIZE' -> 16r16.
+		'SQL_ATTR_QUERY_TIMEOUT' -> 16r0.
+		'SQL_ATTR_QUIET_MODE' -> 16r6F.
+		'SQL_ATTR_READONLY' -> 16r0.
+		'SQL_ATTR_READWRITE_UNKNOWN' -> 16r2.
+		'SQL_ATTR_RESET_CONNECTION' -> 16r74.
+		'SQL_ATTR_RETRIEVE_DATA' -> 16rB.
+		'SQL_ATTR_ROW_ARRAY_SIZE' -> 16r1B.
+		'SQL_ATTR_ROW_BIND_OFFSET_PTR' -> 16r17.
+		'SQL_ATTR_ROW_BIND_TYPE' -> 16r5.
+		'SQL_ATTR_ROW_NUMBER' -> 16rE.
+		'SQL_ATTR_ROW_OPERATION_PTR' -> 16r18.
+		'SQL_ATTR_ROW_STATUS_PTR' -> 16r19.
+		'SQL_ATTR_ROWS_FETCHED_PTR' -> 16r1A.
+		'SQL_ATTR_SIMULATE_CURSOR' -> 16rA.
+		'SQL_ATTR_TRACE' -> 16r68.
+		'SQL_ATTR_TRACEFILE' -> 16r69.
+		'SQL_ATTR_TRANSLATE_LIB' -> 16r6A.
+		'SQL_ATTR_TRANSLATE_OPTION' -> 16r6B.
+		'SQL_ATTR_TXN_ISOLATION' -> 16r6C.
+		'SQL_ATTR_USE_BOOKMARKS' -> 16rC.
+		'SQL_ATTR_WRITE' -> 16r1.
+		'SQL_AUTOCOMMIT' -> 16r66.
+		'SQL_AUTOCOMMIT_DEFAULT' -> 16r1.
+		'SQL_AUTOCOMMIT_OFF' -> 16r0.
+		'SQL_AUTOCOMMIT_ON' -> 16r1.
+		'SQL_BATCH_ROW_COUNT' -> 16r78.
+		'SQL_BATCH_SUPPORT' -> 16r79.
+		'SQL_BEST_ROWID' -> 16r1.
+		'SQL_BIND_BY_COLUMN' -> 16r0.
+		'SQL_BIND_TYPE' -> 16r5.
+		'SQL_BIND_TYPE_DEFAULT' -> 16r0.
+		'SQL_BOOKMARK_PERSISTENCE' -> 16r52.
+		'SQL_BP_CLOSE' -> 16r1.
+		'SQL_BP_DELETE' -> 16r2.
+		'SQL_BP_DROP' -> 16r4.
+		'SQL_BP_OTHER_HSTMT' -> 16r20.
+		'SQL_BP_SCROLL' -> 16r40.
+		'SQL_BP_TRANSACTION' -> 16r8.
+		'SQL_BP_UPDATE' -> 16r10.
+		'SQL_BRC_EXPLICIT' -> 16r2.
+		'SQL_BRC_PROCEDURES' -> 16r1.
+		'SQL_BRC_ROLLED_UP' -> 16r4.
+		'SQL_BS_ROW_COUNT_EXPLICIT' -> 16r2.
+		'SQL_BS_ROW_COUNT_PROC' -> 16r8.
+		'SQL_BS_SELECT_EXPLICIT' -> 16r1.
+		'SQL_BS_SELECT_PROC' -> 16r4.
+		'SQL_C_BINARY' -> -16r2.
+		'SQL_C_BIT' -> -16r7.
+		'SQL_C_CHAR' -> 16r1.
+		'SQL_C_DATE' -> 16r9.
+		'SQL_C_DEFAULT' -> 16r63.
+		'SQL_C_DOUBLE' -> 16r8.
+		'SQL_C_FLOAT' -> 16r7.
+		'SQL_C_GUID' -> -16rB.
+		'SQL_C_INTERVAL_DAY' -> 16r64.
+		'SQL_C_INTERVAL_DAY_TO_HOUR' -> 16r64.
+		'SQL_C_INTERVAL_DAY_TO_MINUTE' -> 16r64.
+		'SQL_C_INTERVAL_DAY_TO_SECOND' -> 16r64.
+		'SQL_C_INTERVAL_HOUR' -> 16r64.
+		'SQL_C_INTERVAL_HOUR_TO_MINUTE' -> 16r64.
+		'SQL_C_INTERVAL_HOUR_TO_SECOND' -> 16r64.
+		'SQL_C_INTERVAL_MINUTE' -> 16r64.
+		'SQL_C_INTERVAL_MINUTE_TO_SECOND' -> 16r64.
+		'SQL_C_INTERVAL_MONTH' -> 16r64.
+		'SQL_C_INTERVAL_SECOND' -> 16r64.
+		'SQL_C_INTERVAL_YEAR' -> 16r64.
+		'SQL_C_INTERVAL_YEAR_TO_MONTH' -> 16r64.
+		'SQL_C_LONG' -> 16r4.
+		'SQL_C_NUMERIC' -> 16r2.
+		'SQL_C_SHORT' -> 16r5.
+		'SQL_C_TIME' -> 16rA.
+		'SQL_C_TIMESTAMP' -> 16rB.
+		'SQL_C_TINYINT' -> -16r6.
+		'SQL_C_TYPE_DATE' -> 16r5B.
+		'SQL_C_TYPE_TIME' -> 16r5C.
+		'SQL_C_TYPE_TIMESTAMP' -> 16r5D.
+		'SQL_CA_CONSTRAINT_DEFERRABLE' -> 16r40.
+		'SQL_CA_CONSTRAINT_INITIALLY_DEFERRED' -> 16r10.
+		'SQL_CA_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r20.
+		'SQL_CA_CONSTRAINT_NON_DEFERRABLE' -> 16r80.
+		'SQL_CA_CREATE_ASSERTION' -> 16r1.
+		'SQL_CA1_ABSOLUTE' -> 16r2.
+		'SQL_CA1_BOOKMARK' -> 16r8.
+		'SQL_CA1_BULK_ADD' -> 16r10000.
+		'SQL_CA1_BULK_DELETE_BY_BOOKMARK' -> 16r40000.
+		'SQL_CA1_BULK_FETCH_BY_BOOKMARK' -> 16r80000.
+		'SQL_CA1_BULK_UPDATE_BY_BOOKMARK' -> 16r20000.
+		'SQL_CA1_LOCK_EXCLUSIVE' -> 16r80.
+		'SQL_CA1_LOCK_NO_CHANGE' -> 16r40.
+		'SQL_CA1_LOCK_UNLOCK' -> 16r100.
+		'SQL_CA1_NEXT' -> 16r1.
+		'SQL_CA1_POS_DELETE' -> 16r800.
+		'SQL_CA1_POS_POSITION' -> 16r200.
+		'SQL_CA1_POS_REFRESH' -> 16r1000.
+		'SQL_CA1_POS_UPDATE' -> 16r400.
+		'SQL_CA1_POSITIONED_DELETE' -> 16r4000.
+		'SQL_CA1_POSITIONED_UPDATE' -> 16r2000.
+		'SQL_CA1_RELATIVE' -> 16r4.
+		'SQL_CA1_SELECT_FOR_UPDATE' -> 16r8000.
+		'SQL_CA2_CRC_APPROXIMATE' -> 16r2000.
+		'SQL_CA2_CRC_EXACT' -> 16r1000.
+		'SQL_CA2_LOCK_CONCURRENCY' -> 16r2.
+		'SQL_CA2_MAX_ROWS_AFFECTS_ALL' -> 16r80.
+		'SQL_CA2_MAX_ROWS_CATALOG' -> 16r800.
+		'SQL_CA2_MAX_ROWS_DELETE' -> 16r200.
+		'SQL_CA2_MAX_ROWS_INSERT' -> 16r100.
+		'SQL_CA2_MAX_ROWS_SELECT' -> 16r80.
+		'SQL_CA2_MAX_ROWS_UPDATE' -> 16r400.
+		'SQL_CA2_OPT_ROWVER_CONCURRENCY' -> 16r4.
+		'SQL_CA2_OPT_VALUES_CONCURRENCY' -> 16r8.
+		'SQL_CA2_READ_ONLY_CONCURRENCY' -> 16r1.
+		'SQL_CA2_SENSITIVITY_ADDITIONS' -> 16r10.
+		'SQL_CA2_SENSITIVITY_DELETIONS' -> 16r20.
+		'SQL_CA2_SENSITIVITY_UPDATES' -> 16r40.
+		'SQL_CA2_SIMULATE_NON_UNIQUE' -> 16r4000.
+		'SQL_CA2_SIMULATE_TRY_UNIQUE' -> 16r8000.
+		'SQL_CA2_SIMULATE_UNIQUE' -> 16r10000.
+		'SQL_CASCADE' -> 16r0.
+		'SQL_CATALOG_LOCATION' -> 16r72.
+		'SQL_CATALOG_NAME' -> 16r2713.
+		'SQL_CATALOG_NAME_SEPARATOR' -> 16r29.
+		'SQL_CATALOG_TERM' -> 16r2A.
+		'SQL_CATALOG_USAGE' -> 16r5C.
+		'SQL_CB_CLOSE' -> 16r1.
+		'SQL_CB_DELETE' -> 16r0.
+		'SQL_CB_NON_NULL' -> 16r1.
+		'SQL_CB_NULL' -> 16r0.
+		'SQL_CB_PRESERVE' -> 16r2.
+		'SQL_CC_CLOSE' -> 16r1.
+		'SQL_CC_DELETE' -> 16r0.
+		'SQL_CC_PRESERVE' -> 16r2.
+		'SQL_CCOL_CREATE_COLLATION' -> 16r1.
+		'SQL_CCS_COLLATE_CLAUSE' -> 16r2.
+		'SQL_CCS_CREATE_CHARACTER_SET' -> 16r1.
+		'SQL_CCS_LIMITED_COLLATION' -> 16r4.
+		'SQL_CD_FALSE' -> 16r0.
+		'SQL_CD_TRUE' -> 16r1.
+		'SQL_CDO_COLLATION' -> 16r8.
+		'SQL_CDO_CONSTRAINT' -> 16r4.
+		'SQL_CDO_CONSTRAINT_DEFERRABLE' -> 16r80.
+		'SQL_CDO_CONSTRAINT_INITIALLY_DEFERRED' -> 16r20.
+		'SQL_CDO_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r40.
+		'SQL_CDO_CONSTRAINT_NAME_DEFINITION' -> 16r10.
+		'SQL_CDO_CONSTRAINT_NON_DEFERRABLE' -> 16r100.
+		'SQL_CDO_CREATE_DOMAIN' -> 16r1.
+		'SQL_CDO_DEFAULT' -> 16r2.
+		'SQL_CL_END' -> 16r2.
+		'SQL_CL_START' -> 16r1.
+		'SQL_CLOSE' -> 16r0.
+		'SQL_CN_ANY' -> 16r2.
+		'SQL_CN_DIFFERENT' -> 16r1.
+		'SQL_CN_NONE' -> 16r0.
+		'SQL_CODE_DATE' -> 16r1.
+		'SQL_CODE_DAY' -> 16r3.
+		'SQL_CODE_DAY_TO_HOUR' -> 16r8.
+		'SQL_CODE_DAY_TO_MINUTE' -> 16r9.
+		'SQL_CODE_DAY_TO_SECOND' -> 16rA.
+		'SQL_CODE_HOUR' -> 16r4.
+		'SQL_CODE_HOUR_TO_MINUTE' -> 16rB.
+		'SQL_CODE_HOUR_TO_SECOND' -> 16rC.
+		'SQL_CODE_MINUTE' -> 16r5.
+		'SQL_CODE_MINUTE_TO_SECOND' -> 16rD.
+		'SQL_CODE_MONTH' -> 16r2.
+		'SQL_CODE_SECOND' -> 16r6.
+		'SQL_CODE_TIME' -> 16r2.
+		'SQL_CODE_TIMESTAMP' -> 16r3.
+		'SQL_CODE_YEAR' -> 16r1.
+		'SQL_CODE_YEAR_TO_MONTH' -> 16r7.
+		'SQL_COL_PRED_BASIC' -> 16r2.
+		'SQL_COL_PRED_CHAR' -> 16r1.
+		'SQL_COLATT_OPT_MAX' -> 16r12.
+		'SQL_COLATT_OPT_MIN' -> 16r0.
+		'SQL_COLLATION_SEQ' -> 16r2714.
+		'SQL_COLUMN_ALIAS' -> 16r57.
+		'SQL_COLUMN_AUTO_INCREMENT' -> 16rB.
+		'SQL_COLUMN_CASE_SENSITIVE' -> 16rC.
+		'SQL_COLUMN_COUNT' -> 16r0.
+		'SQL_COLUMN_DISPLAY_SIZE' -> 16r6.
+		'SQL_COLUMN_IGNORE' -> -16r6.
+		'SQL_COLUMN_LABEL' -> 16r12.
+		'SQL_COLUMN_LENGTH' -> 16r3.
+		'SQL_COLUMN_MONEY' -> 16r9.
+		'SQL_COLUMN_NAME' -> 16r1.
+		'SQL_COLUMN_NULLABLE' -> 16r7.
+		'SQL_COLUMN_NUMBER_UNKNOWN' -> -16r2.
+		'SQL_COLUMN_OWNER_NAME' -> 16r10.
+		'SQL_COLUMN_PRECISION' -> 16r4.
+		'SQL_COLUMN_QUALIFIER_NAME' -> 16r11.
+		'SQL_COLUMN_SCALE' -> 16r5.
+		'SQL_COLUMN_SEARCHABLE' -> 16rD.
+		'SQL_COLUMN_TABLE_NAME' -> 16rF.
+		'SQL_COLUMN_TYPE' -> 16r2.
+		'SQL_COLUMN_TYPE_NAME' -> 16rE.
+		'SQL_COLUMN_UNSIGNED' -> 16r8.
+		'SQL_COLUMN_UPDATABLE' -> 16rA.
+		'SQL_COMMIT' -> 16r0.
+		'SQL_CONCAT_NULL_BEHAVIOR' -> 16r16.
+		'SQL_CONCUR_DEFAULT' -> 16r1.
+		'SQL_CONCUR_LOCK' -> 16r2.
+		'SQL_CONCUR_READ_ONLY' -> 16r1.
+		'SQL_CONCUR_ROWVER' -> 16r3.
+		'SQL_CONCUR_TIMESTAMP' -> 16r3.
+		'SQL_CONCUR_VALUES' -> 16r4.
+		'SQL_CONCURRENCY' -> 16r7.
+		'SQL_CONVERT_BIGINT' -> 16r35.
+		'SQL_CONVERT_BINARY' -> 16r36.
+		'SQL_CONVERT_BIT' -> 16r37.
+		'SQL_CONVERT_CHAR' -> 16r38.
+		'SQL_CONVERT_DATE' -> 16r39.
+		'SQL_CONVERT_DECIMAL' -> 16r3A.
+		'SQL_CONVERT_DOUBLE' -> 16r3B.
+		'SQL_CONVERT_FLOAT' -> 16r3C.
+		'SQL_CONVERT_FUNCTIONS' -> 16r30.
+		'SQL_CONVERT_GUID' -> 16rAD.
+		'SQL_CONVERT_INTEGER' -> 16r3D.
+		'SQL_CONVERT_INTERVAL_DAY_TIME' -> 16r7B.
+		'SQL_CONVERT_INTERVAL_YEAR_MONTH' -> 16r7C.
+		'SQL_CONVERT_LONGVARBINARY' -> 16r47.
+		'SQL_CONVERT_LONGVARCHAR' -> 16r3E.
+		'SQL_CONVERT_NUMERIC' -> 16r3F.
+		'SQL_CONVERT_REAL' -> 16r40.
+		'SQL_CONVERT_SMALLINT' -> 16r41.
+		'SQL_CONVERT_TIME' -> 16r42.
+		'SQL_CONVERT_TIMESTAMP' -> 16r43.
+		'SQL_CONVERT_TINYINT' -> 16r44.
+		'SQL_CONVERT_VARBINARY' -> 16r45.
+		'SQL_CONVERT_VARCHAR' -> 16r46.
+		'SQL_CONVERT_WCHAR' -> 16r7A.
+		'SQL_CONVERT_WLONGVARCHAR' -> 16r7D.
+		'SQL_CONVERT_WVARCHAR' -> 16r7E.
+		'SQL_CORRELATION_NAME' -> 16r4A.
+		'SQL_CP_DEFAULT' -> 16r0.
+		'SQL_CP_DRIVER_AWARE' -> 16r3.
+		'SQL_CP_MATCH_DEFAULT' -> 16r0.
+		'SQL_CP_OFF' -> 16r0.
+		'SQL_CP_ONE_PER_DRIVER' -> 16r1.
+		'SQL_CP_ONE_PER_HENV' -> 16r2.
+		'SQL_CP_RELAXED_MATCH' -> 16r1.
+		'SQL_CP_STRICT_MATCH' -> 16r0.
+		'SQL_CR_CLOSE' -> 16r1.
+		'SQL_CR_DELETE' -> 16r0.
+		'SQL_CR_PRESERVE' -> 16r2.
+		'SQL_CREATE_ASSERTION' -> 16r7F.
+		'SQL_CREATE_CHARACTER_SET' -> 16r80.
+		'SQL_CREATE_COLLATION' -> 16r81.
+		'SQL_CREATE_DOMAIN' -> 16r82.
+		'SQL_CREATE_SCHEMA' -> 16r83.
+		'SQL_CREATE_TABLE' -> 16r84.
+		'SQL_CREATE_TRANSLATION' -> 16r85.
+		'SQL_CREATE_VIEW' -> 16r86.
+		'SQL_CS_AUTHORIZATION' -> 16r2.
+		'SQL_CS_CREATE_SCHEMA' -> 16r1.
+		'SQL_CS_DEFAULT_CHARACTER_SET' -> 16r4.
+		'SQL_CT_COLUMN_COLLATION' -> 16r800.
+		'SQL_CT_COLUMN_CONSTRAINT' -> 16r200.
+		'SQL_CT_COLUMN_DEFAULT' -> 16r400.
+		'SQL_CT_COMMIT_DELETE' -> 16r4.
+		'SQL_CT_COMMIT_PRESERVE' -> 16r2.
+		'SQL_CT_CONSTRAINT_DEFERRABLE' -> 16r80.
+		'SQL_CT_CONSTRAINT_INITIALLY_DEFERRED' -> 16r20.
+		'SQL_CT_CONSTRAINT_INITIALLY_IMMEDIATE' -> 16r40.
+		'SQL_CT_CONSTRAINT_NAME_DEFINITION' -> 16r2000.
+		'SQL_CT_CONSTRAINT_NON_DEFERRABLE' -> 16r100.
+		'SQL_CT_CREATE_TABLE' -> 16r1.
+		'SQL_CT_GLOBAL_TEMPORARY' -> 16r8.
+		'SQL_CT_LOCAL_TEMPORARY' -> 16r10.
+		'SQL_CT_TABLE_CONSTRAINT' -> 16r1000.
+		'SQL_CTR_CREATE_TRANSLATION' -> 16r1.
+		'SQL_CU_DML_STATEMENTS' -> 16r1.
+		'SQL_CU_INDEX_DEFINITION' -> 16r8.
+		'SQL_CU_PRIVILEGE_DEFINITION' -> 16r10.
+		'SQL_CU_PROCEDURE_INVOCATION' -> 16r2.
+		'SQL_CU_TABLE_DEFINITION' -> 16r4.
+		'SQL_CUR_DEFAULT' -> 16r2.
+		'SQL_CUR_USE_DRIVER' -> 16r2.
+		'SQL_CUR_USE_IF_NEEDED' -> 16r0.
+		'SQL_CUR_USE_ODBC' -> 16r1.
+		'SQL_CURRENT_QUALIFIER' -> 16r6D.
+		'SQL_CURSOR_COMMIT_BEHAVIOR' -> 16r17.
+		'SQL_CURSOR_DYNAMIC' -> 16r2.
+		'SQL_CURSOR_FORWARD_ONLY' -> 16r0.
+		'SQL_CURSOR_KEYSET_DRIVEN' -> 16r1.
+		'SQL_CURSOR_ROLLBACK_BEHAVIOR' -> 16r18.
+		'SQL_CURSOR_SENSITIVITY' -> 16r2711.
+		'SQL_CURSOR_STATIC' -> 16r3.
+		'SQL_CURSOR_TYPE' -> 16r6.
+		'SQL_CURSOR_TYPE_DEFAULT' -> 16r0.
+		'SQL_CV_CASCADED' -> 16r4.
+		'SQL_CV_CHECK_OPTION' -> 16r2.
+		'SQL_CV_CREATE_VIEW' -> 16r1.
+		'SQL_CV_LOCAL' -> 16r8.
+		'SQL_CVT_BIGINT' -> 16r4000.
+		'SQL_CVT_BINARY' -> 16r400.
+		'SQL_CVT_BIT' -> 16r1000.
+		'SQL_CVT_CHAR' -> 16r1.
+		'SQL_CVT_DATE' -> 16r8000.
+		'SQL_CVT_DECIMAL' -> 16r4.
+		'SQL_CVT_DOUBLE' -> 16r80.
+		'SQL_CVT_FLOAT' -> 16r20.
+		'SQL_CVT_GUID' -> 16r1000000.
+		'SQL_CVT_INTEGER' -> 16r8.
+		'SQL_CVT_INTERVAL_DAY_TIME' -> 16r100000.
+		'SQL_CVT_INTERVAL_YEAR_MONTH' -> 16r80000.
+		'SQL_CVT_LONGVARBINARY' -> 16r40000.
+		'SQL_CVT_LONGVARCHAR' -> 16r200.
+		'SQL_CVT_NUMERIC' -> 16r2.
+		'SQL_CVT_REAL' -> 16r40.
+		'SQL_CVT_SMALLINT' -> 16r10.
+		'SQL_CVT_TIME' -> 16r10000.
+		'SQL_CVT_TIMESTAMP' -> 16r20000.
+		'SQL_CVT_TINYINT' -> 16r2000.
+		'SQL_CVT_VARBINARY' -> 16r800.
+		'SQL_CVT_VARCHAR' -> 16r100.
+		'SQL_CVT_WCHAR' -> 16r200000.
+		'SQL_CVT_WLONGVARCHAR' -> 16r400000.
+		'SQL_CVT_WVARCHAR' -> 16r800000.
+		'SQL_DA_DROP_ASSERTION' -> 16r1.
+		'SQL_DATA_AT_EXEC' -> -16r2.
+		'SQL_DATA_SOURCE_NAME' -> 16r2.
+		'SQL_DATA_SOURCE_READ_ONLY' -> 16r19.
+		'SQL_DATABASE_NAME' -> 16r10.
+		'SQL_DATE_LEN' -> 16rA.
+		'SQL_DATETIME_LITERALS' -> 16r77.
+		'SQL_DAY' -> 16r3.
+		'SQL_DAY_TO_HOUR' -> 16r8.
+		'SQL_DAY_TO_MINUTE' -> 16r9.
+		'SQL_DAY_TO_SECOND' -> 16rA.
+		'SQL_DB_DEFAULT' -> 16r0.
+		'SQL_DB_DISCONNECT' -> 16r1.
+		'SQL_DB_RETURN_TO_POOL' -> 16r0.
+		'SQL_DBMS_NAME' -> 16r11.
+		'SQL_DBMS_VER' -> 16r12.
+		'SQL_DC_DROP_COLLATION' -> 16r1.
+		'SQL_DCS_DROP_CHARACTER_SET' -> 16r1.
+		'SQL_DD_CASCADE' -> 16r4.
+		'SQL_DD_DROP_DOMAIN' -> 16r1.
+		'SQL_DD_RESTRICT' -> 16r2.
+		'SQL_DDL_INDEX' -> 16rAA.
+		'SQL_DEFAULT' -> 16r63.
+		'SQL_DEFAULT_PARAM' -> -16r5.
+		'SQL_DEFAULT_TXN_ISOLATION' -> 16r1A.
+		'SQL_DELETE' -> 16r3.
+		'SQL_DELETE_BY_BOOKMARK' -> 16r6.
+		'SQL_DESC_ALLOC_AUTO' -> 16r1.
+		'SQL_DESC_ALLOC_TYPE' -> 16r44B.
+		'SQL_DESC_ALLOC_USER' -> 16r2.
+		'SQL_DESC_ARRAY_SIZE' -> 16r14.
+		'SQL_DESC_ARRAY_STATUS_PTR' -> 16r15.
+		'SQL_DESC_AUTO_UNIQUE_VALUE' -> 16rB.
+		'SQL_DESC_BASE_COLUMN_NAME' -> 16r16.
+		'SQL_DESC_BASE_TABLE_NAME' -> 16r17.
+		'SQL_DESC_BIND_OFFSET_PTR' -> 16r18.
+		'SQL_DESC_BIND_TYPE' -> 16r19.
+		'SQL_DESC_CASE_SENSITIVE' -> 16rC.
+		'SQL_DESC_CATALOG_NAME' -> 16r11.
+		'SQL_DESC_CONCISE_TYPE' -> 16r2.
+		'SQL_DESC_COUNT' -> 16r3E9.
+		'SQL_DESC_DATA_PTR' -> 16r3F2.
+		'SQL_DESC_DATETIME_INTERVAL_CODE' -> 16r3EF.
+		'SQL_DESC_DATETIME_INTERVAL_PRECISION' -> 16r1A.
+		'SQL_DESC_DISPLAY_SIZE' -> 16r6.
+		'SQL_DESC_FIXED_PREC_SCALE' -> 16r9.
+		'SQL_DESC_INDICATOR_PTR' -> 16r3F1.
+		'SQL_DESC_LABEL' -> 16r12.
+		'SQL_DESC_LENGTH' -> 16r3EB.
+		'SQL_DESC_LITERAL_PREFIX' -> 16r1B.
+		'SQL_DESC_LITERAL_SUFFIX' -> 16r1C.
+		'SQL_DESC_LOCAL_TYPE_NAME' -> 16r1D.
+		'SQL_DESC_MAXIMUM_SCALE' -> 16r1E.
+		'SQL_DESC_MINIMUM_SCALE' -> 16r1F.
+		'SQL_DESC_NAME' -> 16r3F3.
+		'SQL_DESC_NULLABLE' -> 16r3F0.
+		'SQL_DESC_NUM_PREC_RADIX' -> 16r20.
+		'SQL_DESC_OCTET_LENGTH' -> 16r3F5.
+		'SQL_DESC_OCTET_LENGTH_PTR' -> 16r3EC.
+		'SQL_DESC_PARAMETER_TYPE' -> 16r21.
+		'SQL_DESC_PRECISION' -> 16r3ED.
+		'SQL_DESC_ROWS_PROCESSED_PTR' -> 16r22.
+		'SQL_DESC_ROWVER' -> 16r23.
+		'SQL_DESC_SCALE' -> 16r3EE.
+		'SQL_DESC_SCHEMA_NAME' -> 16r10.
+		'SQL_DESC_SEARCHABLE' -> 16rD.
+		'SQL_DESC_TABLE_NAME' -> 16rF.
+		'SQL_DESC_TYPE' -> 16r3EA.
+		'SQL_DESC_TYPE_NAME' -> 16rE.
+		'SQL_DESC_UNNAMED' -> 16r3F4.
+		'SQL_DESC_UNSIGNED' -> 16r8.
+		'SQL_DESC_UPDATABLE' -> 16rA.
+		'SQL_DESCRIBE_PARAMETER' -> 16r2712.
+		'SQL_DI_CREATE_INDEX' -> 16r1.
+		'SQL_DI_DROP_INDEX' -> 16r2.
+		'SQL_DIAG_ALTER_DOMAIN' -> 16r3.
+		'SQL_DIAG_ALTER_TABLE' -> 16r4.
+		'SQL_DIAG_CALL' -> 16r7.
+		'SQL_DIAG_CLASS_ORIGIN' -> 16r8.
+		'SQL_DIAG_COLUMN_NUMBER' -> -16r4DF.
+		'SQL_DIAG_CONNECTION_NAME' -> 16rA.
+		'SQL_DIAG_CREATE_ASSERTION' -> 16r6.
+		'SQL_DIAG_CREATE_CHARACTER_SET' -> 16r8.
+		'SQL_DIAG_CREATE_COLLATION' -> 16rA.
+		'SQL_DIAG_CREATE_DOMAIN' -> 16r17.
+		'SQL_DIAG_CREATE_INDEX' -> -16r1.
+		'SQL_DIAG_CREATE_SCHEMA' -> 16r40.
+		'SQL_DIAG_CREATE_TABLE' -> 16r4D.
+		'SQL_DIAG_CREATE_TRANSLATION' -> 16r4F.
+		'SQL_DIAG_CREATE_VIEW' -> 16r54.
+		'SQL_DIAG_CURSOR_ROW_COUNT' -> -16r4E1.
+		'SQL_DIAG_DELETE_WHERE' -> 16r13.
+		'SQL_DIAG_DROP_ASSERTION' -> 16r18.
+		'SQL_DIAG_DROP_CHARACTER_SET' -> 16r19.
+		'SQL_DIAG_DROP_COLLATION' -> 16r1A.
+		'SQL_DIAG_DROP_DOMAIN' -> 16r1B.
+		'SQL_DIAG_DROP_INDEX' -> -16r2.
+		'SQL_DIAG_DROP_SCHEMA' -> 16r1F.
+		'SQL_DIAG_DROP_TABLE' -> 16r20.
+		'SQL_DIAG_DROP_TRANSLATION' -> 16r21.
+		'SQL_DIAG_DROP_VIEW' -> 16r24.
+		'SQL_DIAG_DYNAMIC_DELETE_CURSOR' -> 16r26.
+		'SQL_DIAG_DYNAMIC_FUNCTION' -> 16r7.
+		'SQL_DIAG_DYNAMIC_FUNCTION_CODE' -> 16rC.
+		'SQL_DIAG_DYNAMIC_UPDATE_CURSOR' -> 16r51.
+		'SQL_DIAG_GRANT' -> 16r30.
+		'SQL_DIAG_INSERT' -> 16r32.
+		'SQL_DIAG_MESSAGE_TEXT' -> 16r6.
+		'SQL_DIAG_NATIVE' -> 16r5.
+		'SQL_DIAG_NUMBER' -> 16r2.
+		'SQL_DIAG_RETURNCODE' -> 16r1.
+		'SQL_DIAG_REVOKE' -> 16r3B.
+		'SQL_DIAG_ROW_COUNT' -> 16r3.
+		'SQL_DIAG_ROW_NUMBER' -> -16r4E0.
+		'SQL_DIAG_SELECT_CURSOR' -> 16r55.
+		'SQL_DIAG_SERVER_NAME' -> 16rB.
+		'SQL_DIAG_SQLSTATE' -> 16r4.
+		'SQL_DIAG_SUBCLASS_ORIGIN' -> 16r9.
+		'SQL_DIAG_UNKNOWN_STATEMENT' -> 16r0.
+		'SQL_DIAG_UPDATE_WHERE' -> 16r52.
+		'SQL_DL_SQL92_DATE' -> 16r1.
+		'SQL_DL_SQL92_INTERVAL_DAY' -> 16r20.
+		'SQL_DL_SQL92_INTERVAL_DAY_TO_HOUR' -> 16r400.
+		'SQL_DL_SQL92_INTERVAL_DAY_TO_MINUTE' -> 16r800.
+		'SQL_DL_SQL92_INTERVAL_DAY_TO_SECOND' -> 16r1000.
+		'SQL_DL_SQL92_INTERVAL_HOUR' -> 16r40.
+		'SQL_DL_SQL92_INTERVAL_HOUR_TO_MINUTE' -> 16r2000.
+		'SQL_DL_SQL92_INTERVAL_HOUR_TO_SECOND' -> 16r4000.
+		'SQL_DL_SQL92_INTERVAL_MINUTE' -> 16r80.
+		'SQL_DL_SQL92_INTERVAL_MINUTE_TO_SECOND' -> 16r8000.
+		'SQL_DL_SQL92_INTERVAL_MONTH' -> 16r10.
+		'SQL_DL_SQL92_INTERVAL_SECOND' -> 16r100.
+		'SQL_DL_SQL92_INTERVAL_YEAR' -> 16r8.
+		'SQL_DL_SQL92_INTERVAL_YEAR_TO_MONTH' -> 16r200.
+		'SQL_DL_SQL92_TIME' -> 16r2.
+		'SQL_DL_SQL92_TIMESTAMP' -> 16r4.
+		'SQL_DM_VER' -> 16rAB.
+		'SQL_DRIVER_AWARE_POOLING_CAPABLE' -> 16r1.
+		'SQL_DRIVER_AWARE_POOLING_NOT_CAPABLE' -> 16r0.
+		'SQL_DRIVER_AWARE_POOLING_SUPPORTED' -> 16r2728.
+		'SQL_DRIVER_C_TYPE_BASE' -> 16r4000.
+		'SQL_DRIVER_COMPLETE' -> 16r1.
+		'SQL_DRIVER_COMPLETE_REQUIRED' -> 16r3.
+		'SQL_DRIVER_CONN_ATTR_BASE' -> 16r4000.
+		'SQL_DRIVER_DESC_FIELD_BASE' -> 16r4000.
+		'SQL_DRIVER_DIAG_FIELD_BASE' -> 16r4000.
+		'SQL_DRIVER_HDBC' -> 16r3.
+		'SQL_DRIVER_HDESC' -> 16r87.
+		'SQL_DRIVER_HENV' -> 16r4.
+		'SQL_DRIVER_HLIB' -> 16r4C.
+		'SQL_DRIVER_HSTMT' -> 16r5.
+		'SQL_DRIVER_INFO_TYPE_BASE' -> 16r4000.
+		'SQL_DRIVER_NAME' -> 16r6.
+		'SQL_DRIVER_NOPROMPT' -> 16r0.
+		'SQL_DRIVER_ODBC_VER' -> 16r4D.
+		'SQL_DRIVER_PROMPT' -> 16r2.
+		'SQL_DRIVER_SQL_TYPE_BASE' -> 16r4000.
+		'SQL_DRIVER_STMT_ATTR_BASE' -> 16r4000.
+		'SQL_DRIVER_VER' -> 16r7.
+		'SQL_DROP' -> 16r1.
+		'SQL_DROP_ASSERTION' -> 16r88.
+		'SQL_DROP_CHARACTER_SET' -> 16r89.
+		'SQL_DROP_COLLATION' -> 16r8A.
+		'SQL_DROP_DOMAIN' -> 16r8B.
+		'SQL_DROP_SCHEMA' -> 16r8C.
+		'SQL_DROP_TABLE' -> 16r8D.
+		'SQL_DROP_TRANSLATION' -> 16r8E.
+		'SQL_DROP_VIEW' -> 16r8F.
+		'SQL_DS_CASCADE' -> 16r4.
+		'SQL_DS_DROP_SCHEMA' -> 16r1.
+		'SQL_DS_RESTRICT' -> 16r2.
+		'SQL_DT_CASCADE' -> 16r4.
+		'SQL_DT_DROP_TABLE' -> 16r1.
+		'SQL_DT_RESTRICT' -> 16r2.
+		'SQL_DTC_DONE' -> 16r0.
+		'SQL_DTC_ENLIST_EXPENSIVE' -> 16r1.
+		'SQL_DTC_TRANSITION_COST' -> 16r6D6.
+		'SQL_DTC_UNENLIST_EXPENSIVE' -> 16r2.
+		'SQL_DTR_DROP_TRANSLATION' -> 16r1.
+		'SQL_DV_CASCADE' -> 16r4.
+		'SQL_DV_DROP_VIEW' -> 16r1.
+		'SQL_DV_RESTRICT' -> 16r2.
+		'SQL_DYNAMIC_CURSOR_ATTRIBUTES1' -> 16r90.
+		'SQL_DYNAMIC_CURSOR_ATTRIBUTES2' -> 16r91.
+		'SQL_ENSURE' -> 16r1.
+		'SQL_ENTIRE_ROWSET' -> 16r0.
+		'SQL_EXPRESSIONS_IN_ORDERBY' -> 16r1B.
+		'SQL_FALSE' -> 16r0.
+		'SQL_FD_FETCH_ABSOLUTE' -> 16r10.
+		'SQL_FD_FETCH_BOOKMARK' -> 16r80.
+		'SQL_FD_FETCH_FIRST' -> 16r2.
+		'SQL_FD_FETCH_LAST' -> 16r4.
+		'SQL_FD_FETCH_NEXT' -> 16r1.
+		'SQL_FD_FETCH_PREV' -> 16r8.
+		'SQL_FD_FETCH_PRIOR' -> 16r8.
+		'SQL_FD_FETCH_RELATIVE' -> 16r20.
+		'SQL_FD_FETCH_RESUME' -> 16r40.
+		'SQL_FETCH_ABSOLUTE' -> 16r5.
+		'SQL_FETCH_BOOKMARK' -> 16r8.
+		'SQL_FETCH_BY_BOOKMARK' -> 16r7.
+		'SQL_FETCH_DIRECTION' -> 16r8.
+		'SQL_FETCH_FIRST' -> 16r2.
+		'SQL_FETCH_FIRST_SYSTEM' -> 16r20.
+		'SQL_FETCH_FIRST_USER' -> 16r1F.
+		'SQL_FETCH_LAST' -> 16r3.
+		'SQL_FETCH_NEXT' -> 16r1.
+		'SQL_FETCH_PREV' -> 16r4.
+		'SQL_FETCH_PRIOR' -> 16r4.
+		'SQL_FETCH_RELATIVE' -> 16r6.
+		'SQL_FETCH_RESUME' -> 16r7.
+		'SQL_FILE_CATALOG' -> 16r2.
+		'SQL_FILE_NOT_SUPPORTED' -> 16r0.
+		'SQL_FILE_QUALIFIER' -> 16r2.
+		'SQL_FILE_TABLE' -> 16r1.
+		'SQL_FILE_USAGE' -> 16r54.
+		'SQL_FN_CVT_CAST' -> 16r2.
+		'SQL_FN_CVT_CONVERT' -> 16r1.
+		'SQL_FN_NUM_ABS' -> 16r1.
+		'SQL_FN_NUM_ACOS' -> 16r2.
+		'SQL_FN_NUM_ASIN' -> 16r4.
+		'SQL_FN_NUM_ATAN' -> 16r8.
+		'SQL_FN_NUM_ATAN2' -> 16r10.
+		'SQL_FN_NUM_CEILING' -> 16r20.
+		'SQL_FN_NUM_COS' -> 16r40.
+		'SQL_FN_NUM_COT' -> 16r80.
+		'SQL_FN_NUM_DEGREES' -> 16r40000.
+		'SQL_FN_NUM_EXP' -> 16r100.
+		'SQL_FN_NUM_FLOOR' -> 16r200.
+		'SQL_FN_NUM_LOG' -> 16r400.
+		'SQL_FN_NUM_LOG10' -> 16r80000.
+		'SQL_FN_NUM_MOD' -> 16r800.
+		'SQL_FN_NUM_PI' -> 16r10000.
+		'SQL_FN_NUM_POWER' -> 16r100000.
+		'SQL_FN_NUM_RADIANS' -> 16r200000.
+		'SQL_FN_NUM_RAND' -> 16r20000.
+		'SQL_FN_NUM_ROUND' -> 16r400000.
+		'SQL_FN_NUM_SIGN' -> 16r1000.
+		'SQL_FN_NUM_SIN' -> 16r2000.
+		'SQL_FN_NUM_SQRT' -> 16r4000.
+		'SQL_FN_NUM_TAN' -> 16r8000.
+		'SQL_FN_NUM_TRUNCATE' -> 16r800000.
+		'SQL_FN_STR_ASCII' -> 16r2000.
+		'SQL_FN_STR_BIT_LENGTH' -> 16r80000.
+		'SQL_FN_STR_CHAR' -> 16r4000.
+		'SQL_FN_STR_CHAR_LENGTH' -> 16r100000.
+		'SQL_FN_STR_CHARACTER_LENGTH' -> 16r200000.
+		'SQL_FN_STR_CONCAT' -> 16r1.
+		'SQL_FN_STR_DIFFERENCE' -> 16r8000.
+		'SQL_FN_STR_INSERT' -> 16r2.
+		'SQL_FN_STR_LCASE' -> 16r40.
+		'SQL_FN_STR_LEFT' -> 16r4.
+		'SQL_FN_STR_LENGTH' -> 16r10.
+		'SQL_FN_STR_LOCATE' -> 16r20.
+		'SQL_FN_STR_LOCATE_2' -> 16r10000.
+		'SQL_FN_STR_LTRIM' -> 16r8.
+		'SQL_FN_STR_OCTET_LENGTH' -> 16r400000.
+		'SQL_FN_STR_POSITION' -> 16r800000.
+		'SQL_FN_STR_REPEAT' -> 16r80.
+		'SQL_FN_STR_REPLACE' -> 16r100.
+		'SQL_FN_STR_RIGHT' -> 16r200.
+		'SQL_FN_STR_RTRIM' -> 16r400.
+		'SQL_FN_STR_SOUNDEX' -> 16r20000.
+		'SQL_FN_STR_SPACE' -> 16r40000.
+		'SQL_FN_STR_SUBSTRING' -> 16r800.
+		'SQL_FN_STR_UCASE' -> 16r1000.
+		'SQL_FN_SYS_DBNAME' -> 16r2.
+		'SQL_FN_SYS_IFNULL' -> 16r4.
+		'SQL_FN_SYS_USERNAME' -> 16r1.
+		'SQL_FN_TD_CURDATE' -> 16r2.
+		'SQL_FN_TD_CURRENT_DATE' -> 16r20000.
+		'SQL_FN_TD_CURRENT_TIME' -> 16r40000.
+		'SQL_FN_TD_CURRENT_TIMESTAMP' -> 16r80000.
+		'SQL_FN_TD_CURTIME' -> 16r200.
+		'SQL_FN_TD_DAYNAME' -> 16r8000.
+		'SQL_FN_TD_DAYOFMONTH' -> 16r4.
+		'SQL_FN_TD_DAYOFWEEK' -> 16r8.
+		'SQL_FN_TD_DAYOFYEAR' -> 16r10.
+		'SQL_FN_TD_EXTRACT' -> 16r100000.
+		'SQL_FN_TD_HOUR' -> 16r400.
+		'SQL_FN_TD_MINUTE' -> 16r800.
+		'SQL_FN_TD_MONTH' -> 16r20.
+		'SQL_FN_TD_MONTHNAME' -> 16r10000.
+		'SQL_FN_TD_NOW' -> 16r1.
+		'SQL_FN_TD_QUARTER' -> 16r40.
+		'SQL_FN_TD_SECOND' -> 16r1000.
+		'SQL_FN_TD_TIMESTAMPADD' -> 16r2000.
+		'SQL_FN_TD_TIMESTAMPDIFF' -> 16r4000.
+		'SQL_FN_TD_WEEK' -> 16r80.
+		'SQL_FN_TD_YEAR' -> 16r100.
+		'SQL_FN_TSI_DAY' -> 16r10.
+		'SQL_FN_TSI_FRAC_SECOND' -> 16r1.
+		'SQL_FN_TSI_HOUR' -> 16r8.
+		'SQL_FN_TSI_MINUTE' -> 16r4.
+		'SQL_FN_TSI_MONTH' -> 16r40.
+		'SQL_FN_TSI_QUARTER' -> 16r80.
+		'SQL_FN_TSI_SECOND' -> 16r2.
+		'SQL_FN_TSI_WEEK' -> 16r20.
+		'SQL_FN_TSI_YEAR' -> 16r100.
+		'SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1' -> 16r92.
+		'SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES2' -> 16r93.
+		'SQL_GB_COLLATE' -> 16r4.
+		'SQL_GB_GROUP_BY_CONTAINS_SELECT' -> 16r2.
+		'SQL_GB_GROUP_BY_EQUALS_SELECT' -> 16r1.
+		'SQL_GB_NO_RELATION' -> 16r3.
+		'SQL_GB_NOT_SUPPORTED' -> 16r0.
+		'SQL_GD_ANY_COLUMN' -> 16r1.
+		'SQL_GD_ANY_ORDER' -> 16r2.
+		'SQL_GD_BLOCK' -> 16r4.
+		'SQL_GD_BOUND' -> 16r8.
+		'SQL_GD_OUTPUT_PARAMS' -> 16r10.
+		'SQL_GET_BOOKMARK' -> 16rD.
+		'SQL_GETDATA_EXTENSIONS' -> 16r51.
+		'SQL_GROUP_BY' -> 16r58.
+		'SQL_HANDLE_DBC' -> 16r2.
+		'SQL_HANDLE_DESC' -> 16r4.
+		'SQL_HANDLE_ENV' -> 16r1.
+		'SQL_HANDLE_SENV' -> 16r5.
+		'SQL_HANDLE_STMT' -> 16r3.
+		'SQL_HOUR' -> 16r4.
+		'SQL_HOUR_TO_MINUTE' -> 16rB.
+		'SQL_HOUR_TO_SECOND' -> 16rC.
+		'SQL_IC_LOWER' -> 16r2.
+		'SQL_IC_MIXED' -> 16r4.
+		'SQL_IC_SENSITIVE' -> 16r3.
+		'SQL_IC_UPPER' -> 16r1.
+		'SQL_IDENTIFIER_CASE' -> 16r1C.
+		'SQL_IDENTIFIER_QUOTE_CHAR' -> 16r1D.
+		'SQL_IGNORE' -> -16r6.
+		'SQL_IK_ALL' -> 16r1.
+		'SQL_IK_ASC' -> 16r1.
+		'SQL_IK_DESC' -> 16r2.
+		'SQL_IK_NONE' -> 16r0.
+		'SQL_INDEX_ALL' -> 16r1.
+		'SQL_INDEX_CLUSTERED' -> 16r1.
+		'SQL_INDEX_HASHED' -> 16r2.
+		'SQL_INDEX_KEYWORDS' -> 16r94.
+		'SQL_INDEX_OTHER' -> 16r3.
+		'SQL_INDEX_UNIQUE' -> 16r0.
+		'SQL_INFO_FIRST' -> 16r0.
+		'SQL_INFO_SCHEMA_VIEWS' -> 16r95.
+		'SQL_INITIALLY_DEFERRED' -> 16r5.
+		'SQL_INITIALLY_IMMEDIATE' -> 16r6.
+		'SQL_INSENSITIVE' -> 16r1.
+		'SQL_INSERT_STATEMENT' -> 16rAC.
+		'SQL_INTEGRITY' -> 16r49.
+		'SQL_IS_INSERT_LITERALS' -> 16r1.
+		'SQL_IS_INSERT_SEARCHED' -> 16r2.
+		'SQL_IS_INTEGER' -> -16r6.
+		'SQL_IS_POINTER' -> -16r4.
+		'SQL_IS_SELECT_INTO' -> 16r4.
+		'SQL_IS_SMALLINT' -> -16r8.
+		'SQL_IS_UINTEGER' -> -16r5.
+		'SQL_IS_USMALLINT' -> -16r7.
+		'SQL_ISV_ASSERTIONS' -> 16r1.
+		'SQL_ISV_CHARACTER_SETS' -> 16r2.
+		'SQL_ISV_CHECK_CONSTRAINTS' -> 16r4.
+		'SQL_ISV_COLLATIONS' -> 16r8.
+		'SQL_ISV_COLUMN_DOMAIN_USAGE' -> 16r10.
+		'SQL_ISV_COLUMN_PRIVILEGES' -> 16r20.
+		'SQL_ISV_COLUMNS' -> 16r40.
+		'SQL_ISV_CONSTRAINT_COLUMN_USAGE' -> 16r80.
+		'SQL_ISV_CONSTRAINT_TABLE_USAGE' -> 16r100.
+		'SQL_ISV_DOMAIN_CONSTRAINTS' -> 16r200.
+		'SQL_ISV_DOMAINS' -> 16r400.
+		'SQL_ISV_KEY_COLUMN_USAGE' -> 16r800.
+		'SQL_ISV_REFERENTIAL_CONSTRAINTS' -> 16r1000.
+		'SQL_ISV_SCHEMATA' -> 16r2000.
+		'SQL_ISV_SQL_LANGUAGES' -> 16r4000.
+		'SQL_ISV_TABLE_CONSTRAINTS' -> 16r8000.
+		'SQL_ISV_TABLE_PRIVILEGES' -> 16r10000.
+		'SQL_ISV_TABLES' -> 16r20000.
+		'SQL_ISV_TRANSLATIONS' -> 16r40000.
+		'SQL_ISV_USAGE_PRIVILEGES' -> 16r80000.
+		'SQL_ISV_VIEW_COLUMN_USAGE' -> 16r100000.
+		'SQL_ISV_VIEW_TABLE_USAGE' -> 16r200000.
+		'SQL_ISV_VIEWS' -> 16r400000.
+		'SQL_KEYSET_CURSOR_ATTRIBUTES1' -> 16r96.
+		'SQL_KEYSET_CURSOR_ATTRIBUTES2' -> 16r97.
+		'SQL_KEYSET_SIZE' -> 16r8.
+		'SQL_KEYSET_SIZE_DEFAULT' -> 16r0.
+		'SQL_KEYWORDS' -> 16r59.
+		'SQL_LCK_EXCLUSIVE' -> 16r2.
+		'SQL_LCK_NO_CHANGE' -> 16r1.
+		'SQL_LCK_UNLOCK' -> 16r4.
+		'SQL_LEN_BINARY_ATTR_OFFSET' -> -16r64.
+		'SQL_LEN_DATA_AT_EXEC_OFFSET' -> -16r64.
+		'SQL_LIKE_ESCAPE_CLAUSE' -> 16r71.
+		'SQL_LIKE_ONLY' -> 16r1.
+		'SQL_LOCK_EXCLUSIVE' -> 16r1.
+		'SQL_LOCK_NO_CHANGE' -> 16r0.
+		'SQL_LOCK_TYPES' -> 16r4E.
+		'SQL_LOCK_UNLOCK' -> 16r2.
+		'SQL_LOGIN_TIMEOUT' -> 16r67.
+		'SQL_LOGIN_TIMEOUT_DEFAULT' -> 16rF.
+		'SQL_MAX_ASYNC_CONCURRENT_STATEMENTS' -> 16r2726.
+		'SQL_MAX_BINARY_LITERAL_LEN' -> 16r70.
+		'SQL_MAX_CATALOG_NAME_LEN' -> 16r22.
+		'SQL_MAX_CHAR_LITERAL_LEN' -> 16r6C.
+		'SQL_MAX_COLUMN_NAME_LEN' -> 16r1E.
+		'SQL_MAX_COLUMNS_IN_GROUP_BY' -> 16r61.
+		'SQL_MAX_COLUMNS_IN_INDEX' -> 16r62.
+		'SQL_MAX_COLUMNS_IN_ORDER_BY' -> 16r63.
+		'SQL_MAX_COLUMNS_IN_SELECT' -> 16r64.
+		'SQL_MAX_COLUMNS_IN_TABLE' -> 16r65.
+		'SQL_MAX_CONCURRENT_ACTIVITIES' -> 16r1.
+		'SQL_MAX_CURSOR_NAME_LEN' -> 16r1F.
+		'SQL_MAX_DRIVER_CONNECTIONS' -> 16r0.
+		'SQL_MAX_DSN_LENGTH' -> 16r20.
+		'SQL_MAX_IDENTIFIER_LEN' -> 16r2715.
+		'SQL_MAX_INDEX_SIZE' -> 16r66.
+		'SQL_MAX_LENGTH' -> 16r3.
+		'SQL_MAX_LENGTH_DEFAULT' -> 16r0.
+		'SQL_MAX_MESSAGE_LENGTH' -> 16r200.
+		'SQL_MAX_OPTION_STRING_LENGTH' -> 16r100.
+		'SQL_MAX_OWNER_NAME_LEN' -> 16r20.
+		'SQL_MAX_PROCEDURE_NAME_LEN' -> 16r21.
+		'SQL_MAX_QUALIFIER_NAME_LEN' -> 16r22.
+		'SQL_MAX_ROW_SIZE' -> 16r68.
+		'SQL_MAX_ROW_SIZE_INCLUDES_LONG' -> 16r67.
+		'SQL_MAX_ROWS' -> 16r1.
+		'SQL_MAX_ROWS_DEFAULT' -> 16r0.
+		'SQL_MAX_SCHEMA_NAME_LEN' -> 16r20.
+		'SQL_MAX_STATEMENT_LEN' -> 16r69.
+		'SQL_MAX_TABLE_NAME_LEN' -> 16r23.
+		'SQL_MAX_TABLES_IN_SELECT' -> 16r6A.
+		'SQL_MAX_USER_NAME_LEN' -> 16r6B.
+		'SQL_MAXIMUM_CATALOG_NAME_LENGTH' -> 16r22.
+		'SQL_MAXIMUM_COLUMN_NAME_LENGTH' -> 16r1E.
+		'SQL_MAXIMUM_COLUMNS_IN_GROUP_BY' -> 16r61.
+		'SQL_MAXIMUM_COLUMNS_IN_INDEX' -> 16r62.
+		'SQL_MAXIMUM_COLUMNS_IN_ORDER_BY' -> 16r63.
+		'SQL_MAXIMUM_COLUMNS_IN_SELECT' -> 16r64.
+		'SQL_MAXIMUM_CONCURRENT_ACTIVITIES' -> 16r1.
+		'SQL_MAXIMUM_CURSOR_NAME_LENGTH' -> 16r1F.
+		'SQL_MAXIMUM_DRIVER_CONNECTIONS' -> 16r0.
+		'SQL_MAXIMUM_IDENTIFIER_LENGTH' -> 16r2715.
+		'SQL_MAXIMUM_INDEX_SIZE' -> 16r66.
+		'SQL_MAXIMUM_ROW_SIZE' -> 16r68.
+		'SQL_MAXIMUM_SCHEMA_NAME_LENGTH' -> 16r20.
+		'SQL_MAXIMUM_STATEMENT_LENGTH' -> 16r69.
+		'SQL_MAXIMUM_TABLES_IN_SELECT' -> 16r6A.
+		'SQL_MAXIMUM_USER_NAME_LENGTH' -> 16r6B.
+		'SQL_MINUTE' -> 16r5.
+		'SQL_MINUTE_TO_SECOND' -> 16rD.
+		'SQL_MODE_DEFAULT' -> 16r0.
+		'SQL_MODE_READ_ONLY' -> 16r1.
+		'SQL_MODE_READ_WRITE' -> 16r0.
+		'SQL_MONTH' -> 16r2.
+		'SQL_MULT_RESULT_SETS' -> 16r24.
+		'SQL_MULTIPLE_ACTIVE_TXN' -> 16r25.
+		'SQL_NAMED' -> 16r0.
+		'SQL_NC_END' -> 16r4.
+		'SQL_NC_HIGH' -> 16r0.
+		'SQL_NC_LOW' -> 16r1.
+		'SQL_NC_START' -> 16r2.
+		'SQL_NEED_LONG_DATA_LEN' -> 16r6F.
+		'SQL_NNC_NON_NULL' -> 16r1.
+		'SQL_NNC_NULL' -> 16r0.
+		'SQL_NO_ACTION' -> 16r3.
+		'SQL_NO_COLUMN_NUMBER' -> -16r1.
+		'SQL_NO_NULLS' -> 16r0.
+		'SQL_NO_ROW_NUMBER' -> -16r1.
+		'SQL_NO_TOTAL' -> -16r4.
+		'SQL_NON_NULLABLE_COLUMNS' -> 16r4B.
+		'SQL_NONSCROLLABLE' -> 16r0.
+		'SQL_NOSCAN' -> 16r2.
+		'SQL_NOSCAN_DEFAULT' -> 16r0.
+		'SQL_NOSCAN_OFF' -> 16r0.
+		'SQL_NOSCAN_ON' -> 16r1.
+		'SQL_NOT_DEFERRABLE' -> 16r7.
+		'SQL_NTS' -> -16r3.
+		'SQL_NTSL' -> -16r3.
+		'SQL_NULL_COLLATION' -> 16r55.
+		'SQL_NULL_DATA' -> -16r1.
+		'SQL_NULL_HANDLE' -> 16r0.
+		'SQL_NULL_HDBC' -> 16r0.
+		'SQL_NULL_HDESC' -> 16r0.
+		'SQL_NULL_HENV' -> 16r0.
+		'SQL_NULL_HSTMT' -> 16r0.
+		'SQL_NULLABLE' -> 16r1.
+		'SQL_NULLABLE_UNKNOWN' -> 16r2.
+		'SQL_NUM_TYPES' -> 16r69.
+		'SQL_NUMERIC_FUNCTIONS' -> 16r31.
+		'SQL_OAC_LEVEL1' -> 16r1.
+		'SQL_OAC_LEVEL2' -> 16r2.
+		'SQL_OAC_NONE' -> 16r0.
+		'SQL_ODBC_API_CONFORMANCE' -> 16r9.
+		'SQL_ODBC_CURSORS' -> 16r6E.
+		'SQL_ODBC_INTERFACE_CONFORMANCE' -> 16r98.
+		'SQL_ODBC_KEYWORDS' -> 16r0.
+		'SQL_ODBC_SAG_CLI_CONFORMANCE' -> 16rC.
+		'SQL_ODBC_SQL_CONFORMANCE' -> 16rF.
+		'SQL_ODBC_SQL_OPT_IEF' -> 16r49.
+		'SQL_ODBC_VER' -> 16rA.
+		'SQL_OIC_CORE' -> 16r1.
+		'SQL_OIC_LEVEL1' -> 16r2.
+		'SQL_OIC_LEVEL2' -> 16r3.
+		'SQL_OJ_ALL_COMPARISON_OPS' -> 16r40.
+		'SQL_OJ_CAPABILITIES' -> 16r73.
+		'SQL_OJ_FULL' -> 16r4.
+		'SQL_OJ_INNER' -> 16r20.
+		'SQL_OJ_LEFT' -> 16r1.
+		'SQL_OJ_NESTED' -> 16r8.
+		'SQL_OJ_NOT_ORDERED' -> 16r10.
+		'SQL_OJ_RIGHT' -> 16r2.
+		'SQL_OPT_TRACE' -> 16r68.
+		'SQL_OPT_TRACE_DEFAULT' -> 16r0.
+		'SQL_OPT_TRACE_FILE_DEFAULT' -> 16r0.
+		'SQL_OPT_TRACE_OFF' -> 16r0.
+		'SQL_OPT_TRACE_ON' -> 16r1.
+		'SQL_OPT_TRACEFILE' -> 16r69.
+		'SQL_ORDER_BY_COLUMNS_IN_SELECT' -> 16r5A.
+		'SQL_OSC_CORE' -> 16r1.
+		'SQL_OSC_EXTENDED' -> 16r2.
+		'SQL_OSC_MINIMUM' -> 16r0.
+		'SQL_OSCC_COMPLIANT' -> 16r1.
+		'SQL_OSCC_NOT_COMPLIANT' -> 16r0.
+		'SQL_OU_DML_STATEMENTS' -> 16r1.
+		'SQL_OU_INDEX_DEFINITION' -> 16r8.
+		'SQL_OU_PRIVILEGE_DEFINITION' -> 16r10.
+		'SQL_OU_PROCEDURE_INVOCATION' -> 16r2.
+		'SQL_OU_TABLE_DEFINITION' -> 16r4.
+		'SQL_OUTER_JOIN_CAPABILITIES' -> 16r73.
+		'SQL_OUTER_JOINS' -> 16r26.
+		'SQL_OV_ODBC2' -> 16r2.
+		'SQL_OV_ODBC3' -> 16r3.
+		'SQL_OV_ODBC3_80' -> 16r17C.
+		'SQL_OWNER_TERM' -> 16r27.
+		'SQL_OWNER_USAGE' -> 16r5B.
+		'SQL_PACKET_SIZE' -> 16r70.
+		'SQL_PARAM_ARRAY_ROW_COUNTS' -> 16r99.
+		'SQL_PARAM_ARRAY_SELECTS' -> 16r9A.
+		'SQL_PARAM_BIND_BY_COLUMN' -> 16r0.
+		'SQL_PARAM_BIND_TYPE_DEFAULT' -> 16r0.
+		'SQL_PARAM_DATA_AVAILABLE' -> 16r65.
+		'SQL_PARAM_DIAG_UNAVAILABLE' -> 16r1.
+		'SQL_PARAM_ERROR' -> 16r5.
+		'SQL_PARAM_IGNORE' -> 16r1.
+		'SQL_PARAM_INPUT' -> 16r1.
+		'SQL_PARAM_INPUT_OUTPUT' -> 16r2.
+		'SQL_PARAM_INPUT_OUTPUT_STREAM' -> 16r8.
+		'SQL_PARAM_OUTPUT' -> 16r4.
+		'SQL_PARAM_OUTPUT_STREAM' -> 16r10.
+		'SQL_PARAM_PROCEED' -> 16r0.
+		'SQL_PARAM_SUCCESS' -> 16r0.
+		'SQL_PARAM_SUCCESS_WITH_INFO' -> 16r6.
+		'SQL_PARAM_TYPE_DEFAULT' -> 16r2.
+		'SQL_PARAM_TYPE_UNKNOWN' -> 16r0.
+		'SQL_PARAM_UNUSED' -> 16r7.
+		'SQL_PARC_BATCH' -> 16r1.
+		'SQL_PARC_NO_BATCH' -> 16r2.
+		'SQL_PAS_BATCH' -> 16r1.
+		'SQL_PAS_NO_BATCH' -> 16r2.
+		'SQL_PAS_NO_SELECT' -> 16r3.
+		'SQL_PC_NON_PSEUDO' -> 16r1.
+		'SQL_PC_NOT_PSEUDO' -> 16r1.
+		'SQL_PC_PSEUDO' -> 16r2.
+		'SQL_PC_UNKNOWN' -> 16r0.
+		'SQL_POS_ADD' -> 16r10.
+		'SQL_POS_DELETE' -> 16r8.
+		'SQL_POS_OPERATIONS' -> 16r4F.
+		'SQL_POS_POSITION' -> 16r1.
+		'SQL_POS_REFRESH' -> 16r2.
+		'SQL_POS_UPDATE' -> 16r4.
+		'SQL_POSITION' -> 16r0.
+		'SQL_POSITIONED_STATEMENTS' -> 16r50.
+		'SQL_PRED_BASIC' -> 16r2.
+		'SQL_PRED_CHAR' -> 16r1.
+		'SQL_PRED_NONE' -> 16r0.
+		'SQL_PRED_SEARCHABLE' -> 16r3.
+		'SQL_PROCEDURE_TERM' -> 16r28.
+		'SQL_PROCEDURES' -> 16r15.
+		'SQL_PS_POSITIONED_DELETE' -> 16r1.
+		'SQL_PS_POSITIONED_UPDATE' -> 16r2.
+		'SQL_PS_SELECT_FOR_UPDATE' -> 16r4.
+		'SQL_PT_FUNCTION' -> 16r2.
+		'SQL_PT_PROCEDURE' -> 16r1.
+		'SQL_PT_UNKNOWN' -> 16r0.
+		'SQL_QL_END' -> 16r2.
+		'SQL_QL_START' -> 16r1.
+		'SQL_QU_DML_STATEMENTS' -> 16r1.
+		'SQL_QU_INDEX_DEFINITION' -> 16r8.
+		'SQL_QU_PRIVILEGE_DEFINITION' -> 16r10.
+		'SQL_QU_PROCEDURE_INVOCATION' -> 16r2.
+		'SQL_QU_TABLE_DEFINITION' -> 16r4.
+		'SQL_QUALIFIER_LOCATION' -> 16r72.
+		'SQL_QUALIFIER_NAME_SEPARATOR' -> 16r29.
+		'SQL_QUALIFIER_TERM' -> 16r2A.
+		'SQL_QUALIFIER_USAGE' -> 16r5C.
+		'SQL_QUERY_TIMEOUT' -> 16r0.
+		'SQL_QUERY_TIMEOUT_DEFAULT' -> 16r0.
+		'SQL_QUICK' -> 16r0.
+		'SQL_QUIET_MODE' -> 16r6F.
+		'SQL_QUOTED_IDENTIFIER_CASE' -> 16r5D.
+		'SQL_RD_DEFAULT' -> 16r1.
+		'SQL_RD_OFF' -> 16r0.
+		'SQL_RD_ON' -> 16r1.
+		'SQL_REFRESH' -> 16r1.
+		'SQL_RESET_CONNECTION_YES' -> 16r1.
+		'SQL_RESET_PARAMS' -> 16r3.
+		'SQL_RESTRICT' -> 16r1.
+		'SQL_RESULT_COL' -> 16r3.
+		'SQL_RETRIEVE_DATA' -> 16rB.
+		'SQL_RETURN_VALUE' -> 16r5.
+		'SQL_ROLLBACK' -> 16r1.
+		'SQL_ROW_ADDED' -> 16r4.
+		'SQL_ROW_DELETED' -> 16r1.
+		'SQL_ROW_ERROR' -> 16r5.
+		'SQL_ROW_IDENTIFIER' -> 16r1.
+		'SQL_ROW_IGNORE' -> 16r1.
+		'SQL_ROW_NOROW' -> 16r3.
+		'SQL_ROW_NUMBER' -> 16rE.
+		'SQL_ROW_NUMBER_UNKNOWN' -> -16r2.
+		'SQL_ROW_PROCEED' -> 16r0.
+		'SQL_ROW_SUCCESS' -> 16r0.
+		'SQL_ROW_SUCCESS_WITH_INFO' -> 16r6.
+		'SQL_ROW_UPDATED' -> 16r2.
+		'SQL_ROW_UPDATES' -> 16rB.
+		'SQL_ROWSET_SIZE' -> 16r9.
+		'SQL_ROWSET_SIZE_DEFAULT' -> 16r1.
+		'SQL_ROWVER' -> 16r2.
+		'SQL_SC_FIPS127_2_TRANSITIONAL' -> 16r2.
+		'SQL_SC_NON_UNIQUE' -> 16r0.
+		'SQL_SC_SQL92_ENTRY' -> 16r1.
+		'SQL_SC_SQL92_FULL' -> 16r8.
+		'SQL_SC_SQL92_INTERMEDIATE' -> 16r4.
+		'SQL_SC_TRY_UNIQUE' -> 16r1.
+		'SQL_SC_UNIQUE' -> 16r2.
+		'SQL_SCC_ISO92_CLI' -> 16r2.
+		'SQL_SCC_XOPEN_CLI_VERSION1' -> 16r1.
+		'SQL_SCCO_LOCK' -> 16r2.
+		'SQL_SCCO_OPT_ROWVER' -> 16r4.
+		'SQL_SCCO_OPT_TIMESTAMP' -> 16r4.
+		'SQL_SCCO_OPT_VALUES' -> 16r8.
+		'SQL_SCCO_READ_ONLY' -> 16r1.
+		'SQL_SCHEMA_TERM' -> 16r27.
+		'SQL_SCHEMA_USAGE' -> 16r5B.
+		'SQL_SCOPE_CURROW' -> 16r0.
+		'SQL_SCOPE_SESSION' -> 16r2.
+		'SQL_SCOPE_TRANSACTION' -> 16r1.
+		'SQL_SCROLL_CONCURRENCY' -> 16r2B.
+		'SQL_SCROLL_DYNAMIC' -> -16r2.
+		'SQL_SCROLL_FORWARD_ONLY' -> 16r0.
+		'SQL_SCROLL_KEYSET_DRIVEN' -> -16r1.
+		'SQL_SCROLL_OPTIONS' -> 16r2C.
+		'SQL_SCROLL_STATIC' -> -16r3.
+		'SQL_SCROLLABLE' -> 16r1.
+		'SQL_SDF_CURRENT_DATE' -> 16r1.
+		'SQL_SDF_CURRENT_TIME' -> 16r2.
+		'SQL_SDF_CURRENT_TIMESTAMP' -> 16r4.
+		'SQL_SEARCH_PATTERN_ESCAPE' -> 16rE.
+		'SQL_SEARCHABLE' -> 16r3.
+		'SQL_SECOND' -> 16r6.
+		'SQL_SENSITIVE' -> 16r2.
+		'SQL_SERVER_NAME' -> 16rD.
+		'SQL_SET_DEFAULT' -> 16r4.
+		'SQL_SET_NULL' -> 16r2.
+		'SQL_SETPARAM_VALUE_MAX' -> -16r1.
+		'SQL_SETPOS_MAX_LOCK_VALUE' -> 16r2.
+		'SQL_SETPOS_MAX_OPTION_VALUE' -> 16r4.
+		'SQL_SFKD_CASCADE' -> 16r1.
+		'SQL_SFKD_NO_ACTION' -> 16r2.
+		'SQL_SFKD_SET_DEFAULT' -> 16r4.
+		'SQL_SFKD_SET_NULL' -> 16r8.
+		'SQL_SFKU_CASCADE' -> 16r1.
+		'SQL_SFKU_NO_ACTION' -> 16r2.
+		'SQL_SFKU_SET_DEFAULT' -> 16r4.
+		'SQL_SFKU_SET_NULL' -> 16r8.
+		'SQL_SG_DELETE_TABLE' -> 16r20.
+		'SQL_SG_INSERT_COLUMN' -> 16r80.
+		'SQL_SG_INSERT_TABLE' -> 16r40.
+		'SQL_SG_REFERENCES_COLUMN' -> 16r200.
+		'SQL_SG_REFERENCES_TABLE' -> 16r100.
+		'SQL_SG_SELECT_TABLE' -> 16r400.
+		'SQL_SG_UPDATE_COLUMN' -> 16r1000.
+		'SQL_SG_UPDATE_TABLE' -> 16r800.
+		'SQL_SG_USAGE_ON_CHARACTER_SET' -> 16r2.
+		'SQL_SG_USAGE_ON_COLLATION' -> 16r4.
+		'SQL_SG_USAGE_ON_DOMAIN' -> 16r1.
+		'SQL_SG_USAGE_ON_TRANSLATION' -> 16r8.
+		'SQL_SG_WITH_GRANT_OPTION' -> 16r10.
+		'SQL_SIGNED_OFFSET' -> -16r14.
+		'SQL_SIMULATE_CURSOR' -> 16rA.
+		'SQL_SNVF_BIT_LENGTH' -> 16r1.
+		'SQL_SNVF_CHAR_LENGTH' -> 16r2.
+		'SQL_SNVF_CHARACTER_LENGTH' -> 16r4.
+		'SQL_SNVF_EXTRACT' -> 16r8.
+		'SQL_SNVF_OCTET_LENGTH' -> 16r10.
+		'SQL_SNVF_POSITION' -> 16r20.
+		'SQL_SO_DYNAMIC' -> 16r4.
+		'SQL_SO_FORWARD_ONLY' -> 16r1.
+		'SQL_SO_KEYSET_DRIVEN' -> 16r2.
+		'SQL_SO_MIXED' -> 16r8.
+		'SQL_SO_STATIC' -> 16r10.
+		'SQL_SP_BETWEEN' -> 16r800.
+		'SQL_SP_COMPARISON' -> 16r1000.
+		'SQL_SP_EXISTS' -> 16r1.
+		'SQL_SP_IN' -> 16r400.
+		'SQL_SP_ISNOTNULL' -> 16r2.
+		'SQL_SP_ISNULL' -> 16r4.
+		'SQL_SP_LIKE' -> 16r200.
+		'SQL_SP_MATCH_FULL' -> 16r8.
+		'SQL_SP_MATCH_PARTIAL' -> 16r10.
+		'SQL_SP_MATCH_UNIQUE_FULL' -> 16r20.
+		'SQL_SP_MATCH_UNIQUE_PARTIAL' -> 16r40.
+		'SQL_SP_OVERLAPS' -> 16r80.
+		'SQL_SP_QUANTIFIED_COMPARISON' -> 16r2000.
+		'SQL_SP_UNIQUE' -> 16r100.
+		'SQL_SPEC_MAJOR' -> 16r4.
+		'SQL_SPEC_MINOR' -> 16r0.
+		'SQL_SPEC_STRING' -> 16r0.
+		'SQL_SPECIAL_CHARACTERS' -> 16r5E.
+		'SQL_SQ_COMPARISON' -> 16r1.
+		'SQL_SQ_CORRELATED_SUBQUERIES' -> 16r10.
+		'SQL_SQ_EXISTS' -> 16r2.
+		'SQL_SQ_IN' -> 16r4.
+		'SQL_SQ_QUANTIFIED' -> 16r8.
+		'SQL_SQL_CONFORMANCE' -> 16r76.
+		'SQL_SQL92_DATETIME_FUNCTIONS' -> 16r9B.
+		'SQL_SQL92_FOREIGN_KEY_DELETE_RULE' -> 16r9C.
+		'SQL_SQL92_FOREIGN_KEY_UPDATE_RULE' -> 16r9D.
+		'SQL_SQL92_GRANT' -> 16r9E.
+		'SQL_SQL92_NUMERIC_VALUE_FUNCTIONS' -> 16r9F.
+		'SQL_SQL92_PREDICATES' -> 16rA0.
+		'SQL_SQL92_RELATIONAL_JOIN_OPERATORS' -> 16rA1.
+		'SQL_SQL92_REVOKE' -> 16rA2.
+		'SQL_SQL92_ROW_VALUE_CONSTRUCTOR' -> 16rA3.
+		'SQL_SQL92_STRING_FUNCTIONS' -> 16rA4.
+		'SQL_SQL92_VALUE_EXPRESSIONS' -> 16rA5.
+		'SQL_SQLSTATE_SIZE' -> 16r5.
+		'SQL_SR_CASCADE' -> 16r20.
+		'SQL_SR_DELETE_TABLE' -> 16r80.
+		'SQL_SR_GRANT_OPTION_FOR' -> 16r10.
+		'SQL_SR_INSERT_COLUMN' -> 16r200.
+		'SQL_SR_INSERT_TABLE' -> 16r100.
+		'SQL_SR_REFERENCES_COLUMN' -> 16r800.
+		'SQL_SR_REFERENCES_TABLE' -> 16r400.
+		'SQL_SR_RESTRICT' -> 16r40.
+		'SQL_SR_SELECT_TABLE' -> 16r1000.
+		'SQL_SR_UPDATE_COLUMN' -> 16r4000.
+		'SQL_SR_UPDATE_TABLE' -> 16r2000.
+		'SQL_SR_USAGE_ON_CHARACTER_SET' -> 16r2.
+		'SQL_SR_USAGE_ON_COLLATION' -> 16r4.
+		'SQL_SR_USAGE_ON_DOMAIN' -> 16r1.
+		'SQL_SR_USAGE_ON_TRANSLATION' -> 16r8.
+		'SQL_SRJO_CORRESPONDING_CLAUSE' -> 16r1.
+		'SQL_SRJO_CROSS_JOIN' -> 16r2.
+		'SQL_SRJO_EXCEPT_JOIN' -> 16r4.
+		'SQL_SRJO_FULL_OUTER_JOIN' -> 16r8.
+		'SQL_SRJO_INNER_JOIN' -> 16r10.
+		'SQL_SRJO_INTERSECT_JOIN' -> 16r20.
+		'SQL_SRJO_LEFT_OUTER_JOIN' -> 16r40.
+		'SQL_SRJO_NATURAL_JOIN' -> 16r80.
+		'SQL_SRJO_RIGHT_OUTER_JOIN' -> 16r100.
+		'SQL_SRJO_UNION_JOIN' -> 16r200.
+		'SQL_SRVC_DEFAULT' -> 16r4.
+		'SQL_SRVC_NULL' -> 16r2.
+		'SQL_SRVC_ROW_SUBQUERY' -> 16r8.
+		'SQL_SRVC_VALUE_EXPRESSION' -> 16r1.
+		'SQL_SS_ADDITIONS' -> 16r1.
+		'SQL_SS_DELETIONS' -> 16r2.
+		'SQL_SS_UPDATES' -> 16r4.
+		'SQL_SSF_CONVERT' -> 16r1.
+		'SQL_SSF_LOWER' -> 16r2.
+		'SQL_SSF_SUBSTRING' -> 16r8.
+		'SQL_SSF_TRANSLATE' -> 16r10.
+		'SQL_SSF_TRIM_BOTH' -> 16r20.
+		'SQL_SSF_TRIM_LEADING' -> 16r40.
+		'SQL_SSF_TRIM_TRAILING' -> 16r80.
+		'SQL_SSF_UPPER' -> 16r4.
+		'SQL_STANDARD_CLI_CONFORMANCE' -> 16rA6.
+		'SQL_STATIC_CURSOR_ATTRIBUTES1' -> 16rA7.
+		'SQL_STATIC_CURSOR_ATTRIBUTES2' -> 16rA8.
+		'SQL_STATIC_SENSITIVITY' -> 16r53.
+		'SQL_STILL_EXECUTING' -> 16r2.
+		'SQL_STRING_FUNCTIONS' -> 16r32.
+		'SQL_SU_DML_STATEMENTS' -> 16r1.
+		'SQL_SU_INDEX_DEFINITION' -> 16r8.
+		'SQL_SU_PRIVILEGE_DEFINITION' -> 16r10.
+		'SQL_SU_PROCEDURE_INVOCATION' -> 16r2.
+		'SQL_SU_TABLE_DEFINITION' -> 16r4.
+		'SQL_SUBQUERIES' -> 16r5F.
+		'SQL_SVE_CASE' -> 16r1.
+		'SQL_SVE_CAST' -> 16r2.
+		'SQL_SVE_COALESCE' -> 16r4.
+		'SQL_SVE_NULLIF' -> 16r8.
+		'SQL_SYSTEM_FUNCTIONS' -> 16r33.
+		'SQL_TABLE_STAT' -> 16r0.
+		'SQL_TABLE_TERM' -> 16r2D.
+		'SQL_TC_ALL' -> 16r2.
+		'SQL_TC_DDL_COMMIT' -> 16r3.
+		'SQL_TC_DDL_IGNORE' -> 16r4.
+		'SQL_TC_DML' -> 16r1.
+		'SQL_TC_NONE' -> 16r0.
+		'SQL_TIME_LEN' -> 16r8.
+		'SQL_TIMEDATE_ADD_INTERVALS' -> 16r6D.
+		'SQL_TIMEDATE_DIFF_INTERVALS' -> 16r6E.
+		'SQL_TIMEDATE_FUNCTIONS' -> 16r34.
+		'SQL_TIMESTAMP_LEN' -> 16r13.
+		'SQL_TRANSACTION_CAPABLE' -> 16r2E.
+		'SQL_TRANSACTION_ISOLATION_OPTION' -> 16r48.
+		'SQL_TRANSACTION_READ_COMMITTED' -> 16r2.
+		'SQL_TRANSACTION_READ_UNCOMMITTED' -> 16r1.
+		'SQL_TRANSACTION_REPEATABLE_READ' -> 16r4.
+		'SQL_TRANSACTION_SERIALIZABLE' -> 16r8.
+		'SQL_TRANSLATE_DLL' -> 16r6A.
+		'SQL_TRANSLATE_OPTION' -> 16r6B.
+		'SQL_TRUE' -> 16r1.
+		'SQL_TXN_CAPABLE' -> 16r2E.
+		'SQL_TXN_ISOLATION' -> 16r6C.
+		'SQL_TXN_ISOLATION_OPTION' -> 16r48.
+		'SQL_TXN_READ_COMMITTED' -> 16r2.
+		'SQL_TXN_READ_UNCOMMITTED' -> 16r1.
+		'SQL_TXN_REPEATABLE_READ' -> 16r4.
+		'SQL_TXN_SERIALIZABLE' -> 16r8.
+		'SQL_TXN_VERSIONING' -> 16r10.
+		'SQL_TYPE_MAX' -> 16r5D.
+		'SQL_TYPE_MIN' -> -16rB.
+		'SQL_U_UNION' -> 16r1.
+		'SQL_U_UNION_ALL' -> 16r2.
+		'SQL_UB_DEFAULT' -> 16r0.
+		'SQL_UB_FIXED' -> 16r1.
+		'SQL_UB_OFF' -> 16r0.
+		'SQL_UB_ON' -> 16r1.
+		'SQL_UB_VARIABLE' -> 16r2.
+		'SQL_UNBIND' -> 16r2.
+		'SQL_UNION' -> 16r60.
+		'SQL_UNION_STATEMENT' -> 16r60.
+		'SQL_UNNAMED' -> 16r1.
+		'SQL_UNSEARCHABLE' -> 16r0.
+		'SQL_UNSIGNED_OFFSET' -> -16r16.
+		'SQL_UNSPECIFIED' -> 16r0.
+		'SQL_UPDATE' -> 16r2.
+		'SQL_UPDATE_BY_BOOKMARK' -> 16r5.
+		'SQL_US_UNION' -> 16r1.
+		'SQL_US_UNION_ALL' -> 16r2.
+		'SQL_USE_BOOKMARKS' -> 16rC.
+		'SQL_USER_NAME' -> 16r2F.
+		'SQL_XOPEN_CLI_YEAR' -> 16r2710.
+		'SQL_YEAR' -> 16r1.
+		'SQL_YEAR_TO_MONTH' -> 16r7.
+		'TRACE_ON' -> 16r1.
+		'TRACE_VERSION' -> 16r3E8.
+		'TRACE_VS_EVENT_ON' -> 16r2.
+		'TypeOffset' -> 16rC
+	}!
+ODBCConstants guid: (GUID fromString: '{8829338e-6d5a-47f4-bcd7-8574c58cd356}')!
+ODBCConstants comment: ''!
+!ODBCConstants categoriesForClass!Unclassified! !

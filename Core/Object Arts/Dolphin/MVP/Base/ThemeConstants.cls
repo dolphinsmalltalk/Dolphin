@@ -1,752 +1,760 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ThemeConstants} declare: (PoolConstantsDictionary named: #ThemeConstants)!
-ThemeConstants at: 'ABS_DOWNDISABLED' put: 16r8!
-ThemeConstants at: 'ABS_DOWNHOT' put: 16r6!
-ThemeConstants at: 'ABS_DOWNNORMAL' put: 16r5!
-ThemeConstants at: 'ABS_DOWNPRESSED' put: 16r7!
-ThemeConstants at: 'ABS_LEFTDISABLED' put: 16rC!
-ThemeConstants at: 'ABS_LEFTHOT' put: 16rA!
-ThemeConstants at: 'ABS_LEFTNORMAL' put: 16r9!
-ThemeConstants at: 'ABS_LEFTPRESSED' put: 16rB!
-ThemeConstants at: 'ABS_RIGHTDISABLED' put: 16r10!
-ThemeConstants at: 'ABS_RIGHTHOT' put: 16rE!
-ThemeConstants at: 'ABS_RIGHTNORMAL' put: 16rD!
-ThemeConstants at: 'ABS_RIGHTPRESSED' put: 16rF!
-ThemeConstants at: 'ABS_UPDISABLED' put: 16r4!
-ThemeConstants at: 'ABS_UPHOT' put: 16r2!
-ThemeConstants at: 'ABS_UPNORMAL' put: 16r1!
-ThemeConstants at: 'ABS_UPPRESSED' put: 16r3!
-ThemeConstants at: 'BP_CHECKBOX' put: 16r3!
-ThemeConstants at: 'BP_GROUPBOX' put: 16r4!
-ThemeConstants at: 'BP_PUSHBUTTON' put: 16r1!
-ThemeConstants at: 'BP_RADIOBUTTON' put: 16r2!
-ThemeConstants at: 'BP_USERBUTTON' put: 16r5!
-ThemeConstants at: 'BPBF_COMPATIBLEBITMAP' put: 16r0!
-ThemeConstants at: 'BPBF_DIB' put: 16r1!
-ThemeConstants at: 'BPBF_TOPDOWNDIB' put: 16r2!
-ThemeConstants at: 'BPBF_TOPDOWNMONODIB' put: 16r3!
-ThemeConstants at: 'BPPF_ERASE' put: 16r1!
-ThemeConstants at: 'BPPF_NOCLIP' put: 16r2!
-ThemeConstants at: 'BPPF_NONCLIENT' put: 16r4!
-ThemeConstants at: 'BT_BORDERFILL' put: 16r1!
-ThemeConstants at: 'BT_ELLIPSE' put: 16r2!
-ThemeConstants at: 'BT_IMAGEFILE' put: 16r0!
-ThemeConstants at: 'BT_NONE' put: 16r2!
-ThemeConstants at: 'BT_RECT' put: 16r0!
-ThemeConstants at: 'BT_ROUNDRECT' put: 16r1!
-ThemeConstants at: 'CA_CENTER' put: 16r1!
-ThemeConstants at: 'CA_LEFT' put: 16r0!
-ThemeConstants at: 'CA_RIGHT' put: 16r2!
-ThemeConstants at: 'CBS_CHECKEDDISABLED' put: 16r8!
-ThemeConstants at: 'CBS_CHECKEDHOT' put: 16r6!
-ThemeConstants at: 'CBS_CHECKEDNORMAL' put: 16r5!
-ThemeConstants at: 'CBS_CHECKEDPRESSED' put: 16r7!
-ThemeConstants at: 'CBS_DISABLED' put: 16r4!
-ThemeConstants at: 'CBS_HOT' put: 16r2!
-ThemeConstants at: 'CBS_MIXEDDISABLED' put: 16rC!
-ThemeConstants at: 'CBS_MIXEDHOT' put: 16rA!
-ThemeConstants at: 'CBS_MIXEDNORMAL' put: 16r9!
-ThemeConstants at: 'CBS_MIXEDPRESSED' put: 16rB!
-ThemeConstants at: 'CBS_NORMAL' put: 16r1!
-ThemeConstants at: 'CBS_PUSHED' put: 16r3!
-ThemeConstants at: 'CBS_UNCHECKEDDISABLED' put: 16r4!
-ThemeConstants at: 'CBS_UNCHECKEDHOT' put: 16r2!
-ThemeConstants at: 'CBS_UNCHECKEDNORMAL' put: 16r1!
-ThemeConstants at: 'CBS_UNCHECKEDPRESSED' put: 16r3!
-ThemeConstants at: 'CBXS_DISABLED' put: 16r4!
-ThemeConstants at: 'CBXS_HOT' put: 16r2!
-ThemeConstants at: 'CBXS_NORMAL' put: 16r1!
-ThemeConstants at: 'CBXS_PRESSED' put: 16r3!
-ThemeConstants at: 'CHEVS_HOT' put: 16r2!
-ThemeConstants at: 'CHEVS_NORMAL' put: 16r1!
-ThemeConstants at: 'CHEVS_PRESSED' put: 16r3!
-ThemeConstants at: 'CLP_TIME' put: 16r1!
-ThemeConstants at: 'CLS_NORMAL' put: 16r1!
-ThemeConstants at: 'CP_DROPDOWNBUTTON' put: 16r1!
-ThemeConstants at: 'CS_ACTIVE' put: 16r1!
-ThemeConstants at: 'CS_DISABLED' put: 16r3!
-ThemeConstants at: 'CS_INACTIVE' put: 16r2!
-ThemeConstants at: 'DNHZS_DISABLED' put: 16r4!
-ThemeConstants at: 'DNHZS_HOT' put: 16r2!
-ThemeConstants at: 'DNHZS_NORMAL' put: 16r1!
-ThemeConstants at: 'DNHZS_PRESSED' put: 16r3!
-ThemeConstants at: 'DNS_DISABLED' put: 16r4!
-ThemeConstants at: 'DNS_HOT' put: 16r2!
-ThemeConstants at: 'DNS_NORMAL' put: 16r1!
-ThemeConstants at: 'DNS_PRESSED' put: 16r3!
-ThemeConstants at: 'DTBG_CLIPRECT' put: 16r1!
-ThemeConstants at: 'DTBG_COMPUTINGREGION' put: 16r10!
-ThemeConstants at: 'DTBG_DRAWSOLID' put: 16r2!
-ThemeConstants at: 'DTBG_MIRRORDC' put: 16r20!
-ThemeConstants at: 'DTBG_OMITBORDER' put: 16r4!
-ThemeConstants at: 'DTBG_OMITCONTENT' put: 16r8!
-ThemeConstants at: 'DTT_GRAYED' put: 16r1!
-ThemeConstants at: 'EBHC_HOT' put: 16r2!
-ThemeConstants at: 'EBHC_NORMAL' put: 16r1!
-ThemeConstants at: 'EBHC_PRESSED' put: 16r3!
-ThemeConstants at: 'EBHP_HOT' put: 16r2!
-ThemeConstants at: 'EBHP_NORMAL' put: 16r1!
-ThemeConstants at: 'EBHP_PRESSED' put: 16r3!
-ThemeConstants at: 'EBHP_SELECTEDHOT' put: 16r5!
-ThemeConstants at: 'EBHP_SELECTEDNORMAL' put: 16r4!
-ThemeConstants at: 'EBHP_SELECTEDPRESSED' put: 16r6!
-ThemeConstants at: 'EBM_HOT' put: 16r2!
-ThemeConstants at: 'EBM_NORMAL' put: 16r1!
-ThemeConstants at: 'EBM_PRESSED' put: 16r3!
-ThemeConstants at: 'EBNGC_HOT' put: 16r2!
-ThemeConstants at: 'EBNGC_NORMAL' put: 16r1!
-ThemeConstants at: 'EBNGC_PRESSED' put: 16r3!
-ThemeConstants at: 'EBNGE_HOT' put: 16r2!
-ThemeConstants at: 'EBNGE_NORMAL' put: 16r1!
-ThemeConstants at: 'EBNGE_PRESSED' put: 16r3!
-ThemeConstants at: 'EBP_HEADERBACKGROUND' put: 16r1!
-ThemeConstants at: 'EBP_HEADERCLOSE' put: 16r2!
-ThemeConstants at: 'EBP_HEADERPIN' put: 16r3!
-ThemeConstants at: 'EBP_IEBARMENU' put: 16r4!
-ThemeConstants at: 'EBP_NORMALGROUPBACKGROUND' put: 16r5!
-ThemeConstants at: 'EBP_NORMALGROUPCOLLAPSE' put: 16r6!
-ThemeConstants at: 'EBP_NORMALGROUPEXPAND' put: 16r7!
-ThemeConstants at: 'EBP_NORMALGROUPHEAD' put: 16r8!
-ThemeConstants at: 'EBP_SPECIALGROUPBACKGROUND' put: 16r9!
-ThemeConstants at: 'EBP_SPECIALGROUPCOLLAPSE' put: 16rA!
-ThemeConstants at: 'EBP_SPECIALGROUPEXPAND' put: 16rB!
-ThemeConstants at: 'EBP_SPECIALGROUPHEAD' put: 16rC!
-ThemeConstants at: 'EBSGC_HOT' put: 16r2!
-ThemeConstants at: 'EBSGC_NORMAL' put: 16r1!
-ThemeConstants at: 'EBSGC_PRESSED' put: 16r3!
-ThemeConstants at: 'EBSGE_HOT' put: 16r2!
-ThemeConstants at: 'EBSGE_NORMAL' put: 16r1!
-ThemeConstants at: 'EBSGE_PRESSED' put: 16r3!
-ThemeConstants at: 'EP_CARET' put: 16r2!
-ThemeConstants at: 'EP_EDITTEXT' put: 16r1!
-ThemeConstants at: 'ETDT_DISABLE' put: 16r1!
-ThemeConstants at: 'ETDT_ENABLE' put: 16r2!
-ThemeConstants at: 'ETDT_ENABLETAB' put: 16r6!
-ThemeConstants at: 'ETDT_USETABTEXTURE' put: 16r4!
-ThemeConstants at: 'ETS_ASSIST' put: 16r7!
-ThemeConstants at: 'ETS_DISABLED' put: 16r4!
-ThemeConstants at: 'ETS_FOCUSED' put: 16r5!
-ThemeConstants at: 'ETS_HOT' put: 16r2!
-ThemeConstants at: 'ETS_NORMAL' put: 16r1!
-ThemeConstants at: 'ETS_READONLY' put: 16r6!
-ThemeConstants at: 'ETS_SELECTED' put: 16r3!
-ThemeConstants at: 'FS_ACTIVE' put: 16r1!
-ThemeConstants at: 'FS_INACTIVE' put: 16r2!
-ThemeConstants at: 'FT_HORZGRADIENT' put: 16r2!
-ThemeConstants at: 'FT_RADIALGRADIENT' put: 16r3!
-ThemeConstants at: 'FT_SOLID' put: 16r0!
-ThemeConstants at: 'FT_TILEIMAGE' put: 16r4!
-ThemeConstants at: 'FT_VERTGRADIENT' put: 16r1!
-ThemeConstants at: 'GBS_DISABLED' put: 16r2!
-ThemeConstants at: 'GBS_NORMAL' put: 16r1!
-ThemeConstants at: 'GFST_DPI' put: 16r2!
-ThemeConstants at: 'GFST_NONE' put: 16r0!
-ThemeConstants at: 'GFST_SIZE' put: 16r1!
-ThemeConstants at: 'GLPS_CLOSED' put: 16r1!
-ThemeConstants at: 'GLPS_OPENED' put: 16r2!
-ThemeConstants at: 'GP_BORDER' put: 16r1!
-ThemeConstants at: 'GP_LINEHORZ' put: 16r2!
-ThemeConstants at: 'GP_LINEVERT' put: 16r3!
-ThemeConstants at: 'GT_FONTGLYPH' put: 16r2!
-ThemeConstants at: 'GT_IMAGEGLYPH' put: 16r1!
-ThemeConstants at: 'GT_NONE' put: 16r0!
-ThemeConstants at: 'HA_CENTER' put: 16r1!
-ThemeConstants at: 'HA_LEFT' put: 16r0!
-ThemeConstants at: 'HA_RIGHT' put: 16r2!
-ThemeConstants at: 'HBS_DISABLED' put: 16r4!
-ThemeConstants at: 'HBS_HOT' put: 16r2!
-ThemeConstants at: 'HBS_NORMAL' put: 16r1!
-ThemeConstants at: 'HBS_PUSHED' put: 16r3!
-ThemeConstants at: 'HILS_HOT' put: 16r2!
-ThemeConstants at: 'HILS_NORMAL' put: 16r1!
-ThemeConstants at: 'HILS_PRESSED' put: 16r3!
-ThemeConstants at: 'HIRS_HOT' put: 16r2!
-ThemeConstants at: 'HIRS_NORMAL' put: 16r1!
-ThemeConstants at: 'HIRS_PRESSED' put: 16r3!
-ThemeConstants at: 'HIS_HOT' put: 16r2!
-ThemeConstants at: 'HIS_NORMAL' put: 16r1!
-ThemeConstants at: 'HIS_PRESSED' put: 16r3!
-ThemeConstants at: 'HP_HEADERITEM' put: 16r1!
-ThemeConstants at: 'HP_HEADERITEMLEFT' put: 16r2!
-ThemeConstants at: 'HP_HEADERITEMRIGHT' put: 16r3!
-ThemeConstants at: 'HP_HEADERSORTARROW' put: 16r4!
-ThemeConstants at: 'HSAS_SORTEDDOWN' put: 16r2!
-ThemeConstants at: 'HSAS_SORTEDUP' put: 16r1!
-ThemeConstants at: 'HSS_DISABLED' put: 16r4!
-ThemeConstants at: 'HSS_HOT' put: 16r2!
-ThemeConstants at: 'HSS_NORMAL' put: 16r1!
-ThemeConstants at: 'HSS_PUSHED' put: 16r3!
-ThemeConstants at: 'HTS_DISABLED' put: 16r4!
-ThemeConstants at: 'HTS_HOT' put: 16r2!
-ThemeConstants at: 'HTS_NORMAL' put: 16r1!
-ThemeConstants at: 'HTS_PUSHED' put: 16r3!
-ThemeConstants at: 'HTTB_BACKGROUNDSEG' put: 16r0!
-ThemeConstants at: 'HTTB_CAPTION' put: 16r4!
-ThemeConstants at: 'HTTB_FIXEDBORDER' put: 16r2!
-ThemeConstants at: 'HTTB_RESIZINGBORDER' put: 16rF0!
-ThemeConstants at: 'HTTB_RESIZINGBORDER_BOTTOM' put: 16r80!
-ThemeConstants at: 'HTTB_RESIZINGBORDER_LEFT' put: 16r10!
-ThemeConstants at: 'HTTB_RESIZINGBORDER_RIGHT' put: 16r40!
-ThemeConstants at: 'HTTB_RESIZINGBORDER_TOP' put: 16r20!
-ThemeConstants at: 'HTTB_SIZINGTEMPLATE' put: 16r100!
-ThemeConstants at: 'HTTB_SYSTEMSIZINGMARGINS' put: 16r200!
-ThemeConstants at: 'ICE_ALPHA' put: 16r4!
-ThemeConstants at: 'ICE_GLOW' put: 16r1!
-ThemeConstants at: 'ICE_NONE' put: 16r0!
-ThemeConstants at: 'ICE_PULSE' put: 16r3!
-ThemeConstants at: 'ICE_SHADOW' put: 16r2!
-ThemeConstants at: 'IL_HORIZONTAL' put: 16r1!
-ThemeConstants at: 'IL_VERTICAL' put: 16r0!
-ThemeConstants at: 'IST_DPI' put: 16r2!
-ThemeConstants at: 'IST_NONE' put: 16r0!
-ThemeConstants at: 'IST_SIZE' put: 16r1!
-ThemeConstants at: 'LIS_DISABLED' put: 16r4!
-ThemeConstants at: 'LIS_HOT' put: 16r2!
-ThemeConstants at: 'LIS_NORMAL' put: 16r1!
-ThemeConstants at: 'LIS_SELECTED' put: 16r3!
-ThemeConstants at: 'LIS_SELECTEDNOTFOCUS' put: 16r5!
-ThemeConstants at: 'LVEB_HOVER' put: 16r2!
-ThemeConstants at: 'LVEB_NORMAL' put: 16r1!
-ThemeConstants at: 'LVEB_PUSHED' put: 16r3!
-ThemeConstants at: 'LVP_COLLAPSEBUTTON' put: 16r9!
-ThemeConstants at: 'LVP_EMPTYTEXT' put: 16r5!
-ThemeConstants at: 'LVP_EXPANDBUTTON' put: 16r8!
-ThemeConstants at: 'LVP_LISTDETAIL' put: 16r3!
-ThemeConstants at: 'LVP_LISTGROUP' put: 16r2!
-ThemeConstants at: 'LVP_LISTITEM' put: 16r1!
-ThemeConstants at: 'LVP_LISTSORTEDDETAIL' put: 16r4!
-ThemeConstants at: 'MAXBS_DISABLED' put: 16r4!
-ThemeConstants at: 'MAXBS_HOT' put: 16r2!
-ThemeConstants at: 'MAXBS_NORMAL' put: 16r1!
-ThemeConstants at: 'MAXBS_PUSHED' put: 16r3!
-ThemeConstants at: 'MDP_NEWAPPBUTTON' put: 16r1!
-ThemeConstants at: 'MDP_SEPERATOR' put: 16r2!
-ThemeConstants at: 'MDS_CHECKED' put: 16r5!
-ThemeConstants at: 'MDS_DISABLED' put: 16r4!
-ThemeConstants at: 'MDS_HOT' put: 16r2!
-ThemeConstants at: 'MDS_HOTCHECKED' put: 16r6!
-ThemeConstants at: 'MDS_NORMAL' put: 16r1!
-ThemeConstants at: 'MDS_PRESSED' put: 16r3!
-ThemeConstants at: 'MINBS_DISABLED' put: 16r4!
-ThemeConstants at: 'MINBS_HOT' put: 16r2!
-ThemeConstants at: 'MINBS_NORMAL' put: 16r1!
-ThemeConstants at: 'MINBS_PUSHED' put: 16r3!
-ThemeConstants at: 'MNCS_ACTIVE' put: 16r1!
-ThemeConstants at: 'MNCS_DISABLED' put: 16r3!
-ThemeConstants at: 'MNCS_INACTIVE' put: 16r2!
-ThemeConstants at: 'MP_CHEVRON' put: 16r5!
-ThemeConstants at: 'MP_MENUBARDROPDOWN' put: 16r4!
-ThemeConstants at: 'MP_MENUBARITEM' put: 16r3!
-ThemeConstants at: 'MP_MENUDROPDOWN' put: 16r2!
-ThemeConstants at: 'MP_MENUITEM' put: 16r1!
-ThemeConstants at: 'MP_SEPARATOR' put: 16r6!
-ThemeConstants at: 'MS_DEMOTED' put: 16r3!
-ThemeConstants at: 'MS_NORMAL' put: 16r1!
-ThemeConstants at: 'MS_SELECTED' put: 16r2!
-ThemeConstants at: 'MXCS_ACTIVE' put: 16r1!
-ThemeConstants at: 'MXCS_DISABLED' put: 16r3!
-ThemeConstants at: 'MXCS_INACTIVE' put: 16r2!
-ThemeConstants at: 'OT_ABOVELASTBUTTON' put: 16rC!
-ThemeConstants at: 'OT_BELOWLASTBUTTON' put: 16rD!
-ThemeConstants at: 'OT_BOTTOMLEFT' put: 16r3!
-ThemeConstants at: 'OT_BOTTOMMIDDLE' put: 16r5!
-ThemeConstants at: 'OT_BOTTOMRIGHT' put: 16r4!
-ThemeConstants at: 'OT_LEFTOFCAPTION' put: 16r8!
-ThemeConstants at: 'OT_LEFTOFLASTBUTTON' put: 16rA!
-ThemeConstants at: 'OT_MIDDLELEFT' put: 16r6!
-ThemeConstants at: 'OT_MIDDLERIGHT' put: 16r7!
-ThemeConstants at: 'OT_RIGHTOFCAPTION' put: 16r9!
-ThemeConstants at: 'OT_RIGHTOFLASTBUTTON' put: 16rB!
-ThemeConstants at: 'OT_TOPLEFT' put: 16r0!
-ThemeConstants at: 'OT_TOPMIDDLE' put: 16r2!
-ThemeConstants at: 'OT_TOPRIGHT' put: 16r1!
-ThemeConstants at: 'PBS_DEFAULTED' put: 16r5!
-ThemeConstants at: 'PBS_DISABLED' put: 16r4!
-ThemeConstants at: 'PBS_HOT' put: 16r2!
-ThemeConstants at: 'PBS_NORMAL' put: 16r1!
-ThemeConstants at: 'PBS_PRESSED' put: 16r3!
-ThemeConstants at: 'PGRP_DOWN' put: 16r2!
-ThemeConstants at: 'PGRP_DOWNHORZ' put: 16r4!
-ThemeConstants at: 'PGRP_UP' put: 16r1!
-ThemeConstants at: 'PGRP_UPHORZ' put: 16r3!
-ThemeConstants at: 'PO_CLASS' put: 16r2!
-ThemeConstants at: 'PO_GLOBAL' put: 16r3!
-ThemeConstants at: 'PO_NOTFOUND' put: 16r4!
-ThemeConstants at: 'PO_PART' put: 16r1!
-ThemeConstants at: 'PO_STATE' put: 16r0!
-ThemeConstants at: 'PP_BAR' put: 16r1!
-ThemeConstants at: 'PP_BARVERT' put: 16r2!
-ThemeConstants at: 'PP_CHUNK' put: 16r3!
-ThemeConstants at: 'PP_CHUNKVERT' put: 16r4!
-ThemeConstants at: 'RBS_CHECKEDDISABLED' put: 16r8!
-ThemeConstants at: 'RBS_CHECKEDHOT' put: 16r6!
-ThemeConstants at: 'RBS_CHECKEDNORMAL' put: 16r5!
-ThemeConstants at: 'RBS_CHECKEDPRESSED' put: 16r7!
-ThemeConstants at: 'RBS_DISABLED' put: 16r4!
-ThemeConstants at: 'RBS_HOT' put: 16r2!
-ThemeConstants at: 'RBS_NORMAL' put: 16r1!
-ThemeConstants at: 'RBS_PUSHED' put: 16r3!
-ThemeConstants at: 'RBS_UNCHECKEDDISABLED' put: 16r4!
-ThemeConstants at: 'RBS_UNCHECKEDHOT' put: 16r2!
-ThemeConstants at: 'RBS_UNCHECKEDNORMAL' put: 16r1!
-ThemeConstants at: 'RBS_UNCHECKEDPRESSED' put: 16r3!
-ThemeConstants at: 'RP_BACKGROUND' put: 16r7!
-ThemeConstants at: 'RP_BAND' put: 16r3!
-ThemeConstants at: 'RP_CHEVRON' put: 16r4!
-ThemeConstants at: 'RP_CHEVRONVERT' put: 16r5!
-ThemeConstants at: 'RP_GRIPPER' put: 16r1!
-ThemeConstants at: 'RP_GRIPPERVERT' put: 16r2!
-ThemeConstants at: 'RP_SPLITERVERT' put: 16r8!
-ThemeConstants at: 'RP_SPLITTER' put: 16r7!
-ThemeConstants at: 'SBP_ARROWBTN' put: 16r1!
-ThemeConstants at: 'SBP_GRIPPERHORZ' put: 16r8!
-ThemeConstants at: 'SBP_GRIPPERVERT' put: 16r9!
-ThemeConstants at: 'SBP_LOWERTRACKHORZ' put: 16r4!
-ThemeConstants at: 'SBP_LOWERTRACKVERT' put: 16r6!
-ThemeConstants at: 'SBP_SIZEBOX' put: 16rA!
-ThemeConstants at: 'SBP_THUMBBTNHORZ' put: 16r2!
-ThemeConstants at: 'SBP_THUMBBTNVERT' put: 16r3!
-ThemeConstants at: 'SBP_UPPERTRACKHORZ' put: 16r5!
-ThemeConstants at: 'SBP_UPPERTRACKVERT' put: 16r7!
-ThemeConstants at: 'SBS_DISABLED' put: 16r4!
-ThemeConstants at: 'SBS_HOT' put: 16r2!
-ThemeConstants at: 'SBS_NORMAL' put: 16r1!
-ThemeConstants at: 'SBS_PUSHED' put: 16r3!
-ThemeConstants at: 'SCRBS_DISABLED' put: 16r4!
-ThemeConstants at: 'SCRBS_HOT' put: 16r2!
-ThemeConstants at: 'SCRBS_NORMAL' put: 16r1!
-ThemeConstants at: 'SCRBS_PRESSED' put: 16r3!
-ThemeConstants at: 'SP_GRIPPER' put: 16r3!
-ThemeConstants at: 'SP_GRIPPERPANE' put: 16r2!
-ThemeConstants at: 'SP_PANE' put: 16r1!
-ThemeConstants at: 'SPLITS_NORMAL' put: 16r1!
-ThemeConstants at: 'SPLITSV_NORMAL' put: 16r1!
-ThemeConstants at: 'SPLS_HOT' put: 16r2!
-ThemeConstants at: 'SPLS_NORMAL' put: 16r1!
-ThemeConstants at: 'SPLS_PRESSED' put: 16r3!
-ThemeConstants at: 'SPNP_DOWN' put: 16r2!
-ThemeConstants at: 'SPNP_DOWNHORZ' put: 16r4!
-ThemeConstants at: 'SPNP_UP' put: 16r1!
-ThemeConstants at: 'SPNP_UPHORZ' put: 16r3!
-ThemeConstants at: 'SPP_LOGOFF' put: 16r8!
-ThemeConstants at: 'SPP_LOGOFFBUTTONS' put: 16r9!
-ThemeConstants at: 'SPP_MOREPROGRAMS' put: 16r2!
-ThemeConstants at: 'SPP_MOREPROGRAMSARROW' put: 16r3!
-ThemeConstants at: 'SPP_PLACESLIST' put: 16r6!
-ThemeConstants at: 'SPP_PLACESLISTSEPARATOR' put: 16r7!
-ThemeConstants at: 'SPP_PREVIEW' put: 16rB!
-ThemeConstants at: 'SPP_PROGLIST' put: 16r4!
-ThemeConstants at: 'SPP_PROGLISTSEPARATOR' put: 16r5!
-ThemeConstants at: 'SPP_USERPANE' put: 16r1!
-ThemeConstants at: 'SPP_USERPICTURE' put: 16rA!
-ThemeConstants at: 'SPS_HOT' put: 16r2!
-ThemeConstants at: 'SPS_NORMAL' put: 16r1!
-ThemeConstants at: 'SPS_PRESSED' put: 16r3!
-ThemeConstants at: 'ST_STRETCH' put: 16r1!
-ThemeConstants at: 'ST_TILE' put: 16r2!
-ThemeConstants at: 'ST_TRUESIZE' put: 16r0!
-ThemeConstants at: 'STAP_ALLOW_CONTROLS' put: 16r2!
-ThemeConstants at: 'STAP_ALLOW_NONCLIENT' put: 16r1!
-ThemeConstants at: 'STAP_ALLOW_WEBCONTENT' put: 16r4!
-ThemeConstants at: 'SZB_LEFTALIGN' put: 16r2!
-ThemeConstants at: 'SZB_RIGHTALIGN' put: 16r1!
-ThemeConstants at: 'TABP_BODY' put: 16rA!
-ThemeConstants at: 'TABP_PANE' put: 16r9!
-ThemeConstants at: 'TABP_TABITEM' put: 16r1!
-ThemeConstants at: 'TABP_TABITEMBOTHEDGE' put: 16r4!
-ThemeConstants at: 'TABP_TABITEMLEFTEDGE' put: 16r2!
-ThemeConstants at: 'TABP_TABITEMRIGHTEDGE' put: 16r3!
-ThemeConstants at: 'TABP_TOPTABITEM' put: 16r5!
-ThemeConstants at: 'TABP_TOPTABITEMBOTHEDGE' put: 16r8!
-ThemeConstants at: 'TABP_TOPTABITEMLEFTEDGE' put: 16r6!
-ThemeConstants at: 'TABP_TOPTABITEMRIGHTEDGE' put: 16r7!
-ThemeConstants at: 'TBP_BACKGROUNDBOTTOM' put: 16r1!
-ThemeConstants at: 'TBP_BACKGROUNDLEFT' put: 16r4!
-ThemeConstants at: 'TBP_BACKGROUNDRIGHT' put: 16r2!
-ThemeConstants at: 'TBP_BACKGROUNDTOP' put: 16r3!
-ThemeConstants at: 'TBP_SIZINGBARBOTTOM' put: 16r5!
-ThemeConstants at: 'TBP_SIZINGBARLEFT' put: 16r8!
-ThemeConstants at: 'TBP_SIZINGBARRIGHT' put: 16r6!
-ThemeConstants at: 'TBP_SIZINGBARTOP' put: 16r7!
-ThemeConstants at: 'TDP_FLASHBUTTON' put: 16r2!
-ThemeConstants at: 'TDP_FLASHBUTTONGROUPMENU' put: 16r3!
-ThemeConstants at: 'TDP_GROUPCOUNT' put: 16r1!
-ThemeConstants at: 'TIBES_DISABLED' put: 16r4!
-ThemeConstants at: 'TIBES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TIBES_HOT' put: 16r2!
-ThemeConstants at: 'TIBES_NORMAL' put: 16r1!
-ThemeConstants at: 'TIBES_SELECTED' put: 16r3!
-ThemeConstants at: 'TILES_DISABLED' put: 16r4!
-ThemeConstants at: 'TILES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TILES_HOT' put: 16r2!
-ThemeConstants at: 'TILES_NORMAL' put: 16r1!
-ThemeConstants at: 'TILES_SELECTED' put: 16r3!
-ThemeConstants at: 'TIRES_DISABLED' put: 16r4!
-ThemeConstants at: 'TIRES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TIRES_HOT' put: 16r2!
-ThemeConstants at: 'TIRES_NORMAL' put: 16r1!
-ThemeConstants at: 'TIRES_SELECTED' put: 16r3!
-ThemeConstants at: 'TIS_DISABLED' put: 16r4!
-ThemeConstants at: 'TIS_FOCUSED' put: 16r5!
-ThemeConstants at: 'TIS_HOT' put: 16r2!
-ThemeConstants at: 'TIS_NORMAL' put: 16r1!
-ThemeConstants at: 'TIS_SELECTED' put: 16r3!
-ThemeConstants at: 'TKP_THUMB' put: 16r3!
-ThemeConstants at: 'TKP_THUMBBOTTOM' put: 16r4!
-ThemeConstants at: 'TKP_THUMBLEFT' put: 16r7!
-ThemeConstants at: 'TKP_THUMBRIGHT' put: 16r8!
-ThemeConstants at: 'TKP_THUMBTOP' put: 16r5!
-ThemeConstants at: 'TKP_THUMBVERT' put: 16r6!
-ThemeConstants at: 'TKP_TICS' put: 16r9!
-ThemeConstants at: 'TKP_TICSVERT' put: 16rA!
-ThemeConstants at: 'TKP_TRACK' put: 16r1!
-ThemeConstants at: 'TKP_TRACKVERT' put: 16r2!
-ThemeConstants at: 'TKS_NORMAL' put: 16r1!
-ThemeConstants at: 'TMT_ACCENTCOLORHINT' put: 16rEEF!
-ThemeConstants at: 'TMT_ACTIVEBORDER' put: 16r64B!
-ThemeConstants at: 'TMT_ACTIVECAPTION' put: 16r643!
-ThemeConstants at: 'TMT_ALPHALEVEL' put: 16r962!
-ThemeConstants at: 'TMT_ALPHATHRESHOLD' put: 16r96F!
-ThemeConstants at: 'TMT_ALWAYSSHOWSIZINGBAR' put: 16r8A0!
-ThemeConstants at: 'TMT_APPWORKSPACE' put: 16r64D!
-ThemeConstants at: 'TMT_AUTHOR' put: 16r25C!
-ThemeConstants at: 'TMT_AUTOSIZE' put: 16r89A!
-ThemeConstants at: 'TMT_BACKGROUND' put: 16r642!
-ThemeConstants at: 'TMT_BGFILL' put: 16r89D!
-ThemeConstants at: 'TMT_BGTYPE' put: 16rFA1!
-ThemeConstants at: 'TMT_BLENDCOLOR' put: 16r138B!
-ThemeConstants at: 'TMT_BODYTEXTCOLOR' put: 16rEF3!
-ThemeConstants at: 'TMT_BOOL' put: 16rCB!
-ThemeConstants at: 'TMT_BORDERCOLOR' put: 16rED9!
-ThemeConstants at: 'TMT_BORDERCOLORHINT' put: 16rEEE!
-ThemeConstants at: 'TMT_BORDERONLY' put: 16r89B!
-ThemeConstants at: 'TMT_BORDERSIZE' put: 16r963!
-ThemeConstants at: 'TMT_BORDERTYPE' put: 16rFA2!
-ThemeConstants at: 'TMT_BTNFACE' put: 16r650!
-ThemeConstants at: 'TMT_BTNHIGHLIGHT' put: 16r655!
-ThemeConstants at: 'TMT_BTNSHADOW' put: 16r651!
-ThemeConstants at: 'TMT_BTNTEXT' put: 16r653!
-ThemeConstants at: 'TMT_BUTTONALTERNATEFACE' put: 16r65A!
-ThemeConstants at: 'TMT_CAPTIONBARHEIGHT' put: 16r4B5!
-ThemeConstants at: 'TMT_CAPTIONBARWIDTH' put: 16r4B4!
-ThemeConstants at: 'TMT_CAPTIONFONT' put: 16r321!
-ThemeConstants at: 'TMT_CAPTIONMARGINS' put: 16rE13!
-ThemeConstants at: 'TMT_CAPTIONTEXT' put: 16r64A!
-ThemeConstants at: 'TMT_CHARSET' put: 16r193!
-ThemeConstants at: 'TMT_COLOR' put: 16rCC!
-ThemeConstants at: 'TMT_COLORSCHEMES' put: 16r191!
-ThemeConstants at: 'TMT_COMPANY' put: 16r25B!
-ThemeConstants at: 'TMT_COMPOSITED' put: 16r89C!
-ThemeConstants at: 'TMT_CONTENTALIGNMENT' put: 16rFA6!
-ThemeConstants at: 'TMT_CONTENTMARGINS' put: 16rE12!
-ThemeConstants at: 'TMT_COPYRIGHT' put: 16r25D!
-ThemeConstants at: 'TMT_CSSNAME' put: 16r579!
-ThemeConstants at: 'TMT_DEFAULTPANESIZE' put: 16r138A!
-ThemeConstants at: 'TMT_DESCRIPTION' put: 16r260!
-ThemeConstants at: 'TMT_DISPLAYNAME' put: 16r259!
-ThemeConstants at: 'TMT_DKSHADOW3D' put: 16r656!
-ThemeConstants at: 'TMT_EDGEDKSHADOWCOLOR' put: 16rEDF!
-ThemeConstants at: 'TMT_EDGEFILLCOLOR' put: 16rEE0!
-ThemeConstants at: 'TMT_EDGEHIGHLIGHTCOLOR' put: 16rEDD!
-ThemeConstants at: 'TMT_EDGELIGHTCOLOR' put: 16rEDC!
-ThemeConstants at: 'TMT_EDGESHADOWCOLOR' put: 16rEDE!
-ThemeConstants at: 'TMT_FILENAME' put: 16rCE!
-ThemeConstants at: 'TMT_FILLCOLOR' put: 16rEDA!
-ThemeConstants at: 'TMT_FILLCOLORHINT' put: 16rEED!
-ThemeConstants at: 'TMT_FILLTYPE' put: 16rFA3!
-ThemeConstants at: 'TMT_FLATMENUS' put: 16r3E9!
-ThemeConstants at: 'TMT_FONT' put: 16rD2!
-ThemeConstants at: 'TMT_FROMCOLOR1' put: 16r7D1!
-ThemeConstants at: 'TMT_FROMCOLOR2' put: 16r7D2!
-ThemeConstants at: 'TMT_FROMCOLOR3' put: 16r7D3!
-ThemeConstants at: 'TMT_FROMCOLOR4' put: 16r7D4!
-ThemeConstants at: 'TMT_FROMCOLOR5' put: 16r7D5!
-ThemeConstants at: 'TMT_FROMHUE1' put: 16r709!
-ThemeConstants at: 'TMT_FROMHUE2' put: 16r70A!
-ThemeConstants at: 'TMT_FROMHUE3' put: 16r70B!
-ThemeConstants at: 'TMT_FROMHUE4' put: 16r70C!
-ThemeConstants at: 'TMT_FROMHUE5' put: 16r70D!
-ThemeConstants at: 'TMT_GLOWCOLOR' put: 16rEE8!
-ThemeConstants at: 'TMT_GLYPHFONT' put: 16rA29!
-ThemeConstants at: 'TMT_GLYPHFONTSIZINGTYPE' put: 16rFAE!
-ThemeConstants at: 'TMT_GLYPHIMAGEFILE' put: 16rBC0!
-ThemeConstants at: 'TMT_GLYPHINDEX' put: 16r972!
-ThemeConstants at: 'TMT_GLYPHONLY' put: 16r89F!
-ThemeConstants at: 'TMT_GLYPHTEXTCOLOR' put: 16rEEB!
-ThemeConstants at: 'TMT_GLYPHTRANSPARENT' put: 16r89E!
-ThemeConstants at: 'TMT_GLYPHTRANSPARENTCOLOR' put: 16rEEC!
-ThemeConstants at: 'TMT_GLYPHTYPE' put: 16rFAC!
-ThemeConstants at: 'TMT_GRADIENTACTIVECAPTION' put: 16r65C!
-ThemeConstants at: 'TMT_GRADIENTCOLOR1' put: 16rEE2!
-ThemeConstants at: 'TMT_GRADIENTCOLOR2' put: 16rEE3!
-ThemeConstants at: 'TMT_GRADIENTCOLOR3' put: 16rEE4!
-ThemeConstants at: 'TMT_GRADIENTCOLOR4' put: 16rEE5!
-ThemeConstants at: 'TMT_GRADIENTCOLOR5' put: 16rEE6!
-ThemeConstants at: 'TMT_GRADIENTINACTIVECAPTION' put: 16r65D!
-ThemeConstants at: 'TMT_GRADIENTRATIO1' put: 16r966!
-ThemeConstants at: 'TMT_GRADIENTRATIO2' put: 16r967!
-ThemeConstants at: 'TMT_GRADIENTRATIO3' put: 16r968!
-ThemeConstants at: 'TMT_GRADIENTRATIO4' put: 16r969!
-ThemeConstants at: 'TMT_GRADIENTRATIO5' put: 16r96A!
-ThemeConstants at: 'TMT_GRAYTEXT' put: 16r652!
-ThemeConstants at: 'TMT_HALIGN' put: 16rFA5!
-ThemeConstants at: 'TMT_HEIGHT' put: 16r971!
-ThemeConstants at: 'TMT_HIGHLIGHT' put: 16r64E!
-ThemeConstants at: 'TMT_HIGHLIGHTTEXT' put: 16r64F!
-ThemeConstants at: 'TMT_HOTTRACKING' put: 16r65B!
-ThemeConstants at: 'TMT_ICONEFFECT' put: 16rFA9!
-ThemeConstants at: 'TMT_ICONTITLEFONT' put: 16r326!
-ThemeConstants at: 'TMT_IMAGECOUNT' put: 16r961!
-ThemeConstants at: 'TMT_IMAGEFILE' put: 16rBB9!
-ThemeConstants at: 'TMT_IMAGEFILE1' put: 16rBBA!
-ThemeConstants at: 'TMT_IMAGEFILE2' put: 16rBBB!
-ThemeConstants at: 'TMT_IMAGEFILE3' put: 16rBBC!
-ThemeConstants at: 'TMT_IMAGEFILE4' put: 16rBBD!
-ThemeConstants at: 'TMT_IMAGEFILE5' put: 16rBBE!
-ThemeConstants at: 'TMT_IMAGELAYOUT' put: 16rFAB!
-ThemeConstants at: 'TMT_IMAGESELECTTYPE' put: 16rFAD!
-ThemeConstants at: 'TMT_INACTIVEBORDER' put: 16r64C!
-ThemeConstants at: 'TMT_INACTIVECAPTION' put: 16r644!
-ThemeConstants at: 'TMT_INACTIVECAPTIONTEXT' put: 16r654!
-ThemeConstants at: 'TMT_INFOBK' put: 16r659!
-ThemeConstants at: 'TMT_INFOTEXT' put: 16r658!
-ThemeConstants at: 'TMT_INT' put: 16rCA!
-ThemeConstants at: 'TMT_INTEGRALSIZING' put: 16r8A3!
-ThemeConstants at: 'TMT_INTLIST' put: 16rD3!
-ThemeConstants at: 'TMT_LIGHT3D' put: 16r657!
-ThemeConstants at: 'TMT_MARGINS' put: 16rCD!
-ThemeConstants at: 'TMT_MENU' put: 16r645!
-ThemeConstants at: 'TMT_MENUBAR' put: 16r65F!
-ThemeConstants at: 'TMT_MENUBARHEIGHT' put: 16r4B9!
-ThemeConstants at: 'TMT_MENUBARWIDTH' put: 16r4B8!
-ThemeConstants at: 'TMT_MENUFONT' put: 16r323!
-ThemeConstants at: 'TMT_MENUHILIGHT' put: 16r65E!
-ThemeConstants at: 'TMT_MENUTEXT' put: 16r648!
-ThemeConstants at: 'TMT_MINCOLORDEPTH' put: 16r515!
-ThemeConstants at: 'TMT_MINDPI1' put: 16r974!
-ThemeConstants at: 'TMT_MINDPI2' put: 16r975!
-ThemeConstants at: 'TMT_MINDPI3' put: 16r976!
-ThemeConstants at: 'TMT_MINDPI4' put: 16r977!
-ThemeConstants at: 'TMT_MINDPI5' put: 16r978!
-ThemeConstants at: 'TMT_MINSIZE' put: 16rD4B!
-ThemeConstants at: 'TMT_MINSIZE1' put: 16rD4C!
-ThemeConstants at: 'TMT_MINSIZE2' put: 16rD4D!
-ThemeConstants at: 'TMT_MINSIZE3' put: 16rD4E!
-ThemeConstants at: 'TMT_MINSIZE4' put: 16rD4F!
-ThemeConstants at: 'TMT_MINSIZE5' put: 16rD50!
-ThemeConstants at: 'TMT_MIRRORIMAGE' put: 16r8A1!
-ThemeConstants at: 'TMT_MSGBOXFONT' put: 16r325!
-ThemeConstants at: 'TMT_NORMALSIZE' put: 16rD51!
-ThemeConstants at: 'TMT_OFFSET' put: 16rD49!
-ThemeConstants at: 'TMT_OFFSETTYPE' put: 16rFA8!
-ThemeConstants at: 'TMT_POSITION' put: 16rD0!
-ThemeConstants at: 'TMT_PROGRESSCHUNKSIZE' put: 16r96B!
-ThemeConstants at: 'TMT_PROGRESSSPACESIZE' put: 16r96C!
-ThemeConstants at: 'TMT_RECT' put: 16rD1!
-ThemeConstants at: 'TMT_ROUNDCORNERHEIGHT' put: 16r965!
-ThemeConstants at: 'TMT_ROUNDCORNERWIDTH' put: 16r964!
-ThemeConstants at: 'TMT_SATURATION' put: 16r96D!
-ThemeConstants at: 'TMT_SCROLLBAR' put: 16r641!
-ThemeConstants at: 'TMT_SCROLLBARHEIGHT' put: 16r4B3!
-ThemeConstants at: 'TMT_SCROLLBARWIDTH' put: 16r4B2!
-ThemeConstants at: 'TMT_SHADOWCOLOR' put: 16rEE7!
-ThemeConstants at: 'TMT_SIZE' put: 16rCF!
-ThemeConstants at: 'TMT_SIZES' put: 16r192!
-ThemeConstants at: 'TMT_SIZINGBORDERWIDTH' put: 16r4B1!
-ThemeConstants at: 'TMT_SIZINGMARGINS' put: 16rE11!
-ThemeConstants at: 'TMT_SIZINGTYPE' put: 16rFA4!
-ThemeConstants at: 'TMT_SMALLCAPTIONFONT' put: 16r322!
-ThemeConstants at: 'TMT_SMCAPTIONBARHEIGHT' put: 16r4B7!
-ThemeConstants at: 'TMT_SMCAPTIONBARWIDTH' put: 16r4B6!
-ThemeConstants at: 'TMT_SOURCEGROW' put: 16r8A4!
-ThemeConstants at: 'TMT_SOURCESHRINK' put: 16r8A5!
-ThemeConstants at: 'TMT_STATUSFONT' put: 16r324!
-ThemeConstants at: 'TMT_STOCKIMAGEFILE' put: 16rBBF!
-ThemeConstants at: 'TMT_STRING' put: 16rC9!
-ThemeConstants at: 'TMT_TEXT' put: 16rC81!
-ThemeConstants at: 'TMT_TEXTBORDERCOLOR' put: 16rEE9!
-ThemeConstants at: 'TMT_TEXTBORDERSIZE' put: 16r96E!
-ThemeConstants at: 'TMT_TEXTCOLOR' put: 16rEDB!
-ThemeConstants at: 'TMT_TEXTSHADOWCOLOR' put: 16rEEA!
-ThemeConstants at: 'TMT_TEXTSHADOWOFFSET' put: 16rD4A!
-ThemeConstants at: 'TMT_TEXTSHADOWTYPE' put: 16rFAA!
-ThemeConstants at: 'TMT_TOCOLOR1' put: 16r7D6!
-ThemeConstants at: 'TMT_TOCOLOR2' put: 16r7D7!
-ThemeConstants at: 'TMT_TOCOLOR3' put: 16r7D8!
-ThemeConstants at: 'TMT_TOCOLOR4' put: 16r7D9!
-ThemeConstants at: 'TMT_TOCOLOR5' put: 16r7DA!
-ThemeConstants at: 'TMT_TOHUE1' put: 16r70E!
-ThemeConstants at: 'TMT_TOHUE2' put: 16r70F!
-ThemeConstants at: 'TMT_TOHUE3' put: 16r710!
-ThemeConstants at: 'TMT_TOHUE4' put: 16r711!
-ThemeConstants at: 'TMT_TOHUE5' put: 16r712!
-ThemeConstants at: 'TMT_TOOLTIP' put: 16r25A!
-ThemeConstants at: 'TMT_TRANSPARENT' put: 16r899!
-ThemeConstants at: 'TMT_TRANSPARENTCOLOR' put: 16rEE1!
-ThemeConstants at: 'TMT_TRUESIZESCALINGTYPE' put: 16rFAF!
-ThemeConstants at: 'TMT_TRUESIZESTRETCHMARK' put: 16r973!
-ThemeConstants at: 'TMT_UNIFORMSIZING' put: 16r8A2!
-ThemeConstants at: 'TMT_URL' put: 16r25E!
-ThemeConstants at: 'TMT_USERPICTURE' put: 16r1389!
-ThemeConstants at: 'TMT_VALIGN' put: 16rFA7!
-ThemeConstants at: 'TMT_VERSION' put: 16r25F!
-ThemeConstants at: 'TMT_WIDTH' put: 16r970!
-ThemeConstants at: 'TMT_WINDOW' put: 16r646!
-ThemeConstants at: 'TMT_WINDOWFRAME' put: 16r647!
-ThemeConstants at: 'TMT_WINDOWTEXT' put: 16r649!
-ThemeConstants at: 'TMT_XMLNAME' put: 16r57A!
-ThemeConstants at: 'TNP_ANIMBACKGROUND' put: 16r2!
-ThemeConstants at: 'TNP_BACKGROUND' put: 16r1!
-ThemeConstants at: 'TP_BUTTON' put: 16r1!
-ThemeConstants at: 'TP_DROPDOWNBUTTON' put: 16r2!
-ThemeConstants at: 'TP_SEPARATOR' put: 16r5!
-ThemeConstants at: 'TP_SEPARATORVERT' put: 16r6!
-ThemeConstants at: 'TP_SPLITBUTTON' put: 16r3!
-ThemeConstants at: 'TP_SPLITBUTTONDROPDOWN' put: 16r4!
-ThemeConstants at: 'TREIS_DISABLED' put: 16r4!
-ThemeConstants at: 'TREIS_HOT' put: 16r2!
-ThemeConstants at: 'TREIS_NORMAL' put: 16r1!
-ThemeConstants at: 'TREIS_SELECTED' put: 16r3!
-ThemeConstants at: 'TREIS_SELECTEDNOTFOCUS' put: 16r5!
-ThemeConstants at: 'TRS_NORMAL' put: 16r1!
-ThemeConstants at: 'TRVS_NORMAL' put: 16r1!
-ThemeConstants at: 'TS_CHECKED' put: 16r5!
-ThemeConstants at: 'TS_DISABLED' put: 16r4!
-ThemeConstants at: 'TS_DRAW' put: 16r2!
-ThemeConstants at: 'TS_HOT' put: 16r2!
-ThemeConstants at: 'TS_HOTCHECKED' put: 16r6!
-ThemeConstants at: 'TS_MIN' put: 16r0!
-ThemeConstants at: 'TS_NORMAL' put: 16r1!
-ThemeConstants at: 'TS_PRESSED' put: 16r3!
-ThemeConstants at: 'TS_TRUE' put: 16r1!
-ThemeConstants at: 'TSS_NORMAL' put: 16r1!
-ThemeConstants at: 'TSST_DPI' put: 16r2!
-ThemeConstants at: 'TSST_NONE' put: 16r0!
-ThemeConstants at: 'TSST_SIZE' put: 16r1!
-ThemeConstants at: 'TST_CONTINUOUS' put: 16r2!
-ThemeConstants at: 'TST_NONE' put: 16r0!
-ThemeConstants at: 'TST_SINGLE' put: 16r1!
-ThemeConstants at: 'TSVS_NORMAL' put: 16r1!
-ThemeConstants at: 'TTBS_LINK' put: 16r2!
-ThemeConstants at: 'TTBS_NORMAL' put: 16r1!
-ThemeConstants at: 'TTCS_HOT' put: 16r2!
-ThemeConstants at: 'TTCS_NORMAL' put: 16r1!
-ThemeConstants at: 'TTCS_PRESSED' put: 16r3!
-ThemeConstants at: 'TTIBES_DISABLED' put: 16r4!
-ThemeConstants at: 'TTIBES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TTIBES_HOT' put: 16r2!
-ThemeConstants at: 'TTIBES_NORMAL' put: 16r1!
-ThemeConstants at: 'TTIBES_SELECTED' put: 16r3!
-ThemeConstants at: 'TTILES_DISABLED' put: 16r4!
-ThemeConstants at: 'TTILES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TTILES_HOT' put: 16r2!
-ThemeConstants at: 'TTILES_NORMAL' put: 16r1!
-ThemeConstants at: 'TTILES_SELECTED' put: 16r3!
-ThemeConstants at: 'TTIRES_DISABLED' put: 16r4!
-ThemeConstants at: 'TTIRES_FOCUSED' put: 16r5!
-ThemeConstants at: 'TTIRES_HOT' put: 16r2!
-ThemeConstants at: 'TTIRES_NORMAL' put: 16r1!
-ThemeConstants at: 'TTIRES_SELECTED' put: 16r3!
-ThemeConstants at: 'TTIS_DISABLED' put: 16r4!
-ThemeConstants at: 'TTIS_FOCUSED' put: 16r5!
-ThemeConstants at: 'TTIS_HOT' put: 16r2!
-ThemeConstants at: 'TTIS_NORMAL' put: 16r1!
-ThemeConstants at: 'TTIS_SELECTED' put: 16r3!
-ThemeConstants at: 'TTP_BALLOON' put: 16r3!
-ThemeConstants at: 'TTP_BALLOONTITLE' put: 16r4!
-ThemeConstants at: 'TTP_CLOSE' put: 16r5!
-ThemeConstants at: 'TTP_STANDARD' put: 16r1!
-ThemeConstants at: 'TTP_STANDARDTITLE' put: 16r2!
-ThemeConstants at: 'TTSS_LINK' put: 16r2!
-ThemeConstants at: 'TTSS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUBS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUBS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUBS_HOT' put: 16r2!
-ThemeConstants at: 'TUBS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUBS_PRESSED' put: 16r3!
-ThemeConstants at: 'TUS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUS_HOT' put: 16r2!
-ThemeConstants at: 'TUS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUS_PRESSED' put: 16r3!
-ThemeConstants at: 'TUTS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUTS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUTS_HOT' put: 16r2!
-ThemeConstants at: 'TUTS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUTS_PRESSED' put: 16r3!
-ThemeConstants at: 'TUVLS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUVLS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUVLS_HOT' put: 16r2!
-ThemeConstants at: 'TUVLS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUVLS_PRESSED' put: 16r3!
-ThemeConstants at: 'TUVRS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUVRS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUVRS_HOT' put: 16r2!
-ThemeConstants at: 'TUVRS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUVRS_PRESSED' put: 16r3!
-ThemeConstants at: 'TUVS_DISABLED' put: 16r5!
-ThemeConstants at: 'TUVS_FOCUSED' put: 16r4!
-ThemeConstants at: 'TUVS_HOT' put: 16r2!
-ThemeConstants at: 'TUVS_NORMAL' put: 16r1!
-ThemeConstants at: 'TUVS_PRESSED' put: 16r3!
-ThemeConstants at: 'TVP_BRANCH' put: 16r3!
-ThemeConstants at: 'TVP_GLYPH' put: 16r2!
-ThemeConstants at: 'TVP_TREEITEM' put: 16r1!
-ThemeConstants at: 'UPHZS_DISABLED' put: 16r4!
-ThemeConstants at: 'UPHZS_HOT' put: 16r2!
-ThemeConstants at: 'UPHZS_NORMAL' put: 16r1!
-ThemeConstants at: 'UPHZS_PRESSED' put: 16r3!
-ThemeConstants at: 'UPS_DISABLED' put: 16r4!
-ThemeConstants at: 'UPS_HOT' put: 16r2!
-ThemeConstants at: 'UPS_NORMAL' put: 16r1!
-ThemeConstants at: 'UPS_PRESSED' put: 16r3!
-ThemeConstants at: 'VA_BOTTOM' put: 16r2!
-ThemeConstants at: 'VA_CENTER' put: 16r1!
-ThemeConstants at: 'VA_TOP' put: 16r0!
-ThemeConstants at: 'VSS_DISABLED' put: 16r4!
-ThemeConstants at: 'VSS_HOT' put: 16r2!
-ThemeConstants at: 'VSS_NORMAL' put: 16r1!
-ThemeConstants at: 'VSS_PUSHED' put: 16r3!
-ThemeConstants at: 'VTS_DISABLED' put: 16r4!
-ThemeConstants at: 'VTS_HOT' put: 16r2!
-ThemeConstants at: 'VTS_NORMAL' put: 16r1!
-ThemeConstants at: 'VTS_PUSHED' put: 16r3!
-ThemeConstants at: 'WP_CAPTION' put: 16r1!
-ThemeConstants at: 'WP_CAPTIONSIZINGTEMPLATE' put: 16r1E!
-ThemeConstants at: 'WP_CLOSEBUTTON' put: 16r12!
-ThemeConstants at: 'WP_DIALOG' put: 16r1D!
-ThemeConstants at: 'WP_FRAMEBOTTOM' put: 16r9!
-ThemeConstants at: 'WP_FRAMEBOTTOMSIZINGTEMPLATE' put: 16r24!
-ThemeConstants at: 'WP_FRAMELEFT' put: 16r7!
-ThemeConstants at: 'WP_FRAMELEFTSIZINGTEMPLATE' put: 16r20!
-ThemeConstants at: 'WP_FRAMERIGHT' put: 16r8!
-ThemeConstants at: 'WP_FRAMERIGHTSIZINGTEMPLATE' put: 16r22!
-ThemeConstants at: 'WP_HELPBUTTON' put: 16r17!
-ThemeConstants at: 'WP_HORZSCROLL' put: 16r19!
-ThemeConstants at: 'WP_HORZTHUMB' put: 16r1A!
-ThemeConstants at: 'WP_MAXBUTTON' put: 16r11!
-ThemeConstants at: 'WP_MAXCAPTION' put: 16r5!
-ThemeConstants at: 'WP_MDICLOSEBUTTON' put: 16r14!
-ThemeConstants at: 'WP_MDIHELPBUTTON' put: 16r18!
-ThemeConstants at: 'WP_MDIMINBUTTON' put: 16r10!
-ThemeConstants at: 'WP_MDIRESTOREBUTTON' put: 16r16!
-ThemeConstants at: 'WP_MDISYSBUTTON' put: 16rE!
-ThemeConstants at: 'WP_MINBUTTON' put: 16rF!
-ThemeConstants at: 'WP_MINCAPTION' put: 16r3!
-ThemeConstants at: 'WP_RESTOREBUTTON' put: 16r15!
-ThemeConstants at: 'WP_SMALLCAPTION' put: 16r2!
-ThemeConstants at: 'WP_SMALLCAPTIONSIZINGTEMPLATE' put: 16r1F!
-ThemeConstants at: 'WP_SMALLCLOSEBUTTON' put: 16r13!
-ThemeConstants at: 'WP_SMALLFRAMEBOTTOM' put: 16rC!
-ThemeConstants at: 'WP_SMALLFRAMEBOTTOMSIZINGTEMPLATE' put: 16r25!
-ThemeConstants at: 'WP_SMALLFRAMELEFT' put: 16rA!
-ThemeConstants at: 'WP_SMALLFRAMELEFTSIZINGTEMPLATE' put: 16r21!
-ThemeConstants at: 'WP_SMALLFRAMERIGHT' put: 16rB!
-ThemeConstants at: 'WP_SMALLFRAMERIGHTSIZINGTEMPLATE' put: 16r23!
-ThemeConstants at: 'WP_SMALLMAXCAPTION' put: 16r6!
-ThemeConstants at: 'WP_SMALLMINCAPTION' put: 16r4!
-ThemeConstants at: 'WP_SYSBUTTON' put: 16rD!
-ThemeConstants at: 'WP_VERTSCROLL' put: 16r1B!
-ThemeConstants at: 'WP_VERTTHUMB' put: 16r1C!
-ThemeConstants shrink!
+SharedPool subclass: #ThemeConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ABS_DOWNDISABLED' -> 16r8.
+		'ABS_DOWNHOT' -> 16r6.
+		'ABS_DOWNNORMAL' -> 16r5.
+		'ABS_DOWNPRESSED' -> 16r7.
+		'ABS_LEFTDISABLED' -> 16rC.
+		'ABS_LEFTHOT' -> 16rA.
+		'ABS_LEFTNORMAL' -> 16r9.
+		'ABS_LEFTPRESSED' -> 16rB.
+		'ABS_RIGHTDISABLED' -> 16r10.
+		'ABS_RIGHTHOT' -> 16rE.
+		'ABS_RIGHTNORMAL' -> 16rD.
+		'ABS_RIGHTPRESSED' -> 16rF.
+		'ABS_UPDISABLED' -> 16r4.
+		'ABS_UPHOT' -> 16r2.
+		'ABS_UPNORMAL' -> 16r1.
+		'ABS_UPPRESSED' -> 16r3.
+		'BP_CHECKBOX' -> 16r3.
+		'BP_GROUPBOX' -> 16r4.
+		'BP_PUSHBUTTON' -> 16r1.
+		'BP_RADIOBUTTON' -> 16r2.
+		'BP_USERBUTTON' -> 16r5.
+		'BPBF_COMPATIBLEBITMAP' -> 16r0.
+		'BPBF_DIB' -> 16r1.
+		'BPBF_TOPDOWNDIB' -> 16r2.
+		'BPBF_TOPDOWNMONODIB' -> 16r3.
+		'BPPF_ERASE' -> 16r1.
+		'BPPF_NOCLIP' -> 16r2.
+		'BPPF_NONCLIENT' -> 16r4.
+		'BT_BORDERFILL' -> 16r1.
+		'BT_ELLIPSE' -> 16r2.
+		'BT_IMAGEFILE' -> 16r0.
+		'BT_NONE' -> 16r2.
+		'BT_RECT' -> 16r0.
+		'BT_ROUNDRECT' -> 16r1.
+		'CA_CENTER' -> 16r1.
+		'CA_LEFT' -> 16r0.
+		'CA_RIGHT' -> 16r2.
+		'CBS_CHECKEDDISABLED' -> 16r8.
+		'CBS_CHECKEDHOT' -> 16r6.
+		'CBS_CHECKEDNORMAL' -> 16r5.
+		'CBS_CHECKEDPRESSED' -> 16r7.
+		'CBS_DISABLED' -> 16r4.
+		'CBS_HOT' -> 16r2.
+		'CBS_MIXEDDISABLED' -> 16rC.
+		'CBS_MIXEDHOT' -> 16rA.
+		'CBS_MIXEDNORMAL' -> 16r9.
+		'CBS_MIXEDPRESSED' -> 16rB.
+		'CBS_NORMAL' -> 16r1.
+		'CBS_PUSHED' -> 16r3.
+		'CBS_UNCHECKEDDISABLED' -> 16r4.
+		'CBS_UNCHECKEDHOT' -> 16r2.
+		'CBS_UNCHECKEDNORMAL' -> 16r1.
+		'CBS_UNCHECKEDPRESSED' -> 16r3.
+		'CBXS_DISABLED' -> 16r4.
+		'CBXS_HOT' -> 16r2.
+		'CBXS_NORMAL' -> 16r1.
+		'CBXS_PRESSED' -> 16r3.
+		'CHEVS_HOT' -> 16r2.
+		'CHEVS_NORMAL' -> 16r1.
+		'CHEVS_PRESSED' -> 16r3.
+		'CLP_TIME' -> 16r1.
+		'CLS_NORMAL' -> 16r1.
+		'CP_DROPDOWNBUTTON' -> 16r1.
+		'CS_ACTIVE' -> 16r1.
+		'CS_DISABLED' -> 16r3.
+		'CS_INACTIVE' -> 16r2.
+		'DNHZS_DISABLED' -> 16r4.
+		'DNHZS_HOT' -> 16r2.
+		'DNHZS_NORMAL' -> 16r1.
+		'DNHZS_PRESSED' -> 16r3.
+		'DNS_DISABLED' -> 16r4.
+		'DNS_HOT' -> 16r2.
+		'DNS_NORMAL' -> 16r1.
+		'DNS_PRESSED' -> 16r3.
+		'DTBG_CLIPRECT' -> 16r1.
+		'DTBG_COMPUTINGREGION' -> 16r10.
+		'DTBG_DRAWSOLID' -> 16r2.
+		'DTBG_MIRRORDC' -> 16r20.
+		'DTBG_OMITBORDER' -> 16r4.
+		'DTBG_OMITCONTENT' -> 16r8.
+		'DTT_GRAYED' -> 16r1.
+		'EBHC_HOT' -> 16r2.
+		'EBHC_NORMAL' -> 16r1.
+		'EBHC_PRESSED' -> 16r3.
+		'EBHP_HOT' -> 16r2.
+		'EBHP_NORMAL' -> 16r1.
+		'EBHP_PRESSED' -> 16r3.
+		'EBHP_SELECTEDHOT' -> 16r5.
+		'EBHP_SELECTEDNORMAL' -> 16r4.
+		'EBHP_SELECTEDPRESSED' -> 16r6.
+		'EBM_HOT' -> 16r2.
+		'EBM_NORMAL' -> 16r1.
+		'EBM_PRESSED' -> 16r3.
+		'EBNGC_HOT' -> 16r2.
+		'EBNGC_NORMAL' -> 16r1.
+		'EBNGC_PRESSED' -> 16r3.
+		'EBNGE_HOT' -> 16r2.
+		'EBNGE_NORMAL' -> 16r1.
+		'EBNGE_PRESSED' -> 16r3.
+		'EBP_HEADERBACKGROUND' -> 16r1.
+		'EBP_HEADERCLOSE' -> 16r2.
+		'EBP_HEADERPIN' -> 16r3.
+		'EBP_IEBARMENU' -> 16r4.
+		'EBP_NORMALGROUPBACKGROUND' -> 16r5.
+		'EBP_NORMALGROUPCOLLAPSE' -> 16r6.
+		'EBP_NORMALGROUPEXPAND' -> 16r7.
+		'EBP_NORMALGROUPHEAD' -> 16r8.
+		'EBP_SPECIALGROUPBACKGROUND' -> 16r9.
+		'EBP_SPECIALGROUPCOLLAPSE' -> 16rA.
+		'EBP_SPECIALGROUPEXPAND' -> 16rB.
+		'EBP_SPECIALGROUPHEAD' -> 16rC.
+		'EBSGC_HOT' -> 16r2.
+		'EBSGC_NORMAL' -> 16r1.
+		'EBSGC_PRESSED' -> 16r3.
+		'EBSGE_HOT' -> 16r2.
+		'EBSGE_NORMAL' -> 16r1.
+		'EBSGE_PRESSED' -> 16r3.
+		'EP_CARET' -> 16r2.
+		'EP_EDITTEXT' -> 16r1.
+		'ETDT_DISABLE' -> 16r1.
+		'ETDT_ENABLE' -> 16r2.
+		'ETDT_ENABLETAB' -> 16r6.
+		'ETDT_USETABTEXTURE' -> 16r4.
+		'ETS_ASSIST' -> 16r7.
+		'ETS_DISABLED' -> 16r4.
+		'ETS_FOCUSED' -> 16r5.
+		'ETS_HOT' -> 16r2.
+		'ETS_NORMAL' -> 16r1.
+		'ETS_READONLY' -> 16r6.
+		'ETS_SELECTED' -> 16r3.
+		'FS_ACTIVE' -> 16r1.
+		'FS_INACTIVE' -> 16r2.
+		'FT_HORZGRADIENT' -> 16r2.
+		'FT_RADIALGRADIENT' -> 16r3.
+		'FT_SOLID' -> 16r0.
+		'FT_TILEIMAGE' -> 16r4.
+		'FT_VERTGRADIENT' -> 16r1.
+		'GBS_DISABLED' -> 16r2.
+		'GBS_NORMAL' -> 16r1.
+		'GFST_DPI' -> 16r2.
+		'GFST_NONE' -> 16r0.
+		'GFST_SIZE' -> 16r1.
+		'GLPS_CLOSED' -> 16r1.
+		'GLPS_OPENED' -> 16r2.
+		'GP_BORDER' -> 16r1.
+		'GP_LINEHORZ' -> 16r2.
+		'GP_LINEVERT' -> 16r3.
+		'GT_FONTGLYPH' -> 16r2.
+		'GT_IMAGEGLYPH' -> 16r1.
+		'GT_NONE' -> 16r0.
+		'HA_CENTER' -> 16r1.
+		'HA_LEFT' -> 16r0.
+		'HA_RIGHT' -> 16r2.
+		'HBS_DISABLED' -> 16r4.
+		'HBS_HOT' -> 16r2.
+		'HBS_NORMAL' -> 16r1.
+		'HBS_PUSHED' -> 16r3.
+		'HILS_HOT' -> 16r2.
+		'HILS_NORMAL' -> 16r1.
+		'HILS_PRESSED' -> 16r3.
+		'HIRS_HOT' -> 16r2.
+		'HIRS_NORMAL' -> 16r1.
+		'HIRS_PRESSED' -> 16r3.
+		'HIS_HOT' -> 16r2.
+		'HIS_NORMAL' -> 16r1.
+		'HIS_PRESSED' -> 16r3.
+		'HP_HEADERITEM' -> 16r1.
+		'HP_HEADERITEMLEFT' -> 16r2.
+		'HP_HEADERITEMRIGHT' -> 16r3.
+		'HP_HEADERSORTARROW' -> 16r4.
+		'HSAS_SORTEDDOWN' -> 16r2.
+		'HSAS_SORTEDUP' -> 16r1.
+		'HSS_DISABLED' -> 16r4.
+		'HSS_HOT' -> 16r2.
+		'HSS_NORMAL' -> 16r1.
+		'HSS_PUSHED' -> 16r3.
+		'HTS_DISABLED' -> 16r4.
+		'HTS_HOT' -> 16r2.
+		'HTS_NORMAL' -> 16r1.
+		'HTS_PUSHED' -> 16r3.
+		'HTTB_BACKGROUNDSEG' -> 16r0.
+		'HTTB_CAPTION' -> 16r4.
+		'HTTB_FIXEDBORDER' -> 16r2.
+		'HTTB_RESIZINGBORDER' -> 16rF0.
+		'HTTB_RESIZINGBORDER_BOTTOM' -> 16r80.
+		'HTTB_RESIZINGBORDER_LEFT' -> 16r10.
+		'HTTB_RESIZINGBORDER_RIGHT' -> 16r40.
+		'HTTB_RESIZINGBORDER_TOP' -> 16r20.
+		'HTTB_SIZINGTEMPLATE' -> 16r100.
+		'HTTB_SYSTEMSIZINGMARGINS' -> 16r200.
+		'ICE_ALPHA' -> 16r4.
+		'ICE_GLOW' -> 16r1.
+		'ICE_NONE' -> 16r0.
+		'ICE_PULSE' -> 16r3.
+		'ICE_SHADOW' -> 16r2.
+		'IL_HORIZONTAL' -> 16r1.
+		'IL_VERTICAL' -> 16r0.
+		'IST_DPI' -> 16r2.
+		'IST_NONE' -> 16r0.
+		'IST_SIZE' -> 16r1.
+		'LIS_DISABLED' -> 16r4.
+		'LIS_HOT' -> 16r2.
+		'LIS_NORMAL' -> 16r1.
+		'LIS_SELECTED' -> 16r3.
+		'LIS_SELECTEDNOTFOCUS' -> 16r5.
+		'LVEB_HOVER' -> 16r2.
+		'LVEB_NORMAL' -> 16r1.
+		'LVEB_PUSHED' -> 16r3.
+		'LVP_COLLAPSEBUTTON' -> 16r9.
+		'LVP_EMPTYTEXT' -> 16r5.
+		'LVP_EXPANDBUTTON' -> 16r8.
+		'LVP_LISTDETAIL' -> 16r3.
+		'LVP_LISTGROUP' -> 16r2.
+		'LVP_LISTITEM' -> 16r1.
+		'LVP_LISTSORTEDDETAIL' -> 16r4.
+		'MAXBS_DISABLED' -> 16r4.
+		'MAXBS_HOT' -> 16r2.
+		'MAXBS_NORMAL' -> 16r1.
+		'MAXBS_PUSHED' -> 16r3.
+		'MDP_NEWAPPBUTTON' -> 16r1.
+		'MDP_SEPERATOR' -> 16r2.
+		'MDS_CHECKED' -> 16r5.
+		'MDS_DISABLED' -> 16r4.
+		'MDS_HOT' -> 16r2.
+		'MDS_HOTCHECKED' -> 16r6.
+		'MDS_NORMAL' -> 16r1.
+		'MDS_PRESSED' -> 16r3.
+		'MINBS_DISABLED' -> 16r4.
+		'MINBS_HOT' -> 16r2.
+		'MINBS_NORMAL' -> 16r1.
+		'MINBS_PUSHED' -> 16r3.
+		'MNCS_ACTIVE' -> 16r1.
+		'MNCS_DISABLED' -> 16r3.
+		'MNCS_INACTIVE' -> 16r2.
+		'MP_CHEVRON' -> 16r5.
+		'MP_MENUBARDROPDOWN' -> 16r4.
+		'MP_MENUBARITEM' -> 16r3.
+		'MP_MENUDROPDOWN' -> 16r2.
+		'MP_MENUITEM' -> 16r1.
+		'MP_SEPARATOR' -> 16r6.
+		'MS_DEMOTED' -> 16r3.
+		'MS_NORMAL' -> 16r1.
+		'MS_SELECTED' -> 16r2.
+		'MXCS_ACTIVE' -> 16r1.
+		'MXCS_DISABLED' -> 16r3.
+		'MXCS_INACTIVE' -> 16r2.
+		'OT_ABOVELASTBUTTON' -> 16rC.
+		'OT_BELOWLASTBUTTON' -> 16rD.
+		'OT_BOTTOMLEFT' -> 16r3.
+		'OT_BOTTOMMIDDLE' -> 16r5.
+		'OT_BOTTOMRIGHT' -> 16r4.
+		'OT_LEFTOFCAPTION' -> 16r8.
+		'OT_LEFTOFLASTBUTTON' -> 16rA.
+		'OT_MIDDLELEFT' -> 16r6.
+		'OT_MIDDLERIGHT' -> 16r7.
+		'OT_RIGHTOFCAPTION' -> 16r9.
+		'OT_RIGHTOFLASTBUTTON' -> 16rB.
+		'OT_TOPLEFT' -> 16r0.
+		'OT_TOPMIDDLE' -> 16r2.
+		'OT_TOPRIGHT' -> 16r1.
+		'PBS_DEFAULTED' -> 16r5.
+		'PBS_DISABLED' -> 16r4.
+		'PBS_HOT' -> 16r2.
+		'PBS_NORMAL' -> 16r1.
+		'PBS_PRESSED' -> 16r3.
+		'PGRP_DOWN' -> 16r2.
+		'PGRP_DOWNHORZ' -> 16r4.
+		'PGRP_UP' -> 16r1.
+		'PGRP_UPHORZ' -> 16r3.
+		'PO_CLASS' -> 16r2.
+		'PO_GLOBAL' -> 16r3.
+		'PO_NOTFOUND' -> 16r4.
+		'PO_PART' -> 16r1.
+		'PO_STATE' -> 16r0.
+		'PP_BAR' -> 16r1.
+		'PP_BARVERT' -> 16r2.
+		'PP_CHUNK' -> 16r3.
+		'PP_CHUNKVERT' -> 16r4.
+		'RBS_CHECKEDDISABLED' -> 16r8.
+		'RBS_CHECKEDHOT' -> 16r6.
+		'RBS_CHECKEDNORMAL' -> 16r5.
+		'RBS_CHECKEDPRESSED' -> 16r7.
+		'RBS_DISABLED' -> 16r4.
+		'RBS_HOT' -> 16r2.
+		'RBS_NORMAL' -> 16r1.
+		'RBS_PUSHED' -> 16r3.
+		'RBS_UNCHECKEDDISABLED' -> 16r4.
+		'RBS_UNCHECKEDHOT' -> 16r2.
+		'RBS_UNCHECKEDNORMAL' -> 16r1.
+		'RBS_UNCHECKEDPRESSED' -> 16r3.
+		'RP_BACKGROUND' -> 16r7.
+		'RP_BAND' -> 16r3.
+		'RP_CHEVRON' -> 16r4.
+		'RP_CHEVRONVERT' -> 16r5.
+		'RP_GRIPPER' -> 16r1.
+		'RP_GRIPPERVERT' -> 16r2.
+		'RP_SPLITERVERT' -> 16r8.
+		'RP_SPLITTER' -> 16r7.
+		'SBP_ARROWBTN' -> 16r1.
+		'SBP_GRIPPERHORZ' -> 16r8.
+		'SBP_GRIPPERVERT' -> 16r9.
+		'SBP_LOWERTRACKHORZ' -> 16r4.
+		'SBP_LOWERTRACKVERT' -> 16r6.
+		'SBP_SIZEBOX' -> 16rA.
+		'SBP_THUMBBTNHORZ' -> 16r2.
+		'SBP_THUMBBTNVERT' -> 16r3.
+		'SBP_UPPERTRACKHORZ' -> 16r5.
+		'SBP_UPPERTRACKVERT' -> 16r7.
+		'SBS_DISABLED' -> 16r4.
+		'SBS_HOT' -> 16r2.
+		'SBS_NORMAL' -> 16r1.
+		'SBS_PUSHED' -> 16r3.
+		'SCRBS_DISABLED' -> 16r4.
+		'SCRBS_HOT' -> 16r2.
+		'SCRBS_NORMAL' -> 16r1.
+		'SCRBS_PRESSED' -> 16r3.
+		'SP_GRIPPER' -> 16r3.
+		'SP_GRIPPERPANE' -> 16r2.
+		'SP_PANE' -> 16r1.
+		'SPLITS_NORMAL' -> 16r1.
+		'SPLITSV_NORMAL' -> 16r1.
+		'SPLS_HOT' -> 16r2.
+		'SPLS_NORMAL' -> 16r1.
+		'SPLS_PRESSED' -> 16r3.
+		'SPNP_DOWN' -> 16r2.
+		'SPNP_DOWNHORZ' -> 16r4.
+		'SPNP_UP' -> 16r1.
+		'SPNP_UPHORZ' -> 16r3.
+		'SPP_LOGOFF' -> 16r8.
+		'SPP_LOGOFFBUTTONS' -> 16r9.
+		'SPP_MOREPROGRAMS' -> 16r2.
+		'SPP_MOREPROGRAMSARROW' -> 16r3.
+		'SPP_PLACESLIST' -> 16r6.
+		'SPP_PLACESLISTSEPARATOR' -> 16r7.
+		'SPP_PREVIEW' -> 16rB.
+		'SPP_PROGLIST' -> 16r4.
+		'SPP_PROGLISTSEPARATOR' -> 16r5.
+		'SPP_USERPANE' -> 16r1.
+		'SPP_USERPICTURE' -> 16rA.
+		'SPS_HOT' -> 16r2.
+		'SPS_NORMAL' -> 16r1.
+		'SPS_PRESSED' -> 16r3.
+		'ST_STRETCH' -> 16r1.
+		'ST_TILE' -> 16r2.
+		'ST_TRUESIZE' -> 16r0.
+		'STAP_ALLOW_CONTROLS' -> 16r2.
+		'STAP_ALLOW_NONCLIENT' -> 16r1.
+		'STAP_ALLOW_WEBCONTENT' -> 16r4.
+		'SZB_LEFTALIGN' -> 16r2.
+		'SZB_RIGHTALIGN' -> 16r1.
+		'TABP_BODY' -> 16rA.
+		'TABP_PANE' -> 16r9.
+		'TABP_TABITEM' -> 16r1.
+		'TABP_TABITEMBOTHEDGE' -> 16r4.
+		'TABP_TABITEMLEFTEDGE' -> 16r2.
+		'TABP_TABITEMRIGHTEDGE' -> 16r3.
+		'TABP_TOPTABITEM' -> 16r5.
+		'TABP_TOPTABITEMBOTHEDGE' -> 16r8.
+		'TABP_TOPTABITEMLEFTEDGE' -> 16r6.
+		'TABP_TOPTABITEMRIGHTEDGE' -> 16r7.
+		'TBP_BACKGROUNDBOTTOM' -> 16r1.
+		'TBP_BACKGROUNDLEFT' -> 16r4.
+		'TBP_BACKGROUNDRIGHT' -> 16r2.
+		'TBP_BACKGROUNDTOP' -> 16r3.
+		'TBP_SIZINGBARBOTTOM' -> 16r5.
+		'TBP_SIZINGBARLEFT' -> 16r8.
+		'TBP_SIZINGBARRIGHT' -> 16r6.
+		'TBP_SIZINGBARTOP' -> 16r7.
+		'TDP_FLASHBUTTON' -> 16r2.
+		'TDP_FLASHBUTTONGROUPMENU' -> 16r3.
+		'TDP_GROUPCOUNT' -> 16r1.
+		'TIBES_DISABLED' -> 16r4.
+		'TIBES_FOCUSED' -> 16r5.
+		'TIBES_HOT' -> 16r2.
+		'TIBES_NORMAL' -> 16r1.
+		'TIBES_SELECTED' -> 16r3.
+		'TILES_DISABLED' -> 16r4.
+		'TILES_FOCUSED' -> 16r5.
+		'TILES_HOT' -> 16r2.
+		'TILES_NORMAL' -> 16r1.
+		'TILES_SELECTED' -> 16r3.
+		'TIRES_DISABLED' -> 16r4.
+		'TIRES_FOCUSED' -> 16r5.
+		'TIRES_HOT' -> 16r2.
+		'TIRES_NORMAL' -> 16r1.
+		'TIRES_SELECTED' -> 16r3.
+		'TIS_DISABLED' -> 16r4.
+		'TIS_FOCUSED' -> 16r5.
+		'TIS_HOT' -> 16r2.
+		'TIS_NORMAL' -> 16r1.
+		'TIS_SELECTED' -> 16r3.
+		'TKP_THUMB' -> 16r3.
+		'TKP_THUMBBOTTOM' -> 16r4.
+		'TKP_THUMBLEFT' -> 16r7.
+		'TKP_THUMBRIGHT' -> 16r8.
+		'TKP_THUMBTOP' -> 16r5.
+		'TKP_THUMBVERT' -> 16r6.
+		'TKP_TICS' -> 16r9.
+		'TKP_TICSVERT' -> 16rA.
+		'TKP_TRACK' -> 16r1.
+		'TKP_TRACKVERT' -> 16r2.
+		'TKS_NORMAL' -> 16r1.
+		'TMT_ACCENTCOLORHINT' -> 16rEEF.
+		'TMT_ACTIVEBORDER' -> 16r64B.
+		'TMT_ACTIVECAPTION' -> 16r643.
+		'TMT_ALPHALEVEL' -> 16r962.
+		'TMT_ALPHATHRESHOLD' -> 16r96F.
+		'TMT_ALWAYSSHOWSIZINGBAR' -> 16r8A0.
+		'TMT_APPWORKSPACE' -> 16r64D.
+		'TMT_AUTHOR' -> 16r25C.
+		'TMT_AUTOSIZE' -> 16r89A.
+		'TMT_BACKGROUND' -> 16r642.
+		'TMT_BGFILL' -> 16r89D.
+		'TMT_BGTYPE' -> 16rFA1.
+		'TMT_BLENDCOLOR' -> 16r138B.
+		'TMT_BODYTEXTCOLOR' -> 16rEF3.
+		'TMT_BOOL' -> 16rCB.
+		'TMT_BORDERCOLOR' -> 16rED9.
+		'TMT_BORDERCOLORHINT' -> 16rEEE.
+		'TMT_BORDERONLY' -> 16r89B.
+		'TMT_BORDERSIZE' -> 16r963.
+		'TMT_BORDERTYPE' -> 16rFA2.
+		'TMT_BTNFACE' -> 16r650.
+		'TMT_BTNHIGHLIGHT' -> 16r655.
+		'TMT_BTNSHADOW' -> 16r651.
+		'TMT_BTNTEXT' -> 16r653.
+		'TMT_BUTTONALTERNATEFACE' -> 16r65A.
+		'TMT_CAPTIONBARHEIGHT' -> 16r4B5.
+		'TMT_CAPTIONBARWIDTH' -> 16r4B4.
+		'TMT_CAPTIONFONT' -> 16r321.
+		'TMT_CAPTIONMARGINS' -> 16rE13.
+		'TMT_CAPTIONTEXT' -> 16r64A.
+		'TMT_CHARSET' -> 16r193.
+		'TMT_COLOR' -> 16rCC.
+		'TMT_COLORSCHEMES' -> 16r191.
+		'TMT_COMPANY' -> 16r25B.
+		'TMT_COMPOSITED' -> 16r89C.
+		'TMT_CONTENTALIGNMENT' -> 16rFA6.
+		'TMT_CONTENTMARGINS' -> 16rE12.
+		'TMT_COPYRIGHT' -> 16r25D.
+		'TMT_CSSNAME' -> 16r579.
+		'TMT_DEFAULTPANESIZE' -> 16r138A.
+		'TMT_DESCRIPTION' -> 16r260.
+		'TMT_DISPLAYNAME' -> 16r259.
+		'TMT_DKSHADOW3D' -> 16r656.
+		'TMT_EDGEDKSHADOWCOLOR' -> 16rEDF.
+		'TMT_EDGEFILLCOLOR' -> 16rEE0.
+		'TMT_EDGEHIGHLIGHTCOLOR' -> 16rEDD.
+		'TMT_EDGELIGHTCOLOR' -> 16rEDC.
+		'TMT_EDGESHADOWCOLOR' -> 16rEDE.
+		'TMT_FILENAME' -> 16rCE.
+		'TMT_FILLCOLOR' -> 16rEDA.
+		'TMT_FILLCOLORHINT' -> 16rEED.
+		'TMT_FILLTYPE' -> 16rFA3.
+		'TMT_FLATMENUS' -> 16r3E9.
+		'TMT_FONT' -> 16rD2.
+		'TMT_FROMCOLOR1' -> 16r7D1.
+		'TMT_FROMCOLOR2' -> 16r7D2.
+		'TMT_FROMCOLOR3' -> 16r7D3.
+		'TMT_FROMCOLOR4' -> 16r7D4.
+		'TMT_FROMCOLOR5' -> 16r7D5.
+		'TMT_FROMHUE1' -> 16r709.
+		'TMT_FROMHUE2' -> 16r70A.
+		'TMT_FROMHUE3' -> 16r70B.
+		'TMT_FROMHUE4' -> 16r70C.
+		'TMT_FROMHUE5' -> 16r70D.
+		'TMT_GLOWCOLOR' -> 16rEE8.
+		'TMT_GLYPHFONT' -> 16rA29.
+		'TMT_GLYPHFONTSIZINGTYPE' -> 16rFAE.
+		'TMT_GLYPHIMAGEFILE' -> 16rBC0.
+		'TMT_GLYPHINDEX' -> 16r972.
+		'TMT_GLYPHONLY' -> 16r89F.
+		'TMT_GLYPHTEXTCOLOR' -> 16rEEB.
+		'TMT_GLYPHTRANSPARENT' -> 16r89E.
+		'TMT_GLYPHTRANSPARENTCOLOR' -> 16rEEC.
+		'TMT_GLYPHTYPE' -> 16rFAC.
+		'TMT_GRADIENTACTIVECAPTION' -> 16r65C.
+		'TMT_GRADIENTCOLOR1' -> 16rEE2.
+		'TMT_GRADIENTCOLOR2' -> 16rEE3.
+		'TMT_GRADIENTCOLOR3' -> 16rEE4.
+		'TMT_GRADIENTCOLOR4' -> 16rEE5.
+		'TMT_GRADIENTCOLOR5' -> 16rEE6.
+		'TMT_GRADIENTINACTIVECAPTION' -> 16r65D.
+		'TMT_GRADIENTRATIO1' -> 16r966.
+		'TMT_GRADIENTRATIO2' -> 16r967.
+		'TMT_GRADIENTRATIO3' -> 16r968.
+		'TMT_GRADIENTRATIO4' -> 16r969.
+		'TMT_GRADIENTRATIO5' -> 16r96A.
+		'TMT_GRAYTEXT' -> 16r652.
+		'TMT_HALIGN' -> 16rFA5.
+		'TMT_HEIGHT' -> 16r971.
+		'TMT_HIGHLIGHT' -> 16r64E.
+		'TMT_HIGHLIGHTTEXT' -> 16r64F.
+		'TMT_HOTTRACKING' -> 16r65B.
+		'TMT_ICONEFFECT' -> 16rFA9.
+		'TMT_ICONTITLEFONT' -> 16r326.
+		'TMT_IMAGECOUNT' -> 16r961.
+		'TMT_IMAGEFILE' -> 16rBB9.
+		'TMT_IMAGEFILE1' -> 16rBBA.
+		'TMT_IMAGEFILE2' -> 16rBBB.
+		'TMT_IMAGEFILE3' -> 16rBBC.
+		'TMT_IMAGEFILE4' -> 16rBBD.
+		'TMT_IMAGEFILE5' -> 16rBBE.
+		'TMT_IMAGELAYOUT' -> 16rFAB.
+		'TMT_IMAGESELECTTYPE' -> 16rFAD.
+		'TMT_INACTIVEBORDER' -> 16r64C.
+		'TMT_INACTIVECAPTION' -> 16r644.
+		'TMT_INACTIVECAPTIONTEXT' -> 16r654.
+		'TMT_INFOBK' -> 16r659.
+		'TMT_INFOTEXT' -> 16r658.
+		'TMT_INT' -> 16rCA.
+		'TMT_INTEGRALSIZING' -> 16r8A3.
+		'TMT_INTLIST' -> 16rD3.
+		'TMT_LIGHT3D' -> 16r657.
+		'TMT_MARGINS' -> 16rCD.
+		'TMT_MENU' -> 16r645.
+		'TMT_MENUBAR' -> 16r65F.
+		'TMT_MENUBARHEIGHT' -> 16r4B9.
+		'TMT_MENUBARWIDTH' -> 16r4B8.
+		'TMT_MENUFONT' -> 16r323.
+		'TMT_MENUHILIGHT' -> 16r65E.
+		'TMT_MENUTEXT' -> 16r648.
+		'TMT_MINCOLORDEPTH' -> 16r515.
+		'TMT_MINDPI1' -> 16r974.
+		'TMT_MINDPI2' -> 16r975.
+		'TMT_MINDPI3' -> 16r976.
+		'TMT_MINDPI4' -> 16r977.
+		'TMT_MINDPI5' -> 16r978.
+		'TMT_MINSIZE' -> 16rD4B.
+		'TMT_MINSIZE1' -> 16rD4C.
+		'TMT_MINSIZE2' -> 16rD4D.
+		'TMT_MINSIZE3' -> 16rD4E.
+		'TMT_MINSIZE4' -> 16rD4F.
+		'TMT_MINSIZE5' -> 16rD50.
+		'TMT_MIRRORIMAGE' -> 16r8A1.
+		'TMT_MSGBOXFONT' -> 16r325.
+		'TMT_NORMALSIZE' -> 16rD51.
+		'TMT_OFFSET' -> 16rD49.
+		'TMT_OFFSETTYPE' -> 16rFA8.
+		'TMT_POSITION' -> 16rD0.
+		'TMT_PROGRESSCHUNKSIZE' -> 16r96B.
+		'TMT_PROGRESSSPACESIZE' -> 16r96C.
+		'TMT_RECT' -> 16rD1.
+		'TMT_ROUNDCORNERHEIGHT' -> 16r965.
+		'TMT_ROUNDCORNERWIDTH' -> 16r964.
+		'TMT_SATURATION' -> 16r96D.
+		'TMT_SCROLLBAR' -> 16r641.
+		'TMT_SCROLLBARHEIGHT' -> 16r4B3.
+		'TMT_SCROLLBARWIDTH' -> 16r4B2.
+		'TMT_SHADOWCOLOR' -> 16rEE7.
+		'TMT_SIZE' -> 16rCF.
+		'TMT_SIZES' -> 16r192.
+		'TMT_SIZINGBORDERWIDTH' -> 16r4B1.
+		'TMT_SIZINGMARGINS' -> 16rE11.
+		'TMT_SIZINGTYPE' -> 16rFA4.
+		'TMT_SMALLCAPTIONFONT' -> 16r322.
+		'TMT_SMCAPTIONBARHEIGHT' -> 16r4B7.
+		'TMT_SMCAPTIONBARWIDTH' -> 16r4B6.
+		'TMT_SOURCEGROW' -> 16r8A4.
+		'TMT_SOURCESHRINK' -> 16r8A5.
+		'TMT_STATUSFONT' -> 16r324.
+		'TMT_STOCKIMAGEFILE' -> 16rBBF.
+		'TMT_STRING' -> 16rC9.
+		'TMT_TEXT' -> 16rC81.
+		'TMT_TEXTBORDERCOLOR' -> 16rEE9.
+		'TMT_TEXTBORDERSIZE' -> 16r96E.
+		'TMT_TEXTCOLOR' -> 16rEDB.
+		'TMT_TEXTSHADOWCOLOR' -> 16rEEA.
+		'TMT_TEXTSHADOWOFFSET' -> 16rD4A.
+		'TMT_TEXTSHADOWTYPE' -> 16rFAA.
+		'TMT_TOCOLOR1' -> 16r7D6.
+		'TMT_TOCOLOR2' -> 16r7D7.
+		'TMT_TOCOLOR3' -> 16r7D8.
+		'TMT_TOCOLOR4' -> 16r7D9.
+		'TMT_TOCOLOR5' -> 16r7DA.
+		'TMT_TOHUE1' -> 16r70E.
+		'TMT_TOHUE2' -> 16r70F.
+		'TMT_TOHUE3' -> 16r710.
+		'TMT_TOHUE4' -> 16r711.
+		'TMT_TOHUE5' -> 16r712.
+		'TMT_TOOLTIP' -> 16r25A.
+		'TMT_TRANSPARENT' -> 16r899.
+		'TMT_TRANSPARENTCOLOR' -> 16rEE1.
+		'TMT_TRUESIZESCALINGTYPE' -> 16rFAF.
+		'TMT_TRUESIZESTRETCHMARK' -> 16r973.
+		'TMT_UNIFORMSIZING' -> 16r8A2.
+		'TMT_URL' -> 16r25E.
+		'TMT_USERPICTURE' -> 16r1389.
+		'TMT_VALIGN' -> 16rFA7.
+		'TMT_VERSION' -> 16r25F.
+		'TMT_WIDTH' -> 16r970.
+		'TMT_WINDOW' -> 16r646.
+		'TMT_WINDOWFRAME' -> 16r647.
+		'TMT_WINDOWTEXT' -> 16r649.
+		'TMT_XMLNAME' -> 16r57A.
+		'TNP_ANIMBACKGROUND' -> 16r2.
+		'TNP_BACKGROUND' -> 16r1.
+		'TP_BUTTON' -> 16r1.
+		'TP_DROPDOWNBUTTON' -> 16r2.
+		'TP_SEPARATOR' -> 16r5.
+		'TP_SEPARATORVERT' -> 16r6.
+		'TP_SPLITBUTTON' -> 16r3.
+		'TP_SPLITBUTTONDROPDOWN' -> 16r4.
+		'TREIS_DISABLED' -> 16r4.
+		'TREIS_HOT' -> 16r2.
+		'TREIS_NORMAL' -> 16r1.
+		'TREIS_SELECTED' -> 16r3.
+		'TREIS_SELECTEDNOTFOCUS' -> 16r5.
+		'TRS_NORMAL' -> 16r1.
+		'TRVS_NORMAL' -> 16r1.
+		'TS_CHECKED' -> 16r5.
+		'TS_DISABLED' -> 16r4.
+		'TS_DRAW' -> 16r2.
+		'TS_HOT' -> 16r2.
+		'TS_HOTCHECKED' -> 16r6.
+		'TS_MIN' -> 16r0.
+		'TS_NORMAL' -> 16r1.
+		'TS_PRESSED' -> 16r3.
+		'TS_TRUE' -> 16r1.
+		'TSS_NORMAL' -> 16r1.
+		'TSST_DPI' -> 16r2.
+		'TSST_NONE' -> 16r0.
+		'TSST_SIZE' -> 16r1.
+		'TST_CONTINUOUS' -> 16r2.
+		'TST_NONE' -> 16r0.
+		'TST_SINGLE' -> 16r1.
+		'TSVS_NORMAL' -> 16r1.
+		'TTBS_LINK' -> 16r2.
+		'TTBS_NORMAL' -> 16r1.
+		'TTCS_HOT' -> 16r2.
+		'TTCS_NORMAL' -> 16r1.
+		'TTCS_PRESSED' -> 16r3.
+		'TTIBES_DISABLED' -> 16r4.
+		'TTIBES_FOCUSED' -> 16r5.
+		'TTIBES_HOT' -> 16r2.
+		'TTIBES_NORMAL' -> 16r1.
+		'TTIBES_SELECTED' -> 16r3.
+		'TTILES_DISABLED' -> 16r4.
+		'TTILES_FOCUSED' -> 16r5.
+		'TTILES_HOT' -> 16r2.
+		'TTILES_NORMAL' -> 16r1.
+		'TTILES_SELECTED' -> 16r3.
+		'TTIRES_DISABLED' -> 16r4.
+		'TTIRES_FOCUSED' -> 16r5.
+		'TTIRES_HOT' -> 16r2.
+		'TTIRES_NORMAL' -> 16r1.
+		'TTIRES_SELECTED' -> 16r3.
+		'TTIS_DISABLED' -> 16r4.
+		'TTIS_FOCUSED' -> 16r5.
+		'TTIS_HOT' -> 16r2.
+		'TTIS_NORMAL' -> 16r1.
+		'TTIS_SELECTED' -> 16r3.
+		'TTP_BALLOON' -> 16r3.
+		'TTP_BALLOONTITLE' -> 16r4.
+		'TTP_CLOSE' -> 16r5.
+		'TTP_STANDARD' -> 16r1.
+		'TTP_STANDARDTITLE' -> 16r2.
+		'TTSS_LINK' -> 16r2.
+		'TTSS_NORMAL' -> 16r1.
+		'TUBS_DISABLED' -> 16r5.
+		'TUBS_FOCUSED' -> 16r4.
+		'TUBS_HOT' -> 16r2.
+		'TUBS_NORMAL' -> 16r1.
+		'TUBS_PRESSED' -> 16r3.
+		'TUS_DISABLED' -> 16r5.
+		'TUS_FOCUSED' -> 16r4.
+		'TUS_HOT' -> 16r2.
+		'TUS_NORMAL' -> 16r1.
+		'TUS_PRESSED' -> 16r3.
+		'TUTS_DISABLED' -> 16r5.
+		'TUTS_FOCUSED' -> 16r4.
+		'TUTS_HOT' -> 16r2.
+		'TUTS_NORMAL' -> 16r1.
+		'TUTS_PRESSED' -> 16r3.
+		'TUVLS_DISABLED' -> 16r5.
+		'TUVLS_FOCUSED' -> 16r4.
+		'TUVLS_HOT' -> 16r2.
+		'TUVLS_NORMAL' -> 16r1.
+		'TUVLS_PRESSED' -> 16r3.
+		'TUVRS_DISABLED' -> 16r5.
+		'TUVRS_FOCUSED' -> 16r4.
+		'TUVRS_HOT' -> 16r2.
+		'TUVRS_NORMAL' -> 16r1.
+		'TUVRS_PRESSED' -> 16r3.
+		'TUVS_DISABLED' -> 16r5.
+		'TUVS_FOCUSED' -> 16r4.
+		'TUVS_HOT' -> 16r2.
+		'TUVS_NORMAL' -> 16r1.
+		'TUVS_PRESSED' -> 16r3.
+		'TVP_BRANCH' -> 16r3.
+		'TVP_GLYPH' -> 16r2.
+		'TVP_TREEITEM' -> 16r1.
+		'UPHZS_DISABLED' -> 16r4.
+		'UPHZS_HOT' -> 16r2.
+		'UPHZS_NORMAL' -> 16r1.
+		'UPHZS_PRESSED' -> 16r3.
+		'UPS_DISABLED' -> 16r4.
+		'UPS_HOT' -> 16r2.
+		'UPS_NORMAL' -> 16r1.
+		'UPS_PRESSED' -> 16r3.
+		'VA_BOTTOM' -> 16r2.
+		'VA_CENTER' -> 16r1.
+		'VA_TOP' -> 16r0.
+		'VSS_DISABLED' -> 16r4.
+		'VSS_HOT' -> 16r2.
+		'VSS_NORMAL' -> 16r1.
+		'VSS_PUSHED' -> 16r3.
+		'VTS_DISABLED' -> 16r4.
+		'VTS_HOT' -> 16r2.
+		'VTS_NORMAL' -> 16r1.
+		'VTS_PUSHED' -> 16r3.
+		'WP_CAPTION' -> 16r1.
+		'WP_CAPTIONSIZINGTEMPLATE' -> 16r1E.
+		'WP_CLOSEBUTTON' -> 16r12.
+		'WP_DIALOG' -> 16r1D.
+		'WP_FRAMEBOTTOM' -> 16r9.
+		'WP_FRAMEBOTTOMSIZINGTEMPLATE' -> 16r24.
+		'WP_FRAMELEFT' -> 16r7.
+		'WP_FRAMELEFTSIZINGTEMPLATE' -> 16r20.
+		'WP_FRAMERIGHT' -> 16r8.
+		'WP_FRAMERIGHTSIZINGTEMPLATE' -> 16r22.
+		'WP_HELPBUTTON' -> 16r17.
+		'WP_HORZSCROLL' -> 16r19.
+		'WP_HORZTHUMB' -> 16r1A.
+		'WP_MAXBUTTON' -> 16r11.
+		'WP_MAXCAPTION' -> 16r5.
+		'WP_MDICLOSEBUTTON' -> 16r14.
+		'WP_MDIHELPBUTTON' -> 16r18.
+		'WP_MDIMINBUTTON' -> 16r10.
+		'WP_MDIRESTOREBUTTON' -> 16r16.
+		'WP_MDISYSBUTTON' -> 16rE.
+		'WP_MINBUTTON' -> 16rF.
+		'WP_MINCAPTION' -> 16r3.
+		'WP_RESTOREBUTTON' -> 16r15.
+		'WP_SMALLCAPTION' -> 16r2.
+		'WP_SMALLCAPTIONSIZINGTEMPLATE' -> 16r1F.
+		'WP_SMALLCLOSEBUTTON' -> 16r13.
+		'WP_SMALLFRAMEBOTTOM' -> 16rC.
+		'WP_SMALLFRAMEBOTTOMSIZINGTEMPLATE' -> 16r25.
+		'WP_SMALLFRAMELEFT' -> 16rA.
+		'WP_SMALLFRAMELEFTSIZINGTEMPLATE' -> 16r21.
+		'WP_SMALLFRAMERIGHT' -> 16rB.
+		'WP_SMALLFRAMERIGHTSIZINGTEMPLATE' -> 16r23.
+		'WP_SMALLMAXCAPTION' -> 16r6.
+		'WP_SMALLMINCAPTION' -> 16r4.
+		'WP_SYSBUTTON' -> 16rD.
+		'WP_VERTSCROLL' -> 16r1B.
+		'WP_VERTTHUMB' -> 16r1C
+	}!
+ThemeConstants guid: (GUID fromString: '{f601ab70-6b9a-47cf-81f7-79e3c79b803a}')!
+ThemeConstants comment: ''!
+!ThemeConstants categoriesForClass!Unclassified! !

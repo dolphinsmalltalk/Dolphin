@@ -1,65 +1,73 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{TooltipConstants} declare: (PoolConstantsDictionary named: #TooltipConstants)!
-TooltipConstants at: 'TTDT_AUTOMATIC' put: 16r0!
-TooltipConstants at: 'TTDT_AUTOPOP' put: 16r2!
-TooltipConstants at: 'TTDT_INITIAL' put: 16r3!
-TooltipConstants at: 'TTDT_RESHOW' put: 16r1!
-TooltipConstants at: 'TTF_ABSOLUTE' put: 16r80!
-TooltipConstants at: 'TTF_CENTERTIP' put: 16r2!
-TooltipConstants at: 'TTF_DI_SETITEM' put: 16r8000!
-TooltipConstants at: 'TTF_IDISHWND' put: 16r1!
-TooltipConstants at: 'TTF_PARSELINKS' put: 16r1000!
-TooltipConstants at: 'TTF_RTLREADING' put: 16r4!
-TooltipConstants at: 'TTF_SUBCLASS' put: 16r10!
-TooltipConstants at: 'TTF_TRACK' put: 16r20!
-TooltipConstants at: 'TTF_TRANSPARENT' put: 16r100!
-TooltipConstants at: 'TTI_ERROR' put: 16r3!
-TooltipConstants at: 'TTI_INFO' put: 16r1!
-TooltipConstants at: 'TTI_NONE' put: 16r0!
-TooltipConstants at: 'TTI_WARNING' put: 16r2!
-TooltipConstants at: 'TTM_ACTIVATE' put: 16r401!
-TooltipConstants at: 'TTM_ADDTOOLW' put: 16r432!
-TooltipConstants at: 'TTM_ADJUSTRECT' put: 16r41F!
-TooltipConstants at: 'TTM_DELTOOLW' put: 16r433!
-TooltipConstants at: 'TTM_ENUMTOOLSW' put: 16r43A!
-TooltipConstants at: 'TTM_GETBUBBLESIZE' put: 16r41E!
-TooltipConstants at: 'TTM_GETCURRENTTOOLW' put: 16r43B!
-TooltipConstants at: 'TTM_GETDELAYTIME' put: 16r415!
-TooltipConstants at: 'TTM_GETMARGIN' put: 16r41B!
-TooltipConstants at: 'TTM_GETMAXTIPWIDTH' put: 16r419!
-TooltipConstants at: 'TTM_GETTEXTW' put: 16r438!
-TooltipConstants at: 'TTM_GETTIPBKCOLOR' put: 16r416!
-TooltipConstants at: 'TTM_GETTIPTEXTCOLOR' put: 16r417!
-TooltipConstants at: 'TTM_GETTITLE' put: 16r423!
-TooltipConstants at: 'TTM_GETTOOLCOUNT' put: 16r40D!
-TooltipConstants at: 'TTM_GETTOOLINFOW' put: 16r435!
-TooltipConstants at: 'TTM_HITTESTW' put: 16r437!
-TooltipConstants at: 'TTM_NEWTOOLRECTW' put: 16r434!
-TooltipConstants at: 'TTM_POP' put: 16r41C!
-TooltipConstants at: 'TTM_POPUP' put: 16r422!
-TooltipConstants at: 'TTM_RELAYEVENT' put: 16r407!
-TooltipConstants at: 'TTM_SETDELAYTIME' put: 16r403!
-TooltipConstants at: 'TTM_SETMARGIN' put: 16r41A!
-TooltipConstants at: 'TTM_SETMAXTIPWIDTH' put: 16r418!
-TooltipConstants at: 'TTM_SETTIPBKCOLOR' put: 16r413!
-TooltipConstants at: 'TTM_SETTIPTEXTCOLOR' put: 16r414!
-TooltipConstants at: 'TTM_SETTITLEW' put: 16r421!
-TooltipConstants at: 'TTM_SETTOOLINFOW' put: 16r436!
-TooltipConstants at: 'TTM_TRACKACTIVATE' put: 16r411!
-TooltipConstants at: 'TTM_TRACKPOSITION' put: 16r412!
-TooltipConstants at: 'TTM_UPDATE' put: 16r41D!
-TooltipConstants at: 'TTM_UPDATETIPTEXTW' put: 16r439!
-TooltipConstants at: 'TTM_WINDOWFROMPOINT' put: 16r410!
-TooltipConstants at: 'TTN_FIRST' put: -16r208!
-TooltipConstants at: 'TTN_LAST' put: -16r225!
-TooltipConstants at: 'TTN_LINKCLICK' put: -16r20B!
-TooltipConstants at: 'TTN_POP' put: -16r20A!
-TooltipConstants at: 'TTN_SHOW' put: -16r209!
-TooltipConstants at: 'TTS_ALWAYSTIP' put: 16r1!
-TooltipConstants at: 'TTS_BALLOON' put: 16r40!
-TooltipConstants at: 'TTS_CLOSE' put: 16r80!
-TooltipConstants at: 'TTS_NOANIMATE' put: 16r10!
-TooltipConstants at: 'TTS_NOFADE' put: 16r20!
-TooltipConstants at: 'TTS_NOPREFIX' put: 16r2!
-TooltipConstants shrink!
+SharedPool subclass: #TooltipConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TTDT_AUTOMATIC' -> 16r0.
+		'TTDT_AUTOPOP' -> 16r2.
+		'TTDT_INITIAL' -> 16r3.
+		'TTDT_RESHOW' -> 16r1.
+		'TTF_ABSOLUTE' -> 16r80.
+		'TTF_CENTERTIP' -> 16r2.
+		'TTF_DI_SETITEM' -> 16r8000.
+		'TTF_IDISHWND' -> 16r1.
+		'TTF_PARSELINKS' -> 16r1000.
+		'TTF_RTLREADING' -> 16r4.
+		'TTF_SUBCLASS' -> 16r10.
+		'TTF_TRACK' -> 16r20.
+		'TTF_TRANSPARENT' -> 16r100.
+		'TTI_ERROR' -> 16r3.
+		'TTI_INFO' -> 16r1.
+		'TTI_NONE' -> 16r0.
+		'TTI_WARNING' -> 16r2.
+		'TTM_ACTIVATE' -> 16r401.
+		'TTM_ADDTOOLW' -> 16r432.
+		'TTM_ADJUSTRECT' -> 16r41F.
+		'TTM_DELTOOLW' -> 16r433.
+		'TTM_ENUMTOOLSW' -> 16r43A.
+		'TTM_GETBUBBLESIZE' -> 16r41E.
+		'TTM_GETCURRENTTOOLW' -> 16r43B.
+		'TTM_GETDELAYTIME' -> 16r415.
+		'TTM_GETMARGIN' -> 16r41B.
+		'TTM_GETMAXTIPWIDTH' -> 16r419.
+		'TTM_GETTEXTW' -> 16r438.
+		'TTM_GETTIPBKCOLOR' -> 16r416.
+		'TTM_GETTIPTEXTCOLOR' -> 16r417.
+		'TTM_GETTITLE' -> 16r423.
+		'TTM_GETTOOLCOUNT' -> 16r40D.
+		'TTM_GETTOOLINFOW' -> 16r435.
+		'TTM_HITTESTW' -> 16r437.
+		'TTM_NEWTOOLRECTW' -> 16r434.
+		'TTM_POP' -> 16r41C.
+		'TTM_POPUP' -> 16r422.
+		'TTM_RELAYEVENT' -> 16r407.
+		'TTM_SETDELAYTIME' -> 16r403.
+		'TTM_SETMARGIN' -> 16r41A.
+		'TTM_SETMAXTIPWIDTH' -> 16r418.
+		'TTM_SETTIPBKCOLOR' -> 16r413.
+		'TTM_SETTIPTEXTCOLOR' -> 16r414.
+		'TTM_SETTITLEW' -> 16r421.
+		'TTM_SETTOOLINFOW' -> 16r436.
+		'TTM_TRACKACTIVATE' -> 16r411.
+		'TTM_TRACKPOSITION' -> 16r412.
+		'TTM_UPDATE' -> 16r41D.
+		'TTM_UPDATETIPTEXTW' -> 16r439.
+		'TTM_WINDOWFROMPOINT' -> 16r410.
+		'TTN_FIRST' -> -16r208.
+		'TTN_LAST' -> -16r225.
+		'TTN_LINKCLICK' -> -16r20B.
+		'TTN_POP' -> -16r20A.
+		'TTN_SHOW' -> -16r209.
+		'TTS_ALWAYSTIP' -> 16r1.
+		'TTS_BALLOON' -> 16r40.
+		'TTS_CLOSE' -> 16r80.
+		'TTS_NOANIMATE' -> 16r10.
+		'TTS_NOFADE' -> 16r20.
+		'TTS_NOPREFIX' -> 16r2
+	}!
+TooltipConstants guid: (GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
+TooltipConstants comment: ''!
+!TooltipConstants categoriesForClass!Unclassified! !

@@ -15,9 +15,6 @@ package setClassNames: #(
 	#{Crypt32Library}
 	#{CRYPTOAPI_BLOB}
 	#{CRYPTPROTECT_PROMPTSTRUCT}
-).
-
-package setVariableNames: #(
 	#{WinCryptConstants}
 ).
 
@@ -30,6 +27,31 @@ package!
 
 "Class Definitions"!
 
+SharedPool subclass: #WinCryptConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CRYPTPROTECT_AUDIT' -> 16r10.
+		'CRYPTPROTECT_CRED_REGENERATE' -> 16r80.
+		'CRYPTPROTECT_CRED_SYNC' -> 16r8.
+		'CRYPTPROTECT_FIRST_RESERVED_FLAGVAL' -> 16rFFFFFFF.
+		'CRYPTPROTECT_LAST_RESERVED_FLAGVAL' -> 16rFFFFFFFF.
+		'CRYPTPROTECT_LOCAL_MACHINE' -> 16r4.
+		'CRYPTPROTECT_NO_RECOVERY' -> 16r20.
+		'CRYPTPROTECT_PROMPT_ON_PROTECT' -> 16r2.
+		'CRYPTPROTECT_PROMPT_ON_UNPROTECT' -> 16r1.
+		'CRYPTPROTECT_PROMPT_REQUIRE_STRONG' -> 16r10.
+		'CRYPTPROTECT_PROMPT_RESERVED' -> 16r4.
+		'CRYPTPROTECT_PROMPT_STRONG' -> 16r8.
+		'CRYPTPROTECT_UI_FORBIDDEN' -> 16r1.
+		'CRYPTPROTECT_VERIFY_PROTECTION' -> 16r40.
+		'CRYPTPROTECTMEMORY_BLOCK_SIZE' -> 16r10.
+		'CRYPTPROTECTMEMORY_CROSS_PROCESS' -> 16r1.
+		'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
+		'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
+	}!
 ExternalLibrary subclass: #Crypt32Library
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -1,127 +1,135 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{EnhancedMetafileRecordTypes} declare: (PoolConstantsDictionary named: #EnhancedMetafileRecordTypes)!
-EnhancedMetafileRecordTypes at: 'EMR_ABORTPATH' put: 16r44!
-EnhancedMetafileRecordTypes at: 'EMR_ALPHABLEND' put: 16r72!
-EnhancedMetafileRecordTypes at: 'EMR_ANGLEARC' put: 16r29!
-EnhancedMetafileRecordTypes at: 'EMR_ARC' put: 16r2D!
-EnhancedMetafileRecordTypes at: 'EMR_ARCTO' put: 16r37!
-EnhancedMetafileRecordTypes at: 'EMR_BEGINPATH' put: 16r3B!
-EnhancedMetafileRecordTypes at: 'EMR_BITBLT' put: 16r4C!
-EnhancedMetafileRecordTypes at: 'EMR_CHORD' put: 16r2E!
-EnhancedMetafileRecordTypes at: 'EMR_CLOSEFIGURE' put: 16r3D!
-EnhancedMetafileRecordTypes at: 'EMR_COLORCORRECTPALETTE' put: 16r6F!
-EnhancedMetafileRecordTypes at: 'EMR_COLORMATCHTOTARGETW' put: 16r79!
-EnhancedMetafileRecordTypes at: 'EMR_CREATEBRUSHINDIRECT' put: 16r27!
-EnhancedMetafileRecordTypes at: 'EMR_CREATECOLORSPACE' put: 16r63!
-EnhancedMetafileRecordTypes at: 'EMR_CREATECOLORSPACEW' put: 16r7A!
-EnhancedMetafileRecordTypes at: 'EMR_CREATEDIBPATTERNBRUSHPT' put: 16r5E!
-EnhancedMetafileRecordTypes at: 'EMR_CREATEMONOBRUSH' put: 16r5D!
-EnhancedMetafileRecordTypes at: 'EMR_CREATEPALETTE' put: 16r31!
-EnhancedMetafileRecordTypes at: 'EMR_CREATEPEN' put: 16r26!
-EnhancedMetafileRecordTypes at: 'EMR_DELETECOLORSPACE' put: 16r65!
-EnhancedMetafileRecordTypes at: 'EMR_DELETEOBJECT' put: 16r28!
-EnhancedMetafileRecordTypes at: 'EMR_ELLIPSE' put: 16r2A!
-EnhancedMetafileRecordTypes at: 'EMR_ENDPATH' put: 16r3C!
-EnhancedMetafileRecordTypes at: 'EMR_EOF' put: 16rE!
-EnhancedMetafileRecordTypes at: 'EMR_EXCLUDECLIPRECT' put: 16r1D!
-EnhancedMetafileRecordTypes at: 'EMR_EXTCREATEFONTINDIRECTW' put: 16r52!
-EnhancedMetafileRecordTypes at: 'EMR_EXTCREATEPEN' put: 16r5F!
-EnhancedMetafileRecordTypes at: 'EMR_EXTFLOODFILL' put: 16r35!
-EnhancedMetafileRecordTypes at: 'EMR_EXTSELECTCLIPRGN' put: 16r4B!
-EnhancedMetafileRecordTypes at: 'EMR_EXTTEXTOUTA' put: 16r53!
-EnhancedMetafileRecordTypes at: 'EMR_EXTTEXTOUTW' put: 16r54!
-EnhancedMetafileRecordTypes at: 'EMR_FILLPATH' put: 16r3E!
-EnhancedMetafileRecordTypes at: 'EMR_FILLRGN' put: 16r47!
-EnhancedMetafileRecordTypes at: 'EMR_FLATTENPATH' put: 16r41!
-EnhancedMetafileRecordTypes at: 'EMR_FRAMERGN' put: 16r48!
-EnhancedMetafileRecordTypes at: 'EMR_GDICOMMENT' put: 16r46!
-EnhancedMetafileRecordTypes at: 'EMR_GLSBOUNDEDRECORD' put: 16r67!
-EnhancedMetafileRecordTypes at: 'EMR_GLSRECORD' put: 16r66!
-EnhancedMetafileRecordTypes at: 'EMR_GRADIENTFILL' put: 16r76!
-EnhancedMetafileRecordTypes at: 'EMR_HEADER' put: 16r1!
-EnhancedMetafileRecordTypes at: 'EMR_INTERSECTCLIPRECT' put: 16r1E!
-EnhancedMetafileRecordTypes at: 'EMR_INVERTRGN' put: 16r49!
-EnhancedMetafileRecordTypes at: 'EMR_LINETO' put: 16r36!
-EnhancedMetafileRecordTypes at: 'EMR_MASKBLT' put: 16r4E!
-EnhancedMetafileRecordTypes at: 'EMR_MAX' put: 16r7A!
-EnhancedMetafileRecordTypes at: 'EMR_MIN' put: 16r1!
-EnhancedMetafileRecordTypes at: 'EMR_MODIFYWORLDTRANSFORM' put: 16r24!
-EnhancedMetafileRecordTypes at: 'EMR_MOVETOEX' put: 16r1B!
-EnhancedMetafileRecordTypes at: 'EMR_OFFSETCLIPRGN' put: 16r1A!
-EnhancedMetafileRecordTypes at: 'EMR_PAINTRGN' put: 16r4A!
-EnhancedMetafileRecordTypes at: 'EMR_PIE' put: 16r2F!
-EnhancedMetafileRecordTypes at: 'EMR_PIXELFORMAT' put: 16r68!
-EnhancedMetafileRecordTypes at: 'EMR_PLGBLT' put: 16r4F!
-EnhancedMetafileRecordTypes at: 'EMR_POLYBEZIER' put: 16r2!
-EnhancedMetafileRecordTypes at: 'EMR_POLYBEZIER16' put: 16r55!
-EnhancedMetafileRecordTypes at: 'EMR_POLYBEZIERTO' put: 16r5!
-EnhancedMetafileRecordTypes at: 'EMR_POLYBEZIERTO16' put: 16r58!
-EnhancedMetafileRecordTypes at: 'EMR_POLYDRAW' put: 16r38!
-EnhancedMetafileRecordTypes at: 'EMR_POLYDRAW16' put: 16r5C!
-EnhancedMetafileRecordTypes at: 'EMR_POLYGON' put: 16r3!
-EnhancedMetafileRecordTypes at: 'EMR_POLYGON16' put: 16r56!
-EnhancedMetafileRecordTypes at: 'EMR_POLYLINE' put: 16r4!
-EnhancedMetafileRecordTypes at: 'EMR_POLYLINE16' put: 16r57!
-EnhancedMetafileRecordTypes at: 'EMR_POLYLINETO' put: 16r6!
-EnhancedMetafileRecordTypes at: 'EMR_POLYLINETO16' put: 16r59!
-EnhancedMetafileRecordTypes at: 'EMR_POLYPOLYGON' put: 16r8!
-EnhancedMetafileRecordTypes at: 'EMR_POLYPOLYGON16' put: 16r5B!
-EnhancedMetafileRecordTypes at: 'EMR_POLYPOLYLINE' put: 16r7!
-EnhancedMetafileRecordTypes at: 'EMR_POLYPOLYLINE16' put: 16r5A!
-EnhancedMetafileRecordTypes at: 'EMR_POLYTEXTOUTA' put: 16r60!
-EnhancedMetafileRecordTypes at: 'EMR_POLYTEXTOUTW' put: 16r61!
-EnhancedMetafileRecordTypes at: 'EMR_REALIZEPALETTE' put: 16r34!
-EnhancedMetafileRecordTypes at: 'EMR_RECTANGLE' put: 16r2B!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_105' put: 16r69!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_106' put: 16r6A!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_107' put: 16r6B!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_108' put: 16r6C!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_109' put: 16r6D!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_110' put: 16r6E!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_117' put: 16r75!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_119' put: 16r77!
-EnhancedMetafileRecordTypes at: 'EMR_RESERVED_120' put: 16r78!
-EnhancedMetafileRecordTypes at: 'EMR_RESIZEPALETTE' put: 16r33!
-EnhancedMetafileRecordTypes at: 'EMR_RESTOREDC' put: 16r22!
-EnhancedMetafileRecordTypes at: 'EMR_ROUNDRECT' put: 16r2C!
-EnhancedMetafileRecordTypes at: 'EMR_SAVEDC' put: 16r21!
-EnhancedMetafileRecordTypes at: 'EMR_SCALEVIEWPORTEXTEX' put: 16r1F!
-EnhancedMetafileRecordTypes at: 'EMR_SCALEWINDOWEXTEX' put: 16r20!
-EnhancedMetafileRecordTypes at: 'EMR_SELECTCLIPPATH' put: 16r43!
-EnhancedMetafileRecordTypes at: 'EMR_SELECTOBJECT' put: 16r25!
-EnhancedMetafileRecordTypes at: 'EMR_SELECTPALETTE' put: 16r30!
-EnhancedMetafileRecordTypes at: 'EMR_SETARCDIRECTION' put: 16r39!
-EnhancedMetafileRecordTypes at: 'EMR_SETBKCOLOR' put: 16r19!
-EnhancedMetafileRecordTypes at: 'EMR_SETBKMODE' put: 16r12!
-EnhancedMetafileRecordTypes at: 'EMR_SETBRUSHORGEX' put: 16rD!
-EnhancedMetafileRecordTypes at: 'EMR_SETCOLORADJUSTMENT' put: 16r17!
-EnhancedMetafileRecordTypes at: 'EMR_SETCOLORSPACE' put: 16r64!
-EnhancedMetafileRecordTypes at: 'EMR_SETDIBITSTODEVICE' put: 16r50!
-EnhancedMetafileRecordTypes at: 'EMR_SETICMMODE' put: 16r62!
-EnhancedMetafileRecordTypes at: 'EMR_SETICMPROFILEA' put: 16r70!
-EnhancedMetafileRecordTypes at: 'EMR_SETICMPROFILEW' put: 16r71!
-EnhancedMetafileRecordTypes at: 'EMR_SETLAYOUT' put: 16r73!
-EnhancedMetafileRecordTypes at: 'EMR_SETMAPMODE' put: 16r11!
-EnhancedMetafileRecordTypes at: 'EMR_SETMAPPERFLAGS' put: 16r10!
-EnhancedMetafileRecordTypes at: 'EMR_SETMETARGN' put: 16r1C!
-EnhancedMetafileRecordTypes at: 'EMR_SETMITERLIMIT' put: 16r3A!
-EnhancedMetafileRecordTypes at: 'EMR_SETPALETTEENTRIES' put: 16r32!
-EnhancedMetafileRecordTypes at: 'EMR_SETPIXELV' put: 16rF!
-EnhancedMetafileRecordTypes at: 'EMR_SETPOLYFILLMODE' put: 16r13!
-EnhancedMetafileRecordTypes at: 'EMR_SETROP2' put: 16r14!
-EnhancedMetafileRecordTypes at: 'EMR_SETSTRETCHBLTMODE' put: 16r15!
-EnhancedMetafileRecordTypes at: 'EMR_SETTEXTALIGN' put: 16r16!
-EnhancedMetafileRecordTypes at: 'EMR_SETTEXTCOLOR' put: 16r18!
-EnhancedMetafileRecordTypes at: 'EMR_SETVIEWPORTEXTEX' put: 16rB!
-EnhancedMetafileRecordTypes at: 'EMR_SETVIEWPORTORGEX' put: 16rC!
-EnhancedMetafileRecordTypes at: 'EMR_SETWINDOWEXTEX' put: 16r9!
-EnhancedMetafileRecordTypes at: 'EMR_SETWINDOWORGEX' put: 16rA!
-EnhancedMetafileRecordTypes at: 'EMR_SETWORLDTRANSFORM' put: 16r23!
-EnhancedMetafileRecordTypes at: 'EMR_STRETCHBLT' put: 16r4D!
-EnhancedMetafileRecordTypes at: 'EMR_STRETCHDIBITS' put: 16r51!
-EnhancedMetafileRecordTypes at: 'EMR_STROKEANDFILLPATH' put: 16r3F!
-EnhancedMetafileRecordTypes at: 'EMR_STROKEPATH' put: 16r40!
-EnhancedMetafileRecordTypes at: 'EMR_TRANSPARENTBLT' put: 16r74!
-EnhancedMetafileRecordTypes at: 'EMR_WIDENPATH' put: 16r42!
-EnhancedMetafileRecordTypes shrink!
+SharedPool subclass: #EnhancedMetafileRecordTypes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EMR_ABORTPATH' -> 16r44.
+		'EMR_ALPHABLEND' -> 16r72.
+		'EMR_ANGLEARC' -> 16r29.
+		'EMR_ARC' -> 16r2D.
+		'EMR_ARCTO' -> 16r37.
+		'EMR_BEGINPATH' -> 16r3B.
+		'EMR_BITBLT' -> 16r4C.
+		'EMR_CHORD' -> 16r2E.
+		'EMR_CLOSEFIGURE' -> 16r3D.
+		'EMR_COLORCORRECTPALETTE' -> 16r6F.
+		'EMR_COLORMATCHTOTARGETW' -> 16r79.
+		'EMR_CREATEBRUSHINDIRECT' -> 16r27.
+		'EMR_CREATECOLORSPACE' -> 16r63.
+		'EMR_CREATECOLORSPACEW' -> 16r7A.
+		'EMR_CREATEDIBPATTERNBRUSHPT' -> 16r5E.
+		'EMR_CREATEMONOBRUSH' -> 16r5D.
+		'EMR_CREATEPALETTE' -> 16r31.
+		'EMR_CREATEPEN' -> 16r26.
+		'EMR_DELETECOLORSPACE' -> 16r65.
+		'EMR_DELETEOBJECT' -> 16r28.
+		'EMR_ELLIPSE' -> 16r2A.
+		'EMR_ENDPATH' -> 16r3C.
+		'EMR_EOF' -> 16rE.
+		'EMR_EXCLUDECLIPRECT' -> 16r1D.
+		'EMR_EXTCREATEFONTINDIRECTW' -> 16r52.
+		'EMR_EXTCREATEPEN' -> 16r5F.
+		'EMR_EXTFLOODFILL' -> 16r35.
+		'EMR_EXTSELECTCLIPRGN' -> 16r4B.
+		'EMR_EXTTEXTOUTA' -> 16r53.
+		'EMR_EXTTEXTOUTW' -> 16r54.
+		'EMR_FILLPATH' -> 16r3E.
+		'EMR_FILLRGN' -> 16r47.
+		'EMR_FLATTENPATH' -> 16r41.
+		'EMR_FRAMERGN' -> 16r48.
+		'EMR_GDICOMMENT' -> 16r46.
+		'EMR_GLSBOUNDEDRECORD' -> 16r67.
+		'EMR_GLSRECORD' -> 16r66.
+		'EMR_GRADIENTFILL' -> 16r76.
+		'EMR_HEADER' -> 16r1.
+		'EMR_INTERSECTCLIPRECT' -> 16r1E.
+		'EMR_INVERTRGN' -> 16r49.
+		'EMR_LINETO' -> 16r36.
+		'EMR_MASKBLT' -> 16r4E.
+		'EMR_MAX' -> 16r7A.
+		'EMR_MIN' -> 16r1.
+		'EMR_MODIFYWORLDTRANSFORM' -> 16r24.
+		'EMR_MOVETOEX' -> 16r1B.
+		'EMR_OFFSETCLIPRGN' -> 16r1A.
+		'EMR_PAINTRGN' -> 16r4A.
+		'EMR_PIE' -> 16r2F.
+		'EMR_PIXELFORMAT' -> 16r68.
+		'EMR_PLGBLT' -> 16r4F.
+		'EMR_POLYBEZIER' -> 16r2.
+		'EMR_POLYBEZIER16' -> 16r55.
+		'EMR_POLYBEZIERTO' -> 16r5.
+		'EMR_POLYBEZIERTO16' -> 16r58.
+		'EMR_POLYDRAW' -> 16r38.
+		'EMR_POLYDRAW16' -> 16r5C.
+		'EMR_POLYGON' -> 16r3.
+		'EMR_POLYGON16' -> 16r56.
+		'EMR_POLYLINE' -> 16r4.
+		'EMR_POLYLINE16' -> 16r57.
+		'EMR_POLYLINETO' -> 16r6.
+		'EMR_POLYLINETO16' -> 16r59.
+		'EMR_POLYPOLYGON' -> 16r8.
+		'EMR_POLYPOLYGON16' -> 16r5B.
+		'EMR_POLYPOLYLINE' -> 16r7.
+		'EMR_POLYPOLYLINE16' -> 16r5A.
+		'EMR_POLYTEXTOUTA' -> 16r60.
+		'EMR_POLYTEXTOUTW' -> 16r61.
+		'EMR_REALIZEPALETTE' -> 16r34.
+		'EMR_RECTANGLE' -> 16r2B.
+		'EMR_RESERVED_105' -> 16r69.
+		'EMR_RESERVED_106' -> 16r6A.
+		'EMR_RESERVED_107' -> 16r6B.
+		'EMR_RESERVED_108' -> 16r6C.
+		'EMR_RESERVED_109' -> 16r6D.
+		'EMR_RESERVED_110' -> 16r6E.
+		'EMR_RESERVED_117' -> 16r75.
+		'EMR_RESERVED_119' -> 16r77.
+		'EMR_RESERVED_120' -> 16r78.
+		'EMR_RESIZEPALETTE' -> 16r33.
+		'EMR_RESTOREDC' -> 16r22.
+		'EMR_ROUNDRECT' -> 16r2C.
+		'EMR_SAVEDC' -> 16r21.
+		'EMR_SCALEVIEWPORTEXTEX' -> 16r1F.
+		'EMR_SCALEWINDOWEXTEX' -> 16r20.
+		'EMR_SELECTCLIPPATH' -> 16r43.
+		'EMR_SELECTOBJECT' -> 16r25.
+		'EMR_SELECTPALETTE' -> 16r30.
+		'EMR_SETARCDIRECTION' -> 16r39.
+		'EMR_SETBKCOLOR' -> 16r19.
+		'EMR_SETBKMODE' -> 16r12.
+		'EMR_SETBRUSHORGEX' -> 16rD.
+		'EMR_SETCOLORADJUSTMENT' -> 16r17.
+		'EMR_SETCOLORSPACE' -> 16r64.
+		'EMR_SETDIBITSTODEVICE' -> 16r50.
+		'EMR_SETICMMODE' -> 16r62.
+		'EMR_SETICMPROFILEA' -> 16r70.
+		'EMR_SETICMPROFILEW' -> 16r71.
+		'EMR_SETLAYOUT' -> 16r73.
+		'EMR_SETMAPMODE' -> 16r11.
+		'EMR_SETMAPPERFLAGS' -> 16r10.
+		'EMR_SETMETARGN' -> 16r1C.
+		'EMR_SETMITERLIMIT' -> 16r3A.
+		'EMR_SETPALETTEENTRIES' -> 16r32.
+		'EMR_SETPIXELV' -> 16rF.
+		'EMR_SETPOLYFILLMODE' -> 16r13.
+		'EMR_SETROP2' -> 16r14.
+		'EMR_SETSTRETCHBLTMODE' -> 16r15.
+		'EMR_SETTEXTALIGN' -> 16r16.
+		'EMR_SETTEXTCOLOR' -> 16r18.
+		'EMR_SETVIEWPORTEXTEX' -> 16rB.
+		'EMR_SETVIEWPORTORGEX' -> 16rC.
+		'EMR_SETWINDOWEXTEX' -> 16r9.
+		'EMR_SETWINDOWORGEX' -> 16rA.
+		'EMR_SETWORLDTRANSFORM' -> 16r23.
+		'EMR_STRETCHBLT' -> 16r4D.
+		'EMR_STRETCHDIBITS' -> 16r51.
+		'EMR_STROKEANDFILLPATH' -> 16r3F.
+		'EMR_STROKEPATH' -> 16r40.
+		'EMR_TRANSPARENTBLT' -> 16r74.
+		'EMR_WIDENPATH' -> 16r42
+	}!
+EnhancedMetafileRecordTypes guid: (GUID fromString: '{c7e0098e-0256-4501-8c4c-ff3e15338278}')!
+EnhancedMetafileRecordTypes comment: ''!
+!EnhancedMetafileRecordTypes categoriesForClass!Unclassified! !

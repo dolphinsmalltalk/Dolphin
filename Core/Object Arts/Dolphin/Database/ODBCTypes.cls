@@ -1,47 +1,55 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ODBCTypes} declare: (PoolConstantsDictionary named: #ODBCTypes)!
-ODBCTypes at: 'SQL_BIGINT' put: -16r5!
-ODBCTypes at: 'SQL_BINARY' put: -16r2!
-ODBCTypes at: 'SQL_BIT' put: -16r7!
-ODBCTypes at: 'SQL_CHAR' put: 16r1!
-ODBCTypes at: 'SQL_DATE' put: 16r9!
-ODBCTypes at: 'SQL_DATETIME' put: 16r9!
-ODBCTypes at: 'SQL_DECIMAL' put: 16r3!
-ODBCTypes at: 'SQL_DOUBLE' put: 16r8!
-ODBCTypes at: 'SQL_FLOAT' put: 16r6!
-ODBCTypes at: 'SQL_GUID' put: -16rB!
-ODBCTypes at: 'SQL_INTEGER' put: 16r4!
-ODBCTypes at: 'SQL_INTERVAL' put: 16rA!
-ODBCTypes at: 'SQL_INTERVAL_DAY' put: 16r67!
-ODBCTypes at: 'SQL_INTERVAL_DAY_TO_HOUR' put: 16r6C!
-ODBCTypes at: 'SQL_INTERVAL_DAY_TO_MINUTE' put: 16r6D!
-ODBCTypes at: 'SQL_INTERVAL_DAY_TO_SECOND' put: 16r6E!
-ODBCTypes at: 'SQL_INTERVAL_HOUR' put: 16r68!
-ODBCTypes at: 'SQL_INTERVAL_HOUR_TO_MINUTE' put: 16r6F!
-ODBCTypes at: 'SQL_INTERVAL_HOUR_TO_SECOND' put: 16r70!
-ODBCTypes at: 'SQL_INTERVAL_MINUTE' put: 16r69!
-ODBCTypes at: 'SQL_INTERVAL_MINUTE_TO_SECOND' put: 16r71!
-ODBCTypes at: 'SQL_INTERVAL_MONTH' put: 16r66!
-ODBCTypes at: 'SQL_INTERVAL_SECOND' put: 16r6A!
-ODBCTypes at: 'SQL_INTERVAL_YEAR' put: 16r65!
-ODBCTypes at: 'SQL_INTERVAL_YEAR_TO_MONTH' put: 16r6B!
-ODBCTypes at: 'SQL_LONGVARBINARY' put: -16r4!
-ODBCTypes at: 'SQL_LONGVARCHAR' put: -16r1!
-ODBCTypes at: 'SQL_NUMERIC' put: 16r2!
-ODBCTypes at: 'SQL_REAL' put: 16r7!
-ODBCTypes at: 'SQL_SMALLINT' put: 16r5!
-ODBCTypes at: 'SQL_TIME' put: 16rA!
-ODBCTypes at: 'SQL_TIMESTAMP' put: 16rB!
-ODBCTypes at: 'SQL_TINYINT' put: -16r6!
-ODBCTypes at: 'SQL_TYPE_DATE' put: 16r5B!
-ODBCTypes at: 'SQL_TYPE_NULL' put: 16r0!
-ODBCTypes at: 'SQL_TYPE_TIME' put: 16r5C!
-ODBCTypes at: 'SQL_TYPE_TIMESTAMP' put: 16r5D!
-ODBCTypes at: 'SQL_UNKNOWN_TYPE' put: 16r0!
-ODBCTypes at: 'SQL_VARBINARY' put: -16r3!
-ODBCTypes at: 'SQL_VARCHAR' put: 16rC!
-ODBCTypes at: 'SQL_WCHAR' put: -16r8!
-ODBCTypes at: 'SQL_WLONGVARCHAR' put: -16rA!
-ODBCTypes at: 'SQL_WVARCHAR' put: -16r9!
-ODBCTypes shrink!
+SharedPool subclass: #ODBCTypes
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SQL_BIGINT' -> -16r5.
+		'SQL_BINARY' -> -16r2.
+		'SQL_BIT' -> -16r7.
+		'SQL_CHAR' -> 16r1.
+		'SQL_DATE' -> 16r9.
+		'SQL_DATETIME' -> 16r9.
+		'SQL_DECIMAL' -> 16r3.
+		'SQL_DOUBLE' -> 16r8.
+		'SQL_FLOAT' -> 16r6.
+		'SQL_GUID' -> -16rB.
+		'SQL_INTEGER' -> 16r4.
+		'SQL_INTERVAL' -> 16rA.
+		'SQL_INTERVAL_DAY' -> 16r67.
+		'SQL_INTERVAL_DAY_TO_HOUR' -> 16r6C.
+		'SQL_INTERVAL_DAY_TO_MINUTE' -> 16r6D.
+		'SQL_INTERVAL_DAY_TO_SECOND' -> 16r6E.
+		'SQL_INTERVAL_HOUR' -> 16r68.
+		'SQL_INTERVAL_HOUR_TO_MINUTE' -> 16r6F.
+		'SQL_INTERVAL_HOUR_TO_SECOND' -> 16r70.
+		'SQL_INTERVAL_MINUTE' -> 16r69.
+		'SQL_INTERVAL_MINUTE_TO_SECOND' -> 16r71.
+		'SQL_INTERVAL_MONTH' -> 16r66.
+		'SQL_INTERVAL_SECOND' -> 16r6A.
+		'SQL_INTERVAL_YEAR' -> 16r65.
+		'SQL_INTERVAL_YEAR_TO_MONTH' -> 16r6B.
+		'SQL_LONGVARBINARY' -> -16r4.
+		'SQL_LONGVARCHAR' -> -16r1.
+		'SQL_NUMERIC' -> 16r2.
+		'SQL_REAL' -> 16r7.
+		'SQL_SMALLINT' -> 16r5.
+		'SQL_TIME' -> 16rA.
+		'SQL_TIMESTAMP' -> 16rB.
+		'SQL_TINYINT' -> -16r6.
+		'SQL_TYPE_DATE' -> 16r5B.
+		'SQL_TYPE_NULL' -> 16r0.
+		'SQL_TYPE_TIME' -> 16r5C.
+		'SQL_TYPE_TIMESTAMP' -> 16r5D.
+		'SQL_UNKNOWN_TYPE' -> 16r0.
+		'SQL_VARBINARY' -> -16r3.
+		'SQL_VARCHAR' -> 16rC.
+		'SQL_WCHAR' -> -16r8.
+		'SQL_WLONGVARCHAR' -> -16rA.
+		'SQL_WVARCHAR' -> -16r9
+	}!
+ODBCTypes guid: (GUID fromString: '{91b1ee0d-f895-4316-aa43-befde6df9df0}')!
+ODBCTypes comment: ''!
+!ODBCTypes categoriesForClass!Unclassified! !

@@ -1,100 +1,108 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{CDOConstants} declare: (PoolConstantsDictionary named: #CDOConstants)!
-CDOConstants at: 'cdoAbuDhabi' put: 16r18!
-CDOConstants at: 'cdoAdelaide' put: 16r13!
-CDOConstants at: 'cdoAlaska' put: 16rE!
-CDOConstants at: 'cdoAlmaty' put: 16r2E!
-CDOConstants at: 'cdoAnonymous' put: 16r0!
-CDOConstants at: 'cdoArizona' put: 16r26!
-CDOConstants at: 'cdoAthens' put: 16r7!
-CDOConstants at: 'cdoAtlanticCanada' put: 16r9!
-CDOConstants at: 'cdoAzores' put: 16r1D!
-CDOConstants at: 'cdoBaghdad' put: 16r1A!
-CDOConstants at: 'cdoBangkok' put: 16r16!
-CDOConstants at: 'cdoBasic' put: 16r1!
-CDOConstants at: 'cdoBeijing' put: 16r2D!
-CDOConstants at: 'cdoBerlin' put: 16r4!
-CDOConstants at: 'cdoBogota' put: 16r23!
-CDOConstants at: 'cdoBombay' put: 16r17!
-CDOConstants at: 'cdoBrasilia' put: 16r8!
-CDOConstants at: 'cdoBrisbane' put: 16r12!
-CDOConstants at: 'cdoBuenosAires' put: 16r20!
-CDOConstants at: 'cdoCairo' put: 16r31!
-CDOConstants at: 'cdoCaracas' put: 16r21!
-CDOConstants at: 'cdoCentral' put: 16rB!
-CDOConstants at: 'cdoCompanyConfidential' put: 16r3!
-CDOConstants at: 'cdoDarwin' put: 16r2C!
-CDOConstants at: 'cdoDefaults' put: -16r1!
-CDOConstants at: 'cdoDSNDefault' put: 16r0!
-CDOConstants at: 'cdoDSNDelay' put: 16r8!
-CDOConstants at: 'cdoDSNFailure' put: 16r2!
-CDOConstants at: 'cdoDSNNever' put: 16r1!
-CDOConstants at: 'cdoDSNSuccess' put: 16r4!
-CDOConstants at: 'cdoDSNSuccessFailOrDelay' put: 16rE!
-CDOConstants at: 'cdoEastern' put: 16rA!
-CDOConstants at: 'cdoEasternEurope' put: 16r5!
-CDOConstants at: 'cdoEniwetok' put: 16r27!
-CDOConstants at: 'cdoFiji' put: 16r28!
-CDOConstants at: 'cdoGMT' put: 16r1!
-CDOConstants at: 'cdoGuam' put: 16r2B!
-CDOConstants at: 'cdoHarare' put: 16r32!
-CDOConstants at: 'cdoHawaii' put: 16rF!
-CDOConstants at: 'cdoHigh' put: 16r2!
-CDOConstants at: 'cdoHobart' put: 16r2A!
-CDOConstants at: 'cdoHongKong' put: 16r15!
-CDOConstants at: 'cdoIIS' put: 16r1!
-CDOConstants at: 'cdoIndiana' put: 16r22!
-CDOConstants at: 'cdoInvalidTimeZone' put: 16r34!
-CDOConstants at: 'cdoIslamabad' put: 16r2F!
-CDOConstants at: 'cdoIsrael' put: 16r1B!
-CDOConstants at: 'cdoKabul' put: 16r30!
-CDOConstants at: 'cdoLisbon' put: 16r2!
-CDOConstants at: 'cdoLow' put: 16r0!
-CDOConstants at: 'cdoMagadan' put: 16r29!
-CDOConstants at: 'cdoMexicoCity' put: 16r25!
-CDOConstants at: 'cdoMidAtlantic' put: 16r1E!
-CDOConstants at: 'cdoMidwayIsland' put: 16r10!
-CDOConstants at: 'cdoMonrovia' put: 16r1F!
-CDOConstants at: 'cdoMoscow' put: 16r33!
-CDOConstants at: 'cdoMountain' put: 16rC!
-CDOConstants at: 'cdoNewfoundland' put: 16r1C!
-CDOConstants at: 'cdoNormal' put: 16r1!
-CDOConstants at: 'cdoNTLM' put: 16r2!
-CDOConstants at: 'cdoOutlookExpress' put: 16r2!
-CDOConstants at: 'cdoPacific' put: 16rD!
-CDOConstants at: 'cdoParis' put: 16r3!
-CDOConstants at: 'cdoPersonal' put: 16r1!
-CDOConstants at: 'cdoPostMessage' put: 16r1!
-CDOConstants at: 'cdoPostUsingPickup' put: 16r1!
-CDOConstants at: 'cdoPostUsingPort' put: 16r2!
-CDOConstants at: 'cdoPrague' put: 16r6!
-CDOConstants at: 'cdoPriorityNonUrgent' put: -16r1!
-CDOConstants at: 'cdoPriorityNormal' put: 16r0!
-CDOConstants at: 'cdoPriorityUrgent' put: 16r1!
-CDOConstants at: 'cdoPrivate' put: 16r2!
-CDOConstants at: 'cdoProcessControl' put: 16r2!
-CDOConstants at: 'cdoProcessModerator' put: 16r4!
-CDOConstants at: 'cdoRefTypeId' put: 16r0!
-CDOConstants at: 'cdoRefTypeLocation' put: 16r1!
-CDOConstants at: 'cdoRunNextSink' put: 16r0!
-CDOConstants at: 'cdoSaskatchewan' put: 16r24!
-CDOConstants at: 'cdoSendUsingPickup' put: 16r1!
-CDOConstants at: 'cdoSendUsingPort' put: 16r2!
-CDOConstants at: 'cdoSensitivityNone' put: 16r0!
-CDOConstants at: 'cdoSkipRemainingSinks' put: 16r1!
-CDOConstants at: 'cdoStatAbortDelivery' put: 16r2!
-CDOConstants at: 'cdoStatBadMail' put: 16r3!
-CDOConstants at: 'cdoStatSuccess' put: 16r0!
-CDOConstants at: 'cdoSuppressAll' put: 16r1F!
-CDOConstants at: 'cdoSuppressBGSounds' put: 16r2!
-CDOConstants at: 'cdoSuppressFrames' put: 16r4!
-CDOConstants at: 'cdoSuppressImages' put: 16r1!
-CDOConstants at: 'cdoSuppressNone' put: 16r0!
-CDOConstants at: 'cdoSuppressObjects' put: 16r8!
-CDOConstants at: 'cdoSuppressStyleSheets' put: 16r10!
-CDOConstants at: 'cdoTehran' put: 16r19!
-CDOConstants at: 'cdoTokyo' put: 16r14!
-CDOConstants at: 'cdoUTC' put: 16r0!
-CDOConstants at: 'cdoWellington' put: 16r11!
-CDOConstants shrink!
+SharedPool subclass: #CDOConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'cdoAbuDhabi' -> 16r18.
+		'cdoAdelaide' -> 16r13.
+		'cdoAlaska' -> 16rE.
+		'cdoAlmaty' -> 16r2E.
+		'cdoAnonymous' -> 16r0.
+		'cdoArizona' -> 16r26.
+		'cdoAthens' -> 16r7.
+		'cdoAtlanticCanada' -> 16r9.
+		'cdoAzores' -> 16r1D.
+		'cdoBaghdad' -> 16r1A.
+		'cdoBangkok' -> 16r16.
+		'cdoBasic' -> 16r1.
+		'cdoBeijing' -> 16r2D.
+		'cdoBerlin' -> 16r4.
+		'cdoBogota' -> 16r23.
+		'cdoBombay' -> 16r17.
+		'cdoBrasilia' -> 16r8.
+		'cdoBrisbane' -> 16r12.
+		'cdoBuenosAires' -> 16r20.
+		'cdoCairo' -> 16r31.
+		'cdoCaracas' -> 16r21.
+		'cdoCentral' -> 16rB.
+		'cdoCompanyConfidential' -> 16r3.
+		'cdoDarwin' -> 16r2C.
+		'cdoDefaults' -> -16r1.
+		'cdoDSNDefault' -> 16r0.
+		'cdoDSNDelay' -> 16r8.
+		'cdoDSNFailure' -> 16r2.
+		'cdoDSNNever' -> 16r1.
+		'cdoDSNSuccess' -> 16r4.
+		'cdoDSNSuccessFailOrDelay' -> 16rE.
+		'cdoEastern' -> 16rA.
+		'cdoEasternEurope' -> 16r5.
+		'cdoEniwetok' -> 16r27.
+		'cdoFiji' -> 16r28.
+		'cdoGMT' -> 16r1.
+		'cdoGuam' -> 16r2B.
+		'cdoHarare' -> 16r32.
+		'cdoHawaii' -> 16rF.
+		'cdoHigh' -> 16r2.
+		'cdoHobart' -> 16r2A.
+		'cdoHongKong' -> 16r15.
+		'cdoIIS' -> 16r1.
+		'cdoIndiana' -> 16r22.
+		'cdoInvalidTimeZone' -> 16r34.
+		'cdoIslamabad' -> 16r2F.
+		'cdoIsrael' -> 16r1B.
+		'cdoKabul' -> 16r30.
+		'cdoLisbon' -> 16r2.
+		'cdoLow' -> 16r0.
+		'cdoMagadan' -> 16r29.
+		'cdoMexicoCity' -> 16r25.
+		'cdoMidAtlantic' -> 16r1E.
+		'cdoMidwayIsland' -> 16r10.
+		'cdoMonrovia' -> 16r1F.
+		'cdoMoscow' -> 16r33.
+		'cdoMountain' -> 16rC.
+		'cdoNewfoundland' -> 16r1C.
+		'cdoNormal' -> 16r1.
+		'cdoNTLM' -> 16r2.
+		'cdoOutlookExpress' -> 16r2.
+		'cdoPacific' -> 16rD.
+		'cdoParis' -> 16r3.
+		'cdoPersonal' -> 16r1.
+		'cdoPostMessage' -> 16r1.
+		'cdoPostUsingPickup' -> 16r1.
+		'cdoPostUsingPort' -> 16r2.
+		'cdoPrague' -> 16r6.
+		'cdoPriorityNonUrgent' -> -16r1.
+		'cdoPriorityNormal' -> 16r0.
+		'cdoPriorityUrgent' -> 16r1.
+		'cdoPrivate' -> 16r2.
+		'cdoProcessControl' -> 16r2.
+		'cdoProcessModerator' -> 16r4.
+		'cdoRefTypeId' -> 16r0.
+		'cdoRefTypeLocation' -> 16r1.
+		'cdoRunNextSink' -> 16r0.
+		'cdoSaskatchewan' -> 16r24.
+		'cdoSendUsingPickup' -> 16r1.
+		'cdoSendUsingPort' -> 16r2.
+		'cdoSensitivityNone' -> 16r0.
+		'cdoSkipRemainingSinks' -> 16r1.
+		'cdoStatAbortDelivery' -> 16r2.
+		'cdoStatBadMail' -> 16r3.
+		'cdoStatSuccess' -> 16r0.
+		'cdoSuppressAll' -> 16r1F.
+		'cdoSuppressBGSounds' -> 16r2.
+		'cdoSuppressFrames' -> 16r4.
+		'cdoSuppressImages' -> 16r1.
+		'cdoSuppressNone' -> 16r0.
+		'cdoSuppressObjects' -> 16r8.
+		'cdoSuppressStyleSheets' -> 16r10.
+		'cdoTehran' -> 16r19.
+		'cdoTokyo' -> 16r14.
+		'cdoUTC' -> 16r0.
+		'cdoWellington' -> 16r11
+	}!
+CDOConstants guid: (GUID fromString: '{c0c51e62-f068-4935-a3d8-53bb9d4bef47}')!
+CDOConstants comment: ''!
+!CDOConstants categoriesForClass!Unclassified! !

@@ -15,6 +15,7 @@ package setClassNames: #(
 	#{NMMOUSE}
 	#{NMTOOLBARW}
 	#{StatusBar}
+	#{StatusBarConstants}
 	#{StatusBarItem}
 	#{StatusBarItemAbstract}
 	#{StatusBarNullItem}
@@ -24,16 +25,12 @@ package setClassNames: #(
 	#{Toolbar}
 	#{ToolbarBitmapButton}
 	#{ToolbarButton}
+	#{ToolbarConstants}
 	#{ToolbarIconButton}
 	#{ToolbarItem}
 	#{ToolbarSeparator}
 	#{ToolbarSystemButton}
 	#{ToolButton}
-).
-
-package setVariableNames: #(
-	#{StatusBarConstants}
-	#{ToolbarConstants}
 ).
 
 package setPrerequisites: #(
@@ -46,6 +43,211 @@ package!
 
 "Class Definitions"!
 
+SharedPool subclass: #StatusBarConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SB_GETBORDERS' -> 16r407.
+		'SB_GETICON' -> 16r414.
+		'SB_GETPARTS' -> 16r406.
+		'SB_GETRECT' -> 16r40A.
+		'SB_GETTEXT' -> 16r402.
+		'SB_GETTEXTLENGTH' -> 16r403.
+		'SB_GETTIPTEXT' -> 16r412.
+		'SB_ISSIMPLE' -> 16r40E.
+		'SB_SETBKCOLOR' -> 16r2001.
+		'SB_SETICON' -> 16r40F.
+		'SB_SETMINHEIGHT' -> 16r408.
+		'SB_SETPARTS' -> 16r404.
+		'SB_SETTEXT' -> 16r401.
+		'SB_SETTIPTEXT' -> 16r410.
+		'SB_SIMPLE' -> 16r409.
+		'SBARS_SIZEGRIP' -> 16r100.
+		'SBARS_TOOLTIPS' -> 16r800.
+		'SBT_NOBORDERS' -> 16r100.
+		'SBT_NOTABPARSING' -> 16r800.
+		'SBT_OWNERDRAW' -> 16r1000.
+		'SBT_POPOUT' -> 16r200.
+		'SBT_RTLREADING' -> 16r400
+	}!
+SharedPool subclass: #ToolbarConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BTNS_AUTOSIZE' -> 16r10.
+		'BTNS_BUTTON' -> 16r0.
+		'BTNS_CHECK' -> 16r2.
+		'BTNS_CHECKGROUP' -> 16r6.
+		'BTNS_DROPDOWN' -> 16r8.
+		'BTNS_GROUP' -> 16r4.
+		'BTNS_NOPREFIX' -> 16r20.
+		'BTNS_SEP' -> 16r1.
+		'BTNS_SHOWTEXT' -> 16r40.
+		'BTNS_WHOLEDROPDOWN' -> 16r80.
+		'HIST_ADDTOFAVORITES' -> 16r3.
+		'HIST_BACK' -> 16r0.
+		'HIST_FAVORITES' -> 16r2.
+		'HIST_FORWARD' -> 16r1.
+		'HIST_VIEW_SMALL_COLOR' -> 16r8.
+		'HIST_VIEWTREE' -> 16r4.
+		'IDB_HIST_SMALL_COLOR' -> 16r8.
+		'IDB_STD_LARGE_COLOR' -> 16r1.
+		'IDB_STD_SMALL_COLOR' -> 16r0.
+		'IDB_VIEW_LARGE_COLOR' -> 16r5.
+		'IDB_VIEW_SMALL_COLOR' -> 16r4.
+		'STD_COPY' -> 16r1.
+		'STD_CUT' -> 16r0.
+		'STD_DELETE' -> 16r5.
+		'STD_FILENEW' -> 16r6.
+		'STD_FILEOPEN' -> 16r7.
+		'STD_FILESAVE' -> 16r8.
+		'STD_FIND' -> 16rC.
+		'STD_HELP' -> 16rB.
+		'STD_PASTE' -> 16r2.
+		'STD_PRINT' -> 16rE.
+		'STD_PRINTPRE' -> 16r9.
+		'STD_PROPERTIES' -> 16rA.
+		'STD_REDOW' -> 16r4.
+		'STD_REPLACE' -> 16rD.
+		'STD_UNDO' -> 16r3.
+		'TB_ADDBITMAP' -> 16r413.
+		'TB_ADDBUTTONSW' -> 16r444.
+		'TB_ADDSTRINGW' -> 16r44D.
+		'TB_AUTOSIZE' -> 16r421.
+		'TB_BOTTOM' -> 16r7.
+		'TB_BUTTONCOUNT' -> 16r418.
+		'TB_BUTTONSTRUCTSIZE' -> 16r41E.
+		'TB_CHANGEBITMAP' -> 16r42B.
+		'TB_CHECKBUTTON' -> 16r402.
+		'TB_COMMANDTOINDEX' -> 16r419.
+		'TB_CUSTOMIZE' -> 16r41B.
+		'TB_DELETEBUTTON' -> 16r416.
+		'TB_ENABLEBUTTON' -> 16r401.
+		'TB_ENDTRACK' -> 16r8.
+		'TB_GETBITMAP' -> 16r42C.
+		'TB_GETBITMAPFLAGS' -> 16r429.
+		'TB_GETBUTTON' -> 16r417.
+		'TB_GETBUTTONINFOW' -> 16r43F.
+		'TB_GETBUTTONSIZE' -> 16r43A.
+		'TB_GETBUTTONTEXTW' -> 16r44B.
+		'TB_GETDISABLEDIMAGELIST' -> 16r437.
+		'TB_GETHOTIMAGELIST' -> 16r435.
+		'TB_GETIDEALSIZE' -> 16r463.
+		'TB_GETIMAGELIST' -> 16r431.
+		'TB_GETITEMRECT' -> 16r41D.
+		'TB_GETMAXSIZE' -> 16r453.
+		'TB_GETPADDING' -> 16r456.
+		'TB_GETRECT' -> 16r433.
+		'TB_GETROWS' -> 16r428.
+		'TB_GETSTATE' -> 16r412.
+		'TB_GETSTRINGW' -> 16r45B.
+		'TB_GETSTYLE' -> 16r439.
+		'TB_GETTEXTROWS' -> 16r43D.
+		'TB_GETTOOLTIPS' -> 16r423.
+		'TB_HIDEBUTTON' -> 16r404.
+		'TB_INDETERMINATE' -> 16r405.
+		'TB_INSERTBUTTONW' -> 16r443.
+		'TB_ISBUTTONCHECKED' -> 16r40A.
+		'TB_ISBUTTONENABLED' -> 16r409.
+		'TB_ISBUTTONHIDDEN' -> 16r40C.
+		'TB_ISBUTTONINDETERMINATE' -> 16r40D.
+		'TB_ISBUTTONPRESSED' -> 16r40B.
+		'TB_LINEDOWN' -> 16r1.
+		'TB_LINEUP' -> 16r0.
+		'TB_LOADIMAGES' -> 16r432.
+		'TB_MAPACCELERATORW' -> 16r45A.
+		'TB_PAGEDOWN' -> 16r3.
+		'TB_PAGEUP' -> 16r2.
+		'TB_PRESSBUTTON' -> 16r403.
+		'TB_REPLACEBITMAP' -> 16r42E.
+		'TB_SAVERESTOREW' -> 16r44C.
+		'TB_SETBITMAPSIZE' -> 16r420.
+		'TB_SETBUTTONINFOW' -> 16r440.
+		'TB_SETBUTTONSIZE' -> 16r41F.
+		'TB_SETBUTTONWIDTH' -> 16r43B.
+		'TB_SETCMDID' -> 16r42A.
+		'TB_SETDISABLEDIMAGELIST' -> 16r436.
+		'TB_SETEXTENDEDSTYLE' -> 16r454.
+		'TB_SETHOTIMAGELIST' -> 16r434.
+		'TB_SETIMAGELIST' -> 16r430.
+		'TB_SETINDENT' -> 16r42F.
+		'TB_SETMAXTEXTROWS' -> 16r43C.
+		'TB_SETPARENT' -> 16r425.
+		'TB_SETROWS' -> 16r427.
+		'TB_SETSTATE' -> 16r411.
+		'TB_SETSTYLE' -> 16r438.
+		'TB_SETTOOLTIPS' -> 16r424.
+		'TB_STATECHECKED' -> 16r1.
+		'TB_STATEENABLED' -> 16r4.
+		'TB_STATEHIDDEN' -> 16r8.
+		'TB_STATEINDETERMINATE' -> 16r10.
+		'TB_STATEPRESSED' -> 16r2.
+		'TB_STATEWRAP' -> 16r20.
+		'TB_THUMBPOSITION' -> 16r4.
+		'TB_THUMBTRACK' -> 16r5.
+		'TB_TOP' -> 16r6.
+		'TBBF_LARGE' -> 16r1.
+		'TBDDRET_DEFAULT' -> 16r0.
+		'TBDDRET_NODEFAULT' -> 16r1.
+		'TBDDRET_TREATPRESSED' -> 16r2.
+		'TBIF_COMMAND' -> 16r20.
+		'TBIF_IMAGE' -> 16r1.
+		'TBIF_LPARAM' -> 16r10.
+		'TBIF_SIZE' -> 16r40.
+		'TBIF_STATE' -> 16r4.
+		'TBIF_STYLE' -> 16r8.
+		'TBIF_TEXT' -> 16r2.
+		'TBN_BEGINADJUST' -> -16r2BF.
+		'TBN_BEGINDRAG' -> -16r2BD.
+		'TBN_CLOSEUP' -> -16r2C7.
+		'TBN_CUSTHELP' -> -16r2C5.
+		'TBN_DROPDOWN' -> -16r2C6.
+		'TBN_ENDADJUST' -> -16r2C0.
+		'TBN_ENDDRAG' -> -16r2BE.
+		'TBN_FIRST' -> -16r2BC.
+		'TBN_GETBUTTONINFOW' -> -16r2D0.
+		'TBN_GETDISPINFOW' -> -16r2CD.
+		'TBN_GETINFOTIPW' -> -16r2CF.
+		'TBN_LAST' -> -16r2D0.
+		'TBN_QUERYDELETE' -> -16r2C3.
+		'TBN_QUERYINSERT' -> -16r2C2.
+		'TBN_RESET' -> -16r2C1.
+		'TBN_TOOLBARCHANGE' -> -16r2C4.
+		'TBSTATE_CHECKED' -> 16r1.
+		'TBSTATE_ELLIPSES' -> 16r40.
+		'TBSTATE_ENABLED' -> 16r4.
+		'TBSTATE_MARKED' -> 16r80.
+		'TBSTATE_PRESSED' -> 16r2.
+		'TBSTYLE_ALTDRAG' -> 16r400.
+		'TBSTYLE_CUSTOMERASE' -> 16r2000.
+		'TBSTYLE_EX_DOUBLEBUFFER' -> 16r80.
+		'TBSTYLE_EX_DRAWDDARROWS' -> 16r1.
+		'TBSTYLE_EX_HIDECLIPPEDBUTTONS' -> 16r10.
+		'TBSTYLE_EX_MIXEDBUTTONS' -> 16r8.
+		'TBSTYLE_FLAT' -> 16r800.
+		'TBSTYLE_LIST' -> 16r1000.
+		'TBSTYLE_REGISTERDROP' -> 16r4000.
+		'TBSTYLE_TOOLTIPS' -> 16r100.
+		'TBSTYLE_TRANSPARENT' -> 16r8000.
+		'TBSTYLE_WRAPABLE' -> 16r200.
+		'VIEW_DETAILS' -> 16r3.
+		'VIEW_LARGEICONS' -> 16r0.
+		'VIEW_LIST' -> 16r2.
+		'VIEW_NETCONNECT' -> 16r9.
+		'VIEW_NETDISCONNECT' -> 16rA.
+		'VIEW_NEWFOLDER' -> 16rB.
+		'VIEW_PARENTFOLDER' -> 16r8.
+		'VIEW_SMALLICONS' -> 16r1.
+		'VIEW_SORTDATE' -> 16r6.
+		'VIEW_SORTNAME' -> 16r4.
+		'VIEW_SORTSIZE' -> 16r5.
+		'VIEW_SORTTYPE' -> 16r7.
+		'VIEW_VIEWMENU' -> 16rC
+	}!
 Object subclass: #StatusBarItemAbstract
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'

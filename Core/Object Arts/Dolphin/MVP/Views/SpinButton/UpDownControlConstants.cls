@@ -1,32 +1,40 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{UpDownControlConstants} declare: (PoolConstantsDictionary named: #UpDownControlConstants)!
-UpDownControlConstants at: 'UD_MAXVAL' put: 16r7FFF!
-UpDownControlConstants at: 'UD_MINVAL' put: -16r7FFF!
-UpDownControlConstants at: 'UDM_GETACCEL' put: 16r46C!
-UpDownControlConstants at: 'UDM_GETBASE' put: 16r46E!
-UpDownControlConstants at: 'UDM_GETBUDDY' put: 16r46A!
-UpDownControlConstants at: 'UDM_GETPOS' put: 16r468!
-UpDownControlConstants at: 'UDM_GETPOS32' put: 16r472!
-UpDownControlConstants at: 'UDM_GETRANGE' put: 16r466!
-UpDownControlConstants at: 'UDM_GETRANGE32' put: 16r470!
-UpDownControlConstants at: 'UDM_SETACCEL' put: 16r46B!
-UpDownControlConstants at: 'UDM_SETBASE' put: 16r46D!
-UpDownControlConstants at: 'UDM_SETBUDDY' put: 16r469!
-UpDownControlConstants at: 'UDM_SETPOS' put: 16r467!
-UpDownControlConstants at: 'UDM_SETPOS32' put: 16r471!
-UpDownControlConstants at: 'UDM_SETRANGE' put: 16r465!
-UpDownControlConstants at: 'UDM_SETRANGE32' put: 16r46F!
-UpDownControlConstants at: 'UDN_DELTAPOS' put: -16r2D2!
-UpDownControlConstants at: 'UDN_FIRST' put: -16r2D1!
-UpDownControlConstants at: 'UDN_LAST' put: -16r2E4!
-UpDownControlConstants at: 'UDS_ALIGNLEFT' put: 16r8!
-UpDownControlConstants at: 'UDS_ALIGNRIGHT' put: 16r4!
-UpDownControlConstants at: 'UDS_ARROWKEYS' put: 16r20!
-UpDownControlConstants at: 'UDS_AUTOBUDDY' put: 16r10!
-UpDownControlConstants at: 'UDS_HORZ' put: 16r40!
-UpDownControlConstants at: 'UDS_HOTTRACK' put: 16r100!
-UpDownControlConstants at: 'UDS_NOTHOUSANDS' put: 16r80!
-UpDownControlConstants at: 'UDS_SETBUDDYINT' put: 16r2!
-UpDownControlConstants at: 'UDS_WRAP' put: 16r1!
-UpDownControlConstants shrink!
+SharedPool subclass: #UpDownControlConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'UD_MAXVAL' -> 16r7FFF.
+		'UD_MINVAL' -> -16r7FFF.
+		'UDM_GETACCEL' -> 16r46C.
+		'UDM_GETBASE' -> 16r46E.
+		'UDM_GETBUDDY' -> 16r46A.
+		'UDM_GETPOS' -> 16r468.
+		'UDM_GETPOS32' -> 16r472.
+		'UDM_GETRANGE' -> 16r466.
+		'UDM_GETRANGE32' -> 16r470.
+		'UDM_SETACCEL' -> 16r46B.
+		'UDM_SETBASE' -> 16r46D.
+		'UDM_SETBUDDY' -> 16r469.
+		'UDM_SETPOS' -> 16r467.
+		'UDM_SETPOS32' -> 16r471.
+		'UDM_SETRANGE' -> 16r465.
+		'UDM_SETRANGE32' -> 16r46F.
+		'UDN_DELTAPOS' -> -16r2D2.
+		'UDN_FIRST' -> -16r2D1.
+		'UDN_LAST' -> -16r2E4.
+		'UDS_ALIGNLEFT' -> 16r8.
+		'UDS_ALIGNRIGHT' -> 16r4.
+		'UDS_ARROWKEYS' -> 16r20.
+		'UDS_AUTOBUDDY' -> 16r10.
+		'UDS_HORZ' -> 16r40.
+		'UDS_HOTTRACK' -> 16r100.
+		'UDS_NOTHOUSANDS' -> 16r80.
+		'UDS_SETBUDDYINT' -> 16r2.
+		'UDS_WRAP' -> 16r1
+	}!
+UpDownControlConstants guid: (GUID fromString: '{43828364-486d-4e85-b11c-ab07f6b6c5b6}')!
+UpDownControlConstants comment: ''!
+!UpDownControlConstants categoriesForClass!Unclassified! !

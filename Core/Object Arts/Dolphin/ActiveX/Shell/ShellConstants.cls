@@ -1,102 +1,110 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ShellConstants} declare: (PoolConstantsDictionary named: #ShellConstants)!
-ShellConstants at: 'BFFM_ENABLEOK' put: 16r465!
-ShellConstants at: 'BFFM_INITIALIZED' put: 16r1!
-ShellConstants at: 'BFFM_IUNKNOWN' put: 16r5!
-ShellConstants at: 'BFFM_SELCHANGED' put: 16r2!
-ShellConstants at: 'BFFM_SETEXPANDED' put: 16r46A!
-ShellConstants at: 'BFFM_SETOKTEXT' put: 16r469!
-ShellConstants at: 'BFFM_SETSELECTIONA' put: 16r466!
-ShellConstants at: 'BFFM_SETSELECTIONW' put: 16r467!
-ShellConstants at: 'BFFM_SETSTATUSTEXTA' put: 16r464!
-ShellConstants at: 'BFFM_SETSTATUSTEXTW' put: 16r468!
-ShellConstants at: 'BFFM_VALIDATEFAILEDA' put: 16r3!
-ShellConstants at: 'BFFM_VALIDATEFAILEDW' put: 16r4!
-ShellConstants at: 'BIF_BROWSEFORCOMPUTER' put: 16r1000!
-ShellConstants at: 'BIF_BROWSEFORPRINTER' put: 16r2000!
-ShellConstants at: 'BIF_BROWSEINCLUDEFILES' put: 16r4000!
-ShellConstants at: 'BIF_DONTGOBELOWDOMAIN' put: 16r2!
-ShellConstants at: 'BIF_EDITBOX' put: 16r10!
-ShellConstants at: 'BIF_NEWDIALOGSTYLE' put: 16r40!
-ShellConstants at: 'BIF_RETURNFSANCESTORS' put: 16r8!
-ShellConstants at: 'BIF_RETURNONLYFSDIRS' put: 16r1!
-ShellConstants at: 'BIF_STATUSTEXT' put: 16r4!
-ShellConstants at: 'BIF_USENEWUI' put: 16r50!
-ShellConstants at: 'CSIDL_ADMINTOOLS' put: 16r30!
-ShellConstants at: 'CSIDL_ALTSTARTUP' put: 16r1D!
-ShellConstants at: 'CSIDL_APPDATA' put: 16r1A!
-ShellConstants at: 'CSIDL_BITBUCKET' put: 16rA!
-ShellConstants at: 'CSIDL_COMMON_ADMINTOOLS' put: 16r2F!
-ShellConstants at: 'CSIDL_COMMON_ALTSTARTUP' put: 16r1E!
-ShellConstants at: 'CSIDL_COMMON_APPDATA' put: 16r23!
-ShellConstants at: 'CSIDL_COMMON_DESKTOPDIRECTORY' put: 16r19!
-ShellConstants at: 'CSIDL_COMMON_DOCUMENTS' put: 16r2E!
-ShellConstants at: 'CSIDL_COMMON_FAVORITES' put: 16r1F!
-ShellConstants at: 'CSIDL_COMMON_PROGRAMS' put: 16r17!
-ShellConstants at: 'CSIDL_COMMON_STARTMENU' put: 16r16!
-ShellConstants at: 'CSIDL_COMMON_STARTUP' put: 16r18!
-ShellConstants at: 'CSIDL_CONTROLS' put: 16r3!
-ShellConstants at: 'CSIDL_COOKIES' put: 16r21!
-ShellConstants at: 'CSIDL_DESKTOP' put: 16r0!
-ShellConstants at: 'CSIDL_DESKTOPDIRECTORY' put: 16r10!
-ShellConstants at: 'CSIDL_DRIVES' put: 16r11!
-ShellConstants at: 'CSIDL_FAVORITES' put: 16r6!
-ShellConstants at: 'CSIDL_FLAG_CREATE' put: 16r8000!
-ShellConstants at: 'CSIDL_FONTS' put: 16r14!
-ShellConstants at: 'CSIDL_HISTORY' put: 16r22!
-ShellConstants at: 'CSIDL_INTERNET' put: 16r1!
-ShellConstants at: 'CSIDL_INTERNET_CACHE' put: 16r20!
-ShellConstants at: 'CSIDL_LOCAL_APPDATA' put: 16r1C!
-ShellConstants at: 'CSIDL_MYMUSIC' put: 16rD!
-ShellConstants at: 'CSIDL_MYPICTURES' put: 16r27!
-ShellConstants at: 'CSIDL_NETHOOD' put: 16r13!
-ShellConstants at: 'CSIDL_NETWORK' put: 16r12!
-ShellConstants at: 'CSIDL_PERSONAL' put: 16r5!
-ShellConstants at: 'CSIDL_PRINTERS' put: 16r4!
-ShellConstants at: 'CSIDL_PRINTHOOD' put: 16r1B!
-ShellConstants at: 'CSIDL_PROGRAM_FILES' put: 16r26!
-ShellConstants at: 'CSIDL_PROGRAM_FILES_COMMON' put: 16r2B!
-ShellConstants at: 'CSIDL_PROGRAMS' put: 16r2!
-ShellConstants at: 'CSIDL_RECENT' put: 16r8!
-ShellConstants at: 'CSIDL_RESOURCES' put: 16r38!
-ShellConstants at: 'CSIDL_RESOURCES_LOCALIZED' put: 16r39!
-ShellConstants at: 'CSIDL_SENDTO' put: 16r9!
-ShellConstants at: 'CSIDL_STARTMENU' put: 16rB!
-ShellConstants at: 'CSIDL_STARTUP' put: 16r7!
-ShellConstants at: 'CSIDL_SYSTEM' put: 16r25!
-ShellConstants at: 'CSIDL_TEMPLATES' put: 16r15!
-ShellConstants at: 'CSIDL_WINDOWS' put: 16r24!
-ShellConstants at: 'NIF_ICON' put: 16r2!
-ShellConstants at: 'NIF_MESSAGE' put: 16r1!
-ShellConstants at: 'NIF_TIP' put: 16r4!
-ShellConstants at: 'NIM_ADD' put: 16r0!
-ShellConstants at: 'NIM_DELETE' put: 16r2!
-ShellConstants at: 'NIM_MODIFY' put: 16r1!
-ShellConstants at: 'REGSTR_PATH_SPECIAL_FOLDERS' put: '\Shell Folders'!
-ShellConstants at: 'SE_ERR_ACCESSDENIED' put: 16r5!
-ShellConstants at: 'SE_ERR_ASSOCINCOMPLETE' put: 16r1B!
-ShellConstants at: 'SE_ERR_DDEBUSY' put: 16r1E!
-ShellConstants at: 'SE_ERR_DDEFAIL' put: 16r1D!
-ShellConstants at: 'SE_ERR_DDETIMEOUT' put: 16r1C!
-ShellConstants at: 'SE_ERR_DLLNOTFOUND' put: 16r20!
-ShellConstants at: 'SE_ERR_FNF' put: 16r2!
-ShellConstants at: 'SE_ERR_NOASSOC' put: 16r1F!
-ShellConstants at: 'SE_ERR_OOM' put: 16r8!
-ShellConstants at: 'SE_ERR_PNF' put: 16r3!
-ShellConstants at: 'SE_ERR_SHARE' put: 16r1A!
-ShellConstants at: 'SEE_MASK_CLASSKEY' put: 16r3!
-ShellConstants at: 'SEE_MASK_CLASSNAME' put: 16r1!
-ShellConstants at: 'SEE_MASK_CONNECTNETDRV' put: 16r80!
-ShellConstants at: 'SEE_MASK_DOENVSUBST' put: 16r200!
-ShellConstants at: 'SEE_MASK_FLAG_DDEWAIT' put: 16r100!
-ShellConstants at: 'SEE_MASK_FLAG_NO_UI' put: 16r400!
-ShellConstants at: 'SEE_MASK_HOTKEY' put: 16r20!
-ShellConstants at: 'SEE_MASK_ICON' put: 16r10!
-ShellConstants at: 'SEE_MASK_IDLIST' put: 16r4!
-ShellConstants at: 'SEE_MASK_INVOKEIDLIST' put: 16rC!
-ShellConstants at: 'SEE_MASK_NOCLOSEPROCESS' put: 16r40!
-ShellConstants at: 'SEE_MASK_UNICODE' put: 16r10000!
-ShellConstants at: 'SHGFP_TYPE_CURRENT' put: 16r0!
-ShellConstants at: 'SHGFP_TYPE_DEFAULT' put: 16r1!
-ShellConstants shrink!
+SharedPool subclass: #ShellConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BFFM_ENABLEOK' -> 16r465.
+		'BFFM_INITIALIZED' -> 16r1.
+		'BFFM_IUNKNOWN' -> 16r5.
+		'BFFM_SELCHANGED' -> 16r2.
+		'BFFM_SETEXPANDED' -> 16r46A.
+		'BFFM_SETOKTEXT' -> 16r469.
+		'BFFM_SETSELECTIONA' -> 16r466.
+		'BFFM_SETSELECTIONW' -> 16r467.
+		'BFFM_SETSTATUSTEXTA' -> 16r464.
+		'BFFM_SETSTATUSTEXTW' -> 16r468.
+		'BFFM_VALIDATEFAILEDA' -> 16r3.
+		'BFFM_VALIDATEFAILEDW' -> 16r4.
+		'BIF_BROWSEFORCOMPUTER' -> 16r1000.
+		'BIF_BROWSEFORPRINTER' -> 16r2000.
+		'BIF_BROWSEINCLUDEFILES' -> 16r4000.
+		'BIF_DONTGOBELOWDOMAIN' -> 16r2.
+		'BIF_EDITBOX' -> 16r10.
+		'BIF_NEWDIALOGSTYLE' -> 16r40.
+		'BIF_RETURNFSANCESTORS' -> 16r8.
+		'BIF_RETURNONLYFSDIRS' -> 16r1.
+		'BIF_STATUSTEXT' -> 16r4.
+		'BIF_USENEWUI' -> 16r50.
+		'CSIDL_ADMINTOOLS' -> 16r30.
+		'CSIDL_ALTSTARTUP' -> 16r1D.
+		'CSIDL_APPDATA' -> 16r1A.
+		'CSIDL_BITBUCKET' -> 16rA.
+		'CSIDL_COMMON_ADMINTOOLS' -> 16r2F.
+		'CSIDL_COMMON_ALTSTARTUP' -> 16r1E.
+		'CSIDL_COMMON_APPDATA' -> 16r23.
+		'CSIDL_COMMON_DESKTOPDIRECTORY' -> 16r19.
+		'CSIDL_COMMON_DOCUMENTS' -> 16r2E.
+		'CSIDL_COMMON_FAVORITES' -> 16r1F.
+		'CSIDL_COMMON_PROGRAMS' -> 16r17.
+		'CSIDL_COMMON_STARTMENU' -> 16r16.
+		'CSIDL_COMMON_STARTUP' -> 16r18.
+		'CSIDL_CONTROLS' -> 16r3.
+		'CSIDL_COOKIES' -> 16r21.
+		'CSIDL_DESKTOP' -> 16r0.
+		'CSIDL_DESKTOPDIRECTORY' -> 16r10.
+		'CSIDL_DRIVES' -> 16r11.
+		'CSIDL_FAVORITES' -> 16r6.
+		'CSIDL_FLAG_CREATE' -> 16r8000.
+		'CSIDL_FONTS' -> 16r14.
+		'CSIDL_HISTORY' -> 16r22.
+		'CSIDL_INTERNET' -> 16r1.
+		'CSIDL_INTERNET_CACHE' -> 16r20.
+		'CSIDL_LOCAL_APPDATA' -> 16r1C.
+		'CSIDL_MYMUSIC' -> 16rD.
+		'CSIDL_MYPICTURES' -> 16r27.
+		'CSIDL_NETHOOD' -> 16r13.
+		'CSIDL_NETWORK' -> 16r12.
+		'CSIDL_PERSONAL' -> 16r5.
+		'CSIDL_PRINTERS' -> 16r4.
+		'CSIDL_PRINTHOOD' -> 16r1B.
+		'CSIDL_PROGRAM_FILES' -> 16r26.
+		'CSIDL_PROGRAM_FILES_COMMON' -> 16r2B.
+		'CSIDL_PROGRAMS' -> 16r2.
+		'CSIDL_RECENT' -> 16r8.
+		'CSIDL_RESOURCES' -> 16r38.
+		'CSIDL_RESOURCES_LOCALIZED' -> 16r39.
+		'CSIDL_SENDTO' -> 16r9.
+		'CSIDL_STARTMENU' -> 16rB.
+		'CSIDL_STARTUP' -> 16r7.
+		'CSIDL_SYSTEM' -> 16r25.
+		'CSIDL_TEMPLATES' -> 16r15.
+		'CSIDL_WINDOWS' -> 16r24.
+		'NIF_ICON' -> 16r2.
+		'NIF_MESSAGE' -> 16r1.
+		'NIF_TIP' -> 16r4.
+		'NIM_ADD' -> 16r0.
+		'NIM_DELETE' -> 16r2.
+		'NIM_MODIFY' -> 16r1.
+		'REGSTR_PATH_SPECIAL_FOLDERS' -> '\Shell Folders'.
+		'SE_ERR_ACCESSDENIED' -> 16r5.
+		'SE_ERR_ASSOCINCOMPLETE' -> 16r1B.
+		'SE_ERR_DDEBUSY' -> 16r1E.
+		'SE_ERR_DDEFAIL' -> 16r1D.
+		'SE_ERR_DDETIMEOUT' -> 16r1C.
+		'SE_ERR_DLLNOTFOUND' -> 16r20.
+		'SE_ERR_FNF' -> 16r2.
+		'SE_ERR_NOASSOC' -> 16r1F.
+		'SE_ERR_OOM' -> 16r8.
+		'SE_ERR_PNF' -> 16r3.
+		'SE_ERR_SHARE' -> 16r1A.
+		'SEE_MASK_CLASSKEY' -> 16r3.
+		'SEE_MASK_CLASSNAME' -> 16r1.
+		'SEE_MASK_CONNECTNETDRV' -> 16r80.
+		'SEE_MASK_DOENVSUBST' -> 16r200.
+		'SEE_MASK_FLAG_DDEWAIT' -> 16r100.
+		'SEE_MASK_FLAG_NO_UI' -> 16r400.
+		'SEE_MASK_HOTKEY' -> 16r20.
+		'SEE_MASK_ICON' -> 16r10.
+		'SEE_MASK_IDLIST' -> 16r4.
+		'SEE_MASK_INVOKEIDLIST' -> 16rC.
+		'SEE_MASK_NOCLOSEPROCESS' -> 16r40.
+		'SEE_MASK_UNICODE' -> 16r10000.
+		'SHGFP_TYPE_CURRENT' -> 16r0.
+		'SHGFP_TYPE_DEFAULT' -> 16r1
+	}!
+ShellConstants guid: (GUID fromString: '{6a23b879-50e2-472a-a9e4-cafafa121755}')!
+ShellConstants comment: ''!
+!ShellConstants categoriesForClass!Unclassified! !

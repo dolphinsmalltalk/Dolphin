@@ -1,274 +1,282 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{RichEditConstants} declare: (PoolConstantsDictionary named: #RichEditConstants)!
-RichEditConstants at: 'cchTextLimitDefault' put: 16r7FFF!
-RichEditConstants at: 'CFE_AUTOCOLOR' put: 16r40000000!
-RichEditConstants at: 'CFE_BOLD' put: 16r1!
-RichEditConstants at: 'CFE_ITALIC' put: 16r2!
-RichEditConstants at: 'CFE_LINK' put: 16r20!
-RichEditConstants at: 'CFE_PROTECTED' put: 16r10!
-RichEditConstants at: 'CFE_STRIKEOUT' put: 16r8!
-RichEditConstants at: 'CFE_SUBSCRIPT' put: 16r10000!
-RichEditConstants at: 'CFE_SUPERSCRIPT' put: 16r20000!
-RichEditConstants at: 'CFE_UNDERLINE' put: 16r4!
-RichEditConstants at: 'CFM_ALLCAPS' put: 16r80!
-RichEditConstants at: 'CFM_ANIMATION' put: 16r40000!
-RichEditConstants at: 'CFM_BACKCOLOR' put: 16r4000000!
-RichEditConstants at: 'CFM_BOLD' put: 16r1!
-RichEditConstants at: 'CFM_CHARSET' put: 16r8000000!
-RichEditConstants at: 'CFM_COLOR' put: 16r40000000!
-RichEditConstants at: 'CFM_DISABLED' put: 16r2000!
-RichEditConstants at: 'CFM_EMBOSS' put: 16r800!
-RichEditConstants at: 'CFM_FACE' put: 16r20000000!
-RichEditConstants at: 'CFM_HIDDEN' put: 16r100!
-RichEditConstants at: 'CFM_IMPRINT' put: 16r1000!
-RichEditConstants at: 'CFM_ITALIC' put: 16r2!
-RichEditConstants at: 'CFM_KERNING' put: 16r100000!
-RichEditConstants at: 'CFM_LCID' put: 16r2000000!
-RichEditConstants at: 'CFM_LINK' put: 16r20!
-RichEditConstants at: 'CFM_OFFSET' put: 16r10000000!
-RichEditConstants at: 'CFM_OUTLINE' put: 16r200!
-RichEditConstants at: 'CFM_PROTECTED' put: 16r10!
-RichEditConstants at: 'CFM_REVAUTHOR' put: 16r8000!
-RichEditConstants at: 'CFM_REVISED' put: 16r4000!
-RichEditConstants at: 'CFM_SHADOW' put: 16r400!
-RichEditConstants at: 'CFM_SIZE' put: 16r80000000!
-RichEditConstants at: 'CFM_SMALLCAPS' put: 16r40!
-RichEditConstants at: 'CFM_SPACING' put: 16r200000!
-RichEditConstants at: 'CFM_STRIKEOUT' put: 16r8!
-RichEditConstants at: 'CFM_STYLE' put: 16r80000!
-RichEditConstants at: 'CFM_SUBSCRIPT' put: 16r30000!
-RichEditConstants at: 'CFM_SUPERSCRIPT' put: 16r30000!
-RichEditConstants at: 'CFM_UNDERLINE' put: 16r4!
-RichEditConstants at: 'CFM_UNDERLINETYPE' put: 16r800000!
-RichEditConstants at: 'CFM_WEIGHT' put: 16r400000!
-RichEditConstants at: 'CFU_CF1UNDERLINE' put: 16rFF!
-RichEditConstants at: 'CFU_INVERT' put: 16rFE!
-RichEditConstants at: 'CFU_UNDERLINE' put: 16r1!
-RichEditConstants at: 'CFU_UNDERLINEDOTTED' put: 16r4!
-RichEditConstants at: 'CFU_UNDERLINEDOUBLE' put: 16r3!
-RichEditConstants at: 'CFU_UNDERLINEWORD' put: 16r2!
-RichEditConstants at: 'ECO_AUTOHSCROLL' put: 16r80!
-RichEditConstants at: 'ECO_AUTOVSCROLL' put: 16r40!
-RichEditConstants at: 'ECO_AUTOWORDSELECTION' put: 16r1!
-RichEditConstants at: 'ECO_NOHIDESEL' put: 16r100!
-RichEditConstants at: 'ECO_READONLY' put: 16r800!
-RichEditConstants at: 'ECO_SAVESEL' put: 16r8000!
-RichEditConstants at: 'ECO_SELECTIONBAR' put: 16r1000000!
-RichEditConstants at: 'ECO_VERTICAL' put: 16r400000!
-RichEditConstants at: 'ECO_WANTRETURN' put: 16r1000!
-RichEditConstants at: 'ECOOP_AND' put: 16r3!
-RichEditConstants at: 'ECOOP_OR' put: 16r2!
-RichEditConstants at: 'ECOOP_SET' put: 16r1!
-RichEditConstants at: 'ECOOP_XOR' put: 16r4!
-RichEditConstants at: 'EM_AUTOURLDETECT' put: 16r45B!
-RichEditConstants at: 'EM_CANPASTE' put: 16r432!
-RichEditConstants at: 'EM_CANREDO' put: 16r455!
-RichEditConstants at: 'EM_CONVPOSITION' put: 16r46C!
-RichEditConstants at: 'EM_DISPLAYBAND' put: 16r433!
-RichEditConstants at: 'EM_EXGETSEL' put: 16r434!
-RichEditConstants at: 'EM_EXLIMITTEXT' put: 16r435!
-RichEditConstants at: 'EM_EXLINEFROMCHAR' put: 16r436!
-RichEditConstants at: 'EM_EXSETSEL' put: 16r437!
-RichEditConstants at: 'EM_FINDTEXTEXW' put: 16r47C!
-RichEditConstants at: 'EM_FINDTEXTW' put: 16r47B!
-RichEditConstants at: 'EM_FINDWORDBREAK' put: 16r44C!
-RichEditConstants at: 'EM_FORMATRANGE' put: 16r439!
-RichEditConstants at: 'EM_GETAUTOURLDETECT' put: 16r45C!
-RichEditConstants at: 'EM_GETCHARFORMAT' put: 16r43A!
-RichEditConstants at: 'EM_GETEVENTMASK' put: 16r43B!
-RichEditConstants at: 'EM_GETIMECOLOR' put: 16r469!
-RichEditConstants at: 'EM_GETIMECOMPMODE' put: 16r47A!
-RichEditConstants at: 'EM_GETIMEOPTIONS' put: 16r46B!
-RichEditConstants at: 'EM_GETLANGOPTIONS' put: 16r479!
-RichEditConstants at: 'EM_GETOLEINTERFACE' put: 16r43C!
-RichEditConstants at: 'EM_GETOPTIONS' put: 16r44E!
-RichEditConstants at: 'EM_GETPARAFORMAT' put: 16r43D!
-RichEditConstants at: 'EM_GETPUNCTUATION' put: 16r465!
-RichEditConstants at: 'EM_GETREDONAME' put: 16r457!
-RichEditConstants at: 'EM_GETSELTEXT' put: 16r43E!
-RichEditConstants at: 'EM_GETTEXTEX' put: 16r45E!
-RichEditConstants at: 'EM_GETTEXTLENGTHEX' put: 16r45F!
-RichEditConstants at: 'EM_GETTEXTMODE' put: 16r45A!
-RichEditConstants at: 'EM_GETTEXTRANGE' put: 16r44B!
-RichEditConstants at: 'EM_GETUNDONAME' put: 16r456!
-RichEditConstants at: 'EM_GETWORDBREAKPROCEX' put: 16r450!
-RichEditConstants at: 'EM_GETWORDWRAPMODE' put: 16r467!
-RichEditConstants at: 'EM_HIDESELECTION' put: 16r43F!
-RichEditConstants at: 'EM_PASTESPECIAL' put: 16r440!
-RichEditConstants at: 'EM_REDO' put: 16r454!
-RichEditConstants at: 'EM_REQUESTRESIZE' put: 16r441!
-RichEditConstants at: 'EM_SCROLLCARET' put: 16r431!
-RichEditConstants at: 'EM_SELECTIONTYPE' put: 16r442!
-RichEditConstants at: 'EM_SETBKGNDCOLOR' put: 16r443!
-RichEditConstants at: 'EM_SETCHARFORMAT' put: 16r444!
-RichEditConstants at: 'EM_SETEVENTMASK' put: 16r445!
-RichEditConstants at: 'EM_SETIMECOLOR' put: 16r468!
-RichEditConstants at: 'EM_SETIMEOPTIONS' put: 16r46A!
-RichEditConstants at: 'EM_SETLANGOPTIONS' put: 16r478!
-RichEditConstants at: 'EM_SETOLECALLBACK' put: 16r446!
-RichEditConstants at: 'EM_SETOPTIONS' put: 16r44D!
-RichEditConstants at: 'EM_SETPALETTE' put: 16r45D!
-RichEditConstants at: 'EM_SETPARAFORMAT' put: 16r447!
-RichEditConstants at: 'EM_SETPUNCTUATION' put: 16r464!
-RichEditConstants at: 'EM_SETTARGETDEVICE' put: 16r448!
-RichEditConstants at: 'EM_SETTEXTEX' put: 16r461!
-RichEditConstants at: 'EM_SETTEXTMODE' put: 16r459!
-RichEditConstants at: 'EM_SETUNDOLIMIT' put: 16r452!
-RichEditConstants at: 'EM_SETWORDBREAKPROCEX' put: 16r451!
-RichEditConstants at: 'EM_SETWORDWRAPMODE' put: 16r466!
-RichEditConstants at: 'EM_STOPGROUPTYPING' put: 16r458!
-RichEditConstants at: 'EM_STREAMIN' put: 16r449!
-RichEditConstants at: 'EM_STREAMOUT' put: 16r44A!
-RichEditConstants at: 'EN_CORRECTTEXT' put: 16r705!
-RichEditConstants at: 'EN_DRAGDROPDONE' put: 16r70C!
-RichEditConstants at: 'EN_DROPFILES' put: 16r703!
-RichEditConstants at: 'EN_IMECHANGE' put: 16r707!
-RichEditConstants at: 'EN_LINK' put: 16r70B!
-RichEditConstants at: 'EN_MSGFILTER' put: 16r700!
-RichEditConstants at: 'EN_OBJECTPOSITIONS' put: 16r70A!
-RichEditConstants at: 'EN_OLEOPFAILED' put: 16r709!
-RichEditConstants at: 'EN_PROTECTED' put: 16r704!
-RichEditConstants at: 'EN_REQUESTRESIZE' put: 16r701!
-RichEditConstants at: 'EN_SAVECLIPBOARD' put: 16r708!
-RichEditConstants at: 'EN_SELCHANGE' put: 16r702!
-RichEditConstants at: 'EN_STOPNOUNDO' put: 16r706!
-RichEditConstants at: 'ENM_CHANGE' put: 16r1!
-RichEditConstants at: 'ENM_CORRECTTEXT' put: 16r400000!
-RichEditConstants at: 'ENM_DROPFILES' put: 16r100000!
-RichEditConstants at: 'ENM_IMECHANGE' put: 16r800000!
-RichEditConstants at: 'ENM_KEYEVENTS' put: 16r10000!
-RichEditConstants at: 'ENM_LANGCHANGE' put: 16r1000000!
-RichEditConstants at: 'ENM_LINK' put: 16r4000000!
-RichEditConstants at: 'ENM_MOUSEEVENTS' put: 16r20000!
-RichEditConstants at: 'ENM_NONE' put: 16r0!
-RichEditConstants at: 'ENM_OBJECTPOSITIONS' put: 16r2000000!
-RichEditConstants at: 'ENM_PROTECTED' put: 16r200000!
-RichEditConstants at: 'ENM_REQUESTRESIZE' put: 16r40000!
-RichEditConstants at: 'ENM_SCROLL' put: 16r4!
-RichEditConstants at: 'ENM_SELCHANGE' put: 16r80000!
-RichEditConstants at: 'ENM_UPDATE' put: 16r2!
-RichEditConstants at: 'ES_DISABLENOSCROLL' put: 16r2000!
-RichEditConstants at: 'ES_EX_NOCALLOLEINIT' put: 16r1000000!
-RichEditConstants at: 'ES_NOIME' put: 16r80000!
-RichEditConstants at: 'ES_NOOLEDRAGDROP' put: 16r8!
-RichEditConstants at: 'ES_SAVESEL' put: 16r8000!
-RichEditConstants at: 'ES_SELECTIONBAR' put: 16r1000000!
-RichEditConstants at: 'ES_SELFIME' put: 16r40000!
-RichEditConstants at: 'ES_SUNKEN' put: 16r4000!
-RichEditConstants at: 'ES_VERTICAL' put: 16r400000!
-RichEditConstants at: 'GCM_RIGHTMOUSEDROP' put: 16r8000!
-RichEditConstants at: 'GT_DEFAULT' put: 16r0!
-RichEditConstants at: 'GT_NOHIDDENTEXT' put: 16r8!
-RichEditConstants at: 'GT_RAWTEXT' put: 16r4!
-RichEditConstants at: 'GT_SELECTION' put: 16r2!
-RichEditConstants at: 'GT_USECRLF' put: 16r1!
-RichEditConstants at: 'GTL_CLOSE' put: 16r4!
-RichEditConstants at: 'GTL_DEFAULT' put: 16r0!
-RichEditConstants at: 'GTL_NUMBYTES' put: 16r10!
-RichEditConstants at: 'GTL_NUMCHARS' put: 16r8!
-RichEditConstants at: 'GTL_PRECISE' put: 16r2!
-RichEditConstants at: 'GTL_USECRLF' put: 16r1!
-RichEditConstants at: 'ICM_LEVEL2' put: 16r2!
-RichEditConstants at: 'ICM_LEVEL2_5' put: 16r3!
-RichEditConstants at: 'ICM_LEVEL2_SUI' put: 16r4!
-RichEditConstants at: 'ICM_LEVEL3' put: 16r1!
-RichEditConstants at: 'ICM_NOTOPEN' put: 16r0!
-RichEditConstants at: 'IMF_AUTOFONT' put: 16r2!
-RichEditConstants at: 'IMF_AUTOKEYBOARD' put: 16r1!
-RichEditConstants at: 'IMF_CLOSESTATUSWINDOW' put: 16r8!
-RichEditConstants at: 'IMF_FORCEACTIVE' put: 16r40!
-RichEditConstants at: 'IMF_FORCEDISABLE' put: 16r4!
-RichEditConstants at: 'IMF_FORCEENABLE' put: 16r2!
-RichEditConstants at: 'IMF_FORCEINACTIVE' put: 16r80!
-RichEditConstants at: 'IMF_FORCENONE' put: 16r1!
-RichEditConstants at: 'IMF_FORCEREMEMBER' put: 16r100!
-RichEditConstants at: 'IMF_IMEALWAYSSENDNOTIFY' put: 16r8!
-RichEditConstants at: 'IMF_IMECANCELCOMPLETE' put: 16r4!
-RichEditConstants at: 'IMF_MULTIPLEEDIT' put: 16r400!
-RichEditConstants at: 'IMF_VERTICAL' put: 16r20!
-RichEditConstants at: 'lDefaultTab' put: 16r2D0!
-RichEditConstants at: 'MAX_TAB_STOPS' put: 16r20!
-RichEditConstants at: 'OLEOP_DOVERB' put: 16r1!
-RichEditConstants at: 'PC_DELIMITER' put: 16r4!
-RichEditConstants at: 'PC_FOLLOWING' put: 16r1!
-RichEditConstants at: 'PC_LEADING' put: 16r2!
-RichEditConstants at: 'PC_OVERFLOW' put: 16r3!
-RichEditConstants at: 'PFA_CENTER' put: 16r3!
-RichEditConstants at: 'PFA_JUSTIFY' put: 16r4!
-RichEditConstants at: 'PFA_LEFT' put: 16r1!
-RichEditConstants at: 'PFA_RIGHT' put: 16r2!
-RichEditConstants at: 'PFE_TABLECELL' put: 16r4000!
-RichEditConstants at: 'PFE_TABLECELLEND' put: 16r8000!
-RichEditConstants at: 'PFE_TABLEROW' put: 16rC000!
-RichEditConstants at: 'PFM_ALIGNMENT' put: 16r8!
-RichEditConstants at: 'PFM_BORDER' put: 16r800!
-RichEditConstants at: 'PFM_DONOTHYPHEN' put: 16r400000!
-RichEditConstants at: 'PFM_KEEP' put: 16r20000!
-RichEditConstants at: 'PFM_KEEPNEXT' put: 16r40000!
-RichEditConstants at: 'PFM_LINESPACING' put: 16r100!
-RichEditConstants at: 'PFM_NOLINENUMBER' put: 16r100000!
-RichEditConstants at: 'PFM_NOWIDOWCONTROL' put: 16r200000!
-RichEditConstants at: 'PFM_NUMBERING' put: 16r20!
-RichEditConstants at: 'PFM_NUMBERINGSTART' put: 16r8000!
-RichEditConstants at: 'PFM_NUMBERINGSTYLE' put: 16r2000!
-RichEditConstants at: 'PFM_NUMBERINGTAB' put: 16r4000!
-RichEditConstants at: 'PFM_OFFSET' put: 16r4!
-RichEditConstants at: 'PFM_OFFSETINDENT' put: 16r80000000!
-RichEditConstants at: 'PFM_PAGEBREAKBEFORE' put: 16r80000!
-RichEditConstants at: 'PFM_RIGHTINDENT' put: 16r2!
-RichEditConstants at: 'PFM_RTLPARA' put: 16r10000!
-RichEditConstants at: 'PFM_SHADING' put: 16r1000!
-RichEditConstants at: 'PFM_SIDEBYSIDE' put: 16r800000!
-RichEditConstants at: 'PFM_SPACEAFTER' put: 16r80!
-RichEditConstants at: 'PFM_SPACEBEFORE' put: 16r40!
-RichEditConstants at: 'PFM_STARTINDENT' put: 16r1!
-RichEditConstants at: 'PFM_STYLE' put: 16r400!
-RichEditConstants at: 'PFM_TABLE' put: 16r40000000!
-RichEditConstants at: 'PFM_TABSTOPS' put: 16r10!
-RichEditConstants at: 'PFN_BULLET' put: 16r1!
-RichEditConstants at: 'SCF_ALL' put: 16r4!
-RichEditConstants at: 'SCF_DEFAULT' put: 16r0!
-RichEditConstants at: 'SCF_SELECTION' put: 16r1!
-RichEditConstants at: 'SCF_USEUIRULES' put: 16r8!
-RichEditConstants at: 'SCF_WORD' put: 16r2!
-RichEditConstants at: 'SEL_EMPTY' put: 16r0!
-RichEditConstants at: 'SEL_MULTICHAR' put: 16r4!
-RichEditConstants at: 'SEL_MULTIOBJECT' put: 16r8!
-RichEditConstants at: 'SEL_OBJECT' put: 16r2!
-RichEditConstants at: 'SEL_TEXT' put: 16r1!
-RichEditConstants at: 'SF_RTF' put: 16r2!
-RichEditConstants at: 'SF_RTFNOOBJS' put: 16r3!
-RichEditConstants at: 'SF_TEXT' put: 16r1!
-RichEditConstants at: 'SF_TEXTIZED' put: 16r4!
-RichEditConstants at: 'SF_UNICODE' put: 16r10!
-RichEditConstants at: 'SF_USECODEPAGE' put: 16r20!
-RichEditConstants at: 'SFF_PLAINRTF' put: 16r4000!
-RichEditConstants at: 'SFF_SELECTION' put: 16r8000!
-RichEditConstants at: 'ST_DEFAULT' put: 16r0!
-RichEditConstants at: 'ST_KEEPUNDO' put: 16r1!
-RichEditConstants at: 'ST_NEWCHARS' put: 16r4!
-RichEditConstants at: 'ST_SELECTION' put: 16r2!
-RichEditConstants at: 'ST_UNICODE' put: 16r8!
-RichEditConstants at: 'WB_CLASSIFY' put: 16r3!
-RichEditConstants at: 'WB_LEFTBREAK' put: 16r6!
-RichEditConstants at: 'WB_MOVEWORDLEFT' put: 16r4!
-RichEditConstants at: 'WB_MOVEWORDNEXT' put: 16r5!
-RichEditConstants at: 'WB_MOVEWORDPREV' put: 16r4!
-RichEditConstants at: 'WB_MOVEWORDRIGHT' put: 16r5!
-RichEditConstants at: 'WB_NEXTBREAK' put: 16r7!
-RichEditConstants at: 'WB_PREVBREAK' put: 16r6!
-RichEditConstants at: 'WB_RIGHTBREAK' put: 16r7!
-RichEditConstants at: 'WBF_BREAKAFTER' put: 16r40!
-RichEditConstants at: 'WBF_BREAKLINE' put: 16r20!
-RichEditConstants at: 'WBF_CLASS' put: 16rF!
-RichEditConstants at: 'WBF_CUSTOM' put: 16r200!
-RichEditConstants at: 'WBF_ISWHITE' put: 16r10!
-RichEditConstants at: 'WBF_LEVEL1' put: 16r80!
-RichEditConstants at: 'WBF_LEVEL2' put: 16r100!
-RichEditConstants at: 'WBF_OVERFLOW' put: 16r40!
-RichEditConstants at: 'WBF_WORDBREAK' put: 16r20!
-RichEditConstants at: 'WBF_WORDWRAP' put: 16r10!
-RichEditConstants at: 'WCH_EMBEDDING' put: 16rFFFC!
-RichEditConstants at: 'yHeightCharPtsMost' put: 16r666!
-RichEditConstants shrink!
+SharedPool subclass: #RichEditConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'cchTextLimitDefault' -> 16r7FFF.
+		'CFE_AUTOCOLOR' -> 16r40000000.
+		'CFE_BOLD' -> 16r1.
+		'CFE_ITALIC' -> 16r2.
+		'CFE_LINK' -> 16r20.
+		'CFE_PROTECTED' -> 16r10.
+		'CFE_STRIKEOUT' -> 16r8.
+		'CFE_SUBSCRIPT' -> 16r10000.
+		'CFE_SUPERSCRIPT' -> 16r20000.
+		'CFE_UNDERLINE' -> 16r4.
+		'CFM_ALLCAPS' -> 16r80.
+		'CFM_ANIMATION' -> 16r40000.
+		'CFM_BACKCOLOR' -> 16r4000000.
+		'CFM_BOLD' -> 16r1.
+		'CFM_CHARSET' -> 16r8000000.
+		'CFM_COLOR' -> 16r40000000.
+		'CFM_DISABLED' -> 16r2000.
+		'CFM_EMBOSS' -> 16r800.
+		'CFM_FACE' -> 16r20000000.
+		'CFM_HIDDEN' -> 16r100.
+		'CFM_IMPRINT' -> 16r1000.
+		'CFM_ITALIC' -> 16r2.
+		'CFM_KERNING' -> 16r100000.
+		'CFM_LCID' -> 16r2000000.
+		'CFM_LINK' -> 16r20.
+		'CFM_OFFSET' -> 16r10000000.
+		'CFM_OUTLINE' -> 16r200.
+		'CFM_PROTECTED' -> 16r10.
+		'CFM_REVAUTHOR' -> 16r8000.
+		'CFM_REVISED' -> 16r4000.
+		'CFM_SHADOW' -> 16r400.
+		'CFM_SIZE' -> 16r80000000.
+		'CFM_SMALLCAPS' -> 16r40.
+		'CFM_SPACING' -> 16r200000.
+		'CFM_STRIKEOUT' -> 16r8.
+		'CFM_STYLE' -> 16r80000.
+		'CFM_SUBSCRIPT' -> 16r30000.
+		'CFM_SUPERSCRIPT' -> 16r30000.
+		'CFM_UNDERLINE' -> 16r4.
+		'CFM_UNDERLINETYPE' -> 16r800000.
+		'CFM_WEIGHT' -> 16r400000.
+		'CFU_CF1UNDERLINE' -> 16rFF.
+		'CFU_INVERT' -> 16rFE.
+		'CFU_UNDERLINE' -> 16r1.
+		'CFU_UNDERLINEDOTTED' -> 16r4.
+		'CFU_UNDERLINEDOUBLE' -> 16r3.
+		'CFU_UNDERLINEWORD' -> 16r2.
+		'ECO_AUTOHSCROLL' -> 16r80.
+		'ECO_AUTOVSCROLL' -> 16r40.
+		'ECO_AUTOWORDSELECTION' -> 16r1.
+		'ECO_NOHIDESEL' -> 16r100.
+		'ECO_READONLY' -> 16r800.
+		'ECO_SAVESEL' -> 16r8000.
+		'ECO_SELECTIONBAR' -> 16r1000000.
+		'ECO_VERTICAL' -> 16r400000.
+		'ECO_WANTRETURN' -> 16r1000.
+		'ECOOP_AND' -> 16r3.
+		'ECOOP_OR' -> 16r2.
+		'ECOOP_SET' -> 16r1.
+		'ECOOP_XOR' -> 16r4.
+		'EM_AUTOURLDETECT' -> 16r45B.
+		'EM_CANPASTE' -> 16r432.
+		'EM_CANREDO' -> 16r455.
+		'EM_CONVPOSITION' -> 16r46C.
+		'EM_DISPLAYBAND' -> 16r433.
+		'EM_EXGETSEL' -> 16r434.
+		'EM_EXLIMITTEXT' -> 16r435.
+		'EM_EXLINEFROMCHAR' -> 16r436.
+		'EM_EXSETSEL' -> 16r437.
+		'EM_FINDTEXTEXW' -> 16r47C.
+		'EM_FINDTEXTW' -> 16r47B.
+		'EM_FINDWORDBREAK' -> 16r44C.
+		'EM_FORMATRANGE' -> 16r439.
+		'EM_GETAUTOURLDETECT' -> 16r45C.
+		'EM_GETCHARFORMAT' -> 16r43A.
+		'EM_GETEVENTMASK' -> 16r43B.
+		'EM_GETIMECOLOR' -> 16r469.
+		'EM_GETIMECOMPMODE' -> 16r47A.
+		'EM_GETIMEOPTIONS' -> 16r46B.
+		'EM_GETLANGOPTIONS' -> 16r479.
+		'EM_GETOLEINTERFACE' -> 16r43C.
+		'EM_GETOPTIONS' -> 16r44E.
+		'EM_GETPARAFORMAT' -> 16r43D.
+		'EM_GETPUNCTUATION' -> 16r465.
+		'EM_GETREDONAME' -> 16r457.
+		'EM_GETSELTEXT' -> 16r43E.
+		'EM_GETTEXTEX' -> 16r45E.
+		'EM_GETTEXTLENGTHEX' -> 16r45F.
+		'EM_GETTEXTMODE' -> 16r45A.
+		'EM_GETTEXTRANGE' -> 16r44B.
+		'EM_GETUNDONAME' -> 16r456.
+		'EM_GETWORDBREAKPROCEX' -> 16r450.
+		'EM_GETWORDWRAPMODE' -> 16r467.
+		'EM_HIDESELECTION' -> 16r43F.
+		'EM_PASTESPECIAL' -> 16r440.
+		'EM_REDO' -> 16r454.
+		'EM_REQUESTRESIZE' -> 16r441.
+		'EM_SCROLLCARET' -> 16r431.
+		'EM_SELECTIONTYPE' -> 16r442.
+		'EM_SETBKGNDCOLOR' -> 16r443.
+		'EM_SETCHARFORMAT' -> 16r444.
+		'EM_SETEVENTMASK' -> 16r445.
+		'EM_SETIMECOLOR' -> 16r468.
+		'EM_SETIMEOPTIONS' -> 16r46A.
+		'EM_SETLANGOPTIONS' -> 16r478.
+		'EM_SETOLECALLBACK' -> 16r446.
+		'EM_SETOPTIONS' -> 16r44D.
+		'EM_SETPALETTE' -> 16r45D.
+		'EM_SETPARAFORMAT' -> 16r447.
+		'EM_SETPUNCTUATION' -> 16r464.
+		'EM_SETTARGETDEVICE' -> 16r448.
+		'EM_SETTEXTEX' -> 16r461.
+		'EM_SETTEXTMODE' -> 16r459.
+		'EM_SETUNDOLIMIT' -> 16r452.
+		'EM_SETWORDBREAKPROCEX' -> 16r451.
+		'EM_SETWORDWRAPMODE' -> 16r466.
+		'EM_STOPGROUPTYPING' -> 16r458.
+		'EM_STREAMIN' -> 16r449.
+		'EM_STREAMOUT' -> 16r44A.
+		'EN_CORRECTTEXT' -> 16r705.
+		'EN_DRAGDROPDONE' -> 16r70C.
+		'EN_DROPFILES' -> 16r703.
+		'EN_IMECHANGE' -> 16r707.
+		'EN_LINK' -> 16r70B.
+		'EN_MSGFILTER' -> 16r700.
+		'EN_OBJECTPOSITIONS' -> 16r70A.
+		'EN_OLEOPFAILED' -> 16r709.
+		'EN_PROTECTED' -> 16r704.
+		'EN_REQUESTRESIZE' -> 16r701.
+		'EN_SAVECLIPBOARD' -> 16r708.
+		'EN_SELCHANGE' -> 16r702.
+		'EN_STOPNOUNDO' -> 16r706.
+		'ENM_CHANGE' -> 16r1.
+		'ENM_CORRECTTEXT' -> 16r400000.
+		'ENM_DROPFILES' -> 16r100000.
+		'ENM_IMECHANGE' -> 16r800000.
+		'ENM_KEYEVENTS' -> 16r10000.
+		'ENM_LANGCHANGE' -> 16r1000000.
+		'ENM_LINK' -> 16r4000000.
+		'ENM_MOUSEEVENTS' -> 16r20000.
+		'ENM_NONE' -> 16r0.
+		'ENM_OBJECTPOSITIONS' -> 16r2000000.
+		'ENM_PROTECTED' -> 16r200000.
+		'ENM_REQUESTRESIZE' -> 16r40000.
+		'ENM_SCROLL' -> 16r4.
+		'ENM_SELCHANGE' -> 16r80000.
+		'ENM_UPDATE' -> 16r2.
+		'ES_DISABLENOSCROLL' -> 16r2000.
+		'ES_EX_NOCALLOLEINIT' -> 16r1000000.
+		'ES_NOIME' -> 16r80000.
+		'ES_NOOLEDRAGDROP' -> 16r8.
+		'ES_SAVESEL' -> 16r8000.
+		'ES_SELECTIONBAR' -> 16r1000000.
+		'ES_SELFIME' -> 16r40000.
+		'ES_SUNKEN' -> 16r4000.
+		'ES_VERTICAL' -> 16r400000.
+		'GCM_RIGHTMOUSEDROP' -> 16r8000.
+		'GT_DEFAULT' -> 16r0.
+		'GT_NOHIDDENTEXT' -> 16r8.
+		'GT_RAWTEXT' -> 16r4.
+		'GT_SELECTION' -> 16r2.
+		'GT_USECRLF' -> 16r1.
+		'GTL_CLOSE' -> 16r4.
+		'GTL_DEFAULT' -> 16r0.
+		'GTL_NUMBYTES' -> 16r10.
+		'GTL_NUMCHARS' -> 16r8.
+		'GTL_PRECISE' -> 16r2.
+		'GTL_USECRLF' -> 16r1.
+		'ICM_LEVEL2' -> 16r2.
+		'ICM_LEVEL2_5' -> 16r3.
+		'ICM_LEVEL2_SUI' -> 16r4.
+		'ICM_LEVEL3' -> 16r1.
+		'ICM_NOTOPEN' -> 16r0.
+		'IMF_AUTOFONT' -> 16r2.
+		'IMF_AUTOKEYBOARD' -> 16r1.
+		'IMF_CLOSESTATUSWINDOW' -> 16r8.
+		'IMF_FORCEACTIVE' -> 16r40.
+		'IMF_FORCEDISABLE' -> 16r4.
+		'IMF_FORCEENABLE' -> 16r2.
+		'IMF_FORCEINACTIVE' -> 16r80.
+		'IMF_FORCENONE' -> 16r1.
+		'IMF_FORCEREMEMBER' -> 16r100.
+		'IMF_IMEALWAYSSENDNOTIFY' -> 16r8.
+		'IMF_IMECANCELCOMPLETE' -> 16r4.
+		'IMF_MULTIPLEEDIT' -> 16r400.
+		'IMF_VERTICAL' -> 16r20.
+		'lDefaultTab' -> 16r2D0.
+		'MAX_TAB_STOPS' -> 16r20.
+		'OLEOP_DOVERB' -> 16r1.
+		'PC_DELIMITER' -> 16r4.
+		'PC_FOLLOWING' -> 16r1.
+		'PC_LEADING' -> 16r2.
+		'PC_OVERFLOW' -> 16r3.
+		'PFA_CENTER' -> 16r3.
+		'PFA_JUSTIFY' -> 16r4.
+		'PFA_LEFT' -> 16r1.
+		'PFA_RIGHT' -> 16r2.
+		'PFE_TABLECELL' -> 16r4000.
+		'PFE_TABLECELLEND' -> 16r8000.
+		'PFE_TABLEROW' -> 16rC000.
+		'PFM_ALIGNMENT' -> 16r8.
+		'PFM_BORDER' -> 16r800.
+		'PFM_DONOTHYPHEN' -> 16r400000.
+		'PFM_KEEP' -> 16r20000.
+		'PFM_KEEPNEXT' -> 16r40000.
+		'PFM_LINESPACING' -> 16r100.
+		'PFM_NOLINENUMBER' -> 16r100000.
+		'PFM_NOWIDOWCONTROL' -> 16r200000.
+		'PFM_NUMBERING' -> 16r20.
+		'PFM_NUMBERINGSTART' -> 16r8000.
+		'PFM_NUMBERINGSTYLE' -> 16r2000.
+		'PFM_NUMBERINGTAB' -> 16r4000.
+		'PFM_OFFSET' -> 16r4.
+		'PFM_OFFSETINDENT' -> 16r80000000.
+		'PFM_PAGEBREAKBEFORE' -> 16r80000.
+		'PFM_RIGHTINDENT' -> 16r2.
+		'PFM_RTLPARA' -> 16r10000.
+		'PFM_SHADING' -> 16r1000.
+		'PFM_SIDEBYSIDE' -> 16r800000.
+		'PFM_SPACEAFTER' -> 16r80.
+		'PFM_SPACEBEFORE' -> 16r40.
+		'PFM_STARTINDENT' -> 16r1.
+		'PFM_STYLE' -> 16r400.
+		'PFM_TABLE' -> 16r40000000.
+		'PFM_TABSTOPS' -> 16r10.
+		'PFN_BULLET' -> 16r1.
+		'SCF_ALL' -> 16r4.
+		'SCF_DEFAULT' -> 16r0.
+		'SCF_SELECTION' -> 16r1.
+		'SCF_USEUIRULES' -> 16r8.
+		'SCF_WORD' -> 16r2.
+		'SEL_EMPTY' -> 16r0.
+		'SEL_MULTICHAR' -> 16r4.
+		'SEL_MULTIOBJECT' -> 16r8.
+		'SEL_OBJECT' -> 16r2.
+		'SEL_TEXT' -> 16r1.
+		'SF_RTF' -> 16r2.
+		'SF_RTFNOOBJS' -> 16r3.
+		'SF_TEXT' -> 16r1.
+		'SF_TEXTIZED' -> 16r4.
+		'SF_UNICODE' -> 16r10.
+		'SF_USECODEPAGE' -> 16r20.
+		'SFF_PLAINRTF' -> 16r4000.
+		'SFF_SELECTION' -> 16r8000.
+		'ST_DEFAULT' -> 16r0.
+		'ST_KEEPUNDO' -> 16r1.
+		'ST_NEWCHARS' -> 16r4.
+		'ST_SELECTION' -> 16r2.
+		'ST_UNICODE' -> 16r8.
+		'WB_CLASSIFY' -> 16r3.
+		'WB_LEFTBREAK' -> 16r6.
+		'WB_MOVEWORDLEFT' -> 16r4.
+		'WB_MOVEWORDNEXT' -> 16r5.
+		'WB_MOVEWORDPREV' -> 16r4.
+		'WB_MOVEWORDRIGHT' -> 16r5.
+		'WB_NEXTBREAK' -> 16r7.
+		'WB_PREVBREAK' -> 16r6.
+		'WB_RIGHTBREAK' -> 16r7.
+		'WBF_BREAKAFTER' -> 16r40.
+		'WBF_BREAKLINE' -> 16r20.
+		'WBF_CLASS' -> 16rF.
+		'WBF_CUSTOM' -> 16r200.
+		'WBF_ISWHITE' -> 16r10.
+		'WBF_LEVEL1' -> 16r80.
+		'WBF_LEVEL2' -> 16r100.
+		'WBF_OVERFLOW' -> 16r40.
+		'WBF_WORDBREAK' -> 16r20.
+		'WBF_WORDWRAP' -> 16r10.
+		'WCH_EMBEDDING' -> 16rFFFC.
+		'yHeightCharPtsMost' -> 16r666
+	}!
+RichEditConstants guid: (GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
+RichEditConstants comment: ''!
+!RichEditConstants categoriesForClass!Unclassified! !

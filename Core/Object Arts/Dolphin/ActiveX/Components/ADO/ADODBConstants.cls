@@ -1,416 +1,424 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ADODBConstants} declare: (PoolConstantsDictionary named: #ADODBConstants)!
-ADODBConstants at: 'adAddNew' put: 16r1000400!
-ADODBConstants at: 'adAffectAll' put: 16r3!
-ADODBConstants at: 'adAffectAllChapters' put: 16r4!
-ADODBConstants at: 'adAffectCurrent' put: 16r1!
-ADODBConstants at: 'adAffectGroup' put: 16r2!
-ADODBConstants at: 'adApproxPosition' put: 16r4000!
-ADODBConstants at: 'adArray' put: 16r2000!
-ADODBConstants at: 'adAsyncConnect' put: 16r10!
-ADODBConstants at: 'adAsyncExecute' put: 16r10!
-ADODBConstants at: 'adAsyncFetch' put: 16r20!
-ADODBConstants at: 'adAsyncFetchNonBlocking' put: 16r40!
-ADODBConstants at: 'adBigInt' put: 16r14!
-ADODBConstants at: 'adBinary' put: 16r80!
-ADODBConstants at: 'adBookmark' put: 16r2000!
-ADODBConstants at: 'adBookmarkCurrent' put: 16r0!
-ADODBConstants at: 'adBookmarkFirst' put: 16r1!
-ADODBConstants at: 'adBookmarkLast' put: 16r2!
-ADODBConstants at: 'adBoolean' put: 16rB!
-ADODBConstants at: 'adBSTR' put: 16r8!
-ADODBConstants at: 'adChapter' put: 16r88!
-ADODBConstants at: 'adChar' put: 16r81!
-ADODBConstants at: 'adClipString' put: 16r2!
-ADODBConstants at: 'adCmdFile' put: 16r100!
-ADODBConstants at: 'adCmdStoredProc' put: 16r4!
-ADODBConstants at: 'adCmdTable' put: 16r2!
-ADODBConstants at: 'adCmdTableDirect' put: 16r200!
-ADODBConstants at: 'adCmdText' put: 16r1!
-ADODBConstants at: 'adCmdUnknown' put: 16r8!
-ADODBConstants at: 'adCmdUnspecified' put: -16r1!
-ADODBConstants at: 'adCollectionRecord' put: 16r1!
-ADODBConstants at: 'adCompareEqual' put: 16r1!
-ADODBConstants at: 'adCompareGreaterThan' put: 16r2!
-ADODBConstants at: 'adCompareLessThan' put: 16r0!
-ADODBConstants at: 'adCompareNotComparable' put: 16r4!
-ADODBConstants at: 'adCompareNotEqual' put: 16r3!
-ADODBConstants at: 'adConnectUnspecified' put: -16r1!
-ADODBConstants at: 'adCopyAllowEmulation' put: 16r4!
-ADODBConstants at: 'adCopyNonRecursive' put: 16r2!
-ADODBConstants at: 'adCopyOverWrite' put: 16r1!
-ADODBConstants at: 'adCopyUnspecified' put: -16r1!
-ADODBConstants at: 'adCR' put: 16rD!
-ADODBConstants at: 'adCreateCollection' put: 16r2000!
-ADODBConstants at: 'adCreateNonCollection' put: 16r0!
-ADODBConstants at: 'adCreateOverwrite' put: 16r4000000!
-ADODBConstants at: 'adCreateStructDoc' put: -16r80000000!
-ADODBConstants at: 'adCriteriaAllCols' put: 16r1!
-ADODBConstants at: 'adCriteriaKey' put: 16r0!
-ADODBConstants at: 'adCriteriaTimeStamp' put: 16r3!
-ADODBConstants at: 'adCriteriaUpdCols' put: 16r2!
-ADODBConstants at: 'adCRLF' put: -16r1!
-ADODBConstants at: 'adCurrency' put: 16r6!
-ADODBConstants at: 'adDate' put: 16r7!
-ADODBConstants at: 'adDBDate' put: 16r85!
-ADODBConstants at: 'adDBTime' put: 16r86!
-ADODBConstants at: 'adDBTimeStamp' put: 16r87!
-ADODBConstants at: 'adDecimal' put: 16rE!
-ADODBConstants at: 'adDefaultStream' put: -16r1!
-ADODBConstants at: 'adDelayFetchFields' put: 16r8000!
-ADODBConstants at: 'adDelayFetchStream' put: 16r4000!
-ADODBConstants at: 'adDelete' put: 16r1000800!
-ADODBConstants at: 'adDouble' put: 16r5!
-ADODBConstants at: 'adEditAdd' put: 16r2!
-ADODBConstants at: 'adEditDelete' put: 16r4!
-ADODBConstants at: 'adEditInProgress' put: 16r1!
-ADODBConstants at: 'adEditNone' put: 16r0!
-ADODBConstants at: 'adEmpty' put: 16r0!
-ADODBConstants at: 'adErrBoundToCommand' put: 16rE7B!
-ADODBConstants at: 'adErrCannotComplete' put: 16rE94!
-ADODBConstants at: 'adErrCantChangeConnection' put: 16rEA4!
-ADODBConstants at: 'adErrCantChangeProvider' put: 16rC94!
-ADODBConstants at: 'adErrCantConvertvalue' put: 16rE8C!
-ADODBConstants at: 'adErrCantCreate' put: 16rE8D!
-ADODBConstants at: 'adErrCatalogNotSet' put: 16rEA3!
-ADODBConstants at: 'adErrColumnNotOnThisRow' put: 16rE8E!
-ADODBConstants at: 'adErrDataConversion' put: 16rD5D!
-ADODBConstants at: 'adErrDataOverflow' put: 16rE89!
-ADODBConstants at: 'adErrDelResOutOfScope' put: 16rE9A!
-ADODBConstants at: 'adErrDenyNotSupported' put: 16rEA6!
-ADODBConstants at: 'adErrDenyTypeNotSupported' put: 16rEA7!
-ADODBConstants at: 'adErrFeatureNotAvailable' put: 16rCB3!
-ADODBConstants at: 'adErrFieldsUpdateFailed' put: 16rEA5!
-ADODBConstants at: 'adErrIllegalOperation' put: 16rC93!
-ADODBConstants at: 'adErrIntegrityViolation' put: 16rE87!
-ADODBConstants at: 'adErrInTransaction' put: 16rCAE!
-ADODBConstants at: 'adErrInvalidArgument' put: 16rBB9!
-ADODBConstants at: 'adErrInvalidConnection' put: 16rE7D!
-ADODBConstants at: 'adErrInvalidParamInfo' put: 16rE7C!
-ADODBConstants at: 'adErrInvalidTransaction' put: 16rE82!
-ADODBConstants at: 'adErrInvalidURL' put: 16rE91!
-ADODBConstants at: 'adErrItemNotFound' put: 16rCC1!
-ADODBConstants at: 'adErrNoCurrentRecord' put: 16rBCD!
-ADODBConstants at: 'adErrNotExecuting' put: 16rE83!
-ADODBConstants at: 'adErrNotReentrant' put: 16rE7E!
-ADODBConstants at: 'adErrObjectClosed' put: 16rE78!
-ADODBConstants at: 'adErrObjectInCollection' put: 16rD27!
-ADODBConstants at: 'adErrObjectNotSet' put: 16rD5C!
-ADODBConstants at: 'adErrObjectOpen' put: 16rE79!
-ADODBConstants at: 'adErrOpeningFile' put: 16rBBA!
-ADODBConstants at: 'adErrOperationCancelled' put: 16rE80!
-ADODBConstants at: 'adError' put: 16rA!
-ADODBConstants at: 'adErrOutOfSpace' put: 16rE96!
-ADODBConstants at: 'adErrPermissionDenied' put: 16rE88!
-ADODBConstants at: 'adErrPropConflicting' put: 16rE9E!
-ADODBConstants at: 'adErrPropInvalidColumn' put: 16rE9B!
-ADODBConstants at: 'adErrPropInvalidOption' put: 16rE9C!
-ADODBConstants at: 'adErrPropInvalidValue' put: 16rE9D!
-ADODBConstants at: 'adErrPropNotAllSettable' put: 16rE9F!
-ADODBConstants at: 'adErrPropNotSet' put: 16rEA0!
-ADODBConstants at: 'adErrPropNotSettable' put: 16rEA1!
-ADODBConstants at: 'adErrPropNotSupported' put: 16rEA2!
-ADODBConstants at: 'adErrProviderFailed' put: 16rBB8!
-ADODBConstants at: 'adErrProviderNotFound' put: 16rE7A!
-ADODBConstants at: 'adErrReadFile' put: 16rBBB!
-ADODBConstants at: 'adErrResourceExists' put: 16rE93!
-ADODBConstants at: 'adErrResourceLocked' put: 16rE92!
-ADODBConstants at: 'adErrResourceOutOfScope' put: 16rE97!
-ADODBConstants at: 'adErrSchemaViolation' put: 16rE8A!
-ADODBConstants at: 'adErrSignMismatch' put: 16rE8B!
-ADODBConstants at: 'adErrStillConnecting' put: 16rE81!
-ADODBConstants at: 'adErrStillExecuting' put: 16rE7F!
-ADODBConstants at: 'adErrTreePermissionDenied' put: 16rE90!
-ADODBConstants at: 'adErrUnavailable' put: 16rE98!
-ADODBConstants at: 'adErrUnsafeOperation' put: 16rE84!
-ADODBConstants at: 'adErrURLDoesNotExist' put: 16rE8F!
-ADODBConstants at: 'adErrURLNamedRowDoesNotExist' put: 16rE99!
-ADODBConstants at: 'adErrVolumeNotFound' put: 16rE95!
-ADODBConstants at: 'adErrWriteFile' put: 16rBBC!
-ADODBConstants at: 'adExecuteNoRecords' put: 16r80!
-ADODBConstants at: 'adFailIfNotExists' put: -16r1!
-ADODBConstants at: 'adFieldAlreadyExists' put: 16r1A!
-ADODBConstants at: 'adFieldBadStatus' put: 16rC!
-ADODBConstants at: 'adFieldCannotComplete' put: 16r14!
-ADODBConstants at: 'adFieldCannotDeleteSource' put: 16r17!
-ADODBConstants at: 'adFieldCantConvertValue' put: 16r2!
-ADODBConstants at: 'adFieldCantCreate' put: 16r7!
-ADODBConstants at: 'adFieldDataOverflow' put: 16r6!
-ADODBConstants at: 'adFieldDefault' put: 16rD!
-ADODBConstants at: 'adFieldDoesNotExist' put: 16r10!
-ADODBConstants at: 'adFieldIgnore' put: 16rF!
-ADODBConstants at: 'adFieldIntegrityViolation' put: 16rA!
-ADODBConstants at: 'adFieldInvalidURL' put: 16r11!
-ADODBConstants at: 'adFieldIsNull' put: 16r3!
-ADODBConstants at: 'adFieldOK' put: 16r0!
-ADODBConstants at: 'adFieldOutOfSpace' put: 16r16!
-ADODBConstants at: 'adFieldPendingChange' put: 16r40000!
-ADODBConstants at: 'adFieldPendingDelete' put: 16r20000!
-ADODBConstants at: 'adFieldPendingInsert' put: 16r10000!
-ADODBConstants at: 'adFieldPendingUnknown' put: 16r80000!
-ADODBConstants at: 'adFieldPendingUnknownDelete' put: 16r100000!
-ADODBConstants at: 'adFieldPermissionDenied' put: 16r9!
-ADODBConstants at: 'adFieldReadOnly' put: 16r18!
-ADODBConstants at: 'adFieldResourceExists' put: 16r13!
-ADODBConstants at: 'adFieldResourceLocked' put: 16r12!
-ADODBConstants at: 'adFieldResourceOutOfScope' put: 16r19!
-ADODBConstants at: 'adFieldSchemaViolation' put: 16rB!
-ADODBConstants at: 'adFieldSignMismatch' put: 16r5!
-ADODBConstants at: 'adFieldTruncated' put: 16r4!
-ADODBConstants at: 'adFieldUnavailable' put: 16r8!
-ADODBConstants at: 'adFieldVolumeNotFound' put: 16r15!
-ADODBConstants at: 'adFileTime' put: 16r40!
-ADODBConstants at: 'adFilterAffectedRecords' put: 16r2!
-ADODBConstants at: 'adFilterConflictingRecords' put: 16r5!
-ADODBConstants at: 'adFilterFetchedRecords' put: 16r3!
-ADODBConstants at: 'adFilterNone' put: 16r0!
-ADODBConstants at: 'adFilterPendingRecords' put: 16r1!
-ADODBConstants at: 'adFilterPredicate' put: 16r4!
-ADODBConstants at: 'adFind' put: 16r80000!
-ADODBConstants at: 'adFldCacheDeferred' put: 16r1000!
-ADODBConstants at: 'adFldFixed' put: 16r10!
-ADODBConstants at: 'adFldIsChapter' put: 16r2000!
-ADODBConstants at: 'adFldIsCollection' put: 16r40000!
-ADODBConstants at: 'adFldIsDefaultStream' put: 16r20000!
-ADODBConstants at: 'adFldIsNullable' put: 16r20!
-ADODBConstants at: 'adFldIsRowURL' put: 16r10000!
-ADODBConstants at: 'adFldKeyColumn' put: 16r8000!
-ADODBConstants at: 'adFldLong' put: 16r80!
-ADODBConstants at: 'adFldMayBeNull' put: 16r40!
-ADODBConstants at: 'adFldMayDefer' put: 16r2!
-ADODBConstants at: 'adFldNegativeScale' put: 16r4000!
-ADODBConstants at: 'adFldRowID' put: 16r100!
-ADODBConstants at: 'adFldRowVersion' put: 16r200!
-ADODBConstants at: 'adFldUnknownUpdatable' put: 16r8!
-ADODBConstants at: 'adFldUnspecified' put: -16r1!
-ADODBConstants at: 'adFldUpdatable' put: 16r4!
-ADODBConstants at: 'adGetRowsRest' put: -16r1!
-ADODBConstants at: 'adGUID' put: 16r48!
-ADODBConstants at: 'adHoldRecords' put: 16r100!
-ADODBConstants at: 'adIDispatch' put: 16r9!
-ADODBConstants at: 'adIndex' put: 16r800000!
-ADODBConstants at: 'adInteger' put: 16r3!
-ADODBConstants at: 'adIUnknown' put: 16rD!
-ADODBConstants at: 'adLF' put: 16rA!
-ADODBConstants at: 'adLockBatchOptimistic' put: 16r4!
-ADODBConstants at: 'adLockOptimistic' put: 16r3!
-ADODBConstants at: 'adLockPessimistic' put: 16r2!
-ADODBConstants at: 'adLockReadOnly' put: 16r1!
-ADODBConstants at: 'adLockUnspecified' put: -16r1!
-ADODBConstants at: 'adLongVarBinary' put: 16rCD!
-ADODBConstants at: 'adLongVarChar' put: 16rC9!
-ADODBConstants at: 'adLongVarWChar' put: 16rCB!
-ADODBConstants at: 'adMarshalAll' put: 16r0!
-ADODBConstants at: 'adMarshalModifiedOnly' put: 16r1!
-ADODBConstants at: 'adModeRead' put: 16r1!
-ADODBConstants at: 'adModeReadWrite' put: 16r3!
-ADODBConstants at: 'adModeRecursive' put: 16r400000!
-ADODBConstants at: 'adModeShareDenyNone' put: 16r10!
-ADODBConstants at: 'adModeShareDenyRead' put: 16r4!
-ADODBConstants at: 'adModeShareDenyWrite' put: 16r8!
-ADODBConstants at: 'adModeShareExclusive' put: 16rC!
-ADODBConstants at: 'adModeUnknown' put: 16r0!
-ADODBConstants at: 'adModeWrite' put: 16r2!
-ADODBConstants at: 'adMoveAllowEmulation' put: 16r4!
-ADODBConstants at: 'adMoveDontUpdateLinks' put: 16r2!
-ADODBConstants at: 'adMoveOverWrite' put: 16r1!
-ADODBConstants at: 'adMovePrevious' put: 16r200!
-ADODBConstants at: 'adMoveUnspecified' put: -16r1!
-ADODBConstants at: 'adNotify' put: 16r40000!
-ADODBConstants at: 'adNumeric' put: 16r83!
-ADODBConstants at: 'adOpenAsync' put: 16r1000!
-ADODBConstants at: 'adOpenDynamic' put: 16r2!
-ADODBConstants at: 'adOpenForwardOnly' put: 16r0!
-ADODBConstants at: 'adOpenIfExists' put: 16r2000000!
-ADODBConstants at: 'adOpenKeyset' put: 16r1!
-ADODBConstants at: 'adOpenRecordUnspecified' put: -16r1!
-ADODBConstants at: 'adOpenSource' put: 16r800000!
-ADODBConstants at: 'adOpenStatic' put: 16r3!
-ADODBConstants at: 'adOpenStreamAsync' put: 16r1!
-ADODBConstants at: 'adOpenStreamFromRecord' put: 16r4!
-ADODBConstants at: 'adOpenStreamUnspecified' put: -16r1!
-ADODBConstants at: 'adOpenUnspecified' put: -16r1!
-ADODBConstants at: 'adOptionUnspecified' put: -16r1!
-ADODBConstants at: 'adParamInput' put: 16r1!
-ADODBConstants at: 'adParamInputOutput' put: 16r3!
-ADODBConstants at: 'adParamLong' put: 16r80!
-ADODBConstants at: 'adParamNullable' put: 16r40!
-ADODBConstants at: 'adParamOutput' put: 16r2!
-ADODBConstants at: 'adParamReturnValue' put: 16r4!
-ADODBConstants at: 'adParamSigned' put: 16r10!
-ADODBConstants at: 'adParamUnknown' put: 16r0!
-ADODBConstants at: 'adPersistADTG' put: 16r0!
-ADODBConstants at: 'adPersistXML' put: 16r1!
-ADODBConstants at: 'adPosBOF' put: -16r2!
-ADODBConstants at: 'adPosEOF' put: -16r3!
-ADODBConstants at: 'adPosUnknown' put: -16r1!
-ADODBConstants at: 'adPriorityAboveNormal' put: 16r4!
-ADODBConstants at: 'adPriorityBelowNormal' put: 16r2!
-ADODBConstants at: 'adPriorityHighest' put: 16r5!
-ADODBConstants at: 'adPriorityLowest' put: 16r1!
-ADODBConstants at: 'adPriorityNormal' put: 16r3!
-ADODBConstants at: 'adPromptAlways' put: 16r1!
-ADODBConstants at: 'adPromptComplete' put: 16r2!
-ADODBConstants at: 'adPromptCompleteRequired' put: 16r3!
-ADODBConstants at: 'adPromptNever' put: 16r4!
-ADODBConstants at: 'adPropNotSupported' put: 16r0!
-ADODBConstants at: 'adPropOptional' put: 16r2!
-ADODBConstants at: 'adPropRead' put: 16r200!
-ADODBConstants at: 'adPropRequired' put: 16r1!
-ADODBConstants at: 'adPropVariant' put: 16r8A!
-ADODBConstants at: 'adPropWrite' put: 16r400!
-ADODBConstants at: 'adReadAll' put: -16r1!
-ADODBConstants at: 'adReadLine' put: -16r2!
-ADODBConstants at: 'adRecalcAlways' put: 16r1!
-ADODBConstants at: 'adRecalcUpFront' put: 16r0!
-ADODBConstants at: 'adRecCanceled' put: 16r100!
-ADODBConstants at: 'adRecCantRelease' put: 16r400!
-ADODBConstants at: 'adRecConcurrencyViolation' put: 16r800!
-ADODBConstants at: 'adRecDBDeleted' put: 16r40000!
-ADODBConstants at: 'adRecDeleted' put: 16r4!
-ADODBConstants at: 'adRecIntegrityViolation' put: 16r1000!
-ADODBConstants at: 'adRecInvalid' put: 16r10!
-ADODBConstants at: 'adRecMaxChangesExceeded' put: 16r2000!
-ADODBConstants at: 'adRecModified' put: 16r2!
-ADODBConstants at: 'adRecMultipleChanges' put: 16r40!
-ADODBConstants at: 'adRecNew' put: 16r1!
-ADODBConstants at: 'adRecObjectOpen' put: 16r4000!
-ADODBConstants at: 'adRecOK' put: 16r0!
-ADODBConstants at: 'adRecordURL' put: -16r2!
-ADODBConstants at: 'adRecOutOfMemory' put: 16r8000!
-ADODBConstants at: 'adRecPendingChanges' put: 16r80!
-ADODBConstants at: 'adRecPermissionDenied' put: 16r10000!
-ADODBConstants at: 'adRecSchemaViolation' put: 16r20000!
-ADODBConstants at: 'adRecUnmodified' put: 16r8!
-ADODBConstants at: 'adResync' put: 16r20000!
-ADODBConstants at: 'adResyncAll' put: 16rF!
-ADODBConstants at: 'adResyncAllValues' put: 16r2!
-ADODBConstants at: 'adResyncAutoIncrement' put: 16r1!
-ADODBConstants at: 'adResyncConflicts' put: 16r2!
-ADODBConstants at: 'adResyncInserts' put: 16r8!
-ADODBConstants at: 'adResyncNone' put: 16r0!
-ADODBConstants at: 'adResyncUnderlyingValues' put: 16r1!
-ADODBConstants at: 'adResyncUpdates' put: 16r4!
-ADODBConstants at: 'adRsnAddNew' put: 16r1!
-ADODBConstants at: 'adRsnClose' put: 16r9!
-ADODBConstants at: 'adRsnDelete' put: 16r2!
-ADODBConstants at: 'adRsnFirstChange' put: 16rB!
-ADODBConstants at: 'adRsnMove' put: 16rA!
-ADODBConstants at: 'adRsnMoveFirst' put: 16rC!
-ADODBConstants at: 'adRsnMoveLast' put: 16rF!
-ADODBConstants at: 'adRsnMoveNext' put: 16rD!
-ADODBConstants at: 'adRsnMovePrevious' put: 16rE!
-ADODBConstants at: 'adRsnRequery' put: 16r7!
-ADODBConstants at: 'adRsnResynch' put: 16r8!
-ADODBConstants at: 'adRsnUndoAddNew' put: 16r5!
-ADODBConstants at: 'adRsnUndoDelete' put: 16r6!
-ADODBConstants at: 'adRsnUndoUpdate' put: 16r4!
-ADODBConstants at: 'adRsnUpdate' put: 16r3!
-ADODBConstants at: 'adSaveCreateNotExist' put: 16r1!
-ADODBConstants at: 'adSaveCreateOverWrite' put: 16r2!
-ADODBConstants at: 'adSchemaAsserts' put: 16r0!
-ADODBConstants at: 'adSchemaCatalogs' put: 16r1!
-ADODBConstants at: 'adSchemaCharacterSets' put: 16r2!
-ADODBConstants at: 'adSchemaCheckConstraints' put: 16r5!
-ADODBConstants at: 'adSchemaCollations' put: 16r3!
-ADODBConstants at: 'adSchemaColumnPrivileges' put: 16rD!
-ADODBConstants at: 'adSchemaColumns' put: 16r4!
-ADODBConstants at: 'adSchemaColumnsDomainUsage' put: 16rB!
-ADODBConstants at: 'adSchemaConstraintColumnUsage' put: 16r6!
-ADODBConstants at: 'adSchemaConstraintTableUsage' put: 16r7!
-ADODBConstants at: 'adSchemaCubes' put: 16r20!
-ADODBConstants at: 'adSchemaDBInfoKeywords' put: 16r1E!
-ADODBConstants at: 'adSchemaDBInfoLiterals' put: 16r1F!
-ADODBConstants at: 'adSchemaDimensions' put: 16r21!
-ADODBConstants at: 'adSchemaForeignKeys' put: 16r1B!
-ADODBConstants at: 'adSchemaHierarchies' put: 16r22!
-ADODBConstants at: 'adSchemaIndexes' put: 16rC!
-ADODBConstants at: 'adSchemaKeyColumnUsage' put: 16r8!
-ADODBConstants at: 'adSchemaLevels' put: 16r23!
-ADODBConstants at: 'adSchemaMeasures' put: 16r24!
-ADODBConstants at: 'adSchemaMembers' put: 16r26!
-ADODBConstants at: 'adSchemaPrimaryKeys' put: 16r1C!
-ADODBConstants at: 'adSchemaProcedureColumns' put: 16r1D!
-ADODBConstants at: 'adSchemaProcedureParameters' put: 16r1A!
-ADODBConstants at: 'adSchemaProcedures' put: 16r10!
-ADODBConstants at: 'adSchemaProperties' put: 16r25!
-ADODBConstants at: 'adSchemaProviderSpecific' put: -16r1!
-ADODBConstants at: 'adSchemaProviderTypes' put: 16r16!
-ADODBConstants at: 'adSchemaReferentialConstraints' put: 16r9!
-ADODBConstants at: 'adSchemaReferentialContraints' put: 16r9!
-ADODBConstants at: 'adSchemaSchemata' put: 16r11!
-ADODBConstants at: 'adSchemaSQLLanguages' put: 16r12!
-ADODBConstants at: 'adSchemaStatistics' put: 16r13!
-ADODBConstants at: 'adSchemaTableConstraints' put: 16rA!
-ADODBConstants at: 'adSchemaTablePrivileges' put: 16rE!
-ADODBConstants at: 'adSchemaTables' put: 16r14!
-ADODBConstants at: 'adSchemaTranslations' put: 16r15!
-ADODBConstants at: 'adSchemaTrustees' put: 16r27!
-ADODBConstants at: 'adSchemaUsagePrivileges' put: 16rF!
-ADODBConstants at: 'adSchemaViewColumnUsage' put: 16r18!
-ADODBConstants at: 'adSchemaViews' put: 16r17!
-ADODBConstants at: 'adSchemaViewTableUsage' put: 16r19!
-ADODBConstants at: 'adSearchBackward' put: -16r1!
-ADODBConstants at: 'adSearchForward' put: 16r1!
-ADODBConstants at: 'adSeek' put: 16r400000!
-ADODBConstants at: 'adSeekAfter' put: 16r8!
-ADODBConstants at: 'adSeekAfterEQ' put: 16r4!
-ADODBConstants at: 'adSeekBefore' put: 16r20!
-ADODBConstants at: 'adSeekBeforeEQ' put: 16r10!
-ADODBConstants at: 'adSeekFirstEQ' put: 16r1!
-ADODBConstants at: 'adSeekLastEQ' put: 16r2!
-ADODBConstants at: 'adSimpleRecord' put: 16r0!
-ADODBConstants at: 'adSingle' put: 16r4!
-ADODBConstants at: 'adSmallInt' put: 16r2!
-ADODBConstants at: 'adStateClosed' put: 16r0!
-ADODBConstants at: 'adStateConnecting' put: 16r2!
-ADODBConstants at: 'adStateExecuting' put: 16r4!
-ADODBConstants at: 'adStateFetching' put: 16r8!
-ADODBConstants at: 'adStateOpen' put: 16r1!
-ADODBConstants at: 'adStatusCancel' put: 16r4!
-ADODBConstants at: 'adStatusCantDeny' put: 16r3!
-ADODBConstants at: 'adStatusErrorsOccurred' put: 16r2!
-ADODBConstants at: 'adStatusOK' put: 16r1!
-ADODBConstants at: 'adStatusUnwantedEvent' put: 16r5!
-ADODBConstants at: 'adStructDoc' put: 16r2!
-ADODBConstants at: 'adTinyInt' put: 16r10!
-ADODBConstants at: 'adTypeBinary' put: 16r1!
-ADODBConstants at: 'adTypeText' put: 16r2!
-ADODBConstants at: 'adUnsignedBigInt' put: 16r15!
-ADODBConstants at: 'adUnsignedInt' put: 16r13!
-ADODBConstants at: 'adUnsignedSmallInt' put: 16r12!
-ADODBConstants at: 'adUnsignedTinyInt' put: 16r11!
-ADODBConstants at: 'adUpdate' put: 16r1008000!
-ADODBConstants at: 'adUpdateBatch' put: 16r10000!
-ADODBConstants at: 'adUseClient' put: 16r3!
-ADODBConstants at: 'adUseClientBatch' put: 16r3!
-ADODBConstants at: 'adUseNone' put: 16r1!
-ADODBConstants at: 'adUserDefined' put: 16r84!
-ADODBConstants at: 'adUseServer' put: 16r2!
-ADODBConstants at: 'adVarBinary' put: 16rCC!
-ADODBConstants at: 'adVarChar' put: 16rC8!
-ADODBConstants at: 'adVariant' put: 16rC!
-ADODBConstants at: 'adVarNumeric' put: 16r8B!
-ADODBConstants at: 'adVarWChar' put: 16rCA!
-ADODBConstants at: 'adWChar' put: 16r82!
-ADODBConstants at: 'adWriteChar' put: 16r0!
-ADODBConstants at: 'adWriteLine' put: 16r1!
-ADODBConstants at: 'adwrnSecurityDialog' put: 16rE85!
-ADODBConstants at: 'adwrnSecurityDialogHeader' put: 16rE86!
-ADODBConstants at: 'adXactAbortRetaining' put: 16r40000!
-ADODBConstants at: 'adXactAsyncPhaseOne' put: 16r80000!
-ADODBConstants at: 'adXactBrowse' put: 16r100!
-ADODBConstants at: 'adXactChaos' put: 16r10!
-ADODBConstants at: 'adXactCommitRetaining' put: 16r20000!
-ADODBConstants at: 'adXactCursorStability' put: 16r1000!
-ADODBConstants at: 'adXactIsolated' put: 16r100000!
-ADODBConstants at: 'adXactReadCommitted' put: 16r1000!
-ADODBConstants at: 'adXactReadUncommitted' put: 16r100!
-ADODBConstants at: 'adXactRepeatableRead' put: 16r10000!
-ADODBConstants at: 'adXactSerializable' put: 16r100000!
-ADODBConstants at: 'adXactSyncPhaseOne' put: 16r100000!
-ADODBConstants at: 'adXactUnspecified' put: -16r1!
-ADODBConstants at: 'stWriteChar' put: 16r0!
-ADODBConstants at: 'stWriteLine' put: 16r1!
-ADODBConstants shrink!
+SharedPool subclass: #ADODBConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'adAddNew' -> 16r1000400.
+		'adAffectAll' -> 16r3.
+		'adAffectAllChapters' -> 16r4.
+		'adAffectCurrent' -> 16r1.
+		'adAffectGroup' -> 16r2.
+		'adApproxPosition' -> 16r4000.
+		'adArray' -> 16r2000.
+		'adAsyncConnect' -> 16r10.
+		'adAsyncExecute' -> 16r10.
+		'adAsyncFetch' -> 16r20.
+		'adAsyncFetchNonBlocking' -> 16r40.
+		'adBigInt' -> 16r14.
+		'adBinary' -> 16r80.
+		'adBookmark' -> 16r2000.
+		'adBookmarkCurrent' -> 16r0.
+		'adBookmarkFirst' -> 16r1.
+		'adBookmarkLast' -> 16r2.
+		'adBoolean' -> 16rB.
+		'adBSTR' -> 16r8.
+		'adChapter' -> 16r88.
+		'adChar' -> 16r81.
+		'adClipString' -> 16r2.
+		'adCmdFile' -> 16r100.
+		'adCmdStoredProc' -> 16r4.
+		'adCmdTable' -> 16r2.
+		'adCmdTableDirect' -> 16r200.
+		'adCmdText' -> 16r1.
+		'adCmdUnknown' -> 16r8.
+		'adCmdUnspecified' -> -16r1.
+		'adCollectionRecord' -> 16r1.
+		'adCompareEqual' -> 16r1.
+		'adCompareGreaterThan' -> 16r2.
+		'adCompareLessThan' -> 16r0.
+		'adCompareNotComparable' -> 16r4.
+		'adCompareNotEqual' -> 16r3.
+		'adConnectUnspecified' -> -16r1.
+		'adCopyAllowEmulation' -> 16r4.
+		'adCopyNonRecursive' -> 16r2.
+		'adCopyOverWrite' -> 16r1.
+		'adCopyUnspecified' -> -16r1.
+		'adCR' -> 16rD.
+		'adCreateCollection' -> 16r2000.
+		'adCreateNonCollection' -> 16r0.
+		'adCreateOverwrite' -> 16r4000000.
+		'adCreateStructDoc' -> -16r80000000.
+		'adCriteriaAllCols' -> 16r1.
+		'adCriteriaKey' -> 16r0.
+		'adCriteriaTimeStamp' -> 16r3.
+		'adCriteriaUpdCols' -> 16r2.
+		'adCRLF' -> -16r1.
+		'adCurrency' -> 16r6.
+		'adDate' -> 16r7.
+		'adDBDate' -> 16r85.
+		'adDBTime' -> 16r86.
+		'adDBTimeStamp' -> 16r87.
+		'adDecimal' -> 16rE.
+		'adDefaultStream' -> -16r1.
+		'adDelayFetchFields' -> 16r8000.
+		'adDelayFetchStream' -> 16r4000.
+		'adDelete' -> 16r1000800.
+		'adDouble' -> 16r5.
+		'adEditAdd' -> 16r2.
+		'adEditDelete' -> 16r4.
+		'adEditInProgress' -> 16r1.
+		'adEditNone' -> 16r0.
+		'adEmpty' -> 16r0.
+		'adErrBoundToCommand' -> 16rE7B.
+		'adErrCannotComplete' -> 16rE94.
+		'adErrCantChangeConnection' -> 16rEA4.
+		'adErrCantChangeProvider' -> 16rC94.
+		'adErrCantConvertvalue' -> 16rE8C.
+		'adErrCantCreate' -> 16rE8D.
+		'adErrCatalogNotSet' -> 16rEA3.
+		'adErrColumnNotOnThisRow' -> 16rE8E.
+		'adErrDataConversion' -> 16rD5D.
+		'adErrDataOverflow' -> 16rE89.
+		'adErrDelResOutOfScope' -> 16rE9A.
+		'adErrDenyNotSupported' -> 16rEA6.
+		'adErrDenyTypeNotSupported' -> 16rEA7.
+		'adErrFeatureNotAvailable' -> 16rCB3.
+		'adErrFieldsUpdateFailed' -> 16rEA5.
+		'adErrIllegalOperation' -> 16rC93.
+		'adErrIntegrityViolation' -> 16rE87.
+		'adErrInTransaction' -> 16rCAE.
+		'adErrInvalidArgument' -> 16rBB9.
+		'adErrInvalidConnection' -> 16rE7D.
+		'adErrInvalidParamInfo' -> 16rE7C.
+		'adErrInvalidTransaction' -> 16rE82.
+		'adErrInvalidURL' -> 16rE91.
+		'adErrItemNotFound' -> 16rCC1.
+		'adErrNoCurrentRecord' -> 16rBCD.
+		'adErrNotExecuting' -> 16rE83.
+		'adErrNotReentrant' -> 16rE7E.
+		'adErrObjectClosed' -> 16rE78.
+		'adErrObjectInCollection' -> 16rD27.
+		'adErrObjectNotSet' -> 16rD5C.
+		'adErrObjectOpen' -> 16rE79.
+		'adErrOpeningFile' -> 16rBBA.
+		'adErrOperationCancelled' -> 16rE80.
+		'adError' -> 16rA.
+		'adErrOutOfSpace' -> 16rE96.
+		'adErrPermissionDenied' -> 16rE88.
+		'adErrPropConflicting' -> 16rE9E.
+		'adErrPropInvalidColumn' -> 16rE9B.
+		'adErrPropInvalidOption' -> 16rE9C.
+		'adErrPropInvalidValue' -> 16rE9D.
+		'adErrPropNotAllSettable' -> 16rE9F.
+		'adErrPropNotSet' -> 16rEA0.
+		'adErrPropNotSettable' -> 16rEA1.
+		'adErrPropNotSupported' -> 16rEA2.
+		'adErrProviderFailed' -> 16rBB8.
+		'adErrProviderNotFound' -> 16rE7A.
+		'adErrReadFile' -> 16rBBB.
+		'adErrResourceExists' -> 16rE93.
+		'adErrResourceLocked' -> 16rE92.
+		'adErrResourceOutOfScope' -> 16rE97.
+		'adErrSchemaViolation' -> 16rE8A.
+		'adErrSignMismatch' -> 16rE8B.
+		'adErrStillConnecting' -> 16rE81.
+		'adErrStillExecuting' -> 16rE7F.
+		'adErrTreePermissionDenied' -> 16rE90.
+		'adErrUnavailable' -> 16rE98.
+		'adErrUnsafeOperation' -> 16rE84.
+		'adErrURLDoesNotExist' -> 16rE8F.
+		'adErrURLNamedRowDoesNotExist' -> 16rE99.
+		'adErrVolumeNotFound' -> 16rE95.
+		'adErrWriteFile' -> 16rBBC.
+		'adExecuteNoRecords' -> 16r80.
+		'adFailIfNotExists' -> -16r1.
+		'adFieldAlreadyExists' -> 16r1A.
+		'adFieldBadStatus' -> 16rC.
+		'adFieldCannotComplete' -> 16r14.
+		'adFieldCannotDeleteSource' -> 16r17.
+		'adFieldCantConvertValue' -> 16r2.
+		'adFieldCantCreate' -> 16r7.
+		'adFieldDataOverflow' -> 16r6.
+		'adFieldDefault' -> 16rD.
+		'adFieldDoesNotExist' -> 16r10.
+		'adFieldIgnore' -> 16rF.
+		'adFieldIntegrityViolation' -> 16rA.
+		'adFieldInvalidURL' -> 16r11.
+		'adFieldIsNull' -> 16r3.
+		'adFieldOK' -> 16r0.
+		'adFieldOutOfSpace' -> 16r16.
+		'adFieldPendingChange' -> 16r40000.
+		'adFieldPendingDelete' -> 16r20000.
+		'adFieldPendingInsert' -> 16r10000.
+		'adFieldPendingUnknown' -> 16r80000.
+		'adFieldPendingUnknownDelete' -> 16r100000.
+		'adFieldPermissionDenied' -> 16r9.
+		'adFieldReadOnly' -> 16r18.
+		'adFieldResourceExists' -> 16r13.
+		'adFieldResourceLocked' -> 16r12.
+		'adFieldResourceOutOfScope' -> 16r19.
+		'adFieldSchemaViolation' -> 16rB.
+		'adFieldSignMismatch' -> 16r5.
+		'adFieldTruncated' -> 16r4.
+		'adFieldUnavailable' -> 16r8.
+		'adFieldVolumeNotFound' -> 16r15.
+		'adFileTime' -> 16r40.
+		'adFilterAffectedRecords' -> 16r2.
+		'adFilterConflictingRecords' -> 16r5.
+		'adFilterFetchedRecords' -> 16r3.
+		'adFilterNone' -> 16r0.
+		'adFilterPendingRecords' -> 16r1.
+		'adFilterPredicate' -> 16r4.
+		'adFind' -> 16r80000.
+		'adFldCacheDeferred' -> 16r1000.
+		'adFldFixed' -> 16r10.
+		'adFldIsChapter' -> 16r2000.
+		'adFldIsCollection' -> 16r40000.
+		'adFldIsDefaultStream' -> 16r20000.
+		'adFldIsNullable' -> 16r20.
+		'adFldIsRowURL' -> 16r10000.
+		'adFldKeyColumn' -> 16r8000.
+		'adFldLong' -> 16r80.
+		'adFldMayBeNull' -> 16r40.
+		'adFldMayDefer' -> 16r2.
+		'adFldNegativeScale' -> 16r4000.
+		'adFldRowID' -> 16r100.
+		'adFldRowVersion' -> 16r200.
+		'adFldUnknownUpdatable' -> 16r8.
+		'adFldUnspecified' -> -16r1.
+		'adFldUpdatable' -> 16r4.
+		'adGetRowsRest' -> -16r1.
+		'adGUID' -> 16r48.
+		'adHoldRecords' -> 16r100.
+		'adIDispatch' -> 16r9.
+		'adIndex' -> 16r800000.
+		'adInteger' -> 16r3.
+		'adIUnknown' -> 16rD.
+		'adLF' -> 16rA.
+		'adLockBatchOptimistic' -> 16r4.
+		'adLockOptimistic' -> 16r3.
+		'adLockPessimistic' -> 16r2.
+		'adLockReadOnly' -> 16r1.
+		'adLockUnspecified' -> -16r1.
+		'adLongVarBinary' -> 16rCD.
+		'adLongVarChar' -> 16rC9.
+		'adLongVarWChar' -> 16rCB.
+		'adMarshalAll' -> 16r0.
+		'adMarshalModifiedOnly' -> 16r1.
+		'adModeRead' -> 16r1.
+		'adModeReadWrite' -> 16r3.
+		'adModeRecursive' -> 16r400000.
+		'adModeShareDenyNone' -> 16r10.
+		'adModeShareDenyRead' -> 16r4.
+		'adModeShareDenyWrite' -> 16r8.
+		'adModeShareExclusive' -> 16rC.
+		'adModeUnknown' -> 16r0.
+		'adModeWrite' -> 16r2.
+		'adMoveAllowEmulation' -> 16r4.
+		'adMoveDontUpdateLinks' -> 16r2.
+		'adMoveOverWrite' -> 16r1.
+		'adMovePrevious' -> 16r200.
+		'adMoveUnspecified' -> -16r1.
+		'adNotify' -> 16r40000.
+		'adNumeric' -> 16r83.
+		'adOpenAsync' -> 16r1000.
+		'adOpenDynamic' -> 16r2.
+		'adOpenForwardOnly' -> 16r0.
+		'adOpenIfExists' -> 16r2000000.
+		'adOpenKeyset' -> 16r1.
+		'adOpenRecordUnspecified' -> -16r1.
+		'adOpenSource' -> 16r800000.
+		'adOpenStatic' -> 16r3.
+		'adOpenStreamAsync' -> 16r1.
+		'adOpenStreamFromRecord' -> 16r4.
+		'adOpenStreamUnspecified' -> -16r1.
+		'adOpenUnspecified' -> -16r1.
+		'adOptionUnspecified' -> -16r1.
+		'adParamInput' -> 16r1.
+		'adParamInputOutput' -> 16r3.
+		'adParamLong' -> 16r80.
+		'adParamNullable' -> 16r40.
+		'adParamOutput' -> 16r2.
+		'adParamReturnValue' -> 16r4.
+		'adParamSigned' -> 16r10.
+		'adParamUnknown' -> 16r0.
+		'adPersistADTG' -> 16r0.
+		'adPersistXML' -> 16r1.
+		'adPosBOF' -> -16r2.
+		'adPosEOF' -> -16r3.
+		'adPosUnknown' -> -16r1.
+		'adPriorityAboveNormal' -> 16r4.
+		'adPriorityBelowNormal' -> 16r2.
+		'adPriorityHighest' -> 16r5.
+		'adPriorityLowest' -> 16r1.
+		'adPriorityNormal' -> 16r3.
+		'adPromptAlways' -> 16r1.
+		'adPromptComplete' -> 16r2.
+		'adPromptCompleteRequired' -> 16r3.
+		'adPromptNever' -> 16r4.
+		'adPropNotSupported' -> 16r0.
+		'adPropOptional' -> 16r2.
+		'adPropRead' -> 16r200.
+		'adPropRequired' -> 16r1.
+		'adPropVariant' -> 16r8A.
+		'adPropWrite' -> 16r400.
+		'adReadAll' -> -16r1.
+		'adReadLine' -> -16r2.
+		'adRecalcAlways' -> 16r1.
+		'adRecalcUpFront' -> 16r0.
+		'adRecCanceled' -> 16r100.
+		'adRecCantRelease' -> 16r400.
+		'adRecConcurrencyViolation' -> 16r800.
+		'adRecDBDeleted' -> 16r40000.
+		'adRecDeleted' -> 16r4.
+		'adRecIntegrityViolation' -> 16r1000.
+		'adRecInvalid' -> 16r10.
+		'adRecMaxChangesExceeded' -> 16r2000.
+		'adRecModified' -> 16r2.
+		'adRecMultipleChanges' -> 16r40.
+		'adRecNew' -> 16r1.
+		'adRecObjectOpen' -> 16r4000.
+		'adRecOK' -> 16r0.
+		'adRecordURL' -> -16r2.
+		'adRecOutOfMemory' -> 16r8000.
+		'adRecPendingChanges' -> 16r80.
+		'adRecPermissionDenied' -> 16r10000.
+		'adRecSchemaViolation' -> 16r20000.
+		'adRecUnmodified' -> 16r8.
+		'adResync' -> 16r20000.
+		'adResyncAll' -> 16rF.
+		'adResyncAllValues' -> 16r2.
+		'adResyncAutoIncrement' -> 16r1.
+		'adResyncConflicts' -> 16r2.
+		'adResyncInserts' -> 16r8.
+		'adResyncNone' -> 16r0.
+		'adResyncUnderlyingValues' -> 16r1.
+		'adResyncUpdates' -> 16r4.
+		'adRsnAddNew' -> 16r1.
+		'adRsnClose' -> 16r9.
+		'adRsnDelete' -> 16r2.
+		'adRsnFirstChange' -> 16rB.
+		'adRsnMove' -> 16rA.
+		'adRsnMoveFirst' -> 16rC.
+		'adRsnMoveLast' -> 16rF.
+		'adRsnMoveNext' -> 16rD.
+		'adRsnMovePrevious' -> 16rE.
+		'adRsnRequery' -> 16r7.
+		'adRsnResynch' -> 16r8.
+		'adRsnUndoAddNew' -> 16r5.
+		'adRsnUndoDelete' -> 16r6.
+		'adRsnUndoUpdate' -> 16r4.
+		'adRsnUpdate' -> 16r3.
+		'adSaveCreateNotExist' -> 16r1.
+		'adSaveCreateOverWrite' -> 16r2.
+		'adSchemaAsserts' -> 16r0.
+		'adSchemaCatalogs' -> 16r1.
+		'adSchemaCharacterSets' -> 16r2.
+		'adSchemaCheckConstraints' -> 16r5.
+		'adSchemaCollations' -> 16r3.
+		'adSchemaColumnPrivileges' -> 16rD.
+		'adSchemaColumns' -> 16r4.
+		'adSchemaColumnsDomainUsage' -> 16rB.
+		'adSchemaConstraintColumnUsage' -> 16r6.
+		'adSchemaConstraintTableUsage' -> 16r7.
+		'adSchemaCubes' -> 16r20.
+		'adSchemaDBInfoKeywords' -> 16r1E.
+		'adSchemaDBInfoLiterals' -> 16r1F.
+		'adSchemaDimensions' -> 16r21.
+		'adSchemaForeignKeys' -> 16r1B.
+		'adSchemaHierarchies' -> 16r22.
+		'adSchemaIndexes' -> 16rC.
+		'adSchemaKeyColumnUsage' -> 16r8.
+		'adSchemaLevels' -> 16r23.
+		'adSchemaMeasures' -> 16r24.
+		'adSchemaMembers' -> 16r26.
+		'adSchemaPrimaryKeys' -> 16r1C.
+		'adSchemaProcedureColumns' -> 16r1D.
+		'adSchemaProcedureParameters' -> 16r1A.
+		'adSchemaProcedures' -> 16r10.
+		'adSchemaProperties' -> 16r25.
+		'adSchemaProviderSpecific' -> -16r1.
+		'adSchemaProviderTypes' -> 16r16.
+		'adSchemaReferentialConstraints' -> 16r9.
+		'adSchemaReferentialContraints' -> 16r9.
+		'adSchemaSchemata' -> 16r11.
+		'adSchemaSQLLanguages' -> 16r12.
+		'adSchemaStatistics' -> 16r13.
+		'adSchemaTableConstraints' -> 16rA.
+		'adSchemaTablePrivileges' -> 16rE.
+		'adSchemaTables' -> 16r14.
+		'adSchemaTranslations' -> 16r15.
+		'adSchemaTrustees' -> 16r27.
+		'adSchemaUsagePrivileges' -> 16rF.
+		'adSchemaViewColumnUsage' -> 16r18.
+		'adSchemaViews' -> 16r17.
+		'adSchemaViewTableUsage' -> 16r19.
+		'adSearchBackward' -> -16r1.
+		'adSearchForward' -> 16r1.
+		'adSeek' -> 16r400000.
+		'adSeekAfter' -> 16r8.
+		'adSeekAfterEQ' -> 16r4.
+		'adSeekBefore' -> 16r20.
+		'adSeekBeforeEQ' -> 16r10.
+		'adSeekFirstEQ' -> 16r1.
+		'adSeekLastEQ' -> 16r2.
+		'adSimpleRecord' -> 16r0.
+		'adSingle' -> 16r4.
+		'adSmallInt' -> 16r2.
+		'adStateClosed' -> 16r0.
+		'adStateConnecting' -> 16r2.
+		'adStateExecuting' -> 16r4.
+		'adStateFetching' -> 16r8.
+		'adStateOpen' -> 16r1.
+		'adStatusCancel' -> 16r4.
+		'adStatusCantDeny' -> 16r3.
+		'adStatusErrorsOccurred' -> 16r2.
+		'adStatusOK' -> 16r1.
+		'adStatusUnwantedEvent' -> 16r5.
+		'adStructDoc' -> 16r2.
+		'adTinyInt' -> 16r10.
+		'adTypeBinary' -> 16r1.
+		'adTypeText' -> 16r2.
+		'adUnsignedBigInt' -> 16r15.
+		'adUnsignedInt' -> 16r13.
+		'adUnsignedSmallInt' -> 16r12.
+		'adUnsignedTinyInt' -> 16r11.
+		'adUpdate' -> 16r1008000.
+		'adUpdateBatch' -> 16r10000.
+		'adUseClient' -> 16r3.
+		'adUseClientBatch' -> 16r3.
+		'adUseNone' -> 16r1.
+		'adUserDefined' -> 16r84.
+		'adUseServer' -> 16r2.
+		'adVarBinary' -> 16rCC.
+		'adVarChar' -> 16rC8.
+		'adVariant' -> 16rC.
+		'adVarNumeric' -> 16r8B.
+		'adVarWChar' -> 16rCA.
+		'adWChar' -> 16r82.
+		'adWriteChar' -> 16r0.
+		'adWriteLine' -> 16r1.
+		'adwrnSecurityDialog' -> 16rE85.
+		'adwrnSecurityDialogHeader' -> 16rE86.
+		'adXactAbortRetaining' -> 16r40000.
+		'adXactAsyncPhaseOne' -> 16r80000.
+		'adXactBrowse' -> 16r100.
+		'adXactChaos' -> 16r10.
+		'adXactCommitRetaining' -> 16r20000.
+		'adXactCursorStability' -> 16r1000.
+		'adXactIsolated' -> 16r100000.
+		'adXactReadCommitted' -> 16r1000.
+		'adXactReadUncommitted' -> 16r100.
+		'adXactRepeatableRead' -> 16r10000.
+		'adXactSerializable' -> 16r100000.
+		'adXactSyncPhaseOne' -> 16r100000.
+		'adXactUnspecified' -> -16r1.
+		'stWriteChar' -> 16r0.
+		'stWriteLine' -> 16r1
+	}!
+ADODBConstants guid: (GUID fromString: '{3160a50a-0666-4ba6-8f83-87065c268ccf}')!
+ADODBConstants comment: ''!
+!ADODBConstants categoriesForClass!Unclassified! !

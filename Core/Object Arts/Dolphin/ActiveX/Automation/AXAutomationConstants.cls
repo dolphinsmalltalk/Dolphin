@@ -1,182 +1,190 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{AXAutomationConstants} declare: (PoolConstantsDictionary named: #AXAutomationConstants)!
-AXAutomationConstants at: 'ACTIVEOBJECT_STRONG' put: 16r0!
-AXAutomationConstants at: 'ACTIVEOBJECT_WEAK' put: 16r1!
-AXAutomationConstants at: 'CC_CDECL' put: 16r1!
-AXAutomationConstants at: 'CC_MACPASCAL' put: 16r3!
-AXAutomationConstants at: 'CC_MAX' put: 16r9!
-AXAutomationConstants at: 'CC_MPWCDECL' put: 16r7!
-AXAutomationConstants at: 'CC_MPWPASCAL' put: 16r8!
-AXAutomationConstants at: 'CC_MSCPASCAL' put: 16r2!
-AXAutomationConstants at: 'CC_PASCAL' put: 16r2!
-AXAutomationConstants at: 'CC_RESERVED' put: 16r5!
-AXAutomationConstants at: 'CC_STDCALL' put: 16r4!
-AXAutomationConstants at: 'CC_SYSCALL' put: 16r6!
-AXAutomationConstants at: 'DESCKIND_FUNCDESC' put: 16r1!
-AXAutomationConstants at: 'DESCKIND_IMPLICITAPPOBJ' put: 16r4!
-AXAutomationConstants at: 'DESCKIND_MAX' put: 16r5!
-AXAutomationConstants at: 'DESCKIND_NONE' put: 16r0!
-AXAutomationConstants at: 'DESCKIND_TYPECOMP' put: 16r3!
-AXAutomationConstants at: 'DESCKIND_VARDESC' put: 16r2!
-AXAutomationConstants at: 'DISPATCH_METHOD' put: 16r1!
-AXAutomationConstants at: 'DISPATCH_PROPERTYGET' put: 16r2!
-AXAutomationConstants at: 'DISPATCH_PROPERTYPUT' put: 16r4!
-AXAutomationConstants at: 'DISPATCH_PROPERTYPUTREF' put: 16r8!
-AXAutomationConstants at: 'DISPID_COLLECT' put: -16r8!
-AXAutomationConstants at: 'DISPID_CONSTRUCTOR' put: -16r6!
-AXAutomationConstants at: 'DISPID_DESTRUCTOR' put: -16r7!
-AXAutomationConstants at: 'DISPID_EVALUATE' put: -16r5!
-AXAutomationConstants at: 'DISPID_NEWENUM' put: -16r4!
-AXAutomationConstants at: 'DISPID_PROPERTYPUT' put: -16r3!
-AXAutomationConstants at: 'DISPID_UNKNOWN' put: -16r1!
-AXAutomationConstants at: 'DISPID_VALUE' put: 16r0!
-AXAutomationConstants at: 'FADF_AUTO' put: 16r1!
-AXAutomationConstants at: 'FADF_BSTR' put: 16r100!
-AXAutomationConstants at: 'FADF_DISPATCH' put: 16r400!
-AXAutomationConstants at: 'FADF_EMBEDDED' put: 16r4!
-AXAutomationConstants at: 'FADF_FIXEDSIZE' put: 16r10!
-AXAutomationConstants at: 'FADF_HAVEIID' put: 16r40!
-AXAutomationConstants at: 'FADF_HAVEVARTYPE' put: 16r80!
-AXAutomationConstants at: 'FADF_RECORD' put: 16r20!
-AXAutomationConstants at: 'FADF_RESERVED' put: 16rF0E8!
-AXAutomationConstants at: 'FADF_STATIC' put: 16r2!
-AXAutomationConstants at: 'FADF_UNKNOWN' put: 16r200!
-AXAutomationConstants at: 'FADF_VARIANT' put: 16r800!
-AXAutomationConstants at: 'FUNC_DISPATCH' put: 16r4!
-AXAutomationConstants at: 'FUNC_NONVIRTUAL' put: 16r2!
-AXAutomationConstants at: 'FUNC_PUREVIRTUAL' put: 16r1!
-AXAutomationConstants at: 'FUNC_STATIC' put: 16r3!
-AXAutomationConstants at: 'FUNC_VIRTUAL' put: 16r0!
-AXAutomationConstants at: 'FUNCFLAG_FBINDABLE' put: 16r4!
-AXAutomationConstants at: 'FUNCFLAG_FDEFAULTBIND' put: 16r20!
-AXAutomationConstants at: 'FUNCFLAG_FDEFAULTCOLLELEM' put: 16r100!
-AXAutomationConstants at: 'FUNCFLAG_FDISPLAYBIND' put: 16r10!
-AXAutomationConstants at: 'FUNCFLAG_FHIDDEN' put: 16r40!
-AXAutomationConstants at: 'FUNCFLAG_FIMMEDIATEBIND' put: 16r1000!
-AXAutomationConstants at: 'FUNCFLAG_FNONBROWSABLE' put: 16r400!
-AXAutomationConstants at: 'FUNCFLAG_FREPLACEABLE' put: 16r800!
-AXAutomationConstants at: 'FUNCFLAG_FREQUESTEDIT' put: 16r8!
-AXAutomationConstants at: 'FUNCFLAG_FRESTRICTED' put: 16r1!
-AXAutomationConstants at: 'FUNCFLAG_FSOURCE' put: 16r2!
-AXAutomationConstants at: 'FUNCFLAG_FUIDEFAULT' put: 16r200!
-AXAutomationConstants at: 'FUNCFLAG_FUSESGETLASTERROR' put: 16r80!
-AXAutomationConstants at: 'ID_DEFAULTINST' put: -16r2!
-AXAutomationConstants at: 'IDLFLAG_FIN' put: 16r1!
-AXAutomationConstants at: 'IDLFLAG_FLCID' put: 16r4!
-AXAutomationConstants at: 'IDLFLAG_FOUT' put: 16r2!
-AXAutomationConstants at: 'IDLFLAG_FRETVAL' put: 16r8!
-AXAutomationConstants at: 'IDLFLAG_NONE' put: 16r0!
-AXAutomationConstants at: 'IMPLTYPEFLAG_FDEFAULT' put: 16r1!
-AXAutomationConstants at: 'IMPLTYPEFLAG_FRESTRICTED' put: 16r4!
-AXAutomationConstants at: 'IMPLTYPEFLAG_FSOURCE' put: 16r2!
-AXAutomationConstants at: 'INVOKE_FUNC' put: 16r1!
-AXAutomationConstants at: 'INVOKE_PROPERTYGET' put: 16r2!
-AXAutomationConstants at: 'INVOKE_PROPERTYPUT' put: 16r4!
-AXAutomationConstants at: 'INVOKE_PROPERTYPUTREF' put: 16r8!
-AXAutomationConstants at: 'LIBFLAG_FCONTROL' put: 16r2!
-AXAutomationConstants at: 'LIBFLAG_FHASDISKIMAGE' put: 16r8!
-AXAutomationConstants at: 'LIBFLAG_FHIDDEN' put: 16r4!
-AXAutomationConstants at: 'LIBFLAG_FRESTRICTED' put: 16r4!
-AXAutomationConstants at: 'MEMBERID_NIL' put: -16r1!
-AXAutomationConstants at: 'PARAMFLAG_FHASDEFAULT' put: 16r20!
-AXAutomationConstants at: 'PARAMFLAG_FIN' put: 16r1!
-AXAutomationConstants at: 'PARAMFLAG_FOPT' put: 16r10!
-AXAutomationConstants at: 'PARAMFLAG_FOUT' put: 16r2!
-AXAutomationConstants at: 'PARAMFLAG_FRETVAL' put: 16r8!
-AXAutomationConstants at: 'PARAMFLAG_NONE' put: 16r0!
-AXAutomationConstants at: 'REGKIND_DEFAULT' put: 16r0!
-AXAutomationConstants at: 'REGKIND_NONE' put: 16r2!
-AXAutomationConstants at: 'REGKIND_REGISTER' put: 16r1!
-AXAutomationConstants at: 'STDOLE_LCID' put: 16r0!
-AXAutomationConstants at: 'STDOLE_MAJORVERNUM' put: 16r1!
-AXAutomationConstants at: 'STDOLE_MINORVERNUM' put: 16r0!
-AXAutomationConstants at: 'SYS_MAC' put: 16r2!
-AXAutomationConstants at: 'SYS_WIN16' put: 16r0!
-AXAutomationConstants at: 'SYS_WIN32' put: 16r1!
-AXAutomationConstants at: 'TKIND_ALIAS' put: 16r6!
-AXAutomationConstants at: 'TKIND_COCLASS' put: 16r5!
-AXAutomationConstants at: 'TKIND_DISPATCH' put: 16r4!
-AXAutomationConstants at: 'TKIND_ENUM' put: 16r0!
-AXAutomationConstants at: 'TKIND_INTERFACE' put: 16r3!
-AXAutomationConstants at: 'TKIND_MAX' put: 16r8!
-AXAutomationConstants at: 'TKIND_MODULE' put: 16r2!
-AXAutomationConstants at: 'TKIND_RECORD' put: 16r1!
-AXAutomationConstants at: 'TKIND_UNION' put: 16r7!
-AXAutomationConstants at: 'TYPEFLAG_FAGGREGATABLE' put: 16r400!
-AXAutomationConstants at: 'TYPEFLAG_FAPPOBJECT' put: 16r1!
-AXAutomationConstants at: 'TYPEFLAG_FCANCREATE' put: 16r2!
-AXAutomationConstants at: 'TYPEFLAG_FCONTROL' put: 16r20!
-AXAutomationConstants at: 'TYPEFLAG_FDISPATCHABLE' put: 16r1000!
-AXAutomationConstants at: 'TYPEFLAG_FDUAL' put: 16r40!
-AXAutomationConstants at: 'TYPEFLAG_FHIDDEN' put: 16r10!
-AXAutomationConstants at: 'TYPEFLAG_FLICENSED' put: 16r4!
-AXAutomationConstants at: 'TYPEFLAG_FNONEXTENSIBLE' put: 16r80!
-AXAutomationConstants at: 'TYPEFLAG_FOLEAUTOMATION' put: 16r100!
-AXAutomationConstants at: 'TYPEFLAG_FPREDECLID' put: 16r8!
-AXAutomationConstants at: 'TYPEFLAG_FRESTRICTED' put: 16r200!
-AXAutomationConstants at: 'VAR_CONST' put: 16r2!
-AXAutomationConstants at: 'VAR_DATEVALUEONLY' put: 16r2!
-AXAutomationConstants at: 'VAR_DISPATCH' put: 16r3!
-AXAutomationConstants at: 'VAR_PERINSTANCE' put: 16r0!
-AXAutomationConstants at: 'VAR_STATIC' put: 16r1!
-AXAutomationConstants at: 'VAR_TIMEVALUEONLY' put: 16r1!
-AXAutomationConstants at: 'VARFLAG_FBINDABLE' put: 16r4!
-AXAutomationConstants at: 'VARFLAG_FDEFAULTBIND' put: 16r20!
-AXAutomationConstants at: 'VARFLAG_FDISPLAYBIND' put: 16r10!
-AXAutomationConstants at: 'VARFLAG_FHIDDEN' put: 16r40!
-AXAutomationConstants at: 'VARFLAG_FNONBROWSABLE' put: 16r400!
-AXAutomationConstants at: 'VARFLAG_FREADONLY' put: 16r1!
-AXAutomationConstants at: 'VARFLAG_FREQUESTEDIT' put: 16r8!
-AXAutomationConstants at: 'VARFLAG_FRESTRICTED' put: 16r80!
-AXAutomationConstants at: 'VARFLAG_FSOURCE' put: 16r2!
-AXAutomationConstants at: 'VARFLAG_FUIDEFAULT' put: 16r200!
-AXAutomationConstants at: 'VARIANT_FALSE' put: 16r0!
-AXAutomationConstants at: 'VARIANT_NOVALUEPROP' put: 16r1!
-AXAutomationConstants at: 'VARIANT_TRUE' put: -16r1!
-AXAutomationConstants at: 'VT_ARRAY' put: 16r2000!
-AXAutomationConstants at: 'VT_BLOB' put: 16r41!
-AXAutomationConstants at: 'VT_BLOB_OBJECT' put: 16r46!
-AXAutomationConstants at: 'VT_BOOL' put: 16rB!
-AXAutomationConstants at: 'VT_BSTR' put: 16r8!
-AXAutomationConstants at: 'VT_BYREF' put: 16r4000!
-AXAutomationConstants at: 'VT_CARRAY' put: 16r1C!
-AXAutomationConstants at: 'VT_CF' put: 16r47!
-AXAutomationConstants at: 'VT_CLSID' put: 16r48!
-AXAutomationConstants at: 'VT_CY' put: 16r6!
-AXAutomationConstants at: 'VT_DATE' put: 16r7!
-AXAutomationConstants at: 'VT_DECIMAL' put: 16rE!
-AXAutomationConstants at: 'VT_DISPATCH' put: 16r9!
-AXAutomationConstants at: 'VT_EMPTY' put: 16r0!
-AXAutomationConstants at: 'VT_ERROR' put: 16rA!
-AXAutomationConstants at: 'VT_FILETIME' put: 16r40!
-AXAutomationConstants at: 'VT_HRESULT' put: 16r19!
-AXAutomationConstants at: 'VT_I1' put: 16r10!
-AXAutomationConstants at: 'VT_I2' put: 16r2!
-AXAutomationConstants at: 'VT_I4' put: 16r3!
-AXAutomationConstants at: 'VT_I8' put: 16r14!
-AXAutomationConstants at: 'VT_INT' put: 16r16!
-AXAutomationConstants at: 'VT_LPSTR' put: 16r1E!
-AXAutomationConstants at: 'VT_LPWSTR' put: 16r1F!
-AXAutomationConstants at: 'VT_NULL' put: 16r1!
-AXAutomationConstants at: 'VT_PTR' put: 16r1A!
-AXAutomationConstants at: 'VT_R4' put: 16r4!
-AXAutomationConstants at: 'VT_R8' put: 16r5!
-AXAutomationConstants at: 'VT_RECORD' put: 16r24!
-AXAutomationConstants at: 'VT_SAFEARRAY' put: 16r1B!
-AXAutomationConstants at: 'VT_STORAGE' put: 16r43!
-AXAutomationConstants at: 'VT_STORED_OBJECT' put: 16r45!
-AXAutomationConstants at: 'VT_STREAM' put: 16r42!
-AXAutomationConstants at: 'VT_STREAMED_OBJECT' put: 16r44!
-AXAutomationConstants at: 'VT_TYPEMASK' put: 16rFFF!
-AXAutomationConstants at: 'VT_UI1' put: 16r11!
-AXAutomationConstants at: 'VT_UI2' put: 16r12!
-AXAutomationConstants at: 'VT_UI4' put: 16r13!
-AXAutomationConstants at: 'VT_UI8' put: 16r15!
-AXAutomationConstants at: 'VT_UINT' put: 16r17!
-AXAutomationConstants at: 'VT_UNKNOWN' put: 16rD!
-AXAutomationConstants at: 'VT_USERDEFINED' put: 16r1D!
-AXAutomationConstants at: 'VT_VARIANT' put: 16rC!
-AXAutomationConstants at: 'VT_VECTOR' put: 16r1000!
-AXAutomationConstants at: 'VT_VOID' put: 16r18!
-AXAutomationConstants shrink!
+SharedPool subclass: #AXAutomationConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ACTIVEOBJECT_STRONG' -> 16r0.
+		'ACTIVEOBJECT_WEAK' -> 16r1.
+		'CC_CDECL' -> 16r1.
+		'CC_MACPASCAL' -> 16r3.
+		'CC_MAX' -> 16r9.
+		'CC_MPWCDECL' -> 16r7.
+		'CC_MPWPASCAL' -> 16r8.
+		'CC_MSCPASCAL' -> 16r2.
+		'CC_PASCAL' -> 16r2.
+		'CC_RESERVED' -> 16r5.
+		'CC_STDCALL' -> 16r4.
+		'CC_SYSCALL' -> 16r6.
+		'DESCKIND_FUNCDESC' -> 16r1.
+		'DESCKIND_IMPLICITAPPOBJ' -> 16r4.
+		'DESCKIND_MAX' -> 16r5.
+		'DESCKIND_NONE' -> 16r0.
+		'DESCKIND_TYPECOMP' -> 16r3.
+		'DESCKIND_VARDESC' -> 16r2.
+		'DISPATCH_METHOD' -> 16r1.
+		'DISPATCH_PROPERTYGET' -> 16r2.
+		'DISPATCH_PROPERTYPUT' -> 16r4.
+		'DISPATCH_PROPERTYPUTREF' -> 16r8.
+		'DISPID_COLLECT' -> -16r8.
+		'DISPID_CONSTRUCTOR' -> -16r6.
+		'DISPID_DESTRUCTOR' -> -16r7.
+		'DISPID_EVALUATE' -> -16r5.
+		'DISPID_NEWENUM' -> -16r4.
+		'DISPID_PROPERTYPUT' -> -16r3.
+		'DISPID_UNKNOWN' -> -16r1.
+		'DISPID_VALUE' -> 16r0.
+		'FADF_AUTO' -> 16r1.
+		'FADF_BSTR' -> 16r100.
+		'FADF_DISPATCH' -> 16r400.
+		'FADF_EMBEDDED' -> 16r4.
+		'FADF_FIXEDSIZE' -> 16r10.
+		'FADF_HAVEIID' -> 16r40.
+		'FADF_HAVEVARTYPE' -> 16r80.
+		'FADF_RECORD' -> 16r20.
+		'FADF_RESERVED' -> 16rF0E8.
+		'FADF_STATIC' -> 16r2.
+		'FADF_UNKNOWN' -> 16r200.
+		'FADF_VARIANT' -> 16r800.
+		'FUNC_DISPATCH' -> 16r4.
+		'FUNC_NONVIRTUAL' -> 16r2.
+		'FUNC_PUREVIRTUAL' -> 16r1.
+		'FUNC_STATIC' -> 16r3.
+		'FUNC_VIRTUAL' -> 16r0.
+		'FUNCFLAG_FBINDABLE' -> 16r4.
+		'FUNCFLAG_FDEFAULTBIND' -> 16r20.
+		'FUNCFLAG_FDEFAULTCOLLELEM' -> 16r100.
+		'FUNCFLAG_FDISPLAYBIND' -> 16r10.
+		'FUNCFLAG_FHIDDEN' -> 16r40.
+		'FUNCFLAG_FIMMEDIATEBIND' -> 16r1000.
+		'FUNCFLAG_FNONBROWSABLE' -> 16r400.
+		'FUNCFLAG_FREPLACEABLE' -> 16r800.
+		'FUNCFLAG_FREQUESTEDIT' -> 16r8.
+		'FUNCFLAG_FRESTRICTED' -> 16r1.
+		'FUNCFLAG_FSOURCE' -> 16r2.
+		'FUNCFLAG_FUIDEFAULT' -> 16r200.
+		'FUNCFLAG_FUSESGETLASTERROR' -> 16r80.
+		'ID_DEFAULTINST' -> -16r2.
+		'IDLFLAG_FIN' -> 16r1.
+		'IDLFLAG_FLCID' -> 16r4.
+		'IDLFLAG_FOUT' -> 16r2.
+		'IDLFLAG_FRETVAL' -> 16r8.
+		'IDLFLAG_NONE' -> 16r0.
+		'IMPLTYPEFLAG_FDEFAULT' -> 16r1.
+		'IMPLTYPEFLAG_FRESTRICTED' -> 16r4.
+		'IMPLTYPEFLAG_FSOURCE' -> 16r2.
+		'INVOKE_FUNC' -> 16r1.
+		'INVOKE_PROPERTYGET' -> 16r2.
+		'INVOKE_PROPERTYPUT' -> 16r4.
+		'INVOKE_PROPERTYPUTREF' -> 16r8.
+		'LIBFLAG_FCONTROL' -> 16r2.
+		'LIBFLAG_FHASDISKIMAGE' -> 16r8.
+		'LIBFLAG_FHIDDEN' -> 16r4.
+		'LIBFLAG_FRESTRICTED' -> 16r4.
+		'MEMBERID_NIL' -> -16r1.
+		'PARAMFLAG_FHASDEFAULT' -> 16r20.
+		'PARAMFLAG_FIN' -> 16r1.
+		'PARAMFLAG_FOPT' -> 16r10.
+		'PARAMFLAG_FOUT' -> 16r2.
+		'PARAMFLAG_FRETVAL' -> 16r8.
+		'PARAMFLAG_NONE' -> 16r0.
+		'REGKIND_DEFAULT' -> 16r0.
+		'REGKIND_NONE' -> 16r2.
+		'REGKIND_REGISTER' -> 16r1.
+		'STDOLE_LCID' -> 16r0.
+		'STDOLE_MAJORVERNUM' -> 16r1.
+		'STDOLE_MINORVERNUM' -> 16r0.
+		'SYS_MAC' -> 16r2.
+		'SYS_WIN16' -> 16r0.
+		'SYS_WIN32' -> 16r1.
+		'TKIND_ALIAS' -> 16r6.
+		'TKIND_COCLASS' -> 16r5.
+		'TKIND_DISPATCH' -> 16r4.
+		'TKIND_ENUM' -> 16r0.
+		'TKIND_INTERFACE' -> 16r3.
+		'TKIND_MAX' -> 16r8.
+		'TKIND_MODULE' -> 16r2.
+		'TKIND_RECORD' -> 16r1.
+		'TKIND_UNION' -> 16r7.
+		'TYPEFLAG_FAGGREGATABLE' -> 16r400.
+		'TYPEFLAG_FAPPOBJECT' -> 16r1.
+		'TYPEFLAG_FCANCREATE' -> 16r2.
+		'TYPEFLAG_FCONTROL' -> 16r20.
+		'TYPEFLAG_FDISPATCHABLE' -> 16r1000.
+		'TYPEFLAG_FDUAL' -> 16r40.
+		'TYPEFLAG_FHIDDEN' -> 16r10.
+		'TYPEFLAG_FLICENSED' -> 16r4.
+		'TYPEFLAG_FNONEXTENSIBLE' -> 16r80.
+		'TYPEFLAG_FOLEAUTOMATION' -> 16r100.
+		'TYPEFLAG_FPREDECLID' -> 16r8.
+		'TYPEFLAG_FRESTRICTED' -> 16r200.
+		'VAR_CONST' -> 16r2.
+		'VAR_DATEVALUEONLY' -> 16r2.
+		'VAR_DISPATCH' -> 16r3.
+		'VAR_PERINSTANCE' -> 16r0.
+		'VAR_STATIC' -> 16r1.
+		'VAR_TIMEVALUEONLY' -> 16r1.
+		'VARFLAG_FBINDABLE' -> 16r4.
+		'VARFLAG_FDEFAULTBIND' -> 16r20.
+		'VARFLAG_FDISPLAYBIND' -> 16r10.
+		'VARFLAG_FHIDDEN' -> 16r40.
+		'VARFLAG_FNONBROWSABLE' -> 16r400.
+		'VARFLAG_FREADONLY' -> 16r1.
+		'VARFLAG_FREQUESTEDIT' -> 16r8.
+		'VARFLAG_FRESTRICTED' -> 16r80.
+		'VARFLAG_FSOURCE' -> 16r2.
+		'VARFLAG_FUIDEFAULT' -> 16r200.
+		'VARIANT_FALSE' -> 16r0.
+		'VARIANT_NOVALUEPROP' -> 16r1.
+		'VARIANT_TRUE' -> -16r1.
+		'VT_ARRAY' -> 16r2000.
+		'VT_BLOB' -> 16r41.
+		'VT_BLOB_OBJECT' -> 16r46.
+		'VT_BOOL' -> 16rB.
+		'VT_BSTR' -> 16r8.
+		'VT_BYREF' -> 16r4000.
+		'VT_CARRAY' -> 16r1C.
+		'VT_CF' -> 16r47.
+		'VT_CLSID' -> 16r48.
+		'VT_CY' -> 16r6.
+		'VT_DATE' -> 16r7.
+		'VT_DECIMAL' -> 16rE.
+		'VT_DISPATCH' -> 16r9.
+		'VT_EMPTY' -> 16r0.
+		'VT_ERROR' -> 16rA.
+		'VT_FILETIME' -> 16r40.
+		'VT_HRESULT' -> 16r19.
+		'VT_I1' -> 16r10.
+		'VT_I2' -> 16r2.
+		'VT_I4' -> 16r3.
+		'VT_I8' -> 16r14.
+		'VT_INT' -> 16r16.
+		'VT_LPSTR' -> 16r1E.
+		'VT_LPWSTR' -> 16r1F.
+		'VT_NULL' -> 16r1.
+		'VT_PTR' -> 16r1A.
+		'VT_R4' -> 16r4.
+		'VT_R8' -> 16r5.
+		'VT_RECORD' -> 16r24.
+		'VT_SAFEARRAY' -> 16r1B.
+		'VT_STORAGE' -> 16r43.
+		'VT_STORED_OBJECT' -> 16r45.
+		'VT_STREAM' -> 16r42.
+		'VT_STREAMED_OBJECT' -> 16r44.
+		'VT_TYPEMASK' -> 16rFFF.
+		'VT_UI1' -> 16r11.
+		'VT_UI2' -> 16r12.
+		'VT_UI4' -> 16r13.
+		'VT_UI8' -> 16r15.
+		'VT_UINT' -> 16r17.
+		'VT_UNKNOWN' -> 16rD.
+		'VT_USERDEFINED' -> 16r1D.
+		'VT_VARIANT' -> 16rC.
+		'VT_VECTOR' -> 16r1000.
+		'VT_VOID' -> 16r18
+	}!
+AXAutomationConstants guid: (GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!
+AXAutomationConstants comment: ''!
+!AXAutomationConstants categoriesForClass!Unclassified! !

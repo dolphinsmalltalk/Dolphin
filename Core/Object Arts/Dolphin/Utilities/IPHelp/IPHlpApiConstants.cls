@@ -1,723 +1,731 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{IPHlpApiConstants} declare: (PoolConstantsDictionary named: #IPHlpApiConstants)!
-IPHlpApiConstants at: 'AD_APPLY_ALL' put: 16r7!
-IPHlpApiConstants at: 'AD_APPLY_BUFFERED_REFRESH' put: 16r10!
-IPHlpApiConstants at: 'AD_APPLY_FORCE' put: 16r8!
-IPHlpApiConstants at: 'AD_APPLY_HTMLGEN' put: 16r2!
-IPHlpApiConstants at: 'AD_APPLY_REFRESH' put: 16r4!
-IPHlpApiConstants at: 'AD_APPLY_SAVE' put: 16r1!
-IPHlpApiConstants at: 'ADDURL_SILENT' put: 16r1!
-IPHlpApiConstants at: 'BIF_BROWSEFORCOMPUTER' put: 16r1000!
-IPHlpApiConstants at: 'BIF_BROWSEFORPRINTER' put: 16r2000!
-IPHlpApiConstants at: 'BIF_BROWSEINCLUDEFILES' put: 16r4000!
-IPHlpApiConstants at: 'BIF_DONTGOBELOWDOMAIN' put: 16r2!
-IPHlpApiConstants at: 'BIF_EDITBOX' put: 16r10!
-IPHlpApiConstants at: 'BIF_RETURNFSANCESTORS' put: 16r8!
-IPHlpApiConstants at: 'BIF_RETURNONLYFSDIRS' put: 16r1!
-IPHlpApiConstants at: 'BIF_STATUSTEXT' put: 16r4!
-IPHlpApiConstants at: 'BIF_VALIDATE' put: 16r20!
-IPHlpApiConstants at: 'BOLD_FONTTYPE' put: 16r100!
-IPHlpApiConstants at: 'CC_ANYCOLOR' put: 16r100!
-IPHlpApiConstants at: 'CC_CDECL' put: 16r1!
-IPHlpApiConstants at: 'CC_ENABLEHOOK' put: 16r10!
-IPHlpApiConstants at: 'CC_ENABLETEMPLATE' put: 16r20!
-IPHlpApiConstants at: 'CC_ENABLETEMPLATEHANDLE' put: 16r40!
-IPHlpApiConstants at: 'CC_FASTCALL' put: 16r0!
-IPHlpApiConstants at: 'CC_FPFASTCALL' put: 16r5!
-IPHlpApiConstants at: 'CC_FULLOPEN' put: 16r2!
-IPHlpApiConstants at: 'CC_MACPASCAL' put: 16r3!
-IPHlpApiConstants at: 'CC_MAX' put: 16r9!
-IPHlpApiConstants at: 'CC_MPWCDECL' put: 16r7!
-IPHlpApiConstants at: 'CC_MPWPASCAL' put: 16r8!
-IPHlpApiConstants at: 'CC_MSCPASCAL' put: 16r2!
-IPHlpApiConstants at: 'CC_PASCAL' put: 16r2!
-IPHlpApiConstants at: 'CC_PREVENTFULLOPEN' put: 16r4!
-IPHlpApiConstants at: 'CC_RGBINIT' put: 16r1!
-IPHlpApiConstants at: 'CC_SHOWHELP' put: 16r8!
-IPHlpApiConstants at: 'CC_SOLIDCOLOR' put: 16r80!
-IPHlpApiConstants at: 'CC_STDCALL' put: 16r4!
-IPHlpApiConstants at: 'CC_SYSCALL' put: 16r6!
-IPHlpApiConstants at: 'CF_ANSIONLY' put: 16r400!
-IPHlpApiConstants at: 'CF_APPLY' put: 16r200!
-IPHlpApiConstants at: 'CF_BOTH' put: 16r3!
-IPHlpApiConstants at: 'CF_EFFECTS' put: 16r100!
-IPHlpApiConstants at: 'CF_ENABLEHOOK' put: 16r8!
-IPHlpApiConstants at: 'CF_ENABLETEMPLATE' put: 16r10!
-IPHlpApiConstants at: 'CF_ENABLETEMPLATEHANDLE' put: 16r20!
-IPHlpApiConstants at: 'CF_FIXEDPITCHONLY' put: 16r4000!
-IPHlpApiConstants at: 'CF_FONTSHOWHELP' put: 16r4!
-IPHlpApiConstants at: 'CF_FORCEFONTEXIST' put: 16r10000!
-IPHlpApiConstants at: 'CF_INITTOLOGFONTSTRUCT' put: 16r40!
-IPHlpApiConstants at: 'CF_LIMITSIZE' put: 16r2000!
-IPHlpApiConstants at: 'CF_NOFACESEL' put: 16r80000!
-IPHlpApiConstants at: 'CF_NOOEMFONTS' put: 16r800!
-IPHlpApiConstants at: 'CF_NOSCRIPTSEL' put: 16r800000!
-IPHlpApiConstants at: 'CF_NOSIMULATIONS' put: 16r1000!
-IPHlpApiConstants at: 'CF_NOSIZESEL' put: 16r200000!
-IPHlpApiConstants at: 'CF_NOSTYLESEL' put: 16r100000!
-IPHlpApiConstants at: 'CF_NOVECTORFONTS' put: 16r800!
-IPHlpApiConstants at: 'CF_NOVERTFONTS' put: 16r1000000!
-IPHlpApiConstants at: 'CF_PRINTERFONTS' put: 16r2!
-IPHlpApiConstants at: 'CF_SCALABLEONLY' put: 16r20000!
-IPHlpApiConstants at: 'CF_SCREENFONTS' put: 16r1!
-IPHlpApiConstants at: 'CF_SCRIPTSONLY' put: 16r400!
-IPHlpApiConstants at: 'CF_SELECTSCRIPT' put: 16r400000!
-IPHlpApiConstants at: 'CF_SHOWHELP' put: 16r4!
-IPHlpApiConstants at: 'CF_TTONLY' put: 16r40000!
-IPHlpApiConstants at: 'CF_USESTYLE' put: 16r80!
-IPHlpApiConstants at: 'CF_WYSIWYG' put: 16r8000!
-IPHlpApiConstants at: 'CLSCTX_DISABLE_AAA' put: 16r8000!
-IPHlpApiConstants at: 'CLSCTX_ENABLE_AAA' put: 16r10000!
-IPHlpApiConstants at: 'CLSCTX_ENABLE_CODE_DOWNLOAD' put: 16r2000!
-IPHlpApiConstants at: 'CLSCTX_FROM_DEFAULT_CONTEXT' put: 16r20000!
-IPHlpApiConstants at: 'CLSCTX_INPROC_HANDLER' put: 16r2!
-IPHlpApiConstants at: 'CLSCTX_INPROC_HANDLER16' put: 16r20!
-IPHlpApiConstants at: 'CLSCTX_INPROC_SERVER' put: 16r1!
-IPHlpApiConstants at: 'CLSCTX_INPROC_SERVER16' put: 16r8!
-IPHlpApiConstants at: 'CLSCTX_LOCAL_SERVER' put: 16r4!
-IPHlpApiConstants at: 'CLSCTX_NO_CODE_DOWNLOAD' put: 16r400!
-IPHlpApiConstants at: 'CLSCTX_NO_CUSTOM_MARSHAL' put: 16r1000!
-IPHlpApiConstants at: 'CLSCTX_NO_FAILURE_LOG' put: 16r4000!
-IPHlpApiConstants at: 'CLSCTX_REMOTE_SERVER' put: 16r10!
-IPHlpApiConstants at: 'CLSCTX_RESERVED1' put: 16r40!
-IPHlpApiConstants at: 'CLSCTX_RESERVED2' put: 16r80!
-IPHlpApiConstants at: 'CLSCTX_RESERVED3' put: 16r100!
-IPHlpApiConstants at: 'CLSCTX_RESERVED4' put: 16r200!
-IPHlpApiConstants at: 'CLSCTX_RESERVED5' put: 16r800!
-IPHlpApiConstants at: 'CMF_CANRENAME' put: 16r10!
-IPHlpApiConstants at: 'CMF_DEFAULTONLY' put: 16r1!
-IPHlpApiConstants at: 'CMF_EXPLORE' put: 16r4!
-IPHlpApiConstants at: 'CMF_INCLUDESTATIC' put: 16r40!
-IPHlpApiConstants at: 'CMF_NODEFAULT' put: 16r20!
-IPHlpApiConstants at: 'CMF_NORMAL' put: 16r0!
-IPHlpApiConstants at: 'CMF_NOVERBS' put: 16r8!
-IPHlpApiConstants at: 'CMF_RESERVED' put: -16r10000!
-IPHlpApiConstants at: 'CMF_VERBSONLY' put: 16r2!
-IPHlpApiConstants at: 'COINIT_APARTMENTTHREADED' put: 16r2!
-IPHlpApiConstants at: 'COINIT_DISABLE_OLE1DDE' put: 16r4!
-IPHlpApiConstants at: 'COINIT_MULTITHREADED' put: 16r0!
-IPHlpApiConstants at: 'COINIT_SPEED_OVER_MEMORY' put: 16r8!
-IPHlpApiConstants at: 'COMP_ELEM_ALL' put: 16rFFF!
-IPHlpApiConstants at: 'COMP_ELEM_CHECKED' put: 16r2!
-IPHlpApiConstants at: 'COMP_ELEM_DIRTY' put: 16r4!
-IPHlpApiConstants at: 'COMP_ELEM_FRIENDLYNAME' put: 16r400!
-IPHlpApiConstants at: 'COMP_ELEM_NOSCROLL' put: 16r8!
-IPHlpApiConstants at: 'COMP_ELEM_POS_LEFT' put: 16r10!
-IPHlpApiConstants at: 'COMP_ELEM_POS_TOP' put: 16r20!
-IPHlpApiConstants at: 'COMP_ELEM_POS_ZINDEX' put: 16r100!
-IPHlpApiConstants at: 'COMP_ELEM_SIZE_HEIGHT' put: 16r80!
-IPHlpApiConstants at: 'COMP_ELEM_SIZE_WIDTH' put: 16r40!
-IPHlpApiConstants at: 'COMP_ELEM_SOURCE' put: 16r200!
-IPHlpApiConstants at: 'COMP_ELEM_SUBSCRIBEDURL' put: 16r800!
-IPHlpApiConstants at: 'COMP_ELEM_TYPE' put: 16r1!
-IPHlpApiConstants at: 'CSIDL_ALTSTARTUP' put: 16r1D!
-IPHlpApiConstants at: 'CSIDL_APPDATA' put: 16r1A!
-IPHlpApiConstants at: 'CSIDL_BITBUCKET' put: 16rA!
-IPHlpApiConstants at: 'CSIDL_COMMON_ALTSTARTUP' put: 16r1E!
-IPHlpApiConstants at: 'CSIDL_COMMON_DESKTOPDIRECTORY' put: 16r19!
-IPHlpApiConstants at: 'CSIDL_COMMON_FAVORITES' put: 16r1F!
-IPHlpApiConstants at: 'CSIDL_COMMON_PROGRAMS' put: 16r17!
-IPHlpApiConstants at: 'CSIDL_COMMON_STARTMENU' put: 16r16!
-IPHlpApiConstants at: 'CSIDL_COMMON_STARTUP' put: 16r18!
-IPHlpApiConstants at: 'CSIDL_CONTROLS' put: 16r3!
-IPHlpApiConstants at: 'CSIDL_COOKIES' put: 16r21!
-IPHlpApiConstants at: 'CSIDL_DESKTOP' put: 16r0!
-IPHlpApiConstants at: 'CSIDL_DESKTOPDIRECTORY' put: 16r10!
-IPHlpApiConstants at: 'CSIDL_DRIVES' put: 16r11!
-IPHlpApiConstants at: 'CSIDL_FAVORITES' put: 16r6!
-IPHlpApiConstants at: 'CSIDL_FONTS' put: 16r14!
-IPHlpApiConstants at: 'CSIDL_HISTORY' put: 16r22!
-IPHlpApiConstants at: 'CSIDL_INTERNET' put: 16r1!
-IPHlpApiConstants at: 'CSIDL_INTERNET_CACHE' put: 16r20!
-IPHlpApiConstants at: 'CSIDL_NETHOOD' put: 16r13!
-IPHlpApiConstants at: 'CSIDL_NETWORK' put: 16r12!
-IPHlpApiConstants at: 'CSIDL_PERSONAL' put: 16r5!
-IPHlpApiConstants at: 'CSIDL_PRINTERS' put: 16r4!
-IPHlpApiConstants at: 'CSIDL_PRINTHOOD' put: 16r1B!
-IPHlpApiConstants at: 'CSIDL_PROGRAMS' put: 16r2!
-IPHlpApiConstants at: 'CSIDL_RECENT' put: 16r8!
-IPHlpApiConstants at: 'CSIDL_SENDTO' put: 16r9!
-IPHlpApiConstants at: 'CSIDL_STARTMENU' put: 16rB!
-IPHlpApiConstants at: 'CSIDL_STARTUP' put: 16r7!
-IPHlpApiConstants at: 'CSIDL_TEMPLATES' put: 16r15!
-IPHlpApiConstants at: 'DESCKIND_FUNCDESC' put: 16r1!
-IPHlpApiConstants at: 'DESCKIND_IMPLICITAPPOBJ' put: 16r4!
-IPHlpApiConstants at: 'DESCKIND_MAX' put: 16r5!
-IPHlpApiConstants at: 'DESCKIND_NONE' put: 16r0!
-IPHlpApiConstants at: 'DESCKIND_TYPECOMP' put: 16r3!
-IPHlpApiConstants at: 'DESCKIND_VARDESC' put: 16r2!
-IPHlpApiConstants at: 'DTI_ADDUI_DEFAULT' put: 16r0!
-IPHlpApiConstants at: 'DTI_ADDUI_DISPSUBWIZARD' put: 16r1!
-IPHlpApiConstants at: 'ecbBeach' put: 16r40!
-IPHlpApiConstants at: 'ecbCardHand' put: 16r41!
-IPHlpApiConstants at: 'ecbCastle' put: 16r3F!
-IPHlpApiConstants at: 'ecbCrossHatch' put: 16r35!
-IPHlpApiConstants at: 'ecbFishBlue' put: 16r3D!
-IPHlpApiConstants at: 'ecbFishCyan' put: 16r3C!
-IPHlpApiConstants at: 'ecbIvyBlack' put: 16r3A!
-IPHlpApiConstants at: 'ecbIvyBlue' put: 16r3B!
-IPHlpApiConstants at: 'ecbO' put: 16r44!
-IPHlpApiConstants at: 'ecbPlaid' put: 16r36!
-IPHlpApiConstants at: 'ecbRobot' put: 16r38!
-IPHlpApiConstants at: 'ecbRoses' put: 16r39!
-IPHlpApiConstants at: 'ecbShell' put: 16r3E!
-IPHlpApiConstants at: 'ecbUnused' put: 16r42!
-IPHlpApiConstants at: 'ecbWeave' put: 16r37!
-IPHlpApiConstants at: 'ecbX' put: 16r43!
-IPHlpApiConstants at: 'ecfAce' put: 16r0!
-IPHlpApiConstants at: 'ecfEight' put: 16r1C!
-IPHlpApiConstants at: 'ecfFive' put: 16r10!
-IPHlpApiConstants at: 'ecfFour' put: 16rC!
-IPHlpApiConstants at: 'ecfJack' put: 16r28!
-IPHlpApiConstants at: 'ecfKing' put: 16r30!
-IPHlpApiConstants at: 'ecfNine' put: 16r20!
-IPHlpApiConstants at: 'ecfQueen' put: 16r2C!
-IPHlpApiConstants at: 'ecfSeven' put: 16r18!
-IPHlpApiConstants at: 'ecfSix' put: 16r14!
-IPHlpApiConstants at: 'ecfTen' put: 16r24!
-IPHlpApiConstants at: 'ecfThree' put: 16r8!
-IPHlpApiConstants at: 'ecfTwo' put: 16r4!
-IPHlpApiConstants at: 'ecsClubs' put: 16r0!
-IPHlpApiConstants at: 'ecsDiamonds' put: 16r1!
-IPHlpApiConstants at: 'ecsHearts' put: 16r2!
-IPHlpApiConstants at: 'ecsSpades' put: 16r3!
-IPHlpApiConstants at: 'ectBacks' put: 16r1!
-IPHlpApiConstants at: 'ectFaces' put: 16r0!
-IPHlpApiConstants at: 'ectInvert' put: 16r2!
-IPHlpApiConstants at: 'FD_ACCESSTIME' put: 16r10!
-IPHlpApiConstants at: 'FD_ATTRIBUTES' put: 16r4!
-IPHlpApiConstants at: 'FD_CLSID' put: 16r1!
-IPHlpApiConstants at: 'FD_CREATETIME' put: 16r8!
-IPHlpApiConstants at: 'FD_FILESIZE' put: 16r40!
-IPHlpApiConstants at: 'FD_LINKUI' put: 16r8000!
-IPHlpApiConstants at: 'FD_SIZEPOINT' put: 16r2!
-IPHlpApiConstants at: 'FD_WRITESTIME' put: 16r20!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_ATTRIBUTES' put: 16r4!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_DIR_NAME' put: 16r2!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_FILE_NAME' put: 16r1!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_LAST_WRITE' put: 16r10!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_SECURITY' put: 16r100!
-IPHlpApiConstants at: 'FILE_NOTIFY_CHANGE_SIZE' put: 16r8!
-IPHlpApiConstants at: 'FO_COPY' put: 16r2!
-IPHlpApiConstants at: 'FO_DELETE' put: 16r3!
-IPHlpApiConstants at: 'FO_MOVE' put: 16r1!
-IPHlpApiConstants at: 'FO_RENAME' put: 16r4!
-IPHlpApiConstants at: 'FOF_ALLOWUNDO' put: 16r40!
-IPHlpApiConstants at: 'FOF_CONFIRMMOUSE' put: 16r2!
-IPHlpApiConstants at: 'FOF_COPYFLAGS' put: 16r3DD!
-IPHlpApiConstants at: 'FOF_DELETEFLAGS' put: 16r154!
-IPHlpApiConstants at: 'FOF_FILESONLY' put: 16r80!
-IPHlpApiConstants at: 'FOF_MOVEFLAGS' put: 16r3DD!
-IPHlpApiConstants at: 'FOF_MULTIDESTFILES' put: 16r1!
-IPHlpApiConstants at: 'FOF_NOCONFIRMATION' put: 16r10!
-IPHlpApiConstants at: 'FOF_NOCONFIRMMKDIR' put: 16r200!
-IPHlpApiConstants at: 'FOF_RENAMEFLAGS' put: 16r3DD!
-IPHlpApiConstants at: 'FOF_RENAMEONCOLLISION' put: 16r8!
-IPHlpApiConstants at: 'FOF_SILENT' put: 16r4!
-IPHlpApiConstants at: 'FOF_SIMPLEPROGRESS' put: 16r100!
-IPHlpApiConstants at: 'FOF_WANTMAPPINGHANDLE' put: 16r20!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_ALLOCATE_BUFFER' put: 16r100!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_ARGUMENT_ARRAY' put: 16r2000!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_FROM_HMODULE' put: 16r800!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_FROM_STRING' put: 16r400!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_FROM_SYSTEM' put: 16r1000!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_IGNORE_INSERTS' put: 16r200!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_MAX_WIDTH_MASK' put: 16rFF!
-IPHlpApiConstants at: 'FORMAT_MESSAGE_NONE' put: 16r0!
-IPHlpApiConstants at: 'FR_DIALOGTERM' put: 16r40!
-IPHlpApiConstants at: 'FR_DOWN' put: 16r1!
-IPHlpApiConstants at: 'FR_ENABLEHOOK' put: 16r100!
-IPHlpApiConstants at: 'FR_ENABLETEMPLATE' put: 16r200!
-IPHlpApiConstants at: 'FR_ENABLETEMPLATEHANDLE' put: 16r2000!
-IPHlpApiConstants at: 'FR_FINDNEXT' put: 16r8!
-IPHlpApiConstants at: 'FR_HIDEMATCHCASE' put: 16r8000!
-IPHlpApiConstants at: 'FR_HIDEUPDOWN' put: 16r4000!
-IPHlpApiConstants at: 'FR_HIDEWHOLEWORD' put: 16r10000!
-IPHlpApiConstants at: 'FR_MATCHCASE' put: 16r4!
-IPHlpApiConstants at: 'FR_NOMATCHCASE' put: 16r800!
-IPHlpApiConstants at: 'FR_NOUPDOWN' put: 16r400!
-IPHlpApiConstants at: 'FR_NOWHOLEWORD' put: 16r1000!
-IPHlpApiConstants at: 'FR_REPLACE' put: 16r10!
-IPHlpApiConstants at: 'FR_REPLACEALL' put: 16r20!
-IPHlpApiConstants at: 'FR_SHOWHELP' put: 16r80!
-IPHlpApiConstants at: 'FR_WHOLEWORD' put: 16r2!
-IPHlpApiConstants at: 'FUNC_DISPATCH' put: 16r4!
-IPHlpApiConstants at: 'FUNC_NONVIRTUAL' put: 16r2!
-IPHlpApiConstants at: 'FUNC_PUREVIRTUAL' put: 16r1!
-IPHlpApiConstants at: 'FUNC_STATIC' put: 16r3!
-IPHlpApiConstants at: 'FUNC_VIRTUAL' put: 16r0!
-IPHlpApiConstants at: 'FVM_DETAILS' put: 16r4!
-IPHlpApiConstants at: 'FVM_ICON' put: 16r1!
-IPHlpApiConstants at: 'FVM_LIST' put: 16r3!
-IPHlpApiConstants at: 'FVM_SMALLICON' put: 16r2!
-IPHlpApiConstants at: 'FWF_ABBREVIATEDNAMES' put: 16r2!
-IPHlpApiConstants at: 'FWF_ALIGNLEFT' put: 16r800!
-IPHlpApiConstants at: 'FWF_AUTOARRANGE' put: 16r1!
-IPHlpApiConstants at: 'FWF_BESTFITWINDOW' put: 16r10!
-IPHlpApiConstants at: 'FWF_DESKTOP' put: 16r20!
-IPHlpApiConstants at: 'FWF_NOCLIENTEDGE' put: 16r200!
-IPHlpApiConstants at: 'FWF_NOSCROLL' put: 16r400!
-IPHlpApiConstants at: 'FWF_NOSUBFOLDERS' put: 16r80!
-IPHlpApiConstants at: 'FWF_OWNERDATA' put: 16r8!
-IPHlpApiConstants at: 'FWF_SINGLECLICKACTIVATE' put: 16r8000!
-IPHlpApiConstants at: 'FWF_SINGLESEL' put: 16r40!
-IPHlpApiConstants at: 'FWF_SNAPTOGRID' put: 16r4!
-IPHlpApiConstants at: 'FWF_TRANSPARENT' put: 16r100!
-IPHlpApiConstants at: 'GCS_HELPTEXTA' put: 16r1!
-IPHlpApiConstants at: 'GCS_HELPTEXTW' put: 16r5!
-IPHlpApiConstants at: 'GCS_UNICODE' put: 16r4!
-IPHlpApiConstants at: 'GCS_VALIDATEA' put: 16r2!
-IPHlpApiConstants at: 'GCS_VALIDATEW' put: 16r6!
-IPHlpApiConstants at: 'GCS_VERBA' put: 16r0!
-IPHlpApiConstants at: 'GCS_VERBW' put: 16r4!
-IPHlpApiConstants at: 'HIST_ADDTOFAVORITES' put: 16r3!
-IPHlpApiConstants at: 'HIST_BACK' put: 16r0!
-IPHlpApiConstants at: 'HIST_FAVORITES' put: 16r2!
-IPHlpApiConstants at: 'HIST_FORWARD' put: 16r1!
-IPHlpApiConstants at: 'HIST_VIEWTREE' put: 16r4!
-IPHlpApiConstants at: 'HKEY_CLASSES_ROOT' put: -16r80000000!
-IPHlpApiConstants at: 'HKEY_CURRENT_CONFIG' put: -16r7FFFFFFB!
-IPHlpApiConstants at: 'HKEY_CURRENT_USER' put: -16r7FFFFFFF!
-IPHlpApiConstants at: 'HKEY_DYN_DATA' put: -16r7FFFFFFA!
-IPHlpApiConstants at: 'HKEY_LOCAL_MACHINE' put: -16r7FFFFFFE!
-IPHlpApiConstants at: 'HKEY_PERFORMANCE_DATA' put: -16r7FFFFFFC!
-IPHlpApiConstants at: 'HKEY_USERS' put: -16r7FFFFFFD!
-IPHlpApiConstants at: 'ICMP4_DST_UNREACH' put: 16r3!
-IPHlpApiConstants at: 'ICMP4_ECHO_REPLY' put: 16r0!
-IPHlpApiConstants at: 'ICMP4_ECHO_REQUEST' put: 16r8!
-IPHlpApiConstants at: 'ICMP4_MASK_REPLY' put: 16r12!
-IPHlpApiConstants at: 'ICMP4_MASK_REQUEST' put: 16r11!
-IPHlpApiConstants at: 'ICMP4_PARAM_PROB' put: 16rC!
-IPHlpApiConstants at: 'ICMP4_REDIRECT' put: 16r5!
-IPHlpApiConstants at: 'ICMP4_ROUTER_ADVERT' put: 16r9!
-IPHlpApiConstants at: 'ICMP4_ROUTER_SOLICIT' put: 16rA!
-IPHlpApiConstants at: 'ICMP4_SOURCE_QUENCH' put: 16r4!
-IPHlpApiConstants at: 'ICMP4_TIME_EXCEEDED' put: 16rB!
-IPHlpApiConstants at: 'ICMP4_TIMESTAMP_REPLY' put: 16rE!
-IPHlpApiConstants at: 'ICMP4_TIMESTAMP_REQUEST' put: 16rD!
-IPHlpApiConstants at: 'ICMP6_DST_UNREACH' put: 16r1!
-IPHlpApiConstants at: 'ICMP6_ECHO_REPLY' put: 16r81!
-IPHlpApiConstants at: 'ICMP6_ECHO_REQUEST' put: 16r80!
-IPHlpApiConstants at: 'ICMP6_MEMBERSHIP_QUERY' put: 16r82!
-IPHlpApiConstants at: 'ICMP6_MEMBERSHIP_REDUCTION' put: 16r84!
-IPHlpApiConstants at: 'ICMP6_MEMBERSHIP_REPORT' put: 16r83!
-IPHlpApiConstants at: 'ICMP6_PACKET_TOO_BIG' put: 16r2!
-IPHlpApiConstants at: 'ICMP6_PARAM_PROB' put: 16r4!
-IPHlpApiConstants at: 'ICMP6_TIME_EXCEEDED' put: 16r3!
-IPHlpApiConstants at: 'IDB_HIST_LARGE_COLOR' put: 16r9!
-IPHlpApiConstants at: 'IDB_HIST_SMALL_COLOR' put: 16r8!
-IPHlpApiConstants at: 'IDB_STD_LARGE_COLOR' put: 16r1!
-IPHlpApiConstants at: 'IDB_STD_SMALL_COLOR' put: 16r0!
-IPHlpApiConstants at: 'IDB_VIEW_LARGE_COLOR' put: 16r5!
-IPHlpApiConstants at: 'IDB_VIEW_SMALL_COLOR' put: 16r4!
-IPHlpApiConstants at: 'ILC_COLOR' put: 16r0!
-IPHlpApiConstants at: 'ILC_COLOR16' put: 16r10!
-IPHlpApiConstants at: 'ILC_COLOR24' put: 16r18!
-IPHlpApiConstants at: 'ILC_COLOR32' put: 16r20!
-IPHlpApiConstants at: 'ILC_COLOR4' put: 16r4!
-IPHlpApiConstants at: 'ILC_COLOR8' put: 16r8!
-IPHlpApiConstants at: 'ILC_COLORDDB' put: 16rFE!
-IPHlpApiConstants at: 'ILC_MASK' put: 16r1!
-IPHlpApiConstants at: 'ILD_BLEND' put: 16rF00!
-IPHlpApiConstants at: 'ILD_BLEND25' put: 16r2!
-IPHlpApiConstants at: 'ILD_BLEND50' put: 16r4!
-IPHlpApiConstants at: 'ILD_FOCUS' put: 16r4!
-IPHlpApiConstants at: 'ILD_IMAGE' put: 16r20!
-IPHlpApiConstants at: 'ILD_MASK' put: 16r10!
-IPHlpApiConstants at: 'ILD_NORMAL' put: 16r0!
-IPHlpApiConstants at: 'ILD_OVERLAYMASK' put: 16rF00!
-IPHlpApiConstants at: 'ILD_SELECTED' put: 16r4!
-IPHlpApiConstants at: 'ILD_TRANSPARENT' put: 16r1!
-IPHlpApiConstants at: 'INPUT_HARDWARE' put: 16r2!
-IPHlpApiConstants at: 'INPUT_KEYBOARD' put: 16r1!
-IPHlpApiConstants at: 'INPUT_MOUSE' put: 16r0!
-IPHlpApiConstants at: 'INVOKE_FUNC' put: 16r1!
-IPHlpApiConstants at: 'INVOKE_PROPERTYGET' put: 16r2!
-IPHlpApiConstants at: 'INVOKE_PROPERTYPUT' put: 16r4!
-IPHlpApiConstants at: 'INVOKE_PROPERTYPUTREF' put: 16r8!
-IPHlpApiConstants at: 'ITALIC_FONTTYPE' put: 16r200!
-IPHlpApiConstants at: 'KEY_ALL_ACCESS' put: 16rF003F!
-IPHlpApiConstants at: 'KEY_CREATE_LINK' put: 16r20!
-IPHlpApiConstants at: 'KEY_CREATE_SUB_KEY' put: 16r4!
-IPHlpApiConstants at: 'KEY_ENUMERATE_SUB_KEYS' put: 16r8!
-IPHlpApiConstants at: 'KEY_EXECUTE' put: 16r20009!
-IPHlpApiConstants at: 'KEY_NOTIFY' put: 16r10!
-IPHlpApiConstants at: 'KEY_QUERY_VALUE' put: 16r1!
-IPHlpApiConstants at: 'KEY_READ' put: 16r20009!
-IPHlpApiConstants at: 'KEY_SET_VALUE' put: 16r2!
-IPHlpApiConstants at: 'KEY_WRITE' put: 16r20006!
-IPHlpApiConstants at: 'ND_NEIGHBOR_ADVERT' put: 16r88!
-IPHlpApiConstants at: 'ND_NEIGHBOR_SOLICIT' put: 16r87!
-IPHlpApiConstants at: 'ND_REDIRECT' put: 16r89!
-IPHlpApiConstants at: 'ND_ROUTER_ADVERT' put: 16r86!
-IPHlpApiConstants at: 'ND_ROUTER_SOLICIT' put: 16r85!
-IPHlpApiConstants at: 'OFN_ALLOWMULTISELECT' put: 16r200!
-IPHlpApiConstants at: 'OFN_CREATEPROMPT' put: 16r2000!
-IPHlpApiConstants at: 'OFN_ENABLEHOOK' put: 16r20!
-IPHlpApiConstants at: 'OFN_ENABLETEMPLATE' put: 16r40!
-IPHlpApiConstants at: 'OFN_ENABLETEMPLATEHANDLE' put: 16r80!
-IPHlpApiConstants at: 'OFN_EXPLORER' put: 16r80000!
-IPHlpApiConstants at: 'OFN_EXTENSIONDIFFERENT' put: 16r400!
-IPHlpApiConstants at: 'OFN_FILEMUSTEXIST' put: 16r1000!
-IPHlpApiConstants at: 'OFN_HIDEREADONLY' put: 16r4!
-IPHlpApiConstants at: 'OFN_LONGNAMES' put: 16r200000!
-IPHlpApiConstants at: 'OFN_NOCHANGEDIR' put: 16r8!
-IPHlpApiConstants at: 'OFN_NODEREFERENCELINKS' put: 16r100000!
-IPHlpApiConstants at: 'OFN_NOLONGNAMES' put: 16r40000!
-IPHlpApiConstants at: 'OFN_NONETWORKBUTTON' put: 16r20000!
-IPHlpApiConstants at: 'OFN_NOREADONLYRETURN' put: 16r8000!
-IPHlpApiConstants at: 'OFN_NOTESTFILECREATE' put: 16r10000!
-IPHlpApiConstants at: 'OFN_NOVALIDATE' put: 16r100!
-IPHlpApiConstants at: 'OFN_OVERWRITEPROMPT' put: 16r2!
-IPHlpApiConstants at: 'OFN_PATHMUSTEXIST' put: 16r800!
-IPHlpApiConstants at: 'OFN_READONLY' put: 16r1!
-IPHlpApiConstants at: 'OFN_SHAREAWARE' put: 16r4000!
-IPHlpApiConstants at: 'OFN_SHOWHELP' put: 16r10!
-IPHlpApiConstants at: 'PD_ALLPAGES' put: 16r0!
-IPHlpApiConstants at: 'PD_COLLATE' put: 16r10!
-IPHlpApiConstants at: 'PD_DISABLEPRINTTOFILE' put: 16r80000!
-IPHlpApiConstants at: 'PD_ENABLEPRINTHOOK' put: 16r1000!
-IPHlpApiConstants at: 'PD_ENABLEPRINTTEMPLATE' put: 16r4000!
-IPHlpApiConstants at: 'PD_ENABLEPRINTTEMPLATEHANDLE' put: 16r10000!
-IPHlpApiConstants at: 'PD_ENABLESETUPHOOK' put: 16r2000!
-IPHlpApiConstants at: 'PD_ENABLESETUPTEMPLATE' put: 16r8000!
-IPHlpApiConstants at: 'PD_ENABLESETUPTEMPLATEHANDLE' put: 16r20000!
-IPHlpApiConstants at: 'PD_HIDEPRINTTOFILE' put: 16r100000!
-IPHlpApiConstants at: 'PD_NONETWORKBUTTON' put: 16r200000!
-IPHlpApiConstants at: 'PD_NOPAGENUMS' put: 16r8!
-IPHlpApiConstants at: 'PD_NOSELECTION' put: 16r4!
-IPHlpApiConstants at: 'PD_NOWARNING' put: 16r80!
-IPHlpApiConstants at: 'PD_PAGENUMS' put: 16r2!
-IPHlpApiConstants at: 'PD_PRINTSETUP' put: 16r40!
-IPHlpApiConstants at: 'PD_PRINTTOFILE' put: 16r20!
-IPHlpApiConstants at: 'PD_RETURNDC' put: 16r100!
-IPHlpApiConstants at: 'PD_RETURNDEFAULT' put: 16r400!
-IPHlpApiConstants at: 'PD_RETURNIC' put: 16r200!
-IPHlpApiConstants at: 'PD_SELECTION' put: 16r1!
-IPHlpApiConstants at: 'PD_SHOWHELP' put: 16r800!
-IPHlpApiConstants at: 'PD_USEDEVMODECOPIES' put: 16r40000!
-IPHlpApiConstants at: 'PD_USEDEVMODECOPIESANDCOLLATE' put: 16r40000!
-IPHlpApiConstants at: 'PIDMSI_STATUS_DRAFT' put: 16r3!
-IPHlpApiConstants at: 'PIDMSI_STATUS_EDIT' put: 16r5!
-IPHlpApiConstants at: 'PIDMSI_STATUS_FINAL' put: 16r8!
-IPHlpApiConstants at: 'PIDMSI_STATUS_INPROGRESS' put: 16r4!
-IPHlpApiConstants at: 'PIDMSI_STATUS_NEW' put: 16r1!
-IPHlpApiConstants at: 'PIDMSI_STATUS_NORMAL' put: 16r0!
-IPHlpApiConstants at: 'PIDMSI_STATUS_OTHER' put: 16r7FFF!
-IPHlpApiConstants at: 'PIDMSI_STATUS_PRELIM' put: 16r2!
-IPHlpApiConstants at: 'PIDMSI_STATUS_PROOF' put: 16r7!
-IPHlpApiConstants at: 'PIDMSI_STATUS_REVIEW' put: 16r6!
-IPHlpApiConstants at: 'PO_DELETE' put: 16r13!
-IPHlpApiConstants at: 'PO_PORTCHANGE' put: 16r20!
-IPHlpApiConstants at: 'PO_REN_PORT' put: 16r34!
-IPHlpApiConstants at: 'PO_RENAME' put: 16r14!
-IPHlpApiConstants at: 'PRINTER_FONTTYPE' put: 16r4000!
-IPHlpApiConstants at: 'PROCESS_ALL_ACCESS' put: 16r1F0FFF!
-IPHlpApiConstants at: 'PROCESS_CREATE_PROCESS' put: 16r80!
-IPHlpApiConstants at: 'PROCESS_CREATE_THREAD' put: 16r2!
-IPHlpApiConstants at: 'PROCESS_DUP_HANDLE' put: 16r40!
-IPHlpApiConstants at: 'PROCESS_QUERY_INFORMATION' put: 16r400!
-IPHlpApiConstants at: 'PROCESS_SET_INFORMATION' put: 16r200!
-IPHlpApiConstants at: 'PROCESS_SET_QUOTA' put: 16r100!
-IPHlpApiConstants at: 'PROCESS_TERMINATE' put: 16r1!
-IPHlpApiConstants at: 'PROCESS_VM_OPERATION' put: 16r8!
-IPHlpApiConstants at: 'PROCESS_VM_READ' put: 16r10!
-IPHlpApiConstants at: 'PROCESS_VM_WRITE' put: 16r20!
-IPHlpApiConstants at: 'PSD_DEFAULTMINMARGINS' put: 16r0!
-IPHlpApiConstants at: 'PSD_DISABLEMARGINS' put: 16r10!
-IPHlpApiConstants at: 'PSD_DISABLEORIENTATION' put: 16r100!
-IPHlpApiConstants at: 'PSD_DISABLEPAGEPAINTING' put: 16r80000!
-IPHlpApiConstants at: 'PSD_DISABLEPAPER' put: 16r200!
-IPHlpApiConstants at: 'PSD_DISABLEPRINTER' put: 16r20!
-IPHlpApiConstants at: 'PSD_ENABLEPAGEPAINTHOOK' put: 16r40000!
-IPHlpApiConstants at: 'PSD_ENABLEPAGESETUPHOOK' put: 16r2000!
-IPHlpApiConstants at: 'PSD_ENABLEPAGESETUPTEMPLATE' put: 16r8000!
-IPHlpApiConstants at: 'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' put: 16r20000!
-IPHlpApiConstants at: 'PSD_INHUNDREDTHSOFMILLIMETERS' put: 16r8!
-IPHlpApiConstants at: 'PSD_INTHOUSANDTHSOFINCHES' put: 16r4!
-IPHlpApiConstants at: 'PSD_INWININIINTLMEASURE' put: 16r0!
-IPHlpApiConstants at: 'PSD_MARGINS' put: 16r2!
-IPHlpApiConstants at: 'PSD_MINMARGINS' put: 16r1!
-IPHlpApiConstants at: 'PSD_NOWARNING' put: 16r80!
-IPHlpApiConstants at: 'PSD_RETURNDEFAULT' put: 16r400!
-IPHlpApiConstants at: 'PSD_SHOWHELP' put: 16r800!
-IPHlpApiConstants at: 'qbBlack' put: 16r0!
-IPHlpApiConstants at: 'qbBlue' put: 16r1!
-IPHlpApiConstants at: 'qbBrightWhite' put: 16rF!
-IPHlpApiConstants at: 'qbCyan' put: 16r3!
-IPHlpApiConstants at: 'qbGray' put: 16r8!
-IPHlpApiConstants at: 'qbGreen' put: 16r2!
-IPHlpApiConstants at: 'qbLightBlue' put: 16r9!
-IPHlpApiConstants at: 'qbLightCyan' put: 16rB!
-IPHlpApiConstants at: 'qbLightGreen' put: 16rA!
-IPHlpApiConstants at: 'qbLightMagenta' put: 16rD!
-IPHlpApiConstants at: 'qbLightRed' put: 16rC!
-IPHlpApiConstants at: 'qbLightYellow' put: 16rE!
-IPHlpApiConstants at: 'qbMagenta' put: 16r5!
-IPHlpApiConstants at: 'qbRed' put: 16r4!
-IPHlpApiConstants at: 'qbWhite' put: 16r7!
-IPHlpApiConstants at: 'qbYellow' put: 16r6!
-IPHlpApiConstants at: 'REG_BINARY' put: 16r3!
-IPHlpApiConstants at: 'REG_DWORD' put: 16r4!
-IPHlpApiConstants at: 'REG_DWORD_BIG_ENDIAN' put: 16r5!
-IPHlpApiConstants at: 'REG_DWORD_LITTLE_ENDIAN' put: 16r4!
-IPHlpApiConstants at: 'REG_EXPAND_SZ' put: 16r2!
-IPHlpApiConstants at: 'REG_FULL_RESOURCE_DESCRIPTOR' put: 16r9!
-IPHlpApiConstants at: 'REG_LINK' put: 16r6!
-IPHlpApiConstants at: 'REG_MULTI_SZ' put: 16r7!
-IPHlpApiConstants at: 'REG_NONE' put: 16r0!
-IPHlpApiConstants at: 'REG_RESOURCE_LIST' put: 16r8!
-IPHlpApiConstants at: 'REG_RESOURCE_REQUIREMENTS_LIST' put: 16rA!
-IPHlpApiConstants at: 'REG_SZ' put: 16r1!
-IPHlpApiConstants at: 'REGCLS_MULTI_SEPARATE' put: 16r2!
-IPHlpApiConstants at: 'REGCLS_MULTIPLEUSE' put: 16r1!
-IPHlpApiConstants at: 'REGCLS_SINGLEUSE' put: 16r0!
-IPHlpApiConstants at: 'REGULAR_FONTTYPE' put: 16r400!
-IPHlpApiConstants at: 'SBCMDID_CANCELNAVIGATION' put: 16r2!
-IPHlpApiConstants at: 'SBCMDID_ENABLESHOWTREE' put: 16r0!
-IPHlpApiConstants at: 'SBCMDID_ENABLESTOP' put: 16r5!
-IPHlpApiConstants at: 'SBCMDID_MAYSAVECHANGES' put: 16r3!
-IPHlpApiConstants at: 'SBCMDID_OPTIONS' put: 16r6!
-IPHlpApiConstants at: 'SBCMDID_SETHLINKFRAME' put: 16r4!
-IPHlpApiConstants at: 'SBCMDID_SHOWCONTROL' put: 16r1!
-IPHlpApiConstants at: 'SBSC_HIDE' put: 16r0!
-IPHlpApiConstants at: 'SBSC_QUERY' put: 16r3!
-IPHlpApiConstants at: 'SBSC_SHOW' put: 16r1!
-IPHlpApiConstants at: 'SBSC_TOGGLE' put: 16r2!
-IPHlpApiConstants at: 'SCREEN_FONTTYPE' put: 16r2000!
-IPHlpApiConstants at: 'SFGAO_CANCOPY' put: 16r1!
-IPHlpApiConstants at: 'SFGAO_CANDELETE' put: 16r20!
-IPHlpApiConstants at: 'SFGAO_CANLINK' put: 16r4!
-IPHlpApiConstants at: 'SFGAO_CANMOVE' put: 16r2!
-IPHlpApiConstants at: 'SFGAO_CANRENAME' put: 16r10!
-IPHlpApiConstants at: 'SFGAO_CAPABILITYMASK' put: 16r177!
-IPHlpApiConstants at: 'SFGAO_COMPRESSED' put: 16r4000000!
-IPHlpApiConstants at: 'SFGAO_CONTENTSMASK' put: -16r80000000!
-IPHlpApiConstants at: 'SFGAO_DISPLAYATTRMASK' put: 16rF0000!
-IPHlpApiConstants at: 'SFGAO_DROPTARGET' put: 16r100!
-IPHlpApiConstants at: 'SFGAO_FILESYSANCESTOR' put: 16r10000000!
-IPHlpApiConstants at: 'SFGAO_FILESYSTEM' put: 16r40000000!
-IPHlpApiConstants at: 'SFGAO_FOLDER' put: 16r20000000!
-IPHlpApiConstants at: 'SFGAO_GHOSTED' put: 16r80000!
-IPHlpApiConstants at: 'SFGAO_HASPROPSHEET' put: 16r40!
-IPHlpApiConstants at: 'SFGAO_HASSUBFOLDER' put: -16r80000000!
-IPHlpApiConstants at: 'SFGAO_LINK' put: 16r10000!
-IPHlpApiConstants at: 'SFGAO_READONLY' put: 16r40000!
-IPHlpApiConstants at: 'SFGAO_REMOVABLE' put: 16r2000000!
-IPHlpApiConstants at: 'SFGAO_SHARE' put: 16r20000!
-IPHlpApiConstants at: 'SFGAO_VALIDATE' put: 16r1000000!
-IPHlpApiConstants at: 'SHARD_PATH' put: 16r2!
-IPHlpApiConstants at: 'SHARD_PATHA' put: 16r2!
-IPHlpApiConstants at: 'SHARD_PATHW' put: 16r3!
-IPHlpApiConstants at: 'SHARD_PIDL' put: 16r1!
-IPHlpApiConstants at: 'SHCONTF_FOLDERS' put: 16r20!
-IPHlpApiConstants at: 'SHCONTF_INCLUDEHIDDEN' put: 16r80!
-IPHlpApiConstants at: 'SHCONTF_NONFOLDERS' put: 16r40!
-IPHlpApiConstants at: 'SHDVID_FINALTITLEAVAIL' put: 16r7!
-IPHlpApiConstants at: 'SHDVID_REFRESH' put: 16r3!
-IPHlpApiConstants at: 'SHDVID_SETPROGRESSPOS' put: 16r0!
-IPHlpApiConstants at: 'SHDVID_SETPROGRESSRANGE' put: 16r1!
-IPHlpApiConstants at: 'SHDVID_SETSTATUSTEXT' put: 16r2!
-IPHlpApiConstants at: 'SHDVID_SETTITLE' put: 16r6!
-IPHlpApiConstants at: 'SHDVID_STARTLOAD' put: 16r8!
-IPHlpApiConstants at: 'SHDVID_STOP' put: 16r4!
-IPHlpApiConstants at: 'SHDVID_STOPLOAD' put: 16r9!
-IPHlpApiConstants at: 'SHDVID_UPDATECOMMANDS' put: 16r5!
-IPHlpApiConstants at: 'SHGDFIL_FINDDATA' put: 16r1!
-IPHlpApiConstants at: 'SHGDFIL_NETRESOURCE' put: 16r2!
-IPHlpApiConstants at: 'SHGDN_FORADDRESSBAR' put: 16r4000!
-IPHlpApiConstants at: 'SHGDN_FORPARSING' put: 16r8000!
-IPHlpApiConstants at: 'SHGDN_INFOLDER' put: 16r1!
-IPHlpApiConstants at: 'SHGDN_NORMAL' put: 16r0!
-IPHlpApiConstants at: 'SHGFI_ATTRIBUTES' put: 16r800!
-IPHlpApiConstants at: 'SHGFI_DISPLAYNAME' put: 16r200!
-IPHlpApiConstants at: 'SHGFI_EXETYPE' put: 16r2000!
-IPHlpApiConstants at: 'SHGFI_ICON' put: 16r100!
-IPHlpApiConstants at: 'SHGFI_ICONLOCATION' put: 16r1000!
-IPHlpApiConstants at: 'SHGFI_LARGEICON' put: 16r0!
-IPHlpApiConstants at: 'SHGFI_LINKOVERLAY' put: 16r8000!
-IPHlpApiConstants at: 'SHGFI_OPENICON' put: 16r2!
-IPHlpApiConstants at: 'SHGFI_PIDL' put: 16r8!
-IPHlpApiConstants at: 'SHGFI_SELECTED' put: 16r10000!
-IPHlpApiConstants at: 'SHGFI_SHELLICONSIZE' put: 16r4!
-IPHlpApiConstants at: 'SHGFI_SMALLICON' put: 16r1!
-IPHlpApiConstants at: 'SHGFI_SYSICONINDEX' put: 16r4000!
-IPHlpApiConstants at: 'SHGFI_TYPENAME' put: 16r400!
-IPHlpApiConstants at: 'SHGFI_USEFILEATTRIBUTES' put: 16r10!
-IPHlpApiConstants at: 'SHREGDEL_BOTH' put: 16r11!
-IPHlpApiConstants at: 'SHREGDEL_DEFAULT' put: 16r0!
-IPHlpApiConstants at: 'SHREGDEL_HKCU' put: 16r1!
-IPHlpApiConstants at: 'SHREGDEL_HKLM' put: 16r10!
-IPHlpApiConstants at: 'SHREGENUM_BOTH' put: 16r11!
-IPHlpApiConstants at: 'SHREGENUM_DEFAULT' put: 16r0!
-IPHlpApiConstants at: 'SHREGENUM_HKCU' put: 16r1!
-IPHlpApiConstants at: 'SHREGENUM_HKLM' put: 16r10!
-IPHlpApiConstants at: 'SIMULATED_FONTTYPE' put: 16r8000!
-IPHlpApiConstants at: 'SLGP_SHORTPATH' put: 16r1!
-IPHlpApiConstants at: 'SLGP_UNCPRIORITY' put: 16r2!
-IPHlpApiConstants at: 'SLR_ANY_MATCH' put: 16r2!
-IPHlpApiConstants at: 'SLR_NO_UI' put: 16r1!
-IPHlpApiConstants at: 'SLR_UPDATE' put: 16r4!
-IPHlpApiConstants at: 'STD_COPY' put: 16r1!
-IPHlpApiConstants at: 'STD_CUT' put: 16r0!
-IPHlpApiConstants at: 'STD_DELETE' put: 16r5!
-IPHlpApiConstants at: 'STD_FILENEW' put: 16r6!
-IPHlpApiConstants at: 'STD_FILEOPEN' put: 16r7!
-IPHlpApiConstants at: 'STD_FILESAVE' put: 16r8!
-IPHlpApiConstants at: 'STD_FIND' put: 16rC!
-IPHlpApiConstants at: 'STD_HELP' put: 16rB!
-IPHlpApiConstants at: 'STD_PASTE' put: 16r2!
-IPHlpApiConstants at: 'STD_PRINT' put: 16rE!
-IPHlpApiConstants at: 'STD_PRINTPRE' put: 16r9!
-IPHlpApiConstants at: 'STD_PROPERTIES' put: 16rA!
-IPHlpApiConstants at: 'STD_REDOW' put: 16r4!
-IPHlpApiConstants at: 'STD_REPLACE' put: 16rD!
-IPHlpApiConstants at: 'STD_UNDO' put: 16r3!
-IPHlpApiConstants at: 'STG_E_ABNORMALAPIEXIT' put: -16r7FFCFF06!
-IPHlpApiConstants at: 'STG_E_ACCESSDENIED' put: -16r7FFCFFFB!
-IPHlpApiConstants at: 'STG_E_BADBASEADDRESS' put: -16r7FFCFEF0!
-IPHlpApiConstants at: 'STG_E_CANTSAVE' put: -16r7FFCFEFD!
-IPHlpApiConstants at: 'STG_E_DISKISWRITEPROTECTED' put: -16r7FFCFFED!
-IPHlpApiConstants at: 'STG_E_DOCFILECORRUPT' put: -16r7FFCFEF7!
-IPHlpApiConstants at: 'STG_E_EXTANTMARSHALLINGS' put: -16r7FFCFEF8!
-IPHlpApiConstants at: 'STG_E_FILEALREADYEXISTS' put: -16r7FFCFFB0!
-IPHlpApiConstants at: 'STG_E_FILENOTFOUND' put: -16r7FFCFFFE!
-IPHlpApiConstants at: 'STG_E_INCOMPLETE' put: -16r7FFCFDFF!
-IPHlpApiConstants at: 'STG_E_INSUFFICIENTMEMORY' put: -16r7FFCFFF8!
-IPHlpApiConstants at: 'STG_E_INUSE' put: -16r7FFCFF00!
-IPHlpApiConstants at: 'STG_E_INVALIDFLAG' put: -16r7FFCFF01!
-IPHlpApiConstants at: 'STG_E_INVALIDFUNCTION' put: -16r7FFCFFFF!
-IPHlpApiConstants at: 'STG_E_INVALIDHANDLE' put: -16r7FFCFFFA!
-IPHlpApiConstants at: 'STG_E_INVALIDHEADER' put: -16r7FFCFF05!
-IPHlpApiConstants at: 'STG_E_INVALIDNAME' put: -16r7FFCFF04!
-IPHlpApiConstants at: 'STG_E_INVALIDPARAMETER' put: -16r7FFCFFA9!
-IPHlpApiConstants at: 'STG_E_INVALIDPOINTER' put: -16r7FFCFFF7!
-IPHlpApiConstants at: 'STG_E_LOCKVIOLATION' put: -16r7FFCFFDF!
-IPHlpApiConstants at: 'STG_E_MEDIUMFULL' put: -16r7FFCFF90!
-IPHlpApiConstants at: 'STG_E_NOMOREFILES' put: -16r7FFCFFEE!
-IPHlpApiConstants at: 'STG_E_NOTCURRENT' put: -16r7FFCFEFF!
-IPHlpApiConstants at: 'STG_E_NOTFILEBASEDSTORAGE' put: -16r7FFCFEF9!
-IPHlpApiConstants at: 'STG_E_OLDDLL' put: -16r7FFCFEFB!
-IPHlpApiConstants at: 'STG_E_OLDFORMAT' put: -16r7FFCFEFC!
-IPHlpApiConstants at: 'STG_E_PATHNOTFOUND' put: -16r7FFCFFFD!
-IPHlpApiConstants at: 'STG_E_PROPSETMISMATCHED' put: -16r7FFCFF10!
-IPHlpApiConstants at: 'STG_E_READFAULT' put: -16r7FFCFFE2!
-IPHlpApiConstants at: 'STG_E_REVERTED' put: -16r7FFCFEFE!
-IPHlpApiConstants at: 'STG_E_SEEKERROR' put: -16r7FFCFFE7!
-IPHlpApiConstants at: 'STG_E_SHAREREQUIRED' put: -16r7FFCFEFA!
-IPHlpApiConstants at: 'STG_E_SHAREVIOLATION' put: -16r7FFCFFE0!
-IPHlpApiConstants at: 'STG_E_TERMINATED' put: -16r7FFCFDFE!
-IPHlpApiConstants at: 'STG_E_TOOMANYOPENFILES' put: -16r7FFCFFFC!
-IPHlpApiConstants at: 'STG_E_UNIMPLEMENTEDFUNCTION' put: -16r7FFCFF02!
-IPHlpApiConstants at: 'STG_E_UNKNOWN' put: -16r7FFCFF03!
-IPHlpApiConstants at: 'STG_E_WRITEFAULT' put: -16r7FFCFFE3!
-IPHlpApiConstants at: 'STGM_CONVERT' put: 16r20000!
-IPHlpApiConstants at: 'STGM_CREATE' put: 16r1000!
-IPHlpApiConstants at: 'STGM_DELETEONRELEASE' put: 16r4000000!
-IPHlpApiConstants at: 'STGM_DIRECT' put: 16r0!
-IPHlpApiConstants at: 'STGM_FAILIFTHERE' put: 16r0!
-IPHlpApiConstants at: 'STGM_NOSCRATCH' put: 16r100000!
-IPHlpApiConstants at: 'STGM_NOSNAPSHOT' put: 16r200000!
-IPHlpApiConstants at: 'STGM_PRIORITY' put: 16r40000!
-IPHlpApiConstants at: 'STGM_READ' put: 16r0!
-IPHlpApiConstants at: 'STGM_READWRITE' put: 16r2!
-IPHlpApiConstants at: 'STGM_SHARE_DENY_NONE' put: 16r40!
-IPHlpApiConstants at: 'STGM_SHARE_DENY_READ' put: 16r30!
-IPHlpApiConstants at: 'STGM_SHARE_DENY_WRITE' put: 16r20!
-IPHlpApiConstants at: 'STGM_SHARE_EXCLUSIVE' put: 16r10!
-IPHlpApiConstants at: 'STGM_SIMPLE' put: 16r8000000!
-IPHlpApiConstants at: 'STGM_TRANSACTED' put: 16r10000!
-IPHlpApiConstants at: 'STGM_WRITE' put: 16r1!
-IPHlpApiConstants at: 'STRRET_CSTR' put: 16r2!
-IPHlpApiConstants at: 'STRRET_OFFSET' put: 16r1!
-IPHlpApiConstants at: 'STRRET_WSTR' put: 16r0!
-IPHlpApiConstants at: 'SVUIA_ACTIVATE_FOCUS' put: 16r2!
-IPHlpApiConstants at: 'SVUIA_ACTIVATE_NOFOCUS' put: 16r1!
-IPHlpApiConstants at: 'SVUIA_DEACTIVATE' put: 16r0!
-IPHlpApiConstants at: 'SVUIA_INPLACEACTIVATE' put: 16r3!
-IPHlpApiConstants at: 'SW_HIDE' put: 16r0!
-IPHlpApiConstants at: 'SW_MAX' put: 16rA!
-IPHlpApiConstants at: 'SW_MAXIMIZE' put: 16r3!
-IPHlpApiConstants at: 'SW_MINIMIZE' put: 16r6!
-IPHlpApiConstants at: 'SW_NORMAL' put: 16r1!
-IPHlpApiConstants at: 'SW_RESTORE' put: 16r9!
-IPHlpApiConstants at: 'SW_SHOW' put: 16r5!
-IPHlpApiConstants at: 'SW_SHOWDEFAULT' put: 16rA!
-IPHlpApiConstants at: 'SW_SHOWMAXIMIZED' put: 16r3!
-IPHlpApiConstants at: 'SW_SHOWMINIMIZED' put: 16r2!
-IPHlpApiConstants at: 'SW_SHOWMINNOACTIVE' put: 16r7!
-IPHlpApiConstants at: 'SW_SHOWNA' put: 16r8!
-IPHlpApiConstants at: 'SW_SHOWNOACTIVATE' put: 16r4!
-IPHlpApiConstants at: 'SW_SHOWNORMAL' put: 16r1!
-IPHlpApiConstants at: 'SYS_MAC' put: 16r2!
-IPHlpApiConstants at: 'SYS_WIN16' put: 16r0!
-IPHlpApiConstants at: 'SYS_WIN32' put: 16r1!
-IPHlpApiConstants at: 'SYS_WIN64' put: 16r3!
-IPHlpApiConstants at: 'TBSTATE_CHECKED' put: 16r1!
-IPHlpApiConstants at: 'TBSTATE_ELLIPSES' put: 16r40!
-IPHlpApiConstants at: 'TBSTATE_ENABLED' put: 16r4!
-IPHlpApiConstants at: 'TBSTATE_HIDDEN' put: 16r8!
-IPHlpApiConstants at: 'TBSTATE_INDETERMINATE' put: 16r10!
-IPHlpApiConstants at: 'TBSTATE_PRESSED' put: 16r2!
-IPHlpApiConstants at: 'TBSTATE_WRAP' put: 16r20!
-IPHlpApiConstants at: 'TBSTYLE_ALTDRAG' put: 16r400!
-IPHlpApiConstants at: 'TBSTYLE_BUTTON' put: 16r0!
-IPHlpApiConstants at: 'TBSTYLE_CHECK' put: 16r2!
-IPHlpApiConstants at: 'TBSTYLE_CHECKGROUP' put: 16r6!
-IPHlpApiConstants at: 'TBSTYLE_CUSTOMERASE' put: 16r2000!
-IPHlpApiConstants at: 'TBSTYLE_DROPDOWN' put: 16r8!
-IPHlpApiConstants at: 'TBSTYLE_EX_DRAWDDARROWS' put: 16r1!
-IPHlpApiConstants at: 'TBSTYLE_FLAT' put: 16r800!
-IPHlpApiConstants at: 'TBSTYLE_GROUP' put: 16r4!
-IPHlpApiConstants at: 'TBSTYLE_LIST' put: 16r1000!
-IPHlpApiConstants at: 'TBSTYLE_REGISTERDROP' put: 16r4000!
-IPHlpApiConstants at: 'TBSTYLE_SEP' put: 16r1!
-IPHlpApiConstants at: 'TBSTYLE_TOOLTIPS' put: 16r100!
-IPHlpApiConstants at: 'TBSTYLE_TRANSPARENT' put: 16r8000!
-IPHlpApiConstants at: 'TBSTYLE_WRAPABLE' put: 16r200!
-IPHlpApiConstants at: 'TKIND_ALIAS' put: 16r6!
-IPHlpApiConstants at: 'TKIND_COCLASS' put: 16r5!
-IPHlpApiConstants at: 'TKIND_DISPATCH' put: 16r4!
-IPHlpApiConstants at: 'TKIND_ENUM' put: 16r0!
-IPHlpApiConstants at: 'TKIND_INTERFACE' put: 16r3!
-IPHlpApiConstants at: 'TKIND_MAX' put: 16r8!
-IPHlpApiConstants at: 'TKIND_MODULE' put: 16r2!
-IPHlpApiConstants at: 'TKIND_RECORD' put: 16r1!
-IPHlpApiConstants at: 'TKIND_UNION' put: 16r7!
-IPHlpApiConstants at: 'TM_MULTICODEPAGE' put: 16r20!
-IPHlpApiConstants at: 'TM_MULTILEVELUNDO' put: 16r8!
-IPHlpApiConstants at: 'TM_PLAINTEXT' put: 16r1!
-IPHlpApiConstants at: 'TM_RICHTEXT' put: 16r2!
-IPHlpApiConstants at: 'TM_SINGLECODEPAGE' put: 16r10!
-IPHlpApiConstants at: 'TM_SINGLELEVELUNDO' put: 16r4!
-IPHlpApiConstants at: 'triChecked' put: 16r1!
-IPHlpApiConstants at: 'triGray' put: 16r2!
-IPHlpApiConstants at: 'triUnchecked' put: 16r0!
-IPHlpApiConstants at: 'UID_CUT' put: 16r4!
-IPHlpApiConstants at: 'UID_DELETE' put: 16r2!
-IPHlpApiConstants at: 'UID_DRAGDROP' put: 16r3!
-IPHlpApiConstants at: 'UID_PASTE' put: 16r5!
-IPHlpApiConstants at: 'UID_TYPING' put: 16r1!
-IPHlpApiConstants at: 'UID_UNKNOWN' put: 16r0!
-IPHlpApiConstants at: 'VAR_CONST' put: 16r2!
-IPHlpApiConstants at: 'VAR_DISPATCH' put: 16r3!
-IPHlpApiConstants at: 'VAR_PERINSTANCE' put: 16r0!
-IPHlpApiConstants at: 'VAR_STATIC' put: 16r1!
-IPHlpApiConstants at: 'VIEW_DETAILS' put: 16r3!
-IPHlpApiConstants at: 'VIEW_LARGEICONS' put: 16r0!
-IPHlpApiConstants at: 'VIEW_LIST' put: 16r2!
-IPHlpApiConstants at: 'VIEW_NETCONNECT' put: 16r9!
-IPHlpApiConstants at: 'VIEW_NETDISCONNECT' put: 16rA!
-IPHlpApiConstants at: 'VIEW_NEWFOLDER' put: 16rB!
-IPHlpApiConstants at: 'VIEW_PARENTFOLDER' put: 16r8!
-IPHlpApiConstants at: 'VIEW_SMALLICONS' put: 16r1!
-IPHlpApiConstants at: 'VIEW_SORTDATE' put: 16r6!
-IPHlpApiConstants at: 'VIEW_SORTNAME' put: 16r4!
-IPHlpApiConstants at: 'VIEW_SORTSIZE' put: 16r5!
-IPHlpApiConstants at: 'VIEW_SORTTYPE' put: 16r7!
-IPHlpApiConstants at: 'WPSTYLE_CENTER' put: 16r0!
-IPHlpApiConstants at: 'WPSTYLE_MAX' put: 16r3!
-IPHlpApiConstants at: 'WPSTYLE_STRETCH' put: 16r2!
-IPHlpApiConstants at: 'WPSTYLE_TILE' put: 16r1!
-IPHlpApiConstants shrink!
+SharedPool subclass: #IPHlpApiConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AD_APPLY_ALL' -> 16r7.
+		'AD_APPLY_BUFFERED_REFRESH' -> 16r10.
+		'AD_APPLY_FORCE' -> 16r8.
+		'AD_APPLY_HTMLGEN' -> 16r2.
+		'AD_APPLY_REFRESH' -> 16r4.
+		'AD_APPLY_SAVE' -> 16r1.
+		'ADDURL_SILENT' -> 16r1.
+		'BIF_BROWSEFORCOMPUTER' -> 16r1000.
+		'BIF_BROWSEFORPRINTER' -> 16r2000.
+		'BIF_BROWSEINCLUDEFILES' -> 16r4000.
+		'BIF_DONTGOBELOWDOMAIN' -> 16r2.
+		'BIF_EDITBOX' -> 16r10.
+		'BIF_RETURNFSANCESTORS' -> 16r8.
+		'BIF_RETURNONLYFSDIRS' -> 16r1.
+		'BIF_STATUSTEXT' -> 16r4.
+		'BIF_VALIDATE' -> 16r20.
+		'BOLD_FONTTYPE' -> 16r100.
+		'CC_ANYCOLOR' -> 16r100.
+		'CC_CDECL' -> 16r1.
+		'CC_ENABLEHOOK' -> 16r10.
+		'CC_ENABLETEMPLATE' -> 16r20.
+		'CC_ENABLETEMPLATEHANDLE' -> 16r40.
+		'CC_FASTCALL' -> 16r0.
+		'CC_FPFASTCALL' -> 16r5.
+		'CC_FULLOPEN' -> 16r2.
+		'CC_MACPASCAL' -> 16r3.
+		'CC_MAX' -> 16r9.
+		'CC_MPWCDECL' -> 16r7.
+		'CC_MPWPASCAL' -> 16r8.
+		'CC_MSCPASCAL' -> 16r2.
+		'CC_PASCAL' -> 16r2.
+		'CC_PREVENTFULLOPEN' -> 16r4.
+		'CC_RGBINIT' -> 16r1.
+		'CC_SHOWHELP' -> 16r8.
+		'CC_SOLIDCOLOR' -> 16r80.
+		'CC_STDCALL' -> 16r4.
+		'CC_SYSCALL' -> 16r6.
+		'CF_ANSIONLY' -> 16r400.
+		'CF_APPLY' -> 16r200.
+		'CF_BOTH' -> 16r3.
+		'CF_EFFECTS' -> 16r100.
+		'CF_ENABLEHOOK' -> 16r8.
+		'CF_ENABLETEMPLATE' -> 16r10.
+		'CF_ENABLETEMPLATEHANDLE' -> 16r20.
+		'CF_FIXEDPITCHONLY' -> 16r4000.
+		'CF_FONTSHOWHELP' -> 16r4.
+		'CF_FORCEFONTEXIST' -> 16r10000.
+		'CF_INITTOLOGFONTSTRUCT' -> 16r40.
+		'CF_LIMITSIZE' -> 16r2000.
+		'CF_NOFACESEL' -> 16r80000.
+		'CF_NOOEMFONTS' -> 16r800.
+		'CF_NOSCRIPTSEL' -> 16r800000.
+		'CF_NOSIMULATIONS' -> 16r1000.
+		'CF_NOSIZESEL' -> 16r200000.
+		'CF_NOSTYLESEL' -> 16r100000.
+		'CF_NOVECTORFONTS' -> 16r800.
+		'CF_NOVERTFONTS' -> 16r1000000.
+		'CF_PRINTERFONTS' -> 16r2.
+		'CF_SCALABLEONLY' -> 16r20000.
+		'CF_SCREENFONTS' -> 16r1.
+		'CF_SCRIPTSONLY' -> 16r400.
+		'CF_SELECTSCRIPT' -> 16r400000.
+		'CF_SHOWHELP' -> 16r4.
+		'CF_TTONLY' -> 16r40000.
+		'CF_USESTYLE' -> 16r80.
+		'CF_WYSIWYG' -> 16r8000.
+		'CLSCTX_DISABLE_AAA' -> 16r8000.
+		'CLSCTX_ENABLE_AAA' -> 16r10000.
+		'CLSCTX_ENABLE_CODE_DOWNLOAD' -> 16r2000.
+		'CLSCTX_FROM_DEFAULT_CONTEXT' -> 16r20000.
+		'CLSCTX_INPROC_HANDLER' -> 16r2.
+		'CLSCTX_INPROC_HANDLER16' -> 16r20.
+		'CLSCTX_INPROC_SERVER' -> 16r1.
+		'CLSCTX_INPROC_SERVER16' -> 16r8.
+		'CLSCTX_LOCAL_SERVER' -> 16r4.
+		'CLSCTX_NO_CODE_DOWNLOAD' -> 16r400.
+		'CLSCTX_NO_CUSTOM_MARSHAL' -> 16r1000.
+		'CLSCTX_NO_FAILURE_LOG' -> 16r4000.
+		'CLSCTX_REMOTE_SERVER' -> 16r10.
+		'CLSCTX_RESERVED1' -> 16r40.
+		'CLSCTX_RESERVED2' -> 16r80.
+		'CLSCTX_RESERVED3' -> 16r100.
+		'CLSCTX_RESERVED4' -> 16r200.
+		'CLSCTX_RESERVED5' -> 16r800.
+		'CMF_CANRENAME' -> 16r10.
+		'CMF_DEFAULTONLY' -> 16r1.
+		'CMF_EXPLORE' -> 16r4.
+		'CMF_INCLUDESTATIC' -> 16r40.
+		'CMF_NODEFAULT' -> 16r20.
+		'CMF_NORMAL' -> 16r0.
+		'CMF_NOVERBS' -> 16r8.
+		'CMF_RESERVED' -> -16r10000.
+		'CMF_VERBSONLY' -> 16r2.
+		'COINIT_APARTMENTTHREADED' -> 16r2.
+		'COINIT_DISABLE_OLE1DDE' -> 16r4.
+		'COINIT_MULTITHREADED' -> 16r0.
+		'COINIT_SPEED_OVER_MEMORY' -> 16r8.
+		'COMP_ELEM_ALL' -> 16rFFF.
+		'COMP_ELEM_CHECKED' -> 16r2.
+		'COMP_ELEM_DIRTY' -> 16r4.
+		'COMP_ELEM_FRIENDLYNAME' -> 16r400.
+		'COMP_ELEM_NOSCROLL' -> 16r8.
+		'COMP_ELEM_POS_LEFT' -> 16r10.
+		'COMP_ELEM_POS_TOP' -> 16r20.
+		'COMP_ELEM_POS_ZINDEX' -> 16r100.
+		'COMP_ELEM_SIZE_HEIGHT' -> 16r80.
+		'COMP_ELEM_SIZE_WIDTH' -> 16r40.
+		'COMP_ELEM_SOURCE' -> 16r200.
+		'COMP_ELEM_SUBSCRIBEDURL' -> 16r800.
+		'COMP_ELEM_TYPE' -> 16r1.
+		'CSIDL_ALTSTARTUP' -> 16r1D.
+		'CSIDL_APPDATA' -> 16r1A.
+		'CSIDL_BITBUCKET' -> 16rA.
+		'CSIDL_COMMON_ALTSTARTUP' -> 16r1E.
+		'CSIDL_COMMON_DESKTOPDIRECTORY' -> 16r19.
+		'CSIDL_COMMON_FAVORITES' -> 16r1F.
+		'CSIDL_COMMON_PROGRAMS' -> 16r17.
+		'CSIDL_COMMON_STARTMENU' -> 16r16.
+		'CSIDL_COMMON_STARTUP' -> 16r18.
+		'CSIDL_CONTROLS' -> 16r3.
+		'CSIDL_COOKIES' -> 16r21.
+		'CSIDL_DESKTOP' -> 16r0.
+		'CSIDL_DESKTOPDIRECTORY' -> 16r10.
+		'CSIDL_DRIVES' -> 16r11.
+		'CSIDL_FAVORITES' -> 16r6.
+		'CSIDL_FONTS' -> 16r14.
+		'CSIDL_HISTORY' -> 16r22.
+		'CSIDL_INTERNET' -> 16r1.
+		'CSIDL_INTERNET_CACHE' -> 16r20.
+		'CSIDL_NETHOOD' -> 16r13.
+		'CSIDL_NETWORK' -> 16r12.
+		'CSIDL_PERSONAL' -> 16r5.
+		'CSIDL_PRINTERS' -> 16r4.
+		'CSIDL_PRINTHOOD' -> 16r1B.
+		'CSIDL_PROGRAMS' -> 16r2.
+		'CSIDL_RECENT' -> 16r8.
+		'CSIDL_SENDTO' -> 16r9.
+		'CSIDL_STARTMENU' -> 16rB.
+		'CSIDL_STARTUP' -> 16r7.
+		'CSIDL_TEMPLATES' -> 16r15.
+		'DESCKIND_FUNCDESC' -> 16r1.
+		'DESCKIND_IMPLICITAPPOBJ' -> 16r4.
+		'DESCKIND_MAX' -> 16r5.
+		'DESCKIND_NONE' -> 16r0.
+		'DESCKIND_TYPECOMP' -> 16r3.
+		'DESCKIND_VARDESC' -> 16r2.
+		'DTI_ADDUI_DEFAULT' -> 16r0.
+		'DTI_ADDUI_DISPSUBWIZARD' -> 16r1.
+		'ecbBeach' -> 16r40.
+		'ecbCardHand' -> 16r41.
+		'ecbCastle' -> 16r3F.
+		'ecbCrossHatch' -> 16r35.
+		'ecbFishBlue' -> 16r3D.
+		'ecbFishCyan' -> 16r3C.
+		'ecbIvyBlack' -> 16r3A.
+		'ecbIvyBlue' -> 16r3B.
+		'ecbO' -> 16r44.
+		'ecbPlaid' -> 16r36.
+		'ecbRobot' -> 16r38.
+		'ecbRoses' -> 16r39.
+		'ecbShell' -> 16r3E.
+		'ecbUnused' -> 16r42.
+		'ecbWeave' -> 16r37.
+		'ecbX' -> 16r43.
+		'ecfAce' -> 16r0.
+		'ecfEight' -> 16r1C.
+		'ecfFive' -> 16r10.
+		'ecfFour' -> 16rC.
+		'ecfJack' -> 16r28.
+		'ecfKing' -> 16r30.
+		'ecfNine' -> 16r20.
+		'ecfQueen' -> 16r2C.
+		'ecfSeven' -> 16r18.
+		'ecfSix' -> 16r14.
+		'ecfTen' -> 16r24.
+		'ecfThree' -> 16r8.
+		'ecfTwo' -> 16r4.
+		'ecsClubs' -> 16r0.
+		'ecsDiamonds' -> 16r1.
+		'ecsHearts' -> 16r2.
+		'ecsSpades' -> 16r3.
+		'ectBacks' -> 16r1.
+		'ectFaces' -> 16r0.
+		'ectInvert' -> 16r2.
+		'FD_ACCESSTIME' -> 16r10.
+		'FD_ATTRIBUTES' -> 16r4.
+		'FD_CLSID' -> 16r1.
+		'FD_CREATETIME' -> 16r8.
+		'FD_FILESIZE' -> 16r40.
+		'FD_LINKUI' -> 16r8000.
+		'FD_SIZEPOINT' -> 16r2.
+		'FD_WRITESTIME' -> 16r20.
+		'FILE_NOTIFY_CHANGE_ATTRIBUTES' -> 16r4.
+		'FILE_NOTIFY_CHANGE_DIR_NAME' -> 16r2.
+		'FILE_NOTIFY_CHANGE_FILE_NAME' -> 16r1.
+		'FILE_NOTIFY_CHANGE_LAST_WRITE' -> 16r10.
+		'FILE_NOTIFY_CHANGE_SECURITY' -> 16r100.
+		'FILE_NOTIFY_CHANGE_SIZE' -> 16r8.
+		'FO_COPY' -> 16r2.
+		'FO_DELETE' -> 16r3.
+		'FO_MOVE' -> 16r1.
+		'FO_RENAME' -> 16r4.
+		'FOF_ALLOWUNDO' -> 16r40.
+		'FOF_CONFIRMMOUSE' -> 16r2.
+		'FOF_COPYFLAGS' -> 16r3DD.
+		'FOF_DELETEFLAGS' -> 16r154.
+		'FOF_FILESONLY' -> 16r80.
+		'FOF_MOVEFLAGS' -> 16r3DD.
+		'FOF_MULTIDESTFILES' -> 16r1.
+		'FOF_NOCONFIRMATION' -> 16r10.
+		'FOF_NOCONFIRMMKDIR' -> 16r200.
+		'FOF_RENAMEFLAGS' -> 16r3DD.
+		'FOF_RENAMEONCOLLISION' -> 16r8.
+		'FOF_SILENT' -> 16r4.
+		'FOF_SIMPLEPROGRESS' -> 16r100.
+		'FOF_WANTMAPPINGHANDLE' -> 16r20.
+		'FORMAT_MESSAGE_ALLOCATE_BUFFER' -> 16r100.
+		'FORMAT_MESSAGE_ARGUMENT_ARRAY' -> 16r2000.
+		'FORMAT_MESSAGE_FROM_HMODULE' -> 16r800.
+		'FORMAT_MESSAGE_FROM_STRING' -> 16r400.
+		'FORMAT_MESSAGE_FROM_SYSTEM' -> 16r1000.
+		'FORMAT_MESSAGE_IGNORE_INSERTS' -> 16r200.
+		'FORMAT_MESSAGE_MAX_WIDTH_MASK' -> 16rFF.
+		'FORMAT_MESSAGE_NONE' -> 16r0.
+		'FR_DIALOGTERM' -> 16r40.
+		'FR_DOWN' -> 16r1.
+		'FR_ENABLEHOOK' -> 16r100.
+		'FR_ENABLETEMPLATE' -> 16r200.
+		'FR_ENABLETEMPLATEHANDLE' -> 16r2000.
+		'FR_FINDNEXT' -> 16r8.
+		'FR_HIDEMATCHCASE' -> 16r8000.
+		'FR_HIDEUPDOWN' -> 16r4000.
+		'FR_HIDEWHOLEWORD' -> 16r10000.
+		'FR_MATCHCASE' -> 16r4.
+		'FR_NOMATCHCASE' -> 16r800.
+		'FR_NOUPDOWN' -> 16r400.
+		'FR_NOWHOLEWORD' -> 16r1000.
+		'FR_REPLACE' -> 16r10.
+		'FR_REPLACEALL' -> 16r20.
+		'FR_SHOWHELP' -> 16r80.
+		'FR_WHOLEWORD' -> 16r2.
+		'FUNC_DISPATCH' -> 16r4.
+		'FUNC_NONVIRTUAL' -> 16r2.
+		'FUNC_PUREVIRTUAL' -> 16r1.
+		'FUNC_STATIC' -> 16r3.
+		'FUNC_VIRTUAL' -> 16r0.
+		'FVM_DETAILS' -> 16r4.
+		'FVM_ICON' -> 16r1.
+		'FVM_LIST' -> 16r3.
+		'FVM_SMALLICON' -> 16r2.
+		'FWF_ABBREVIATEDNAMES' -> 16r2.
+		'FWF_ALIGNLEFT' -> 16r800.
+		'FWF_AUTOARRANGE' -> 16r1.
+		'FWF_BESTFITWINDOW' -> 16r10.
+		'FWF_DESKTOP' -> 16r20.
+		'FWF_NOCLIENTEDGE' -> 16r200.
+		'FWF_NOSCROLL' -> 16r400.
+		'FWF_NOSUBFOLDERS' -> 16r80.
+		'FWF_OWNERDATA' -> 16r8.
+		'FWF_SINGLECLICKACTIVATE' -> 16r8000.
+		'FWF_SINGLESEL' -> 16r40.
+		'FWF_SNAPTOGRID' -> 16r4.
+		'FWF_TRANSPARENT' -> 16r100.
+		'GCS_HELPTEXTA' -> 16r1.
+		'GCS_HELPTEXTW' -> 16r5.
+		'GCS_UNICODE' -> 16r4.
+		'GCS_VALIDATEA' -> 16r2.
+		'GCS_VALIDATEW' -> 16r6.
+		'GCS_VERBA' -> 16r0.
+		'GCS_VERBW' -> 16r4.
+		'HIST_ADDTOFAVORITES' -> 16r3.
+		'HIST_BACK' -> 16r0.
+		'HIST_FAVORITES' -> 16r2.
+		'HIST_FORWARD' -> 16r1.
+		'HIST_VIEWTREE' -> 16r4.
+		'HKEY_CLASSES_ROOT' -> -16r80000000.
+		'HKEY_CURRENT_CONFIG' -> -16r7FFFFFFB.
+		'HKEY_CURRENT_USER' -> -16r7FFFFFFF.
+		'HKEY_DYN_DATA' -> -16r7FFFFFFA.
+		'HKEY_LOCAL_MACHINE' -> -16r7FFFFFFE.
+		'HKEY_PERFORMANCE_DATA' -> -16r7FFFFFFC.
+		'HKEY_USERS' -> -16r7FFFFFFD.
+		'ICMP4_DST_UNREACH' -> 16r3.
+		'ICMP4_ECHO_REPLY' -> 16r0.
+		'ICMP4_ECHO_REQUEST' -> 16r8.
+		'ICMP4_MASK_REPLY' -> 16r12.
+		'ICMP4_MASK_REQUEST' -> 16r11.
+		'ICMP4_PARAM_PROB' -> 16rC.
+		'ICMP4_REDIRECT' -> 16r5.
+		'ICMP4_ROUTER_ADVERT' -> 16r9.
+		'ICMP4_ROUTER_SOLICIT' -> 16rA.
+		'ICMP4_SOURCE_QUENCH' -> 16r4.
+		'ICMP4_TIME_EXCEEDED' -> 16rB.
+		'ICMP4_TIMESTAMP_REPLY' -> 16rE.
+		'ICMP4_TIMESTAMP_REQUEST' -> 16rD.
+		'ICMP6_DST_UNREACH' -> 16r1.
+		'ICMP6_ECHO_REPLY' -> 16r81.
+		'ICMP6_ECHO_REQUEST' -> 16r80.
+		'ICMP6_MEMBERSHIP_QUERY' -> 16r82.
+		'ICMP6_MEMBERSHIP_REDUCTION' -> 16r84.
+		'ICMP6_MEMBERSHIP_REPORT' -> 16r83.
+		'ICMP6_PACKET_TOO_BIG' -> 16r2.
+		'ICMP6_PARAM_PROB' -> 16r4.
+		'ICMP6_TIME_EXCEEDED' -> 16r3.
+		'IDB_HIST_LARGE_COLOR' -> 16r9.
+		'IDB_HIST_SMALL_COLOR' -> 16r8.
+		'IDB_STD_LARGE_COLOR' -> 16r1.
+		'IDB_STD_SMALL_COLOR' -> 16r0.
+		'IDB_VIEW_LARGE_COLOR' -> 16r5.
+		'IDB_VIEW_SMALL_COLOR' -> 16r4.
+		'ILC_COLOR' -> 16r0.
+		'ILC_COLOR16' -> 16r10.
+		'ILC_COLOR24' -> 16r18.
+		'ILC_COLOR32' -> 16r20.
+		'ILC_COLOR4' -> 16r4.
+		'ILC_COLOR8' -> 16r8.
+		'ILC_COLORDDB' -> 16rFE.
+		'ILC_MASK' -> 16r1.
+		'ILD_BLEND' -> 16rF00.
+		'ILD_BLEND25' -> 16r2.
+		'ILD_BLEND50' -> 16r4.
+		'ILD_FOCUS' -> 16r4.
+		'ILD_IMAGE' -> 16r20.
+		'ILD_MASK' -> 16r10.
+		'ILD_NORMAL' -> 16r0.
+		'ILD_OVERLAYMASK' -> 16rF00.
+		'ILD_SELECTED' -> 16r4.
+		'ILD_TRANSPARENT' -> 16r1.
+		'INPUT_HARDWARE' -> 16r2.
+		'INPUT_KEYBOARD' -> 16r1.
+		'INPUT_MOUSE' -> 16r0.
+		'INVOKE_FUNC' -> 16r1.
+		'INVOKE_PROPERTYGET' -> 16r2.
+		'INVOKE_PROPERTYPUT' -> 16r4.
+		'INVOKE_PROPERTYPUTREF' -> 16r8.
+		'ITALIC_FONTTYPE' -> 16r200.
+		'KEY_ALL_ACCESS' -> 16rF003F.
+		'KEY_CREATE_LINK' -> 16r20.
+		'KEY_CREATE_SUB_KEY' -> 16r4.
+		'KEY_ENUMERATE_SUB_KEYS' -> 16r8.
+		'KEY_EXECUTE' -> 16r20009.
+		'KEY_NOTIFY' -> 16r10.
+		'KEY_QUERY_VALUE' -> 16r1.
+		'KEY_READ' -> 16r20009.
+		'KEY_SET_VALUE' -> 16r2.
+		'KEY_WRITE' -> 16r20006.
+		'ND_NEIGHBOR_ADVERT' -> 16r88.
+		'ND_NEIGHBOR_SOLICIT' -> 16r87.
+		'ND_REDIRECT' -> 16r89.
+		'ND_ROUTER_ADVERT' -> 16r86.
+		'ND_ROUTER_SOLICIT' -> 16r85.
+		'OFN_ALLOWMULTISELECT' -> 16r200.
+		'OFN_CREATEPROMPT' -> 16r2000.
+		'OFN_ENABLEHOOK' -> 16r20.
+		'OFN_ENABLETEMPLATE' -> 16r40.
+		'OFN_ENABLETEMPLATEHANDLE' -> 16r80.
+		'OFN_EXPLORER' -> 16r80000.
+		'OFN_EXTENSIONDIFFERENT' -> 16r400.
+		'OFN_FILEMUSTEXIST' -> 16r1000.
+		'OFN_HIDEREADONLY' -> 16r4.
+		'OFN_LONGNAMES' -> 16r200000.
+		'OFN_NOCHANGEDIR' -> 16r8.
+		'OFN_NODEREFERENCELINKS' -> 16r100000.
+		'OFN_NOLONGNAMES' -> 16r40000.
+		'OFN_NONETWORKBUTTON' -> 16r20000.
+		'OFN_NOREADONLYRETURN' -> 16r8000.
+		'OFN_NOTESTFILECREATE' -> 16r10000.
+		'OFN_NOVALIDATE' -> 16r100.
+		'OFN_OVERWRITEPROMPT' -> 16r2.
+		'OFN_PATHMUSTEXIST' -> 16r800.
+		'OFN_READONLY' -> 16r1.
+		'OFN_SHAREAWARE' -> 16r4000.
+		'OFN_SHOWHELP' -> 16r10.
+		'PD_ALLPAGES' -> 16r0.
+		'PD_COLLATE' -> 16r10.
+		'PD_DISABLEPRINTTOFILE' -> 16r80000.
+		'PD_ENABLEPRINTHOOK' -> 16r1000.
+		'PD_ENABLEPRINTTEMPLATE' -> 16r4000.
+		'PD_ENABLEPRINTTEMPLATEHANDLE' -> 16r10000.
+		'PD_ENABLESETUPHOOK' -> 16r2000.
+		'PD_ENABLESETUPTEMPLATE' -> 16r8000.
+		'PD_ENABLESETUPTEMPLATEHANDLE' -> 16r20000.
+		'PD_HIDEPRINTTOFILE' -> 16r100000.
+		'PD_NONETWORKBUTTON' -> 16r200000.
+		'PD_NOPAGENUMS' -> 16r8.
+		'PD_NOSELECTION' -> 16r4.
+		'PD_NOWARNING' -> 16r80.
+		'PD_PAGENUMS' -> 16r2.
+		'PD_PRINTSETUP' -> 16r40.
+		'PD_PRINTTOFILE' -> 16r20.
+		'PD_RETURNDC' -> 16r100.
+		'PD_RETURNDEFAULT' -> 16r400.
+		'PD_RETURNIC' -> 16r200.
+		'PD_SELECTION' -> 16r1.
+		'PD_SHOWHELP' -> 16r800.
+		'PD_USEDEVMODECOPIES' -> 16r40000.
+		'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000.
+		'PIDMSI_STATUS_DRAFT' -> 16r3.
+		'PIDMSI_STATUS_EDIT' -> 16r5.
+		'PIDMSI_STATUS_FINAL' -> 16r8.
+		'PIDMSI_STATUS_INPROGRESS' -> 16r4.
+		'PIDMSI_STATUS_NEW' -> 16r1.
+		'PIDMSI_STATUS_NORMAL' -> 16r0.
+		'PIDMSI_STATUS_OTHER' -> 16r7FFF.
+		'PIDMSI_STATUS_PRELIM' -> 16r2.
+		'PIDMSI_STATUS_PROOF' -> 16r7.
+		'PIDMSI_STATUS_REVIEW' -> 16r6.
+		'PO_DELETE' -> 16r13.
+		'PO_PORTCHANGE' -> 16r20.
+		'PO_REN_PORT' -> 16r34.
+		'PO_RENAME' -> 16r14.
+		'PRINTER_FONTTYPE' -> 16r4000.
+		'PROCESS_ALL_ACCESS' -> 16r1F0FFF.
+		'PROCESS_CREATE_PROCESS' -> 16r80.
+		'PROCESS_CREATE_THREAD' -> 16r2.
+		'PROCESS_DUP_HANDLE' -> 16r40.
+		'PROCESS_QUERY_INFORMATION' -> 16r400.
+		'PROCESS_SET_INFORMATION' -> 16r200.
+		'PROCESS_SET_QUOTA' -> 16r100.
+		'PROCESS_TERMINATE' -> 16r1.
+		'PROCESS_VM_OPERATION' -> 16r8.
+		'PROCESS_VM_READ' -> 16r10.
+		'PROCESS_VM_WRITE' -> 16r20.
+		'PSD_DEFAULTMINMARGINS' -> 16r0.
+		'PSD_DISABLEMARGINS' -> 16r10.
+		'PSD_DISABLEORIENTATION' -> 16r100.
+		'PSD_DISABLEPAGEPAINTING' -> 16r80000.
+		'PSD_DISABLEPAPER' -> 16r200.
+		'PSD_DISABLEPRINTER' -> 16r20.
+		'PSD_ENABLEPAGEPAINTHOOK' -> 16r40000.
+		'PSD_ENABLEPAGESETUPHOOK' -> 16r2000.
+		'PSD_ENABLEPAGESETUPTEMPLATE' -> 16r8000.
+		'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' -> 16r20000.
+		'PSD_INHUNDREDTHSOFMILLIMETERS' -> 16r8.
+		'PSD_INTHOUSANDTHSOFINCHES' -> 16r4.
+		'PSD_INWININIINTLMEASURE' -> 16r0.
+		'PSD_MARGINS' -> 16r2.
+		'PSD_MINMARGINS' -> 16r1.
+		'PSD_NOWARNING' -> 16r80.
+		'PSD_RETURNDEFAULT' -> 16r400.
+		'PSD_SHOWHELP' -> 16r800.
+		'qbBlack' -> 16r0.
+		'qbBlue' -> 16r1.
+		'qbBrightWhite' -> 16rF.
+		'qbCyan' -> 16r3.
+		'qbGray' -> 16r8.
+		'qbGreen' -> 16r2.
+		'qbLightBlue' -> 16r9.
+		'qbLightCyan' -> 16rB.
+		'qbLightGreen' -> 16rA.
+		'qbLightMagenta' -> 16rD.
+		'qbLightRed' -> 16rC.
+		'qbLightYellow' -> 16rE.
+		'qbMagenta' -> 16r5.
+		'qbRed' -> 16r4.
+		'qbWhite' -> 16r7.
+		'qbYellow' -> 16r6.
+		'REG_BINARY' -> 16r3.
+		'REG_DWORD' -> 16r4.
+		'REG_DWORD_BIG_ENDIAN' -> 16r5.
+		'REG_DWORD_LITTLE_ENDIAN' -> 16r4.
+		'REG_EXPAND_SZ' -> 16r2.
+		'REG_FULL_RESOURCE_DESCRIPTOR' -> 16r9.
+		'REG_LINK' -> 16r6.
+		'REG_MULTI_SZ' -> 16r7.
+		'REG_NONE' -> 16r0.
+		'REG_RESOURCE_LIST' -> 16r8.
+		'REG_RESOURCE_REQUIREMENTS_LIST' -> 16rA.
+		'REG_SZ' -> 16r1.
+		'REGCLS_MULTI_SEPARATE' -> 16r2.
+		'REGCLS_MULTIPLEUSE' -> 16r1.
+		'REGCLS_SINGLEUSE' -> 16r0.
+		'REGULAR_FONTTYPE' -> 16r400.
+		'SBCMDID_CANCELNAVIGATION' -> 16r2.
+		'SBCMDID_ENABLESHOWTREE' -> 16r0.
+		'SBCMDID_ENABLESTOP' -> 16r5.
+		'SBCMDID_MAYSAVECHANGES' -> 16r3.
+		'SBCMDID_OPTIONS' -> 16r6.
+		'SBCMDID_SETHLINKFRAME' -> 16r4.
+		'SBCMDID_SHOWCONTROL' -> 16r1.
+		'SBSC_HIDE' -> 16r0.
+		'SBSC_QUERY' -> 16r3.
+		'SBSC_SHOW' -> 16r1.
+		'SBSC_TOGGLE' -> 16r2.
+		'SCREEN_FONTTYPE' -> 16r2000.
+		'SFGAO_CANCOPY' -> 16r1.
+		'SFGAO_CANDELETE' -> 16r20.
+		'SFGAO_CANLINK' -> 16r4.
+		'SFGAO_CANMOVE' -> 16r2.
+		'SFGAO_CANRENAME' -> 16r10.
+		'SFGAO_CAPABILITYMASK' -> 16r177.
+		'SFGAO_COMPRESSED' -> 16r4000000.
+		'SFGAO_CONTENTSMASK' -> -16r80000000.
+		'SFGAO_DISPLAYATTRMASK' -> 16rF0000.
+		'SFGAO_DROPTARGET' -> 16r100.
+		'SFGAO_FILESYSANCESTOR' -> 16r10000000.
+		'SFGAO_FILESYSTEM' -> 16r40000000.
+		'SFGAO_FOLDER' -> 16r20000000.
+		'SFGAO_GHOSTED' -> 16r80000.
+		'SFGAO_HASPROPSHEET' -> 16r40.
+		'SFGAO_HASSUBFOLDER' -> -16r80000000.
+		'SFGAO_LINK' -> 16r10000.
+		'SFGAO_READONLY' -> 16r40000.
+		'SFGAO_REMOVABLE' -> 16r2000000.
+		'SFGAO_SHARE' -> 16r20000.
+		'SFGAO_VALIDATE' -> 16r1000000.
+		'SHARD_PATH' -> 16r2.
+		'SHARD_PATHA' -> 16r2.
+		'SHARD_PATHW' -> 16r3.
+		'SHARD_PIDL' -> 16r1.
+		'SHCONTF_FOLDERS' -> 16r20.
+		'SHCONTF_INCLUDEHIDDEN' -> 16r80.
+		'SHCONTF_NONFOLDERS' -> 16r40.
+		'SHDVID_FINALTITLEAVAIL' -> 16r7.
+		'SHDVID_REFRESH' -> 16r3.
+		'SHDVID_SETPROGRESSPOS' -> 16r0.
+		'SHDVID_SETPROGRESSRANGE' -> 16r1.
+		'SHDVID_SETSTATUSTEXT' -> 16r2.
+		'SHDVID_SETTITLE' -> 16r6.
+		'SHDVID_STARTLOAD' -> 16r8.
+		'SHDVID_STOP' -> 16r4.
+		'SHDVID_STOPLOAD' -> 16r9.
+		'SHDVID_UPDATECOMMANDS' -> 16r5.
+		'SHGDFIL_FINDDATA' -> 16r1.
+		'SHGDFIL_NETRESOURCE' -> 16r2.
+		'SHGDN_FORADDRESSBAR' -> 16r4000.
+		'SHGDN_FORPARSING' -> 16r8000.
+		'SHGDN_INFOLDER' -> 16r1.
+		'SHGDN_NORMAL' -> 16r0.
+		'SHGFI_ATTRIBUTES' -> 16r800.
+		'SHGFI_DISPLAYNAME' -> 16r200.
+		'SHGFI_EXETYPE' -> 16r2000.
+		'SHGFI_ICON' -> 16r100.
+		'SHGFI_ICONLOCATION' -> 16r1000.
+		'SHGFI_LARGEICON' -> 16r0.
+		'SHGFI_LINKOVERLAY' -> 16r8000.
+		'SHGFI_OPENICON' -> 16r2.
+		'SHGFI_PIDL' -> 16r8.
+		'SHGFI_SELECTED' -> 16r10000.
+		'SHGFI_SHELLICONSIZE' -> 16r4.
+		'SHGFI_SMALLICON' -> 16r1.
+		'SHGFI_SYSICONINDEX' -> 16r4000.
+		'SHGFI_TYPENAME' -> 16r400.
+		'SHGFI_USEFILEATTRIBUTES' -> 16r10.
+		'SHREGDEL_BOTH' -> 16r11.
+		'SHREGDEL_DEFAULT' -> 16r0.
+		'SHREGDEL_HKCU' -> 16r1.
+		'SHREGDEL_HKLM' -> 16r10.
+		'SHREGENUM_BOTH' -> 16r11.
+		'SHREGENUM_DEFAULT' -> 16r0.
+		'SHREGENUM_HKCU' -> 16r1.
+		'SHREGENUM_HKLM' -> 16r10.
+		'SIMULATED_FONTTYPE' -> 16r8000.
+		'SLGP_SHORTPATH' -> 16r1.
+		'SLGP_UNCPRIORITY' -> 16r2.
+		'SLR_ANY_MATCH' -> 16r2.
+		'SLR_NO_UI' -> 16r1.
+		'SLR_UPDATE' -> 16r4.
+		'STD_COPY' -> 16r1.
+		'STD_CUT' -> 16r0.
+		'STD_DELETE' -> 16r5.
+		'STD_FILENEW' -> 16r6.
+		'STD_FILEOPEN' -> 16r7.
+		'STD_FILESAVE' -> 16r8.
+		'STD_FIND' -> 16rC.
+		'STD_HELP' -> 16rB.
+		'STD_PASTE' -> 16r2.
+		'STD_PRINT' -> 16rE.
+		'STD_PRINTPRE' -> 16r9.
+		'STD_PROPERTIES' -> 16rA.
+		'STD_REDOW' -> 16r4.
+		'STD_REPLACE' -> 16rD.
+		'STD_UNDO' -> 16r3.
+		'STG_E_ABNORMALAPIEXIT' -> -16r7FFCFF06.
+		'STG_E_ACCESSDENIED' -> -16r7FFCFFFB.
+		'STG_E_BADBASEADDRESS' -> -16r7FFCFEF0.
+		'STG_E_CANTSAVE' -> -16r7FFCFEFD.
+		'STG_E_DISKISWRITEPROTECTED' -> -16r7FFCFFED.
+		'STG_E_DOCFILECORRUPT' -> -16r7FFCFEF7.
+		'STG_E_EXTANTMARSHALLINGS' -> -16r7FFCFEF8.
+		'STG_E_FILEALREADYEXISTS' -> -16r7FFCFFB0.
+		'STG_E_FILENOTFOUND' -> -16r7FFCFFFE.
+		'STG_E_INCOMPLETE' -> -16r7FFCFDFF.
+		'STG_E_INSUFFICIENTMEMORY' -> -16r7FFCFFF8.
+		'STG_E_INUSE' -> -16r7FFCFF00.
+		'STG_E_INVALIDFLAG' -> -16r7FFCFF01.
+		'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
+		'STG_E_INVALIDHANDLE' -> -16r7FFCFFFA.
+		'STG_E_INVALIDHEADER' -> -16r7FFCFF05.
+		'STG_E_INVALIDNAME' -> -16r7FFCFF04.
+		'STG_E_INVALIDPARAMETER' -> -16r7FFCFFA9.
+		'STG_E_INVALIDPOINTER' -> -16r7FFCFFF7.
+		'STG_E_LOCKVIOLATION' -> -16r7FFCFFDF.
+		'STG_E_MEDIUMFULL' -> -16r7FFCFF90.
+		'STG_E_NOMOREFILES' -> -16r7FFCFFEE.
+		'STG_E_NOTCURRENT' -> -16r7FFCFEFF.
+		'STG_E_NOTFILEBASEDSTORAGE' -> -16r7FFCFEF9.
+		'STG_E_OLDDLL' -> -16r7FFCFEFB.
+		'STG_E_OLDFORMAT' -> -16r7FFCFEFC.
+		'STG_E_PATHNOTFOUND' -> -16r7FFCFFFD.
+		'STG_E_PROPSETMISMATCHED' -> -16r7FFCFF10.
+		'STG_E_READFAULT' -> -16r7FFCFFE2.
+		'STG_E_REVERTED' -> -16r7FFCFEFE.
+		'STG_E_SEEKERROR' -> -16r7FFCFFE7.
+		'STG_E_SHAREREQUIRED' -> -16r7FFCFEFA.
+		'STG_E_SHAREVIOLATION' -> -16r7FFCFFE0.
+		'STG_E_TERMINATED' -> -16r7FFCFDFE.
+		'STG_E_TOOMANYOPENFILES' -> -16r7FFCFFFC.
+		'STG_E_UNIMPLEMENTEDFUNCTION' -> -16r7FFCFF02.
+		'STG_E_UNKNOWN' -> -16r7FFCFF03.
+		'STG_E_WRITEFAULT' -> -16r7FFCFFE3.
+		'STGM_CONVERT' -> 16r20000.
+		'STGM_CREATE' -> 16r1000.
+		'STGM_DELETEONRELEASE' -> 16r4000000.
+		'STGM_DIRECT' -> 16r0.
+		'STGM_FAILIFTHERE' -> 16r0.
+		'STGM_NOSCRATCH' -> 16r100000.
+		'STGM_NOSNAPSHOT' -> 16r200000.
+		'STGM_PRIORITY' -> 16r40000.
+		'STGM_READ' -> 16r0.
+		'STGM_READWRITE' -> 16r2.
+		'STGM_SHARE_DENY_NONE' -> 16r40.
+		'STGM_SHARE_DENY_READ' -> 16r30.
+		'STGM_SHARE_DENY_WRITE' -> 16r20.
+		'STGM_SHARE_EXCLUSIVE' -> 16r10.
+		'STGM_SIMPLE' -> 16r8000000.
+		'STGM_TRANSACTED' -> 16r10000.
+		'STGM_WRITE' -> 16r1.
+		'STRRET_CSTR' -> 16r2.
+		'STRRET_OFFSET' -> 16r1.
+		'STRRET_WSTR' -> 16r0.
+		'SVUIA_ACTIVATE_FOCUS' -> 16r2.
+		'SVUIA_ACTIVATE_NOFOCUS' -> 16r1.
+		'SVUIA_DEACTIVATE' -> 16r0.
+		'SVUIA_INPLACEACTIVATE' -> 16r3.
+		'SW_HIDE' -> 16r0.
+		'SW_MAX' -> 16rA.
+		'SW_MAXIMIZE' -> 16r3.
+		'SW_MINIMIZE' -> 16r6.
+		'SW_NORMAL' -> 16r1.
+		'SW_RESTORE' -> 16r9.
+		'SW_SHOW' -> 16r5.
+		'SW_SHOWDEFAULT' -> 16rA.
+		'SW_SHOWMAXIMIZED' -> 16r3.
+		'SW_SHOWMINIMIZED' -> 16r2.
+		'SW_SHOWMINNOACTIVE' -> 16r7.
+		'SW_SHOWNA' -> 16r8.
+		'SW_SHOWNOACTIVATE' -> 16r4.
+		'SW_SHOWNORMAL' -> 16r1.
+		'SYS_MAC' -> 16r2.
+		'SYS_WIN16' -> 16r0.
+		'SYS_WIN32' -> 16r1.
+		'SYS_WIN64' -> 16r3.
+		'TBSTATE_CHECKED' -> 16r1.
+		'TBSTATE_ELLIPSES' -> 16r40.
+		'TBSTATE_ENABLED' -> 16r4.
+		'TBSTATE_HIDDEN' -> 16r8.
+		'TBSTATE_INDETERMINATE' -> 16r10.
+		'TBSTATE_PRESSED' -> 16r2.
+		'TBSTATE_WRAP' -> 16r20.
+		'TBSTYLE_ALTDRAG' -> 16r400.
+		'TBSTYLE_BUTTON' -> 16r0.
+		'TBSTYLE_CHECK' -> 16r2.
+		'TBSTYLE_CHECKGROUP' -> 16r6.
+		'TBSTYLE_CUSTOMERASE' -> 16r2000.
+		'TBSTYLE_DROPDOWN' -> 16r8.
+		'TBSTYLE_EX_DRAWDDARROWS' -> 16r1.
+		'TBSTYLE_FLAT' -> 16r800.
+		'TBSTYLE_GROUP' -> 16r4.
+		'TBSTYLE_LIST' -> 16r1000.
+		'TBSTYLE_REGISTERDROP' -> 16r4000.
+		'TBSTYLE_SEP' -> 16r1.
+		'TBSTYLE_TOOLTIPS' -> 16r100.
+		'TBSTYLE_TRANSPARENT' -> 16r8000.
+		'TBSTYLE_WRAPABLE' -> 16r200.
+		'TKIND_ALIAS' -> 16r6.
+		'TKIND_COCLASS' -> 16r5.
+		'TKIND_DISPATCH' -> 16r4.
+		'TKIND_ENUM' -> 16r0.
+		'TKIND_INTERFACE' -> 16r3.
+		'TKIND_MAX' -> 16r8.
+		'TKIND_MODULE' -> 16r2.
+		'TKIND_RECORD' -> 16r1.
+		'TKIND_UNION' -> 16r7.
+		'TM_MULTICODEPAGE' -> 16r20.
+		'TM_MULTILEVELUNDO' -> 16r8.
+		'TM_PLAINTEXT' -> 16r1.
+		'TM_RICHTEXT' -> 16r2.
+		'TM_SINGLECODEPAGE' -> 16r10.
+		'TM_SINGLELEVELUNDO' -> 16r4.
+		'triChecked' -> 16r1.
+		'triGray' -> 16r2.
+		'triUnchecked' -> 16r0.
+		'UID_CUT' -> 16r4.
+		'UID_DELETE' -> 16r2.
+		'UID_DRAGDROP' -> 16r3.
+		'UID_PASTE' -> 16r5.
+		'UID_TYPING' -> 16r1.
+		'UID_UNKNOWN' -> 16r0.
+		'VAR_CONST' -> 16r2.
+		'VAR_DISPATCH' -> 16r3.
+		'VAR_PERINSTANCE' -> 16r0.
+		'VAR_STATIC' -> 16r1.
+		'VIEW_DETAILS' -> 16r3.
+		'VIEW_LARGEICONS' -> 16r0.
+		'VIEW_LIST' -> 16r2.
+		'VIEW_NETCONNECT' -> 16r9.
+		'VIEW_NETDISCONNECT' -> 16rA.
+		'VIEW_NEWFOLDER' -> 16rB.
+		'VIEW_PARENTFOLDER' -> 16r8.
+		'VIEW_SMALLICONS' -> 16r1.
+		'VIEW_SORTDATE' -> 16r6.
+		'VIEW_SORTNAME' -> 16r4.
+		'VIEW_SORTSIZE' -> 16r5.
+		'VIEW_SORTTYPE' -> 16r7.
+		'WPSTYLE_CENTER' -> 16r0.
+		'WPSTYLE_MAX' -> 16r3.
+		'WPSTYLE_STRETCH' -> 16r2.
+		'WPSTYLE_TILE' -> 16r1
+	}!
+IPHlpApiConstants guid: (GUID fromString: '{cf21fda9-e7be-4a8d-b79d-e49173e5c3cc}')!
+IPHlpApiConstants comment: ''!
+!IPHlpApiConstants categoriesForClass!Unclassified! !

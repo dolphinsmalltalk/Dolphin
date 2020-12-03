@@ -1,48 +1,56 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ButtonConstants} declare: (PoolConstantsDictionary named: #ButtonConstants)!
-ButtonConstants at: 'BCM_GETNOTE' put: 16r160A!
-ButtonConstants at: 'BCM_GETNOTELENGTH' put: 16r160B!
-ButtonConstants at: 'BCM_SETNOTE' put: 16r1609!
-ButtonConstants at: 'BCM_SETSHIELD' put: 16r160C!
-ButtonConstants at: 'BM_CLICK' put: 16rF5!
-ButtonConstants at: 'BM_GETCHECK' put: 16rF0!
-ButtonConstants at: 'BM_GETIMAGE' put: 16rF6!
-ButtonConstants at: 'BM_GETSTATE' put: 16rF2!
-ButtonConstants at: 'BM_SETCHECK' put: 16rF1!
-ButtonConstants at: 'BM_SETIMAGE' put: 16rF7!
-ButtonConstants at: 'BM_SETSTATE' put: 16rF3!
-ButtonConstants at: 'BM_SETSTYLE' put: 16rF4!
-ButtonConstants at: 'BN_CLICKED' put: 16r0!
-ButtonConstants at: 'BN_HILITE' put: 16r2!
-ButtonConstants at: 'BN_UNHILITE' put: 16r3!
-ButtonConstants at: 'BS_3STATE' put: 16r5!
-ButtonConstants at: 'BS_AUTO3STATE' put: 16r6!
-ButtonConstants at: 'BS_AUTOCHECKBOX' put: 16r3!
-ButtonConstants at: 'BS_AUTORADIOBUTTON' put: 16r9!
-ButtonConstants at: 'BS_BITMAP' put: 16r80!
-ButtonConstants at: 'BS_BOTTOM' put: 16r800!
-ButtonConstants at: 'BS_CENTER' put: 16r300!
-ButtonConstants at: 'BS_COMMANDLINK' put: 16rE!
-ButtonConstants at: 'BS_DEFCOMMANDLINK' put: 16rF!
-ButtonConstants at: 'BS_DEFPUSHBUTTON' put: 16r1!
-ButtonConstants at: 'BS_FLAT' put: 16r8000!
-ButtonConstants at: 'BS_GROUPBOX' put: 16r7!
-ButtonConstants at: 'BS_ICON' put: 16r40!
-ButtonConstants at: 'BS_LEFT' put: 16r100!
-ButtonConstants at: 'BS_LEFTTEXT' put: 16r20!
-ButtonConstants at: 'BS_MULTILINE' put: 16r2000!
-ButtonConstants at: 'BS_NOTIFY' put: 16r4000!
-ButtonConstants at: 'BS_PUSHBUTTON' put: 16r0!
-ButtonConstants at: 'BS_PUSHLIKE' put: 16r1000!
-ButtonConstants at: 'BS_RADIOBUTTON' put: 16r4!
-ButtonConstants at: 'BS_RIGHT' put: 16r200!
-ButtonConstants at: 'BS_RIGHTBUTTON' put: 16r20!
-ButtonConstants at: 'BS_TEXT' put: 16r0!
-ButtonConstants at: 'BS_TOP' put: 16r400!
-ButtonConstants at: 'BS_TYPEMASK' put: 16rF!
-ButtonConstants at: 'BS_VCENTER' put: 16rC00!
-ButtonConstants at: 'BST_CHECKED' put: 16r1!
-ButtonConstants at: 'BST_INDETERMINATE' put: 16r2!
-ButtonConstants at: 'BST_UNCHECKED' put: 16r0!
-ButtonConstants shrink!
+SharedPool subclass: #ButtonConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BCM_GETNOTE' -> 16r160A.
+		'BCM_GETNOTELENGTH' -> 16r160B.
+		'BCM_SETNOTE' -> 16r1609.
+		'BCM_SETSHIELD' -> 16r160C.
+		'BM_CLICK' -> 16rF5.
+		'BM_GETCHECK' -> 16rF0.
+		'BM_GETIMAGE' -> 16rF6.
+		'BM_GETSTATE' -> 16rF2.
+		'BM_SETCHECK' -> 16rF1.
+		'BM_SETIMAGE' -> 16rF7.
+		'BM_SETSTATE' -> 16rF3.
+		'BM_SETSTYLE' -> 16rF4.
+		'BN_CLICKED' -> 16r0.
+		'BN_HILITE' -> 16r2.
+		'BN_UNHILITE' -> 16r3.
+		'BS_3STATE' -> 16r5.
+		'BS_AUTO3STATE' -> 16r6.
+		'BS_AUTOCHECKBOX' -> 16r3.
+		'BS_AUTORADIOBUTTON' -> 16r9.
+		'BS_BITMAP' -> 16r80.
+		'BS_BOTTOM' -> 16r800.
+		'BS_CENTER' -> 16r300.
+		'BS_COMMANDLINK' -> 16rE.
+		'BS_DEFCOMMANDLINK' -> 16rF.
+		'BS_DEFPUSHBUTTON' -> 16r1.
+		'BS_FLAT' -> 16r8000.
+		'BS_GROUPBOX' -> 16r7.
+		'BS_ICON' -> 16r40.
+		'BS_LEFT' -> 16r100.
+		'BS_LEFTTEXT' -> 16r20.
+		'BS_MULTILINE' -> 16r2000.
+		'BS_NOTIFY' -> 16r4000.
+		'BS_PUSHBUTTON' -> 16r0.
+		'BS_PUSHLIKE' -> 16r1000.
+		'BS_RADIOBUTTON' -> 16r4.
+		'BS_RIGHT' -> 16r200.
+		'BS_RIGHTBUTTON' -> 16r20.
+		'BS_TEXT' -> 16r0.
+		'BS_TOP' -> 16r400.
+		'BS_TYPEMASK' -> 16rF.
+		'BS_VCENTER' -> 16rC00.
+		'BST_CHECKED' -> 16r1.
+		'BST_INDETERMINATE' -> 16r2.
+		'BST_UNCHECKED' -> 16r0
+	}!
+ButtonConstants guid: (GUID fromString: '{4468d603-0524-4246-aac6-40acaa431b19}')!
+ButtonConstants comment: ''!
+!ButtonConstants categoriesForClass!Unclassified! !

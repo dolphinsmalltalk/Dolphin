@@ -1,1268 +1,1276 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ScintillaConstants} declare: (PoolConstantsDictionary named: #ScintillaConstants)!
-ScintillaConstants at: 'ANNOTATION_BOXED' put: 16r2!
-ScintillaConstants at: 'ANNOTATION_HIDDEN' put: 16r0!
-ScintillaConstants at: 'ANNOTATION_INDENTED' put: 16r3!
-ScintillaConstants at: 'ANNOTATION_STANDARD' put: 16r1!
-ScintillaConstants at: 'CARET_EVEN' put: 16r8!
-ScintillaConstants at: 'CARET_JUMPS' put: 16r10!
-ScintillaConstants at: 'CARET_SLOP' put: 16r1!
-ScintillaConstants at: 'CARET_STRICT' put: 16r4!
-ScintillaConstants at: 'CARETSTYLE_BLOCK' put: 16r2!
-ScintillaConstants at: 'CARETSTYLE_BLOCK_AFTER' put: 16r100!
-ScintillaConstants at: 'CARETSTYLE_INS_MASK' put: 16rF!
-ScintillaConstants at: 'CARETSTYLE_INVISIBLE' put: 16r0!
-ScintillaConstants at: 'CARETSTYLE_LINE' put: 16r1!
-ScintillaConstants at: 'CARETSTYLE_OVERSTRIKE_BAR' put: 16r0!
-ScintillaConstants at: 'CARETSTYLE_OVERSTRIKE_BLOCK' put: 16r10!
-ScintillaConstants at: 'EDGE_BACKGROUND' put: 16r2!
-ScintillaConstants at: 'EDGE_LINE' put: 16r1!
-ScintillaConstants at: 'EDGE_MULTILINE' put: 16r3!
-ScintillaConstants at: 'EDGE_NONE' put: 16r0!
-ScintillaConstants at: 'EOLANNOTATION_BOXED' put: 16r2!
-ScintillaConstants at: 'EOLANNOTATION_HIDDEN' put: 16r0!
-ScintillaConstants at: 'EOLANNOTATION_STANDARD' put: 16r1!
-ScintillaConstants at: 'INDIC_BOX' put: 16r6!
-ScintillaConstants at: 'INDIC_COMPOSITIONTHICK' put: 16rE!
-ScintillaConstants at: 'INDIC_COMPOSITIONTHIN' put: 16rF!
-ScintillaConstants at: 'INDIC_DASH' put: 16r9!
-ScintillaConstants at: 'INDIC_DIAGONAL' put: 16r3!
-ScintillaConstants at: 'INDIC_DOTBOX' put: 16rC!
-ScintillaConstants at: 'INDIC_DOTS' put: 16rA!
-ScintillaConstants at: 'INDIC_FULLBOX' put: 16r10!
-ScintillaConstants at: 'INDIC_GRADIENT' put: 16r14!
-ScintillaConstants at: 'INDIC_GRADIENTCENTRE' put: 16r15!
-ScintillaConstants at: 'INDIC_HIDDEN' put: 16r5!
-ScintillaConstants at: 'INDIC_PLAIN' put: 16r0!
-ScintillaConstants at: 'INDIC_POINT' put: 16r12!
-ScintillaConstants at: 'INDIC_POINTCHARACTER' put: 16r13!
-ScintillaConstants at: 'INDIC_ROUNDBOX' put: 16r7!
-ScintillaConstants at: 'INDIC_SQUIGGLE' put: 16r1!
-ScintillaConstants at: 'INDIC_SQUIGGLELOW' put: 16rB!
-ScintillaConstants at: 'INDIC_SQUIGGLEPIXMAP' put: 16rD!
-ScintillaConstants at: 'INDIC_STRAIGHTBOX' put: 16r8!
-ScintillaConstants at: 'INDIC_STRIKE' put: 16r4!
-ScintillaConstants at: 'INDIC_TEXTFORE' put: 16r11!
-ScintillaConstants at: 'INDIC_TT' put: 16r2!
-ScintillaConstants at: 'INDIC0_MASK' put: 16r20!
-ScintillaConstants at: 'INDIC1_MASK' put: 16r40!
-ScintillaConstants at: 'INDIC2_MASK' put: 16r80!
-ScintillaConstants at: 'INDICATOR_CONTAINER' put: 16r8!
-ScintillaConstants at: 'INDICATOR_IME' put: 16r20!
-ScintillaConstants at: 'INDICATOR_IME_MAX' put: 16r23!
-ScintillaConstants at: 'INDICATOR_MAX' put: 16r23!
-ScintillaConstants at: 'INDICS_MASK' put: 16rE0!
-ScintillaConstants at: 'INVALID_POSITION' put: -16r1!
-ScintillaConstants at: 'KEYWORDSET_MAX' put: 16r8!
-ScintillaConstants at: 'MARKER_MAX' put: 16r1F!
-ScintillaConstants at: 'SC_AC_COMMAND' put: 16r5!
-ScintillaConstants at: 'SC_AC_DOUBLECLICK' put: 16r2!
-ScintillaConstants at: 'SC_AC_FILLUP' put: 16r1!
-ScintillaConstants at: 'SC_AC_NEWLINE' put: 16r4!
-ScintillaConstants at: 'SC_AC_TAB' put: 16r3!
-ScintillaConstants at: 'SC_ACCESSIBILITY_DISABLED' put: 16r0!
-ScintillaConstants at: 'SC_ACCESSIBILITY_ENABLED' put: 16r1!
-ScintillaConstants at: 'SC_ALPHA_NOALPHA' put: 16r100!
-ScintillaConstants at: 'SC_ALPHA_OPAQUE' put: 16rFF!
-ScintillaConstants at: 'SC_ALPHA_TRANSPARENT' put: 16r0!
-ScintillaConstants at: 'SC_AUTOMATICFOLD_CHANGE' put: 16r4!
-ScintillaConstants at: 'SC_AUTOMATICFOLD_CLICK' put: 16r2!
-ScintillaConstants at: 'SC_AUTOMATICFOLD_SHOW' put: 16r1!
-ScintillaConstants at: 'SC_BIDIRECTIONAL_DISABLED' put: 16r0!
-ScintillaConstants at: 'SC_BIDIRECTIONAL_L2R' put: 16r1!
-ScintillaConstants at: 'SC_BIDIRECTIONAL_R2L' put: 16r2!
-ScintillaConstants at: 'SC_CACHE_CARET' put: 16r1!
-ScintillaConstants at: 'SC_CACHE_DOCUMENT' put: 16r3!
-ScintillaConstants at: 'SC_CACHE_NONE' put: 16r0!
-ScintillaConstants at: 'SC_CACHE_PAGE' put: 16r2!
-ScintillaConstants at: 'SC_CARETSTICKY_OFF' put: 16r0!
-ScintillaConstants at: 'SC_CARETSTICKY_ON' put: 16r1!
-ScintillaConstants at: 'SC_CARETSTICKY_WHITESPACE' put: 16r2!
-ScintillaConstants at: 'SC_CASE_CAMEL' put: 16r3!
-ScintillaConstants at: 'SC_CASE_LOWER' put: 16r2!
-ScintillaConstants at: 'SC_CASE_MIXED' put: 16r0!
-ScintillaConstants at: 'SC_CASE_UPPER' put: 16r1!
-ScintillaConstants at: 'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE' put: 16r1!
-ScintillaConstants at: 'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE' put: 16r0!
-ScintillaConstants at: 'SC_CHARACTERSOURCE_DIRECT_INPUT' put: 16r0!
-ScintillaConstants at: 'SC_CHARACTERSOURCE_IME_RESULT' put: 16r2!
-ScintillaConstants at: 'SC_CHARACTERSOURCE_TENTATIVE_INPUT' put: 16r1!
-ScintillaConstants at: 'SC_CHARSET_8859_15' put: 16r3E8!
-ScintillaConstants at: 'SC_CHARSET_ANSI' put: 16r0!
-ScintillaConstants at: 'SC_CHARSET_ARABIC' put: 16rB2!
-ScintillaConstants at: 'SC_CHARSET_BALTIC' put: 16rBA!
-ScintillaConstants at: 'SC_CHARSET_CHINESEBIG5' put: 16r88!
-ScintillaConstants at: 'SC_CHARSET_CYRILLIC' put: 16r4E3!
-ScintillaConstants at: 'SC_CHARSET_DEFAULT' put: 16r1!
-ScintillaConstants at: 'SC_CHARSET_EASTEUROPE' put: 16rEE!
-ScintillaConstants at: 'SC_CHARSET_GB2312' put: 16r86!
-ScintillaConstants at: 'SC_CHARSET_GREEK' put: 16rA1!
-ScintillaConstants at: 'SC_CHARSET_HANGUL' put: 16r81!
-ScintillaConstants at: 'SC_CHARSET_HEBREW' put: 16rB1!
-ScintillaConstants at: 'SC_CHARSET_JOHAB' put: 16r82!
-ScintillaConstants at: 'SC_CHARSET_MAC' put: 16r4D!
-ScintillaConstants at: 'SC_CHARSET_OEM' put: 16rFF!
-ScintillaConstants at: 'SC_CHARSET_OEM866' put: 16r362!
-ScintillaConstants at: 'SC_CHARSET_RUSSIAN' put: 16rCC!
-ScintillaConstants at: 'SC_CHARSET_SHIFTJIS' put: 16r80!
-ScintillaConstants at: 'SC_CHARSET_SYMBOL' put: 16r2!
-ScintillaConstants at: 'SC_CHARSET_THAI' put: 16rDE!
-ScintillaConstants at: 'SC_CHARSET_TURKISH' put: 16rA2!
-ScintillaConstants at: 'SC_CHARSET_VIETNAMESE' put: 16rA3!
-ScintillaConstants at: 'SC_CP_UTF8' put: 16rFDE9!
-ScintillaConstants at: 'SC_CURSORARROW' put: 16r2!
-ScintillaConstants at: 'SC_CURSORNORMAL' put: -16r1!
-ScintillaConstants at: 'SC_CURSORREVERSEARROW' put: 16r7!
-ScintillaConstants at: 'SC_CURSORWAIT' put: 16r4!
-ScintillaConstants at: 'SC_DOCUMENTOPTION_DEFAULT' put: 16r0!
-ScintillaConstants at: 'SC_DOCUMENTOPTION_STYLES_NONE' put: 16r1!
-ScintillaConstants at: 'SC_DOCUMENTOPTION_TEXT_LARGE' put: 16r100!
-ScintillaConstants at: 'SC_EFF_QUALITY_ANTIALIASED' put: 16r2!
-ScintillaConstants at: 'SC_EFF_QUALITY_DEFAULT' put: 16r0!
-ScintillaConstants at: 'SC_EFF_QUALITY_LCD_OPTIMIZED' put: 16r3!
-ScintillaConstants at: 'SC_EFF_QUALITY_MASK' put: 16rF!
-ScintillaConstants at: 'SC_EFF_QUALITY_NON_ANTIALIASED' put: 16r1!
-ScintillaConstants at: 'SC_EOL_CR' put: 16r1!
-ScintillaConstants at: 'SC_EOL_CRLF' put: 16r0!
-ScintillaConstants at: 'SC_EOL_LF' put: 16r2!
-ScintillaConstants at: 'SC_FOLDACTION_CONTRACT' put: 16r0!
-ScintillaConstants at: 'SC_FOLDACTION_EXPAND' put: 16r1!
-ScintillaConstants at: 'SC_FOLDACTION_TOGGLE' put: 16r2!
-ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_BOXED' put: 16r2!
-ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_HIDDEN' put: 16r0!
-ScintillaConstants at: 'SC_FOLDDISPLAYTEXT_STANDARD' put: 16r1!
-ScintillaConstants at: 'SC_FOLDFLAG_LEVELNUMBERS' put: 16r40!
-ScintillaConstants at: 'SC_FOLDFLAG_LINEAFTER_CONTRACTED' put: 16r10!
-ScintillaConstants at: 'SC_FOLDFLAG_LINEAFTER_EXPANDED' put: 16r8!
-ScintillaConstants at: 'SC_FOLDFLAG_LINEBEFORE_CONTRACTED' put: 16r4!
-ScintillaConstants at: 'SC_FOLDFLAG_LINEBEFORE_EXPANDED' put: 16r2!
-ScintillaConstants at: 'SC_FOLDFLAG_LINESTATE' put: 16r80!
-ScintillaConstants at: 'SC_FOLDLEVELBASE' put: 16r400!
-ScintillaConstants at: 'SC_FOLDLEVELHEADERFLAG' put: 16r2000!
-ScintillaConstants at: 'SC_FOLDLEVELNUMBERMASK' put: 16rFFF!
-ScintillaConstants at: 'SC_FOLDLEVELWHITEFLAG' put: 16r1000!
-ScintillaConstants at: 'SC_FONT_SIZE_MULTIPLIER' put: 16r64!
-ScintillaConstants at: 'SC_IDLESTYLING_AFTERVISIBLE' put: 16r2!
-ScintillaConstants at: 'SC_IDLESTYLING_ALL' put: 16r3!
-ScintillaConstants at: 'SC_IDLESTYLING_NONE' put: 16r0!
-ScintillaConstants at: 'SC_IDLESTYLING_TOVISIBLE' put: 16r1!
-ScintillaConstants at: 'SC_IME_INLINE' put: 16r1!
-ScintillaConstants at: 'SC_IME_WINDOWED' put: 16r0!
-ScintillaConstants at: 'SC_INDICFLAG_VALUEFORE' put: 16r1!
-ScintillaConstants at: 'SC_INDICVALUEBIT' put: 16r1000000!
-ScintillaConstants at: 'SC_INDICVALUEMASK' put: 16rFFFFFF!
-ScintillaConstants at: 'SC_IV_LOOKBOTH' put: 16r3!
-ScintillaConstants at: 'SC_IV_LOOKFORWARD' put: 16r2!
-ScintillaConstants at: 'SC_IV_NONE' put: 16r0!
-ScintillaConstants at: 'SC_IV_REAL' put: 16r1!
-ScintillaConstants at: 'SC_LASTSTEPINUNDOREDO' put: 16r100!
-ScintillaConstants at: 'SC_LINE_END_TYPE_DEFAULT' put: 16r0!
-ScintillaConstants at: 'SC_LINE_END_TYPE_UNICODE' put: 16r1!
-ScintillaConstants at: 'SC_LINECHARACTERINDEX_NONE' put: 16r0!
-ScintillaConstants at: 'SC_LINECHARACTERINDEX_UTF16' put: 16r2!
-ScintillaConstants at: 'SC_LINECHARACTERINDEX_UTF32' put: 16r1!
-ScintillaConstants at: 'SC_MARGIN_BACK' put: 16r2!
-ScintillaConstants at: 'SC_MARGIN_COLOUR' put: 16r6!
-ScintillaConstants at: 'SC_MARGIN_FORE' put: 16r3!
-ScintillaConstants at: 'SC_MARGIN_NUMBER' put: 16r1!
-ScintillaConstants at: 'SC_MARGIN_RTEXT' put: 16r5!
-ScintillaConstants at: 'SC_MARGIN_SYMBOL' put: 16r0!
-ScintillaConstants at: 'SC_MARGIN_TEXT' put: 16r4!
-ScintillaConstants at: 'SC_MARGINOPTION_NONE' put: 16r0!
-ScintillaConstants at: 'SC_MARGINOPTION_SUBLINESELECT' put: 16r1!
-ScintillaConstants at: 'SC_MARK_ARROW' put: 16r2!
-ScintillaConstants at: 'SC_MARK_ARROWDOWN' put: 16r6!
-ScintillaConstants at: 'SC_MARK_ARROWS' put: 16r18!
-ScintillaConstants at: 'SC_MARK_AVAILABLE' put: 16r1C!
-ScintillaConstants at: 'SC_MARK_BACKGROUND' put: 16r16!
-ScintillaConstants at: 'SC_MARK_BOOKMARK' put: 16r1F!
-ScintillaConstants at: 'SC_MARK_BOXMINUS' put: 16rE!
-ScintillaConstants at: 'SC_MARK_BOXMINUSCONNECTED' put: 16rF!
-ScintillaConstants at: 'SC_MARK_BOXPLUS' put: 16rC!
-ScintillaConstants at: 'SC_MARK_BOXPLUSCONNECTED' put: 16rD!
-ScintillaConstants at: 'SC_MARK_CHARACTER' put: 16r2710!
-ScintillaConstants at: 'SC_MARK_CIRCLE' put: 16r0!
-ScintillaConstants at: 'SC_MARK_CIRCLEMINUS' put: 16r14!
-ScintillaConstants at: 'SC_MARK_CIRCLEMINUSCONNECTED' put: 16r15!
-ScintillaConstants at: 'SC_MARK_CIRCLEPLUS' put: 16r12!
-ScintillaConstants at: 'SC_MARK_CIRCLEPLUSCONNECTED' put: 16r13!
-ScintillaConstants at: 'SC_MARK_DOTDOTDOT' put: 16r17!
-ScintillaConstants at: 'SC_MARK_EMPTY' put: 16r5!
-ScintillaConstants at: 'SC_MARK_FULLRECT' put: 16r1A!
-ScintillaConstants at: 'SC_MARK_LCORNER' put: 16rA!
-ScintillaConstants at: 'SC_MARK_LCORNERCURVE' put: 16r10!
-ScintillaConstants at: 'SC_MARK_LEFTRECT' put: 16r1B!
-ScintillaConstants at: 'SC_MARK_MINUS' put: 16r7!
-ScintillaConstants at: 'SC_MARK_PIXMAP' put: 16r19!
-ScintillaConstants at: 'SC_MARK_PLUS' put: 16r8!
-ScintillaConstants at: 'SC_MARK_RGBAIMAGE' put: 16r1E!
-ScintillaConstants at: 'SC_MARK_ROUNDRECT' put: 16r1!
-ScintillaConstants at: 'SC_MARK_SHORTARROW' put: 16r4!
-ScintillaConstants at: 'SC_MARK_SMALLRECT' put: 16r3!
-ScintillaConstants at: 'SC_MARK_TCORNER' put: 16rB!
-ScintillaConstants at: 'SC_MARK_TCORNERCURVE' put: 16r11!
-ScintillaConstants at: 'SC_MARK_UNDERLINE' put: 16r1D!
-ScintillaConstants at: 'SC_MARK_VERTICALBOOKMARK' put: 16r20!
-ScintillaConstants at: 'SC_MARK_VLINE' put: 16r9!
-ScintillaConstants at: 'SC_MARKNUM_FOLDER' put: 16r1E!
-ScintillaConstants at: 'SC_MARKNUM_FOLDEREND' put: 16r19!
-ScintillaConstants at: 'SC_MARKNUM_FOLDERMIDTAIL' put: 16r1B!
-ScintillaConstants at: 'SC_MARKNUM_FOLDEROPEN' put: 16r1F!
-ScintillaConstants at: 'SC_MARKNUM_FOLDEROPENMID' put: 16r1A!
-ScintillaConstants at: 'SC_MARKNUM_FOLDERSUB' put: 16r1D!
-ScintillaConstants at: 'SC_MARKNUM_FOLDERTAIL' put: 16r1C!
-ScintillaConstants at: 'SC_MASK_FOLDERS' put: 16rFE000000!
-ScintillaConstants at: 'SC_MAX_MARGIN' put: 16r4!
-ScintillaConstants at: 'SC_MOD_BEFOREDELETE' put: 16r800!
-ScintillaConstants at: 'SC_MOD_BEFOREINSERT' put: 16r400!
-ScintillaConstants at: 'SC_MOD_CHANGEANNOTATION' put: 16r20000!
-ScintillaConstants at: 'SC_MOD_CHANGEEOLANNOTATION' put: 16r400000!
-ScintillaConstants at: 'SC_MOD_CHANGEFOLD' put: 16r8!
-ScintillaConstants at: 'SC_MOD_CHANGEINDICATOR' put: 16r4000!
-ScintillaConstants at: 'SC_MOD_CHANGELINESTATE' put: 16r8000!
-ScintillaConstants at: 'SC_MOD_CHANGEMARGIN' put: 16r10000!
-ScintillaConstants at: 'SC_MOD_CHANGEMARKER' put: 16r200!
-ScintillaConstants at: 'SC_MOD_CHANGESTYLE' put: 16r4!
-ScintillaConstants at: 'SC_MOD_CHANGETABSTOPS' put: 16r200000!
-ScintillaConstants at: 'SC_MOD_CONTAINER' put: 16r40000!
-ScintillaConstants at: 'SC_MOD_DELETETEXT' put: 16r2!
-ScintillaConstants at: 'SC_MOD_INSERTCHECK' put: 16r100000!
-ScintillaConstants at: 'SC_MOD_INSERTTEXT' put: 16r1!
-ScintillaConstants at: 'SC_MOD_LEXERSTATE' put: 16r80000!
-ScintillaConstants at: 'SC_MOD_NONE' put: 16r0!
-ScintillaConstants at: 'SC_MODEVENTMASKALL' put: 16r7FFFFF!
-ScintillaConstants at: 'SC_MULTIAUTOC_EACH' put: 16r1!
-ScintillaConstants at: 'SC_MULTIAUTOC_ONCE' put: 16r0!
-ScintillaConstants at: 'SC_MULTILINEUNDOREDO' put: 16r1000!
-ScintillaConstants at: 'SC_MULTIPASTE_EACH' put: 16r1!
-ScintillaConstants at: 'SC_MULTIPASTE_ONCE' put: 16r0!
-ScintillaConstants at: 'SC_MULTISTEPUNDOREDO' put: 16r80!
-ScintillaConstants at: 'SC_ORDER_CUSTOM' put: 16r2!
-ScintillaConstants at: 'SC_ORDER_PERFORMSORT' put: 16r1!
-ScintillaConstants at: 'SC_ORDER_PRESORTED' put: 16r0!
-ScintillaConstants at: 'SC_PERFORMED_REDO' put: 16r40!
-ScintillaConstants at: 'SC_PERFORMED_UNDO' put: 16r20!
-ScintillaConstants at: 'SC_PERFORMED_USER' put: 16r10!
-ScintillaConstants at: 'SC_PHASES_MULTIPLE' put: 16r2!
-ScintillaConstants at: 'SC_PHASES_ONE' put: 16r0!
-ScintillaConstants at: 'SC_PHASES_TWO' put: 16r1!
-ScintillaConstants at: 'SC_POPUP_ALL' put: 16r1!
-ScintillaConstants at: 'SC_POPUP_NEVER' put: 16r0!
-ScintillaConstants at: 'SC_POPUP_TEXT' put: 16r2!
-ScintillaConstants at: 'SC_PRINT_BLACKONWHITE' put: 16r2!
-ScintillaConstants at: 'SC_PRINT_COLOURONWHITE' put: 16r3!
-ScintillaConstants at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 16r4!
-ScintillaConstants at: 'SC_PRINT_INVERTLIGHT' put: 16r1!
-ScintillaConstants at: 'SC_PRINT_NORMAL' put: 16r0!
-ScintillaConstants at: 'SC_PRINT_SCREENCOLOURS' put: 16r5!
-ScintillaConstants at: 'SC_SEL_LINES' put: 16r2!
-ScintillaConstants at: 'SC_SEL_RECTANGLE' put: 16r1!
-ScintillaConstants at: 'SC_SEL_STREAM' put: 16r0!
-ScintillaConstants at: 'SC_SEL_THIN' put: 16r3!
-ScintillaConstants at: 'SC_STARTACTION' put: 16r2000!
-ScintillaConstants at: 'SC_STATUS_BADALLOC' put: 16r2!
-ScintillaConstants at: 'SC_STATUS_FAILURE' put: 16r1!
-ScintillaConstants at: 'SC_STATUS_OK' put: 16r0!
-ScintillaConstants at: 'SC_STATUS_WARN_REGEX' put: 16r3E9!
-ScintillaConstants at: 'SC_STATUS_WARN_START' put: 16r3E8!
-ScintillaConstants at: 'SC_TECHNOLOGY_DEFAULT' put: 16r0!
-ScintillaConstants at: 'SC_TECHNOLOGY_DIRECTWRITE' put: 16r1!
-ScintillaConstants at: 'SC_TECHNOLOGY_DIRECTWRITEDC' put: 16r3!
-ScintillaConstants at: 'SC_TECHNOLOGY_DIRECTWRITERETAIN' put: 16r2!
-ScintillaConstants at: 'SC_TIME_FOREVER' put: 16r989680!
-ScintillaConstants at: 'SC_TYPE_BOOLEAN' put: 16r0!
-ScintillaConstants at: 'SC_TYPE_INTEGER' put: 16r1!
-ScintillaConstants at: 'SC_TYPE_STRING' put: 16r2!
-ScintillaConstants at: 'SC_UPDATE_CONTENT' put: 16r1!
-ScintillaConstants at: 'SC_UPDATE_H_SCROLL' put: 16r8!
-ScintillaConstants at: 'SC_UPDATE_SELECTION' put: 16r2!
-ScintillaConstants at: 'SC_UPDATE_V_SCROLL' put: 16r4!
-ScintillaConstants at: 'SC_WEIGHT_BOLD' put: 16r2BC!
-ScintillaConstants at: 'SC_WEIGHT_NORMAL' put: 16r190!
-ScintillaConstants at: 'SC_WEIGHT_SEMIBOLD' put: 16r258!
-ScintillaConstants at: 'SC_WRAP_CHAR' put: 16r2!
-ScintillaConstants at: 'SC_WRAP_NONE' put: 16r0!
-ScintillaConstants at: 'SC_WRAP_WHITESPACE' put: 16r3!
-ScintillaConstants at: 'SC_WRAP_WORD' put: 16r1!
-ScintillaConstants at: 'SC_WRAPINDENT_DEEPINDENT' put: 16r3!
-ScintillaConstants at: 'SC_WRAPINDENT_FIXED' put: 16r0!
-ScintillaConstants at: 'SC_WRAPINDENT_INDENT' put: 16r2!
-ScintillaConstants at: 'SC_WRAPINDENT_SAME' put: 16r1!
-ScintillaConstants at: 'SC_WRAPVISUALFLAG_END' put: 16r1!
-ScintillaConstants at: 'SC_WRAPVISUALFLAG_MARGIN' put: 16r4!
-ScintillaConstants at: 'SC_WRAPVISUALFLAG_NONE' put: 16r0!
-ScintillaConstants at: 'SC_WRAPVISUALFLAG_START' put: 16r2!
-ScintillaConstants at: 'SC_WRAPVISUALFLAGLOC_DEFAULT' put: 16r0!
-ScintillaConstants at: 'SC_WRAPVISUALFLAGLOC_END_BY_TEXT' put: 16r1!
-ScintillaConstants at: 'SC_WRAPVISUALFLAGLOC_START_BY_TEXT' put: 16r2!
-ScintillaConstants at: 'SCEN_CHANGE' put: 16r300!
-ScintillaConstants at: 'SCEN_KILLFOCUS' put: 16r100!
-ScintillaConstants at: 'SCEN_SETFOCUS' put: 16r200!
-ScintillaConstants at: 'SCFIND_CXX11REGEX' put: 16r800000!
-ScintillaConstants at: 'SCFIND_MATCHCASE' put: 16r4!
-ScintillaConstants at: 'SCFIND_NONE' put: 16r0!
-ScintillaConstants at: 'SCFIND_POSIX' put: 16r400000!
-ScintillaConstants at: 'SCFIND_REGEXP' put: 16r200000!
-ScintillaConstants at: 'SCFIND_WHOLEWORD' put: 16r2!
-ScintillaConstants at: 'SCFIND_WORDSTART' put: 16r100000!
-ScintillaConstants at: 'SCI_ADDREFDOCUMENT' put: 16r948!
-ScintillaConstants at: 'SCI_ADDSELECTION' put: 16rA0D!
-ScintillaConstants at: 'SCI_ADDSTYLEDTEXT' put: 16r7D2!
-ScintillaConstants at: 'SCI_ADDTABSTOP' put: 16rA74!
-ScintillaConstants at: 'SCI_ADDTEXT' put: 16r7D1!
-ScintillaConstants at: 'SCI_ADDUNDOACTION' put: 16rA00!
-ScintillaConstants at: 'SCI_ALLOCATE' put: 16r98E!
-ScintillaConstants at: 'SCI_ALLOCATEEXTENDEDSTYLES' put: 16r9F9!
-ScintillaConstants at: 'SCI_ALLOCATELINECHARACTERINDEX' put: 16rA97!
-ScintillaConstants at: 'SCI_ALLOCATESUBSTYLES' put: 16rFB4!
-ScintillaConstants at: 'SCI_ANNOTATIONCLEARALL' put: 16r9F3!
-ScintillaConstants at: 'SCI_ANNOTATIONGETLINES' put: 16r9F2!
-ScintillaConstants at: 'SCI_ANNOTATIONGETSTYLE' put: 16r9EF!
-ScintillaConstants at: 'SCI_ANNOTATIONGETSTYLEOFFSET' put: 16r9F7!
-ScintillaConstants at: 'SCI_ANNOTATIONGETSTYLES' put: 16r9F1!
-ScintillaConstants at: 'SCI_ANNOTATIONGETTEXT' put: 16r9ED!
-ScintillaConstants at: 'SCI_ANNOTATIONGETVISIBLE' put: 16r9F5!
-ScintillaConstants at: 'SCI_ANNOTATIONSETSTYLE' put: 16r9EE!
-ScintillaConstants at: 'SCI_ANNOTATIONSETSTYLEOFFSET' put: 16r9F6!
-ScintillaConstants at: 'SCI_ANNOTATIONSETSTYLES' put: 16r9F0!
-ScintillaConstants at: 'SCI_ANNOTATIONSETTEXT' put: 16r9EC!
-ScintillaConstants at: 'SCI_ANNOTATIONSETVISIBLE' put: 16r9F4!
-ScintillaConstants at: 'SCI_APPENDTEXT' put: 16r8EA!
-ScintillaConstants at: 'SCI_ASSIGNCMDKEY' put: 16r816!
-ScintillaConstants at: 'SCI_AUTOCACTIVE' put: 16r836!
-ScintillaConstants at: 'SCI_AUTOCCANCEL' put: 16r835!
-ScintillaConstants at: 'SCI_AUTOCCOMPLETE' put: 16r838!
-ScintillaConstants at: 'SCI_AUTOCGETAUTOHIDE' put: 16r847!
-ScintillaConstants at: 'SCI_AUTOCGETCANCELATSTART' put: 16r83F!
-ScintillaConstants at: 'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR' put: 16rA4B!
-ScintillaConstants at: 'SCI_AUTOCGETCHOOSESINGLE' put: 16r842!
-ScintillaConstants at: 'SCI_AUTOCGETCURRENT' put: 16r98D!
-ScintillaConstants at: 'SCI_AUTOCGETCURRENTTEXT' put: 16rA32!
-ScintillaConstants at: 'SCI_AUTOCGETDROPRESTOFWORD' put: 16r8DF!
-ScintillaConstants at: 'SCI_AUTOCGETIGNORECASE' put: 16r844!
-ScintillaConstants at: 'SCI_AUTOCGETMAXHEIGHT' put: 16r8A3!
-ScintillaConstants at: 'SCI_AUTOCGETMAXWIDTH' put: 16r8A1!
-ScintillaConstants at: 'SCI_AUTOCGETMULTI' put: 16rA4D!
-ScintillaConstants at: 'SCI_AUTOCGETORDER' put: 16rA65!
-ScintillaConstants at: 'SCI_AUTOCGETSEPARATOR' put: 16r83B!
-ScintillaConstants at: 'SCI_AUTOCGETTYPESEPARATOR' put: 16r8ED!
-ScintillaConstants at: 'SCI_AUTOCPOSSTART' put: 16r837!
-ScintillaConstants at: 'SCI_AUTOCSELECT' put: 16r83C!
-ScintillaConstants at: 'SCI_AUTOCSETAUTOHIDE' put: 16r846!
-ScintillaConstants at: 'SCI_AUTOCSETCANCELATSTART' put: 16r83E!
-ScintillaConstants at: 'SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR' put: 16rA4A!
-ScintillaConstants at: 'SCI_AUTOCSETCHOOSESINGLE' put: 16r841!
-ScintillaConstants at: 'SCI_AUTOCSETDROPRESTOFWORD' put: 16r8DE!
-ScintillaConstants at: 'SCI_AUTOCSETFILLUPS' put: 16r840!
-ScintillaConstants at: 'SCI_AUTOCSETIGNORECASE' put: 16r843!
-ScintillaConstants at: 'SCI_AUTOCSETMAXHEIGHT' put: 16r8A2!
-ScintillaConstants at: 'SCI_AUTOCSETMAXWIDTH' put: 16r8A0!
-ScintillaConstants at: 'SCI_AUTOCSETMULTI' put: 16rA4C!
-ScintillaConstants at: 'SCI_AUTOCSETORDER' put: 16rA64!
-ScintillaConstants at: 'SCI_AUTOCSETSEPARATOR' put: 16r83A!
-ScintillaConstants at: 'SCI_AUTOCSETTYPESEPARATOR' put: 16r8EE!
-ScintillaConstants at: 'SCI_AUTOCSHOW' put: 16r834!
-ScintillaConstants at: 'SCI_AUTOCSTOPS' put: 16r839!
-ScintillaConstants at: 'SCI_BACKTAB' put: 16r918!
-ScintillaConstants at: 'SCI_BEGINUNDOACTION' put: 16r81E!
-ScintillaConstants at: 'SCI_BRACEBADLIGHT' put: 16r930!
-ScintillaConstants at: 'SCI_BRACEBADLIGHTINDICATOR' put: 16r9C3!
-ScintillaConstants at: 'SCI_BRACEHIGHLIGHT' put: 16r92F!
-ScintillaConstants at: 'SCI_BRACEHIGHLIGHTINDICATOR' put: 16r9C2!
-ScintillaConstants at: 'SCI_BRACEMATCH' put: 16r931!
-ScintillaConstants at: 'SCI_BRACEMATCHNEXT' put: 16r941!
-ScintillaConstants at: 'SCI_CALLTIPACTIVE' put: 16r89A!
-ScintillaConstants at: 'SCI_CALLTIPCANCEL' put: 16r899!
-ScintillaConstants at: 'SCI_CALLTIPPOSSTART' put: 16r89B!
-ScintillaConstants at: 'SCI_CALLTIPSETBACK' put: 16r89D!
-ScintillaConstants at: 'SCI_CALLTIPSETFORE' put: 16r89E!
-ScintillaConstants at: 'SCI_CALLTIPSETFOREHLT' put: 16r89F!
-ScintillaConstants at: 'SCI_CALLTIPSETHLT' put: 16r89C!
-ScintillaConstants at: 'SCI_CALLTIPSETPOSITION' put: 16r8A5!
-ScintillaConstants at: 'SCI_CALLTIPSETPOSSTART' put: 16r8A6!
-ScintillaConstants at: 'SCI_CALLTIPSHOW' put: 16r898!
-ScintillaConstants at: 'SCI_CALLTIPUSESTYLE' put: 16r8A4!
-ScintillaConstants at: 'SCI_CANCEL' put: 16r915!
-ScintillaConstants at: 'SCI_CANPASTE' put: 16r87D!
-ScintillaConstants at: 'SCI_CANREDO' put: 16r7E0!
-ScintillaConstants at: 'SCI_CANUNDO' put: 16r87E!
-ScintillaConstants at: 'SCI_CHANGEINSERTION' put: 16rA70!
-ScintillaConstants at: 'SCI_CHANGELEXERSTATE' put: 16rA39!
-ScintillaConstants at: 'SCI_CHARLEFT' put: 16r900!
-ScintillaConstants at: 'SCI_CHARLEFTEXTEND' put: 16r901!
-ScintillaConstants at: 'SCI_CHARLEFTRECTEXTEND' put: 16r97C!
-ScintillaConstants at: 'SCI_CHARPOSITIONFROMPOINT' put: 16rA01!
-ScintillaConstants at: 'SCI_CHARPOSITIONFROMPOINTCLOSE' put: 16rA02!
-ScintillaConstants at: 'SCI_CHARRIGHT' put: 16r902!
-ScintillaConstants at: 'SCI_CHARRIGHTEXTEND' put: 16r903!
-ScintillaConstants at: 'SCI_CHARRIGHTRECTEXTEND' put: 16r97D!
-ScintillaConstants at: 'SCI_CHOOSECARETX' put: 16r95F!
-ScintillaConstants at: 'SCI_CLEAR' put: 16r884!
-ScintillaConstants at: 'SCI_CLEARALL' put: 16r7D4!
-ScintillaConstants at: 'SCI_CLEARALLCMDKEYS' put: 16r818!
-ScintillaConstants at: 'SCI_CLEARCMDKEY' put: 16r817!
-ScintillaConstants at: 'SCI_CLEARDOCUMENTSTYLE' put: 16r7D5!
-ScintillaConstants at: 'SCI_CLEARREGISTEREDIMAGES' put: 16r968!
-ScintillaConstants at: 'SCI_CLEARREPRESENTATION' put: 16rA6B!
-ScintillaConstants at: 'SCI_CLEARSELECTIONS' put: 16rA0B!
-ScintillaConstants at: 'SCI_CLEARTABSTOPS' put: 16rA73!
-ScintillaConstants at: 'SCI_COLOURISE' put: 16rFA3!
-ScintillaConstants at: 'SCI_CONTRACTEDFOLDNEXT' put: 16rA3A!
-ScintillaConstants at: 'SCI_CONVERTEOLS' put: 16r7ED!
-ScintillaConstants at: 'SCI_COPY' put: 16r882!
-ScintillaConstants at: 'SCI_COPYALLOWLINE' put: 16r9D7!
-ScintillaConstants at: 'SCI_COPYRANGE' put: 16r973!
-ScintillaConstants at: 'SCI_COPYTEXT' put: 16r974!
-ScintillaConstants at: 'SCI_COUNTCHARACTERS' put: 16rA49!
-ScintillaConstants at: 'SCI_COUNTCODEUNITS' put: 16rA9B!
-ScintillaConstants at: 'SCI_CREATEDOCUMENT' put: 16r947!
-ScintillaConstants at: 'SCI_CREATELOADER' put: 16rA48!
-ScintillaConstants at: 'SCI_CUT' put: 16r881!
-ScintillaConstants at: 'SCI_DELETEBACK' put: 16r916!
-ScintillaConstants at: 'SCI_DELETEBACKNOTLINE' put: 16r928!
-ScintillaConstants at: 'SCI_DELETERANGE' put: 16rA55!
-ScintillaConstants at: 'SCI_DELLINELEFT' put: 16r95B!
-ScintillaConstants at: 'SCI_DELLINERIGHT' put: 16r95C!
-ScintillaConstants at: 'SCI_DELWORDLEFT' put: 16r91F!
-ScintillaConstants at: 'SCI_DELWORDRIGHT' put: 16r920!
-ScintillaConstants at: 'SCI_DELWORDRIGHTEND' put: 16r9D6!
-ScintillaConstants at: 'SCI_DESCRIBEKEYWORDSETS' put: 16rFB1!
-ScintillaConstants at: 'SCI_DESCRIBEPROPERTY' put: 16rFB0!
-ScintillaConstants at: 'SCI_DESCRIPTIONOFSTYLE' put: 16rFC0!
-ScintillaConstants at: 'SCI_DISTANCETOSECONDARYSTYLES' put: 16rFB9!
-ScintillaConstants at: 'SCI_DOCLINEFROMVISIBLE' put: 16r8AD!
-ScintillaConstants at: 'SCI_DOCUMENTEND' put: 16r90E!
-ScintillaConstants at: 'SCI_DOCUMENTENDEXTEND' put: 16r90F!
-ScintillaConstants at: 'SCI_DOCUMENTSTART' put: 16r90C!
-ScintillaConstants at: 'SCI_DOCUMENTSTARTEXTEND' put: 16r90D!
-ScintillaConstants at: 'SCI_DROPSELECTIONN' put: 16rA6F!
-ScintillaConstants at: 'SCI_EDITTOGGLEOVERTYPE' put: 16r914!
-ScintillaConstants at: 'SCI_EMPTYUNDOBUFFER' put: 16r87F!
-ScintillaConstants at: 'SCI_ENCODEDFROMUTF8' put: 16r991!
-ScintillaConstants at: 'SCI_ENDUNDOACTION' put: 16r81F!
-ScintillaConstants at: 'SCI_ENSUREVISIBLE' put: 16r8B8!
-ScintillaConstants at: 'SCI_ENSUREVISIBLEENFORCEPOLICY' put: 16r8BA!
-ScintillaConstants at: 'SCI_EOLANNOTATIONCLEARALL' put: 16rAB8!
-ScintillaConstants at: 'SCI_EOLANNOTATIONGETSTYLE' put: 16rAB7!
-ScintillaConstants at: 'SCI_EOLANNOTATIONGETSTYLEOFFSET' put: 16rABC!
-ScintillaConstants at: 'SCI_EOLANNOTATIONGETTEXT' put: 16rAB5!
-ScintillaConstants at: 'SCI_EOLANNOTATIONGETVISIBLE' put: 16rABA!
-ScintillaConstants at: 'SCI_EOLANNOTATIONSETSTYLE' put: 16rAB6!
-ScintillaConstants at: 'SCI_EOLANNOTATIONSETSTYLEOFFSET' put: 16rABB!
-ScintillaConstants at: 'SCI_EOLANNOTATIONSETTEXT' put: 16rAB4!
-ScintillaConstants at: 'SCI_EOLANNOTATIONSETVISIBLE' put: 16rAB9!
-ScintillaConstants at: 'SCI_EXPANDCHILDREN' put: 16r8BF!
-ScintillaConstants at: 'SCI_FINDCOLUMN' put: 16r998!
-ScintillaConstants at: 'SCI_FINDINDICATORFLASH' put: 16rA51!
-ScintillaConstants at: 'SCI_FINDINDICATORHIDE' put: 16rA52!
-ScintillaConstants at: 'SCI_FINDINDICATORSHOW' put: 16rA50!
-ScintillaConstants at: 'SCI_FINDTEXT' put: 16r866!
-ScintillaConstants at: 'SCI_FOLDALL' put: 16rA66!
-ScintillaConstants at: 'SCI_FOLDCHILDREN' put: 16r8BE!
-ScintillaConstants at: 'SCI_FOLDDISPLAYTEXTGETSTYLE' put: 16rA93!
-ScintillaConstants at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 16rA8D!
-ScintillaConstants at: 'SCI_FOLDLINE' put: 16r8BD!
-ScintillaConstants at: 'SCI_FORMATRANGE' put: 16r867!
-ScintillaConstants at: 'SCI_FORMFEED' put: 16r91A!
-ScintillaConstants at: 'SCI_FREESUBSTYLES' put: 16rFB7!
-ScintillaConstants at: 'SCI_GETACCESSIBILITY' put: 16rA8F!
-ScintillaConstants at: 'SCI_GETADDITIONALCARETFORE' put: 16rA2D!
-ScintillaConstants at: 'SCI_GETADDITIONALCARETSBLINK' put: 16rA08!
-ScintillaConstants at: 'SCI_GETADDITIONALCARETSVISIBLE' put: 16rA31!
-ScintillaConstants at: 'SCI_GETADDITIONALSELALPHA' put: 16rA2B!
-ScintillaConstants at: 'SCI_GETADDITIONALSELECTIONTYPING' put: 16rA06!
-ScintillaConstants at: 'SCI_GETALLLINESVISIBLE' put: 16r8BC!
-ScintillaConstants at: 'SCI_GETANCHOR' put: 16r7D9!
-ScintillaConstants at: 'SCI_GETAUTOMATICFOLD' put: 16rA68!
-ScintillaConstants at: 'SCI_GETBACKSPACEUNINDENTS' put: 16r8D7!
-ScintillaConstants at: 'SCI_GETBIDIRECTIONAL' put: 16rA94!
-ScintillaConstants at: 'SCI_GETBUFFEREDDRAW' put: 16r7F2!
-ScintillaConstants at: 'SCI_GETCARETFORE' put: 16r85A!
-ScintillaConstants at: 'SCI_GETCARETLINEBACK' put: 16r831!
-ScintillaConstants at: 'SCI_GETCARETLINEBACKALPHA' put: 16r9A7!
-ScintillaConstants at: 'SCI_GETCARETLINEFRAME' put: 16rA90!
-ScintillaConstants at: 'SCI_GETCARETLINEVISIBLE' put: 16r82F!
-ScintillaConstants at: 'SCI_GETCARETLINEVISIBLEALWAYS' put: 16rA5E!
-ScintillaConstants at: 'SCI_GETCARETPERIOD' put: 16r81B!
-ScintillaConstants at: 'SCI_GETCARETSTICKY' put: 16r999!
-ScintillaConstants at: 'SCI_GETCARETSTYLE' put: 16r9D1!
-ScintillaConstants at: 'SCI_GETCARETWIDTH' put: 16r88D!
-ScintillaConstants at: 'SCI_GETCHARACTERCATEGORYOPTIMIZATION' put: 16rAA1!
-ScintillaConstants at: 'SCI_GETCHARACTERPOINTER' put: 16r9D8!
-ScintillaConstants at: 'SCI_GETCHARAT' put: 16r7D7!
-ScintillaConstants at: 'SCI_GETCODEPAGE' put: 16r859!
-ScintillaConstants at: 'SCI_GETCOLUMN' put: 16r851!
-ScintillaConstants at: 'SCI_GETCOMMANDEVENTS' put: 16rA9E!
-ScintillaConstants at: 'SCI_GETCONTROLCHARSYMBOL' put: 16r955!
-ScintillaConstants at: 'SCI_GETCURLINE' put: 16r7EB!
-ScintillaConstants at: 'SCI_GETCURRENTPOS' put: 16r7D8!
-ScintillaConstants at: 'SCI_GETCURSOR' put: 16r953!
-ScintillaConstants at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: 16rAA3!
-ScintillaConstants at: 'SCI_GETDIRECTFUNCTION' put: 16r888!
-ScintillaConstants at: 'SCI_GETDIRECTPOINTER' put: 16r889!
-ScintillaConstants at: 'SCI_GETDOCPOINTER' put: 16r935!
-ScintillaConstants at: 'SCI_GETDOCUMENTOPTIONS' put: 16r94B!
-ScintillaConstants at: 'SCI_GETEDGECOLOUR' put: 16r93C!
-ScintillaConstants at: 'SCI_GETEDGECOLUMN' put: 16r938!
-ScintillaConstants at: 'SCI_GETEDGEMODE' put: 16r93A!
-ScintillaConstants at: 'SCI_GETENDATLASTLINE' put: 16r8E6!
-ScintillaConstants at: 'SCI_GETENDSTYLED' put: 16r7EC!
-ScintillaConstants at: 'SCI_GETEOLMODE' put: 16r7EE!
-ScintillaConstants at: 'SCI_GETEXTRAASCENT' put: 16r9DE!
-ScintillaConstants at: 'SCI_GETEXTRADESCENT' put: 16r9E0!
-ScintillaConstants at: 'SCI_GETFIRSTVISIBLELINE' put: 16r868!
-ScintillaConstants at: 'SCI_GETFOCUS' put: 16r94D!
-ScintillaConstants at: 'SCI_GETFOLDEXPANDED' put: 16r8B6!
-ScintillaConstants at: 'SCI_GETFOLDLEVEL' put: 16r8AF!
-ScintillaConstants at: 'SCI_GETFOLDPARENT' put: 16r8B1!
-ScintillaConstants at: 'SCI_GETFONTQUALITY' put: 16rA34!
-ScintillaConstants at: 'SCI_GETGAPPOSITION' put: 16rA54!
-ScintillaConstants at: 'SCI_GETHIGHLIGHTGUIDE' put: 16r857!
-ScintillaConstants at: 'SCI_GETHOTSPOTACTIVEBACK' put: 16r9BF!
-ScintillaConstants at: 'SCI_GETHOTSPOTACTIVEFORE' put: 16r9BE!
-ScintillaConstants at: 'SCI_GETHOTSPOTACTIVEUNDERLINE' put: 16r9C0!
-ScintillaConstants at: 'SCI_GETHOTSPOTSINGLELINE' put: 16r9C1!
-ScintillaConstants at: 'SCI_GETHSCROLLBAR' put: 16r853!
-ScintillaConstants at: 'SCI_GETIDENTIFIER' put: 16rA3F!
-ScintillaConstants at: 'SCI_GETIDLESTYLING' put: 16rA85!
-ScintillaConstants at: 'SCI_GETIMEINTERACTION' put: 16rA76!
-ScintillaConstants at: 'SCI_GETINDENT' put: 16r84B!
-ScintillaConstants at: 'SCI_GETINDENTATIONGUIDES' put: 16r855!
-ScintillaConstants at: 'SCI_GETINDICATORCURRENT' put: 16r9C5!
-ScintillaConstants at: 'SCI_GETINDICATORVALUE' put: 16r9C7!
-ScintillaConstants at: 'SCI_GETKEYSUNICODE' put: 16r9DA!
-ScintillaConstants at: 'SCI_GETLASTCHILD' put: 16r8B0!
-ScintillaConstants at: 'SCI_GETLAYOUTCACHE' put: 16r8E1!
-ScintillaConstants at: 'SCI_GETLENGTH' put: 16r7D6!
-ScintillaConstants at: 'SCI_GETLEXER' put: 16rFA2!
-ScintillaConstants at: 'SCI_GETLEXERLANGUAGE' put: 16rFAC!
-ScintillaConstants at: 'SCI_GETLINE' put: 16r869!
-ScintillaConstants at: 'SCI_GETLINECHARACTERINDEX' put: 16rA96!
-ScintillaConstants at: 'SCI_GETLINECOUNT' put: 16r86A!
-ScintillaConstants at: 'SCI_GETLINEENDPOSITION' put: 16r858!
-ScintillaConstants at: 'SCI_GETLINEENDTYPESACTIVE' put: 16rA62!
-ScintillaConstants at: 'SCI_GETLINEENDTYPESALLOWED' put: 16rA61!
-ScintillaConstants at: 'SCI_GETLINEENDTYPESSUPPORTED' put: 16rFB2!
-ScintillaConstants at: 'SCI_GETLINEINDENTATION' put: 16r84F!
-ScintillaConstants at: 'SCI_GETLINEINDENTPOSITION' put: 16r850!
-ScintillaConstants at: 'SCI_GETLINESELENDPOSITION' put: 16r979!
-ScintillaConstants at: 'SCI_GETLINESELSTARTPOSITION' put: 16r978!
-ScintillaConstants at: 'SCI_GETLINESTATE' put: 16r82D!
-ScintillaConstants at: 'SCI_GETLINEVISIBLE' put: 16r8B4!
-ScintillaConstants at: 'SCI_GETMAINSELECTION' put: 16rA0F!
-ScintillaConstants at: 'SCI_GETMARGINBACKN' put: 16r8CB!
-ScintillaConstants at: 'SCI_GETMARGINCURSORN' put: 16r8C9!
-ScintillaConstants at: 'SCI_GETMARGINLEFT' put: 16r86C!
-ScintillaConstants at: 'SCI_GETMARGINMASKN' put: 16r8C5!
-ScintillaConstants at: 'SCI_GETMARGINOPTIONS' put: 16r9FD!
-ScintillaConstants at: 'SCI_GETMARGINRIGHT' put: 16r86E!
-ScintillaConstants at: 'SCI_GETMARGINS' put: 16r8CD!
-ScintillaConstants at: 'SCI_GETMARGINSENSITIVEN' put: 16r8C7!
-ScintillaConstants at: 'SCI_GETMARGINTYPEN' put: 16r8C1!
-ScintillaConstants at: 'SCI_GETMARGINWIDTHN' put: 16r8C3!
-ScintillaConstants at: 'SCI_GETMAXLINESTATE' put: 16r82E!
-ScintillaConstants at: 'SCI_GETMODEVENTMASK' put: 16r94A!
-ScintillaConstants at: 'SCI_GETMODIFY' put: 16r86F!
-ScintillaConstants at: 'SCI_GETMOUSEDOWNCAPTURES' put: 16r951!
-ScintillaConstants at: 'SCI_GETMOUSEDWELLTIME' put: 16r8D9!
-ScintillaConstants at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 16rA6D!
-ScintillaConstants at: 'SCI_GETMOUSEWHEELCAPTURES' put: 16rA89!
-ScintillaConstants at: 'SCI_GETMOVEEXTENDSSELECTION' put: 16rA92!
-ScintillaConstants at: 'SCI_GETMULTIPASTE' put: 16rA37!
-ScintillaConstants at: 'SCI_GETMULTIPLESELECTION' put: 16rA04!
-ScintillaConstants at: 'SCI_GETNAMEDSTYLES' put: 16rFBD!
-ScintillaConstants at: 'SCI_GETNEXTTABSTOP' put: 16rA75!
-ScintillaConstants at: 'SCI_GETOVERTYPE' put: 16r88B!
-ScintillaConstants at: 'SCI_GETPASTECONVERTENDINGS' put: 16r9A4!
-ScintillaConstants at: 'SCI_GETPHASESDRAW' put: 16rA71!
-ScintillaConstants at: 'SCI_GETPOSITIONCACHE' put: 16r9D3!
-ScintillaConstants at: 'SCI_GETPRIMARYSTYLEFROMSTYLE' put: 16rFBC!
-ScintillaConstants at: 'SCI_GETPRINTCOLOURMODE' put: 16r865!
-ScintillaConstants at: 'SCI_GETPRINTMAGNIFICATION' put: 16r863!
-ScintillaConstants at: 'SCI_GETPRINTWRAPMODE' put: 16r967!
-ScintillaConstants at: 'SCI_GETPROPERTY' put: 16rFA8!
-ScintillaConstants at: 'SCI_GETPROPERTYEXPANDED' put: 16rFA9!
-ScintillaConstants at: 'SCI_GETPROPERTYINT' put: 16rFAA!
-ScintillaConstants at: 'SCI_GETPUNCTUATIONCHARS' put: 16rA59!
-ScintillaConstants at: 'SCI_GETRANGEPOINTER' put: 16rA53!
-ScintillaConstants at: 'SCI_GETREADONLY' put: 16r85C!
-ScintillaConstants at: 'SCI_GETRECTANGULARSELECTIONANCHOR' put: 16rA1F!
-ScintillaConstants at: 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE' put: 16rA23!
-ScintillaConstants at: 'SCI_GETRECTANGULARSELECTIONCARET' put: 16rA1D!
-ScintillaConstants at: 'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' put: 16rA21!
-ScintillaConstants at: 'SCI_GETRECTANGULARSELECTIONMODIFIER' put: 16rA27!
-ScintillaConstants at: 'SCI_GETREPRESENTATION' put: 16rA6A!
-ScintillaConstants at: 'SCI_GETSCROLLWIDTH' put: 16r8E3!
-ScintillaConstants at: 'SCI_GETSCROLLWIDTHTRACKING' put: 16r9D5!
-ScintillaConstants at: 'SCI_GETSEARCHFLAGS' put: 16r897!
-ScintillaConstants at: 'SCI_GETSELALPHA' put: 16r9AD!
-ScintillaConstants at: 'SCI_GETSELECTIONEMPTY' put: 16rA5A!
-ScintillaConstants at: 'SCI_GETSELECTIONEND' put: 16r861!
-ScintillaConstants at: 'SCI_GETSELECTIONMODE' put: 16r977!
-ScintillaConstants at: 'SCI_GETSELECTIONNANCHOR' put: 16rA13!
-ScintillaConstants at: 'SCI_GETSELECTIONNANCHORVIRTUALSPACE' put: 16rA17!
-ScintillaConstants at: 'SCI_GETSELECTIONNCARET' put: 16rA11!
-ScintillaConstants at: 'SCI_GETSELECTIONNCARETVIRTUALSPACE' put: 16rA15!
-ScintillaConstants at: 'SCI_GETSELECTIONNEND' put: 16rA1B!
-ScintillaConstants at: 'SCI_GETSELECTIONNENDVIRTUALSPACE' put: 16rAA7!
-ScintillaConstants at: 'SCI_GETSELECTIONNSTART' put: 16rA19!
-ScintillaConstants at: 'SCI_GETSELECTIONNSTARTVIRTUALSPACE' put: 16rAA6!
-ScintillaConstants at: 'SCI_GETSELECTIONS' put: 16rA0A!
-ScintillaConstants at: 'SCI_GETSELECTIONSTART' put: 16r85F!
-ScintillaConstants at: 'SCI_GETSELEOLFILLED' put: 16r9AF!
-ScintillaConstants at: 'SCI_GETSELTEXT' put: 16r871!
-ScintillaConstants at: 'SCI_GETSTATUS' put: 16r94F!
-ScintillaConstants at: 'SCI_GETSTYLEAT' put: 16r7DA!
-ScintillaConstants at: 'SCI_GETSTYLEBITS' put: 16r82B!
-ScintillaConstants at: 'SCI_GETSTYLEBITSNEEDED' put: 16rFAB!
-ScintillaConstants at: 'SCI_GETSTYLEDTEXT' put: 16r7DF!
-ScintillaConstants at: 'SCI_GETSTYLEFROMSUBSTYLE' put: 16rFBB!
-ScintillaConstants at: 'SCI_GETSUBSTYLEBASES' put: 16rFBA!
-ScintillaConstants at: 'SCI_GETSUBSTYLESLENGTH' put: 16rFB6!
-ScintillaConstants at: 'SCI_GETSUBSTYLESSTART' put: 16rFB5!
-ScintillaConstants at: 'SCI_GETTABDRAWMODE' put: 16rA8A!
-ScintillaConstants at: 'SCI_GETTABINDENTS' put: 16r8D5!
-ScintillaConstants at: 'SCI_GETTABMINIMUMWIDTH' put: 16rAA5!
-ScintillaConstants at: 'SCI_GETTABWIDTH' put: 16r849!
-ScintillaConstants at: 'SCI_GETTAG' put: 16rA38!
-ScintillaConstants at: 'SCI_GETTARGETEND' put: 16r891!
-ScintillaConstants at: 'SCI_GETTARGETENDVIRTUALSPACE' put: 16rAAB!
-ScintillaConstants at: 'SCI_GETTARGETSTART' put: 16r88F!
-ScintillaConstants at: 'SCI_GETTARGETSTARTVIRTUALSPACE' put: 16rAA9!
-ScintillaConstants at: 'SCI_GETTARGETTEXT' put: 16rA7F!
-ScintillaConstants at: 'SCI_GETTECHNOLOGY' put: 16rA47!
-ScintillaConstants at: 'SCI_GETTEXT' put: 16r886!
-ScintillaConstants at: 'SCI_GETTEXTLENGTH' put: 16r887!
-ScintillaConstants at: 'SCI_GETTEXTRANGE' put: 16r872!
-ScintillaConstants at: 'SCI_GETTWOPHASEDRAW' put: 16r8EB!
-ScintillaConstants at: 'SCI_GETUNDOCOLLECTION' put: 16r7E3!
-ScintillaConstants at: 'SCI_GETUSETABS' put: 16r84D!
-ScintillaConstants at: 'SCI_GETVIEWEOL' put: 16r933!
-ScintillaConstants at: 'SCI_GETVIEWWS' put: 16r7E4!
-ScintillaConstants at: 'SCI_GETVIRTUALSPACEOPTIONS' put: 16rA25!
-ScintillaConstants at: 'SCI_GETVSCROLLBAR' put: 16r8E9!
-ScintillaConstants at: 'SCI_GETWHITESPACECHARS' put: 16rA57!
-ScintillaConstants at: 'SCI_GETWHITESPACESIZE' put: 16r827!
-ScintillaConstants at: 'SCI_GETWORDCHARS' put: 16rA56!
-ScintillaConstants at: 'SCI_GETWRAPINDENTMODE' put: 16r9A9!
-ScintillaConstants at: 'SCI_GETWRAPMODE' put: 16r8DD!
-ScintillaConstants at: 'SCI_GETWRAPSTARTINDENT' put: 16r9A1!
-ScintillaConstants at: 'SCI_GETWRAPVISUALFLAGS' put: 16r99D!
-ScintillaConstants at: 'SCI_GETWRAPVISUALFLAGSLOCATION' put: 16r99F!
-ScintillaConstants at: 'SCI_GETXOFFSET' put: 16r95E!
-ScintillaConstants at: 'SCI_GETZOOM' put: 16r946!
-ScintillaConstants at: 'SCI_GOTOLINE' put: 16r7E8!
-ScintillaConstants at: 'SCI_GOTOPOS' put: 16r7E9!
-ScintillaConstants at: 'SCI_GRABFOCUS' put: 16r960!
-ScintillaConstants at: 'SCI_HIDELINES' put: 16r8B3!
-ScintillaConstants at: 'SCI_HIDESELECTION' put: 16r873!
-ScintillaConstants at: 'SCI_HOME' put: 16r908!
-ScintillaConstants at: 'SCI_HOMEDISPLAY' put: 16r929!
-ScintillaConstants at: 'SCI_HOMEDISPLAYEXTEND' put: 16r92A!
-ScintillaConstants at: 'SCI_HOMEEXTEND' put: 16r909!
-ScintillaConstants at: 'SCI_HOMERECTEXTEND' put: 16r97E!
-ScintillaConstants at: 'SCI_HOMEWRAP' put: 16r92D!
-ScintillaConstants at: 'SCI_HOMEWRAPEXTEND' put: 16r992!
-ScintillaConstants at: 'SCI_INDEXPOSITIONFROMLINE' put: 16rA9A!
-ScintillaConstants at: 'SCI_INDICATORALLONFOR' put: 16r9CA!
-ScintillaConstants at: 'SCI_INDICATORCLEARRANGE' put: 16r9C9!
-ScintillaConstants at: 'SCI_INDICATOREND' put: 16r9CD!
-ScintillaConstants at: 'SCI_INDICATORFILLRANGE' put: 16r9C8!
-ScintillaConstants at: 'SCI_INDICATORSTART' put: 16r9CC!
-ScintillaConstants at: 'SCI_INDICATORVALUEAT' put: 16r9CB!
-ScintillaConstants at: 'SCI_INDICGETALPHA' put: 16r9DC!
-ScintillaConstants at: 'SCI_INDICGETFLAGS' put: 16rA7D!
-ScintillaConstants at: 'SCI_INDICGETFORE' put: 16r823!
-ScintillaConstants at: 'SCI_INDICGETHOVERFORE' put: 16rA7B!
-ScintillaConstants at: 'SCI_INDICGETHOVERSTYLE' put: 16rA79!
-ScintillaConstants at: 'SCI_INDICGETOUTLINEALPHA' put: 16r9FF!
-ScintillaConstants at: 'SCI_INDICGETSTYLE' put: 16r821!
-ScintillaConstants at: 'SCI_INDICGETUNDER' put: 16r9CF!
-ScintillaConstants at: 'SCI_INDICSETALPHA' put: 16r9DB!
-ScintillaConstants at: 'SCI_INDICSETFLAGS' put: 16rA7C!
-ScintillaConstants at: 'SCI_INDICSETFORE' put: 16r822!
-ScintillaConstants at: 'SCI_INDICSETHOVERFORE' put: 16rA7A!
-ScintillaConstants at: 'SCI_INDICSETHOVERSTYLE' put: 16rA78!
-ScintillaConstants at: 'SCI_INDICSETOUTLINEALPHA' put: 16r9FE!
-ScintillaConstants at: 'SCI_INDICSETSTYLE' put: 16r820!
-ScintillaConstants at: 'SCI_INDICSETUNDER' put: 16r9CE!
-ScintillaConstants at: 'SCI_INSERTTEXT' put: 16r7D3!
-ScintillaConstants at: 'SCI_ISRANGEWORD' put: 16rA83!
-ScintillaConstants at: 'SCI_LEXER_START' put: 16rFA0!
-ScintillaConstants at: 'SCI_LINECOPY' put: 16r997!
-ScintillaConstants at: 'SCI_LINECUT' put: 16r921!
-ScintillaConstants at: 'SCI_LINEDELETE' put: 16r922!
-ScintillaConstants at: 'SCI_LINEDOWN' put: 16r8FC!
-ScintillaConstants at: 'SCI_LINEDOWNEXTEND' put: 16r8FD!
-ScintillaConstants at: 'SCI_LINEDOWNRECTEXTEND' put: 16r97A!
-ScintillaConstants at: 'SCI_LINEDUPLICATE' put: 16r964!
-ScintillaConstants at: 'SCI_LINEEND' put: 16r90A!
-ScintillaConstants at: 'SCI_LINEENDDISPLAY' put: 16r92B!
-ScintillaConstants at: 'SCI_LINEENDDISPLAYEXTEND' put: 16r92C!
-ScintillaConstants at: 'SCI_LINEENDEXTEND' put: 16r90B!
-ScintillaConstants at: 'SCI_LINEENDRECTEXTEND' put: 16r980!
-ScintillaConstants at: 'SCI_LINEENDWRAP' put: 16r993!
-ScintillaConstants at: 'SCI_LINEENDWRAPEXTEND' put: 16r994!
-ScintillaConstants at: 'SCI_LINEFROMINDEXPOSITION' put: 16rA99!
-ScintillaConstants at: 'SCI_LINEFROMPOSITION' put: 16r876!
-ScintillaConstants at: 'SCI_LINELENGTH' put: 16r92E!
-ScintillaConstants at: 'SCI_LINEREVERSE' put: 16r932!
-ScintillaConstants at: 'SCI_LINESCROLL' put: 16r878!
-ScintillaConstants at: 'SCI_LINESCROLLDOWN' put: 16r926!
-ScintillaConstants at: 'SCI_LINESCROLLUP' put: 16r927!
-ScintillaConstants at: 'SCI_LINESJOIN' put: 16r8F0!
-ScintillaConstants at: 'SCI_LINESONSCREEN' put: 16r942!
-ScintillaConstants at: 'SCI_LINESSPLIT' put: 16r8F1!
-ScintillaConstants at: 'SCI_LINETRANSPOSE' put: 16r923!
-ScintillaConstants at: 'SCI_LINEUP' put: 16r8FE!
-ScintillaConstants at: 'SCI_LINEUPEXTEND' put: 16r8FF!
-ScintillaConstants at: 'SCI_LINEUPRECTEXTEND' put: 16r97B!
-ScintillaConstants at: 'SCI_LOADLEXERLIBRARY' put: 16rFA7!
-ScintillaConstants at: 'SCI_LOWERCASE' put: 16r924!
-ScintillaConstants at: 'SCI_MARGINGETSTYLE' put: 16r9E5!
-ScintillaConstants at: 'SCI_MARGINGETSTYLEOFFSET' put: 16r9EA!
-ScintillaConstants at: 'SCI_MARGINGETSTYLES' put: 16r9E7!
-ScintillaConstants at: 'SCI_MARGINGETTEXT' put: 16r9E3!
-ScintillaConstants at: 'SCI_MARGINSETSTYLE' put: 16r9E4!
-ScintillaConstants at: 'SCI_MARGINSETSTYLEOFFSET' put: 16r9E9!
-ScintillaConstants at: 'SCI_MARGINSETSTYLES' put: 16r9E6!
-ScintillaConstants at: 'SCI_MARGINSETTEXT' put: 16r9E2!
-ScintillaConstants at: 'SCI_MARGINTEXTCLEARALL' put: 16r9E8!
-ScintillaConstants at: 'SCI_MARKERADD' put: 16r7FB!
-ScintillaConstants at: 'SCI_MARKERADDSET' put: 16r9A2!
-ScintillaConstants at: 'SCI_MARKERDEFINE' put: 16r7F8!
-ScintillaConstants at: 'SCI_MARKERDEFINEPIXMAP' put: 16r801!
-ScintillaConstants at: 'SCI_MARKERDEFINERGBAIMAGE' put: 16rA42!
-ScintillaConstants at: 'SCI_MARKERDELETE' put: 16r7FC!
-ScintillaConstants at: 'SCI_MARKERDELETEALL' put: 16r7FD!
-ScintillaConstants at: 'SCI_MARKERDELETEHANDLE' put: 16r7E2!
-ScintillaConstants at: 'SCI_MARKERENABLEHIGHLIGHT' put: 16r8F5!
-ScintillaConstants at: 'SCI_MARKERGET' put: 16r7FE!
-ScintillaConstants at: 'SCI_MARKERHANDLEFROMLINE' put: 16rAAC!
-ScintillaConstants at: 'SCI_MARKERLINEFROMHANDLE' put: 16r7E1!
-ScintillaConstants at: 'SCI_MARKERNEXT' put: 16r7FF!
-ScintillaConstants at: 'SCI_MARKERNUMBERFROMLINE' put: 16rAAD!
-ScintillaConstants at: 'SCI_MARKERPREVIOUS' put: 16r800!
-ScintillaConstants at: 'SCI_MARKERSETALPHA' put: 16r9AC!
-ScintillaConstants at: 'SCI_MARKERSETBACK' put: 16r7FA!
-ScintillaConstants at: 'SCI_MARKERSETBACKSELECTED' put: 16r8F4!
-ScintillaConstants at: 'SCI_MARKERSETFORE' put: 16r7F9!
-ScintillaConstants at: 'SCI_MARKERSYMBOLDEFINED' put: 16r9E1!
-ScintillaConstants at: 'SCI_MOVECARETINSIDEVIEW' put: 16r961!
-ScintillaConstants at: 'SCI_MOVESELECTEDLINESDOWN' put: 16rA3D!
-ScintillaConstants at: 'SCI_MOVESELECTEDLINESUP' put: 16rA3C!
-ScintillaConstants at: 'SCI_MULTIEDGEADDLINE' put: 16rA86!
-ScintillaConstants at: 'SCI_MULTIEDGECLEARALL' put: 16rA87!
-ScintillaConstants at: 'SCI_MULTIPLESELECTADDEACH' put: 16rA81!
-ScintillaConstants at: 'SCI_MULTIPLESELECTADDNEXT' put: 16rA80!
-ScintillaConstants at: 'SCI_NAMEOFSTYLE' put: 16rFBE!
-ScintillaConstants at: 'SCI_NEWLINE' put: 16r919!
-ScintillaConstants at: 'SCI_NULL' put: 16r87C!
-ScintillaConstants at: 'SCI_OPTIONAL_START' put: 16rBB8!
-ScintillaConstants at: 'SCI_PAGEDOWN' put: 16r912!
-ScintillaConstants at: 'SCI_PAGEDOWNEXTEND' put: 16r913!
-ScintillaConstants at: 'SCI_PAGEDOWNRECTEXTEND' put: 16r982!
-ScintillaConstants at: 'SCI_PAGEUP' put: 16r910!
-ScintillaConstants at: 'SCI_PAGEUPEXTEND' put: 16r911!
-ScintillaConstants at: 'SCI_PAGEUPRECTEXTEND' put: 16r981!
-ScintillaConstants at: 'SCI_PARADOWN' put: 16r96D!
-ScintillaConstants at: 'SCI_PARADOWNEXTEND' put: 16r96E!
-ScintillaConstants at: 'SCI_PARAUP' put: 16r96F!
-ScintillaConstants at: 'SCI_PARAUPEXTEND' put: 16r970!
-ScintillaConstants at: 'SCI_PASTE' put: 16r883!
-ScintillaConstants at: 'SCI_POINTXFROMPOSITION' put: 16r874!
-ScintillaConstants at: 'SCI_POINTYFROMPOSITION' put: 16r875!
-ScintillaConstants at: 'SCI_POSITIONAFTER' put: 16r972!
-ScintillaConstants at: 'SCI_POSITIONBEFORE' put: 16r971!
-ScintillaConstants at: 'SCI_POSITIONFROMLINE' put: 16r877!
-ScintillaConstants at: 'SCI_POSITIONFROMPOINT' put: 16r7E6!
-ScintillaConstants at: 'SCI_POSITIONFROMPOINTCLOSE' put: 16r7E7!
-ScintillaConstants at: 'SCI_POSITIONRELATIVE' put: 16rA6E!
-ScintillaConstants at: 'SCI_POSITIONRELATIVECODEUNITS' put: 16rA9C!
-ScintillaConstants at: 'SCI_PRIVATELEXERCALL' put: 16rFAD!
-ScintillaConstants at: 'SCI_PROPERTYNAMES' put: 16rFAE!
-ScintillaConstants at: 'SCI_PROPERTYTYPE' put: 16rFAF!
-ScintillaConstants at: 'SCI_REDO' put: 16r7DB!
-ScintillaConstants at: 'SCI_REGISTERIMAGE' put: 16r965!
-ScintillaConstants at: 'SCI_REGISTERRGBAIMAGE' put: 16rA43!
-ScintillaConstants at: 'SCI_RELEASEALLEXTENDEDSTYLES' put: 16r9F8!
-ScintillaConstants at: 'SCI_RELEASEDOCUMENT' put: 16r949!
-ScintillaConstants at: 'SCI_RELEASELINECHARACTERINDEX' put: 16rA98!
-ScintillaConstants at: 'SCI_REPLACESEL' put: 16r87A!
-ScintillaConstants at: 'SCI_REPLACETARGET' put: 16r892!
-ScintillaConstants at: 'SCI_REPLACETARGETRE' put: 16r893!
-ScintillaConstants at: 'SCI_RGBAIMAGESETHEIGHT' put: 16rA41!
-ScintillaConstants at: 'SCI_RGBAIMAGESETSCALE' put: 16rA5B!
-ScintillaConstants at: 'SCI_RGBAIMAGESETWIDTH' put: 16rA40!
-ScintillaConstants at: 'SCI_ROTATESELECTION' put: 16rA2E!
-ScintillaConstants at: 'SCI_SCROLLCARET' put: 16r879!
-ScintillaConstants at: 'SCI_SCROLLRANGE' put: 16rA09!
-ScintillaConstants at: 'SCI_SCROLLTOEND' put: 16rA45!
-ScintillaConstants at: 'SCI_SCROLLTOSTART' put: 16rA44!
-ScintillaConstants at: 'SCI_SEARCHANCHOR' put: 16r93E!
-ScintillaConstants at: 'SCI_SEARCHINTARGET' put: 16r895!
-ScintillaConstants at: 'SCI_SEARCHNEXT' put: 16r93F!
-ScintillaConstants at: 'SCI_SEARCHPREV' put: 16r940!
-ScintillaConstants at: 'SCI_SELECTALL' put: 16r7DD!
-ScintillaConstants at: 'SCI_SELECTIONDUPLICATE' put: 16r9A5!
-ScintillaConstants at: 'SCI_SELECTIONISRECTANGLE' put: 16r944!
-ScintillaConstants at: 'SCI_SETACCESSIBILITY' put: 16rA8E!
-ScintillaConstants at: 'SCI_SETADDITIONALCARETFORE' put: 16rA2C!
-ScintillaConstants at: 'SCI_SETADDITIONALCARETSBLINK' put: 16rA07!
-ScintillaConstants at: 'SCI_SETADDITIONALCARETSVISIBLE' put: 16rA30!
-ScintillaConstants at: 'SCI_SETADDITIONALSELALPHA' put: 16rA2A!
-ScintillaConstants at: 'SCI_SETADDITIONALSELBACK' put: 16rA29!
-ScintillaConstants at: 'SCI_SETADDITIONALSELECTIONTYPING' put: 16rA05!
-ScintillaConstants at: 'SCI_SETADDITIONALSELFORE' put: 16rA28!
-ScintillaConstants at: 'SCI_SETANCHOR' put: 16r7EA!
-ScintillaConstants at: 'SCI_SETAUTOMATICFOLD' put: 16rA67!
-ScintillaConstants at: 'SCI_SETBACKSPACEUNINDENTS' put: 16r8D6!
-ScintillaConstants at: 'SCI_SETBIDIRECTIONAL' put: 16rA95!
-ScintillaConstants at: 'SCI_SETBUFFEREDDRAW' put: 16r7F3!
-ScintillaConstants at: 'SCI_SETCARETFORE' put: 16r815!
-ScintillaConstants at: 'SCI_SETCARETLINEBACK' put: 16r832!
-ScintillaConstants at: 'SCI_SETCARETLINEBACKALPHA' put: 16r9A6!
-ScintillaConstants at: 'SCI_SETCARETLINEFRAME' put: 16rA91!
-ScintillaConstants at: 'SCI_SETCARETLINEVISIBLE' put: 16r830!
-ScintillaConstants at: 'SCI_SETCARETLINEVISIBLEALWAYS' put: 16rA5F!
-ScintillaConstants at: 'SCI_SETCARETPERIOD' put: 16r81C!
-ScintillaConstants at: 'SCI_SETCARETSTICKY' put: 16r99A!
-ScintillaConstants at: 'SCI_SETCARETSTYLE' put: 16r9D0!
-ScintillaConstants at: 'SCI_SETCARETWIDTH' put: 16r88C!
-ScintillaConstants at: 'SCI_SETCHARACTERCATEGORYOPTIMIZATION' put: 16rAA0!
-ScintillaConstants at: 'SCI_SETCHARSDEFAULT' put: 16r98C!
-ScintillaConstants at: 'SCI_SETCODEPAGE' put: 16r7F5!
-ScintillaConstants at: 'SCI_SETCOMMANDEVENTS' put: 16rA9D!
-ScintillaConstants at: 'SCI_SETCONTROLCHARSYMBOL' put: 16r954!
-ScintillaConstants at: 'SCI_SETCURRENTPOS' put: 16r85D!
-ScintillaConstants at: 'SCI_SETCURSOR' put: 16r952!
-ScintillaConstants at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: 16rAA2!
-ScintillaConstants at: 'SCI_SETDOCPOINTER' put: 16r936!
-ScintillaConstants at: 'SCI_SETEDGECOLOUR' put: 16r93D!
-ScintillaConstants at: 'SCI_SETEDGECOLUMN' put: 16r939!
-ScintillaConstants at: 'SCI_SETEDGEMODE' put: 16r93B!
-ScintillaConstants at: 'SCI_SETEMPTYSELECTION' put: 16r9FC!
-ScintillaConstants at: 'SCI_SETENDATLASTLINE' put: 16r8E5!
-ScintillaConstants at: 'SCI_SETEOLMODE' put: 16r7EF!
-ScintillaConstants at: 'SCI_SETEXTRAASCENT' put: 16r9DD!
-ScintillaConstants at: 'SCI_SETEXTRADESCENT' put: 16r9DF!
-ScintillaConstants at: 'SCI_SETFIRSTVISIBLELINE' put: 16rA35!
-ScintillaConstants at: 'SCI_SETFOCUS' put: 16r94C!
-ScintillaConstants at: 'SCI_SETFOLDEXPANDED' put: 16r8B5!
-ScintillaConstants at: 'SCI_SETFOLDFLAGS' put: 16r8B9!
-ScintillaConstants at: 'SCI_SETFOLDLEVEL' put: 16r8AE!
-ScintillaConstants at: 'SCI_SETFOLDMARGINCOLOUR' put: 16r8F2!
-ScintillaConstants at: 'SCI_SETFOLDMARGINHICOLOUR' put: 16r8F3!
-ScintillaConstants at: 'SCI_SETFONTQUALITY' put: 16rA33!
-ScintillaConstants at: 'SCI_SETHIGHLIGHTGUIDE' put: 16r856!
-ScintillaConstants at: 'SCI_SETHOTSPOTACTIVEBACK' put: 16r96B!
-ScintillaConstants at: 'SCI_SETHOTSPOTACTIVEFORE' put: 16r96A!
-ScintillaConstants at: 'SCI_SETHOTSPOTACTIVEUNDERLINE' put: 16r96C!
-ScintillaConstants at: 'SCI_SETHOTSPOTSINGLELINE' put: 16r975!
-ScintillaConstants at: 'SCI_SETHSCROLLBAR' put: 16r852!
-ScintillaConstants at: 'SCI_SETIDENTIFIER' put: 16rA3E!
-ScintillaConstants at: 'SCI_SETIDENTIFIERS' put: 16rFB8!
-ScintillaConstants at: 'SCI_SETIDLESTYLING' put: 16rA84!
-ScintillaConstants at: 'SCI_SETILEXER' put: 16rFC1!
-ScintillaConstants at: 'SCI_SETIMEINTERACTION' put: 16rA77!
-ScintillaConstants at: 'SCI_SETINDENT' put: 16r84A!
-ScintillaConstants at: 'SCI_SETINDENTATIONGUIDES' put: 16r854!
-ScintillaConstants at: 'SCI_SETINDICATORCURRENT' put: 16r9C4!
-ScintillaConstants at: 'SCI_SETINDICATORVALUE' put: 16r9C6!
-ScintillaConstants at: 'SCI_SETKEYSUNICODE' put: 16r9D9!
-ScintillaConstants at: 'SCI_SETKEYWORDS' put: 16rFA5!
-ScintillaConstants at: 'SCI_SETLAYOUTCACHE' put: 16r8E0!
-ScintillaConstants at: 'SCI_SETLENGTHFORENCODE' put: 16r990!
-ScintillaConstants at: 'SCI_SETLEXER' put: 16rFA1!
-ScintillaConstants at: 'SCI_SETLEXERLANGUAGE' put: 16rFA6!
-ScintillaConstants at: 'SCI_SETLINEENDTYPESALLOWED' put: 16rA60!
-ScintillaConstants at: 'SCI_SETLINEINDENTATION' put: 16r84E!
-ScintillaConstants at: 'SCI_SETLINESTATE' put: 16r82C!
-ScintillaConstants at: 'SCI_SETMAINSELECTION' put: 16rA0E!
-ScintillaConstants at: 'SCI_SETMARGINBACKN' put: 16r8CA!
-ScintillaConstants at: 'SCI_SETMARGINCURSORN' put: 16r8C8!
-ScintillaConstants at: 'SCI_SETMARGINLEFT' put: 16r86B!
-ScintillaConstants at: 'SCI_SETMARGINMASKN' put: 16r8C4!
-ScintillaConstants at: 'SCI_SETMARGINOPTIONS' put: 16r9EB!
-ScintillaConstants at: 'SCI_SETMARGINRIGHT' put: 16r86D!
-ScintillaConstants at: 'SCI_SETMARGINS' put: 16r8CC!
-ScintillaConstants at: 'SCI_SETMARGINSENSITIVEN' put: 16r8C6!
-ScintillaConstants at: 'SCI_SETMARGINTYPEN' put: 16r8C0!
-ScintillaConstants at: 'SCI_SETMARGINWIDTHN' put: 16r8C2!
-ScintillaConstants at: 'SCI_SETMODEVENTMASK' put: 16r937!
-ScintillaConstants at: 'SCI_SETMOUSEDOWNCAPTURES' put: 16r950!
-ScintillaConstants at: 'SCI_SETMOUSEDWELLTIME' put: 16r8D8!
-ScintillaConstants at: 'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' put: 16rA6C!
-ScintillaConstants at: 'SCI_SETMOUSEWHEELCAPTURES' put: 16rA88!
-ScintillaConstants at: 'SCI_SETMULTIPASTE' put: 16rA36!
-ScintillaConstants at: 'SCI_SETMULTIPLESELECTION' put: 16rA03!
-ScintillaConstants at: 'SCI_SETOVERTYPE' put: 16r88A!
-ScintillaConstants at: 'SCI_SETPASTECONVERTENDINGS' put: 16r9A3!
-ScintillaConstants at: 'SCI_SETPHASESDRAW' put: 16rA72!
-ScintillaConstants at: 'SCI_SETPOSITIONCACHE' put: 16r9D2!
-ScintillaConstants at: 'SCI_SETPRINTCOLOURMODE' put: 16r864!
-ScintillaConstants at: 'SCI_SETPRINTMAGNIFICATION' put: 16r862!
-ScintillaConstants at: 'SCI_SETPRINTWRAPMODE' put: 16r966!
-ScintillaConstants at: 'SCI_SETPROPERTY' put: 16rFA4!
-ScintillaConstants at: 'SCI_SETPUNCTUATIONCHARS' put: 16rA58!
-ScintillaConstants at: 'SCI_SETREADONLY' put: 16r87B!
-ScintillaConstants at: 'SCI_SETRECTANGULARSELECTIONANCHOR' put: 16rA1E!
-ScintillaConstants at: 'SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE' put: 16rA22!
-ScintillaConstants at: 'SCI_SETRECTANGULARSELECTIONCARET' put: 16rA1C!
-ScintillaConstants at: 'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE' put: 16rA20!
-ScintillaConstants at: 'SCI_SETRECTANGULARSELECTIONMODIFIER' put: 16rA26!
-ScintillaConstants at: 'SCI_SETREPRESENTATION' put: 16rA69!
-ScintillaConstants at: 'SCI_SETSAVEPOINT' put: 16r7DE!
-ScintillaConstants at: 'SCI_SETSCROLLWIDTH' put: 16r8E2!
-ScintillaConstants at: 'SCI_SETSCROLLWIDTHTRACKING' put: 16r9D4!
-ScintillaConstants at: 'SCI_SETSEARCHFLAGS' put: 16r896!
-ScintillaConstants at: 'SCI_SETSEL' put: 16r870!
-ScintillaConstants at: 'SCI_SETSELALPHA' put: 16r9AE!
-ScintillaConstants at: 'SCI_SETSELBACK' put: 16r814!
-ScintillaConstants at: 'SCI_SETSELECTION' put: 16rA0C!
-ScintillaConstants at: 'SCI_SETSELECTIONEND' put: 16r860!
-ScintillaConstants at: 'SCI_SETSELECTIONMODE' put: 16r976!
-ScintillaConstants at: 'SCI_SETSELECTIONNANCHOR' put: 16rA12!
-ScintillaConstants at: 'SCI_SETSELECTIONNANCHORVIRTUALSPACE' put: 16rA16!
-ScintillaConstants at: 'SCI_SETSELECTIONNCARET' put: 16rA10!
-ScintillaConstants at: 'SCI_SETSELECTIONNCARETVIRTUALSPACE' put: 16rA14!
-ScintillaConstants at: 'SCI_SETSELECTIONNEND' put: 16rA1A!
-ScintillaConstants at: 'SCI_SETSELECTIONNSTART' put: 16rA18!
-ScintillaConstants at: 'SCI_SETSELECTIONSTART' put: 16r85E!
-ScintillaConstants at: 'SCI_SETSELEOLFILLED' put: 16r9B0!
-ScintillaConstants at: 'SCI_SETSELFORE' put: 16r813!
-ScintillaConstants at: 'SCI_SETSTATUS' put: 16r94E!
-ScintillaConstants at: 'SCI_SETSTYLEBITS' put: 16r82A!
-ScintillaConstants at: 'SCI_SETSTYLING' put: 16r7F1!
-ScintillaConstants at: 'SCI_SETSTYLINGEX' put: 16r819!
-ScintillaConstants at: 'SCI_SETTABDRAWMODE' put: 16rA8B!
-ScintillaConstants at: 'SCI_SETTABINDENTS' put: 16r8D4!
-ScintillaConstants at: 'SCI_SETTABMINIMUMWIDTH' put: 16rAA4!
-ScintillaConstants at: 'SCI_SETTABWIDTH' put: 16r7F4!
-ScintillaConstants at: 'SCI_SETTARGETEND' put: 16r890!
-ScintillaConstants at: 'SCI_SETTARGETENDVIRTUALSPACE' put: 16rAAA!
-ScintillaConstants at: 'SCI_SETTARGETRANGE' put: 16rA7E!
-ScintillaConstants at: 'SCI_SETTARGETSTART' put: 16r88E!
-ScintillaConstants at: 'SCI_SETTARGETSTARTVIRTUALSPACE' put: 16rAA8!
-ScintillaConstants at: 'SCI_SETTECHNOLOGY' put: 16rA46!
-ScintillaConstants at: 'SCI_SETTEXT' put: 16r885!
-ScintillaConstants at: 'SCI_SETTWOPHASEDRAW' put: 16r8EC!
-ScintillaConstants at: 'SCI_SETUNDOCOLLECTION' put: 16r7DC!
-ScintillaConstants at: 'SCI_SETUSETABS' put: 16r84C!
-ScintillaConstants at: 'SCI_SETVIEWEOL' put: 16r934!
-ScintillaConstants at: 'SCI_SETVIEWWS' put: 16r7E5!
-ScintillaConstants at: 'SCI_SETVIRTUALSPACEOPTIONS' put: 16rA24!
-ScintillaConstants at: 'SCI_SETVISIBLEPOLICY' put: 16r95A!
-ScintillaConstants at: 'SCI_SETVSCROLLBAR' put: 16r8E8!
-ScintillaConstants at: 'SCI_SETWHITESPACEBACK' put: 16r825!
-ScintillaConstants at: 'SCI_SETWHITESPACECHARS' put: 16r98B!
-ScintillaConstants at: 'SCI_SETWHITESPACEFORE' put: 16r824!
-ScintillaConstants at: 'SCI_SETWHITESPACESIZE' put: 16r826!
-ScintillaConstants at: 'SCI_SETWORDCHARS' put: 16r81D!
-ScintillaConstants at: 'SCI_SETWRAPINDENTMODE' put: 16r9A8!
-ScintillaConstants at: 'SCI_SETWRAPMODE' put: 16r8DC!
-ScintillaConstants at: 'SCI_SETWRAPSTARTINDENT' put: 16r9A0!
-ScintillaConstants at: 'SCI_SETWRAPVISUALFLAGS' put: 16r99C!
-ScintillaConstants at: 'SCI_SETWRAPVISUALFLAGSLOCATION' put: 16r99E!
-ScintillaConstants at: 'SCI_SETXCARETPOLICY' put: 16r962!
-ScintillaConstants at: 'SCI_SETXOFFSET' put: 16r95D!
-ScintillaConstants at: 'SCI_SETYCARETPOLICY' put: 16r963!
-ScintillaConstants at: 'SCI_SETZOOM' put: 16r945!
-ScintillaConstants at: 'SCI_SHOWLINES' put: 16r8B2!
-ScintillaConstants at: 'SCI_START' put: 16r7D0!
-ScintillaConstants at: 'SCI_STARTRECORD' put: 16rBB9!
-ScintillaConstants at: 'SCI_STARTSTYLING' put: 16r7F0!
-ScintillaConstants at: 'SCI_STOPRECORD' put: 16rBBA!
-ScintillaConstants at: 'SCI_STUTTEREDPAGEDOWN' put: 16r985!
-ScintillaConstants at: 'SCI_STUTTEREDPAGEDOWNEXTEND' put: 16r986!
-ScintillaConstants at: 'SCI_STUTTEREDPAGEUP' put: 16r983!
-ScintillaConstants at: 'SCI_STUTTEREDPAGEUPEXTEND' put: 16r984!
-ScintillaConstants at: 'SCI_STYLECLEARALL' put: 16r802!
-ScintillaConstants at: 'SCI_STYLEGETBACK' put: 16r9B2!
-ScintillaConstants at: 'SCI_STYLEGETBOLD' put: 16r9B3!
-ScintillaConstants at: 'SCI_STYLEGETCASE' put: 16r9B9!
-ScintillaConstants at: 'SCI_STYLEGETCHANGEABLE' put: 16r9BC!
-ScintillaConstants at: 'SCI_STYLEGETCHARACTERSET' put: 16r9BA!
-ScintillaConstants at: 'SCI_STYLEGETEOLFILLED' put: 16r9B7!
-ScintillaConstants at: 'SCI_STYLEGETFONT' put: 16r9B6!
-ScintillaConstants at: 'SCI_STYLEGETFORE' put: 16r9B1!
-ScintillaConstants at: 'SCI_STYLEGETHOTSPOT' put: 16r9BD!
-ScintillaConstants at: 'SCI_STYLEGETITALIC' put: 16r9B4!
-ScintillaConstants at: 'SCI_STYLEGETSIZE' put: 16r9B5!
-ScintillaConstants at: 'SCI_STYLEGETSIZEFRACTIONAL' put: 16r80E!
-ScintillaConstants at: 'SCI_STYLEGETUNDERLINE' put: 16r9B8!
-ScintillaConstants at: 'SCI_STYLEGETVISIBLE' put: 16r9BB!
-ScintillaConstants at: 'SCI_STYLEGETWEIGHT' put: 16r810!
-ScintillaConstants at: 'SCI_STYLERESETDEFAULT' put: 16r80A!
-ScintillaConstants at: 'SCI_STYLESETBACK' put: 16r804!
-ScintillaConstants at: 'SCI_STYLESETBOLD' put: 16r805!
-ScintillaConstants at: 'SCI_STYLESETCASE' put: 16r80C!
-ScintillaConstants at: 'SCI_STYLESETCHANGEABLE' put: 16r833!
-ScintillaConstants at: 'SCI_STYLESETCHARACTERSET' put: 16r812!
-ScintillaConstants at: 'SCI_STYLESETEOLFILLED' put: 16r809!
-ScintillaConstants at: 'SCI_STYLESETFONT' put: 16r808!
-ScintillaConstants at: 'SCI_STYLESETFORE' put: 16r803!
-ScintillaConstants at: 'SCI_STYLESETHOTSPOT' put: 16r969!
-ScintillaConstants at: 'SCI_STYLESETITALIC' put: 16r806!
-ScintillaConstants at: 'SCI_STYLESETSIZE' put: 16r807!
-ScintillaConstants at: 'SCI_STYLESETSIZEFRACTIONAL' put: 16r80D!
-ScintillaConstants at: 'SCI_STYLESETUNDERLINE' put: 16r80B!
-ScintillaConstants at: 'SCI_STYLESETVISIBLE' put: 16r81A!
-ScintillaConstants at: 'SCI_STYLESETWEIGHT' put: 16r80F!
-ScintillaConstants at: 'SCI_SWAPMAINANCHORCARET' put: 16rA2F!
-ScintillaConstants at: 'SCI_TAB' put: 16r917!
-ScintillaConstants at: 'SCI_TAGSOFSTYLE' put: 16rFBF!
-ScintillaConstants at: 'SCI_TARGETASUTF8' put: 16r98F!
-ScintillaConstants at: 'SCI_TARGETFROMSELECTION' put: 16r8EF!
-ScintillaConstants at: 'SCI_TARGETWHOLEDOCUMENT' put: 16rA82!
-ScintillaConstants at: 'SCI_TEXTHEIGHT' put: 16r8E7!
-ScintillaConstants at: 'SCI_TEXTWIDTH' put: 16r8E4!
-ScintillaConstants at: 'SCI_TOGGLECARETSTICKY' put: 16r99B!
-ScintillaConstants at: 'SCI_TOGGLEFOLD' put: 16r8B7!
-ScintillaConstants at: 'SCI_TOGGLEFOLDSHOWTEXT' put: 16rA8C!
-ScintillaConstants at: 'SCI_UNDO' put: 16r880!
-ScintillaConstants at: 'SCI_UPPERCASE' put: 16r925!
-ScintillaConstants at: 'SCI_USEPOPUP' put: 16r943!
-ScintillaConstants at: 'SCI_USERLISTSHOW' put: 16r845!
-ScintillaConstants at: 'SCI_VCHOME' put: 16r91B!
-ScintillaConstants at: 'SCI_VCHOMEDISPLAY' put: 16rA5C!
-ScintillaConstants at: 'SCI_VCHOMEDISPLAYEXTEND' put: 16rA5D!
-ScintillaConstants at: 'SCI_VCHOMEEXTEND' put: 16r91C!
-ScintillaConstants at: 'SCI_VCHOMERECTEXTEND' put: 16r97F!
-ScintillaConstants at: 'SCI_VCHOMEWRAP' put: 16r995!
-ScintillaConstants at: 'SCI_VCHOMEWRAPEXTEND' put: 16r996!
-ScintillaConstants at: 'SCI_VERTICALCENTRECARET' put: 16rA3B!
-ScintillaConstants at: 'SCI_VISIBLEFROMDOCLINE' put: 16r8AC!
-ScintillaConstants at: 'SCI_WORDENDPOSITION' put: 16r8DB!
-ScintillaConstants at: 'SCI_WORDLEFT' put: 16r904!
-ScintillaConstants at: 'SCI_WORDLEFTEND' put: 16r987!
-ScintillaConstants at: 'SCI_WORDLEFTENDEXTEND' put: 16r988!
-ScintillaConstants at: 'SCI_WORDLEFTEXTEND' put: 16r905!
-ScintillaConstants at: 'SCI_WORDPARTLEFT' put: 16r956!
-ScintillaConstants at: 'SCI_WORDPARTLEFTEXTEND' put: 16r957!
-ScintillaConstants at: 'SCI_WORDPARTRIGHT' put: 16r958!
-ScintillaConstants at: 'SCI_WORDPARTRIGHTEXTEND' put: 16r959!
-ScintillaConstants at: 'SCI_WORDRIGHT' put: 16r906!
-ScintillaConstants at: 'SCI_WORDRIGHTEND' put: 16r989!
-ScintillaConstants at: 'SCI_WORDRIGHTENDEXTEND' put: 16r98A!
-ScintillaConstants at: 'SCI_WORDRIGHTEXTEND' put: 16r907!
-ScintillaConstants at: 'SCI_WORDSTARTPOSITION' put: 16r8DA!
-ScintillaConstants at: 'SCI_WRAPCOUNT' put: 16r8BB!
-ScintillaConstants at: 'SCI_ZOOMIN' put: 16r91D!
-ScintillaConstants at: 'SCI_ZOOMOUT' put: 16r91E!
-ScintillaConstants at: 'SCK_ADD' put: 16r136!
-ScintillaConstants at: 'SCK_BACK' put: 16r8!
-ScintillaConstants at: 'SCK_DELETE' put: 16r134!
-ScintillaConstants at: 'SCK_DIVIDE' put: 16r138!
-ScintillaConstants at: 'SCK_DOWN' put: 16r12C!
-ScintillaConstants at: 'SCK_END' put: 16r131!
-ScintillaConstants at: 'SCK_ESCAPE' put: 16r7!
-ScintillaConstants at: 'SCK_HOME' put: 16r130!
-ScintillaConstants at: 'SCK_INSERT' put: 16r135!
-ScintillaConstants at: 'SCK_LEFT' put: 16r12E!
-ScintillaConstants at: 'SCK_MENU' put: 16r13B!
-ScintillaConstants at: 'SCK_NEXT' put: 16r133!
-ScintillaConstants at: 'SCK_PRIOR' put: 16r132!
-ScintillaConstants at: 'SCK_RETURN' put: 16rD!
-ScintillaConstants at: 'SCK_RIGHT' put: 16r12F!
-ScintillaConstants at: 'SCK_RWIN' put: 16r13A!
-ScintillaConstants at: 'SCK_SUBTRACT' put: 16r137!
-ScintillaConstants at: 'SCK_TAB' put: 16r9!
-ScintillaConstants at: 'SCK_UP' put: 16r12D!
-ScintillaConstants at: 'SCK_WIN' put: 16r139!
-ScintillaConstants at: 'SCLEX_A68K' put: 16r64!
-ScintillaConstants at: 'SCLEX_ABAQUS' put: 16r54!
-ScintillaConstants at: 'SCLEX_ADA' put: 16r14!
-ScintillaConstants at: 'SCLEX_APDL' put: 16r3D!
-ScintillaConstants at: 'SCLEX_AS' put: 16r71!
-ScintillaConstants at: 'SCLEX_ASM' put: 16r22!
-ScintillaConstants at: 'SCLEX_ASN1' put: 16r3F!
-ScintillaConstants at: 'SCLEX_ASYMPTOTE' put: 16r55!
-ScintillaConstants at: 'SCLEX_AU3' put: 16r3C!
-ScintillaConstants at: 'SCLEX_AUTOMATIC' put: 16r3E8!
-ScintillaConstants at: 'SCLEX_AVE' put: 16r13!
-ScintillaConstants at: 'SCLEX_AVS' put: 16r68!
-ScintillaConstants at: 'SCLEX_BAAN' put: 16r1F!
-ScintillaConstants at: 'SCLEX_BASH' put: 16r3E!
-ScintillaConstants at: 'SCLEX_BATCH' put: 16rC!
-ScintillaConstants at: 'SCLEX_BIBTEX' put: 16r74!
-ScintillaConstants at: 'SCLEX_BLITZBASIC' put: 16r42!
-ScintillaConstants at: 'SCLEX_BULLANT' put: 16r1B!
-ScintillaConstants at: 'SCLEX_CAML' put: 16r41!
-ScintillaConstants at: 'SCLEX_CIL' put: 16r7F!
-ScintillaConstants at: 'SCLEX_CLW' put: 16r2D!
-ScintillaConstants at: 'SCLEX_CLWNOCASE' put: 16r2E!
-ScintillaConstants at: 'SCLEX_CMAKE' put: 16r50!
-ScintillaConstants at: 'SCLEX_COBOL' put: 16r5C!
-ScintillaConstants at: 'SCLEX_COFFEESCRIPT' put: 16r66!
-ScintillaConstants at: 'SCLEX_CONF' put: 16r11!
-ScintillaConstants at: 'SCLEX_CONTAINER' put: 16r0!
-ScintillaConstants at: 'SCLEX_CPP' put: 16r3!
-ScintillaConstants at: 'SCLEX_CPPNOCASE' put: 16r23!
-ScintillaConstants at: 'SCLEX_CSOUND' put: 16r4A!
-ScintillaConstants at: 'SCLEX_CSS' put: 16r26!
-ScintillaConstants at: 'SCLEX_D' put: 16r4F!
-ScintillaConstants at: 'SCLEX_DATAFLEX' put: 16r81!
-ScintillaConstants at: 'SCLEX_DIFF' put: 16r10!
-ScintillaConstants at: 'SCLEX_DMAP' put: 16r70!
-ScintillaConstants at: 'SCLEX_DMIS' put: 16r72!
-ScintillaConstants at: 'SCLEX_ECL' put: 16r69!
-ScintillaConstants at: 'SCLEX_EDIFACT' put: 16r79!
-ScintillaConstants at: 'SCLEX_EIFFEL' put: 16r17!
-ScintillaConstants at: 'SCLEX_EIFFELKW' put: 16r18!
-ScintillaConstants at: 'SCLEX_ERLANG' put: 16r35!
-ScintillaConstants at: 'SCLEX_ERRORLIST' put: 16rA!
-ScintillaConstants at: 'SCLEX_ESCRIPT' put: 16r29!
-ScintillaConstants at: 'SCLEX_F77' put: 16r25!
-ScintillaConstants at: 'SCLEX_FLAGSHIP' put: 16r49!
-ScintillaConstants at: 'SCLEX_FORTH' put: 16r34!
-ScintillaConstants at: 'SCLEX_FORTRAN' put: 16r24!
-ScintillaConstants at: 'SCLEX_FREEBASIC' put: 16r4B!
-ScintillaConstants at: 'SCLEX_GAP' put: 16r51!
-ScintillaConstants at: 'SCLEX_GUI4CLI' put: 16r3A!
-ScintillaConstants at: 'SCLEX_HASKELL' put: 16r44!
-ScintillaConstants at: 'SCLEX_HOLLYWOOD' put: 16r82!
-ScintillaConstants at: 'SCLEX_HTML' put: 16r4!
-ScintillaConstants at: 'SCLEX_IHEX' put: 16r76!
-ScintillaConstants at: 'SCLEX_INDENT' put: 16r7A!
-ScintillaConstants at: 'SCLEX_INNOSETUP' put: 16r4C!
-ScintillaConstants at: 'SCLEX_JSON' put: 16r78!
-ScintillaConstants at: 'SCLEX_KIX' put: 16r39!
-ScintillaConstants at: 'SCLEX_KVIRC' put: 16r6E!
-ScintillaConstants at: 'SCLEX_LATEX' put: 16rE!
-ScintillaConstants at: 'SCLEX_LISP' put: 16r15!
-ScintillaConstants at: 'SCLEX_LITERATEHASKELL' put: 16r6C!
-ScintillaConstants at: 'SCLEX_LOT' put: 16r2F!
-ScintillaConstants at: 'SCLEX_LOUT' put: 16r28!
-ScintillaConstants at: 'SCLEX_LUA' put: 16rF!
-ScintillaConstants at: 'SCLEX_MAGIK' put: 16r57!
-ScintillaConstants at: 'SCLEX_MAKEFILE' put: 16rB!
-ScintillaConstants at: 'SCLEX_MARKDOWN' put: 16r62!
-ScintillaConstants at: 'SCLEX_MATLAB' put: 16r20!
-ScintillaConstants at: 'SCLEX_MAXIMA' put: 16r7B!
-ScintillaConstants at: 'SCLEX_METAPOST' put: 16r32!
-ScintillaConstants at: 'SCLEX_MMIXAL' put: 16r2C!
-ScintillaConstants at: 'SCLEX_MODULA' put: 16r65!
-ScintillaConstants at: 'SCLEX_MSSQL' put: 16r37!
-ScintillaConstants at: 'SCLEX_MYSQL' put: 16r59!
-ScintillaConstants at: 'SCLEX_NIM' put: 16r7E!
-ScintillaConstants at: 'SCLEX_NIMROD' put: 16r60!
-ScintillaConstants at: 'SCLEX_NNCRONTAB' put: 16r1A!
-ScintillaConstants at: 'SCLEX_NSIS' put: 16r2B!
-ScintillaConstants at: 'SCLEX_NULL' put: 16r1!
-ScintillaConstants at: 'SCLEX_OCTAVE' put: 16r36!
-ScintillaConstants at: 'SCLEX_OPAL' put: 16r4D!
-ScintillaConstants at: 'SCLEX_OSCRIPT' put: 16r6A!
-ScintillaConstants at: 'SCLEX_PASCAL' put: 16r12!
-ScintillaConstants at: 'SCLEX_PERL' put: 16r6!
-ScintillaConstants at: 'SCLEX_PHPSCRIPT' put: 16r45!
-ScintillaConstants at: 'SCLEX_PLM' put: 16r52!
-ScintillaConstants at: 'SCLEX_PO' put: 16r5A!
-ScintillaConstants at: 'SCLEX_POV' put: 16r27!
-ScintillaConstants at: 'SCLEX_POWERBASIC' put: 16r33!
-ScintillaConstants at: 'SCLEX_POWERPRO' put: 16r5F!
-ScintillaConstants at: 'SCLEX_POWERSHELL' put: 16r58!
-ScintillaConstants at: 'SCLEX_PROGRESS' put: 16r53!
-ScintillaConstants at: 'SCLEX_PROPERTIES' put: 16r9!
-ScintillaConstants at: 'SCLEX_PS' put: 16r2A!
-ScintillaConstants at: 'SCLEX_PUREBASIC' put: 16r43!
-ScintillaConstants at: 'SCLEX_PYTHON' put: 16r2!
-ScintillaConstants at: 'SCLEX_R' put: 16r56!
-ScintillaConstants at: 'SCLEX_RAKU' put: 16r83!
-ScintillaConstants at: 'SCLEX_REBOL' put: 16r47!
-ScintillaConstants at: 'SCLEX_REGISTRY' put: 16r73!
-ScintillaConstants at: 'SCLEX_RUBY' put: 16r16!
-ScintillaConstants at: 'SCLEX_RUST' put: 16r6F!
-ScintillaConstants at: 'SCLEX_SAS' put: 16r7D!
-ScintillaConstants at: 'SCLEX_SCRIPTOL' put: 16r21!
-ScintillaConstants at: 'SCLEX_SMALLTALK' put: 16r48!
-ScintillaConstants at: 'SCLEX_SML' put: 16r61!
-ScintillaConstants at: 'SCLEX_SORCUS' put: 16r5E!
-ScintillaConstants at: 'SCLEX_SPECMAN' put: 16r3B!
-ScintillaConstants at: 'SCLEX_SPICE' put: 16r4E!
-ScintillaConstants at: 'SCLEX_SQL' put: 16r7!
-ScintillaConstants at: 'SCLEX_SREC' put: 16r75!
-ScintillaConstants at: 'SCLEX_STATA' put: 16r7C!
-ScintillaConstants at: 'SCLEX_STTXT' put: 16r6D!
-ScintillaConstants at: 'SCLEX_TACL' put: 16r5D!
-ScintillaConstants at: 'SCLEX_TADS3' put: 16r46!
-ScintillaConstants at: 'SCLEX_TAL' put: 16r5B!
-ScintillaConstants at: 'SCLEX_TCL' put: 16r19!
-ScintillaConstants at: 'SCLEX_TCMD' put: 16r67!
-ScintillaConstants at: 'SCLEX_TEHEX' put: 16r77!
-ScintillaConstants at: 'SCLEX_TEX' put: 16r31!
-ScintillaConstants at: 'SCLEX_TXT2TAGS' put: 16r63!
-ScintillaConstants at: 'SCLEX_VB' put: 16r8!
-ScintillaConstants at: 'SCLEX_VBSCRIPT' put: 16r1C!
-ScintillaConstants at: 'SCLEX_VERILOG' put: 16r38!
-ScintillaConstants at: 'SCLEX_VHDL' put: 16r40!
-ScintillaConstants at: 'SCLEX_VISUALPROLOG' put: 16r6B!
-ScintillaConstants at: 'SCLEX_X12' put: 16r80!
-ScintillaConstants at: 'SCLEX_XCODE' put: 16rD!
-ScintillaConstants at: 'SCLEX_XML' put: 16r5!
-ScintillaConstants at: 'SCLEX_YAML' put: 16r30!
-ScintillaConstants at: 'SCMOD_ALT' put: 16r4!
-ScintillaConstants at: 'SCMOD_CTRL' put: 16r2!
-ScintillaConstants at: 'SCMOD_META' put: 16r10!
-ScintillaConstants at: 'SCMOD_NORM' put: 16r0!
-ScintillaConstants at: 'SCMOD_SHIFT' put: 16r1!
-ScintillaConstants at: 'SCMOD_SUPER' put: 16r8!
-ScintillaConstants at: 'SCN_AUTOCCANCELLED' put: 16r7E9!
-ScintillaConstants at: 'SCN_AUTOCCHARDELETED' put: 16r7EA!
-ScintillaConstants at: 'SCN_AUTOCCOMPLETED' put: 16r7EE!
-ScintillaConstants at: 'SCN_AUTOCSELECTION' put: 16r7E6!
-ScintillaConstants at: 'SCN_AUTOCSELECTIONCHANGE' put: 16r7F0!
-ScintillaConstants at: 'SCN_CALLTIPCLICK' put: 16r7E5!
-ScintillaConstants at: 'SCN_CHARADDED' put: 16r7D1!
-ScintillaConstants at: 'SCN_DOUBLECLICK' put: 16r7D6!
-ScintillaConstants at: 'SCN_DWELLEND' put: 16r7E1!
-ScintillaConstants at: 'SCN_DWELLSTART' put: 16r7E0!
-ScintillaConstants at: 'SCN_FOCUSIN' put: 16r7EC!
-ScintillaConstants at: 'SCN_FOCUSOUT' put: 16r7ED!
-ScintillaConstants at: 'SCN_HOTSPOTCLICK' put: 16r7E3!
-ScintillaConstants at: 'SCN_HOTSPOTDOUBLECLICK' put: 16r7E4!
-ScintillaConstants at: 'SCN_HOTSPOTRELEASECLICK' put: 16r7EB!
-ScintillaConstants at: 'SCN_INDICATORCLICK' put: 16r7E7!
-ScintillaConstants at: 'SCN_INDICATORRELEASE' put: 16r7E8!
-ScintillaConstants at: 'SCN_KEY' put: 16r7D5!
-ScintillaConstants at: 'SCN_MACRORECORD' put: 16r7D9!
-ScintillaConstants at: 'SCN_MARGINCLICK' put: 16r7DA!
-ScintillaConstants at: 'SCN_MARGINRIGHTCLICK' put: 16r7EF!
-ScintillaConstants at: 'SCN_MODIFIED' put: 16r7D8!
-ScintillaConstants at: 'SCN_MODIFYATTEMPTRO' put: 16r7D4!
-ScintillaConstants at: 'SCN_NEEDSHOWN' put: 16r7DB!
-ScintillaConstants at: 'SCN_PAINTED' put: 16r7DD!
-ScintillaConstants at: 'SCN_SAVEPOINTLEFT' put: 16r7D3!
-ScintillaConstants at: 'SCN_SAVEPOINTREACHED' put: 16r7D2!
-ScintillaConstants at: 'SCN_STYLENEEDED' put: 16r7D0!
-ScintillaConstants at: 'SCN_UPDATEUI' put: 16r7D7!
-ScintillaConstants at: 'SCN_URIDROPPED' put: 16r7DF!
-ScintillaConstants at: 'SCN_USERLISTSELECTION' put: 16r7DE!
-ScintillaConstants at: 'SCN_ZOOM' put: 16r7E2!
-ScintillaConstants at: 'SCTD_LONGARROW' put: 16r0!
-ScintillaConstants at: 'SCTD_STRIKEOUT' put: 16r1!
-ScintillaConstants at: 'SCVS_NONE' put: 16r0!
-ScintillaConstants at: 'SCVS_NOWRAPLINESTART' put: 16r4!
-ScintillaConstants at: 'SCVS_RECTANGULARSELECTION' put: 16r1!
-ScintillaConstants at: 'SCVS_USERACCESSIBLE' put: 16r2!
-ScintillaConstants at: 'SCWS_INVISIBLE' put: 16r0!
-ScintillaConstants at: 'SCWS_VISIBLEAFTERINDENT' put: 16r2!
-ScintillaConstants at: 'SCWS_VISIBLEALWAYS' put: 16r1!
-ScintillaConstants at: 'SCWS_VISIBLEONLYININDENT' put: 16r3!
-ScintillaConstants at: 'STYLE_BRACEBAD' put: 16r23!
-ScintillaConstants at: 'STYLE_BRACELIGHT' put: 16r22!
-ScintillaConstants at: 'STYLE_CALLTIP' put: 16r26!
-ScintillaConstants at: 'STYLE_CONTROLCHAR' put: 16r24!
-ScintillaConstants at: 'STYLE_DEFAULT' put: 16r20!
-ScintillaConstants at: 'STYLE_FOLDDISPLAYTEXT' put: 16r27!
-ScintillaConstants at: 'STYLE_INDENTGUIDE' put: 16r25!
-ScintillaConstants at: 'STYLE_LASTPREDEFINED' put: 16r27!
-ScintillaConstants at: 'STYLE_LINENUMBER' put: 16r21!
-ScintillaConstants at: 'STYLE_MAX' put: 16rFF!
-ScintillaConstants at: 'STYLE_NORMAL' put: 16r0!
-ScintillaConstants at: 'UNDO_MAY_COALESCE' put: 16r1!
-ScintillaConstants at: 'UNDO_NONE' put: 16r0!
-ScintillaConstants at: 'VISIBLE_SLOP' put: 16r1!
-ScintillaConstants at: 'VISIBLE_STRICT' put: 16r4!
-ScintillaConstants shrink!
+SharedPool subclass: #ScintillaConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ANNOTATION_BOXED' -> 16r2.
+		'ANNOTATION_HIDDEN' -> 16r0.
+		'ANNOTATION_INDENTED' -> 16r3.
+		'ANNOTATION_STANDARD' -> 16r1.
+		'CARET_EVEN' -> 16r8.
+		'CARET_JUMPS' -> 16r10.
+		'CARET_SLOP' -> 16r1.
+		'CARET_STRICT' -> 16r4.
+		'CARETSTYLE_BLOCK' -> 16r2.
+		'CARETSTYLE_BLOCK_AFTER' -> 16r100.
+		'CARETSTYLE_INS_MASK' -> 16rF.
+		'CARETSTYLE_INVISIBLE' -> 16r0.
+		'CARETSTYLE_LINE' -> 16r1.
+		'CARETSTYLE_OVERSTRIKE_BAR' -> 16r0.
+		'CARETSTYLE_OVERSTRIKE_BLOCK' -> 16r10.
+		'EDGE_BACKGROUND' -> 16r2.
+		'EDGE_LINE' -> 16r1.
+		'EDGE_MULTILINE' -> 16r3.
+		'EDGE_NONE' -> 16r0.
+		'EOLANNOTATION_BOXED' -> 16r2.
+		'EOLANNOTATION_HIDDEN' -> 16r0.
+		'EOLANNOTATION_STANDARD' -> 16r1.
+		'INDIC_BOX' -> 16r6.
+		'INDIC_COMPOSITIONTHICK' -> 16rE.
+		'INDIC_COMPOSITIONTHIN' -> 16rF.
+		'INDIC_DASH' -> 16r9.
+		'INDIC_DIAGONAL' -> 16r3.
+		'INDIC_DOTBOX' -> 16rC.
+		'INDIC_DOTS' -> 16rA.
+		'INDIC_FULLBOX' -> 16r10.
+		'INDIC_GRADIENT' -> 16r14.
+		'INDIC_GRADIENTCENTRE' -> 16r15.
+		'INDIC_HIDDEN' -> 16r5.
+		'INDIC_PLAIN' -> 16r0.
+		'INDIC_POINT' -> 16r12.
+		'INDIC_POINTCHARACTER' -> 16r13.
+		'INDIC_ROUNDBOX' -> 16r7.
+		'INDIC_SQUIGGLE' -> 16r1.
+		'INDIC_SQUIGGLELOW' -> 16rB.
+		'INDIC_SQUIGGLEPIXMAP' -> 16rD.
+		'INDIC_STRAIGHTBOX' -> 16r8.
+		'INDIC_STRIKE' -> 16r4.
+		'INDIC_TEXTFORE' -> 16r11.
+		'INDIC_TT' -> 16r2.
+		'INDIC0_MASK' -> 16r20.
+		'INDIC1_MASK' -> 16r40.
+		'INDIC2_MASK' -> 16r80.
+		'INDICATOR_CONTAINER' -> 16r8.
+		'INDICATOR_IME' -> 16r20.
+		'INDICATOR_IME_MAX' -> 16r23.
+		'INDICATOR_MAX' -> 16r23.
+		'INDICS_MASK' -> 16rE0.
+		'INVALID_POSITION' -> -16r1.
+		'KEYWORDSET_MAX' -> 16r8.
+		'MARKER_MAX' -> 16r1F.
+		'SC_AC_COMMAND' -> 16r5.
+		'SC_AC_DOUBLECLICK' -> 16r2.
+		'SC_AC_FILLUP' -> 16r1.
+		'SC_AC_NEWLINE' -> 16r4.
+		'SC_AC_TAB' -> 16r3.
+		'SC_ACCESSIBILITY_DISABLED' -> 16r0.
+		'SC_ACCESSIBILITY_ENABLED' -> 16r1.
+		'SC_ALPHA_NOALPHA' -> 16r100.
+		'SC_ALPHA_OPAQUE' -> 16rFF.
+		'SC_ALPHA_TRANSPARENT' -> 16r0.
+		'SC_AUTOMATICFOLD_CHANGE' -> 16r4.
+		'SC_AUTOMATICFOLD_CLICK' -> 16r2.
+		'SC_AUTOMATICFOLD_SHOW' -> 16r1.
+		'SC_BIDIRECTIONAL_DISABLED' -> 16r0.
+		'SC_BIDIRECTIONAL_L2R' -> 16r1.
+		'SC_BIDIRECTIONAL_R2L' -> 16r2.
+		'SC_CACHE_CARET' -> 16r1.
+		'SC_CACHE_DOCUMENT' -> 16r3.
+		'SC_CACHE_NONE' -> 16r0.
+		'SC_CACHE_PAGE' -> 16r2.
+		'SC_CARETSTICKY_OFF' -> 16r0.
+		'SC_CARETSTICKY_ON' -> 16r1.
+		'SC_CARETSTICKY_WHITESPACE' -> 16r2.
+		'SC_CASE_CAMEL' -> 16r3.
+		'SC_CASE_LOWER' -> 16r2.
+		'SC_CASE_MIXED' -> 16r0.
+		'SC_CASE_UPPER' -> 16r1.
+		'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE' -> 16r1.
+		'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE' -> 16r0.
+		'SC_CHARACTERSOURCE_DIRECT_INPUT' -> 16r0.
+		'SC_CHARACTERSOURCE_IME_RESULT' -> 16r2.
+		'SC_CHARACTERSOURCE_TENTATIVE_INPUT' -> 16r1.
+		'SC_CHARSET_8859_15' -> 16r3E8.
+		'SC_CHARSET_ANSI' -> 16r0.
+		'SC_CHARSET_ARABIC' -> 16rB2.
+		'SC_CHARSET_BALTIC' -> 16rBA.
+		'SC_CHARSET_CHINESEBIG5' -> 16r88.
+		'SC_CHARSET_CYRILLIC' -> 16r4E3.
+		'SC_CHARSET_DEFAULT' -> 16r1.
+		'SC_CHARSET_EASTEUROPE' -> 16rEE.
+		'SC_CHARSET_GB2312' -> 16r86.
+		'SC_CHARSET_GREEK' -> 16rA1.
+		'SC_CHARSET_HANGUL' -> 16r81.
+		'SC_CHARSET_HEBREW' -> 16rB1.
+		'SC_CHARSET_JOHAB' -> 16r82.
+		'SC_CHARSET_MAC' -> 16r4D.
+		'SC_CHARSET_OEM' -> 16rFF.
+		'SC_CHARSET_OEM866' -> 16r362.
+		'SC_CHARSET_RUSSIAN' -> 16rCC.
+		'SC_CHARSET_SHIFTJIS' -> 16r80.
+		'SC_CHARSET_SYMBOL' -> 16r2.
+		'SC_CHARSET_THAI' -> 16rDE.
+		'SC_CHARSET_TURKISH' -> 16rA2.
+		'SC_CHARSET_VIETNAMESE' -> 16rA3.
+		'SC_CP_UTF8' -> 16rFDE9.
+		'SC_CURSORARROW' -> 16r2.
+		'SC_CURSORNORMAL' -> -16r1.
+		'SC_CURSORREVERSEARROW' -> 16r7.
+		'SC_CURSORWAIT' -> 16r4.
+		'SC_DOCUMENTOPTION_DEFAULT' -> 16r0.
+		'SC_DOCUMENTOPTION_STYLES_NONE' -> 16r1.
+		'SC_DOCUMENTOPTION_TEXT_LARGE' -> 16r100.
+		'SC_EFF_QUALITY_ANTIALIASED' -> 16r2.
+		'SC_EFF_QUALITY_DEFAULT' -> 16r0.
+		'SC_EFF_QUALITY_LCD_OPTIMIZED' -> 16r3.
+		'SC_EFF_QUALITY_MASK' -> 16rF.
+		'SC_EFF_QUALITY_NON_ANTIALIASED' -> 16r1.
+		'SC_EOL_CR' -> 16r1.
+		'SC_EOL_CRLF' -> 16r0.
+		'SC_EOL_LF' -> 16r2.
+		'SC_FOLDACTION_CONTRACT' -> 16r0.
+		'SC_FOLDACTION_EXPAND' -> 16r1.
+		'SC_FOLDACTION_TOGGLE' -> 16r2.
+		'SC_FOLDDISPLAYTEXT_BOXED' -> 16r2.
+		'SC_FOLDDISPLAYTEXT_HIDDEN' -> 16r0.
+		'SC_FOLDDISPLAYTEXT_STANDARD' -> 16r1.
+		'SC_FOLDFLAG_LEVELNUMBERS' -> 16r40.
+		'SC_FOLDFLAG_LINEAFTER_CONTRACTED' -> 16r10.
+		'SC_FOLDFLAG_LINEAFTER_EXPANDED' -> 16r8.
+		'SC_FOLDFLAG_LINEBEFORE_CONTRACTED' -> 16r4.
+		'SC_FOLDFLAG_LINEBEFORE_EXPANDED' -> 16r2.
+		'SC_FOLDFLAG_LINESTATE' -> 16r80.
+		'SC_FOLDLEVELBASE' -> 16r400.
+		'SC_FOLDLEVELHEADERFLAG' -> 16r2000.
+		'SC_FOLDLEVELNUMBERMASK' -> 16rFFF.
+		'SC_FOLDLEVELWHITEFLAG' -> 16r1000.
+		'SC_FONT_SIZE_MULTIPLIER' -> 16r64.
+		'SC_IDLESTYLING_AFTERVISIBLE' -> 16r2.
+		'SC_IDLESTYLING_ALL' -> 16r3.
+		'SC_IDLESTYLING_NONE' -> 16r0.
+		'SC_IDLESTYLING_TOVISIBLE' -> 16r1.
+		'SC_IME_INLINE' -> 16r1.
+		'SC_IME_WINDOWED' -> 16r0.
+		'SC_INDICFLAG_VALUEFORE' -> 16r1.
+		'SC_INDICVALUEBIT' -> 16r1000000.
+		'SC_INDICVALUEMASK' -> 16rFFFFFF.
+		'SC_IV_LOOKBOTH' -> 16r3.
+		'SC_IV_LOOKFORWARD' -> 16r2.
+		'SC_IV_NONE' -> 16r0.
+		'SC_IV_REAL' -> 16r1.
+		'SC_LASTSTEPINUNDOREDO' -> 16r100.
+		'SC_LINE_END_TYPE_DEFAULT' -> 16r0.
+		'SC_LINE_END_TYPE_UNICODE' -> 16r1.
+		'SC_LINECHARACTERINDEX_NONE' -> 16r0.
+		'SC_LINECHARACTERINDEX_UTF16' -> 16r2.
+		'SC_LINECHARACTERINDEX_UTF32' -> 16r1.
+		'SC_MARGIN_BACK' -> 16r2.
+		'SC_MARGIN_COLOUR' -> 16r6.
+		'SC_MARGIN_FORE' -> 16r3.
+		'SC_MARGIN_NUMBER' -> 16r1.
+		'SC_MARGIN_RTEXT' -> 16r5.
+		'SC_MARGIN_SYMBOL' -> 16r0.
+		'SC_MARGIN_TEXT' -> 16r4.
+		'SC_MARGINOPTION_NONE' -> 16r0.
+		'SC_MARGINOPTION_SUBLINESELECT' -> 16r1.
+		'SC_MARK_ARROW' -> 16r2.
+		'SC_MARK_ARROWDOWN' -> 16r6.
+		'SC_MARK_ARROWS' -> 16r18.
+		'SC_MARK_AVAILABLE' -> 16r1C.
+		'SC_MARK_BACKGROUND' -> 16r16.
+		'SC_MARK_BOOKMARK' -> 16r1F.
+		'SC_MARK_BOXMINUS' -> 16rE.
+		'SC_MARK_BOXMINUSCONNECTED' -> 16rF.
+		'SC_MARK_BOXPLUS' -> 16rC.
+		'SC_MARK_BOXPLUSCONNECTED' -> 16rD.
+		'SC_MARK_CHARACTER' -> 16r2710.
+		'SC_MARK_CIRCLE' -> 16r0.
+		'SC_MARK_CIRCLEMINUS' -> 16r14.
+		'SC_MARK_CIRCLEMINUSCONNECTED' -> 16r15.
+		'SC_MARK_CIRCLEPLUS' -> 16r12.
+		'SC_MARK_CIRCLEPLUSCONNECTED' -> 16r13.
+		'SC_MARK_DOTDOTDOT' -> 16r17.
+		'SC_MARK_EMPTY' -> 16r5.
+		'SC_MARK_FULLRECT' -> 16r1A.
+		'SC_MARK_LCORNER' -> 16rA.
+		'SC_MARK_LCORNERCURVE' -> 16r10.
+		'SC_MARK_LEFTRECT' -> 16r1B.
+		'SC_MARK_MINUS' -> 16r7.
+		'SC_MARK_PIXMAP' -> 16r19.
+		'SC_MARK_PLUS' -> 16r8.
+		'SC_MARK_RGBAIMAGE' -> 16r1E.
+		'SC_MARK_ROUNDRECT' -> 16r1.
+		'SC_MARK_SHORTARROW' -> 16r4.
+		'SC_MARK_SMALLRECT' -> 16r3.
+		'SC_MARK_TCORNER' -> 16rB.
+		'SC_MARK_TCORNERCURVE' -> 16r11.
+		'SC_MARK_UNDERLINE' -> 16r1D.
+		'SC_MARK_VERTICALBOOKMARK' -> 16r20.
+		'SC_MARK_VLINE' -> 16r9.
+		'SC_MARKNUM_FOLDER' -> 16r1E.
+		'SC_MARKNUM_FOLDEREND' -> 16r19.
+		'SC_MARKNUM_FOLDERMIDTAIL' -> 16r1B.
+		'SC_MARKNUM_FOLDEROPEN' -> 16r1F.
+		'SC_MARKNUM_FOLDEROPENMID' -> 16r1A.
+		'SC_MARKNUM_FOLDERSUB' -> 16r1D.
+		'SC_MARKNUM_FOLDERTAIL' -> 16r1C.
+		'SC_MASK_FOLDERS' -> 16rFE000000.
+		'SC_MAX_MARGIN' -> 16r4.
+		'SC_MOD_BEFOREDELETE' -> 16r800.
+		'SC_MOD_BEFOREINSERT' -> 16r400.
+		'SC_MOD_CHANGEANNOTATION' -> 16r20000.
+		'SC_MOD_CHANGEEOLANNOTATION' -> 16r400000.
+		'SC_MOD_CHANGEFOLD' -> 16r8.
+		'SC_MOD_CHANGEINDICATOR' -> 16r4000.
+		'SC_MOD_CHANGELINESTATE' -> 16r8000.
+		'SC_MOD_CHANGEMARGIN' -> 16r10000.
+		'SC_MOD_CHANGEMARKER' -> 16r200.
+		'SC_MOD_CHANGESTYLE' -> 16r4.
+		'SC_MOD_CHANGETABSTOPS' -> 16r200000.
+		'SC_MOD_CONTAINER' -> 16r40000.
+		'SC_MOD_DELETETEXT' -> 16r2.
+		'SC_MOD_INSERTCHECK' -> 16r100000.
+		'SC_MOD_INSERTTEXT' -> 16r1.
+		'SC_MOD_LEXERSTATE' -> 16r80000.
+		'SC_MOD_NONE' -> 16r0.
+		'SC_MODEVENTMASKALL' -> 16r7FFFFF.
+		'SC_MULTIAUTOC_EACH' -> 16r1.
+		'SC_MULTIAUTOC_ONCE' -> 16r0.
+		'SC_MULTILINEUNDOREDO' -> 16r1000.
+		'SC_MULTIPASTE_EACH' -> 16r1.
+		'SC_MULTIPASTE_ONCE' -> 16r0.
+		'SC_MULTISTEPUNDOREDO' -> 16r80.
+		'SC_ORDER_CUSTOM' -> 16r2.
+		'SC_ORDER_PERFORMSORT' -> 16r1.
+		'SC_ORDER_PRESORTED' -> 16r0.
+		'SC_PERFORMED_REDO' -> 16r40.
+		'SC_PERFORMED_UNDO' -> 16r20.
+		'SC_PERFORMED_USER' -> 16r10.
+		'SC_PHASES_MULTIPLE' -> 16r2.
+		'SC_PHASES_ONE' -> 16r0.
+		'SC_PHASES_TWO' -> 16r1.
+		'SC_POPUP_ALL' -> 16r1.
+		'SC_POPUP_NEVER' -> 16r0.
+		'SC_POPUP_TEXT' -> 16r2.
+		'SC_PRINT_BLACKONWHITE' -> 16r2.
+		'SC_PRINT_COLOURONWHITE' -> 16r3.
+		'SC_PRINT_COLOURONWHITEDEFAULTBG' -> 16r4.
+		'SC_PRINT_INVERTLIGHT' -> 16r1.
+		'SC_PRINT_NORMAL' -> 16r0.
+		'SC_PRINT_SCREENCOLOURS' -> 16r5.
+		'SC_SEL_LINES' -> 16r2.
+		'SC_SEL_RECTANGLE' -> 16r1.
+		'SC_SEL_STREAM' -> 16r0.
+		'SC_SEL_THIN' -> 16r3.
+		'SC_STARTACTION' -> 16r2000.
+		'SC_STATUS_BADALLOC' -> 16r2.
+		'SC_STATUS_FAILURE' -> 16r1.
+		'SC_STATUS_OK' -> 16r0.
+		'SC_STATUS_WARN_REGEX' -> 16r3E9.
+		'SC_STATUS_WARN_START' -> 16r3E8.
+		'SC_TECHNOLOGY_DEFAULT' -> 16r0.
+		'SC_TECHNOLOGY_DIRECTWRITE' -> 16r1.
+		'SC_TECHNOLOGY_DIRECTWRITEDC' -> 16r3.
+		'SC_TECHNOLOGY_DIRECTWRITERETAIN' -> 16r2.
+		'SC_TIME_FOREVER' -> 16r989680.
+		'SC_TYPE_BOOLEAN' -> 16r0.
+		'SC_TYPE_INTEGER' -> 16r1.
+		'SC_TYPE_STRING' -> 16r2.
+		'SC_UPDATE_CONTENT' -> 16r1.
+		'SC_UPDATE_H_SCROLL' -> 16r8.
+		'SC_UPDATE_SELECTION' -> 16r2.
+		'SC_UPDATE_V_SCROLL' -> 16r4.
+		'SC_WEIGHT_BOLD' -> 16r2BC.
+		'SC_WEIGHT_NORMAL' -> 16r190.
+		'SC_WEIGHT_SEMIBOLD' -> 16r258.
+		'SC_WRAP_CHAR' -> 16r2.
+		'SC_WRAP_NONE' -> 16r0.
+		'SC_WRAP_WHITESPACE' -> 16r3.
+		'SC_WRAP_WORD' -> 16r1.
+		'SC_WRAPINDENT_DEEPINDENT' -> 16r3.
+		'SC_WRAPINDENT_FIXED' -> 16r0.
+		'SC_WRAPINDENT_INDENT' -> 16r2.
+		'SC_WRAPINDENT_SAME' -> 16r1.
+		'SC_WRAPVISUALFLAG_END' -> 16r1.
+		'SC_WRAPVISUALFLAG_MARGIN' -> 16r4.
+		'SC_WRAPVISUALFLAG_NONE' -> 16r0.
+		'SC_WRAPVISUALFLAG_START' -> 16r2.
+		'SC_WRAPVISUALFLAGLOC_DEFAULT' -> 16r0.
+		'SC_WRAPVISUALFLAGLOC_END_BY_TEXT' -> 16r1.
+		'SC_WRAPVISUALFLAGLOC_START_BY_TEXT' -> 16r2.
+		'SCEN_CHANGE' -> 16r300.
+		'SCEN_KILLFOCUS' -> 16r100.
+		'SCEN_SETFOCUS' -> 16r200.
+		'SCFIND_CXX11REGEX' -> 16r800000.
+		'SCFIND_MATCHCASE' -> 16r4.
+		'SCFIND_NONE' -> 16r0.
+		'SCFIND_POSIX' -> 16r400000.
+		'SCFIND_REGEXP' -> 16r200000.
+		'SCFIND_WHOLEWORD' -> 16r2.
+		'SCFIND_WORDSTART' -> 16r100000.
+		'SCI_ADDREFDOCUMENT' -> 16r948.
+		'SCI_ADDSELECTION' -> 16rA0D.
+		'SCI_ADDSTYLEDTEXT' -> 16r7D2.
+		'SCI_ADDTABSTOP' -> 16rA74.
+		'SCI_ADDTEXT' -> 16r7D1.
+		'SCI_ADDUNDOACTION' -> 16rA00.
+		'SCI_ALLOCATE' -> 16r98E.
+		'SCI_ALLOCATEEXTENDEDSTYLES' -> 16r9F9.
+		'SCI_ALLOCATELINECHARACTERINDEX' -> 16rA97.
+		'SCI_ALLOCATESUBSTYLES' -> 16rFB4.
+		'SCI_ANNOTATIONCLEARALL' -> 16r9F3.
+		'SCI_ANNOTATIONGETLINES' -> 16r9F2.
+		'SCI_ANNOTATIONGETSTYLE' -> 16r9EF.
+		'SCI_ANNOTATIONGETSTYLEOFFSET' -> 16r9F7.
+		'SCI_ANNOTATIONGETSTYLES' -> 16r9F1.
+		'SCI_ANNOTATIONGETTEXT' -> 16r9ED.
+		'SCI_ANNOTATIONGETVISIBLE' -> 16r9F5.
+		'SCI_ANNOTATIONSETSTYLE' -> 16r9EE.
+		'SCI_ANNOTATIONSETSTYLEOFFSET' -> 16r9F6.
+		'SCI_ANNOTATIONSETSTYLES' -> 16r9F0.
+		'SCI_ANNOTATIONSETTEXT' -> 16r9EC.
+		'SCI_ANNOTATIONSETVISIBLE' -> 16r9F4.
+		'SCI_APPENDTEXT' -> 16r8EA.
+		'SCI_ASSIGNCMDKEY' -> 16r816.
+		'SCI_AUTOCACTIVE' -> 16r836.
+		'SCI_AUTOCCANCEL' -> 16r835.
+		'SCI_AUTOCCOMPLETE' -> 16r838.
+		'SCI_AUTOCGETAUTOHIDE' -> 16r847.
+		'SCI_AUTOCGETCANCELATSTART' -> 16r83F.
+		'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR' -> 16rA4B.
+		'SCI_AUTOCGETCHOOSESINGLE' -> 16r842.
+		'SCI_AUTOCGETCURRENT' -> 16r98D.
+		'SCI_AUTOCGETCURRENTTEXT' -> 16rA32.
+		'SCI_AUTOCGETDROPRESTOFWORD' -> 16r8DF.
+		'SCI_AUTOCGETIGNORECASE' -> 16r844.
+		'SCI_AUTOCGETMAXHEIGHT' -> 16r8A3.
+		'SCI_AUTOCGETMAXWIDTH' -> 16r8A1.
+		'SCI_AUTOCGETMULTI' -> 16rA4D.
+		'SCI_AUTOCGETORDER' -> 16rA65.
+		'SCI_AUTOCGETSEPARATOR' -> 16r83B.
+		'SCI_AUTOCGETTYPESEPARATOR' -> 16r8ED.
+		'SCI_AUTOCPOSSTART' -> 16r837.
+		'SCI_AUTOCSELECT' -> 16r83C.
+		'SCI_AUTOCSETAUTOHIDE' -> 16r846.
+		'SCI_AUTOCSETCANCELATSTART' -> 16r83E.
+		'SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR' -> 16rA4A.
+		'SCI_AUTOCSETCHOOSESINGLE' -> 16r841.
+		'SCI_AUTOCSETDROPRESTOFWORD' -> 16r8DE.
+		'SCI_AUTOCSETFILLUPS' -> 16r840.
+		'SCI_AUTOCSETIGNORECASE' -> 16r843.
+		'SCI_AUTOCSETMAXHEIGHT' -> 16r8A2.
+		'SCI_AUTOCSETMAXWIDTH' -> 16r8A0.
+		'SCI_AUTOCSETMULTI' -> 16rA4C.
+		'SCI_AUTOCSETORDER' -> 16rA64.
+		'SCI_AUTOCSETSEPARATOR' -> 16r83A.
+		'SCI_AUTOCSETTYPESEPARATOR' -> 16r8EE.
+		'SCI_AUTOCSHOW' -> 16r834.
+		'SCI_AUTOCSTOPS' -> 16r839.
+		'SCI_BACKTAB' -> 16r918.
+		'SCI_BEGINUNDOACTION' -> 16r81E.
+		'SCI_BRACEBADLIGHT' -> 16r930.
+		'SCI_BRACEBADLIGHTINDICATOR' -> 16r9C3.
+		'SCI_BRACEHIGHLIGHT' -> 16r92F.
+		'SCI_BRACEHIGHLIGHTINDICATOR' -> 16r9C2.
+		'SCI_BRACEMATCH' -> 16r931.
+		'SCI_BRACEMATCHNEXT' -> 16r941.
+		'SCI_CALLTIPACTIVE' -> 16r89A.
+		'SCI_CALLTIPCANCEL' -> 16r899.
+		'SCI_CALLTIPPOSSTART' -> 16r89B.
+		'SCI_CALLTIPSETBACK' -> 16r89D.
+		'SCI_CALLTIPSETFORE' -> 16r89E.
+		'SCI_CALLTIPSETFOREHLT' -> 16r89F.
+		'SCI_CALLTIPSETHLT' -> 16r89C.
+		'SCI_CALLTIPSETPOSITION' -> 16r8A5.
+		'SCI_CALLTIPSETPOSSTART' -> 16r8A6.
+		'SCI_CALLTIPSHOW' -> 16r898.
+		'SCI_CALLTIPUSESTYLE' -> 16r8A4.
+		'SCI_CANCEL' -> 16r915.
+		'SCI_CANPASTE' -> 16r87D.
+		'SCI_CANREDO' -> 16r7E0.
+		'SCI_CANUNDO' -> 16r87E.
+		'SCI_CHANGEINSERTION' -> 16rA70.
+		'SCI_CHANGELEXERSTATE' -> 16rA39.
+		'SCI_CHARLEFT' -> 16r900.
+		'SCI_CHARLEFTEXTEND' -> 16r901.
+		'SCI_CHARLEFTRECTEXTEND' -> 16r97C.
+		'SCI_CHARPOSITIONFROMPOINT' -> 16rA01.
+		'SCI_CHARPOSITIONFROMPOINTCLOSE' -> 16rA02.
+		'SCI_CHARRIGHT' -> 16r902.
+		'SCI_CHARRIGHTEXTEND' -> 16r903.
+		'SCI_CHARRIGHTRECTEXTEND' -> 16r97D.
+		'SCI_CHOOSECARETX' -> 16r95F.
+		'SCI_CLEAR' -> 16r884.
+		'SCI_CLEARALL' -> 16r7D4.
+		'SCI_CLEARALLCMDKEYS' -> 16r818.
+		'SCI_CLEARCMDKEY' -> 16r817.
+		'SCI_CLEARDOCUMENTSTYLE' -> 16r7D5.
+		'SCI_CLEARREGISTEREDIMAGES' -> 16r968.
+		'SCI_CLEARREPRESENTATION' -> 16rA6B.
+		'SCI_CLEARSELECTIONS' -> 16rA0B.
+		'SCI_CLEARTABSTOPS' -> 16rA73.
+		'SCI_COLOURISE' -> 16rFA3.
+		'SCI_CONTRACTEDFOLDNEXT' -> 16rA3A.
+		'SCI_CONVERTEOLS' -> 16r7ED.
+		'SCI_COPY' -> 16r882.
+		'SCI_COPYALLOWLINE' -> 16r9D7.
+		'SCI_COPYRANGE' -> 16r973.
+		'SCI_COPYTEXT' -> 16r974.
+		'SCI_COUNTCHARACTERS' -> 16rA49.
+		'SCI_COUNTCODEUNITS' -> 16rA9B.
+		'SCI_CREATEDOCUMENT' -> 16r947.
+		'SCI_CREATELOADER' -> 16rA48.
+		'SCI_CUT' -> 16r881.
+		'SCI_DELETEBACK' -> 16r916.
+		'SCI_DELETEBACKNOTLINE' -> 16r928.
+		'SCI_DELETERANGE' -> 16rA55.
+		'SCI_DELLINELEFT' -> 16r95B.
+		'SCI_DELLINERIGHT' -> 16r95C.
+		'SCI_DELWORDLEFT' -> 16r91F.
+		'SCI_DELWORDRIGHT' -> 16r920.
+		'SCI_DELWORDRIGHTEND' -> 16r9D6.
+		'SCI_DESCRIBEKEYWORDSETS' -> 16rFB1.
+		'SCI_DESCRIBEPROPERTY' -> 16rFB0.
+		'SCI_DESCRIPTIONOFSTYLE' -> 16rFC0.
+		'SCI_DISTANCETOSECONDARYSTYLES' -> 16rFB9.
+		'SCI_DOCLINEFROMVISIBLE' -> 16r8AD.
+		'SCI_DOCUMENTEND' -> 16r90E.
+		'SCI_DOCUMENTENDEXTEND' -> 16r90F.
+		'SCI_DOCUMENTSTART' -> 16r90C.
+		'SCI_DOCUMENTSTARTEXTEND' -> 16r90D.
+		'SCI_DROPSELECTIONN' -> 16rA6F.
+		'SCI_EDITTOGGLEOVERTYPE' -> 16r914.
+		'SCI_EMPTYUNDOBUFFER' -> 16r87F.
+		'SCI_ENCODEDFROMUTF8' -> 16r991.
+		'SCI_ENDUNDOACTION' -> 16r81F.
+		'SCI_ENSUREVISIBLE' -> 16r8B8.
+		'SCI_ENSUREVISIBLEENFORCEPOLICY' -> 16r8BA.
+		'SCI_EOLANNOTATIONCLEARALL' -> 16rAB8.
+		'SCI_EOLANNOTATIONGETSTYLE' -> 16rAB7.
+		'SCI_EOLANNOTATIONGETSTYLEOFFSET' -> 16rABC.
+		'SCI_EOLANNOTATIONGETTEXT' -> 16rAB5.
+		'SCI_EOLANNOTATIONGETVISIBLE' -> 16rABA.
+		'SCI_EOLANNOTATIONSETSTYLE' -> 16rAB6.
+		'SCI_EOLANNOTATIONSETSTYLEOFFSET' -> 16rABB.
+		'SCI_EOLANNOTATIONSETTEXT' -> 16rAB4.
+		'SCI_EOLANNOTATIONSETVISIBLE' -> 16rAB9.
+		'SCI_EXPANDCHILDREN' -> 16r8BF.
+		'SCI_FINDCOLUMN' -> 16r998.
+		'SCI_FINDINDICATORFLASH' -> 16rA51.
+		'SCI_FINDINDICATORHIDE' -> 16rA52.
+		'SCI_FINDINDICATORSHOW' -> 16rA50.
+		'SCI_FINDTEXT' -> 16r866.
+		'SCI_FOLDALL' -> 16rA66.
+		'SCI_FOLDCHILDREN' -> 16r8BE.
+		'SCI_FOLDDISPLAYTEXTGETSTYLE' -> 16rA93.
+		'SCI_FOLDDISPLAYTEXTSETSTYLE' -> 16rA8D.
+		'SCI_FOLDLINE' -> 16r8BD.
+		'SCI_FORMATRANGE' -> 16r867.
+		'SCI_FORMFEED' -> 16r91A.
+		'SCI_FREESUBSTYLES' -> 16rFB7.
+		'SCI_GETACCESSIBILITY' -> 16rA8F.
+		'SCI_GETADDITIONALCARETFORE' -> 16rA2D.
+		'SCI_GETADDITIONALCARETSBLINK' -> 16rA08.
+		'SCI_GETADDITIONALCARETSVISIBLE' -> 16rA31.
+		'SCI_GETADDITIONALSELALPHA' -> 16rA2B.
+		'SCI_GETADDITIONALSELECTIONTYPING' -> 16rA06.
+		'SCI_GETALLLINESVISIBLE' -> 16r8BC.
+		'SCI_GETANCHOR' -> 16r7D9.
+		'SCI_GETAUTOMATICFOLD' -> 16rA68.
+		'SCI_GETBACKSPACEUNINDENTS' -> 16r8D7.
+		'SCI_GETBIDIRECTIONAL' -> 16rA94.
+		'SCI_GETBUFFEREDDRAW' -> 16r7F2.
+		'SCI_GETCARETFORE' -> 16r85A.
+		'SCI_GETCARETLINEBACK' -> 16r831.
+		'SCI_GETCARETLINEBACKALPHA' -> 16r9A7.
+		'SCI_GETCARETLINEFRAME' -> 16rA90.
+		'SCI_GETCARETLINEVISIBLE' -> 16r82F.
+		'SCI_GETCARETLINEVISIBLEALWAYS' -> 16rA5E.
+		'SCI_GETCARETPERIOD' -> 16r81B.
+		'SCI_GETCARETSTICKY' -> 16r999.
+		'SCI_GETCARETSTYLE' -> 16r9D1.
+		'SCI_GETCARETWIDTH' -> 16r88D.
+		'SCI_GETCHARACTERCATEGORYOPTIMIZATION' -> 16rAA1.
+		'SCI_GETCHARACTERPOINTER' -> 16r9D8.
+		'SCI_GETCHARAT' -> 16r7D7.
+		'SCI_GETCODEPAGE' -> 16r859.
+		'SCI_GETCOLUMN' -> 16r851.
+		'SCI_GETCOMMANDEVENTS' -> 16rA9E.
+		'SCI_GETCONTROLCHARSYMBOL' -> 16r955.
+		'SCI_GETCURLINE' -> 16r7EB.
+		'SCI_GETCURRENTPOS' -> 16r7D8.
+		'SCI_GETCURSOR' -> 16r953.
+		'SCI_GETDEFAULTFOLDDISPLAYTEXT' -> 16rAA3.
+		'SCI_GETDIRECTFUNCTION' -> 16r888.
+		'SCI_GETDIRECTPOINTER' -> 16r889.
+		'SCI_GETDOCPOINTER' -> 16r935.
+		'SCI_GETDOCUMENTOPTIONS' -> 16r94B.
+		'SCI_GETEDGECOLOUR' -> 16r93C.
+		'SCI_GETEDGECOLUMN' -> 16r938.
+		'SCI_GETEDGEMODE' -> 16r93A.
+		'SCI_GETENDATLASTLINE' -> 16r8E6.
+		'SCI_GETENDSTYLED' -> 16r7EC.
+		'SCI_GETEOLMODE' -> 16r7EE.
+		'SCI_GETEXTRAASCENT' -> 16r9DE.
+		'SCI_GETEXTRADESCENT' -> 16r9E0.
+		'SCI_GETFIRSTVISIBLELINE' -> 16r868.
+		'SCI_GETFOCUS' -> 16r94D.
+		'SCI_GETFOLDEXPANDED' -> 16r8B6.
+		'SCI_GETFOLDLEVEL' -> 16r8AF.
+		'SCI_GETFOLDPARENT' -> 16r8B1.
+		'SCI_GETFONTQUALITY' -> 16rA34.
+		'SCI_GETGAPPOSITION' -> 16rA54.
+		'SCI_GETHIGHLIGHTGUIDE' -> 16r857.
+		'SCI_GETHOTSPOTACTIVEBACK' -> 16r9BF.
+		'SCI_GETHOTSPOTACTIVEFORE' -> 16r9BE.
+		'SCI_GETHOTSPOTACTIVEUNDERLINE' -> 16r9C0.
+		'SCI_GETHOTSPOTSINGLELINE' -> 16r9C1.
+		'SCI_GETHSCROLLBAR' -> 16r853.
+		'SCI_GETIDENTIFIER' -> 16rA3F.
+		'SCI_GETIDLESTYLING' -> 16rA85.
+		'SCI_GETIMEINTERACTION' -> 16rA76.
+		'SCI_GETINDENT' -> 16r84B.
+		'SCI_GETINDENTATIONGUIDES' -> 16r855.
+		'SCI_GETINDICATORCURRENT' -> 16r9C5.
+		'SCI_GETINDICATORVALUE' -> 16r9C7.
+		'SCI_GETKEYSUNICODE' -> 16r9DA.
+		'SCI_GETLASTCHILD' -> 16r8B0.
+		'SCI_GETLAYOUTCACHE' -> 16r8E1.
+		'SCI_GETLENGTH' -> 16r7D6.
+		'SCI_GETLEXER' -> 16rFA2.
+		'SCI_GETLEXERLANGUAGE' -> 16rFAC.
+		'SCI_GETLINE' -> 16r869.
+		'SCI_GETLINECHARACTERINDEX' -> 16rA96.
+		'SCI_GETLINECOUNT' -> 16r86A.
+		'SCI_GETLINEENDPOSITION' -> 16r858.
+		'SCI_GETLINEENDTYPESACTIVE' -> 16rA62.
+		'SCI_GETLINEENDTYPESALLOWED' -> 16rA61.
+		'SCI_GETLINEENDTYPESSUPPORTED' -> 16rFB2.
+		'SCI_GETLINEINDENTATION' -> 16r84F.
+		'SCI_GETLINEINDENTPOSITION' -> 16r850.
+		'SCI_GETLINESELENDPOSITION' -> 16r979.
+		'SCI_GETLINESELSTARTPOSITION' -> 16r978.
+		'SCI_GETLINESTATE' -> 16r82D.
+		'SCI_GETLINEVISIBLE' -> 16r8B4.
+		'SCI_GETMAINSELECTION' -> 16rA0F.
+		'SCI_GETMARGINBACKN' -> 16r8CB.
+		'SCI_GETMARGINCURSORN' -> 16r8C9.
+		'SCI_GETMARGINLEFT' -> 16r86C.
+		'SCI_GETMARGINMASKN' -> 16r8C5.
+		'SCI_GETMARGINOPTIONS' -> 16r9FD.
+		'SCI_GETMARGINRIGHT' -> 16r86E.
+		'SCI_GETMARGINS' -> 16r8CD.
+		'SCI_GETMARGINSENSITIVEN' -> 16r8C7.
+		'SCI_GETMARGINTYPEN' -> 16r8C1.
+		'SCI_GETMARGINWIDTHN' -> 16r8C3.
+		'SCI_GETMAXLINESTATE' -> 16r82E.
+		'SCI_GETMODEVENTMASK' -> 16r94A.
+		'SCI_GETMODIFY' -> 16r86F.
+		'SCI_GETMOUSEDOWNCAPTURES' -> 16r951.
+		'SCI_GETMOUSEDWELLTIME' -> 16r8D9.
+		'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' -> 16rA6D.
+		'SCI_GETMOUSEWHEELCAPTURES' -> 16rA89.
+		'SCI_GETMOVEEXTENDSSELECTION' -> 16rA92.
+		'SCI_GETMULTIPASTE' -> 16rA37.
+		'SCI_GETMULTIPLESELECTION' -> 16rA04.
+		'SCI_GETNAMEDSTYLES' -> 16rFBD.
+		'SCI_GETNEXTTABSTOP' -> 16rA75.
+		'SCI_GETOVERTYPE' -> 16r88B.
+		'SCI_GETPASTECONVERTENDINGS' -> 16r9A4.
+		'SCI_GETPHASESDRAW' -> 16rA71.
+		'SCI_GETPOSITIONCACHE' -> 16r9D3.
+		'SCI_GETPRIMARYSTYLEFROMSTYLE' -> 16rFBC.
+		'SCI_GETPRINTCOLOURMODE' -> 16r865.
+		'SCI_GETPRINTMAGNIFICATION' -> 16r863.
+		'SCI_GETPRINTWRAPMODE' -> 16r967.
+		'SCI_GETPROPERTY' -> 16rFA8.
+		'SCI_GETPROPERTYEXPANDED' -> 16rFA9.
+		'SCI_GETPROPERTYINT' -> 16rFAA.
+		'SCI_GETPUNCTUATIONCHARS' -> 16rA59.
+		'SCI_GETRANGEPOINTER' -> 16rA53.
+		'SCI_GETREADONLY' -> 16r85C.
+		'SCI_GETRECTANGULARSELECTIONANCHOR' -> 16rA1F.
+		'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE' -> 16rA23.
+		'SCI_GETRECTANGULARSELECTIONCARET' -> 16rA1D.
+		'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 16rA21.
+		'SCI_GETRECTANGULARSELECTIONMODIFIER' -> 16rA27.
+		'SCI_GETREPRESENTATION' -> 16rA6A.
+		'SCI_GETSCROLLWIDTH' -> 16r8E3.
+		'SCI_GETSCROLLWIDTHTRACKING' -> 16r9D5.
+		'SCI_GETSEARCHFLAGS' -> 16r897.
+		'SCI_GETSELALPHA' -> 16r9AD.
+		'SCI_GETSELECTIONEMPTY' -> 16rA5A.
+		'SCI_GETSELECTIONEND' -> 16r861.
+		'SCI_GETSELECTIONMODE' -> 16r977.
+		'SCI_GETSELECTIONNANCHOR' -> 16rA13.
+		'SCI_GETSELECTIONNANCHORVIRTUALSPACE' -> 16rA17.
+		'SCI_GETSELECTIONNCARET' -> 16rA11.
+		'SCI_GETSELECTIONNCARETVIRTUALSPACE' -> 16rA15.
+		'SCI_GETSELECTIONNEND' -> 16rA1B.
+		'SCI_GETSELECTIONNENDVIRTUALSPACE' -> 16rAA7.
+		'SCI_GETSELECTIONNSTART' -> 16rA19.
+		'SCI_GETSELECTIONNSTARTVIRTUALSPACE' -> 16rAA6.
+		'SCI_GETSELECTIONS' -> 16rA0A.
+		'SCI_GETSELECTIONSTART' -> 16r85F.
+		'SCI_GETSELEOLFILLED' -> 16r9AF.
+		'SCI_GETSELTEXT' -> 16r871.
+		'SCI_GETSTATUS' -> 16r94F.
+		'SCI_GETSTYLEAT' -> 16r7DA.
+		'SCI_GETSTYLEBITS' -> 16r82B.
+		'SCI_GETSTYLEBITSNEEDED' -> 16rFAB.
+		'SCI_GETSTYLEDTEXT' -> 16r7DF.
+		'SCI_GETSTYLEFROMSUBSTYLE' -> 16rFBB.
+		'SCI_GETSUBSTYLEBASES' -> 16rFBA.
+		'SCI_GETSUBSTYLESLENGTH' -> 16rFB6.
+		'SCI_GETSUBSTYLESSTART' -> 16rFB5.
+		'SCI_GETTABDRAWMODE' -> 16rA8A.
+		'SCI_GETTABINDENTS' -> 16r8D5.
+		'SCI_GETTABMINIMUMWIDTH' -> 16rAA5.
+		'SCI_GETTABWIDTH' -> 16r849.
+		'SCI_GETTAG' -> 16rA38.
+		'SCI_GETTARGETEND' -> 16r891.
+		'SCI_GETTARGETENDVIRTUALSPACE' -> 16rAAB.
+		'SCI_GETTARGETSTART' -> 16r88F.
+		'SCI_GETTARGETSTARTVIRTUALSPACE' -> 16rAA9.
+		'SCI_GETTARGETTEXT' -> 16rA7F.
+		'SCI_GETTECHNOLOGY' -> 16rA47.
+		'SCI_GETTEXT' -> 16r886.
+		'SCI_GETTEXTLENGTH' -> 16r887.
+		'SCI_GETTEXTRANGE' -> 16r872.
+		'SCI_GETTWOPHASEDRAW' -> 16r8EB.
+		'SCI_GETUNDOCOLLECTION' -> 16r7E3.
+		'SCI_GETUSETABS' -> 16r84D.
+		'SCI_GETVIEWEOL' -> 16r933.
+		'SCI_GETVIEWWS' -> 16r7E4.
+		'SCI_GETVIRTUALSPACEOPTIONS' -> 16rA25.
+		'SCI_GETVSCROLLBAR' -> 16r8E9.
+		'SCI_GETWHITESPACECHARS' -> 16rA57.
+		'SCI_GETWHITESPACESIZE' -> 16r827.
+		'SCI_GETWORDCHARS' -> 16rA56.
+		'SCI_GETWRAPINDENTMODE' -> 16r9A9.
+		'SCI_GETWRAPMODE' -> 16r8DD.
+		'SCI_GETWRAPSTARTINDENT' -> 16r9A1.
+		'SCI_GETWRAPVISUALFLAGS' -> 16r99D.
+		'SCI_GETWRAPVISUALFLAGSLOCATION' -> 16r99F.
+		'SCI_GETXOFFSET' -> 16r95E.
+		'SCI_GETZOOM' -> 16r946.
+		'SCI_GOTOLINE' -> 16r7E8.
+		'SCI_GOTOPOS' -> 16r7E9.
+		'SCI_GRABFOCUS' -> 16r960.
+		'SCI_HIDELINES' -> 16r8B3.
+		'SCI_HIDESELECTION' -> 16r873.
+		'SCI_HOME' -> 16r908.
+		'SCI_HOMEDISPLAY' -> 16r929.
+		'SCI_HOMEDISPLAYEXTEND' -> 16r92A.
+		'SCI_HOMEEXTEND' -> 16r909.
+		'SCI_HOMERECTEXTEND' -> 16r97E.
+		'SCI_HOMEWRAP' -> 16r92D.
+		'SCI_HOMEWRAPEXTEND' -> 16r992.
+		'SCI_INDEXPOSITIONFROMLINE' -> 16rA9A.
+		'SCI_INDICATORALLONFOR' -> 16r9CA.
+		'SCI_INDICATORCLEARRANGE' -> 16r9C9.
+		'SCI_INDICATOREND' -> 16r9CD.
+		'SCI_INDICATORFILLRANGE' -> 16r9C8.
+		'SCI_INDICATORSTART' -> 16r9CC.
+		'SCI_INDICATORVALUEAT' -> 16r9CB.
+		'SCI_INDICGETALPHA' -> 16r9DC.
+		'SCI_INDICGETFLAGS' -> 16rA7D.
+		'SCI_INDICGETFORE' -> 16r823.
+		'SCI_INDICGETHOVERFORE' -> 16rA7B.
+		'SCI_INDICGETHOVERSTYLE' -> 16rA79.
+		'SCI_INDICGETOUTLINEALPHA' -> 16r9FF.
+		'SCI_INDICGETSTYLE' -> 16r821.
+		'SCI_INDICGETUNDER' -> 16r9CF.
+		'SCI_INDICSETALPHA' -> 16r9DB.
+		'SCI_INDICSETFLAGS' -> 16rA7C.
+		'SCI_INDICSETFORE' -> 16r822.
+		'SCI_INDICSETHOVERFORE' -> 16rA7A.
+		'SCI_INDICSETHOVERSTYLE' -> 16rA78.
+		'SCI_INDICSETOUTLINEALPHA' -> 16r9FE.
+		'SCI_INDICSETSTYLE' -> 16r820.
+		'SCI_INDICSETUNDER' -> 16r9CE.
+		'SCI_INSERTTEXT' -> 16r7D3.
+		'SCI_ISRANGEWORD' -> 16rA83.
+		'SCI_LEXER_START' -> 16rFA0.
+		'SCI_LINECOPY' -> 16r997.
+		'SCI_LINECUT' -> 16r921.
+		'SCI_LINEDELETE' -> 16r922.
+		'SCI_LINEDOWN' -> 16r8FC.
+		'SCI_LINEDOWNEXTEND' -> 16r8FD.
+		'SCI_LINEDOWNRECTEXTEND' -> 16r97A.
+		'SCI_LINEDUPLICATE' -> 16r964.
+		'SCI_LINEEND' -> 16r90A.
+		'SCI_LINEENDDISPLAY' -> 16r92B.
+		'SCI_LINEENDDISPLAYEXTEND' -> 16r92C.
+		'SCI_LINEENDEXTEND' -> 16r90B.
+		'SCI_LINEENDRECTEXTEND' -> 16r980.
+		'SCI_LINEENDWRAP' -> 16r993.
+		'SCI_LINEENDWRAPEXTEND' -> 16r994.
+		'SCI_LINEFROMINDEXPOSITION' -> 16rA99.
+		'SCI_LINEFROMPOSITION' -> 16r876.
+		'SCI_LINELENGTH' -> 16r92E.
+		'SCI_LINEREVERSE' -> 16r932.
+		'SCI_LINESCROLL' -> 16r878.
+		'SCI_LINESCROLLDOWN' -> 16r926.
+		'SCI_LINESCROLLUP' -> 16r927.
+		'SCI_LINESJOIN' -> 16r8F0.
+		'SCI_LINESONSCREEN' -> 16r942.
+		'SCI_LINESSPLIT' -> 16r8F1.
+		'SCI_LINETRANSPOSE' -> 16r923.
+		'SCI_LINEUP' -> 16r8FE.
+		'SCI_LINEUPEXTEND' -> 16r8FF.
+		'SCI_LINEUPRECTEXTEND' -> 16r97B.
+		'SCI_LOADLEXERLIBRARY' -> 16rFA7.
+		'SCI_LOWERCASE' -> 16r924.
+		'SCI_MARGINGETSTYLE' -> 16r9E5.
+		'SCI_MARGINGETSTYLEOFFSET' -> 16r9EA.
+		'SCI_MARGINGETSTYLES' -> 16r9E7.
+		'SCI_MARGINGETTEXT' -> 16r9E3.
+		'SCI_MARGINSETSTYLE' -> 16r9E4.
+		'SCI_MARGINSETSTYLEOFFSET' -> 16r9E9.
+		'SCI_MARGINSETSTYLES' -> 16r9E6.
+		'SCI_MARGINSETTEXT' -> 16r9E2.
+		'SCI_MARGINTEXTCLEARALL' -> 16r9E8.
+		'SCI_MARKERADD' -> 16r7FB.
+		'SCI_MARKERADDSET' -> 16r9A2.
+		'SCI_MARKERDEFINE' -> 16r7F8.
+		'SCI_MARKERDEFINEPIXMAP' -> 16r801.
+		'SCI_MARKERDEFINERGBAIMAGE' -> 16rA42.
+		'SCI_MARKERDELETE' -> 16r7FC.
+		'SCI_MARKERDELETEALL' -> 16r7FD.
+		'SCI_MARKERDELETEHANDLE' -> 16r7E2.
+		'SCI_MARKERENABLEHIGHLIGHT' -> 16r8F5.
+		'SCI_MARKERGET' -> 16r7FE.
+		'SCI_MARKERHANDLEFROMLINE' -> 16rAAC.
+		'SCI_MARKERLINEFROMHANDLE' -> 16r7E1.
+		'SCI_MARKERNEXT' -> 16r7FF.
+		'SCI_MARKERNUMBERFROMLINE' -> 16rAAD.
+		'SCI_MARKERPREVIOUS' -> 16r800.
+		'SCI_MARKERSETALPHA' -> 16r9AC.
+		'SCI_MARKERSETBACK' -> 16r7FA.
+		'SCI_MARKERSETBACKSELECTED' -> 16r8F4.
+		'SCI_MARKERSETFORE' -> 16r7F9.
+		'SCI_MARKERSYMBOLDEFINED' -> 16r9E1.
+		'SCI_MOVECARETINSIDEVIEW' -> 16r961.
+		'SCI_MOVESELECTEDLINESDOWN' -> 16rA3D.
+		'SCI_MOVESELECTEDLINESUP' -> 16rA3C.
+		'SCI_MULTIEDGEADDLINE' -> 16rA86.
+		'SCI_MULTIEDGECLEARALL' -> 16rA87.
+		'SCI_MULTIPLESELECTADDEACH' -> 16rA81.
+		'SCI_MULTIPLESELECTADDNEXT' -> 16rA80.
+		'SCI_NAMEOFSTYLE' -> 16rFBE.
+		'SCI_NEWLINE' -> 16r919.
+		'SCI_NULL' -> 16r87C.
+		'SCI_OPTIONAL_START' -> 16rBB8.
+		'SCI_PAGEDOWN' -> 16r912.
+		'SCI_PAGEDOWNEXTEND' -> 16r913.
+		'SCI_PAGEDOWNRECTEXTEND' -> 16r982.
+		'SCI_PAGEUP' -> 16r910.
+		'SCI_PAGEUPEXTEND' -> 16r911.
+		'SCI_PAGEUPRECTEXTEND' -> 16r981.
+		'SCI_PARADOWN' -> 16r96D.
+		'SCI_PARADOWNEXTEND' -> 16r96E.
+		'SCI_PARAUP' -> 16r96F.
+		'SCI_PARAUPEXTEND' -> 16r970.
+		'SCI_PASTE' -> 16r883.
+		'SCI_POINTXFROMPOSITION' -> 16r874.
+		'SCI_POINTYFROMPOSITION' -> 16r875.
+		'SCI_POSITIONAFTER' -> 16r972.
+		'SCI_POSITIONBEFORE' -> 16r971.
+		'SCI_POSITIONFROMLINE' -> 16r877.
+		'SCI_POSITIONFROMPOINT' -> 16r7E6.
+		'SCI_POSITIONFROMPOINTCLOSE' -> 16r7E7.
+		'SCI_POSITIONRELATIVE' -> 16rA6E.
+		'SCI_POSITIONRELATIVECODEUNITS' -> 16rA9C.
+		'SCI_PRIVATELEXERCALL' -> 16rFAD.
+		'SCI_PROPERTYNAMES' -> 16rFAE.
+		'SCI_PROPERTYTYPE' -> 16rFAF.
+		'SCI_REDO' -> 16r7DB.
+		'SCI_REGISTERIMAGE' -> 16r965.
+		'SCI_REGISTERRGBAIMAGE' -> 16rA43.
+		'SCI_RELEASEALLEXTENDEDSTYLES' -> 16r9F8.
+		'SCI_RELEASEDOCUMENT' -> 16r949.
+		'SCI_RELEASELINECHARACTERINDEX' -> 16rA98.
+		'SCI_REPLACESEL' -> 16r87A.
+		'SCI_REPLACETARGET' -> 16r892.
+		'SCI_REPLACETARGETRE' -> 16r893.
+		'SCI_RGBAIMAGESETHEIGHT' -> 16rA41.
+		'SCI_RGBAIMAGESETSCALE' -> 16rA5B.
+		'SCI_RGBAIMAGESETWIDTH' -> 16rA40.
+		'SCI_ROTATESELECTION' -> 16rA2E.
+		'SCI_SCROLLCARET' -> 16r879.
+		'SCI_SCROLLRANGE' -> 16rA09.
+		'SCI_SCROLLTOEND' -> 16rA45.
+		'SCI_SCROLLTOSTART' -> 16rA44.
+		'SCI_SEARCHANCHOR' -> 16r93E.
+		'SCI_SEARCHINTARGET' -> 16r895.
+		'SCI_SEARCHNEXT' -> 16r93F.
+		'SCI_SEARCHPREV' -> 16r940.
+		'SCI_SELECTALL' -> 16r7DD.
+		'SCI_SELECTIONDUPLICATE' -> 16r9A5.
+		'SCI_SELECTIONISRECTANGLE' -> 16r944.
+		'SCI_SETACCESSIBILITY' -> 16rA8E.
+		'SCI_SETADDITIONALCARETFORE' -> 16rA2C.
+		'SCI_SETADDITIONALCARETSBLINK' -> 16rA07.
+		'SCI_SETADDITIONALCARETSVISIBLE' -> 16rA30.
+		'SCI_SETADDITIONALSELALPHA' -> 16rA2A.
+		'SCI_SETADDITIONALSELBACK' -> 16rA29.
+		'SCI_SETADDITIONALSELECTIONTYPING' -> 16rA05.
+		'SCI_SETADDITIONALSELFORE' -> 16rA28.
+		'SCI_SETANCHOR' -> 16r7EA.
+		'SCI_SETAUTOMATICFOLD' -> 16rA67.
+		'SCI_SETBACKSPACEUNINDENTS' -> 16r8D6.
+		'SCI_SETBIDIRECTIONAL' -> 16rA95.
+		'SCI_SETBUFFEREDDRAW' -> 16r7F3.
+		'SCI_SETCARETFORE' -> 16r815.
+		'SCI_SETCARETLINEBACK' -> 16r832.
+		'SCI_SETCARETLINEBACKALPHA' -> 16r9A6.
+		'SCI_SETCARETLINEFRAME' -> 16rA91.
+		'SCI_SETCARETLINEVISIBLE' -> 16r830.
+		'SCI_SETCARETLINEVISIBLEALWAYS' -> 16rA5F.
+		'SCI_SETCARETPERIOD' -> 16r81C.
+		'SCI_SETCARETSTICKY' -> 16r99A.
+		'SCI_SETCARETSTYLE' -> 16r9D0.
+		'SCI_SETCARETWIDTH' -> 16r88C.
+		'SCI_SETCHARACTERCATEGORYOPTIMIZATION' -> 16rAA0.
+		'SCI_SETCHARSDEFAULT' -> 16r98C.
+		'SCI_SETCODEPAGE' -> 16r7F5.
+		'SCI_SETCOMMANDEVENTS' -> 16rA9D.
+		'SCI_SETCONTROLCHARSYMBOL' -> 16r954.
+		'SCI_SETCURRENTPOS' -> 16r85D.
+		'SCI_SETCURSOR' -> 16r952.
+		'SCI_SETDEFAULTFOLDDISPLAYTEXT' -> 16rAA2.
+		'SCI_SETDOCPOINTER' -> 16r936.
+		'SCI_SETEDGECOLOUR' -> 16r93D.
+		'SCI_SETEDGECOLUMN' -> 16r939.
+		'SCI_SETEDGEMODE' -> 16r93B.
+		'SCI_SETEMPTYSELECTION' -> 16r9FC.
+		'SCI_SETENDATLASTLINE' -> 16r8E5.
+		'SCI_SETEOLMODE' -> 16r7EF.
+		'SCI_SETEXTRAASCENT' -> 16r9DD.
+		'SCI_SETEXTRADESCENT' -> 16r9DF.
+		'SCI_SETFIRSTVISIBLELINE' -> 16rA35.
+		'SCI_SETFOCUS' -> 16r94C.
+		'SCI_SETFOLDEXPANDED' -> 16r8B5.
+		'SCI_SETFOLDFLAGS' -> 16r8B9.
+		'SCI_SETFOLDLEVEL' -> 16r8AE.
+		'SCI_SETFOLDMARGINCOLOUR' -> 16r8F2.
+		'SCI_SETFOLDMARGINHICOLOUR' -> 16r8F3.
+		'SCI_SETFONTQUALITY' -> 16rA33.
+		'SCI_SETHIGHLIGHTGUIDE' -> 16r856.
+		'SCI_SETHOTSPOTACTIVEBACK' -> 16r96B.
+		'SCI_SETHOTSPOTACTIVEFORE' -> 16r96A.
+		'SCI_SETHOTSPOTACTIVEUNDERLINE' -> 16r96C.
+		'SCI_SETHOTSPOTSINGLELINE' -> 16r975.
+		'SCI_SETHSCROLLBAR' -> 16r852.
+		'SCI_SETIDENTIFIER' -> 16rA3E.
+		'SCI_SETIDENTIFIERS' -> 16rFB8.
+		'SCI_SETIDLESTYLING' -> 16rA84.
+		'SCI_SETILEXER' -> 16rFC1.
+		'SCI_SETIMEINTERACTION' -> 16rA77.
+		'SCI_SETINDENT' -> 16r84A.
+		'SCI_SETINDENTATIONGUIDES' -> 16r854.
+		'SCI_SETINDICATORCURRENT' -> 16r9C4.
+		'SCI_SETINDICATORVALUE' -> 16r9C6.
+		'SCI_SETKEYSUNICODE' -> 16r9D9.
+		'SCI_SETKEYWORDS' -> 16rFA5.
+		'SCI_SETLAYOUTCACHE' -> 16r8E0.
+		'SCI_SETLENGTHFORENCODE' -> 16r990.
+		'SCI_SETLEXER' -> 16rFA1.
+		'SCI_SETLEXERLANGUAGE' -> 16rFA6.
+		'SCI_SETLINEENDTYPESALLOWED' -> 16rA60.
+		'SCI_SETLINEINDENTATION' -> 16r84E.
+		'SCI_SETLINESTATE' -> 16r82C.
+		'SCI_SETMAINSELECTION' -> 16rA0E.
+		'SCI_SETMARGINBACKN' -> 16r8CA.
+		'SCI_SETMARGINCURSORN' -> 16r8C8.
+		'SCI_SETMARGINLEFT' -> 16r86B.
+		'SCI_SETMARGINMASKN' -> 16r8C4.
+		'SCI_SETMARGINOPTIONS' -> 16r9EB.
+		'SCI_SETMARGINRIGHT' -> 16r86D.
+		'SCI_SETMARGINS' -> 16r8CC.
+		'SCI_SETMARGINSENSITIVEN' -> 16r8C6.
+		'SCI_SETMARGINTYPEN' -> 16r8C0.
+		'SCI_SETMARGINWIDTHN' -> 16r8C2.
+		'SCI_SETMODEVENTMASK' -> 16r937.
+		'SCI_SETMOUSEDOWNCAPTURES' -> 16r950.
+		'SCI_SETMOUSEDWELLTIME' -> 16r8D8.
+		'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' -> 16rA6C.
+		'SCI_SETMOUSEWHEELCAPTURES' -> 16rA88.
+		'SCI_SETMULTIPASTE' -> 16rA36.
+		'SCI_SETMULTIPLESELECTION' -> 16rA03.
+		'SCI_SETOVERTYPE' -> 16r88A.
+		'SCI_SETPASTECONVERTENDINGS' -> 16r9A3.
+		'SCI_SETPHASESDRAW' -> 16rA72.
+		'SCI_SETPOSITIONCACHE' -> 16r9D2.
+		'SCI_SETPRINTCOLOURMODE' -> 16r864.
+		'SCI_SETPRINTMAGNIFICATION' -> 16r862.
+		'SCI_SETPRINTWRAPMODE' -> 16r966.
+		'SCI_SETPROPERTY' -> 16rFA4.
+		'SCI_SETPUNCTUATIONCHARS' -> 16rA58.
+		'SCI_SETREADONLY' -> 16r87B.
+		'SCI_SETRECTANGULARSELECTIONANCHOR' -> 16rA1E.
+		'SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE' -> 16rA22.
+		'SCI_SETRECTANGULARSELECTIONCARET' -> 16rA1C.
+		'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 16rA20.
+		'SCI_SETRECTANGULARSELECTIONMODIFIER' -> 16rA26.
+		'SCI_SETREPRESENTATION' -> 16rA69.
+		'SCI_SETSAVEPOINT' -> 16r7DE.
+		'SCI_SETSCROLLWIDTH' -> 16r8E2.
+		'SCI_SETSCROLLWIDTHTRACKING' -> 16r9D4.
+		'SCI_SETSEARCHFLAGS' -> 16r896.
+		'SCI_SETSEL' -> 16r870.
+		'SCI_SETSELALPHA' -> 16r9AE.
+		'SCI_SETSELBACK' -> 16r814.
+		'SCI_SETSELECTION' -> 16rA0C.
+		'SCI_SETSELECTIONEND' -> 16r860.
+		'SCI_SETSELECTIONMODE' -> 16r976.
+		'SCI_SETSELECTIONNANCHOR' -> 16rA12.
+		'SCI_SETSELECTIONNANCHORVIRTUALSPACE' -> 16rA16.
+		'SCI_SETSELECTIONNCARET' -> 16rA10.
+		'SCI_SETSELECTIONNCARETVIRTUALSPACE' -> 16rA14.
+		'SCI_SETSELECTIONNEND' -> 16rA1A.
+		'SCI_SETSELECTIONNSTART' -> 16rA18.
+		'SCI_SETSELECTIONSTART' -> 16r85E.
+		'SCI_SETSELEOLFILLED' -> 16r9B0.
+		'SCI_SETSELFORE' -> 16r813.
+		'SCI_SETSTATUS' -> 16r94E.
+		'SCI_SETSTYLEBITS' -> 16r82A.
+		'SCI_SETSTYLING' -> 16r7F1.
+		'SCI_SETSTYLINGEX' -> 16r819.
+		'SCI_SETTABDRAWMODE' -> 16rA8B.
+		'SCI_SETTABINDENTS' -> 16r8D4.
+		'SCI_SETTABMINIMUMWIDTH' -> 16rAA4.
+		'SCI_SETTABWIDTH' -> 16r7F4.
+		'SCI_SETTARGETEND' -> 16r890.
+		'SCI_SETTARGETENDVIRTUALSPACE' -> 16rAAA.
+		'SCI_SETTARGETRANGE' -> 16rA7E.
+		'SCI_SETTARGETSTART' -> 16r88E.
+		'SCI_SETTARGETSTARTVIRTUALSPACE' -> 16rAA8.
+		'SCI_SETTECHNOLOGY' -> 16rA46.
+		'SCI_SETTEXT' -> 16r885.
+		'SCI_SETTWOPHASEDRAW' -> 16r8EC.
+		'SCI_SETUNDOCOLLECTION' -> 16r7DC.
+		'SCI_SETUSETABS' -> 16r84C.
+		'SCI_SETVIEWEOL' -> 16r934.
+		'SCI_SETVIEWWS' -> 16r7E5.
+		'SCI_SETVIRTUALSPACEOPTIONS' -> 16rA24.
+		'SCI_SETVISIBLEPOLICY' -> 16r95A.
+		'SCI_SETVSCROLLBAR' -> 16r8E8.
+		'SCI_SETWHITESPACEBACK' -> 16r825.
+		'SCI_SETWHITESPACECHARS' -> 16r98B.
+		'SCI_SETWHITESPACEFORE' -> 16r824.
+		'SCI_SETWHITESPACESIZE' -> 16r826.
+		'SCI_SETWORDCHARS' -> 16r81D.
+		'SCI_SETWRAPINDENTMODE' -> 16r9A8.
+		'SCI_SETWRAPMODE' -> 16r8DC.
+		'SCI_SETWRAPSTARTINDENT' -> 16r9A0.
+		'SCI_SETWRAPVISUALFLAGS' -> 16r99C.
+		'SCI_SETWRAPVISUALFLAGSLOCATION' -> 16r99E.
+		'SCI_SETXCARETPOLICY' -> 16r962.
+		'SCI_SETXOFFSET' -> 16r95D.
+		'SCI_SETYCARETPOLICY' -> 16r963.
+		'SCI_SETZOOM' -> 16r945.
+		'SCI_SHOWLINES' -> 16r8B2.
+		'SCI_START' -> 16r7D0.
+		'SCI_STARTRECORD' -> 16rBB9.
+		'SCI_STARTSTYLING' -> 16r7F0.
+		'SCI_STOPRECORD' -> 16rBBA.
+		'SCI_STUTTEREDPAGEDOWN' -> 16r985.
+		'SCI_STUTTEREDPAGEDOWNEXTEND' -> 16r986.
+		'SCI_STUTTEREDPAGEUP' -> 16r983.
+		'SCI_STUTTEREDPAGEUPEXTEND' -> 16r984.
+		'SCI_STYLECLEARALL' -> 16r802.
+		'SCI_STYLEGETBACK' -> 16r9B2.
+		'SCI_STYLEGETBOLD' -> 16r9B3.
+		'SCI_STYLEGETCASE' -> 16r9B9.
+		'SCI_STYLEGETCHANGEABLE' -> 16r9BC.
+		'SCI_STYLEGETCHARACTERSET' -> 16r9BA.
+		'SCI_STYLEGETEOLFILLED' -> 16r9B7.
+		'SCI_STYLEGETFONT' -> 16r9B6.
+		'SCI_STYLEGETFORE' -> 16r9B1.
+		'SCI_STYLEGETHOTSPOT' -> 16r9BD.
+		'SCI_STYLEGETITALIC' -> 16r9B4.
+		'SCI_STYLEGETSIZE' -> 16r9B5.
+		'SCI_STYLEGETSIZEFRACTIONAL' -> 16r80E.
+		'SCI_STYLEGETUNDERLINE' -> 16r9B8.
+		'SCI_STYLEGETVISIBLE' -> 16r9BB.
+		'SCI_STYLEGETWEIGHT' -> 16r810.
+		'SCI_STYLERESETDEFAULT' -> 16r80A.
+		'SCI_STYLESETBACK' -> 16r804.
+		'SCI_STYLESETBOLD' -> 16r805.
+		'SCI_STYLESETCASE' -> 16r80C.
+		'SCI_STYLESETCHANGEABLE' -> 16r833.
+		'SCI_STYLESETCHARACTERSET' -> 16r812.
+		'SCI_STYLESETEOLFILLED' -> 16r809.
+		'SCI_STYLESETFONT' -> 16r808.
+		'SCI_STYLESETFORE' -> 16r803.
+		'SCI_STYLESETHOTSPOT' -> 16r969.
+		'SCI_STYLESETITALIC' -> 16r806.
+		'SCI_STYLESETSIZE' -> 16r807.
+		'SCI_STYLESETSIZEFRACTIONAL' -> 16r80D.
+		'SCI_STYLESETUNDERLINE' -> 16r80B.
+		'SCI_STYLESETVISIBLE' -> 16r81A.
+		'SCI_STYLESETWEIGHT' -> 16r80F.
+		'SCI_SWAPMAINANCHORCARET' -> 16rA2F.
+		'SCI_TAB' -> 16r917.
+		'SCI_TAGSOFSTYLE' -> 16rFBF.
+		'SCI_TARGETASUTF8' -> 16r98F.
+		'SCI_TARGETFROMSELECTION' -> 16r8EF.
+		'SCI_TARGETWHOLEDOCUMENT' -> 16rA82.
+		'SCI_TEXTHEIGHT' -> 16r8E7.
+		'SCI_TEXTWIDTH' -> 16r8E4.
+		'SCI_TOGGLECARETSTICKY' -> 16r99B.
+		'SCI_TOGGLEFOLD' -> 16r8B7.
+		'SCI_TOGGLEFOLDSHOWTEXT' -> 16rA8C.
+		'SCI_UNDO' -> 16r880.
+		'SCI_UPPERCASE' -> 16r925.
+		'SCI_USEPOPUP' -> 16r943.
+		'SCI_USERLISTSHOW' -> 16r845.
+		'SCI_VCHOME' -> 16r91B.
+		'SCI_VCHOMEDISPLAY' -> 16rA5C.
+		'SCI_VCHOMEDISPLAYEXTEND' -> 16rA5D.
+		'SCI_VCHOMEEXTEND' -> 16r91C.
+		'SCI_VCHOMERECTEXTEND' -> 16r97F.
+		'SCI_VCHOMEWRAP' -> 16r995.
+		'SCI_VCHOMEWRAPEXTEND' -> 16r996.
+		'SCI_VERTICALCENTRECARET' -> 16rA3B.
+		'SCI_VISIBLEFROMDOCLINE' -> 16r8AC.
+		'SCI_WORDENDPOSITION' -> 16r8DB.
+		'SCI_WORDLEFT' -> 16r904.
+		'SCI_WORDLEFTEND' -> 16r987.
+		'SCI_WORDLEFTENDEXTEND' -> 16r988.
+		'SCI_WORDLEFTEXTEND' -> 16r905.
+		'SCI_WORDPARTLEFT' -> 16r956.
+		'SCI_WORDPARTLEFTEXTEND' -> 16r957.
+		'SCI_WORDPARTRIGHT' -> 16r958.
+		'SCI_WORDPARTRIGHTEXTEND' -> 16r959.
+		'SCI_WORDRIGHT' -> 16r906.
+		'SCI_WORDRIGHTEND' -> 16r989.
+		'SCI_WORDRIGHTENDEXTEND' -> 16r98A.
+		'SCI_WORDRIGHTEXTEND' -> 16r907.
+		'SCI_WORDSTARTPOSITION' -> 16r8DA.
+		'SCI_WRAPCOUNT' -> 16r8BB.
+		'SCI_ZOOMIN' -> 16r91D.
+		'SCI_ZOOMOUT' -> 16r91E.
+		'SCK_ADD' -> 16r136.
+		'SCK_BACK' -> 16r8.
+		'SCK_DELETE' -> 16r134.
+		'SCK_DIVIDE' -> 16r138.
+		'SCK_DOWN' -> 16r12C.
+		'SCK_END' -> 16r131.
+		'SCK_ESCAPE' -> 16r7.
+		'SCK_HOME' -> 16r130.
+		'SCK_INSERT' -> 16r135.
+		'SCK_LEFT' -> 16r12E.
+		'SCK_MENU' -> 16r13B.
+		'SCK_NEXT' -> 16r133.
+		'SCK_PRIOR' -> 16r132.
+		'SCK_RETURN' -> 16rD.
+		'SCK_RIGHT' -> 16r12F.
+		'SCK_RWIN' -> 16r13A.
+		'SCK_SUBTRACT' -> 16r137.
+		'SCK_TAB' -> 16r9.
+		'SCK_UP' -> 16r12D.
+		'SCK_WIN' -> 16r139.
+		'SCLEX_A68K' -> 16r64.
+		'SCLEX_ABAQUS' -> 16r54.
+		'SCLEX_ADA' -> 16r14.
+		'SCLEX_APDL' -> 16r3D.
+		'SCLEX_AS' -> 16r71.
+		'SCLEX_ASM' -> 16r22.
+		'SCLEX_ASN1' -> 16r3F.
+		'SCLEX_ASYMPTOTE' -> 16r55.
+		'SCLEX_AU3' -> 16r3C.
+		'SCLEX_AUTOMATIC' -> 16r3E8.
+		'SCLEX_AVE' -> 16r13.
+		'SCLEX_AVS' -> 16r68.
+		'SCLEX_BAAN' -> 16r1F.
+		'SCLEX_BASH' -> 16r3E.
+		'SCLEX_BATCH' -> 16rC.
+		'SCLEX_BIBTEX' -> 16r74.
+		'SCLEX_BLITZBASIC' -> 16r42.
+		'SCLEX_BULLANT' -> 16r1B.
+		'SCLEX_CAML' -> 16r41.
+		'SCLEX_CIL' -> 16r7F.
+		'SCLEX_CLW' -> 16r2D.
+		'SCLEX_CLWNOCASE' -> 16r2E.
+		'SCLEX_CMAKE' -> 16r50.
+		'SCLEX_COBOL' -> 16r5C.
+		'SCLEX_COFFEESCRIPT' -> 16r66.
+		'SCLEX_CONF' -> 16r11.
+		'SCLEX_CONTAINER' -> 16r0.
+		'SCLEX_CPP' -> 16r3.
+		'SCLEX_CPPNOCASE' -> 16r23.
+		'SCLEX_CSOUND' -> 16r4A.
+		'SCLEX_CSS' -> 16r26.
+		'SCLEX_D' -> 16r4F.
+		'SCLEX_DATAFLEX' -> 16r81.
+		'SCLEX_DIFF' -> 16r10.
+		'SCLEX_DMAP' -> 16r70.
+		'SCLEX_DMIS' -> 16r72.
+		'SCLEX_ECL' -> 16r69.
+		'SCLEX_EDIFACT' -> 16r79.
+		'SCLEX_EIFFEL' -> 16r17.
+		'SCLEX_EIFFELKW' -> 16r18.
+		'SCLEX_ERLANG' -> 16r35.
+		'SCLEX_ERRORLIST' -> 16rA.
+		'SCLEX_ESCRIPT' -> 16r29.
+		'SCLEX_F77' -> 16r25.
+		'SCLEX_FLAGSHIP' -> 16r49.
+		'SCLEX_FORTH' -> 16r34.
+		'SCLEX_FORTRAN' -> 16r24.
+		'SCLEX_FREEBASIC' -> 16r4B.
+		'SCLEX_GAP' -> 16r51.
+		'SCLEX_GUI4CLI' -> 16r3A.
+		'SCLEX_HASKELL' -> 16r44.
+		'SCLEX_HOLLYWOOD' -> 16r82.
+		'SCLEX_HTML' -> 16r4.
+		'SCLEX_IHEX' -> 16r76.
+		'SCLEX_INDENT' -> 16r7A.
+		'SCLEX_INNOSETUP' -> 16r4C.
+		'SCLEX_JSON' -> 16r78.
+		'SCLEX_KIX' -> 16r39.
+		'SCLEX_KVIRC' -> 16r6E.
+		'SCLEX_LATEX' -> 16rE.
+		'SCLEX_LISP' -> 16r15.
+		'SCLEX_LITERATEHASKELL' -> 16r6C.
+		'SCLEX_LOT' -> 16r2F.
+		'SCLEX_LOUT' -> 16r28.
+		'SCLEX_LUA' -> 16rF.
+		'SCLEX_MAGIK' -> 16r57.
+		'SCLEX_MAKEFILE' -> 16rB.
+		'SCLEX_MARKDOWN' -> 16r62.
+		'SCLEX_MATLAB' -> 16r20.
+		'SCLEX_MAXIMA' -> 16r7B.
+		'SCLEX_METAPOST' -> 16r32.
+		'SCLEX_MMIXAL' -> 16r2C.
+		'SCLEX_MODULA' -> 16r65.
+		'SCLEX_MSSQL' -> 16r37.
+		'SCLEX_MYSQL' -> 16r59.
+		'SCLEX_NIM' -> 16r7E.
+		'SCLEX_NIMROD' -> 16r60.
+		'SCLEX_NNCRONTAB' -> 16r1A.
+		'SCLEX_NSIS' -> 16r2B.
+		'SCLEX_NULL' -> 16r1.
+		'SCLEX_OCTAVE' -> 16r36.
+		'SCLEX_OPAL' -> 16r4D.
+		'SCLEX_OSCRIPT' -> 16r6A.
+		'SCLEX_PASCAL' -> 16r12.
+		'SCLEX_PERL' -> 16r6.
+		'SCLEX_PHPSCRIPT' -> 16r45.
+		'SCLEX_PLM' -> 16r52.
+		'SCLEX_PO' -> 16r5A.
+		'SCLEX_POV' -> 16r27.
+		'SCLEX_POWERBASIC' -> 16r33.
+		'SCLEX_POWERPRO' -> 16r5F.
+		'SCLEX_POWERSHELL' -> 16r58.
+		'SCLEX_PROGRESS' -> 16r53.
+		'SCLEX_PROPERTIES' -> 16r9.
+		'SCLEX_PS' -> 16r2A.
+		'SCLEX_PUREBASIC' -> 16r43.
+		'SCLEX_PYTHON' -> 16r2.
+		'SCLEX_R' -> 16r56.
+		'SCLEX_RAKU' -> 16r83.
+		'SCLEX_REBOL' -> 16r47.
+		'SCLEX_REGISTRY' -> 16r73.
+		'SCLEX_RUBY' -> 16r16.
+		'SCLEX_RUST' -> 16r6F.
+		'SCLEX_SAS' -> 16r7D.
+		'SCLEX_SCRIPTOL' -> 16r21.
+		'SCLEX_SMALLTALK' -> 16r48.
+		'SCLEX_SML' -> 16r61.
+		'SCLEX_SORCUS' -> 16r5E.
+		'SCLEX_SPECMAN' -> 16r3B.
+		'SCLEX_SPICE' -> 16r4E.
+		'SCLEX_SQL' -> 16r7.
+		'SCLEX_SREC' -> 16r75.
+		'SCLEX_STATA' -> 16r7C.
+		'SCLEX_STTXT' -> 16r6D.
+		'SCLEX_TACL' -> 16r5D.
+		'SCLEX_TADS3' -> 16r46.
+		'SCLEX_TAL' -> 16r5B.
+		'SCLEX_TCL' -> 16r19.
+		'SCLEX_TCMD' -> 16r67.
+		'SCLEX_TEHEX' -> 16r77.
+		'SCLEX_TEX' -> 16r31.
+		'SCLEX_TXT2TAGS' -> 16r63.
+		'SCLEX_VB' -> 16r8.
+		'SCLEX_VBSCRIPT' -> 16r1C.
+		'SCLEX_VERILOG' -> 16r38.
+		'SCLEX_VHDL' -> 16r40.
+		'SCLEX_VISUALPROLOG' -> 16r6B.
+		'SCLEX_X12' -> 16r80.
+		'SCLEX_XCODE' -> 16rD.
+		'SCLEX_XML' -> 16r5.
+		'SCLEX_YAML' -> 16r30.
+		'SCMOD_ALT' -> 16r4.
+		'SCMOD_CTRL' -> 16r2.
+		'SCMOD_META' -> 16r10.
+		'SCMOD_NORM' -> 16r0.
+		'SCMOD_SHIFT' -> 16r1.
+		'SCMOD_SUPER' -> 16r8.
+		'SCN_AUTOCCANCELLED' -> 16r7E9.
+		'SCN_AUTOCCHARDELETED' -> 16r7EA.
+		'SCN_AUTOCCOMPLETED' -> 16r7EE.
+		'SCN_AUTOCSELECTION' -> 16r7E6.
+		'SCN_AUTOCSELECTIONCHANGE' -> 16r7F0.
+		'SCN_CALLTIPCLICK' -> 16r7E5.
+		'SCN_CHARADDED' -> 16r7D1.
+		'SCN_DOUBLECLICK' -> 16r7D6.
+		'SCN_DWELLEND' -> 16r7E1.
+		'SCN_DWELLSTART' -> 16r7E0.
+		'SCN_FOCUSIN' -> 16r7EC.
+		'SCN_FOCUSOUT' -> 16r7ED.
+		'SCN_HOTSPOTCLICK' -> 16r7E3.
+		'SCN_HOTSPOTDOUBLECLICK' -> 16r7E4.
+		'SCN_HOTSPOTRELEASECLICK' -> 16r7EB.
+		'SCN_INDICATORCLICK' -> 16r7E7.
+		'SCN_INDICATORRELEASE' -> 16r7E8.
+		'SCN_KEY' -> 16r7D5.
+		'SCN_MACRORECORD' -> 16r7D9.
+		'SCN_MARGINCLICK' -> 16r7DA.
+		'SCN_MARGINRIGHTCLICK' -> 16r7EF.
+		'SCN_MODIFIED' -> 16r7D8.
+		'SCN_MODIFYATTEMPTRO' -> 16r7D4.
+		'SCN_NEEDSHOWN' -> 16r7DB.
+		'SCN_PAINTED' -> 16r7DD.
+		'SCN_SAVEPOINTLEFT' -> 16r7D3.
+		'SCN_SAVEPOINTREACHED' -> 16r7D2.
+		'SCN_STYLENEEDED' -> 16r7D0.
+		'SCN_UPDATEUI' -> 16r7D7.
+		'SCN_URIDROPPED' -> 16r7DF.
+		'SCN_USERLISTSELECTION' -> 16r7DE.
+		'SCN_ZOOM' -> 16r7E2.
+		'SCTD_LONGARROW' -> 16r0.
+		'SCTD_STRIKEOUT' -> 16r1.
+		'SCVS_NONE' -> 16r0.
+		'SCVS_NOWRAPLINESTART' -> 16r4.
+		'SCVS_RECTANGULARSELECTION' -> 16r1.
+		'SCVS_USERACCESSIBLE' -> 16r2.
+		'SCWS_INVISIBLE' -> 16r0.
+		'SCWS_VISIBLEAFTERINDENT' -> 16r2.
+		'SCWS_VISIBLEALWAYS' -> 16r1.
+		'SCWS_VISIBLEONLYININDENT' -> 16r3.
+		'STYLE_BRACEBAD' -> 16r23.
+		'STYLE_BRACELIGHT' -> 16r22.
+		'STYLE_CALLTIP' -> 16r26.
+		'STYLE_CONTROLCHAR' -> 16r24.
+		'STYLE_DEFAULT' -> 16r20.
+		'STYLE_FOLDDISPLAYTEXT' -> 16r27.
+		'STYLE_INDENTGUIDE' -> 16r25.
+		'STYLE_LASTPREDEFINED' -> 16r27.
+		'STYLE_LINENUMBER' -> 16r21.
+		'STYLE_MAX' -> 16rFF.
+		'STYLE_NORMAL' -> 16r0.
+		'UNDO_MAY_COALESCE' -> 16r1.
+		'UNDO_NONE' -> 16r0.
+		'VISIBLE_SLOP' -> 16r1.
+		'VISIBLE_STRICT' -> 16r4
+	}!
+ScintillaConstants guid: (GUID fromString: '{7ee9ff4e-157d-4f90-905b-11142e7ed8c3}')!
+ScintillaConstants comment: ''!
+!ScintillaConstants categoriesForClass!Unclassified! !

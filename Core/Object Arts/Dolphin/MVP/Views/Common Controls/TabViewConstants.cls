@@ -1,64 +1,72 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{TabViewConstants} declare: (PoolConstantsDictionary named: #TabViewConstants)!
-TabViewConstants at: 'ODT_TAB' put: 16r65!
-TabViewConstants at: 'TCHT_NOWHERE' put: 16r1!
-TabViewConstants at: 'TCHT_ONITEM' put: 16r6!
-TabViewConstants at: 'TCHT_ONITEMICON' put: 16r2!
-TabViewConstants at: 'TCHT_ONITEMLABEL' put: 16r4!
-TabViewConstants at: 'TCIF_IMAGE' put: 16r2!
-TabViewConstants at: 'TCIF_PARAM' put: 16r8!
-TabViewConstants at: 'TCIF_RTLREADING' put: 16r4!
-TabViewConstants at: 'TCIF_STATE' put: 16r10!
-TabViewConstants at: 'TCIF_TEXT' put: 16r1!
-TabViewConstants at: 'TCM_ADJUSTRECT' put: 16r1328!
-TabViewConstants at: 'TCM_DELETEALLITEMS' put: 16r1309!
-TabViewConstants at: 'TCM_DELETEITEM' put: 16r1308!
-TabViewConstants at: 'TCM_FIRST' put: 16r1300!
-TabViewConstants at: 'TCM_GETCURFOCUS' put: 16r132F!
-TabViewConstants at: 'TCM_GETCURSEL' put: 16r130B!
-TabViewConstants at: 'TCM_GETEXTENDEDSTYLE' put: 16r1335!
-TabViewConstants at: 'TCM_GETIMAGELIST' put: 16r1302!
-TabViewConstants at: 'TCM_GETITEMA' put: 16r1305!
-TabViewConstants at: 'TCM_GETITEMCOUNT' put: 16r1304!
-TabViewConstants at: 'TCM_GETITEMRECT' put: 16r130A!
-TabViewConstants at: 'TCM_GETITEMW' put: 16r133C!
-TabViewConstants at: 'TCM_GETROWCOUNT' put: 16r132C!
-TabViewConstants at: 'TCM_GETTOOLTIPS' put: 16r132D!
-TabViewConstants at: 'TCM_HITTEST' put: 16r130D!
-TabViewConstants at: 'TCM_INSERTITEMA' put: 16r1307!
-TabViewConstants at: 'TCM_INSERTITEMW' put: 16r133E!
-TabViewConstants at: 'TCM_REMOVEIMAGE' put: 16r132A!
-TabViewConstants at: 'TCM_SETCURFOCUS' put: 16r1330!
-TabViewConstants at: 'TCM_SETCURSEL' put: 16r130C!
-TabViewConstants at: 'TCM_SETEXTENDEDSTYLE' put: 16r1334!
-TabViewConstants at: 'TCM_SETIMAGELIST' put: 16r1303!
-TabViewConstants at: 'TCM_SETITEMA' put: 16r1306!
-TabViewConstants at: 'TCM_SETITEMEXTRA' put: 16r130E!
-TabViewConstants at: 'TCM_SETITEMSIZE' put: 16r1329!
-TabViewConstants at: 'TCM_SETITEMW' put: 16r133D!
-TabViewConstants at: 'TCM_SETPADDING' put: 16r132B!
-TabViewConstants at: 'TCM_SETTOOLTIPS' put: 16r132E!
-TabViewConstants at: 'TCN_FIRST' put: -16r226!
-TabViewConstants at: 'TCN_KEYDOWN' put: -16r226!
-TabViewConstants at: 'TCN_LAST' put: -16r244!
-TabViewConstants at: 'TCN_SELCHANGE' put: -16r227!
-TabViewConstants at: 'TCN_SELCHANGING' put: -16r228!
-TabViewConstants at: 'TCS_BOTTOM' put: 16r2!
-TabViewConstants at: 'TCS_BUTTONS' put: 16r100!
-TabViewConstants at: 'TCS_EX_FLATSEPARATORS' put: 16r1!
-TabViewConstants at: 'TCS_FIXEDWIDTH' put: 16r400!
-TabViewConstants at: 'TCS_FOCUSNEVER' put: 16r8000!
-TabViewConstants at: 'TCS_FOCUSONBUTTONDOWN' put: 16r1000!
-TabViewConstants at: 'TCS_FORCEICONLEFT' put: 16r10!
-TabViewConstants at: 'TCS_FORCELABELEFT' put: 16r20!
-TabViewConstants at: 'TCS_HOTTRACK' put: 16r40!
-TabViewConstants at: 'TCS_MULTILINE' put: 16r200!
-TabViewConstants at: 'TCS_OWNERDRAWFIXED' put: 16r2000!
-TabViewConstants at: 'TCS_RAGGEDRIGHT' put: 16r800!
-TabViewConstants at: 'TCS_RIGHTJUSTIFY' put: 16r0!
-TabViewConstants at: 'TCS_SINGLELINE' put: 16r0!
-TabViewConstants at: 'TCS_TABS' put: 16r0!
-TabViewConstants at: 'TCS_TOOLTIPS' put: 16r4000!
-TabViewConstants at: 'TCS_VERTICAL' put: 16r80!
-TabViewConstants shrink!
+SharedPool subclass: #TabViewConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ODT_TAB' -> 16r65.
+		'TCHT_NOWHERE' -> 16r1.
+		'TCHT_ONITEM' -> 16r6.
+		'TCHT_ONITEMICON' -> 16r2.
+		'TCHT_ONITEMLABEL' -> 16r4.
+		'TCIF_IMAGE' -> 16r2.
+		'TCIF_PARAM' -> 16r8.
+		'TCIF_RTLREADING' -> 16r4.
+		'TCIF_STATE' -> 16r10.
+		'TCIF_TEXT' -> 16r1.
+		'TCM_ADJUSTRECT' -> 16r1328.
+		'TCM_DELETEALLITEMS' -> 16r1309.
+		'TCM_DELETEITEM' -> 16r1308.
+		'TCM_FIRST' -> 16r1300.
+		'TCM_GETCURFOCUS' -> 16r132F.
+		'TCM_GETCURSEL' -> 16r130B.
+		'TCM_GETEXTENDEDSTYLE' -> 16r1335.
+		'TCM_GETIMAGELIST' -> 16r1302.
+		'TCM_GETITEMA' -> 16r1305.
+		'TCM_GETITEMCOUNT' -> 16r1304.
+		'TCM_GETITEMRECT' -> 16r130A.
+		'TCM_GETITEMW' -> 16r133C.
+		'TCM_GETROWCOUNT' -> 16r132C.
+		'TCM_GETTOOLTIPS' -> 16r132D.
+		'TCM_HITTEST' -> 16r130D.
+		'TCM_INSERTITEMA' -> 16r1307.
+		'TCM_INSERTITEMW' -> 16r133E.
+		'TCM_REMOVEIMAGE' -> 16r132A.
+		'TCM_SETCURFOCUS' -> 16r1330.
+		'TCM_SETCURSEL' -> 16r130C.
+		'TCM_SETEXTENDEDSTYLE' -> 16r1334.
+		'TCM_SETIMAGELIST' -> 16r1303.
+		'TCM_SETITEMA' -> 16r1306.
+		'TCM_SETITEMEXTRA' -> 16r130E.
+		'TCM_SETITEMSIZE' -> 16r1329.
+		'TCM_SETITEMW' -> 16r133D.
+		'TCM_SETPADDING' -> 16r132B.
+		'TCM_SETTOOLTIPS' -> 16r132E.
+		'TCN_FIRST' -> -16r226.
+		'TCN_KEYDOWN' -> -16r226.
+		'TCN_LAST' -> -16r244.
+		'TCN_SELCHANGE' -> -16r227.
+		'TCN_SELCHANGING' -> -16r228.
+		'TCS_BOTTOM' -> 16r2.
+		'TCS_BUTTONS' -> 16r100.
+		'TCS_EX_FLATSEPARATORS' -> 16r1.
+		'TCS_FIXEDWIDTH' -> 16r400.
+		'TCS_FOCUSNEVER' -> 16r8000.
+		'TCS_FOCUSONBUTTONDOWN' -> 16r1000.
+		'TCS_FORCEICONLEFT' -> 16r10.
+		'TCS_FORCELABELEFT' -> 16r20.
+		'TCS_HOTTRACK' -> 16r40.
+		'TCS_MULTILINE' -> 16r200.
+		'TCS_OWNERDRAWFIXED' -> 16r2000.
+		'TCS_RAGGEDRIGHT' -> 16r800.
+		'TCS_RIGHTJUSTIFY' -> 16r0.
+		'TCS_SINGLELINE' -> 16r0.
+		'TCS_TABS' -> 16r0.
+		'TCS_TOOLTIPS' -> 16r4000.
+		'TCS_VERTICAL' -> 16r80
+	}!
+TabViewConstants guid: (GUID fromString: '{b17ee2d0-3b54-4ffd-a62e-eac4ee36000b}')!
+TabViewConstants comment: ''!
+!TabViewConstants categoriesForClass!Unclassified! !

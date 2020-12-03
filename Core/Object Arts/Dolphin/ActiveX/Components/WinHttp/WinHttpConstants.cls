@@ -1,38 +1,46 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{WinHttpConstants} declare: (PoolConstantsDictionary named: #WinHttpConstants)!
-WinHttpConstants at: 'AutoLogonPolicy_Always' put: 16r0!
-WinHttpConstants at: 'AutoLogonPolicy_Never' put: 16r2!
-WinHttpConstants at: 'AutoLogonPolicy_OnlyIfBypassProxy' put: 16r1!
-WinHttpConstants at: 'SecureProtocol_ALL' put: 16rA8!
-WinHttpConstants at: 'SecureProtocol_SSL2' put: 16r8!
-WinHttpConstants at: 'SecureProtocol_SSL3' put: 16r20!
-WinHttpConstants at: 'SecureProtocol_TLS1' put: 16r80!
-WinHttpConstants at: 'SecureProtocol_TLS1_1' put: 16r200!
-WinHttpConstants at: 'SecureProtocol_TLS1_2' put: 16r800!
-WinHttpConstants at: 'SslErrorFlag_CertCNInvalid' put: 16r1000!
-WinHttpConstants at: 'SslErrorFlag_CertDateInvalid' put: 16r2000!
-WinHttpConstants at: 'SslErrorFlag_CertWrongUsage' put: 16r200!
-WinHttpConstants at: 'SslErrorFlag_Ignore_All' put: 16r3300!
-WinHttpConstants at: 'SslErrorFlag_UnknownCA' put: 16r100!
-WinHttpConstants at: 'WinHttpRequestOption_EnableCertificateRevocationCheck' put: 16r12!
-WinHttpConstants at: 'WinHttpRequestOption_EnableHttp1_1' put: 16r11!
-WinHttpConstants at: 'WinHttpRequestOption_EnableHttpsToHttpRedirects' put: 16rC!
-WinHttpConstants at: 'WinHttpRequestOption_EnablePassportAuthentication' put: 16rD!
-WinHttpConstants at: 'WinHttpRequestOption_EnableRedirects' put: 16r6!
-WinHttpConstants at: 'WinHttpRequestOption_EnableTracing' put: 16rA!
-WinHttpConstants at: 'WinHttpRequestOption_EscapePercentInURL' put: 16r3!
-WinHttpConstants at: 'WinHttpRequestOption_MaxAutomaticRedirects' put: 16rE!
-WinHttpConstants at: 'WinHttpRequestOption_MaxResponseDrainSize' put: 16r10!
-WinHttpConstants at: 'WinHttpRequestOption_MaxResponseHeaderSize' put: 16rF!
-WinHttpConstants at: 'WinHttpRequestOption_RejectUserpwd' put: 16r13!
-WinHttpConstants at: 'WinHttpRequestOption_RevertImpersonationOverSsl' put: 16rB!
-WinHttpConstants at: 'WinHttpRequestOption_SecureProtocols' put: 16r9!
-WinHttpConstants at: 'WinHttpRequestOption_SelectCertificate' put: 16r5!
-WinHttpConstants at: 'WinHttpRequestOption_SslErrorIgnoreFlags' put: 16r4!
-WinHttpConstants at: 'WinHttpRequestOption_URL' put: 16r1!
-WinHttpConstants at: 'WinHttpRequestOption_URLCodePage' put: 16r2!
-WinHttpConstants at: 'WinHttpRequestOption_UrlEscapeDisable' put: 16r7!
-WinHttpConstants at: 'WinHttpRequestOption_UrlEscapeDisableQuery' put: 16r8!
-WinHttpConstants at: 'WinHttpRequestOption_UserAgentString' put: 16r0!
-WinHttpConstants shrink!
+SharedPool subclass: #WinHttpConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoLogonPolicy_Always' -> 16r0.
+		'AutoLogonPolicy_Never' -> 16r2.
+		'AutoLogonPolicy_OnlyIfBypassProxy' -> 16r1.
+		'SecureProtocol_ALL' -> 16rA8.
+		'SecureProtocol_SSL2' -> 16r8.
+		'SecureProtocol_SSL3' -> 16r20.
+		'SecureProtocol_TLS1' -> 16r80.
+		'SecureProtocol_TLS1_1' -> 16r200.
+		'SecureProtocol_TLS1_2' -> 16r800.
+		'SslErrorFlag_CertCNInvalid' -> 16r1000.
+		'SslErrorFlag_CertDateInvalid' -> 16r2000.
+		'SslErrorFlag_CertWrongUsage' -> 16r200.
+		'SslErrorFlag_Ignore_All' -> 16r3300.
+		'SslErrorFlag_UnknownCA' -> 16r100.
+		'WinHttpRequestOption_EnableCertificateRevocationCheck' -> 16r12.
+		'WinHttpRequestOption_EnableHttp1_1' -> 16r11.
+		'WinHttpRequestOption_EnableHttpsToHttpRedirects' -> 16rC.
+		'WinHttpRequestOption_EnablePassportAuthentication' -> 16rD.
+		'WinHttpRequestOption_EnableRedirects' -> 16r6.
+		'WinHttpRequestOption_EnableTracing' -> 16rA.
+		'WinHttpRequestOption_EscapePercentInURL' -> 16r3.
+		'WinHttpRequestOption_MaxAutomaticRedirects' -> 16rE.
+		'WinHttpRequestOption_MaxResponseDrainSize' -> 16r10.
+		'WinHttpRequestOption_MaxResponseHeaderSize' -> 16rF.
+		'WinHttpRequestOption_RejectUserpwd' -> 16r13.
+		'WinHttpRequestOption_RevertImpersonationOverSsl' -> 16rB.
+		'WinHttpRequestOption_SecureProtocols' -> 16r9.
+		'WinHttpRequestOption_SelectCertificate' -> 16r5.
+		'WinHttpRequestOption_SslErrorIgnoreFlags' -> 16r4.
+		'WinHttpRequestOption_URL' -> 16r1.
+		'WinHttpRequestOption_URLCodePage' -> 16r2.
+		'WinHttpRequestOption_UrlEscapeDisable' -> 16r7.
+		'WinHttpRequestOption_UrlEscapeDisableQuery' -> 16r8.
+		'WinHttpRequestOption_UserAgentString' -> 16r0
+	}!
+WinHttpConstants guid: (GUID fromString: '{c25f8cb5-09bf-468f-852d-6c0147400e5a}')!
+WinHttpConstants comment: ''!
+!WinHttpConstants categoriesForClass!Unclassified! !

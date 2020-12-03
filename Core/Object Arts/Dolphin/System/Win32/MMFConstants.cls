@@ -1,23 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{MMFConstants} declare: (PoolConstantsDictionary named: #MMFConstants)!
-MMFConstants at: 'FILE_MAP_ALL_ACCESS' put: 16rF001F!
-MMFConstants at: 'FILE_MAP_COPY' put: 16r1!
-MMFConstants at: 'FILE_MAP_READ' put: 16r4!
-MMFConstants at: 'FILE_MAP_WRITE' put: 16r2!
-MMFConstants at: 'PAGE_EXECUTE' put: 16r10!
-MMFConstants at: 'PAGE_EXECUTE_READ' put: 16r20!
-MMFConstants at: 'PAGE_EXECUTE_READWRITE' put: 16r40!
-MMFConstants at: 'PAGE_EXECUTE_WRITECOPY' put: 16r80!
-MMFConstants at: 'PAGE_GUARD' put: 16r100!
-MMFConstants at: 'PAGE_NOACCESS' put: 16r1!
-MMFConstants at: 'PAGE_NOCACHE' put: 16r200!
-MMFConstants at: 'PAGE_READONLY' put: 16r2!
-MMFConstants at: 'PAGE_READWRITE' put: 16r4!
-MMFConstants at: 'PAGE_WRITECOPY' put: 16r8!
-MMFConstants at: 'SEC_COMMIT' put: 16r8000000!
-MMFConstants at: 'SEC_FILE' put: 16r800000!
-MMFConstants at: 'SEC_IMAGE' put: 16r1000000!
-MMFConstants at: 'SEC_NOCACHE' put: 16r10000000!
-MMFConstants at: 'SEC_RESERVE' put: 16r4000000!
-MMFConstants shrink!
+SharedPool subclass: #MMFConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FILE_MAP_ALL_ACCESS' -> 16rF001F.
+		'FILE_MAP_COPY' -> 16r1.
+		'FILE_MAP_READ' -> 16r4.
+		'FILE_MAP_WRITE' -> 16r2.
+		'PAGE_EXECUTE' -> 16r10.
+		'PAGE_EXECUTE_READ' -> 16r20.
+		'PAGE_EXECUTE_READWRITE' -> 16r40.
+		'PAGE_EXECUTE_WRITECOPY' -> 16r80.
+		'PAGE_GUARD' -> 16r100.
+		'PAGE_NOACCESS' -> 16r1.
+		'PAGE_NOCACHE' -> 16r200.
+		'PAGE_READONLY' -> 16r2.
+		'PAGE_READWRITE' -> 16r4.
+		'PAGE_WRITECOPY' -> 16r8.
+		'SEC_COMMIT' -> 16r8000000.
+		'SEC_FILE' -> 16r800000.
+		'SEC_IMAGE' -> 16r1000000.
+		'SEC_NOCACHE' -> 16r10000000.
+		'SEC_RESERVE' -> 16r4000000
+	}!
+MMFConstants guid: (GUID fromString: '{f837fc43-e1a2-43b0-9726-37c308613aa0}')!
+MMFConstants comment: ''!
+!MMFConstants categoriesForClass!Unclassified! !

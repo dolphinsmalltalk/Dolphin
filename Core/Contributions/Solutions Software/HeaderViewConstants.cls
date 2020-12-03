@@ -1,31 +1,39 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{HeaderViewConstants} declare: (PoolDictionary named: #HeaderViewConstants)!
-HeaderViewConstants at: 'HDF_CENTER' put: 16r2!
-HeaderViewConstants at: 'HDF_CHECKBOX' put: 16r40!
-HeaderViewConstants at: 'HDF_CHECKED' put: 16r80!
-HeaderViewConstants at: 'HDF_JUSTIFYMASK' put: 16r3!
-HeaderViewConstants at: 'HDF_LEFT' put: 16r0!
-HeaderViewConstants at: 'HDF_RIGHT' put: 16r1!
-HeaderViewConstants at: 'HDF_SORTDOWN' put: 16r200!
-HeaderViewConstants at: 'HDF_SORTUP' put: 16r400!
-HeaderViewConstants at: 'HDF_SPLITBUTTON' put: 16r1000000!
-HeaderViewConstants at: 'HDI_FORMAT' put: 16r4!
-HeaderViewConstants at: 'HDI_IMAGE' put: 16r20!
-HeaderViewConstants at: 'HDI_LPARAM' put: 16r8!
-HeaderViewConstants at: 'HDI_TEXT' put: 16r2!
-HeaderViewConstants at: 'HDM_FIRST' put: 16r1200!
-HeaderViewConstants at: 'HDM_GETITEMRECT' put: 16r1207!
-HeaderViewConstants at: 'HDM_GETITEMW' put: 16r120B!
-HeaderViewConstants at: 'HDM_SETITEMW' put: 16r120C!
-HeaderViewConstants at: 'HDN_BEGINDRAG' put: -16r136!
-HeaderViewConstants at: 'HDN_BEGINTRACKW' put: -16r146!
-HeaderViewConstants at: 'HDN_DIVIDERDBLCLICKW' put: -16r145!
-HeaderViewConstants at: 'HDN_DROPDOWN' put: -16r13E!
-HeaderViewConstants at: 'HDN_ENDDRAG' put: -16r137!
-HeaderViewConstants at: 'HDN_ENDTRACKW' put: -16r147!
-HeaderViewConstants at: 'HDN_ITEMCLICKW' put: -16r142!
-HeaderViewConstants at: 'HDN_ITEMDBLCLICKW' put: -16r143!
-HeaderViewConstants at: 'HDN_ITEMSTATEICONCLICK' put: -16r13C!
-HeaderViewConstants at: 'HDS_CHECKBOXES' put: 16r400!
-HeaderViewConstants shrink!
+SharedPool subclass: #HeaderViewConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HDF_CENTER' -> 16r2.
+		'HDF_CHECKBOX' -> 16r40.
+		'HDF_CHECKED' -> 16r80.
+		'HDF_JUSTIFYMASK' -> 16r3.
+		'HDF_LEFT' -> 16r0.
+		'HDF_RIGHT' -> 16r1.
+		'HDF_SORTDOWN' -> 16r200.
+		'HDF_SORTUP' -> 16r400.
+		'HDF_SPLITBUTTON' -> 16r1000000.
+		'HDI_FORMAT' -> 16r4.
+		'HDI_IMAGE' -> 16r20.
+		'HDI_LPARAM' -> 16r8.
+		'HDI_TEXT' -> 16r2.
+		'HDM_FIRST' -> 16r1200.
+		'HDM_GETITEMRECT' -> 16r1207.
+		'HDM_GETITEMW' -> 16r120B.
+		'HDM_SETITEMW' -> 16r120C.
+		'HDN_BEGINDRAG' -> -16r136.
+		'HDN_BEGINTRACKW' -> -16r146.
+		'HDN_DIVIDERDBLCLICKW' -> -16r145.
+		'HDN_DROPDOWN' -> -16r13E.
+		'HDN_ENDDRAG' -> -16r137.
+		'HDN_ENDTRACKW' -> -16r147.
+		'HDN_ITEMCLICKW' -> -16r142.
+		'HDN_ITEMDBLCLICKW' -> -16r143.
+		'HDN_ITEMSTATEICONCLICK' -> -16r13C.
+		'HDS_CHECKBOXES' -> 16r400
+	}!
+HeaderViewConstants guid: (GUID fromString: '{dfcf6358-e711-4bb0-be79-5f237ebf578f}')!
+HeaderViewConstants comment: ''!
+!HeaderViewConstants categoriesForClass!Unclassified! !

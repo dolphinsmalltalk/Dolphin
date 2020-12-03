@@ -1,61 +1,69 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ComboBoxConstants} declare: (PoolConstantsDictionary named: #ComboBoxConstants)!
-ComboBoxConstants at: 'CB_ADDSTRING' put: 16r143!
-ComboBoxConstants at: 'CB_DELETESTRING' put: 16r144!
-ComboBoxConstants at: 'CB_DIR' put: 16r145!
-ComboBoxConstants at: 'CB_ERR' put: -16r1!
-ComboBoxConstants at: 'CB_ERRSPACE' put: -16r2!
-ComboBoxConstants at: 'CB_FINDSTRING' put: 16r14C!
-ComboBoxConstants at: 'CB_FINDSTRINGEXACT' put: 16r158!
-ComboBoxConstants at: 'CB_GETCOMBOBOXINFO' put: 16r164!
-ComboBoxConstants at: 'CB_GETCOUNT' put: 16r146!
-ComboBoxConstants at: 'CB_GETCUEBANNER' put: 16r1704!
-ComboBoxConstants at: 'CB_GETCURSEL' put: 16r147!
-ComboBoxConstants at: 'CB_GETDROPPEDCONTROLRECT' put: 16r152!
-ComboBoxConstants at: 'CB_GETDROPPEDSTATE' put: 16r157!
-ComboBoxConstants at: 'CB_GETDROPPEDWIDTH' put: 16r15F!
-ComboBoxConstants at: 'CB_GETEDITSEL' put: 16r140!
-ComboBoxConstants at: 'CB_GETEXTENDEDUI' put: 16r156!
-ComboBoxConstants at: 'CB_GETHORIZONTALEXTENT' put: 16r15D!
-ComboBoxConstants at: 'CB_GETITEMDATA' put: 16r150!
-ComboBoxConstants at: 'CB_GETITEMHEIGHT' put: 16r154!
-ComboBoxConstants at: 'CB_GETLBTEXT' put: 16r148!
-ComboBoxConstants at: 'CB_GETLBTEXTLEN' put: 16r149!
-ComboBoxConstants at: 'CB_GETLOCALE' put: 16r15A!
-ComboBoxConstants at: 'CB_GETMINVISIBLE' put: 16r1702!
-ComboBoxConstants at: 'CB_GETTOPINDEX' put: 16r15B!
-ComboBoxConstants at: 'CB_INITSTORAGE' put: 16r161!
-ComboBoxConstants at: 'CB_INSERTSTRING' put: 16r14A!
-ComboBoxConstants at: 'CB_LIMITTEXT' put: 16r141!
-ComboBoxConstants at: 'CB_MSGMAX' put: 16r165!
-ComboBoxConstants at: 'CB_OKAY' put: 16r0!
-ComboBoxConstants at: 'CB_RESETCONTENT' put: 16r14B!
-ComboBoxConstants at: 'CB_SELECTSTRING' put: 16r14D!
-ComboBoxConstants at: 'CB_SETCUEBANNER' put: 16r1703!
-ComboBoxConstants at: 'CB_SETCURSEL' put: 16r14E!
-ComboBoxConstants at: 'CB_SETDROPPEDWIDTH' put: 16r160!
-ComboBoxConstants at: 'CB_SETEDITSEL' put: 16r142!
-ComboBoxConstants at: 'CB_SETEXTENDEDUI' put: 16r155!
-ComboBoxConstants at: 'CB_SETHORIZONTALEXTENT' put: 16r15E!
-ComboBoxConstants at: 'CB_SETITEMDATA' put: 16r151!
-ComboBoxConstants at: 'CB_SETITEMHEIGHT' put: 16r153!
-ComboBoxConstants at: 'CB_SETLOCALE' put: 16r159!
-ComboBoxConstants at: 'CB_SETMINVISIBLE' put: 16r1701!
-ComboBoxConstants at: 'CB_SETTOPINDEX' put: 16r15C!
-ComboBoxConstants at: 'CB_SHOWDROPDOWN' put: 16r14F!
-ComboBoxConstants at: 'CBM_FIRST' put: 16r1700!
-ComboBoxConstants at: 'CBS_AUTOHSCROLL' put: 16r40!
-ComboBoxConstants at: 'CBS_DISABLENOSCROLL' put: 16r800!
-ComboBoxConstants at: 'CBS_DROPDOWN' put: 16r2!
-ComboBoxConstants at: 'CBS_DROPDOWNLIST' put: 16r3!
-ComboBoxConstants at: 'CBS_HASSTRINGS' put: 16r200!
-ComboBoxConstants at: 'CBS_LOWERCASE' put: 16r4000!
-ComboBoxConstants at: 'CBS_NOINTEGRALHEIGHT' put: 16r400!
-ComboBoxConstants at: 'CBS_OEMCONVERT' put: 16r80!
-ComboBoxConstants at: 'CBS_OWNERDRAWFIXED' put: 16r10!
-ComboBoxConstants at: 'CBS_OWNERDRAWVARIABLE' put: 16r20!
-ComboBoxConstants at: 'CBS_SIMPLE' put: 16r1!
-ComboBoxConstants at: 'CBS_SORT' put: 16r100!
-ComboBoxConstants at: 'CBS_UPPERCASE' put: 16r2000!
-ComboBoxConstants shrink!
+SharedPool subclass: #ComboBoxConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CB_ADDSTRING' -> 16r143.
+		'CB_DELETESTRING' -> 16r144.
+		'CB_DIR' -> 16r145.
+		'CB_ERR' -> -16r1.
+		'CB_ERRSPACE' -> -16r2.
+		'CB_FINDSTRING' -> 16r14C.
+		'CB_FINDSTRINGEXACT' -> 16r158.
+		'CB_GETCOMBOBOXINFO' -> 16r164.
+		'CB_GETCOUNT' -> 16r146.
+		'CB_GETCUEBANNER' -> 16r1704.
+		'CB_GETCURSEL' -> 16r147.
+		'CB_GETDROPPEDCONTROLRECT' -> 16r152.
+		'CB_GETDROPPEDSTATE' -> 16r157.
+		'CB_GETDROPPEDWIDTH' -> 16r15F.
+		'CB_GETEDITSEL' -> 16r140.
+		'CB_GETEXTENDEDUI' -> 16r156.
+		'CB_GETHORIZONTALEXTENT' -> 16r15D.
+		'CB_GETITEMDATA' -> 16r150.
+		'CB_GETITEMHEIGHT' -> 16r154.
+		'CB_GETLBTEXT' -> 16r148.
+		'CB_GETLBTEXTLEN' -> 16r149.
+		'CB_GETLOCALE' -> 16r15A.
+		'CB_GETMINVISIBLE' -> 16r1702.
+		'CB_GETTOPINDEX' -> 16r15B.
+		'CB_INITSTORAGE' -> 16r161.
+		'CB_INSERTSTRING' -> 16r14A.
+		'CB_LIMITTEXT' -> 16r141.
+		'CB_MSGMAX' -> 16r165.
+		'CB_OKAY' -> 16r0.
+		'CB_RESETCONTENT' -> 16r14B.
+		'CB_SELECTSTRING' -> 16r14D.
+		'CB_SETCUEBANNER' -> 16r1703.
+		'CB_SETCURSEL' -> 16r14E.
+		'CB_SETDROPPEDWIDTH' -> 16r160.
+		'CB_SETEDITSEL' -> 16r142.
+		'CB_SETEXTENDEDUI' -> 16r155.
+		'CB_SETHORIZONTALEXTENT' -> 16r15E.
+		'CB_SETITEMDATA' -> 16r151.
+		'CB_SETITEMHEIGHT' -> 16r153.
+		'CB_SETLOCALE' -> 16r159.
+		'CB_SETMINVISIBLE' -> 16r1701.
+		'CB_SETTOPINDEX' -> 16r15C.
+		'CB_SHOWDROPDOWN' -> 16r14F.
+		'CBM_FIRST' -> 16r1700.
+		'CBS_AUTOHSCROLL' -> 16r40.
+		'CBS_DISABLENOSCROLL' -> 16r800.
+		'CBS_DROPDOWN' -> 16r2.
+		'CBS_DROPDOWNLIST' -> 16r3.
+		'CBS_HASSTRINGS' -> 16r200.
+		'CBS_LOWERCASE' -> 16r4000.
+		'CBS_NOINTEGRALHEIGHT' -> 16r400.
+		'CBS_OEMCONVERT' -> 16r80.
+		'CBS_OWNERDRAWFIXED' -> 16r10.
+		'CBS_OWNERDRAWVARIABLE' -> 16r20.
+		'CBS_SIMPLE' -> 16r1.
+		'CBS_SORT' -> 16r100.
+		'CBS_UPPERCASE' -> 16r2000
+	}!
+ComboBoxConstants guid: (GUID fromString: '{6358ea98-3267-4d2b-900c-2da6836d1331}')!
+ComboBoxConstants comment: ''!
+!ComboBoxConstants categoriesForClass!Unclassified! !

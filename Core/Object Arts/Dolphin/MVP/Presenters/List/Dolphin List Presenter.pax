@@ -15,7 +15,9 @@ package basicPackageVersion: '6.1'.
 package setClassNames: #(
 	#{BasicListAbstract}
 	#{ComboBox}
+	#{ComboBoxConstants}
 	#{ListBox}
+	#{ListBoxConstants}
 	#{ListControlView}
 	#{ListPresenter}
 ).
@@ -23,11 +25,6 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{SelectableItemsPresenter class} #icon)
 	#(#{View} #wmBeginDrag:wParam:lParam:)
-).
-
-package setVariableNames: #(
-	#{ComboBoxConstants}
-	#{ListBoxConstants}
 ).
 
 package setPrerequisites: #(
@@ -42,6 +39,137 @@ package!
 
 "Class Definitions"!
 
+SharedPool subclass: #ComboBoxConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CB_ADDSTRING' -> 16r143.
+		'CB_DELETESTRING' -> 16r144.
+		'CB_DIR' -> 16r145.
+		'CB_ERR' -> -16r1.
+		'CB_ERRSPACE' -> -16r2.
+		'CB_FINDSTRING' -> 16r14C.
+		'CB_FINDSTRINGEXACT' -> 16r158.
+		'CB_GETCOMBOBOXINFO' -> 16r164.
+		'CB_GETCOUNT' -> 16r146.
+		'CB_GETCUEBANNER' -> 16r1704.
+		'CB_GETCURSEL' -> 16r147.
+		'CB_GETDROPPEDCONTROLRECT' -> 16r152.
+		'CB_GETDROPPEDSTATE' -> 16r157.
+		'CB_GETDROPPEDWIDTH' -> 16r15F.
+		'CB_GETEDITSEL' -> 16r140.
+		'CB_GETEXTENDEDUI' -> 16r156.
+		'CB_GETHORIZONTALEXTENT' -> 16r15D.
+		'CB_GETITEMDATA' -> 16r150.
+		'CB_GETITEMHEIGHT' -> 16r154.
+		'CB_GETLBTEXT' -> 16r148.
+		'CB_GETLBTEXTLEN' -> 16r149.
+		'CB_GETLOCALE' -> 16r15A.
+		'CB_GETMINVISIBLE' -> 16r1702.
+		'CB_GETTOPINDEX' -> 16r15B.
+		'CB_INITSTORAGE' -> 16r161.
+		'CB_INSERTSTRING' -> 16r14A.
+		'CB_LIMITTEXT' -> 16r141.
+		'CB_MSGMAX' -> 16r165.
+		'CB_OKAY' -> 16r0.
+		'CB_RESETCONTENT' -> 16r14B.
+		'CB_SELECTSTRING' -> 16r14D.
+		'CB_SETCUEBANNER' -> 16r1703.
+		'CB_SETCURSEL' -> 16r14E.
+		'CB_SETDROPPEDWIDTH' -> 16r160.
+		'CB_SETEDITSEL' -> 16r142.
+		'CB_SETEXTENDEDUI' -> 16r155.
+		'CB_SETHORIZONTALEXTENT' -> 16r15E.
+		'CB_SETITEMDATA' -> 16r151.
+		'CB_SETITEMHEIGHT' -> 16r153.
+		'CB_SETLOCALE' -> 16r159.
+		'CB_SETMINVISIBLE' -> 16r1701.
+		'CB_SETTOPINDEX' -> 16r15C.
+		'CB_SHOWDROPDOWN' -> 16r14F.
+		'CBM_FIRST' -> 16r1700.
+		'CBS_AUTOHSCROLL' -> 16r40.
+		'CBS_DISABLENOSCROLL' -> 16r800.
+		'CBS_DROPDOWN' -> 16r2.
+		'CBS_DROPDOWNLIST' -> 16r3.
+		'CBS_HASSTRINGS' -> 16r200.
+		'CBS_LOWERCASE' -> 16r4000.
+		'CBS_NOINTEGRALHEIGHT' -> 16r400.
+		'CBS_OEMCONVERT' -> 16r80.
+		'CBS_OWNERDRAWFIXED' -> 16r10.
+		'CBS_OWNERDRAWVARIABLE' -> 16r20.
+		'CBS_SIMPLE' -> 16r1.
+		'CBS_SORT' -> 16r100.
+		'CBS_UPPERCASE' -> 16r2000
+	}!
+SharedPool subclass: #ListBoxConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LB_ADDFILE' -> 16r196.
+		'LB_ADDSTRING' -> 16r180.
+		'LB_CTLCODE' -> 16r0.
+		'LB_DELETESTRING' -> 16r182.
+		'LB_DIR' -> 16r18D.
+		'LB_ERR' -> -16r1.
+		'LB_ERRSPACE' -> -16r2.
+		'LB_FINDSTRING' -> 16r18F.
+		'LB_FINDSTRINGEXACT' -> 16r1A2.
+		'LB_GETANCHORINDEX' -> 16r19D.
+		'LB_GETCARETINDEX' -> 16r19F.
+		'LB_GETCOUNT' -> 16r18B.
+		'LB_GETCURSEL' -> 16r188.
+		'LB_GETHORIZONTALEXTENT' -> 16r193.
+		'LB_GETITEMDATA' -> 16r199.
+		'LB_GETITEMHEIGHT' -> 16r1A1.
+		'LB_GETITEMRECT' -> 16r198.
+		'LB_GETLOCALE' -> 16r1A6.
+		'LB_GETSEL' -> 16r187.
+		'LB_GETSELCOUNT' -> 16r190.
+		'LB_GETSELITEMS' -> 16r191.
+		'LB_GETTEXT' -> 16r189.
+		'LB_GETTEXTLEN' -> 16r18A.
+		'LB_GETTOPINDEX' -> 16r18E.
+		'LB_INITSTORAGE' -> 16r1A8.
+		'LB_INSERTSTRING' -> 16r181.
+		'LB_ITEMFROMPOINT' -> 16r1A9.
+		'LB_OKAY' -> 16r0.
+		'LB_RESETCONTENT' -> 16r184.
+		'LB_SELECTSTRING' -> 16r18C.
+		'LB_SELITEMRANGE' -> 16r19B.
+		'LB_SELITEMRANGEEX' -> 16r183.
+		'LB_SETANCHORINDEX' -> 16r19C.
+		'LB_SETCARETINDEX' -> 16r19E.
+		'LB_SETCOLUMNWIDTH' -> 16r195.
+		'LB_SETCOUNT' -> 16r1A7.
+		'LB_SETCURSEL' -> 16r186.
+		'LB_SETHORIZONTALEXTENT' -> 16r194.
+		'LB_SETITEMDATA' -> 16r19A.
+		'LB_SETITEMHEIGHT' -> 16r1A0.
+		'LB_SETLOCALE' -> 16r1A5.
+		'LB_SETSEL' -> 16r185.
+		'LB_SETTABSTOPS' -> 16r192.
+		'LB_SETTOPINDEX' -> 16r197.
+		'LBS_DISABLENOSCROLL' -> 16r1000.
+		'LBS_EXTENDEDSEL' -> 16r800.
+		'LBS_HASSTRINGS' -> 16r40.
+		'LBS_MULTICOLUMN' -> 16r200.
+		'LBS_MULTIPLESEL' -> 16r8.
+		'LBS_NODATA' -> 16r2000.
+		'LBS_NOINTEGRALHEIGHT' -> 16r100.
+		'LBS_NOREDRAW' -> 16r4.
+		'LBS_NOSEL' -> 16r4000.
+		'LBS_NOTIFY' -> 16r1.
+		'LBS_OWNERDRAWFIXED' -> 16r10.
+		'LBS_OWNERDRAWVARIABLE' -> 16r20.
+		'LBS_SORT' -> 16r2.
+		'LBS_STANDARD' -> 16rA00003.
+		'LBS_USETABSTOPS' -> 16r80.
+		'LBS_WANTKEYBOARDINPUT' -> 16r400
+	}!
 SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''

@@ -1,64 +1,72 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ListBoxConstants} declare: (PoolConstantsDictionary named: #ListBoxConstants)!
-ListBoxConstants at: 'LB_ADDFILE' put: 16r196!
-ListBoxConstants at: 'LB_ADDSTRING' put: 16r180!
-ListBoxConstants at: 'LB_CTLCODE' put: 16r0!
-ListBoxConstants at: 'LB_DELETESTRING' put: 16r182!
-ListBoxConstants at: 'LB_DIR' put: 16r18D!
-ListBoxConstants at: 'LB_ERR' put: -16r1!
-ListBoxConstants at: 'LB_ERRSPACE' put: -16r2!
-ListBoxConstants at: 'LB_FINDSTRING' put: 16r18F!
-ListBoxConstants at: 'LB_FINDSTRINGEXACT' put: 16r1A2!
-ListBoxConstants at: 'LB_GETANCHORINDEX' put: 16r19D!
-ListBoxConstants at: 'LB_GETCARETINDEX' put: 16r19F!
-ListBoxConstants at: 'LB_GETCOUNT' put: 16r18B!
-ListBoxConstants at: 'LB_GETCURSEL' put: 16r188!
-ListBoxConstants at: 'LB_GETHORIZONTALEXTENT' put: 16r193!
-ListBoxConstants at: 'LB_GETITEMDATA' put: 16r199!
-ListBoxConstants at: 'LB_GETITEMHEIGHT' put: 16r1A1!
-ListBoxConstants at: 'LB_GETITEMRECT' put: 16r198!
-ListBoxConstants at: 'LB_GETLOCALE' put: 16r1A6!
-ListBoxConstants at: 'LB_GETSEL' put: 16r187!
-ListBoxConstants at: 'LB_GETSELCOUNT' put: 16r190!
-ListBoxConstants at: 'LB_GETSELITEMS' put: 16r191!
-ListBoxConstants at: 'LB_GETTEXT' put: 16r189!
-ListBoxConstants at: 'LB_GETTEXTLEN' put: 16r18A!
-ListBoxConstants at: 'LB_GETTOPINDEX' put: 16r18E!
-ListBoxConstants at: 'LB_INITSTORAGE' put: 16r1A8!
-ListBoxConstants at: 'LB_INSERTSTRING' put: 16r181!
-ListBoxConstants at: 'LB_ITEMFROMPOINT' put: 16r1A9!
-ListBoxConstants at: 'LB_OKAY' put: 16r0!
-ListBoxConstants at: 'LB_RESETCONTENT' put: 16r184!
-ListBoxConstants at: 'LB_SELECTSTRING' put: 16r18C!
-ListBoxConstants at: 'LB_SELITEMRANGE' put: 16r19B!
-ListBoxConstants at: 'LB_SELITEMRANGEEX' put: 16r183!
-ListBoxConstants at: 'LB_SETANCHORINDEX' put: 16r19C!
-ListBoxConstants at: 'LB_SETCARETINDEX' put: 16r19E!
-ListBoxConstants at: 'LB_SETCOLUMNWIDTH' put: 16r195!
-ListBoxConstants at: 'LB_SETCOUNT' put: 16r1A7!
-ListBoxConstants at: 'LB_SETCURSEL' put: 16r186!
-ListBoxConstants at: 'LB_SETHORIZONTALEXTENT' put: 16r194!
-ListBoxConstants at: 'LB_SETITEMDATA' put: 16r19A!
-ListBoxConstants at: 'LB_SETITEMHEIGHT' put: 16r1A0!
-ListBoxConstants at: 'LB_SETLOCALE' put: 16r1A5!
-ListBoxConstants at: 'LB_SETSEL' put: 16r185!
-ListBoxConstants at: 'LB_SETTABSTOPS' put: 16r192!
-ListBoxConstants at: 'LB_SETTOPINDEX' put: 16r197!
-ListBoxConstants at: 'LBS_DISABLENOSCROLL' put: 16r1000!
-ListBoxConstants at: 'LBS_EXTENDEDSEL' put: 16r800!
-ListBoxConstants at: 'LBS_HASSTRINGS' put: 16r40!
-ListBoxConstants at: 'LBS_MULTICOLUMN' put: 16r200!
-ListBoxConstants at: 'LBS_MULTIPLESEL' put: 16r8!
-ListBoxConstants at: 'LBS_NODATA' put: 16r2000!
-ListBoxConstants at: 'LBS_NOINTEGRALHEIGHT' put: 16r100!
-ListBoxConstants at: 'LBS_NOREDRAW' put: 16r4!
-ListBoxConstants at: 'LBS_NOSEL' put: 16r4000!
-ListBoxConstants at: 'LBS_NOTIFY' put: 16r1!
-ListBoxConstants at: 'LBS_OWNERDRAWFIXED' put: 16r10!
-ListBoxConstants at: 'LBS_OWNERDRAWVARIABLE' put: 16r20!
-ListBoxConstants at: 'LBS_SORT' put: 16r2!
-ListBoxConstants at: 'LBS_STANDARD' put: 16rA00003!
-ListBoxConstants at: 'LBS_USETABSTOPS' put: 16r80!
-ListBoxConstants at: 'LBS_WANTKEYBOARDINPUT' put: 16r400!
-ListBoxConstants shrink!
+SharedPool subclass: #ListBoxConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LB_ADDFILE' -> 16r196.
+		'LB_ADDSTRING' -> 16r180.
+		'LB_CTLCODE' -> 16r0.
+		'LB_DELETESTRING' -> 16r182.
+		'LB_DIR' -> 16r18D.
+		'LB_ERR' -> -16r1.
+		'LB_ERRSPACE' -> -16r2.
+		'LB_FINDSTRING' -> 16r18F.
+		'LB_FINDSTRINGEXACT' -> 16r1A2.
+		'LB_GETANCHORINDEX' -> 16r19D.
+		'LB_GETCARETINDEX' -> 16r19F.
+		'LB_GETCOUNT' -> 16r18B.
+		'LB_GETCURSEL' -> 16r188.
+		'LB_GETHORIZONTALEXTENT' -> 16r193.
+		'LB_GETITEMDATA' -> 16r199.
+		'LB_GETITEMHEIGHT' -> 16r1A1.
+		'LB_GETITEMRECT' -> 16r198.
+		'LB_GETLOCALE' -> 16r1A6.
+		'LB_GETSEL' -> 16r187.
+		'LB_GETSELCOUNT' -> 16r190.
+		'LB_GETSELITEMS' -> 16r191.
+		'LB_GETTEXT' -> 16r189.
+		'LB_GETTEXTLEN' -> 16r18A.
+		'LB_GETTOPINDEX' -> 16r18E.
+		'LB_INITSTORAGE' -> 16r1A8.
+		'LB_INSERTSTRING' -> 16r181.
+		'LB_ITEMFROMPOINT' -> 16r1A9.
+		'LB_OKAY' -> 16r0.
+		'LB_RESETCONTENT' -> 16r184.
+		'LB_SELECTSTRING' -> 16r18C.
+		'LB_SELITEMRANGE' -> 16r19B.
+		'LB_SELITEMRANGEEX' -> 16r183.
+		'LB_SETANCHORINDEX' -> 16r19C.
+		'LB_SETCARETINDEX' -> 16r19E.
+		'LB_SETCOLUMNWIDTH' -> 16r195.
+		'LB_SETCOUNT' -> 16r1A7.
+		'LB_SETCURSEL' -> 16r186.
+		'LB_SETHORIZONTALEXTENT' -> 16r194.
+		'LB_SETITEMDATA' -> 16r19A.
+		'LB_SETITEMHEIGHT' -> 16r1A0.
+		'LB_SETLOCALE' -> 16r1A5.
+		'LB_SETSEL' -> 16r185.
+		'LB_SETTABSTOPS' -> 16r192.
+		'LB_SETTOPINDEX' -> 16r197.
+		'LBS_DISABLENOSCROLL' -> 16r1000.
+		'LBS_EXTENDEDSEL' -> 16r800.
+		'LBS_HASSTRINGS' -> 16r40.
+		'LBS_MULTICOLUMN' -> 16r200.
+		'LBS_MULTIPLESEL' -> 16r8.
+		'LBS_NODATA' -> 16r2000.
+		'LBS_NOINTEGRALHEIGHT' -> 16r100.
+		'LBS_NOREDRAW' -> 16r4.
+		'LBS_NOSEL' -> 16r4000.
+		'LBS_NOTIFY' -> 16r1.
+		'LBS_OWNERDRAWFIXED' -> 16r10.
+		'LBS_OWNERDRAWVARIABLE' -> 16r20.
+		'LBS_SORT' -> 16r2.
+		'LBS_STANDARD' -> 16rA00003.
+		'LBS_USETABSTOPS' -> 16r80.
+		'LBS_WANTKEYBOARDINPUT' -> 16r400
+	}!
+ListBoxConstants guid: (GUID fromString: '{c4c55da7-4db0-459e-92fd-fc4d5f563fce}')!
+ListBoxConstants comment: ''!
+!ListBoxConstants categoriesForClass!Unclassified! !

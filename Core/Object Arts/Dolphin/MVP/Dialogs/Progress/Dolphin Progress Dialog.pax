@@ -10,15 +10,12 @@ package basicPackageVersion: '6.1'.
 
 package setClassNames: #(
 	#{ProgressBar}
+	#{ProgressBarConstants}
 	#{ProgressDialog}
 ).
 
 package setMethodNames: #(
 	#(#{NumberPresenter class} #resource_Progress_bar)
-).
-
-package setVariableNames: #(
-	#{ProgressBarConstants}
 ).
 
 package setPrerequisites: #(
@@ -35,6 +32,27 @@ package!
 
 "Class Definitions"!
 
+SharedPool subclass: #ProgressBarConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'PBM_DELTAPOS' -> 16r403.
+		'PBM_GETPOS' -> 16r408.
+		'PBM_GETRANGE' -> 16r407.
+		'PBM_SETBARCOLOR' -> 16r409.
+		'PBM_SETBKCOLOR' -> 16r2001.
+		'PBM_SETMARQUEE' -> 16r40A.
+		'PBM_SETPOS' -> 16r402.
+		'PBM_SETRANGE' -> 16r401.
+		'PBM_SETRANGE32' -> 16r406.
+		'PBM_SETSTEP' -> 16r404.
+		'PBM_STEPIT' -> 16r405.
+		'PBS_MARQUEE' -> 16r8.
+		'PBS_SMOOTH' -> 16r1.
+		'PBS_VERTICAL' -> 16r4
+	}!
 Dialog subclass: #ProgressDialog
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
 	classVariableNames: ''

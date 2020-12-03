@@ -1,173 +1,181 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ToolbarConstants} declare: (PoolConstantsDictionary named: #ToolbarConstants)!
-ToolbarConstants at: 'BTNS_AUTOSIZE' put: 16r10!
-ToolbarConstants at: 'BTNS_BUTTON' put: 16r0!
-ToolbarConstants at: 'BTNS_CHECK' put: 16r2!
-ToolbarConstants at: 'BTNS_CHECKGROUP' put: 16r6!
-ToolbarConstants at: 'BTNS_DROPDOWN' put: 16r8!
-ToolbarConstants at: 'BTNS_GROUP' put: 16r4!
-ToolbarConstants at: 'BTNS_NOPREFIX' put: 16r20!
-ToolbarConstants at: 'BTNS_SEP' put: 16r1!
-ToolbarConstants at: 'BTNS_SHOWTEXT' put: 16r40!
-ToolbarConstants at: 'BTNS_WHOLEDROPDOWN' put: 16r80!
-ToolbarConstants at: 'HIST_ADDTOFAVORITES' put: 16r3!
-ToolbarConstants at: 'HIST_BACK' put: 16r0!
-ToolbarConstants at: 'HIST_FAVORITES' put: 16r2!
-ToolbarConstants at: 'HIST_FORWARD' put: 16r1!
-ToolbarConstants at: 'HIST_VIEW_SMALL_COLOR' put: 16r8!
-ToolbarConstants at: 'HIST_VIEWTREE' put: 16r4!
-ToolbarConstants at: 'IDB_HIST_SMALL_COLOR' put: 16r8!
-ToolbarConstants at: 'IDB_STD_LARGE_COLOR' put: 16r1!
-ToolbarConstants at: 'IDB_STD_SMALL_COLOR' put: 16r0!
-ToolbarConstants at: 'IDB_VIEW_LARGE_COLOR' put: 16r5!
-ToolbarConstants at: 'IDB_VIEW_SMALL_COLOR' put: 16r4!
-ToolbarConstants at: 'STD_COPY' put: 16r1!
-ToolbarConstants at: 'STD_CUT' put: 16r0!
-ToolbarConstants at: 'STD_DELETE' put: 16r5!
-ToolbarConstants at: 'STD_FILENEW' put: 16r6!
-ToolbarConstants at: 'STD_FILEOPEN' put: 16r7!
-ToolbarConstants at: 'STD_FILESAVE' put: 16r8!
-ToolbarConstants at: 'STD_FIND' put: 16rC!
-ToolbarConstants at: 'STD_HELP' put: 16rB!
-ToolbarConstants at: 'STD_PASTE' put: 16r2!
-ToolbarConstants at: 'STD_PRINT' put: 16rE!
-ToolbarConstants at: 'STD_PRINTPRE' put: 16r9!
-ToolbarConstants at: 'STD_PROPERTIES' put: 16rA!
-ToolbarConstants at: 'STD_REDOW' put: 16r4!
-ToolbarConstants at: 'STD_REPLACE' put: 16rD!
-ToolbarConstants at: 'STD_UNDO' put: 16r3!
-ToolbarConstants at: 'TB_ADDBITMAP' put: 16r413!
-ToolbarConstants at: 'TB_ADDBUTTONSW' put: 16r444!
-ToolbarConstants at: 'TB_ADDSTRINGW' put: 16r44D!
-ToolbarConstants at: 'TB_AUTOSIZE' put: 16r421!
-ToolbarConstants at: 'TB_BOTTOM' put: 16r7!
-ToolbarConstants at: 'TB_BUTTONCOUNT' put: 16r418!
-ToolbarConstants at: 'TB_BUTTONSTRUCTSIZE' put: 16r41E!
-ToolbarConstants at: 'TB_CHANGEBITMAP' put: 16r42B!
-ToolbarConstants at: 'TB_CHECKBUTTON' put: 16r402!
-ToolbarConstants at: 'TB_COMMANDTOINDEX' put: 16r419!
-ToolbarConstants at: 'TB_CUSTOMIZE' put: 16r41B!
-ToolbarConstants at: 'TB_DELETEBUTTON' put: 16r416!
-ToolbarConstants at: 'TB_ENABLEBUTTON' put: 16r401!
-ToolbarConstants at: 'TB_ENDTRACK' put: 16r8!
-ToolbarConstants at: 'TB_GETBITMAP' put: 16r42C!
-ToolbarConstants at: 'TB_GETBITMAPFLAGS' put: 16r429!
-ToolbarConstants at: 'TB_GETBUTTON' put: 16r417!
-ToolbarConstants at: 'TB_GETBUTTONINFOW' put: 16r43F!
-ToolbarConstants at: 'TB_GETBUTTONSIZE' put: 16r43A!
-ToolbarConstants at: 'TB_GETBUTTONTEXTW' put: 16r44B!
-ToolbarConstants at: 'TB_GETDISABLEDIMAGELIST' put: 16r437!
-ToolbarConstants at: 'TB_GETHOTIMAGELIST' put: 16r435!
-ToolbarConstants at: 'TB_GETIDEALSIZE' put: 16r463!
-ToolbarConstants at: 'TB_GETIMAGELIST' put: 16r431!
-ToolbarConstants at: 'TB_GETITEMRECT' put: 16r41D!
-ToolbarConstants at: 'TB_GETMAXSIZE' put: 16r453!
-ToolbarConstants at: 'TB_GETPADDING' put: 16r456!
-ToolbarConstants at: 'TB_GETRECT' put: 16r433!
-ToolbarConstants at: 'TB_GETROWS' put: 16r428!
-ToolbarConstants at: 'TB_GETSTATE' put: 16r412!
-ToolbarConstants at: 'TB_GETSTRINGW' put: 16r45B!
-ToolbarConstants at: 'TB_GETSTYLE' put: 16r439!
-ToolbarConstants at: 'TB_GETTEXTROWS' put: 16r43D!
-ToolbarConstants at: 'TB_GETTOOLTIPS' put: 16r423!
-ToolbarConstants at: 'TB_HIDEBUTTON' put: 16r404!
-ToolbarConstants at: 'TB_INDETERMINATE' put: 16r405!
-ToolbarConstants at: 'TB_INSERTBUTTONW' put: 16r443!
-ToolbarConstants at: 'TB_ISBUTTONCHECKED' put: 16r40A!
-ToolbarConstants at: 'TB_ISBUTTONENABLED' put: 16r409!
-ToolbarConstants at: 'TB_ISBUTTONHIDDEN' put: 16r40C!
-ToolbarConstants at: 'TB_ISBUTTONINDETERMINATE' put: 16r40D!
-ToolbarConstants at: 'TB_ISBUTTONPRESSED' put: 16r40B!
-ToolbarConstants at: 'TB_LINEDOWN' put: 16r1!
-ToolbarConstants at: 'TB_LINEUP' put: 16r0!
-ToolbarConstants at: 'TB_LOADIMAGES' put: 16r432!
-ToolbarConstants at: 'TB_MAPACCELERATORW' put: 16r45A!
-ToolbarConstants at: 'TB_PAGEDOWN' put: 16r3!
-ToolbarConstants at: 'TB_PAGEUP' put: 16r2!
-ToolbarConstants at: 'TB_PRESSBUTTON' put: 16r403!
-ToolbarConstants at: 'TB_REPLACEBITMAP' put: 16r42E!
-ToolbarConstants at: 'TB_SAVERESTOREW' put: 16r44C!
-ToolbarConstants at: 'TB_SETBITMAPSIZE' put: 16r420!
-ToolbarConstants at: 'TB_SETBUTTONINFOW' put: 16r440!
-ToolbarConstants at: 'TB_SETBUTTONSIZE' put: 16r41F!
-ToolbarConstants at: 'TB_SETBUTTONWIDTH' put: 16r43B!
-ToolbarConstants at: 'TB_SETCMDID' put: 16r42A!
-ToolbarConstants at: 'TB_SETDISABLEDIMAGELIST' put: 16r436!
-ToolbarConstants at: 'TB_SETEXTENDEDSTYLE' put: 16r454!
-ToolbarConstants at: 'TB_SETHOTIMAGELIST' put: 16r434!
-ToolbarConstants at: 'TB_SETIMAGELIST' put: 16r430!
-ToolbarConstants at: 'TB_SETINDENT' put: 16r42F!
-ToolbarConstants at: 'TB_SETMAXTEXTROWS' put: 16r43C!
-ToolbarConstants at: 'TB_SETPARENT' put: 16r425!
-ToolbarConstants at: 'TB_SETROWS' put: 16r427!
-ToolbarConstants at: 'TB_SETSTATE' put: 16r411!
-ToolbarConstants at: 'TB_SETSTYLE' put: 16r438!
-ToolbarConstants at: 'TB_SETTOOLTIPS' put: 16r424!
-ToolbarConstants at: 'TB_STATECHECKED' put: 16r1!
-ToolbarConstants at: 'TB_STATEENABLED' put: 16r4!
-ToolbarConstants at: 'TB_STATEHIDDEN' put: 16r8!
-ToolbarConstants at: 'TB_STATEINDETERMINATE' put: 16r10!
-ToolbarConstants at: 'TB_STATEPRESSED' put: 16r2!
-ToolbarConstants at: 'TB_STATEWRAP' put: 16r20!
-ToolbarConstants at: 'TB_THUMBPOSITION' put: 16r4!
-ToolbarConstants at: 'TB_THUMBTRACK' put: 16r5!
-ToolbarConstants at: 'TB_TOP' put: 16r6!
-ToolbarConstants at: 'TBBF_LARGE' put: 16r1!
-ToolbarConstants at: 'TBDDRET_DEFAULT' put: 16r0!
-ToolbarConstants at: 'TBDDRET_NODEFAULT' put: 16r1!
-ToolbarConstants at: 'TBDDRET_TREATPRESSED' put: 16r2!
-ToolbarConstants at: 'TBIF_COMMAND' put: 16r20!
-ToolbarConstants at: 'TBIF_IMAGE' put: 16r1!
-ToolbarConstants at: 'TBIF_LPARAM' put: 16r10!
-ToolbarConstants at: 'TBIF_SIZE' put: 16r40!
-ToolbarConstants at: 'TBIF_STATE' put: 16r4!
-ToolbarConstants at: 'TBIF_STYLE' put: 16r8!
-ToolbarConstants at: 'TBIF_TEXT' put: 16r2!
-ToolbarConstants at: 'TBN_BEGINADJUST' put: -16r2BF!
-ToolbarConstants at: 'TBN_BEGINDRAG' put: -16r2BD!
-ToolbarConstants at: 'TBN_CLOSEUP' put: -16r2C7!
-ToolbarConstants at: 'TBN_CUSTHELP' put: -16r2C5!
-ToolbarConstants at: 'TBN_DROPDOWN' put: -16r2C6!
-ToolbarConstants at: 'TBN_ENDADJUST' put: -16r2C0!
-ToolbarConstants at: 'TBN_ENDDRAG' put: -16r2BE!
-ToolbarConstants at: 'TBN_FIRST' put: -16r2BC!
-ToolbarConstants at: 'TBN_GETBUTTONINFOW' put: -16r2D0!
-ToolbarConstants at: 'TBN_GETDISPINFOW' put: -16r2CD!
-ToolbarConstants at: 'TBN_GETINFOTIPW' put: -16r2CF!
-ToolbarConstants at: 'TBN_LAST' put: -16r2D0!
-ToolbarConstants at: 'TBN_QUERYDELETE' put: -16r2C3!
-ToolbarConstants at: 'TBN_QUERYINSERT' put: -16r2C2!
-ToolbarConstants at: 'TBN_RESET' put: -16r2C1!
-ToolbarConstants at: 'TBN_TOOLBARCHANGE' put: -16r2C4!
-ToolbarConstants at: 'TBSTATE_CHECKED' put: 16r1!
-ToolbarConstants at: 'TBSTATE_ELLIPSES' put: 16r40!
-ToolbarConstants at: 'TBSTATE_ENABLED' put: 16r4!
-ToolbarConstants at: 'TBSTATE_MARKED' put: 16r80!
-ToolbarConstants at: 'TBSTATE_PRESSED' put: 16r2!
-ToolbarConstants at: 'TBSTYLE_ALTDRAG' put: 16r400!
-ToolbarConstants at: 'TBSTYLE_CUSTOMERASE' put: 16r2000!
-ToolbarConstants at: 'TBSTYLE_EX_DOUBLEBUFFER' put: 16r80!
-ToolbarConstants at: 'TBSTYLE_EX_DRAWDDARROWS' put: 16r1!
-ToolbarConstants at: 'TBSTYLE_EX_HIDECLIPPEDBUTTONS' put: 16r10!
-ToolbarConstants at: 'TBSTYLE_EX_MIXEDBUTTONS' put: 16r8!
-ToolbarConstants at: 'TBSTYLE_FLAT' put: 16r800!
-ToolbarConstants at: 'TBSTYLE_LIST' put: 16r1000!
-ToolbarConstants at: 'TBSTYLE_REGISTERDROP' put: 16r4000!
-ToolbarConstants at: 'TBSTYLE_TOOLTIPS' put: 16r100!
-ToolbarConstants at: 'TBSTYLE_TRANSPARENT' put: 16r8000!
-ToolbarConstants at: 'TBSTYLE_WRAPABLE' put: 16r200!
-ToolbarConstants at: 'VIEW_DETAILS' put: 16r3!
-ToolbarConstants at: 'VIEW_LARGEICONS' put: 16r0!
-ToolbarConstants at: 'VIEW_LIST' put: 16r2!
-ToolbarConstants at: 'VIEW_NETCONNECT' put: 16r9!
-ToolbarConstants at: 'VIEW_NETDISCONNECT' put: 16rA!
-ToolbarConstants at: 'VIEW_NEWFOLDER' put: 16rB!
-ToolbarConstants at: 'VIEW_PARENTFOLDER' put: 16r8!
-ToolbarConstants at: 'VIEW_SMALLICONS' put: 16r1!
-ToolbarConstants at: 'VIEW_SORTDATE' put: 16r6!
-ToolbarConstants at: 'VIEW_SORTNAME' put: 16r4!
-ToolbarConstants at: 'VIEW_SORTSIZE' put: 16r5!
-ToolbarConstants at: 'VIEW_SORTTYPE' put: 16r7!
-ToolbarConstants at: 'VIEW_VIEWMENU' put: 16rC!
-ToolbarConstants shrink!
+SharedPool subclass: #ToolbarConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BTNS_AUTOSIZE' -> 16r10.
+		'BTNS_BUTTON' -> 16r0.
+		'BTNS_CHECK' -> 16r2.
+		'BTNS_CHECKGROUP' -> 16r6.
+		'BTNS_DROPDOWN' -> 16r8.
+		'BTNS_GROUP' -> 16r4.
+		'BTNS_NOPREFIX' -> 16r20.
+		'BTNS_SEP' -> 16r1.
+		'BTNS_SHOWTEXT' -> 16r40.
+		'BTNS_WHOLEDROPDOWN' -> 16r80.
+		'HIST_ADDTOFAVORITES' -> 16r3.
+		'HIST_BACK' -> 16r0.
+		'HIST_FAVORITES' -> 16r2.
+		'HIST_FORWARD' -> 16r1.
+		'HIST_VIEW_SMALL_COLOR' -> 16r8.
+		'HIST_VIEWTREE' -> 16r4.
+		'IDB_HIST_SMALL_COLOR' -> 16r8.
+		'IDB_STD_LARGE_COLOR' -> 16r1.
+		'IDB_STD_SMALL_COLOR' -> 16r0.
+		'IDB_VIEW_LARGE_COLOR' -> 16r5.
+		'IDB_VIEW_SMALL_COLOR' -> 16r4.
+		'STD_COPY' -> 16r1.
+		'STD_CUT' -> 16r0.
+		'STD_DELETE' -> 16r5.
+		'STD_FILENEW' -> 16r6.
+		'STD_FILEOPEN' -> 16r7.
+		'STD_FILESAVE' -> 16r8.
+		'STD_FIND' -> 16rC.
+		'STD_HELP' -> 16rB.
+		'STD_PASTE' -> 16r2.
+		'STD_PRINT' -> 16rE.
+		'STD_PRINTPRE' -> 16r9.
+		'STD_PROPERTIES' -> 16rA.
+		'STD_REDOW' -> 16r4.
+		'STD_REPLACE' -> 16rD.
+		'STD_UNDO' -> 16r3.
+		'TB_ADDBITMAP' -> 16r413.
+		'TB_ADDBUTTONSW' -> 16r444.
+		'TB_ADDSTRINGW' -> 16r44D.
+		'TB_AUTOSIZE' -> 16r421.
+		'TB_BOTTOM' -> 16r7.
+		'TB_BUTTONCOUNT' -> 16r418.
+		'TB_BUTTONSTRUCTSIZE' -> 16r41E.
+		'TB_CHANGEBITMAP' -> 16r42B.
+		'TB_CHECKBUTTON' -> 16r402.
+		'TB_COMMANDTOINDEX' -> 16r419.
+		'TB_CUSTOMIZE' -> 16r41B.
+		'TB_DELETEBUTTON' -> 16r416.
+		'TB_ENABLEBUTTON' -> 16r401.
+		'TB_ENDTRACK' -> 16r8.
+		'TB_GETBITMAP' -> 16r42C.
+		'TB_GETBITMAPFLAGS' -> 16r429.
+		'TB_GETBUTTON' -> 16r417.
+		'TB_GETBUTTONINFOW' -> 16r43F.
+		'TB_GETBUTTONSIZE' -> 16r43A.
+		'TB_GETBUTTONTEXTW' -> 16r44B.
+		'TB_GETDISABLEDIMAGELIST' -> 16r437.
+		'TB_GETHOTIMAGELIST' -> 16r435.
+		'TB_GETIDEALSIZE' -> 16r463.
+		'TB_GETIMAGELIST' -> 16r431.
+		'TB_GETITEMRECT' -> 16r41D.
+		'TB_GETMAXSIZE' -> 16r453.
+		'TB_GETPADDING' -> 16r456.
+		'TB_GETRECT' -> 16r433.
+		'TB_GETROWS' -> 16r428.
+		'TB_GETSTATE' -> 16r412.
+		'TB_GETSTRINGW' -> 16r45B.
+		'TB_GETSTYLE' -> 16r439.
+		'TB_GETTEXTROWS' -> 16r43D.
+		'TB_GETTOOLTIPS' -> 16r423.
+		'TB_HIDEBUTTON' -> 16r404.
+		'TB_INDETERMINATE' -> 16r405.
+		'TB_INSERTBUTTONW' -> 16r443.
+		'TB_ISBUTTONCHECKED' -> 16r40A.
+		'TB_ISBUTTONENABLED' -> 16r409.
+		'TB_ISBUTTONHIDDEN' -> 16r40C.
+		'TB_ISBUTTONINDETERMINATE' -> 16r40D.
+		'TB_ISBUTTONPRESSED' -> 16r40B.
+		'TB_LINEDOWN' -> 16r1.
+		'TB_LINEUP' -> 16r0.
+		'TB_LOADIMAGES' -> 16r432.
+		'TB_MAPACCELERATORW' -> 16r45A.
+		'TB_PAGEDOWN' -> 16r3.
+		'TB_PAGEUP' -> 16r2.
+		'TB_PRESSBUTTON' -> 16r403.
+		'TB_REPLACEBITMAP' -> 16r42E.
+		'TB_SAVERESTOREW' -> 16r44C.
+		'TB_SETBITMAPSIZE' -> 16r420.
+		'TB_SETBUTTONINFOW' -> 16r440.
+		'TB_SETBUTTONSIZE' -> 16r41F.
+		'TB_SETBUTTONWIDTH' -> 16r43B.
+		'TB_SETCMDID' -> 16r42A.
+		'TB_SETDISABLEDIMAGELIST' -> 16r436.
+		'TB_SETEXTENDEDSTYLE' -> 16r454.
+		'TB_SETHOTIMAGELIST' -> 16r434.
+		'TB_SETIMAGELIST' -> 16r430.
+		'TB_SETINDENT' -> 16r42F.
+		'TB_SETMAXTEXTROWS' -> 16r43C.
+		'TB_SETPARENT' -> 16r425.
+		'TB_SETROWS' -> 16r427.
+		'TB_SETSTATE' -> 16r411.
+		'TB_SETSTYLE' -> 16r438.
+		'TB_SETTOOLTIPS' -> 16r424.
+		'TB_STATECHECKED' -> 16r1.
+		'TB_STATEENABLED' -> 16r4.
+		'TB_STATEHIDDEN' -> 16r8.
+		'TB_STATEINDETERMINATE' -> 16r10.
+		'TB_STATEPRESSED' -> 16r2.
+		'TB_STATEWRAP' -> 16r20.
+		'TB_THUMBPOSITION' -> 16r4.
+		'TB_THUMBTRACK' -> 16r5.
+		'TB_TOP' -> 16r6.
+		'TBBF_LARGE' -> 16r1.
+		'TBDDRET_DEFAULT' -> 16r0.
+		'TBDDRET_NODEFAULT' -> 16r1.
+		'TBDDRET_TREATPRESSED' -> 16r2.
+		'TBIF_COMMAND' -> 16r20.
+		'TBIF_IMAGE' -> 16r1.
+		'TBIF_LPARAM' -> 16r10.
+		'TBIF_SIZE' -> 16r40.
+		'TBIF_STATE' -> 16r4.
+		'TBIF_STYLE' -> 16r8.
+		'TBIF_TEXT' -> 16r2.
+		'TBN_BEGINADJUST' -> -16r2BF.
+		'TBN_BEGINDRAG' -> -16r2BD.
+		'TBN_CLOSEUP' -> -16r2C7.
+		'TBN_CUSTHELP' -> -16r2C5.
+		'TBN_DROPDOWN' -> -16r2C6.
+		'TBN_ENDADJUST' -> -16r2C0.
+		'TBN_ENDDRAG' -> -16r2BE.
+		'TBN_FIRST' -> -16r2BC.
+		'TBN_GETBUTTONINFOW' -> -16r2D0.
+		'TBN_GETDISPINFOW' -> -16r2CD.
+		'TBN_GETINFOTIPW' -> -16r2CF.
+		'TBN_LAST' -> -16r2D0.
+		'TBN_QUERYDELETE' -> -16r2C3.
+		'TBN_QUERYINSERT' -> -16r2C2.
+		'TBN_RESET' -> -16r2C1.
+		'TBN_TOOLBARCHANGE' -> -16r2C4.
+		'TBSTATE_CHECKED' -> 16r1.
+		'TBSTATE_ELLIPSES' -> 16r40.
+		'TBSTATE_ENABLED' -> 16r4.
+		'TBSTATE_MARKED' -> 16r80.
+		'TBSTATE_PRESSED' -> 16r2.
+		'TBSTYLE_ALTDRAG' -> 16r400.
+		'TBSTYLE_CUSTOMERASE' -> 16r2000.
+		'TBSTYLE_EX_DOUBLEBUFFER' -> 16r80.
+		'TBSTYLE_EX_DRAWDDARROWS' -> 16r1.
+		'TBSTYLE_EX_HIDECLIPPEDBUTTONS' -> 16r10.
+		'TBSTYLE_EX_MIXEDBUTTONS' -> 16r8.
+		'TBSTYLE_FLAT' -> 16r800.
+		'TBSTYLE_LIST' -> 16r1000.
+		'TBSTYLE_REGISTERDROP' -> 16r4000.
+		'TBSTYLE_TOOLTIPS' -> 16r100.
+		'TBSTYLE_TRANSPARENT' -> 16r8000.
+		'TBSTYLE_WRAPABLE' -> 16r200.
+		'VIEW_DETAILS' -> 16r3.
+		'VIEW_LARGEICONS' -> 16r0.
+		'VIEW_LIST' -> 16r2.
+		'VIEW_NETCONNECT' -> 16r9.
+		'VIEW_NETDISCONNECT' -> 16rA.
+		'VIEW_NEWFOLDER' -> 16rB.
+		'VIEW_PARENTFOLDER' -> 16r8.
+		'VIEW_SMALLICONS' -> 16r1.
+		'VIEW_SORTDATE' -> 16r6.
+		'VIEW_SORTNAME' -> 16r4.
+		'VIEW_SORTSIZE' -> 16r5.
+		'VIEW_SORTTYPE' -> 16r7.
+		'VIEW_VIEWMENU' -> 16rC
+	}!
+ToolbarConstants guid: (GUID fromString: '{b3db8126-a20b-4003-9446-48a9f5b8c3af}')!
+ToolbarConstants comment: ''!
+!ToolbarConstants categoriesForClass!Unclassified! !

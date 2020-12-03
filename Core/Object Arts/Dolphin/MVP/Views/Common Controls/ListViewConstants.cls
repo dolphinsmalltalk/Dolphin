@@ -1,222 +1,230 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{ListViewConstants} declare: (PoolConstantsDictionary named: #ListViewConstants)!
-ListViewConstants at: 'LV_MAX_WORKAREAS' put: 16r10!
-ListViewConstants at: 'LV_VIEW_DETAILS' put: 16r1!
-ListViewConstants at: 'LV_VIEW_ICON' put: 16r0!
-ListViewConstants at: 'LV_VIEW_LIST' put: 16r3!
-ListViewConstants at: 'LV_VIEW_MAX' put: 16r4!
-ListViewConstants at: 'LV_VIEW_SMALLICON' put: 16r2!
-ListViewConstants at: 'LV_VIEW_TILE' put: 16r4!
-ListViewConstants at: 'LVA_ALIGNLEFT' put: 16r1!
-ListViewConstants at: 'LVA_ALIGNTOP' put: 16r2!
-ListViewConstants at: 'LVA_DEFAULT' put: 16r0!
-ListViewConstants at: 'LVA_SNAPTOGRID' put: 16r5!
-ListViewConstants at: 'LVBKIF_FLAG_TILEOFFSET' put: 16r100!
-ListViewConstants at: 'LVBKIF_SOURCE_HBITMAP' put: 16r1!
-ListViewConstants at: 'LVBKIF_SOURCE_MASK' put: 16r3!
-ListViewConstants at: 'LVBKIF_SOURCE_NONE' put: 16r0!
-ListViewConstants at: 'LVBKIF_SOURCE_URL' put: 16r2!
-ListViewConstants at: 'LVBKIF_STYLE_MASK' put: 16r10!
-ListViewConstants at: 'LVBKIF_STYLE_NORMAL' put: 16r0!
-ListViewConstants at: 'LVBKIF_STYLE_TILE' put: 16r10!
-ListViewConstants at: 'LVBKIF_TYPE_WATERMARK' put: 16r10000000!
-ListViewConstants at: 'LVCF_FMT' put: 16r1!
-ListViewConstants at: 'LVCF_IMAGE' put: 16r10!
-ListViewConstants at: 'LVCF_ORDER' put: 16r20!
-ListViewConstants at: 'LVCF_SUBITEM' put: 16r8!
-ListViewConstants at: 'LVCF_TEXT' put: 16r4!
-ListViewConstants at: 'LVCF_WIDTH' put: 16r2!
-ListViewConstants at: 'LVCFMT_BITMAP_ON_RIGHT' put: 16r1000!
-ListViewConstants at: 'LVCFMT_CENTER' put: 16r2!
-ListViewConstants at: 'LVCFMT_COL_HAS_IMAGES' put: 16r8000!
-ListViewConstants at: 'LVCFMT_IMAGE' put: 16r800!
-ListViewConstants at: 'LVCFMT_JUSTIFYMASK' put: 16r3!
-ListViewConstants at: 'LVCFMT_LEFT' put: 16r0!
-ListViewConstants at: 'LVCFMT_RIGHT' put: 16r1!
-ListViewConstants at: 'LVFI_NEARESTXY' put: 16r40!
-ListViewConstants at: 'LVFI_PARAM' put: 16r1!
-ListViewConstants at: 'LVFI_PARTIAL' put: 16r8!
-ListViewConstants at: 'LVFI_STRING' put: 16r2!
-ListViewConstants at: 'LVFI_WRAP' put: 16r20!
-ListViewConstants at: 'LVGIT_UNFOLDED' put: 16r1!
-ListViewConstants at: 'LVHT_ABOVE' put: 16r8!
-ListViewConstants at: 'LVHT_BELOW' put: 16r10!
-ListViewConstants at: 'LVHT_NOWHERE' put: 16r1!
-ListViewConstants at: 'LVHT_ONITEM' put: 16rD!
-ListViewConstants at: 'LVHT_ONITEMICON' put: 16r2!
-ListViewConstants at: 'LVHT_ONITEMLABEL' put: 16r4!
-ListViewConstants at: 'LVHT_ONITEMSTATEICON' put: 16r8!
-ListViewConstants at: 'LVHT_TOLEFT' put: 16r40!
-ListViewConstants at: 'LVHT_TORIGHT' put: 16r20!
-ListViewConstants at: 'LVIF_DI_SETITEM' put: 16r1000!
-ListViewConstants at: 'LVIF_DISETITEM' put: 16r1000!
-ListViewConstants at: 'LVIF_IMAGE' put: 16r2!
-ListViewConstants at: 'LVIF_INDENT' put: 16r10!
-ListViewConstants at: 'LVIF_PARAM' put: 16r4!
-ListViewConstants at: 'LVIF_STATE' put: 16r8!
-ListViewConstants at: 'LVIF_TEXT' put: 16r1!
-ListViewConstants at: 'LVIR_BOUNDS' put: 16r0!
-ListViewConstants at: 'LVIR_ICON' put: 16r1!
-ListViewConstants at: 'LVIR_LABEL' put: 16r2!
-ListViewConstants at: 'LVIR_SELECTBOUNDS' put: 16r3!
-ListViewConstants at: 'LVIS_CUT' put: 16r4!
-ListViewConstants at: 'LVIS_DROPHILITED' put: 16r8!
-ListViewConstants at: 'LVIS_FOCUSED' put: 16r1!
-ListViewConstants at: 'LVIS_OVERLAYMASK' put: 16rF00!
-ListViewConstants at: 'LVIS_SELECTED' put: 16r2!
-ListViewConstants at: 'LVIS_STATEIMAGEMASK' put: 16rF000!
-ListViewConstants at: 'LVM_APPROXIMATEVIEWRECT' put: 16r1040!
-ListViewConstants at: 'LVM_ARRANGE' put: 16r1016!
-ListViewConstants at: 'LVM_CREATEDRAGIMAGE' put: 16r1021!
-ListViewConstants at: 'LVM_DELETEALLITEMS' put: 16r1009!
-ListViewConstants at: 'LVM_DELETECOLUMN' put: 16r101C!
-ListViewConstants at: 'LVM_DELETEITEM' put: 16r1008!
-ListViewConstants at: 'LVM_EDITLABEL' put: 16r1017!
-ListViewConstants at: 'LVM_ENSUREVISIBLE' put: 16r1013!
-ListViewConstants at: 'LVM_FINDITEM' put: 16r100D!
-ListViewConstants at: 'LVM_FIRST' put: 16r1000!
-ListViewConstants at: 'LVM_GETBKIMAGEW' put: 16r108B!
-ListViewConstants at: 'LVM_GETCALLBACKMASK' put: 16r100A!
-ListViewConstants at: 'LVM_GETCOLUMNORDERARRAY' put: 16r103B!
-ListViewConstants at: 'LVM_GETCOLUMNW' put: 16r105F!
-ListViewConstants at: 'LVM_GETCOLUMNWIDTH' put: 16r101D!
-ListViewConstants at: 'LVM_GETCOUNTPERPAGE' put: 16r1028!
-ListViewConstants at: 'LVM_GETEXTENDEDLISTVIEWSTYLE' put: 16r1037!
-ListViewConstants at: 'LVM_GETHEADER' put: 16r101F!
-ListViewConstants at: 'LVM_GETHOTCURSOR' put: 16r103F!
-ListViewConstants at: 'LVM_GETHOTITEM' put: 16r103D!
-ListViewConstants at: 'LVM_GETHOVERTIME' put: 16r1048!
-ListViewConstants at: 'LVM_GETIMAGELIST' put: 16r1002!
-ListViewConstants at: 'LVM_GETITEMCOUNT' put: 16r1004!
-ListViewConstants at: 'LVM_GETITEMPOSITION' put: 16r1010!
-ListViewConstants at: 'LVM_GETITEMRECT' put: 16r100E!
-ListViewConstants at: 'LVM_GETITEMSPACING' put: 16r1033!
-ListViewConstants at: 'LVM_GETITEMSTATE' put: 16r102C!
-ListViewConstants at: 'LVM_GETITEMW' put: 16r104B!
-ListViewConstants at: 'LVM_GETNEXTITEM' put: 16r100C!
-ListViewConstants at: 'LVM_GETNUMBEROFWORKAREAS' put: 16r1049!
-ListViewConstants at: 'LVM_GETORIGIN' put: 16r1029!
-ListViewConstants at: 'LVM_GETSELECTEDCOUNT' put: 16r1032!
-ListViewConstants at: 'LVM_GETSELECTIONMARK' put: 16r1042!
-ListViewConstants at: 'LVM_GETSTRINGWIDTH' put: 16r1011!
-ListViewConstants at: 'LVM_GETSUBITEMRECT' put: 16r1038!
-ListViewConstants at: 'LVM_GETTOOLTIPS' put: 16r104E!
-ListViewConstants at: 'LVM_GETTOPINDEX' put: 16r1027!
-ListViewConstants at: 'LVM_GETVIEW' put: 16r108F!
-ListViewConstants at: 'LVM_GETVIEWRECT' put: 16r1022!
-ListViewConstants at: 'LVM_GETWORKAREAS' put: 16r1046!
-ListViewConstants at: 'LVM_HITTEST' put: 16r1012!
-ListViewConstants at: 'LVM_INSERTCOLUMNW' put: 16r1061!
-ListViewConstants at: 'LVM_INSERTITEMW' put: 16r104D!
-ListViewConstants at: 'LVM_REDRAWITEMS' put: 16r1015!
-ListViewConstants at: 'LVM_SCROLL' put: 16r1014!
-ListViewConstants at: 'LVM_SETBKCOLOR' put: 16r1001!
-ListViewConstants at: 'LVM_SETBKIMAGEW' put: 16r108A!
-ListViewConstants at: 'LVM_SETCALLBACKMASK' put: 16r100B!
-ListViewConstants at: 'LVM_SETCOLUMNORDERARRAY' put: 16r103A!
-ListViewConstants at: 'LVM_SETCOLUMNW' put: 16r1060!
-ListViewConstants at: 'LVM_SETCOLUMNWIDTH' put: 16r101E!
-ListViewConstants at: 'LVM_SETEXTENDEDLISTVIEWSTYLE' put: 16r1036!
-ListViewConstants at: 'LVM_SETHOTCURSOR' put: 16r103E!
-ListViewConstants at: 'LVM_SETHOTITEM' put: 16r103C!
-ListViewConstants at: 'LVM_SETHOVERTIME' put: 16r1047!
-ListViewConstants at: 'LVM_SETICONSPACING' put: 16r1035!
-ListViewConstants at: 'LVM_SETIMAGELIST' put: 16r1003!
-ListViewConstants at: 'LVM_SETITEMCOUNT' put: 16r102F!
-ListViewConstants at: 'LVM_SETITEMPOSITION' put: 16r1031!
-ListViewConstants at: 'LVM_SETITEMSTATE' put: 16r102B!
-ListViewConstants at: 'LVM_SETITEMTEXTW' put: 16r1074!
-ListViewConstants at: 'LVM_SETITEMW' put: 16r104C!
-ListViewConstants at: 'LVM_SETSELECTIONMARK' put: 16r1043!
-ListViewConstants at: 'LVM_SETTEXTBKCOLOR' put: 16r1026!
-ListViewConstants at: 'LVM_SETTEXTCOLOR' put: 16r1024!
-ListViewConstants at: 'LVM_SETTOOLTIPS' put: 16r104A!
-ListViewConstants at: 'LVM_SETVIEW' put: 16r108E!
-ListViewConstants at: 'LVM_SETWORKAREAS' put: 16r1041!
-ListViewConstants at: 'LVM_SORTITEMS' put: 16r1030!
-ListViewConstants at: 'LVM_SUBITEMHITTEST' put: 16r1039!
-ListViewConstants at: 'LVM_UPDATE' put: 16r102A!
-ListViewConstants at: 'LVN_BEGINDRAG' put: -16r6D!
-ListViewConstants at: 'LVN_BEGINLABELEDITW' put: -16rAF!
-ListViewConstants at: 'LVN_BEGINRDRAG' put: -16r6F!
-ListViewConstants at: 'LVN_BEGINSCROLL' put: -16rB4!
-ListViewConstants at: 'LVN_COLUMNCLICK' put: -16r6C!
-ListViewConstants at: 'LVN_COLUMNDROPDOWN' put: -16rA4!
-ListViewConstants at: 'LVN_COLUMNOVERFLOWCLICK' put: -16rA6!
-ListViewConstants at: 'LVN_DELETEALLITEMS' put: -16r68!
-ListViewConstants at: 'LVN_DELETEITEM' put: -16r67!
-ListViewConstants at: 'LVN_ENDLABELEDITW' put: -16rB0!
-ListViewConstants at: 'LVN_ENDSCROLL' put: -16rB5!
-ListViewConstants at: 'LVN_FIRST' put: -16r64!
-ListViewConstants at: 'LVN_GETDISPINFOW' put: -16rB1!
-ListViewConstants at: 'LVN_GETEMPTYMARKUP' put: -16rBB!
-ListViewConstants at: 'LVN_GETINFOTIPW' put: -16r9E!
-ListViewConstants at: 'LVN_HOTTRACK' put: -16r79!
-ListViewConstants at: 'LVN_INCREMENTALSEARCHW' put: -16rA3!
-ListViewConstants at: 'LVN_INSERTITEM' put: -16r66!
-ListViewConstants at: 'LVN_ITEMACTIVATE' put: -16r72!
-ListViewConstants at: 'LVN_ITEMCHANGED' put: -16r65!
-ListViewConstants at: 'LVN_ITEMCHANGING' put: -16r64!
-ListViewConstants at: 'LVN_KEYDOWN' put: -16r9B!
-ListViewConstants at: 'LVN_LAST' put: -16rC7!
-ListViewConstants at: 'LVN_LINKCLICK' put: -16rB8!
-ListViewConstants at: 'LVN_MARQUEEBEGIN' put: -16r9C!
-ListViewConstants at: 'LVN_ODCACHEHINT' put: -16r71!
-ListViewConstants at: 'LVN_ODFINDITEMW' put: -16rB3!
-ListViewConstants at: 'LVN_ODSTATECHANGED' put: -16r73!
-ListViewConstants at: 'LVN_SETDISPINFOW' put: -16rB2!
-ListViewConstants at: 'LVNI_ABOVE' put: 16r100!
-ListViewConstants at: 'LVNI_ALL' put: 16r0!
-ListViewConstants at: 'LVNI_BELOW' put: 16r200!
-ListViewConstants at: 'LVNI_CUT' put: 16r4!
-ListViewConstants at: 'LVNI_DROPHILITED' put: 16r8!
-ListViewConstants at: 'LVNI_FOCUSED' put: 16r1!
-ListViewConstants at: 'LVNI_SELECTED' put: 16r2!
-ListViewConstants at: 'LVNI_TOLEFT' put: 16r400!
-ListViewConstants at: 'LVNI_TORIGHT' put: 16r800!
-ListViewConstants at: 'LVS_ALIGNLEFT' put: 16r800!
-ListViewConstants at: 'LVS_ALIGNMASK' put: 16rC00!
-ListViewConstants at: 'LVS_ALIGNTOP' put: 16r0!
-ListViewConstants at: 'LVS_AUTOARRANGE' put: 16r100!
-ListViewConstants at: 'LVS_EDITLABELS' put: 16r200!
-ListViewConstants at: 'LVS_EX_BORDERSELECT' put: 16r8000!
-ListViewConstants at: 'LVS_EX_CHECKBOXES' put: 16r4!
-ListViewConstants at: 'LVS_EX_DOUBLEBUFFER' put: 16r10000!
-ListViewConstants at: 'LVS_EX_FLATSB' put: 16r100!
-ListViewConstants at: 'LVS_EX_FULLROWSELECT' put: 16r20!
-ListViewConstants at: 'LVS_EX_GRIDLINES' put: 16r1!
-ListViewConstants at: 'LVS_EX_HEADERDRAGDROP' put: 16r10!
-ListViewConstants at: 'LVS_EX_HIDELABELS' put: 16r20000!
-ListViewConstants at: 'LVS_EX_INFOTIP' put: 16r400!
-ListViewConstants at: 'LVS_EX_LABELTIP' put: 16r4000!
-ListViewConstants at: 'LVS_EX_ONECLICKACTIVATE' put: 16r40!
-ListViewConstants at: 'LVS_EX_SIMPLESELECT' put: 16r100000!
-ListViewConstants at: 'LVS_EX_SINGLEROW' put: 16r40000!
-ListViewConstants at: 'LVS_EX_SNAPTOGRID' put: 16r80000!
-ListViewConstants at: 'LVS_EX_SUBITEMIMAGES' put: 16r2!
-ListViewConstants at: 'LVS_EX_TRACKSELECT' put: 16r8!
-ListViewConstants at: 'LVS_EX_TWOCLICKACTIVATE' put: 16r80!
-ListViewConstants at: 'LVS_ICON' put: 16r0!
-ListViewConstants at: 'LVS_LIST' put: 16r3!
-ListViewConstants at: 'LVS_NOCOLUMNHEADER' put: 16r4000!
-ListViewConstants at: 'LVS_NOLABELWRAP' put: 16r80!
-ListViewConstants at: 'LVS_NOSORTHEADER' put: 16r8000!
-ListViewConstants at: 'LVS_OWNERDATA' put: 16r1000!
-ListViewConstants at: 'LVS_REPORT' put: 16r1!
-ListViewConstants at: 'LVS_SHAREIMAGELISTS' put: 16r40!
-ListViewConstants at: 'LVS_SHOWSELALWAYS' put: 16r8!
-ListViewConstants at: 'LVS_SINGLESEL' put: 16r4!
-ListViewConstants at: 'LVS_SMALLICON' put: 16r2!
-ListViewConstants at: 'LVS_SORTASCENDING' put: 16r10!
-ListViewConstants at: 'LVS_SORTDESCENDING' put: 16r20!
-ListViewConstants at: 'LVS_TYPEMASK' put: 16r3!
-ListViewConstants at: 'LVS_TYPESTYLEMASK' put: 16rFC00!
-ListViewConstants at: 'LVSCW_AUTOSIZE' put: -16r1!
-ListViewConstants at: 'LVSCW_AUTOSIZEUSEHEADER' put: -16r2!
-ListViewConstants at: 'LVSIL_NORMAL' put: 16r0!
-ListViewConstants at: 'LVSIL_SMALL' put: 16r1!
-ListViewConstants at: 'LVSIL_STATE' put: 16r2!
-ListViewConstants at: 'ODT_HEADER' put: 16r64!
-ListViewConstants at: 'ODT_LISTVIEW' put: 16r66!
-ListViewConstants shrink!
+SharedPool subclass: #ListViewConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LV_MAX_WORKAREAS' -> 16r10.
+		'LV_VIEW_DETAILS' -> 16r1.
+		'LV_VIEW_ICON' -> 16r0.
+		'LV_VIEW_LIST' -> 16r3.
+		'LV_VIEW_MAX' -> 16r4.
+		'LV_VIEW_SMALLICON' -> 16r2.
+		'LV_VIEW_TILE' -> 16r4.
+		'LVA_ALIGNLEFT' -> 16r1.
+		'LVA_ALIGNTOP' -> 16r2.
+		'LVA_DEFAULT' -> 16r0.
+		'LVA_SNAPTOGRID' -> 16r5.
+		'LVBKIF_FLAG_TILEOFFSET' -> 16r100.
+		'LVBKIF_SOURCE_HBITMAP' -> 16r1.
+		'LVBKIF_SOURCE_MASK' -> 16r3.
+		'LVBKIF_SOURCE_NONE' -> 16r0.
+		'LVBKIF_SOURCE_URL' -> 16r2.
+		'LVBKIF_STYLE_MASK' -> 16r10.
+		'LVBKIF_STYLE_NORMAL' -> 16r0.
+		'LVBKIF_STYLE_TILE' -> 16r10.
+		'LVBKIF_TYPE_WATERMARK' -> 16r10000000.
+		'LVCF_FMT' -> 16r1.
+		'LVCF_IMAGE' -> 16r10.
+		'LVCF_ORDER' -> 16r20.
+		'LVCF_SUBITEM' -> 16r8.
+		'LVCF_TEXT' -> 16r4.
+		'LVCF_WIDTH' -> 16r2.
+		'LVCFMT_BITMAP_ON_RIGHT' -> 16r1000.
+		'LVCFMT_CENTER' -> 16r2.
+		'LVCFMT_COL_HAS_IMAGES' -> 16r8000.
+		'LVCFMT_IMAGE' -> 16r800.
+		'LVCFMT_JUSTIFYMASK' -> 16r3.
+		'LVCFMT_LEFT' -> 16r0.
+		'LVCFMT_RIGHT' -> 16r1.
+		'LVFI_NEARESTXY' -> 16r40.
+		'LVFI_PARAM' -> 16r1.
+		'LVFI_PARTIAL' -> 16r8.
+		'LVFI_STRING' -> 16r2.
+		'LVFI_WRAP' -> 16r20.
+		'LVGIT_UNFOLDED' -> 16r1.
+		'LVHT_ABOVE' -> 16r8.
+		'LVHT_BELOW' -> 16r10.
+		'LVHT_NOWHERE' -> 16r1.
+		'LVHT_ONITEM' -> 16rD.
+		'LVHT_ONITEMICON' -> 16r2.
+		'LVHT_ONITEMLABEL' -> 16r4.
+		'LVHT_ONITEMSTATEICON' -> 16r8.
+		'LVHT_TOLEFT' -> 16r40.
+		'LVHT_TORIGHT' -> 16r20.
+		'LVIF_DI_SETITEM' -> 16r1000.
+		'LVIF_DISETITEM' -> 16r1000.
+		'LVIF_IMAGE' -> 16r2.
+		'LVIF_INDENT' -> 16r10.
+		'LVIF_PARAM' -> 16r4.
+		'LVIF_STATE' -> 16r8.
+		'LVIF_TEXT' -> 16r1.
+		'LVIR_BOUNDS' -> 16r0.
+		'LVIR_ICON' -> 16r1.
+		'LVIR_LABEL' -> 16r2.
+		'LVIR_SELECTBOUNDS' -> 16r3.
+		'LVIS_CUT' -> 16r4.
+		'LVIS_DROPHILITED' -> 16r8.
+		'LVIS_FOCUSED' -> 16r1.
+		'LVIS_OVERLAYMASK' -> 16rF00.
+		'LVIS_SELECTED' -> 16r2.
+		'LVIS_STATEIMAGEMASK' -> 16rF000.
+		'LVM_APPROXIMATEVIEWRECT' -> 16r1040.
+		'LVM_ARRANGE' -> 16r1016.
+		'LVM_CREATEDRAGIMAGE' -> 16r1021.
+		'LVM_DELETEALLITEMS' -> 16r1009.
+		'LVM_DELETECOLUMN' -> 16r101C.
+		'LVM_DELETEITEM' -> 16r1008.
+		'LVM_EDITLABEL' -> 16r1017.
+		'LVM_ENSUREVISIBLE' -> 16r1013.
+		'LVM_FINDITEM' -> 16r100D.
+		'LVM_FIRST' -> 16r1000.
+		'LVM_GETBKIMAGEW' -> 16r108B.
+		'LVM_GETCALLBACKMASK' -> 16r100A.
+		'LVM_GETCOLUMNORDERARRAY' -> 16r103B.
+		'LVM_GETCOLUMNW' -> 16r105F.
+		'LVM_GETCOLUMNWIDTH' -> 16r101D.
+		'LVM_GETCOUNTPERPAGE' -> 16r1028.
+		'LVM_GETEXTENDEDLISTVIEWSTYLE' -> 16r1037.
+		'LVM_GETHEADER' -> 16r101F.
+		'LVM_GETHOTCURSOR' -> 16r103F.
+		'LVM_GETHOTITEM' -> 16r103D.
+		'LVM_GETHOVERTIME' -> 16r1048.
+		'LVM_GETIMAGELIST' -> 16r1002.
+		'LVM_GETITEMCOUNT' -> 16r1004.
+		'LVM_GETITEMPOSITION' -> 16r1010.
+		'LVM_GETITEMRECT' -> 16r100E.
+		'LVM_GETITEMSPACING' -> 16r1033.
+		'LVM_GETITEMSTATE' -> 16r102C.
+		'LVM_GETITEMW' -> 16r104B.
+		'LVM_GETNEXTITEM' -> 16r100C.
+		'LVM_GETNUMBEROFWORKAREAS' -> 16r1049.
+		'LVM_GETORIGIN' -> 16r1029.
+		'LVM_GETSELECTEDCOUNT' -> 16r1032.
+		'LVM_GETSELECTIONMARK' -> 16r1042.
+		'LVM_GETSTRINGWIDTH' -> 16r1011.
+		'LVM_GETSUBITEMRECT' -> 16r1038.
+		'LVM_GETTOOLTIPS' -> 16r104E.
+		'LVM_GETTOPINDEX' -> 16r1027.
+		'LVM_GETVIEW' -> 16r108F.
+		'LVM_GETVIEWRECT' -> 16r1022.
+		'LVM_GETWORKAREAS' -> 16r1046.
+		'LVM_HITTEST' -> 16r1012.
+		'LVM_INSERTCOLUMNW' -> 16r1061.
+		'LVM_INSERTITEMW' -> 16r104D.
+		'LVM_REDRAWITEMS' -> 16r1015.
+		'LVM_SCROLL' -> 16r1014.
+		'LVM_SETBKCOLOR' -> 16r1001.
+		'LVM_SETBKIMAGEW' -> 16r108A.
+		'LVM_SETCALLBACKMASK' -> 16r100B.
+		'LVM_SETCOLUMNORDERARRAY' -> 16r103A.
+		'LVM_SETCOLUMNW' -> 16r1060.
+		'LVM_SETCOLUMNWIDTH' -> 16r101E.
+		'LVM_SETEXTENDEDLISTVIEWSTYLE' -> 16r1036.
+		'LVM_SETHOTCURSOR' -> 16r103E.
+		'LVM_SETHOTITEM' -> 16r103C.
+		'LVM_SETHOVERTIME' -> 16r1047.
+		'LVM_SETICONSPACING' -> 16r1035.
+		'LVM_SETIMAGELIST' -> 16r1003.
+		'LVM_SETITEMCOUNT' -> 16r102F.
+		'LVM_SETITEMPOSITION' -> 16r1031.
+		'LVM_SETITEMSTATE' -> 16r102B.
+		'LVM_SETITEMTEXTW' -> 16r1074.
+		'LVM_SETITEMW' -> 16r104C.
+		'LVM_SETSELECTIONMARK' -> 16r1043.
+		'LVM_SETTEXTBKCOLOR' -> 16r1026.
+		'LVM_SETTEXTCOLOR' -> 16r1024.
+		'LVM_SETTOOLTIPS' -> 16r104A.
+		'LVM_SETVIEW' -> 16r108E.
+		'LVM_SETWORKAREAS' -> 16r1041.
+		'LVM_SORTITEMS' -> 16r1030.
+		'LVM_SUBITEMHITTEST' -> 16r1039.
+		'LVM_UPDATE' -> 16r102A.
+		'LVN_BEGINDRAG' -> -16r6D.
+		'LVN_BEGINLABELEDITW' -> -16rAF.
+		'LVN_BEGINRDRAG' -> -16r6F.
+		'LVN_BEGINSCROLL' -> -16rB4.
+		'LVN_COLUMNCLICK' -> -16r6C.
+		'LVN_COLUMNDROPDOWN' -> -16rA4.
+		'LVN_COLUMNOVERFLOWCLICK' -> -16rA6.
+		'LVN_DELETEALLITEMS' -> -16r68.
+		'LVN_DELETEITEM' -> -16r67.
+		'LVN_ENDLABELEDITW' -> -16rB0.
+		'LVN_ENDSCROLL' -> -16rB5.
+		'LVN_FIRST' -> -16r64.
+		'LVN_GETDISPINFOW' -> -16rB1.
+		'LVN_GETEMPTYMARKUP' -> -16rBB.
+		'LVN_GETINFOTIPW' -> -16r9E.
+		'LVN_HOTTRACK' -> -16r79.
+		'LVN_INCREMENTALSEARCHW' -> -16rA3.
+		'LVN_INSERTITEM' -> -16r66.
+		'LVN_ITEMACTIVATE' -> -16r72.
+		'LVN_ITEMCHANGED' -> -16r65.
+		'LVN_ITEMCHANGING' -> -16r64.
+		'LVN_KEYDOWN' -> -16r9B.
+		'LVN_LAST' -> -16rC7.
+		'LVN_LINKCLICK' -> -16rB8.
+		'LVN_MARQUEEBEGIN' -> -16r9C.
+		'LVN_ODCACHEHINT' -> -16r71.
+		'LVN_ODFINDITEMW' -> -16rB3.
+		'LVN_ODSTATECHANGED' -> -16r73.
+		'LVN_SETDISPINFOW' -> -16rB2.
+		'LVNI_ABOVE' -> 16r100.
+		'LVNI_ALL' -> 16r0.
+		'LVNI_BELOW' -> 16r200.
+		'LVNI_CUT' -> 16r4.
+		'LVNI_DROPHILITED' -> 16r8.
+		'LVNI_FOCUSED' -> 16r1.
+		'LVNI_SELECTED' -> 16r2.
+		'LVNI_TOLEFT' -> 16r400.
+		'LVNI_TORIGHT' -> 16r800.
+		'LVS_ALIGNLEFT' -> 16r800.
+		'LVS_ALIGNMASK' -> 16rC00.
+		'LVS_ALIGNTOP' -> 16r0.
+		'LVS_AUTOARRANGE' -> 16r100.
+		'LVS_EDITLABELS' -> 16r200.
+		'LVS_EX_BORDERSELECT' -> 16r8000.
+		'LVS_EX_CHECKBOXES' -> 16r4.
+		'LVS_EX_DOUBLEBUFFER' -> 16r10000.
+		'LVS_EX_FLATSB' -> 16r100.
+		'LVS_EX_FULLROWSELECT' -> 16r20.
+		'LVS_EX_GRIDLINES' -> 16r1.
+		'LVS_EX_HEADERDRAGDROP' -> 16r10.
+		'LVS_EX_HIDELABELS' -> 16r20000.
+		'LVS_EX_INFOTIP' -> 16r400.
+		'LVS_EX_LABELTIP' -> 16r4000.
+		'LVS_EX_ONECLICKACTIVATE' -> 16r40.
+		'LVS_EX_SIMPLESELECT' -> 16r100000.
+		'LVS_EX_SINGLEROW' -> 16r40000.
+		'LVS_EX_SNAPTOGRID' -> 16r80000.
+		'LVS_EX_SUBITEMIMAGES' -> 16r2.
+		'LVS_EX_TRACKSELECT' -> 16r8.
+		'LVS_EX_TWOCLICKACTIVATE' -> 16r80.
+		'LVS_ICON' -> 16r0.
+		'LVS_LIST' -> 16r3.
+		'LVS_NOCOLUMNHEADER' -> 16r4000.
+		'LVS_NOLABELWRAP' -> 16r80.
+		'LVS_NOSORTHEADER' -> 16r8000.
+		'LVS_OWNERDATA' -> 16r1000.
+		'LVS_REPORT' -> 16r1.
+		'LVS_SHAREIMAGELISTS' -> 16r40.
+		'LVS_SHOWSELALWAYS' -> 16r8.
+		'LVS_SINGLESEL' -> 16r4.
+		'LVS_SMALLICON' -> 16r2.
+		'LVS_SORTASCENDING' -> 16r10.
+		'LVS_SORTDESCENDING' -> 16r20.
+		'LVS_TYPEMASK' -> 16r3.
+		'LVS_TYPESTYLEMASK' -> 16rFC00.
+		'LVSCW_AUTOSIZE' -> -16r1.
+		'LVSCW_AUTOSIZEUSEHEADER' -> -16r2.
+		'LVSIL_NORMAL' -> 16r0.
+		'LVSIL_SMALL' -> 16r1.
+		'LVSIL_STATE' -> 16r2.
+		'ODT_HEADER' -> 16r64.
+		'ODT_LISTVIEW' -> 16r66
+	}!
+ListViewConstants guid: (GUID fromString: '{b86fc801-bc08-4396-9ffa-1175b2e3518e}')!
+ListViewConstants comment: ''!
+!ListViewConstants categoriesForClass!Unclassified! !

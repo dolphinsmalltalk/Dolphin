@@ -1,67 +1,75 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{TextEditConstants} declare: (PoolConstantsDictionary named: #TextEditConstants)!
-TextEditConstants at: 'EC_LEFTMARGIN' put: 16r1!
-TextEditConstants at: 'EC_RIGHTMARGIN' put: 16r2!
-TextEditConstants at: 'EC_USEFONTINFO' put: 16rFFFF!
-TextEditConstants at: 'ECM_FIRST' put: 16r1500!
-TextEditConstants at: 'EM_CANUNDO' put: 16rC6!
-TextEditConstants at: 'EM_CHARFROMPOS' put: 16rD7!
-TextEditConstants at: 'EM_EMPTYUNDOBUFFER' put: 16rCD!
-TextEditConstants at: 'EM_FMTLINES' put: 16rC8!
-TextEditConstants at: 'EM_GETCUEBANNER' put: 16r1502!
-TextEditConstants at: 'EM_GETFIRSTVISIBLELINE' put: 16rCE!
-TextEditConstants at: 'EM_GETHANDLE' put: 16rBD!
-TextEditConstants at: 'EM_GETHILITE' put: 16r1506!
-TextEditConstants at: 'EM_GETLIMITTEXT' put: 16rD5!
-TextEditConstants at: 'EM_GETLINE' put: 16rC4!
-TextEditConstants at: 'EM_GETLINECOUNT' put: 16rBA!
-TextEditConstants at: 'EM_GETMARGINS' put: 16rD4!
-TextEditConstants at: 'EM_GETMODIFY' put: 16rB8!
-TextEditConstants at: 'EM_GETPASSWORDCHAR' put: 16rD2!
-TextEditConstants at: 'EM_GETRECT' put: 16rB2!
-TextEditConstants at: 'EM_GETSEL' put: 16rB0!
-TextEditConstants at: 'EM_GETTHUMB' put: 16rBE!
-TextEditConstants at: 'EM_GETWORDBREAKPROC' put: 16rD1!
-TextEditConstants at: 'EM_HIDEBALLOONTIP' put: 16r1504!
-TextEditConstants at: 'EM_LIMITTEXT' put: 16rC5!
-TextEditConstants at: 'EM_LINEFROMCHAR' put: 16rC9!
-TextEditConstants at: 'EM_LINEINDEX' put: 16rBB!
-TextEditConstants at: 'EM_LINELENGTH' put: 16rC1!
-TextEditConstants at: 'EM_LINESCROLL' put: 16rB6!
-TextEditConstants at: 'EM_NOSETFOCUS' put: 16r1507!
-TextEditConstants at: 'EM_POSFROMCHAR' put: 16rD6!
-TextEditConstants at: 'EM_REPLACESEL' put: 16rC2!
-TextEditConstants at: 'EM_SCROLL' put: 16rB5!
-TextEditConstants at: 'EM_SCROLLCARET' put: 16rB7!
-TextEditConstants at: 'EM_SETCUEBANNER' put: 16r1501!
-TextEditConstants at: 'EM_SETHANDLE' put: 16rBC!
-TextEditConstants at: 'EM_SETHILITE' put: 16r1505!
-TextEditConstants at: 'EM_SETLIMITTEXT' put: 16rC5!
-TextEditConstants at: 'EM_SETMARGINS' put: 16rD3!
-TextEditConstants at: 'EM_SETMODIFY' put: 16rB9!
-TextEditConstants at: 'EM_SETPASSWORDCHAR' put: 16rCC!
-TextEditConstants at: 'EM_SETREADONLY' put: 16rCF!
-TextEditConstants at: 'EM_SETRECT' put: 16rB3!
-TextEditConstants at: 'EM_SETRECTNP' put: 16rB4!
-TextEditConstants at: 'EM_SETSEL' put: 16rB1!
-TextEditConstants at: 'EM_SETTABSTOPS' put: 16rCB!
-TextEditConstants at: 'EM_SETWORDBREAKPROC' put: 16rD0!
-TextEditConstants at: 'EM_SHOWBALLOONTIP' put: 16r1503!
-TextEditConstants at: 'EM_TAKEFOCUS' put: 16r1508!
-TextEditConstants at: 'EM_UNDO' put: 16rC7!
-TextEditConstants at: 'ES_AUTOHSCROLL' put: 16r80!
-TextEditConstants at: 'ES_AUTOVSCROLL' put: 16r40!
-TextEditConstants at: 'ES_CENTER' put: 16r1!
-TextEditConstants at: 'ES_LEFT' put: 16r0!
-TextEditConstants at: 'ES_LOWERCASE' put: 16r10!
-TextEditConstants at: 'ES_MULTILINE' put: 16r4!
-TextEditConstants at: 'ES_NOHIDESEL' put: 16r100!
-TextEditConstants at: 'ES_NUMBER' put: 16r2000!
-TextEditConstants at: 'ES_OEMCONVERT' put: 16r400!
-TextEditConstants at: 'ES_PASSWORD' put: 16r20!
-TextEditConstants at: 'ES_READONLY' put: 16r800!
-TextEditConstants at: 'ES_RIGHT' put: 16r2!
-TextEditConstants at: 'ES_UPPERCASE' put: 16r8!
-TextEditConstants at: 'ES_WANTRETURN' put: 16r1000!
-TextEditConstants shrink!
+SharedPool subclass: #TextEditConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EC_LEFTMARGIN' -> 16r1.
+		'EC_RIGHTMARGIN' -> 16r2.
+		'EC_USEFONTINFO' -> 16rFFFF.
+		'ECM_FIRST' -> 16r1500.
+		'EM_CANUNDO' -> 16rC6.
+		'EM_CHARFROMPOS' -> 16rD7.
+		'EM_EMPTYUNDOBUFFER' -> 16rCD.
+		'EM_FMTLINES' -> 16rC8.
+		'EM_GETCUEBANNER' -> 16r1502.
+		'EM_GETFIRSTVISIBLELINE' -> 16rCE.
+		'EM_GETHANDLE' -> 16rBD.
+		'EM_GETHILITE' -> 16r1506.
+		'EM_GETLIMITTEXT' -> 16rD5.
+		'EM_GETLINE' -> 16rC4.
+		'EM_GETLINECOUNT' -> 16rBA.
+		'EM_GETMARGINS' -> 16rD4.
+		'EM_GETMODIFY' -> 16rB8.
+		'EM_GETPASSWORDCHAR' -> 16rD2.
+		'EM_GETRECT' -> 16rB2.
+		'EM_GETSEL' -> 16rB0.
+		'EM_GETTHUMB' -> 16rBE.
+		'EM_GETWORDBREAKPROC' -> 16rD1.
+		'EM_HIDEBALLOONTIP' -> 16r1504.
+		'EM_LIMITTEXT' -> 16rC5.
+		'EM_LINEFROMCHAR' -> 16rC9.
+		'EM_LINEINDEX' -> 16rBB.
+		'EM_LINELENGTH' -> 16rC1.
+		'EM_LINESCROLL' -> 16rB6.
+		'EM_NOSETFOCUS' -> 16r1507.
+		'EM_POSFROMCHAR' -> 16rD6.
+		'EM_REPLACESEL' -> 16rC2.
+		'EM_SCROLL' -> 16rB5.
+		'EM_SCROLLCARET' -> 16rB7.
+		'EM_SETCUEBANNER' -> 16r1501.
+		'EM_SETHANDLE' -> 16rBC.
+		'EM_SETHILITE' -> 16r1505.
+		'EM_SETLIMITTEXT' -> 16rC5.
+		'EM_SETMARGINS' -> 16rD3.
+		'EM_SETMODIFY' -> 16rB9.
+		'EM_SETPASSWORDCHAR' -> 16rCC.
+		'EM_SETREADONLY' -> 16rCF.
+		'EM_SETRECT' -> 16rB3.
+		'EM_SETRECTNP' -> 16rB4.
+		'EM_SETSEL' -> 16rB1.
+		'EM_SETTABSTOPS' -> 16rCB.
+		'EM_SETWORDBREAKPROC' -> 16rD0.
+		'EM_SHOWBALLOONTIP' -> 16r1503.
+		'EM_TAKEFOCUS' -> 16r1508.
+		'EM_UNDO' -> 16rC7.
+		'ES_AUTOHSCROLL' -> 16r80.
+		'ES_AUTOVSCROLL' -> 16r40.
+		'ES_CENTER' -> 16r1.
+		'ES_LEFT' -> 16r0.
+		'ES_LOWERCASE' -> 16r10.
+		'ES_MULTILINE' -> 16r4.
+		'ES_NOHIDESEL' -> 16r100.
+		'ES_NUMBER' -> 16r2000.
+		'ES_OEMCONVERT' -> 16r400.
+		'ES_PASSWORD' -> 16r20.
+		'ES_READONLY' -> 16r800.
+		'ES_RIGHT' -> 16r2.
+		'ES_UPPERCASE' -> 16r8.
+		'ES_WANTRETURN' -> 16r1000
+	}!
+TextEditConstants guid: (GUID fromString: '{a42eeb15-779c-49f7-9a50-ebe150e4d0b2}')!
+TextEditConstants comment: ''!
+!TextEditConstants categoriesForClass!Unclassified! !

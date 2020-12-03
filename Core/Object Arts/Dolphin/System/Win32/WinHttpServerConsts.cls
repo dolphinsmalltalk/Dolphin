@@ -1,233 +1,241 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{WinHttpServerConsts} declare: (PoolConstantsDictionary named: #WinHttpServerConsts)!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_ALL' put: 16r1F!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_BASIC' put: 16r1!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_DIGEST' put: 16r2!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_KERBEROS' put: 16r10!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_NEGOTIATE' put: 16r8!
-WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_NTLM' put: 16r4!
-WinHttpServerConsts at: 'HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL' put: 16r2!
-WinHttpServerConsts at: 'HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING' put: 16r1!
-WinHttpServerConsts at: 'HTTP_BYTE_RANGE_TO_EOF' put: -16r1!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_CLIENT_SERVICE' put: 16r10!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_DOTLESS_SERVICE' put: 16r4!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK' put: 16r2!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_PROXY' put: 16r1!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_PROXY_COHOSTING' put: 16r20!
-WinHttpServerConsts at: 'HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN' put: 16r8!
-WinHttpServerConsts at: 'HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER' put: 16r2!
-WinHttpServerConsts at: 'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' put: 16r1!
-WinHttpServerConsts at: 'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' put: 16r1!
-WinHttpServerConsts at: 'HTTP_INITIALIZE_CONFIG' put: 16r2!
-WinHttpServerConsts at: 'HTTP_INITIALIZE_SERVER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_LIMIT_INFINITE' put: -16r1!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_BYTES_RECV' put: 16r2000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_BYTES_SENT' put: 16r1000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_CLIENT_IP' put: 16r4!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_CLIENT_PORT' put: 16r400000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_COMPUTER_NAME' put: 16r20!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_COOKIE' put: 16r20000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_DATE' put: 16r1!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_HOST' put: 16r100000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_METHOD' put: 16r80!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_QUEUE_NAME' put: 16r4000000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_REASON' put: 16r2000000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_REFERER' put: 16r40000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_SERVER_IP' put: 16r40!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_SERVER_PORT' put: 16r8000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_SITE_ID' put: 16r1000000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_SITE_NAME' put: 16r10!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_STATUS' put: 16r400!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_STREAM_ID' put: 16r8000000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_SUB_STATUS' put: 16r200000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_TIME' put: 16r2!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_TIME_TAKEN' put: 16r4000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_URI' put: 16r800000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_URI_QUERY' put: 16r200!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_URI_STEM' put: 16r100!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_USER_AGENT' put: 16r10000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_USER_NAME' put: 16r8!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_VERSION' put: 16r80000!
-WinHttpServerConsts at: 'HTTP_LOG_FIELD_WIN32_STATUS' put: 16r800!
-WinHttpServerConsts at: 'HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY' put: 16r4!
-WinHttpServerConsts at: 'HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY' put: 16r8!
-WinHttpServerConsts at: 'HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION' put: 16r2!
-WinHttpServerConsts at: 'HTTP_MAX_SERVER_QUEUE_LENGTH' put: 16r7FFFFFFF!
-WinHttpServerConsts at: 'HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE' put: 16r400!
-WinHttpServerConsts at: 'HTTP_MIN_ALLOWED_LOG_FILE_ROLLOVER_SIZE' put: 16r100000!
-WinHttpServerConsts at: 'HTTP_MIN_SERVER_QUEUE_LENGTH' put: 16r1!
-WinHttpServerConsts at: 'HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY' put: 16r1!
-WinHttpServerConsts at: 'HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY' put: 16r2!
-WinHttpServerConsts at: 'HTTP_RECEIVE_SECURE_CHANNEL_TOKEN' put: 16r1!
-WinHttpServerConsts at: 'HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED' put: 16r1!
-WinHttpServerConsts at: 'HTTP_REQUEST_FLAG_HTTP2' put: 16r4!
-WinHttpServerConsts at: 'HTTP_REQUEST_FLAG_IP_ROUTED' put: 16r2!
-WinHttpServerConsts at: 'HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS' put: 16r1!
-WinHttpServerConsts at: 'HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE' put: 16r1!
-WinHttpServerConsts at: 'HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA' put: 16r4!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_DISCONNECT' put: 16r1!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING' put: 16r8!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_MORE_DATA' put: 16r2!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_OPAQUE' put: 16r40!
-WinHttpServerConsts at: 'HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES' put: 16r20!
-WinHttpServerConsts at: 'HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT' put: 16r2!
-WinHttpServerConsts at: 'HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER' put: 16r4!
-WinHttpServerConsts at: 'HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT' put: 16r8!
-WinHttpServerConsts at: 'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_URL_FLAG_REMOVE_ALL' put: 16r1!
-WinHttpServerConsts at: 'Http503ResponseVerbosityBasic' put: 16r0!
-WinHttpServerConsts at: 'Http503ResponseVerbosityFull' put: 16r2!
-WinHttpServerConsts at: 'Http503ResponseVerbosityLimited' put: 16r1!
-WinHttpServerConsts at: 'HttpAuthenticationHardeningLegacy' put: 16r0!
-WinHttpServerConsts at: 'HttpAuthenticationHardeningMedium' put: 16r1!
-WinHttpServerConsts at: 'HttpAuthenticationHardeningStrict' put: 16r2!
-WinHttpServerConsts at: 'HttpAuthStatusFailure' put: 16r2!
-WinHttpServerConsts at: 'HttpAuthStatusNotAuthenticated' put: 16r1!
-WinHttpServerConsts at: 'HttpAuthStatusSuccess' put: 16r0!
-WinHttpServerConsts at: 'HttpCachePolicyMaximum' put: 16r3!
-WinHttpServerConsts at: 'HttpCachePolicyNocache' put: 16r0!
-WinHttpServerConsts at: 'HttpCachePolicyTimeToLive' put: 16r2!
-WinHttpServerConsts at: 'HttpCachePolicyUserInvalidates' put: 16r1!
-WinHttpServerConsts at: 'HttpDataChunkFromFileHandle' put: 16r1!
-WinHttpServerConsts at: 'HttpDataChunkFromFragmentCache' put: 16r2!
-WinHttpServerConsts at: 'HttpDataChunkFromFragmentCacheEx' put: 16r3!
-WinHttpServerConsts at: 'HttpDataChunkFromMemory' put: 16r0!
-WinHttpServerConsts at: 'HttpDataChunkMaximum' put: 16r4!
-WinHttpServerConsts at: 'HttpEnabledStateActive' put: 16r0!
-WinHttpServerConsts at: 'HttpEnabledStateInactive' put: 16r1!
-WinHttpServerConsts at: 'HttpHeaderAccept' put: 16r14!
-WinHttpServerConsts at: 'HttpHeaderAcceptCharset' put: 16r15!
-WinHttpServerConsts at: 'HttpHeaderAcceptEncoding' put: 16r16!
-WinHttpServerConsts at: 'HttpHeaderAcceptLanguage' put: 16r17!
-WinHttpServerConsts at: 'HttpHeaderAcceptRanges' put: 16r14!
-WinHttpServerConsts at: 'HttpHeaderAge' put: 16r15!
-WinHttpServerConsts at: 'HttpHeaderAllow' put: 16rA!
-WinHttpServerConsts at: 'HttpHeaderAuthorization' put: 16r18!
-WinHttpServerConsts at: 'HttpHeaderCacheControl' put: 16r0!
-WinHttpServerConsts at: 'HttpHeaderConnection' put: 16r1!
-WinHttpServerConsts at: 'HttpHeaderContentEncoding' put: 16rD!
-WinHttpServerConsts at: 'HttpHeaderContentLanguage' put: 16rE!
-WinHttpServerConsts at: 'HttpHeaderContentLength' put: 16rB!
-WinHttpServerConsts at: 'HttpHeaderContentLocation' put: 16rF!
-WinHttpServerConsts at: 'HttpHeaderContentMd5' put: 16r10!
-WinHttpServerConsts at: 'HttpHeaderContentRange' put: 16r11!
-WinHttpServerConsts at: 'HttpHeaderContentType' put: 16rC!
-WinHttpServerConsts at: 'HttpHeaderCookie' put: 16r19!
-WinHttpServerConsts at: 'HttpHeaderDate' put: 16r2!
-WinHttpServerConsts at: 'HttpHeaderEtag' put: 16r16!
-WinHttpServerConsts at: 'HttpHeaderExpect' put: 16r1A!
-WinHttpServerConsts at: 'HttpHeaderExpires' put: 16r12!
-WinHttpServerConsts at: 'HttpHeaderFrom' put: 16r1B!
-WinHttpServerConsts at: 'HttpHeaderHost' put: 16r1C!
-WinHttpServerConsts at: 'HttpHeaderIfMatch' put: 16r1D!
-WinHttpServerConsts at: 'HttpHeaderIfModifiedSince' put: 16r1E!
-WinHttpServerConsts at: 'HttpHeaderIfNoneMatch' put: 16r1F!
-WinHttpServerConsts at: 'HttpHeaderIfRange' put: 16r20!
-WinHttpServerConsts at: 'HttpHeaderIfUnmodifiedSince' put: 16r21!
-WinHttpServerConsts at: 'HttpHeaderKeepAlive' put: 16r3!
-WinHttpServerConsts at: 'HttpHeaderLastModified' put: 16r13!
-WinHttpServerConsts at: 'HttpHeaderLocation' put: 16r17!
-WinHttpServerConsts at: 'HttpHeaderMaxForwards' put: 16r22!
-WinHttpServerConsts at: 'HttpHeaderMaximum' put: 16r29!
-WinHttpServerConsts at: 'HttpHeaderPragma' put: 16r4!
-WinHttpServerConsts at: 'HttpHeaderProxyAuthenticate' put: 16r18!
-WinHttpServerConsts at: 'HttpHeaderProxyAuthorization' put: 16r23!
-WinHttpServerConsts at: 'HttpHeaderRange' put: 16r25!
-WinHttpServerConsts at: 'HttpHeaderReferer' put: 16r24!
-WinHttpServerConsts at: 'HttpHeaderRequestMaximum' put: 16r29!
-WinHttpServerConsts at: 'HttpHeaderResponseMaximum' put: 16r1E!
-WinHttpServerConsts at: 'HttpHeaderRetryAfter' put: 16r19!
-WinHttpServerConsts at: 'HttpHeaderServer' put: 16r1A!
-WinHttpServerConsts at: 'HttpHeaderSetCookie' put: 16r1B!
-WinHttpServerConsts at: 'HttpHeaderTe' put: 16r26!
-WinHttpServerConsts at: 'HttpHeaderTrailer' put: 16r5!
-WinHttpServerConsts at: 'HttpHeaderTransferEncoding' put: 16r6!
-WinHttpServerConsts at: 'HttpHeaderTranslate' put: 16r27!
-WinHttpServerConsts at: 'HttpHeaderUpgrade' put: 16r7!
-WinHttpServerConsts at: 'HttpHeaderUserAgent' put: 16r28!
-WinHttpServerConsts at: 'HttpHeaderVary' put: 16r1C!
-WinHttpServerConsts at: 'HttpHeaderVia' put: 16r8!
-WinHttpServerConsts at: 'HttpHeaderWarning' put: 16r9!
-WinHttpServerConsts at: 'HttpHeaderWwwAuthenticate' put: 16r1D!
-WinHttpServerConsts at: 'HttpLogDataTypeFields' put: 16r0!
-WinHttpServerConsts at: 'HttpLoggingRolloverDaily' put: 16r1!
-WinHttpServerConsts at: 'HttpLoggingRolloverHourly' put: 16r4!
-WinHttpServerConsts at: 'HttpLoggingRolloverMonthly' put: 16r3!
-WinHttpServerConsts at: 'HttpLoggingRolloverSize' put: 16r0!
-WinHttpServerConsts at: 'HttpLoggingRolloverWeekly' put: 16r2!
-WinHttpServerConsts at: 'HttpLoggingTypeIIS' put: 16r1!
-WinHttpServerConsts at: 'HttpLoggingTypeNCSA' put: 16r2!
-WinHttpServerConsts at: 'HttpLoggingTypeRaw' put: 16r3!
-WinHttpServerConsts at: 'HttpLoggingTypeW3C' put: 16r0!
-WinHttpServerConsts at: 'HttpProtectionLevelEdgeRestricted' put: 16r1!
-WinHttpServerConsts at: 'HttpProtectionLevelRestricted' put: 16r2!
-WinHttpServerConsts at: 'HttpProtectionLevelUnrestricted' put: 16r0!
-WinHttpServerConsts at: 'HttpQosSettingTypeBandwidth' put: 16r0!
-WinHttpServerConsts at: 'HttpQosSettingTypeConnectionLimit' put: 16r1!
-WinHttpServerConsts at: 'HttpQosSettingTypeFlowRate' put: 16r2!
-WinHttpServerConsts at: 'HttpRequestAuthTypeBasic' put: 16r1!
-WinHttpServerConsts at: 'HttpRequestAuthTypeDigest' put: 16r2!
-WinHttpServerConsts at: 'HttpRequestAuthTypeKerberos' put: 16r5!
-WinHttpServerConsts at: 'HttpRequestAuthTypeNegotiate' put: 16r4!
-WinHttpServerConsts at: 'HttpRequestAuthTypeNone' put: 16r0!
-WinHttpServerConsts at: 'HttpRequestAuthTypeNTLM' put: 16r3!
-WinHttpServerConsts at: 'HttpRequestInfoTypeAuth' put: 16r0!
-WinHttpServerConsts at: 'HttpRequestInfoTypeChannelBind' put: 16r1!
-WinHttpServerConsts at: 'HttpRequestInfoTypeSslProtocol' put: 16r2!
-WinHttpServerConsts at: 'HttpRequestInfoTypeSslTokenBinding' put: 16r3!
-WinHttpServerConsts at: 'HttpResponseInfoTypeAuthenticationProperty' put: 16r1!
-WinHttpServerConsts at: 'HttpResponseInfoTypeChannelBind' put: 16r3!
-WinHttpServerConsts at: 'HttpResponseInfoTypeMultipleKnownHeaders' put: 16r0!
-WinHttpServerConsts at: 'HttpResponseInfoTypeQoSProperty' put: 16r2!
-WinHttpServerConsts at: 'HttpServer503VerbosityProperty' put: 16r6!
-WinHttpServerConsts at: 'HttpServerAuthenticationProperty' put: 16r0!
-WinHttpServerConsts at: 'HttpServerBindingProperty' put: 16r7!
-WinHttpServerConsts at: 'HttpServerChannelBindProperty' put: 16rA!
-WinHttpServerConsts at: 'HttpServerExtendedAuthenticationProperty' put: 16r8!
-WinHttpServerConsts at: 'HttpServerListenEndpointProperty' put: 16r9!
-WinHttpServerConsts at: 'HttpServerLoggingProperty' put: 16r1!
-WinHttpServerConsts at: 'HttpServerProtectionLevelProperty' put: 16rB!
-WinHttpServerConsts at: 'HttpServerQosProperty' put: 16r2!
-WinHttpServerConsts at: 'HttpServerQueueLengthProperty' put: 16r4!
-WinHttpServerConsts at: 'HttpServerStateProperty' put: 16r5!
-WinHttpServerConsts at: 'HttpServerTimeoutsProperty' put: 16r3!
-WinHttpServerConsts at: 'HttpServiceBindingTypeA' put: 16r2!
-WinHttpServerConsts at: 'HttpServiceBindingTypeNone' put: 16r0!
-WinHttpServerConsts at: 'HttpServiceBindingTypeW' put: 16r1!
-WinHttpServerConsts at: 'HttpServiceConfigCache' put: 16r4!
-WinHttpServerConsts at: 'HttpServiceConfigIPListenList' put: 16r0!
-WinHttpServerConsts at: 'HttpServiceConfigMax' put: 16r7!
-WinHttpServerConsts at: 'HttpServiceConfigQueryExact' put: 16r0!
-WinHttpServerConsts at: 'HttpServiceConfigQueryMax' put: 16r2!
-WinHttpServerConsts at: 'HttpServiceConfigQueryNext' put: 16r1!
-WinHttpServerConsts at: 'HttpServiceConfigSslCcsCertInfo' put: 16r6!
-WinHttpServerConsts at: 'HttpServiceConfigSSLCertInfo' put: 16r1!
-WinHttpServerConsts at: 'HttpServiceConfigSslSniCertInfo' put: 16r5!
-WinHttpServerConsts at: 'HttpServiceConfigTimeout' put: 16r3!
-WinHttpServerConsts at: 'HttpServiceConfigUrlAclInfo' put: 16r2!
-WinHttpServerConsts at: 'HttpVerbCONNECT' put: 16rA!
-WinHttpServerConsts at: 'HttpVerbCOPY' put: 16rD!
-WinHttpServerConsts at: 'HttpVerbDELETE' put: 16r8!
-WinHttpServerConsts at: 'HttpVerbGET' put: 16r4!
-WinHttpServerConsts at: 'HttpVerbHEAD' put: 16r5!
-WinHttpServerConsts at: 'HttpVerbInvalid' put: 16r2!
-WinHttpServerConsts at: 'HttpVerbLOCK' put: 16r11!
-WinHttpServerConsts at: 'HttpVerbMaximum' put: 16r14!
-WinHttpServerConsts at: 'HttpVerbMKCOL' put: 16r10!
-WinHttpServerConsts at: 'HttpVerbMOVE' put: 16rC!
-WinHttpServerConsts at: 'HttpVerbOPTIONS' put: 16r3!
-WinHttpServerConsts at: 'HttpVerbPOST' put: 16r6!
-WinHttpServerConsts at: 'HttpVerbPROPFIND' put: 16rE!
-WinHttpServerConsts at: 'HttpVerbPROPPATCH' put: 16rF!
-WinHttpServerConsts at: 'HttpVerbPUT' put: 16r7!
-WinHttpServerConsts at: 'HttpVerbSEARCH' put: 16r13!
-WinHttpServerConsts at: 'HttpVerbTRACE' put: 16r9!
-WinHttpServerConsts at: 'HttpVerbTRACK' put: 16rB!
-WinHttpServerConsts at: 'HttpVerbUnknown' put: 16r1!
-WinHttpServerConsts at: 'HttpVerbUNLOCK' put: 16r12!
-WinHttpServerConsts at: 'HttpVerbUnparsed' put: 16r0!
-WinHttpServerConsts shrink!
+SharedPool subclass: #WinHttpServerConsts
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HTTP_AUTH_ENABLE_ALL' -> 16r1F.
+		'HTTP_AUTH_ENABLE_BASIC' -> 16r1.
+		'HTTP_AUTH_ENABLE_DIGEST' -> 16r2.
+		'HTTP_AUTH_ENABLE_KERBEROS' -> 16r10.
+		'HTTP_AUTH_ENABLE_NEGOTIATE' -> 16r8.
+		'HTTP_AUTH_ENABLE_NTLM' -> 16r4.
+		'HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL' -> 16r2.
+		'HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING' -> 16r1.
+		'HTTP_BYTE_RANGE_TO_EOF' -> -16r1.
+		'HTTP_CHANNEL_BIND_CLIENT_SERVICE' -> 16r10.
+		'HTTP_CHANNEL_BIND_DOTLESS_SERVICE' -> 16r4.
+		'HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK' -> 16r2.
+		'HTTP_CHANNEL_BIND_PROXY' -> 16r1.
+		'HTTP_CHANNEL_BIND_PROXY_COHOSTING' -> 16r20.
+		'HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN' -> 16r8.
+		'HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER' -> 16r2.
+		'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' -> 16r1.
+		'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' -> 16r1.
+		'HTTP_INITIALIZE_CONFIG' -> 16r2.
+		'HTTP_INITIALIZE_SERVER' -> 16r1.
+		'HTTP_LIMIT_INFINITE' -> -16r1.
+		'HTTP_LOG_FIELD_BYTES_RECV' -> 16r2000.
+		'HTTP_LOG_FIELD_BYTES_SENT' -> 16r1000.
+		'HTTP_LOG_FIELD_CLIENT_IP' -> 16r4.
+		'HTTP_LOG_FIELD_CLIENT_PORT' -> 16r400000.
+		'HTTP_LOG_FIELD_COMPUTER_NAME' -> 16r20.
+		'HTTP_LOG_FIELD_COOKIE' -> 16r20000.
+		'HTTP_LOG_FIELD_DATE' -> 16r1.
+		'HTTP_LOG_FIELD_HOST' -> 16r100000.
+		'HTTP_LOG_FIELD_METHOD' -> 16r80.
+		'HTTP_LOG_FIELD_QUEUE_NAME' -> 16r4000000.
+		'HTTP_LOG_FIELD_REASON' -> 16r2000000.
+		'HTTP_LOG_FIELD_REFERER' -> 16r40000.
+		'HTTP_LOG_FIELD_SERVER_IP' -> 16r40.
+		'HTTP_LOG_FIELD_SERVER_PORT' -> 16r8000.
+		'HTTP_LOG_FIELD_SITE_ID' -> 16r1000000.
+		'HTTP_LOG_FIELD_SITE_NAME' -> 16r10.
+		'HTTP_LOG_FIELD_STATUS' -> 16r400.
+		'HTTP_LOG_FIELD_STREAM_ID' -> 16r8000000.
+		'HTTP_LOG_FIELD_SUB_STATUS' -> 16r200000.
+		'HTTP_LOG_FIELD_TIME' -> 16r2.
+		'HTTP_LOG_FIELD_TIME_TAKEN' -> 16r4000.
+		'HTTP_LOG_FIELD_URI' -> 16r800000.
+		'HTTP_LOG_FIELD_URI_QUERY' -> 16r200.
+		'HTTP_LOG_FIELD_URI_STEM' -> 16r100.
+		'HTTP_LOG_FIELD_USER_AGENT' -> 16r10000.
+		'HTTP_LOG_FIELD_USER_NAME' -> 16r8.
+		'HTTP_LOG_FIELD_VERSION' -> 16r80000.
+		'HTTP_LOG_FIELD_WIN32_STATUS' -> 16r800.
+		'HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER' -> 16r1.
+		'HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY' -> 16r4.
+		'HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY' -> 16r8.
+		'HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION' -> 16r2.
+		'HTTP_MAX_SERVER_QUEUE_LENGTH' -> 16r7FFFFFFF.
+		'HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE' -> 16r400.
+		'HTTP_MIN_ALLOWED_LOG_FILE_ROLLOVER_SIZE' -> 16r100000.
+		'HTTP_MIN_SERVER_QUEUE_LENGTH' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY' -> 16r2.
+		'HTTP_RECEIVE_SECURE_CHANNEL_TOKEN' -> 16r1.
+		'HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED' -> 16r1.
+		'HTTP_REQUEST_FLAG_HTTP2' -> 16r4.
+		'HTTP_REQUEST_FLAG_IP_ROUTED' -> 16r2.
+		'HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS' -> 16r1.
+		'HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE' -> 16r1.
+		'HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER' -> 16r1.
+		'HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA' -> 16r4.
+		'HTTP_SEND_RESPONSE_FLAG_DISCONNECT' -> 16r1.
+		'HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING' -> 16r8.
+		'HTTP_SEND_RESPONSE_FLAG_MORE_DATA' -> 16r2.
+		'HTTP_SEND_RESPONSE_FLAG_OPAQUE' -> 16r40.
+		'HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES' -> 16r20.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT' -> 16r2.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER' -> 16r4.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT' -> 16r8.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' -> 16r1.
+		'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1.
+		'Http503ResponseVerbosityBasic' -> 16r0.
+		'Http503ResponseVerbosityFull' -> 16r2.
+		'Http503ResponseVerbosityLimited' -> 16r1.
+		'HttpAuthenticationHardeningLegacy' -> 16r0.
+		'HttpAuthenticationHardeningMedium' -> 16r1.
+		'HttpAuthenticationHardeningStrict' -> 16r2.
+		'HttpAuthStatusFailure' -> 16r2.
+		'HttpAuthStatusNotAuthenticated' -> 16r1.
+		'HttpAuthStatusSuccess' -> 16r0.
+		'HttpCachePolicyMaximum' -> 16r3.
+		'HttpCachePolicyNocache' -> 16r0.
+		'HttpCachePolicyTimeToLive' -> 16r2.
+		'HttpCachePolicyUserInvalidates' -> 16r1.
+		'HttpDataChunkFromFileHandle' -> 16r1.
+		'HttpDataChunkFromFragmentCache' -> 16r2.
+		'HttpDataChunkFromFragmentCacheEx' -> 16r3.
+		'HttpDataChunkFromMemory' -> 16r0.
+		'HttpDataChunkMaximum' -> 16r4.
+		'HttpEnabledStateActive' -> 16r0.
+		'HttpEnabledStateInactive' -> 16r1.
+		'HttpHeaderAccept' -> 16r14.
+		'HttpHeaderAcceptCharset' -> 16r15.
+		'HttpHeaderAcceptEncoding' -> 16r16.
+		'HttpHeaderAcceptLanguage' -> 16r17.
+		'HttpHeaderAcceptRanges' -> 16r14.
+		'HttpHeaderAge' -> 16r15.
+		'HttpHeaderAllow' -> 16rA.
+		'HttpHeaderAuthorization' -> 16r18.
+		'HttpHeaderCacheControl' -> 16r0.
+		'HttpHeaderConnection' -> 16r1.
+		'HttpHeaderContentEncoding' -> 16rD.
+		'HttpHeaderContentLanguage' -> 16rE.
+		'HttpHeaderContentLength' -> 16rB.
+		'HttpHeaderContentLocation' -> 16rF.
+		'HttpHeaderContentMd5' -> 16r10.
+		'HttpHeaderContentRange' -> 16r11.
+		'HttpHeaderContentType' -> 16rC.
+		'HttpHeaderCookie' -> 16r19.
+		'HttpHeaderDate' -> 16r2.
+		'HttpHeaderEtag' -> 16r16.
+		'HttpHeaderExpect' -> 16r1A.
+		'HttpHeaderExpires' -> 16r12.
+		'HttpHeaderFrom' -> 16r1B.
+		'HttpHeaderHost' -> 16r1C.
+		'HttpHeaderIfMatch' -> 16r1D.
+		'HttpHeaderIfModifiedSince' -> 16r1E.
+		'HttpHeaderIfNoneMatch' -> 16r1F.
+		'HttpHeaderIfRange' -> 16r20.
+		'HttpHeaderIfUnmodifiedSince' -> 16r21.
+		'HttpHeaderKeepAlive' -> 16r3.
+		'HttpHeaderLastModified' -> 16r13.
+		'HttpHeaderLocation' -> 16r17.
+		'HttpHeaderMaxForwards' -> 16r22.
+		'HttpHeaderMaximum' -> 16r29.
+		'HttpHeaderPragma' -> 16r4.
+		'HttpHeaderProxyAuthenticate' -> 16r18.
+		'HttpHeaderProxyAuthorization' -> 16r23.
+		'HttpHeaderRange' -> 16r25.
+		'HttpHeaderReferer' -> 16r24.
+		'HttpHeaderRequestMaximum' -> 16r29.
+		'HttpHeaderResponseMaximum' -> 16r1E.
+		'HttpHeaderRetryAfter' -> 16r19.
+		'HttpHeaderServer' -> 16r1A.
+		'HttpHeaderSetCookie' -> 16r1B.
+		'HttpHeaderTe' -> 16r26.
+		'HttpHeaderTrailer' -> 16r5.
+		'HttpHeaderTransferEncoding' -> 16r6.
+		'HttpHeaderTranslate' -> 16r27.
+		'HttpHeaderUpgrade' -> 16r7.
+		'HttpHeaderUserAgent' -> 16r28.
+		'HttpHeaderVary' -> 16r1C.
+		'HttpHeaderVia' -> 16r8.
+		'HttpHeaderWarning' -> 16r9.
+		'HttpHeaderWwwAuthenticate' -> 16r1D.
+		'HttpLogDataTypeFields' -> 16r0.
+		'HttpLoggingRolloverDaily' -> 16r1.
+		'HttpLoggingRolloverHourly' -> 16r4.
+		'HttpLoggingRolloverMonthly' -> 16r3.
+		'HttpLoggingRolloverSize' -> 16r0.
+		'HttpLoggingRolloverWeekly' -> 16r2.
+		'HttpLoggingTypeIIS' -> 16r1.
+		'HttpLoggingTypeNCSA' -> 16r2.
+		'HttpLoggingTypeRaw' -> 16r3.
+		'HttpLoggingTypeW3C' -> 16r0.
+		'HttpProtectionLevelEdgeRestricted' -> 16r1.
+		'HttpProtectionLevelRestricted' -> 16r2.
+		'HttpProtectionLevelUnrestricted' -> 16r0.
+		'HttpQosSettingTypeBandwidth' -> 16r0.
+		'HttpQosSettingTypeConnectionLimit' -> 16r1.
+		'HttpQosSettingTypeFlowRate' -> 16r2.
+		'HttpRequestAuthTypeBasic' -> 16r1.
+		'HttpRequestAuthTypeDigest' -> 16r2.
+		'HttpRequestAuthTypeKerberos' -> 16r5.
+		'HttpRequestAuthTypeNegotiate' -> 16r4.
+		'HttpRequestAuthTypeNone' -> 16r0.
+		'HttpRequestAuthTypeNTLM' -> 16r3.
+		'HttpRequestInfoTypeAuth' -> 16r0.
+		'HttpRequestInfoTypeChannelBind' -> 16r1.
+		'HttpRequestInfoTypeSslProtocol' -> 16r2.
+		'HttpRequestInfoTypeSslTokenBinding' -> 16r3.
+		'HttpResponseInfoTypeAuthenticationProperty' -> 16r1.
+		'HttpResponseInfoTypeChannelBind' -> 16r3.
+		'HttpResponseInfoTypeMultipleKnownHeaders' -> 16r0.
+		'HttpResponseInfoTypeQoSProperty' -> 16r2.
+		'HttpServer503VerbosityProperty' -> 16r6.
+		'HttpServerAuthenticationProperty' -> 16r0.
+		'HttpServerBindingProperty' -> 16r7.
+		'HttpServerChannelBindProperty' -> 16rA.
+		'HttpServerExtendedAuthenticationProperty' -> 16r8.
+		'HttpServerListenEndpointProperty' -> 16r9.
+		'HttpServerLoggingProperty' -> 16r1.
+		'HttpServerProtectionLevelProperty' -> 16rB.
+		'HttpServerQosProperty' -> 16r2.
+		'HttpServerQueueLengthProperty' -> 16r4.
+		'HttpServerStateProperty' -> 16r5.
+		'HttpServerTimeoutsProperty' -> 16r3.
+		'HttpServiceBindingTypeA' -> 16r2.
+		'HttpServiceBindingTypeNone' -> 16r0.
+		'HttpServiceBindingTypeW' -> 16r1.
+		'HttpServiceConfigCache' -> 16r4.
+		'HttpServiceConfigIPListenList' -> 16r0.
+		'HttpServiceConfigMax' -> 16r7.
+		'HttpServiceConfigQueryExact' -> 16r0.
+		'HttpServiceConfigQueryMax' -> 16r2.
+		'HttpServiceConfigQueryNext' -> 16r1.
+		'HttpServiceConfigSslCcsCertInfo' -> 16r6.
+		'HttpServiceConfigSSLCertInfo' -> 16r1.
+		'HttpServiceConfigSslSniCertInfo' -> 16r5.
+		'HttpServiceConfigTimeout' -> 16r3.
+		'HttpServiceConfigUrlAclInfo' -> 16r2.
+		'HttpVerbCONNECT' -> 16rA.
+		'HttpVerbCOPY' -> 16rD.
+		'HttpVerbDELETE' -> 16r8.
+		'HttpVerbGET' -> 16r4.
+		'HttpVerbHEAD' -> 16r5.
+		'HttpVerbInvalid' -> 16r2.
+		'HttpVerbLOCK' -> 16r11.
+		'HttpVerbMaximum' -> 16r14.
+		'HttpVerbMKCOL' -> 16r10.
+		'HttpVerbMOVE' -> 16rC.
+		'HttpVerbOPTIONS' -> 16r3.
+		'HttpVerbPOST' -> 16r6.
+		'HttpVerbPROPFIND' -> 16rE.
+		'HttpVerbPROPPATCH' -> 16rF.
+		'HttpVerbPUT' -> 16r7.
+		'HttpVerbSEARCH' -> 16r13.
+		'HttpVerbTRACE' -> 16r9.
+		'HttpVerbTRACK' -> 16rB.
+		'HttpVerbUnknown' -> 16r1.
+		'HttpVerbUNLOCK' -> 16r12.
+		'HttpVerbUnparsed' -> 16r0
+	}!
+WinHttpServerConsts guid: (GUID fromString: '{bc245d26-a611-4cfb-a915-5f87a6763326}')!
+WinHttpServerConsts comment: ''!
+!WinHttpServerConsts categoriesForClass!Unclassified! !

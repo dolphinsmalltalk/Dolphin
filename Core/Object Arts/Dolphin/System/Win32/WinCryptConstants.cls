@@ -1,22 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{WinCryptConstants} declare: (PoolConstantsDictionary named: #WinCryptConstants)!
-WinCryptConstants at: 'CRYPTPROTECT_AUDIT' put: 16r10!
-WinCryptConstants at: 'CRYPTPROTECT_CRED_REGENERATE' put: 16r80!
-WinCryptConstants at: 'CRYPTPROTECT_CRED_SYNC' put: 16r8!
-WinCryptConstants at: 'CRYPTPROTECT_FIRST_RESERVED_FLAGVAL' put: 16rFFFFFFF!
-WinCryptConstants at: 'CRYPTPROTECT_LAST_RESERVED_FLAGVAL' put: 16rFFFFFFFF!
-WinCryptConstants at: 'CRYPTPROTECT_LOCAL_MACHINE' put: 16r4!
-WinCryptConstants at: 'CRYPTPROTECT_NO_RECOVERY' put: 16r20!
-WinCryptConstants at: 'CRYPTPROTECT_PROMPT_ON_PROTECT' put: 16r2!
-WinCryptConstants at: 'CRYPTPROTECT_PROMPT_ON_UNPROTECT' put: 16r1!
-WinCryptConstants at: 'CRYPTPROTECT_PROMPT_REQUIRE_STRONG' put: 16r10!
-WinCryptConstants at: 'CRYPTPROTECT_PROMPT_RESERVED' put: 16r4!
-WinCryptConstants at: 'CRYPTPROTECT_PROMPT_STRONG' put: 16r8!
-WinCryptConstants at: 'CRYPTPROTECT_UI_FORBIDDEN' put: 16r1!
-WinCryptConstants at: 'CRYPTPROTECT_VERIFY_PROTECTION' put: 16r40!
-WinCryptConstants at: 'CRYPTPROTECTMEMORY_BLOCK_SIZE' put: 16r10!
-WinCryptConstants at: 'CRYPTPROTECTMEMORY_CROSS_PROCESS' put: 16r1!
-WinCryptConstants at: 'CRYPTPROTECTMEMORY_SAME_LOGON' put: 16r2!
-WinCryptConstants at: 'CRYPTPROTECTMEMORY_SAME_PROCESS' put: 16r0!
-WinCryptConstants shrink!
+SharedPool subclass: #WinCryptConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CRYPTPROTECT_AUDIT' -> 16r10.
+		'CRYPTPROTECT_CRED_REGENERATE' -> 16r80.
+		'CRYPTPROTECT_CRED_SYNC' -> 16r8.
+		'CRYPTPROTECT_FIRST_RESERVED_FLAGVAL' -> 16rFFFFFFF.
+		'CRYPTPROTECT_LAST_RESERVED_FLAGVAL' -> 16rFFFFFFFF.
+		'CRYPTPROTECT_LOCAL_MACHINE' -> 16r4.
+		'CRYPTPROTECT_NO_RECOVERY' -> 16r20.
+		'CRYPTPROTECT_PROMPT_ON_PROTECT' -> 16r2.
+		'CRYPTPROTECT_PROMPT_ON_UNPROTECT' -> 16r1.
+		'CRYPTPROTECT_PROMPT_REQUIRE_STRONG' -> 16r10.
+		'CRYPTPROTECT_PROMPT_RESERVED' -> 16r4.
+		'CRYPTPROTECT_PROMPT_STRONG' -> 16r8.
+		'CRYPTPROTECT_UI_FORBIDDEN' -> 16r1.
+		'CRYPTPROTECT_VERIFY_PROTECTION' -> 16r40.
+		'CRYPTPROTECTMEMORY_BLOCK_SIZE' -> 16r10.
+		'CRYPTPROTECTMEMORY_CROSS_PROCESS' -> 16r1.
+		'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
+		'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
+	}!
+WinCryptConstants guid: (GUID fromString: '{0766bf98-26e5-46e9-936f-814d23452c3a}')!
+WinCryptConstants comment: ''!
+!WinCryptConstants categoriesForClass!Unclassified! !

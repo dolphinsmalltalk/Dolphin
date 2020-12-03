@@ -1,56 +1,64 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{TrackBarConstants} declare: (PoolConstantsDictionary named: #TrackBarConstants)!
-TrackBarConstants at: 'TBM_CLEARSEL' put: 16r413!
-TrackBarConstants at: 'TBM_CLEARTICS' put: 16r409!
-TrackBarConstants at: 'TBM_GETBUDDY' put: 16r421!
-TrackBarConstants at: 'TBM_GETCHANNELRECT' put: 16r41A!
-TrackBarConstants at: 'TBM_GETLINESIZE' put: 16r418!
-TrackBarConstants at: 'TBM_GETNUMTICS' put: 16r410!
-TrackBarConstants at: 'TBM_GETPAGESIZE' put: 16r416!
-TrackBarConstants at: 'TBM_GETPOS' put: 16r400!
-TrackBarConstants at: 'TBM_GETPTICS' put: 16r40E!
-TrackBarConstants at: 'TBM_GETRANGEMAX' put: 16r402!
-TrackBarConstants at: 'TBM_GETRANGEMIN' put: 16r401!
-TrackBarConstants at: 'TBM_GETSELEND' put: 16r412!
-TrackBarConstants at: 'TBM_GETSELSTART' put: 16r411!
-TrackBarConstants at: 'TBM_GETTHUMBLENGTH' put: 16r41C!
-TrackBarConstants at: 'TBM_GETTHUMBRECT' put: 16r419!
-TrackBarConstants at: 'TBM_GETTIC' put: 16r403!
-TrackBarConstants at: 'TBM_GETTICPOS' put: 16r40F!
-TrackBarConstants at: 'TBM_GETTOOLTIPS' put: 16r41E!
-TrackBarConstants at: 'TBM_GETUNICODEFORMAT' put: 16r2006!
-TrackBarConstants at: 'TBM_SETBUDDY' put: 16r420!
-TrackBarConstants at: 'TBM_SETLINESIZE' put: 16r417!
-TrackBarConstants at: 'TBM_SETPAGESIZE' put: 16r415!
-TrackBarConstants at: 'TBM_SETPOS' put: 16r405!
-TrackBarConstants at: 'TBM_SETRANGE' put: 16r406!
-TrackBarConstants at: 'TBM_SETRANGEMAX' put: 16r408!
-TrackBarConstants at: 'TBM_SETRANGEMIN' put: 16r407!
-TrackBarConstants at: 'TBM_SETSEL' put: 16r40A!
-TrackBarConstants at: 'TBM_SETSELEND' put: 16r40C!
-TrackBarConstants at: 'TBM_SETSELSTART' put: 16r40B!
-TrackBarConstants at: 'TBM_SETTHUMBLENGTH' put: 16r41B!
-TrackBarConstants at: 'TBM_SETTIC' put: 16r404!
-TrackBarConstants at: 'TBM_SETTICFREQ' put: 16r414!
-TrackBarConstants at: 'TBM_SETTIPSIDE' put: 16r41F!
-TrackBarConstants at: 'TBM_SETTOOLTIPS' put: 16r41D!
-TrackBarConstants at: 'TBM_SETUNICODEFORMAT' put: 16r2005!
-TrackBarConstants at: 'TBS_AUTOTICKS' put: 16r1!
-TrackBarConstants at: 'TBS_BOTH' put: 16r8!
-TrackBarConstants at: 'TBS_BOTTOM' put: 16r0!
-TrackBarConstants at: 'TBS_ENABLESELRANGE' put: 16r20!
-TrackBarConstants at: 'TBS_FIXEDLENGTH' put: 16r40!
-TrackBarConstants at: 'TBS_HORZ' put: 16r0!
-TrackBarConstants at: 'TBS_LEFT' put: 16r4!
-TrackBarConstants at: 'TBS_NOTHUMB' put: 16r80!
-TrackBarConstants at: 'TBS_NOTICKS' put: 16r10!
-TrackBarConstants at: 'TBS_RIGHT' put: 16r0!
-TrackBarConstants at: 'TBS_TOOLTIPS' put: 16r100!
-TrackBarConstants at: 'TBS_TOP' put: 16r4!
-TrackBarConstants at: 'TBS_VERT' put: 16r2!
-TrackBarConstants at: 'TBTS_BOTTOM' put: 16r2!
-TrackBarConstants at: 'TBTS_LEFT' put: 16r1!
-TrackBarConstants at: 'TBTS_RIGHT' put: 16r3!
-TrackBarConstants at: 'TBTS_TOP' put: 16r0!
-TrackBarConstants shrink!
+SharedPool subclass: #TrackBarConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TBM_CLEARSEL' -> 16r413.
+		'TBM_CLEARTICS' -> 16r409.
+		'TBM_GETBUDDY' -> 16r421.
+		'TBM_GETCHANNELRECT' -> 16r41A.
+		'TBM_GETLINESIZE' -> 16r418.
+		'TBM_GETNUMTICS' -> 16r410.
+		'TBM_GETPAGESIZE' -> 16r416.
+		'TBM_GETPOS' -> 16r400.
+		'TBM_GETPTICS' -> 16r40E.
+		'TBM_GETRANGEMAX' -> 16r402.
+		'TBM_GETRANGEMIN' -> 16r401.
+		'TBM_GETSELEND' -> 16r412.
+		'TBM_GETSELSTART' -> 16r411.
+		'TBM_GETTHUMBLENGTH' -> 16r41C.
+		'TBM_GETTHUMBRECT' -> 16r419.
+		'TBM_GETTIC' -> 16r403.
+		'TBM_GETTICPOS' -> 16r40F.
+		'TBM_GETTOOLTIPS' -> 16r41E.
+		'TBM_GETUNICODEFORMAT' -> 16r2006.
+		'TBM_SETBUDDY' -> 16r420.
+		'TBM_SETLINESIZE' -> 16r417.
+		'TBM_SETPAGESIZE' -> 16r415.
+		'TBM_SETPOS' -> 16r405.
+		'TBM_SETRANGE' -> 16r406.
+		'TBM_SETRANGEMAX' -> 16r408.
+		'TBM_SETRANGEMIN' -> 16r407.
+		'TBM_SETSEL' -> 16r40A.
+		'TBM_SETSELEND' -> 16r40C.
+		'TBM_SETSELSTART' -> 16r40B.
+		'TBM_SETTHUMBLENGTH' -> 16r41B.
+		'TBM_SETTIC' -> 16r404.
+		'TBM_SETTICFREQ' -> 16r414.
+		'TBM_SETTIPSIDE' -> 16r41F.
+		'TBM_SETTOOLTIPS' -> 16r41D.
+		'TBM_SETUNICODEFORMAT' -> 16r2005.
+		'TBS_AUTOTICKS' -> 16r1.
+		'TBS_BOTH' -> 16r8.
+		'TBS_BOTTOM' -> 16r0.
+		'TBS_ENABLESELRANGE' -> 16r20.
+		'TBS_FIXEDLENGTH' -> 16r40.
+		'TBS_HORZ' -> 16r0.
+		'TBS_LEFT' -> 16r4.
+		'TBS_NOTHUMB' -> 16r80.
+		'TBS_NOTICKS' -> 16r10.
+		'TBS_RIGHT' -> 16r0.
+		'TBS_TOOLTIPS' -> 16r100.
+		'TBS_TOP' -> 16r4.
+		'TBS_VERT' -> 16r2.
+		'TBTS_BOTTOM' -> 16r2.
+		'TBTS_LEFT' -> 16r1.
+		'TBTS_RIGHT' -> 16r3.
+		'TBTS_TOP' -> 16r0
+	}!
+TrackBarConstants guid: (GUID fromString: '{6abda823-2244-4c63-8344-b1225795298a}')!
+TrackBarConstants comment: ''!
+!TrackBarConstants categoriesForClass!Unclassified! !

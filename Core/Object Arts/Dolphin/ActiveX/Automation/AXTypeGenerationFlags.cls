@@ -1,19 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{AXTypeGenerationFlags} declare: (PoolConstantsDictionary named: #AXTypeGenerationFlags)!
-AXTypeGenerationFlags at: 'CommentStyleMask' put: 16r101!
-AXTypeGenerationFlags at: 'DefineProtocol' put: 16r20!
-AXTypeGenerationFlags at: 'LowercaseIdentifiers' put: 16r400!
-AXTypeGenerationFlags at: 'MinimizeWrappers' put: 16r80!
-AXTypeGenerationFlags at: 'NoClassComment' put: 16r1!
-AXTypeGenerationFlags at: 'NoCompile' put: 16r40!
-AXTypeGenerationFlags at: 'NoFunctionTable' put: 16r4!
-AXTypeGenerationFlags at: 'NoSourceInterfaces' put: 16r200!
-AXTypeGenerationFlags at: 'NoTypeLib' put: 16r2!
-AXTypeGenerationFlags at: 'OverwriteClassComments' put: 16r100!
-AXTypeGenerationFlags at: 'RawMethodsOnly' put: 16r10!
-AXTypeGenerationFlags at: 'Trace' put: 16r8!
-AXTypeGenerationFlags at: 'TraceOnly' put: 16r48!
-AXTypeGenerationFlags at: 'Verbose' put: 16r800!
-AXTypeGenerationFlags at: 'WrapperStyleMask' put: 16r90!
-AXTypeGenerationFlags shrink!
+SharedPool subclass: #AXTypeGenerationFlags
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CommentStyleMask' -> 16r101.
+		'DefineProtocol' -> 16r20.
+		'LowercaseIdentifiers' -> 16r400.
+		'MinimizeWrappers' -> 16r80.
+		'NoClassComment' -> 16r1.
+		'NoCompile' -> 16r40.
+		'NoFunctionTable' -> 16r4.
+		'NoSourceInterfaces' -> 16r200.
+		'NoTypeLib' -> 16r2.
+		'OverwriteClassComments' -> 16r100.
+		'RawMethodsOnly' -> 16r10.
+		'Trace' -> 16r8.
+		'TraceOnly' -> 16r48.
+		'Verbose' -> 16r800.
+		'WrapperStyleMask' -> 16r90
+	}!
+AXTypeGenerationFlags guid: (GUID fromString: '{65bfd99a-c64d-4f9a-b125-1ccf47a617e9}')!
+AXTypeGenerationFlags comment: ''!
+!AXTypeGenerationFlags categoriesForClass!Unclassified! !

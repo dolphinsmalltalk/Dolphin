@@ -1,76 +1,84 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{SHDocVwConstants} declare: (PoolConstantsDictionary named: #SHDocVwConstants)!
-SHDocVwConstants at: 'CSC_NAVIGATEBACK' put: 16r2!
-SHDocVwConstants at: 'CSC_NAVIGATEFORWARD' put: 16r1!
-SHDocVwConstants at: 'CSC_UPDATECOMMANDS' put: -16r1!
-SHDocVwConstants at: 'OLECMDEXECOPT_DODEFAULT' put: 16r0!
-SHDocVwConstants at: 'OLECMDEXECOPT_DONTPROMPTUSER' put: 16r2!
-SHDocVwConstants at: 'OLECMDEXECOPT_PROMPTUSER' put: 16r1!
-SHDocVwConstants at: 'OLECMDEXECOPT_SHOWHELP' put: 16r3!
-SHDocVwConstants at: 'OLECMDF_DEFHIDEONCTXTMENU' put: 16r20!
-SHDocVwConstants at: 'OLECMDF_ENABLED' put: 16r2!
-SHDocVwConstants at: 'OLECMDF_INVISIBLE' put: 16r10!
-SHDocVwConstants at: 'OLECMDF_LATCHED' put: 16r4!
-SHDocVwConstants at: 'OLECMDF_NINCHED' put: 16r8!
-SHDocVwConstants at: 'OLECMDF_SUPPORTED' put: 16r1!
-SHDocVwConstants at: 'OLECMDID_ALLOWUILESSSAVEAS' put: 16r2E!
-SHDocVwConstants at: 'OLECMDID_CLEARSELECTION' put: 16r12!
-SHDocVwConstants at: 'OLECMDID_CLOSE' put: 16r2D!
-SHDocVwConstants at: 'OLECMDID_COPY' put: 16rC!
-SHDocVwConstants at: 'OLECMDID_CUT' put: 16rB!
-SHDocVwConstants at: 'OLECMDID_DELETE' put: 16r21!
-SHDocVwConstants at: 'OLECMDID_DONTDOWNLOADCSS' put: 16r2F!
-SHDocVwConstants at: 'OLECMDID_ENABLE_INTERACTION' put: 16r24!
-SHDocVwConstants at: 'OLECMDID_FIND' put: 16r20!
-SHDocVwConstants at: 'OLECMDID_GETZOOMRANGE' put: 16r14!
-SHDocVwConstants at: 'OLECMDID_HIDETOOLBARS' put: 16r18!
-SHDocVwConstants at: 'OLECMDID_HTTPEQUIV' put: 16r22!
-SHDocVwConstants at: 'OLECMDID_HTTPEQUIV_DONE' put: 16r23!
-SHDocVwConstants at: 'OLECMDID_NEW' put: 16r2!
-SHDocVwConstants at: 'OLECMDID_ONTOOLBARACTIVATED' put: 16r1F!
-SHDocVwConstants at: 'OLECMDID_ONUNLOAD' put: 16r25!
-SHDocVwConstants at: 'OLECMDID_OPEN' put: 16r1!
-SHDocVwConstants at: 'OLECMDID_PAGESETUP' put: 16r8!
-SHDocVwConstants at: 'OLECMDID_PASTE' put: 16rD!
-SHDocVwConstants at: 'OLECMDID_PASTESPECIAL' put: 16rE!
-SHDocVwConstants at: 'OLECMDID_PREREFRESH' put: 16r27!
-SHDocVwConstants at: 'OLECMDID_PRINT' put: 16r6!
-SHDocVwConstants at: 'OLECMDID_PRINTPREVIEW' put: 16r7!
-SHDocVwConstants at: 'OLECMDID_PROPERTIES' put: 16rA!
-SHDocVwConstants at: 'OLECMDID_PROPERTYBAG2' put: 16r26!
-SHDocVwConstants at: 'OLECMDID_REDO' put: 16r10!
-SHDocVwConstants at: 'OLECMDID_REFRESH' put: 16r16!
-SHDocVwConstants at: 'OLECMDID_SAVE' put: 16r3!
-SHDocVwConstants at: 'OLECMDID_SAVEAS' put: 16r4!
-SHDocVwConstants at: 'OLECMDID_SAVECOPYAS' put: 16r5!
-SHDocVwConstants at: 'OLECMDID_SELECTALL' put: 16r11!
-SHDocVwConstants at: 'OLECMDID_SETDOWNLOADSTATE' put: 16r1D!
-SHDocVwConstants at: 'OLECMDID_SETPROGRESSMAX' put: 16r19!
-SHDocVwConstants at: 'OLECMDID_SETPROGRESSPOS' put: 16r1A!
-SHDocVwConstants at: 'OLECMDID_SETPROGRESSTEXT' put: 16r1B!
-SHDocVwConstants at: 'OLECMDID_SETTITLE' put: 16r1C!
-SHDocVwConstants at: 'OLECMDID_SHOWFIND' put: 16r2A!
-SHDocVwConstants at: 'OLECMDID_SHOWMESSAGE' put: 16r29!
-SHDocVwConstants at: 'OLECMDID_SHOWPAGESETUP' put: 16r2B!
-SHDocVwConstants at: 'OLECMDID_SHOWPRINT' put: 16r2C!
-SHDocVwConstants at: 'OLECMDID_SHOWSCRIPTERROR' put: 16r28!
-SHDocVwConstants at: 'OLECMDID_SPELL' put: 16r9!
-SHDocVwConstants at: 'OLECMDID_STOP' put: 16r17!
-SHDocVwConstants at: 'OLECMDID_STOPDOWNLOAD' put: 16r1E!
-SHDocVwConstants at: 'OLECMDID_UNDO' put: 16rF!
-SHDocVwConstants at: 'OLECMDID_UPDATECOMMANDS' put: 16r15!
-SHDocVwConstants at: 'OLECMDID_ZOOM' put: 16r13!
-SHDocVwConstants at: 'READYSTATE_COMPLETE' put: 16r4!
-SHDocVwConstants at: 'READYSTATE_INTERACTIVE' put: 16r3!
-SHDocVwConstants at: 'READYSTATE_LOADED' put: 16r2!
-SHDocVwConstants at: 'READYSTATE_LOADING' put: 16r1!
-SHDocVwConstants at: 'READYSTATE_UNINITIALIZED' put: 16r0!
-SHDocVwConstants at: 'SWC_3RDPARTY' put: 16r2!
-SHDocVwConstants at: 'SWC_BROWSER' put: 16r1!
-SHDocVwConstants at: 'SWC_CALLBACK' put: 16r4!
-SHDocVwConstants at: 'SWC_EXPLORER' put: 16r0!
-SHDocVwConstants at: 'SWFO_COOKIEPASSED' put: 16r4!
-SHDocVwConstants at: 'SWFO_INCLUDEPENDING' put: 16r2!
-SHDocVwConstants at: 'SWFO_NEEDDISPATCH' put: 16r1!
-SHDocVwConstants shrink!
+SharedPool subclass: #SHDocVwConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CSC_NAVIGATEBACK' -> 16r2.
+		'CSC_NAVIGATEFORWARD' -> 16r1.
+		'CSC_UPDATECOMMANDS' -> -16r1.
+		'OLECMDEXECOPT_DODEFAULT' -> 16r0.
+		'OLECMDEXECOPT_DONTPROMPTUSER' -> 16r2.
+		'OLECMDEXECOPT_PROMPTUSER' -> 16r1.
+		'OLECMDEXECOPT_SHOWHELP' -> 16r3.
+		'OLECMDF_DEFHIDEONCTXTMENU' -> 16r20.
+		'OLECMDF_ENABLED' -> 16r2.
+		'OLECMDF_INVISIBLE' -> 16r10.
+		'OLECMDF_LATCHED' -> 16r4.
+		'OLECMDF_NINCHED' -> 16r8.
+		'OLECMDF_SUPPORTED' -> 16r1.
+		'OLECMDID_ALLOWUILESSSAVEAS' -> 16r2E.
+		'OLECMDID_CLEARSELECTION' -> 16r12.
+		'OLECMDID_CLOSE' -> 16r2D.
+		'OLECMDID_COPY' -> 16rC.
+		'OLECMDID_CUT' -> 16rB.
+		'OLECMDID_DELETE' -> 16r21.
+		'OLECMDID_DONTDOWNLOADCSS' -> 16r2F.
+		'OLECMDID_ENABLE_INTERACTION' -> 16r24.
+		'OLECMDID_FIND' -> 16r20.
+		'OLECMDID_GETZOOMRANGE' -> 16r14.
+		'OLECMDID_HIDETOOLBARS' -> 16r18.
+		'OLECMDID_HTTPEQUIV' -> 16r22.
+		'OLECMDID_HTTPEQUIV_DONE' -> 16r23.
+		'OLECMDID_NEW' -> 16r2.
+		'OLECMDID_ONTOOLBARACTIVATED' -> 16r1F.
+		'OLECMDID_ONUNLOAD' -> 16r25.
+		'OLECMDID_OPEN' -> 16r1.
+		'OLECMDID_PAGESETUP' -> 16r8.
+		'OLECMDID_PASTE' -> 16rD.
+		'OLECMDID_PASTESPECIAL' -> 16rE.
+		'OLECMDID_PREREFRESH' -> 16r27.
+		'OLECMDID_PRINT' -> 16r6.
+		'OLECMDID_PRINTPREVIEW' -> 16r7.
+		'OLECMDID_PROPERTIES' -> 16rA.
+		'OLECMDID_PROPERTYBAG2' -> 16r26.
+		'OLECMDID_REDO' -> 16r10.
+		'OLECMDID_REFRESH' -> 16r16.
+		'OLECMDID_SAVE' -> 16r3.
+		'OLECMDID_SAVEAS' -> 16r4.
+		'OLECMDID_SAVECOPYAS' -> 16r5.
+		'OLECMDID_SELECTALL' -> 16r11.
+		'OLECMDID_SETDOWNLOADSTATE' -> 16r1D.
+		'OLECMDID_SETPROGRESSMAX' -> 16r19.
+		'OLECMDID_SETPROGRESSPOS' -> 16r1A.
+		'OLECMDID_SETPROGRESSTEXT' -> 16r1B.
+		'OLECMDID_SETTITLE' -> 16r1C.
+		'OLECMDID_SHOWFIND' -> 16r2A.
+		'OLECMDID_SHOWMESSAGE' -> 16r29.
+		'OLECMDID_SHOWPAGESETUP' -> 16r2B.
+		'OLECMDID_SHOWPRINT' -> 16r2C.
+		'OLECMDID_SHOWSCRIPTERROR' -> 16r28.
+		'OLECMDID_SPELL' -> 16r9.
+		'OLECMDID_STOP' -> 16r17.
+		'OLECMDID_STOPDOWNLOAD' -> 16r1E.
+		'OLECMDID_UNDO' -> 16rF.
+		'OLECMDID_UPDATECOMMANDS' -> 16r15.
+		'OLECMDID_ZOOM' -> 16r13.
+		'READYSTATE_COMPLETE' -> 16r4.
+		'READYSTATE_INTERACTIVE' -> 16r3.
+		'READYSTATE_LOADED' -> 16r2.
+		'READYSTATE_LOADING' -> 16r1.
+		'READYSTATE_UNINITIALIZED' -> 16r0.
+		'SWC_3RDPARTY' -> 16r2.
+		'SWC_BROWSER' -> 16r1.
+		'SWC_CALLBACK' -> 16r4.
+		'SWC_EXPLORER' -> 16r0.
+		'SWFO_COOKIEPASSED' -> 16r4.
+		'SWFO_INCLUDEPENDING' -> 16r2.
+		'SWFO_NEEDDISPATCH' -> 16r1
+	}!
+SHDocVwConstants guid: (GUID fromString: '{7c28b970-4bfb-459c-a83d-1e6deb02f54e}')!
+SHDocVwConstants comment: ''!
+!SHDocVwConstants categoriesForClass!Unclassified! !

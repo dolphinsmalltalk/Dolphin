@@ -1,105 +1,113 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{TreeViewConstants} declare: (PoolConstantsDictionary named: #TreeViewConstants)!
-TreeViewConstants at: 'TV_FIRST' put: 16r1100!
-TreeViewConstants at: 'TVC_BYKEYBOARD' put: 16r2!
-TreeViewConstants at: 'TVC_UNKNOWN' put: 16r0!
-TreeViewConstants at: 'TVE_COLLAPSE' put: 16r1!
-TreeViewConstants at: 'TVE_COLLAPSERESET' put: 16r8000!
-TreeViewConstants at: 'TVE_EXPAND' put: 16r2!
-TreeViewConstants at: 'TVE_TOGGLE' put: 16r3!
-TreeViewConstants at: 'TVGN_CARET' put: 16r9!
-TreeViewConstants at: 'TVGN_CHILD' put: 16r4!
-TreeViewConstants at: 'TVGN_DROPHILITE' put: 16r8!
-TreeViewConstants at: 'TVGN_FIRSTVISIBLE' put: 16r5!
-TreeViewConstants at: 'TVGN_NEXT' put: 16r1!
-TreeViewConstants at: 'TVGN_NEXTVISIBLE' put: 16r6!
-TreeViewConstants at: 'TVGN_PARENT' put: 16r3!
-TreeViewConstants at: 'TVGN_PREVIOUS' put: 16r2!
-TreeViewConstants at: 'TVGN_PREVIOUSVISIBLE' put: 16r7!
-TreeViewConstants at: 'TVGN_ROOT' put: 16r0!
-TreeViewConstants at: 'TVI_FIRST' put: -16rFFFF!
-TreeViewConstants at: 'TVI_LAST' put: -16rFFFE!
-TreeViewConstants at: 'TVI_ROOT' put: -16r10000!
-TreeViewConstants at: 'TVI_SORT' put: -16rFFFD!
-TreeViewConstants at: 'TVIF_CHILDREN' put: 16r40!
-TreeViewConstants at: 'TVIF_DI_SETITEM' put: 16r1000!
-TreeViewConstants at: 'TVIF_EXPANDEDIMAGE' put: 16r200!
-TreeViewConstants at: 'TVIF_HANDLE' put: 16r10!
-TreeViewConstants at: 'TVIF_IMAGE' put: 16r2!
-TreeViewConstants at: 'TVIF_PARAM' put: 16r4!
-TreeViewConstants at: 'TVIF_SELECTEDIMAGE' put: 16r20!
-TreeViewConstants at: 'TVIF_STATE' put: 16r8!
-TreeViewConstants at: 'TVIF_STATEEX' put: 16r100!
-TreeViewConstants at: 'TVIF_TEXT' put: 16r1!
-TreeViewConstants at: 'TVIS_BOLD' put: 16r10!
-TreeViewConstants at: 'TVIS_CUT' put: 16r4!
-TreeViewConstants at: 'TVIS_DROPHIGHLIGHTED' put: 16r8!
-TreeViewConstants at: 'TVIS_EX_DISABLED' put: 16r2!
-TreeViewConstants at: 'TVIS_EX_FLAT' put: 16r1!
-TreeViewConstants at: 'TVIS_EXPANDED' put: 16r20!
-TreeViewConstants at: 'TVIS_EXPANDEDONCE' put: 16r40!
-TreeViewConstants at: 'TVIS_FOCUSED' put: 16r1!
-TreeViewConstants at: 'TVIS_OVERLAYMASK' put: 16rF00!
-TreeViewConstants at: 'TVIS_SELECTED' put: 16r2!
-TreeViewConstants at: 'TVIS_STATEIMAGEMASK' put: 16rF000!
-TreeViewConstants at: 'TVIS_USERMASK' put: 16rF000!
-TreeViewConstants at: 'TVM_DELETEITEM' put: 16r1101!
-TreeViewConstants at: 'TVM_EDITLABELW' put: 16r1141!
-TreeViewConstants at: 'TVM_ENSUREVISIBLE' put: 16r1114!
-TreeViewConstants at: 'TVM_EXPAND' put: 16r1102!
-TreeViewConstants at: 'TVM_GETCOUNT' put: 16r1105!
-TreeViewConstants at: 'TVM_GETEXTENDEDSTYLE' put: 16r112D!
-TreeViewConstants at: 'TVM_GETIMAGELIST' put: 16r1108!
-TreeViewConstants at: 'TVM_GETINDENT' put: 16r1106!
-TreeViewConstants at: 'TVM_GETITEMRECT' put: 16r1104!
-TreeViewConstants at: 'TVM_GETITEMW' put: 16r113E!
-TreeViewConstants at: 'TVM_GETNEXTITEM' put: 16r110A!
-TreeViewConstants at: 'TVM_GETVISIBLECOUNT' put: 16r1110!
-TreeViewConstants at: 'TVM_HITTEST' put: 16r1111!
-TreeViewConstants at: 'TVM_INSERTITEMW' put: 16r1132!
-TreeViewConstants at: 'TVM_SELECTITEM' put: 16r110B!
-TreeViewConstants at: 'TVM_SETBKCOLOR' put: 16r111D!
-TreeViewConstants at: 'TVM_SETEXTENDEDSTYLE' put: 16r112C!
-TreeViewConstants at: 'TVM_SETIMAGELIST' put: 16r1109!
-TreeViewConstants at: 'TVM_SETINDENT' put: 16r1107!
-TreeViewConstants at: 'TVM_SETITEMW' put: 16r113F!
-TreeViewConstants at: 'TVM_SETTEXTCOLOR' put: 16r111E!
-TreeViewConstants at: 'TVN_ASYNCDRAW' put: -16r1A4!
-TreeViewConstants at: 'TVN_BEGINDRAGW' put: -16r1C8!
-TreeViewConstants at: 'TVN_BEGINLABELEDITW' put: -16r1CB!
-TreeViewConstants at: 'TVN_BEGINRDRAGW' put: -16r1C9!
-TreeViewConstants at: 'TVN_DELETEITEMW' put: -16r1CA!
-TreeViewConstants at: 'TVN_ENDLABELEDITW' put: -16r1CC!
-TreeViewConstants at: 'TVN_FIRST' put: -16r190!
-TreeViewConstants at: 'TVN_GETDISPINFOW' put: -16r1C4!
-TreeViewConstants at: 'TVN_GETINFOTIPW' put: -16r19E!
-TreeViewConstants at: 'TVN_ITEMCHANGEDW' put: -16r1A3!
-TreeViewConstants at: 'TVN_ITEMCHANGINGW' put: -16r1A1!
-TreeViewConstants at: 'TVN_ITEMEXPANDEDW' put: -16r1C7!
-TreeViewConstants at: 'TVN_ITEMEXPANDINGW' put: -16r1C6!
-TreeViewConstants at: 'TVN_KEYDOWN' put: -16r19C!
-TreeViewConstants at: 'TVN_LAST' put: -16r1F3!
-TreeViewConstants at: 'TVN_SELCHANGEDW' put: -16r1C3!
-TreeViewConstants at: 'TVN_SELCHANGING' put: -16r191!
-TreeViewConstants at: 'TVN_SELCHANGINGW' put: -16r1C2!
-TreeViewConstants at: 'TVN_SETDISPINFOW' put: -16r1C5!
-TreeViewConstants at: 'TVN_SINGLEEXPAND' put: -16r19F!
-TreeViewConstants at: 'TVS_CHECKBOXES' put: 16r100!
-TreeViewConstants at: 'TVS_DISABLEDRAGDROP' put: 16r10!
-TreeViewConstants at: 'TVS_EDITLABELS' put: 16r8!
-TreeViewConstants at: 'TVS_EX_DOUBLEBUFFER' put: 16r4!
-TreeViewConstants at: 'TVS_EX_FADEINOUTEXPANDOS' put: 16r40!
-TreeViewConstants at: 'TVS_FULLROWSELECT' put: 16r1000!
-TreeViewConstants at: 'TVS_HASBUTTONS' put: 16r1!
-TreeViewConstants at: 'TVS_HASLINES' put: 16r2!
-TreeViewConstants at: 'TVS_INFOTIP' put: 16r800!
-TreeViewConstants at: 'TVS_LINESATROOT' put: 16r4!
-TreeViewConstants at: 'TVS_NONEVENHEIGHT' put: 16r4000!
-TreeViewConstants at: 'TVS_NOSCROLL' put: 16r2000!
-TreeViewConstants at: 'TVS_SHOWSELALWAYS' put: 16r20!
-TreeViewConstants at: 'TVS_SINGLEEXPAND' put: 16r400!
-TreeViewConstants at: 'TVS_TRACKSELECT' put: 16r200!
-TreeViewConstants at: 'TVSIL_NORMAL' put: 16r0!
-TreeViewConstants at: 'TVSIL_STATE' put: 16r2!
-TreeViewConstants shrink!
+SharedPool subclass: #TreeViewConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TV_FIRST' -> 16r1100.
+		'TVC_BYKEYBOARD' -> 16r2.
+		'TVC_UNKNOWN' -> 16r0.
+		'TVE_COLLAPSE' -> 16r1.
+		'TVE_COLLAPSERESET' -> 16r8000.
+		'TVE_EXPAND' -> 16r2.
+		'TVE_TOGGLE' -> 16r3.
+		'TVGN_CARET' -> 16r9.
+		'TVGN_CHILD' -> 16r4.
+		'TVGN_DROPHILITE' -> 16r8.
+		'TVGN_FIRSTVISIBLE' -> 16r5.
+		'TVGN_NEXT' -> 16r1.
+		'TVGN_NEXTVISIBLE' -> 16r6.
+		'TVGN_PARENT' -> 16r3.
+		'TVGN_PREVIOUS' -> 16r2.
+		'TVGN_PREVIOUSVISIBLE' -> 16r7.
+		'TVGN_ROOT' -> 16r0.
+		'TVI_FIRST' -> -16rFFFF.
+		'TVI_LAST' -> -16rFFFE.
+		'TVI_ROOT' -> -16r10000.
+		'TVI_SORT' -> -16rFFFD.
+		'TVIF_CHILDREN' -> 16r40.
+		'TVIF_DI_SETITEM' -> 16r1000.
+		'TVIF_EXPANDEDIMAGE' -> 16r200.
+		'TVIF_HANDLE' -> 16r10.
+		'TVIF_IMAGE' -> 16r2.
+		'TVIF_PARAM' -> 16r4.
+		'TVIF_SELECTEDIMAGE' -> 16r20.
+		'TVIF_STATE' -> 16r8.
+		'TVIF_STATEEX' -> 16r100.
+		'TVIF_TEXT' -> 16r1.
+		'TVIS_BOLD' -> 16r10.
+		'TVIS_CUT' -> 16r4.
+		'TVIS_DROPHIGHLIGHTED' -> 16r8.
+		'TVIS_EX_DISABLED' -> 16r2.
+		'TVIS_EX_FLAT' -> 16r1.
+		'TVIS_EXPANDED' -> 16r20.
+		'TVIS_EXPANDEDONCE' -> 16r40.
+		'TVIS_FOCUSED' -> 16r1.
+		'TVIS_OVERLAYMASK' -> 16rF00.
+		'TVIS_SELECTED' -> 16r2.
+		'TVIS_STATEIMAGEMASK' -> 16rF000.
+		'TVIS_USERMASK' -> 16rF000.
+		'TVM_DELETEITEM' -> 16r1101.
+		'TVM_EDITLABELW' -> 16r1141.
+		'TVM_ENSUREVISIBLE' -> 16r1114.
+		'TVM_EXPAND' -> 16r1102.
+		'TVM_GETCOUNT' -> 16r1105.
+		'TVM_GETEXTENDEDSTYLE' -> 16r112D.
+		'TVM_GETIMAGELIST' -> 16r1108.
+		'TVM_GETINDENT' -> 16r1106.
+		'TVM_GETITEMRECT' -> 16r1104.
+		'TVM_GETITEMW' -> 16r113E.
+		'TVM_GETNEXTITEM' -> 16r110A.
+		'TVM_GETVISIBLECOUNT' -> 16r1110.
+		'TVM_HITTEST' -> 16r1111.
+		'TVM_INSERTITEMW' -> 16r1132.
+		'TVM_SELECTITEM' -> 16r110B.
+		'TVM_SETBKCOLOR' -> 16r111D.
+		'TVM_SETEXTENDEDSTYLE' -> 16r112C.
+		'TVM_SETIMAGELIST' -> 16r1109.
+		'TVM_SETINDENT' -> 16r1107.
+		'TVM_SETITEMW' -> 16r113F.
+		'TVM_SETTEXTCOLOR' -> 16r111E.
+		'TVN_ASYNCDRAW' -> -16r1A4.
+		'TVN_BEGINDRAGW' -> -16r1C8.
+		'TVN_BEGINLABELEDITW' -> -16r1CB.
+		'TVN_BEGINRDRAGW' -> -16r1C9.
+		'TVN_DELETEITEMW' -> -16r1CA.
+		'TVN_ENDLABELEDITW' -> -16r1CC.
+		'TVN_FIRST' -> -16r190.
+		'TVN_GETDISPINFOW' -> -16r1C4.
+		'TVN_GETINFOTIPW' -> -16r19E.
+		'TVN_ITEMCHANGEDW' -> -16r1A3.
+		'TVN_ITEMCHANGINGW' -> -16r1A1.
+		'TVN_ITEMEXPANDEDW' -> -16r1C7.
+		'TVN_ITEMEXPANDINGW' -> -16r1C6.
+		'TVN_KEYDOWN' -> -16r19C.
+		'TVN_LAST' -> -16r1F3.
+		'TVN_SELCHANGEDW' -> -16r1C3.
+		'TVN_SELCHANGING' -> -16r191.
+		'TVN_SELCHANGINGW' -> -16r1C2.
+		'TVN_SETDISPINFOW' -> -16r1C5.
+		'TVN_SINGLEEXPAND' -> -16r19F.
+		'TVS_CHECKBOXES' -> 16r100.
+		'TVS_DISABLEDRAGDROP' -> 16r10.
+		'TVS_EDITLABELS' -> 16r8.
+		'TVS_EX_DOUBLEBUFFER' -> 16r4.
+		'TVS_EX_FADEINOUTEXPANDOS' -> 16r40.
+		'TVS_FULLROWSELECT' -> 16r1000.
+		'TVS_HASBUTTONS' -> 16r1.
+		'TVS_HASLINES' -> 16r2.
+		'TVS_INFOTIP' -> 16r800.
+		'TVS_LINESATROOT' -> 16r4.
+		'TVS_NONEVENHEIGHT' -> 16r4000.
+		'TVS_NOSCROLL' -> 16r2000.
+		'TVS_SHOWSELALWAYS' -> 16r20.
+		'TVS_SINGLEEXPAND' -> 16r400.
+		'TVS_TRACKSELECT' -> 16r200.
+		'TVSIL_NORMAL' -> 16r0.
+		'TVSIL_STATE' -> 16r2
+	}!
+TreeViewConstants guid: (GUID fromString: '{3c01401d-cb80-4bc6-93aa-f109bd5160d3}')!
+TreeViewConstants comment: ''!
+!TreeViewConstants categoriesForClass!Unclassified! !

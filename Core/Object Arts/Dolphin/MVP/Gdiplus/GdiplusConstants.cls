@@ -1,866 +1,874 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{GdiplusConstants} declare: (PoolConstantsDictionary named: #GdiplusConstants)!
-GdiplusConstants at: 'Aborted' put: 16r9!
-GdiplusConstants at: 'AccessDenied' put: 16rC!
-GdiplusConstants at: 'BrushTypeHatchFill' put: 16r1!
-GdiplusConstants at: 'BrushTypeLinearGradient' put: 16r4!
-GdiplusConstants at: 'BrushTypePathGradient' put: 16r3!
-GdiplusConstants at: 'BrushTypeSolidColor' put: 16r0!
-GdiplusConstants at: 'BrushTypeTextureFill' put: 16r2!
-GdiplusConstants at: 'ColorAdjustTypeAny' put: 16r6!
-GdiplusConstants at: 'ColorAdjustTypeBitmap' put: 16r1!
-GdiplusConstants at: 'ColorAdjustTypeBrush' put: 16r2!
-GdiplusConstants at: 'ColorAdjustTypeCount' put: 16r5!
-GdiplusConstants at: 'ColorAdjustTypeDefault' put: 16r0!
-GdiplusConstants at: 'ColorAdjustTypePen' put: 16r3!
-GdiplusConstants at: 'ColorAdjustTypeText' put: 16r4!
-GdiplusConstants at: 'ColorChannelFlagsC' put: 16r0!
-GdiplusConstants at: 'ColorChannelFlagsK' put: 16r3!
-GdiplusConstants at: 'ColorChannelFlagsLast' put: 16r4!
-GdiplusConstants at: 'ColorChannelFlagsM' put: 16r1!
-GdiplusConstants at: 'ColorChannelFlagsY' put: 16r2!
-GdiplusConstants at: 'ColorMatrixFlagsAltGray' put: 16r2!
-GdiplusConstants at: 'ColorMatrixFlagsDefault' put: 16r0!
-GdiplusConstants at: 'ColorMatrixFlagsSkipGrays' put: 16r1!
-GdiplusConstants at: 'ColorModeARGB32' put: 16r0!
-GdiplusConstants at: 'ColorModeARGB64' put: 16r1!
-GdiplusConstants at: 'CombineModeComplement' put: 16r5!
-GdiplusConstants at: 'CombineModeExclude' put: 16r4!
-GdiplusConstants at: 'CombineModeIntersect' put: 16r1!
-GdiplusConstants at: 'CombineModeReplace' put: 16r0!
-GdiplusConstants at: 'CombineModeUnion' put: 16r2!
-GdiplusConstants at: 'CombineModeXor' put: 16r3!
-GdiplusConstants at: 'CompositingModeSourceCopy' put: 16r1!
-GdiplusConstants at: 'CompositingModeSourceOver' put: 16r0!
-GdiplusConstants at: 'CompositingQualityAssumeLinear' put: 16r4!
-GdiplusConstants at: 'CompositingQualityDefault' put: 16r0!
-GdiplusConstants at: 'CompositingQualityGammaCorrected' put: 16r3!
-GdiplusConstants at: 'CompositingQualityHighQuality' put: 16r2!
-GdiplusConstants at: 'CompositingQualityHighSpeed' put: 16r1!
-GdiplusConstants at: 'CompositingQualityInvalid' put: -16r1!
-GdiplusConstants at: 'CoordinateSpaceDevice' put: 16r2!
-GdiplusConstants at: 'CoordinateSpacePage' put: 16r1!
-GdiplusConstants at: 'CoordinateSpaceWorld' put: 16r0!
-GdiplusConstants at: 'CustomLineCapTypeAdjustableArrow' put: 16r1!
-GdiplusConstants at: 'CustomLineCapTypeDefault' put: 16r0!
-GdiplusConstants at: 'DashCapFlat' put: 16r0!
-GdiplusConstants at: 'DashCapRound' put: 16r2!
-GdiplusConstants at: 'DashCapTriangle' put: 16r3!
-GdiplusConstants at: 'DashStyleCustom' put: 16r5!
-GdiplusConstants at: 'DashStyleDash' put: 16r1!
-GdiplusConstants at: 'DashStyleDashDot' put: 16r3!
-GdiplusConstants at: 'DashStyleDashDotDot' put: 16r4!
-GdiplusConstants at: 'DashStyleDot' put: 16r2!
-GdiplusConstants at: 'DashStyleSolid' put: 16r0!
-GdiplusConstants at: 'DriverStringOptionsCmapLookup' put: 16r1!
-GdiplusConstants at: 'DriverStringOptionsLimitSubpixel' put: 16r8!
-GdiplusConstants at: 'DriverStringOptionsRealizedAdvance' put: 16r4!
-GdiplusConstants at: 'DriverStringOptionsVertical' put: 16r2!
-GdiplusConstants at: 'EmfPlusRecordTotal' put: 16r4037!
-GdiplusConstants at: 'EmfPlusRecordTypeBeginContainer' put: 16r4027!
-GdiplusConstants at: 'EmfPlusRecordTypeBeginContainerNoParams' put: 16r4028!
-GdiplusConstants at: 'EmfPlusRecordTypeClear' put: 16r4009!
-GdiplusConstants at: 'EmfPlusRecordTypeComment' put: 16r4003!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawArc' put: 16r4012!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawBeziers' put: 16r4019!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawClosedCurve' put: 16r4017!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawCurve' put: 16r4018!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawDriverString' put: 16r4036!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawEllipse' put: 16r400F!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawImage' put: 16r401A!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawImagePoints' put: 16r401B!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawLines' put: 16r400D!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawPath' put: 16r4015!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawPie' put: 16r4011!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawRects' put: 16r400B!
-GdiplusConstants at: 'EmfPlusRecordTypeDrawString' put: 16r401C!
-GdiplusConstants at: 'EmfPlusRecordTypeEndContainer' put: 16r4029!
-GdiplusConstants at: 'EmfPlusRecordTypeEndOfFile' put: 16r4002!
-GdiplusConstants at: 'EmfPlusRecordTypeFillClosedCurve' put: 16r4016!
-GdiplusConstants at: 'EmfPlusRecordTypeFillEllipse' put: 16r400E!
-GdiplusConstants at: 'EmfPlusRecordTypeFillPath' put: 16r4014!
-GdiplusConstants at: 'EmfPlusRecordTypeFillPie' put: 16r4010!
-GdiplusConstants at: 'EmfPlusRecordTypeFillPolygon' put: 16r400C!
-GdiplusConstants at: 'EmfPlusRecordTypeFillRects' put: 16r400A!
-GdiplusConstants at: 'EmfPlusRecordTypeFillRegion' put: 16r4013!
-GdiplusConstants at: 'EmfPlusRecordTypeGetDC' put: 16r4004!
-GdiplusConstants at: 'EmfPlusRecordTypeHeader' put: 16r4001!
-GdiplusConstants at: 'EmfPlusRecordTypeInvalid' put: 16r4000!
-GdiplusConstants at: 'EmfPlusRecordTypeMax' put: 16r4036!
-GdiplusConstants at: 'EmfPlusRecordTypeMin' put: 16r4001!
-GdiplusConstants at: 'EmfPlusRecordTypeMultiFormatEnd' put: 16r4007!
-GdiplusConstants at: 'EmfPlusRecordTypeMultiFormatSection' put: 16r4006!
-GdiplusConstants at: 'EmfPlusRecordTypeMultiFormatStart' put: 16r4005!
-GdiplusConstants at: 'EmfPlusRecordTypeMultiplyWorldTransform' put: 16r402C!
-GdiplusConstants at: 'EmfPlusRecordTypeObject' put: 16r4008!
-GdiplusConstants at: 'EmfPlusRecordTypeOffsetClip' put: 16r4035!
-GdiplusConstants at: 'EmfPlusRecordTypeResetClip' put: 16r4031!
-GdiplusConstants at: 'EmfPlusRecordTypeResetWorldTransform' put: 16r402B!
-GdiplusConstants at: 'EmfPlusRecordTypeRestore' put: 16r4026!
-GdiplusConstants at: 'EmfPlusRecordTypeRotateWorldTransform' put: 16r402F!
-GdiplusConstants at: 'EmfPlusRecordTypeSave' put: 16r4025!
-GdiplusConstants at: 'EmfPlusRecordTypeScaleWorldTransform' put: 16r402E!
-GdiplusConstants at: 'EmfPlusRecordTypeSetAntiAliasMode' put: 16r401E!
-GdiplusConstants at: 'EmfPlusRecordTypeSetClipPath' put: 16r4033!
-GdiplusConstants at: 'EmfPlusRecordTypeSetClipRect' put: 16r4032!
-GdiplusConstants at: 'EmfPlusRecordTypeSetClipRegion' put: 16r4034!
-GdiplusConstants at: 'EmfPlusRecordTypeSetCompositingMode' put: 16r4023!
-GdiplusConstants at: 'EmfPlusRecordTypeSetCompositingQuality' put: 16r4024!
-GdiplusConstants at: 'EmfPlusRecordTypeSetInterpolationMode' put: 16r4021!
-GdiplusConstants at: 'EmfPlusRecordTypeSetPageTransform' put: 16r4030!
-GdiplusConstants at: 'EmfPlusRecordTypeSetPixelOffsetMode' put: 16r4022!
-GdiplusConstants at: 'EmfPlusRecordTypeSetRenderingOrigin' put: 16r401D!
-GdiplusConstants at: 'EmfPlusRecordTypeSetTextContrast' put: 16r4020!
-GdiplusConstants at: 'EmfPlusRecordTypeSetTextRenderingHint' put: 16r401F!
-GdiplusConstants at: 'EmfPlusRecordTypeSetWorldTransform' put: 16r402A!
-GdiplusConstants at: 'EmfPlusRecordTypeTranslateWorldTransform' put: 16r402D!
-GdiplusConstants at: 'EmfRecordTypeAbortPath' put: 16r44!
-GdiplusConstants at: 'EmfRecordTypeAlphaBlend' put: 16r72!
-GdiplusConstants at: 'EmfRecordTypeAngleArc' put: 16r29!
-GdiplusConstants at: 'EmfRecordTypeArc' put: 16r2D!
-GdiplusConstants at: 'EmfRecordTypeArcTo' put: 16r37!
-GdiplusConstants at: 'EmfRecordTypeBeginPath' put: 16r3B!
-GdiplusConstants at: 'EmfRecordTypeBitBlt' put: 16r4C!
-GdiplusConstants at: 'EmfRecordTypeChord' put: 16r2E!
-GdiplusConstants at: 'EmfRecordTypeCloseFigure' put: 16r3D!
-GdiplusConstants at: 'EmfRecordTypeColorCorrectPalette' put: 16r6F!
-GdiplusConstants at: 'EmfRecordTypeColorMatchToTargetW' put: 16r79!
-GdiplusConstants at: 'EmfRecordTypeCreateBrushIndirect' put: 16r27!
-GdiplusConstants at: 'EmfRecordTypeCreateColorSpace' put: 16r63!
-GdiplusConstants at: 'EmfRecordTypeCreateColorSpaceW' put: 16r7A!
-GdiplusConstants at: 'EmfRecordTypeCreateDIBPatternBrushPt' put: 16r5E!
-GdiplusConstants at: 'EmfRecordTypeCreateMonoBrush' put: 16r5D!
-GdiplusConstants at: 'EmfRecordTypeCreatePalette' put: 16r31!
-GdiplusConstants at: 'EmfRecordTypeCreatePen' put: 16r26!
-GdiplusConstants at: 'EmfRecordTypeDeleteColorSpace' put: 16r65!
-GdiplusConstants at: 'EmfRecordTypeDeleteObject' put: 16r28!
-GdiplusConstants at: 'EmfRecordTypeDrawEscape' put: 16r69!
-GdiplusConstants at: 'EmfRecordTypeEllipse' put: 16r2A!
-GdiplusConstants at: 'EmfRecordTypeEndPath' put: 16r3C!
-GdiplusConstants at: 'EmfRecordTypeEOF' put: 16rE!
-GdiplusConstants at: 'EmfRecordTypeExcludeClipRect' put: 16r1D!
-GdiplusConstants at: 'EmfRecordTypeExtCreateFontIndirect' put: 16r52!
-GdiplusConstants at: 'EmfRecordTypeExtCreatePen' put: 16r5F!
-GdiplusConstants at: 'EmfRecordTypeExtEscape' put: 16r6A!
-GdiplusConstants at: 'EmfRecordTypeExtFloodFill' put: 16r35!
-GdiplusConstants at: 'EmfRecordTypeExtSelectClipRgn' put: 16r4B!
-GdiplusConstants at: 'EmfRecordTypeExtTextOutA' put: 16r53!
-GdiplusConstants at: 'EmfRecordTypeExtTextOutW' put: 16r54!
-GdiplusConstants at: 'EmfRecordTypeFillPath' put: 16r3E!
-GdiplusConstants at: 'EmfRecordTypeFillRgn' put: 16r47!
-GdiplusConstants at: 'EmfRecordTypeFlattenPath' put: 16r41!
-GdiplusConstants at: 'EmfRecordTypeForceUFIMapping' put: 16r6D!
-GdiplusConstants at: 'EmfRecordTypeFrameRgn' put: 16r48!
-GdiplusConstants at: 'EmfRecordTypeGdiComment' put: 16r46!
-GdiplusConstants at: 'EmfRecordTypeGLSBoundedRecord' put: 16r67!
-GdiplusConstants at: 'EmfRecordTypeGLSRecord' put: 16r66!
-GdiplusConstants at: 'EmfRecordTypeGradientFill' put: 16r76!
-GdiplusConstants at: 'EmfRecordTypeHeader' put: 16r1!
-GdiplusConstants at: 'EmfRecordTypeIntersectClipRect' put: 16r1E!
-GdiplusConstants at: 'EmfRecordTypeInvertRgn' put: 16r49!
-GdiplusConstants at: 'EmfRecordTypeLineTo' put: 16r36!
-GdiplusConstants at: 'EmfRecordTypeMaskBlt' put: 16r4E!
-GdiplusConstants at: 'EmfRecordTypeMax' put: 16r7A!
-GdiplusConstants at: 'EmfRecordTypeMin' put: 16r1!
-GdiplusConstants at: 'EmfRecordTypeModifyWorldTransform' put: 16r24!
-GdiplusConstants at: 'EmfRecordTypeMoveToEx' put: 16r1B!
-GdiplusConstants at: 'EmfRecordTypeNamedEscape' put: 16r6E!
-GdiplusConstants at: 'EmfRecordTypeOffsetClipRgn' put: 16r1A!
-GdiplusConstants at: 'EmfRecordTypePaintRgn' put: 16r4A!
-GdiplusConstants at: 'EmfRecordTypePie' put: 16r2F!
-GdiplusConstants at: 'EmfRecordTypePixelFormat' put: 16r68!
-GdiplusConstants at: 'EmfRecordTypePlgBlt' put: 16r4F!
-GdiplusConstants at: 'EmfRecordTypePolyBezier' put: 16r2!
-GdiplusConstants at: 'EmfRecordTypePolyBezier16' put: 16r55!
-GdiplusConstants at: 'EmfRecordTypePolyBezierTo' put: 16r5!
-GdiplusConstants at: 'EmfRecordTypePolyBezierTo16' put: 16r58!
-GdiplusConstants at: 'EmfRecordTypePolyDraw' put: 16r38!
-GdiplusConstants at: 'EmfRecordTypePolyDraw16' put: 16r5C!
-GdiplusConstants at: 'EmfRecordTypePolygon' put: 16r3!
-GdiplusConstants at: 'EmfRecordTypePolygon16' put: 16r56!
-GdiplusConstants at: 'EmfRecordTypePolyline' put: 16r4!
-GdiplusConstants at: 'EmfRecordTypePolyline16' put: 16r57!
-GdiplusConstants at: 'EmfRecordTypePolyLineTo' put: 16r6!
-GdiplusConstants at: 'EmfRecordTypePolylineTo16' put: 16r59!
-GdiplusConstants at: 'EmfRecordTypePolyPolygon' put: 16r8!
-GdiplusConstants at: 'EmfRecordTypePolyPolygon16' put: 16r5B!
-GdiplusConstants at: 'EmfRecordTypePolyPolyline' put: 16r7!
-GdiplusConstants at: 'EmfRecordTypePolyPolyline16' put: 16r5A!
-GdiplusConstants at: 'EmfRecordTypePolyTextOutA' put: 16r60!
-GdiplusConstants at: 'EmfRecordTypePolyTextOutW' put: 16r61!
-GdiplusConstants at: 'EmfRecordTypeRealizePalette' put: 16r34!
-GdiplusConstants at: 'EmfRecordTypeRectangle' put: 16r2B!
-GdiplusConstants at: 'EmfRecordTypeReserved_069' put: 16r45!
-GdiplusConstants at: 'EmfRecordTypeReserved_117' put: 16r75!
-GdiplusConstants at: 'EmfRecordTypeResizePalette' put: 16r33!
-GdiplusConstants at: 'EmfRecordTypeRestoreDC' put: 16r22!
-GdiplusConstants at: 'EmfRecordTypeRoundRect' put: 16r2C!
-GdiplusConstants at: 'EmfRecordTypeSaveDC' put: 16r21!
-GdiplusConstants at: 'EmfRecordTypeScaleViewportExtEx' put: 16r1F!
-GdiplusConstants at: 'EmfRecordTypeScaleWindowExtEx' put: 16r20!
-GdiplusConstants at: 'EmfRecordTypeSelectClipPath' put: 16r43!
-GdiplusConstants at: 'EmfRecordTypeSelectObject' put: 16r25!
-GdiplusConstants at: 'EmfRecordTypeSelectPalette' put: 16r30!
-GdiplusConstants at: 'EmfRecordTypeSetArcDirection' put: 16r39!
-GdiplusConstants at: 'EmfRecordTypeSetBkColor' put: 16r19!
-GdiplusConstants at: 'EmfRecordTypeSetBkMode' put: 16r12!
-GdiplusConstants at: 'EmfRecordTypeSetBrushOrgEx' put: 16rD!
-GdiplusConstants at: 'EmfRecordTypeSetColorAdjustment' put: 16r17!
-GdiplusConstants at: 'EmfRecordTypeSetColorSpace' put: 16r64!
-GdiplusConstants at: 'EmfRecordTypeSetDIBitsToDevice' put: 16r50!
-GdiplusConstants at: 'EmfRecordTypeSetICMMode' put: 16r62!
-GdiplusConstants at: 'EmfRecordTypeSetICMProfileA' put: 16r70!
-GdiplusConstants at: 'EmfRecordTypeSetICMProfileW' put: 16r71!
-GdiplusConstants at: 'EmfRecordTypeSetLayout' put: 16r73!
-GdiplusConstants at: 'EmfRecordTypeSetLinkedUFIs' put: 16r77!
-GdiplusConstants at: 'EmfRecordTypeSetMapMode' put: 16r11!
-GdiplusConstants at: 'EmfRecordTypeSetMapperFlags' put: 16r10!
-GdiplusConstants at: 'EmfRecordTypeSetMetaRgn' put: 16r1C!
-GdiplusConstants at: 'EmfRecordTypeSetMiterLimit' put: 16r3A!
-GdiplusConstants at: 'EmfRecordTypeSetPaletteEntries' put: 16r32!
-GdiplusConstants at: 'EmfRecordTypeSetPixelV' put: 16rF!
-GdiplusConstants at: 'EmfRecordTypeSetPolyFillMode' put: 16r13!
-GdiplusConstants at: 'EmfRecordTypeSetROP2' put: 16r14!
-GdiplusConstants at: 'EmfRecordTypeSetStretchBltMode' put: 16r15!
-GdiplusConstants at: 'EmfRecordTypeSetTextAlign' put: 16r16!
-GdiplusConstants at: 'EmfRecordTypeSetTextColor' put: 16r18!
-GdiplusConstants at: 'EmfRecordTypeSetTextJustification' put: 16r78!
-GdiplusConstants at: 'EmfRecordTypeSetViewportExtEx' put: 16rB!
-GdiplusConstants at: 'EmfRecordTypeSetViewportOrgEx' put: 16rC!
-GdiplusConstants at: 'EmfRecordTypeSetWindowExtEx' put: 16r9!
-GdiplusConstants at: 'EmfRecordTypeSetWindowOrgEx' put: 16rA!
-GdiplusConstants at: 'EmfRecordTypeSetWorldTransform' put: 16r23!
-GdiplusConstants at: 'EmfRecordTypeSmallTextOut' put: 16r6C!
-GdiplusConstants at: 'EmfRecordTypeStartDoc' put: 16r6B!
-GdiplusConstants at: 'EmfRecordTypeStretchBlt' put: 16r4D!
-GdiplusConstants at: 'EmfRecordTypeStretchDIBits' put: 16r51!
-GdiplusConstants at: 'EmfRecordTypeStrokeAndFillPath' put: 16r3F!
-GdiplusConstants at: 'EmfRecordTypeStrokePath' put: 16r40!
-GdiplusConstants at: 'EmfRecordTypeTransparentBlt' put: 16r74!
-GdiplusConstants at: 'EmfRecordTypeWidenPath' put: 16r42!
-GdiplusConstants at: 'EmfToWmfBitsFlagsDefault' put: 16r0!
-GdiplusConstants at: 'EmfToWmfBitsFlagsEmbedEmf' put: 16r1!
-GdiplusConstants at: 'EmfToWmfBitsFlagsIncludePlaceable' put: 16r2!
-GdiplusConstants at: 'EmfToWmfBitsFlagsNoXORClip' put: 16r4!
-GdiplusConstants at: 'EmfTypeEmfOnly' put: 16r3!
-GdiplusConstants at: 'EmfTypeEmfPlusDual' put: 16r5!
-GdiplusConstants at: 'EmfTypeEmfPlusOnly' put: 16r4!
-GdiplusConstants at: 'EncoderParameterValueTypeASCII' put: 16r2!
-GdiplusConstants at: 'EncoderParameterValueTypeByte' put: 16r1!
-GdiplusConstants at: 'EncoderParameterValueTypeLong' put: 16r4!
-GdiplusConstants at: 'EncoderParameterValueTypeLongRange' put: 16r6!
-GdiplusConstants at: 'EncoderParameterValueTypePointer' put: 16r9!
-GdiplusConstants at: 'EncoderParameterValueTypeRational' put: 16r5!
-GdiplusConstants at: 'EncoderParameterValueTypeRationalRange' put: 16r8!
-GdiplusConstants at: 'EncoderParameterValueTypeShort' put: 16r3!
-GdiplusConstants at: 'EncoderParameterValueTypeUndefined' put: 16r7!
-GdiplusConstants at: 'EncoderValueColorTypeCMYK' put: 16r0!
-GdiplusConstants at: 'EncoderValueColorTypeYCCK' put: 16r1!
-GdiplusConstants at: 'EncoderValueCompressionCCITT3' put: 16r3!
-GdiplusConstants at: 'EncoderValueCompressionCCITT4' put: 16r4!
-GdiplusConstants at: 'EncoderValueCompressionLZW' put: 16r2!
-GdiplusConstants at: 'EncoderValueCompressionNone' put: 16r6!
-GdiplusConstants at: 'EncoderValueCompressionRle' put: 16r5!
-GdiplusConstants at: 'EncoderValueFlush' put: 16r14!
-GdiplusConstants at: 'EncoderValueFrameDimensionPage' put: 16r17!
-GdiplusConstants at: 'EncoderValueFrameDimensionResolution' put: 16r16!
-GdiplusConstants at: 'EncoderValueFrameDimensionTime' put: 16r15!
-GdiplusConstants at: 'EncoderValueLastFrame' put: 16r13!
-GdiplusConstants at: 'EncoderValueMultiFrame' put: 16r12!
-GdiplusConstants at: 'EncoderValueRenderNonProgressive' put: 16rC!
-GdiplusConstants at: 'EncoderValueRenderProgressive' put: 16rB!
-GdiplusConstants at: 'EncoderValueScanMethodInterlaced' put: 16r7!
-GdiplusConstants at: 'EncoderValueScanMethodNonInterlaced' put: 16r8!
-GdiplusConstants at: 'EncoderValueTransformFlipHorizontal' put: 16r10!
-GdiplusConstants at: 'EncoderValueTransformFlipVertical' put: 16r11!
-GdiplusConstants at: 'EncoderValueTransformRotate180' put: 16rE!
-GdiplusConstants at: 'EncoderValueTransformRotate270' put: 16rF!
-GdiplusConstants at: 'EncoderValueTransformRotate90' put: 16rD!
-GdiplusConstants at: 'EncoderValueVersionGif87' put: 16r9!
-GdiplusConstants at: 'EncoderValueVersionGif89' put: 16rA!
-GdiplusConstants at: 'FileNotFound' put: 16rA!
-GdiplusConstants at: 'FillModeAlternate' put: 16r0!
-GdiplusConstants at: 'FillModeWinding' put: 16r1!
-GdiplusConstants at: 'FlatnessDefault' put: 0.0!
-GdiplusConstants at: 'FlushIntentionFlush' put: 16r0!
-GdiplusConstants at: 'FlushIntentionSync' put: 16r1!
-GdiplusConstants at: 'FontFamilyNotFound' put: 16rE!
-GdiplusConstants at: 'FontStyleBold' put: 16r1!
-GdiplusConstants at: 'FontStyleBoldItalic' put: 16r3!
-GdiplusConstants at: 'FontStyleItalic' put: 16r2!
-GdiplusConstants at: 'FontStyleNotFound' put: 16rF!
-GdiplusConstants at: 'FontStyleRegular' put: 16r0!
-GdiplusConstants at: 'FontStyleStrikeout' put: 16r8!
-GdiplusConstants at: 'FontStyleUnderline' put: 16r4!
-GdiplusConstants at: 'GdiplusNotInitialized' put: 16r12!
-GdiplusConstants at: 'GenericError' put: 16r1!
-GdiplusConstants at: 'GenericFontFamilyMonospace' put: 16r2!
-GdiplusConstants at: 'GenericFontFamilySansSerif' put: 16r1!
-GdiplusConstants at: 'GenericFontFamilySerif' put: 16r0!
-GdiplusConstants at: 'HatchStyle05Percent' put: 16r6!
-GdiplusConstants at: 'HatchStyle10Percent' put: 16r7!
-GdiplusConstants at: 'HatchStyle20Percent' put: 16r8!
-GdiplusConstants at: 'HatchStyle25Percent' put: 16r9!
-GdiplusConstants at: 'HatchStyle30Percent' put: 16rA!
-GdiplusConstants at: 'HatchStyle40Percent' put: 16rB!
-GdiplusConstants at: 'HatchStyle50Percent' put: 16rC!
-GdiplusConstants at: 'HatchStyle60Percent' put: 16rD!
-GdiplusConstants at: 'HatchStyle70Percent' put: 16rE!
-GdiplusConstants at: 'HatchStyle75Percent' put: 16rF!
-GdiplusConstants at: 'HatchStyle80Percent' put: 16r10!
-GdiplusConstants at: 'HatchStyle90Percent' put: 16r11!
-GdiplusConstants at: 'HatchStyleBackwardDiagonal' put: 16r3!
-GdiplusConstants at: 'HatchStyleCross' put: 16r4!
-GdiplusConstants at: 'HatchStyleDarkDownwardDiagonal' put: 16r14!
-GdiplusConstants at: 'HatchStyleDarkHorizontal' put: 16r1D!
-GdiplusConstants at: 'HatchStyleDarkUpwardDiagonal' put: 16r15!
-GdiplusConstants at: 'HatchStyleDarkVertical' put: 16r1C!
-GdiplusConstants at: 'HatchStyleDashedDownwardDiagonal' put: 16r1E!
-GdiplusConstants at: 'HatchStyleDashedHorizontal' put: 16r20!
-GdiplusConstants at: 'HatchStyleDashedUpwardDiagonal' put: 16r1F!
-GdiplusConstants at: 'HatchStyleDashedVertical' put: 16r21!
-GdiplusConstants at: 'HatchStyleDiagonalBrick' put: 16r26!
-GdiplusConstants at: 'HatchStyleDiagonalCross' put: 16r5!
-GdiplusConstants at: 'HatchStyleDivot' put: 16r2A!
-GdiplusConstants at: 'HatchStyleDottedDiamond' put: 16r2C!
-GdiplusConstants at: 'HatchStyleDottedGrid' put: 16r2B!
-GdiplusConstants at: 'HatchStyleForwardDiagonal' put: 16r2!
-GdiplusConstants at: 'HatchStyleHorizontal' put: 16r0!
-GdiplusConstants at: 'HatchStyleHorizontalBrick' put: 16r27!
-GdiplusConstants at: 'HatchStyleLargeCheckerBoard' put: 16r32!
-GdiplusConstants at: 'HatchStyleLargeConfetti' put: 16r23!
-GdiplusConstants at: 'HatchStyleLargeGrid' put: 16r4!
-GdiplusConstants at: 'HatchStyleLightDownwardDiagonal' put: 16r12!
-GdiplusConstants at: 'HatchStyleLightHorizontal' put: 16r19!
-GdiplusConstants at: 'HatchStyleLightUpwardDiagonal' put: 16r13!
-GdiplusConstants at: 'HatchStyleLightVertical' put: 16r18!
-GdiplusConstants at: 'HatchStyleMax' put: 16r34!
-GdiplusConstants at: 'HatchStyleMin' put: 16r0!
-GdiplusConstants at: 'HatchStyleNarrowHorizontal' put: 16r1B!
-GdiplusConstants at: 'HatchStyleNarrowVertical' put: 16r1A!
-GdiplusConstants at: 'HatchStyleOutlinedDiamond' put: 16r33!
-GdiplusConstants at: 'HatchStylePlaid' put: 16r29!
-GdiplusConstants at: 'HatchStyleShingle' put: 16r2D!
-GdiplusConstants at: 'HatchStyleSmallCheckerBoard' put: 16r31!
-GdiplusConstants at: 'HatchStyleSmallConfetti' put: 16r22!
-GdiplusConstants at: 'HatchStyleSmallGrid' put: 16r30!
-GdiplusConstants at: 'HatchStyleSolidDiamond' put: 16r34!
-GdiplusConstants at: 'HatchStyleSphere' put: 16r2F!
-GdiplusConstants at: 'HatchStyleTotal' put: 16r35!
-GdiplusConstants at: 'HatchStyleTrellis' put: 16r2E!
-GdiplusConstants at: 'HatchStyleVertical' put: 16r1!
-GdiplusConstants at: 'HatchStyleWave' put: 16r25!
-GdiplusConstants at: 'HatchStyleWeave' put: 16r28!
-GdiplusConstants at: 'HatchStyleWideDownwardDiagonal' put: 16r16!
-GdiplusConstants at: 'HatchStyleWideUpwardDiagonal' put: 16r17!
-GdiplusConstants at: 'HatchStyleZigZag' put: 16r24!
-GdiplusConstants at: 'HotkeyPrefixHide' put: 16r2!
-GdiplusConstants at: 'HotkeyPrefixNone' put: 16r0!
-GdiplusConstants at: 'HotkeyPrefixShow' put: 16r1!
-GdiplusConstants at: 'ImageFlagsCaching' put: 16r20000!
-GdiplusConstants at: 'ImageFlagsColorSpaceCMYK' put: 16r20!
-GdiplusConstants at: 'ImageFlagsColorSpaceGRAY' put: 16r40!
-GdiplusConstants at: 'ImageFlagsColorSpaceRGB' put: 16r10!
-GdiplusConstants at: 'ImageFlagsColorSpaceYCBCR' put: 16r80!
-GdiplusConstants at: 'ImageFlagsColorSpaceYCCK' put: 16r100!
-GdiplusConstants at: 'ImageFlagsHasAlpha' put: 16r2!
-GdiplusConstants at: 'ImageFlagsHasRealDPI' put: 16r1000!
-GdiplusConstants at: 'ImageFlagsHasRealPixelSize' put: 16r2000!
-GdiplusConstants at: 'ImageFlagsHasTranslucent' put: 16r4!
-GdiplusConstants at: 'ImageFlagsNone' put: 16r0!
-GdiplusConstants at: 'ImageFlagsPartiallyScalable' put: 16r8!
-GdiplusConstants at: 'ImageFlagsReadOnly' put: 16r10000!
-GdiplusConstants at: 'ImageFlagsScalable' put: 16r1!
-GdiplusConstants at: 'ImageTypeBitmap' put: 16r1!
-GdiplusConstants at: 'ImageTypeMetafile' put: 16r2!
-GdiplusConstants at: 'ImageTypeUnknown' put: 16r0!
-GdiplusConstants at: 'InsufficientBuffer' put: 16r5!
-GdiplusConstants at: 'InterpolationModeBicubic' put: 16r4!
-GdiplusConstants at: 'InterpolationModeBilinear' put: 16r3!
-GdiplusConstants at: 'InterpolationModeDefault' put: 16r0!
-GdiplusConstants at: 'InterpolationModeHighQuality' put: 16r2!
-GdiplusConstants at: 'InterpolationModeHighQualityBicubic' put: 16r7!
-GdiplusConstants at: 'InterpolationModeHighQualityBilinear' put: 16r6!
-GdiplusConstants at: 'InterpolationModeInvalid' put: -16r1!
-GdiplusConstants at: 'InterpolationModeLowQuality' put: 16r1!
-GdiplusConstants at: 'InterpolationModeNearestNeighbor' put: 16r5!
-GdiplusConstants at: 'InvalidParameter' put: 16r2!
-GdiplusConstants at: 'LinearGradientModeBackwardDiagonal' put: 16r3!
-GdiplusConstants at: 'LinearGradientModeForwardDiagonal' put: 16r2!
-GdiplusConstants at: 'LinearGradientModeHorizontal' put: 16r0!
-GdiplusConstants at: 'LinearGradientModeVertical' put: 16r1!
-GdiplusConstants at: 'LineCapAnchorMask' put: 16rF0!
-GdiplusConstants at: 'LineCapArrowAnchor' put: 16r14!
-GdiplusConstants at: 'LineCapCustom' put: 16rFF!
-GdiplusConstants at: 'LineCapDiamondAnchor' put: 16r13!
-GdiplusConstants at: 'LineCapFlat' put: 16r0!
-GdiplusConstants at: 'LineCapNoAnchor' put: 16r10!
-GdiplusConstants at: 'LineCapRound' put: 16r2!
-GdiplusConstants at: 'LineCapRoundAnchor' put: 16r12!
-GdiplusConstants at: 'LineCapSquare' put: 16r1!
-GdiplusConstants at: 'LineCapSquareAnchor' put: 16r11!
-GdiplusConstants at: 'LineCapTriangle' put: 16r3!
-GdiplusConstants at: 'LineJoinBevel' put: 16r1!
-GdiplusConstants at: 'LineJoinMiter' put: 16r0!
-GdiplusConstants at: 'LineJoinMiterClipped' put: 16r3!
-GdiplusConstants at: 'LineJoinRound' put: 16r2!
-GdiplusConstants at: 'MatrixOrderAppend' put: 16r1!
-GdiplusConstants at: 'MatrixOrderPrepend' put: 16r0!
-GdiplusConstants at: 'MetafileFrameUnitDocument' put: 16r5!
-GdiplusConstants at: 'MetafileFrameUnitGdi' put: 16r7!
-GdiplusConstants at: 'MetafileFrameUnitInch' put: 16r4!
-GdiplusConstants at: 'MetafileFrameUnitMillimeter' put: 16r6!
-GdiplusConstants at: 'MetafileFrameUnitPixel' put: 16r2!
-GdiplusConstants at: 'MetafileFrameUnitPoint' put: 16r3!
-GdiplusConstants at: 'MetafileTypeEmf' put: 16r3!
-GdiplusConstants at: 'MetafileTypeEmfPlusDual' put: 16r5!
-GdiplusConstants at: 'MetafileTypeEmfPlusOnly' put: 16r4!
-GdiplusConstants at: 'MetafileTypeInvalid' put: 16r0!
-GdiplusConstants at: 'MetafileTypeWmf' put: 16r1!
-GdiplusConstants at: 'MetafileTypeWmfPlaceable' put: 16r2!
-GdiplusConstants at: 'NotImplemented' put: 16r6!
-GdiplusConstants at: 'NotTrueTypeFont' put: 16r10!
-GdiplusConstants at: 'ObjectBusy' put: 16r4!
-GdiplusConstants at: 'ObjectTypeBrush' put: 16r1!
-GdiplusConstants at: 'ObjectTypeCustomLineCap' put: 16r9!
-GdiplusConstants at: 'ObjectTypeFont' put: 16r6!
-GdiplusConstants at: 'ObjectTypeImage' put: 16r5!
-GdiplusConstants at: 'ObjectTypeImageAttributes' put: 16r8!
-GdiplusConstants at: 'ObjectTypeInvalid' put: 16r0!
-GdiplusConstants at: 'ObjectTypeMax' put: 16r9!
-GdiplusConstants at: 'ObjectTypeMin' put: 16r1!
-GdiplusConstants at: 'ObjectTypePath' put: 16r3!
-GdiplusConstants at: 'ObjectTypePen' put: 16r2!
-GdiplusConstants at: 'ObjectTypeRegion' put: 16r4!
-GdiplusConstants at: 'ObjectTypeStringFormat' put: 16r7!
-GdiplusConstants at: 'Ok' put: 16r0!
-GdiplusConstants at: 'OutOfMemory' put: 16r3!
-GdiplusConstants at: 'PaletteFlagsGrayScale' put: 16r2!
-GdiplusConstants at: 'PaletteFlagsHalftone' put: 16r4!
-GdiplusConstants at: 'PaletteFlagsHasAlpha' put: 16r1!
-GdiplusConstants at: 'PathPointTypeBezier' put: 16r3!
-GdiplusConstants at: 'PathPointTypeBezier3' put: 16r3!
-GdiplusConstants at: 'PathPointTypeCloseSubpath' put: 16r80!
-GdiplusConstants at: 'PathPointTypeDashMode' put: 16r10!
-GdiplusConstants at: 'PathPointTypeLine' put: 16r1!
-GdiplusConstants at: 'PathPointTypePathMarker' put: 16r20!
-GdiplusConstants at: 'PathPointTypePathTypeMask' put: 16r7!
-GdiplusConstants at: 'PathPointTypeStart' put: 16r0!
-GdiplusConstants at: 'PenAlignmentCenter' put: 16r0!
-GdiplusConstants at: 'PenAlignmentInset' put: 16r1!
-GdiplusConstants at: 'PenTypeHatchFill' put: 16r1!
-GdiplusConstants at: 'PenTypeLinearGradient' put: 16r4!
-GdiplusConstants at: 'PenTypePathGradient' put: 16r3!
-GdiplusConstants at: 'PenTypeSolidColor' put: 16r0!
-GdiplusConstants at: 'PenTypeTextureFill' put: 16r2!
-GdiplusConstants at: 'PenTypeUnknown' put: -16r1!
-GdiplusConstants at: 'PixelFormat16bppARGB1555' put: 16r61007!
-GdiplusConstants at: 'PixelFormat16bppGrayScale' put: 16r101004!
-GdiplusConstants at: 'PixelFormat16bppRGB555' put: 16r21005!
-GdiplusConstants at: 'PixelFormat16bppRGB565' put: 16r21006!
-GdiplusConstants at: 'PixelFormat1bppIndexed' put: 16r30101!
-GdiplusConstants at: 'PixelFormat24bppRGB' put: 16r21808!
-GdiplusConstants at: 'PixelFormat32bppARGB' put: 16r26200A!
-GdiplusConstants at: 'PixelFormat32bppPARGB' put: 16rE200B!
-GdiplusConstants at: 'PixelFormat32bppRGB' put: 16r22009!
-GdiplusConstants at: 'PixelFormat48bppRGB' put: 16r10300C!
-GdiplusConstants at: 'PixelFormat4bppIndexed' put: 16r30402!
-GdiplusConstants at: 'PixelFormat64bppARGB' put: 16r34400D!
-GdiplusConstants at: 'PixelFormat64bppPARGB' put: 16r1C400E!
-GdiplusConstants at: 'PixelFormat8bppIndexed' put: 16r30803!
-GdiplusConstants at: 'PixelFormatAlpha' put: 16r40000!
-GdiplusConstants at: 'PixelFormatCanonical' put: 16r200000!
-GdiplusConstants at: 'PixelFormatDontCare' put: 16r0!
-GdiplusConstants at: 'PixelFormatExtended' put: 16r100000!
-GdiplusConstants at: 'PixelFormatGDI' put: 16r20000!
-GdiplusConstants at: 'PixelFormatIndexed' put: 16r10000!
-GdiplusConstants at: 'PixelFormatMax' put: 16rF!
-GdiplusConstants at: 'PixelFormatPAlpha' put: 16r80000!
-GdiplusConstants at: 'PixelFormatUndefined' put: 16r0!
-GdiplusConstants at: 'PixelOffsetModeDefault' put: 16r0!
-GdiplusConstants at: 'PixelOffsetModeHalf' put: 16r4!
-GdiplusConstants at: 'PixelOffsetModeHighQuality' put: 16r2!
-GdiplusConstants at: 'PixelOffsetModeHighSpeed' put: 16r1!
-GdiplusConstants at: 'PixelOffsetModeInvalid' put: -16r1!
-GdiplusConstants at: 'PixelOffsetModeNone' put: 16r3!
-GdiplusConstants at: 'PropertyNotFound' put: 16r13!
-GdiplusConstants at: 'PropertyNotSupported' put: 16r14!
-GdiplusConstants at: 'PropertyTagArtist' put: 16r13B!
-GdiplusConstants at: 'PropertyTagBitsPerSample' put: 16r102!
-GdiplusConstants at: 'PropertyTagCellHeight' put: 16r109!
-GdiplusConstants at: 'PropertyTagCellWidth' put: 16r108!
-GdiplusConstants at: 'PropertyTagChrominanceTable' put: 16r5091!
-GdiplusConstants at: 'PropertyTagColorMap' put: 16r140!
-GdiplusConstants at: 'PropertyTagColorTransferFunction' put: 16r501A!
-GdiplusConstants at: 'PropertyTagCompression' put: 16r103!
-GdiplusConstants at: 'PropertyTagCopyright' put: 16r8298!
-GdiplusConstants at: 'PropertyTagDateTime' put: 16r132!
-GdiplusConstants at: 'PropertyTagDocumentName' put: 16r10D!
-GdiplusConstants at: 'PropertyTagDotRange' put: 16r150!
-GdiplusConstants at: 'PropertyTagEquipMake' put: 16r10F!
-GdiplusConstants at: 'PropertyTagEquipModel' put: 16r110!
-GdiplusConstants at: 'PropertyTagExifAperture' put: 16r9202!
-GdiplusConstants at: 'PropertyTagExifBrightness' put: 16r9203!
-GdiplusConstants at: 'PropertyTagExifCfaPattern' put: 16rA302!
-GdiplusConstants at: 'PropertyTagExifColorSpace' put: 16rA001!
-GdiplusConstants at: 'PropertyTagExifCompBPP' put: 16r9102!
-GdiplusConstants at: 'PropertyTagExifCompConfig' put: 16r9101!
-GdiplusConstants at: 'PropertyTagExifDTDigitized' put: 16r9004!
-GdiplusConstants at: 'PropertyTagExifDTDigSS' put: 16r9292!
-GdiplusConstants at: 'PropertyTagExifDTOrig' put: 16r9003!
-GdiplusConstants at: 'PropertyTagExifDTOrigSS' put: 16r9291!
-GdiplusConstants at: 'PropertyTagExifDTSubsec' put: 16r9290!
-GdiplusConstants at: 'PropertyTagExifExposureBias' put: 16r9204!
-GdiplusConstants at: 'PropertyTagExifExposureIndex' put: 16rA215!
-GdiplusConstants at: 'PropertyTagExifExposureProg' put: 16r8822!
-GdiplusConstants at: 'PropertyTagExifExposureTime' put: 16r829A!
-GdiplusConstants at: 'PropertyTagExifFileSource' put: 16rA300!
-GdiplusConstants at: 'PropertyTagExifFlash' put: 16r9209!
-GdiplusConstants at: 'PropertyTagExifFlashEnergy' put: 16rA20B!
-GdiplusConstants at: 'PropertyTagExifFNumber' put: 16r829D!
-GdiplusConstants at: 'PropertyTagExifFocalLength' put: 16r920A!
-GdiplusConstants at: 'PropertyTagExifFocalResUnit' put: 16rA210!
-GdiplusConstants at: 'PropertyTagExifFocalXRes' put: 16rA20E!
-GdiplusConstants at: 'PropertyTagExifFocalYRes' put: 16rA20F!
-GdiplusConstants at: 'PropertyTagExifFPXVer' put: 16rA000!
-GdiplusConstants at: 'PropertyTagExifIFD' put: 16r8769!
-GdiplusConstants at: 'PropertyTagExifInterop' put: 16rA005!
-GdiplusConstants at: 'PropertyTagExifISOSpeed' put: 16r8827!
-GdiplusConstants at: 'PropertyTagExifLightSource' put: 16r9208!
-GdiplusConstants at: 'PropertyTagExifMakerNote' put: 16r927C!
-GdiplusConstants at: 'PropertyTagExifMaxAperture' put: 16r9205!
-GdiplusConstants at: 'PropertyTagExifMeteringMode' put: 16r9207!
-GdiplusConstants at: 'PropertyTagExifOECF' put: 16r8828!
-GdiplusConstants at: 'PropertyTagExifPixXDim' put: 16rA002!
-GdiplusConstants at: 'PropertyTagExifPixYDim' put: 16rA003!
-GdiplusConstants at: 'PropertyTagExifRelatedWav' put: 16rA004!
-GdiplusConstants at: 'PropertyTagExifSceneType' put: 16rA301!
-GdiplusConstants at: 'PropertyTagExifSensingMethod' put: 16rA217!
-GdiplusConstants at: 'PropertyTagExifShutterSpeed' put: 16r9201!
-GdiplusConstants at: 'PropertyTagExifSpatialFR' put: 16rA20C!
-GdiplusConstants at: 'PropertyTagExifSpectralSense' put: 16r8824!
-GdiplusConstants at: 'PropertyTagExifSubjectDist' put: 16r9206!
-GdiplusConstants at: 'PropertyTagExifSubjectLoc' put: 16rA214!
-GdiplusConstants at: 'PropertyTagExifUserComment' put: 16r9286!
-GdiplusConstants at: 'PropertyTagExifVer' put: 16r9000!
-GdiplusConstants at: 'PropertyTagExtraSamples' put: 16r152!
-GdiplusConstants at: 'PropertyTagFillOrder' put: 16r10A!
-GdiplusConstants at: 'PropertyTagFrameDelay' put: 16r5100!
-GdiplusConstants at: 'PropertyTagFreeByteCounts' put: 16r121!
-GdiplusConstants at: 'PropertyTagFreeOffset' put: 16r120!
-GdiplusConstants at: 'PropertyTagGamma' put: 16r301!
-GdiplusConstants at: 'PropertyTagGpsAltitude' put: 16r6!
-GdiplusConstants at: 'PropertyTagGpsAltitudeRef' put: 16r5!
-GdiplusConstants at: 'PropertyTagGpsDestBear' put: 16r18!
-GdiplusConstants at: 'PropertyTagGpsDestBearRef' put: 16r17!
-GdiplusConstants at: 'PropertyTagGpsDestDist' put: 16r1A!
-GdiplusConstants at: 'PropertyTagGpsDestDistRef' put: 16r19!
-GdiplusConstants at: 'PropertyTagGpsDestLat' put: 16r14!
-GdiplusConstants at: 'PropertyTagGpsDestLatRef' put: 16r13!
-GdiplusConstants at: 'PropertyTagGpsDestLong' put: 16r16!
-GdiplusConstants at: 'PropertyTagGpsDestLongRef' put: 16r15!
-GdiplusConstants at: 'PropertyTagGpsGpsDop' put: 16rB!
-GdiplusConstants at: 'PropertyTagGpsGpsMeasureMode' put: 16rA!
-GdiplusConstants at: 'PropertyTagGpsGpsSatellites' put: 16r8!
-GdiplusConstants at: 'PropertyTagGpsGpsStatus' put: 16r9!
-GdiplusConstants at: 'PropertyTagGpsGpsTime' put: 16r7!
-GdiplusConstants at: 'PropertyTagGpsIFD' put: 16r8825!
-GdiplusConstants at: 'PropertyTagGpsImgDir' put: 16r11!
-GdiplusConstants at: 'PropertyTagGpsImgDirRef' put: 16r10!
-GdiplusConstants at: 'PropertyTagGpsLatitude' put: 16r2!
-GdiplusConstants at: 'PropertyTagGpsLatitudeRef' put: 16r1!
-GdiplusConstants at: 'PropertyTagGpsLongitude' put: 16r4!
-GdiplusConstants at: 'PropertyTagGpsLongitudeRef' put: 16r3!
-GdiplusConstants at: 'PropertyTagGpsMapDatum' put: 16r12!
-GdiplusConstants at: 'PropertyTagGpsSpeed' put: 16rD!
-GdiplusConstants at: 'PropertyTagGpsSpeedRef' put: 16rC!
-GdiplusConstants at: 'PropertyTagGpsTrack' put: 16rF!
-GdiplusConstants at: 'PropertyTagGpsTrackRef' put: 16rE!
-GdiplusConstants at: 'PropertyTagGpsVer' put: 16r0!
-GdiplusConstants at: 'PropertyTagGrayResponseCurve' put: 16r123!
-GdiplusConstants at: 'PropertyTagGrayResponseUnit' put: 16r122!
-GdiplusConstants at: 'PropertyTagGridSize' put: 16r5011!
-GdiplusConstants at: 'PropertyTagHalftoneDegree' put: 16r500C!
-GdiplusConstants at: 'PropertyTagHalftoneHints' put: 16r141!
-GdiplusConstants at: 'PropertyTagHalftoneLPI' put: 16r500A!
-GdiplusConstants at: 'PropertyTagHalftoneLPIUnit' put: 16r500B!
-GdiplusConstants at: 'PropertyTagHalftoneMisc' put: 16r500E!
-GdiplusConstants at: 'PropertyTagHalftoneScreen' put: 16r500F!
-GdiplusConstants at: 'PropertyTagHalftoneShape' put: 16r500D!
-GdiplusConstants at: 'PropertyTagHostComputer' put: 16r13C!
-GdiplusConstants at: 'PropertyTagICCProfile' put: 16r8773!
-GdiplusConstants at: 'PropertyTagICCProfileDescriptor' put: 16r302!
-GdiplusConstants at: 'PropertyTagImageDescription' put: 16r10E!
-GdiplusConstants at: 'PropertyTagImageHeight' put: 16r101!
-GdiplusConstants at: 'PropertyTagImageTitle' put: 16r320!
-GdiplusConstants at: 'PropertyTagImageWidth' put: 16r100!
-GdiplusConstants at: 'PropertyTagInkNames' put: 16r14D!
-GdiplusConstants at: 'PropertyTagInkSet' put: 16r14C!
-GdiplusConstants at: 'PropertyTagJPEGACTables' put: 16r209!
-GdiplusConstants at: 'PropertyTagJPEGDCTables' put: 16r208!
-GdiplusConstants at: 'PropertyTagJPEGInterFormat' put: 16r201!
-GdiplusConstants at: 'PropertyTagJPEGInterLength' put: 16r202!
-GdiplusConstants at: 'PropertyTagJPEGLosslessPredictors' put: 16r205!
-GdiplusConstants at: 'PropertyTagJPEGPointTransforms' put: 16r206!
-GdiplusConstants at: 'PropertyTagJPEGProc' put: 16r200!
-GdiplusConstants at: 'PropertyTagJPEGQTables' put: 16r207!
-GdiplusConstants at: 'PropertyTagJPEGQuality' put: 16r5010!
-GdiplusConstants at: 'PropertyTagJPEGRestartInterval' put: 16r203!
-GdiplusConstants at: 'PropertyTagLoopCount' put: 16r5101!
-GdiplusConstants at: 'PropertyTagLuminanceTable' put: 16r5090!
-GdiplusConstants at: 'PropertyTagMaxSampleValue' put: 16r119!
-GdiplusConstants at: 'PropertyTagMinSampleValue' put: 16r118!
-GdiplusConstants at: 'PropertyTagNewSubfileType' put: 16rFE!
-GdiplusConstants at: 'PropertyTagNumberOfInks' put: 16r14E!
-GdiplusConstants at: 'PropertyTagOrientation' put: 16r112!
-GdiplusConstants at: 'PropertyTagPageName' put: 16r11D!
-GdiplusConstants at: 'PropertyTagPageNumber' put: 16r129!
-GdiplusConstants at: 'PropertyTagPaletteHistogram' put: 16r5113!
-GdiplusConstants at: 'PropertyTagPhotometricInterp' put: 16r106!
-GdiplusConstants at: 'PropertyTagPixelPerUnitX' put: 16r5111!
-GdiplusConstants at: 'PropertyTagPixelPerUnitY' put: 16r5112!
-GdiplusConstants at: 'PropertyTagPixelUnit' put: 16r5110!
-GdiplusConstants at: 'PropertyTagPlanarConfig' put: 16r11C!
-GdiplusConstants at: 'PropertyTagPredictor' put: 16r13D!
-GdiplusConstants at: 'PropertyTagPrimaryChromaticities' put: 16r13F!
-GdiplusConstants at: 'PropertyTagPrintFlags' put: 16r5005!
-GdiplusConstants at: 'PropertyTagPrintFlagsBleedWidth' put: 16r5008!
-GdiplusConstants at: 'PropertyTagPrintFlagsBleedWidthScale' put: 16r5009!
-GdiplusConstants at: 'PropertyTagPrintFlagsCrop' put: 16r5007!
-GdiplusConstants at: 'PropertyTagPrintFlagsVersion' put: 16r5006!
-GdiplusConstants at: 'PropertyTagREFBlackWhite' put: 16r214!
-GdiplusConstants at: 'PropertyTagResolutionUnit' put: 16r128!
-GdiplusConstants at: 'PropertyTagResolutionXLengthUnit' put: 16r5003!
-GdiplusConstants at: 'PropertyTagResolutionXUnit' put: 16r5001!
-GdiplusConstants at: 'PropertyTagResolutionYLengthUnit' put: 16r5004!
-GdiplusConstants at: 'PropertyTagResolutionYUnit' put: 16r5002!
-GdiplusConstants at: 'PropertyTagRowsPerStrip' put: 16r116!
-GdiplusConstants at: 'PropertyTagSampleFormat' put: 16r153!
-GdiplusConstants at: 'PropertyTagSamplesPerPixel' put: 16r115!
-GdiplusConstants at: 'PropertyTagSMaxSampleValue' put: 16r155!
-GdiplusConstants at: 'PropertyTagSMinSampleValue' put: 16r154!
-GdiplusConstants at: 'PropertyTagSoftwareUsed' put: 16r131!
-GdiplusConstants at: 'PropertyTagSRGBRenderingIntent' put: 16r303!
-GdiplusConstants at: 'PropertyTagStripBytesCount' put: 16r117!
-GdiplusConstants at: 'PropertyTagStripOffsets' put: 16r111!
-GdiplusConstants at: 'PropertyTagSubfileType' put: 16rFF!
-GdiplusConstants at: 'PropertyTagT4Option' put: 16r124!
-GdiplusConstants at: 'PropertyTagT6Option' put: 16r125!
-GdiplusConstants at: 'PropertyTagTargetPrinter' put: 16r151!
-GdiplusConstants at: 'PropertyTagThreshHolding' put: 16r107!
-GdiplusConstants at: 'PropertyTagThumbnailArtist' put: 16r5034!
-GdiplusConstants at: 'PropertyTagThumbnailBitsPerSample' put: 16r5022!
-GdiplusConstants at: 'PropertyTagThumbnailColorDepth' put: 16r5015!
-GdiplusConstants at: 'PropertyTagThumbnailCompressedSize' put: 16r5019!
-GdiplusConstants at: 'PropertyTagThumbnailCompression' put: 16r5023!
-GdiplusConstants at: 'PropertyTagThumbnailCopyRight' put: 16r503B!
-GdiplusConstants at: 'PropertyTagThumbnailData' put: 16r501B!
-GdiplusConstants at: 'PropertyTagThumbnailDateTime' put: 16r5033!
-GdiplusConstants at: 'PropertyTagThumbnailEquipMake' put: 16r5026!
-GdiplusConstants at: 'PropertyTagThumbnailEquipModel' put: 16r5027!
-GdiplusConstants at: 'PropertyTagThumbnailFormat' put: 16r5012!
-GdiplusConstants at: 'PropertyTagThumbnailHeight' put: 16r5014!
-GdiplusConstants at: 'PropertyTagThumbnailImageDescription' put: 16r5025!
-GdiplusConstants at: 'PropertyTagThumbnailImageHeight' put: 16r5021!
-GdiplusConstants at: 'PropertyTagThumbnailImageWidth' put: 16r5020!
-GdiplusConstants at: 'PropertyTagThumbnailOrientation' put: 16r5029!
-GdiplusConstants at: 'PropertyTagThumbnailPhotometricInterp' put: 16r5024!
-GdiplusConstants at: 'PropertyTagThumbnailPlanarConfig' put: 16r502F!
-GdiplusConstants at: 'PropertyTagThumbnailPlanes' put: 16r5016!
-GdiplusConstants at: 'PropertyTagThumbnailPrimaryChromaticities' put: 16r5036!
-GdiplusConstants at: 'PropertyTagThumbnailRawBytes' put: 16r5017!
-GdiplusConstants at: 'PropertyTagThumbnailRefBlackWhite' put: 16r503A!
-GdiplusConstants at: 'PropertyTagThumbnailResolutionUnit' put: 16r5030!
-GdiplusConstants at: 'PropertyTagThumbnailResolutionX' put: 16r502D!
-GdiplusConstants at: 'PropertyTagThumbnailResolutionY' put: 16r502E!
-GdiplusConstants at: 'PropertyTagThumbnailRowsPerStrip' put: 16r502B!
-GdiplusConstants at: 'PropertyTagThumbnailSamplesPerPixel' put: 16r502A!
-GdiplusConstants at: 'PropertyTagThumbnailSize' put: 16r5018!
-GdiplusConstants at: 'PropertyTagThumbnailSoftwareUsed' put: 16r5032!
-GdiplusConstants at: 'PropertyTagThumbnailStripBytesCount' put: 16r502C!
-GdiplusConstants at: 'PropertyTagThumbnailStripOffsets' put: 16r5028!
-GdiplusConstants at: 'PropertyTagThumbnailTransferFunction' put: 16r5031!
-GdiplusConstants at: 'PropertyTagThumbnailWhitePoint' put: 16r5035!
-GdiplusConstants at: 'PropertyTagThumbnailWidth' put: 16r5013!
-GdiplusConstants at: 'PropertyTagThumbnailYCbCrCoefficients' put: 16r5037!
-GdiplusConstants at: 'PropertyTagThumbnailYCbCrPositioning' put: 16r5039!
-GdiplusConstants at: 'PropertyTagThumbnailYCbCrSubsampling' put: 16r5038!
-GdiplusConstants at: 'PropertyTagTileByteCounts' put: 16r145!
-GdiplusConstants at: 'PropertyTagTileLength' put: 16r143!
-GdiplusConstants at: 'PropertyTagTileOffset' put: 16r144!
-GdiplusConstants at: 'PropertyTagTileWidth' put: 16r142!
-GdiplusConstants at: 'PropertyTagTransferFuncition' put: 16r12D!
-GdiplusConstants at: 'PropertyTagTransferRange' put: 16r156!
-GdiplusConstants at: 'PropertyTagTypeASCII' put: 16r2!
-GdiplusConstants at: 'PropertyTagTypeByte' put: 16r1!
-GdiplusConstants at: 'PropertyTagTypeLong' put: 16r4!
-GdiplusConstants at: 'PropertyTagTypeRational' put: 16r5!
-GdiplusConstants at: 'PropertyTagTypeShort' put: 16r3!
-GdiplusConstants at: 'PropertyTagTypeSLONG' put: 16r9!
-GdiplusConstants at: 'PropertyTagTypeSRational' put: 16rA!
-GdiplusConstants at: 'PropertyTagTypeUndefined' put: 16r7!
-GdiplusConstants at: 'PropertyTagWhitePoint' put: 16r13E!
-GdiplusConstants at: 'PropertyTagXPosition' put: 16r11E!
-GdiplusConstants at: 'PropertyTagXResolution' put: 16r11A!
-GdiplusConstants at: 'PropertyTagYCbCrCoefficients' put: 16r211!
-GdiplusConstants at: 'PropertyTagYCbCrPositioning' put: 16r213!
-GdiplusConstants at: 'PropertyTagYCbCrSubsampling' put: 16r212!
-GdiplusConstants at: 'PropertyTagYPosition' put: 16r11F!
-GdiplusConstants at: 'PropertyTagYResolution' put: 16r11B!
-GdiplusConstants at: 'QualityModeDefault' put: 16r0!
-GdiplusConstants at: 'QualityModeHigh' put: 16r2!
-GdiplusConstants at: 'QualityModeInvalid' put: -16r1!
-GdiplusConstants at: 'QualityModeLow' put: 16r1!
-GdiplusConstants at: 'Rotate180FlipNone' put: 16r2!
-GdiplusConstants at: 'Rotate180FlipX' put: 16r6!
-GdiplusConstants at: 'Rotate180FlipXY' put: 16r0!
-GdiplusConstants at: 'Rotate180FlipY' put: 16r4!
-GdiplusConstants at: 'Rotate270FlipNone' put: 16r3!
-GdiplusConstants at: 'Rotate270FlipX' put: 16r7!
-GdiplusConstants at: 'Rotate270FlipXY' put: 16r1!
-GdiplusConstants at: 'Rotate270FlipY' put: 16r5!
-GdiplusConstants at: 'Rotate90FlipNone' put: 16r1!
-GdiplusConstants at: 'Rotate90FlipX' put: 16r5!
-GdiplusConstants at: 'Rotate90FlipXY' put: 16r3!
-GdiplusConstants at: 'Rotate90FlipY' put: 16r7!
-GdiplusConstants at: 'RotateNoneFlipNone' put: 16r0!
-GdiplusConstants at: 'RotateNoneFlipX' put: 16r4!
-GdiplusConstants at: 'RotateNoneFlipXY' put: 16r2!
-GdiplusConstants at: 'RotateNoneFlipY' put: 16r6!
-GdiplusConstants at: 'SmoothingModeAntiAlias' put: 16r4!
-GdiplusConstants at: 'SmoothingModeDefault' put: 16r0!
-GdiplusConstants at: 'SmoothingModeHighQuality' put: 16r2!
-GdiplusConstants at: 'SmoothingModeHighSpeed' put: 16r1!
-GdiplusConstants at: 'SmoothingModeInvalid' put: -16r1!
-GdiplusConstants at: 'SmoothingModeNone' put: 16r3!
-GdiplusConstants at: 'StringAlignmentCenter' put: 16r1!
-GdiplusConstants at: 'StringAlignmentFar' put: 16r2!
-GdiplusConstants at: 'StringAlignmentNear' put: 16r0!
-GdiplusConstants at: 'StringDigitSubstituteNational' put: 16r2!
-GdiplusConstants at: 'StringDigitSubstituteNone' put: 16r1!
-GdiplusConstants at: 'StringDigitSubstituteTraditional' put: 16r3!
-GdiplusConstants at: 'StringDigitSubstituteUser' put: 16r0!
-GdiplusConstants at: 'StringFormatFlagsDirectionRightToLeft' put: 16r1!
-GdiplusConstants at: 'StringFormatFlagsDirectionVertical' put: 16r2!
-GdiplusConstants at: 'StringFormatFlagsDisplayFormatControl' put: 16r20!
-GdiplusConstants at: 'StringFormatFlagsLineLimit' put: 16r2000!
-GdiplusConstants at: 'StringFormatFlagsMeasureTrailingSpaces' put: 16r800!
-GdiplusConstants at: 'StringFormatFlagsNoClip' put: 16r4000!
-GdiplusConstants at: 'StringFormatFlagsNoFitBlackBox' put: 16r4!
-GdiplusConstants at: 'StringFormatFlagsNoFontFallback' put: 16r400!
-GdiplusConstants at: 'StringFormatFlagsNoWrap' put: 16r1000!
-GdiplusConstants at: 'StringTrimmingCharacter' put: 16r1!
-GdiplusConstants at: 'StringTrimmingEllipsisCharacter' put: 16r3!
-GdiplusConstants at: 'StringTrimmingEllipsisPath' put: 16r5!
-GdiplusConstants at: 'StringTrimmingEllipsisWord' put: 16r4!
-GdiplusConstants at: 'StringTrimmingNone' put: 16r0!
-GdiplusConstants at: 'StringTrimmingWord' put: 16r2!
-GdiplusConstants at: 'TestControlForceBilinear' put: 16r0!
-GdiplusConstants at: 'TestControlGetBuildNumber' put: 16r2!
-GdiplusConstants at: 'TestControlNoICM' put: 16r1!
-GdiplusConstants at: 'TextRenderingHintAntiAlias' put: 16r4!
-GdiplusConstants at: 'TextRenderingHintAntiAliasGridFit' put: 16r3!
-GdiplusConstants at: 'TextRenderingHintClearTypeGridFit' put: 16r5!
-GdiplusConstants at: 'TextRenderingHintSingleBitPerPixel' put: 16r2!
-GdiplusConstants at: 'TextRenderingHintSingleBitPerPixelGridFit' put: 16r1!
-GdiplusConstants at: 'TextRenderingHintSystemDefault' put: 16r0!
-GdiplusConstants at: 'UnitDisplay' put: 16r1!
-GdiplusConstants at: 'UnitDocument' put: 16r5!
-GdiplusConstants at: 'UnitInch' put: 16r4!
-GdiplusConstants at: 'UnitMillimeter' put: 16r6!
-GdiplusConstants at: 'UnitPixel' put: 16r2!
-GdiplusConstants at: 'UnitPoint' put: 16r3!
-GdiplusConstants at: 'UnitWorld' put: 16r0!
-GdiplusConstants at: 'UnknownImageFormat' put: 16rD!
-GdiplusConstants at: 'UnsupportedGdiplusVersion' put: 16r11!
-GdiplusConstants at: 'ValueOverflow' put: 16rB!
-GdiplusConstants at: 'WarpModeBilinear' put: 16r1!
-GdiplusConstants at: 'WarpModePerspective' put: 16r0!
-GdiplusConstants at: 'Win32Error' put: 16r7!
-GdiplusConstants at: 'WmfRecordTypeAbortDoc' put: 16r10052!
-GdiplusConstants at: 'WmfRecordTypeAnimatePalette' put: 16r10436!
-GdiplusConstants at: 'WmfRecordTypeArc' put: 16r10817!
-GdiplusConstants at: 'WmfRecordTypeBitBlt' put: 16r10922!
-GdiplusConstants at: 'WmfRecordTypeChord' put: 16r10830!
-GdiplusConstants at: 'WmfRecordTypeCreateBitmap' put: 16r106FE!
-GdiplusConstants at: 'WmfRecordTypeCreateBitmapIndirect' put: 16r102FD!
-GdiplusConstants at: 'WmfRecordTypeCreateBrush' put: 16r100F8!
-GdiplusConstants at: 'WmfRecordTypeCreateBrushIndirect' put: 16r102FC!
-GdiplusConstants at: 'WmfRecordTypeCreateFontIndirect' put: 16r102FB!
-GdiplusConstants at: 'WmfRecordTypeCreatePalette' put: 16r100F7!
-GdiplusConstants at: 'WmfRecordTypeCreatePatternBrush' put: 16r101F9!
-GdiplusConstants at: 'WmfRecordTypeCreatePenIndirect' put: 16r102FA!
-GdiplusConstants at: 'WmfRecordTypeCreateRegion' put: 16r106FF!
-GdiplusConstants at: 'WmfRecordTypeDeleteObject' put: 16r101F0!
-GdiplusConstants at: 'WmfRecordTypeDIBBitBlt' put: 16r10940!
-GdiplusConstants at: 'WmfRecordTypeDIBCreatePatternBrush' put: 16r10142!
-GdiplusConstants at: 'WmfRecordTypeDIBStretchBlt' put: 16r10B41!
-GdiplusConstants at: 'WmfRecordTypeDrawText' put: 16r1062F!
-GdiplusConstants at: 'WmfRecordTypeEllipse' put: 16r10418!
-GdiplusConstants at: 'WmfRecordTypeEndDoc' put: 16r1005E!
-GdiplusConstants at: 'WmfRecordTypeEndPage' put: 16r10050!
-GdiplusConstants at: 'WmfRecordTypeEscape' put: 16r10626!
-GdiplusConstants at: 'WmfRecordTypeExcludeClipRect' put: 16r10415!
-GdiplusConstants at: 'WmfRecordTypeExtFloodFill' put: 16r10548!
-GdiplusConstants at: 'WmfRecordTypeExtTextOut' put: 16r10A32!
-GdiplusConstants at: 'WmfRecordTypeFillRegion' put: 16r10228!
-GdiplusConstants at: 'WmfRecordTypeFloodFill' put: 16r10419!
-GdiplusConstants at: 'WmfRecordTypeFrameRegion' put: 16r10429!
-GdiplusConstants at: 'WmfRecordTypeIntersectClipRect' put: 16r10416!
-GdiplusConstants at: 'WmfRecordTypeInvertRegion' put: 16r1012A!
-GdiplusConstants at: 'WmfRecordTypeLineTo' put: 16r10213!
-GdiplusConstants at: 'WmfRecordTypeMoveTo' put: 16r10214!
-GdiplusConstants at: 'WmfRecordTypeOffsetClipRgn' put: 16r10220!
-GdiplusConstants at: 'WmfRecordTypeOffsetViewportOrg' put: 16r10211!
-GdiplusConstants at: 'WmfRecordTypeOffsetWindowOrg' put: 16r1020F!
-GdiplusConstants at: 'WmfRecordTypePaintRegion' put: 16r1012B!
-GdiplusConstants at: 'WmfRecordTypePatBlt' put: 16r1061D!
-GdiplusConstants at: 'WmfRecordTypePie' put: 16r1081A!
-GdiplusConstants at: 'WmfRecordTypePolygon' put: 16r10324!
-GdiplusConstants at: 'WmfRecordTypePolyline' put: 16r10325!
-GdiplusConstants at: 'WmfRecordTypePolyPolygon' put: 16r10538!
-GdiplusConstants at: 'WmfRecordTypeRealizePalette' put: 16r10035!
-GdiplusConstants at: 'WmfRecordTypeRectangle' put: 16r1041B!
-GdiplusConstants at: 'WmfRecordTypeResetDC' put: 16r1014C!
-GdiplusConstants at: 'WmfRecordTypeResizePalette' put: 16r10139!
-GdiplusConstants at: 'WmfRecordTypeRestoreDC' put: 16r10127!
-GdiplusConstants at: 'WmfRecordTypeRoundRect' put: 16r1061C!
-GdiplusConstants at: 'WmfRecordTypeSaveDC' put: 16r1001E!
-GdiplusConstants at: 'WmfRecordTypeScaleViewportExt' put: 16r10412!
-GdiplusConstants at: 'WmfRecordTypeScaleWindowExt' put: 16r10410!
-GdiplusConstants at: 'WmfRecordTypeSelectClipRegion' put: 16r1012C!
-GdiplusConstants at: 'WmfRecordTypeSelectObject' put: 16r1012D!
-GdiplusConstants at: 'WmfRecordTypeSelectPalette' put: 16r10234!
-GdiplusConstants at: 'WmfRecordTypeSetBkColor' put: 16r10201!
-GdiplusConstants at: 'WmfRecordTypeSetBkMode' put: 16r10102!
-GdiplusConstants at: 'WmfRecordTypeSetDIBToDev' put: 16r10D33!
-GdiplusConstants at: 'WmfRecordTypeSetLayout' put: 16r10149!
-GdiplusConstants at: 'WmfRecordTypeSetMapMode' put: 16r10103!
-GdiplusConstants at: 'WmfRecordTypeSetMapperFlags' put: 16r10231!
-GdiplusConstants at: 'WmfRecordTypeSetPalEntries' put: 16r10037!
-GdiplusConstants at: 'WmfRecordTypeSetPixel' put: 16r1041F!
-GdiplusConstants at: 'WmfRecordTypeSetPolyFillMode' put: 16r10106!
-GdiplusConstants at: 'WmfRecordTypeSetRelAbs' put: 16r10105!
-GdiplusConstants at: 'WmfRecordTypeSetROP2' put: 16r10104!
-GdiplusConstants at: 'WmfRecordTypeSetStretchBltMode' put: 16r10107!
-GdiplusConstants at: 'WmfRecordTypeSetTextAlign' put: 16r1012E!
-GdiplusConstants at: 'WmfRecordTypeSetTextCharExtra' put: 16r10108!
-GdiplusConstants at: 'WmfRecordTypeSetTextColor' put: 16r10209!
-GdiplusConstants at: 'WmfRecordTypeSetTextJustification' put: 16r1020A!
-GdiplusConstants at: 'WmfRecordTypeSetViewportExt' put: 16r1020E!
-GdiplusConstants at: 'WmfRecordTypeSetViewportOrg' put: 16r1020D!
-GdiplusConstants at: 'WmfRecordTypeSetWindowExt' put: 16r1020C!
-GdiplusConstants at: 'WmfRecordTypeSetWindowOrg' put: 16r1020B!
-GdiplusConstants at: 'WmfRecordTypeStartDoc' put: 16r1014D!
-GdiplusConstants at: 'WmfRecordTypeStartPage' put: 16r1004F!
-GdiplusConstants at: 'WmfRecordTypeStretchBlt' put: 16r10B23!
-GdiplusConstants at: 'WmfRecordTypeStretchDIB' put: 16r10F43!
-GdiplusConstants at: 'WmfRecordTypeTextOut' put: 16r10521!
-GdiplusConstants at: 'WrapModeClamp' put: 16r4!
-GdiplusConstants at: 'WrapModeTile' put: 16r0!
-GdiplusConstants at: 'WrapModeTileFlipX' put: 16r1!
-GdiplusConstants at: 'WrapModeTileFlipXY' put: 16r3!
-GdiplusConstants at: 'WrapModeTileFlipY' put: 16r2!
-GdiplusConstants at: 'WrongState' put: 16r8!
-GdiplusConstants shrink!
+SharedPool subclass: #GdiplusConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Aborted' -> 16r9.
+		'AccessDenied' -> 16rC.
+		'BrushTypeHatchFill' -> 16r1.
+		'BrushTypeLinearGradient' -> 16r4.
+		'BrushTypePathGradient' -> 16r3.
+		'BrushTypeSolidColor' -> 16r0.
+		'BrushTypeTextureFill' -> 16r2.
+		'ColorAdjustTypeAny' -> 16r6.
+		'ColorAdjustTypeBitmap' -> 16r1.
+		'ColorAdjustTypeBrush' -> 16r2.
+		'ColorAdjustTypeCount' -> 16r5.
+		'ColorAdjustTypeDefault' -> 16r0.
+		'ColorAdjustTypePen' -> 16r3.
+		'ColorAdjustTypeText' -> 16r4.
+		'ColorChannelFlagsC' -> 16r0.
+		'ColorChannelFlagsK' -> 16r3.
+		'ColorChannelFlagsLast' -> 16r4.
+		'ColorChannelFlagsM' -> 16r1.
+		'ColorChannelFlagsY' -> 16r2.
+		'ColorMatrixFlagsAltGray' -> 16r2.
+		'ColorMatrixFlagsDefault' -> 16r0.
+		'ColorMatrixFlagsSkipGrays' -> 16r1.
+		'ColorModeARGB32' -> 16r0.
+		'ColorModeARGB64' -> 16r1.
+		'CombineModeComplement' -> 16r5.
+		'CombineModeExclude' -> 16r4.
+		'CombineModeIntersect' -> 16r1.
+		'CombineModeReplace' -> 16r0.
+		'CombineModeUnion' -> 16r2.
+		'CombineModeXor' -> 16r3.
+		'CompositingModeSourceCopy' -> 16r1.
+		'CompositingModeSourceOver' -> 16r0.
+		'CompositingQualityAssumeLinear' -> 16r4.
+		'CompositingQualityDefault' -> 16r0.
+		'CompositingQualityGammaCorrected' -> 16r3.
+		'CompositingQualityHighQuality' -> 16r2.
+		'CompositingQualityHighSpeed' -> 16r1.
+		'CompositingQualityInvalid' -> -16r1.
+		'CoordinateSpaceDevice' -> 16r2.
+		'CoordinateSpacePage' -> 16r1.
+		'CoordinateSpaceWorld' -> 16r0.
+		'CustomLineCapTypeAdjustableArrow' -> 16r1.
+		'CustomLineCapTypeDefault' -> 16r0.
+		'DashCapFlat' -> 16r0.
+		'DashCapRound' -> 16r2.
+		'DashCapTriangle' -> 16r3.
+		'DashStyleCustom' -> 16r5.
+		'DashStyleDash' -> 16r1.
+		'DashStyleDashDot' -> 16r3.
+		'DashStyleDashDotDot' -> 16r4.
+		'DashStyleDot' -> 16r2.
+		'DashStyleSolid' -> 16r0.
+		'DriverStringOptionsCmapLookup' -> 16r1.
+		'DriverStringOptionsLimitSubpixel' -> 16r8.
+		'DriverStringOptionsRealizedAdvance' -> 16r4.
+		'DriverStringOptionsVertical' -> 16r2.
+		'EmfPlusRecordTotal' -> 16r4037.
+		'EmfPlusRecordTypeBeginContainer' -> 16r4027.
+		'EmfPlusRecordTypeBeginContainerNoParams' -> 16r4028.
+		'EmfPlusRecordTypeClear' -> 16r4009.
+		'EmfPlusRecordTypeComment' -> 16r4003.
+		'EmfPlusRecordTypeDrawArc' -> 16r4012.
+		'EmfPlusRecordTypeDrawBeziers' -> 16r4019.
+		'EmfPlusRecordTypeDrawClosedCurve' -> 16r4017.
+		'EmfPlusRecordTypeDrawCurve' -> 16r4018.
+		'EmfPlusRecordTypeDrawDriverString' -> 16r4036.
+		'EmfPlusRecordTypeDrawEllipse' -> 16r400F.
+		'EmfPlusRecordTypeDrawImage' -> 16r401A.
+		'EmfPlusRecordTypeDrawImagePoints' -> 16r401B.
+		'EmfPlusRecordTypeDrawLines' -> 16r400D.
+		'EmfPlusRecordTypeDrawPath' -> 16r4015.
+		'EmfPlusRecordTypeDrawPie' -> 16r4011.
+		'EmfPlusRecordTypeDrawRects' -> 16r400B.
+		'EmfPlusRecordTypeDrawString' -> 16r401C.
+		'EmfPlusRecordTypeEndContainer' -> 16r4029.
+		'EmfPlusRecordTypeEndOfFile' -> 16r4002.
+		'EmfPlusRecordTypeFillClosedCurve' -> 16r4016.
+		'EmfPlusRecordTypeFillEllipse' -> 16r400E.
+		'EmfPlusRecordTypeFillPath' -> 16r4014.
+		'EmfPlusRecordTypeFillPie' -> 16r4010.
+		'EmfPlusRecordTypeFillPolygon' -> 16r400C.
+		'EmfPlusRecordTypeFillRects' -> 16r400A.
+		'EmfPlusRecordTypeFillRegion' -> 16r4013.
+		'EmfPlusRecordTypeGetDC' -> 16r4004.
+		'EmfPlusRecordTypeHeader' -> 16r4001.
+		'EmfPlusRecordTypeInvalid' -> 16r4000.
+		'EmfPlusRecordTypeMax' -> 16r4036.
+		'EmfPlusRecordTypeMin' -> 16r4001.
+		'EmfPlusRecordTypeMultiFormatEnd' -> 16r4007.
+		'EmfPlusRecordTypeMultiFormatSection' -> 16r4006.
+		'EmfPlusRecordTypeMultiFormatStart' -> 16r4005.
+		'EmfPlusRecordTypeMultiplyWorldTransform' -> 16r402C.
+		'EmfPlusRecordTypeObject' -> 16r4008.
+		'EmfPlusRecordTypeOffsetClip' -> 16r4035.
+		'EmfPlusRecordTypeResetClip' -> 16r4031.
+		'EmfPlusRecordTypeResetWorldTransform' -> 16r402B.
+		'EmfPlusRecordTypeRestore' -> 16r4026.
+		'EmfPlusRecordTypeRotateWorldTransform' -> 16r402F.
+		'EmfPlusRecordTypeSave' -> 16r4025.
+		'EmfPlusRecordTypeScaleWorldTransform' -> 16r402E.
+		'EmfPlusRecordTypeSetAntiAliasMode' -> 16r401E.
+		'EmfPlusRecordTypeSetClipPath' -> 16r4033.
+		'EmfPlusRecordTypeSetClipRect' -> 16r4032.
+		'EmfPlusRecordTypeSetClipRegion' -> 16r4034.
+		'EmfPlusRecordTypeSetCompositingMode' -> 16r4023.
+		'EmfPlusRecordTypeSetCompositingQuality' -> 16r4024.
+		'EmfPlusRecordTypeSetInterpolationMode' -> 16r4021.
+		'EmfPlusRecordTypeSetPageTransform' -> 16r4030.
+		'EmfPlusRecordTypeSetPixelOffsetMode' -> 16r4022.
+		'EmfPlusRecordTypeSetRenderingOrigin' -> 16r401D.
+		'EmfPlusRecordTypeSetTextContrast' -> 16r4020.
+		'EmfPlusRecordTypeSetTextRenderingHint' -> 16r401F.
+		'EmfPlusRecordTypeSetWorldTransform' -> 16r402A.
+		'EmfPlusRecordTypeTranslateWorldTransform' -> 16r402D.
+		'EmfRecordTypeAbortPath' -> 16r44.
+		'EmfRecordTypeAlphaBlend' -> 16r72.
+		'EmfRecordTypeAngleArc' -> 16r29.
+		'EmfRecordTypeArc' -> 16r2D.
+		'EmfRecordTypeArcTo' -> 16r37.
+		'EmfRecordTypeBeginPath' -> 16r3B.
+		'EmfRecordTypeBitBlt' -> 16r4C.
+		'EmfRecordTypeChord' -> 16r2E.
+		'EmfRecordTypeCloseFigure' -> 16r3D.
+		'EmfRecordTypeColorCorrectPalette' -> 16r6F.
+		'EmfRecordTypeColorMatchToTargetW' -> 16r79.
+		'EmfRecordTypeCreateBrushIndirect' -> 16r27.
+		'EmfRecordTypeCreateColorSpace' -> 16r63.
+		'EmfRecordTypeCreateColorSpaceW' -> 16r7A.
+		'EmfRecordTypeCreateDIBPatternBrushPt' -> 16r5E.
+		'EmfRecordTypeCreateMonoBrush' -> 16r5D.
+		'EmfRecordTypeCreatePalette' -> 16r31.
+		'EmfRecordTypeCreatePen' -> 16r26.
+		'EmfRecordTypeDeleteColorSpace' -> 16r65.
+		'EmfRecordTypeDeleteObject' -> 16r28.
+		'EmfRecordTypeDrawEscape' -> 16r69.
+		'EmfRecordTypeEllipse' -> 16r2A.
+		'EmfRecordTypeEndPath' -> 16r3C.
+		'EmfRecordTypeEOF' -> 16rE.
+		'EmfRecordTypeExcludeClipRect' -> 16r1D.
+		'EmfRecordTypeExtCreateFontIndirect' -> 16r52.
+		'EmfRecordTypeExtCreatePen' -> 16r5F.
+		'EmfRecordTypeExtEscape' -> 16r6A.
+		'EmfRecordTypeExtFloodFill' -> 16r35.
+		'EmfRecordTypeExtSelectClipRgn' -> 16r4B.
+		'EmfRecordTypeExtTextOutA' -> 16r53.
+		'EmfRecordTypeExtTextOutW' -> 16r54.
+		'EmfRecordTypeFillPath' -> 16r3E.
+		'EmfRecordTypeFillRgn' -> 16r47.
+		'EmfRecordTypeFlattenPath' -> 16r41.
+		'EmfRecordTypeForceUFIMapping' -> 16r6D.
+		'EmfRecordTypeFrameRgn' -> 16r48.
+		'EmfRecordTypeGdiComment' -> 16r46.
+		'EmfRecordTypeGLSBoundedRecord' -> 16r67.
+		'EmfRecordTypeGLSRecord' -> 16r66.
+		'EmfRecordTypeGradientFill' -> 16r76.
+		'EmfRecordTypeHeader' -> 16r1.
+		'EmfRecordTypeIntersectClipRect' -> 16r1E.
+		'EmfRecordTypeInvertRgn' -> 16r49.
+		'EmfRecordTypeLineTo' -> 16r36.
+		'EmfRecordTypeMaskBlt' -> 16r4E.
+		'EmfRecordTypeMax' -> 16r7A.
+		'EmfRecordTypeMin' -> 16r1.
+		'EmfRecordTypeModifyWorldTransform' -> 16r24.
+		'EmfRecordTypeMoveToEx' -> 16r1B.
+		'EmfRecordTypeNamedEscape' -> 16r6E.
+		'EmfRecordTypeOffsetClipRgn' -> 16r1A.
+		'EmfRecordTypePaintRgn' -> 16r4A.
+		'EmfRecordTypePie' -> 16r2F.
+		'EmfRecordTypePixelFormat' -> 16r68.
+		'EmfRecordTypePlgBlt' -> 16r4F.
+		'EmfRecordTypePolyBezier' -> 16r2.
+		'EmfRecordTypePolyBezier16' -> 16r55.
+		'EmfRecordTypePolyBezierTo' -> 16r5.
+		'EmfRecordTypePolyBezierTo16' -> 16r58.
+		'EmfRecordTypePolyDraw' -> 16r38.
+		'EmfRecordTypePolyDraw16' -> 16r5C.
+		'EmfRecordTypePolygon' -> 16r3.
+		'EmfRecordTypePolygon16' -> 16r56.
+		'EmfRecordTypePolyline' -> 16r4.
+		'EmfRecordTypePolyline16' -> 16r57.
+		'EmfRecordTypePolyLineTo' -> 16r6.
+		'EmfRecordTypePolylineTo16' -> 16r59.
+		'EmfRecordTypePolyPolygon' -> 16r8.
+		'EmfRecordTypePolyPolygon16' -> 16r5B.
+		'EmfRecordTypePolyPolyline' -> 16r7.
+		'EmfRecordTypePolyPolyline16' -> 16r5A.
+		'EmfRecordTypePolyTextOutA' -> 16r60.
+		'EmfRecordTypePolyTextOutW' -> 16r61.
+		'EmfRecordTypeRealizePalette' -> 16r34.
+		'EmfRecordTypeRectangle' -> 16r2B.
+		'EmfRecordTypeReserved_069' -> 16r45.
+		'EmfRecordTypeReserved_117' -> 16r75.
+		'EmfRecordTypeResizePalette' -> 16r33.
+		'EmfRecordTypeRestoreDC' -> 16r22.
+		'EmfRecordTypeRoundRect' -> 16r2C.
+		'EmfRecordTypeSaveDC' -> 16r21.
+		'EmfRecordTypeScaleViewportExtEx' -> 16r1F.
+		'EmfRecordTypeScaleWindowExtEx' -> 16r20.
+		'EmfRecordTypeSelectClipPath' -> 16r43.
+		'EmfRecordTypeSelectObject' -> 16r25.
+		'EmfRecordTypeSelectPalette' -> 16r30.
+		'EmfRecordTypeSetArcDirection' -> 16r39.
+		'EmfRecordTypeSetBkColor' -> 16r19.
+		'EmfRecordTypeSetBkMode' -> 16r12.
+		'EmfRecordTypeSetBrushOrgEx' -> 16rD.
+		'EmfRecordTypeSetColorAdjustment' -> 16r17.
+		'EmfRecordTypeSetColorSpace' -> 16r64.
+		'EmfRecordTypeSetDIBitsToDevice' -> 16r50.
+		'EmfRecordTypeSetICMMode' -> 16r62.
+		'EmfRecordTypeSetICMProfileA' -> 16r70.
+		'EmfRecordTypeSetICMProfileW' -> 16r71.
+		'EmfRecordTypeSetLayout' -> 16r73.
+		'EmfRecordTypeSetLinkedUFIs' -> 16r77.
+		'EmfRecordTypeSetMapMode' -> 16r11.
+		'EmfRecordTypeSetMapperFlags' -> 16r10.
+		'EmfRecordTypeSetMetaRgn' -> 16r1C.
+		'EmfRecordTypeSetMiterLimit' -> 16r3A.
+		'EmfRecordTypeSetPaletteEntries' -> 16r32.
+		'EmfRecordTypeSetPixelV' -> 16rF.
+		'EmfRecordTypeSetPolyFillMode' -> 16r13.
+		'EmfRecordTypeSetROP2' -> 16r14.
+		'EmfRecordTypeSetStretchBltMode' -> 16r15.
+		'EmfRecordTypeSetTextAlign' -> 16r16.
+		'EmfRecordTypeSetTextColor' -> 16r18.
+		'EmfRecordTypeSetTextJustification' -> 16r78.
+		'EmfRecordTypeSetViewportExtEx' -> 16rB.
+		'EmfRecordTypeSetViewportOrgEx' -> 16rC.
+		'EmfRecordTypeSetWindowExtEx' -> 16r9.
+		'EmfRecordTypeSetWindowOrgEx' -> 16rA.
+		'EmfRecordTypeSetWorldTransform' -> 16r23.
+		'EmfRecordTypeSmallTextOut' -> 16r6C.
+		'EmfRecordTypeStartDoc' -> 16r6B.
+		'EmfRecordTypeStretchBlt' -> 16r4D.
+		'EmfRecordTypeStretchDIBits' -> 16r51.
+		'EmfRecordTypeStrokeAndFillPath' -> 16r3F.
+		'EmfRecordTypeStrokePath' -> 16r40.
+		'EmfRecordTypeTransparentBlt' -> 16r74.
+		'EmfRecordTypeWidenPath' -> 16r42.
+		'EmfToWmfBitsFlagsDefault' -> 16r0.
+		'EmfToWmfBitsFlagsEmbedEmf' -> 16r1.
+		'EmfToWmfBitsFlagsIncludePlaceable' -> 16r2.
+		'EmfToWmfBitsFlagsNoXORClip' -> 16r4.
+		'EmfTypeEmfOnly' -> 16r3.
+		'EmfTypeEmfPlusDual' -> 16r5.
+		'EmfTypeEmfPlusOnly' -> 16r4.
+		'EncoderParameterValueTypeASCII' -> 16r2.
+		'EncoderParameterValueTypeByte' -> 16r1.
+		'EncoderParameterValueTypeLong' -> 16r4.
+		'EncoderParameterValueTypeLongRange' -> 16r6.
+		'EncoderParameterValueTypePointer' -> 16r9.
+		'EncoderParameterValueTypeRational' -> 16r5.
+		'EncoderParameterValueTypeRationalRange' -> 16r8.
+		'EncoderParameterValueTypeShort' -> 16r3.
+		'EncoderParameterValueTypeUndefined' -> 16r7.
+		'EncoderValueColorTypeCMYK' -> 16r0.
+		'EncoderValueColorTypeYCCK' -> 16r1.
+		'EncoderValueCompressionCCITT3' -> 16r3.
+		'EncoderValueCompressionCCITT4' -> 16r4.
+		'EncoderValueCompressionLZW' -> 16r2.
+		'EncoderValueCompressionNone' -> 16r6.
+		'EncoderValueCompressionRle' -> 16r5.
+		'EncoderValueFlush' -> 16r14.
+		'EncoderValueFrameDimensionPage' -> 16r17.
+		'EncoderValueFrameDimensionResolution' -> 16r16.
+		'EncoderValueFrameDimensionTime' -> 16r15.
+		'EncoderValueLastFrame' -> 16r13.
+		'EncoderValueMultiFrame' -> 16r12.
+		'EncoderValueRenderNonProgressive' -> 16rC.
+		'EncoderValueRenderProgressive' -> 16rB.
+		'EncoderValueScanMethodInterlaced' -> 16r7.
+		'EncoderValueScanMethodNonInterlaced' -> 16r8.
+		'EncoderValueTransformFlipHorizontal' -> 16r10.
+		'EncoderValueTransformFlipVertical' -> 16r11.
+		'EncoderValueTransformRotate180' -> 16rE.
+		'EncoderValueTransformRotate270' -> 16rF.
+		'EncoderValueTransformRotate90' -> 16rD.
+		'EncoderValueVersionGif87' -> 16r9.
+		'EncoderValueVersionGif89' -> 16rA.
+		'FileNotFound' -> 16rA.
+		'FillModeAlternate' -> 16r0.
+		'FillModeWinding' -> 16r1.
+		'FlatnessDefault' -> 0.0.
+		'FlushIntentionFlush' -> 16r0.
+		'FlushIntentionSync' -> 16r1.
+		'FontFamilyNotFound' -> 16rE.
+		'FontStyleBold' -> 16r1.
+		'FontStyleBoldItalic' -> 16r3.
+		'FontStyleItalic' -> 16r2.
+		'FontStyleNotFound' -> 16rF.
+		'FontStyleRegular' -> 16r0.
+		'FontStyleStrikeout' -> 16r8.
+		'FontStyleUnderline' -> 16r4.
+		'GdiplusNotInitialized' -> 16r12.
+		'GenericError' -> 16r1.
+		'GenericFontFamilyMonospace' -> 16r2.
+		'GenericFontFamilySansSerif' -> 16r1.
+		'GenericFontFamilySerif' -> 16r0.
+		'HatchStyle05Percent' -> 16r6.
+		'HatchStyle10Percent' -> 16r7.
+		'HatchStyle20Percent' -> 16r8.
+		'HatchStyle25Percent' -> 16r9.
+		'HatchStyle30Percent' -> 16rA.
+		'HatchStyle40Percent' -> 16rB.
+		'HatchStyle50Percent' -> 16rC.
+		'HatchStyle60Percent' -> 16rD.
+		'HatchStyle70Percent' -> 16rE.
+		'HatchStyle75Percent' -> 16rF.
+		'HatchStyle80Percent' -> 16r10.
+		'HatchStyle90Percent' -> 16r11.
+		'HatchStyleBackwardDiagonal' -> 16r3.
+		'HatchStyleCross' -> 16r4.
+		'HatchStyleDarkDownwardDiagonal' -> 16r14.
+		'HatchStyleDarkHorizontal' -> 16r1D.
+		'HatchStyleDarkUpwardDiagonal' -> 16r15.
+		'HatchStyleDarkVertical' -> 16r1C.
+		'HatchStyleDashedDownwardDiagonal' -> 16r1E.
+		'HatchStyleDashedHorizontal' -> 16r20.
+		'HatchStyleDashedUpwardDiagonal' -> 16r1F.
+		'HatchStyleDashedVertical' -> 16r21.
+		'HatchStyleDiagonalBrick' -> 16r26.
+		'HatchStyleDiagonalCross' -> 16r5.
+		'HatchStyleDivot' -> 16r2A.
+		'HatchStyleDottedDiamond' -> 16r2C.
+		'HatchStyleDottedGrid' -> 16r2B.
+		'HatchStyleForwardDiagonal' -> 16r2.
+		'HatchStyleHorizontal' -> 16r0.
+		'HatchStyleHorizontalBrick' -> 16r27.
+		'HatchStyleLargeCheckerBoard' -> 16r32.
+		'HatchStyleLargeConfetti' -> 16r23.
+		'HatchStyleLargeGrid' -> 16r4.
+		'HatchStyleLightDownwardDiagonal' -> 16r12.
+		'HatchStyleLightHorizontal' -> 16r19.
+		'HatchStyleLightUpwardDiagonal' -> 16r13.
+		'HatchStyleLightVertical' -> 16r18.
+		'HatchStyleMax' -> 16r34.
+		'HatchStyleMin' -> 16r0.
+		'HatchStyleNarrowHorizontal' -> 16r1B.
+		'HatchStyleNarrowVertical' -> 16r1A.
+		'HatchStyleOutlinedDiamond' -> 16r33.
+		'HatchStylePlaid' -> 16r29.
+		'HatchStyleShingle' -> 16r2D.
+		'HatchStyleSmallCheckerBoard' -> 16r31.
+		'HatchStyleSmallConfetti' -> 16r22.
+		'HatchStyleSmallGrid' -> 16r30.
+		'HatchStyleSolidDiamond' -> 16r34.
+		'HatchStyleSphere' -> 16r2F.
+		'HatchStyleTotal' -> 16r35.
+		'HatchStyleTrellis' -> 16r2E.
+		'HatchStyleVertical' -> 16r1.
+		'HatchStyleWave' -> 16r25.
+		'HatchStyleWeave' -> 16r28.
+		'HatchStyleWideDownwardDiagonal' -> 16r16.
+		'HatchStyleWideUpwardDiagonal' -> 16r17.
+		'HatchStyleZigZag' -> 16r24.
+		'HotkeyPrefixHide' -> 16r2.
+		'HotkeyPrefixNone' -> 16r0.
+		'HotkeyPrefixShow' -> 16r1.
+		'ImageFlagsCaching' -> 16r20000.
+		'ImageFlagsColorSpaceCMYK' -> 16r20.
+		'ImageFlagsColorSpaceGRAY' -> 16r40.
+		'ImageFlagsColorSpaceRGB' -> 16r10.
+		'ImageFlagsColorSpaceYCBCR' -> 16r80.
+		'ImageFlagsColorSpaceYCCK' -> 16r100.
+		'ImageFlagsHasAlpha' -> 16r2.
+		'ImageFlagsHasRealDPI' -> 16r1000.
+		'ImageFlagsHasRealPixelSize' -> 16r2000.
+		'ImageFlagsHasTranslucent' -> 16r4.
+		'ImageFlagsNone' -> 16r0.
+		'ImageFlagsPartiallyScalable' -> 16r8.
+		'ImageFlagsReadOnly' -> 16r10000.
+		'ImageFlagsScalable' -> 16r1.
+		'ImageTypeBitmap' -> 16r1.
+		'ImageTypeMetafile' -> 16r2.
+		'ImageTypeUnknown' -> 16r0.
+		'InsufficientBuffer' -> 16r5.
+		'InterpolationModeBicubic' -> 16r4.
+		'InterpolationModeBilinear' -> 16r3.
+		'InterpolationModeDefault' -> 16r0.
+		'InterpolationModeHighQuality' -> 16r2.
+		'InterpolationModeHighQualityBicubic' -> 16r7.
+		'InterpolationModeHighQualityBilinear' -> 16r6.
+		'InterpolationModeInvalid' -> -16r1.
+		'InterpolationModeLowQuality' -> 16r1.
+		'InterpolationModeNearestNeighbor' -> 16r5.
+		'InvalidParameter' -> 16r2.
+		'LinearGradientModeBackwardDiagonal' -> 16r3.
+		'LinearGradientModeForwardDiagonal' -> 16r2.
+		'LinearGradientModeHorizontal' -> 16r0.
+		'LinearGradientModeVertical' -> 16r1.
+		'LineCapAnchorMask' -> 16rF0.
+		'LineCapArrowAnchor' -> 16r14.
+		'LineCapCustom' -> 16rFF.
+		'LineCapDiamondAnchor' -> 16r13.
+		'LineCapFlat' -> 16r0.
+		'LineCapNoAnchor' -> 16r10.
+		'LineCapRound' -> 16r2.
+		'LineCapRoundAnchor' -> 16r12.
+		'LineCapSquare' -> 16r1.
+		'LineCapSquareAnchor' -> 16r11.
+		'LineCapTriangle' -> 16r3.
+		'LineJoinBevel' -> 16r1.
+		'LineJoinMiter' -> 16r0.
+		'LineJoinMiterClipped' -> 16r3.
+		'LineJoinRound' -> 16r2.
+		'MatrixOrderAppend' -> 16r1.
+		'MatrixOrderPrepend' -> 16r0.
+		'MetafileFrameUnitDocument' -> 16r5.
+		'MetafileFrameUnitGdi' -> 16r7.
+		'MetafileFrameUnitInch' -> 16r4.
+		'MetafileFrameUnitMillimeter' -> 16r6.
+		'MetafileFrameUnitPixel' -> 16r2.
+		'MetafileFrameUnitPoint' -> 16r3.
+		'MetafileTypeEmf' -> 16r3.
+		'MetafileTypeEmfPlusDual' -> 16r5.
+		'MetafileTypeEmfPlusOnly' -> 16r4.
+		'MetafileTypeInvalid' -> 16r0.
+		'MetafileTypeWmf' -> 16r1.
+		'MetafileTypeWmfPlaceable' -> 16r2.
+		'NotImplemented' -> 16r6.
+		'NotTrueTypeFont' -> 16r10.
+		'ObjectBusy' -> 16r4.
+		'ObjectTypeBrush' -> 16r1.
+		'ObjectTypeCustomLineCap' -> 16r9.
+		'ObjectTypeFont' -> 16r6.
+		'ObjectTypeImage' -> 16r5.
+		'ObjectTypeImageAttributes' -> 16r8.
+		'ObjectTypeInvalid' -> 16r0.
+		'ObjectTypeMax' -> 16r9.
+		'ObjectTypeMin' -> 16r1.
+		'ObjectTypePath' -> 16r3.
+		'ObjectTypePen' -> 16r2.
+		'ObjectTypeRegion' -> 16r4.
+		'ObjectTypeStringFormat' -> 16r7.
+		'Ok' -> 16r0.
+		'OutOfMemory' -> 16r3.
+		'PaletteFlagsGrayScale' -> 16r2.
+		'PaletteFlagsHalftone' -> 16r4.
+		'PaletteFlagsHasAlpha' -> 16r1.
+		'PathPointTypeBezier' -> 16r3.
+		'PathPointTypeBezier3' -> 16r3.
+		'PathPointTypeCloseSubpath' -> 16r80.
+		'PathPointTypeDashMode' -> 16r10.
+		'PathPointTypeLine' -> 16r1.
+		'PathPointTypePathMarker' -> 16r20.
+		'PathPointTypePathTypeMask' -> 16r7.
+		'PathPointTypeStart' -> 16r0.
+		'PenAlignmentCenter' -> 16r0.
+		'PenAlignmentInset' -> 16r1.
+		'PenTypeHatchFill' -> 16r1.
+		'PenTypeLinearGradient' -> 16r4.
+		'PenTypePathGradient' -> 16r3.
+		'PenTypeSolidColor' -> 16r0.
+		'PenTypeTextureFill' -> 16r2.
+		'PenTypeUnknown' -> -16r1.
+		'PixelFormat16bppARGB1555' -> 16r61007.
+		'PixelFormat16bppGrayScale' -> 16r101004.
+		'PixelFormat16bppRGB555' -> 16r21005.
+		'PixelFormat16bppRGB565' -> 16r21006.
+		'PixelFormat1bppIndexed' -> 16r30101.
+		'PixelFormat24bppRGB' -> 16r21808.
+		'PixelFormat32bppARGB' -> 16r26200A.
+		'PixelFormat32bppPARGB' -> 16rE200B.
+		'PixelFormat32bppRGB' -> 16r22009.
+		'PixelFormat48bppRGB' -> 16r10300C.
+		'PixelFormat4bppIndexed' -> 16r30402.
+		'PixelFormat64bppARGB' -> 16r34400D.
+		'PixelFormat64bppPARGB' -> 16r1C400E.
+		'PixelFormat8bppIndexed' -> 16r30803.
+		'PixelFormatAlpha' -> 16r40000.
+		'PixelFormatCanonical' -> 16r200000.
+		'PixelFormatDontCare' -> 16r0.
+		'PixelFormatExtended' -> 16r100000.
+		'PixelFormatGDI' -> 16r20000.
+		'PixelFormatIndexed' -> 16r10000.
+		'PixelFormatMax' -> 16rF.
+		'PixelFormatPAlpha' -> 16r80000.
+		'PixelFormatUndefined' -> 16r0.
+		'PixelOffsetModeDefault' -> 16r0.
+		'PixelOffsetModeHalf' -> 16r4.
+		'PixelOffsetModeHighQuality' -> 16r2.
+		'PixelOffsetModeHighSpeed' -> 16r1.
+		'PixelOffsetModeInvalid' -> -16r1.
+		'PixelOffsetModeNone' -> 16r3.
+		'PropertyNotFound' -> 16r13.
+		'PropertyNotSupported' -> 16r14.
+		'PropertyTagArtist' -> 16r13B.
+		'PropertyTagBitsPerSample' -> 16r102.
+		'PropertyTagCellHeight' -> 16r109.
+		'PropertyTagCellWidth' -> 16r108.
+		'PropertyTagChrominanceTable' -> 16r5091.
+		'PropertyTagColorMap' -> 16r140.
+		'PropertyTagColorTransferFunction' -> 16r501A.
+		'PropertyTagCompression' -> 16r103.
+		'PropertyTagCopyright' -> 16r8298.
+		'PropertyTagDateTime' -> 16r132.
+		'PropertyTagDocumentName' -> 16r10D.
+		'PropertyTagDotRange' -> 16r150.
+		'PropertyTagEquipMake' -> 16r10F.
+		'PropertyTagEquipModel' -> 16r110.
+		'PropertyTagExifAperture' -> 16r9202.
+		'PropertyTagExifBrightness' -> 16r9203.
+		'PropertyTagExifCfaPattern' -> 16rA302.
+		'PropertyTagExifColorSpace' -> 16rA001.
+		'PropertyTagExifCompBPP' -> 16r9102.
+		'PropertyTagExifCompConfig' -> 16r9101.
+		'PropertyTagExifDTDigitized' -> 16r9004.
+		'PropertyTagExifDTDigSS' -> 16r9292.
+		'PropertyTagExifDTOrig' -> 16r9003.
+		'PropertyTagExifDTOrigSS' -> 16r9291.
+		'PropertyTagExifDTSubsec' -> 16r9290.
+		'PropertyTagExifExposureBias' -> 16r9204.
+		'PropertyTagExifExposureIndex' -> 16rA215.
+		'PropertyTagExifExposureProg' -> 16r8822.
+		'PropertyTagExifExposureTime' -> 16r829A.
+		'PropertyTagExifFileSource' -> 16rA300.
+		'PropertyTagExifFlash' -> 16r9209.
+		'PropertyTagExifFlashEnergy' -> 16rA20B.
+		'PropertyTagExifFNumber' -> 16r829D.
+		'PropertyTagExifFocalLength' -> 16r920A.
+		'PropertyTagExifFocalResUnit' -> 16rA210.
+		'PropertyTagExifFocalXRes' -> 16rA20E.
+		'PropertyTagExifFocalYRes' -> 16rA20F.
+		'PropertyTagExifFPXVer' -> 16rA000.
+		'PropertyTagExifIFD' -> 16r8769.
+		'PropertyTagExifInterop' -> 16rA005.
+		'PropertyTagExifISOSpeed' -> 16r8827.
+		'PropertyTagExifLightSource' -> 16r9208.
+		'PropertyTagExifMakerNote' -> 16r927C.
+		'PropertyTagExifMaxAperture' -> 16r9205.
+		'PropertyTagExifMeteringMode' -> 16r9207.
+		'PropertyTagExifOECF' -> 16r8828.
+		'PropertyTagExifPixXDim' -> 16rA002.
+		'PropertyTagExifPixYDim' -> 16rA003.
+		'PropertyTagExifRelatedWav' -> 16rA004.
+		'PropertyTagExifSceneType' -> 16rA301.
+		'PropertyTagExifSensingMethod' -> 16rA217.
+		'PropertyTagExifShutterSpeed' -> 16r9201.
+		'PropertyTagExifSpatialFR' -> 16rA20C.
+		'PropertyTagExifSpectralSense' -> 16r8824.
+		'PropertyTagExifSubjectDist' -> 16r9206.
+		'PropertyTagExifSubjectLoc' -> 16rA214.
+		'PropertyTagExifUserComment' -> 16r9286.
+		'PropertyTagExifVer' -> 16r9000.
+		'PropertyTagExtraSamples' -> 16r152.
+		'PropertyTagFillOrder' -> 16r10A.
+		'PropertyTagFrameDelay' -> 16r5100.
+		'PropertyTagFreeByteCounts' -> 16r121.
+		'PropertyTagFreeOffset' -> 16r120.
+		'PropertyTagGamma' -> 16r301.
+		'PropertyTagGpsAltitude' -> 16r6.
+		'PropertyTagGpsAltitudeRef' -> 16r5.
+		'PropertyTagGpsDestBear' -> 16r18.
+		'PropertyTagGpsDestBearRef' -> 16r17.
+		'PropertyTagGpsDestDist' -> 16r1A.
+		'PropertyTagGpsDestDistRef' -> 16r19.
+		'PropertyTagGpsDestLat' -> 16r14.
+		'PropertyTagGpsDestLatRef' -> 16r13.
+		'PropertyTagGpsDestLong' -> 16r16.
+		'PropertyTagGpsDestLongRef' -> 16r15.
+		'PropertyTagGpsGpsDop' -> 16rB.
+		'PropertyTagGpsGpsMeasureMode' -> 16rA.
+		'PropertyTagGpsGpsSatellites' -> 16r8.
+		'PropertyTagGpsGpsStatus' -> 16r9.
+		'PropertyTagGpsGpsTime' -> 16r7.
+		'PropertyTagGpsIFD' -> 16r8825.
+		'PropertyTagGpsImgDir' -> 16r11.
+		'PropertyTagGpsImgDirRef' -> 16r10.
+		'PropertyTagGpsLatitude' -> 16r2.
+		'PropertyTagGpsLatitudeRef' -> 16r1.
+		'PropertyTagGpsLongitude' -> 16r4.
+		'PropertyTagGpsLongitudeRef' -> 16r3.
+		'PropertyTagGpsMapDatum' -> 16r12.
+		'PropertyTagGpsSpeed' -> 16rD.
+		'PropertyTagGpsSpeedRef' -> 16rC.
+		'PropertyTagGpsTrack' -> 16rF.
+		'PropertyTagGpsTrackRef' -> 16rE.
+		'PropertyTagGpsVer' -> 16r0.
+		'PropertyTagGrayResponseCurve' -> 16r123.
+		'PropertyTagGrayResponseUnit' -> 16r122.
+		'PropertyTagGridSize' -> 16r5011.
+		'PropertyTagHalftoneDegree' -> 16r500C.
+		'PropertyTagHalftoneHints' -> 16r141.
+		'PropertyTagHalftoneLPI' -> 16r500A.
+		'PropertyTagHalftoneLPIUnit' -> 16r500B.
+		'PropertyTagHalftoneMisc' -> 16r500E.
+		'PropertyTagHalftoneScreen' -> 16r500F.
+		'PropertyTagHalftoneShape' -> 16r500D.
+		'PropertyTagHostComputer' -> 16r13C.
+		'PropertyTagICCProfile' -> 16r8773.
+		'PropertyTagICCProfileDescriptor' -> 16r302.
+		'PropertyTagImageDescription' -> 16r10E.
+		'PropertyTagImageHeight' -> 16r101.
+		'PropertyTagImageTitle' -> 16r320.
+		'PropertyTagImageWidth' -> 16r100.
+		'PropertyTagInkNames' -> 16r14D.
+		'PropertyTagInkSet' -> 16r14C.
+		'PropertyTagJPEGACTables' -> 16r209.
+		'PropertyTagJPEGDCTables' -> 16r208.
+		'PropertyTagJPEGInterFormat' -> 16r201.
+		'PropertyTagJPEGInterLength' -> 16r202.
+		'PropertyTagJPEGLosslessPredictors' -> 16r205.
+		'PropertyTagJPEGPointTransforms' -> 16r206.
+		'PropertyTagJPEGProc' -> 16r200.
+		'PropertyTagJPEGQTables' -> 16r207.
+		'PropertyTagJPEGQuality' -> 16r5010.
+		'PropertyTagJPEGRestartInterval' -> 16r203.
+		'PropertyTagLoopCount' -> 16r5101.
+		'PropertyTagLuminanceTable' -> 16r5090.
+		'PropertyTagMaxSampleValue' -> 16r119.
+		'PropertyTagMinSampleValue' -> 16r118.
+		'PropertyTagNewSubfileType' -> 16rFE.
+		'PropertyTagNumberOfInks' -> 16r14E.
+		'PropertyTagOrientation' -> 16r112.
+		'PropertyTagPageName' -> 16r11D.
+		'PropertyTagPageNumber' -> 16r129.
+		'PropertyTagPaletteHistogram' -> 16r5113.
+		'PropertyTagPhotometricInterp' -> 16r106.
+		'PropertyTagPixelPerUnitX' -> 16r5111.
+		'PropertyTagPixelPerUnitY' -> 16r5112.
+		'PropertyTagPixelUnit' -> 16r5110.
+		'PropertyTagPlanarConfig' -> 16r11C.
+		'PropertyTagPredictor' -> 16r13D.
+		'PropertyTagPrimaryChromaticities' -> 16r13F.
+		'PropertyTagPrintFlags' -> 16r5005.
+		'PropertyTagPrintFlagsBleedWidth' -> 16r5008.
+		'PropertyTagPrintFlagsBleedWidthScale' -> 16r5009.
+		'PropertyTagPrintFlagsCrop' -> 16r5007.
+		'PropertyTagPrintFlagsVersion' -> 16r5006.
+		'PropertyTagREFBlackWhite' -> 16r214.
+		'PropertyTagResolutionUnit' -> 16r128.
+		'PropertyTagResolutionXLengthUnit' -> 16r5003.
+		'PropertyTagResolutionXUnit' -> 16r5001.
+		'PropertyTagResolutionYLengthUnit' -> 16r5004.
+		'PropertyTagResolutionYUnit' -> 16r5002.
+		'PropertyTagRowsPerStrip' -> 16r116.
+		'PropertyTagSampleFormat' -> 16r153.
+		'PropertyTagSamplesPerPixel' -> 16r115.
+		'PropertyTagSMaxSampleValue' -> 16r155.
+		'PropertyTagSMinSampleValue' -> 16r154.
+		'PropertyTagSoftwareUsed' -> 16r131.
+		'PropertyTagSRGBRenderingIntent' -> 16r303.
+		'PropertyTagStripBytesCount' -> 16r117.
+		'PropertyTagStripOffsets' -> 16r111.
+		'PropertyTagSubfileType' -> 16rFF.
+		'PropertyTagT4Option' -> 16r124.
+		'PropertyTagT6Option' -> 16r125.
+		'PropertyTagTargetPrinter' -> 16r151.
+		'PropertyTagThreshHolding' -> 16r107.
+		'PropertyTagThumbnailArtist' -> 16r5034.
+		'PropertyTagThumbnailBitsPerSample' -> 16r5022.
+		'PropertyTagThumbnailColorDepth' -> 16r5015.
+		'PropertyTagThumbnailCompressedSize' -> 16r5019.
+		'PropertyTagThumbnailCompression' -> 16r5023.
+		'PropertyTagThumbnailCopyRight' -> 16r503B.
+		'PropertyTagThumbnailData' -> 16r501B.
+		'PropertyTagThumbnailDateTime' -> 16r5033.
+		'PropertyTagThumbnailEquipMake' -> 16r5026.
+		'PropertyTagThumbnailEquipModel' -> 16r5027.
+		'PropertyTagThumbnailFormat' -> 16r5012.
+		'PropertyTagThumbnailHeight' -> 16r5014.
+		'PropertyTagThumbnailImageDescription' -> 16r5025.
+		'PropertyTagThumbnailImageHeight' -> 16r5021.
+		'PropertyTagThumbnailImageWidth' -> 16r5020.
+		'PropertyTagThumbnailOrientation' -> 16r5029.
+		'PropertyTagThumbnailPhotometricInterp' -> 16r5024.
+		'PropertyTagThumbnailPlanarConfig' -> 16r502F.
+		'PropertyTagThumbnailPlanes' -> 16r5016.
+		'PropertyTagThumbnailPrimaryChromaticities' -> 16r5036.
+		'PropertyTagThumbnailRawBytes' -> 16r5017.
+		'PropertyTagThumbnailRefBlackWhite' -> 16r503A.
+		'PropertyTagThumbnailResolutionUnit' -> 16r5030.
+		'PropertyTagThumbnailResolutionX' -> 16r502D.
+		'PropertyTagThumbnailResolutionY' -> 16r502E.
+		'PropertyTagThumbnailRowsPerStrip' -> 16r502B.
+		'PropertyTagThumbnailSamplesPerPixel' -> 16r502A.
+		'PropertyTagThumbnailSize' -> 16r5018.
+		'PropertyTagThumbnailSoftwareUsed' -> 16r5032.
+		'PropertyTagThumbnailStripBytesCount' -> 16r502C.
+		'PropertyTagThumbnailStripOffsets' -> 16r5028.
+		'PropertyTagThumbnailTransferFunction' -> 16r5031.
+		'PropertyTagThumbnailWhitePoint' -> 16r5035.
+		'PropertyTagThumbnailWidth' -> 16r5013.
+		'PropertyTagThumbnailYCbCrCoefficients' -> 16r5037.
+		'PropertyTagThumbnailYCbCrPositioning' -> 16r5039.
+		'PropertyTagThumbnailYCbCrSubsampling' -> 16r5038.
+		'PropertyTagTileByteCounts' -> 16r145.
+		'PropertyTagTileLength' -> 16r143.
+		'PropertyTagTileOffset' -> 16r144.
+		'PropertyTagTileWidth' -> 16r142.
+		'PropertyTagTransferFuncition' -> 16r12D.
+		'PropertyTagTransferRange' -> 16r156.
+		'PropertyTagTypeASCII' -> 16r2.
+		'PropertyTagTypeByte' -> 16r1.
+		'PropertyTagTypeLong' -> 16r4.
+		'PropertyTagTypeRational' -> 16r5.
+		'PropertyTagTypeShort' -> 16r3.
+		'PropertyTagTypeSLONG' -> 16r9.
+		'PropertyTagTypeSRational' -> 16rA.
+		'PropertyTagTypeUndefined' -> 16r7.
+		'PropertyTagWhitePoint' -> 16r13E.
+		'PropertyTagXPosition' -> 16r11E.
+		'PropertyTagXResolution' -> 16r11A.
+		'PropertyTagYCbCrCoefficients' -> 16r211.
+		'PropertyTagYCbCrPositioning' -> 16r213.
+		'PropertyTagYCbCrSubsampling' -> 16r212.
+		'PropertyTagYPosition' -> 16r11F.
+		'PropertyTagYResolution' -> 16r11B.
+		'QualityModeDefault' -> 16r0.
+		'QualityModeHigh' -> 16r2.
+		'QualityModeInvalid' -> -16r1.
+		'QualityModeLow' -> 16r1.
+		'Rotate180FlipNone' -> 16r2.
+		'Rotate180FlipX' -> 16r6.
+		'Rotate180FlipXY' -> 16r0.
+		'Rotate180FlipY' -> 16r4.
+		'Rotate270FlipNone' -> 16r3.
+		'Rotate270FlipX' -> 16r7.
+		'Rotate270FlipXY' -> 16r1.
+		'Rotate270FlipY' -> 16r5.
+		'Rotate90FlipNone' -> 16r1.
+		'Rotate90FlipX' -> 16r5.
+		'Rotate90FlipXY' -> 16r3.
+		'Rotate90FlipY' -> 16r7.
+		'RotateNoneFlipNone' -> 16r0.
+		'RotateNoneFlipX' -> 16r4.
+		'RotateNoneFlipXY' -> 16r2.
+		'RotateNoneFlipY' -> 16r6.
+		'SmoothingModeAntiAlias' -> 16r4.
+		'SmoothingModeDefault' -> 16r0.
+		'SmoothingModeHighQuality' -> 16r2.
+		'SmoothingModeHighSpeed' -> 16r1.
+		'SmoothingModeInvalid' -> -16r1.
+		'SmoothingModeNone' -> 16r3.
+		'StringAlignmentCenter' -> 16r1.
+		'StringAlignmentFar' -> 16r2.
+		'StringAlignmentNear' -> 16r0.
+		'StringDigitSubstituteNational' -> 16r2.
+		'StringDigitSubstituteNone' -> 16r1.
+		'StringDigitSubstituteTraditional' -> 16r3.
+		'StringDigitSubstituteUser' -> 16r0.
+		'StringFormatFlagsDirectionRightToLeft' -> 16r1.
+		'StringFormatFlagsDirectionVertical' -> 16r2.
+		'StringFormatFlagsDisplayFormatControl' -> 16r20.
+		'StringFormatFlagsLineLimit' -> 16r2000.
+		'StringFormatFlagsMeasureTrailingSpaces' -> 16r800.
+		'StringFormatFlagsNoClip' -> 16r4000.
+		'StringFormatFlagsNoFitBlackBox' -> 16r4.
+		'StringFormatFlagsNoFontFallback' -> 16r400.
+		'StringFormatFlagsNoWrap' -> 16r1000.
+		'StringTrimmingCharacter' -> 16r1.
+		'StringTrimmingEllipsisCharacter' -> 16r3.
+		'StringTrimmingEllipsisPath' -> 16r5.
+		'StringTrimmingEllipsisWord' -> 16r4.
+		'StringTrimmingNone' -> 16r0.
+		'StringTrimmingWord' -> 16r2.
+		'TestControlForceBilinear' -> 16r0.
+		'TestControlGetBuildNumber' -> 16r2.
+		'TestControlNoICM' -> 16r1.
+		'TextRenderingHintAntiAlias' -> 16r4.
+		'TextRenderingHintAntiAliasGridFit' -> 16r3.
+		'TextRenderingHintClearTypeGridFit' -> 16r5.
+		'TextRenderingHintSingleBitPerPixel' -> 16r2.
+		'TextRenderingHintSingleBitPerPixelGridFit' -> 16r1.
+		'TextRenderingHintSystemDefault' -> 16r0.
+		'UnitDisplay' -> 16r1.
+		'UnitDocument' -> 16r5.
+		'UnitInch' -> 16r4.
+		'UnitMillimeter' -> 16r6.
+		'UnitPixel' -> 16r2.
+		'UnitPoint' -> 16r3.
+		'UnitWorld' -> 16r0.
+		'UnknownImageFormat' -> 16rD.
+		'UnsupportedGdiplusVersion' -> 16r11.
+		'ValueOverflow' -> 16rB.
+		'WarpModeBilinear' -> 16r1.
+		'WarpModePerspective' -> 16r0.
+		'Win32Error' -> 16r7.
+		'WmfRecordTypeAbortDoc' -> 16r10052.
+		'WmfRecordTypeAnimatePalette' -> 16r10436.
+		'WmfRecordTypeArc' -> 16r10817.
+		'WmfRecordTypeBitBlt' -> 16r10922.
+		'WmfRecordTypeChord' -> 16r10830.
+		'WmfRecordTypeCreateBitmap' -> 16r106FE.
+		'WmfRecordTypeCreateBitmapIndirect' -> 16r102FD.
+		'WmfRecordTypeCreateBrush' -> 16r100F8.
+		'WmfRecordTypeCreateBrushIndirect' -> 16r102FC.
+		'WmfRecordTypeCreateFontIndirect' -> 16r102FB.
+		'WmfRecordTypeCreatePalette' -> 16r100F7.
+		'WmfRecordTypeCreatePatternBrush' -> 16r101F9.
+		'WmfRecordTypeCreatePenIndirect' -> 16r102FA.
+		'WmfRecordTypeCreateRegion' -> 16r106FF.
+		'WmfRecordTypeDeleteObject' -> 16r101F0.
+		'WmfRecordTypeDIBBitBlt' -> 16r10940.
+		'WmfRecordTypeDIBCreatePatternBrush' -> 16r10142.
+		'WmfRecordTypeDIBStretchBlt' -> 16r10B41.
+		'WmfRecordTypeDrawText' -> 16r1062F.
+		'WmfRecordTypeEllipse' -> 16r10418.
+		'WmfRecordTypeEndDoc' -> 16r1005E.
+		'WmfRecordTypeEndPage' -> 16r10050.
+		'WmfRecordTypeEscape' -> 16r10626.
+		'WmfRecordTypeExcludeClipRect' -> 16r10415.
+		'WmfRecordTypeExtFloodFill' -> 16r10548.
+		'WmfRecordTypeExtTextOut' -> 16r10A32.
+		'WmfRecordTypeFillRegion' -> 16r10228.
+		'WmfRecordTypeFloodFill' -> 16r10419.
+		'WmfRecordTypeFrameRegion' -> 16r10429.
+		'WmfRecordTypeIntersectClipRect' -> 16r10416.
+		'WmfRecordTypeInvertRegion' -> 16r1012A.
+		'WmfRecordTypeLineTo' -> 16r10213.
+		'WmfRecordTypeMoveTo' -> 16r10214.
+		'WmfRecordTypeOffsetClipRgn' -> 16r10220.
+		'WmfRecordTypeOffsetViewportOrg' -> 16r10211.
+		'WmfRecordTypeOffsetWindowOrg' -> 16r1020F.
+		'WmfRecordTypePaintRegion' -> 16r1012B.
+		'WmfRecordTypePatBlt' -> 16r1061D.
+		'WmfRecordTypePie' -> 16r1081A.
+		'WmfRecordTypePolygon' -> 16r10324.
+		'WmfRecordTypePolyline' -> 16r10325.
+		'WmfRecordTypePolyPolygon' -> 16r10538.
+		'WmfRecordTypeRealizePalette' -> 16r10035.
+		'WmfRecordTypeRectangle' -> 16r1041B.
+		'WmfRecordTypeResetDC' -> 16r1014C.
+		'WmfRecordTypeResizePalette' -> 16r10139.
+		'WmfRecordTypeRestoreDC' -> 16r10127.
+		'WmfRecordTypeRoundRect' -> 16r1061C.
+		'WmfRecordTypeSaveDC' -> 16r1001E.
+		'WmfRecordTypeScaleViewportExt' -> 16r10412.
+		'WmfRecordTypeScaleWindowExt' -> 16r10410.
+		'WmfRecordTypeSelectClipRegion' -> 16r1012C.
+		'WmfRecordTypeSelectObject' -> 16r1012D.
+		'WmfRecordTypeSelectPalette' -> 16r10234.
+		'WmfRecordTypeSetBkColor' -> 16r10201.
+		'WmfRecordTypeSetBkMode' -> 16r10102.
+		'WmfRecordTypeSetDIBToDev' -> 16r10D33.
+		'WmfRecordTypeSetLayout' -> 16r10149.
+		'WmfRecordTypeSetMapMode' -> 16r10103.
+		'WmfRecordTypeSetMapperFlags' -> 16r10231.
+		'WmfRecordTypeSetPalEntries' -> 16r10037.
+		'WmfRecordTypeSetPixel' -> 16r1041F.
+		'WmfRecordTypeSetPolyFillMode' -> 16r10106.
+		'WmfRecordTypeSetRelAbs' -> 16r10105.
+		'WmfRecordTypeSetROP2' -> 16r10104.
+		'WmfRecordTypeSetStretchBltMode' -> 16r10107.
+		'WmfRecordTypeSetTextAlign' -> 16r1012E.
+		'WmfRecordTypeSetTextCharExtra' -> 16r10108.
+		'WmfRecordTypeSetTextColor' -> 16r10209.
+		'WmfRecordTypeSetTextJustification' -> 16r1020A.
+		'WmfRecordTypeSetViewportExt' -> 16r1020E.
+		'WmfRecordTypeSetViewportOrg' -> 16r1020D.
+		'WmfRecordTypeSetWindowExt' -> 16r1020C.
+		'WmfRecordTypeSetWindowOrg' -> 16r1020B.
+		'WmfRecordTypeStartDoc' -> 16r1014D.
+		'WmfRecordTypeStartPage' -> 16r1004F.
+		'WmfRecordTypeStretchBlt' -> 16r10B23.
+		'WmfRecordTypeStretchDIB' -> 16r10F43.
+		'WmfRecordTypeTextOut' -> 16r10521.
+		'WrapModeClamp' -> 16r4.
+		'WrapModeTile' -> 16r0.
+		'WrapModeTileFlipX' -> 16r1.
+		'WrapModeTileFlipXY' -> 16r3.
+		'WrapModeTileFlipY' -> 16r2.
+		'WrongState' -> 16r8
+	}!
+GdiplusConstants guid: (GUID fromString: '{d4a258d7-f529-41e1-aef0-295a3f4b60b7}')!
+GdiplusConstants comment: ''!
+!GdiplusConstants categoriesForClass!Unclassified! !

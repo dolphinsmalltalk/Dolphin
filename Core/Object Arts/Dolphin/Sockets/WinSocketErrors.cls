@@ -1,66 +1,74 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{WinSocketErrors} declare: (PoolConstantsDictionary named: #WinSocketErrors)!
-WinSocketErrors at: 'WSA_E_CANCELLED' put: 16r277F!
-WinSocketErrors at: 'WSA_E_NO_MORE' put: 16r277E!
-WinSocketErrors at: 'WSAEACCES' put: 16r271D!
-WinSocketErrors at: 'WSAEADDRINUSE' put: 16r2740!
-WinSocketErrors at: 'WSAEADDRNOTAVAIL' put: 16r2741!
-WinSocketErrors at: 'WSAEAFNOSUPPORT' put: 16r273F!
-WinSocketErrors at: 'WSAEALREADY' put: 16r2735!
-WinSocketErrors at: 'WSAEBADF' put: 16r2719!
-WinSocketErrors at: 'WSAECANCELLED' put: 16r2777!
-WinSocketErrors at: 'WSAECONNABORTED' put: 16r2745!
-WinSocketErrors at: 'WSAECONNREFUSED' put: 16r274D!
-WinSocketErrors at: 'WSAECONNRESET' put: 16r2746!
-WinSocketErrors at: 'WSAEDESTADDRREQ' put: 16r2737!
-WinSocketErrors at: 'WSAEDISCON' put: 16r2775!
-WinSocketErrors at: 'WSAEDQUOT' put: 16r2755!
-WinSocketErrors at: 'WSAEFAULT' put: 16r271E!
-WinSocketErrors at: 'WSAEHOSTDOWN' put: 16r2750!
-WinSocketErrors at: 'WSAEHOSTUNREACH' put: 16r2751!
-WinSocketErrors at: 'WSAEINPROGRESS' put: 16r2734!
-WinSocketErrors at: 'WSAEINTR' put: 16r2714!
-WinSocketErrors at: 'WSAEINVAL' put: 16r2726!
-WinSocketErrors at: 'WSAEINVALIDPROCTABLE' put: 16r2778!
-WinSocketErrors at: 'WSAEINVALIDPROVIDER' put: 16r2779!
-WinSocketErrors at: 'WSAEISCONN' put: 16r2748!
-WinSocketErrors at: 'WSAELOOP' put: 16r274E!
-WinSocketErrors at: 'WSAEMFILE' put: 16r2728!
-WinSocketErrors at: 'WSAEMSGSIZE' put: 16r2738!
-WinSocketErrors at: 'WSAENAMETOOLONG' put: 16r274F!
-WinSocketErrors at: 'WSAENETDOWN' put: 16r2742!
-WinSocketErrors at: 'WSAENETRESET' put: 16r2744!
-WinSocketErrors at: 'WSAENETUNREACH' put: 16r2743!
-WinSocketErrors at: 'WSAENOBUFS' put: 16r2747!
-WinSocketErrors at: 'WSAENOMORE' put: 16r2776!
-WinSocketErrors at: 'WSAENOPROTOOPT' put: 16r273A!
-WinSocketErrors at: 'WSAENOTCONN' put: 16r2749!
-WinSocketErrors at: 'WSAENOTEMPTY' put: 16r2752!
-WinSocketErrors at: 'WSAENOTSOCK' put: 16r2736!
-WinSocketErrors at: 'WSAEOPNOTSUPP' put: 16r273D!
-WinSocketErrors at: 'WSAEPFNOSUPPORT' put: 16r273E!
-WinSocketErrors at: 'WSAEPROCLIM' put: 16r2753!
-WinSocketErrors at: 'WSAEPROTONOSUPPORT' put: 16r273B!
-WinSocketErrors at: 'WSAEPROTOTYPE' put: 16r2739!
-WinSocketErrors at: 'WSAEPROVIDERFAILEDINIT' put: 16r277A!
-WinSocketErrors at: 'WSAEREFUSED' put: 16r2780!
-WinSocketErrors at: 'WSAEREMOTE' put: 16r2757!
-WinSocketErrors at: 'WSAESHUTDOWN' put: 16r274A!
-WinSocketErrors at: 'WSAESOCKTNOSUPPORT' put: 16r273C!
-WinSocketErrors at: 'WSAESTALE' put: 16r2756!
-WinSocketErrors at: 'WSAETIMEDOUT' put: 16r274C!
-WinSocketErrors at: 'WSAETOOMANYREFS' put: 16r274B!
-WinSocketErrors at: 'WSAEUSERS' put: 16r2754!
-WinSocketErrors at: 'WSAEWOULDBLOCK' put: 16r2733!
-WinSocketErrors at: 'WSAHOST_NOT_FOUND' put: 16r2AF9!
-WinSocketErrors at: 'WSANO_DATA' put: 16r2AFC!
-WinSocketErrors at: 'WSANO_RECOVERY' put: 16r2AFB!
-WinSocketErrors at: 'WSANOTINITIALISED' put: 16r276D!
-WinSocketErrors at: 'WSASERVICE_NOT_FOUND' put: 16r277C!
-WinSocketErrors at: 'WSASYSCALLFAILURE' put: 16r277B!
-WinSocketErrors at: 'WSASYSNOTREADY' put: 16r276B!
-WinSocketErrors at: 'WSATRY_AGAIN' put: 16r2AFA!
-WinSocketErrors at: 'WSATYPE_NOT_FOUND' put: 16r277D!
-WinSocketErrors at: 'WSAVERNOTSUPPORTED' put: 16r276C!
-WinSocketErrors shrink!
+SharedPool subclass: #WinSocketErrors
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'WSA_E_CANCELLED' -> 16r277F.
+		'WSA_E_NO_MORE' -> 16r277E.
+		'WSAEACCES' -> 16r271D.
+		'WSAEADDRINUSE' -> 16r2740.
+		'WSAEADDRNOTAVAIL' -> 16r2741.
+		'WSAEAFNOSUPPORT' -> 16r273F.
+		'WSAEALREADY' -> 16r2735.
+		'WSAEBADF' -> 16r2719.
+		'WSAECANCELLED' -> 16r2777.
+		'WSAECONNABORTED' -> 16r2745.
+		'WSAECONNREFUSED' -> 16r274D.
+		'WSAECONNRESET' -> 16r2746.
+		'WSAEDESTADDRREQ' -> 16r2737.
+		'WSAEDISCON' -> 16r2775.
+		'WSAEDQUOT' -> 16r2755.
+		'WSAEFAULT' -> 16r271E.
+		'WSAEHOSTDOWN' -> 16r2750.
+		'WSAEHOSTUNREACH' -> 16r2751.
+		'WSAEINPROGRESS' -> 16r2734.
+		'WSAEINTR' -> 16r2714.
+		'WSAEINVAL' -> 16r2726.
+		'WSAEINVALIDPROCTABLE' -> 16r2778.
+		'WSAEINVALIDPROVIDER' -> 16r2779.
+		'WSAEISCONN' -> 16r2748.
+		'WSAELOOP' -> 16r274E.
+		'WSAEMFILE' -> 16r2728.
+		'WSAEMSGSIZE' -> 16r2738.
+		'WSAENAMETOOLONG' -> 16r274F.
+		'WSAENETDOWN' -> 16r2742.
+		'WSAENETRESET' -> 16r2744.
+		'WSAENETUNREACH' -> 16r2743.
+		'WSAENOBUFS' -> 16r2747.
+		'WSAENOMORE' -> 16r2776.
+		'WSAENOPROTOOPT' -> 16r273A.
+		'WSAENOTCONN' -> 16r2749.
+		'WSAENOTEMPTY' -> 16r2752.
+		'WSAENOTSOCK' -> 16r2736.
+		'WSAEOPNOTSUPP' -> 16r273D.
+		'WSAEPFNOSUPPORT' -> 16r273E.
+		'WSAEPROCLIM' -> 16r2753.
+		'WSAEPROTONOSUPPORT' -> 16r273B.
+		'WSAEPROTOTYPE' -> 16r2739.
+		'WSAEPROVIDERFAILEDINIT' -> 16r277A.
+		'WSAEREFUSED' -> 16r2780.
+		'WSAEREMOTE' -> 16r2757.
+		'WSAESHUTDOWN' -> 16r274A.
+		'WSAESOCKTNOSUPPORT' -> 16r273C.
+		'WSAESTALE' -> 16r2756.
+		'WSAETIMEDOUT' -> 16r274C.
+		'WSAETOOMANYREFS' -> 16r274B.
+		'WSAEUSERS' -> 16r2754.
+		'WSAEWOULDBLOCK' -> 16r2733.
+		'WSAHOST_NOT_FOUND' -> 16r2AF9.
+		'WSANO_DATA' -> 16r2AFC.
+		'WSANO_RECOVERY' -> 16r2AFB.
+		'WSANOTINITIALISED' -> 16r276D.
+		'WSASERVICE_NOT_FOUND' -> 16r277C.
+		'WSASYSCALLFAILURE' -> 16r277B.
+		'WSASYSNOTREADY' -> 16r276B.
+		'WSATRY_AGAIN' -> 16r2AFA.
+		'WSATYPE_NOT_FOUND' -> 16r277D.
+		'WSAVERNOTSUPPORTED' -> 16r276C
+	}!
+WinSocketErrors guid: (GUID fromString: '{dd50fc7b-d07d-43c6-ba58-2f75c76f6a4f}')!
+WinSocketErrors comment: ''!
+!WinSocketErrors categoriesForClass!Unclassified! !

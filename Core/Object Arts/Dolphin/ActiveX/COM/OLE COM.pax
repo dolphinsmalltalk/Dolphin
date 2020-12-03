@@ -91,6 +91,7 @@ package setClassNames: #(
 	#{LICINFO}
 	#{MULTI_QI}
 	#{OLEAutLibrary}
+	#{OLEConstants}
 	#{OLECountedArray}
 	#{OLEEnumerator}
 	#{OLEFinalizableStructure}
@@ -113,10 +114,6 @@ package setMethodNames: #(
 	#(#{String} #copyToCOMTaskMemory)
 ).
 
-package setVariableNames: #(
-	#{OLEConstants}
-).
-
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Message Box'
@@ -127,6 +124,21 @@ package!
 
 "Class Definitions"!
 
+SharedPool subclass: #OLEConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CLSCTX_INPROC_HANDLER' -> 16r2.
+		'CLSCTX_INPROC_SERVER' -> 16r1.
+		'CLSCTX_LOCAL_SERVER' -> 16r4.
+		'CLSCTX_REMOTE_SERVER' -> 16r10.
+		'MEMCTX_SHARED' -> 16r2.
+		'MEMCTX_TASK' -> 16r1.
+		'REGCLS_MULTI_SEPARATE' -> 16r2.
+		'REGCLS_MULTIPLEUSE' -> 16r1
+	}!
 Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''

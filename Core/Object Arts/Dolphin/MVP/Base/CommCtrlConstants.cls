@@ -1,115 +1,123 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{CommCtrlConstants} declare: (PoolConstantsDictionary named: #CommCtrlConstants)!
-CommCtrlConstants at: 'ACM_OPEN' put: 16r464!
-CommCtrlConstants at: 'ACM_PLAY' put: 16r465!
-CommCtrlConstants at: 'ACM_STOP' put: 16r466!
-CommCtrlConstants at: 'ACS_AUTOPLAY' put: 16r4!
-CommCtrlConstants at: 'ACS_CENTER' put: 16r1!
-CommCtrlConstants at: 'ACS_TRANSPARENT' put: 16r2!
-CommCtrlConstants at: 'CCM_FIRST' put: 16r2000!
-CommCtrlConstants at: 'CCM_GETVERSION' put: 16r2008!
-CommCtrlConstants at: 'CCM_SETBKCOLOR' put: 16r2001!
-CommCtrlConstants at: 'CCM_SETVERSION' put: 16r2007!
-CommCtrlConstants at: 'CCS_ADJUSTABLE' put: 16r20!
-CommCtrlConstants at: 'CCS_BOTTOM' put: 16r3!
-CommCtrlConstants at: 'CCS_LEFT' put: 16r81!
-CommCtrlConstants at: 'CCS_NODIVIDER' put: 16r40!
-CommCtrlConstants at: 'CCS_NOMOVEY' put: 16r2!
-CommCtrlConstants at: 'CCS_NOPARENTALIGN' put: 16r8!
-CommCtrlConstants at: 'CCS_NORESIZE' put: 16r4!
-CommCtrlConstants at: 'CCS_RIGHT' put: 16r83!
-CommCtrlConstants at: 'CCS_TOP' put: 16r1!
-CommCtrlConstants at: 'CCS_VERT' put: 16r80!
-CommCtrlConstants at: 'CDDS_ITEM' put: 16r10000!
-CommCtrlConstants at: 'CDDS_ITEMPOSTERASE' put: 16r10004!
-CommCtrlConstants at: 'CDDS_ITEMPOSTPAINT' put: 16r10002!
-CommCtrlConstants at: 'CDDS_ITEMPREERASE' put: 16r10003!
-CommCtrlConstants at: 'CDDS_ITEMPREPAINT' put: 16r10001!
-CommCtrlConstants at: 'CDDS_POSTERASE' put: 16r4!
-CommCtrlConstants at: 'CDDS_POSTPAINT' put: 16r2!
-CommCtrlConstants at: 'CDDS_PREERASE' put: 16r3!
-CommCtrlConstants at: 'CDDS_PREPAINT' put: 16r1!
-CommCtrlConstants at: 'CDDS_SUBITEM' put: 16r20000!
-CommCtrlConstants at: 'CDIS_CHECKED' put: 16r8!
-CommCtrlConstants at: 'CDIS_DEFAULT' put: 16r20!
-CommCtrlConstants at: 'CDIS_DISABLED' put: 16r4!
-CommCtrlConstants at: 'CDIS_DROPHILITED' put: 16r1000!
-CommCtrlConstants at: 'CDIS_FOCUS' put: 16r10!
-CommCtrlConstants at: 'CDIS_GRAYED' put: 16r2!
-CommCtrlConstants at: 'CDIS_HOT' put: 16r40!
-CommCtrlConstants at: 'CDIS_INDETERMINATE' put: 16r100!
-CommCtrlConstants at: 'CDIS_MARKED' put: 16r80!
-CommCtrlConstants at: 'CDIS_NEARHOT' put: 16r400!
-CommCtrlConstants at: 'CDIS_OTHERSIDEHOT' put: 16r800!
-CommCtrlConstants at: 'CDIS_SELECTED' put: 16r1!
-CommCtrlConstants at: 'CDIS_SHOWKEYBOARDCUES' put: 16r200!
-CommCtrlConstants at: 'CDRF_DODEFAULT' put: 16r0!
-CommCtrlConstants at: 'CDRF_DOERASE' put: 16r8!
-CommCtrlConstants at: 'CDRF_NEWFONT' put: 16r2!
-CommCtrlConstants at: 'CDRF_NOTIFYITEMDRAW' put: 16r20!
-CommCtrlConstants at: 'CDRF_NOTIFYPOSTERASE' put: 16r40!
-CommCtrlConstants at: 'CDRF_NOTIFYPOSTPAINT' put: 16r10!
-CommCtrlConstants at: 'CDRF_NOTIFYSUBITEMDRAW' put: 16r20!
-CommCtrlConstants at: 'CDRF_SKIPDEFAULT' put: 16r4!
-CommCtrlConstants at: 'CDRF_SKIPPOSTPAINT' put: 16r100!
-CommCtrlConstants at: 'GDT_ERROR' put: -16r1!
-CommCtrlConstants at: 'GDT_NONE' put: 16r1!
-CommCtrlConstants at: 'GDT_VALID' put: 16r0!
-CommCtrlConstants at: 'GDTR_MAX' put: 16r2!
-CommCtrlConstants at: 'GDTR_MIN' put: 16r1!
-CommCtrlConstants at: 'I_CHILDRENCALLBACK' put: -16r1!
-CommCtrlConstants at: 'I_IMAGECALLBACK' put: -16r1!
-CommCtrlConstants at: 'ICC_DATE_CLASSES' put: 16r121!
-CommCtrlConstants at: 'ICC_WIN95_CLASSES' put: 16rFF!
-CommCtrlConstants at: 'ILC_COLOR' put: 16r0!
-CommCtrlConstants at: 'ILC_COLOR16' put: 16r10!
-CommCtrlConstants at: 'ILC_COLOR32' put: 16r20!
-CommCtrlConstants at: 'ILC_COLOR4' put: 16r4!
-CommCtrlConstants at: 'ILC_COLOR8' put: 16r8!
-CommCtrlConstants at: 'ILC_COLORDB' put: 16rFE!
-CommCtrlConstants at: 'ILC_MASK' put: 16r1!
-CommCtrlConstants at: 'ILC_PALETTE' put: 16r800!
-CommCtrlConstants at: 'ILD_ASYNC' put: 16r8000!
-CommCtrlConstants at: 'ILD_BLEND' put: 16rF00!
-CommCtrlConstants at: 'ILD_BLEND25' put: 16r2!
-CommCtrlConstants at: 'ILD_BLEND50' put: 16r4!
-CommCtrlConstants at: 'ILD_DPISCALE' put: 16r4000!
-CommCtrlConstants at: 'ILD_FOCUS' put: 16r4!
-CommCtrlConstants at: 'ILD_IMAGE' put: 16r20!
-CommCtrlConstants at: 'ILD_MASK' put: 16r10!
-CommCtrlConstants at: 'ILD_NORMAL' put: 16r0!
-CommCtrlConstants at: 'ILD_OVERLAYMASK' put: 16rF00!
-CommCtrlConstants at: 'ILD_PRESERVEALPHA' put: 16r1000!
-CommCtrlConstants at: 'ILD_ROP' put: 16r40!
-CommCtrlConstants at: 'ILD_SCALE' put: 16r2000!
-CommCtrlConstants at: 'ILD_SELECTED' put: 16r4!
-CommCtrlConstants at: 'ILD_TRANSPARENT' put: 16r1!
-CommCtrlConstants at: 'LIM_LARGE' put: 16r1!
-CommCtrlConstants at: 'LIM_SMALL' put: 16r0!
-CommCtrlConstants at: 'NM_CHAR' put: -16r12!
-CommCtrlConstants at: 'NM_CLICK' put: -16r2!
-CommCtrlConstants at: 'NM_CUSTOMDRAW' put: -16rC!
-CommCtrlConstants at: 'NM_CUSTOMTEXT' put: -16r18!
-CommCtrlConstants at: 'NM_DBLCLK' put: -16r3!
-CommCtrlConstants at: 'NM_FIRST' put: 16r0!
-CommCtrlConstants at: 'NM_FONTCHANGED' put: -16r17!
-CommCtrlConstants at: 'NM_HOVER' put: -16rD!
-CommCtrlConstants at: 'NM_KEYDOWN' put: -16rF!
-CommCtrlConstants at: 'NM_KILLFOCUS' put: -16r8!
-CommCtrlConstants at: 'NM_LDOWN' put: -16r14!
-CommCtrlConstants at: 'NM_NCHITTEST' put: -16rE!
-CommCtrlConstants at: 'NM_OUTOFMEMORY' put: -16r1!
-CommCtrlConstants at: 'NM_RCLICK' put: -16r5!
-CommCtrlConstants at: 'NM_RDBLCLK' put: -16r6!
-CommCtrlConstants at: 'NM_RDOWN' put: -16r15!
-CommCtrlConstants at: 'NM_RELEASEDCAPTURE' put: -16r10!
-CommCtrlConstants at: 'NM_RETURN' put: -16r4!
-CommCtrlConstants at: 'NM_SETCURSOR' put: -16r11!
-CommCtrlConstants at: 'NM_SETFOCUS' put: -16r7!
-CommCtrlConstants at: 'NM_THEMECHANGED' put: -16r16!
-CommCtrlConstants at: 'NM_TOOLTIPSCREATED' put: -16r13!
-CommCtrlConstants at: 'TTF_IDISHWND' put: 16r1!
-CommCtrlConstants at: 'TTN_GETDISPINFOA' put: -16r208!
-CommCtrlConstants at: 'TTN_GETDISPINFOW' put: -16r212!
-CommCtrlConstants shrink!
+SharedPool subclass: #CommCtrlConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ACM_OPEN' -> 16r464.
+		'ACM_PLAY' -> 16r465.
+		'ACM_STOP' -> 16r466.
+		'ACS_AUTOPLAY' -> 16r4.
+		'ACS_CENTER' -> 16r1.
+		'ACS_TRANSPARENT' -> 16r2.
+		'CCM_FIRST' -> 16r2000.
+		'CCM_GETVERSION' -> 16r2008.
+		'CCM_SETBKCOLOR' -> 16r2001.
+		'CCM_SETVERSION' -> 16r2007.
+		'CCS_ADJUSTABLE' -> 16r20.
+		'CCS_BOTTOM' -> 16r3.
+		'CCS_LEFT' -> 16r81.
+		'CCS_NODIVIDER' -> 16r40.
+		'CCS_NOMOVEY' -> 16r2.
+		'CCS_NOPARENTALIGN' -> 16r8.
+		'CCS_NORESIZE' -> 16r4.
+		'CCS_RIGHT' -> 16r83.
+		'CCS_TOP' -> 16r1.
+		'CCS_VERT' -> 16r80.
+		'CDDS_ITEM' -> 16r10000.
+		'CDDS_ITEMPOSTERASE' -> 16r10004.
+		'CDDS_ITEMPOSTPAINT' -> 16r10002.
+		'CDDS_ITEMPREERASE' -> 16r10003.
+		'CDDS_ITEMPREPAINT' -> 16r10001.
+		'CDDS_POSTERASE' -> 16r4.
+		'CDDS_POSTPAINT' -> 16r2.
+		'CDDS_PREERASE' -> 16r3.
+		'CDDS_PREPAINT' -> 16r1.
+		'CDDS_SUBITEM' -> 16r20000.
+		'CDIS_CHECKED' -> 16r8.
+		'CDIS_DEFAULT' -> 16r20.
+		'CDIS_DISABLED' -> 16r4.
+		'CDIS_DROPHILITED' -> 16r1000.
+		'CDIS_FOCUS' -> 16r10.
+		'CDIS_GRAYED' -> 16r2.
+		'CDIS_HOT' -> 16r40.
+		'CDIS_INDETERMINATE' -> 16r100.
+		'CDIS_MARKED' -> 16r80.
+		'CDIS_NEARHOT' -> 16r400.
+		'CDIS_OTHERSIDEHOT' -> 16r800.
+		'CDIS_SELECTED' -> 16r1.
+		'CDIS_SHOWKEYBOARDCUES' -> 16r200.
+		'CDRF_DODEFAULT' -> 16r0.
+		'CDRF_DOERASE' -> 16r8.
+		'CDRF_NEWFONT' -> 16r2.
+		'CDRF_NOTIFYITEMDRAW' -> 16r20.
+		'CDRF_NOTIFYPOSTERASE' -> 16r40.
+		'CDRF_NOTIFYPOSTPAINT' -> 16r10.
+		'CDRF_NOTIFYSUBITEMDRAW' -> 16r20.
+		'CDRF_SKIPDEFAULT' -> 16r4.
+		'CDRF_SKIPPOSTPAINT' -> 16r100.
+		'GDT_ERROR' -> -16r1.
+		'GDT_NONE' -> 16r1.
+		'GDT_VALID' -> 16r0.
+		'GDTR_MAX' -> 16r2.
+		'GDTR_MIN' -> 16r1.
+		'I_CHILDRENCALLBACK' -> -16r1.
+		'I_IMAGECALLBACK' -> -16r1.
+		'ICC_DATE_CLASSES' -> 16r121.
+		'ICC_WIN95_CLASSES' -> 16rFF.
+		'ILC_COLOR' -> 16r0.
+		'ILC_COLOR16' -> 16r10.
+		'ILC_COLOR32' -> 16r20.
+		'ILC_COLOR4' -> 16r4.
+		'ILC_COLOR8' -> 16r8.
+		'ILC_COLORDB' -> 16rFE.
+		'ILC_MASK' -> 16r1.
+		'ILC_PALETTE' -> 16r800.
+		'ILD_ASYNC' -> 16r8000.
+		'ILD_BLEND' -> 16rF00.
+		'ILD_BLEND25' -> 16r2.
+		'ILD_BLEND50' -> 16r4.
+		'ILD_DPISCALE' -> 16r4000.
+		'ILD_FOCUS' -> 16r4.
+		'ILD_IMAGE' -> 16r20.
+		'ILD_MASK' -> 16r10.
+		'ILD_NORMAL' -> 16r0.
+		'ILD_OVERLAYMASK' -> 16rF00.
+		'ILD_PRESERVEALPHA' -> 16r1000.
+		'ILD_ROP' -> 16r40.
+		'ILD_SCALE' -> 16r2000.
+		'ILD_SELECTED' -> 16r4.
+		'ILD_TRANSPARENT' -> 16r1.
+		'LIM_LARGE' -> 16r1.
+		'LIM_SMALL' -> 16r0.
+		'NM_CHAR' -> -16r12.
+		'NM_CLICK' -> -16r2.
+		'NM_CUSTOMDRAW' -> -16rC.
+		'NM_CUSTOMTEXT' -> -16r18.
+		'NM_DBLCLK' -> -16r3.
+		'NM_FIRST' -> 16r0.
+		'NM_FONTCHANGED' -> -16r17.
+		'NM_HOVER' -> -16rD.
+		'NM_KEYDOWN' -> -16rF.
+		'NM_KILLFOCUS' -> -16r8.
+		'NM_LDOWN' -> -16r14.
+		'NM_NCHITTEST' -> -16rE.
+		'NM_OUTOFMEMORY' -> -16r1.
+		'NM_RCLICK' -> -16r5.
+		'NM_RDBLCLK' -> -16r6.
+		'NM_RDOWN' -> -16r15.
+		'NM_RELEASEDCAPTURE' -> -16r10.
+		'NM_RETURN' -> -16r4.
+		'NM_SETCURSOR' -> -16r11.
+		'NM_SETFOCUS' -> -16r7.
+		'NM_THEMECHANGED' -> -16r16.
+		'NM_TOOLTIPSCREATED' -> -16r13.
+		'TTF_IDISHWND' -> 16r1.
+		'TTN_GETDISPINFOA' -> -16r208.
+		'TTN_GETDISPINFOW' -> -16r212
+	}!
+CommCtrlConstants guid: (GUID fromString: '{13fdce7c-6ba4-4b0a-8ec8-90af54a7fbb1}')!
+CommCtrlConstants comment: ''!
+!CommCtrlConstants categoriesForClass!Unclassified! !

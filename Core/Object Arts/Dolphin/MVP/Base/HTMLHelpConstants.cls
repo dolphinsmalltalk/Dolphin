@@ -1,16 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{HTMLHelpConstants} declare: (PoolConstantsDictionary named: #HTMLHelpConstants)!
-HTMLHelpConstants at: 'HH_CLOSE_ALL' put: 16r12!
-HTMLHelpConstants at: 'HH_DISPLAY_INDEX' put: 16r1!
-HTMLHelpConstants at: 'HH_DISPLAY_TEXT_POPUP' put: 16rE!
-HTMLHelpConstants at: 'HH_DISPLAY_TOPIC' put: 16r0!
-HTMLHelpConstants at: 'HH_GET_WIN_HANDLE' put: 16r6!
-HTMLHelpConstants at: 'HH_GET_WIN_TYPE' put: 16r5!
-HTMLHelpConstants at: 'HH_HELP_CONTEXT' put: 16rF!
-HTMLHelpConstants at: 'HH_INITIALIZE' put: 16r1C!
-HTMLHelpConstants at: 'HH_SET_WIN_TYPE' put: 16r4!
-HTMLHelpConstants at: 'HH_TP_HELP_CONTEXTMENU' put: 16r10!
-HTMLHelpConstants at: 'HH_TP_HELP_WM_HELP' put: 16r11!
-HTMLHelpConstants at: 'HH_UNINITIALIZE' put: 16r1D!
-HTMLHelpConstants shrink!
+SharedPool subclass: #HTMLHelpConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HH_CLOSE_ALL' -> 16r12.
+		'HH_DISPLAY_INDEX' -> 16r1.
+		'HH_DISPLAY_TEXT_POPUP' -> 16rE.
+		'HH_DISPLAY_TOPIC' -> 16r0.
+		'HH_GET_WIN_HANDLE' -> 16r6.
+		'HH_GET_WIN_TYPE' -> 16r5.
+		'HH_HELP_CONTEXT' -> 16rF.
+		'HH_INITIALIZE' -> 16r1C.
+		'HH_SET_WIN_TYPE' -> 16r4.
+		'HH_TP_HELP_CONTEXTMENU' -> 16r10.
+		'HH_TP_HELP_WM_HELP' -> 16r11.
+		'HH_UNINITIALIZE' -> 16r1D
+	}!
+HTMLHelpConstants guid: (GUID fromString: '{8fa353ac-bdb2-4d52-9169-e27fc53fe1b2}')!
+HTMLHelpConstants comment: ''!
+!HTMLHelpConstants categoriesForClass!Unclassified! !

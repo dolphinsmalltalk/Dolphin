@@ -1,19 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-#{HotKeyConstants} declare: (PoolConstantsDictionary named: #HotKeyConstants)!
-HotKeyConstants at: 'HKCOMB_A' put: 16r8!
-HotKeyConstants at: 'HKCOMB_C' put: 16r4!
-HotKeyConstants at: 'HKCOMB_CA' put: 16r40!
-HotKeyConstants at: 'HKCOMB_NONE' put: 16r1!
-HotKeyConstants at: 'HKCOMB_S' put: 16r2!
-HotKeyConstants at: 'HKCOMB_SA' put: 16r20!
-HotKeyConstants at: 'HKCOMB_SC' put: 16r10!
-HotKeyConstants at: 'HKCOMB_SCA' put: 16r80!
-HotKeyConstants at: 'HKM_GETHOTKEY' put: 16r402!
-HotKeyConstants at: 'HKM_SETHOTKEY' put: 16r401!
-HotKeyConstants at: 'HKM_SETRULES' put: 16r403!
-HotKeyConstants at: 'HOTKEYF_ALT' put: 16r4!
-HotKeyConstants at: 'HOTKEYF_CONTROL' put: 16r2!
-HotKeyConstants at: 'HOTKEYF_EXT' put: 16r8!
-HotKeyConstants at: 'HOTKEYF_SHIFT' put: 16r1!
-HotKeyConstants shrink!
+SharedPool subclass: #HotKeyConstants
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HKCOMB_A' -> 16r8.
+		'HKCOMB_C' -> 16r4.
+		'HKCOMB_CA' -> 16r40.
+		'HKCOMB_NONE' -> 16r1.
+		'HKCOMB_S' -> 16r2.
+		'HKCOMB_SA' -> 16r20.
+		'HKCOMB_SC' -> 16r10.
+		'HKCOMB_SCA' -> 16r80.
+		'HKM_GETHOTKEY' -> 16r402.
+		'HKM_SETHOTKEY' -> 16r401.
+		'HKM_SETRULES' -> 16r403.
+		'HOTKEYF_ALT' -> 16r4.
+		'HOTKEYF_CONTROL' -> 16r2.
+		'HOTKEYF_EXT' -> 16r8.
+		'HOTKEYF_SHIFT' -> 16r1
+	}!
+HotKeyConstants guid: (GUID fromString: '{33caba91-add2-4495-bcd1-83759b95cf34}')!
+HotKeyConstants comment: ''!
+!HotKeyConstants categoriesForClass!Unclassified! !
