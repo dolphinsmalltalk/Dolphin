@@ -1,29 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusPrivateFontCollectionInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PrivateFontCollectionInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPrivateFontCollectionInitializer guid: (GUID fromString: '{c09d8c07-5f28-11d7-b609-00e0987e8081}')!
-GdiplusPrivateFontCollectionInitializer comment: ''!
-!GdiplusPrivateFontCollectionInitializer categoriesForClass!Unclassified! !
-!GdiplusPrivateFontCollectionInitializer methodsFor!
+Graphics.Gdiplus.PrivateFontCollectionInitializer guid: (Core.GUID fromString: '{c09d8c07-5f28-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PrivateFontCollectionInitializer comment: ''!
+!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipNewPrivateFontCollection: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating PrivateFontCollection'! !
-!GdiplusPrivateFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusPrivateFontCollectionInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusPrivateFontCollectionInitializer class methodsFor!
+!Graphics.Gdiplus.PrivateFontCollectionInitializer class methodsFor!
 
 default
 	^Default ifNil: [Default := self basicNew]!
@@ -36,7 +36,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!GdiplusPrivateFontCollectionInitializer class categoriesFor: #default!instance creation!private! !
-!GdiplusPrivateFontCollectionInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusPrivateFontCollectionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #default!instance creation!private! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #new!development!instance creation!public! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 

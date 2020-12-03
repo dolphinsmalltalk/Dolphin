@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusBrush
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Brush'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBrush guid: (GUID fromString: '{9a229a16-873b-4102-946a-b33879a9b261}')!
-GdiplusBrush comment: 'GdiplusBrush is an abstract class that defines an object used to paint the interior of graphics shapes, such as rectangles, ellipses, pies, polygons, strings, regions and paths.
+Graphics.Gdiplus.Brush guid: (Core.GUID fromString: '{9a229a16-873b-4102-946a-b33879a9b261}')!
+Graphics.Gdiplus.Brush isNonInstantiable: true!
+Graphics.Gdiplus.Brush comment: 'GdiplusBrush is an abstract class that defines an object used to paint the interior of graphics shapes, such as rectangles, ellipses, pies, polygons, strings, regions and paths.
 
 '!
-!GdiplusBrush categoriesForClass!Unclassified! !
-!GdiplusBrush methodsFor!
+!Graphics.Gdiplus.Brush categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Brush methodsFor!
 
 basicFree
 	"Private - Free up external resources held by the receiver.
@@ -23,20 +24,20 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneBrush: self handle cloneBrush: gpHandle) = Ok 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipCloneBrush: self handle cloneBrush: gpHandle) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipCloneBrush' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself! !
-!GdiplusBrush categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusBrush categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.Brush categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Brush categoriesFor: #clone!copying!public! !
 
-!GdiplusBrush class methodsFor!
+!Graphics.Gdiplus.Brush class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Brush icon! !
-!GdiplusBrush class categoriesFor: #icon!constants!development!public! !
+	^Graphics.Brush icon! !
+!Graphics.Gdiplus.Brush class categoriesFor: #icon!constants!development!public! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalPoint subclass: #POINTF
+External.POINT subclass: #'Graphics.Gdiplus.POINTF'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
-POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
+Graphics.Gdiplus.POINTF guid: (Core.GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
+Graphics.Gdiplus.POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
 `POINTF` is a cartesian coordinate with single precision floating point x and y values.'!
-!POINTF categoriesForClass!External-Data-Structured! !
-!POINTF methodsFor!
+!Graphics.Gdiplus.POINTF categoriesForClass!External-Data-Structured! !
+!Graphics.Gdiplus.POINTF methodsFor!
 
 asDword
 	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
@@ -40,13 +40,13 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
-!POINTF categoriesFor: #asDword!converting!public! !
-!POINTF categoriesFor: #x!**compiled accessors**!public! !
-!POINTF categoriesFor: #x:!**compiled accessors**!public! !
-!POINTF categoriesFor: #y!**compiled accessors**!public! !
-!POINTF categoriesFor: #y:!**compiled accessors**!public! !
+!Graphics.Gdiplus.POINTF categoriesFor: #asDword!converting!public! !
+!Graphics.Gdiplus.POINTF categoriesFor: #x!**compiled accessors**!public! !
+!Graphics.Gdiplus.POINTF categoriesFor: #x:!**compiled accessors**!public! !
+!Graphics.Gdiplus.POINTF categoriesFor: #y!**compiled accessors**!public! !
+!Graphics.Gdiplus.POINTF categoriesFor: #y:!**compiled accessors**!public! !
 
-!POINTF class methodsFor!
+!Graphics.Gdiplus.POINTF class methodsFor!
 
 defineFields
 	"Define the fields of the POINTF structure.
@@ -69,12 +69,10 @@ x: x y: y
 	Implementation Note: For performance reasons avoid going through
 	all the <ExternalStructure> framework methods."
 
-	^self basicNew 
-		bytes: ((ByteArray newFixed: 8)
+	^self basicNew bytes: ((ByteArray newFixed: 8)
 				floatAtOffset: 0 put: x;
 				floatAtOffset: 4 put: y;
-				yourself)
-! !
-!POINTF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!POINTF class categoriesFor: #x:y:!instance creation!public! !
+				yourself)! !
+!Graphics.Gdiplus.POINTF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.POINTF class categoriesFor: #x:y:!instance creation!public! !
 

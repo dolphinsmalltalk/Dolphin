@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ENHMETAHEADER3
+External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dSignature' -> 16r28.
@@ -22,8 +22,8 @@ ExternalStructure subclass: #ENHMETAHEADER3
 		'_OffsetOf_szlDevice' -> 16r48.
 		'_OffsetOf_szlMillimeters' -> 16r50
 	}!
-ENHMETAHEADER3 guid: (GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
-ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.ENHMETAHEADER3 guid: (Core.GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
+Graphics.Gdiplus.ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -50,8 +50,8 @@ struct tagENHMETAHEADER3 {
 	SIZEL szlMillimeters;
 } ENHMETAHEADER3;
 '!
-!ENHMETAHEADER3 categoriesForClass!Unclassified! !
-!ENHMETAHEADER3 methodsFor!
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.ENHMETAHEADER3 methodsFor!
 
 dSignature
 	"Answer the <Integer> value of the receiver's 'dSignature' field."
@@ -154,9 +154,9 @@ offDescription: anInteger
 	bytes dwordAtOffset: _OffsetOf_offDescription put: anInteger!
 
 rclBounds
-	"Answer the <RECT> value of the receiver's 'rclBounds' field."
+	"Answer the <RECTL> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
@@ -164,13 +164,13 @@ rclBounds: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1!
 
 rclFrame
-	"Answer the <RECT> value of the receiver's 'rclFrame' field."
+	"Answer the <RECTL> value of the receiver's 'rclFrame' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
 rclFrame: aRECT
 	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
@@ -178,7 +178,7 @@ rclFrame: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclFrame + 1)
-		to: ##(_OffsetOf_rclFrame + RECT basicByteSize)
+		to: ##(_OffsetOf_rclFrame + RECTL basicByteSize)
 		startingAt: 1!
 
 sReserved
@@ -194,7 +194,7 @@ sReserved: anInteger
 szlDevice
 	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
 szlDevice: aSIZE
 	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
@@ -202,13 +202,13 @@ szlDevice: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlDevice + 1)
-		to: ##(_OffsetOf_szlDevice + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlDevice + SIZEL basicByteSize)
 		startingAt: 1!
 
 szlMillimeters
 	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
 
-	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
+	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
 szlMillimeters: aSIZE
 	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
@@ -216,40 +216,40 @@ szlMillimeters: aSIZE
 	aSIZE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMillimeters + 1)
-		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
+		to: ##(_OffsetOf_szlMillimeters + SIZEL basicByteSize)
 		startingAt: 1! !
-!ENHMETAHEADER3 categoriesFor: #dSignature!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #dSignature:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #iType!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #iType:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nBytes!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nBytes:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nDescription!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nHandles!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nHandles:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nRecords!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nRecords:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nSize!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nSize:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nVersion!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nVersion:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #offDescription!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #offDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclFrame!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclFrame:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #sReserved!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #sReserved:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlDevice!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlDevice:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlMillimeters!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #dSignature!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #dSignature:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #iType!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #iType:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nBytes!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nBytes:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nDescription!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nDescription:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nHandles!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nHandles:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nPalEntries!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nPalEntries:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nRecords!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nRecords:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nSize!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nSize:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nVersion!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #nVersion:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #offDescription!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #offDescription:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #rclBounds!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #rclFrame!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #rclFrame:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #sReserved!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #sReserved:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #szlDevice!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #szlDevice:!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #szlMillimeters!**compiled accessors**!public! !
+!Graphics.Gdiplus.ENHMETAHEADER3 categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
 
-!ENHMETAHEADER3 class methodsFor!
+!Graphics.Gdiplus.ENHMETAHEADER3 class methodsFor!
 
 defineFields
 	"Define the fields of the ENHMETAHEADER3 structure.
@@ -276,25 +276,55 @@ defineFields
 "
 
 	self
-		defineField: #iType type: DWORDField new offset: 0;
-		defineField: #nSize type: DWORDField new offset: 4;
-		defineField: #rclBounds type: (StructureField type: RECT) offset: 8;
-		defineField: #rclFrame type: (StructureField type: RECT) offset: 24;
-		defineField: #dSignature type: DWORDField new offset: 40;
-		defineField: #nVersion type: DWORDField new offset: 44;
-		defineField: #nBytes type: DWORDField new offset: 48;
-		defineField: #nRecords type: DWORDField new offset: 52;
-		defineField: #nHandles type: WORDField new offset: 56;
-		defineField: #sReserved type: WORDField new offset: 58;
-		defineField: #nDescription type: DWORDField new offset: 60;
-		defineField: #offDescription type: DWORDField new offset: 64;
-		defineField: #nPalEntries type: DWORDField new offset: 68;
-		defineField: #szlDevice type: (StructureField type: SIZE) offset: 72;
-		defineField: #szlMillimeters type: (StructureField type: SIZE) offset: 80.
+		defineField: #iType
+			type: DWORDField new
+			offset: 0;
+		defineField: #nSize
+			type: DWORDField new
+			offset: 4;
+		defineField: #rclBounds
+			type: (StructureField type: RECTL)
+			offset: 8;
+		defineField: #rclFrame
+			type: (StructureField type: RECTL)
+			offset: 24;
+		defineField: #dSignature
+			type: DWORDField new
+			offset: 40;
+		defineField: #nVersion
+			type: DWORDField new
+			offset: 44;
+		defineField: #nBytes
+			type: DWORDField new
+			offset: 48;
+		defineField: #nRecords
+			type: DWORDField new
+			offset: 52;
+		defineField: #nHandles
+			type: WORDField new
+			offset: 56;
+		defineField: #sReserved
+			type: WORDField new
+			offset: 58;
+		defineField: #nDescription
+			type: DWORDField new
+			offset: 60;
+		defineField: #offDescription
+			type: DWORDField new
+			offset: 64;
+		defineField: #nPalEntries
+			type: DWORDField new
+			offset: 68;
+		defineField: #szlDevice
+			type: (StructureField type: SIZEL)
+			offset: 72;
+		defineField: #szlMillimeters
+			type: (StructureField type: SIZEL)
+			offset: 80.
 	self byteSize: 88!
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
-!ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!ENHMETAHEADER3 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.ENHMETAHEADER3 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

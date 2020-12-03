@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpPropertyItem
+External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_id' -> 16r0.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #GpPropertyItem
 		'_OffsetOf_Type' -> 16r8.
 		'_OffsetOf_Value' -> 16rC
 	}!
-GpPropertyItem guid: (GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
-GpPropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpPropertyItem guid: (Core.GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
+Graphics.Gdiplus.GpPropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagGpPropertyItem {
 	void* Value;
 } GpPropertyItem;
 '!
-!GpPropertyItem categoriesForClass!Unclassified! !
-!GpPropertyItem methodsFor!
+!Graphics.Gdiplus.GpPropertyItem categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpPropertyItem methodsFor!
 
 id
 	"Answer the <Integer> value of the receiver's 'id' field."
@@ -55,8 +55,8 @@ name
 	"Answer the receiver's id (property tag) as a string.  If unknown, answer the receiver's id as a hex string."
 
 	^GdiplusConstants keys asOrderedCollection detect: 
-			[:e | 
-			((e beginsWith: 'PropertyTag') and: [(e beginsWith: 'PropertyTagType') not]) 
+			[:e |
+			((e beginsWith: 'PropertyTag') and: [(e beginsWith: 'PropertyTagType') not])
 				and: [self id = (GdiplusConstants at: e)]]
 		ifNone: [self id hex]!
 
@@ -73,7 +73,7 @@ Type: anInteger
 typeName
 	"Answer the receiver's type (property tag type) as a string."
 
-	^GdiplusConstants keys asOrderedCollection 
+	^GdiplusConstants keys asOrderedCollection
 		detect: [:e | (e beginsWith: 'PropertyTagType') and: [self Type = (GdiplusConstants at: e)]]!
 
 Value
@@ -105,19 +105,19 @@ valueArray
 	"Next line won't work with an arary returned, i.e., if length > 8."
 	type == 10 ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
-!GpPropertyItem categoriesFor: #id!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #id:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #length!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #length:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #name!accessing!public! !
-!GpPropertyItem categoriesFor: #Type!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #Type:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #typeName!accessing!public! !
-!GpPropertyItem categoriesFor: #Value!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #Value:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #valueArray!accessing!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #id!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #id:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #length!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #length:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #name!accessing!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Type!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Type:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #typeName!accessing!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Value!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Value:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesFor: #valueArray!accessing!public! !
 
-!GpPropertyItem class methodsFor!
+!Graphics.Gdiplus.GpPropertyItem class methodsFor!
 
 defineFields
 	"Define the fields of the GpPropertyItem structure.
@@ -133,14 +133,22 @@ defineFields
 "
 
 	self
-		defineField: #id type: DWORDField new offset: 0;
-		defineField: #length type: DWORDField new offset: 4;
-		defineField: #Type type: WORDField new offset: 8;
-		defineField: #Value type: LPVOIDField new offset: 12.
+		defineField: #id
+			type: DWORDField new
+			offset: 0;
+		defineField: #length
+			type: DWORDField new
+			offset: 4;
+		defineField: #Type
+			type: WORDField new
+			offset: 8;
+		defineField: #Value
+			type: LPVOIDField new
+			offset: 12.
 	self byteSize: 16!
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
-!GpPropertyItem class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpPropertyItem class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpPropertyItem class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpPropertyItem class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

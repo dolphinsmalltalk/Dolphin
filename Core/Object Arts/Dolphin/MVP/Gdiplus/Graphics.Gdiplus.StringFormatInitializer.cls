@@ -1,32 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusStringFormatInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.StringFormatInitializer'
 	instanceVariableNames: 'formatFlags language'
 	classVariableNames: 'GenericDefault GenericTypographic'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusStringFormatInitializer guid: (GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
-GdiplusStringFormatInitializer isAbstract: true!
-GdiplusStringFormatInitializer comment: ''!
-!GdiplusStringFormatInitializer categoriesForClass!Unclassified! !
-!GdiplusStringFormatInitializer methodsFor!
+Graphics.Gdiplus.StringFormatInitializer guid: (Core.GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
+Graphics.Gdiplus.StringFormatInitializer isNonInstantiable: true!
+Graphics.Gdiplus.StringFormatInitializer comment: ''!
+!Graphics.Gdiplus.StringFormatInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.StringFormatInitializer methodsFor!
 
 gdiplusConstructorErrorDescription
 	^'Error creating StringFormat'! !
-!GdiplusStringFormatInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.StringFormatInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusStringFormatInitializer class methodsFor!
+!Graphics.Gdiplus.StringFormatInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber
-	^GdiplusStringFormatFromFlagsInitializer basicNew formatFlags: flagsNumber language: languageNumber!
+	^StringFormatFromFlagsInitializer basicNew formatFlags: flagsNumber language: languageNumber!
 
 genericDefault
-	^GenericDefault ifNil: [GenericDefault := GdiplusStringFormatGenericDefaultInitializer basicNew]!
+	^GenericDefault ifNil: [GenericDefault := StringFormatGenericDefaultInitializer basicNew]!
 
 genericTypographic
 	^GenericTypographic
-		ifNil: [GenericTypographic := GdiplusStringFormatGenericTypographicInitializer basicNew]!
+		ifNil: [GenericTypographic := StringFormatGenericTypographicInitializer basicNew]!
 
 new
 	^self shouldNotImplement!
@@ -39,10 +39,10 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!GdiplusStringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GdiplusStringFormatInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

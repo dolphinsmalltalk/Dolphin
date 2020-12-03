@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromImageInitializer'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsFromImageInitializer guid: (GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
-GdiplusGraphicsFromImageInitializer comment: ''!
-!GdiplusGraphicsFromImageInitializer categoriesForClass!Unclassified! !
-!GdiplusGraphicsFromImageInitializer methodsFor!
+Graphics.Gdiplus.GraphicsFromImageInitializer guid: (Core.GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
+Graphics.Gdiplus.GraphicsFromImageInitializer comment: ''!
+!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer methodsFor!
 
 createHandle
 	"Private -  Graphics(IN Image* image)
@@ -23,7 +23,7 @@ createHandle
         }"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipGetImageGraphicsContext: image asParameter graphics: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -33,13 +33,13 @@ gdiplusConstructorErrorDescription
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
 
-!GdiplusGraphicsFromImageInitializer class methodsFor!
+!Graphics.Gdiplus.GraphicsFromImageInitializer class methodsFor!
 
 image: aGdiplusImage
 	^self new image: aGdiplusImage! !
-!GdiplusGraphicsFromImageInitializer class categoriesFor: #image:!instance creation!public! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer class categoriesFor: #image:!instance creation!public! !
 

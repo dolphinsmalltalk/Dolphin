@@ -1,31 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusCachedBitmap
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.CachedBitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusCachedBitmap guid: (GUID fromString: '{28e34ab0-3f39-40a2-9e59-af891814c197}')!
-GdiplusCachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a format that is optimized for display on a particular device. To display an instance, call the GdiplusGraphics>>drawCachedBitmap method.
+Graphics.Gdiplus.CachedBitmap guid: (Core.GUID fromString: '{28e34ab0-3f39-40a2-9e59-af891814c197}')!
+Graphics.Gdiplus.CachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a format that is optimized for display on a particular device. To display an instance, call the GdiplusGraphics>>drawCachedBitmap method.
 
 '!
-!GdiplusCachedBitmap categoriesForClass!Unclassified! !
-!GdiplusCachedBitmap methodsFor!
+!Graphics.Gdiplus.CachedBitmap categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.CachedBitmap methodsFor!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
 	GdiplusLibrary default gdipDeleteCachedBitmap: handle! !
-!GdiplusCachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.CachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
 
-!GdiplusCachedBitmap class methodsFor!
+!Graphics.Gdiplus.CachedBitmap class methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
 	"Answer an instance of the receiver that is based on aBitmap and aGraphics objects."
 
-	^self 
-		fromInitializer: (GdiplusCachedBitmapInitializer bitmap: aBitmap graphics: aGraphics)!
+	^self fromInitializer: (CachedBitmapInitializer bitmap: aBitmap graphics: aGraphics)!
 
 exampleGdipCBPerformance
 	"MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Using a Cached Bitmap to Improve Performance
@@ -36,10 +35,10 @@ exampleGdipCBPerformance
 	"
 
 	| bitmap graphics image cachedBitmap strm time1 time2 |
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
-	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
+	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	cachedBitmap := CachedBitmap bitmap: image graphics: graphics.
 	strm := String smalltalkWriteStream.
 	strm
 		display: 'CachedBitmap drawing time';
@@ -57,7 +56,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Bitmap icon! !
-!GdiplusCachedBitmap class categoriesFor: #bitmap:graphics:!instance creation!public! !
-!GdiplusCachedBitmap class categoriesFor: #exampleGdipCBPerformance!examples!public!sunit! !
-!GdiplusCachedBitmap class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.CachedBitmap class categoriesFor: #bitmap:graphics:!instance creation!public! !
+!Graphics.Gdiplus.CachedBitmap class categoriesFor: #exampleGdipCBPerformance!examples!public!sunit! !
+!Graphics.Gdiplus.CachedBitmap class categoriesFor: #icon!constants!development!public! !
 

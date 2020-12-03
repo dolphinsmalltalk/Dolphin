@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromHDCInitializer'
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsFromHDCInitializer guid: (GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
-GdiplusGraphicsFromHDCInitializer comment: ''!
-!GdiplusGraphicsFromHDCInitializer categoriesForClass!Unclassified! !
-!GdiplusGraphicsFromHDCInitializer methodsFor!
+Graphics.Gdiplus.GraphicsFromHDCInitializer guid: (Core.GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
+Graphics.Gdiplus.GraphicsFromHDCInitializer comment: ''!
+!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer methodsFor!
 
 canvas: aCanvas
 	canvas := aCanvas!
@@ -25,22 +25,22 @@ createHandle
 	Graphics object is deleted or goes out of scope before the device context is released."
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Graphics'! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #canvas:!initializing!private! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesFor: #canvas:!initializing!private! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusGraphicsFromHDCInitializer class methodsFor!
+!Graphics.Gdiplus.GraphicsFromHDCInitializer class methodsFor!
 
 canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
 	^self new canvas: aCanvas! !
-!GdiplusGraphicsFromHDCInitializer class categoriesFor: #canvas:!instance creation!public! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer class categoriesFor: #canvas:!instance creation!public! !
 

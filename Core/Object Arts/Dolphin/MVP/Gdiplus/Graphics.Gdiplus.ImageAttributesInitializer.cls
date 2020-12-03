@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.ImageAttributesInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageAttributesInitializer guid: (GUID fromString: '{88f79e30-7465-481e-afda-b77fcd6e29bd}')!
-GdiplusImageAttributesInitializer comment: ''!
-!GdiplusImageAttributesInitializer categoriesForClass!Unclassified! !
-!GdiplusImageAttributesInitializer methodsFor!
+Graphics.Gdiplus.ImageAttributesInitializer guid: (Core.GUID fromString: '{88f79e30-7465-481e-afda-b77fcd6e29bd}')!
+Graphics.Gdiplus.ImageAttributesInitializer comment: ''!
+!Graphics.Gdiplus.ImageAttributesInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.ImageAttributesInitializer methodsFor!
 
 createHandle
 	"Private - 
@@ -20,17 +20,17 @@ createHandle
 	    }"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateImageAttributes: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating ImageAttributes'! !
-!GdiplusImageAttributesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageAttributesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.ImageAttributesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageAttributesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusImageAttributesInitializer class methodsFor!
+!Graphics.Gdiplus.ImageAttributesInitializer class methodsFor!
 
 default
 	^Default ifNil: [Default := self basicNew]!
@@ -43,7 +43,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!GdiplusImageAttributesInitializer class categoriesFor: #default!instance creation!private! !
-!GdiplusImageAttributesInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusImageAttributesInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #default!instance creation!private! !
+!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #new!development!instance creation!public! !
+!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 

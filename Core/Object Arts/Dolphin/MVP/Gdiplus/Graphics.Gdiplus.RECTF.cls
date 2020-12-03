@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalRectangle subclass: #RECTF
+External.RECT subclass: #'Graphics.Gdiplus.RECTF'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_height' -> 16rC.
@@ -11,8 +11,8 @@ ExternalRectangle subclass: #RECTF
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-RECTF guid: (GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
-RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.RECTF guid: (Core.GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
+Graphics.Gdiplus.RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagRECTF {
 	float Height;
 } RECTF;
 '!
-!RECTF categoriesForClass!Unclassified! !
-!RECTF methodsFor!
+!Graphics.Gdiplus.RECTF categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.RECTF methodsFor!
 
 asRectangle
 	^self x @ self y extent: self width @ self height!
@@ -85,21 +85,21 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
-!RECTF categoriesFor: #asRectangle!converting!public! !
-!RECTF categoriesFor: #bottom!accessing!public! !
-!RECTF categoriesFor: #height!**compiled accessors**!public! !
-!RECTF categoriesFor: #height:!**compiled accessors**!public! !
-!RECTF categoriesFor: #left!public! !
-!RECTF categoriesFor: #right!accessing!public! !
-!RECTF categoriesFor: #top!public! !
-!RECTF categoriesFor: #width!**compiled accessors**!public! !
-!RECTF categoriesFor: #width:!**compiled accessors**!public! !
-!RECTF categoriesFor: #x!**compiled accessors**!public! !
-!RECTF categoriesFor: #x:!**compiled accessors**!public! !
-!RECTF categoriesFor: #y!**compiled accessors**!public! !
-!RECTF categoriesFor: #y:!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #asRectangle!converting!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #bottom!accessing!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #height!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #height:!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #left!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #right!accessing!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #top!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #width!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #width:!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #x!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #x:!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #y!**compiled accessors**!public! !
+!Graphics.Gdiplus.RECTF categoriesFor: #y:!**compiled accessors**!public! !
 
-!RECTF class methodsFor!
+!Graphics.Gdiplus.RECTF class methodsFor!
 
 defineFields
 	"Define the fields of the RECTF structure.
@@ -153,10 +153,10 @@ left: left top: top width: width height: height
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
-!RECTF class categoriesFor: #defineFields!public!template definition! !
-!RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
-!RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
-!RECTF class categoriesFor: #newBuffer!instance creation!public! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
+!Graphics.Gdiplus.RECTF class categoriesFor: #newBuffer!instance creation!public! !
 

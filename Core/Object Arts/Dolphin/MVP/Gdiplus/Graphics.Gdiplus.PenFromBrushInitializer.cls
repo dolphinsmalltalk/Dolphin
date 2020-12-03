@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
+Graphics.Gdiplus.PenInitializer subclass: #'Graphics.Gdiplus.PenFromBrushInitializer'
 	instanceVariableNames: 'brush width'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPenFromBrushInitializer guid: (GUID fromString: '{3cebfbe5-f58d-442f-bf48-8d88151842cf}')!
-GdiplusPenFromBrushInitializer comment: ''!
-!GdiplusPenFromBrushInitializer categoriesForClass!Unclassified! !
-!GdiplusPenFromBrushInitializer methodsFor!
+Graphics.Gdiplus.PenFromBrushInitializer guid: (Core.GUID fromString: '{3cebfbe5-f58d-442f-bf48-8d88151842cf}')!
+Graphics.Gdiplus.PenFromBrushInitializer comment: ''!
+!Graphics.Gdiplus.PenFromBrushInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PenFromBrushInitializer methodsFor!
 
 brush
 	"Private - Unit test accessor"
@@ -30,7 +30,7 @@ createHandle
                       		              width, unit, &nativePen);"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreatePen2: brush asParameter
 				width: (width ?? 1.0) asParameter
@@ -38,7 +38,7 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusPenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
-!GdiplusPenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
-!GdiplusPenFromBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
+!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
+!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.ImageFromIStreamInitializer'
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageFromIStreamInitializer guid: (GUID fromString: '{0a3984b0-2193-4a59-abd8-6f6d3f8ed0f7}')!
-GdiplusImageFromIStreamInitializer comment: ''!
-!GdiplusImageFromIStreamInitializer categoriesForClass!Unclassified! !
-!GdiplusImageFromIStreamInitializer methodsFor!
+Graphics.Gdiplus.ImageFromIStreamInitializer guid: (Core.GUID fromString: '{0a3984b0-2193-4a59-abd8-6f6d3f8ed0f7}')!
+Graphics.Gdiplus.ImageFromIStreamInitializer comment: ''!
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer methodsFor!
 
 createHandle
 	"Private -  Image::Image(
@@ -31,7 +31,7 @@ createHandle
 }"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipLoadImageFromStream: iStream asParameter image: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -46,14 +46,14 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
 
-!GdiplusImageFromIStreamInitializer class methodsFor!
+!Graphics.Gdiplus.ImageFromIStreamInitializer class methodsFor!
 
 iStream: pStream
 	^self new iStream: pStream! !
-!GdiplusImageFromIStreamInitializer class categoriesFor: #iStream:!instance creation!public! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer class categoriesFor: #iStream:!instance creation!public! !
 

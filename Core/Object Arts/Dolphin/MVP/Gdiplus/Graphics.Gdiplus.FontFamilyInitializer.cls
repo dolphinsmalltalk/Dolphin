@@ -1,31 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FontFamilyInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'GenericSansSerif GenericSerif'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusFontFamilyInitializer guid: (GUID fromString: '{c09d8c09-5f28-11d7-b609-00e0987e8081}')!
-GdiplusFontFamilyInitializer isAbstract: true!
-GdiplusFontFamilyInitializer comment: ''!
-!GdiplusFontFamilyInitializer categoriesForClass!Unclassified! !
-!GdiplusFontFamilyInitializer methodsFor!
+Graphics.Gdiplus.FontFamilyInitializer guid: (Core.GUID fromString: '{c09d8c09-5f28-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.FontFamilyInitializer isNonInstantiable: true!
+Graphics.Gdiplus.FontFamilyInitializer comment: ''!
+!Graphics.Gdiplus.FontFamilyInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.FontFamilyInitializer methodsFor!
 
 gdiplusConstructorErrorDescription
 	^'Error creating FontFamily'! !
-!GdiplusFontFamilyInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.FontFamilyInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusFontFamilyInitializer class methodsFor!
+!Graphics.Gdiplus.FontFamilyInitializer class methodsFor!
 
 genericSansSerif
-	^GenericSansSerif ifNil: [GenericSansSerif := GdiplusFontFamilyGenericSansSerifInitializer basicNew]!
+	^GenericSansSerif ifNil: [GenericSansSerif := FontFamilyGenericSansSerifInitializer basicNew]!
 
 genericSerif
-	^GenericSerif ifNil: [GenericSerif := GdiplusFontFamilyGenericSerifInitializer basicNew]!
+	^GenericSerif ifNil: [GenericSerif := FontFamilyGenericSerifInitializer basicNew]!
 
 name: aString fontCollection: aFontCollection
-	^GdiplusFontFamilyFromNameInitializer basicNew name: aString fontCollection: aFontCollection!
+	^FontFamilyFromNameInitializer basicNew name: aString fontCollection: aFontCollection!
 
 new
 	^self shouldNotImplement!
@@ -35,9 +35,9 @@ onPreStripImage
 	which hold sub-instance of the receiver."
 
 	GenericSansSerif := GenericSerif := nil! !
-!GdiplusFontFamilyInitializer class categoriesFor: #genericSansSerif!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #genericSerif!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #name:fontCollection:!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #new!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #genericSansSerif!instance creation!public! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #genericSerif!instance creation!public! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #name:fontCollection:!instance creation!public! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 

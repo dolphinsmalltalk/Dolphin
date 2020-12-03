@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpEncoderParameter
+External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Guid' -> 16r0.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #GpEncoderParameter
 		'_OffsetOf_Type' -> 16r14.
 		'_OffsetOf_Value' -> 16r18
 	}!
-GpEncoderParameter guid: (GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
-GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpEncoderParameter guid: (Core.GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
+Graphics.Gdiplus.GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagGpEncoderParameter {
 	void* Value;
 } GpEncoderParameter;
 '!
-!GpEncoderParameter categoriesForClass!Unclassified! !
-!GpEncoderParameter methodsFor!
+!Graphics.Gdiplus.GpEncoderParameter categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpEncoderParameter methodsFor!
 
 Guid
 	"Answer the <GUID> value of the receiver's 'Guid' field."
@@ -74,16 +74,16 @@ Value: anExternalAddress
 	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
-!GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #NumberOfValues:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Type!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Type:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Value!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Value:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #NumberOfValues:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Type!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Type:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Value!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Value:!**compiled accessors**!public! !
 
-!GpEncoderParameter class methodsFor!
+!Graphics.Gdiplus.GpEncoderParameter class methodsFor!
 
 defineFields
 	"Define the fields of the GpEncoderParameter structure.
@@ -99,14 +99,22 @@ defineFields
 "
 
 	self
-		defineField: #Guid type: (StructureField type: GUID) offset: 0;
-		defineField: #NumberOfValues type: DWORDField new offset: 16;
-		defineField: #Type type: DWORDField new offset: 20;
-		defineField: #Value type: LPVOIDField new offset: 24.
+		defineField: #Guid
+			type: (StructureField type: GUID)
+			offset: 0;
+		defineField: #NumberOfValues
+			type: DWORDField new
+			offset: 16;
+		defineField: #Type
+			type: DWORDField new
+			offset: 20;
+		defineField: #Value
+			type: LPVOIDField new
+			offset: 24.
 	self byteSize: 28!
 
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
-!GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

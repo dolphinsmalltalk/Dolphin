@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.CachedBitmapInitializer'
 	instanceVariableNames: 'bitmap graphics'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusCachedBitmapInitializer guid: (GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
-GdiplusCachedBitmapInitializer comment: ''!
-!GdiplusCachedBitmapInitializer categoriesForClass!Unclassified! !
-!GdiplusCachedBitmapInitializer methodsFor!
+Graphics.Gdiplus.CachedBitmapInitializer guid: (Core.GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.CachedBitmapInitializer comment: ''!
+!Graphics.Gdiplus.CachedBitmapInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.CachedBitmapInitializer methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
 	bitmap := aBitmap.
@@ -17,7 +17,7 @@ bitmap: aBitmap graphics: aGraphics
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalAddress new.
+	gpHandle := Address new.
 	status := self library
 				gdipCreateCachedBitmap: bitmap asParameter
 				graphics: graphics asParameter
@@ -27,13 +27,13 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating CachedBitmap'! !
-!GdiplusCachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
-!GdiplusCachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusCachedBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
+!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusCachedBitmapInitializer class methodsFor!
+!Graphics.Gdiplus.CachedBitmapInitializer class methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
 	^self new bitmap: aBitmap graphics: aGraphics! !
-!GdiplusCachedBitmapInitializer class categoriesFor: #bitmap:graphics:!instance creation!public! !
+!Graphics.Gdiplus.CachedBitmapInitializer class categoriesFor: #bitmap:graphics:!instance creation!public! !
 

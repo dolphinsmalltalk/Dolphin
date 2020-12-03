@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.CustomLineCapInitializer'
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusCustomLineCapInitializer guid: (GUID fromString: '{ea986b36-8426-11d7-b609-00e0987e8081}')!
-GdiplusCustomLineCapInitializer comment: ''!
-!GdiplusCustomLineCapInitializer categoriesForClass!Unclassified! !
-!GdiplusCustomLineCapInitializer methodsFor!
+Graphics.Gdiplus.CustomLineCapInitializer guid: (Core.GUID fromString: '{ea986b36-8426-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.CustomLineCapInitializer comment: ''!
+!Graphics.Gdiplus.CustomLineCapInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.CustomLineCapInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateCustomLineCap: fillPath asParameter
 				strokePath: strokePath asParameter
@@ -31,11 +31,11 @@ fillPath: aFillPath strokePath: aStrokePath baseCap: aLineCapConstant baseInset:
 
 gdiplusConstructorErrorDescription
 	^'Error creating CustomLineCap'! !
-!GdiplusCustomLineCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusCustomLineCapInitializer categoriesFor: #fillPath:strokePath:baseCap:baseInset:!initializing!private! !
-!GdiplusCustomLineCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.CustomLineCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.CustomLineCapInitializer categoriesFor: #fillPath:strokePath:baseCap:baseInset:!initializing!private! !
+!Graphics.Gdiplus.CustomLineCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusCustomLineCapInitializer class methodsFor!
+!Graphics.Gdiplus.CustomLineCapInitializer class methodsFor!
 
 fillPath: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset 
 	^self new 
@@ -43,5 +43,5 @@ fillPath: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset
 		strokePath: strokePath
 		baseCap: baseCap
 		baseInset: baseInset! !
-!GdiplusCustomLineCapInitializer class categoriesFor: #fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+!Graphics.Gdiplus.CustomLineCapInitializer class categoriesFor: #fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
 

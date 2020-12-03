@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpColorMap
+External.Structure subclass: #'Graphics.Gdiplus.GpColorMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_newColor' -> 16r4.
 		'_OffsetOf_oldColor' -> 16r0
 	}!
-GpColorMap guid: (GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
-GpColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpColorMap guid: (Core.GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
+Graphics.Gdiplus.GpColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagGpColorMap {
 	unsigned long newColor;
 } GpColorMap;
 '!
-!GpColorMap categoriesForClass!Unclassified! !
-!GpColorMap methodsFor!
+!Graphics.Gdiplus.GpColorMap categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpColorMap methodsFor!
 
 newColor
 	"Answer the <Integer> value of the receiver's 'newColor' field."
@@ -46,12 +46,12 @@ oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
-!GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #oldColor:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMap categoriesFor: #oldColor:!**compiled accessors**!public! !
 
-!GpColorMap class methodsFor!
+!Graphics.Gdiplus.GpColorMap class methodsFor!
 
 defineFields
 	"Define the fields of the GpColorMap structure.
@@ -65,12 +65,16 @@ defineFields
 "
 
 	self
-		defineField: #oldColor type: DWORDField new offset: 0;
-		defineField: #newColor type: DWORDField new offset: 4.
+		defineField: #oldColor
+			type: DWORDField new
+			offset: 0;
+		defineField: #newColor
+			type: DWORDField new
+			offset: 4.
 	self byteSize: 8!
 
 getFieldNames
 	^#(#oldColor #newColor)! !
-!GpColorMap class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpColorMap class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

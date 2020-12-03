@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusMatrixInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.MatrixInitializer'
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusMatrixInitializer guid: (GUID fromString: '{1a1a5ea6-6151-11d7-b609-00e0987e8081}')!
-GdiplusMatrixInitializer comment: ''!
-!GdiplusMatrixInitializer categoriesForClass!Unclassified! !
-!GdiplusMatrixInitializer methodsFor!
+Graphics.Gdiplus.MatrixInitializer guid: (Core.GUID fromString: '{1a1a5ea6-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.MatrixInitializer comment: ''!
+!Graphics.Gdiplus.MatrixInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.MatrixInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	(status := self library
 				gdipCreateMatrix2: m11
 				m12: m12
@@ -35,11 +35,11 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m22 := aReal22.
 	m31 := aReal31.
 	m32 := aReal32! !
-!GdiplusMatrixInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusMatrixInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusMatrixInitializer categoriesFor: #m11:m12:m21:m22:m31:m32:!initializing!private! !
+!Graphics.Gdiplus.MatrixInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.MatrixInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.MatrixInitializer categoriesFor: #m11:m12:m21:m22:m31:m32:!initializing!private! !
 
-!GdiplusMatrixInitializer class methodsFor!
+!Graphics.Gdiplus.MatrixInitializer class methodsFor!
 
 m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	^self new 
@@ -49,5 +49,5 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 		m22: aReal22
 		m31: aReal31
 		m32: aReal32! !
-!GdiplusMatrixInitializer class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!Graphics.Gdiplus.MatrixInitializer class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
 

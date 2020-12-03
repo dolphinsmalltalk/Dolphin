@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusFontFamily
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.FontFamily'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusFontFamily guid: (GUID fromString: '{c09d8c08-5f28-11d7-b609-00e0987e8081}')!
-GdiplusFontFamily comment: 'GdiplusFontFamily represents a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
+Graphics.Gdiplus.FontFamily guid: (Core.GUID fromString: '{c09d8c08-5f28-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.FontFamily comment: 'GdiplusFontFamily represents a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
 
 '!
-!GdiplusFontFamily categoriesForClass!Unclassified! !
-!GdiplusFontFamily methodsFor!
+!Graphics.Gdiplus.FontFamily categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.FontFamily methodsFor!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
@@ -22,8 +22,8 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle) 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle)
 		= Ok ifFalse: [GdiplusError signal: 'GdipCloneFontFamily failed' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
@@ -34,10 +34,10 @@ lineSpacing
 
 	| status lineSpacing |
 	lineSpacing := DWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetLineSpacing: self asParameter
 				style: 0
-				lineSpacing: lineSpacing) = Ok 
+				lineSpacing: lineSpacing) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetLineSpacing failed' with: status].
 	^lineSpacing asInteger!
 
@@ -52,12 +52,12 @@ name
 				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !
-!GdiplusFontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusFontFamily categoriesFor: #clone!copying!public! !
-!GdiplusFontFamily categoriesFor: #lineSpacing!accessing!public! !
-!GdiplusFontFamily categoriesFor: #name!accessing!public! !
+!Graphics.Gdiplus.FontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.FontFamily categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.FontFamily categoriesFor: #lineSpacing!accessing!public! !
+!Graphics.Gdiplus.FontFamily categoriesFor: #name!accessing!public! !
 
-!GdiplusFontFamily class methodsFor!
+!Graphics.Gdiplus.FontFamily class methodsFor!
 
 exampleGdipFFClone
 	"MSDN: FontFamily::Clone
@@ -67,11 +67,11 @@ exampleGdipFFClone
 	"
 
 	| bitmap fontFamily cloneFontFamily font |
-	bitmap := GdiplusBitmap extent: 250 @ 100.
-	fontFamily := GdiplusFontFamily fromName: 'arial'.
+	bitmap := Bitmap extent: 250 @ 100.
+	fontFamily := FontFamily fromName: 'arial'.
 	cloneFontFamily := fontFamily clone.
-	font := GdiplusFont fontFamily: cloneFontFamily emSize: 16.
-	bitmap graphics 
+	font := Font fontFamily: cloneFontFamily pointSize: 16.
+	bitmap graphics
 		drawString: 'This is an Arial font'
 		font: font
 		at: 10 @ 10
@@ -83,23 +83,22 @@ fromName: aString
 	^self fromName: aString fontCollection: nil!
 
 fromName: aString fontCollection: aFontCollection
-	^self fromInitializer: (GdiplusFontFamilyInitializer name: aString
-				fontCollection: aFontCollection)!
+	^self fromInitializer: (FontFamilyInitializer name: aString fontCollection: aFontCollection)!
 
 genericSansSerif
-	^self fromInitializer: GdiplusFontFamilyInitializer genericSansSerif!
+	^self fromInitializer: FontFamilyInitializer genericSansSerif!
 
 genericSerif
-	^self fromInitializer: GdiplusFontFamilyInitializer genericSerif!
+	^self fromInitializer: FontFamilyInitializer genericSerif!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Font icon! !
-!GdiplusFontFamily class categoriesFor: #exampleGdipFFClone!examples!public!sunit! !
-!GdiplusFontFamily class categoriesFor: #fromName:!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #fromName:fontCollection:!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #genericSansSerif!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #genericSerif!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #icon!constants!development!public! !
+	^Graphics.Font icon! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #exampleGdipFFClone!examples!public!sunit! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #fromName:!instance creation!public! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #fromName:fontCollection:!instance creation!public! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #genericSansSerif!instance creation!public! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #genericSerif!instance creation!public! !
+!Graphics.Gdiplus.FontFamily class categoriesFor: #icon!constants!development!public! !
 

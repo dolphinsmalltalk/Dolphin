@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusMatrix
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Matrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusMatrix guid: (GUID fromString: '{1a1a5ea7-6151-11d7-b609-00e0987e8081}')!
-GdiplusMatrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, in turn, represents an affine transformation. An instance stores only six of the 9 numbers in a 3 ×3 matrix because all 3 ×3 matrices that represent affine transformations have the same third column (0, 0, 1).  An instance is typically used to transform characteristics of another object (see definitions of #transform:).
+Graphics.Gdiplus.Matrix guid: (Core.GUID fromString: '{1a1a5ea7-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.Matrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, in turn, represents an affine transformation. An instance stores only six of the 9 numbers in a 3 ×3 matrix because all 3 ×3 matrices that represent affine transformations have the same third column (0, 0, 1).  An instance is typically used to transform characteristics of another object (see definitions of #transform:).
 
 '!
-!GdiplusMatrix categoriesForClass!Unclassified! !
-!GdiplusMatrix methodsFor!
+!Graphics.Gdiplus.Matrix categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Matrix methodsFor!
 
 asArray
 	| status array |
 	array := FLOATArray new: 6.
-	(status := GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array) = Ok 
+	(status := GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetMatrixElements failed' with: status].
 	^array asArray!
 
@@ -35,44 +35,44 @@ printOn: aStream
 rotateTransform: aRealAngle
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aRealAngle order: aMatrixOrderConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipRotateMatrix: self asParameter
 				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipRotateMatrix failed' with: status]!
 
 scaleTransform: aPoint
 	self scaleTransform: aPoint order: MatrixOrderPrepend!
 
-scaleTransform: aPoint order: aMatrixOrderConstant 
+scaleTransform: aPoint order: aMatrixOrderConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipScaleMatrix: self asParameter
 				scaleX: aPoint x
 				scaleY: aPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipScaleMatrix failed' with: status]!
 
 shearTransform: aPoint
 	self shearTransform: aPoint order: MatrixOrderPrepend!
 
-shearTransform: aPoint order: aMatrixOrderConstant 
+shearTransform: aPoint order: aMatrixOrderConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipShearMatrix: self asParameter
 				shearX: aPoint x
 				shearY: aPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipShearMatrix failed' with: status]!
 
 transformPoints: aPointsCollection
 	| pts status |
-	pts := (StructureArray
+	pts := StructureArray
 				withAll: aPointsCollection
 				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y]).
+				initializer: [:pointl :point | pointl x: point x y: point y].
 	pts beUnfinalizable.
 	(status := GdiplusLibrary default
 				gdipTransformMatrixPointsI: self handle
@@ -84,28 +84,28 @@ transformPoints: aPointsCollection
 translateTransform: aPoint
 	self translateTransform: aPoint order: MatrixOrderPrepend!
 
-translateTransform: aPoint order: aMatrixOrderConstant 
+translateTransform: aPoint order: aMatrixOrderConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipTranslateMatrix: self asParameter
 				offsetX: aPoint x
 				offsetY: aPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
-!GdiplusMatrix categoriesFor: #asArray!converting!public! !
-!GdiplusMatrix categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusMatrix categoriesFor: #printOn:!printing!public! !
-!GdiplusMatrix categoriesFor: #rotateTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #rotateTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #scaleTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #scaleTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #shearTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #shearTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #transformPoints:!operations!public! !
-!GdiplusMatrix categoriesFor: #translateTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #translateTransform:order:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #asArray!converting!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Matrix categoriesFor: #printOn:!printing!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #rotateTransform:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #rotateTransform:order:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #scaleTransform:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #scaleTransform:order:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #shearTransform:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #shearTransform:order:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #transformPoints:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #translateTransform:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesFor: #translateTransform:order:!operations!public! !
 
-!GdiplusMatrix class methodsFor!
+!Graphics.Gdiplus.Matrix class methodsFor!
 
 exampleGdipMShadows
 	"This example various transformations (shear, scale and translate) to display a string
@@ -115,15 +115,15 @@ exampleGdipMShadows
 	"
 
 	| bitmap graphics font matrix brush |
-	bitmap := GdiplusBitmap extent: 750 @ 200.
+	bitmap := Bitmap extent: 750 @ 200.
 	graphics := bitmap graphics.
-	(matrix := GdiplusMatrix new)
+	(matrix := Matrix new)
 		shearTransform: -1.4 @ 0;
 		scaleTransform: 1 @ 0.6;
 		translateTransform: 180 @ 86.
 	graphics transform: matrix.
-	font := GdiplusFont name: 'Times New Roman' pointSize: 100.
-	brush := GdiplusSolidBrush color: Color gray.
+	font := Font name: 'Times New Roman' pointSize: 100.
+	brush := SolidBrush color: Color gray.
 	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
 		do: 
 			[:num :char |
@@ -157,17 +157,17 @@ exampleGdipMShear
 	"
 
 	| bitmap graphics rect matrix |
-	bitmap := GdiplusBitmap extent: 550 @ 150.
+	bitmap := Bitmap extent: 550 @ 150.
 	graphics := bitmap graphics.
 	rect := 0 @ 0 extent: 100 @ 50.
-	graphics drawRectangle: rect pen: GdiplusPen black.
-	matrix := GdiplusMatrix new.
+	graphics drawRectangle: rect pen: Pen black.
+	matrix := Matrix new.
 	matrix scaleTransform: 2 @ 2.
 	graphics transform: matrix.
-	graphics drawRectangle: rect pen: GdiplusPen blue.
+	graphics drawRectangle: rect pen: Pen blue.
 	matrix shearTransform: 3 @ 0 order: MatrixOrderAppend.
 	graphics transform: matrix.
-	graphics drawRectangle: rect pen: GdiplusPen red.
+	graphics drawRectangle: rect pen: Pen red.
 	^bitmap!
 
 exampleGdipMTranslate
@@ -180,12 +180,12 @@ exampleGdipMTranslate
 	"
 
 	| bitmap matrix pen |
-	bitmap := GdiplusBitmap extent: 500 @ 300.
-	(matrix := GdiplusMatrix new)
+	bitmap := Bitmap extent: 500 @ 300.
+	(matrix := Matrix new)
 		rotateTransform: 30;
 		translateTransform: 250 @ 100 order: MatrixOrderAppend.
-	pen := GdiplusPen blue.
-	(bitmap graphics)
+	pen := Pen blue.
+	bitmap graphics
 		drawEllipse: (Point zero extent: 200 @ 100) pen: pen;
 		drawString: 'Original' at: 60 @ 40;
 		transform: matrix;
@@ -206,7 +206,7 @@ fromArray: anArray
 		m32: (anArray at: 6)!
 
 m11: aNumber11 m12: aNumber12 m21: aNumber21 m22: aNumber22 m31: aNumber31 m32: aNumber32
-	^self fromInitializer: (GdiplusMatrixInitializer 
+	^self fromInitializer: (MatrixInitializer
 				m11: aNumber11 asFloat
 				m12: aNumber12 asFloat
 				m21: aNumber21 asFloat
@@ -225,11 +225,11 @@ rectangle: aRectangle point: aPoint
 		m22: aRectangle height
 		m31: aPoint x
 		m32: aPoint y! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMShadows!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMShear!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMTranslate!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #fromArray:!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #new!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #rectangle:point:!instance creation!public! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMShadows!examples!public!sunit! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMShear!examples!public!sunit! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMTranslate!examples!public!sunit! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #fromArray:!instance creation!public! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Matrix class categoriesFor: #rectangle:point:!instance creation!public! !
 

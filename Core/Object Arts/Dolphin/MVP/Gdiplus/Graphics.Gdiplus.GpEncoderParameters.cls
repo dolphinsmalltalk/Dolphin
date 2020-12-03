@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpEncoderParameters
+External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Parameter' -> 16r4
 	}!
-GpEncoderParameters guid: (GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
-GpEncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpEncoderParameters guid: (Core.GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
+Graphics.Gdiplus.GpEncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagGpEncoderParameters {
 	GpEncoderParameter Parameter[1];
 } GpEncoderParameters;
 '!
-!GpEncoderParameters categoriesForClass!Unclassified! !
-!GpEncoderParameters methodsFor!
+!Graphics.Gdiplus.GpEncoderParameters categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpEncoderParameters methodsFor!
 
 byteSize
 	"Same approach as BITMAPINFO>>byteSize."
@@ -61,13 +61,13 @@ Parameter: aStructureArrayOfGpEncoderParameter
 		to: _OffsetOf_Parameter + size
 		startingAt: 1.
 	self Count: aStructureArrayOfGpEncoderParameter size! !
-!GpEncoderParameters categoriesFor: #byteSize!accessing!public! !
-!GpEncoderParameters categoriesFor: #Count!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Count:!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Parameter!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Parameter:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #byteSize!accessing!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter:!**compiled accessors**!public! !
 
-!GpEncoderParameters class methodsFor!
+!Graphics.Gdiplus.GpEncoderParameters class methodsFor!
 
 defineFields
 	"Define the fields of the GpEncoderParameters structure.
@@ -94,14 +94,14 @@ defineFields
 getFieldNames
 	^#(#Count #Parameter)!
 
-length: anInteger 
+length: anInteger
 	"Answer a new instance of the receiver with sufficient capacity to contain the specified
 	number of parameters."
 
 	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
 		Count: anInteger;
 		yourself! !
-!GpEncoderParameters class categoriesFor: #defineFields!public!template definition! !
-!GpEncoderParameters class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!GpEncoderParameters class categoriesFor: #length:!public! !
+!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #length:!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBrush subclass: #GdiplusHatchBrush
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.HatchBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusHatchBrush guid: (GUID fromString: '{1a1a5ea4-6151-11d7-b609-00e0987e8081}')!
-GdiplusHatchBrush comment: 'A hatch brush paints a background and paints, over that background, a foreground that consists of a pattern of lines, dots, dashes, squares, crosshatch, or some variation of these. The hatch brush consists of two colors: one for the background and one for the foreground.'!
-!GdiplusHatchBrush categoriesForClass!Unclassified! !
-!GdiplusHatchBrush class methodsFor!
+Graphics.Gdiplus.HatchBrush guid: (Core.GUID fromString: '{1a1a5ea4-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.HatchBrush comment: 'A hatch brush paints a background and paints, over that background, a foreground that consists of a pattern of lines, dots, dashes, squares, crosshatch, or some variation of these. The hatch brush consists of two colors: one for the background and one for the foreground.'!
+!Graphics.Gdiplus.HatchBrush categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.HatchBrush class methodsFor!
 
 exampleGdipHBFillAShape
 	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with a Hatch Pattern
@@ -19,8 +19,8 @@ exampleGdipHBFillAShape
 	"
 
 	| bitmap brush |
-	bitmap := GdiplusBitmap extent: 250 @ 150.
-	brush := GdiplusHatchBrush
+	bitmap := Bitmap extent: 250 @ 150.
+	brush := HatchBrush
 				style: HatchStyleHorizontal
 				forecolor: Color red
 				backcolor: Color cyan.
@@ -34,12 +34,12 @@ exampleGdipHBFillAString
 	"
 
 	| bitmap brush font |
-	bitmap := GdiplusBitmap extent: 600 @ 150.
-	brush := GdiplusHatchBrush
+	bitmap := Bitmap extent: 600 @ 150.
+	brush := HatchBrush
 				style: HatchStyleLargeConfetti
 				forecolor: Color yellow
 				backcolor: Color blue.
-	font := GdiplusFont name: 'Arial' pointSize: 72.
+	font := Font name: 'Arial' pointSize: 72.
 	bitmap graphics
 		drawString: 'Hello Dolphin'
 		font: font
@@ -55,16 +55,16 @@ exampleGdipHBStyles
 	"
 
 	| bitmap styles brush font row col corner |
-	bitmap := GdiplusBitmap extent: 800 @ 530.
-	font := GdiplusFont name: 'Arial' pointSize: 10.
+	bitmap := Bitmap extent: 800 @ 530.
+	font := Font name: 'Arial' pointSize: 10.
 	styles := self enumsHatchStyle.
 	styles removeLast.	"HatchStyleTotal doesn't work"
 	styles keysAndValuesDo: 
 			[:i :e |
-			brush := GdiplusHatchBrush
+			brush := HatchBrush
 						style: e value
 						forecolor: Color red
-						backcolor: Color yellow.  
+						backcolor: Color yellow.
 			col := (i - 1) \\ 8.
 			row := ((i - 1) / 8) truncated.
 			corner := (col * 100 + 5) @ (row * 75 + 5).
@@ -78,12 +78,12 @@ exampleGdipHBStyles
 	^bitmap!
 
 style: aNumber forecolor: foreARGB backcolor: backARGB
-	^self fromInitializer: (GdiplusHatchBrushInitializer 
+	^self fromInitializer: (HatchBrushInitializer
 				style: aNumber
 				forecolor: foreARGB
 				backcolor: backARGB)! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAShape!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAString!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBStyles!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBFillAShape!examples!public!sunit! !
+!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBFillAString!examples!public!sunit! !
+!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBStyles!examples!public!sunit! !
+!Graphics.Gdiplus.HatchBrush class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
 

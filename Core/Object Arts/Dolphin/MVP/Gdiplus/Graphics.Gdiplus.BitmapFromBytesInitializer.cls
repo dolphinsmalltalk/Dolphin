@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
+Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.BitmapFromBytesInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromBytesInitializer guid: (GUID fromString: '{6e7e335e-9dd7-44fa-8648-96e7d9528f11}')!
-GdiplusBitmapFromBytesInitializer comment: ''!
-!GdiplusBitmapFromBytesInitializer categoriesForClass!Unclassified! !
-!GdiplusBitmapFromBytesInitializer methodsFor!
+Graphics.Gdiplus.BitmapFromBytesInitializer guid: (Core.GUID fromString: '{6e7e335e-9dd7-44fa-8648-96e7d9528f11}')!
+Graphics.Gdiplus.BitmapFromBytesInitializer comment: ''!
+!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.BitmapFromBytesInitializer methodsFor!
 
 createHandle
 	"Private -  Bitmap::Bitmap(
@@ -22,7 +22,7 @@ createHandle
 	    }"
 
 	| gpHandle status stm |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	stm := self iStream.
 	status := self library gdipCreateBitmapFromStream: stm bitmap: gpHandle.
 	stm free.
@@ -31,6 +31,6 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
-!GdiplusBitmapFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

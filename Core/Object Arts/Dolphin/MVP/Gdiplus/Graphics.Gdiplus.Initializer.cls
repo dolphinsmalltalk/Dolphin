@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #GdiplusInitializer
+Core.Object subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: 'library'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusInitializer guid: (GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
-GdiplusInitializer isAbstract: true!
-GdiplusInitializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!
-!GdiplusInitializer categoriesForClass!Unclassified! !
-!GdiplusInitializer methodsFor!
+Graphics.Gdiplus.Initializer guid: (Core.GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
+Graphics.Gdiplus.Initializer isNonInstantiable: true!
+Graphics.Gdiplus.Initializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!
+!Graphics.Gdiplus.Initializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Initializer methodsFor!
 
 createHandle
 	^self subclassResponsibility!
@@ -39,10 +39,10 @@ library
 
 library: anObject
 	library := anObject! !
-!GdiplusInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusInitializer categoriesFor: #gdiplusErrorWith:!exceptions!private! !
-!GdiplusInitializer categoriesFor: #isPersistent!public!testing! !
-!GdiplusInitializer categoriesFor: #library!accessing!private! !
-!GdiplusInitializer categoriesFor: #library:!private!test accessing! !
+!Graphics.Gdiplus.Initializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Initializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.Initializer categoriesFor: #gdiplusErrorWith:!exceptions!private! !
+!Graphics.Gdiplus.Initializer categoriesFor: #isPersistent!public!testing! !
+!Graphics.Gdiplus.Initializer categoriesFor: #library!accessing!private! !
+!Graphics.Gdiplus.Initializer categoriesFor: #library:!private!test accessing! !
 

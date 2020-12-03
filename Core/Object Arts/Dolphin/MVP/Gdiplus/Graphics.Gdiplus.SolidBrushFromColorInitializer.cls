@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
 	instanceVariableNames: 'color'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusSolidBrushFromColorInitializer guid: (GUID fromString: '{02b80350-515e-40c3-8ec4-b328a7a4bcbb}')!
-GdiplusSolidBrushFromColorInitializer comment: ''!
-!GdiplusSolidBrushFromColorInitializer categoriesForClass!Unclassified! !
-!GdiplusSolidBrushFromColorInitializer methodsFor!
+Graphics.Gdiplus.SolidBrushFromColorInitializer guid: (Core.GUID fromString: '{02b80350-515e-40c3-8ec4-b328a7a4bcbb}')!
+Graphics.Gdiplus.SolidBrushFromColorInitializer comment: ''!
+!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer methodsFor!
 
 color: aColor
 	color := aColor!
@@ -23,20 +23,20 @@ createHandle
 	    };"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	(status := self library gdipCreateSolidFill: color argbCode brush: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating SolidBrush'! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #color:!initializing!private! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesFor: #color:!initializing!private! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusSolidBrushFromColorInitializer class methodsFor!
+!Graphics.Gdiplus.SolidBrushFromColorInitializer class methodsFor!
 
 color: aColor
 	^self new color: aColor! !
-!GdiplusSolidBrushFromColorInitializer class categoriesFor: #color:!instance creation!public! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer class categoriesFor: #color:!instance creation!public! !
 

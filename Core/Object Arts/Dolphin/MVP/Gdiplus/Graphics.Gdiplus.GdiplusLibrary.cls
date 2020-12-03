@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #GdiplusLibrary
+External.Library subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLibrary guid: (GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!
-GdiplusLibrary comment: 'Gdiplus is the <ExternalLibrary> class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
+Graphics.Gdiplus.GdiplusLibrary guid: (Core.GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!
+Graphics.Gdiplus.GdiplusLibrary comment: 'Gdiplus is the <ExternalLibrary> class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
 '!
-!GdiplusLibrary categoriesForClass!External-Libraries-Win32! !
-!GdiplusLibrary methodsFor!
+!Graphics.Gdiplus.GdiplusLibrary categoriesForClass!External-Libraries-Win32! !
+!Graphics.Gdiplus.GdiplusLibrary methodsFor!
 
 close
 	"Release the reference the receiver has to the External Library	it represents. This may
@@ -408,7 +408,7 @@ gdipAddPathRectanglesI: path rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathRectanglesI handle RECT* sdword>
+	<stdcall: sdword GdipAddPathRectanglesI handle RECTL* sdword>
 	^self invalidCall: _failureCode!
 
 gdipAddPathString: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -437,10 +437,10 @@ gdipAddPathStringI: path string: string length: length family: family style: sty
 			[in]PGpFontFamily family,
 			int style,
 			REAL emSize,
-			[in]RECT* layoutRect,
+			[in]RECTL* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: sdword GdipAddPathStringI handle lpwstr sdword handle sdword float RECT* handle>
+	<stdcall: sdword GdipAddPathStringI handle lpwstr sdword handle sdword float RECTL* handle>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
@@ -476,7 +476,7 @@ gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: sdword GdipBeginContainerI handle RECT* RECT* sdword dword*>
+	<stdcall: sdword GdipBeginContainerI handle RECTL* RECTL* sdword dword*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetPixel: bitmap x: x y: y color: color
@@ -501,7 +501,7 @@ gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapDa
 			[in]PixelFormat format,
 			[out, retval]BitmapData* lockedBitmapData);"
 
-	<stdcall: sdword GdipBitmapLockBits handle RECT* dword sdword GpBitmapData*>
+	<stdcall: sdword GdipBitmapLockBits handle RECTL* dword sdword GpBitmapData*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapSetPixel: bitmap x: x y: y color: color
@@ -734,7 +734,7 @@ gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 			[in]GpRect* rect,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionRectI handle RECT* sdword>
+	<stdcall: sdword GdipCombineRegionRectI handle RECTL* sdword>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
@@ -877,7 +877,7 @@ gdipCreateBitmapFromStream: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromStream IStream* handle*>
+	<stdcall: sdword GdipCreateBitmapFromStream Smalltalk.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
@@ -887,7 +887,7 @@ gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromStreamICM IStream* handle*>
+	<stdcall: sdword GdipCreateBitmapFromStreamICM Smalltalk.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
@@ -1101,7 +1101,7 @@ gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrap
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectI RECT* dword dword sdword sdword handle*>
+	<stdcall: sdword GdipCreateLineBrushFromRectI RECTL* dword dword sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
@@ -1131,7 +1131,7 @@ gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle:
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI RECT* dword dword float sdword sdword handle*>
+	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI RECTL* dword dword float sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
@@ -1191,7 +1191,7 @@ gdipCreateMatrix3I: rect dstplg: dstplg matrix: matrix
 			[in]GpPoint* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix3I RECT* POINTL* handle*>
+	<stdcall: sdword GdipCreateMatrix3I RECTL* POINTL* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
@@ -1222,7 +1222,7 @@ gdipCreateMetafileFromStream: stream metafile: metafile
 			IStream* stream,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromStream IStream* handle*>
+	<stdcall: sdword GdipCreateMetafileFromStream Smalltalk.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
@@ -1398,7 +1398,7 @@ gdipCreateRegionRectI: rect region: region
 			[in]GpRect* rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionRectI RECT* handle*>
+	<stdcall: sdword GdipCreateRegionRectI RECTL* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegionRgnData: regionData size: size region: region
@@ -1430,7 +1430,7 @@ gdipCreateStreamOnFile: filename access: access stream: stream
 			unsigned int access,
 			[out, retval]IStream** stream);"
 
-	<stdcall: sdword GdipCreateStreamOnFile lpwstr dword IStream**>
+	<stdcall: sdword GdipCreateStreamOnFile lpwstr dword Smalltalk.IStream**>
 	^self invalidCall: _failureCode!
 
 gdipCreateStringFormat: formatAttributes language: language format: format
@@ -2290,7 +2290,7 @@ gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipDrawRectanglesI handle handle RECT* sdword>
+	<stdcall: sdword GdipDrawRectanglesI handle handle RECTL* sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat brush: brush
@@ -2351,7 +2351,7 @@ gdipEnumerateMetafileDestPointI: graphics metafile: metafile destPoint: destPoin
 		GpStatus __stdcall GdipEnumerateMetafileDestPointI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINT* destPoint,
+			[in]POINTL* destPoint,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
@@ -2380,7 +2380,7 @@ gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPo
 		GpStatus __stdcall GdipEnumerateMetafileDestPointsI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINT* destPoints,
+			[in]POINTL* destPoints,
 			int Count,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
@@ -2409,12 +2409,12 @@ gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect f
 		GpStatus __stdcall GdipEnumerateMetafileDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECT* destRect,
+			[in]RECTL* destRect,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestRectI handle handle RECT* void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileDestRectI handle handle RECTL* void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2439,14 +2439,14 @@ gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: d
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestPointI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINT* destPoint,
-			[in]RECT* srcRect,
+			[in]POINTL* destPoint,
+			[in]RECTL* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* RECTL* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2472,15 +2472,15 @@ gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints:
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestPointsI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]POINT* destPoints,
+			[in]POINTL* destPoints,
 			int Count,
-			[in]RECT* srcRect,
+			[in]RECTL* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword RECTL* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2505,14 +2505,14 @@ gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: des
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECT* destRect,
-			[in]RECT* srcRect,
+			[in]RECTL* destRect,
+			[in]RECTL* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI handle handle RECT* RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI handle handle RECTL* RECTL* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve: graphics brush: brush points: points count: count
@@ -2737,7 +2737,7 @@ gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipFillRectanglesI handle handle RECT* sdword>
+	<stdcall: sdword GdipFillRectanglesI handle handle RECTL* sdword>
 	^self invalidCall: _failureCode!
 
 gdipFillRegion: graphics brush: brush region: region
@@ -2907,7 +2907,7 @@ gdipGetClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetClipBoundsI handle RECT*>
+	<stdcall: sdword GdipGetClipBoundsI handle RECTL*>
 	^self invalidCall: _failureCode!
 
 gdipGetCompositingMode: graphics compositingMode: compositingMode
@@ -3508,7 +3508,7 @@ gdipGetLineRectI: brush rect: rect
 			PGpLineGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetLineRectI handle RECT*>
+	<stdcall: sdword GdipGetLineRectI handle RECTL*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
@@ -3621,7 +3621,7 @@ gdipGetMetafileHeaderFromStream: stream header: header
 			IStream* stream,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromStream IStream* GpMetafileHeader*>
+	<stdcall: sdword GdipGetMetafileHeaderFromStream Smalltalk.IStream* GpMetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader header: header
@@ -3817,7 +3817,7 @@ gdipGetPathGradientRectI: brush rect: rect
 			PGpPathGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetPathGradientRectI handle RECT*>
+	<stdcall: sdword GdipGetPathGradientRectI handle RECTL*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorCount: brush count: count
@@ -3925,7 +3925,7 @@ gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: sdword GdipGetPathWorldBoundsI handle RECT* handle handle>
+	<stdcall: sdword GdipGetPathWorldBoundsI handle RECTL* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipGetPenBrushFill: pen brush: brush
@@ -4224,7 +4224,7 @@ gdipGetRegionBoundsI: region graphics: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetRegionBoundsI handle handle RECT*>
+	<stdcall: sdword GdipGetRegionBoundsI handle handle RECTL*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: sizeFilled
@@ -4292,7 +4292,7 @@ gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetRegionScansI handle RECT* sdword* handle>
+	<stdcall: sdword GdipGetRegionScansI handle RECTL* sdword* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRenderingOrigin: graphics x: x y: y
@@ -4486,7 +4486,7 @@ gdipGetVisibleClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetVisibleClipBoundsI handle RECT*>
+	<stdcall: sdword GdipGetVisibleClipBoundsI handle RECTL*>
 	^self invalidCall: _failureCode!
 
 gdipGetWorldTransform: graphics matrix: matrix
@@ -4865,7 +4865,7 @@ gdipLoadImageFromStream: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromStream IStream* handle*>
+	<stdcall: sdword GdipLoadImageFromStream Smalltalk.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipLoadImageFromStreamICM: stream image: image
@@ -4875,7 +4875,7 @@ gdipLoadImageFromStreamICM: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromStreamICM IStream* handle*>
+	<stdcall: sdword GdipLoadImageFromStreamICM Smalltalk.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdiplusNotificationHook: token1
@@ -5261,7 +5261,7 @@ gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileFileNameI lpwstr handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileFileNameI lpwstr handle sdword RECTL* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5275,7 +5275,7 @@ gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: fra
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileI handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileI handle sdword RECTL* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5290,7 +5290,7 @@ gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileStream IStream* handle sdword RECTF* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileStream Smalltalk.IStream* handle sdword RECTF* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5305,7 +5305,7 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileStreamI IStream* handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileStreamI Smalltalk.IStream* handle sdword RECTL* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc
@@ -5547,7 +5547,7 @@ gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderPa
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: sdword GdipSaveImageToStream handle IStream* guid* GpEncoderParameters*>
+	<stdcall: sdword GdipSaveImageToStream handle Smalltalk.IStream* guid* GpEncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipScaleLineTransform: brush sx: sx sy: sy order: order
@@ -6945,11 +6945,11 @@ initialize
 	input := GdiplusStartupInput new.
 	input GdiplusVersion: 1.
 	token := DWORD new.
-	status := self 
+	status := self
 				gdiplusStartup: token
 				input: input
 				output: nil.
-	status = Ok 
+	status = Ok
 		ifTrue: [token := token asInteger]
 		ifFalse: 
 			[token := nil.
@@ -6961,626 +6961,626 @@ uninitialize
 	token isNil ifTrue: [^self].
 	self gdiplusShutdown: token.
 	token := nil! !
-!GdiplusLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!GdiplusLibrary categoriesFor: #gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathArcI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathBezier:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathBezierI:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathBeziers:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathBeziersI:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve2:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve2I:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathClosedCurveI:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurve:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurve2:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurve2I:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurve3:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurve3I:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathCurveI:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathEllipse:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathEllipseI:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathLine:x1:y1:x2:y2:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathLine2:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathLine2I:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathLineI:x1:y1:x2:y2:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathPath:addingPath:connect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathPie:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathPieI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathPolygon:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathPolygonI:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathRectangle:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathRectangleI:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathRectangles:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathRectanglesI:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathString:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipAddPathStringI:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBeginContainer:dstrect:srcRect:unit:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBeginContainer2:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBeginContainerI:dstrect:srcRect:unit:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBitmapGetPixel:x:y:color:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBitmapLockBits:rect:flags:format:lockedBitmapData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBitmapSetPixel:x:y:color:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBitmapSetResolution:xdpi:ydpi:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipBitmapUnlockBits:lockedBitmapData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipClearPathMarkers:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneBitmapArea:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneBitmapAreaI:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneBrush:cloneBrush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneCustomLineCap:clonedCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneFont:cloneFont:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneFontFamily:clonedFontFamily:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneImage:cloneImage:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneImageAttributes:cloneImageattr:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneMatrix:cloneMatrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipClonePath:clonePath:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipClonePen:clonepen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneRegion:cloneRegion:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCloneStringFormat:newFormat:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipClosePathFigure:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipClosePathFigures:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCombineRegionPath:path:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCombineRegionRect:rect:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCombineRegionRectI:rect:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCombineRegionRegion:region2:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipComment:sizeData:data:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateAdjustableArrowCap:width:isFilled:cap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromDirectDrawSurface:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromFile:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromFileICM:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromGdiDib:gdiBitmapData:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromGraphics:height:target:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromHICON:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromResource:lpBitmapName:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromStream:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateBitmapFromStreamICM:bitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateCachedBitmap:graphics:cachedBitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFont:emSize:style:unit:font:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFontFromDC:font:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFromHDC:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFromHWND:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateFromHWNDICM:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateHalftonePalette!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateHatchBrush:forecol:backcol:brush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateHBITMAPFromBitmap:hbmReturn:background:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateHICONFromBitmap:hbmReturn:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateImageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrush:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRect:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectWithAngle:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectWithAngleI:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMatrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMatrix2:m12:m21:m22:dx:dy:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMatrix3:dstplg:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMatrix3I:dstplg:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMetafileFromEmf:deleteEmf:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMetafileFromFile:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMetafileFromStream:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMetafileFromWmf:deleteWmf:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateMetafileFromWmfFile:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePath:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePath2:types:count:fillMode:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePath2I:types:count:fillMode:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePathGradient:count:wrapMode:polyGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePathGradientFromPath:polyGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePathGradientI:count:wrapMode:polyGradient:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePathIter:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePen1:width:unit:pen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreatePen2:width:unit:pen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegion:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegionHrgn:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegionPath:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegionRect:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegionRectI:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateRegionRgnData:size:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateSolidFill:brush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateStreamOnFile:access:stream:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateStringFormat:language:format:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateTexture:wrapMode:texture:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateTexture2:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateTexture2I:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateTextureIA:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipCreateTextureIAI:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteBrush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteCachedBitmap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteCustomLineCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteFont:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteFontFamily:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteGraphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteMatrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeletePath:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeletePathIter:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeletePen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeletePrivateFontCollection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteRegion:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDeleteStringFormat:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDisposeImage:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDisposeImageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawArc:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawArcI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawBezier:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawBezierI:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawBeziers:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawBeziersI:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCachedBitmap:cachedBitmap:x:y:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawClosedCurve:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawClosedCurve2:pen:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawClosedCurve2I:pen:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawClosedCurveI:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurve:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurve2:pen:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurve2I:pen:points:count:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurve3:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurve3I:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawCurveI:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawDriverString:text:length:font:brush:positions:flags:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawEllipse:pen:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawEllipseI:pen:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImage:image:x:y:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImageI:image:x:y:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePointRect:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePointRectI:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePoints:image:dstpoints:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePointsI:image:dstpoints:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePointsRect:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImagePointsRectI:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImageRect:image:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImageRectI:image:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImageRectRect:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawImageRectRectI:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawLine:pen:x1:y1:x2:y2:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawLineI:pen:x1:y1:x2:y2:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawLines:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawLinesI:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawPath:pen:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawPie:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawPieI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawPolygon:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawPolygonI:pen:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawRectangle:pen:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawRectangleI:pen:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawRectangles:pen:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawRectanglesI:pen:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipDrawString:str:length:font:layoutRect:stringFormat:brush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEmfToWmfBits:cbData16:pData16:iMapMode:eFlags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEndContainer:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPoint:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPointI:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPoints:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPointsI:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestRect:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestRectI:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPoint:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPointI:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPoints:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPointsI:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestRect:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestRectI:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillClosedCurve:brush:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillClosedCurve2:brush:points:count:tension:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillClosedCurve2I:brush:points:count:tension:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillClosedCurveI:brush:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillEllipse:brush:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillEllipseI:brush:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPath:brush:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPie:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPieI:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPolygon:brush:points:count:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPolygon2:brush:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPolygon2I:brush:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillPolygonI:brush:points:count:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillRectangle:brush:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillRectangleI:brush:x:y:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillRectangles:brush:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillRectanglesI:brush:rects:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFillRegion:brush:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFlattenPath:matrix:flatness:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFlush:intention:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFontCollectionEnumerable:graphics:numFound:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipFontCollectionEnumerate:numSought:gpfamilies:numFound:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapHeight:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapWidth:width:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetAllPropertyItems:totalBufferSize:numProperties:allItems:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetBrushType:type:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCellAscent:style:cellAscent:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCellDescent:style:cellDescent:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetClip:region:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetClipBounds:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetClipBoundsI:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCompositingMode:compositingMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCompositingQuality:compositingQuality:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapBaseInset:inset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapType:capType:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetDC:hdc:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetDpiX:dpi:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetDpiY:dpi:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetEmHeight:style:emHeight:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetEncoderParameterList:clsidEncoder:size:buffer:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetEncoderParameterListSize:clsidEncoder:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFamily:family:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFamilyName:name:language:!modified!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontCollectionFamilyCount:numFound:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontCollectionFamilyList:numSought:gpfamilies:numFound:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontHeight:graphics:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontHeightGivenDPI:dpi:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontSize:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontStyle:style:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetFontUnit:unit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilyMonospace:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilySansSerif:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilySerif:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetHatchBackgroundColor:backcol:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetHatchForegroundColor:forecol:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetHatchStyle:hatchStyle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetHemfFromMetafile:hEmf:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageAttributesAdjustedPalette:colorPalette:colorAdjustType:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageBounds:srcRect:srcUnit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageDecoders:size:decoders:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageDecodersSize:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageDimension:width:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageEncoders:size:encoders:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageEncodersSize:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageFlags:flags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageGraphicsContext:graphics:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageHeight:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageHorizontalResolution:resolution:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImagePalette:palette:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImagePaletteSize:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImagePixelFormat:format:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageRawFormat:format:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageThumbnail:thumbWidth:thumbHeight:thumbImage:pfnCallback:callbackData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageType:type:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageVerticalResolution:resolution:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetImageWidth:width:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetInterpolationMode:interpolationMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineBlendCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineColors:colors:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLinePresetBlendCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineRect:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineRectI:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineSpacing:style:lineSpacing:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLineWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLogFontA:graphics:logfonta:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetLogFontW:graphics:logfonta:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMatrixElements:matrixOut:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromEmf:header:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromFile:header:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromMetafile:header:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromStream:header:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromWmf:wmfPlaceableFileHeader:header:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetNearestColor:argb:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPageScale:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPageUnit:unit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathData:pathData:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathFillMode:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientBlendCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterColor:colors:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterPoint:points:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterPointI:points:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientPath:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientPointCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientPresetBlendCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientRect:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientRectI:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientSurroundColorCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathLastPoint:lastPoint:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathPoints:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathPointsI:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathTypes:types:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathWorldBounds:bounds:matrix:pen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPathWorldBoundsI:bounds:matrix:pen:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenBrushFill:brush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenColor:argb:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenCompoundArray:dash:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenCompoundCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenCustomEndCap:customCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenCustomStartCap:customCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenDashArray:dash:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenDashCap197819:dashCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenDashCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenDashOffset:offset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenDashStyle:dashStyle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenEndCap:endCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenFillType:type:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenLineJoin:lineJoin:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenMiterLimit:miterLimit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenMode:penMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenStartCap:startCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenUnit:unit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPenWidth:width:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPointCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPropertyCount:numOfProperty:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPropertyIdList:numOfProperty:list:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPropertyItem:propId:propSize:buffer:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPropertyItemSize:propId:size:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetPropertySize:totalBufferSize:numProperties:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionBounds:graphics:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionBoundsI:graphics:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionData:buffer:bufferSize:sizeFilled:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionDataSize:bufferSize:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionHRgn:graphics:hRgn:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionScans:rects:count:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionScansCount:count:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRegionScansI:rects:count:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetRenderingOrigin:x:y:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetSmoothingMode:smoothingMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetSolidFillColor:color:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatAlign:align:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatFlags:flags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatLineAlign:align:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatMeasurableCharacterRangeCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatTabStopCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatTabStops:count:firstTabOffset:tabStops:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetStringFormatTrimming:trimming:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetTextContrast:contrast:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetTextRenderingHint:mode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetTextureImage:image:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetTextureTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetTextureWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetVisibleClipBounds:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetVisibleClipBoundsI:rect:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGetWorldTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipGraphicsClear:color:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageForceValidation:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageGetFrameCount:dimensionID:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageGetFrameDimensionsCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageGetFrameDimensionsList:dimensionIDs:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageRotateFlip:rfType:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipImageSelectActiveFrame:dimensionID:frameIndex:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipInvertMatrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsClipEmpty:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsEmptyRegion:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsEqualRegion:region2:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsInfiniteRegion:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsMatrixEqual:matrix2:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsMatrixIdentity:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsMatrixInvertible:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsOutlineVisiblePathPoint:x:y:pen:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsOutlineVisiblePathPointI:x:y:pen:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsStyleAvailable:style:isStyleAvailable:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleClipEmpty:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisiblePathPoint:x:y:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisiblePathPointI:x:y:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisiblePoint:x:y:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisiblePointI:x:y:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRect:x:y:width:height:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRectI:x:y:width:height:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRegionPoint:x:y:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRegionPointI:x:y:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRegionRect:x:y:width:height:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipIsVisibleRegionRectI:x:y:width:height:graphics:result:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipLoadImageFromFile:image:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipLoadImageFromFileICM:image:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipLoadImageFromStream:image:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipLoadImageFromStreamICM:image:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdiplusNotificationHook:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdiplusNotificationUnhook:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdiplusShutdown:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdiplusStartup:input:output:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMeasureCharacterRanges:str:length:font:layoutRect:stringFormat:regionCount:regions:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMeasureDriverString:text:length:font:positions:flags:matrix:boundingBox:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMeasureString:str:length:font:layoutRect:stringFormat:boundingBox:codepointsFitted:linesFilled:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyLineTransform:matrix:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyMatrix:matrix2:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyPathGradientTransform:matrix:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyPenTransform:matrix:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyTextureTransform:matrix:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipMultiplyWorldTransform:matrix:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipNewInstalledFontCollection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipNewPrivateFontCollection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterCopyData:resultCount:points:types:startIndex:endIndex:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterEnumerate:resultCount:points:types:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterGetCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterGetSubpathCount:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterHasCurve:hasCurve:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterIsValid:valid:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterNextMarker:resultCount:startIndex:endIndex:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterNextMarkerPath:resultCount:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterNextPathType:resultCount:pathType:startIndex:endIndex:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterNextSubpath:resultCount:startIndex:endIndex:isClosed:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterNextSubpathPath:resultCount:path:isClosed:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPathIterRewind:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPlayMetafileRecord:recordType:flags:dataSize:data:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPrivateAddFontFile:filename:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipPrivateAddMemoryFont:memory:length:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafile:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafileFileName:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafileFileNameI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafileI:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafileStream:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRecordMetafileStreamI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipReleaseDC:hdc:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRemovePropertyItem:propId:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetClip:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetImageAttributes:type:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetLineTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetPageTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetPath:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetPathGradientTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetPenTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetTextureTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipResetWorldTransform:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRestoreGraphics:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipReversePath:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotateLineTransform:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotateMatrix:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotatePathGradientTransform:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotatePenTransform:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotateTextureTransform:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipRotateWorldTransform:angle:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSaveAdd:encoderParams:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSaveAddImage:newImage:encoderParams:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSaveGraphics:state:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSaveImageToFile:filename:clsidEncoder:encoderParams:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSaveImageToStream:stream:clsidEncoder:encoderParams:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScaleLineTransform:sx:sy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScaleMatrix:scaleX:scaleY:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScalePathGradientTransform:sx:sy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScalePenTransform:sx:sy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScaleTextureTransform:sx:sy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipScaleWorldTransform:sx:sy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapHeight:height:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapWidth:width:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipGraphics:srcgraphics:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipHrgn:hRgn:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipPath:path:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipRect:x:y:width:height:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipRectI:x:y:width:height:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetClipRegion:region:combineMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCompositingMode:compositingMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCompositingQuality:compositingQuality:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCustomLineCapBaseInset:inset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetEmpty:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesCachedBackground:enableFlag:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesColorKeys:type:enableFlag:colorLow:colorHigh:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesColorMatrix:type:enableFlag:colorMatrix:grayMatrix:flags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesGamma:type:enableFlag:gamma:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesICMMode:on:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesNoOp:type:enableFlag:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesOutputChannel:type:enableFlag:channelFlags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesOutputChannelColorProfile:type:enableFlag:colorProfileFilename:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesRemapTable:type:enableFlag:mapSize:map:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesThreshold:type:enableFlag:threshold:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesToIdentity:type:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImageAttributesWrapMode:wrap:argb:clamp:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetImagePalette:palette:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetInfinite:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetInterpolationMode:interpolationMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineColors:color1:color2:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineLinearBlend:focus:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineSigmaBlend:focus:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetLineWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetMatrixElements:m11:m12:m21:m22:dx:dy:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPageScale:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPageUnit:unit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathFillMode:fillMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterColor:colors:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterPoint:points:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterPointI:points:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientLinearBlend:focus:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientPath:path:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientSigmaBlend:focus:scale:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPathMarker:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenBrushFill:brush:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenColor:argb:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenCompoundArray:dash:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenCustomEndCap:customCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenCustomStartCap:customCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenDashArray:dash:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenDashCap197819:dashCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenDashOffset:offset:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenDashStyle:dashStyle:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenEndCap:endCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenLineCap197819:startCap:endCap:dashCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenLineJoin:lineJoin:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenMiterLimit:miterLimit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenMode:penMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenStartCap:startCap:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenUnit:unit:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPenWidth:width:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetPropertyItem:item:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetRenderingOrigin:x:y:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetSmoothingMode:smoothingMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetSolidFillColor:color:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatAlign:align:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatFlags:flags:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatLineAlign:align:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatMeasurableCharacterRanges:rangeCount:ranges:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatTabStops:firstTabOffset:count:tabStops:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetStringFormatTrimming:trimming:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetTextContrast:contrast:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetTextRenderingHint:mode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetTextureTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetTextureWrapMode:wrapMode:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipSetWorldTransform:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipShearMatrix:shearX:shearY:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipStartPathFigure:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipStringFormatGetGenericDefault:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipStringFormatGetGenericTypographic:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTestControl:param:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformMatrixPoints:pts:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformMatrixPointsI:pts:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformPath:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformPoints:destSpace:srcSpace:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformPointsI:destSpace:srcSpace:points:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTransformRegion:matrix:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateClip:dx:dy:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateClipI:dx:dy:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateLineTransform:dx:dy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateMatrix:offsetX:offsetY:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslatePathGradientTransform:dx:dy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslatePenTransform:dx:dy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateRegion:dx:dy:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateRegionI:dx:dy:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateTextureTransform:dx:dy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipTranslateWorldTransform:dx:dy:order:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipVectorTransformMatrixPoints:pts:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipVectorTransformMatrixPointsI:pts:count:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipWarpPath:matrix:points:count:srcx:srcy:srcwidth:srcheight:warpMode:flatness:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipWidenPath:pen:matrix:flatness:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #gdipWindingModeOutline:matrix:flatness:!**auto generated**!public! !
-!GdiplusLibrary categoriesFor: #initialize!initializing!private! !
-!GdiplusLibrary categoriesFor: #uninitialize!private!realizing/unrealizing! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathArc:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathArcI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathBezier:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathBezierI:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathBeziers:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathBeziersI:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve2:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathClosedCurve2I:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathClosedCurveI:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurve:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurve2:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurve2I:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurve3:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurve3I:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathCurveI:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathEllipse:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathEllipseI:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathLine:x1:y1:x2:y2:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathLine2:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathLine2I:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathLineI:x1:y1:x2:y2:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathPath:addingPath:connect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathPie:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathPieI:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathPolygon:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathPolygonI:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathRectangle:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathRectangleI:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathRectangles:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathRectanglesI:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathString:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipAddPathStringI:string:length:family:style:emSize:layoutRect:format:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBeginContainer:dstrect:srcRect:unit:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBeginContainer2:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBeginContainerI:dstrect:srcRect:unit:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBitmapGetPixel:x:y:color:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBitmapLockBits:rect:flags:format:lockedBitmapData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBitmapSetPixel:x:y:color:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBitmapSetResolution:xdpi:ydpi:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipBitmapUnlockBits:lockedBitmapData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipClearPathMarkers:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneBitmapArea:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneBitmapAreaI:y:width:height:format:srcBitmap:dstBitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneBrush:cloneBrush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneCustomLineCap:clonedCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneFont:cloneFont:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneFontFamily:clonedFontFamily:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneImage:cloneImage:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneImageAttributes:cloneImageattr:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneMatrix:cloneMatrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipClonePath:clonePath:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipClonePen:clonepen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneRegion:cloneRegion:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCloneStringFormat:newFormat:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipClosePathFigure:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipClosePathFigures:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCombineRegionPath:path:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCombineRegionRect:rect:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCombineRegionRectI:rect:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCombineRegionRegion:region2:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipComment:sizeData:data:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateAdjustableArrowCap:width:isFilled:cap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromDirectDrawSurface:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromFile:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromFileICM:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromGdiDib:gdiBitmapData:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromGraphics:height:target:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromHICON:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromResource:lpBitmapName:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromStream:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateBitmapFromStreamICM:bitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateCachedBitmap:graphics:cachedBitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFont:emSize:style:unit:font:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFontFromDC:font:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFromHDC:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFromHWND:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateFromHWNDICM:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateHalftonePalette!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateHatchBrush:forecol:backcol:brush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateHBITMAPFromBitmap:hbmReturn:background:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateHICONFromBitmap:hbmReturn:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateImageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrush:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRect:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectWithAngle:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrushFromRectWithAngleI:color1:color2:angle:isAngleScalable:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMatrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMatrix2:m12:m21:m22:dx:dy:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMatrix3:dstplg:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMatrix3I:dstplg:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMetafileFromEmf:deleteEmf:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMetafileFromFile:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMetafileFromStream:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMetafileFromWmf:deleteWmf:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateMetafileFromWmfFile:wmfPlaceableFileHeader:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePath:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePath2:types:count:fillMode:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePath2I:types:count:fillMode:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePathGradient:count:wrapMode:polyGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePathGradientFromPath:polyGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePathGradientI:count:wrapMode:polyGradient:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePathIter:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePen1:width:unit:pen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreatePen2:width:unit:pen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegion:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegionHrgn:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegionPath:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegionRect:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegionRectI:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateRegionRgnData:size:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateSolidFill:brush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateStreamOnFile:access:stream:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateStringFormat:language:format:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateTexture:wrapMode:texture:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateTexture2:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateTexture2I:wrapMode:x:y:width:height:texture:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateTextureIA:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipCreateTextureIAI:imageAttributes:x:y:width:height:texture:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteBrush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteCachedBitmap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteCustomLineCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteFont:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteFontFamily:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteGraphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteMatrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeletePath:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeletePathIter:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeletePen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeletePrivateFontCollection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteRegion:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDeleteStringFormat:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDisposeImage:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDisposeImageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawArc:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawArcI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawBezier:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawBezierI:pen:x1:y1:x2:y2:x3:y3:x4:y4:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawBeziers:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawBeziersI:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCachedBitmap:cachedBitmap:x:y:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawClosedCurve:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawClosedCurve2:pen:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawClosedCurve2I:pen:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawClosedCurveI:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurve:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurve2:pen:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurve2I:pen:points:count:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurve3:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurve3I:pen:points:count:offset:numberOfSegments:tension:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawCurveI:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawDriverString:text:length:font:brush:positions:flags:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawEllipse:pen:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawEllipseI:pen:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImage:image:x:y:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImageI:image:x:y:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePointRect:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePointRectI:image:x:y:srcx:srcy:srcwidth:srcheight:srcUnit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePoints:image:dstpoints:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePointsI:image:dstpoints:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePointsRect:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImagePointsRectI:image:points:count:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImageRect:image:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImageRectI:image:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImageRectRect:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawImageRectRectI:image:dstx:dsty:dstwidth:dstheight:srcx:srcy:srcwidth:srcheight:srcUnit:imageAttributes:callback:callbackData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawLine:pen:x1:y1:x2:y2:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawLineI:pen:x1:y1:x2:y2:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawLines:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawLinesI:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawPath:pen:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawPie:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawPieI:pen:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawPolygon:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawPolygonI:pen:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawRectangle:pen:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawRectangleI:pen:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawRectangles:pen:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawRectanglesI:pen:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipDrawString:str:length:font:layoutRect:stringFormat:brush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEmfToWmfBits:cbData16:pData16:iMapMode:eFlags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEndContainer:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPoint:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPointI:metafile:destPoint:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPoints:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestPointsI:metafile:destPoints:count:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestRect:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileDestRectI:metafile:destRect:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPoint:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPointI:metafile:destPoint:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPoints:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestPointsI:metafile:destPoints:count:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestRect:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipEnumerateMetafileSrcRectDestRectI:metafile:destRect:srcRect:srcUnit:fnCallback:callbackData:imageAttributes:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillClosedCurve:brush:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillClosedCurve2:brush:points:count:tension:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillClosedCurve2I:brush:points:count:tension:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillClosedCurveI:brush:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillEllipse:brush:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillEllipseI:brush:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPath:brush:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPie:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPieI:brush:x:y:width:height:startAngle:sweepAngle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPolygon:brush:points:count:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPolygon2:brush:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPolygon2I:brush:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillPolygonI:brush:points:count:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillRectangle:brush:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillRectangleI:brush:x:y:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillRectangles:brush:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillRectanglesI:brush:rects:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFillRegion:brush:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFlattenPath:matrix:flatness:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFlush:intention:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFontCollectionEnumerable:graphics:numFound:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipFontCollectionEnumerate:numSought:gpfamilies:numFound:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapHeight:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetAdjustableArrowCapWidth:width:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetAllPropertyItems:totalBufferSize:numProperties:allItems:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetBrushType:type:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCellAscent:style:cellAscent:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCellDescent:style:cellDescent:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetClip:region:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetClipBounds:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetClipBoundsI:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCompositingMode:compositingMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCompositingQuality:compositingQuality:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapBaseInset:inset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapType:capType:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetDC:hdc:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetDpiX:dpi:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetDpiY:dpi:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetEmHeight:style:emHeight:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetEncoderParameterList:clsidEncoder:size:buffer:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetEncoderParameterListSize:clsidEncoder:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFamily:family:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFamilyName:name:language:!modified!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontCollectionFamilyCount:numFound:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontCollectionFamilyList:numSought:gpfamilies:numFound:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontHeight:graphics:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontHeightGivenDPI:dpi:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontSize:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontStyle:style:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetFontUnit:unit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilyMonospace:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilySansSerif:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetGenericFontFamilySerif:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetHatchBackgroundColor:backcol:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetHatchForegroundColor:forecol:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetHatchStyle:hatchStyle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetHemfFromMetafile:hEmf:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageAttributesAdjustedPalette:colorPalette:colorAdjustType:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageBounds:srcRect:srcUnit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageDecoders:size:decoders:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageDecodersSize:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageDimension:width:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageEncoders:size:encoders:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageEncodersSize:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageFlags:flags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageGraphicsContext:graphics:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageHeight:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageHorizontalResolution:resolution:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImagePalette:palette:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImagePaletteSize:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImagePixelFormat:format:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageRawFormat:format:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageThumbnail:thumbWidth:thumbHeight:thumbImage:pfnCallback:callbackData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageType:type:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageVerticalResolution:resolution:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetImageWidth:width:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetInterpolationMode:interpolationMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineBlendCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineColors:colors:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLinePresetBlendCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineRect:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineRectI:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineSpacing:style:lineSpacing:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLineWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLogFontA:graphics:logfonta:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetLogFontW:graphics:logfonta:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMatrixElements:matrixOut:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromEmf:header:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromFile:header:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromMetafile:header:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromStream:header:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromWmf:wmfPlaceableFileHeader:header:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetNearestColor:argb:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPageScale:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPageUnit:unit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathData:pathData:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathFillMode:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientBlendCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterColor:colors:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterPoint:points:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientCenterPointI:points:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientPath:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientPointCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientPresetBlendCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientRect:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientRectI:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientSurroundColorCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathLastPoint:lastPoint:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathPoints:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathPointsI:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathTypes:types:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathWorldBounds:bounds:matrix:pen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPathWorldBoundsI:bounds:matrix:pen:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenBrushFill:brush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenColor:argb:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenCompoundArray:dash:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenCompoundCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenCustomEndCap:customCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenCustomStartCap:customCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenDashArray:dash:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenDashCap197819:dashCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenDashCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenDashOffset:offset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenDashStyle:dashStyle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenEndCap:endCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenFillType:type:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenLineJoin:lineJoin:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenMiterLimit:miterLimit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenMode:penMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenStartCap:startCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenUnit:unit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPenWidth:width:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPointCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPropertyCount:numOfProperty:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPropertyIdList:numOfProperty:list:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPropertyItem:propId:propSize:buffer:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPropertyItemSize:propId:size:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetPropertySize:totalBufferSize:numProperties:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionBounds:graphics:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionBoundsI:graphics:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionData:buffer:bufferSize:sizeFilled:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionDataSize:bufferSize:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionHRgn:graphics:hRgn:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionScans:rects:count:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionScansCount:count:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRegionScansI:rects:count:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetRenderingOrigin:x:y:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetSmoothingMode:smoothingMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetSolidFillColor:color:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatAlign:align:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatFlags:flags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatLineAlign:align:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatMeasurableCharacterRangeCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatTabStopCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatTabStops:count:firstTabOffset:tabStops:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetStringFormatTrimming:trimming:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetTextContrast:contrast:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetTextRenderingHint:mode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetTextureImage:image:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetTextureTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetTextureWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetVisibleClipBounds:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetVisibleClipBoundsI:rect:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGetWorldTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipGraphicsClear:color:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageForceValidation:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageGetFrameCount:dimensionID:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageGetFrameDimensionsCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageGetFrameDimensionsList:dimensionIDs:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageRotateFlip:rfType:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipImageSelectActiveFrame:dimensionID:frameIndex:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipInvertMatrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsClipEmpty:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsEmptyRegion:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsEqualRegion:region2:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsInfiniteRegion:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsMatrixEqual:matrix2:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsMatrixIdentity:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsMatrixInvertible:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsOutlineVisiblePathPoint:x:y:pen:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsOutlineVisiblePathPointI:x:y:pen:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsStyleAvailable:style:isStyleAvailable:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleClipEmpty:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisiblePathPoint:x:y:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisiblePathPointI:x:y:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisiblePoint:x:y:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisiblePointI:x:y:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRect:x:y:width:height:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRectI:x:y:width:height:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRegionPoint:x:y:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRegionPointI:x:y:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRegionRect:x:y:width:height:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipIsVisibleRegionRectI:x:y:width:height:graphics:result:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipLoadImageFromFile:image:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipLoadImageFromFileICM:image:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipLoadImageFromStream:image:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipLoadImageFromStreamICM:image:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdiplusNotificationHook:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdiplusNotificationUnhook:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdiplusShutdown:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdiplusStartup:input:output:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMeasureCharacterRanges:str:length:font:layoutRect:stringFormat:regionCount:regions:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMeasureDriverString:text:length:font:positions:flags:matrix:boundingBox:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMeasureString:str:length:font:layoutRect:stringFormat:boundingBox:codepointsFitted:linesFilled:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyLineTransform:matrix:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyMatrix:matrix2:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyPathGradientTransform:matrix:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyPenTransform:matrix:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyTextureTransform:matrix:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipMultiplyWorldTransform:matrix:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipNewInstalledFontCollection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipNewPrivateFontCollection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterCopyData:resultCount:points:types:startIndex:endIndex:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterEnumerate:resultCount:points:types:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterGetCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterGetSubpathCount:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterHasCurve:hasCurve:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterIsValid:valid:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterNextMarker:resultCount:startIndex:endIndex:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterNextMarkerPath:resultCount:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterNextPathType:resultCount:pathType:startIndex:endIndex:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterNextSubpath:resultCount:startIndex:endIndex:isClosed:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterNextSubpathPath:resultCount:path:isClosed:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPathIterRewind:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPlayMetafileRecord:recordType:flags:dataSize:data:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPrivateAddFontFile:filename:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipPrivateAddMemoryFont:memory:length:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafile:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafileFileName:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafileFileNameI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafileI:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafileStream:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRecordMetafileStreamI:referenceHdc:type:frameRect:frameUnit:description:metafile:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipReleaseDC:hdc:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRemovePropertyItem:propId:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetClip:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetImageAttributes:type:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetLineTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetPageTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetPath:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetPathGradientTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetPenTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetTextureTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipResetWorldTransform:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRestoreGraphics:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipReversePath:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotateLineTransform:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotateMatrix:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotatePathGradientTransform:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotatePenTransform:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotateTextureTransform:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipRotateWorldTransform:angle:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSaveAdd:encoderParams:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSaveAddImage:newImage:encoderParams:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSaveGraphics:state:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSaveImageToFile:filename:clsidEncoder:encoderParams:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSaveImageToStream:stream:clsidEncoder:encoderParams:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScaleLineTransform:sx:sy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScaleMatrix:scaleX:scaleY:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScalePathGradientTransform:sx:sy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScalePenTransform:sx:sy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScaleTextureTransform:sx:sy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipScaleWorldTransform:sx:sy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapFillState:fillState:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapHeight:height:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapMiddleInset:middleInset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetAdjustableArrowCapWidth:width:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipGraphics:srcgraphics:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipHrgn:hRgn:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipPath:path:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipRect:x:y:width:height:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipRectI:x:y:width:height:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetClipRegion:region:combineMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCompositingMode:compositingMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCompositingQuality:compositingQuality:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCustomLineCapBaseCap:baseCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCustomLineCapBaseInset:inset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCustomLineCapStrokeCaps:startCap:endCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCustomLineCapStrokeJoin:lineJoin:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetCustomLineCapWidthScale:widthScale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetEmpty:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesCachedBackground:enableFlag:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesColorKeys:type:enableFlag:colorLow:colorHigh:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesColorMatrix:type:enableFlag:colorMatrix:grayMatrix:flags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesGamma:type:enableFlag:gamma:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesICMMode:on:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesNoOp:type:enableFlag:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesOutputChannel:type:enableFlag:channelFlags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesOutputChannelColorProfile:type:enableFlag:colorProfileFilename:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesRemapTable:type:enableFlag:mapSize:map:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesThreshold:type:enableFlag:threshold:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesToIdentity:type:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImageAttributesWrapMode:wrap:argb:clamp:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetImagePalette:palette:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetInfinite:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetInterpolationMode:interpolationMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineColors:color1:color2:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineGammaCorrection:useGammaCorrection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineLinearBlend:focus:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLinePresetBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineSigmaBlend:focus:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetLineWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetMatrixElements:m11:m12:m21:m22:dx:dy:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPageScale:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPageUnit:unit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathFillMode:fillMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterColor:colors:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterPoint:points:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientCenterPointI:points:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientFocusScales:xScale:yScale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientGammaCorrection:useGammaCorrection:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientLinearBlend:focus:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientPath:path:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientPresetBlend:blend:positions:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientSigmaBlend:focus:scale:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientSurroundColorsWithCount:color:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathGradientWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPathMarker:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenBrushFill:brush:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenColor:argb:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenCompoundArray:dash:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenCustomEndCap:customCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenCustomStartCap:customCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenDashArray:dash:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenDashCap197819:dashCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenDashOffset:offset:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenDashStyle:dashStyle:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenEndCap:endCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenLineCap197819:startCap:endCap:dashCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenLineJoin:lineJoin:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenMiterLimit:miterLimit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenMode:penMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenStartCap:startCap:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenUnit:unit:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPenWidth:width:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPixelOffsetMode:pixelOffsetMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetPropertyItem:item:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetRenderingOrigin:x:y:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetSmoothingMode:smoothingMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetSolidFillColor:color:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatAlign:align:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatDigitSubstitution:language:substitute:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatFlags:flags:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatHotkeyPrefix:hotkeyPrefix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatLineAlign:align:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatMeasurableCharacterRanges:rangeCount:ranges:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatTabStops:firstTabOffset:count:tabStops:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetStringFormatTrimming:trimming:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetTextContrast:contrast:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetTextRenderingHint:mode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetTextureTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetTextureWrapMode:wrapMode:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipSetWorldTransform:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipShearMatrix:shearX:shearY:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipStartPathFigure:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipStringFormatGetGenericDefault:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipStringFormatGetGenericTypographic:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTestControl:param:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformMatrixPoints:pts:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformMatrixPointsI:pts:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformPath:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformPoints:destSpace:srcSpace:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformPointsI:destSpace:srcSpace:points:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTransformRegion:matrix:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateClip:dx:dy:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateClipI:dx:dy:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateLineTransform:dx:dy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateMatrix:offsetX:offsetY:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslatePathGradientTransform:dx:dy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslatePenTransform:dx:dy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateRegion:dx:dy:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateRegionI:dx:dy:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateTextureTransform:dx:dy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipTranslateWorldTransform:dx:dy:order:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipVectorTransformMatrixPoints:pts:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipVectorTransformMatrixPointsI:pts:count:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipWarpPath:matrix:points:count:srcx:srcy:srcwidth:srcheight:warpMode:flatness:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipWidenPath:pen:matrix:flatness:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #gdipWindingModeOutline:matrix:flatness:!**auto generated**!public! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #initialize!initializing!private! !
+!Graphics.Gdiplus.GdiplusLibrary categoriesFor: #uninitialize!private!realizing/unrealizing! !
 
-!GdiplusLibrary class methodsFor!
+!Graphics.Gdiplus.GdiplusLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library."
 
 	^'GDIPLUS'
 ! !
-!GdiplusLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!Graphics.Gdiplus.GdiplusLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 

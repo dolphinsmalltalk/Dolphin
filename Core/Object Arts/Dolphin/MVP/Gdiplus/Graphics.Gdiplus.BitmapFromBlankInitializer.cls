@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromBlankInitializer guid: (GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
-GdiplusBitmapFromBlankInitializer comment: ''!
-!GdiplusBitmapFromBlankInitializer categoriesForClass!Unclassified! !
-!GdiplusBitmapFromBlankInitializer methodsFor!
+Graphics.Gdiplus.BitmapFromBlankInitializer guid: (Core.GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
+Graphics.Gdiplus.BitmapFromBlankInitializer comment: ''!
+!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer methodsFor!
 
 createHandle
 	"Private -  Bitmap::Bitmap(
@@ -28,7 +28,7 @@ createHandle
                                                        &bitmap);"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateBitmapFromScan0: width
 				height: height
@@ -47,16 +47,16 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	height := heightInteger.
 	format := aPixelFormat.
 	^self! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
 
-!GdiplusBitmapFromBlankInitializer class methodsFor!
+!Graphics.Gdiplus.BitmapFromBlankInitializer class methodsFor!
 
 width: width height: height format: aPixelFormat
 	^self new 
 		width: width
 		height: height
 		format: aPixelFormat! !
-!GdiplusBitmapFromBlankInitializer class categoriesFor: #width:height:format:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer class categoriesFor: #width:height:format:!instance creation!public! !
 

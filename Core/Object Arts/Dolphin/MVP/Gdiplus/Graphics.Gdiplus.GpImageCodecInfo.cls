@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpImageCodecInfo
+External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Clsid' -> 16r0.
@@ -20,8 +20,8 @@ ExternalStructure subclass: #GpImageCodecInfo
 		'_OffsetOf_SigSize' -> 16r40.
 		'_OffsetOf_Version' -> 16r38
 	}!
-GpImageCodecInfo guid: (GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
-GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpImageCodecInfo guid: (Core.GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
+Graphics.Gdiplus.GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -46,8 +46,8 @@ struct tagGpImageCodecInfo {
 	BYTE* SigMask;
 } GpImageCodecInfo;
 '!
-!GpImageCodecInfo categoriesForClass!Unclassified! !
-!GpImageCodecInfo methodsFor!
+!Graphics.Gdiplus.GpImageCodecInfo categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpImageCodecInfo methodsFor!
 
 Clsid
 	"Answer the <GUID> value of the receiver's 'Clsid' field."
@@ -186,34 +186,34 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
-!GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #CodecName:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #DllName!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #DllName:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FilenameExtension!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FilenameExtension:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Flags!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Flags:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatDescription!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatDescription:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatID!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatID:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #MimeType!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #MimeType:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigCount!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigCount:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigMask!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigMask:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigPattern!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigPattern:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigSize!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigSize:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Version!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Version:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #CodecName:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #DllName!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #DllName:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FilenameExtension!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FilenameExtension:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Flags!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Flags:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatDescription!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatDescription:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatID!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatID:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #MimeType!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #MimeType:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigCount!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigCount:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigMask!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigMask:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigPattern!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigPattern:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigSize!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigSize:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Version!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Version:!**compiled accessors**!public! !
 
-!GpImageCodecInfo class methodsFor!
+!Graphics.Gdiplus.GpImageCodecInfo class methodsFor!
 
 defineFields
 	"Define the fields of the GpImageCodecInfo structure.
@@ -238,23 +238,49 @@ defineFields
 "
 
 	self
-		defineField: #Clsid type: (StructureField type: GUID) offset: 0;
-		defineField: #FormatID type: (StructureField type: GUID) offset: 16;
-		defineField: #CodecName type: (PointerField type: Utf16String) offset: 32;
-		defineField: #DllName type: (PointerField type: Utf16String) offset: 36;
-		defineField: #FormatDescription type: (PointerField type: Utf16String) offset: 40;
-		defineField: #FilenameExtension type: (PointerField type: Utf16String) offset: 44;
-		defineField: #MimeType type: (PointerField type: Utf16String) offset: 48;
-		defineField: #Flags type: DWORDField new offset: 52;
-		defineField: #Version type: DWORDField new offset: 56;
-		defineField: #SigCount type: DWORDField new offset: 60;
-		defineField: #SigSize type: DWORDField new offset: 64;
-		defineField: #SigPattern type: (PointerField type: BYTE) offset: 68;
-		defineField: #SigMask type: (PointerField type: BYTE) offset: 72.
+		defineField: #Clsid
+			type: (StructureField type: GUID)
+			offset: 0;
+		defineField: #FormatID
+			type: (StructureField type: GUID)
+			offset: 16;
+		defineField: #CodecName
+			type: (PointerField type: Utf16String)
+			offset: 32;
+		defineField: #DllName
+			type: (PointerField type: Utf16String)
+			offset: 36;
+		defineField: #FormatDescription
+			type: (PointerField type: Utf16String)
+			offset: 40;
+		defineField: #FilenameExtension
+			type: (PointerField type: Utf16String)
+			offset: 44;
+		defineField: #MimeType
+			type: (PointerField type: Utf16String)
+			offset: 48;
+		defineField: #Flags
+			type: DWORDField new
+			offset: 52;
+		defineField: #Version
+			type: DWORDField new
+			offset: 56;
+		defineField: #SigCount
+			type: DWORDField new
+			offset: 60;
+		defineField: #SigSize
+			type: DWORDField new
+			offset: 64;
+		defineField: #SigPattern
+			type: (PointerField type: BYTE)
+			offset: 68;
+		defineField: #SigMask
+			type: (PointerField type: BYTE)
+			offset: 72.
 	self byteSize: 76!
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
-!GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #GdiplusError
+Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
 	instanceVariableNames: 'win32Error'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ErrorDescriptions' -> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
 	}!
-GdiplusError guid: (GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
-GdiplusError comment: ''!
-!GdiplusError categoriesForClass!Unclassified! !
-!GdiplusError methodsFor!
+Graphics.Gdiplus.GdiplusError guid: (Core.GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
+Graphics.Gdiplus.GdiplusError comment: ''!
+!Graphics.Gdiplus.GdiplusError categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GdiplusError methodsFor!
 
 _descriptionArguments
 	"Answer a <sequencedReadableCollection> of the  arguments to be substitued 
@@ -44,12 +44,12 @@ win32ErrorDescription
 	error messages of the form: 'The error is: the operation was successful;"
 
 	^win32Error statusCode = 0 ifTrue: [''] ifFalse: [win32Error description]! !
-!GdiplusError categoriesFor: #_descriptionArguments!displaying!public! !
-!GdiplusError categoriesFor: #_descriptionFormat!displaying!public! !
-!GdiplusError categoriesFor: #initialize!initializing!public! !
-!GdiplusError categoriesFor: #win32ErrorDescription!accessing!private! !
+!Graphics.Gdiplus.GdiplusError categoriesFor: #_descriptionArguments!displaying!public! !
+!Graphics.Gdiplus.GdiplusError categoriesFor: #_descriptionFormat!displaying!public! !
+!Graphics.Gdiplus.GdiplusError categoriesFor: #initialize!initializing!public! !
+!Graphics.Gdiplus.GdiplusError categoriesFor: #win32ErrorDescription!accessing!private! !
 
-!GdiplusError class methodsFor!
+!Graphics.Gdiplus.GdiplusError class methodsFor!
 
 initialize
 	"
@@ -64,5 +64,5 @@ initialize
 		failure."
 
 	self addClassConstant: 'ErrorDescriptions' value: #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
-!GdiplusError class categoriesFor: #initialize!development!initializing!public! !
+!Graphics.Gdiplus.GdiplusError class categoriesFor: #initialize!development!initializing!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusFontCollection subclass: #GdiplusInstalledFontCollection
+Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.InstalledFontCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusInstalledFontCollection guid: (GUID fromString: '{c09d8c03-5f28-11d7-b609-00e0987e8081}')!
-GdiplusInstalledFontCollection comment: 'GdiplusInstalledFontCollection class represents the fonts installed on the system.'!
-!GdiplusInstalledFontCollection categoriesForClass!Unclassified! !
-!GdiplusInstalledFontCollection class methodsFor!
+Graphics.Gdiplus.InstalledFontCollection guid: (Core.GUID fromString: '{c09d8c03-5f28-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.InstalledFontCollection comment: 'GdiplusInstalledFontCollection class represents the fonts installed on the system.'!
+!Graphics.Gdiplus.InstalledFontCollection categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.InstalledFontCollection class methodsFor!
 
 exampleGdipIFCEnumerating
 	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Enumerating Installed Fonts
@@ -20,22 +20,22 @@ exampleGdipIFCEnumerating
 	"
 
 	| bitmap rect names stream |
-	bitmap := GdiplusBitmap extent: 500 @ 400.
+	bitmap := Bitmap extent: 500 @ 400.
 	rect := bitmap bounds insetBy: 40.
-	names := GdiplusInstalledFontCollection new families collect: [:e | e name].
+	names := InstalledFontCollection new families collect: [:e | e name].
 	(stream := String new writeStream)
 		display: 'There are ';
 		display: names size;
 		display: ' installed fonts.  The family names are: ';
 		display: names first.
 	(2 to: names size) do: [:i | stream display: ', ' , (names at: i)].
-	(bitmap graphics)
+	bitmap graphics
 		drawString: stream contents layoutRect: rect;
 		drawRectangle: rect.
 	^bitmap!
 
 new
-	^self fromInitializer: GdiplusInstalledFontCollectionInitializer default! !
-!GdiplusInstalledFontCollection class categoriesFor: #exampleGdipIFCEnumerating!examples!public!sunit! !
-!GdiplusInstalledFontCollection class categoriesFor: #new!instance creation!public! !
+	^self fromInitializer: InstalledFontCollectionInitializer default! !
+!Graphics.Gdiplus.InstalledFontCollection class categoriesFor: #exampleGdipIFCEnumerating!examples!public!sunit! !
+!Graphics.Gdiplus.InstalledFontCollection class categoriesFor: #new!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ImageViewAbstract subclass: #GdiplusImageView
+UI.ImageViewAbstract subclass: #'Graphics.Gdiplus.ImageView'
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageView guid: (GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
-GdiplusImageView comment: 'GdiplusImageView is a <valueView> for displaying static <image>s based on Object-Art''''s ImageView
+Graphics.Gdiplus.ImageView guid: (Core.GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
+Graphics.Gdiplus.ImageView comment: 'GdiplusImageView is a <valueView> for displaying static <image>s based on Object-Art''''s ImageView
 
 It can display either GDI or Gdiplus based images.
 
@@ -25,12 +25,10 @@ Instance Variables:
 	swun5			<UndefinedObject>
 	swun6			<UndefinedObject>
 
-Class Variables:
-	IsEraseBackgroundMask	<SmallInteger>
 
 '!
-!GdiplusImageView categoriesForClass!MVP-Views! !
-!GdiplusImageView methodsFor!
+!Graphics.Gdiplus.ImageView categoriesForClass!MVP-Views! !
+!Graphics.Gdiplus.ImageView methodsFor!
 
 default: imageExtent in: displayRect 
 	"Note: behavior is different from ImageView in that the default is #normal not #scale"
@@ -47,19 +45,19 @@ imagePadding
 	#deprecated.
 	^self insets!
 
-imagePadding: padding 
+imagePadding: padding
 	"anObject can be <Integer> <Point> or <Rectangle>"
 
 	#deprecated.
-	self insets: (padding isInteger 
+	self insets: (padding isInteger
 				ifTrue: 
-					[Rectangle 
+					[Rectangle
 						left: padding
 						top: padding
 						right: padding
 						bottom: padding]
 				ifFalse: 
-					[(padding isKindOf: Point) 
+					[(padding isKindOf: Point)
 						ifTrue: [Rectangle origin: padding corner: padding]
 						ifFalse: [(padding isKindOf: Rectangle) ifTrue: [padding]]])!
 
@@ -118,19 +116,19 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
-!GdiplusImageView categoriesFor: #default:in:!geometry!private! !
-!GdiplusImageView categoriesFor: #imageAttributes!accessing!public! !
-!GdiplusImageView categoriesFor: #imageAttributes:!accessing!public! !
-!GdiplusImageView categoriesFor: #imagePadding!accessing!public! !
-!GdiplusImageView categoriesFor: #imagePadding:!accessing!public! !
-!GdiplusImageView categoriesFor: #initialize!initializing!private! !
-!GdiplusImageView categoriesFor: #interpolationMode!accessing!public! !
-!GdiplusImageView categoriesFor: #interpolationMode:!accessing!public! !
-!GdiplusImageView categoriesFor: #isEraseBackground!accessing!public! !
-!GdiplusImageView categoriesFor: #isEraseBackground:!accessing!public! !
-!GdiplusImageView categoriesFor: #paintImageOn:!drawing!private! !
+!Graphics.Gdiplus.ImageView categoriesFor: #default:in:!geometry!private! !
+!Graphics.Gdiplus.ImageView categoriesFor: #imageAttributes!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #imageAttributes:!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #imagePadding!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #imagePadding:!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #initialize!initializing!private! !
+!Graphics.Gdiplus.ImageView categoriesFor: #interpolationMode!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #interpolationMode:!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #isEraseBackground!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #isEraseBackground:!accessing!public! !
+!Graphics.Gdiplus.ImageView categoriesFor: #paintImageOn:!drawing!private! !
 
-!GdiplusImageView class methodsFor!
+!Graphics.Gdiplus.ImageView class methodsFor!
 
 interpolationStyles
 	^self interpolationStyleTable keys asArray!
@@ -149,14 +147,6 @@ interpolationStyleTable
 		at: #highQualityBicubic put: InterpolationModeHighQualityBicubic.
 	^dict!
 
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect choice: #interpolationMode from: self interpolationStyles);
-		add: (Aspect name: #imageAttributes);
-		yourself!
-
 stbConvert: instVarArray fromVersion: verInteger 
 	"Convert from earlier version view by updating and answering the array of instance variables
 	(for the View), instVarArray."
@@ -167,10 +157,10 @@ stbConvert: instVarArray fromVersion: verInteger
 	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
 	^instVars!
 
-stbConvertFromVersion13: anArray 
+stbConvertFromVersion13: anArray
 	| instVars |
 	instVars := Array new: 28.
-	instVars 
+	instVars
 		replaceFrom: 1
 		to: 16
 		with: anArray
@@ -178,24 +168,24 @@ stbConvertFromVersion13: anArray
 	instVars at: 17 put: (anArray at: 20).	"image"
 	instVars at: 18 put: (anArray at: 21).	"viewMode"
 	instVars at: 19 put: (anArray at: 19).	"ivFlags = flag"
-	(anArray at: 24) 
+	(anArray at: 24)
 		ifNotNil: 
-			[:padding | 
+			[:padding |
 			"set insets from padding"
 			instVars at: 20
-				put: (padding isInteger 
+				put: (padding isInteger
 						ifTrue: 
-							[Rectangle 
+							[Rectangle
 								left: padding
 								top: padding
 								right: padding
 								bottom: padding]
 						ifFalse: 
-							[(padding isKindOf: Point) 
+							[(padding isKindOf: Point)
 								ifTrue: [Rectangle origin: padding corner: padding]
 								ifFalse: [(padding isKindOf: Rectangle) ifTrue: [padding]]])].
 	instVars at: 21 put: nil.	"_dummy"
-	instVars 
+	instVars
 		replaceFrom: 22
 		to: 28
 		with: anArray
@@ -205,10 +195,9 @@ stbConvertFromVersion13: anArray
 
 stbVersion
 	^14! !
-!GdiplusImageView class categoriesFor: #interpolationStyles!constants!public! !
-!GdiplusImageView class categoriesFor: #interpolationStyleTable!constants!public! !
-!GdiplusImageView class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
-!GdiplusImageView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!GdiplusImageView class categoriesFor: #stbConvertFromVersion13:!public! !
-!GdiplusImageView class categoriesFor: #stbVersion!public! !
+!Graphics.Gdiplus.ImageView class categoriesFor: #interpolationStyles!constants!public! !
+!Graphics.Gdiplus.ImageView class categoriesFor: #interpolationStyleTable!constants!public! !
+!Graphics.Gdiplus.ImageView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
+!Graphics.Gdiplus.ImageView class categoriesFor: #stbConvertFromVersion13:!public! !
+!Graphics.Gdiplus.ImageView class categoriesFor: #stbVersion!public! !
 

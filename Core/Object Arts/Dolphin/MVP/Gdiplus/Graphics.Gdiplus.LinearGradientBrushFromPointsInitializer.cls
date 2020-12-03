@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
+Graphics.Gdiplus.LinearGradientBrushInitializer subclass: #'Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer'
 	instanceVariableNames: 'point1 point2 color1 color2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLinearGradientBrushFromPointsInitializer guid: (GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
-GdiplusLinearGradientBrushFromPointsInitializer comment: ''!
-!GdiplusLinearGradientBrushFromPointsInitializer categoriesForClass!Unclassified! !
-!GdiplusLinearGradientBrushFromPointsInitializer methodsFor!
+Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer guid: (Core.GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
+Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer comment: ''!
+!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer methodsFor!
 
 createHandle
 	"Private - LinearGradientBrush(IN const Point& point1,
@@ -27,7 +27,7 @@ createHandle
                                                       &brush);"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateLineBrushI: point1 asParameter
 				point2: point2 asParameter
@@ -43,6 +43,6 @@ point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor
 	point2 := aPoint2.
 	color1 := startColor.
 	color2 := endColor! !
-!GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #point1:point2:color1:color2:!initializing!private! !
+!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesFor: #point1:point2:color1:color2:!initializing!private! !
 

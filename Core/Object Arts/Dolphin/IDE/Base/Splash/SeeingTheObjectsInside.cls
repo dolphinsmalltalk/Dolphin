@@ -360,11 +360,11 @@ showHintBubble
 
 splashBitmap
 	| bitmap rawBitmap extent imageAttr |
-	rawBitmap := GdiplusBitmap fromFile: 'Resources\Dolphin7Splash.png'
+	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\Dolphin7Splash.png'
 				usingLocator: FileLocator installRelative.
 	extent := rawBitmap extent.
-	bitmap := GdiplusBitmap extent: extent.
-	imageAttr := GdiplusImageAttributes new
+	bitmap := Gdiplus.Bitmap extent: extent.
+	imageAttr := Gdiplus.ImageAttributes new
 				remapColor: self dolphinSplashBackcolor to: SmalltalkSystemShell backcolor;
 				yourself.
 	bitmap graphics

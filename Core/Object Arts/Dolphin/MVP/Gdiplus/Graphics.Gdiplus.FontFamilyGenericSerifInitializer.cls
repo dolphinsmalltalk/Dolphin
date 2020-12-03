@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
+Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyGenericSerifInitializer'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusFontFamilyGenericSerifInitializer guid: (GUID fromString: '{57c9fb99-3104-48e2-b5e7-d4f2041b5a3e}')!
-GdiplusFontFamilyGenericSerifInitializer comment: ''!
-!GdiplusFontFamilyGenericSerifInitializer categoriesForClass!Unclassified! !
-!GdiplusFontFamilyGenericSerifInitializer methodsFor!
+Graphics.Gdiplus.FontFamilyGenericSerifInitializer guid: (Core.GUID fromString: '{57c9fb99-3104-48e2-b5e7-d4f2041b5a3e}')!
+Graphics.Gdiplus.FontFamilyGenericSerifInitializer comment: ''!
+!Graphics.Gdiplus.FontFamilyGenericSerifInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.FontFamilyGenericSerifInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipGetGenericFontFamilySerif: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusFontFamilyGenericSerifInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.FontFamilyGenericSerifInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 
-!GdiplusFontFamilyGenericSerifInitializer class methodsFor!
+!Graphics.Gdiplus.FontFamilyGenericSerifInitializer class methodsFor!
 
 uninitialize
 	GenericSerif := nil! !
-!GdiplusFontFamilyGenericSerifInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.FontFamilyGenericSerifInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

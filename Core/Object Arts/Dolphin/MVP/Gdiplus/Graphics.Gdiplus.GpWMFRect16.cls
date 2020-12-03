@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpWMFRect16
+External.Structure subclass: #'Graphics.Gdiplus.GpWMFRect16'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bottom' -> 16r6.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #GpWMFRect16
 		'_OffsetOf_right' -> 16r4.
 		'_OffsetOf_top' -> 16r2
 	}!
-GpWMFRect16 guid: (GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
-GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpWMFRect16 guid: (Core.GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
+Graphics.Gdiplus.GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagGpWMFRect16 {
 	short bottom;
 } GpWMFRect16;
 '!
-!GpWMFRect16 categoriesForClass!Unclassified! !
-!GpWMFRect16 methodsFor!
+!Graphics.Gdiplus.GpWMFRect16 categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpWMFRect16 methodsFor!
 
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
@@ -70,16 +70,16 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
-!GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #left:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #right!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #right:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #top!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #top:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #left:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #right!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #right:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #top!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #top:!**compiled accessors**!public! !
 
-!GpWMFRect16 class methodsFor!
+!Graphics.Gdiplus.GpWMFRect16 class methodsFor!
 
 defineFields
 	"Define the fields of the GpWMFRect16 structure.
@@ -95,14 +95,22 @@ defineFields
 "
 
 	self
-		defineField: #left type: SWORDField new offset: 0;
-		defineField: #top type: SWORDField new offset: 2;
-		defineField: #right type: SWORDField new offset: 4;
-		defineField: #bottom type: SWORDField new offset: 6.
+		defineField: #left
+			type: SWORDField new
+			offset: 0;
+		defineField: #top
+			type: SWORDField new
+			offset: 2;
+		defineField: #right
+			type: SWORDField new
+			offset: 4;
+		defineField: #bottom
+			type: SWORDField new
+			offset: 6.
 	self byteSize: 8!
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
-!GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

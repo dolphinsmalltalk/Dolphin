@@ -1,0 +1,150 @@
+﻿| package |
+package := Package name: 'Gdiplus (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Gdiplus Old Names (Pre-namespace Names).
+
+This package includes legacy aliases for Gdiplus classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.GdiplusAdjustableArrowCap}
+	#{Smalltalk.GdiplusBase}
+	#{Smalltalk.GdiplusBitmap}
+	#{Smalltalk.GdiplusCachedBitmap}
+	#{Smalltalk.GdiplusConstants}
+	#{Smalltalk.GdiplusCustomLineCap}
+	#{Smalltalk.GdiplusDoubleBufferedView}
+	#{Smalltalk.GdiplusFont}
+	#{Smalltalk.GdiplusFontCollection}
+	#{Smalltalk.GdiplusFontFamily}
+	#{Smalltalk.GdiplusFromBytesInitializer}
+	#{Smalltalk.GdiplusGraphics}
+	#{Smalltalk.GdiplusGraphicsPath}
+	#{Smalltalk.GdiplusHatchBrush}
+	#{Smalltalk.GdiplusImage}
+	#{Smalltalk.GdiplusImageAttributes}
+	#{Smalltalk.GdiplusImageFromBytesInitializer}
+	#{Smalltalk.GdiplusImageView}
+	#{Smalltalk.GdiplusInstalledFontCollection}
+	#{Smalltalk.GdiplusLibrary}
+	#{Smalltalk.GdiplusLinearGradientBrush}
+	#{Smalltalk.GdiplusMatrix}
+	#{Smalltalk.GdiplusPathGradientBrush}
+	#{Smalltalk.GdiplusPen}
+	#{Smalltalk.GdiplusPrivateFontCollection}
+	#{Smalltalk.GdiplusRegion}
+	#{Smalltalk.GdiplusSolidBrush}
+	#{Smalltalk.GdiplusStringFormat}
+	#{Smalltalk.GdiplusTextureBrush}
+	#{Smalltalk.GpColorMap}
+	#{Smalltalk.GpColorMatrix}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.GdiplusAdjustableArrowCap}
+	#{Smalltalk.GdiplusBase}
+	#{Smalltalk.GdiplusBitmap}
+	#{Smalltalk.GdiplusCachedBitmap}
+	#{Smalltalk.GdiplusConstants}
+	#{Smalltalk.GdiplusCustomLineCap}
+	#{Smalltalk.GdiplusDoubleBufferedView}
+	#{Smalltalk.GdiplusFont}
+	#{Smalltalk.GdiplusFontCollection}
+	#{Smalltalk.GdiplusFontFamily}
+	#{Smalltalk.GdiplusFromBytesInitializer}
+	#{Smalltalk.GdiplusGraphics}
+	#{Smalltalk.GdiplusGraphicsPath}
+	#{Smalltalk.GdiplusHatchBrush}
+	#{Smalltalk.GdiplusImage}
+	#{Smalltalk.GdiplusImageAttributes}
+	#{Smalltalk.GdiplusImageFromBytesInitializer}
+	#{Smalltalk.GdiplusImageView}
+	#{Smalltalk.GdiplusInstalledFontCollection}
+	#{Smalltalk.GdiplusLibrary}
+	#{Smalltalk.GdiplusLinearGradientBrush}
+	#{Smalltalk.GdiplusMatrix}
+	#{Smalltalk.GdiplusPathGradientBrush}
+	#{Smalltalk.GdiplusPen}
+	#{Smalltalk.GdiplusPrivateFontCollection}
+	#{Smalltalk.GdiplusRegion}
+	#{Smalltalk.GdiplusSolidBrush}
+	#{Smalltalk.GdiplusStringFormat}
+	#{Smalltalk.GdiplusTextureBrush}
+	#{Smalltalk.GpColorMap}
+	#{Smalltalk.GpColorMatrix}
+).
+
+package setPrerequisites: #(
+	'Gdiplus'
+	'Gdiplus ImageView'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.GdiplusAdjustableArrowCap := Graphics.Gdiplus.AdjustableArrowCap!
+
+Smalltalk.GdiplusBase := Graphics.Gdiplus.GdiplusBase!
+
+Smalltalk.GdiplusBitmap := Graphics.Gdiplus.Bitmap!
+
+Smalltalk.GdiplusCachedBitmap := Graphics.Gdiplus.CachedBitmap!
+
+Smalltalk.GdiplusConstants := Graphics.Gdiplus.GdiplusConstants!
+
+Smalltalk.GdiplusCustomLineCap := Graphics.Gdiplus.CustomLineCap!
+
+Smalltalk.GdiplusDoubleBufferedView := Graphics.Gdiplus.DoubleBufferedView!
+
+Smalltalk.GdiplusFont := Graphics.Gdiplus.Font!
+
+Smalltalk.GdiplusFontCollection := Graphics.Gdiplus.FontCollection!
+
+Smalltalk.GdiplusFontFamily := Graphics.Gdiplus.FontFamily!
+
+Smalltalk.GdiplusFromBytesInitializer := Graphics.Gdiplus.FromBytesInitializer!
+
+Smalltalk.GdiplusGraphics := Graphics.Gdiplus.GdiplusGraphics!
+
+Smalltalk.GdiplusGraphicsPath := Graphics.Gdiplus.Path!
+
+Smalltalk.GdiplusHatchBrush := Graphics.Gdiplus.HatchBrush!
+
+Smalltalk.GdiplusImage := Graphics.Gdiplus.Image!
+
+Smalltalk.GdiplusImageAttributes := Graphics.Gdiplus.ImageAttributes!
+
+Smalltalk.GdiplusImageFromBytesInitializer := Graphics.Gdiplus.ImageFromBytesInitializer!
+
+Smalltalk.GdiplusImageView := Graphics.Gdiplus.ImageView!
+
+Smalltalk.GdiplusInstalledFontCollection := Graphics.Gdiplus.InstalledFontCollection!
+
+Smalltalk.GdiplusLibrary := Graphics.Gdiplus.GdiplusLibrary!
+
+Smalltalk.GdiplusLinearGradientBrush := Graphics.Gdiplus.LinearGradientBrush!
+
+Smalltalk.GdiplusMatrix := Graphics.Gdiplus.Matrix!
+
+Smalltalk.GdiplusPathGradientBrush := Graphics.Gdiplus.PathGradientBrush!
+
+Smalltalk.GdiplusPen := Graphics.Gdiplus.Pen!
+
+Smalltalk.GdiplusPrivateFontCollection := Graphics.Gdiplus.PrivateFontCollection!
+
+Smalltalk.GdiplusRegion := Graphics.Gdiplus.Region!
+
+Smalltalk.GdiplusSolidBrush := Graphics.Gdiplus.SolidBrush!
+
+Smalltalk.GdiplusStringFormat := Graphics.Gdiplus.StringFormat!
+
+Smalltalk.GdiplusTextureBrush := Graphics.Gdiplus.TextureBrush!
+
+Smalltalk.GpColorMap := Graphics.Gdiplus.GpColorMap!
+
+Smalltalk.GpColorMatrix := Graphics.Gdiplus.GpColorMatrix!
+
+
+"End of package definition"!
+

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromRectangleInitializer'
 	instanceVariableNames: 'rectangle'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusRegionFromRectangleInitializer guid: (GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
-GdiplusRegionFromRectangleInitializer comment: ''!
-!GdiplusRegionFromRectangleInitializer categoriesForClass!Unclassified! !
-!GdiplusRegionFromRectangleInitializer methodsFor!
+Graphics.Gdiplus.RegionFromRectangleInitializer guid: (Core.GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
+Graphics.Gdiplus.RegionFromRectangleInitializer comment: ''!
+!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateRegionRectI: rectangle asParameter region: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -23,13 +23,13 @@ gdiplusConstructorErrorDescription
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
 
-!GdiplusRegionFromRectangleInitializer class methodsFor!
+!Graphics.Gdiplus.RegionFromRectangleInitializer class methodsFor!
 
 fromRectangle: aRectangle
 	^self new rectangle: aRectangle! !
-!GdiplusRegionFromRectangleInitializer class categoriesFor: #fromRectangle:!instance creation!public! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer class categoriesFor: #fromRectangle:!instance creation!public! !
 

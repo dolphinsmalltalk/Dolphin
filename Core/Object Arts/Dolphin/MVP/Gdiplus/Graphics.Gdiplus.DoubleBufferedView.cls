@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #GdiplusDoubleBufferedView
+UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusDoubleBufferedView guid: (GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
-GdiplusDoubleBufferedView comment: ''!
-!GdiplusDoubleBufferedView categoriesForClass!Unclassified! !
-!GdiplusDoubleBufferedView methodsFor!
+Graphics.Gdiplus.DoubleBufferedView guid: (Core.GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
+Graphics.Gdiplus.DoubleBufferedView comment: ''!
+!Graphics.Gdiplus.DoubleBufferedView categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.DoubleBufferedView methodsFor!
 
 backSurface
 
@@ -46,10 +46,9 @@ initialize
 initializeSurfacesFor: aPointExtent
 	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
 
-	backSurface notNil ifTrue: [ backSurface free ].
-	backSurface := GdiplusBitmap extent: aPointExtent.
-	self invalidate.
-!
+	backSurface notNil ifTrue: [backSurface free].
+	backSurface := Gdiplus.Bitmap extent: aPointExtent.
+	self invalidate!
 
 invalidate
 	"Flag the current rendition as being invalid. A repaint will cause a
@@ -112,24 +111,24 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!GdiplusDoubleBufferedView categoriesFor: #backSurface!accessing!public! !
-!GdiplusDoubleBufferedView categoriesFor: #flip!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #graphics!accessing!public! !
-!GdiplusDoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!GdiplusDoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!GdiplusDoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!GdiplusDoubleBufferedView categoriesFor: #render!operations!private! !
-!GdiplusDoubleBufferedView categoriesFor: #repaint!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #backSurface!accessing!public! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #flip!operations!public! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #graphics!accessing!public! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #initialize!initializing!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #invalidate!operations!public! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #render!operations!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #repaint!operations!public! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 
-!GdiplusDoubleBufferedView class methodsFor!
+!Graphics.Gdiplus.DoubleBufferedView class methodsFor!
 
-defaultModel	
-	^ListModel new! !
-!GdiplusDoubleBufferedView class categoriesFor: #defaultModel!public! !
+defaultModel
+	^UI.ListModel new! !
+!Graphics.Gdiplus.DoubleBufferedView class categoriesFor: #defaultModel!public! !
 

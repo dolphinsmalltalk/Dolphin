@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
 	instanceVariableNames: 'path'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusRegionFromPathInitializer guid: (GUID fromString: '{2e7c1bb2-37d2-4d8b-9135-3eb9ab2ed1bb}')!
-GdiplusRegionFromPathInitializer comment: ''!
-!GdiplusRegionFromPathInitializer categoriesForClass!Unclassified! !
-!GdiplusRegionFromPathInitializer methodsFor!
+Graphics.Gdiplus.RegionFromPathInitializer guid: (Core.GUID fromString: '{2e7c1bb2-37d2-4d8b-9135-3eb9ab2ed1bb}')!
+Graphics.Gdiplus.RegionFromPathInitializer comment: ''!
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.RegionFromPathInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateRegionPath: path asParameter region: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -26,14 +26,14 @@ isPersistent
 
 path: aPath
 	path := aPath! !
-!GdiplusRegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusRegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!initializing!private! !
-!GdiplusRegionFromPathInitializer categoriesFor: #isPersistent!public! !
-!GdiplusRegionFromPathInitializer categoriesFor: #path:!initializing!private! !
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!initializing!private! !
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #isPersistent!public! !
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #path:!initializing!private! !
 
-!GdiplusRegionFromPathInitializer class methodsFor!
+!Graphics.Gdiplus.RegionFromPathInitializer class methodsFor!
 
 fromPath: aPath
 	^self new path: aPath! !
-!GdiplusRegionFromPathInitializer class categoriesFor: #fromPath:!instance creation!public! !
+!Graphics.Gdiplus.RegionFromPathInitializer class categoriesFor: #fromPath:!instance creation!public! !
 

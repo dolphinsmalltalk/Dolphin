@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
 	instanceVariableNames: 'height width isFilled'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusAdjustableArrowCapInitializer guid: (GUID fromString: '{c1fcc801-8763-11d7-b609-00e0987e8081}')!
-GdiplusAdjustableArrowCapInitializer comment: ''!
-!GdiplusAdjustableArrowCapInitializer categoriesForClass!Unclassified! !
-!GdiplusAdjustableArrowCapInitializer methodsFor!
+Graphics.Gdiplus.AdjustableArrowCapInitializer guid: (Core.GUID fromString: '{c1fcc801-8763-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.AdjustableArrowCapInitializer comment: ''!
+!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateAdjustableArrowCap: height
 				width: width
@@ -29,16 +29,16 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 	height := heightReal.
 	width := widthReal.
 	isFilled := isFilledBoolean! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #height:width:isFilled:!initializing!private! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #height:width:isFilled:!initializing!private! !
 
-!GdiplusAdjustableArrowCapInitializer class methodsFor!
+!Graphics.Gdiplus.AdjustableArrowCapInitializer class methodsFor!
 
 height: heightReal width: widthReal isFilled: isFilledBoolean
 	^self new 
 		height: heightReal
 		width: widthReal
 		isFilled: isFilledBoolean! !
-!GdiplusAdjustableArrowCapInitializer class categoriesFor: #height:width:isFilled:!instance creation!public! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer class categoriesFor: #height:width:isFilled:!instance creation!public! !
 

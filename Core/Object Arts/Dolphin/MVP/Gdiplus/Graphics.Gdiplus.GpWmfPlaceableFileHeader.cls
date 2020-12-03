@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpWmfPlaceableFileHeader
+External.Structure subclass: #'Graphics.Gdiplus.GpWmfPlaceableFileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_BoundingBox' -> 16r6.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #GpWmfPlaceableFileHeader
 		'_OffsetOf_Key' -> 16r0.
 		'_OffsetOf_Reserved' -> 16r10
 	}!
-GpWmfPlaceableFileHeader guid: (GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
-GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpWmfPlaceableFileHeader guid: (Core.GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
+Graphics.Gdiplus.GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -32,8 +32,8 @@ struct tagGpWmfPlaceableFileHeader {
 	short Checksum;
 } GpWmfPlaceableFileHeader;
 '!
-!GpWmfPlaceableFileHeader categoriesForClass!Unclassified! !
-!GpWmfPlaceableFileHeader methodsFor!
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader methodsFor!
 
 BoundingBox
 	"Answer the <GpWMFRect16> value of the receiver's 'BoundingBox' field."
@@ -98,20 +98,20 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
-!GpWmfPlaceableFileHeader categoriesFor: #BoundingBox!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #BoundingBox:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Checksum!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Checksum:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Hmf!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Hmf:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Inch!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Inch:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Key!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Key:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Reserved!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Reserved:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #BoundingBox!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #BoundingBox:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Checksum!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Checksum:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Hmf!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Hmf:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Inch!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Inch:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Key!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Key:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Reserved!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Reserved:!**compiled accessors**!public! !
 
-!GpWmfPlaceableFileHeader class methodsFor!
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader class methodsFor!
 
 defineFields
 	"Define the fields of the GpWmfPlaceableFileHeader structure.
@@ -129,16 +129,28 @@ defineFields
 "
 
 	self
-		defineField: #Key type: DWORDField new offset: 0;
-		defineField: #Hmf type: SWORDField new offset: 4;
-		defineField: #BoundingBox type: (StructureField type: GpWMFRect16) offset: 6;
-		defineField: #Inch type: SWORDField new offset: 14;
-		defineField: #Reserved type: DWORDField new offset: 16;
-		defineField: #Checksum type: SWORDField new offset: 20.
+		defineField: #Key
+			type: DWORDField new
+			offset: 0;
+		defineField: #Hmf
+			type: SWORDField new
+			offset: 4;
+		defineField: #BoundingBox
+			type: (StructureField type: GpWMFRect16)
+			offset: 6;
+		defineField: #Inch
+			type: SWORDField new
+			offset: 14;
+		defineField: #Reserved
+			type: DWORDField new
+			offset: 16;
+		defineField: #Checksum
+			type: SWORDField new
+			offset: 20.
 	self byteSize: 24!
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
-!GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpWmfPlaceableFileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

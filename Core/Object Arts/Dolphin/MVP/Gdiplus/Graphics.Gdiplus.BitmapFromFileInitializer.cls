@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
+Graphics.Gdiplus.FromFileInitializer subclass: #'Graphics.Gdiplus.BitmapFromFileInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromFileInitializer guid: (GUID fromString: '{22318a95-8a19-46a9-8774-f3e8c2d5db86}')!
-GdiplusBitmapFromFileInitializer comment: ''!
-!GdiplusBitmapFromFileInitializer categoriesForClass!Unclassified! !
-!GdiplusBitmapFromFileInitializer methodsFor!
+Graphics.Gdiplus.BitmapFromFileInitializer guid: (Core.GUID fromString: '{22318a95-8a19-46a9-8774-f3e8c2d5db86}')!
+Graphics.Gdiplus.BitmapFromFileInitializer comment: ''!
+!Graphics.Gdiplus.BitmapFromFileInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.BitmapFromFileInitializer methodsFor!
 
 createHandle
 	"Private - GdiplusBitmap.h
@@ -25,13 +25,13 @@ createHandle
 	"Note: GdiplusBitmap.h uses a switch on useEmbeddedColorManagement to call different flat-api functions"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error loading Bitmap'! !
-!GdiplusBitmapFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.BitmapFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

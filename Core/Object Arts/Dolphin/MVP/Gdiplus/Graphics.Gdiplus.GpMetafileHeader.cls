@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpMetafileHeader
+External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DpiX' -> 16r10.
@@ -22,8 +22,8 @@ ExternalStructure subclass: #GpMetafileHeader
 		'_OffsetOf_x' -> 16r18.
 		'_OffsetOf_y' -> 16r1C
 	}!
-GpMetafileHeader guid: (GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
-GpMetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpMetafileHeader guid: (Core.GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
+Graphics.Gdiplus.GpMetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -49,8 +49,8 @@ struct tagGpMetafileHeader {
 	int LogicalDpiY;
 } GpMetafileHeader;
 '!
-!GpMetafileHeader categoriesForClass!Unclassified! !
-!GpMetafileHeader methodsFor!
+!Graphics.Gdiplus.GpMetafileHeader categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpMetafileHeader methodsFor!
 
 DpiX
 	"Answer the <Float> value of the receiver's 'DpiX' field."
@@ -209,38 +209,38 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!GpMetafileHeader categoriesFor: #DpiX!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiX:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiY!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiY:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfHeader!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfHeader:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusFlags!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusFlags:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusHeaderSize!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusHeaderSize:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #height!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #height:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiX!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiX:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiY!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiY:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #size!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #size:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #type!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #type:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #Version!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #Version:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #width!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #width:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #WmfHeader!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #WmfHeader:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #x!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #x:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #y!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #y:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #DpiX!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #DpiX:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #DpiY!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #DpiY:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfHeader!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfHeader:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfPlusFlags!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfPlusFlags:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfPlusHeaderSize!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #EmfPlusHeaderSize:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #height!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #height:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #LogicalDpiX!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #LogicalDpiX:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #LogicalDpiY!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #LogicalDpiY:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #size!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #size:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #type!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #type:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #Version!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #Version:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #width!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #width:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #WmfHeader!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #WmfHeader:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #x!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #x:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #y!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpMetafileHeader categoriesFor: #y:!**compiled accessors**!public! !
 
-!GpMetafileHeader class methodsFor!
+!Graphics.Gdiplus.GpMetafileHeader class methodsFor!
 
 defineFields
 	"Define the fields of the GpMetafileHeader structure.
@@ -318,6 +318,6 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
-!GpMetafileHeader class categoriesFor: #defineFields!public!template definition! !
-!GpMetafileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpMetafileHeader class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.GpMetafileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

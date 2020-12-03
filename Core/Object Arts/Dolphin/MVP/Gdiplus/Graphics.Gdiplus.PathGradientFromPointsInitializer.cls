@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPointsInitializer'
 	instanceVariableNames: 'pathPoints wrapMode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
-GdiplusPathGradientFromPointsInitializer comment: ''!
-!GdiplusPathGradientFromPointsInitializer categoriesForClass!Unclassified! !
-!GdiplusPathGradientFromPointsInitializer methodsFor!
+Graphics.Gdiplus.PathGradientFromPointsInitializer guid: (Core.GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathGradientFromPointsInitializer comment: ''!
+!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer methodsFor!
 
 createHandle
 	| gpHandle status points |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	points := StructureArray
 				withAll: pathPoints
 				elementClass: POINTL
@@ -33,13 +33,13 @@ gdiplusConstructorErrorDescription
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
 
-!GdiplusPathGradientFromPointsInitializer class methodsFor!
+!Graphics.Gdiplus.PathGradientFromPointsInitializer class methodsFor!
 
 points: points wrapMode: aWrapModeConstant
 	^self new points: points wrapMode: aWrapModeConstant! !
-!GdiplusPathGradientFromPointsInitializer class categoriesFor: #points:wrapMode:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesFor: #points:wrapMode:!instance creation!public! !
 

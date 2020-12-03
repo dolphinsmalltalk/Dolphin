@@ -1,28 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusRegion
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Region'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusRegion guid: (GUID fromString: '{148916f7-d5f7-4aea-a739-3e4ba82692ac}')!
-GdiplusRegion comment: 'An instance of GdiplusRegion describes an area of the display surface. The area can be any shape, i.e., the boundary of the area can be a combination of curved and straight lines. Regions can also be created from the interiors of rectangles, paths, or a combination of these. Regions are used in clipping and hit-testing operations.'!
-!GdiplusRegion categoriesForClass!Unclassified! !
-!GdiplusRegion methodsFor!
+Graphics.Gdiplus.Region guid: (Core.GUID fromString: '{148916f7-d5f7-4aea-a739-3e4ba82692ac}')!
+Graphics.Gdiplus.Region comment: 'An instance of GdiplusRegion describes an area of the display surface. The area can be any shape, i.e., the boundary of the area can be a combination of curved and straight lines. Regions can also be created from the interiors of rectangles, paths, or a combination of these. Regions are used in clipping and hit-testing operations.'!
+!Graphics.Gdiplus.Region categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Region methodsFor!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
 	GdiplusLibrary default gdipDeleteRegion: handle!
 
-bounds: graphics 
+bounds: graphics
 	| status rect |
-	rect := RECT new.
-	(status := GdiplusLibrary default 
+	rect := RECTL new.
+	(status := GdiplusLibrary default
 				gdipGetRegionBoundsI: self asParameter
 				graphics: graphics asParameter
-				rect: rect) = Ok 
+				rect: rect) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetRegionsBoundsI failed' with: status].
 	^rect asRectangle!
 
@@ -30,35 +30,35 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneRegion: self asParameter cloneRegion: gpHandle) = Ok 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipCloneRegion: self asParameter cloneRegion: gpHandle) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipCloneRegion' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
 
-combinePath: aPath mode: aCombineModeConstant 
+combinePath: aPath mode: aCombineModeConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipCombineRegionPath: self asParameter
 				path: aPath asParameter
-				combineMode: aCombineModeConstant) = Ok 
+				combineMode: aCombineModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipCombineRegionPath failed' with: status]!
 
-combineRectangle: aRectangle mode: aCombineModeConstant 
+combineRectangle: aRectangle mode: aCombineModeConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipCombineRegionRectI: self asParameter
 				rect: aRectangle asParameter
-				combineMode: aCombineModeConstant) = Ok 
+				combineMode: aCombineModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipCombineRegionRectI failed' with: status]!
 
-combineRegion: aRegion mode: aCombineModeConstant 
+combineRegion: aRegion mode: aCombineModeConstant
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipCombineRegionRegion: self asParameter
 				region2: aRegion asParameter
-				combineMode: aCombineModeConstant) = Ok 
+				combineMode: aCombineModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipCombineRegionRegion failed' with: status]!
 
 complementPath: aPath
@@ -75,18 +75,18 @@ isVisible: aPoint
 
 	^self isVisible: aPoint graphics: nil!
 
-isVisible: aPoint graphics: aGraphics 
+isVisible: aPoint graphics: aGraphics
 	"Answer whether aPoint is inside the receiver, where aGraphics contains the world and page
 	transformations required to calculate the device coordinates of the receiver and aPoint."
 
 	| status result |
 	result := SDWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipIsVisibleRegionPointI: self asParameter
 				x: aPoint x
 				y: aPoint y
 				graphics: aGraphics asParameter
-				result: result) = Ok 
+				result: result) = Ok
 		ifFalse: [GdiplusError signal: 'GdipIsVisibleRegionPointI failed' with: status].
 	^result ~= 0!
 
@@ -94,14 +94,14 @@ makeEmpty
 	"Update the receiver to an empty region, i.e., so that it occupies no space on the display device."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetEmpty: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipSetEmpty: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetEmpty failed' with: status]!
 
 makeInfinite
 	"Update the receiver to an infinite region, i.e., so that it occupies all the space on the display device."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetInfinite: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipSetInfinite: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetInfinite failed' with: status]!
 
 unionRegion: aRegion
@@ -111,23 +111,23 @@ xorRegion: aRegion
 	"Update the receiver to the nonintersecting portions of itself and aRegion."
 
 	self combineRegion: aRegion mode: CombineModeXor! !
-!GdiplusRegion categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusRegion categoriesFor: #bounds:!accessing!public! !
-!GdiplusRegion categoriesFor: #clone!copying!public! !
-!GdiplusRegion categoriesFor: #combinePath:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #combineRectangle:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #combineRegion:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #complementPath:!helpers!public! !
-!GdiplusRegion categoriesFor: #complementRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #intersectRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #isVisible:!public!testing! !
-!GdiplusRegion categoriesFor: #isVisible:graphics:!public!testing! !
-!GdiplusRegion categoriesFor: #makeEmpty!operations!public! !
-!GdiplusRegion categoriesFor: #makeInfinite!operations!public! !
-!GdiplusRegion categoriesFor: #unionRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #xorRegion:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Region categoriesFor: #bounds:!accessing!public! !
+!Graphics.Gdiplus.Region categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.Region categoriesFor: #combinePath:mode:!operations!public! !
+!Graphics.Gdiplus.Region categoriesFor: #combineRectangle:mode:!operations!public! !
+!Graphics.Gdiplus.Region categoriesFor: #combineRegion:mode:!operations!public! !
+!Graphics.Gdiplus.Region categoriesFor: #complementPath:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesFor: #complementRegion:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesFor: #intersectRegion:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesFor: #isVisible:!public!testing! !
+!Graphics.Gdiplus.Region categoriesFor: #isVisible:graphics:!public!testing! !
+!Graphics.Gdiplus.Region categoriesFor: #makeEmpty!operations!public! !
+!Graphics.Gdiplus.Region categoriesFor: #makeInfinite!operations!public! !
+!Graphics.Gdiplus.Region categoriesFor: #unionRegion:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesFor: #xorRegion:!helpers!public! !
 
-!GdiplusRegion class methodsFor!
+!Graphics.Gdiplus.Region class methodsFor!
 
 exampleClippingSimple
 	"Private - Why is the region twice the width of the rectangle?
@@ -137,15 +137,15 @@ exampleClippingSimple
 	"
 
 	| bitmap graphics brush rect1 region1 |
-	bitmap := GdiplusBitmap extent: 350 @ 350.
+	bitmap := Bitmap extent: 350 @ 350.
 	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush color: Color blue.
+	brush := SolidBrush color: Color blue.
 	rect1 := 100 @ 50 extent: 50 @ 150.
-	region1 := GdiplusRegion fromRectangle: rect1.
+	region1 := Region fromRectangle: rect1.
 	region1 handle.
 	graphics
 		fillRegion: region1 brush: brush;
-		drawRectangle: rect1 pen: GdiplusPen black.
+		drawRectangle: rect1 pen: Pen black.
 	^bitmap!
 
 exampleClippingSimple2
@@ -155,14 +155,14 @@ exampleClippingSimple2
 	"
 
 	| bitmap brush rect1 region1 |
-	bitmap := GdiplusBitmap extent: 350 @ 350.
-	brush := GdiplusSolidBrush color: Color blue.
+	bitmap := Bitmap extent: 350 @ 350.
+	brush := SolidBrush color: Color blue.
 	rect1 := 0 @ 0 extent: 50 @ 150.
-	region1 := GdiplusRegion fromRectangle: rect1.
-	(bitmap graphics)
+	region1 := Region fromRectangle: rect1.
+	bitmap graphics
 		translateTransform: 100 @ 50 order: nil;
 		fillRegion: region1 brush: brush;
-		drawRectangle: (Point zero extent: rect1 extent) pen: GdiplusPen black.
+		drawRectangle: (Point zero extent: rect1 extent) pen: Pen black.
 	^bitmap!
 
 exampleGdipRClipWithRegion
@@ -172,21 +172,21 @@ exampleGdipRClipWithRegion
 	"
 
 	| bitmap graphics path region pen fontFamily font brush |
-	bitmap := GdiplusBitmap extent: 200 @ 200.
+	bitmap := Bitmap extent: 200 @ 200.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new.
+	path := Path new.
 	path addPolygon: {10 @ 10. 150 @ 10. 100 @ 75. 100 @ 150}.
-	region := GdiplusRegion fromPath: path.
-	pen := GdiplusPen black.
+	region := Region fromPath: path.
+	pen := Pen black.
 	graphics drawPath: path pen: pen.
 	graphics clipRegion: region combineMode: nil.
-	fontFamily := GdiplusFontFamily fromName: 'Arial'.
-	font := GdiplusFont
+	fontFamily := FontFamily fromName: 'Arial'.
+	font := Font
 				fontFamily: fontFamily
 				emSize: 36
 				style: FontStyleBold
 				unit: UnitPixel.
-	brush := GdiplusSolidBrush red.
+	brush := SolidBrush red.
 	graphics
 		drawString: 'A Clipping Region'
 		font: font
@@ -209,47 +209,47 @@ exampleGdipRHitTesting
 	"
 
 	| bitmap graphics brush rect1 rect2 region1 region2 presenter onLeftButtonPressed |
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush green.
+	brush := SolidBrush green.
 	rect1 := 50 @ 0 extent: 50 @ 150.
 	rect2 := 0 @ 50 extent: 150 @ 50.
-	region1 := GdiplusRegion fromRectangle: rect1.
-	region2 := GdiplusRegion fromRectangle: rect2.
+	region1 := Region fromRectangle: rect1.
+	region2 := Region fromRectangle: rect2.
 	region1 unionRegion: region2.
 	graphics fillRegion: region1 brush: brush.
 	"Show in blue what region1's area should be."
-	graphics fillRectangle: rect1 brush: GdiplusSolidBrush blue.
-	graphics fillRectangle: rect2 brush: GdiplusSolidBrush blue.
-	(presenter := ImagePresenter show: 'Basic image' on: bitmap) view viewMode: #normal.
+	graphics fillRectangle: rect1 brush: SolidBrush blue.
+	graphics fillRectangle: rect2 brush: SolidBrush blue.
+	(presenter := UI.ImagePresenter show: 'Basic image' on: bitmap) view viewMode: #normal.
 	onLeftButtonPressed := 
-			[:aMouseEvent | 
-			(region1 isVisible: aMouseEvent x @ aMouseEvent y graphics: graphics) 
+			[:aMouseEvent |
+			(region1 isVisible: aMouseEvent x @ aMouseEvent y graphics: graphics)
 				ifTrue: [brush color: Color green]
 				ifFalse: [brush color: Color red].
 			graphics fillRegion: region1 brush: brush.
 			presenter view invalidate].
 	presenter propertyAt: #clickHandler put: onLeftButtonPressed.
-	presenter 
+	presenter
 		when: #leftButtonPressed:
 		send: #value:
 		to: onLeftButtonPressed!
 
 fromPath: aPath
-	^self fromInitializer: (GdiplusRegionFromPathInitializer fromPath: aPath)!
+	^self fromInitializer: (RegionFromPathInitializer fromPath: aPath)!
 
 fromRectangle: aRectangle
-	^self fromInitializer: (GdiplusRegionFromRectangleInitializer fromRectangle: aRectangle)!
+	^self fromInitializer: (RegionFromRectangleInitializer fromRectangle: aRectangle)!
 
 new
 	"Answer an instance of the receiver that is infinite."
 
-	^self fromInitializer: GdiplusRegionInitializer default! !
-!GdiplusRegion class categoriesFor: #exampleClippingSimple!examples!private! !
-!GdiplusRegion class categoriesFor: #exampleClippingSimple2!examples!private! !
-!GdiplusRegion class categoriesFor: #exampleGdipRClipWithRegion!examples!public!sunit! !
-!GdiplusRegion class categoriesFor: #exampleGdipRHitTesting!examples!public! !
-!GdiplusRegion class categoriesFor: #fromPath:!instance creation!public! !
-!GdiplusRegion class categoriesFor: #fromRectangle:!instance creation!public! !
-!GdiplusRegion class categoriesFor: #new!instance creation!public! !
+	^self fromInitializer: RegionInitializer default! !
+!Graphics.Gdiplus.Region class categoriesFor: #exampleClippingSimple!examples!private! !
+!Graphics.Gdiplus.Region class categoriesFor: #exampleClippingSimple2!examples!private! !
+!Graphics.Gdiplus.Region class categoriesFor: #exampleGdipRClipWithRegion!examples!public!sunit! !
+!Graphics.Gdiplus.Region class categoriesFor: #exampleGdipRHitTesting!examples!public! !
+!Graphics.Gdiplus.Region class categoriesFor: #fromPath:!instance creation!public! !
+!Graphics.Gdiplus.Region class categoriesFor: #fromRectangle:!instance creation!public! !
+!Graphics.Gdiplus.Region class categoriesFor: #new!instance creation!public! !
 

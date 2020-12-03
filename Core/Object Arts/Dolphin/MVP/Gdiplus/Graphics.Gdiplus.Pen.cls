@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusPen
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Pen'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPen guid: (GUID fromString: '{f98f70c8-58ea-4592-bc70-1907f78c8bc8}')!
-GdiplusPen comment: 'GdiplusPen is used to draw lines and curves.  In general, where an object has an outside and an inside, GdiplusPen draws the outside and GdiplusBrush is used to fill the inside.'!
-!GdiplusPen categoriesForClass!Unclassified! !
-!GdiplusPen methodsFor!
+Graphics.Gdiplus.Pen guid: (Core.GUID fromString: '{f98f70c8-58ea-4592-bc70-1907f78c8bc8}')!
+Graphics.Gdiplus.Pen comment: 'GdiplusPen is used to draw lines and curves.  In general, where an object has an outside and an inside, GdiplusPen draws the outside and GdiplusBrush is used to fill the inside.'!
+!Graphics.Gdiplus.Pen categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Pen methodsFor!
 
 alignment
 	"Answer the alignment (e.g., center or inset) of the receiver relative to a stroke that is drawn."
@@ -20,11 +20,11 @@ alignment
 		ifFalse: [GdiplusError signal: 'GdipGetPenMode failed' with: status].
 	^alignment value!
 
-alignment: aPenAlignmentConstant 
+alignment: aPenAlignmentConstant
 	"Set the alignment (e.g., center or inset) of the receiver relative to a stroke that is drawn."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPenMode: self asParameter penMode: aPenAlignmentConstant) 
+	(status := GdiplusLibrary default gdipSetPenMode: self asParameter penMode: aPenAlignmentConstant)
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetPenMode failed' with: status]!
 
 basicFree
@@ -37,25 +37,22 @@ brush
 	"Answer the receiver's brush, used when drawing a line."
 
 	| status type gpHandle class |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	(status := GdiplusLibrary default gdipGetPenBrushFill: self asParameter brush: gpHandle) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenBrushFill failed' with: status].
 	type := SDWORD new.
 	(status := GdiplusLibrary default gdipGetBrushType: gpHandle type: type) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetBrushType failed' with: status].
-	class := ##({GdiplusSolidBrush.
-				GdiplusHatchBrush.
-				GdiplusTextureBrush.
-				GdiplusPathGradientBrush.
-				GdiplusLinearGradientBrush}) at: type value + 1.
+	class := ##({SolidBrush. HatchBrush. TextureBrush. PathGradientBrush. LinearGradientBrush})
+				at: type value + 1.
 	^class fromOwnedHandle: gpHandle!
 
-brush: aGdiplusBrush 
+brush: aGdiplusBrush
 	"Set the receiver to use aGdiplusBrush when drawing a line."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPenBrushFill: self asParameter
-				brush: aGdiplusBrush asParameter) = Ok 
+				brush: aGdiplusBrush asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenBrushFill failed' with: status]!
 
 color
@@ -77,22 +74,22 @@ color: aColor
 compoundArray
 	| status array |
 	array := FLOATArray new: self compoundArrayCount.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPenCompoundArray: self asParameter
 				dash: array
-				count: array size) = Ok 
+				count: array size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenCompoundArray failed' with: status].
 	^array asArray!
 
-compoundArray: aRealArray 
+compoundArray: aRealArray
 	| status |
 	self assert: [aRealArray size >= 2].
 	self assert: [aRealArray allSatisfy: [:each | each between: 0.0 and: 1.0]].
 	self assert: [aRealArray first = 0.0 and: [aRealArray last = 1.0]].
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPenCompoundArray: self asParameter
 				dash: (FLOATArray withAll: aRealArray)
-				count: aRealArray size) = Ok 
+				count: aRealArray size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenCompoundArray failed' with: status]!
 
 compoundArrayCount
@@ -100,35 +97,35 @@ compoundArrayCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPenCompoundCount: self asParameter count: count) = Ok 
+	(status := GdiplusLibrary default gdipGetPenCompoundCount: self asParameter count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenCompoundCount failed' with: status].
 	^count value!
 
 customEndCap
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipGetPenCustomEndCap: self asParameter customCap: gpHandle) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPenCustomEndCap failed' with: status].
-	^GdiplusCustomLineCap fromOwnedHandle: gpHandle!
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipGetPenCustomEndCap: self asParameter customCap: gpHandle) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPenCustomEndCap failed' with: status].
+	^CustomLineCap fromOwnedHandle: gpHandle!
 
-customEndCap: aGdiplusCustomLineCap 
+customEndCap: aGdiplusCustomLineCap
 	| status |
 	(status := GdiplusLibrary default gdipSetPenCustomEndCap: self asParameter
-				customCap: aGdiplusCustomLineCap asParameter) = Ok 
+				customCap: aGdiplusCustomLineCap asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenCustomEndCap failed' with: status]!
 
-customStartCap: aGdiplusCustomLineCap 
+customStartCap: aGdiplusCustomLineCap
 	| status |
 	(status := GdiplusLibrary default gdipSetPenCustomStartCap: self asParameter
-				customCap: aGdiplusCustomLineCap asParameter) = Ok 
+				customCap: aGdiplusCustomLineCap asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenCustomStartCap failed' with: status]!
 
-dashCap: aDashCapConstant 
+dashCap: aDashCapConstant
 	"Set the dash cap of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPenDashCap197819: self asParameter
-				dashCap: aDashCapConstant) = Ok 
+				dashCap: aDashCapConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenDashCap197819 failed' with: status]!
 
 dashPattern
@@ -143,14 +140,14 @@ dashPattern
 		ifFalse: [GdiplusError signal: 'GdipGetPenDashArray failed' with: status].
 	^array asArray!
 
-dashPattern: aRealArray 
+dashPattern: aRealArray
 	"Set an array of custom dashes and spaces for the receiver."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPenDashArray: self asParameter
 				dash: (FLOATArray withAll: aRealArray)
-				count: aRealArray size) = Ok 
+				count: aRealArray size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenDashArray failed' with: status]!
 
 dashPatternCount
@@ -158,78 +155,78 @@ dashPatternCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPenDashCount: self asParameter count: count) = Ok 
+	(status := GdiplusLibrary default gdipGetPenDashCount: self asParameter count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenDashCount failed' with: status].
 	^count value!
 
-dashStyle: aDashStyleConstant 
+dashStyle: aDashStyleConstant
 	"Set the dash style of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPenDashStyle: self asParameter
-				dashStyle: aDashStyleConstant) = Ok 
+				dashStyle: aDashStyleConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenDashStyle failed' with: status]!
 
-endCap: aLineCapConstant 
+endCap: aLineCapConstant
 	| status |
-	(status := GdiplusLibrary default gdipSetPenEndCap: self asParameter endCap: aLineCapConstant) = Ok 
+	(status := GdiplusLibrary default gdipSetPenEndCap: self asParameter endCap: aLineCapConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenEndCap failed' with: status]!
 
-lineCap: startCap endCap: endCap dashCap: dashCap 
+lineCap: startCap endCap: endCap dashCap: dashCap
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPenLineCap197819: self asParameter
 				startCap: startCap
 				endCap: endCap
-				dashCap: dashCap) = Ok 
+				dashCap: dashCap) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenLineCap197819 failed' with: status]!
 
-lineJoin: aLineJoinConstant 
+lineJoin: aLineJoinConstant
 	| status |
-	(status := GdiplusLibrary default gdipSetPenLineJoin: self asParameter lineJoin: aLineJoinConstant) 
+	(status := GdiplusLibrary default gdipSetPenLineJoin: self asParameter lineJoin: aLineJoinConstant)
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetPenLineJoin failed' with: status]!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
 	| status |
-	(status := GdiplusLibrary default gdipResetPenTransform: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipResetPenTransform: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipResetPenTransform failed' with: status]!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipRotatePenTransform: self asParameter
 				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipRotatePenTransform failed' with: status]!
 
-scaleTransform: aRealPoint order: aMatrixOrderConstant 
+scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipScalePenTransform: self asParameter
 				sx: aRealPoint x
 				sy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipScalePenTransform failed' with: status]!
 
-startCap: aLineCapConstant 
+startCap: aLineCapConstant
 	| status |
-	(status := GdiplusLibrary default gdipSetPenStartCap: self asParameter startCap: aLineCapConstant) 
+	(status := GdiplusLibrary default gdipSetPenStartCap: self asParameter startCap: aLineCapConstant)
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetPenStartCap failed' with: status]!
 
-transform: aGdiplusMatrix 
+transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPenTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) = Ok 
+				matrix: aGdiplusMatrix asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenTransform failed' with: status]!
 
 width
@@ -237,46 +234,46 @@ width
 
 	| status width |
 	width := FLOAT new.
-	(status := GdiplusLibrary default gdipGetPenWidth: self asParameter width: width) = Ok 
+	(status := GdiplusLibrary default gdipGetPenWidth: self asParameter width: width) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenWidth failed' with: status].
 	^width asFloat!
 
-width: aNumber 
+width: aNumber
 	"Set the width of the receiver's stroke."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPenWidth: self asParameter width: aNumber) = Ok 
+	(status := GdiplusLibrary default gdipSetPenWidth: self asParameter width: aNumber) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenWidth failed' with: status]! !
-!GdiplusPen categoriesFor: #alignment!accessing!public! !
-!GdiplusPen categoriesFor: #alignment:!accessing!public! !
-!GdiplusPen categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusPen categoriesFor: #brush!accessing!public! !
-!GdiplusPen categoriesFor: #brush:!accessing!public! !
-!GdiplusPen categoriesFor: #color!accessing!public! !
-!GdiplusPen categoriesFor: #color:!accessing!public! !
-!GdiplusPen categoriesFor: #compoundArray!accessing!public! !
-!GdiplusPen categoriesFor: #compoundArray:!accessing!public! !
-!GdiplusPen categoriesFor: #compoundArrayCount!accessing!private! !
-!GdiplusPen categoriesFor: #customEndCap!accessing!public! !
-!GdiplusPen categoriesFor: #customEndCap:!accessing!public! !
-!GdiplusPen categoriesFor: #customStartCap:!accessing!public! !
-!GdiplusPen categoriesFor: #dashCap:!accessing!public! !
-!GdiplusPen categoriesFor: #dashPattern!accessing!public! !
-!GdiplusPen categoriesFor: #dashPattern:!accessing!public! !
-!GdiplusPen categoriesFor: #dashPatternCount!accessing!private! !
-!GdiplusPen categoriesFor: #dashStyle:!accessing!public! !
-!GdiplusPen categoriesFor: #endCap:!accessing!public! !
-!GdiplusPen categoriesFor: #lineCap:endCap:dashCap:!accessing!public! !
-!GdiplusPen categoriesFor: #lineJoin:!accessing!public! !
-!GdiplusPen categoriesFor: #resetTransform!operations!public! !
-!GdiplusPen categoriesFor: #rotateTransform:order:!operations!public! !
-!GdiplusPen categoriesFor: #scaleTransform:order:!operations!public! !
-!GdiplusPen categoriesFor: #startCap:!accessing!public! !
-!GdiplusPen categoriesFor: #transform:!operations!public! !
-!GdiplusPen categoriesFor: #width!accessing!public! !
-!GdiplusPen categoriesFor: #width:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #alignment!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #alignment:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Pen categoriesFor: #brush!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #brush:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #color!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #color:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #compoundArray!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #compoundArray:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #compoundArrayCount!accessing!private! !
+!Graphics.Gdiplus.Pen categoriesFor: #customEndCap!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #customEndCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #customStartCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #dashCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #dashPattern!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #dashPattern:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #dashPatternCount!accessing!private! !
+!Graphics.Gdiplus.Pen categoriesFor: #dashStyle:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #endCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #lineCap:endCap:dashCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #lineJoin:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #resetTransform!operations!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #rotateTransform:order:!operations!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #scaleTransform:order:!operations!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #startCap:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #transform:!operations!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #width!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesFor: #width:!accessing!public! !
 
-!GdiplusPen class methodsFor!
+!Graphics.Gdiplus.Pen class methodsFor!
 
 black
 	^self color: Color black!
@@ -287,8 +284,7 @@ blue
 brush: aGdiplusBrush width: aFloat
 	"Creates a Pen object that uses the attributes of a brush and a real number to set the width of this Pen object"
 
-	^self 
-		fromInitializer: (GdiplusPenFromBrushInitializer brush: aGdiplusBrush width: aFloat)!
+	^self fromInitializer: (PenFromBrushInitializer brush: aGdiplusBrush width: aFloat)!
 
 color: aColor
 	"Answer an instance of the receiver with the specified color and default width (1.0)."
@@ -298,7 +294,7 @@ color: aColor
 color: anARGB width: aFloat
 	"Answer an instance of the receiver with the specified color and width."
 
-	^self fromInitializer: (GdiplusPenFromColorInitializer color: anARGB width: aFloat)!
+	^self fromInitializer: (PenFromColorInitializer color: anARGB width: aFloat)!
 
 exampleGdipPAttributes
 	"From MSDN: Using GDI+ > Using a Pen to Draw Lines and Shapes > Setting Pen Width and Alignment
@@ -307,10 +303,10 @@ exampleGdipPAttributes
 	"
 
 	| bitmap graphics blackPen greenPen |
-	bitmap := GdiplusBitmap extent: 150 @ 300.
+	bitmap := Bitmap extent: 150 @ 300.
 	graphics := bitmap graphics.
-	blackPen := GdiplusPen black.
-	greenPen := GdiplusPen green width: 10.
+	blackPen := Pen black.
+	greenPen := Pen green width: 10.
 	graphics
 		drawLine: (10 @ 10 corner: 100 @ 50) pen: greenPen;
 		drawLine: (10 @ 10 corner: 100 @ 50) pen: blackPen;
@@ -331,9 +327,9 @@ exampleGdipPCompoundArray
 	"
 
 	| bitmap graphics pen |
-	bitmap := GdiplusBitmap extent: 450 @ 350.
+	bitmap := Bitmap extent: 450 @ 350.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 30.
+	pen := Pen blue width: 30.
 	pen compoundArray: #(0 1).
 	graphics
 		drawLine: (10 @ 60 corner: 400 @ 60) pen: pen;
@@ -364,11 +360,11 @@ exampleGdipPCustomCaps
 	"
 
 	| bitmap graphics strokePath pen custCap |
-	bitmap := GdiplusBitmap extent: 300 @ 200.
+	bitmap := Bitmap extent: 300 @ 200.
 	graphics := bitmap graphics.
-	strokePath := GdiplusGraphicsPath new addRectangle: (-10 @ -5 corner: 20 @ 10).
-	pen := GdiplusPen blue.
-	custCap := GdiplusCustomLineCap strokePath: strokePath.
+	strokePath := Path new addRectangle: (-10 @ -5 corner: 20 @ 10).
+	pen := Pen blue.
+	custCap := CustomLineCap strokePath: strokePath.
 	pen customStartCap: custCap.
 	pen customEndCap: custCap.
 	graphics drawLine: (20 @ 20 corner: 200 @ 100) pen: pen.
@@ -381,9 +377,9 @@ exampleGdipPDashCap
 	"
 
 	| bitmap graphics pen |
-	bitmap := GdiplusBitmap extent: 300 @ 200.
+	bitmap := Bitmap extent: 300 @ 200.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 15.
+	pen := Pen blue width: 15.
 	pen dashStyle: DashStyleDash.
 	pen dashCap: DashCapTriangle.
 	graphics drawLine: (20 @ 20 corner: 280 @ 180) pen: pen.
@@ -396,8 +392,8 @@ exampleGdipPDashPattern
 	"
 
 	| bitmap pen |
-	bitmap := GdiplusBitmap extent: 450 @ 200.
-	pen := GdiplusPen blue width: 5.
+	bitmap := Bitmap extent: 450 @ 200.
+	pen := Pen blue width: 5.
 	pen dashPattern: #(10 2).
 	(bitmap graphics)
 		drawLine: (10 @ 40 extent: 400 @ 0) pen: pen;
@@ -423,8 +419,8 @@ exampleGdipPDrawing
 	"
 
 	| bitmap pen |
-	bitmap := GdiplusBitmap extent: 350 @ 150.
-	pen := GdiplusPen black.
+	bitmap := Bitmap extent: 350 @ 150.
+	pen := Pen black.
 	(bitmap graphics)
 		drawLine: (20 @ 10 corner: 300 @ 100) pen: pen;
 		drawRectangle: (10 @ 10 corner: 100 @ 50) pen: (pen width: 5).
@@ -440,14 +436,15 @@ exampleGdipPFillWithTexture
 	"
 
 	| bitmap image brush pen |
-	bitmap := GdiplusBitmap extent: 350 @ 150.
-	image := (GdiplusImage fromFile: self fileResource pafEyeJpg) thumbnailWithHeight: 32.
-	brush := GdiplusTextureBrush image: image.
-	pen := GdiplusPen brush: brush width: 30.
+	bitmap := Bitmap extent: 350 @ 150.
+	image := (Image fromFile: self fileResource pafEyeJpg) thumbnailWithHeight: 32.
+	brush := TextureBrush image: image.
+	pen := Pen brush: brush width: 30.
 	(bitmap graphics)
 		drawImage: image;
 		drawEllipse: (100 @ 20 extent: 200 @ 100) pen: pen.
-	^bitmap!
+	^bitmap
+!
 
 exampleGdipPJoiningLines
 	"From MSDN: Using GDI+ > Using a Pen to Draw Lines and Shapes > Joining Lines
@@ -456,12 +453,12 @@ exampleGdipPJoiningLines
 	"
 
 	| bitmap graphics path pen x |
-	bitmap := GdiplusBitmap extent: 600 @ 400.
+	bitmap := Bitmap extent: 600 @ 400.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 15.
+	pen := Pen blue width: 15.
 	self enumsLineJoin keysAndValuesDo: 
-			[:i :e | 
-			path := GdiplusGraphicsPath new.
+			[:i :e |
+			path := Path new.
 			path startFigure.
 			x := (i - 1) * 120.
 			path addLineFrom: (x + 20) @ 50 to: (x + 70) @ 50.
@@ -471,8 +468,8 @@ exampleGdipPJoiningLines
 				drawPath: path pen: pen;
 				drawString: e key at: ((i - 1) * 120) @ 20].
 	self enumsLineJoin keysAndValuesDo: 
-			[:i :e | 
-			path := GdiplusGraphicsPath new.
+			[:i :e |
+			path := Path new.
 			path startFigure.
 			x := (i - 1) * 120.
 			path addLineFrom: (x + 20) @ 150 to: (x + 50) @ 150.
@@ -480,8 +477,8 @@ exampleGdipPJoiningLines
 			pen lineJoin: e value.
 			graphics drawPath: path pen: pen].
 	self enumsLineJoin keysAndValuesDo: 
-			[:i :e | 
-			path := GdiplusGraphicsPath new.
+			[:i :e |
+			path := Path new.
 			path startFigure.
 			x := (i - 1) * 120.
 			path addLineFrom: (x + 20) @ 250 to: (x + 70) @ 250.
@@ -499,13 +496,12 @@ exampleGdipPLineCaps
 		self exampleGdipPLineCaps showExample
 	"
 
-	| bitmap graphics path pen row x y |
-	bitmap := GdiplusBitmap extent: 750 @ 500.
+	| bitmap graphics pen row x y |
+	bitmap := Bitmap extent: 750 @ 500.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new.
-	pen := GdiplusPen red width: 9.
+	pen := Pen red width: 9.
 	self enumsLineCap keysAndValuesDo: 
-			[:i :e | 
+			[:i :e |
 			pen startCap: e value.
 			pen endCap: e value.
 			row := (i - 1) // 4.
@@ -515,10 +511,10 @@ exampleGdipPLineCaps
 				drawLine: (x @ y extent: 100 @ 100) pen: pen;
 				drawLine: ((x + 50) @ y extent: 0 @ 100) pen: pen;
 				drawString: e key at: x @ (row * 160 + 5)].
-	pen := GdiplusPen blue.
+	pen := Pen blue.
 	0 to: 2
 		do: 
-			[:i | 
+			[:i |
 			graphics
 				drawLine: (5 @ (i * 160 + 40) extent: 700 @ 0) pen: pen;
 				drawLine: (5 @ (i * 160 + 140) extent: 700 @ 0) pen: pen].
@@ -530,15 +526,15 @@ examplesWorkspace
 		self examplesWorkspace
 	"
 
-	| bitmap graphics pen matrix width pen2 brush |
+	| bitmap graphics pen matrix brush |
 	#GdiplusPen.
 
 	"#transform:"
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 2.
-	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: GdiplusPen black.
-	matrix := GdiplusMatrix fromArray: #(20 0 0 10 0 0).
+	pen := Pen blue width: 2.
+	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: Pen black.
+	matrix := Matrix fromArray: #(20 0 0 10 0 0).
 	pen transform: matrix.
 	graphics drawRectangle: (210 @ 50 extent: 150 @ 100) pen: pen.
 	pen resetTransform.
@@ -546,18 +542,18 @@ examplesWorkspace
 	bitmap showExample.
 
 	"#scaleTransform:"
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 2.
+	pen := Pen blue width: 2.
 	graphics drawRectangle: (50 @ 50 extent: 150 @ 100) pen: pen.
 	pen scaleTransform: 8 @ 4 order: MatrixOrderPrepend.
 	graphics drawRectangle: (250 @ 50 extent: 150 @ 100) pen: pen.
 	bitmap showExample.
 
 	"#rotateTransform:"
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 5.
+	pen := Pen blue width: 5.
 	pen scaleTransform: 1 @ 4 order: MatrixOrderPrepend.
 	pen rotateTransform: 30 order: MatrixOrderPrepend.
 	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: pen.
@@ -566,9 +562,9 @@ examplesWorkspace
 	bitmap showExample.
 
 	"#dashStyle:"
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	pen := GdiplusPen blue width: 15.
+	pen := Pen blue width: 15.
 	pen dashStyle: DashStyleDash.
 	graphics drawLine: (0 @ 50 corner: 400 @ 150) pen: pen.
 	pen dashStyle: DashStyleDot.
@@ -578,13 +574,13 @@ examplesWorkspace
 	bitmap showExample.
 
 	"#brush:"
-	bitmap := GdiplusBitmap new.
+	bitmap := Bitmap new.
 	graphics := bitmap graphics.
-	brush := GdiplusHatchBrush 
+	brush := HatchBrush 
 				style: HatchStyleVertical
 				forecolor: Color red
 				backcolor: Color blue.
-	pen := GdiplusPen green width: 10.
+	pen := Pen green width: 10.
 	graphics drawLine: (10 @ 10 corner: 200 @ 50) pen: pen.
 	pen brush: brush.
 	graphics drawLine: (10 @ 10 corner: 200 @ 100) pen: pen.
@@ -596,30 +592,30 @@ green
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Pen icon!
+	^Graphics.Pen icon!
 
 new
 	^self black!
 
 red
 	^self color: Color red! !
-!GdiplusPen class categoriesFor: #black!instance creation!public! !
-!GdiplusPen class categoriesFor: #blue!instance creation!public! !
-!GdiplusPen class categoriesFor: #brush:width:!instance creation!public! !
-!GdiplusPen class categoriesFor: #color:!instance creation!public! !
-!GdiplusPen class categoriesFor: #color:width:!instance creation!public! !
-!GdiplusPen class categoriesFor: #exampleGdipPAttributes!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPCompoundArray!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPCustomCaps!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPDashCap!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPDashPattern!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPDrawing!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPFillWithTexture!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPJoiningLines!examples!public!sunit! !
-!GdiplusPen class categoriesFor: #exampleGdipPLineCaps!examples!public!unit tests! !
-!GdiplusPen class categoriesFor: #examplesWorkspace!examples!private! !
-!GdiplusPen class categoriesFor: #green!instance creation!public! !
-!GdiplusPen class categoriesFor: #icon!constants!development!public! !
-!GdiplusPen class categoriesFor: #new!instance creation!public! !
-!GdiplusPen class categoriesFor: #red!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #black!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #blue!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #brush:width:!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #color:!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #color:width:!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPAttributes!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPCompoundArray!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPCustomCaps!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDashCap!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDashPattern!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDrawing!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPFillWithTexture!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPJoiningLines!examples!public!sunit! !
+!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPLineCaps!examples!public!unit tests! !
+!Graphics.Gdiplus.Pen class categoriesFor: #examplesWorkspace!examples!private! !
+!Graphics.Gdiplus.Pen class categoriesFor: #green!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesFor: #red!instance creation!public! !
 

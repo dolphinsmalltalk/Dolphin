@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
+Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.ImageFromBytesInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageFromBytesInitializer guid: (GUID fromString: '{351525b1-07b3-43c9-b7d0-bc92d49db495}')!
-GdiplusImageFromBytesInitializer comment: ''!
-!GdiplusImageFromBytesInitializer categoriesForClass!Unclassified! !
-!GdiplusImageFromBytesInitializer methodsFor!
+Graphics.Gdiplus.ImageFromBytesInitializer guid: (Core.GUID fromString: '{351525b1-07b3-43c9-b7d0-bc92d49db495}')!
+Graphics.Gdiplus.ImageFromBytesInitializer comment: ''!
+!Graphics.Gdiplus.ImageFromBytesInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.ImageFromBytesInitializer methodsFor!
 
 createHandle
 	"Private -  Bitmap::Bitmap(
@@ -22,7 +22,7 @@ createHandle
 	    }"
 
 	| gpHandle status stm |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	stm := self iStream.
 	status := self library gdipLoadImageFromStream: stm image: gpHandle.
 	stm free.
@@ -31,6 +31,6 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Image'! !
-!GdiplusImageFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.ImageFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #METAHEADER
+External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_mtHeaderSize' -> 16r2.
@@ -14,8 +14,8 @@ ExternalStructure subclass: #METAHEADER
 		'_OffsetOf_mtType' -> 16r0.
 		'_OffsetOf_mtVersion' -> 16r4
 	}!
-METAHEADER guid: (GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
-METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.METAHEADER guid: (Core.GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
+Graphics.Gdiplus.METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -34,8 +34,8 @@ struct tagMETAHEADER {
 	unsigned short mtNoParameters;
 } METAHEADER;
 '!
-!METAHEADER categoriesForClass!Unclassified! !
-!METAHEADER methodsFor!
+!Graphics.Gdiplus.METAHEADER categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.METAHEADER methodsFor!
 
 mtHeaderSize
 	"Answer the <Integer> value of the receiver's 'mtHeaderSize' field."
@@ -106,22 +106,22 @@ mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
-!METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtMaxRecord:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoObjects!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoObjects:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoParameters!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoParameters:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtSize!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtSize:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtType!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtType:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtVersion!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtVersion:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtMaxRecord:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtNoObjects!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtNoObjects:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtNoParameters!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtNoParameters:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtSize!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtSize:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtType!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtType:!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtVersion!**compiled accessors**!public! !
+!Graphics.Gdiplus.METAHEADER categoriesFor: #mtVersion:!**compiled accessors**!public! !
 
-!METAHEADER class methodsFor!
+!Graphics.Gdiplus.METAHEADER class methodsFor!
 
 defineFields
 	"Define the fields of the METAHEADER structure.
@@ -140,17 +140,31 @@ defineFields
 "
 
 	self
-		defineField: #mtType type: WORDField new offset: 0;
-		defineField: #mtHeaderSize type: WORDField new offset: 2;
-		defineField: #mtVersion type: WORDField new offset: 4;
-		defineField: #mtSize type: DWORDField new offset: 8;
-		defineField: #mtNoObjects type: WORDField new offset: 12;
-		defineField: #mtMaxRecord type: DWORDField new offset: 16;
-		defineField: #mtNoParameters type: WORDField new offset: 20.
+		defineField: #mtType
+			type: WORDField new
+			offset: 0;
+		defineField: #mtHeaderSize
+			type: WORDField new
+			offset: 2;
+		defineField: #mtVersion
+			type: WORDField new
+			offset: 4;
+		defineField: #mtSize
+			type: DWORDField new
+			offset: 8;
+		defineField: #mtNoObjects
+			type: WORDField new
+			offset: 12;
+		defineField: #mtMaxRecord
+			type: DWORDField new
+			offset: 16;
+		defineField: #mtNoParameters
+			type: WORDField new
+			offset: 20.
 	self byteSize: 24!
 
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
-!METAHEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.METAHEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapInitializer'
 	instanceVariableNames: 'bitmap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromBitmapInitializer guid: (GUID fromString: '{72187357-d718-4876-aaea-2cfefd2c5fd7}')!
-GdiplusBitmapFromBitmapInitializer comment: ''!
-!GdiplusBitmapFromBitmapInitializer categoriesForClass!Unclassified! !
-!GdiplusBitmapFromBitmapInitializer methodsFor!
+Graphics.Gdiplus.BitmapFromGdiBitmapInitializer guid: (Core.GUID fromString: '{72187357-d718-4876-aaea-2cfefd2c5fd7}')!
+Graphics.Gdiplus.BitmapFromGdiBitmapInitializer comment: ''!
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer methodsFor!
 
 bitmap: aBitmap
 	bitmap := aBitmap!
@@ -25,7 +25,7 @@ createHandle
 	    lastResult = DllExports::GdipCreateBitmapFromHBITMAP(hbm, hpal, &bitmap);"
 
 	| gpHandle status hPalette |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	hPalette := bitmap createPalette.
 
 	"MSDN: Do not pass to the GDI+ Bitmap constructor a GDI bitmap or a GDI palette
@@ -42,11 +42,11 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #bitmap:!initializing!private! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesFor: #bitmap:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
-!GdiplusBitmapFromBitmapInitializer class methodsFor!
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class methodsFor!
 
 bitmap: aBitmap
 	"Creates a Bitmap object based on a handle to a Windows Microsoft® Windows® 
@@ -55,5 +55,5 @@ bitmap: aBitmap
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"
 
 	^self new bitmap: aBitmap! !
-!GdiplusBitmapFromBitmapInitializer class categoriesFor: #bitmap:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class categoriesFor: #bitmap:!instance creation!public! !
 

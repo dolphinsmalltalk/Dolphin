@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpBitmapData
+External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Height' -> 16r4.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #GpBitmapData
 		'_OffsetOf_Stride' -> 16r8.
 		'_OffsetOf_Width' -> 16r0
 	}!
-GpBitmapData guid: (GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
-GpBitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpBitmapData guid: (Core.GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
+Graphics.Gdiplus.GpBitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -32,8 +32,8 @@ struct tagGpBitmapData {
 	unsigned int Reserved;
 } GpBitmapData;
 '!
-!GpBitmapData categoriesForClass!Unclassified! !
-!GpBitmapData methodsFor!
+!Graphics.Gdiplus.GpBitmapData categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpBitmapData methodsFor!
 
 Height
 	"Answer the <Integer> value of the receiver's 'Height' field."
@@ -84,18 +84,18 @@ Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
-!GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #PixelFormat:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Scan0!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Scan0:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Stride!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Stride:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Width!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Width:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #PixelFormat:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Scan0!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Scan0:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Stride!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Stride:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Width!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesFor: #Width:!**compiled accessors**!public! !
 
-!GpBitmapData class methodsFor!
+!Graphics.Gdiplus.GpBitmapData class methodsFor!
 
 defineFields
 	"Define the fields of the GpBitmapData structure.
@@ -113,16 +113,28 @@ defineFields
 "
 
 	self
-		defineField: #Width type: DWORDField new offset: 0;
-		defineField: #Height type: DWORDField new offset: 4;
-		defineField: #Stride type: SDWORDField new offset: 8;
-		defineField: #PixelFormat type: SDWORDField new offset: 12;
-		defineField: #Scan0 type: LPVOIDField new offset: 16;
-		defineField: #Reserved type: DWORDField filler offset: 20.
+		defineField: #Width
+			type: DWORDField new
+			offset: 0;
+		defineField: #Height
+			type: DWORDField new
+			offset: 4;
+		defineField: #Stride
+			type: SDWORDField new
+			offset: 8;
+		defineField: #PixelFormat
+			type: SDWORDField new
+			offset: 12;
+		defineField: #Scan0
+			type: LPVOIDField new
+			offset: 16;
+		defineField: #Reserved
+			type: DWORDField filler
+			offset: 20.
 	self byteSize: 24!
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
-!GpBitmapData class categoriesFor: #defineFields!public!template definition! !
-!GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpBitmapData class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

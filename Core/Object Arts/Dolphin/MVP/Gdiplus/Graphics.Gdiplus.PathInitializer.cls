@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathInitializer'
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsPathInitializer guid: (GUID fromString: '{1a1a5ea1-6151-11d7-b609-00e0987e8081}')!
-GdiplusGraphicsPathInitializer comment: ''!
-!GdiplusGraphicsPathInitializer categoriesForClass!Unclassified! !
-!GdiplusGraphicsPathInitializer methodsFor!
+Graphics.Gdiplus.PathInitializer guid: (Core.GUID fromString: '{1a1a5ea1-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathInitializer comment: ''!
+!Graphics.Gdiplus.PathInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PathInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreatePath: fillMode path: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -26,14 +26,14 @@ gdiplusConstructorErrorDescription
 
 isPersistent
 	^false! !
-!GdiplusGraphicsPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsPathInitializer categoriesFor: #fillMode:!initializing!private! !
-!GdiplusGraphicsPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsPathInitializer categoriesFor: #isPersistent!public!testing! !
+!Graphics.Gdiplus.PathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PathInitializer categoriesFor: #fillMode:!initializing!private! !
+!Graphics.Gdiplus.PathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.PathInitializer categoriesFor: #isPersistent!public!testing! !
 
-!GdiplusGraphicsPathInitializer class methodsFor!
+!Graphics.Gdiplus.PathInitializer class methodsFor!
 
 fillMode: aNumber
 	^self new fillMode: aNumber! !
-!GdiplusGraphicsPathInitializer class categoriesFor: #fillMode:!instance creation!public! !
+!Graphics.Gdiplus.PathInitializer class categoriesFor: #fillMode:!instance creation!public! !
 

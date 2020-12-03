@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GDI+ Binding
 Copyright (c) Dan Antion, Object Arts Ltd, Louis Sumberg, Chris Uppal, and Steve Waring, 2003-2004.
@@ -126,108 +126,110 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{ENHMETAHEADER3}
-	#{GdiplusAdjustableArrowCap}
-	#{GdiplusAdjustableArrowCapInitializer}
-	#{GdiplusBase}
-	#{GdiplusBitmap}
-	#{GdiplusBitmapFromBitmapInitializer}
-	#{GdiplusBitmapFromBlankInitializer}
-	#{GdiplusBitmapFromBytesInitializer}
-	#{GdiplusBitmapFromFileInitializer}
-	#{GdiplusBitmapFromIconInitializer}
-	#{GdiplusBitmapFromIStreamInitializer}
-	#{GdiplusBrush}
-	#{GdiplusCachedBitmap}
-	#{GdiplusCachedBitmapInitializer}
-	#{GdiplusConstants}
-	#{GdiplusCustomLineCap}
-	#{GdiplusCustomLineCapInitializer}
-	#{GdiplusDoubleBufferedView}
-	#{GdiplusError}
-	#{GdiplusFont}
-	#{GdiplusFontCollection}
-	#{GdiplusFontFamily}
-	#{GdiplusFontFamilyFromNameInitializer}
-	#{GdiplusFontFamilyGenericSansSerifInitializer}
-	#{GdiplusFontFamilyGenericSerifInitializer}
-	#{GdiplusFontFamilyInitializer}
-	#{GdiplusFontFromFontFamilyInitializer}
-	#{GdiplusFromBytesInitializer}
-	#{GdiplusFromFileInitializer}
-	#{GdiplusGraphics}
-	#{GdiplusGraphicsFromHDCInitializer}
-	#{GdiplusGraphicsFromImageInitializer}
-	#{GdiplusGraphicsPath}
-	#{GdiplusGraphicsPathFromPointsInitializer}
-	#{GdiplusGraphicsPathInitializer}
-	#{GdiplusGUIDs}
-	#{GdiplusHatchBrush}
-	#{GdiplusHatchBrushInitializer}
-	#{GdiplusImage}
-	#{GdiplusImageAttributes}
-	#{GdiplusImageAttributesInitializer}
-	#{GdiplusImageFromBytesInitializer}
-	#{GdiplusImageFromFileInitializer}
-	#{GdiplusImageFromIStreamInitializer}
-	#{GdiplusInitializer}
-	#{GdiplusInstalledFontCollection}
-	#{GdiplusInstalledFontCollectionInitializer}
-	#{GdiplusLibrary}
-	#{GdiplusLinearGradientBrush}
-	#{GdiplusLinearGradientBrushFromPointsInitializer}
-	#{GdiplusLinearGradientBrushFromRectInitializer}
-	#{GdiplusLinearGradientBrushInitializer}
-	#{GdiplusMatrix}
-	#{GdiplusMatrixInitializer}
-	#{GdiplusPathGradientBrush}
-	#{GdiplusPathGradientFromPathInitializer}
-	#{GdiplusPathGradientFromPointsInitializer}
-	#{GdiplusPen}
-	#{GdiplusPenFromBrushInitializer}
-	#{GdiplusPenFromColorInitializer}
-	#{GdiplusPenInitializer}
-	#{GdiplusPrivateFontCollection}
-	#{GdiplusPrivateFontCollectionInitializer}
-	#{GdiplusRegion}
-	#{GdiplusRegionFromPathInitializer}
-	#{GdiplusRegionFromRectangleInitializer}
-	#{GdiplusRegionInitializer}
-	#{GdiplusSolidBrush}
-	#{GdiplusSolidBrushFromColorInitializer}
-	#{GdiplusStartupInput}
-	#{GdiplusStartupOutput}
-	#{GdiplusStringFormat}
-	#{GdiplusStringFormatFromFlagsInitializer}
-	#{GdiplusStringFormatGenericDefaultInitializer}
-	#{GdiplusStringFormatGenericTypographicInitializer}
-	#{GdiplusStringFormatInitializer}
-	#{GdiplusTextureBrush}
-	#{GdiplusTextureBrushInitializer}
-	#{GpBitmapData}
-	#{GpCharacterRange}
-	#{GpColorMap}
-	#{GpColorMatrix}
-	#{GpColorPalette}
-	#{GpEncoderParameter}
-	#{GpEncoderParameters}
-	#{GpImageCodecInfo}
-	#{GpMetafileHeader}
-	#{GpPathData}
-	#{GpPropertyItem}
-	#{GpWmfPlaceableFileHeader}
-	#{GpWMFRect16}
-	#{METAHEADER}
-	#{RECTF}
+	#{Graphics.Gdiplus}
+	#{Graphics.Gdiplus.AdjustableArrowCap}
+	#{Graphics.Gdiplus.AdjustableArrowCapInitializer}
+	#{Graphics.Gdiplus.Bitmap}
+	#{Graphics.Gdiplus.BitmapFromBlankInitializer}
+	#{Graphics.Gdiplus.BitmapFromBytesInitializer}
+	#{Graphics.Gdiplus.BitmapFromFileInitializer}
+	#{Graphics.Gdiplus.BitmapFromGdiBitmapInitializer}
+	#{Graphics.Gdiplus.BitmapFromIconInitializer}
+	#{Graphics.Gdiplus.BitmapFromIStreamInitializer}
+	#{Graphics.Gdiplus.Brush}
+	#{Graphics.Gdiplus.CachedBitmap}
+	#{Graphics.Gdiplus.CachedBitmapInitializer}
+	#{Graphics.Gdiplus.CustomLineCap}
+	#{Graphics.Gdiplus.CustomLineCapInitializer}
+	#{Graphics.Gdiplus.DoubleBufferedView}
+	#{Graphics.Gdiplus.ENHMETAHEADER3}
+	#{Graphics.Gdiplus.Font}
+	#{Graphics.Gdiplus.FontCollection}
+	#{Graphics.Gdiplus.FontFamily}
+	#{Graphics.Gdiplus.FontFamilyFromNameInitializer}
+	#{Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer}
+	#{Graphics.Gdiplus.FontFamilyGenericSerifInitializer}
+	#{Graphics.Gdiplus.FontFamilyInitializer}
+	#{Graphics.Gdiplus.FontFromFontFamilyInitializer}
+	#{Graphics.Gdiplus.FromBytesInitializer}
+	#{Graphics.Gdiplus.FromFileInitializer}
+	#{Graphics.Gdiplus.GdiplusBase}
+	#{Graphics.Gdiplus.GdiplusConstants}
+	#{Graphics.Gdiplus.GdiplusError}
+	#{Graphics.Gdiplus.GdiplusGraphics}
+	#{Graphics.Gdiplus.GdiplusGUIDs}
+	#{Graphics.Gdiplus.GdiplusLibrary}
+	#{Graphics.Gdiplus.GdiplusStartupInput}
+	#{Graphics.Gdiplus.GdiplusStartupOutput}
+	#{Graphics.Gdiplus.GpBitmapData}
+	#{Graphics.Gdiplus.GpCharacterRange}
+	#{Graphics.Gdiplus.GpColorMap}
+	#{Graphics.Gdiplus.GpColorMatrix}
+	#{Graphics.Gdiplus.GpColorPalette}
+	#{Graphics.Gdiplus.GpEncoderParameter}
+	#{Graphics.Gdiplus.GpEncoderParameters}
+	#{Graphics.Gdiplus.GpImageCodecInfo}
+	#{Graphics.Gdiplus.GpMetafileHeader}
+	#{Graphics.Gdiplus.GpPathData}
+	#{Graphics.Gdiplus.GpPropertyItem}
+	#{Graphics.Gdiplus.GpWmfPlaceableFileHeader}
+	#{Graphics.Gdiplus.GpWMFRect16}
+	#{Graphics.Gdiplus.GraphicsFromHDCInitializer}
+	#{Graphics.Gdiplus.GraphicsFromImageInitializer}
+	#{Graphics.Gdiplus.HatchBrush}
+	#{Graphics.Gdiplus.HatchBrushInitializer}
+	#{Graphics.Gdiplus.Image}
+	#{Graphics.Gdiplus.ImageAttributes}
+	#{Graphics.Gdiplus.ImageAttributesInitializer}
+	#{Graphics.Gdiplus.ImageFromBytesInitializer}
+	#{Graphics.Gdiplus.ImageFromFileInitializer}
+	#{Graphics.Gdiplus.ImageFromIStreamInitializer}
+	#{Graphics.Gdiplus.Initializer}
+	#{Graphics.Gdiplus.InstalledFontCollection}
+	#{Graphics.Gdiplus.InstalledFontCollectionInitializer}
+	#{Graphics.Gdiplus.LinearGradientBrush}
+	#{Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer}
+	#{Graphics.Gdiplus.LinearGradientBrushFromRectInitializer}
+	#{Graphics.Gdiplus.LinearGradientBrushInitializer}
+	#{Graphics.Gdiplus.Matrix}
+	#{Graphics.Gdiplus.MatrixInitializer}
+	#{Graphics.Gdiplus.METAHEADER}
+	#{Graphics.Gdiplus.Path}
+	#{Graphics.Gdiplus.PathFromPointsInitializer}
+	#{Graphics.Gdiplus.PathGradientBrush}
+	#{Graphics.Gdiplus.PathGradientFromPathInitializer}
+	#{Graphics.Gdiplus.PathGradientFromPointsInitializer}
+	#{Graphics.Gdiplus.PathInitializer}
+	#{Graphics.Gdiplus.Pen}
+	#{Graphics.Gdiplus.PenFromBrushInitializer}
+	#{Graphics.Gdiplus.PenFromColorInitializer}
+	#{Graphics.Gdiplus.PenInitializer}
+	#{Graphics.Gdiplus.POINTF}
+	#{Graphics.Gdiplus.PrivateFontCollection}
+	#{Graphics.Gdiplus.PrivateFontCollectionInitializer}
+	#{Graphics.Gdiplus.RECTF}
+	#{Graphics.Gdiplus.Region}
+	#{Graphics.Gdiplus.RegionFromPathInitializer}
+	#{Graphics.Gdiplus.RegionFromRectangleInitializer}
+	#{Graphics.Gdiplus.RegionInitializer}
+	#{Graphics.Gdiplus.SolidBrush}
+	#{Graphics.Gdiplus.SolidBrushFromColorInitializer}
+	#{Graphics.Gdiplus.StringFormat}
+	#{Graphics.Gdiplus.StringFormatFromFlagsInitializer}
+	#{Graphics.Gdiplus.StringFormatGenericDefaultInitializer}
+	#{Graphics.Gdiplus.StringFormatGenericTypographicInitializer}
+	#{Graphics.Gdiplus.StringFormatInitializer}
+	#{Graphics.Gdiplus.TextureBrush}
+	#{Graphics.Gdiplus.TextureBrushInitializer}
 ).
 
 package setMethodNames: #(
-	#(#{Bitmap} #asColorKeyedBitmap)
-	#(#{Bitmap} #asColorKeyedBitmap:)
-	#(#{Point} #scaledOver:)
-	#(#{Point} #scaledTo:)
-	#(#{Rectangle} #asGdiplusRectangle)
-	#(#{View} #createThumbnailExtent:mask:)
+	#(#{Graphics.Bitmap} #asColorKeyedBitmap)
+	#(#{Graphics.Bitmap} #asColorKeyedBitmap:)
+	#(#{Graphics.Point} #scaledOver:)
+	#(#{Graphics.Point} #scaledTo:)
+	#(#{Graphics.Rectangle} #asGdiplusRectangle)
+	#(#{UI.View} #createThumbnailExtent:mask:)
 ).
 
 package setPrerequisites: #(
@@ -246,7 +248,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #GdiplusConstants
+Graphics subclass: #'Graphics.Gdiplus'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1115,7 +1123,7 @@ SharedPool subclass: #GdiplusConstants
 		'WrapModeTileFlipY' -> 16r2.
 		'WrongState' -> 16r8
 	}!
-SharedPool subclass: #GdiplusGUIDs
+Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusGUIDs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1135,13 +1143,13 @@ SharedPool subclass: #GdiplusGUIDs
 		'FrameDimensionResolution' -> (GUID fromString: '{84236f7b-3bd3-428f-8dab-4ea1439ca315}').
 		'FrameDimensionTime' -> (GUID fromString: '{6aedbd6d-3fb5-418a-83a6-7f45229dc872}')
 	}!
-Object subclass: #GdiplusInitializer
+Core.Object subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: 'library'
 	classVariableNames: ''
-	imports: #(#{GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error subclass: #GdiplusError
+Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
 	instanceVariableNames: 'win32Error'
 	classVariableNames: ''
 	imports: #()
@@ -1149,13 +1157,427 @@ Error subclass: #GdiplusError
 	classConstants: {
 		'ErrorDescriptions' -> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
 	}!
-ExternalLibrary subclass: #GdiplusLibrary
-	instanceVariableNames: 'token'
+Graphics.GraphicsTool subclass: #'Graphics.Gdiplus.GdiplusBase'
+	instanceVariableNames: 'initializer'
 	classVariableNames: ''
-	imports: #(#{GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs} #{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #ENHMETAHEADER3
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Brush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.CachedBitmap'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.CustomLineCap'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Font'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.FontCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.FontFamily'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.GdiplusGraphics'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Image'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.ImageAttributes'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Matrix'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Path'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Pen'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Region'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.StringFormat'
+	instanceVariableNames: ''
+	classVariableNames: 'GenericDefault GenericTypographic'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.HatchBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.LinearGradientBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.PathGradientBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.SolidBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.TextureBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.CustomLineCap subclass: #'Graphics.Gdiplus.AdjustableArrowCap'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.InstalledFontCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.PrivateFontCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Image subclass: #'Graphics.Gdiplus.Bitmap'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.AdjustableArrowCapInitializer'
+	instanceVariableNames: 'height width isFilled'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromBlankInitializer'
+	instanceVariableNames: 'width height format'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromGdiBitmapInitializer'
+	instanceVariableNames: 'bitmap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromIconInitializer'
+	instanceVariableNames: 'icon'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromIStreamInitializer'
+	instanceVariableNames: 'iStream'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.CachedBitmapInitializer'
+	instanceVariableNames: 'bitmap graphics'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.CustomLineCapInitializer'
+	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FontFamilyInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'GenericSansSerif GenericSerif'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FontFromFontFamilyInitializer'
+	instanceVariableNames: 'fontFamily emSize style unit'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FromBytesInitializer'
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FromFileInitializer'
+	instanceVariableNames: 'filename fileLocator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromHDCInitializer'
+	instanceVariableNames: 'canvas'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.GraphicsFromImageInitializer'
+	instanceVariableNames: 'image'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.HatchBrushInitializer'
+	instanceVariableNames: 'style forecolor backcolor'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.ImageAttributesInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.ImageFromIStreamInitializer'
+	instanceVariableNames: 'iStream'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.InstalledFontCollectionInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.LinearGradientBrushInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.MatrixInitializer'
+	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathFromPointsInitializer'
+	instanceVariableNames: 'pathPoints pathTypes fillMode'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPathInitializer'
+	instanceVariableNames: 'path'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPointsInitializer'
+	instanceVariableNames: 'pathPoints wrapMode'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathInitializer'
+	instanceVariableNames: 'fillMode'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PenInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PrivateFontCollectionInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromPathInitializer'
+	instanceVariableNames: 'path'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionFromRectangleInitializer'
+	instanceVariableNames: 'rectangle'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.RegionInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.SolidBrushFromColorInitializer'
+	instanceVariableNames: 'color'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.StringFormatInitializer'
+	instanceVariableNames: 'formatFlags language'
+	classVariableNames: 'GenericDefault GenericTypographic'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.TextureBrushInitializer'
+	instanceVariableNames: 'image wrapMode rectangle'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyFromNameInitializer'
+	instanceVariableNames: 'name fontCollection'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FontFamilyInitializer subclass: #'Graphics.Gdiplus.FontFamilyGenericSerifInitializer'
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.BitmapFromBytesInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FromBytesInitializer subclass: #'Graphics.Gdiplus.ImageFromBytesInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FromFileInitializer subclass: #'Graphics.Gdiplus.BitmapFromFileInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.FromFileInitializer subclass: #'Graphics.Gdiplus.ImageFromFileInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.LinearGradientBrushInitializer subclass: #'Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer'
+	instanceVariableNames: 'point1 point2 color1 color2'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.LinearGradientBrushInitializer subclass: #'Graphics.Gdiplus.LinearGradientBrushFromRectInitializer'
+	instanceVariableNames: 'rect color1 color2 mode'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.PenInitializer subclass: #'Graphics.Gdiplus.PenFromBrushInitializer'
+	instanceVariableNames: 'brush width'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.PenInitializer subclass: #'Graphics.Gdiplus.PenFromColorInitializer'
+	instanceVariableNames: 'color width'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatFromFlagsInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericDefaultInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericTypographicInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Library subclass: #'Graphics.Gdiplus.GdiplusLibrary'
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1177,7 +1599,7 @@ ExternalStructure subclass: #ENHMETAHEADER3
 		'_OffsetOf_szlDevice' -> 16r48.
 		'_OffsetOf_szlMillimeters' -> 16r50
 	}!
-ExternalStructure subclass: #GdiplusStartupInput
+External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1188,7 +1610,7 @@ ExternalStructure subclass: #GdiplusStartupInput
 		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
 		'_OffsetOf_SuppressExternalCodecs' -> 16rC
 	}!
-ExternalStructure subclass: #GdiplusStartupOutput
+External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1197,7 +1619,7 @@ ExternalStructure subclass: #GdiplusStartupOutput
 		'_OffsetOf_NotificationHook' -> 16r0.
 		'_OffsetOf_NotificationUnhook' -> 16r4
 	}!
-ExternalStructure subclass: #GpBitmapData
+External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1210,7 +1632,7 @@ ExternalStructure subclass: #GpBitmapData
 		'_OffsetOf_Stride' -> 16r8.
 		'_OffsetOf_Width' -> 16r0
 	}!
-ExternalStructure subclass: #GpCharacterRange
+External.Structure subclass: #'Graphics.Gdiplus.GpCharacterRange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1219,7 +1641,7 @@ ExternalStructure subclass: #GpCharacterRange
 		'_OffsetOf_First' -> 16r0.
 		'_OffsetOf_length' -> 16r4
 	}!
-ExternalStructure subclass: #GpColorMap
+External.Structure subclass: #'Graphics.Gdiplus.GpColorMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1228,7 +1650,7 @@ ExternalStructure subclass: #GpColorMap
 		'_OffsetOf_newColor' -> 16r4.
 		'_OffsetOf_oldColor' -> 16r0
 	}!
-ExternalStructure subclass: #GpColorMatrix
+External.Structure subclass: #'Graphics.Gdiplus.GpColorMatrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1236,7 +1658,7 @@ ExternalStructure subclass: #GpColorMatrix
 	classConstants: {
 		'_OffsetOf_m' -> 16r0
 	}!
-ExternalStructure subclass: #GpColorPalette
+External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1246,7 +1668,7 @@ ExternalStructure subclass: #GpColorPalette
 		'_OffsetOf_Entries' -> 16r8.
 		'_OffsetOf_Flags' -> 16r0
 	}!
-ExternalStructure subclass: #GpEncoderParameter
+External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1257,7 +1679,7 @@ ExternalStructure subclass: #GpEncoderParameter
 		'_OffsetOf_Type' -> 16r14.
 		'_OffsetOf_Value' -> 16r18
 	}!
-ExternalStructure subclass: #GpEncoderParameters
+External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1266,7 +1688,7 @@ ExternalStructure subclass: #GpEncoderParameters
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Parameter' -> 16r4
 	}!
-ExternalStructure subclass: #GpImageCodecInfo
+External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1286,7 +1708,7 @@ ExternalStructure subclass: #GpImageCodecInfo
 		'_OffsetOf_SigSize' -> 16r40.
 		'_OffsetOf_Version' -> 16r38
 	}!
-ExternalStructure subclass: #GpMetafileHeader
+External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1308,7 +1730,7 @@ ExternalStructure subclass: #GpMetafileHeader
 		'_OffsetOf_x' -> 16r18.
 		'_OffsetOf_y' -> 16r1C
 	}!
-ExternalStructure subclass: #GpPathData
+External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1318,7 +1740,7 @@ ExternalStructure subclass: #GpPathData
 		'_OffsetOf_Points' -> 16r4.
 		'_OffsetOf_Types' -> 16r8
 	}!
-ExternalStructure subclass: #GpPropertyItem
+External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1329,7 +1751,7 @@ ExternalStructure subclass: #GpPropertyItem
 		'_OffsetOf_Type' -> 16r8.
 		'_OffsetOf_Value' -> 16rC
 	}!
-ExternalStructure subclass: #GpWmfPlaceableFileHeader
+External.Structure subclass: #'Graphics.Gdiplus.GpWmfPlaceableFileHeader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1342,7 +1764,7 @@ ExternalStructure subclass: #GpWmfPlaceableFileHeader
 		'_OffsetOf_Key' -> 16r0.
 		'_OffsetOf_Reserved' -> 16r10
 	}!
-ExternalStructure subclass: #GpWMFRect16
+External.Structure subclass: #'Graphics.Gdiplus.GpWMFRect16'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1353,7 +1775,7 @@ ExternalStructure subclass: #GpWMFRect16
 		'_OffsetOf_right' -> 16r4.
 		'_OffsetOf_top' -> 16r2
 	}!
-ExternalStructure subclass: #METAHEADER
+External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1367,7 +1789,16 @@ ExternalStructure subclass: #METAHEADER
 		'_OffsetOf_mtType' -> 16r0.
 		'_OffsetOf_mtVersion' -> 16r4
 	}!
-ExternalRectangle subclass: #RECTF
+External.POINT subclass: #'Graphics.Gdiplus.POINTF'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
+External.RECT subclass: #'Graphics.Gdiplus.RECTF'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1378,421 +1809,7 @@ ExternalRectangle subclass: #RECTF
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
-	instanceVariableNames: 'height width isFilled'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
-	instanceVariableNames: 'bitmap'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
-	instanceVariableNames: 'width height format'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
-	instanceVariableNames: 'icon'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
-	instanceVariableNames: 'iStream'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
-	instanceVariableNames: 'bitmap graphics'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
-	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'GenericSansSerif GenericSerif'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
-	instanceVariableNames: 'fontFamily emSize style unit'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusFromBytesInitializer
-	instanceVariableNames: 'bytes'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusFromFileInitializer
-	instanceVariableNames: 'filename fileLocator'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
-	instanceVariableNames: 'canvas'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
-	instanceVariableNames: 'image'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
-	instanceVariableNames: 'pathPoints pathTypes fillMode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
-	instanceVariableNames: 'fillMode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
-	instanceVariableNames: 'style forecolor backcolor'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
-	instanceVariableNames: 'iStream'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusMatrixInitializer
-	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
-	instanceVariableNames: 'path'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
-	instanceVariableNames: 'pathPoints wrapMode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusPenInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusPrivateFontCollectionInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
-	instanceVariableNames: 'path'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
-	instanceVariableNames: 'rectangle'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusRegionInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
-	instanceVariableNames: 'color'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusStringFormatInitializer
-	instanceVariableNames: 'formatFlags language'
-	classVariableNames: 'GenericDefault GenericTypographic'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
-	instanceVariableNames: 'image wrapMode rectangle'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
-	instanceVariableNames: 'name fontCollection'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSansSerifInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
-	instanceVariableNames: ''
-	classVariableNames: 'Default'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
-	instanceVariableNames: 'point1 point2 color1 color2'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
-	instanceVariableNames: 'rect color1 color2 mode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
-	instanceVariableNames: 'brush width'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
-	instanceVariableNames: 'color width'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #GdiplusBase
-	instanceVariableNames: 'initializer'
-	classVariableNames: ''
-	imports: #(#{GdiplusConstants} #{GdiplusGUIDs})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusCachedBitmap
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusCustomLineCap
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusFont
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusFontCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusFontFamily
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusGraphics
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusGraphicsPath
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusImage
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusImageAttributes
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusMatrix
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusPen
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusRegion
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBase subclass: #GdiplusStringFormat
-	instanceVariableNames: ''
-	classVariableNames: 'GenericDefault GenericTypographic'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBrush subclass: #GdiplusHatchBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBrush subclass: #GdiplusLinearGradientBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBrush subclass: #GdiplusPathGradientBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBrush subclass: #GdiplusSolidBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{GdiplusConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusBrush subclass: #GdiplusTextureBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFontCollection subclass: #GdiplusInstalledFontCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusFontCollection subclass: #GdiplusPrivateFontCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GdiplusImage subclass: #GdiplusBitmap
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-View subclass: #GdiplusDoubleBufferedView
+UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	imports: #()
@@ -1801,7 +1818,7 @@ View subclass: #GdiplusDoubleBufferedView
 
 "Loose Methods"!
 
-!Bitmap methodsFor!
+!Graphics.Bitmap methodsFor!
 
 asColorKeyedBitmap
 	^self asColorKeyedBitmap: (self canvas pixelAt: 0 @ 0).
@@ -1809,14 +1826,14 @@ asColorKeyedBitmap
 
 asColorKeyedBitmap: aKeyColor
 	| image imageAttributes bitmap keyedBitmap ext |
-	image := GdiplusBitmap fromBitmap: self.
-	imageAttributes := GdiplusImageAttributes new.
+	image := Gdiplus.Bitmap fromBitmap: self.
+	imageAttributes := Gdiplus.ImageAttributes new.
 	imageAttributes
-		colorKeys: GdiplusConstants.ColorAdjustTypeBitmap
+		colorKeys: Gdiplus.GdiplusConstants.ColorAdjustTypeBitmap
 		colorLow: aKeyColor
 		colorHigh: aKeyColor.
 	ext := self extent.
-	bitmap := GdiplusBitmap extent: ext.
+	bitmap := Gdiplus.Bitmap extent: ext.
 	bitmap graphics
 		drawImage: image
 		at: Point.Zero
@@ -1832,10 +1849,10 @@ asColorKeyedBitmap: aKeyColor
 	bitmap free.
 	keyedBitmap freeDC.
 	^keyedBitmap! !
-!Bitmap categoriesFor: #asColorKeyedBitmap!public! !
-!Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
+!Graphics.Bitmap categoriesFor: #asColorKeyedBitmap!public! !
+!Graphics.Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
 
-!Point methodsFor!
+!Graphics.Point methodsFor!
 
 scaledOver: aPoint 
 	"Answer a copy of the receiver scaled over aPoint.  One of the answered 
@@ -1856,24 +1873,24 @@ scaledTo: aPoint
 	scale := aPoint x / self x.
 	scale * self y > aPoint y ifTrue: [scale := aPoint y / self y].
 	^scale * self! !
-!Point categoriesFor: #scaledOver:!public! !
-!Point categoriesFor: #scaledTo:!operations!public! !
+!Graphics.Point categoriesFor: #scaledOver:!public! !
+!Graphics.Point categoriesFor: #scaledTo:!operations!public! !
 
-!Rectangle methodsFor!
+!Graphics.Rectangle methodsFor!
 
 asGdiplusRectangle
 	"In Gdiplus the rectangle coordinates include the lower right border"
 
 	^self position extent: self extent - 1 asPoint! !
-!Rectangle categoriesFor: #asGdiplusRectangle!converting!public! !
+!Graphics.Rectangle categoriesFor: #asGdiplusRectangle!converting!public! !
 
-!View methodsFor!
+!UI.View methodsFor!
 
-createThumbnailExtent: extent mask: aColor 
+createThumbnailExtent: extent mask: aColor
 	| image crop rect scale thumbnail canvas r scaledExtent |
-	image := GdiplusBitmap fromView: self.
+	image := Gdiplus.Bitmap fromView: self.
 	rect := Rectangle extent: self extent.
-	crop := GdiplusBitmap extent: rect extent.
+	crop := Gdiplus.Bitmap extent: rect extent.
 	crop graphics
 		clear: aColor;
 		drawImage: image
@@ -1881,7 +1898,7 @@ createThumbnailExtent: extent mask: aColor
 			extent: rect extent
 			from: rect topLeft
 			extent: rect extent;
-		drawRectangle: (rect translatedBy: 1 @ 1) pen: (GdiplusPen color: Color silver).
+		drawRectangle: (rect translatedBy: 1 @ 1) pen: (Pen color: Color silver).
 	image := crop.
 
 	"Work out scale to use"
@@ -1898,7 +1915,7 @@ createThumbnailExtent: extent mask: aColor
 	image drawOn: canvas at: ((extent - scaledExtent) / 2) rounded.
 	thumbnail freeDC.
 	^thumbnail! !
-!View categoriesFor: #createThumbnailExtent:mask:!private! !
+!UI.View categoriesFor: #createThumbnailExtent:mask:!private! !
 
 "End of package definition"!
 

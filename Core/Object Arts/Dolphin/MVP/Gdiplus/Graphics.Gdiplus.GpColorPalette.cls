@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpColorPalette
+External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Count' -> 16r4.
 		'_OffsetOf_Entries' -> 16r8.
 		'_OffsetOf_Flags' -> 16r0
 	}!
-GpColorPalette guid: (GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
-GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpColorPalette guid: (Core.GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
+Graphics.Gdiplus.GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagGpColorPalette {
 	unsigned long Entries[1];
 } GpColorPalette;
 '!
-!GpColorPalette categoriesForClass!Unclassified! !
-!GpColorPalette methodsFor!
+!Graphics.Gdiplus.GpColorPalette categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpColorPalette methodsFor!
 
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
@@ -70,14 +70,14 @@ Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
-!GpColorPalette categoriesFor: #Count!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Count:!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Entries!accessing!public! !
-!GpColorPalette categoriesFor: #Entries:!accessing!public! !
-!GpColorPalette categoriesFor: #Flags!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Flags:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Count!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Count:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Entries!accessing!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Entries:!accessing!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Flags!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesFor: #Flags:!**compiled accessors**!public! !
 
-!GpColorPalette class methodsFor!
+!Graphics.Gdiplus.GpColorPalette class methodsFor!
 
 defineFields
 	"Define the fields of the GpColorPalette structure.
@@ -105,6 +105,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
-!GpColorPalette class categoriesFor: #defineFields!public!template definition! !
-!GpColorPalette class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpColorPalette class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.GpColorPalette class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

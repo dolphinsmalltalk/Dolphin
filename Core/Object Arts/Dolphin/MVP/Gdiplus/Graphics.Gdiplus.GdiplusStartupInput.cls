@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GdiplusStartupInput
+External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DebugEventCallback' -> 16r4.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #GdiplusStartupInput
 		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
 		'_OffsetOf_SuppressExternalCodecs' -> 16rC
 	}!
-GdiplusStartupInput guid: (GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
-GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GdiplusStartupInput guid: (Core.GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
+Graphics.Gdiplus.GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,16 +28,16 @@ struct tagGdiplusStartupInput {
 	long SuppressExternalCodecs;
 } GdiplusStartupInput;
 '!
-!GdiplusStartupInput categoriesForClass!Unclassified! !
-!GdiplusStartupInput methodsFor!
+!Graphics.Gdiplus.GdiplusStartupInput categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GdiplusStartupInput methodsFor!
 
 GdiplusVersion: anInteger
 	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
-!GdiplusStartupInput categoriesFor: #GdiplusVersion:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GdiplusStartupInput categoriesFor: #GdiplusVersion:!**compiled accessors**!public! !
 
-!GdiplusStartupInput class methodsFor!
+!Graphics.Gdiplus.GdiplusStartupInput class methodsFor!
 
 defineFields
 	"Define the fields of the GdiplusStartupInput structure.
@@ -53,14 +53,22 @@ defineFields
 "
 
 	self
-		defineField: #GdiplusVersion type: DWORDField writeOnly offset: 0;
-		defineField: #DebugEventCallback type: LPVOIDField filler offset: 4;
-		defineField: #SuppressBackgroundThread type: BOOLField filler offset: 8;
-		defineField: #SuppressExternalCodecs type: BOOLField filler offset: 12.
+		defineField: #GdiplusVersion
+			type: DWORDField writeOnly
+			offset: 0;
+		defineField: #DebugEventCallback
+			type: LPVOIDField filler
+			offset: 4;
+		defineField: #SuppressBackgroundThread
+			type: BOOLField filler
+			offset: 8;
+		defineField: #SuppressExternalCodecs
+			type: BOOLField filler
+			offset: 12.
 	self byteSize: 16!
 
 getFieldNames
 	^#(#GdiplusVersion)! !
-!GdiplusStartupInput class categoriesFor: #defineFields!public!template definition! !
-!GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GdiplusStartupInput class categoriesFor: #defineFields!public!template definition! !
+!Graphics.Gdiplus.GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

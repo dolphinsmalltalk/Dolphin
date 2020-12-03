@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
+Graphics.Gdiplus.PenInitializer subclass: #'Graphics.Gdiplus.PenFromColorInitializer'
 	instanceVariableNames: 'color width'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPenFromColorInitializer guid: (GUID fromString: '{2f244647-43b8-40cb-92f6-f06f2b1cfdae}')!
-GdiplusPenFromColorInitializer comment: ''!
-!GdiplusPenFromColorInitializer categoriesForClass!Unclassified! !
-!GdiplusPenFromColorInitializer methodsFor!
+Graphics.Gdiplus.PenFromColorInitializer guid: (Core.GUID fromString: '{2f244647-43b8-40cb-92f6-f06f2b1cfdae}')!
+Graphics.Gdiplus.PenFromColorInitializer comment: ''!
+!Graphics.Gdiplus.PenFromColorInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PenFromColorInitializer methodsFor!
 
 color: anARGB width: aFloat
 	color := anARGB.
@@ -26,7 +26,7 @@ createHandle
                                     width, unit, &nativePen);"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreatePen1: color argbCode
 				width: (width ?? 1.0) asParameter
@@ -34,6 +34,6 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusPenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
-!GdiplusPenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
+!Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

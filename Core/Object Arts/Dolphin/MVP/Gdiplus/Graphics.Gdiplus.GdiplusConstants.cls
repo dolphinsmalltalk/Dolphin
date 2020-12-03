@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #GdiplusConstants
+Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -869,6 +869,7 @@ SharedPool subclass: #GdiplusConstants
 		'WrapModeTileFlipY' -> 16r2.
 		'WrongState' -> 16r8
 	}!
-GdiplusConstants guid: (GUID fromString: '{d4a258d7-f529-41e1-aef0-295a3f4b60b7}')!
-GdiplusConstants comment: ''!
-!GdiplusConstants categoriesForClass!Unclassified! !
+Graphics.Gdiplus.GdiplusConstants guid: (Core.GUID fromString: '{d4a258d7-f529-41e1-aef0-295a3f4b60b7}')!
+Graphics.Gdiplus.GdiplusConstants isNonInstantiable: true!
+Graphics.Gdiplus.GdiplusConstants comment: ''!
+!Graphics.Gdiplus.GdiplusConstants categoriesForClass!Unclassified! !

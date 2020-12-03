@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusImage
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Image'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImage guid: (GUID fromString: '{00b83139-f011-4475-99dd-34afd09c2e06}')!
-GdiplusImage comment: 'GdiplusImage provides methods for loading and saving raster images (bitmaps) and vector images (metafiles).  Various methods are available to manipulate and display an image.  Different file types can be read from and saved to - see #encoderMimeTypes and #decoderMimeTypes.'!
-!GdiplusImage categoriesForClass!Unclassified! !
-!GdiplusImage methodsFor!
+Graphics.Gdiplus.Image guid: (Core.GUID fromString: '{00b83139-f011-4475-99dd-34afd09c2e06}')!
+Graphics.Gdiplus.Image comment: 'GdiplusImage provides methods for loading and saving raster images (bitmaps) and vector images (metafiles).  Various methods are available to manipulate and display an image.  Different file types can be read from and saved to - see #encoderMimeTypes and #decoderMimeTypes.'!
+!Graphics.Gdiplus.Image categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Image methodsFor!
 
 asBitmap
 	"Answer a display-compatible <Bitmap> with the receiver's image."
@@ -29,7 +29,7 @@ asByteArray: mimeString compression: anIntegerOrNil
 	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses dont) ... is that necessary?"
 
 	| pStream bytes |
-	pStream := IStream onHGLOBAL.
+	pStream := Smalltalk.IStream onHGLOBAL.
 	self 
 		saveToIStream: pStream
 		mimeType: mimeString
@@ -44,11 +44,11 @@ basicFree
 
 	GdiplusLibrary default gdipDisposeImage: handle!
 
-basicRotate: aRotateConstant 
+basicRotate: aRotateConstant
 	"Rotate the receiver according to aRotateConstant."
 
 	| status |
-	(status := GdiplusLibrary default gdipImageRotateFlip: self asParameter rfType: aRotateConstant) 
+	(status := GdiplusLibrary default gdipImageRotateFlip: self asParameter rfType: aRotateConstant)
 		= Ok ifFalse: [^GdiplusError signal: 'Error rotating image' with: status]!
 
 bounds
@@ -59,7 +59,7 @@ bounds
 	bounds := self getBounds first.
 	^bounds origin rounded corner: bounds corner rounded!
 
-buildCompressionParameters: anIntegerOrNil 
+buildCompressionParameters: anIntegerOrNil
 	| quality params encoderParameter |
 	params := GpEncoderParameters new.
 	params Count: 1.
@@ -76,8 +76,8 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneImage: self handle cloneImage: gpHandle) = Ok 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipCloneImage: self handle cloneImage: gpHandle) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipCloneImage' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
@@ -99,10 +99,10 @@ copyToClipboard
 
 	self asBitmap copyToClipboard!
 
-drawOn: aCanvas 
+drawOn: aCanvas
 	"Draw the receiver on aCanvas (no stretching)."
 
-	self drawOn: aCanvas at: Point zero!
+	self drawOn: aCanvas at: Point.Zero!
 
 drawOn: aCanvas at: aPoint
 	"Draw the receiver on aCanvas at position aPoint (no stretching)."
@@ -117,7 +117,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	The receiver is stretched to fit the destination rectangle."
 
 	| graphics |
-	(graphics := GdiplusGraphics fromCanvas: aCanvas) 
+	(graphics := GdiplusGraphics fromCanvas: aCanvas)
 		drawImage: self
 		at: dstOrigin
 		extent: dstExtent.
@@ -127,7 +127,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExten
 	"Draw the portion of the receiver specified by srcOrigin and srcExtent to aCanvas at the rectangle 
 	specified by dstOrigin and dstExtent. The receiver is stretched to fit the destination rectangle."
 
-	(GdiplusGraphics fromCanvas: aCanvas) 
+	(GdiplusGraphics fromCanvas: aCanvas)
 		drawImage: self
 		at: dstOrigin
 		extent: dstExtent
@@ -148,29 +148,29 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 		unit: srcUnit
 		attributes: anImageAttributes!
 
-encoderParameterList: aCLSID 
+encoderParameterList: aCLSID
 	"Answer a list of the parameters supported by the image encoder specified by aCLSID."
 
 	| status size buffer |
 	size := self encoderParameterListSize: aCLSID.
 	buffer := GpEncoderParameters new: size.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetEncoderParameterList: self asParameter
 				clsidEncoder: aCLSID
 				size: size
-				buffer: buffer) = Ok 
+				buffer: buffer) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetEncoderParameterList failed' with: status].
 	^buffer!
 
-encoderParameterListSize: aCLSID 
+encoderParameterListSize: aCLSID
 	"Answer the size, in bytes, of the parameter list for the image encoder specified by aCLSID."
 
 	| status size |
 	size := DWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetEncoderParameterListSize: self asParameter
 				clsidEncoder: aCLSID
-				size: size) = Ok 
+				size: size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetEncoderParameterListSize failed' with: status].
 	^size asInteger!
 
@@ -217,15 +217,15 @@ frameCount
 
 	^self frameCount: self frameDimensionsList first!
 
-frameCount: aFrameDimensionGUID 
+frameCount: aFrameDimensionGUID
 	"Answer the number of frames in the specified dimension of the receiver."
 
 	| status count |
 	count := DWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipImageGetFrameCount: self asParameter
 				dimensionID: aFrameDimensionGUID asParameter
-				count: count) = Ok 
+				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipImageGetFrameCount failed' with: status].
 	^count asInteger!
 
@@ -243,7 +243,7 @@ frameDimensionsCount
 
 	| status count |
 	count := DWORD new.
-	(status := GdiplusLibrary default gdipImageGetFrameDimensionsCount: self asParameter count: count) 
+	(status := GdiplusLibrary default gdipImageGetFrameDimensionsCount: self asParameter count: count)
 		= Ok ifFalse: [GdiplusError signal: 'GdipImageGetFrameDimensionsCount failed' with: status].
 	^count asInteger!
 
@@ -252,10 +252,10 @@ frameDimensionsList
 
 	| status guids |
 	guids := StructureArray length: self frameDimensionsCount elementClass: GUID.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipImageGetFrameDimensionsList: self asParameter
 				dimensionIDs: guids
-				count: guids size) = Ok 
+				count: guids size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipImageGetFrameDimensionsList failed' with: status].
 	^guids asArray!
 
@@ -266,9 +266,9 @@ frames
 	images := OrderedCollection new.
 	0 to: self frameCount - 1
 		do: 
-			[:i | 
+			[:i |
 			self selectActiveFrame: i.
-			bitmap := GdiplusBitmap extent: self extent.
+			bitmap := Bitmap extent: self extent.
 			bitmap graphics drawImage: self.
 			images add: bitmap].
 	^images!
@@ -348,19 +348,19 @@ palette
 	| size palette status |
 	size := self paletteSize.
 	palette := GpColorPalette new: size.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetImagePalette: self asParameter
 				palette: palette
-				size: size) = Ok 
+				size: size) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetImagePalette failed' with: status].
 	^palette!
 
-palette: aGpColorPalette 
+palette: aGpColorPalette
 	"Set the receiver's color palette to aGpColorPalette."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetImagePalette: self asParameter
-				palette: aGpColorPalette asParameter) = Ok 
+				palette: aGpColorPalette asParameter) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipSetImagePalette failed' with: status]!
 
 paletteSize
@@ -368,14 +368,14 @@ paletteSize
 
 	| size status |
 	size := DWORD new.
-	(status := GdiplusLibrary default gdipGetImagePaletteSize: self asParameter size: size) = Ok 
+	(status := GdiplusLibrary default gdipGetImagePaletteSize: self asParameter size: size) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetImagePaletteSize failed' with: status].
 	^size asInteger!
 
 pixelFormat
 	| flags status |
 	flags := SDWORD new.
-	(status := GdiplusLibrary default gdipGetImagePixelFormat: self asParameter format: flags) = Ok 
+	(status := GdiplusLibrary default gdipGetImagePixelFormat: self asParameter format: flags) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetImagePixelFormat failed' with: status].
 	^flags asInteger!
 
@@ -390,7 +390,7 @@ propertiesCount
 	| propertyCount status |
 	propertyCount := DWORD new.
 	(status := GdiplusLibrary default gdipGetPropertyCount: self asParameter
-				numOfProperty: propertyCount) = Ok 
+				numOfProperty: propertyCount) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertyCount failed' with: status].
 	^propertyCount asInteger!
 
@@ -413,24 +413,24 @@ propertiesSizeAndCount
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertySize failed' with: status].
 	^{size asInteger. count asInteger}!
 
-property: aGpPropertyItem 
+property: aGpPropertyItem
 	"Set aGpPropertyItem to be one of the receiver's property items."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPropertyItem: self asParameter item: aGpPropertyItem) = Ok 
+	(status := GdiplusLibrary default gdipSetPropertyItem: self asParameter item: aGpPropertyItem) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipSetPropertyItem failed' with: status]!
 
-propertyFromId: aPropertyTagConstant 
+propertyFromId: aPropertyTagConstant
 	"Answer the receiver's <GpPropertyItem> identified by aPropertyTagConstant."
 
 	| propertyItem propSize status |
 	propSize := self propertySize: aPropertyTagConstant.
 	propertyItem := GpPropertyItem new: propSize.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPropertyItem: self asParameter
 				propId: aPropertyTagConstant
 				propSize: propSize
-				buffer: propertyItem) = Ok 
+				buffer: propertyItem) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertyItem failed' with: status].
 	^propertyItem!
 
@@ -441,22 +441,22 @@ propertyIdList
 	count := self propertiesCount.
 	count = 0 ifTrue: [^#()].
 	list := DWORDArray new: count.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPropertyIdList: self asParameter
 				numOfProperty: self propertiesCount
-				list: list) = Ok 
+				list: list) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertyIdList failed' with: status].
 	^list asArray!
 
-propertySize: aPropertyTagConstant 
+propertySize: aPropertyTagConstant
 	"Private - Answer the integer size of the receiver's property identified by aPropertyTagConstant."
 
 	| size status |
 	size := DWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPropertyItemSize: self asParameter
 				propId: aPropertyTagConstant
-				size: size) = Ok 
+				size: size) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertyItemSize failed' with: status].
 	^size asInteger!
 
@@ -503,21 +503,21 @@ rotateRight
 
 	self basicRotate: Rotate90FlipNone!
 
-saveAdd: aGpEncoderParameters 
+saveAdd: aGpEncoderParameters
 	"Close the receiver's disk file.  Used with multi-frame images."
 
 	| status |
-	(status := GdiplusLibrary default gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters) 
+	(status := GdiplusLibrary default gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters)
 		= Ok ifFalse: [^GdiplusError signal: 'GdipSaveAdd failed' with: status]!
 
-saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters 
+saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters
 	"Add aGdiplusImage to the receiver and save it as a frame in the receiver's disk file."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSaveAddImage: self asParameter
 				newImage: aGdiplusImage asParameter
-				encoderParams: aGpEncoderParameters) = Ok 
+				encoderParams: aGpEncoderParameters) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipSaveAddImage failed' with: status]!
 
 saveFramesToFiles
@@ -583,7 +583,7 @@ saveToFile: pathString encoderParams: aGpEncoderParameters
 	| mimeType encoder |
 	mimeType := self class encoderMimeTypeForExtension: (File splitExtensionFrom: pathString).
 	encoder := self class encoderClsid: mimeType.
-	self 
+	self
 		saveToFile: pathString
 		clsidEncoder: encoder
 		encoderParams: aGpEncoderParameters!
@@ -599,7 +599,7 @@ saveToIStream: pStream mimeType: mimeString
 		mimeType: mimeString
 		encoderParams: nil!
 
-saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters 
+saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
 	"Save the receiver to the specified IStream using  the image encoder associated with mimeString
 	and parameters specified by aGpEncoderParameters."
 
@@ -608,7 +608,7 @@ saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
 
 	| encoder status |
 	encoder := self class encoderClsid: mimeString.
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipSaveImageToStream: self asParameter
 				stream: pStream
 				clsidEncoder: encoder
@@ -621,16 +621,16 @@ selectActiveFrame: anInteger
 
 	self selectActiveFrame: anInteger dimensionID: self frameDimensionsList first asParameter!
 
-selectActiveFrame: anInteger dimensionID: aFrameDimensionGUID 
+selectActiveFrame: anInteger dimensionID: aFrameDimensionGUID
 	"Switch to the frame in the receiver specified by zero-indexed anInteger, in the frame 
 	dimension specified by aFrameDimensionGUID.  All changes made to the previously 
 	active frame are discarded unless saved before switching."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipImageSelectActiveFrame: self asParameter
 				dimensionID: aFrameDimensionGUID asParameter
-				frameIndex: anInteger) = Ok 
+				frameIndex: anInteger) = Ok
 		ifFalse: [GdiplusError signal: 'GdipImageSelectActiveFrame failed' with: status]!
 
 showExample
@@ -662,7 +662,7 @@ thumbnailWidth
 		ifTrue: [(self propertyFromId: PropertyTagThumbnailWidth) valueArray first]
 		ifFalse: [0]!
 
-thumbnailWithExtent: aPoint 
+thumbnailWithExtent: aPoint
 	"Answer a copy of the receiver sized to aPoint.  If the receiver has embedded thumbnail data,
 	that data will be used, else it will generate the thumbnail.  NB:  If the receiver has an embedded
 	thumbnail and it is smaller than aPoint, the thumbnail will be resized to aPoint, in which case
@@ -670,20 +670,20 @@ thumbnailWithExtent: aPoint
 	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
 
 	| gpImage status |
-	gpImage := ExternalHandle new.
-	(status := GdiplusLibrary default 
+	gpImage := Handle new.
+	(status := GdiplusLibrary default
 				gdipGetImageThumbnail: self asParameter
 				thumbWidth: aPoint x
 				thumbHeight: aPoint y
 				thumbImage: gpImage
 				pfnCallback: nil
-				callbackData: nil) = Ok 
+				callbackData: nil) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipGetImageThumbnail' with: status].
 	^(self class fromOwnedHandle: gpImage)
 		initializer: (self class fromFile: self filename) initializer;
 		yourself!
 
-thumbnailWithExtent2: aPoint 
+thumbnailWithExtent2: aPoint
 	"Answer a copy of the receiver sized to aPoint.  If the receiver has embedded thumbnail data,
 	that data will be used, else it will generate the thumbnail.  NB:  If the receiver has an embedded
 	thumbnail and it is smaller than aPoint, the thumbnail will be resized to aPoint, in which case
@@ -691,14 +691,14 @@ thumbnailWithExtent2: aPoint
 	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
 
 	| gpImage status |
-	gpImage := ExternalHandle new.
-	(status := GdiplusLibrary default 
+	gpImage := Handle new.
+	(status := GdiplusLibrary default
 				gdipGetImageThumbnail: self asParameter
 				thumbWidth: aPoint x
 				thumbHeight: aPoint y
 				thumbImage: gpImage
 				pfnCallback: nil
-				callbackData: nil) = Ok 
+				callbackData: nil) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipGetImageThumbnail' with: status].
 	^(self class fromOwnedHandle: gpImage)
 		initializer: self initializer;
@@ -719,86 +719,86 @@ width
 	(status := GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
 	^buf asInteger! !
-!GdiplusImage categoriesFor: #asBitmap!public! !
-!GdiplusImage categoriesFor: #asByteArray:!converting!public! !
-!GdiplusImage categoriesFor: #asByteArray:compression:!converting!public! !
-!GdiplusImage categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusImage categoriesFor: #basicRotate:!operations!public! !
-!GdiplusImage categoriesFor: #bounds!accessing!public! !
-!GdiplusImage categoriesFor: #buildCompressionParameters:!converting!helpers!private! !
-!GdiplusImage categoriesFor: #clone!copying!public! !
-!GdiplusImage categoriesFor: #copy!copying!public! !
-!GdiplusImage categoriesFor: #copyPropertiesFrom:!accessing-properties!public! !
-!GdiplusImage categoriesFor: #copyToClipboard!copying!public! !
-!GdiplusImage categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!GdiplusImage categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!GdiplusImage categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!GdiplusImage categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!GdiplusImage categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!GdiplusImage categoriesFor: #encoderParameterList:!accessing-encoders!private! !
-!GdiplusImage categoriesFor: #encoderParameterListSize:!accessing-encoders!private! !
-!GdiplusImage categoriesFor: #extent!accessing!public! !
-!GdiplusImage categoriesFor: #filename!accessing!public! !
-!GdiplusImage categoriesFor: #flags!accessing!public! !
-!GdiplusImage categoriesFor: #flipX!operations!public! !
-!GdiplusImage categoriesFor: #flipY!operations!public! !
-!GdiplusImage categoriesFor: #frameCount!accessing-frames!public! !
-!GdiplusImage categoriesFor: #frameCount:!accessing-frames!public! !
-!GdiplusImage categoriesFor: #frameDimension!accessing-frames!private! !
-!GdiplusImage categoriesFor: #frameDimensionsCount!accessing-frames!public! !
-!GdiplusImage categoriesFor: #frameDimensionsList!accessing-frames!public! !
-!GdiplusImage categoriesFor: #frames!accessing-frames!public! !
-!GdiplusImage categoriesFor: #freeDC!public! !
-!GdiplusImage categoriesFor: #getBounds!accessing!private! !
-!GdiplusImage categoriesFor: #graphics!accessing!public! !
-!GdiplusImage categoriesFor: #hasPropertyId:!accessing-properties!public!testing! !
-!GdiplusImage categoriesFor: #hasThumbnail!private!testing!thumbnails! !
-!GdiplusImage categoriesFor: #hasThumbnailData!public!testing!thumbnails! !
-!GdiplusImage categoriesFor: #height!accessing!public! !
-!GdiplusImage categoriesFor: #isLandscape!public!testing! !
-!GdiplusImage categoriesFor: #isPortrait!public!testing! !
-!GdiplusImage categoriesFor: #isValid!public!testing! !
-!GdiplusImage categoriesFor: #mimeType!accessing!public! !
-!GdiplusImage categoriesFor: #palette!accessing!public! !
-!GdiplusImage categoriesFor: #palette:!accessing!public! !
-!GdiplusImage categoriesFor: #paletteSize!accessing!private! !
-!GdiplusImage categoriesFor: #pixelFormat!accessing!public! !
-!GdiplusImage categoriesFor: #properties!accessing-properties!public! !
-!GdiplusImage categoriesFor: #propertiesCount!accessing-properties!private! !
-!GdiplusImage categoriesFor: #propertiesSize!accessing-properties!private! !
-!GdiplusImage categoriesFor: #propertiesSizeAndCount!accessing-properties!private! !
-!GdiplusImage categoriesFor: #property:!accessing-properties!public! !
-!GdiplusImage categoriesFor: #propertyFromId:!accessing-properties!public! !
-!GdiplusImage categoriesFor: #propertyIdList!accessing-properties!public! !
-!GdiplusImage categoriesFor: #propertySize:!accessing-properties!private! !
-!GdiplusImage categoriesFor: #propertyTagDateTime!accessing-properties!public! !
-!GdiplusImage categoriesFor: #rectScaledToFit:!helpers!public! !
-!GdiplusImage categoriesFor: #rectScaledToFit:centered:!helpers!public! !
-!GdiplusImage categoriesFor: #rotateLeft!operations!public! !
-!GdiplusImage categoriesFor: #rotateRight!operations!public! !
-!GdiplusImage categoriesFor: #saveAdd:!file operations!public! !
-!GdiplusImage categoriesFor: #saveAddImage:encoderParams:!file operations!public! !
-!GdiplusImage categoriesFor: #saveFramesToFiles!file operations!public! !
-!GdiplusImage categoriesFor: #saveFramesToFiles:!file operations!public! !
-!GdiplusImage categoriesFor: #saveToFile:!file operations!public! !
-!GdiplusImage categoriesFor: #saveToFile:clsidEncoder:encoderParams:!file operations!private! !
-!GdiplusImage categoriesFor: #saveToFile:compression:!file operations!public! !
-!GdiplusImage categoriesFor: #saveToFile:encoderParams:!file operations!public! !
-!GdiplusImage categoriesFor: #saveToIStream:mimeType:!file operations!public! !
-!GdiplusImage categoriesFor: #saveToIStream:mimeType:encoderParams:!file operations!public! !
-!GdiplusImage categoriesFor: #selectActiveFrame:!accessing-frames!public! !
-!GdiplusImage categoriesFor: #selectActiveFrame:dimensionID:!accessing-frames!public! !
-!GdiplusImage categoriesFor: #showExample!development!private! !
-!GdiplusImage categoriesFor: #thumbnailExtent!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailHeight!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailScaledBy:!operations!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailWidth!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailWithExtent:!operations!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailWithExtent2:!operations!public!thumbnails! !
-!GdiplusImage categoriesFor: #thumbnailWithHeight:!operations!public!thumbnails! !
-!GdiplusImage categoriesFor: #width!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #asBitmap!public! !
+!Graphics.Gdiplus.Image categoriesFor: #asByteArray:!converting!public! !
+!Graphics.Gdiplus.Image categoriesFor: #asByteArray:compression:!converting!public! !
+!Graphics.Gdiplus.Image categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Image categoriesFor: #basicRotate:!operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #bounds!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #buildCompressionParameters:!converting!helpers!private! !
+!Graphics.Gdiplus.Image categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.Image categoriesFor: #copy!copying!public! !
+!Graphics.Gdiplus.Image categoriesFor: #copyPropertiesFrom:!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #copyToClipboard!copying!public! !
+!Graphics.Gdiplus.Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
+!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
+!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
+!Graphics.Gdiplus.Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!Graphics.Gdiplus.Image categoriesFor: #encoderParameterList:!accessing-encoders!private! !
+!Graphics.Gdiplus.Image categoriesFor: #encoderParameterListSize:!accessing-encoders!private! !
+!Graphics.Gdiplus.Image categoriesFor: #extent!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #filename!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #flags!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #flipX!operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #flipY!operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #frameCount!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #frameCount:!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #frameDimension!accessing-frames!private! !
+!Graphics.Gdiplus.Image categoriesFor: #frameDimensionsCount!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #frameDimensionsList!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #frames!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #freeDC!public! !
+!Graphics.Gdiplus.Image categoriesFor: #getBounds!accessing!private! !
+!Graphics.Gdiplus.Image categoriesFor: #graphics!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #hasPropertyId:!accessing-properties!public!testing! !
+!Graphics.Gdiplus.Image categoriesFor: #hasThumbnail!private!testing!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #hasThumbnailData!public!testing!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #height!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #isLandscape!public!testing! !
+!Graphics.Gdiplus.Image categoriesFor: #isPortrait!public!testing! !
+!Graphics.Gdiplus.Image categoriesFor: #isValid!public!testing! !
+!Graphics.Gdiplus.Image categoriesFor: #mimeType!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #palette!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #palette:!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #paletteSize!accessing!private! !
+!Graphics.Gdiplus.Image categoriesFor: #pixelFormat!accessing!public! !
+!Graphics.Gdiplus.Image categoriesFor: #properties!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #propertiesCount!accessing-properties!private! !
+!Graphics.Gdiplus.Image categoriesFor: #propertiesSize!accessing-properties!private! !
+!Graphics.Gdiplus.Image categoriesFor: #propertiesSizeAndCount!accessing-properties!private! !
+!Graphics.Gdiplus.Image categoriesFor: #property:!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #propertyFromId:!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #propertyIdList!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #propertySize:!accessing-properties!private! !
+!Graphics.Gdiplus.Image categoriesFor: #propertyTagDateTime!accessing-properties!public! !
+!Graphics.Gdiplus.Image categoriesFor: #rectScaledToFit:!helpers!public! !
+!Graphics.Gdiplus.Image categoriesFor: #rectScaledToFit:centered:!helpers!public! !
+!Graphics.Gdiplus.Image categoriesFor: #rotateLeft!operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #rotateRight!operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveAdd:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveAddImage:encoderParams:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveFramesToFiles!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveFramesToFiles:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToFile:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToFile:clsidEncoder:encoderParams:!file operations!private! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToFile:compression:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToFile:encoderParams:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToIStream:mimeType:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #saveToIStream:mimeType:encoderParams:!file operations!public! !
+!Graphics.Gdiplus.Image categoriesFor: #selectActiveFrame:!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #selectActiveFrame:dimensionID:!accessing-frames!public! !
+!Graphics.Gdiplus.Image categoriesFor: #showExample!development!private! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailExtent!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailHeight!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailScaledBy:!operations!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailWidth!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithExtent:!operations!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithExtent2:!operations!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithHeight:!operations!public!thumbnails! !
+!Graphics.Gdiplus.Image categoriesFor: #width!accessing!public! !
 
-!GdiplusImage class methodsFor!
+!Graphics.Gdiplus.Image class methodsFor!
 
 decoderFileExtensions
 	"Answer a list of strings that represent the supported decoder file extensions."
@@ -888,7 +888,7 @@ exampleGdipIDecoderFileExtensions
 		display: 'Decoder file extensions: ';
 		cr.
 	self decoderFileExtensions do: 
-			[:e | 
+			[:e |
 			strm
 				tab;
 				display: e;
@@ -908,7 +908,7 @@ exampleGdipIDecoders
 		display: 'Decoder mime types: ';
 		cr.
 	self decoderMimeTypes do: 
-			[:e | 
+			[:e |
 			strm
 				tab;
 				display: e;
@@ -925,8 +925,8 @@ exampleGdipIEncoderClsid
 	| strm |
 	strm := String new writeStream.
 	self encoders keysAndValuesDo: 
-			[:i :e | 
-			e MimeType asString = 'image/png' 
+			[:i :e |
+			e MimeType asString = 'image/png'
 				ifTrue: 
 					[strm
 						display: 'An ImageCodecInfo object representing the PNG encoder';
@@ -951,7 +951,7 @@ exampleGdipIEncoderFileExtensions
 		display: 'Encoder file extensions: ';
 		cr.
 	self encoderFileExtensions do: 
-			[:e | 
+			[:e |
 			strm
 				tab;
 				display: e;
@@ -967,15 +967,14 @@ exampleGdipIEncoderParameters
 	"
 
 	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType strm |
-	image := GdiplusBitmap new.
+	image := Bitmap new.
 	mimeType := 'image/jpeg'.
-	encoderClsid := GdiplusImage encoderClsid: mimeType.
+	encoderClsid := Image encoderClsid: mimeType.
 	listSize := image encoderParameterListSize: encoderClsid.
 	encoderParameters := image encoderParameterList: encoderClsid.
 	strm := String new writeStream.
 	encoder := encoderParameters Parameter at: 2.
-	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) 
-				key.
+	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
 	valueType := ULARGE_INTEGER atAddress: encoder Value.
 	strm
 		display: 'Parameters supported by mime type ' , mimeType;
@@ -983,7 +982,7 @@ exampleGdipIEncoderParameters
 		cr;
 		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
 		cr;
-		display: ('There are %i GpEncoderParameter objects in the array.' 
+		display: ('There are %i GpEncoderParameter objects in the array.'
 					sprintfWith: encoderParameters Count);
 		cr;
 		cr;
@@ -1014,7 +1013,7 @@ exampleGdipIEncoders
 		display: 'Encoder mime types: ';
 		cr.
 	self encoderMimeTypes do: 
-			[:e | 
+			[:e |
 			strm
 				tab;
 				display: e;
@@ -1031,44 +1030,40 @@ exampleGdipIEncoderValues
 	"
 
 	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType valueTypeName strm |
-	image := GdiplusBitmap new.
+	image := Bitmap new.
 	mimeType := 'image/jpeg'.
-	encoderClsid := GdiplusImage encoderClsid: mimeType.
+	encoderClsid := Image encoderClsid: mimeType.
 	listSize := image encoderParameterListSize: encoderClsid.
 	encoderParameters := image encoderParameterList: encoderClsid.
 	strm := String new writeStream.
 	encoder := encoderParameters Parameter at: 1.
-	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) 
+	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
+	valueType := DWORDArray fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
+	valueTypeName := (image class enumsEncoderParameterValueType detect: [:e | e value = encoder Type])
 				key.
-	valueType := DWORDArray fromAddress: encoder Value yourAddress
-				length: encoder NumberOfValues.
-	valueTypeName := (image class enumsEncoderParameterValueType 
-				detect: [:e | e value = encoder Type]) key.
 	strm
 		display: 'Parameters supported by mime type ' , mimeType;
 		cr;
 		cr;
 		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
 		cr;
-		display: ('There are %i EncoderParameter objects in the array.' 
-					sprintfWith: encoderParameters Count);
+		display: ('There are %i EncoderParameter objects in the array.' sprintfWith: encoderParameters Count);
 		cr;
 		cr;
 		display: 'Parameter 1: ' , encoderParameterName;
 		cr;
 		display: 'The GUID is ' , encoder Guid displayString;
 		cr;
-		display: 'The value type is ' , encoder Type displayString , ', which is type ' 
-					, valueTypeName;
+		display: 'The value type is ' , encoder Type displayString , ', which is type ' , valueTypeName;
 		cr;
 		display: 'The number of values is ' , encoder NumberOfValues displayString;
 		cr;
 		display: 'The allowable values are :';
 		cr.
 	valueType do: 
-			[:e | 
+			[:e |
 			strm
-				display: '	' , e asInteger displayString , ': ' 
+				display: '	' , e asInteger displayString , ': '
 							, (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
 				cr].
 	^strm contents!
@@ -1079,19 +1074,18 @@ exampleGdipIFlags
 		RichTextPresenter showOn: self exampleGdipIFlags
 	"
 
-	| image col strm |
+	| image strm |
 	image := self fromFile: self fileResource pafEyeJpg.
-	col := Dictionary new.
 	strm := String new writeStream.
 	strm
 		display: 'Image flags for file ' , image filename , ': ';
 		cr.
 	GdiplusBase enumsImageFlags do: 
-			[:e | 
+			[:e |
 			strm
 				tab;
 				display: (e key midString: e key size - 10 from: 11);
-				nextPut: $ ;
+				nextPut: $\x20;
 				display: (73750 bitAnd: e value) = e value;
 				cr].
 	^strm contents!
@@ -1105,8 +1099,8 @@ exampleGdipIInterpMode
 	"
 
 	| bitmap image |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	bitmap := GdiplusBitmap extent: 600 @ 420.
+	image := Image fromFile: self fileResource pafEyeJpg.
+	bitmap := Bitmap extent: 600 @ 420.
 	(bitmap graphics)
 		interpolationMode: InterpolationModeLowQuality;
 		drawImage: image
@@ -1139,7 +1133,7 @@ exampleGdipIJPEGCompression
 	"
 
 	| image encoderParameters encoderParameter quality images bitmap toFile points |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image := Image fromFile: self fileResource pafEyeJpg.
 	encoderParameters := GpEncoderParameters new.
 	encoderParameters Count: 1.
 	(encoderParameter := encoderParameters Parameter first)
@@ -1154,8 +1148,8 @@ exampleGdipIJPEGCompression
 			quality value: num.
 			toFile := self fileResource fileLocator localFileSpecFor: 'test' , num displayString , '.jpg'.
 			image saveToFile: toFile encoderParams: encoderParameters.
-			images add: (GdiplusImage fromFile: toFile)].
-	bitmap := GdiplusBitmap extent: 810 @ 610.
+			images add: (Image fromFile: toFile)].
+	bitmap := Bitmap extent: 810 @ 610.
 	points := {0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310}.
 	images keysAndValuesDo: 
 			[:i :e |
@@ -1176,7 +1170,7 @@ exampleGdipILoadImage
 		self exampleGdipILoadImage showExample
 	"
 
-	^GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp!
+	^Image fromFile: self fileResource pafRgb0000FF_100x100bmp!
 
 exampleGdipILoadImages
 	"From MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Loading and Displaying Bitmaps
@@ -1186,11 +1180,10 @@ exampleGdipILoadImages
 	"
 
 	| bitmap image |
-	bitmap := GdiplusBitmap extent: 620 @ 200.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
-				usingLocator: FileLocator installRelative.
+	bitmap := Bitmap extent: 620 @ 200.
+	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
 	bitmap graphics drawImage: image at: 60 @ 10.
-	image := GdiplusBitmap fromIcon: Icon warning.
+	image := Bitmap fromIcon: Icon warning.
 	bitmap graphics drawImage: image at: 10 @ 60.
 	^bitmap!
 
@@ -1204,18 +1197,18 @@ exampleGdipILosslessRotation
 	"
 
 	| image encoderParameters toFilename encValue |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image := Image fromFile: self fileResource pafEyeJpg.
 	"self assert: [image extent / 16 truncated * 16 = image extent]."
 	encoderParameters := GpEncoderParameters new Count: 1.
 	encValue := DWORD fromInteger: EncoderValueTransformRotate90.
-	(encoderParameters Parameter first)
+	encoderParameters Parameter first
 		Guid: EncoderTransformation;
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1;
 		Value: encValue yourAddress.
 	toFilename := self fileResource fileLocator localFileSpecFor: 'testLosslessRotation.jpg'.
 	image saveToFile: toFilename encoderParams: encoderParameters.
-	^GdiplusImage fromFile: toFilename!
+	^Image fromFile: toFilename!
 
 exampleGdipIMetadata
 	"MSDN:  GDI+ >  Using GDI+ >  Using Images, Bitmaps, and Metafiles > Reading and Writing Metadata
@@ -1225,18 +1218,17 @@ exampleGdipIMetadata
 	"
 
 	| image strm |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image := Image fromFile: self fileResource pafEyeJpg.
 	strm := String writeStream.
 	strm
 		display: 'File: ' , image filename;
 		cr;
 		display: ('There are %i property items in the file.' sprintfWith: image propertiesCount);
 		cr;
-		display: ('The total size of all property items is %i bytes.' 
-					sprintfWith: image propertiesSize);
+		display: ('The total size of all property items is %i bytes.' sprintfWith: image propertiesSize);
 		cr.
 	image properties keysAndValuesDo: 
-			[:i :e | 
+			[:i :e |
 			strm
 				display: 'Property item ' , i displayString;
 				cr;
@@ -1255,13 +1247,13 @@ exampleGdipIMetadata2
 	"
 
 	| image strm |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image := Image fromFile: self fileResource pafEyeJpg.
 	(strm := String writeStream)
 		nextPutAll: image filename;
 		cr;
 		cr.
 	image properties do: 
-			[:e | 
+			[:e |
 			strm
 				nextPutAll: e id hex , ': ';
 				nextPutAll: e name , ' = ';
@@ -1277,7 +1269,7 @@ exampleGdipIMultiFrame
 		RichTextPresenter showOn: self exampleGdipIMultiFrame
 	"
 
-	| encoderParameters parameter value encoderClsid image1 image2 image3 toFile strm guids |
+	| encoderParameters parameter value image1 image2 image3 toFile strm guids |
 	encoderParameters := GpEncoderParameters new Count: 1.
 	parameter := encoderParameters Parameter first.
 	value := DWORD new.
@@ -1286,10 +1278,9 @@ exampleGdipIMultiFrame
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1;
 		Value: value yourAddress.
-	encoderClsid := GdiplusImage encoderClsid: 'image/tiff'.
-	image1 := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	image2 := GdiplusImage fromFile: self fileResource pafFish32x32png.
-	image3 := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	image1 := Image fromFile: self fileResource pafEyeJpg.
+	image2 := Image fromFile: self fileResource pafFish32x32png.
+	image3 := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	toFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
 	value value: EncoderValueMultiFrame.
 	image1 saveToFile: toFile encoderParams: encoderParameters.
@@ -1298,7 +1289,7 @@ exampleGdipIMultiFrame
 	image1 saveAddImage: image3 encoderParams: encoderParameters.
 	value value: EncoderValueFlush.
 	image1 saveAdd: encoderParameters.
-	image1 := GdiplusImage fromFile: toFile.
+	image1 := Image fromFile: toFile.
 	guids := image1 frameDimensionsList.
 	(strm := String new writeStream)
 		display: 'Frame information for file: ' , image1 filename;
@@ -1307,7 +1298,7 @@ exampleGdipIMultiFrame
 		cr;
 		display: ('The first dimension ID is %s.' sprintfWith: guids first displayString);
 		cr;
-		display: ('The number of frames in that dimension is %i.' 
+		display: ('The number of frames in that dimension is %i.'
 					sprintfWith: (image1 frameCount: guids first));
 		cr.
 	^strm contents!
@@ -1326,23 +1317,23 @@ exampleGdipIMultiFrame2
 	dstFile0 := self fileResource fileLocator localFileSpecFor: 'testMultiframe0.png'.
 	dstFile1 := self fileResource fileLocator localFileSpecFor: 'testMultiframe1.png'.
 	dstFile2 := self fileResource fileLocator localFileSpecFor: 'testMultiframe2.png'.
-	image := GdiplusImage fromFile: srcFile.
+	image := Image fromFile: srcFile.
 	image selectActiveFrame: 0.
 	image saveToFile: dstFile0.
 	image selectActiveFrame: 1.
 	image saveToFile: dstFile1.
 	image selectActiveFrame: 2.
 	image saveToFile: dstFile2.
-	bitmap := GdiplusBitmap extent: 260 @ 350.
+	bitmap := Bitmap extent: 260 @ 350.
 	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: dstFile0.
-	graphics 
+	image := Image fromFile: dstFile0.
+	graphics
 		drawImage: image
 		at: 10 @ 10
 		extent: 240 @ 180.
-	image := GdiplusImage fromFile: dstFile1.
+	image := Image fromFile: dstFile1.
 	graphics drawImage: image at: 10 @ 200.
-	image := GdiplusImage fromFile: dstFile2.
+	image := Image fromFile: dstFile2.
 	graphics drawImage: image at: 10 @ 240.
 	^bitmap!
 
@@ -1354,10 +1345,10 @@ exampleGdipIMultiFrame3
 	"
 
 	| frames |
-	frames := GdiplusImage prompt frames.
+	frames := Image prompt frames.
 	1 to: frames size
 		by: 6
-		do: [:i | ImagePresenter show: 'Basic image' on: (frames at: i)]!
+		do: [:i | UI.ImagePresenter show: 'Basic image' on: (frames at: i)]!
 
 exampleGdipIPrinting1
 	"This example prints an image, plain and simple.  No units conversion or scaling is done.
@@ -1371,7 +1362,7 @@ exampleGdipIPrinting1
 	| printer graphics image |
 	printer := PrinterCanvas choose.
 	graphics := GdiplusGraphics fromCanvas: printer.
-	image := GdiplusImage fromFile: self fileResource pafSeattleNightJpg.
+	image := Image fromFile: self fileResource pafSeattleNightJpg.
 	printer startDoc.
 	graphics drawImage: image.
 	printer endDoc!
@@ -1386,19 +1377,19 @@ exampleGdipIPrinting2
 	| printer graphics image pageExtent layoutRect bitmap graphicsB |
 	printer := PrinterCanvas choose.
 	graphics := GdiplusGraphics fromCanvas: printer.
-	image := GdiplusImage fromFile: self fileResource pafSeattleNightJpg.
+	image := Image fromFile: self fileResource pafSeattleNightJpg.
 	"Convert pixels to hundredths of inches."
 	pageExtent := (printer extent * 100 / graphics resolution) truncated.
 	pageExtent x < pageExtent y ifTrue: [image rotateLeft].
 	layoutRect := Point zero extent: (image extent scaledTo: pageExtent) truncated.
 	"Preview image"
-	bitmap := GdiplusBitmap extent: (pageExtent / 2) rounded.
+	bitmap := Bitmap extent: (pageExtent / 2) rounded.
 	graphicsB := bitmap graphics.
 	graphicsB scaleTransform: 0.5 @ 0.5 order: nil.
 	graphicsB drawImage: image rectangle: layoutRect.
 	bitmap showExample.
 	"Print image"
-	(MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
+	(UI.MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
 	printer startDoc.
 	graphics drawImage: image rectangle: layoutRect.
 	printer endDoc!
@@ -1412,7 +1403,7 @@ exampleGdipIPrinting3
 	| printer graphics image1 image2 image3 res margin pageSize layoutSize boundingRect layoutRect |
 	image1 := self exampleGdipIMultiFrame2.
 	image2 := GdiplusGraphics exampleGdipGDrawingShapes rotateLeft.
-	image3 := GdiplusHatchBrush exampleGdipHBStyles.
+	image3 := HatchBrush exampleGdipHBStyles.
 	printer := PrinterCanvas choose.
 	printer ifNil: [^self].
 	graphics := GdiplusGraphics fromCanvas: printer.
@@ -1458,7 +1449,7 @@ exampleGdipIPrinting4LabeledToAPage
 	margin := 25.	"1/4 inch"
 	"Calculate 1/4 of page in hundredths of inches."
 	quarterExtent := ((printer extent / res * 100 - margin) / 2) truncated.
-	font := GdiplusFont name: 'Arial' pointSize: 6.
+	font := Font name: 'Arial' pointSize: 6.
 
 	"Load images, rotate as needed, calculate extents, assign labels."
 	images := Array new: 4.
@@ -1468,7 +1459,7 @@ exampleGdipIPrinting4LabeledToAPage
 	1 to: 4
 		do: 
 			[:i |
-			image := GdiplusImage prompt.
+			image := Image prompt.
 			images at: i put: image.
 			labels at: i put: (File splitStemFrom: image filename).
 			image isLandscape = isPrinterPortrait
@@ -1508,16 +1499,16 @@ exampleGdipIPrinting4LabeledToAPage
 							font: font
 							at: extent - measure
 							format: nil
-							brush: GdiplusSolidBrush red]].
+							brush: SolidBrush red]].
 
 	"Preview images.  Draw them on a bitmap that's scaled to half the printer page."
-	bitmap := GdiplusBitmap extent: (pagesize / 2) rounded.
+	bitmap := Bitmap extent: (pagesize / 2) rounded.
 	graphicsB := bitmap graphics.
 	drawBlock value: graphicsB value: 0.5 @ 0.5.
 	bitmap showExample.
 
 	"Print images"
-	(MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
+	(UI.MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
 	printer startDoc.
 	drawBlock value: graphicsPrn value: 1 @ 1.
 	printer endDoc!
@@ -1532,7 +1523,7 @@ exampleGdipIPropertiesCopy
 
 	| image resizedImage toFile |
 	image := self fromFile: self fileResource pafEyeJpg.
-	resizedImage := GdiplusBitmap fromImage: image scaledBy: 1 / 4.
+	resizedImage := Bitmap fromImage: image scaledBy: 1 / 4.
 	resizedImage copyPropertiesFrom: image.
 	toFile := self fileResource fileLocator localFileSpecFor: 'testPropertiesCopy.jpg'.
 	resizedImage saveToFile: toFile.
@@ -1548,8 +1539,7 @@ exampleGdipIPropertyItem
 	"
 
 	| image title propItem |
-	image := GdiplusImage fromFile: 'Resources/LagoonSideBar.jpg'
-				usingLocator: FileLocator installRelative.
+	image := Image fromFile: 'Resources/LagoonSideBar.jpg' usingLocator: FileLocator installRelative.
 	title := 'Lagoon Sidebar'.
 	(propItem := GpPropertyItem new)
 		id: PropertyTagImageTitle;
@@ -1573,16 +1563,15 @@ exampleGdipIPropertyItems
 	(directory := #{BrowseFolderDialog} value new
 				value: 'c:\my documents';
 				showModal) ifNil: [^nil].
-	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') 
-				collect: [:e | e path].
+	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') collect: [:e | e path].
 	strm := String writeStream.
 	filenames do: 
-			[:filename | 
-			image := GdiplusImage fromFile: filename.
+			[:filename |
+			image := Image fromFile: filename.
 			"Force realization now."
 			(
 			[image handle.
-			true] on: Error do: [:err | false]) 
+			true] on: Error do: [:err | false])
 				ifTrue: 
 					[strm
 						nextPutAll: image propertiesCount displayString;
@@ -1591,28 +1580,28 @@ exampleGdipIPropertyItems
 						nextPutAll: ', extent = ';
 						nextPutAll: image extent displayString;
 						cr.
-					(image hasPropertyId: PropertyTagExifUserComment) 
+					(image hasPropertyId: PropertyTagExifUserComment)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagExifUserComment: ';
 								nextPutAll: (image propertyFromId: 37510) valueArray asString trimNulls trimBlanks;
 								cr].
-					(image hasPropertyId: PropertyTagSoftwareUsed) 
+					(image hasPropertyId: PropertyTagSoftwareUsed)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagSoftwareUsed: ';
 								nextPutAll: (image propertyFromId: 305) valueArray asString trimNulls trimBlanks;
 								cr].
-					(image hasPropertyId: PropertyTagThumbnailWidth) 
+					(image hasPropertyId: PropertyTagThumbnailWidth)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagThumbnailWidth: ';
 								nextPutAll: (image propertyFromId: 20499) valueArray first displayString;
 								cr].
-					(image hasPropertyId: PropertyTagThumbnailData) 
+					(image hasPropertyId: PropertyTagThumbnailData)
 						ifTrue: 
 							[strm
 								tab;
@@ -1627,7 +1616,7 @@ exampleGdipISaveFrames
 		self exampleGdipISaveFrames
 	"
 
-	GdiplusImage prompt saveFramesToFiles: self fileResource fileLocator basePath!
+	Image prompt saveFramesToFiles: self fileResource fileLocator basePath!
 
 exampleGdipISkewing
 	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles 
@@ -1637,10 +1626,10 @@ exampleGdipISkewing
 	"
 
 	| bitmap image graphics |
-	bitmap := GdiplusBitmap extent: 300 @ 250.
+	bitmap := Bitmap extent: 300 @ 250.
 	graphics := bitmap graphics.
-	image := (GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
-				usingLocator: FileLocator installRelative) thumbnailWithHeight: 75.
+	image := (Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative)
+				thumbnailWithHeight: 75.
 	graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image points: {200 @ 20. 110 @ 200. 250 @ 50}.
@@ -1653,11 +1642,10 @@ exampleGdipIThumbnails
 	"
 
 	| bitmap image thumbnail |
-	bitmap := GdiplusBitmap extent: 600 @ 300.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
-				usingLocator: FileLocator installRelative.
+	bitmap := Bitmap extent: 600 @ 300.
+	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
 	thumbnail := image thumbnailScaledBy: 0.4.
-	(bitmap graphics)
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: thumbnail at: 10 @ 200.
 	^bitmap!
@@ -1681,14 +1669,14 @@ fileTypes
 						extensions}].
 	types
 		addLast: {'All Images'. all contents};
-		addLast: FileDialog allFilesType.
+		addLast: UI.FileDialog allFilesType.
 	^types asArray!
 
-fromByteArray: aByteArray 
+fromByteArray: aByteArray
 	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
 	initializer that can be used after an image reload or after passing through STB serialization/deserialization."
 
-	^self fromInitializer: (GdiplusImageFromBytesInitializer bytes: aByteArray)!
+	^self fromInitializer: (ImageFromBytesInitializer bytes: aByteArray)!
 
 fromFile: aFilename
 	"Answer an instance of the receiver created from data in the specified file."
@@ -1698,15 +1686,14 @@ fromFile: aFilename
 fromFile: aFilename usingLocator: aFileLocator
 	"Answer an instance of the receiver created from data in the specified file."
 
-	^self fromInitializer: (GdiplusImageFromFileInitializer filename: aFilename
-				fileLocator: aFileLocator)!
+	^self fromInitializer: (ImageFromFileInitializer filename: aFilename fileLocator: aFileLocator)!
 
 fromIStream: pStream
 	"Answer an instance of the receiver created from data in the specified IStream."
 
-	^self fromInitializer: (GdiplusImageFromIStreamInitializer iStream: pStream)!
+	^self fromInitializer: (ImageFromIStreamInitializer iStream: pStream)!
 
-getImageCodecs: aBoolean 
+getImageCodecs: aBoolean
 	"Private - Answer a <StructureArray> of <GpImageCodecInfo>s, describing either the available encoders
 	or decoders, depending on the <boolean> argument."
 
@@ -1722,26 +1709,26 @@ getImageCodecs: aBoolean
 	numCodecs := DWORD new.
 	byteSize := DWORD new.
 	lib := GdiplusLibrary default.
-	status := aBoolean 
+	status := aBoolean
 				ifTrue: [lib gdipGetImageEncodersSize: numCodecs size: byteSize]
 				ifFalse: [lib gdipGetImageDecodersSize: numCodecs size: byteSize].
 	status = Ok ifFalse: [^GdiplusError signal: 'Error in GdipGetImage[De|En]codersSize' with: status].
 	numCodecs := numCodecs asInteger.
 	byteSize := byteSize asInteger.
-	buf := ExternalMemory new: byteSize.
-	status := aBoolean 
+	buf := Memory new: byteSize.
+	status := aBoolean
 				ifTrue: 
-					[lib 
+					[lib
 						gdipGetImageEncoders: numCodecs
 						size: byteSize
 						encoders: buf]
 				ifFalse: 
-					[lib 
+					[lib
 						gdipGetImageDecoders: numCodecs
 						size: byteSize
 						decoders: buf].
 	status = Ok ifFalse: [^GdiplusError signal: 'Error in GdipGetImage[De|En]coders' with: status].
-	codecs := StructureArray 
+	codecs := StructureArray
 				fromAddress: buf
 				length: numCodecs
 				elementClass: GpImageCodecInfo.
@@ -1750,7 +1737,7 @@ getImageCodecs: aBoolean
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Image icon!
+	^Graphics.Image icon!
 
 mimeTypeForExtension: aString
 	"Answer a String mime type associated with the file extension aString.
@@ -1765,53 +1752,53 @@ mimeTypeForExtension: aString
 prompt
 	"Prompt for an image file.  Answer an Image created from that file or nil."
 
-	^((FileOpenDialog new fileTypes: self fileTypes)
+	^((UI.FileOpenDialog new fileTypes: self fileTypes)
 		defaultExtension: 'png';
 		showModal) ifNotNil: [:file | self fromFile: file]! !
-!GdiplusImage class categoriesFor: #decoderFileExtensions!enquiries!public! !
-!GdiplusImage class categoriesFor: #decoderMimeTypes!enquiries!public! !
-!GdiplusImage class categoriesFor: #decoders!enquiries!public! !
-!GdiplusImage class categoriesFor: #encoderClsid:!enquiries!private! !
-!GdiplusImage class categoriesFor: #encoderClsidForExtension:!enquiries!private! !
-!GdiplusImage class categoriesFor: #encoderFileExtensions!enquiries!public! !
-!GdiplusImage class categoriesFor: #encoderMimeTypeForExtension:!enquiries!private! !
-!GdiplusImage class categoriesFor: #encoderMimeTypes!enquiries!public! !
-!GdiplusImage class categoriesFor: #encoders!enquiries!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIDecoderFileExtensions!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIDecoders!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIEncoderClsid!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIEncoderFileExtensions!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIEncoderParameters!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIEncoders!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIEncoderValues!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIFlags!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIInterpMode!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIJPEGCompression!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipILoadImage!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipILoadImages!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipILosslessRotation!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIMetadata!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIMetadata2!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIMultiFrame!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIMultiFrame2!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIMultiFrame3!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIPrinting1!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIPrinting2!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIPrinting3!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIPrinting4LabeledToAPage!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipIPropertiesCopy!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIPropertyItem!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIPropertyItems!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipISaveFrames!examples!public! !
-!GdiplusImage class categoriesFor: #exampleGdipISkewing!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #exampleGdipIThumbnails!examples!public!sunit! !
-!GdiplusImage class categoriesFor: #fileTypes!enquiries!public! !
-!GdiplusImage class categoriesFor: #fromByteArray:!instance creation!public! !
-!GdiplusImage class categoriesFor: #fromFile:!instance creation!public! !
-!GdiplusImage class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!GdiplusImage class categoriesFor: #fromIStream:!instance creation!public! !
-!GdiplusImage class categoriesFor: #getImageCodecs:!helpers!private! !
-!GdiplusImage class categoriesFor: #icon!constants!public! !
-!GdiplusImage class categoriesFor: #mimeTypeForExtension:!enquiries!private! !
-!GdiplusImage class categoriesFor: #prompt!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #decoderFileExtensions!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #decoderMimeTypes!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #decoders!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoderClsid:!enquiries!private! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoderClsidForExtension:!enquiries!private! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoderFileExtensions!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoderMimeTypeForExtension:!enquiries!private! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoderMimeTypes!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #encoders!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIDecoderFileExtensions!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIDecoders!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderClsid!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderFileExtensions!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderParameters!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoders!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderValues!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIFlags!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIInterpMode!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIJPEGCompression!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILoadImage!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILoadImages!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILosslessRotation!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMetadata!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMetadata2!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame2!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame3!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting1!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting2!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting3!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting4LabeledToAPage!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertiesCopy!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertyItem!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertyItems!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipISaveFrames!examples!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipISkewing!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIThumbnails!examples!public!sunit! !
+!Graphics.Gdiplus.Image class categoriesFor: #fileTypes!enquiries!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #fromByteArray:!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #fromFile:!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #fromIStream:!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #getImageCodecs:!helpers!private! !
+!Graphics.Gdiplus.Image class categoriesFor: #icon!constants!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #mimeTypeForExtension:!enquiries!private! !
+!Graphics.Gdiplus.Image class categoriesFor: #prompt!instance creation!public! !
 

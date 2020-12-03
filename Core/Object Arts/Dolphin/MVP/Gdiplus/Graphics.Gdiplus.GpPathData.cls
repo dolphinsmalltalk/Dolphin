@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpPathData
+External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Points' -> 16r4.
 		'_OffsetOf_Types' -> 16r8
 	}!
-GpPathData guid: (GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
-GpPathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpPathData guid: (Core.GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
+Graphics.Gdiplus.GpPathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagGpPathData {
 	BYTE* types;
 } GpPathData;
 '!
-!GpPathData categoriesForClass!Unclassified! !
-!GpPathData methodsFor!
+!Graphics.Gdiplus.GpPathData categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpPathData methodsFor!
 
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
@@ -58,14 +58,14 @@ Types: aBYTE
 	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
 
 	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
-!GpPathData categoriesFor: #Count!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Count:!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Points!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Points:!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Types!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Types:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Count!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Count:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Points!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Points:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Types!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesFor: #Types:!**compiled accessors**!public! !
 
-!GpPathData class methodsFor!
+!Graphics.Gdiplus.GpPathData class methodsFor!
 
 defineFields
 	"Define the fields of the GpPathData structure.
@@ -80,13 +80,19 @@ defineFields
 "
 
 	self
-		defineField: #Count type: SDWORDField new offset: 0;
-		defineField: #Points type: (PointerField type: POINTF) offset: 4;
-		defineField: #Types type: (PointerField type: BYTE) offset: 8.
+		defineField: #Count
+			type: SDWORDField new
+			offset: 0;
+		defineField: #Points
+			type: (PointerField type: POINTF)
+			offset: 4;
+		defineField: #Types
+			type: (PointerField type: BYTE)
+			offset: 8.
 	self byteSize: 12!
 
 getFieldNames
 	^#(#Count #Points #Types)! !
-!GpPathData class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpPathData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpPathData class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpPathData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.BitmapFromIconInitializer'
 	instanceVariableNames: 'icon'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromIconInitializer guid: (GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
-GdiplusBitmapFromIconInitializer comment: ''!
-!GdiplusBitmapFromIconInitializer categoriesForClass!Unclassified! !
-!GdiplusBitmapFromIconInitializer methodsFor!
+Graphics.Gdiplus.BitmapFromIconInitializer guid: (Core.GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
+Graphics.Gdiplus.BitmapFromIconInitializer comment: ''!
+!Graphics.Gdiplus.BitmapFromIconInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.BitmapFromIconInitializer methodsFor!
 
 createHandle
 	"Private -  Bitmap::FromHICON(
@@ -20,7 +20,7 @@ createHandle
 	}"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -30,15 +30,15 @@ gdiplusConstructorErrorDescription
 
 icon: anIcon
 	icon := anIcon! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #icon:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromIconInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromIconInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.BitmapFromIconInitializer categoriesFor: #icon:!initializing!private! !
 
-!GdiplusBitmapFromIconInitializer class methodsFor!
+!Graphics.Gdiplus.BitmapFromIconInitializer class methodsFor!
 
 icon: anIcon
 	"Creates a Bitmap object based on an icon."
 
 	^self new icon: anIcon! !
-!GdiplusBitmapFromIconInitializer class categoriesFor: #icon:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromIconInitializer class categoriesFor: #icon:!instance creation!public! !
 

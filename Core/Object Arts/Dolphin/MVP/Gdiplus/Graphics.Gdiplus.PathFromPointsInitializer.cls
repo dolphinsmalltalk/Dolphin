@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathFromPointsInitializer'
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsPathFromPointsInitializer guid: (GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
-GdiplusGraphicsPathFromPointsInitializer comment: ''!
-!GdiplusGraphicsPathFromPointsInitializer categoriesForClass!Unclassified! !
-!GdiplusGraphicsPathFromPointsInitializer methodsFor!
+Graphics.Gdiplus.PathFromPointsInitializer guid: (Core.GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathFromPointsInitializer comment: ''!
+!Graphics.Gdiplus.PathFromPointsInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PathFromPointsInitializer methodsFor!
 
 createHandle
 	| gpHandle status points |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	points := StructureArray
 				withAll: pathPoints
 				elementClass: POINTL
@@ -35,16 +35,16 @@ points: points types: types fillMode: aFillModeConstant
 	pathPoints := points.
 	pathTypes := types asByteArray.
 	fillMode := aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #points:types:fillMode:!initializing!private! !
+!Graphics.Gdiplus.PathFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.PathFromPointsInitializer categoriesFor: #points:types:fillMode:!initializing!private! !
 
-!GdiplusGraphicsPathFromPointsInitializer class methodsFor!
+!Graphics.Gdiplus.PathFromPointsInitializer class methodsFor!
 
 points: points types: types fillMode: aFillModeConstant 
 	^self new 
 		points: points
 		types: types
 		fillMode: aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer class categoriesFor: #points:types:fillMode:!public! !
+!Graphics.Gdiplus.PathFromPointsInitializer class categoriesFor: #points:types:fillMode:!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus ImageView'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'See the "Gdiplus ImageView Sample" package'.
 
@@ -8,19 +8,18 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{GdiplusImageView}
+	#{Graphics.Gdiplus.ImageView}
 ).
 
 package setMethodNames: #(
-	#(#{Bitmap} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
-	#(#{Icon} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
-	#(#{Image} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
-	#(#{ImagePresenter class} #resource_Gdiplus_view)
-	#(#{OLEPicture} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Graphics.Bitmap} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Graphics.Icon} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Graphics.Image} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Smalltalk.OLEPicture} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{UI.ImagePresenter class} #resource_Gdiplus_view)
 ).
 
 package setPrerequisites: #(
-	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Image\Dolphin Image Presenter'
@@ -35,16 +34,16 @@ package!
 
 "Class Definitions"!
 
-ImageViewAbstract subclass: #GdiplusImageView
+UI.ImageViewAbstract subclass: #'Graphics.Gdiplus.ImageView'
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Bitmap methodsFor!
+!Graphics.Bitmap methodsFor!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	"Subclass are responsible for drawing themselves on aGraphics.
@@ -60,9 +59,9 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				extent: dstExtent
 				from: srcOrigin
 				extent: srcExtent]! !
-!Bitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!Graphics.Bitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
-!Icon methodsFor!
+!Graphics.Icon methodsFor!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	"Subclass are responsible for drawing themselves on aGraphics.
@@ -78,9 +77,9 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				drawOn: aCanvas
 				at: dstOrigin
 				extent: dstExtent]! !
-!Icon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!Graphics.Icon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
-!Image methodsFor!
+!Graphics.Image methodsFor!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	"Subclass are responsible for drawing themselves on aGraphics.
@@ -91,20 +90,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 	"For the moment, signal a warning, not an error if not implemented"
 
 	Notification signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name! !
-!Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-
-!ImagePresenter class methodsFor!
-
-resource_Gdiplus_view
-	"Answer the literal data from which the 'Gdiplus view' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
-	"
-
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GdiplusImageView) 34 28 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 4294902331 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 1 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 1 1 626 1 1 nil nil #none nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 626 1 1 626 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 100 0 0 0 100 0 0 0] 8 #() 626 193 193 nil 29 )! !
-!ImagePresenter class categoriesFor: #resource_Gdiplus_view!public!resources-views! !
+!Graphics.Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
 !OLEPicture methodsFor!
 
@@ -123,6 +109,19 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				at: dstOrigin
 				extent: dstExtent]! !
 !OLEPicture categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+
+!UI.ImagePresenter class methodsFor!
+
+resource_Gdiplus_view
+	"Answer the literal data from which the 'Gdiplus view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
+	"
+
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Graphics.Gdiplus.ImageView) 34 28 nil nil 34 2 8 1140850944 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil 8 4294902331 1049094 ##(UI.NullConverter) nil nil nil nil #normal 1 1180166 ##(Graphics.Rectangle) 655878 ##(Graphics.Point) 1 1 626 1 1 nil nil #none nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 626 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 29)! !
+!UI.ImagePresenter class categoriesFor: #resource_Gdiplus_view!public!resources-views! !
 
 "End of package definition"!
 

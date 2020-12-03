@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicInitializer
+Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatGenericTypographicInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusStringFormatGenericTypographicInitializer guid: (GUID fromString: '{cbe1bbee-b46a-4c95-90e4-d4bec63775e9}')!
-GdiplusStringFormatGenericTypographicInitializer comment: ''!
-!GdiplusStringFormatGenericTypographicInitializer categoriesForClass!Unclassified! !
-!GdiplusStringFormatGenericTypographicInitializer methodsFor!
+Graphics.Gdiplus.StringFormatGenericTypographicInitializer guid: (Core.GUID fromString: '{cbe1bbee-b46a-4c95-90e4-d4bec63775e9}')!
+Graphics.Gdiplus.StringFormatGenericTypographicInitializer comment: ''!
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	(status := self library gdipStringFormatGetGenericTypographic: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusStringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 
-!GdiplusStringFormatGenericTypographicInitializer class methodsFor!
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer class methodsFor!
 
 uninitialize
 	GenericTypographic := nil! !
-!GdiplusStringFormatGenericTypographicInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

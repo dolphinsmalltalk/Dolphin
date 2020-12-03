@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #GdiplusGUIDs
+Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusGUIDs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -20,6 +20,7 @@ SharedPool subclass: #GdiplusGUIDs
 		'FrameDimensionResolution' -> (GUID fromString: '{84236f7b-3bd3-428f-8dab-4ea1439ca315}').
 		'FrameDimensionTime' -> (GUID fromString: '{6aedbd6d-3fb5-418a-83a6-7f45229dc872}')
 	}!
-GdiplusGUIDs guid: (GUID fromString: '{84863640-2c7c-4142-96d7-cc4986906b7b}')!
-GdiplusGUIDs comment: ''!
-!GdiplusGUIDs categoriesForClass!Unclassified! !
+Graphics.Gdiplus.GdiplusGUIDs guid: (Core.GUID fromString: '{84863640-2c7c-4142-96d7-cc4986906b7b}')!
+Graphics.Gdiplus.GdiplusGUIDs isNonInstantiable: true!
+Graphics.Gdiplus.GdiplusGUIDs comment: ''!
+!Graphics.Gdiplus.GdiplusGUIDs categoriesForClass!Unclassified! !

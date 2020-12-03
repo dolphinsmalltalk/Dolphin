@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.TextureBrushInitializer'
 	instanceVariableNames: 'image wrapMode rectangle'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusTextureBrushInitializer guid: (GUID fromString: '{1a1a5ea3-6151-11d7-b609-00e0987e8081}')!
-GdiplusTextureBrushInitializer comment: ''!
-!GdiplusTextureBrushInitializer categoriesForClass!Unclassified! !
-!GdiplusTextureBrushInitializer methodsFor!
+Graphics.Gdiplus.TextureBrushInitializer guid: (Core.GUID fromString: '{1a1a5ea3-6151-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.TextureBrushInitializer comment: ''!
+!Graphics.Gdiplus.TextureBrushInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.TextureBrushInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := rectangle isNil
 				ifTrue: 
 					[self library
@@ -42,17 +42,17 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 
 isPersistent
 	^image isPersistent! !
-!GdiplusTextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusTextureBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusTextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
-!GdiplusTextureBrushInitializer categoriesFor: #isPersistent!public! !
+!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
+!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #isPersistent!public! !
 
-!GdiplusTextureBrushInitializer class methodsFor!
+!Graphics.Gdiplus.TextureBrushInitializer class methodsFor!
 
 image: anImage wrapMode: aNumber rectangle: aRectangle
 	^self new 
 		image: anImage
 		wrapMode: aNumber
 		rectangle: aRectangle! !
-!GdiplusTextureBrushInitializer class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
+!Graphics.Gdiplus.TextureBrushInitializer class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
 

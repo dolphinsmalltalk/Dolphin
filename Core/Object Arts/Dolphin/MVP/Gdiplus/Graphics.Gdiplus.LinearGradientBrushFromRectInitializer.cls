@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
+Graphics.Gdiplus.LinearGradientBrushInitializer subclass: #'Graphics.Gdiplus.LinearGradientBrushFromRectInitializer'
 	instanceVariableNames: 'rect color1 color2 mode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLinearGradientBrushFromRectInitializer guid: (GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
-GdiplusLinearGradientBrushFromRectInitializer comment: ''!
-!GdiplusLinearGradientBrushFromRectInitializer categoriesForClass!Unclassified! !
-!GdiplusLinearGradientBrushFromRectInitializer methodsFor!
+Graphics.Gdiplus.LinearGradientBrushFromRectInitializer guid: (Core.GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
+Graphics.Gdiplus.LinearGradientBrushFromRectInitializer comment: ''!
+!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer methodsFor!
 
 createHandle
 	"Private -  LinearGradientBrush(IN const Rect& rect,
@@ -27,7 +27,7 @@ createHandle
                                                               &brush);"
 
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateLineBrushFromRectI: rect asParameter
 				color1: color1 argbCode
@@ -43,6 +43,6 @@ rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	color1 := startColor.
 	color2 := endColor.
 	mode := aLinearGradientMode! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
+!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
 

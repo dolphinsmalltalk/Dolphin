@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBrush subclass: #GdiplusSolidBrush
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.SolidBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusSolidBrush guid: (GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
-GdiplusSolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
-!GdiplusSolidBrush categoriesForClass!Unclassified! !
-!GdiplusSolidBrush methodsFor!
+Graphics.Gdiplus.SolidBrush guid: (Core.GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
+Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
+!Graphics.Gdiplus.SolidBrush categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.SolidBrush methodsFor!
 
 color
 	| status color |
@@ -22,10 +22,10 @@ color: aColor
 	| status |
 	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode)
 		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
-!GdiplusSolidBrush categoriesFor: #color!accessing!public! !
-!GdiplusSolidBrush categoriesFor: #color:!accessing!public! !
+!Graphics.Gdiplus.SolidBrush categoriesFor: #color!accessing!public! !
+!Graphics.Gdiplus.SolidBrush categoriesFor: #color:!accessing!public! !
 
-!GdiplusSolidBrush class methodsFor!
+!Graphics.Gdiplus.SolidBrush class methodsFor!
 
 black
 	^self color: Color black!
@@ -36,7 +36,7 @@ blue
 color: aColor
 	"Creates a SolidBrush object based on a color."
 
-	^self fromInitializer: (GdiplusSolidBrushFromColorInitializer color: aColor)!
+	^self fromInitializer: (SolidBrushFromColorInitializer color: aColor)!
 
 exampleGdipDropShadow
 	"
@@ -45,25 +45,25 @@ exampleGdipDropShadow
 
 	| rect shadowRect shadow bitmap offset |
 	rect := 0 @ 0 corner: 100 @ 60.
-	offset := 8@8.
+	offset := 8 @ 8.
 	shadowRect := rect topLeft // offset corner: rect extent // offset.
-	shadow := GdiplusBitmap extent: shadowRect extent.
+	shadow := Bitmap extent: shadowRect extent.
 	shadow graphics fillRectangle: shadowRect
-		brush: (GdiplusSolidBrush color: (Color 
+		brush: (SolidBrush color: (Color
 						a: 128
 						r: 0
 						g: 0
 						b: 0)).
-	bitmap := GdiplusBitmap extent: rect extent + (offset*2).
-	(bitmap graphics)
+	bitmap := Bitmap extent: rect extent + (offset * 2).
+	bitmap graphics
 		interpolationMode: InterpolationModeHighQualityBicubic;
 		drawImage: shadow
 			at: offset
 			extent: rect extent
 			from: 0 @ 0
 			extent: shadowRect extent.
-	(bitmap graphics)
-		fillRectangle: rect brush: (GdiplusSolidBrush color: Color white);
+	bitmap graphics
+		fillRectangle: rect brush: (SolidBrush color: Color white);
 		drawRectangle: rect.
 	^bitmap!
 
@@ -74,8 +74,8 @@ exampleGdipSBFillAShape
 	"
 
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 200 @ 150.
-	bitmap graphics fillEllipse: (50 @ 50 extent: 100 @ 60) brush: GdiplusSolidBrush red.
+	bitmap := Bitmap extent: 200 @ 150.
+	bitmap graphics fillEllipse: (50 @ 50 extent: 100 @ 60) brush: SolidBrush red.
 	^bitmap!
 
 green
@@ -86,12 +86,12 @@ new
 
 red
 	^self color: Color red! !
-!GdiplusSolidBrush class categoriesFor: #black!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #blue!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #color:!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #exampleGdipDropShadow!examples!public!sunit! !
-!GdiplusSolidBrush class categoriesFor: #exampleGdipSBFillAShape!examples!public!sunit! !
-!GdiplusSolidBrush class categoriesFor: #green!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #new!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #red!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #black!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #blue!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #color:!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #exampleGdipDropShadow!examples!public!sunit! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #exampleGdipSBFillAShape!examples!public!sunit! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #green!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesFor: #red!instance creation!public! !
 

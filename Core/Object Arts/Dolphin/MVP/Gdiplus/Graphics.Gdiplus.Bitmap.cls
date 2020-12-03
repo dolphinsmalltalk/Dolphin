@@ -1,60 +1,59 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusImage subclass: #GdiplusBitmap
+Graphics.Gdiplus.Image subclass: #'Graphics.Gdiplus.Bitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmap guid: (GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
-GdiplusBitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
-!GdiplusBitmap categoriesForClass!Unclassified! !
-!GdiplusBitmap methodsFor!
+Graphics.Gdiplus.Bitmap guid: (Core.GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
+Graphics.Gdiplus.Bitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
+!Graphics.Gdiplus.Bitmap categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Bitmap methodsFor!
 
 asBitmap
 	"Answer a <Bitmap> with the receiver's image."
 
 	| status hbmReturn |
-	hbmReturn := ExternalHandle new.
+	hbmReturn := Handle new.
 	(status := GdiplusLibrary default
 				gdipCreateHBITMAPFromBitmap: self asParameter
 				hbmReturn: hbmReturn
 				background: 0) == Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHBITMAPFromBitmap' with: status].
-	^Bitmap fromOwnedHandle: hbmReturn!
+	^Graphics.Bitmap fromOwnedHandle: hbmReturn!
 
 asIcon
 	"Answer an <Icon> with the receiver's image."
 
 	| status hbmReturn |
-	hbmReturn := ExternalHandle new.
-	(status := GdiplusLibrary default 
-				gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn) == Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHICONFromBitmap' with: status].
+	hbmReturn := Handle new.
+	(status := GdiplusLibrary default gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn)
+		== Ok ifFalse: [^GdiplusError signal: 'Error in GdipCreateHICONFromBitmap' with: status].
 	^Icon fromOwnedHandle: hbmReturn!
 
-cloneBitmapRectangle: aRectangle format: aPixelFormatConstant 
+cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
 	"Private - Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default
 				gdipCloneBitmapAreaI: aRectangle left
 				y: aRectangle top
 				width: aRectangle width
 				height: aRectangle height
 				format: aPixelFormatConstant
 				srcBitmap: self handle
-				dstBitmap: gpHandle) = Ok 
+				dstBitmap: gpHandle) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipCloneBitmapAreaI' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
 
-cloneFormat: aPixelFormatConstant 
+cloneFormat: aPixelFormatConstant
 	"Answer a copy of the receiver."
 
-	^self cloneBitmapRectangle: (Point zero extent: self extent) format: aPixelFormatConstant!
+	^self cloneBitmapRectangle: (Rectangle extent: self extent) format: aPixelFormatConstant!
 
 lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
 	| status |
@@ -90,11 +89,11 @@ pixelAt: aPoint
 	status == Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel  failed' with: status].
 	^Color fromArgbCode: color asInteger!
 
-pixelAt: aPoint put: anARGB 
+pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
 
 	| status |
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipBitmapSetPixel: self asParameter
 				x: aPoint x
 				y: aPoint y
@@ -106,16 +105,16 @@ unlockBits: lockedBitmapData
 	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
 				lockedBitmapData: lockedBitmapData) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
-!GdiplusBitmap categoriesFor: #asBitmap!public! !
-!GdiplusBitmap categoriesFor: #asIcon!public! !
-!GdiplusBitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !
-!GdiplusBitmap categoriesFor: #cloneFormat:!copying!public! !
-!GdiplusBitmap categoriesFor: #lockBits:flags:format:lockedBitmapData:!accessing!public! !
-!GdiplusBitmap categoriesFor: #pixelAt:!accessing!public! !
-!GdiplusBitmap categoriesFor: #pixelAt:put:!accessing!public! !
-!GdiplusBitmap categoriesFor: #unlockBits:!accessing!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #asBitmap!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #asIcon!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #cloneFormat:!copying!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #lockBits:flags:format:lockedBitmapData:!accessing!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #pixelAt:!accessing!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #pixelAt:put:!accessing!public! !
+!Graphics.Gdiplus.Bitmap categoriesFor: #unlockBits:!accessing!public! !
 
-!GdiplusBitmap class methodsFor!
+!Graphics.Gdiplus.Bitmap class methodsFor!
 
 exampleGdipBFromBitmap
 	"This example displays a GdiplusBitmap created from a bitmap that's a copy of an icon.
@@ -124,11 +123,11 @@ exampleGdipBFromBitmap
 	"
 
 	| bmp |
-	bmp := Bitmap 
+	bmp := Graphics.Bitmap
 				gdipCopyOfIcon: self icon
 				extent: 32 @ 32
 				backcolor: Color black.
-	^GdiplusBitmap fromBitmap: bmp!
+	^Bitmap fromBitmap: bmp!
 
 exampleGdipBFromByteArray
 	"This example displays a GdiplusBitmap created from a ByteArray.
@@ -138,7 +137,7 @@ exampleGdipBFromByteArray
 
 	| testBytes |
 	testBytes := self fileResource fish32x32pngBytes.
-	^GdiplusBitmap fromByteArray: testBytes!
+	^Bitmap fromByteArray: testBytes!
 
 exampleGdipBFromDIB
 	"This example creates aGdiplusBitmap from a DIBSection.
@@ -147,11 +146,11 @@ exampleGdipBFromDIB
 	"
 
 	| bmp |
-	bmp := DIBSection 
+	bmp := DIBSection
 				gdipCopyOfIcon: self icon
 				extent: 32 @ 32
 				backcolor: Color black.
-	^GdiplusBitmap fromBitmap: bmp!
+	^Gdiplus.Bitmap fromBitmap: bmp!
 
 exampleGdipBFromXPIcon
 	"This example creates aGdiplusBitmap from an Icon file.
@@ -162,7 +161,7 @@ exampleGdipBFromXPIcon
 
 	| testIcon |
 	testIcon := Icon fromFile: self fileResource pafWinXP32x32ico.
-	^GdiplusBitmap fromIcon: testIcon!
+	^Bitmap fromIcon: testIcon!
 
 exampleGdipBResize1
 	"This example creates an image from an existing file and then creates several copies 
@@ -173,13 +172,13 @@ exampleGdipBResize1
 	"
 
 	| bitmap image copy1 copy2 copy3 copy4 |
-	bitmap := GdiplusBitmap extent: 620 @ 200.
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	copy1 := GdiplusBitmap fromImage: image extent: 100 @ 150.
-	copy2 := GdiplusBitmap fromImage: image centeredIn: 100 @ 150.
-	copy3 := GdiplusBitmap fromImage: image scaledBy: 1 / 4.
-	copy4 := GdiplusBitmap fromImage: image crop: (180 @ 220 extent: 200 @ 150).
-	(bitmap graphics)
+	bitmap := Bitmap extent: 620 @ 200.
+	image := Image fromFile: self fileResource pafEyeJpg.
+	copy1 := Bitmap fromImage: image extent: 100 @ 150.
+	copy2 := Bitmap fromImage: image centeredIn: 100 @ 150.
+	copy3 := Bitmap fromImage: image scaledBy: 1 / 4.
+	copy4 := Bitmap fromImage: image crop: (180 @ 220 extent: 200 @ 150).
+	bitmap graphics
 		drawImage: copy1 at: 10 @ 10;
 		drawRectangle: (10 @ 10 extent: copy1 extent);
 		drawString: 'withExtent:' at: 10 @ 170;
@@ -202,7 +201,7 @@ exampleGdipBResize2
 
 	| image resizedImage toFile |
 	image := self fromFile: self fileResource pafSeattleNightJpg.
-	resizedImage := GdiplusBitmap fromImage: image scaledBy: 1 / 3.
+	resizedImage := Bitmap fromImage: image scaledBy: 1 / 3.
 	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.jpg'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile!
@@ -215,28 +214,29 @@ exampleGdipBResize3
 
 	| image resizedImage toFile |
 	image := self fromFile: self fileResource pafSeattleNightJpg.
-	resizedImage := GdiplusBitmap fromImage: image centeredIn: 400 @ 200.
+	resizedImage := Bitmap fromImage: image centeredIn: 400 @ 200.
 	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.png'.
 	resizedImage saveToFile: toFile.
 	^self fromFile: toFile!
 
 exampleLockBitsTest1Bmp
 	| bitmap redBrush blueBrush |
-	bitmap := GdiplusBitmap width: 30 height: 16.
-	redBrush := GdiplusSolidBrush red.
-	blueBrush := GdiplusSolidBrush blue.
+	bitmap := Bitmap width: 30 height: 16.
+	redBrush := SolidBrush red.
+	blueBrush := SolidBrush blue.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 30 @ 4) brush: redBrush;
 		fillRectangle: (0 @ 4 extent: 30 @ 4) brush: blueBrush;
 		fillRectangle: (0 @ 8 extent: 30 @ 4) brush: redBrush;
 		fillRectangle: (0 @ 12 extent: 30 @ 4) brush: blueBrush.
-	^bitmap!
+	^bitmap
+!
 
 exampleLockBitsTest2Bmp
 	| bitmap redBrush blueBrush |
-	bitmap := GdiplusBitmap width: 120 height: 60.
-	redBrush := GdiplusSolidBrush red.
-	blueBrush := GdiplusSolidBrush blue.
+	bitmap := Bitmap width: 120 height: 60.
+	redBrush := SolidBrush red.
+	blueBrush := SolidBrush blue.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 120 @ 12) brush: redBrush;
 		fillRectangle: (0 @ 12 extent: 120 @ 12) brush: blueBrush;
@@ -257,24 +257,23 @@ fromBitmap: aBitmap
 	"MSDN: Do not pass to the GDI+ Bitmap constructor a GDI bitmap or a GDI
 	palette that is currently (***or was previously*** ?) selected into a device context."
 
-	^self fromInitializer: (GdiplusBitmapFromBitmapInitializer bitmap: aBitmap)!
+	^self fromInitializer: (BitmapFromGdiBitmapInitializer bitmap: aBitmap)!
 
-fromByteArray: aByteArray 
+fromByteArray: aByteArray
 	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
 	initializer that can be used after an image reload or after passing through STB serialization/deserialization."
 
-	^self fromInitializer: (GdiplusBitmapFromBytesInitializer bytes: aByteArray)!
+	^self fromInitializer: (BitmapFromBytesInitializer bytes: aByteArray)!
 
 fromFile: aFilename usingLocator: aFileLocator
 	"Answer an instance loaded from the file aFilename by using aFileLocator."
 
-	^self fromInitializer: (GdiplusBitmapFromFileInitializer filename: aFilename
-				fileLocator: aFileLocator)!
+	^self fromInitializer: (BitmapFromFileInitializer filename: aFilename fileLocator: aFileLocator)!
 
 fromIcon: anIcon
 	"Creates a Bitmap object based on an icon."
 
-	^self fromInitializer: (GdiplusBitmapFromIconInitializer icon: anIcon)!
+	^self fromInitializer: (BitmapFromIconInitializer icon: anIcon)!
 
 fromImage: aGdiplusImage centeredIn: aPoint
 	"Answer an instance of the receiver based on aGdiplusImage and sized proportionally to fit
@@ -300,7 +299,7 @@ fromImage: aGdiplusImage crop: aRectangle
 	bitmap := self extent: aRectangle extent.
 	bitmap graphics
 		drawImage: aGdiplusImage
-			at: Point zero
+			at: Point.Zero
 			extent: bitmap extent
 			from: aRectangle origin
 			extent: aRectangle extent;
@@ -328,7 +327,7 @@ fromImage: aGdiplusImage scaledBy: aNumber
 fromIStream: pStream
 	"Creates a Bitmap object based on a stream."
 
-	^self fromInitializer: (GdiplusBitmapFromIStreamInitializer iStream: pStream)!
+	^self fromInitializer: (BitmapFromIStreamInitializer iStream: pStream)!
 
 fromView: aView 
 	^self fromBitmap: (Bitmap fromView: aView)
@@ -354,31 +353,31 @@ width: width height: height format: aPixelFormat
 
 	"aPixelFormat ... The default value is PixelFormat32bppARGB. "
 
-	^self fromInitializer: (GdiplusBitmapFromBlankInitializer 
+	^self fromInitializer: (BitmapFromBlankInitializer
 				width: width
 				height: height
 				format: aPixelFormat)! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromBitmap!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromByteArray!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromDIB!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromXPIcon!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize1!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize2!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize3!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleLockBitsTest1Bmp!examples!private! !
-!GdiplusBitmap class categoriesFor: #exampleLockBitsTest2Bmp!examples!private! !
-!GdiplusBitmap class categoriesFor: #extent:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromBitmap:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromByteArray:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromIcon:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:centeredIn:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:crop:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:extent:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:scaledBy:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromIStream:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromView:!public! !
-!GdiplusBitmap class categoriesFor: #new!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #width:height:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #width:height:format:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBFromBitmap!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBFromByteArray!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBFromDIB!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBFromXPIcon!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBResize1!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBResize2!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleGdipBResize3!examples!public!sunit! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleLockBitsTest1Bmp!examples!private! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #exampleLockBitsTest2Bmp!examples!private! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #extent:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromBitmap:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromByteArray:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromIcon:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromImage:centeredIn:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromImage:crop:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromImage:extent:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromImage:scaledBy:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromIStream:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #fromView:!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #width:height:!instance creation!public! !
+!Graphics.Gdiplus.Bitmap class categoriesFor: #width:height:format:!instance creation!public! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitializer
+Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringFormatFromFlagsInitializer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusStringFormatFromFlagsInitializer guid: (GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
-GdiplusStringFormatFromFlagsInitializer comment: ''!
-!GdiplusStringFormatFromFlagsInitializer categoriesForClass!Unclassified! !
-!GdiplusStringFormatFromFlagsInitializer methodsFor!
+Graphics.Gdiplus.StringFormatFromFlagsInitializer guid: (Core.GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.StringFormatFromFlagsInitializer comment: ''!
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library
 				gdipCreateStringFormat: formatFlags
 				language: language
@@ -24,12 +24,12 @@ createHandle
 formatFlags: flagsNumber language: languageNumber
 	formatFlags := flagsNumber.
 	language := languageNumber! !
-!GdiplusStringFormatFromFlagsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusStringFormatFromFlagsInitializer categoriesFor: #formatFlags:language:!initializing!private! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesFor: #formatFlags:language:!initializing!private! !
 
-!GdiplusStringFormatFromFlagsInitializer class methodsFor!
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber
 	^self new formatFlags: flagsNumber language: languageNumber! !
-!GdiplusStringFormatFromFlagsInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
 

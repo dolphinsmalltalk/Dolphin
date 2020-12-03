@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #GpColorMatrix
+External.Structure subclass: #'Graphics.Gdiplus.GpColorMatrix'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_m' -> 16r0
 	}!
-GpColorMatrix guid: (GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
-GpColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
+Graphics.Gdiplus.GpColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
+Graphics.Gdiplus.GpColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
 
@@ -22,8 +22,8 @@ struct tagGpColorMatrix {
 	single m[5][5];
 } GpColorMatrix;
 '!
-!GpColorMatrix categoriesForClass!Unclassified! !
-!GpColorMatrix methodsFor!
+!Graphics.Gdiplus.GpColorMatrix categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.GpColorMatrix methodsFor!
 
 atPoint: aPoint 
 	^self row: aPoint x col: aPoint y!
@@ -55,14 +55,14 @@ row: rowInteger col: colInteger
 
 row: rowInteger col: colInteger put: aNumber
 	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
-!GpColorMatrix categoriesFor: #atPoint:!accessing!public! !
-!GpColorMatrix categoriesFor: #atPoint:put:!accessing!public! !
-!GpColorMatrix categoriesFor: #m!**compiled accessors**!public! !
-!GpColorMatrix categoriesFor: #m:!**compiled accessors**!public! !
-!GpColorMatrix categoriesFor: #row:col:!accessing!public! !
-!GpColorMatrix categoriesFor: #row:col:put:!accessing!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #atPoint:!accessing!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #atPoint:put:!accessing!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #m!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #m:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #row:col:!accessing!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesFor: #row:col:put:!accessing!public! !
 
-!GpColorMatrix class methodsFor!
+!Graphics.Gdiplus.GpColorMatrix class methodsFor!
 
 defineFields
 	"Define the fields of the GpColorMatrix structure.
@@ -75,7 +75,9 @@ defineFields
 "
 
 	self
-		defineField: #m type: (ArrayField type: FLOATArray length: 25) offset: 0.
+		defineField: #m
+		type: (ArrayField type: FLOATArray length: 25)
+		offset: 0.
 	self byteSize: 100!
 
 getFieldNames
@@ -92,14 +94,14 @@ identityArray
 
 	^#(1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1)!
 
-withAll: anArray 
+withAll: anArray
 	"Answer an instance created from anArray.
 	anArray should have 25 <Magnitude> elements"
 
 	^self new m: (FLOATArray withAll: anArray)! !
-!GpColorMatrix class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!GpColorMatrix class categoriesFor: #identity!instance creation!public! !
-!GpColorMatrix class categoriesFor: #identityArray!constants!public! !
-!GpColorMatrix class categoriesFor: #withAll:!instance creation!public! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #identity!instance creation!public! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #identityArray!constants!public! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #withAll:!instance creation!public! !
 

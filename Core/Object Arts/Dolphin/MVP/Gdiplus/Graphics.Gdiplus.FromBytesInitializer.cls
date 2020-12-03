@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusFromBytesInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.FromBytesInitializer'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusFromBytesInitializer guid: (GUID fromString: '{3156f9e7-c46c-48e7-9cca-e6405bf8a085}')!
-GdiplusFromBytesInitializer isAbstract: true!
-GdiplusFromBytesInitializer comment: ''!
-!GdiplusFromBytesInitializer categoriesForClass!Unclassified! !
-!GdiplusFromBytesInitializer methodsFor!
+Graphics.Gdiplus.FromBytesInitializer guid: (Core.GUID fromString: '{3156f9e7-c46c-48e7-9cca-e6405bf8a085}')!
+Graphics.Gdiplus.FromBytesInitializer isNonInstantiable: true!
+Graphics.Gdiplus.FromBytesInitializer comment: ''!
+!Graphics.Gdiplus.FromBytesInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.FromBytesInitializer methodsFor!
 
 = comperand 
 	^self species = comperand species and: [self bytes = comperand bytes]!
@@ -22,19 +22,19 @@ hash
 	^self bytes hash!
 
 iStream
-	^IStream fromBytes: bytes!
+	^Smalltalk.IStream fromBytes: bytes!
 
 setBytes: aByteArray 
 	bytes := aByteArray! !
-!GdiplusFromBytesInitializer categoriesFor: #=!comparing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #bytes!accessing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #hash!comparing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #iStream!public!realizing/unrealizing! !
-!GdiplusFromBytesInitializer categoriesFor: #setBytes:!initializing!private! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #=!comparing!public! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #bytes!accessing!public! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #hash!comparing!public! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #iStream!public!realizing/unrealizing! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #setBytes:!initializing!private! !
 
-!GdiplusFromBytesInitializer class methodsFor!
+!Graphics.Gdiplus.FromBytesInitializer class methodsFor!
 
 bytes: aByteArray 
 	^self new setBytes: aByteArray! !
-!GdiplusFromBytesInitializer class categoriesFor: #bytes:!instance creation!public! !
+!Graphics.Gdiplus.FromBytesInitializer class categoriesFor: #bytes:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusImageAttributes
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.ImageAttributes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageAttributes guid: (GUID fromString: '{c5f76a31-54e8-45a9-905c-14e9d8ae7c0d}')!
-GdiplusImageAttributes comment: 'A GdiplusImageAttributes object contains information about how bitmap and metafile colors are manipulated during rendering.  Accessors are available to adjust color, grayscale, gamma, brightness, transparency, and more.  Typically you will initialize an instance, change some settings, and pass the instance to a GdiplusGraphics drawImage method.'!
-!GdiplusImageAttributes categoriesForClass!Unclassified! !
-!GdiplusImageAttributes methodsFor!
+Graphics.Gdiplus.ImageAttributes guid: (Core.GUID fromString: '{c5f76a31-54e8-45a9-905c-14e9d8ae7c0d}')!
+Graphics.Gdiplus.ImageAttributes comment: 'A GdiplusImageAttributes object contains information about how bitmap and metafile colors are manipulated during rendering.  Accessors are available to adjust color, grayscale, gamma, brightness, transparency, and more.  Typically you will initialize an instance, change some settings, and pass the instance to a GdiplusGraphics drawImage method.'!
+!Graphics.Gdiplus.ImageAttributes categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.ImageAttributes methodsFor!
 
 basicFree
 	"Private - Free up external resources held by the receiver.
@@ -118,84 +118,84 @@ threshold: aFloat type: aColorAdjustTypeConstant
 				enableFlag: TRUE
 				threshold: aFloat) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesThreshold  failed' with: status]! !
-!GdiplusImageAttributes categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusImageAttributes categoriesFor: #colorKeys:colorLow:colorHigh:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #colorMatrix:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #colorMatrix:type:mode:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #gamma:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #gamma:type:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #outputChannel:channelFlags:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapColor:to:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapColor:to:type:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapTable:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapTable:type:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #threshold:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #threshold:type:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorKeys:colorLow:colorHigh:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorMatrix:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorMatrix:type:mode:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #gamma:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #gamma:type:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #outputChannel:channelFlags:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapColor:to:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapColor:to:type:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapTable:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapTable:type:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #threshold:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesFor: #threshold:type:!accessing!public! !
 
-!GdiplusImageAttributes class methodsFor!
+!Graphics.Gdiplus.ImageAttributes class methodsFor!
 
 exampleColorBars1
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
-		fillRectangle: (0 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush black;
-		fillRectangle: (40 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush red;
-		fillRectangle: (80 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush green;
-		fillRectangle: (120 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush blue.
+	bitmap := Bitmap extent: 160 @ 120.
+	bitmap graphics
+		fillRectangle: (0 @ 0 extent: 40 @ 120) brush: SolidBrush black;
+		fillRectangle: (40 @ 0 extent: 40 @ 120) brush: SolidBrush red;
+		fillRectangle: (80 @ 0 extent: 40 @ 120) brush: SolidBrush green;
+		fillRectangle: (120 @ 0 extent: 40 @ 120) brush: SolidBrush blue.
 	^bitmap!
 
 exampleColorBars2
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 160 @ 120.
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.2 0.2)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.2 0.2)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0.4 0.2)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.2 0.4 0.2)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.8))).
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.8))).
 	^bitmap!
 
 exampleColorBars3
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 160 @ 120.
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.6 0.6 0.6)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.6 0.6 0.6)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 1 1)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0 1 1)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 0 1))).
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 1 0 1))).
 	^bitmap!
 
 exampleColorBars4
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 160 @ 120.
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 0 1)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0 0 1)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.5 1 0.5)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.5 1 0.5)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4))).
+			brush: (SolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4))).
 	^bitmap!
 
 exampleColorKeyTest
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 160 @ 120.
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 90 90 20)));
+			brush: (SolidBrush color: (Color fromArray: #(255 90 90 20)));
 		fillRectangle: (0 @ 40 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 130 130 40)));
+			brush: (SolidBrush color: (Color fromArray: #(255 130 130 40)));
 		fillRectangle: (0 @ 80 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 150 150 150))).
+			brush: (SolidBrush color: (Color fromArray: #(255 150 150 150))).
 	^bitmap!
 
 exampleGdipIAAlphaBlending
@@ -205,18 +205,18 @@ exampleGdipIAAlphaBlending
 	"
 
 	| bitmap graphics image pen colorMatrix imageAtt |
-	bitmap := GdiplusBitmap extent: 250 @ 150.
+	bitmap := Bitmap extent: 250 @ 150.
 	graphics := bitmap graphics.
-	image := GdiplusBitmap fromFile: self fileResource pafFish32x32png.
+	image := Bitmap fromFile: self fileResource pafFish32x32png.
 	"Initialize the color matrix and change the value at row 4 column 4."
 	colorMatrix := GpColorMatrix identity atPoint: 4 @ 4 put: 0.8.
 	"Create an ImageAttributes object and set its color matrix. "
-	imageAtt := GdiplusImageAttributes new colorMatrix: colorMatrix.
+	imageAtt := ImageAttributes new colorMatrix: colorMatrix.
 	"First draw a wide black line. "
-	pen := GdiplusPen color: (Color fromArray: #(255 0 0 0)) width: 5.
+	pen := Pen color: (Color fromArray: #(255 0 0 0)) width: 5.
 	graphics drawLine: (10 @ 55 corner: 200 @ 55) pen: pen.
 	"Now draw the semitransparent bitmap image"
-	graphics 
+	graphics
 		drawImage: image
 		at: 30 @ 0
 		extent: image extent * 3
@@ -233,10 +233,10 @@ exampleGdipIAColorKey
 	"
 
 	| bitmap graphics image imageAtt |
-	bitmap := GdiplusBitmap extent: 450 @ 250.
+	bitmap := Bitmap extent: 450 @ 250.
 	graphics := bitmap graphics.
-	image := GdiplusImageAttributes exampleColorKeyTest.
-	(imageAtt := GdiplusImageAttributes new) 
+	image := ImageAttributes exampleColorKeyTest.
+	(imageAtt := ImageAttributes new)
 		colorKeys: ColorAdjustTypeBitmap
 		colorLow: (Color fromArray: #(255 100 95 30))
 		colorHigh: (Color fromArray: #(255 250 245 60)).
@@ -250,8 +250,7 @@ exampleGdipIAColorKey
 			unit: UnitPixel
 			attributes: imageAtt;
 		drawString: 'Original' at: 10 @ 40;
-		drawString: 'Color key set - middle stripe is transparent'
-			layoutRect: (210 @ 20 extent: 220 @ 50).
+		drawString: 'Color key set - middle stripe is transparent' layoutRect: (210 @ 20 extent: 220 @ 50).
 	^bitmap!
 
 exampleGdipIAColorMatrix
@@ -261,9 +260,9 @@ exampleGdipIAColorMatrix
  	"
 
 	| bitmap image brush colorMatrix imageAttributes |
-	image := GdiplusBitmap extent: 160 @ 120.
+	image := Bitmap extent: 160 @ 120.
 	"Create an image that's a solid color."
-	brush := GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0 0.4)).
+	brush := SolidBrush color: (Color fromNormalizedArray: #(1 0.2 0 0.4)).
 	image graphics fillRectangle: (Point zero extent: image extent) brush: brush.
 	"Create a color matrix and draw the image unchanged and changed."
 	(colorMatrix := GpColorMatrix identity)
@@ -271,9 +270,9 @@ exampleGdipIAColorMatrix
 		atPoint: 5 @ 1 put: 0.2;
 		atPoint: 5 @ 2 put: 0.2;
 		atPoint: 5 @ 3 put: 0.2.
-	imageAttributes := GdiplusImageAttributes new colorMatrix: colorMatrix.
-	bitmap := GdiplusBitmap extent: 400 @ 330.
-	(bitmap graphics)
+	imageAttributes := ImageAttributes new colorMatrix: colorMatrix.
+	bitmap := Bitmap extent: 400 @ 330.
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
 			at: 200 @ 10
@@ -283,8 +282,8 @@ exampleGdipIAColorMatrix
 			unit: UnitPixel
 			attributes: imageAttributes.
 	"Using the same color matrix, draw a picture, unchanged and changed."
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	(bitmap graphics)
+	image := Image fromFile: self fileResource pafEyeJpg.
+	bitmap graphics
 		drawImage: image
 			at: 10 @ 150
 			extent: image extent / 4;
@@ -312,8 +311,8 @@ exampleGdipIAColorRemap
 	(table at: 1)
 		oldColor: Color red argbCode;
 		newColor: Color blue argbCode.
-	imageAttributes := GdiplusImageAttributes new remapTable: table.
-	bitmap := GdiplusBitmap extent: 400 @ 200.
+	imageAttributes := ImageAttributes new remapTable: table.
+	bitmap := Bitmap extent: 400 @ 200.
 	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
@@ -333,10 +332,10 @@ exampleGdipIAGamma
 	"
 
 	| image graphics bitmap imageAtt |
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	imageAtt := GdiplusImageAttributes new.
+	image := Image fromFile: self fileResource pafEyeJpg.
+	imageAtt := ImageAttributes new.
 	imageAtt gamma: 0.7 type: ColorAdjustTypeBitmap.
-	bitmap := GdiplusBitmap extent: 700 @ 300.
+	bitmap := Bitmap extent: 700 @ 300.
 	graphics := bitmap graphics.
 	graphics
 		drawImage: image
@@ -359,9 +358,9 @@ exampleGdipIAOutputChannel
 	"
 
 	| bitmap graphics image imageAtt |
-	bitmap := GdiplusBitmap extent: 550 @ 200.
+	bitmap := Bitmap extent: 550 @ 200.
 	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: self fileResource pafMosaic2Bmp.
+	image := Image fromFile: self fileResource pafMosaic2Bmp.
 	graphics
 		drawString: 'CMYK intensities of an image' at: 150 @ 10;
 		drawString: 'Original' at: 10 @ 50;
@@ -370,9 +369,9 @@ exampleGdipIAOutputChannel
 		drawString: 'Yellow' at: 310 @ 50;
 		drawString: 'Black' at: 410 @ 50.
 	graphics drawImage: image at: 10 @ 70.
-	imageAtt := GdiplusImageAttributes new.
+	imageAtt := ImageAttributes new.
 	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsC.
-	graphics 
+	graphics
 		drawImage: image
 		at: 110 @ 70
 		extent: image extent
@@ -381,7 +380,7 @@ exampleGdipIAOutputChannel
 		unit: UnitPixel
 		attributes: imageAtt.
 	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsM.
-	graphics 
+	graphics
 		drawImage: image
 		at: 210 @ 70
 		extent: image extent
@@ -390,7 +389,7 @@ exampleGdipIAOutputChannel
 		unit: UnitPixel
 		attributes: imageAtt.
 	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsY.
-	graphics 
+	graphics
 		drawImage: image
 		at: 310 @ 70
 		extent: image extent
@@ -399,7 +398,7 @@ exampleGdipIAOutputChannel
 		unit: UnitPixel
 		attributes: imageAtt.
 	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsK.
-	graphics 
+	graphics
 		drawImage: image
 		at: 410 @ 70
 		extent: image extent
@@ -421,15 +420,15 @@ exampleGdipIAScaleColors
 		self exampleGdipIAScaleColors showExample
  	"
 
-	| bitmap bars image brush colorMatrix imageAttributes |
+	| bitmap bars image colorMatrix imageAttributes |
 	bars := self exampleColorBars2.
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image := Image fromFile: self fileResource pafEyeJpg.
 	colorMatrix := GpColorMatrix identity.
 	colorMatrix atPoint: 3 @ 3 put: 2.
-	imageAttributes := GdiplusImageAttributes new.
+	imageAttributes := ImageAttributes new.
 	imageAttributes colorMatrix: colorMatrix.
-	bitmap := GdiplusBitmap extent: 600 @ 300.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 600 @ 300.
+	bitmap graphics
 		drawImage: bars at: 10 @ 10;
 		drawImage: bars
 			at: 200 @ 10
@@ -452,7 +451,7 @@ exampleGdipIAScaleColors
 		atPoint: 2 @ 2 put: 0.65;
 		atPoint: 3 @ 3 put: 0.5.
 	imageAttributes colorMatrix: colorMatrix.
-	(bitmap graphics)
+	bitmap graphics
 		drawImage: bars at: 10 @ 150;
 		drawImage: bars
 			at: 200 @ 150
@@ -478,14 +477,14 @@ exampleGdipIAShearColors
 		self exampleGdipIAShearColors showExample
  	"
 
-	| bitmap image brush colorMatrix imageAttributes |
+	| bitmap image colorMatrix imageAttributes |
 	image := self exampleColorBars4.
 	colorMatrix := GpColorMatrix identity.
 	colorMatrix atPoint: 3 @ 1 put: 0.5.
-	imageAttributes := GdiplusImageAttributes new.
+	imageAttributes := ImageAttributes new.
 	imageAttributes colorMatrix: colorMatrix.
-	bitmap := GdiplusBitmap extent: 600 @ 150.
-	(bitmap graphics)
+	bitmap := Bitmap extent: 600 @ 150.
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
 			at: 200 @ 10
@@ -494,8 +493,8 @@ exampleGdipIAShearColors
 			extent: image extent
 			unit: UnitPixel
 			attributes: imageAttributes.
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	bitmap graphics 
+	image := Image fromFile: self fileResource pafEyeJpg.
+	bitmap graphics
 		drawImage: image
 		at: 400 @ 10
 		extent: image extent / 4
@@ -512,12 +511,12 @@ exampleGdipIAThreshold
 	"
 
 	| bitmap graphics image imageAtt |
-	bitmap := GdiplusBitmap extent: 300 @ 150.
+	bitmap := Bitmap extent: 300 @ 150.
 	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: self fileResource pafFish32x32png.
+	image := Image fromFile: self fileResource pafFish32x32png.
 	"Create an ImageAttributes object, and set its bitmap threshold."
-	imageAtt := GdiplusImageAttributes new threshold: 0.6.
-	graphics 
+	imageAtt := ImageAttributes new threshold: 0.6.
+	graphics
 		drawImage: image
 		at: 100 @ 10
 		extent: image extent * 3
@@ -536,13 +535,13 @@ exampleGdipIATranslateColors
 		self exampleGdipIATranslateColors showExample
  	"
 
-	| bitmap image brush colorMatrix imageAttributes |
+	| bitmap image colorMatrix imageAttributes |
 	image := self exampleColorBars1.
 	colorMatrix := GpColorMatrix identity.
 	colorMatrix atPoint: 5 @ 1 put: 0.75.
-	imageAttributes := GdiplusImageAttributes new colorMatrix: colorMatrix.
-	bitmap := GdiplusBitmap extent: 400 @ 300.
-	(bitmap graphics)
+	imageAttributes := ImageAttributes new colorMatrix: colorMatrix.
+	bitmap := Bitmap extent: 400 @ 300.
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
 			at: 200 @ 10
@@ -551,8 +550,8 @@ exampleGdipIATranslateColors
 			extent: image extent
 			unit: UnitPixel
 			attributes: imageAttributes.
-	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	(bitmap graphics)
+	image := Image fromFile: self fileResource pafEyeJpg.
+	bitmap graphics
 		drawImage: image
 			at: 10 @ 150
 			extent: image extent / 4;
@@ -567,32 +566,32 @@ exampleGdipIATranslateColors
 
 exampleRemapInput
 	| bitmap |
-	bitmap := GdiplusBitmap extent: 160 @ 120.
+	bitmap := Bitmap extent: 160 @ 120.
 	bitmap graphics
 		clear: Color red;
-		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (GdiplusSolidBrush color: Color yellow);
-		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (GdiplusSolidBrush color: Color cyan);
-		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (GdiplusSolidBrush color: Color green);
-		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (GdiplusSolidBrush color: Color magenta).
+		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (SolidBrush color: Color yellow);
+		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (SolidBrush color: Color cyan);
+		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (SolidBrush color: Color green);
+		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (SolidBrush color: Color magenta).
 	^bitmap!
 
 new
-	^self fromInitializer: GdiplusImageAttributesInitializer default! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars1!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars2!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars3!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars4!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorKeyTest!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAAlphaBlending!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorKey!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorMatrix!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorRemap!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAGamma!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAOutputChannel!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAScaleColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAShearColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAThreshold!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIATranslateColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleRemapInput!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #new!instance creation!public! !
+	^self fromInitializer: ImageAttributesInitializer default! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars1!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars2!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars3!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars4!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorKeyTest!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAAlphaBlending!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorKey!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorMatrix!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorRemap!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAGamma!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAOutputChannel!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAScaleColors!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAShearColors!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAThreshold!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIATranslateColors!examples!public!sunit! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleRemapInput!examples!private! !
+!Graphics.Gdiplus.ImageAttributes class categoriesFor: #new!instance creation!public! !
 

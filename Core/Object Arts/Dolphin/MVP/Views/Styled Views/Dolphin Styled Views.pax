@@ -19,6 +19,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Gdiplus\Gdiplus'
+	'..\..\Gdiplus\Gdiplus (Old Names)'
 ).
 
 package!

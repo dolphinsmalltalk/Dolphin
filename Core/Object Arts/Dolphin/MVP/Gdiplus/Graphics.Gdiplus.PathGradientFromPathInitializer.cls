@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.PathGradientFromPathInitializer'
 	instanceVariableNames: 'path'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPathGradientFromPathInitializer guid: (GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
-GdiplusPathGradientFromPathInitializer comment: ''!
-!GdiplusPathGradientFromPathInitializer categoriesForClass!Unclassified! !
-!GdiplusPathGradientFromPathInitializer methodsFor!
+Graphics.Gdiplus.PathGradientFromPathInitializer guid: (Core.GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathGradientFromPathInitializer comment: ''!
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer methodsFor!
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalHandle new.
+	gpHandle := Handle new.
 	status := self library gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -26,14 +26,14 @@ isPersistent
 
 path: aGdiplusPath
 	path := aGdiplusPath! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #isPersistent!public! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #path:!initializing!private! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #isPersistent!public! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #path:!initializing!private! !
 
-!GdiplusPathGradientFromPathInitializer class methodsFor!
+!Graphics.Gdiplus.PathGradientFromPathInitializer class methodsFor!
 
 path: aGdiplusPath
 	^self new path: aGdiplusPath! !
-!GdiplusPathGradientFromPathInitializer class categoriesFor: #path:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer class categoriesFor: #path:!instance creation!public! !
 

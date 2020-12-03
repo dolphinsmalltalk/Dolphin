@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBrush subclass: #GdiplusPathGradientBrush
+Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.PathGradientBrush'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPathGradientBrush guid: (GUID fromString: '{c8f38622-766b-11d7-b609-00e0987e8081}')!
-GdiplusPathGradientBrush comment: 'A path gradient brush paints a color gradient in which the color changes from a center point outward to a boundary that is defined by a closed curve or path. The color gradient has one color at the center point and one or multiple colors at the boundary. '!
-!GdiplusPathGradientBrush categoriesForClass!Unclassified! !
-!GdiplusPathGradientBrush methodsFor!
+Graphics.Gdiplus.PathGradientBrush guid: (Core.GUID fromString: '{c8f38622-766b-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.PathGradientBrush comment: 'A path gradient brush paints a color gradient in which the color changes from a center point outward to a boundary that is defined by a closed curve or path. The color gradient has one color at the center point and one or multiple colors at the boundary. '!
+!Graphics.Gdiplus.PathGradientBrush categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.PathGradientBrush methodsFor!
 
-blendBellShape: focusReal scale: scaleReal 
+blendBellShape: focusReal scale: scaleReal
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientSigmaBlend: self asParameter
 				focus: focusReal
-				scale: scaleReal) = Ok 
+				scale: scaleReal) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientSigmaBlend failed' with: status]!
 
 blendColors
@@ -74,17 +74,17 @@ blendFactors
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlend failed' with: status].
 	^{factors asArray. positions asArray}!
 
-blendFactors: factorsArray positions: positionsArray 
+blendFactors: factorsArray positions: positionsArray
 	| status |
 	self assert: [factorsArray size = positionsArray size].
 	self assert: [positionsArray size >= 2].
 	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientBlend: self asParameter
 				blend: (FLOATArray withAll: factorsArray)
 				positions: (FLOATArray withAll: positionsArray)
-				count: factorsArray size) = Ok 
+				count: factorsArray size) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientBlend failed' with: status]!
 
 blendFactorsCount
@@ -96,12 +96,12 @@ blendFactorsCount
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlendCount failed' with: status].
 	^count value!
 
-blendTriangularShape: focusReal scale: scaleReal 
+blendTriangularShape: focusReal scale: scaleReal
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientLinearBlend: self asParameter
 				focus: focusReal
-				scale: scaleReal) = Ok 
+				scale: scaleReal) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientLinearBlend failed' with: status]!
 
 bounds
@@ -134,18 +134,18 @@ centerPoint
 	"Answer the center point of the receiver."
 
 	| status point |
-	point := POINT new.
+	point := POINTL new.
 	(status := GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter points: point)
 		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterPointI failed' with: status].
 	^point asPoint!
 
-centerPoint: aPoint 
+centerPoint: aPoint
 	"Set the center point of the receiver. By default, the center point is at the centroid of the 
 	receiver's boundary path, but it can be set to any location inside or outside the path."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPathGradientCenterPointI: self asParameter
-				points: (POINTL fromPoint: aPoint)) = Ok 
+				points: (POINTL fromPoint: aPoint)) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientCenterPointI failed' with: status]!
 
 focusScales
@@ -161,15 +161,15 @@ focusScales
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientFocusScales failed' with: status].
 	^x value @ y value!
 
-focusScales: aPoint 
+focusScales: aPoint
 	"Specify that the receiver's center color should appear within the receiver's boundary path 
 	scaled by a factor of aPoint in the x and y directions."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientFocusScales: self asParameter
 				xScale: aPoint x
-				yScale: aPoint y) = Ok 
+				yScale: aPoint y) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientFocusScales failed' with: status]!
 
 isGammaCorrected
@@ -178,16 +178,16 @@ isGammaCorrected
 	| status result |
 	result := SDWORD new.
 	(status := GdiplusLibrary default gdipGetPathGradientGammaCorrection: self asParameter
-				useGammaCorrection: result asParameter) = Ok 
+				useGammaCorrection: result asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientGammaCorrection failed' with: status].
 	^result ~= 0!
 
-isGammaCorrected: aBoolean 
+isGammaCorrected: aBoolean
 	"Set whether or not gamma correction should be applied to the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPathGradientGammaCorrection: self asParameter
-				useGammaCorrection: aBoolean asParameter) = Ok 
+				useGammaCorrection: aBoolean asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientGammaCorrection failed' with: status]!
 
 multiplyTransform: aGdiplusMatrix 
@@ -195,15 +195,15 @@ multiplyTransform: aGdiplusMatrix
 
 	self multiplyTransform: aGdiplusMatrix order: nil!
 
-multiplyTransform: aGdiplusMatrix order: aMatrixOrderConstant 
+multiplyTransform: aGdiplusMatrix order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and aGdiplusMatrix
 	with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipMultiplyPathGradientTransform: self asParameter
 				matrix: aGdiplusMatrix asParameter
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipMultiplyPathGradientTransform failed' with: status]!
 
 pointCount
@@ -211,15 +211,15 @@ pointCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientPointCount: self asParameter count: count) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientPointCount failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientPointCount: self asParameter count: count) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPointCount failed' with: status].
 	^count asInteger!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
 	| status |
-	(status := GdiplusLibrary default gdipResetPathGradientTransform: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipResetPathGradientTransform: self asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipResetPathGradientTransform failed' with: status]!
 
 rotateTransform: aRealPoint 
@@ -227,15 +227,15 @@ rotateTransform: aRealPoint
 
 	self rotateTransform: aRealPoint order: nil!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipRotatePathGradientTransform: self asParameter
 				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipRotatePathGradientTransform failed' with: status]!
 
 scaleTransform: aRealPoint 
@@ -243,16 +243,16 @@ scaleTransform: aRealPoint
 
 	self scaleTransform: aRealPoint order: nil!
 
-scaleTransform: aRealPoint order: aMatrixOrderConstant 
+scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipScalePathGradientTransform: self asParameter
 				sx: aRealPoint x
 				sy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipScalePathGradientTransform failed' with: status]!
 
 surroundColor: aColor
@@ -266,7 +266,7 @@ surroundColors
 	| status count colors |
 	count := self surroundColorsCount.
 	colors := DWORDArray new: count.
-	count := DWORD fromInteger: count. 
+	count := DWORD fromInteger: count.
 	(status := GdiplusLibrary default
 				gdipGetPathGradientSurroundColorsWithCount: self asParameter
 				color: colors
@@ -296,18 +296,18 @@ transform
 	"Answer a GdiplusMatrix that is the receiver's transformation matrix."
 
 	| status matrix |
-	matrix := GdiplusMatrix new.
+	matrix := Matrix new.
 	(status := GdiplusLibrary default gdipGetPathGradientTransform: self asParameter
-				matrix: matrix asParameter) = Ok 
+				matrix: matrix asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientTransform failed' with: status].
 	^matrix!
 
-transform: aGdiplusMatrix 
+transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPathGradientTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) = Ok 
+				matrix: aGdiplusMatrix asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientTransform failed' with: status]!
 
 translateTransform: aRealPoint 
@@ -315,16 +315,16 @@ translateTransform: aRealPoint
 
 	self translateTransform: aRealPoint order: nil!
 
-translateTransform: aRealPoint order: aMatrixOrderConstant 
+translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipTranslatePathGradientTransform: self asParameter
 				dx: aRealPoint x
 				dy: aRealPoint y
-				order: aMatrixOrderConstant) = Ok 
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipTranslatePathGradientTransform failed' with: status]!
 
 wrapMode
@@ -332,54 +332,54 @@ wrapMode
 
 	| status mode |
 	mode := DWORD new.
-	(status := GdiplusLibrary default gdipGetPathGradientWrapMode: self asParameter wrapMode: mode) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientWrapMode failed' with: status].
+	(status := GdiplusLibrary default gdipGetPathGradientWrapMode: self asParameter wrapMode: mode) = Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPathGradientWrapMode failed' with: status].
 	^mode asInteger!
 
-wrapMode: aWrapModeConstant 
+wrapMode: aWrapModeConstant
 	"Set if and how painting is done outside the receiver's boundary path."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPathGradientWrapMode: self asParameter
-				wrapMode: aWrapModeConstant) = Ok 
+				wrapMode: aWrapModeConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientWrapMode failed' with: status]! !
-!GdiplusPathGradientBrush categoriesFor: #blendBellShape:scale:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendColors!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendColors:positions:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendColorsCount!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendFactors!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendFactors:positions:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendFactorsCount!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #blendTriangularShape:scale:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #bounds!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #centerColor!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #centerColor:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #centerPoint!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #centerPoint:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #focusScales!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #focusScales:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #isGammaCorrected!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #isGammaCorrected:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #multiplyTransform:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #multiplyTransform:order:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #pointCount!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #resetTransform!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #rotateTransform:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #rotateTransform:order:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #scaleTransform:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #scaleTransform:order:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #surroundColor:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #surroundColors!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #surroundColors:!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #surroundColorsCount!accessing-properties!private! !
-!GdiplusPathGradientBrush categoriesFor: #transform!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #transform:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #translateTransform:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #translateTransform:order:!accessing-transformations!public! !
-!GdiplusPathGradientBrush categoriesFor: #wrapMode!accessing-properties!public! !
-!GdiplusPathGradientBrush categoriesFor: #wrapMode:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendBellShape:scale:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors:positions:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColorsCount!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactors!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactors:positions:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactorsCount!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendTriangularShape:scale:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #bounds!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerColor!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerColor:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerPoint!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerPoint:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #focusScales!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #focusScales:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #isGammaCorrected!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #isGammaCorrected:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #multiplyTransform:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #multiplyTransform:order:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #pointCount!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #resetTransform!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #rotateTransform:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #rotateTransform:order:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #scaleTransform:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #scaleTransform:order:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColor:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColors!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColors:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColorsCount!accessing-properties!private! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #transform!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #transform:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #translateTransform:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #translateTransform:order:!accessing-transformations!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #wrapMode!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesFor: #wrapMode:!accessing-properties!public! !
 
-!GdiplusPathGradientBrush class methodsFor!
+!Graphics.Gdiplus.PathGradientBrush class methodsFor!
 
 exampleGdipPGBlendColors
 	"This example displays a triangular brush with different color and positions controlling the gradient areas.
@@ -388,9 +388,9 @@ exampleGdipPGBlendColors
 	"
 
 	| bitmap graphics brush colors |
-	bitmap := GdiplusBitmap extent: 400 @ 400.
+	bitmap := Bitmap extent: 400 @ 400.
 	graphics := bitmap graphics.
-	brush := GdiplusPathGradientBrush points: {100 @ 0. 200 @ 200. 0 @ 200} wrapMode: WrapModeTile.
+	brush := PathGradientBrush points: {100 @ 0. 200 @ 200. 0 @ 200} wrapMode: WrapModeTile.
 	colors := self rgb.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -419,10 +419,10 @@ exampleGdipPGBlendFactors
 	"
 
 	| bitmap graphics path brush |
-	bitmap := GdiplusBitmap extent: 600 @ 300.
+	bitmap := Bitmap extent: 600 @ 300.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 corner: 200 @ 150).
-	(brush := GdiplusPathGradientBrush path: path)
+	path := Path new addEllipse: (0 @ 0 corner: 200 @ 150).
+	(brush := PathGradientBrush path: path)
 		wrapMode: WrapModeTile;
 		centerColor: Color blue;
 		surroundColors: (Array new: brush pointCount withAll: Color red).
@@ -431,8 +431,8 @@ exampleGdipPGBlendFactors
 	graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
 	brush blendFactors: #(0 0.1 0.5 1) positions: #(0 0.3 0.7 1).
 	graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
-	path := GdiplusGraphicsPath new addRectangle: (0 @ 0 corner: 200 @ 150).
-	(brush := GdiplusPathGradientBrush path: path)
+	path := Path new addRectangle: (0 @ 0 corner: 200 @ 150).
+	(brush := PathGradientBrush path: path)
 		wrapMode: WrapModeTile;
 		centerColor: Color blue;
 		surroundColors: {Color green. Color red}.
@@ -453,17 +453,17 @@ exampleGdipPGBounds
 	"
 
 	| bitmap points brush bounds |
-	bitmap := GdiplusBitmap extent: 250 @ 300.
+	bitmap := Bitmap extent: 250 @ 300.
 	points := {0 @ 0. 120 @ 20. 70 @ 80. 30 @ 180}.
 	"Uncomment the next line and see how this doesn't seem to work right."
 	"points := points collect: [:e | e + (20 @ 30)]."
-	brush := GdiplusPathGradientBrush points: points.
+	brush := PathGradientBrush points: points.
 	bitmap graphics translateTransform: 20 @ 30.
 	bounds := brush bounds.
 	bitmap graphics
 		fillRectangle: bounds brush: brush;
-		drawRectangle: bounds pen: GdiplusPen new;
-		drawPolygon: points pen: GdiplusPen red.
+		drawRectangle: bounds pen: Pen new;
+		drawPolygon: points pen: Pen red.
 	"	fillPolygon: points brush: brush.	"
 	^bitmap!
 
@@ -474,9 +474,9 @@ exampleGdipPGCenterColor
 	"
 
 	| bitmap path brush |
-	bitmap := GdiplusBitmap extent: 350 @ 250.
-	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
-	brush := GdiplusPathGradientBrush path: path.
+	bitmap := Bitmap extent: 350 @ 250.
+	path := Path new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := PathGradientBrush path: path.
 	brush centerColor: Color blue.
 	bitmap graphics fillRectangle: (10 @ 10 corner: 300 @ 200) brush: brush.
 	^bitmap!
@@ -488,10 +488,10 @@ exampleGdipPGCenterPoint
 	"
 
 	| bitmap graphics path brush |
-	bitmap := GdiplusBitmap extent: 300 @ 450.
+	bitmap := Bitmap extent: 300 @ 450.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new addEllipse: (Point zero extent: 300 @ 150).
-	(brush := GdiplusPathGradientBrush path: path)
+	path := Path new addEllipse: (Point zero extent: 300 @ 150).
+	(brush := PathGradientBrush path: path)
 		centerColor: Color blue;
 		wrapMode: WrapModeTile;
 		surroundColor: Color cyan.
@@ -512,8 +512,8 @@ exampleGdipPGFocusScales
 	"
 
 	| bitmap brush focusBrush |
-	bitmap := GdiplusBitmap extent: 500 @ 250.
-	brush := GdiplusPathGradientBrush points: self triangle.
+	bitmap := Bitmap extent: 500 @ 250.
+	brush := PathGradientBrush points: self triangle.
 	brush blendColors: {Color red. Color blue} positions: #(0 1).
 	focusBrush := brush clone focusScales: 0.2 @ 0.6.
 	bitmap graphics
@@ -532,8 +532,8 @@ exampleGdipPGGamma
 	"
 
 	| bitmap points path colors brush |
-	bitmap := GdiplusBitmap extent: 400 @ 200.
-	points := (OrderedCollection new)
+	bitmap := Bitmap extent: 400 @ 200.
+	points := OrderedCollection new
 				add: 75 @ 0;
 				add: 100 @ 50;
 				add: 150 @ 50;
@@ -545,8 +545,8 @@ exampleGdipPGGamma
 				add: 0 @ 50;
 				add: 50 @ 50;
 				yourself.
-	path := GdiplusGraphicsPath new addLines: points.
-	colors := (OrderedCollection new)
+	path := Path new addLines: points.
+	colors := OrderedCollection new
 				add: Color black;
 				add: Color green;
 				add: Color blue;
@@ -558,12 +558,12 @@ exampleGdipPGGamma
 				add: Color black;
 				add: Color green;
 				yourself.
-	(brush := GdiplusPathGradientBrush path: path)
+	(brush := PathGradientBrush path: path)
 		centerColor: Color red;
 		surroundColors: colors.
 	bitmap graphics fillPath: path brush: brush.
 	brush isGammaCorrected: true.
-	(bitmap graphics)
+	bitmap graphics
 		translateTransform: 200 @ 0;
 		fillPath: path brush: brush;
 		resetTransform;
@@ -578,14 +578,14 @@ exampleGdipPGMultiply
 	"
 
 	| bitmap graphics points matrix brush |
-	bitmap := GdiplusBitmap extent: 650 @ 350.
+	bitmap := Bitmap extent: 650 @ 350.
 	graphics := bitmap graphics.
 	points := {0 @ 0. 150 @ 0. 150 @ 150}.
-	brush := GdiplusPathGradientBrush points: points.
+	brush := PathGradientBrush points: points.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 40.
-	matrix := GdiplusMatrix fromArray: #(1 0 0 1 150 150).
+	matrix := Matrix fromArray: #(1 0 0 1 150 150).
 	brush scaleTransform: 3 @ 1 order: nil.
 	graphics
 		fillRectangle: (0 @ 0 extent: 450 @ 150) brush: brush;
@@ -602,12 +602,12 @@ exampleGdipPGScale
 		self exampleGdipPGScale showExample
 	"
 
-	| bitmap points brush scaledBrush |
-	bitmap := GdiplusBitmap extent: 650 @ 350.
-	brush := GdiplusPathGradientBrush points: self triangle.
+	| bitmap brush scaledBrush |
+	bitmap := Bitmap extent: 650 @ 350.
+	brush := PathGradientBrush points: self triangle.
 	brush centerColor: Color red.
 	scaledBrush := brush copy scaleTransform: 3 @ 1.5.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 40;
 		fillRectangle: (0 @ 0 extent: 600 @ 600) brush: scaledBrush;
@@ -621,8 +621,8 @@ exampleGdipPGSurroundColors
 	"
 
 	| bitmap brush |
-	bitmap := GdiplusBitmap extent: 400 @ 400.
-	brush := GdiplusPathGradientBrush points: self triangle.
+	bitmap := Bitmap extent: 400 @ 400.
+	brush := PathGradientBrush points: self triangle.
 	brush wrapMode: WrapModeTile.
 	brush centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
@@ -641,9 +641,9 @@ exampleGdipPGSurroundColors2
 	"
 
 	| bitmap path brush |
-	bitmap := GdiplusBitmap extent: 600 @ 450.
-	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 extent: 200 @ 150).
-	(brush := GdiplusPathGradientBrush path: path)
+	bitmap := Bitmap extent: 600 @ 450.
+	path := Path new addEllipse: (0 @ 0 extent: 200 @ 150).
+	(brush := PathGradientBrush path: path)
 		wrapMode: WrapModeTile;
 		centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
@@ -675,9 +675,9 @@ exampleGdipPGTransform
 	"
 
 	| bitmap graphics matrix brush |
-	bitmap := GdiplusBitmap extent: 500 @ 350.
+	bitmap := Bitmap extent: 500 @ 350.
 	graphics := bitmap graphics.
-	brush := GdiplusPathGradientBrush points: self triangle.
+	brush := PathGradientBrush points: self triangle.
 	brush wrapMode: WrapModeTile.
 	brush centerColor: Color yellow.
 	brush surroundColors: self rgb.
@@ -685,7 +685,7 @@ exampleGdipPGTransform
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 0.
 	"Set the transformation for the brush (rotate, then translate)."
-	matrix := GdiplusMatrix fromArray: #(0 1 -1 0 250 100).
+	matrix := Matrix fromArray: #(0 1 -1 0 250 100).
 	brush transform: matrix.
 	graphics
 		fillRectangle: (250 @ 100 extent: 200 @ 200) brush: brush;
@@ -699,11 +699,11 @@ exampleGdipPGTranslate
 	"
 
 	| bitmap brush translateBrush |
-	bitmap := GdiplusBitmap extent: 400 @ 300.
-	brush := GdiplusPathGradientBrush points: self triangle.
+	bitmap := Bitmap extent: 400 @ 300.
+	brush := PathGradientBrush points: self triangle.
 	brush centerColor: Color blue.
 	translateBrush := brush clone translateTransform: 125 @ 75.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 0;
 		fillRectangle: (0 @ 0 extent: 400 @ 300) brush: translateBrush;
@@ -717,7 +717,7 @@ exampleGdipPGWrapMode
 	"
 
 	| bitmap pathPoints brush points modes |
-	bitmap := GdiplusBitmap extent: 600 @ 400.
+	bitmap := Bitmap extent: 600 @ 400.
 	pathPoints := {5 @ 5. 25 @ 30. 35 @ 60. 10 @ 50}.
 	points := {0 @ 0. 200 @ 0. 400 @ 0. 0 @ 200. 200 @ 200}.
 	"Take out 'reverse' in next line and see the effect on WrapModeClamp."
@@ -726,7 +726,7 @@ exampleGdipPGWrapMode
 	modes with: points
 		do: 
 			[:assoc :point |
-			brush := GdiplusPathGradientBrush points: pathPoints wrapMode: assoc value.
+			brush := PathGradientBrush points: pathPoints wrapMode: assoc value.
 			brush centerColor: Color red.
 			bitmap graphics
 				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
@@ -740,12 +740,12 @@ examplesWorkspace
 	"
 
 	| graphics bitmap points brush path colors rect |
-	#GdiplusPathGradientBrush.
+	#'Graphics.Gdiplus.PathGradientBrush'.
 
 	"#blendFactors:positions:"
-	graphics := (bitmap := GdiplusBitmap new) graphics.
-	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
-	brush := GdiplusPathGradientBrush path: path.
+	graphics := (bitmap := Bitmap new) graphics.
+	path := Path new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := PathGradientBrush path: path.
 	brush centerColor: Color red.
 	brush surroundColor: Color cyan.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.3 0.7 1).
@@ -753,9 +753,9 @@ examplesWorkspace
 	bitmap showExample.
 
 	"blendTriangularShape:scale:"
-	graphics := (bitmap := GdiplusBitmap new) graphics.
-	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
-	brush := GdiplusPathGradientBrush path: path.
+	graphics := (bitmap := Bitmap new) graphics.
+	path := Path new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := PathGradientBrush path: path.
 	brush centerColor: Color red.
 	colors := {Color blue}.
 	brush surroundColors: colors.
@@ -764,9 +764,9 @@ examplesWorkspace
 	bitmap showExample.
 
 	"blendBellShape:scale:"
-	graphics := (bitmap := GdiplusBitmap new) graphics.
-	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
-	brush := GdiplusPathGradientBrush path: path.
+	graphics := (bitmap := Bitmap new) graphics.
+	path := Path new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := PathGradientBrush path: path.
 	brush centerColor: Color red.
 	colors := {Color blue}.
 	brush surroundColors: colors.
@@ -775,34 +775,34 @@ examplesWorkspace
 	bitmap showExample.
 
 	"#bounds"
-	graphics := (bitmap := GdiplusBitmap new) graphics.
+	graphics := (bitmap := Bitmap new) graphics.
 	points := {30 @ 20. 150 @ 40. 100 @ 100. 60 @ 200}.
 	"	points := points collect: [:e | e - (30@20)].		"
 	"	points := points collect: [:e | e + (100@100)].	"
-	brush := GdiplusPathGradientBrush points: points.
+	brush := PathGradientBrush points: points.
 	rect := brush bounds.
 	graphics fillRectangle: rect brush: brush.
-	graphics drawRectangle: rect pen: GdiplusPen new.
-	graphics drawPolygon: points pen: GdiplusPen red.
+	graphics drawRectangle: rect pen: Pen new.
+	graphics drawPolygon: points pen: Pen red.
 	"	graphics fillPolygon: points brush: brush.	"
 	bitmap showExample!
 
-path: aGdiplusPath 
+path: aGdiplusPath
 	"Answer an instance of the receiver with boundary aGdiplusPath."
 
-	^self fromInitializer: (GdiplusPathGradientFromPathInitializer path: aGdiplusPath)!
+	^self fromInitializer: (PathGradientFromPathInitializer path: aGdiplusPath)!
 
 points: points 
 	"Answer an instance of the receiver with boundary path specified by points."
 
 	^self points: points wrapMode: WrapModeClamp!
 
-points: points wrapMode: aWrapModeConstant 
+points: points wrapMode: aWrapModeConstant
 	"Answer an instance of the receiver with boundary path specified by points and 
 	wrap mode specified by aWrapModeConstant."
 
-	^self fromInitializer: (GdiplusPathGradientFromPointsInitializer points: points
-				wrapMode: aWrapModeConstant)!
+	^self
+		fromInitializer: (PathGradientFromPointsInitializer points: points wrapMode: aWrapModeConstant)!
 
 rgb
 	"Private - Answer a 3-element Array containing red, green, and blue Colors."
@@ -811,24 +811,24 @@ rgb
 
 triangle
 	^{100 @ 0. 200 @ 200. 0 @ 200}! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBlendColors!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBlendFactors!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBounds!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGCenterColor!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGCenterPoint!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGFocusScales!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGGamma!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGMultiply!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGScale!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors2!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGTransform!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGTranslate!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGWrapMode!examples!public!sunit! !
-!GdiplusPathGradientBrush class categoriesFor: #examplesWorkspace!examples!private! !
-!GdiplusPathGradientBrush class categoriesFor: #path:!instance creation!public! !
-!GdiplusPathGradientBrush class categoriesFor: #points:!instance creation!public! !
-!GdiplusPathGradientBrush class categoriesFor: #points:wrapMode:!instance creation!public! !
-!GdiplusPathGradientBrush class categoriesFor: #rgb!examples!private! !
-!GdiplusPathGradientBrush class categoriesFor: #triangle!examples!private! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBlendColors!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBlendFactors!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBounds!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGCenterColor!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGCenterPoint!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGFocusScales!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGGamma!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGMultiply!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGScale!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors2!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGTransform!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGTranslate!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGWrapMode!examples!public!sunit! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #examplesWorkspace!examples!private! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #path:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #points:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #points:wrapMode:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #rgb!examples!private! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #triangle!examples!private! !
 

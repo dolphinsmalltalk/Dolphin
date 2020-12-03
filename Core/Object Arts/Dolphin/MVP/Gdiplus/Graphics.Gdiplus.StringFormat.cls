@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusBase subclass: #GdiplusStringFormat
+Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.StringFormat'
 	instanceVariableNames: ''
 	classVariableNames: 'GenericDefault GenericTypographic'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusStringFormat guid: (GUID fromString: '{f4b7aa81-5fd1-11d7-b609-00e0987e8081}')!
-GdiplusStringFormat comment: 'GdiplusStringFormat contains text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A GdiplusStringFormat instance can be passed to the GdiplusGraphics>>drawString methods to format a string.
+Graphics.Gdiplus.StringFormat guid: (Core.GUID fromString: '{f4b7aa81-5fd1-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.StringFormat comment: 'GdiplusStringFormat contains text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A GdiplusStringFormat instance can be passed to the GdiplusGraphics>>drawString methods to format a string.
 
 '!
-!GdiplusStringFormat categoriesForClass!Unclassified! !
-!GdiplusStringFormat methodsFor!
+!Graphics.Gdiplus.StringFormat categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.StringFormat methodsFor!
 
 alignment
 	"Answer a StringAlignment constant  that specifies how the receiver will align 
@@ -19,16 +19,16 @@ alignment
 
 	| status answer |
 	answer := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer) == Ok 
+	(status := GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetStringFormatAlign failed' with: status].
 	^answer asInteger!
 
-alignment: aStringAlignmentConstant 
+alignment: aStringAlignmentConstant
 	"Set how the receiver will align characters of a string horizontally within a layout rectangle."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatAlign: self asParameter
-				align: aStringAlignmentConstant) == Ok 
+				align: aStringAlignmentConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatAlign failed' with: status]!
 
 basicFree
@@ -47,8 +47,9 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle) == Ok 
+	gpHandle := Handle new.
+	(status := GdiplusLibrary default gdipCloneStringFormat: self asParameter
+				newFormat: gpHandle) == Ok
 		ifFalse: [GdiplusError signal: 'GdipCloneStringFormat failed' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
@@ -64,18 +65,18 @@ flags
 
 	| buf status |
 	buf := DWORDBytes new.
-	(status := GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf) == Ok 
+	(status := GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status].
 	^buf asSignedInteger!
 
-flags: anInteger 
+flags: anInteger
 	"Set the receiver's flags to specify one or more of text layout information (such as orientation 
 	and clipping) and display manipulations (such as ellipsis insertion, digit substitution, and 
 	representation of characters that are not supported by a font).  anInteger represents zero or
 	more StringFormatFlags constants."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger) == Ok 
+	(status := GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status]!
 
 getTabOffsets
@@ -101,12 +102,12 @@ lineAlignment
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status].
 	^buf asSignedInteger!
 
-lineAlignment: aStringAlignmentConstant 
+lineAlignment: aStringAlignmentConstant
 	"Set how the receiver will align a string vertically in a layout rectangle."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
-				align: aStringAlignmentConstant) == Ok 
+				align: aStringAlignmentConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status]!
 
 near
@@ -133,15 +134,15 @@ printOn: aStream
 				print: (trimmings at: self trimming + 1)].
 	aStream nextPut: $)!
 
-setTabStops: aRealArray first: aReal 
+setTabStops: aRealArray first: aReal
 	"Private - Set the receiver's tab-stops."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetStringFormatTabStops: self asParameter
 				firstTabOffset: aReal asParameter
 				count: aRealArray size
-				tabStops: (FLOATArray withAll: aRealArray)) == Ok 
+				tabStops: (FLOATArray withAll: aRealArray)) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTabStops failed' with: status]!
 
 tabOffsets
@@ -164,7 +165,7 @@ tabStopCount
 
 	| status count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count) 
+	(status := GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count)
 		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStopCount failed' with: status].
 	^count asInteger!
 
@@ -174,39 +175,39 @@ trimming
 
 	| status answer |
 	answer := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer) 
+	(status := GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer)
 		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTrimming failed' with: status].
 	^answer asInteger!
 
-trimming: aStringTrimmingConstant 
+trimming: aStringTrimmingConstant
 	"Set the receiver's trimming style to aStringTrimmingConstant.  This indicates how the 
 	receiver will trim characters from a string that's too large to fit in a layout rectangle."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
-				trimming: aStringTrimmingConstant) == Ok 
+				trimming: aStringTrimmingConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTrimming failed' with: status]! !
-!GdiplusStringFormat categoriesFor: #alignment!accessing!public! !
-!GdiplusStringFormat categoriesFor: #alignment:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusStringFormat categoriesFor: #centered!accessing!public! !
-!GdiplusStringFormat categoriesFor: #clone!copying!public! !
-!GdiplusStringFormat categoriesFor: #far!accessing!public! !
-!GdiplusStringFormat categoriesFor: #flags!accessing!public! !
-!GdiplusStringFormat categoriesFor: #flags:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #getTabOffsets!accessing!private! !
-!GdiplusStringFormat categoriesFor: #lineAlignment!accessing!public! !
-!GdiplusStringFormat categoriesFor: #lineAlignment:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #near!accessing!public! !
-!GdiplusStringFormat categoriesFor: #printOn:!public! !
-!GdiplusStringFormat categoriesFor: #setTabStops:first:!accessing!private! !
-!GdiplusStringFormat categoriesFor: #tabOffsets!accessing!public! !
-!GdiplusStringFormat categoriesFor: #tabOffsets:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #tabStopCount!accessing!private! !
-!GdiplusStringFormat categoriesFor: #trimming!accessing!public! !
-!GdiplusStringFormat categoriesFor: #trimming:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #alignment!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #alignment:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #centered!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #far!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #flags!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #flags:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #getTabOffsets!accessing!private! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #lineAlignment!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #lineAlignment:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #near!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #printOn:!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #setTabStops:first:!accessing!private! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #tabOffsets!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #tabOffsets:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #tabStopCount!accessing!private! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #trimming!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesFor: #trimming:!accessing!public! !
 
-!GdiplusStringFormat class methodsFor!
+!Graphics.Gdiplus.StringFormat class methodsFor!
 
 centered
 	"Answer an instance of the receiver with horizontal and vertical centering."
@@ -221,19 +222,19 @@ exampleGdipSFFormatText
 	"
 
 	| bitmap font rect |
-	bitmap := GdiplusBitmap extent: 300 @ 300.
-	font := GdiplusFont 
+	bitmap := Bitmap extent: 300 @ 300.
+	font := Font
 				name: 'Arial'
 				emSize: 12
 				style: FontStyleBold
 				unit: UnitPoint.
 	rect := bitmap bounds insetBy: 75.
-	(bitmap graphics)
+	bitmap graphics
 		drawString: 'Use StringFormat and Rectangle objects to center text in a rectangle.'
 			font: font
 			rect: rect
-			format: GdiplusStringFormat centered
-			brush: GdiplusSolidBrush blue;
+			format: StringFormat centered
+			brush: SolidBrush blue;
 		drawRectangle: rect.
 	^bitmap!
 
@@ -245,13 +246,13 @@ exampleGdipSFGenerics
 	"
 
 	| bitmap graphics brush font rect stringFormat pen |
-	bitmap := GdiplusBitmap extent: 300 @ 350.
+	bitmap := Bitmap extent: 300 @ 350.
 	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush blue.
-	font := GdiplusFont name: 'Times New Roman' pointSize: 12.
+	brush := SolidBrush blue.
+	font := Font name: 'Times New Roman' pointSize: 12.
 	rect := 30 @ 30 extent: 160 @ 50.
-	pen := GdiplusPen blue.
-	stringFormat := GdiplusStringFormat genericDefault.
+	pen := Pen blue.
+	stringFormat := StringFormat genericDefault.
 	graphics
 		drawString: 'This text was formatted by a generic StringFormat object.'
 		font: font
@@ -262,7 +263,7 @@ exampleGdipSFGenerics
 	rect moveBy: 0 @ 100.
 	pen color: Color red.
 	brush color: Color red.
-	stringFormat := GdiplusStringFormat genericTypographic.
+	stringFormat := StringFormat genericTypographic.
 	graphics
 		drawString: 'This text was formatted by a typographic StringFormat object.'
 		font: font
@@ -273,7 +274,7 @@ exampleGdipSFGenerics
 	rect moveBy: 0 @ 100.
 	pen color: Color black.
 	brush color: Color black.
-	stringFormat := GdiplusStringFormat new.
+	stringFormat := StringFormat new.
 	graphics
 		drawString: 'This text was formatted by a new StringFormat object.'
 		font: font
@@ -291,22 +292,22 @@ exampleGdipSFTabs
 	"
 
 	| bitmap graphics font rect stringFormat |
-	bitmap := GdiplusBitmap extent: 550 @ 200.
+	bitmap := Bitmap extent: 550 @ 200.
 	graphics := bitmap graphics.
-	font := GdiplusFont name: 'Courier New' pointSize: 12.
-	stringFormat := GdiplusStringFormat new tabOffsets: #(0 150 100 100).
+	font := Font name: 'Courier New' pointSize: 12.
+	stringFormat := StringFormat new tabOffsets: #(0 150 100 100).
 	rect := 20 @ 20 extent: 500 @ 100.
 	graphics
 		drawString: 'Name	Test 1	Test 2	Test 3'
 			font: font
 			rect: rect
 			format: stringFormat
-			brush: GdiplusSolidBrush blue;
+			brush: SolidBrush blue;
 		drawString: 'Tabs set at: ' , (stringFormat tabOffsets collect: [:e | e asInteger]) displayString
 			font: font
 			at: 20 @ 50
 			format: stringFormat
-			brush: GdiplusSolidBrush red;
+			brush: SolidBrush red;
 		drawRectangle: rect.
 	^bitmap!
 
@@ -317,23 +318,23 @@ exampleGdipSFTrimming
 	"
 
 	| bitmap graphics string font stringFormat row rect |
-	bitmap := GdiplusBitmap extent: 550 @ 450.
+	bitmap := Bitmap extent: 550 @ 450.
 	graphics := bitmap graphics.
 	string := 'One two three four five six seven eight nine'.
 	self enumsStringTrimming keysAndValuesDo: 
 			[:i :e |
-			stringFormat := GdiplusStringFormat new trimming: e value.
-			font := GdiplusFont name: 'Times New Roman' pointSize: 24.
+			stringFormat := StringFormat new trimming: e value.
+			font := Font name: 'Times New Roman' pointSize: 24.
 			row := (i - 1) // 2.
 			rect := ((i - 1 - (row * 2)) * 250 + 30) @ (row * 130 + 30) extent: 200 @ 80.
 			graphics
-				drawRectangle: rect pen: GdiplusPen black;
+				drawRectangle: rect pen: Pen black;
 				drawString: e key at: rect origin x @ rect origin y - 20;
 				drawString: string
 					font: font
 					rect: rect
 					format: stringFormat
-					brush: GdiplusSolidBrush red].
+					brush: SolidBrush red].
 	^bitmap!
 
 far
@@ -350,15 +351,15 @@ flags: formatFlags language: language
 	"Answer an instance of the receiver whose characteristics are set by formatFlags (zero or more
 	StringFormatFlags constants) and the specified <Integer> language."
 
-	^self fromInitializer: (GdiplusStringFormatInitializer formatFlags: formatFlags language: language)!
+	^self fromInitializer: (StringFormatInitializer formatFlags: formatFlags language: language)!
 
 genericDefault
 	^GenericDefault
-		ifNil: [GenericDefault := self fromInitializer: GdiplusStringFormatInitializer genericDefault]!
+		ifNil: [GenericDefault := self fromInitializer: StringFormatInitializer genericDefault]!
 
 genericTypographic
 	^GenericTypographic
-		ifNil: [GenericTypographic := self fromInitializer: GdiplusStringFormatInitializer genericTypographic]!
+		ifNil: [GenericTypographic := self fromInitializer: StringFormatInitializer genericTypographic]!
 
 near
 	"Answer an instance of the receiver with horizontal near alignment."
@@ -378,18 +379,18 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!GdiplusStringFormat class categoriesFor: #centered!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFFormatText!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFGenerics!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFTabs!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFTrimming!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #far!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #flags:!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #flags:language:!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #genericDefault!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #genericTypographic!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #near!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #new!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GdiplusStringFormat class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #centered!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFFormatText!examples!public!sunit! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFGenerics!examples!public!sunit! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFTabs!examples!public!sunit! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFTrimming!examples!public!sunit! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #far!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #flags:!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #flags:language:!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #genericDefault!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #genericTypographic!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #near!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormat class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
