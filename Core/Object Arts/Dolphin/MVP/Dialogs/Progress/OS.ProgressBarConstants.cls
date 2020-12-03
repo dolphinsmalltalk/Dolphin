@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ProgressBarConstants
+Kernel.SharedPool subclass: #'OS.ProgressBarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -21,6 +21,7 @@ SharedPool subclass: #ProgressBarConstants
 		'PBS_SMOOTH' -> 16r1.
 		'PBS_VERTICAL' -> 16r4
 	}!
-ProgressBarConstants guid: (GUID fromString: '{dd75854c-9e8c-4afe-b86a-d99b4dbaa1b1}')!
-ProgressBarConstants comment: ''!
-!ProgressBarConstants categoriesForClass!Unclassified! !
+OS.ProgressBarConstants guid: (Core.GUID fromString: '{dd75854c-9e8c-4afe-b86a-d99b4dbaa1b1}')!
+OS.ProgressBarConstants isNonInstantiable: true!
+OS.ProgressBarConstants comment: ''!
+!OS.ProgressBarConstants categoriesForClass!Unclassified! !

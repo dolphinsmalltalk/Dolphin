@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #ProgressBar
+UI.ValueConvertingControlView subclass: #'UI.ProgressBar'
 	instanceVariableNames: ''
 	classVariableNames: 'ValidRange'
-	poolDictionaries: 'ProgressBarConstants'
+	imports: #(#{OS.ProgressBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProgressBar guid: (GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
-ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
+UI.ProgressBar guid: (Core.GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
 Class Variables:
 	ValidRange	<Interval> describing the range of displayable <integer> values.
 
 '!
-!ProgressBar categoriesForClass!MVP-Views! !
-!ProgressBar methodsFor!
+!UI.ProgressBar categoriesForClass!MVP-Views! !
+!UI.ProgressBar methodsFor!
 
 backcolorChanged
 	"Private - Note that setting the colours of a progress bar has no effect when XP
@@ -129,26 +129,29 @@ state
 	to its current state"
 
 	^super state
-		add: (MessageSend receiver: self selector: #range: argument: self range);
+		add: (MessageSend
+					receiver: self
+					selector: #range:
+					argument: self range);
 		yourself! !
-!ProgressBar categoriesFor: #backcolorChanged!helpers!private! !
-!ProgressBar categoriesFor: #barPosition!accessing!private! !
-!ProgressBar categoriesFor: #barPosition:!accessing!private! !
-!ProgressBar categoriesFor: #defaultWindowStyle!constants!private! !
-!ProgressBar categoriesFor: #deltaBarPosition:!positioning!private! !
-!ProgressBar categoriesFor: #displayValue!private!updating! !
-!ProgressBar categoriesFor: #displayValue:!private!updating! !
-!ProgressBar categoriesFor: #forecolor:!accessing!public! !
-!ProgressBar categoriesFor: #incrementBy:!positioning!public! !
-!ProgressBar categoriesFor: #isSmooth!accessing-styles!public!updating! !
-!ProgressBar categoriesFor: #isSmooth:!accessing-styles!public!updating! !
-!ProgressBar categoriesFor: #onViewCreated!accessing!public! !
-!ProgressBar categoriesFor: #range!accessing!public! !
-!ProgressBar categoriesFor: #range:!accessing!public! !
-!ProgressBar categoriesFor: #setControlBackcolor:!accessing!private! !
-!ProgressBar categoriesFor: #state!accessing!private! !
+!UI.ProgressBar categoriesFor: #backcolorChanged!helpers!private! !
+!UI.ProgressBar categoriesFor: #barPosition!accessing!private! !
+!UI.ProgressBar categoriesFor: #barPosition:!accessing!private! !
+!UI.ProgressBar categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.ProgressBar categoriesFor: #deltaBarPosition:!positioning!private! !
+!UI.ProgressBar categoriesFor: #displayValue!private!updating! !
+!UI.ProgressBar categoriesFor: #displayValue:!private!updating! !
+!UI.ProgressBar categoriesFor: #forecolor:!accessing!public! !
+!UI.ProgressBar categoriesFor: #incrementBy:!positioning!public! !
+!UI.ProgressBar categoriesFor: #isSmooth!accessing-styles!public!updating! !
+!UI.ProgressBar categoriesFor: #isSmooth:!accessing-styles!public!updating! !
+!UI.ProgressBar categoriesFor: #onViewCreated!accessing!public! !
+!UI.ProgressBar categoriesFor: #range!accessing!public! !
+!UI.ProgressBar categoriesFor: #range:!accessing!public! !
+!UI.ProgressBar categoriesFor: #setControlBackcolor:!accessing!private! !
+!UI.ProgressBar categoriesFor: #state!accessing!private! !
 
-!ProgressBar class methodsFor!
+!UI.ProgressBar class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -179,10 +182,10 @@ winClassName
 
 	^'msctls_progress32'
 ! !
-!ProgressBar class categoriesFor: #defaultModel!models!public! !
-!ProgressBar class categoriesFor: #icon!constants!public! !
-!ProgressBar class categoriesFor: #initialize!development!initializing!private! !
-!ProgressBar class categoriesFor: #themePartName!constants!private! !
-!ProgressBar class categoriesFor: #validRange!constants!private! !
-!ProgressBar class categoriesFor: #winClassName!constants!private! !
+!UI.ProgressBar class categoriesFor: #defaultModel!models!public! !
+!UI.ProgressBar class categoriesFor: #icon!constants!public! !
+!UI.ProgressBar class categoriesFor: #initialize!development!initializing!private! !
+!UI.ProgressBar class categoriesFor: #themePartName!constants!private! !
+!UI.ProgressBar class categoriesFor: #validRange!constants!private! !
+!UI.ProgressBar class categoriesFor: #winClassName!constants!private! !
 
