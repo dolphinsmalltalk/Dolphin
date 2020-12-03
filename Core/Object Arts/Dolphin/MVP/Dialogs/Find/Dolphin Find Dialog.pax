@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Find Dialog'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Find Dialog
 Copyright (c) Object Arts Ltd. 2004.
@@ -12,8 +12,8 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AdvancedFindDetails}
-	#{AdvancedFindDialog}
+	#{UI.AdvancedFindDetails}
+	#{UI.AdvancedFindDialog}
 ).
 
 package setPrerequisites: #(
@@ -32,16 +32,16 @@ package!
 
 "Class Definitions"!
 
-FindDetails subclass: #AdvancedFindDetails
+UI.FindDetails subclass: #'UI.AdvancedFindDetails'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dialog subclass: #AdvancedFindDialog
+UI.Dialog subclass: #'UI.AdvancedFindDialog'
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'RegExpMask' -> 16r2.

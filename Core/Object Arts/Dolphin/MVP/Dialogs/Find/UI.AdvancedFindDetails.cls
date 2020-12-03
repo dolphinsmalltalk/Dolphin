@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FindDetails subclass: #AdvancedFindDetails
+UI.FindDetails subclass: #'UI.AdvancedFindDetails'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AdvancedFindDetails guid: (GUID fromString: '{6c4e30d4-924f-4c0a-be20-50f5ec823741}')!
-AdvancedFindDetails comment: ''!
-!AdvancedFindDetails categoriesForClass!Kernel-Objects! !
-!AdvancedFindDetails methodsFor!
+UI.AdvancedFindDetails guid: (Core.GUID fromString: '{6c4e30d4-924f-4c0a-be20-50f5ec823741}')!
+UI.AdvancedFindDetails comment: ''!
+!UI.AdvancedFindDetails categoriesForClass!Kernel-Objects! !
+!UI.AdvancedFindDetails methodsFor!
 
 findIn: aView range: anIntervalOfInteger
 	^self isRegularExpression
@@ -46,19 +46,19 @@ regularExpression
 		multiline: true;
 		global: true."
 	^regexp! !
-!AdvancedFindDetails categoriesFor: #findIn:range:!public! !
-!AdvancedFindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!AdvancedFindDetails categoriesFor: #isRegularExpression!public!testing! !
-!AdvancedFindDetails categoriesFor: #isRegularExpression:!accessing!public! !
-!AdvancedFindDetails categoriesFor: #regularExpression!accessing!public! !
+!UI.AdvancedFindDetails categoriesFor: #findIn:range:!public! !
+!UI.AdvancedFindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
+!UI.AdvancedFindDetails categoriesFor: #isRegularExpression!public!testing! !
+!UI.AdvancedFindDetails categoriesFor: #isRegularExpression:!accessing!public! !
+!UI.AdvancedFindDetails categoriesFor: #regularExpression!accessing!public! !
 
-!AdvancedFindDetails class methodsFor!
+!UI.AdvancedFindDetails class methodsFor!
 
 regexpClass
-	^IRegExp2!
+	^Smalltalk.IRegExp2!
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !
-!AdvancedFindDetails class categoriesFor: #regexpClass!constants!public! !
-!AdvancedFindDetails class categoriesFor: #searchModes!constants!public! !
+!UI.AdvancedFindDetails class categoriesFor: #regexpClass!constants!public! !
+!UI.AdvancedFindDetails class categoriesFor: #searchModes!constants!public! !
 
