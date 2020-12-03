@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequencedGrowableCollection subclass: #ListModel
+Core.SequencedGrowableCollection subclass: #'UI.ListModel'
 	instanceVariableNames: 'list events searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListModel guid: (GUID fromString: '{87b4c522-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListModel comment: 'ListModel implements the <listModel> protocol for identity based <sequencedCollecion>s. All of the manipulations that modify the list will trigger notification events such that Observers will be informed of the changes. The <listModel> protocol defines the following events:
+UI.ListModel guid: (Core.GUID fromString: '{87b4c522-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ListModel comment: 'ListModel implements the <listModel> protocol for identity based <sequencedCollecion>s. All of the manipulations that modify the list will trigger notification events such that Observers will be informed of the changes. The <listModel> protocol defines the following events:
 
 #listChanged
 #item:addedAtIndex:
@@ -24,8 +24,8 @@ Instance Variables:
 
 
 '!
-!ListModel categoriesForClass!Collections-Sequenceable!MVP-Models! !
-!ListModel methodsFor!
+!UI.ListModel categoriesForClass!Collections-Sequenceable!MVP-Models! !
+!UI.ListModel methodsFor!
 
 add: newElement
 	"Add newElement as a new element of the receiver. Answers newElement."
@@ -302,48 +302,48 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!ListModel categoriesFor: #add:!adding!public! !
-!ListModel categoriesFor: #add:afterIndex:!adding!public! !
-!ListModel categoriesFor: #addAll:!adding!public! !
-!ListModel categoriesFor: #addAnsweringIndex:!adding!public! !
-!ListModel categoriesFor: #at:!accessing!public! !
-!ListModel categoriesFor: #at:put:!accessing!public! !
-!ListModel categoriesFor: #beSorted!public!sorting! !
-!ListModel categoriesFor: #beSorted:!public!sorting! !
-!ListModel categoriesFor: #beUnsorted!public!sorting! !
-!ListModel categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #getEvents!events!private! !
-!ListModel categoriesFor: #includes:!public!searching! !
-!ListModel categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!ListModel categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #list!accessing!public! !
-!ListModel categoriesFor: #list:!accessing!public! !
-!ListModel categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!ListModel categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!ListModel categoriesFor: #notifyItem:updatedAtIndex:!private!updating! !
-!ListModel categoriesFor: #notifyListChanged!private!updating! !
-!ListModel categoriesFor: #postCopy!copying!public! !
-!ListModel categoriesFor: #refresh:!public!updating! !
-!ListModel categoriesFor: #refresh:ifAbsent:!public!updating! !
-!ListModel categoriesFor: #refreshAtIndex:!public!updating! !
-!ListModel categoriesFor: #removeAll!public!removing! !
-!ListModel categoriesFor: #removeAtIndex:!public!removing! !
-!ListModel categoriesFor: #resize:!mutating!private! !
-!ListModel categoriesFor: #searchPolicy!accessing!public! !
-!ListModel categoriesFor: #searchPolicy:!accessing!public! !
-!ListModel categoriesFor: #select:!enumerating!public! !
-!ListModel categoriesFor: #setEvents:!events!private! !
-!ListModel categoriesFor: #setList:searchPolicy:!initializing!private! !
-!ListModel categoriesFor: #size!accessing!public! !
-!ListModel categoriesFor: #sortAlgorithmClass!public!sorting! !
-!ListModel categoriesFor: #species!constants!public! !
-!ListModel categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.ListModel categoriesFor: #add:!adding!public! !
+!UI.ListModel categoriesFor: #add:afterIndex:!adding!public! !
+!UI.ListModel categoriesFor: #addAll:!adding!public! !
+!UI.ListModel categoriesFor: #addAnsweringIndex:!adding!public! !
+!UI.ListModel categoriesFor: #at:!accessing!public! !
+!UI.ListModel categoriesFor: #at:put:!accessing!public! !
+!UI.ListModel categoriesFor: #beSorted!public!sorting! !
+!UI.ListModel categoriesFor: #beSorted:!public!sorting! !
+!UI.ListModel categoriesFor: #beUnsorted!public!sorting! !
+!UI.ListModel categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
+!UI.ListModel categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
+!UI.ListModel categoriesFor: #getEvents!events!private! !
+!UI.ListModel categoriesFor: #includes:!public!searching! !
+!UI.ListModel categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!UI.ListModel categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!UI.ListModel categoriesFor: #list!accessing!public! !
+!UI.ListModel categoriesFor: #list:!accessing!public! !
+!UI.ListModel categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!UI.ListModel categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!UI.ListModel categoriesFor: #notifyItem:updatedAtIndex:!private!updating! !
+!UI.ListModel categoriesFor: #notifyListChanged!private!updating! !
+!UI.ListModel categoriesFor: #postCopy!copying!public! !
+!UI.ListModel categoriesFor: #refresh:!public!updating! !
+!UI.ListModel categoriesFor: #refresh:ifAbsent:!public!updating! !
+!UI.ListModel categoriesFor: #refreshAtIndex:!public!updating! !
+!UI.ListModel categoriesFor: #removeAll!public!removing! !
+!UI.ListModel categoriesFor: #removeAtIndex:!public!removing! !
+!UI.ListModel categoriesFor: #resize:!mutating!private! !
+!UI.ListModel categoriesFor: #searchPolicy!accessing!public! !
+!UI.ListModel categoriesFor: #searchPolicy:!accessing!public! !
+!UI.ListModel categoriesFor: #select:!enumerating!public! !
+!UI.ListModel categoriesFor: #setEvents:!events!private! !
+!UI.ListModel categoriesFor: #setList:searchPolicy:!initializing!private! !
+!UI.ListModel categoriesFor: #size!accessing!public! !
+!UI.ListModel categoriesFor: #sortAlgorithmClass!public!sorting! !
+!UI.ListModel categoriesFor: #species!constants!public! !
+!UI.ListModel categoriesFor: #stbSaveOn:!binary filing!public! !
 
-ListModel methodProtocol: #listModel attributes: #(#readOnly) selectors: #(#list #list:)!
-ListModel methodProtocol: #model attributes: #(#readOnly) selectors: #()!
+UI.ListModel methodProtocol: #listModel attributes: #(#readOnly) selectors: #(#list #list:)!
+UI.ListModel methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
-!ListModel class methodsFor!
+!UI.ListModel class methodsFor!
 
 defaultSearchPolicy
 	"Answer the default <searchPolicy> used by instances of the receiver."
@@ -399,13 +399,13 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
-!ListModel class categoriesFor: #defaultSearchPolicy!constants!public! !
-!ListModel class categoriesFor: #new!instance creation!public! !
-!ListModel class categoriesFor: #new:!instance creation!public! !
-!ListModel class categoriesFor: #newEquality!instance creation!public! !
-!ListModel class categoriesFor: #newWithSearchPolicy:!instance creation!public! !
-!ListModel class categoriesFor: #on:!instance creation!public! !
-!ListModel class categoriesFor: #on:searchPolicy:!instance creation!public! !
-!ListModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ListModel class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ListModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!UI.ListModel class categoriesFor: #new!instance creation!public! !
+!UI.ListModel class categoriesFor: #new:!instance creation!public! !
+!UI.ListModel class categoriesFor: #newEquality!instance creation!public! !
+!UI.ListModel class categoriesFor: #newWithSearchPolicy:!instance creation!public! !
+!UI.ListModel class categoriesFor: #on:!instance creation!public! !
+!UI.ListModel class categoriesFor: #on:searchPolicy:!instance creation!public! !
+!UI.ListModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.ListModel class categoriesFor: #stbVersion!binary filing!public! !
 

@@ -1,13 +1,13 @@
 ﻿| package |
 package := Package name: 'Dolphin List Models'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework List Models.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
 
 
 package setClassNames: #(
-	#{ListModel}
+	#{UI.ListModel}
 ).
 
 package setPrerequisites: #(
@@ -19,10 +19,10 @@ package!
 
 "Class Definitions"!
 
-SequencedGrowableCollection subclass: #ListModel
+Core.SequencedGrowableCollection subclass: #'UI.ListModel'
 	instanceVariableNames: 'list events searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
