@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromBitmapInitializerTest guid: (GUID fromString: '{acefb85f-8196-4e9b-b4fb-0c12068a6cad}')!
-GdiplusBitmapFromBitmapInitializerTest comment: ''!
-!GdiplusBitmapFromBitmapInitializerTest categoriesForClass!Unclassified! !
-!GdiplusBitmapFromBitmapInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest guid: (Core.GUID fromString: '{acefb85f-8196-4e9b-b4fb-0c12068a6cad}')!
+Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest methodsFor!
 
 gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,12 +17,12 @@ gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap
 
 setUp
 	super setUp.
-	model := GdiplusBitmapFromBitmapInitializer new library: self!
+	model := BitmapFromGdiBitmapInitializer new library: self!
 
 testCreateHandle
 	| bitmap |
-	bitmap := Bitmap
-				gdipCopyOfIcon: GdiplusBitmap icon
+	bitmap := Graphics.Bitmap
+				gdipCopyOfIcon: Bitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
 	model bitmap: bitmap.
@@ -35,8 +35,8 @@ testCreateHandle
 
 testCreateHandleFreesDC
 	| bitmap |
-	bitmap := Bitmap
-				gdipCopyOfIcon: GdiplusBitmap icon
+	bitmap := Graphics.Bitmap
+				gdipCopyOfIcon: Bitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
 	model bitmap: bitmap.
@@ -46,8 +46,8 @@ testCreateHandleFreesDC
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
 	self assertIsNil: bitmap hdc! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #testCreateHandleFreesDC!public!unit tests! !
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesFor: #testCreateHandleFreesDC!public!unit tests! !
 

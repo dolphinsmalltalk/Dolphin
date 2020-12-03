@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializer subclass: #GdiplusTestInitializer
+Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.Tests.TestInitializer'
 	instanceVariableNames: 'mockHandle arg1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusTestInitializer guid: (GUID fromString: '{256bd680-0b78-486f-a0a0-99651f0b42a0}')!
-GdiplusTestInitializer comment: ''!
-!GdiplusTestInitializer categoriesForClass!Unclassified! !
-!GdiplusTestInitializer methodsFor!
+Graphics.Gdiplus.Tests.TestInitializer guid: (Core.GUID fromString: '{256bd680-0b78-486f-a0a0-99651f0b42a0}')!
+Graphics.Gdiplus.Tests.TestInitializer comment: ''!
+!Graphics.Gdiplus.Tests.TestInitializer categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.TestInitializer methodsFor!
 
 = aGdiplusTestInitializer
 	"Arbitrary test for equality"
@@ -34,17 +34,17 @@ hash
 initialize
 	super initialize.
 	mockHandle := self! !
-!GdiplusTestInitializer categoriesFor: #=!accessing!comparison!public! !
-!GdiplusTestInitializer categoriesFor: #arg1!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #arg1:!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusTestInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public! !
-!GdiplusTestInitializer categoriesFor: #hash!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #initialize!initializing!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #=!accessing!comparison!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #arg1!accessing!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #arg1:!accessing!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #hash!accessing!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #initialize!initializing!public! !
 
-!GdiplusTestInitializer class methodsFor!
+!Graphics.Gdiplus.Tests.TestInitializer class methodsFor!
 
 new
 	^self basicNew initialize! !
-!GdiplusTestInitializer class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Tests.TestInitializer class categoriesFor: #new!instance creation!public! !
 

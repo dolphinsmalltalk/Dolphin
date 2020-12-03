@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusGraphicsFromImageInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsFromImageInitializerTest guid: (GUID fromString: '{de9caa66-14ef-49f9-8e8b-dbda54c36c53}')!
-GdiplusGraphicsFromImageInitializerTest comment: ''!
-!GdiplusGraphicsFromImageInitializerTest categoriesForClass!Unclassified! !
-!GdiplusGraphicsFromImageInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest guid: (Core.GUID fromString: '{de9caa66-14ef-49f9-8e8b-dbda54c36c53}')!
+Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest methodsFor!
 
 gdipGetImageGraphicsContext: image graphics: graphics 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,17 +17,17 @@ gdipGetImageGraphicsContext: image graphics: graphics
 
 setUp
 	super setUp.
-	model := GdiplusGraphicsFromImageInitializer new library: self!
+	model := GraphicsFromImageInitializer new library: self!
 
 testCreateHandle
 	| image |
-	image := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	image := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model image: image.
 	model createHandle.
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: image asParameter.
 	self assertLastArgIsHandle! !
-!GdiplusGraphicsFromImageInitializerTest categoriesFor: #gdipGetImageGraphicsContext:graphics:!accessing!public! !
-!GdiplusGraphicsFromImageInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusGraphicsFromImageInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesFor: #gdipGetImageGraphicsContext:graphics:!accessing!public! !
+!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.GraphicsFromImageInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 

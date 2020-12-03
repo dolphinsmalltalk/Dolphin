@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLinearGradientBrushFromRectInitializerTest guid: (GUID fromString: '{4159f1e0-74dd-4646-832a-12d38b4281c9}')!
-GdiplusLinearGradientBrushFromRectInitializerTest comment: ''!
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !
-!GdiplusLinearGradientBrushFromRectInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest guid: (Core.GUID fromString: '{4159f1e0-74dd-4646-832a-12d38b4281c9}')!
+Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest methodsFor!
 
 gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,7 +17,7 @@ gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrap
 
 setUp
 	super setUp.
-	model := GdiplusLinearGradientBrushFromRectInitializer new library: self!
+	model := LinearGradientBrushFromRectInitializer new library: self!
 
 testCreateHandle
 	| rectangle |
@@ -28,14 +28,14 @@ testCreateHandle
 		mode: LinearGradientModeBackwardDiagonal.
 	model createHandle.
 	self assert: constructorArgs size equals: 6.
-	self assert: constructorArgs first class identicalTo: RECT.
+	self assert: constructorArgs first class identicalTo: RECTL.
 	self assert: constructorArgs first asRectangle equals: rectangle.
 	self assert: constructorArgs second equals: 1.
 	self assert: constructorArgs third equals: 2.
 	self assert: constructorArgs fourth equals: LinearGradientModeBackwardDiagonal.
 	self assert: (constructorArgs at: 5) equals: WrapModeTile.
 	self assertLastArgIsHandle! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromRectInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenFromColorInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPenFromColorInitializerTest guid: (GUID fromString: '{af606711-5d59-44e2-b217-d6db5d89ffc4}')!
-GdiplusPenFromColorInitializerTest comment: ''!
-!GdiplusPenFromColorInitializerTest categoriesForClass!Unclassified! !
-!GdiplusPenFromColorInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.PenFromColorInitializerTest guid: (Core.GUID fromString: '{af606711-5d59-44e2-b217-d6db5d89ffc4}')!
+Graphics.Gdiplus.Tests.PenFromColorInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest methodsFor!
 
 gdipCreatePen1: color width: width unit: unit pen: pen 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,7 +17,7 @@ gdipCreatePen1: color width: width unit: unit pen: pen
 
 setUp
 	super setUp.
-	model := GdiplusPenFromColorInitializer new library: self!
+	model := PenFromColorInitializer new library: self!
 
 testCreateHandle
 	model color: (Color fromArgbCode: 1) width: 0.5.
@@ -36,8 +36,8 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs second equals: 1.0.
 	self assert: constructorArgs third equals: UnitWorld.
 	self assertLastArgIsHandle! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #gdipCreatePen1:width:unit:pen:!accessing!public! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest categoriesFor: #gdipCreatePen1:width:unit:pen:!accessing!public! !
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.PenFromColorInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
 

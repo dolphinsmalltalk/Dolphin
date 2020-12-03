@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GpColorMatrixTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GpColorMatrixTest'
 	instanceVariableNames: 'matrix'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GpColorMatrixTest guid: (GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
-GpColorMatrixTest comment: ''!
-!GpColorMatrixTest categoriesForClass!Unclassified! !
-!GpColorMatrixTest methodsFor!
+Graphics.Gdiplus.Tests.GpColorMatrixTest guid: (Core.GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
+Graphics.Gdiplus.Tests.GpColorMatrixTest comment: ''!
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest methodsFor!
 
 assertIsIdentity
 	1 to: 5
@@ -37,9 +37,9 @@ testConstruction
 testIdentity
 	self assert: (matrix atPoint: 1 @ 1) equals: 1.
 	self assertIsIdentity! !
-!GpColorMatrixTest categoriesFor: #assertIsIdentity!public!unit tests! !
-!GpColorMatrixTest categoriesFor: #setUp!public!setup! !
-!GpColorMatrixTest categoriesFor: #testAccessing!public!unit tests! !
-!GpColorMatrixTest categoriesFor: #testConstruction!public!unit tests! !
-!GpColorMatrixTest categoriesFor: #testIdentity!public!unit tests! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #assertIsIdentity!public!unit tests! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testAccessing!public!unit tests! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testConstruction!public!unit tests! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testIdentity!public!unit tests! !
 

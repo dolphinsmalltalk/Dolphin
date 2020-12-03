@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusHatchBrushTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusHatchBrushTest guid: (GUID fromString: '{be9147c0-8247-11d7-b609-00e0987e8081}')!
-GdiplusHatchBrushTest comment: ''!
-!GdiplusHatchBrushTest categoriesForClass!Unclassified! !
-!GdiplusHatchBrushTest methodsFor!
+Graphics.Gdiplus.Tests.HatchBrushTest guid: (Core.GUID fromString: '{be9147c0-8247-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.Tests.HatchBrushTest comment: ''!
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.HatchBrushTest methodsFor!
 
 setSampleDiagCross
-	model := GdiplusHatchBrush
+	model := HatchBrush
 				style: HatchStyleDiagonalCross
 				forecolor: Color red
 				backcolor: Color blue!
@@ -37,13 +37,13 @@ testConstructors
 testFillingCrossDiagonal
 	| bitmap |
 	self setSampleDiagCross.
-	bitmap := GdiplusBitmap extent: 200 @ 150.
+	bitmap := Bitmap extent: 200 @ 150.
 	bitmap graphics fillRectangle: (Point zero extent: bitmap extent) brush: model.
 	self assert: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 1).
 	self deny: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 0)! !
-!GdiplusHatchBrushTest categoriesFor: #setSampleDiagCross!public! !
-!GdiplusHatchBrushTest categoriesFor: #setUp!public! !
-!GdiplusHatchBrushTest categoriesFor: #testClone!public!unit tests! !
-!GdiplusHatchBrushTest categoriesFor: #testConstructors!public! !
-!GdiplusHatchBrushTest categoriesFor: #testFillingCrossDiagonal!public!unit tests! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #setSampleDiagCross!public! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #setUp!public! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testClone!public!unit tests! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testConstructors!public! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testFillingCrossDiagonal!public!unit tests! !
 

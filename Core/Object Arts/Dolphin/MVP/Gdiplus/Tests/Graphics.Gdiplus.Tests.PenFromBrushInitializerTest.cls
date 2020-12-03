@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.PenFromBrushInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusPenFromBrushInitializerTest guid: (GUID fromString: '{911c5add-1255-427e-b2e6-26d9d8f38caf}')!
-GdiplusPenFromBrushInitializerTest comment: ''!
-!GdiplusPenFromBrushInitializerTest categoriesForClass!Unclassified! !
-!GdiplusPenFromBrushInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.PenFromBrushInitializerTest guid: (Core.GUID fromString: '{911c5add-1255-427e-b2e6-26d9d8f38caf}')!
+Graphics.Gdiplus.Tests.PenFromBrushInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest methodsFor!
 
 gdipCreatePen2: brush width: width unit: unit pen: pen 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,7 +17,7 @@ gdipCreatePen2: brush width: width unit: unit pen: pen
 
 setUp
 	super setUp.
-	model := GdiplusPenFromBrushInitializer new library: self!
+	model := PenFromBrushInitializer new library: self!
 
 testCreateHandle
 	| brush |
@@ -38,8 +38,8 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs first identicalTo: brush basicHandle.
 	self assert: constructorArgs second equals: 1.0.
 	self assertLastArgIsHandle! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #gdipCreatePen2:width:unit:pen:!accessing!public! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest categoriesFor: #gdipCreatePen2:width:unit:pen:!accessing!public! !
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.PenFromBrushInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
 

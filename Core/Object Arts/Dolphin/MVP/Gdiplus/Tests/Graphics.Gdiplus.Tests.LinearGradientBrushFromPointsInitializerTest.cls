@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromPointsInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLinearGradientBrushFromPointsInitializerTest guid: (GUID fromString: '{2ca114c0-deee-48f6-ade7-9bc53b50d22c}')!
-GdiplusLinearGradientBrushFromPointsInitializerTest comment: ''!
-!GdiplusLinearGradientBrushFromPointsInitializerTest categoriesForClass!Unclassified! !
-!GdiplusLinearGradientBrushFromPointsInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest guid: (Core.GUID fromString: '{2ca114c0-deee-48f6-ade7-9bc53b50d22c}')!
+Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest methodsFor!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,7 +17,7 @@ gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMo
 
 setUp
 	super setUp.
-	model := GdiplusLinearGradientBrushFromPointsInitializer new library: self!
+	model := LinearGradientBrushFromPointsInitializer new library: self!
 
 testCreateHandle
 	model
@@ -34,7 +34,7 @@ testCreateHandle
 	self assert: constructorArgs third equals: 1.
 	self assert: constructorArgs fourth equals: 2.
 	self assert: (constructorArgs at: 5) equals: WrapModeTile! !
-!GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!accessing!public! !
-!GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest categoriesFor: #gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!accessing!public! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushFromPointsInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 

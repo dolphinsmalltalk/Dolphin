@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusImageTests
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ImageTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageTests guid: (GUID fromString: '{f51a7675-4fec-411d-a3a4-3a11dd7d104a}')!
-GdiplusImageTests isAbstract: true!
-GdiplusImageTests comment: ''!
-!GdiplusImageTests categoriesForClass!Unclassified! !
-!GdiplusImageTests methodsFor!
+Graphics.Gdiplus.Tests.ImageTests guid: (Core.GUID fromString: '{f51a7675-4fec-411d-a3a4-3a11dd7d104a}')!
+Graphics.Gdiplus.Tests.ImageTests isNonInstantiable: true!
+Graphics.Gdiplus.Tests.ImageTests comment: ''!
+!Graphics.Gdiplus.Tests.ImageTests categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.ImageTests methodsFor!
 
 testAsByteArrayRoundTrip
 	| bytes bitmap |
 	bytes := model asByteArray: 'image/png'.
-	bitmap := GdiplusBitmap fromByteArray: bytes.
+	bitmap := Bitmap fromByteArray: bytes.
 	self assert: bytes equals: (bitmap asByteArray: 'image/png')!
 
 testClone
@@ -32,16 +32,15 @@ testExtent
 	self assert: model extent equals: 32 @ 32!
 
 testJpegContentType
-	self assert: (GdiplusImage encoderClsid: 'image/jpeg')
-		equals: (GdiplusImage encoderClsidForExtension: 'jpg')!
+	self assert: (Image encoderClsid: 'image/jpeg') equals: (Image encoderClsidForExtension: 'jpg')!
 
 testSaveToFileJpeg
 	"GdiplusImage>>#saveToFile: should be matching against GpImageCodecInfo's FilenameExtension ... not its MimeType"
 
 	model saveToFile: (File temporaryFilenameWithPrefix: 'gdipTests') , '.jpg'! !
-!GdiplusImageTests categoriesFor: #testAsByteArrayRoundTrip!public!unit tests! !
-!GdiplusImageTests categoriesFor: #testClone!public!unit tests! !
-!GdiplusImageTests categoriesFor: #testExtent!public!unit tests! !
-!GdiplusImageTests categoriesFor: #testJpegContentType!public!unit tests! !
-!GdiplusImageTests categoriesFor: #testSaveToFileJpeg!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testAsByteArrayRoundTrip!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testClone!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testExtent!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testJpegContentType!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testSaveToFileJpeg!public!unit tests! !
 

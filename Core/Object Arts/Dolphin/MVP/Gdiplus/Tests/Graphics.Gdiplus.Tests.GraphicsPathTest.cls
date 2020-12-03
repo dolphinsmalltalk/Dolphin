@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusGraphicsPathTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsPathTest guid: (GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
-GdiplusGraphicsPathTest comment: ''!
-!GdiplusGraphicsPathTest categoriesForClass!Unclassified! !
-!GdiplusGraphicsPathTest methodsFor!
+Graphics.Gdiplus.Tests.GraphicsPathTest guid: (Core.GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.Tests.GraphicsPathTest comment: ''!
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest methodsFor!
 
 setSample3Points
-	model := GdiplusGraphicsPath
+	model := Path
 				points: {100 @ 0. 200 @ 150. 0 @ 150}
 				types: (ByteArray new: 3 withAll: PathPointTypeLine)
 				fillMode: nil!
 
 setSampleEllipse
-	model := GdiplusGraphicsPath new addEllipse: (Point zero extent: 200 @ 100)!
+	model := Path new addEllipse: (Point zero extent: 200 @ 100)!
 
 setSampleNew
-	model := GdiplusGraphicsPath new!
+	model := Path new!
 
 testBounds
 	self setSample3Points.
@@ -48,12 +48,12 @@ testFillMode
 testPointCount
 	self setSample3Points.
 	self assert: model pointCount equals: 3! !
-!GdiplusGraphicsPathTest categoriesFor: #setSample3Points!public! !
-!GdiplusGraphicsPathTest categoriesFor: #setSampleEllipse!public! !
-!GdiplusGraphicsPathTest categoriesFor: #setSampleNew!public! !
-!GdiplusGraphicsPathTest categoriesFor: #testBounds!public! !
-!GdiplusGraphicsPathTest categoriesFor: #testConstructor3Points!public! !
-!GdiplusGraphicsPathTest categoriesFor: #testConstructorPoints!public! !
-!GdiplusGraphicsPathTest categoriesFor: #testFillMode!public! !
-!GdiplusGraphicsPathTest categoriesFor: #testPointCount!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSample3Points!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSampleEllipse!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSampleNew!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testBounds!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testConstructor3Points!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testConstructorPoints!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testFillMode!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testPointCount!public! !
 

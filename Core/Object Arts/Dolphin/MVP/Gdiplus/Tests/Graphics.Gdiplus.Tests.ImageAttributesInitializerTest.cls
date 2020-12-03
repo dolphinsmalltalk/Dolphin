@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusImageAttributesInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.ImageAttributesInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusImageAttributesInitializerTest guid: (GUID fromString: '{5b179394-fe1b-49be-8b4e-a8c385d87c6a}')!
-GdiplusImageAttributesInitializerTest comment: ''!
-!GdiplusImageAttributesInitializerTest categoriesForClass!Unclassified! !
-!GdiplusImageAttributesInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.ImageAttributesInitializerTest guid: (Core.GUID fromString: '{5b179394-fe1b-49be-8b4e-a8c385d87c6a}')!
+Graphics.Gdiplus.Tests.ImageAttributesInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.ImageAttributesInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.ImageAttributesInitializerTest methodsFor!
 
 gdipCreateImageAttributes: imageattr 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,13 +17,13 @@ gdipCreateImageAttributes: imageattr
 
 setUp
 	super setUp.
-	model := GdiplusImageAttributesInitializer basicNew library: self!
+	model := ImageAttributesInitializer basicNew library: self!
 
 testCreateHandle
 	model createHandle.
 	self assert: constructorArgs size equals: 1.
 	self assertLastArgIsHandle! !
-!GdiplusImageAttributesInitializerTest categoriesFor: #gdipCreateImageAttributes:!accessing!public! !
-!GdiplusImageAttributesInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusImageAttributesInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageAttributesInitializerTest categoriesFor: #gdipCreateImageAttributes:!accessing!public! !
+!Graphics.Gdiplus.Tests.ImageAttributesInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.ImageAttributesInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 

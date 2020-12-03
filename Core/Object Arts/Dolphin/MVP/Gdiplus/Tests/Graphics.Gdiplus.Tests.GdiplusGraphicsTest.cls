@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusGraphicsTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GdiplusGraphicsTest'
 	instanceVariableNames: 'bitmap graphics canvas'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsTest guid: (GUID fromString: '{c612875a-7f39-4ba6-80bf-c091a74986db}')!
-GdiplusGraphicsTest comment: 'This TestCase is setup to provide a way to quickly ''test'' a GdiplusGraphics method.
+Graphics.Gdiplus.Tests.GdiplusGraphicsTest guid: (Core.GUID fromString: '{c612875a-7f39-4ba6-80bf-c091a74986db}')!
+Graphics.Gdiplus.Tests.GdiplusGraphicsTest comment: 'This TestCase is setup to provide a way to quickly ''test'' a GdiplusGraphics method.
 
 Most of the current tests are kick-the-tyres tests. They all could be extended by adding more asserts, but they are better than nothing
 
 '!
-!GdiplusGraphicsTest categoriesForClass!Unclassified! !
-!GdiplusGraphicsTest methodsFor!
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest methodsFor!
 
 setUp
 	super setUp.
@@ -51,7 +51,7 @@ testCompositingQuality
 
 testDrawImageRectRect
 	| image |
-	image := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	image := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	graphics
 		drawImage: image
 		at: 1 @ 1
@@ -97,13 +97,13 @@ testFromCanvas
 	| bmp |
 	bmp := self getSampleGDIBitmap.
 	model := GdiplusGraphics fromCanvas: bmp canvas.
-	self assert: model handle class identicalTo: ExternalHandle!
+	self assert: model handle class identicalTo: Handle!
 
 testFromImage
-	| image pixel pixelColor |
-	image := GdiplusBitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	| image pixelColor |
+	image := Bitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model := GdiplusGraphics fromImage: image.
-	self assert: model handle class identicalTo: ExternalHandle.
+	self assert: model handle class identicalTo: Handle.
 	"Can the next 2 lines replace those below them?"
 	pixelColor := image pixelAt: 50 @ 50.
 	self assert: pixelColor equals: Color blue
@@ -130,17 +130,17 @@ testInterpolationMode
 			[:each |
 			graphics interpolationMode: each.
 			self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
-!GdiplusGraphicsTest categoriesFor: #setUp!public!setup! !
-!GdiplusGraphicsTest categoriesFor: #tearDown!public!setup! !
-!GdiplusGraphicsTest categoriesFor: #testCompositingMode!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testCompositingQuality!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testDrawImageRectRect!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testDrawLine1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillEllipse1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillEllipse2!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillRectangle1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillRectangle2!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFromCanvas!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFromImage!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testInterpolationMode!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #tearDown!public!setup! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testCompositingMode!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testCompositingQuality!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testDrawImageRectRect!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testDrawLine1!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFillEllipse1!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFillEllipse2!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFillRectangle1!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFillRectangle2!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFromCanvas!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testFromImage!public!unit tests! !
+!Graphics.Gdiplus.Tests.GdiplusGraphicsTest categoriesFor: #testInterpolationMode!public!unit tests! !
 

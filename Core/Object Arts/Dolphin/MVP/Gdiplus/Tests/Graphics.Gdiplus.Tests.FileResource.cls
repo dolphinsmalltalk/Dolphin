@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestResource subclass: #GdiplusFileResource
+XProgramming.SUnit.TestResource subclass: #'Graphics.Gdiplus.Tests.FileResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusFileResource guid: (GUID fromString: '{fca5bf8a-3e20-4e92-9cb5-dedf99daae36}')!
-GdiplusFileResource comment: 'A TestResource that writes a number of files to disk that can then be accessed by TestCases.
+Graphics.Gdiplus.Tests.FileResource guid: (Core.GUID fromString: '{fca5bf8a-3e20-4e92-9cb5-dedf99daae36}')!
+Graphics.Gdiplus.Tests.FileResource comment: 'A TestResource that writes a number of files to disk that can then be accessed by TestCases.
 
 The motivation behind this resource is to avoid the need to maintain external files that the TestCases depend on.
 
@@ -32,11 +32,11 @@ Best Practice
 
 
 '!
-!GdiplusFileResource categoriesForClass!Unclassified! !
-!GdiplusFileResource methodsFor!
+!Graphics.Gdiplus.Tests.FileResource categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.FileResource methodsFor!
 
 eyeJpgBytes
-	^ByteArray 
+	^ByteArray
 		fromBase64String: '/9j/4RxFRXhpZgAASUkqAAgAAAALAA4BAgALAAAAkgAAAA8BAgAGAAAAsgAAABABAgAFAAAAygAA
 ABIBAwABAAAAAQAAABoBBQABAAAA2AAAABsBBQABAAAA4AAAACgBAwABAAAAAgAAADEBAgAIAAAA
 6AAAADIBAgAUAAAACAEAABMCAwABAAAAAgAAAGmHBAABAAAAHAEAABgDAAAgICAgICAgICAgAAAA
@@ -2808,11 +2808,10 @@ sZKFT2lkun9Ow23t52B3Esqptl83+Id8dPQ/XPParJuXVmiUqOgYY/hGOCOfp9PwrClUblKOy+7b
 uvffpbTv8znr0Uqd7/19/wBx/9k='!
 
 fileLocator
-	^FolderRelativeFileLocator 
-		basePath: (FileLocator imageRelative localFileSpecFor: 'Resources\Tests\GdiplusTestImages\')!
+	^FileLocator imageFolderRelative: 'Resources\Tests\GdiplusTestImages\'!
 
 fish32x32pngBytes
-	^ByteArray 
+	^ByteArray
 		fromBase64String: 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAANbY1E9YMgAAAAZiS0dE
 AP8A/wD/oL2nkwAABt5JREFUeNrtl1uMXVUZx39rrX09c2amzLSdTjsdplemZXrDCqWVMoqKo6TG
 qPEKCWhi1ATFaAwxhgSDKPCgSID4ADHFRKRQQaAClt6AlkJbLKV0oKVTmE7bmc6lM2fO2Zd18eG0
@@ -2849,7 +2848,7 @@ P2yAfwJ/8lVwNrxZnwAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAASUVO
 RK5CYII='!
 
 mosaic2BmpBytes
-	^ByteArray 
+	^ByteArray
 		fromBase64String: 'Qk32WgAAAAAAADYAAAAoAAAAWAAAAFgAAAABABgAAAAAAAAAAADEDgAAxA4AAAAAAAAAAAAAMo0y
 QJI/l5+ObJaZJsDAJM/PL5KSeYqKo5CQz25u7kJC5jEx4zU15TY25DY25zc36Tg46Tk56DAwxVxc
 t8DApaCfg5ieWcPnM7zpNrvnM7voPbfghq++wb27vsTDs7q6oaCgk35+jVhYljg4rSgolB0doIaG
@@ -3290,7 +3289,7 @@ rgb0000FF_100x100bmpBytes
 	^byteStream grabContents!
 
 seattleNightJpgBytes
-	^ByteArray 
+	^ByteArray
 		fromBase64String: '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEP
 ERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4e
 Hh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAKqA40DASIA
@@ -5382,10 +5381,11 @@ setUp
 
 tearDown
 	super tearDown.
-	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]!
+	(File exists: self fileLocator basePath)
+		ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]!
 
 winXP32x32icoBytes
-	^ByteArray 
+	^ByteArray
 		fromBase64String: 'AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAgBAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -5467,25 +5467,25 @@ writeBytes: aByteArray filename: aAbsFilename
 	| fs |
 	fs := FileStream write: aAbsFilename text: false.
 	[fs nextPutAll: aByteArray] ensure: [fs close]! !
-!GdiplusFileResource categoriesFor: #eyeJpgBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #fileLocator!accessing!public! !
-!GdiplusFileResource categoriesFor: #fish32x32pngBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #mosaic2BmpBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #pafBugJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafEyeJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafFish32x32png!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafMosaic2Bmp!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafRgb0000FF_100x100bmp!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafSeattleNightJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafWinXP32x32ico!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #rgb0000FF_100x100bmpBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #seattleNightJpgBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #setUp!public!setup! !
-!GdiplusFileResource categoriesFor: #tearDown!public!setup! !
-!GdiplusFileResource categoriesFor: #winXP32x32icoBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #writeBytes:filename:!operations!private! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #eyeJpgBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #fileLocator!accessing!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #fish32x32pngBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #mosaic2BmpBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafBugJpg!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafEyeJpg!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafFish32x32png!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafMosaic2Bmp!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafRgb0000FF_100x100bmp!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafSeattleNightJpg!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #pafWinXP32x32ico!accessing-filenames!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #rgb0000FF_100x100bmpBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #seattleNightJpgBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #tearDown!public!setup! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #winXP32x32icoBytes!accessing-bytes!public! !
+!Graphics.Gdiplus.Tests.FileResource categoriesFor: #writeBytes:filename:!operations!private! !
 
-!GdiplusFileResource class methodsFor!
+!Graphics.Gdiplus.Tests.FileResource class methodsFor!
 
 promptImageAsHex
 	"Private - A helper method that prompts for an image file and constructs the string that 
@@ -5496,7 +5496,7 @@ promptImageAsHex
 	"
 
 	| image strm |
-	image := GdiplusImage prompt.
+	image := Image prompt.
 	strm := String new writeStream.
 	strm
 		display: '<name><type>Bytes';
@@ -5505,5 +5505,5 @@ promptImageAsHex
 		display: '^'.
 	(image asByteArray: image mimeType) hexStoreOn: strm.
 	^strm contents! !
-!GdiplusFileResource class categoriesFor: #promptImageAsHex!private! !
+!Graphics.Gdiplus.Tests.FileResource class categoriesFor: #promptImageAsHex!private! !
 

@@ -1,29 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusInitializerTests
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.InitializerTests'
 	instanceVariableNames: 'constructorArgs'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusInitializerTests guid: (GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
-GdiplusInitializerTests isAbstract: true!
-GdiplusInitializerTests comment: ''!
-!GdiplusInitializerTests categoriesForClass!Unclassified! !
-!GdiplusInitializerTests methodsFor!
+Graphics.Gdiplus.Tests.InitializerTests guid: (Core.GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
+Graphics.Gdiplus.Tests.InitializerTests isNonInstantiable: true!
+Graphics.Gdiplus.Tests.InitializerTests comment: ''!
+!Graphics.Gdiplus.Tests.InitializerTests categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.InitializerTests methodsFor!
 
 assertLastArgIsHandle
-	self assert: constructorArgs last class identicalTo: ExternalHandle!
+	self assert: constructorArgs last class identicalTo: Handle!
 
 testErrorWith
-	self should: [model gdiplusErrorWith: 123] raise: GdiplusError matching: [:ex | ex tag = 123]
-!
+	self
+		should: [model gdiplusErrorWith: 123]
+		raise: GdiplusError
+		matching: [:ex | ex tag = 123]!
 
 testIsPersistent
 	"By default initializers can be persisted"
 
 	self assert: model isPersistent! !
-!GdiplusInitializerTests categoriesFor: #assertLastArgIsHandle!asserting!public! !
-!GdiplusInitializerTests categoriesFor: #testErrorWith!public!unit tests! !
-!GdiplusInitializerTests categoriesFor: #testIsPersistent!public!unit tests! !
+!Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #assertLastArgIsHandle!asserting!public! !
+!Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #testErrorWith!public!unit tests! !
+!Graphics.Gdiplus.Tests.InitializerTests categoriesFor: #testIsPersistent!public!unit tests! !
 

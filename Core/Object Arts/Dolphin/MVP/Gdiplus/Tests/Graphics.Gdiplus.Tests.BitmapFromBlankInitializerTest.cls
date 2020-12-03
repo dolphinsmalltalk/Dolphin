@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusBitmapFromBlankInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusBitmapFromBlankInitializerTest guid: (GUID fromString: '{1c9cb1c1-e014-4fcc-aa39-81767a17af85}')!
-GdiplusBitmapFromBlankInitializerTest comment: ''!
-!GdiplusBitmapFromBlankInitializerTest categoriesForClass!Unclassified! !
-!GdiplusBitmapFromBlankInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest guid: (Core.GUID fromString: '{1c9cb1c1-e014-4fcc-aa39-81767a17af85}')!
+Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest methodsFor!
 
 gdipCreateBitmapFromScan0: width height: height stride: stride format: format scan0: scan0 bitmap: bitmap 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,7 +17,7 @@ gdipCreateBitmapFromScan0: width height: height stride: stride format: format sc
 
 setUp
 	super setUp.
-	model := GdiplusBitmapFromBlankInitializer new library: self!
+	model := BitmapFromBlankInitializer new library: self!
 
 testCreateHandle
 	model
@@ -31,7 +31,7 @@ testCreateHandle
 	self assert: constructorArgs third equals: 0.
 	"self assert: constructorArgs fourth = PixelFormat32bppARGB."
 	self assertLastArgIsHandle! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!public!setup! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest categoriesFor: #gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!public!setup! !
+!Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.BitmapFromBlankInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 

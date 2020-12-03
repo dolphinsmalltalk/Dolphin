@@ -1,20 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusCustomLineCapTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusCustomLineCapTest guid: (GUID fromString: '{11ce56c0-847e-11d7-b609-00e0987e8081}')!
-GdiplusCustomLineCapTest comment: ''!
-!GdiplusCustomLineCapTest categoriesForClass!Unclassified! !
-!GdiplusCustomLineCapTest methodsFor!
+Graphics.Gdiplus.Tests.CustomLineCapTest guid: (Core.GUID fromString: '{11ce56c0-847e-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.Tests.CustomLineCapTest comment: ''!
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest methodsFor!
 
 setUp
 	super setUp.
-	model := GdiplusCustomLineCap 
-				strokePath: (GdiplusGraphicsPath new addEllipse: (Point zero extent: 200 @ 100))!
+	model := CustomLineCap strokePath: (Path new addEllipse: (Point zero extent: 200 @ 100))!
 
 testBaseCap
 	self assert: model baseCap equals: 0.
@@ -65,11 +64,11 @@ testWidthScale
 	self assert: model widthScale equals: 1.
 	model widthScale: 2.5.
 	self assert: model widthScale equals: 2.5! !
-!GdiplusCustomLineCapTest categoriesFor: #setUp!public!setup! !
-!GdiplusCustomLineCapTest categoriesFor: #testBaseCap!public!unit tests! !
-!GdiplusCustomLineCapTest categoriesFor: #testBaseInset!public!unit tests! !
-!GdiplusCustomLineCapTest categoriesFor: #testClone!public!unit tests! !
-!GdiplusCustomLineCapTest categoriesFor: #testStrokeCaps!public!unit tests! !
-!GdiplusCustomLineCapTest categoriesFor: #testStrokeJoin!public!unit tests! !
-!GdiplusCustomLineCapTest categoriesFor: #testWidthScale!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testBaseCap!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testBaseInset!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testClone!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testStrokeCaps!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testStrokeJoin!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testWidthScale!public!unit tests! !
 

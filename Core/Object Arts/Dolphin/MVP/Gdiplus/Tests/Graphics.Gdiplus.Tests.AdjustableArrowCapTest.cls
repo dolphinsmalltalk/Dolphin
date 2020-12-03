@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusAdjustableArrowCapTest guid: (GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
-GdiplusAdjustableArrowCapTest comment: ''!
-!GdiplusAdjustableArrowCapTest categoriesForClass!Unclassified! !
-!GdiplusAdjustableArrowCapTest methodsFor!
+Graphics.Gdiplus.Tests.AdjustableArrowCapTest guid: (Core.GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
+Graphics.Gdiplus.Tests.AdjustableArrowCapTest comment: ''!
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest methodsFor!
 
 setUp
 	super setUp.
-	model := GdiplusAdjustableArrowCap 
+	model := AdjustableArrowCap
 				height: 10
 				width: 5
 				isFilled: true!
@@ -35,9 +35,9 @@ testMiddleInset
 testWidth
 	model width: 17.
 	self assert: model width equals: 17! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #setUp!public!setup! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testHeight!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testIsFilled!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testMiddleInset!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testWidth!public!unit tests! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testHeight!public!unit tests! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testIsFilled!public!unit tests! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testMiddleInset!public!unit tests! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testWidth!public!unit tests! !
 

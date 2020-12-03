@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #GdiplusLinearGradientBrushTest
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.LinearGradientBrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusLinearGradientBrushTest guid: (GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
-GdiplusLinearGradientBrushTest comment: ''!
-!GdiplusLinearGradientBrushTest categoriesForClass!Unclassified! !
-!GdiplusLinearGradientBrushTest methodsFor!
+Graphics.Gdiplus.Tests.LinearGradientBrushTest guid: (Core.GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
+Graphics.Gdiplus.Tests.LinearGradientBrushTest comment: ''!
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest methodsFor!
 
 setSample1
-	model := GdiplusLinearGradientBrush 
+	model := LinearGradientBrush
 				point1: 0 @ 0
 				point2: 255 @ 0
 				color1: Color red
@@ -34,7 +34,7 @@ testConstructor1
 	self assertPersistedValid!
 
 testConstructor2
-	model := GdiplusLinearGradientBrush
+	model := LinearGradientBrush
 				rect: (0 @ 0 extent: 255 @ 255)
 				color1: (Color fromArgbCode: 16rFFFF0000)
 				color2: (Color fromArgbCode: 16rFF0000FF)
@@ -86,12 +86,12 @@ testPersistentArgument
 	"Create an object that has a constructor argument that itself needs to be realised"
 
 	| brush pen |
-	brush := GdiplusLinearGradientBrush
+	brush := LinearGradientBrush
 				point1: 0 @ 0
 				point2: 255 @ 0
 				color1: Color red
 				color2: Color blue.
-	pen := GdiplusPen brush: brush width: nil.
+	pen := Pen brush: brush width: nil.
 	"realize it"
 	pen asParameter.
 	self assert: brush isRealized.
@@ -105,13 +105,13 @@ testPersistentArgument
 	self assert: brush isRealized.
 	self assert: pen initializer brush identicalTo: brush
 	"for gc reasons .. the pen must always hold a reference to the brush"! !
-!GdiplusLinearGradientBrushTest categoriesFor: #setSample1!accessing!public! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testClone!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testConstructor1!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testConstructor2!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testFillingHorizontal!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testGetBlend!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testGetBlendCount!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testIsGammaCorrected!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testPersistentArgument!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #setSample1!accessing!public! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testClone!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testConstructor1!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testConstructor2!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testFillingHorizontal!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testGetBlend!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testGetBlendCount!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testIsGammaCorrected!public!unit tests! !
+!Graphics.Gdiplus.Tests.LinearGradientBrushTest categoriesFor: #testPersistentArgument!public!unit tests! !
 

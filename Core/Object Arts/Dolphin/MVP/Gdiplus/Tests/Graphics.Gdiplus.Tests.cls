@@ -1,83 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #GdiplusTests
-	instanceVariableNames: 'model'
+Graphics.Gdiplus subclass: #'Graphics.Gdiplus.Tests'
+	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusTests guid: (GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!
-GdiplusTests isAbstract: true!
-GdiplusTests comment: ''!
-!GdiplusTests categoriesForClass!Unclassified! !
-!GdiplusTests methodsFor!
+Graphics.Gdiplus.Tests guid: (Core.GUID fromString: '{73046962-f3ae-4c29-a4a8-123cf7416804}')!
+Graphics.Gdiplus.Tests isNonInstantiable: true!
+Graphics.Gdiplus.Tests comment: ''!
+!Graphics.Gdiplus.Tests categoriesForClass!Kernel-Objects! !
+!Graphics.Gdiplus.Tests class methodsFor!
 
-assertPersistedValid
-	| recreated |
-	recreated := Object fromBinaryStoreBytes: model binaryStoreBytes.
-	"Asking recreated for it's handle should find any errors"
-	self assert: recreated handle class identicalTo: ExternalHandle!
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
-compare: x to: y
-	"Compare that the two <Float> values are equivalent to within the specified <Float> difference."
-
-	^self 
-		compare: x
-		to: y
-		epsilon: 1.0e-006!
-
-compare: x to: y epsilon: epsilon
-	"Compare that the two <Float> values are equivalent to within the specified <Float> difference."
-
-	| max |
-	^(max := x abs max: y abs) <= epsilon or: [(x - y) abs < (epsilon * max)]!
-
-fileLocator
-	^self fileResource fileLocator!
-
-fileResource
-	^GdiplusFileResource current!
-
-getSampleBrush
-	#todo.	"Replace this with a solid brush"
-	^self getSampleLinearGradientBrush!
-
-getSampleGDIBitmap
-	^Bitmap 
-		gdipCopyOfIcon: self icon
-		extent: 32 @ 32
-		backcolor: Color black!
-
-getSampleLinearGradientBrush
-	^GdiplusLinearGradientBrush 
-		point1: 0 @ 0
-		point2: 255 @ 0
-		color1: Color red
-		color2: Color red!
-
-getSamplePen
-	^GdiplusPen red!
-
-tearDown
-	model 
-		ifNotNil: 
-			[model free.
-			model := nil].
-	super tearDown! !
-!GdiplusTests categoriesFor: #assertPersistedValid!asserting!public! !
-!GdiplusTests categoriesFor: #compare:to:!comparing!public! !
-!GdiplusTests categoriesFor: #compare:to:epsilon:!comparing!public! !
-!GdiplusTests categoriesFor: #fileLocator!accessing!public! !
-!GdiplusTests categoriesFor: #fileResource!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleBrush!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleGDIBitmap!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleLinearGradientBrush!accessing!public! !
-!GdiplusTests categoriesFor: #getSamplePen!accessing!public! !
-!GdiplusTests categoriesFor: #tearDown!public!Running! !
-
-!GdiplusTests class methodsFor!
-
-resources
-	^{GdiplusFileResource}! !
-!GdiplusTests class categoriesFor: #resources!accessing!public! !
+	^TestCase icon! !
+!Graphics.Gdiplus.Tests class categoriesFor: #icon!constants!public! !
 

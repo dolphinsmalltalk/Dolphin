@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
+Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusGraphicsFromHDCInitializerTest guid: (GUID fromString: '{8fde00f2-25d2-4046-907f-a52febba1a57}')!
-GdiplusGraphicsFromHDCInitializerTest comment: ''!
-!GdiplusGraphicsFromHDCInitializerTest categoriesForClass!Unclassified! !
-!GdiplusGraphicsFromHDCInitializerTest methodsFor!
+Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest guid: (Core.GUID fromString: '{8fde00f2-25d2-4046-907f-a52febba1a57}')!
+Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest comment: ''!
+!Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest categoriesForClass!Unclassified! !
+!Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest methodsFor!
 
 gdipCreateFromHDC: hdc graphics: graphics 
 	constructorArgs := Processor activeProcess topFrame arguments.
@@ -17,12 +17,12 @@ gdipCreateFromHDC: hdc graphics: graphics
 
 setUp
 	super setUp.
-	model := GdiplusGraphicsFromHDCInitializer new library: self!
+	model := GraphicsFromHDCInitializer new library: self!
 
 testCreateHandle
 	| bitmap canvas |
-	bitmap := Bitmap
-				gdipCopyOfIcon: GdiplusBitmap icon
+	bitmap := Graphics.Bitmap
+				gdipCopyOfIcon: Graphics.Bitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
 	canvas := bitmap canvas.
@@ -31,7 +31,7 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: canvas asParameter.
 	self assertLastArgIsHandle! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #gdipCreateFromHDC:graphics:!accessing!public! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest categoriesFor: #gdipCreateFromHDC:graphics:!accessing!public! !
+!Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.GraphicsFromHDCInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
 
