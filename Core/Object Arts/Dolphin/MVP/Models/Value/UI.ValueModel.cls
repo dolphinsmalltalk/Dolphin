@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #ValueModel
+Core.Model subclass: #'UI.ValueModel'
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueModel guid: (GUID fromString: '{87b4c66e-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueModel isAbstract: true!
-ValueModel comment: 'ValueModel is an abstract class whose subclasses provide the capability to adapt the protocol of a subject object to a simple <value> protocol. The intention is to allow general purpose objects, such as <views>, to interact with more specific objects, by providing an adapted layer between them. A client of a <valueModel> can set the value of the subject using a #value: message and similarly the value can be retrieved by sending #value:. 
+UI.ValueModel guid: (Core.GUID fromString: '{87b4c66e-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueModel isNonInstantiable: true!
+UI.ValueModel comment: 'ValueModel is an abstract class whose subclasses provide the capability to adapt the protocol of a subject object to a simple <value> protocol. The intention is to allow general purpose objects, such as <views>, to interact with more specific objects, by providing an adapted layer between them. A client of a <valueModel> can set the value of the subject using a #value: message and similarly the value can be retrieved by sending #value:. 
 
 An additional benefit is that <valueModel>s trigger a #value change notification whenever  the value is modified. This allows <valueModel>s to share data with several observers following the standard Observer pattern.  All <valueModel>s hold a <ComparisonPolicy> which determines when to trigger an update notification that the value has changed. By default, a change is notified when an attempt is made to set the value to a new one which is not equal to the existing value. 
  
@@ -17,8 +17,8 @@ The most commonly used subclass of ValueModel is ValueHolder whose instances wra
 Instance Variables:
 	comparisonPolicy	<ComparisonPolicy> for determining whether a new value is different from the existing value
 '!
-!ValueModel categoriesForClass!MVP-Models! !
-!ValueModel methodsFor!
+!UI.ValueModel categoriesForClass!MVP-Models! !
+!UI.ValueModel methodsFor!
 
 aspectAdaptorClass
 	^ValueModelAspectAdaptor!
@@ -101,24 +101,24 @@ value: anObject
 	[settingValue := true.
 	self setValue: anObject] ensure: [settingValue := false].
 	self notifyChanged! !
-!ValueModel categoriesFor: #aspectAdaptorClass!constants!private! !
-!ValueModel categoriesFor: #asValue!converting!public! !
-!ValueModel categoriesFor: #canGet!private!testing! !
-!ValueModel categoriesFor: #canSet!private!testing! !
-!ValueModel categoriesFor: #comparisonPolicy!accessing!public! !
-!ValueModel categoriesFor: #comparisonPolicy:!accessing!public! !
-!ValueModel categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!ValueModel categoriesFor: #initialize!initializing!private! !
-!ValueModel categoriesFor: #notifyChanged!operations!private! !
-!ValueModel categoriesFor: #printOn:!printing!public! !
-!ValueModel categoriesFor: #setValue:!accessing!private! !
-!ValueModel categoriesFor: #value!accessing!public! !
-!ValueModel categoriesFor: #value:!accessing!public! !
+!UI.ValueModel categoriesFor: #aspectAdaptorClass!constants!private! !
+!UI.ValueModel categoriesFor: #asValue!converting!public! !
+!UI.ValueModel categoriesFor: #canGet!private!testing! !
+!UI.ValueModel categoriesFor: #canSet!private!testing! !
+!UI.ValueModel categoriesFor: #comparisonPolicy!accessing!public! !
+!UI.ValueModel categoriesFor: #comparisonPolicy:!accessing!public! !
+!UI.ValueModel categoriesFor: #defaultComparisonPolicy!initializing!private! !
+!UI.ValueModel categoriesFor: #initialize!initializing!private! !
+!UI.ValueModel categoriesFor: #notifyChanged!operations!private! !
+!UI.ValueModel categoriesFor: #printOn:!printing!public! !
+!UI.ValueModel categoriesFor: #setValue:!accessing!private! !
+!UI.ValueModel categoriesFor: #value!accessing!public! !
+!UI.ValueModel categoriesFor: #value:!accessing!public! !
 
-ValueModel methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
-ValueModel methodProtocol: #valueModel attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValueModel methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValueModel methodProtocol: #valueModel attributes: #(#readOnly) selectors: #(#value #value:)!
 
-!ValueModel class methodsFor!
+!UI.ValueModel class methodsFor!
 
 comparisonPolicy: aComparisonPolicy
 	"Answer a new instance of the receiver with the specified comparison
@@ -148,8 +148,8 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!ValueModel class categoriesFor: #comparisonPolicy:!instance creation!public! !
-!ValueModel class categoriesFor: #icon!constants!public! !
-!ValueModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ValueModel class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ValueModel class categoriesFor: #comparisonPolicy:!instance creation!public! !
+!UI.ValueModel class categoriesFor: #icon!constants!public! !
+!UI.ValueModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.ValueModel class categoriesFor: #stbVersion!binary filing!public! !
 

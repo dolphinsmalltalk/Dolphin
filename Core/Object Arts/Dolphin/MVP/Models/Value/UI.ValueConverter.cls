@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueModel subclass: #ValueConverter
+UI.ValueModel subclass: #'UI.ValueConverter'
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueConverter guid: (GUID fromString: '{87b4c677-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueConverter comment: 'A ValueConverter sits between a subject <valueModel> and some <value> client of this. It supports the <valueModel> protocol such that when the client attempts to get the subject value it is converted into another type of object that is more palatable to the client. Similarly when the client tries to put a value back into the subject the type can again be converted, this time to suit the subject''s needs.
+UI.ValueConverter guid: (Core.GUID fromString: '{87b4c677-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueConverter comment: 'A ValueConverter sits between a subject <valueModel> and some <value> client of this. It supports the <valueModel> protocol such that when the client attempts to get the subject value it is converted into another type of object that is more palatable to the client. Similarly when the client tries to put a value back into the subject the type can again be converted, this time to suit the subject''s needs.
 
 An assumption is made that the subject will be a <valueModel> and will therefore trigger its own #value events when it is updated. A ValueConverter simply forwards this event to any of its own clients.
 
@@ -16,8 +16,8 @@ Instance Variables:
 	typeConverter	<typeConverter> for mapping the subject value to another type.
 
 '!
-!ValueConverter categoriesForClass!MVP-Models! !
-!ValueConverter methodsFor!
+!UI.ValueConverter categoriesForClass!MVP-Models! !
+!UI.ValueConverter methodsFor!
 
 format
 	"Answers the format of the current type converter. 
@@ -75,16 +75,16 @@ value
 	"Answer the <Object> value of the receiver."
 
 	^self typeConverter convertFromLeftToRight: self subject value! !
-!ValueConverter categoriesFor: #format!accessing!public! !
-!ValueConverter categoriesFor: #format:!accessing!public! !
-!ValueConverter categoriesFor: #setValue:!accessing!private! !
-!ValueConverter categoriesFor: #subject!accessing!private! !
-!ValueConverter categoriesFor: #subject:!accessing!private! !
-!ValueConverter categoriesFor: #typeConverter!accessing!public! !
-!ValueConverter categoriesFor: #typeConverter:!accessing!public! !
-!ValueConverter categoriesFor: #value!accessing!public! !
+!UI.ValueConverter categoriesFor: #format!accessing!public! !
+!UI.ValueConverter categoriesFor: #format:!accessing!public! !
+!UI.ValueConverter categoriesFor: #setValue:!accessing!private! !
+!UI.ValueConverter categoriesFor: #subject!accessing!private! !
+!UI.ValueConverter categoriesFor: #subject:!accessing!private! !
+!UI.ValueConverter categoriesFor: #typeConverter!accessing!public! !
+!UI.ValueConverter categoriesFor: #typeConverter:!accessing!public! !
+!UI.ValueConverter categoriesFor: #value!accessing!public! !
 
-!ValueConverter class methodsFor!
+!UI.ValueConverter class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -101,7 +101,7 @@ subject: aValueModel typeConverter: aTypeConverter
 	using aTypeConverter for the conversion process"
 
 	^super new subject: aValueModel; typeConverter: aTypeConverter; yourself! !
-!ValueConverter class categoriesFor: #icon!constants!public! !
-!ValueConverter class categoriesFor: #new!instance creation!private! !
-!ValueConverter class categoriesFor: #subject:typeConverter:!instance creation!public! !
+!UI.ValueConverter class categoriesFor: #icon!constants!public! !
+!UI.ValueConverter class categoriesFor: #new!instance creation!private! !
+!UI.ValueConverter class categoriesFor: #subject:typeConverter:!instance creation!public! !
 

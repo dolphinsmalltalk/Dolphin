@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueAdaptor subclass: #ValueKeyedAdaptor
+UI.ValueAdaptor subclass: #'UI.ValueKeyedAdaptor'
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueKeyedAdaptor guid: (GUID fromString: '{87b4c67a-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueKeyedAdaptor comment: 'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
+UI.ValueKeyedAdaptor guid: (Core.GUID fromString: '{87b4c67a-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueKeyedAdaptor comment: 'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
 
 Instance Variables:
 	key		<Object> used as the key to access an element of the subject
 	putSelector	<selector> message used to set the aspect
 	getSelector	<selector> message used to get the aspect
 '!
-!ValueKeyedAdaptor categoriesForClass!MVP-Models! !
-!ValueKeyedAdaptor methodsFor!
+!UI.ValueKeyedAdaptor categoriesForClass!MVP-Models! !
+!UI.ValueKeyedAdaptor methodsFor!
 
 = comperand
 	"Answer whether the receiver is considered equal to the <Object>, comperand.
@@ -65,8 +65,7 @@ key
 objectRefName
 	"Private - Answer name to use when the value of the receiver is dragged as an #ObjectRef"
 
-	^self value basicPrintString , self key displayString 
-		copyWithout: Character space!
+	^self value basicPrintString , self key displayString copyWithout: Character space!
 
 putSelector
 	"Private - Answers the selector used for setting the aspect value into the subject"
@@ -95,20 +94,20 @@ value
 	sending a message to the receiver's subject with the key."
 	
 	^self subject perform: self getSelector with: self key! !
-!ValueKeyedAdaptor categoriesFor: #=!comparing!public! !
-!ValueKeyedAdaptor categoriesFor: #canGet!private!testing! !
-!ValueKeyedAdaptor categoriesFor: #canSet!private!testing! !
-!ValueKeyedAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueKeyedAdaptor categoriesFor: #getSelector!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #hash!comparing!public! !
-!ValueKeyedAdaptor categoriesFor: #key!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #objectRefName!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #putSelector!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #setValue:!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #subject:key:!initializing!private! !
-!ValueKeyedAdaptor categoriesFor: #value!accessing!public! !
+!UI.ValueKeyedAdaptor categoriesFor: #=!comparing!public! !
+!UI.ValueKeyedAdaptor categoriesFor: #canGet!private!testing! !
+!UI.ValueKeyedAdaptor categoriesFor: #canSet!private!testing! !
+!UI.ValueKeyedAdaptor categoriesFor: #displayOn:!displaying!public! !
+!UI.ValueKeyedAdaptor categoriesFor: #getSelector!accessing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #hash!comparing!public! !
+!UI.ValueKeyedAdaptor categoriesFor: #key!accessing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #objectRefName!accessing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #putSelector!accessing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #setValue:!accessing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #subject:key:!initializing!private! !
+!UI.ValueKeyedAdaptor categoriesFor: #value!accessing!public! !
 
-!ValueKeyedAdaptor class methodsFor!
+!UI.ValueKeyedAdaptor class methodsFor!
 
 new
 	"Private - An instance of this class requires parameters"
@@ -120,6 +119,6 @@ subject: anObject key: aKey
 	an element of anObject identified by aKey"
 
 	^(super new) subject: anObject key: aKey; yourself! !
-!ValueKeyedAdaptor class categoriesFor: #new!instance creation!private! !
-!ValueKeyedAdaptor class categoriesFor: #subject:key:!instance creation!public! !
+!UI.ValueKeyedAdaptor class categoriesFor: #new!instance creation!private! !
+!UI.ValueKeyedAdaptor class categoriesFor: #subject:key:!instance creation!public! !
 

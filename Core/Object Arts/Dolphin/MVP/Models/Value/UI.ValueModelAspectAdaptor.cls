@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
+UI.ValueAspectAdaptor subclass: #'UI.ValueModelAspectAdaptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueModelAspectAdaptor guid: (GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
-ValueModelAspectAdaptor comment: ''!
-!ValueModelAspectAdaptor categoriesForClass!Unclassified! !
-!ValueModelAspectAdaptor methodsFor!
+UI.ValueModelAspectAdaptor guid: (Core.GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
+UI.ValueModelAspectAdaptor comment: ''!
+!UI.ValueModelAspectAdaptor categoriesForClass!Unclassified! !
+!UI.ValueModelAspectAdaptor methodsFor!
 
 notifyChanged
 	super notifyChanged.
@@ -34,7 +34,7 @@ subject: anObject
 				to: self
 				with: #valueChanged].
 	subject := anObject! !
-!ValueModelAspectAdaptor categoriesFor: #notifyChanged!private! !
-!ValueModelAspectAdaptor categoriesFor: #subject!private! !
-!ValueModelAspectAdaptor categoriesFor: #subject:!private! !
+!UI.ValueModelAspectAdaptor categoriesFor: #notifyChanged!private! !
+!UI.ValueModelAspectAdaptor categoriesFor: #subject!private! !
+!UI.ValueModelAspectAdaptor categoriesFor: #subject:!private! !
 

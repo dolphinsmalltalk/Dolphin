@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueAdaptor subclass: #CompositeValueAdaptor
+UI.ValueAdaptor subclass: #'UI.CompositeValueAdaptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompositeValueAdaptor guid: (GUID fromString: '{c2011d89-6b90-4844-a5e9-fd4edf82239d}')!
-CompositeValueAdaptor comment: 'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is a useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
-!CompositeValueAdaptor categoriesForClass!MVP-Models! !
-!CompositeValueAdaptor methodsFor!
+UI.CompositeValueAdaptor guid: (Core.GUID fromString: '{c2011d89-6b90-4844-a5e9-fd4edf82239d}')!
+UI.CompositeValueAdaptor comment: 'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is a useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
+!UI.CompositeValueAdaptor categoriesForClass!MVP-Models! !
+!UI.CompositeValueAdaptor methodsFor!
 
-aspectValue: aSymbol 
+aspectValue: aSymbol
 	"Answer a <ValueAspectAdapter> that provides access to the named aspect of our subject model.
 	The aspect adaptor is monitored for any changes that are made through it."
 
@@ -44,9 +44,9 @@ value
 	by sending a message to the receiver's subject."
 
 	^subject! !
-!CompositeValueAdaptor categoriesFor: #aspectValue:!accessing!public! !
-!CompositeValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!CompositeValueAdaptor categoriesFor: #onAspectChanged!event handling!private! !
-!CompositeValueAdaptor categoriesFor: #setValue:!accessing!private! !
-!CompositeValueAdaptor categoriesFor: #value!accessing!public! !
+!UI.CompositeValueAdaptor categoriesFor: #aspectValue:!accessing!public! !
+!UI.CompositeValueAdaptor categoriesFor: #displayOn:!displaying!public! !
+!UI.CompositeValueAdaptor categoriesFor: #onAspectChanged!event handling!private! !
+!UI.CompositeValueAdaptor categoriesFor: #setValue:!accessing!private! !
+!UI.CompositeValueAdaptor categoriesFor: #value!accessing!public! !
 

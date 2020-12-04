@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #AspectBuffer
+Core.Model subclass: #'UI.AspectBuffer'
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AspectBuffer guid: (GUID fromString: '{87b4c666-026e-11d3-9fd7-00a0cc3e4a32}')!
-AspectBuffer comment: 'An AspectBuffer is used to buffer changes to the aspects of a subject object. These changes are held in a copy of the subject until the buffer receives an #apply message. A client of the buffer can request an aspect for the subject using #aspectValue: and it will receive an appropriate <ValueAspectAdapter>. Only the aspects that have been explicitly requested and then modified will be updated back to the subject when #apply is received.  
+UI.AspectBuffer guid: (Core.GUID fromString: '{87b4c666-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.AspectBuffer comment: 'An AspectBuffer is used to buffer changes to the aspects of a subject object. These changes are held in a copy of the subject until the buffer receives an #apply message. A client of the buffer can request an aspect for the subject using #aspectValue: and it will receive an appropriate <ValueAspectAdapter>. Only the aspects that have been explicitly requested and then modified will be updated back to the subject when #apply is received.  
  
 In order to be correctly used with an AspectBuffer, a subject object must be able to be sensibly duplicated using #copy. The advantage of keeping a complete copy of the subject within the buffer is that the validity of any changes made to it can be tested using #isValid before the changes are applied back. By default the validation check is made by sending #isValid to the subject copy. This default can be modified  by changing the isValidBlock in the buffer.
 
@@ -19,8 +19,8 @@ Instance Variables:
 	isValidBlock	<monadicValuable> to determine of the subject copy is valid before applying changes.
 
 '!
-!AspectBuffer categoriesForClass!MVP-Models! !
-!AspectBuffer methodsFor!
+!UI.AspectBuffer categoriesForClass!MVP-Models! !
+!UI.AspectBuffer methodsFor!
 
 apply
 	"Apply the aspects held by the receiver in the model copy back to the 
@@ -36,8 +36,8 @@ aspectValue: anAspectSymbol
 	adapter model is answered. Otherwise a new one is created and registered
 	in our aspects dictionary"
 
-	^aspects at: anAspectSymbol ifAbsentPut: [
-			ValueAspectAdaptor subject: subjectCopy aspect: anAspectSymbol]!
+	^aspects at: anAspectSymbol
+		ifAbsentPut: [ValueAspectAdaptor subject: subjectCopy aspect: anAspectSymbol]!
 
 doesNotUnderstand: aMessage
 	"The receiver has not understood aMessage. Most likely this is because it was intended for
@@ -117,31 +117,29 @@ subject: aSubjectModel
 
 	subject := aSubjectModel.
 	subjectCopy := aSubjectModel copy.
-	aspects := IdentityDictionary new.
-
-	!
+	aspects := IdentityDictionary new!
 
 value
 	"Answer the copy of the subject model"
 
 	^subjectCopy! !
-!AspectBuffer categoriesFor: #apply!commands!public! !
-!AspectBuffer categoriesFor: #aspectValue:!accessing!public! !
-!AspectBuffer categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!AspectBuffer categoriesFor: #gate!accessing!public! !
-!AspectBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #initialize!initializing!private! !
-!AspectBuffer categoriesFor: #isValid!public!testing! !
-!AspectBuffer categoriesFor: #isValidBlock!accessing!public! !
-!AspectBuffer categoriesFor: #isValidBlock:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #notifyChanged!operations!public! !
-!AspectBuffer categoriesFor: #onGateChanged!event handling!private! !
-!AspectBuffer categoriesFor: #revert!commands!public! !
-!AspectBuffer categoriesFor: #subject!accessing!public! !
-!AspectBuffer categoriesFor: #subject:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #value!accessing!public! !
+!UI.AspectBuffer categoriesFor: #apply!commands!public! !
+!UI.AspectBuffer categoriesFor: #aspectValue:!accessing!public! !
+!UI.AspectBuffer categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!UI.AspectBuffer categoriesFor: #gate!accessing!public! !
+!UI.AspectBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
+!UI.AspectBuffer categoriesFor: #initialize!initializing!private! !
+!UI.AspectBuffer categoriesFor: #isValid!public!testing! !
+!UI.AspectBuffer categoriesFor: #isValidBlock!accessing!public! !
+!UI.AspectBuffer categoriesFor: #isValidBlock:!accessing!not an aspect!public! !
+!UI.AspectBuffer categoriesFor: #notifyChanged!operations!public! !
+!UI.AspectBuffer categoriesFor: #onGateChanged!event handling!private! !
+!UI.AspectBuffer categoriesFor: #revert!commands!public! !
+!UI.AspectBuffer categoriesFor: #subject!accessing!public! !
+!UI.AspectBuffer categoriesFor: #subject:!accessing!not an aspect!public! !
+!UI.AspectBuffer categoriesFor: #value!accessing!public! !
 
-!AspectBuffer class methodsFor!
+!UI.AspectBuffer class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -158,7 +156,7 @@ subject: aSubjectModel
 
 	^super new subject: aSubjectModel
 ! !
-!AspectBuffer class categoriesFor: #icon!constants!development!public! !
-!AspectBuffer class categoriesFor: #new!instance creation!private! !
-!AspectBuffer class categoriesFor: #subject:!instance creation!public! !
+!UI.AspectBuffer class categoriesFor: #icon!constants!development!public! !
+!UI.AspectBuffer class categoriesFor: #new!instance creation!private! !
+!UI.AspectBuffer class categoriesFor: #subject:!instance creation!public! !
 

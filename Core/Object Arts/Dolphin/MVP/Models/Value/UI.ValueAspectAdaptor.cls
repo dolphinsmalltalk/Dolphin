@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueAdaptor subclass: #ValueAspectAdaptor
+UI.ValueAdaptor subclass: #'UI.ValueAspectAdaptor'
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueAspectAdaptor guid: (GUID fromString: '{87b4c679-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueAspectAdaptor comment: 'A ValueAspectAdaptor is capable of adapting an aspect of a subject object and treating this as a <value>. An aspect is considered to be an attribute of an object that can be fetched and set using a pair of accessor methods (aspect and aspect: say). 
+UI.ValueAspectAdaptor guid: (Core.GUID fromString: '{87b4c679-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueAspectAdaptor comment: 'A ValueAspectAdaptor is capable of adapting an aspect of a subject object and treating this as a <value>. An aspect is considered to be an attribute of an object that can be fetched and set using a pair of accessor methods (aspect and aspect: say). 
 
 ValueAspectAdaptors are typically used in two situations. The first is to adapt an aspect of a model to the generic <value> protocol of #value, #value: messages. This is a common requirement of <dialogPresenter>s which need to present multiple aspects of a model within their sub-presenters. The second is to allow aspects of a domain class which does  not generate change notifications to be used in situations that require them.  
 
@@ -16,8 +16,8 @@ Instance Variables:
 	putSelector	<Symbol> message selector used to set the aspect
 	getSelector	<Symbol> message selector used to get the aspect
 '!
-!ValueAspectAdaptor categoriesForClass!MVP-Models! !
-!ValueAspectAdaptor methodsFor!
+!UI.ValueAspectAdaptor categoriesForClass!MVP-Models! !
+!UI.ValueAspectAdaptor methodsFor!
 
 = comperand
 	"Answer whether the receiver is considered equal to the <Object>, comperand."
@@ -96,21 +96,21 @@ value
 	by sending a message to the receiver's subject."
 
 	^self getValue! !
-!ValueAspectAdaptor categoriesFor: #=!comparing!public! !
-!ValueAspectAdaptor categoriesFor: #aspect!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #aspectTriggers:!accessing!public! !
-!ValueAspectAdaptor categoriesFor: #canGet!private!testing! !
-!ValueAspectAdaptor categoriesFor: #canSet!private!testing! !
-!ValueAspectAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueAspectAdaptor categoriesFor: #getSelector!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #getValue!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #hash!comparing!public! !
-!ValueAspectAdaptor categoriesFor: #putSelector!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #setValue:!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #subject:aspect:!initializing!private! !
-!ValueAspectAdaptor categoriesFor: #value!accessing!public! !
+!UI.ValueAspectAdaptor categoriesFor: #=!comparing!public! !
+!UI.ValueAspectAdaptor categoriesFor: #aspect!accessing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #aspectTriggers:!accessing!public! !
+!UI.ValueAspectAdaptor categoriesFor: #canGet!private!testing! !
+!UI.ValueAspectAdaptor categoriesFor: #canSet!private!testing! !
+!UI.ValueAspectAdaptor categoriesFor: #displayOn:!displaying!public! !
+!UI.ValueAspectAdaptor categoriesFor: #getSelector!accessing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #getValue!accessing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #hash!comparing!public! !
+!UI.ValueAspectAdaptor categoriesFor: #putSelector!accessing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #setValue:!accessing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #subject:aspect:!initializing!private! !
+!UI.ValueAspectAdaptor categoriesFor: #value!accessing!public! !
 
-!ValueAspectAdaptor class methodsFor!
+!UI.ValueAspectAdaptor class methodsFor!
 
 new
 	"Private - An instance of this class requires parameters"
@@ -122,6 +122,6 @@ subject: anObject aspect: aSymbol
 	an aspect of anObject identified by aSymbol"
 
 	^(super new) subject: anObject aspect: aSymbol; yourself! !
-!ValueAspectAdaptor class categoriesFor: #new!instance creation!private! !
-!ValueAspectAdaptor class categoriesFor: #subject:aspect:!instance creation!public! !
+!UI.ValueAspectAdaptor class categoriesFor: #new!instance creation!private! !
+!UI.ValueAspectAdaptor class categoriesFor: #subject:aspect:!instance creation!public! !
 

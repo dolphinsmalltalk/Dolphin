@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueModel subclass: #ValueAdaptor
+UI.ValueModel subclass: #'UI.ValueAdaptor'
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueAdaptor guid: (GUID fromString: '{87b4c676-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueAdaptor isAbstract: true!
-ValueAdaptor comment: 'An abstract class whose subclasses allow some part of a subject object (typically an aspect or keyed element) to be treated a <valueModel>.
+UI.ValueAdaptor guid: (Core.GUID fromString: '{87b4c676-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueAdaptor isNonInstantiable: true!
+UI.ValueAdaptor comment: 'An abstract class whose subclasses allow some part of a subject object (typically an aspect or keyed element) to be treated a <valueModel>.
 
 Instance Variables
 	subject	<Object> whose content will be adapted to be accessed as a <value>'!
-!ValueAdaptor categoriesForClass!MVP-Models! !
-!ValueAdaptor methodsFor!
+!UI.ValueAdaptor categoriesForClass!MVP-Models! !
+!UI.ValueAdaptor methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -40,12 +40,12 @@ subject: anObject
 
 	subject := anObject.
 ! !
-!ValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueAdaptor categoriesFor: #printOn:!printing!public! !
-!ValueAdaptor categoriesFor: #subject!accessing!private! !
-!ValueAdaptor categoriesFor: #subject:!initializing!private! !
+!UI.ValueAdaptor categoriesFor: #displayOn:!displaying!public! !
+!UI.ValueAdaptor categoriesFor: #printOn:!printing!public! !
+!UI.ValueAdaptor categoriesFor: #subject!accessing!private! !
+!UI.ValueAdaptor categoriesFor: #subject:!initializing!private! !
 
-!ValueAdaptor class methodsFor!
+!UI.ValueAdaptor class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -56,6 +56,6 @@ subject: anObject
 	^(self new)
 		subject: anObject;
 		yourself! !
-!ValueAdaptor class categoriesFor: #icon!constants!public! !
-!ValueAdaptor class categoriesFor: #subject:!instance creation!public! !
+!UI.ValueAdaptor class categoriesFor: #icon!constants!public! !
+!UI.ValueAdaptor class categoriesFor: #subject:!instance creation!public! !
 
