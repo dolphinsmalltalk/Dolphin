@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONReader subclass: #DolphinSTONReader
+STON.Reader subclass: #'STON.DolphinReader'
 	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
 	classVariableNames: 'EscapeChars'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15)
+		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
 	}!
-DolphinSTONReader guid: (GUID fromString: '{a8dab6bc-8e16-483a-adee-741c2aa9f0f7}')!
-DolphinSTONReader comment: ''!
-!DolphinSTONReader categoriesForClass!Unclassified! !
-!DolphinSTONReader methodsFor!
+STON.DolphinReader guid: (Core.GUID fromString: '{a8dab6bc-8e16-483a-adee-741c2aa9f0f7}')!
+STON.DolphinReader comment: ''!
+!STON.DolphinReader categoriesForClass!Unclassified! !
+!STON.DolphinReader methodsFor!
 
 atEnd
 	^currentCharacter isNil!
@@ -22,7 +22,7 @@ consumeWhitespace
 	[(currentCharacter ?? $\0) isSeparator] whileTrue: [currentCharacter := readStream nextAvailable]!
 
 error: aString
-	^DolphinSTONReaderError signal: aString
+	^ReaderError signal: aString
 		streamPosition: (readStream isPositionable ifTrue: [readStream position])!
 
 expectChar: character
@@ -51,18 +51,19 @@ instVarMapFor: aClass
 			map]!
 
 isClassChar: aCharacter
-	| charClass |
-	charClass := SmalltalkScanner classify: aCharacter.
-	^charClass == #alphabetic or: [charClass == #digit]!
+	^aCharacter == $. or: 
+			[| charClass |
+			charClass := Scanner classify: aCharacter.
+			charClass == #alphabetic or: [charClass == #digit]]!
 
 isClassStartChar: aCharacter
-	^(SmalltalkScanner classify: aCharacter) == #alphabetic and: [aCharacter code < ##($a code)]!
+	^(Scanner classify: aCharacter) == #alphabetic and: [aCharacter code < ##($a code)]!
 
 isList
 	^currentCharacter == $[!
 
 lookupClass: aSymbol
-	^(Smalltalk bindingFor: aSymbol)
+	^(Smalltalk fullBindingFor: aSymbol)
 		ifNotNil: [:binding | binding value]
 		ifNil: [classes at: aSymbol ifAbsentPut: [(self renamedClasses lookup: aSymbol) ?? aSymbol]]!
 
@@ -81,9 +82,9 @@ matchChar: character
 newReference
 	| index reference |
 	index := objects size + 1.
-	reference := DolphinSTONReference index: index.
+	reference := STON.DolphinReference index: index.
 	objects addLast: reference.
-	^ reference!
+	^reference!
 
 next
 	self consumeWhitespace.
@@ -211,13 +212,13 @@ parseMapOrListRepresentation
 	currentCharacter == ${
 		ifTrue: 
 			[| map |
-			map := STON mapClass new.
+			map := Root.STON mapClass new.
 			self parseMapDo: [:key :value | map at: key put: value].
 			^map].
 	currentCharacter == $[
 		ifTrue: 
 			[| stream |
-			stream := STON listClass writeStream: 16.
+			stream := Root.STON listClass writeStream: 16.
 			self parseListDo: [:each | stream nextPut: each].
 			^stream grabContents].
 	self error: 'invalid input'!
@@ -393,7 +394,7 @@ renamedClasses
 			renamed := IdentityDictionary new.
 			Smalltalk allClasses do: 
 					[:each |
-					((each class includesSelector: #stonName) and: [each stonName ~~ each name])
+					((each class includesSelector: #stonName) and: [each stonName ~~ each fullName])
 						ifTrue: [renamed at: each stonName put: each]].
 			renamedClasses := renamed]!
 
@@ -413,54 +414,54 @@ storeReference: object
 
 stringStreamContents: block
 	self shouldNotImplement! !
-!DolphinSTONReader categoriesFor: #atEnd!private!testing! !
-!DolphinSTONReader categoriesFor: #consumeWhitespace!helpers!private! !
-!DolphinSTONReader categoriesFor: #error:!error handling!private! !
-!DolphinSTONReader categoriesFor: #expectChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #initialize!initialize/release!private! !
-!DolphinSTONReader categoriesFor: #instVarMapFor:!private! !
-!DolphinSTONReader categoriesFor: #isClassChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #isClassStartChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #isList!public!testing! !
-!DolphinSTONReader categoriesFor: #lookupClass:!helpers!private! !
-!DolphinSTONReader categoriesFor: #match:do:!helpers!private! !
-!DolphinSTONReader categoriesFor: #matchChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #newReference!helpers!private! !
-!DolphinSTONReader categoriesFor: #next!public! !
-!DolphinSTONReader categoriesFor: #objectProperties!private! !
-!DolphinSTONReader categoriesFor: #on:!initialize/release!private! !
-!DolphinSTONReader categoriesFor: #parseCharacter!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseCharacterHexDigit!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseClass!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseConstant!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseEscapedCharacter!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseList!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseListDo:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseListSingleton!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseMapDo:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumber!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberExponent!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberFraction!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberInteger!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseObject!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseReference!public! !
-!DolphinSTONReader categoriesFor: #parseSimpleValue!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseStringInternal!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseSymbol!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseTrailingSurrogateHexEscape!parsing!private! !
-!DolphinSTONReader categoriesFor: #peekFor:!operations!private! !
-!DolphinSTONReader categoriesFor: #processSubObjectsOf:!private! !
-!DolphinSTONReader categoriesFor: #registerNewObject:!parsing!private! !
-!DolphinSTONReader categoriesFor: #renamedClasses!helpers!private! !
-!DolphinSTONReader categoriesFor: #resolveReference:!private! !
-!DolphinSTONReader categoriesFor: #resolveReferenceIndex:!private! !
-!DolphinSTONReader categoriesFor: #storeReference:!helpers!private! !
-!DolphinSTONReader categoriesFor: #stringStreamContents:!helpers!private! !
+!STON.DolphinReader categoriesFor: #atEnd!private!testing! !
+!STON.DolphinReader categoriesFor: #consumeWhitespace!helpers!private! !
+!STON.DolphinReader categoriesFor: #error:!error handling!private! !
+!STON.DolphinReader categoriesFor: #expectChar:!helpers!private! !
+!STON.DolphinReader categoriesFor: #initialize!initialize/release!private! !
+!STON.DolphinReader categoriesFor: #instVarMapFor:!private! !
+!STON.DolphinReader categoriesFor: #isClassChar:!helpers!private! !
+!STON.DolphinReader categoriesFor: #isClassStartChar:!helpers!private! !
+!STON.DolphinReader categoriesFor: #isList!public!testing! !
+!STON.DolphinReader categoriesFor: #lookupClass:!helpers!private! !
+!STON.DolphinReader categoriesFor: #match:do:!helpers!private! !
+!STON.DolphinReader categoriesFor: #matchChar:!helpers!private! !
+!STON.DolphinReader categoriesFor: #newReference!helpers!private! !
+!STON.DolphinReader categoriesFor: #next!public! !
+!STON.DolphinReader categoriesFor: #objectProperties!private! !
+!STON.DolphinReader categoriesFor: #on:!initialize/release!private! !
+!STON.DolphinReader categoriesFor: #parseCharacter!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseCharacterHexDigit!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseClass!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseConstant!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseEscapedCharacter!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseList!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseListDo:!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseListSingleton!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseMapDo:!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseNumber!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseNumberExponent!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseNumberFraction!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseNumberInteger!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseObject!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseReference!public! !
+!STON.DolphinReader categoriesFor: #parseSimpleValue!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseStringInternal!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseSymbol!parsing!private! !
+!STON.DolphinReader categoriesFor: #parseTrailingSurrogateHexEscape!parsing!private! !
+!STON.DolphinReader categoriesFor: #peekFor:!operations!private! !
+!STON.DolphinReader categoriesFor: #processSubObjectsOf:!private! !
+!STON.DolphinReader categoriesFor: #registerNewObject:!parsing!private! !
+!STON.DolphinReader categoriesFor: #renamedClasses!helpers!private! !
+!STON.DolphinReader categoriesFor: #resolveReference:!private! !
+!STON.DolphinReader categoriesFor: #resolveReferenceIndex:!private! !
+!STON.DolphinReader categoriesFor: #storeReference:!helpers!private! !
+!STON.DolphinReader categoriesFor: #stringStreamContents:!helpers!private! !
 
-!DolphinSTONReader class methodsFor!
+!STON.DolphinReader class methodsFor!
 
 initialize
 	"
@@ -490,6 +491,6 @@ initializeHexDigitValues
 	$a codePoint to: $f codePoint
 		do: [:each | digitValues at: each + 1 put: each - ##($a codePoint - 10)].
 	self addClassConstant: 'HexDigitValues' value: digitValues! !
-!DolphinSTONReader class categoriesFor: #initialize!initializing!public! !
-!DolphinSTONReader class categoriesFor: #initializeHexDigitValues!initializing!private! !
+!STON.DolphinReader class categoriesFor: #initialize!initializing!public! !
+!STON.DolphinReader class categoriesFor: #initializeHexDigitValues!initializing!private! !
 

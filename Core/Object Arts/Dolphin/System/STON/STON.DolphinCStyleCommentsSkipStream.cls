@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
+STON.CStyleCommentsSkipStream subclass: #'STON.DolphinCStyleCommentsSkipStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSTONCStyleCommentsSkipStream guid: (GUID fromString: '{c5873f76-4d78-4e57-9352-92f7bc94b1f3}')!
-DolphinSTONCStyleCommentsSkipStream comment: ''!
-!DolphinSTONCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
-!DolphinSTONCStyleCommentsSkipStream methodsFor!
+STON.DolphinCStyleCommentsSkipStream guid: (Core.GUID fromString: '{c5873f76-4d78-4e57-9352-92f7bc94b1f3}')!
+STON.DolphinCStyleCommentsSkipStream comment: ''!
+!STON.DolphinCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
+!STON.DolphinCStyleCommentsSkipStream methodsFor!
 
 consumeToEOL
 	"Override to use #nextAvailable rather than #next"
@@ -63,9 +63,9 @@ nextNonCommentChar
 				[self consumeComment.
 				stream nextAvailable]
 			ifFalse: [char]! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #insideString!private! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #isPositionable!public! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #nextAvailable!public! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
+!STON.DolphinCStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
+!STON.DolphinCStyleCommentsSkipStream categoriesFor: #insideString!private! !
+!STON.DolphinCStyleCommentsSkipStream categoriesFor: #isPositionable!public! !
+!STON.DolphinCStyleCommentsSkipStream categoriesFor: #nextAvailable!public! !
+!STON.DolphinCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
 

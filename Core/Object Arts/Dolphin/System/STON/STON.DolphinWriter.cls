@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONWriter subclass: #DolphinSTONWriter
+STON.Writer subclass: #'STON.DolphinWriter'
 	instanceVariableNames: 'classInstVarMaps stringQuote'
 	classVariableNames: 'ExtendedCharacters'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSTONWriter guid: (GUID fromString: '{56f95579-e6b4-4cd5-8ca6-c7cf2f754593}')!
-DolphinSTONWriter comment: ''!
-!DolphinSTONWriter categoriesForClass!Unclassified! !
-!DolphinSTONWriter methodsFor!
+STON.DolphinWriter guid: (Core.GUID fromString: '{56f95579-e6b4-4cd5-8ca6-c7cf2f754593}')!
+STON.DolphinWriter comment: ''!
+!STON.DolphinWriter categoriesForClass!Unclassified! !
+!STON.DolphinWriter methodsFor!
 
 encodeString: aString
 	writeStream nextPut: stringQuote.
@@ -86,20 +86,20 @@ writeObject: anObject extra: extraPairs
 										ifNotNil: [:value | dictionary at: each asSymbol put: value]
 										ifNil: [anObject stonShouldWriteNilInstVars ifTrue: [dictionary at: each asSymbol put: nil]]]].
 					extraPairs do: [:each | dictionary at: each key put: each value]]]! !
-!DolphinSTONWriter categoriesFor: #encodeString:!private! !
-!DolphinSTONWriter categoriesFor: #escape:with:!initialize/release!public! !
-!DolphinSTONWriter categoriesFor: #initialize!private! !
-!DolphinSTONWriter categoriesFor: #instVarMapFor:!private! !
-!DolphinSTONWriter categoriesFor: #isSimpleSymbol:!private! !
-!DolphinSTONWriter categoriesFor: #jsonMode:!initialize/release!public! !
-!DolphinSTONWriter categoriesFor: #stonCharacters!accessing!private! !
-!DolphinSTONWriter categoriesFor: #writeObject:!public!writing! !
-!DolphinSTONWriter categoriesFor: #writeObject:extra:!public!writing! !
+!STON.DolphinWriter categoriesFor: #encodeString:!private! !
+!STON.DolphinWriter categoriesFor: #escape:with:!initialize/release!public! !
+!STON.DolphinWriter categoriesFor: #initialize!private! !
+!STON.DolphinWriter categoriesFor: #instVarMapFor:!private! !
+!STON.DolphinWriter categoriesFor: #isSimpleSymbol:!private! !
+!STON.DolphinWriter categoriesFor: #jsonMode:!initialize/release!public! !
+!STON.DolphinWriter categoriesFor: #stonCharacters!accessing!private! !
+!STON.DolphinWriter categoriesFor: #writeObject:!public!writing! !
+!STON.DolphinWriter categoriesFor: #writeObject:extra:!public!writing! !
 
-!DolphinSTONWriter class methodsFor!
+!STON.DolphinWriter class methodsFor!
 
 initialize
 	STONCharacters isImmutable: true.
 	STONSimpleSymbolCharacters isImmutable: true! !
-!DolphinSTONWriter class categoriesFor: #initialize!class initialization!public! !
+!STON.DolphinWriter class categoriesFor: #initialize!class initialization!public! !
 

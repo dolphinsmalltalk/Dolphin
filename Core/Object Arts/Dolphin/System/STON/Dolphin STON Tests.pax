@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin STON Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin STON SUnit tests
 Copyright (c) Object Arts Ltd, 2019
@@ -9,41 +9,42 @@ Tests of Dolphin specific aspects of the STON implementation.'.
 
 
 package setMethodNames: #(
-	#(#{Array} #asDictionary)
-	#(#{ByteArrayTest} #testHex)
-	#(#{Collection} #atRandom)
-	#(#{Integer} #atRandom)
-	#(#{SequenceableCollection} #asFloatArray)
-	#(#{SequenceableCollection} #asIntegerArray)
-	#(#{SequenceableCollection} #atRandom)
-	#(#{SequenceableCollection} #doWithIndex:)
-	#(#{STONReaderTest} #testColorInvalid)
-	#(#{STONReaderTest} #testReferenceCycle2)
-	#(#{STONReaderTest} #testSymbolMultiByte)
-	#(#{STONTestDomainObject class} #icon)
-	#(#{STONTestKnownObject class} #icon)
-	#(#{STONTestUser class} #icon)
-	#(#{STONWriteReadTest} #testCompiledMethodsAndBlocks)
-	#(#{STONWriteReadTest} #testExtendedCharacters)
-	#(#{STONWriteReadTest} #testFramingCalculation)
-	#(#{STONWriteReadTest} #testNamedColors)
-	#(#{STONWriteReadTest} #testPluggableColors)
-	#(#{STONWriteReadTest} #testProcessor)
-	#(#{STONWriteReadTest} #testSearchPolicy)
-	#(#{STONWriteReadTest} #testSystemDictionary)
-	#(#{STONWriterTest} #testFramingCalculation)
-	#(#{STONWriterTest} #testIsSimpleSymbol2)
-	#(#{STONWriterTest} #testLegacyDate)
-	#(#{STONWriterTest} #testProcessor)
-	#(#{STONWriterTest} #testSearchPolicy)
-	#(#{STONWriterTest} #testSymbolMultiByte)
-	#(#{String class} #crlf)
-	#(#{Symbol class} #hasInterned:ifTrue:)
-	#(#{Time class} #hour:minute:second:)
-	#(#{Time class} #hour:minute:second:nanoSecond:)
+	#(#{Core.Array} #asDictionary)
+	#(#{Core.Collection} #atRandom)
+	#(#{Core.Integer} #atRandom)
+	#(#{Core.SequenceableCollection} #asFloatArray)
+	#(#{Core.SequenceableCollection} #asIntegerArray)
+	#(#{Core.SequenceableCollection} #atRandom)
+	#(#{Core.SequenceableCollection} #doWithIndex:)
+	#(#{Core.String class} #crlf)
+	#(#{Core.Symbol class} #hasInterned:ifTrue:)
+	#(#{Core.Tests.ByteArrayTest} #testHex)
+	#(#{Core.Time class} #hour:minute:second:)
+	#(#{Core.Time class} #hour:minute:second:nanoSecond:)
+	#(#{STON.Tests.ReaderTest} #testColorInvalid)
+	#(#{STON.Tests.ReaderTest} #testReferenceCycle2)
+	#(#{STON.Tests.ReaderTest} #testSymbolMultiByte)
+	#(#{STON.Tests.STONTestUser class} #icon)
+	#(#{STON.Tests.TestDomainObject class} #icon)
+	#(#{STON.Tests.TestKnownObject class} #icon)
+	#(#{STON.Tests.WriteReadTest} #testCompiledMethodsAndBlocks)
+	#(#{STON.Tests.WriteReadTest} #testExtendedCharacters)
+	#(#{STON.Tests.WriteReadTest} #testFramingCalculation)
+	#(#{STON.Tests.WriteReadTest} #testNamedColors)
+	#(#{STON.Tests.WriteReadTest} #testPluggableColors)
+	#(#{STON.Tests.WriteReadTest} #testProcessor)
+	#(#{STON.Tests.WriteReadTest} #testSearchPolicy)
+	#(#{STON.Tests.WriteReadTest} #testSystemDictionary)
+	#(#{STON.Tests.WriterTest} #testFramingCalculation)
+	#(#{STON.Tests.WriterTest} #testIsSimpleSymbol2)
+	#(#{STON.Tests.WriterTest} #testLegacyDate)
+	#(#{STON.Tests.WriterTest} #testProcessor)
+	#(#{STON.Tests.WriterTest} #testSearchPolicy)
+	#(#{STON.Tests.WriterTest} #testSymbolMultiByte)
 ).
 
 package setPrerequisites: #(
+	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
 	'..\..\Base\Dolphin Legacy Date & Time'
@@ -57,31 +58,16 @@ package!
 
 "Loose Methods"!
 
-!Array methodsFor!
+!Core.Array methodsFor!
 
 asDictionary
 	"Private - Questionable conversion message from Pharo that works only it the target collection contains associations (or at least elements that understand #key and #value). 
 	It is here only for the STON tests."
 
 	^Dictionary withAll: self! !
-!Array categoriesFor: #asDictionary!private! !
+!Core.Array categoriesFor: #asDictionary!private! !
 
-!ByteArrayTest methodsFor!
-
-testHex
-	self assert: #[122 43 213 7] hex equals: '7a2bd507'.
-	self
-		assert: #[151 193 242 221 249 32 153 72 179 41 49 154 48 193 99 134] hex
-		equals: '97c1f2ddf9209948b329319a30c16386'.
-	self
-		assert: (ByteArray readHexFrom: '7A2BD507')
-		equals: #[122 43 213 7].
-	self
-		assert: (ByteArray readHexFrom: '7a2bd507')
-		equals: #[122 43 213 7]! !
-!ByteArrayTest categoriesFor: #testHex!public! !
-
-!Collection methodsFor!
+!Core.Collection methodsFor!
 
 atRandom
 	| r i |
@@ -89,23 +75,23 @@ atRandom
 	i := 1.
 	self do: [:each | i == r ifTrue: [^each]].
 	^self errorEmptyCollection! !
-!Collection categoriesFor: #atRandom!public! !
+!Core.Collection categoriesFor: #atRandom!public! !
 
-!Integer methodsFor!
+!Core.Integer methodsFor!
 
 atRandom
 	"Answer a random integer from 1 to self."
 
 	^(Random default next * self) truncated + 1! !
-!Integer categoriesFor: #atRandom!public! !
+!Core.Integer categoriesFor: #atRandom!public! !
 
-!SequenceableCollection methodsFor!
+!Core.SequenceableCollection methodsFor!
 
 asFloatArray
-	^FLOATArray withAll: self!
+	^External.FLOATArray withAll: self!
 
 asIntegerArray
-	^SDWORDArray withAll: self!
+	^External.SDWORDArray withAll: self!
 
 atRandom
 	^self at: self size atRandom!
@@ -114,25 +100,62 @@ doWithIndex: aDyadicValuable
 	"For Pharo compatibility; #keysAndValuesDo: is preferred (and faster)"
 
 	self keysAndValuesDo: [:index :value | aDyadicValuable value: value value: index]! !
-!SequenceableCollection categoriesFor: #asFloatArray!public! !
-!SequenceableCollection categoriesFor: #asIntegerArray!public! !
-!SequenceableCollection categoriesFor: #atRandom!public! !
-!SequenceableCollection categoriesFor: #doWithIndex:!public! !
+!Core.SequenceableCollection categoriesFor: #asFloatArray!public! !
+!Core.SequenceableCollection categoriesFor: #asIntegerArray!public! !
+!Core.SequenceableCollection categoriesFor: #atRandom!public! !
+!Core.SequenceableCollection categoriesFor: #doWithIndex:!public! !
 
-!STONReaderTest methodsFor!
+!Core.String class methodsFor!
+
+crlf
+	^##(AnsiString with: $\r with: $\n)! !
+!Core.String class categoriesFor: #crlf!public! !
+
+!Core.Symbol class methodsFor!
+
+hasInterned: aString ifTrue: aMonadicValuable 
+	^(self findInterned: aString) ifNil: [false] ifNotNil: [:symbol | aMonadicValuable value: symbol. true]! !
+!Core.Symbol class categoriesFor: #hasInterned:ifTrue:!public! !
+
+!Core.Tests.ByteArrayTest methodsFor!
+
+testHex
+	self assert: #[122 43 213 7] hex equals: '7a2bd507'.
+	self assert: #[151 193 242 221 249 32 153 72 179 41 49 154 48 193 99 134] hex
+		equals: '97c1f2ddf9209948b329319a30c16386'.
+	self assert: (ByteArray readHexFrom: '7A2BD507') equals: #[122 43 213 7].
+	self assert: (ByteArray readHexFrom: '7a2bd507') equals: #[122 43 213 7]! !
+!Core.Tests.ByteArrayTest categoriesFor: #testHex!public! !
+
+!Core.Time class methodsFor!
+
+hour: anInteger minute: anInteger2 second: anInteger3 
+	^self hours: anInteger minutes: anInteger2 seconds: anInteger3!
+
+hour: hoursInteger minute: minutesInteger second: secondsInteger nanoSecond: nanosInteger
+	^self fromSeconds: (hoursInteger * 60 + minutesInteger) * 60 + secondsInteger + (nanosInteger / 1e9)! !
+!Core.Time class categoriesFor: #hour:minute:second:!public! !
+!Core.Time class categoriesFor: #hour:minute:second:nanoSecond:!public! !
+
+!STON.Tests.ReaderTest methodsFor!
 
 testColorInvalid
 	"This is a handy test of DolphinSTONReader>>parseListSingleton"
-	self should: [self materialize: 'Color[#red,#blue]'] raise: STONReaderError matching: [:ex | ex description = 'At character 11: ] expected'].
-	self should: [self materialize: 'Color[]'] raise: STONReaderError matching: [:ex | ex description = 'At character 7: invalid input']
-!
+
+	self
+		should: [self materialize: 'Color[#red,#blue]']
+		raise: STON.ReaderError
+		matching: [:ex | ex description = 'At character 11: ] expected'].
+	self
+		should: [self materialize: 'Color[]']
+		raise: STON.ReaderError
+		matching: [:ex | ex description = 'At character 7: invalid input']!
 
 testReferenceCycle2
 	| object |
 	object := self materialize: 'Link{#nextLink:@1}'.
 	self assert: object class equals: Link.
-	self assert: object nextLink identicalTo: object
-!
+	self assert: object nextLink identicalTo: object!
 
 testSymbolMultiByte
 	"https://github.com/svenvc/ston/issues/25"
@@ -141,35 +164,35 @@ testSymbolMultiByte
 	self assert: (self materialize: '#''€''') equals: Character euro asSymbol.
 	self assert: (self materialize: '#''你好''') equals: #'你好'.
 	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
-!STONReaderTest categoriesFor: #testColorInvalid!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceCycle2!public!tests! !
-!STONReaderTest categoriesFor: #testSymbolMultiByte!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testColorInvalid!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testReferenceCycle2!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testSymbolMultiByte!public!tests! !
 
-!STONTestDomainObject class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^STONTest icon! !
-!STONTestDomainObject class categoriesFor: #icon!constants!public! !
-
-!STONTestKnownObject class methodsFor!
+!STON.Tests.STONTestUser class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STONTest icon! !
-!STONTestKnownObject class categoriesFor: #icon!constants!public! !
+	^STON.Tests.STONTest icon! !
+!STON.Tests.STONTestUser class categoriesFor: #icon!constants!public! !
 
-!STONTestUser class methodsFor!
+!STON.Tests.TestDomainObject class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STONTest icon! !
-!STONTestUser class categoriesFor: #icon!constants!public! !
+	^STON.Tests.STONTest icon! !
+!STON.Tests.TestDomainObject class categoriesFor: #icon!constants!public! !
 
-!STONWriteReadTest methodsFor!
+!STON.Tests.TestKnownObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON.Tests.STONTest icon! !
+!STON.Tests.TestKnownObject class categoriesFor: #icon!constants!public! !
+
+!STON.Tests.WriteReadTest methodsFor!
 
 testCompiledMethodsAndBlocks
 	self serializeAndMaterialize: self class methodDictionary!
@@ -181,7 +204,7 @@ testExtendedCharacters
 
 testFramingCalculation
 	| objects |
-	objects := {FramingCalculation fixedParentLeft. FramingCalculation relativeParentHeight}.
+	objects := {UI.FramingCalculation fixedParentLeft. UI.FramingCalculation relativeParentHeight}.
 	self serializeAndMaterialize: objects!
 
 testNamedColors
@@ -202,30 +225,32 @@ testProcessor
 
 testSearchPolicy
 	| objects |
-	objects := { SearchPolicy always. SearchPolicy association. SearchPolicy method}.
+	objects := {SearchPolicy always.
+				SearchPolicy identity.
+				Smalltalk.CompiledMethodSearchPolicy current}.
 	self serializeAndMaterialize: objects!
 
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
-!STONWriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
-!STONWriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
-!STONWriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
-!STONWriteReadTest categoriesFor: #testNamedColors!public!tests! !
-!STONWriteReadTest categoriesFor: #testPluggableColors!public!tests! !
-!STONWriteReadTest categoriesFor: #testProcessor!public!tests! !
-!STONWriteReadTest categoriesFor: #testSearchPolicy!public!tests! !
-!STONWriteReadTest categoriesFor: #testSystemDictionary!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testNamedColors!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testPluggableColors!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testProcessor!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testSearchPolicy!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testSystemDictionary!public!tests! !
 
-!STONWriterTest methodsFor!
+!STON.Tests.WriterTest methodsFor!
 
 testFramingCalculation
-	self assert: (self serialize: FramingCalculation fixedParentLeft) equals: 'FramingCalculation[#fixedParentLeft]'!
+	self assert: (self serialize: UI.FramingCalculation fixedParentLeft)
+		equals: 'FramingCalculation[#fixedParentLeft]'!
 
 testIsSimpleSymbol2
 	self deny: (STON writer isSimpleSymbol: #'£').
 	self deny: (STON writer isSimpleSymbol: Character euro asSymbol).
-	self deny: (STON writer isSimpleSymbol: Character dolphin asSymbol).
-!
+	self deny: (STON writer isSimpleSymbol: Character dolphin asSymbol)!
 
 testLegacyDate
 	| date tz offset |
@@ -250,34 +275,12 @@ testSymbolMultiByte
 	self assert: (self serialize: Character euro asSymbol) equals: '#''€'''.
 	self assert: (self serialize: #'你好') equals: '#''你好'''.
 	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
-!STONWriterTest categoriesFor: #testFramingCalculation!public!tests! !
-!STONWriterTest categoriesFor: #testIsSimpleSymbol2!public!tests! !
-!STONWriterTest categoriesFor: #testLegacyDate!public!tests! !
-!STONWriterTest categoriesFor: #testProcessor!public!tests! !
-!STONWriterTest categoriesFor: #testSearchPolicy!public!tests! !
-!STONWriterTest categoriesFor: #testSymbolMultiByte!public!tests! !
-
-!String class methodsFor!
-
-crlf
-	^##(AnsiString with: $\r with: $\n)! !
-!String class categoriesFor: #crlf!public! !
-
-!Symbol class methodsFor!
-
-hasInterned: aString ifTrue: aMonadicValuable 
-	^(self findInterned: aString) ifNil: [false] ifNotNil: [:symbol | aMonadicValuable value: symbol. true]! !
-!Symbol class categoriesFor: #hasInterned:ifTrue:!public! !
-
-!Time class methodsFor!
-
-hour: anInteger minute: anInteger2 second: anInteger3 
-	^self hours: anInteger minutes: anInteger2 seconds: anInteger3!
-
-hour: hoursInteger minute: minutesInteger second: secondsInteger nanoSecond: nanosInteger
-	^self fromSeconds: (hoursInteger * 60 + minutesInteger) * 60 + secondsInteger + (nanosInteger / 1e9)! !
-!Time class categoriesFor: #hour:minute:second:!public! !
-!Time class categoriesFor: #hour:minute:second:nanoSecond:!public! !
+!STON.Tests.WriterTest categoriesFor: #testFramingCalculation!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testIsSimpleSymbol2!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testLegacyDate!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testProcessor!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testSearchPolicy!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testSymbolMultiByte!public!tests! !
 
 "End of package definition"!
 

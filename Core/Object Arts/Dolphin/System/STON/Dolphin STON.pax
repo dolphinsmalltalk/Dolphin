@@ -1,70 +1,68 @@
 ﻿| package |
 package := Package name: 'Dolphin STON'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin STON support
 Copyright (c) Object Arts Ltd, 2019'.
 
 
 package setClassNames: #(
-	#{DolphinSTONCStyleCommentsSkipStream}
-	#{DolphinSTONReader}
-	#{DolphinSTONReaderError}
-	#{DolphinSTONReference}
-	#{DolphinSTONWriter}
+	#{STON.DolphinCStyleCommentsSkipStream}
+	#{STON.DolphinReader}
+	#{STON.DolphinReference}
+	#{STON.DolphinWriter}
 ).
 
 package setMethodNames: #(
-	#(#{BlockClosure} #fromSton:)
-	#(#{BlockClosure} #stonOn:)
-	#(#{ByteArray} #hex)
-	#(#{ByteArray class} #readHexFrom:)
-	#(#{CardLayout class} #stonAllInstVarNames)
-	#(#{Color} #stonOn:)
-	#(#{Color class} #fromSton:)
-	#(#{Color class} #stonName)
-	#(#{CompiledCode} #fromSton:)
-	#(#{CompiledCode} #stonOn:)
-	#(#{ControlView class} #stonAllInstVarNames)
-	#(#{Date} #stonOn:)
-	#(#{Date class} #fromSton:)
-	#(#{FramingCalculation} #stonOn:)
-	#(#{FramingCalculation class} #fromSton:)
-	#(#{GraphicsTool class} #stonAllInstVarNames)
-	#(#{GUID} #stonOn:)
-	#(#{GUID class} #fromSton:)
-	#(#{IconImageManager} #stonOn:)
-	#(#{IconImageManager class} #fromSton:)
-	#(#{MessageSequence} #stonOn:)
-	#(#{MessageSequence class} #fromSton:)
-	#(#{Model class} #stonAllInstVarNames)
-	#(#{Object class} #fromSton:)
-	#(#{ProcessorScheduler} #stonOn:)
-	#(#{ProcessorScheduler class} #fromSton:)
-	#(#{ReferenceView} #stonExtras)
-	#(#{ReferenceView class} #stonAllInstVarNames)
-	#(#{ScintillaView class} #stonAllInstVarNames)
-	#(#{SearchPolicy class} #fromSton:)
-	#(#{SingletonSearchPolicy} #stonOn:)
-	#(#{SingletonSearchPolicy class} #stonName)
-	#(#{SmalltalkSystem} #stonOn:)
+	#(#{Core.ByteArray} #hex)
+	#(#{Core.ByteArray class} #readHexFrom:)
+	#(#{Core.Date} #stonOn:)
+	#(#{Core.Date class} #fromSton:)
+	#(#{Core.GUID} #stonOn:)
+	#(#{Core.GUID class} #fromSton:)
+	#(#{Core.MessageSequence} #stonOn:)
+	#(#{Core.MessageSequence class} #fromSton:)
+	#(#{Core.Model class} #stonAllInstVarNames)
+	#(#{Core.Object class} #fromSton:)
+	#(#{Core.SearchPolicy class} #fromSton:)
+	#(#{Graphics.Color} #stonOn:)
+	#(#{Graphics.Color class} #fromSton:)
+	#(#{Graphics.Color class} #stonName)
+	#(#{Graphics.GraphicsTool class} #stonAllInstVarNames)
+	#(#{Graphics.IconImageManager} #stonOn:)
+	#(#{Graphics.IconImageManager class} #fromSton:)
+	#(#{Kernel.BlockClosure} #fromSton:)
+	#(#{Kernel.BlockClosure} #stonOn:)
+	#(#{Kernel.CompiledCode} #fromSton:)
+	#(#{Kernel.CompiledCode} #stonOn:)
+	#(#{Kernel.ProcessorScheduler} #stonOn:)
+	#(#{Kernel.ProcessorScheduler class} #fromSton:)
+	#(#{Kernel.SingletonSearchPolicy} #stonOn:)
+	#(#{Kernel.SingletonSearchPolicy class} #stonName)
+	#(#{Smalltalk.ScintillaView class} #stonAllInstVarNames)
+	#(#{Smalltalk.SmalltalkSystem} #stonOn:)
 	#(#{STON class} #icon)
-	#(#{STONCStyleCommentsSkipStream} #skipSeparators)
-	#(#{STONCStyleCommentsSkipStream class} #icon)
-	#(#{STONCStyleCommentsSkipStream class} #new)
-	#(#{STONJSON class} #icon)
-	#(#{STONReader class} #icon)
-	#(#{STONReader class} #new)
-	#(#{STONReference class} #icon)
-	#(#{STONStreamWriter class} #icon)
-	#(#{STONWriter class} #icon)
-	#(#{STONWriter class} #new)
-	#(#{SystemDictionary} #stonOn:)
-	#(#{SystemDictionary class} #fromSton:)
-	#(#{Toolbar class} #stonAllInstVarNames)
-	#(#{View} #stonExtras)
-	#(#{View} #stonOn:)
-	#(#{View class} #stonAllInstVarNames)
+	#(#{STON.CStyleCommentsSkipStream} #skipSeparators)
+	#(#{STON.CStyleCommentsSkipStream class} #icon)
+	#(#{STON.CStyleCommentsSkipStream class} #new)
+	#(#{STON.JSON class} #icon)
+	#(#{STON.Reader class} #icon)
+	#(#{STON.Reader class} #initialize)
+	#(#{STON.Reader class} #new)
+	#(#{STON.Reference class} #icon)
+	#(#{STON.StreamWriter class} #icon)
+	#(#{STON.Writer class} #icon)
+	#(#{STON.Writer class} #new)
+	#(#{UI.CardLayout class} #stonAllInstVarNames)
+	#(#{UI.ControlView class} #stonAllInstVarNames)
+	#(#{UI.FramingCalculation} #stonOn:)
+	#(#{UI.FramingCalculation class} #fromSton:)
+	#(#{UI.ReferenceView} #stonExtras)
+	#(#{UI.ReferenceView class} #stonAllInstVarNames)
+	#(#{UI.Toolbar class} #stonAllInstVarNames)
+	#(#{UI.View} #stonExtras)
+	#(#{UI.View} #stonOn:)
+	#(#{UI.View class} #stonAllInstVarNames)
 ).
 
 package setPrerequisites: #(
@@ -83,42 +81,219 @@ package!
 
 "Class Definitions"!
 
-STONReaderError subclass: #DolphinSTONReaderError
+STON.CStyleCommentsSkipStream subclass: #'STON.DolphinCStyleCommentsSkipStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-STONReader subclass: #DolphinSTONReader
+STON.Reader subclass: #'STON.DolphinReader'
 	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
 	classVariableNames: 'EscapeChars'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15)
+		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
 	}!
-STONReference subclass: #DolphinSTONReference
+STON.Reference subclass: #'STON.DolphinReference'
 	instanceVariableNames: 'refCount'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriter subclass: #DolphinSTONWriter
+STON.Writer subclass: #'STON.DolphinWriter'
 	instanceVariableNames: 'classInstVarMaps stringQuote'
 	classVariableNames: 'ExtendedCharacters'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!BlockClosure methodsFor!
+!Core.ByteArray methodsFor!
+
+hex
+	"Answer a hexadecimal representation of the receiver"
+
+	| hexStream string |
+	string := AnsiString new: self size * 2.
+	hexStream := string writeStream.
+	self printHexOn: hexStream.
+	^string! !
+!Core.ByteArray categoriesFor: #hex!public! !
+
+!Core.ByteArray class methodsFor!
+
+readHexFrom: aString
+	^self fromHexString: aString! !
+!Core.ByteArray class categoriesFor: #readHexFrom:!public!ston! !
+
+!Core.Date methodsFor!
+
+stonOn: stonWriter
+	"Use an ISO style YYYY-MM-DD representation.
+	Since my current implementation is time zone offset sensitive, the offset has to be included."
+
+	"Custom implementation for Dolphin replacing the Pharo implementation in STON-Core"
+
+	| stream offset |
+	stream := String writeStream: 15.
+	stream locale: Locale invariant.
+	self printOn: stream format: 'yyyy-MM-dd'.
+	offset := Locale timeZoneInformation offsetSeconds.
+	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].
+	stonWriter writeObject: self listSingleton: stream grabContents! !
+!Core.Date categoriesFor: #stonOn:!public!ston! !
+
+!Core.Date class methodsFor!
+
+fromSton: stonReader
+	"Read a ISO YYYY-MM-DD format.
+	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
+	A missing offset results in the local timezone offset to be used"
+
+	"Customised for Dolphin from the STON-Core original"
+
+	| readStream date |
+	readStream := stonReader parseListSingleton readStream.
+	date := self readFrom: readStream format: 'ymd'.
+	readStream atEnd
+		ifFalse: 
+			[| offset dt |
+			offset := DateAndTime readOffsetFrom: readStream sign: readStream next.
+			dt := DateAndTime
+						year: date year
+						day: date dayOfYear
+						offset: offset.
+			date := dt asLocal asDate].
+	^date! !
+!Core.Date class categoriesFor: #fromSton:!instance creation!public! !
+
+!Core.GUID methodsFor!
+
+stonOn: stonWriter
+	"Use a hex representation"
+	
+	stonWriter writeObject: self listSingleton: self idlString! !
+!Core.GUID categoriesFor: #stonOn:!public!ston! !
+
+!Core.GUID class methodsFor!
+
+fromSton: stonReader
+	^ self fromIdlString: stonReader parseListSingleton! !
+!Core.GUID class categoriesFor: #fromSton:!public!ston! !
+
+!Core.MessageSequence methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self do: [stonWriter encodeList: list]! !
+!Core.MessageSequence categoriesFor: #stonOn:!public!ston! !
+
+!Core.MessageSequence class methodsFor!
+
+fromSton: stonReader
+	"MessageSequences are like OrderedCollections of Messages."
+
+	| collection |
+	collection := self new.
+	stonReader parseListDo: [:each | collection add: each].
+	^collection! !
+!Core.MessageSequence class categoriesFor: #fromSton:!public!ston! !
+
+!Core.Model class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the events instance variable as we never want to serialize these."
+
+	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+!Core.Model class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+!Core.Object class methodsFor!
+
+fromSton: stonReader
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+
+	| instance |
+	"Divergence from standard STON in using #basicNew. As we are trying to restore an Object, we don't want it to run its normal initialization."
+	instance := self basicNew.
+	"We also call back to the reader to inform it of the new instance, as it can then use this to resolve any internal references. This is only really necessary if the receiving class creates external references as it is being materialized."
+	stonReader registerNewObject: instance.
+	^instance
+		fromSton: stonReader;
+		yourself! !
+!Core.Object class categoriesFor: #fromSton:!public!ston! !
+
+!Core.SearchPolicy class methodsFor!
+
+fromSton: stonReader
+	^stonReader isList
+		ifTrue: [self perform: stonReader parseListSingleton]
+		ifFalse: [super fromSton: stonReader]! !
+!Core.SearchPolicy class categoriesFor: #fromSton:!public!ston! !
+
+!Graphics.Color methodsFor!
+
+stonOn: stonWriter
+	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
+
+	self name
+		ifNil: 
+			[stonWriter writeObject: self
+				streamMap: 
+					[:map |
+					map
+						at: #red put: (self normalizedRed roundTo: 0.001);
+						at: #green put: (self normalizedGreen roundTo: 0.001);
+						at: #blue put: (self normalizedBlue roundTo: 0.001);
+						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
+		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+!Graphics.Color categoriesFor: #stonOn:!public!ston! !
+
+!Graphics.Color class methodsFor!
+
+fromSton: stonReader
+	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
+
+	^stonReader isList
+		ifTrue: [self named: stonReader parseListSingleton]
+		ifFalse: 
+			[| values |
+			values := stonReader parseMap.
+			self
+				alpha: (values at: #alpha) * 255
+				red: (values at: #red) * 255
+				green: (values at: #green) * 255
+				blue: (values at: #blue) * 255]!
+
+stonName
+	^#Color! !
+!Graphics.Color class categoriesFor: #fromSton:!public!ston! !
+!Graphics.Color class categoriesFor: #stonName!public!ston! !
+
+!Graphics.GraphicsTool class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
+
+	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+!Graphics.GraphicsTool class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+!Graphics.IconImageManager methodsFor!
+
+stonOn: stonWriter
+	stonWriter 
+		writeObject: self 
+		do: []! !
+!Graphics.IconImageManager categoriesFor: #stonOn:!public!ston! !
+
+!Graphics.IconImageManager class methodsFor!
+
+fromSton: stonReader
+	^self current! !
+!Graphics.IconImageManager class categoriesFor: #fromSton:!public! !
+
+!Kernel.BlockClosure methodsFor!
 
 fromSton: stonReader
 	| instVars |
@@ -145,76 +320,10 @@ stonOn: stonWriter
 			BlockClosure instVarNames
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			dictionary at: #copiedValues put: self copiedValues]! !
-!BlockClosure categoriesFor: #fromSton:!public! !
-!BlockClosure categoriesFor: #stonOn:!public!ston! !
+!Kernel.BlockClosure categoriesFor: #fromSton:!public! !
+!Kernel.BlockClosure categoriesFor: #stonOn:!public!ston! !
 
-!ByteArray methodsFor!
-
-hex
-	"Answer a hexadecimal representation of the receiver"
-
-	| hexStream string |
-	string := AnsiString new: self size * 2.
-	hexStream := string writeStream.
-	self printHexOn: hexStream.
-	^string! !
-!ByteArray categoriesFor: #hex!public! !
-
-!ByteArray class methodsFor!
-
-readHexFrom: aString
-	^self fromHexString: aString! !
-!ByteArray class categoriesFor: #readHexFrom:!public!ston! !
-
-!CardLayout class methodsFor!
-
-stonAllInstVarNames
-	"Override to exclude the number of instance variables we never want to serialize."
-
-	^superclass stonAllInstVarNames
-		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
-!CardLayout class categoriesFor: #stonAllInstVarNames!public! !
-
-!Color methodsFor!
-
-stonOn: stonWriter
-	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
-
-	self name
-		ifNil: 
-			[stonWriter writeObject: self
-				streamMap: 
-					[:map |
-					map
-						at: #red put: (self normalizedRed roundTo: 0.001);
-						at: #green put: (self normalizedGreen roundTo: 0.001);
-						at: #blue put: (self normalizedBlue roundTo: 0.001);
-						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
-		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
-!Color categoriesFor: #stonOn:!public!ston! !
-
-!Color class methodsFor!
-
-fromSton: stonReader
-	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
-
-	^stonReader isList
-		ifTrue: [self named: stonReader parseListSingleton]
-		ifFalse: 
-			[| values |
-			values := stonReader parseMap.
-			self
-				alpha: (values at: #alpha) * 255
-				red: (values at: #red) * 255
-				green: (values at: #green) * 255
-				blue: (values at: #blue) * 255]!
-
-stonName
-	^#Color! !
-!Color class categoriesFor: #fromSton:!public!ston! !
-!Color class categoriesFor: #stonName!public!ston! !
-
-!CompiledCode methodsFor!
+!Kernel.CompiledCode methodsFor!
 
 fromSton: stonReader
 	| instVars |
@@ -242,172 +351,36 @@ stonOn: stonWriter
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			"Store the indexable fields as a literals list"
 			dictionary at: #literals put: self literals]! !
-!CompiledCode categoriesFor: #fromSton:!public! !
-!CompiledCode categoriesFor: #stonOn:!public!ston! !
+!Kernel.CompiledCode categoriesFor: #fromSton:!public! !
+!Kernel.CompiledCode categoriesFor: #stonOn:!public!ston! !
 
-!ControlView class methodsFor!
-
-stonAllInstVarNames
-	"Override to exclude the number of instance variables we never want to serialize."
-
-	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
-!ControlView class categoriesFor: #stonAllInstVarNames!public!ston! !
-
-!Date methodsFor!
-
-stonOn: stonWriter
-	"Use an ISO style YYYY-MM-DD representation.
-	Since my current implementation is time zone offset sensitive, the offset has to be included."
-
-	"Custom implementation for Dolphin replacing the Pharo implementation in STON-Core"
-
-	| stream offset |
-	stream := String writeStream: 15.
-	stream locale: Locale invariant.
-	self printOn: stream format: 'yyyy-MM-dd'.
-	offset := Locale timeZoneInformation offsetSeconds.
-	offset = 0 ifTrue: [stream nextPut: $Z] ifFalse: [offset seconds printOn: stream format: '+hh:mm'].
-	stonWriter writeObject: self listSingleton: stream grabContents! !
-!Date categoriesFor: #stonOn:!public!ston! !
-
-!Date class methodsFor!
-
-fromSton: stonReader
-	"Read a ISO YYYY-MM-DD format.
-	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
-	A missing offset results in the local timezone offset to be used"
-
-	"Customised for Dolphin from the STON-Core original"
-
-	| readStream date |
-	readStream := stonReader parseListSingleton readStream.
-	date := self readFrom: readStream format: 'ymd'.
-	readStream atEnd
-		ifFalse: 
-			[| offset dt |
-			offset := DateAndTime readOffsetFrom: readStream sign: readStream next.
-			dt := DateAndTime year: date year day: date dayOfYear offset: offset.
-			date := dt asLocal asDate].
-	^date! !
-!Date class categoriesFor: #fromSton:!instance creation!public! !
-
-!FramingCalculation methodsFor!
-
-stonOn: stonWriter
-	stonWriter writeObject: self listSingleton: name! !
-!FramingCalculation categoriesFor: #stonOn:!public!ston! !
-
-!FramingCalculation class methodsFor!
-
-fromSton: stonReader
-	#todo. "Perform is a security risk - provide a lookup table."
-	^self perform: stonReader parseListSingleton! !
-!FramingCalculation class categoriesFor: #fromSton:!public!ston! !
-
-!GraphicsTool class methodsFor!
-
-stonAllInstVarNames
-	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
-
-	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!GraphicsTool class categoriesFor: #stonAllInstVarNames!public!ston! !
-
-!GUID methodsFor!
-
-stonOn: stonWriter
-	"Use a hex representation"
-	
-	stonWriter writeObject: self listSingleton: self idlString! !
-!GUID categoriesFor: #stonOn:!public!ston! !
-
-!GUID class methodsFor!
-
-fromSton: stonReader
-	^ self fromIdlString: stonReader parseListSingleton! !
-!GUID class categoriesFor: #fromSton:!public!ston! !
-
-!IconImageManager methodsFor!
-
-stonOn: stonWriter
-	stonWriter 
-		writeObject: self 
-		do: []! !
-!IconImageManager categoriesFor: #stonOn:!public!ston! !
-
-!IconImageManager class methodsFor!
-
-fromSton: stonReader
-	^self current! !
-!IconImageManager class categoriesFor: #fromSton:!public! !
-
-!MessageSequence methodsFor!
-
-stonOn: stonWriter
-	stonWriter writeObject: self do: [stonWriter encodeList: list]! !
-!MessageSequence categoriesFor: #stonOn:!public!ston! !
-
-!MessageSequence class methodsFor!
-
-fromSton: stonReader
-	"MessageSequences are like OrderedCollections of Messages."
-
-	| collection |
-	collection := self new.
-	stonReader parseListDo: [:each | collection add: each].
-	^collection! !
-!MessageSequence class categoriesFor: #fromSton:!public!ston! !
-
-!Model class methodsFor!
-
-stonAllInstVarNames
-	"Override to exclude the events instance variable as we never want to serialize these."
-
-	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!Model class categoriesFor: #stonAllInstVarNames!public!ston! !
-
-!Object class methodsFor!
-
-fromSton: stonReader
-	"Create a new instance and delegate decoding to instance side.
-	Override only when new instance should be created directly (see implementors). "
-
-	| instance |
-	"Divergence from standard STON in using #basicNew. As we are trying to restore an Object, we don't want it to run its normal initialization."
-	instance := self basicNew.
-	"We also call back to the reader to inform it of the new instance, as it can then use this to resolve any internal references. This is only really necessary if the receiving class creates external references as it is being materialized."
-	stonReader registerNewObject: instance.
-	^instance
-		fromSton: stonReader;
-		yourself! !
-!Object class categoriesFor: #fromSton:!public!ston! !
-
-!ProcessorScheduler methodsFor!
+!Kernel.ProcessorScheduler methodsFor!
 
 stonOn: aSTONWriter 
 	aSTONWriter 
 		writeObject: self 
 		do: []! !
-!ProcessorScheduler categoriesFor: #stonOn:!public!ston! !
+!Kernel.ProcessorScheduler categoriesFor: #stonOn:!public!ston! !
 
-!ProcessorScheduler class methodsFor!
+!Kernel.ProcessorScheduler class methodsFor!
 
 fromSton: stonReader
 	^Processor! !
-!ProcessorScheduler class categoriesFor: #fromSton:!public!ston! !
+!Kernel.ProcessorScheduler class categoriesFor: #fromSton:!public!ston! !
 
-!ReferenceView methodsFor!
+!Kernel.SingletonSearchPolicy methodsFor!
 
-stonExtras
-	^{#state -> self state}! !
-!ReferenceView categoriesFor: #stonExtras!public!ston! !
+stonOn: stonWriter
+	self name
+		ifNil: [stonWriter writeObject: self]
+		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+!Kernel.SingletonSearchPolicy categoriesFor: #stonOn:!public!ston! !
 
-!ReferenceView class methodsFor!
+!Kernel.SingletonSearchPolicy class methodsFor!
 
-stonAllInstVarNames
-	"Override to exclude the number of instance variables we never want to serialize."
-
-	^super stonAllInstVarNames copyWithout: 'referee'! !
-!ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+stonName
+	^#SearchPolicy! !
+!Kernel.SingletonSearchPolicy class categoriesFor: #stonName!public!ston! !
 
 !ScintillaView class methodsFor!
 
@@ -416,28 +389,6 @@ stonAllInstVarNames
 
 	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
 !ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
-
-!SearchPolicy class methodsFor!
-
-fromSton: stonReader
-	^stonReader isList
-		ifTrue: [self perform: stonReader parseListSingleton]
-		ifFalse: [super fromSton: stonReader]! !
-!SearchPolicy class categoriesFor: #fromSton:!public!ston! !
-
-!SingletonSearchPolicy methodsFor!
-
-stonOn: stonWriter
-	self name
-		ifNil: [stonWriter writeObject: self]
-		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
-!SingletonSearchPolicy categoriesFor: #stonOn:!public!ston! !
-
-!SingletonSearchPolicy class methodsFor!
-
-stonName
-	^#SearchPolicy! !
-!SingletonSearchPolicy class categoriesFor: #stonName!public!ston! !
 
 !SmalltalkSystem methodsFor!
 
@@ -453,98 +404,129 @@ icon
 	^self defaultIcon! !
 !STON class categoriesFor: #icon!constants!public! !
 
-!STONCStyleCommentsSkipStream methodsFor!
+!STON.CStyleCommentsSkipStream methodsFor!
 
 skipSeparators
 	^stream skipSeparators! !
-!STONCStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
 
-!STONCStyleCommentsSkipStream class methodsFor!
+!STON.CStyleCommentsSkipStream class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON icon!
+	^Root.STON icon!
 
 new
-	^DolphinSTONCStyleCommentsSkipStream basicNew! !
-!STONCStyleCommentsSkipStream class categoriesFor: #icon!constants!public! !
-!STONCStyleCommentsSkipStream class categoriesFor: #new!instance creation!public! !
+	^STON.DolphinCStyleCommentsSkipStream basicNew! !
+!STON.CStyleCommentsSkipStream class categoriesFor: #icon!constants!public! !
+!STON.CStyleCommentsSkipStream class categoriesFor: #new!instance creation!public! !
 
-!STONJSON class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^STON icon! !
-!STONJSON class categoriesFor: #icon!constants!public! !
-
-!STONReader class methodsFor!
+!STON.JSON class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON icon!
+	^Root.STON icon! !
+!STON.JSON class categoriesFor: #icon!constants!public! !
+
+!STON.Reader class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Root.STON icon!
+
+initialize
+	NotFound := NotFoundError!
 
 new
-	^DolphinSTONReader basicNew initialize! !
-!STONReader class categoriesFor: #icon!constants!public! !
-!STONReader class categoriesFor: #new!instance creation!private! !
+	^STON.DolphinReader basicNew initialize! !
+!STON.Reader class categoriesFor: #icon!constants!public! !
+!STON.Reader class categoriesFor: #initialize!private! !
+!STON.Reader class categoriesFor: #new!instance creation!private! !
 
-!STONReference class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^STON icon! !
-!STONReference class categoriesFor: #icon!constants!public! !
-
-!STONStreamWriter class methodsFor!
+!STON.Reference class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON icon! !
-!STONStreamWriter class categoriesFor: #icon!constants!public! !
+	^Root.STON icon! !
+!STON.Reference class categoriesFor: #icon!constants!public! !
 
-!STONWriter class methodsFor!
+!STON.StreamWriter class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON icon!
+	^Root.STON icon! !
+!STON.StreamWriter class categoriesFor: #icon!constants!public! !
+
+!STON.Writer class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Root.STON icon!
 
 new
-	^DolphinSTONWriter basicNew initialize! !
-!STONWriter class categoriesFor: #icon!constants!public! !
-!STONWriter class categoriesFor: #new!public! !
+	^STON.DolphinWriter basicNew initialize! !
+!STON.Writer class categoriesFor: #icon!constants!public! !
+!STON.Writer class categoriesFor: #new!public! !
 
-!SystemDictionary methodsFor!
+!UI.CardLayout class methodsFor!
 
-stonOn: aSTONWriter 
-	aSTONWriter 
-		writeObject: self 
-		listSingleton: #Smalltalk! !
-!SystemDictionary categoriesFor: #stonOn:!public! !
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
 
-!SystemDictionary class methodsFor!
+	^superclass stonAllInstVarNames
+		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
+!UI.CardLayout class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.ControlView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
+!UI.ControlView class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+!UI.FramingCalculation methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: name! !
+!UI.FramingCalculation categoriesFor: #stonOn:!public!ston! !
+
+!UI.FramingCalculation class methodsFor!
 
 fromSton: stonReader
-	| globalName theClass |
-	globalName := stonReader parseListSingleton.
-	theClass := globalName asQualifiedReference value.
-	^theClass! !
-!SystemDictionary class categoriesFor: #fromSton:!public! !
+	#todo. "Perform is a security risk - provide a lookup table."
+	^self perform: stonReader parseListSingleton! !
+!UI.FramingCalculation class categoriesFor: #fromSton:!public!ston! !
 
-!Toolbar class methodsFor!
+!UI.ReferenceView methodsFor!
+
+stonExtras
+	^{#state -> self state}! !
+!UI.ReferenceView categoriesFor: #stonExtras!public!ston! !
+
+!UI.ReferenceView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'referee'! !
+!UI.ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.Toolbar class methodsFor!
 
 stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithoutAll: #('idMap' 'bitmapsStart')! !
-!Toolbar class categoriesFor: #stonAllInstVarNames!public! !
+!UI.Toolbar class categoriesFor: #stonAllInstVarNames!public! !
 
-!View methodsFor!
+!UI.View methodsFor!
 
 stonExtras
 	^{#state -> self state. #subViews -> self subViews}!
@@ -560,10 +542,10 @@ stonOn: stonWriter
 	"
 
 	stonWriter writeObject: self extra: self stonExtras! !
-!View categoriesFor: #stonExtras!public!ston! !
-!View categoriesFor: #stonOn:!public!ston! !
+!UI.View categoriesFor: #stonExtras!public!ston! !
+!UI.View categoriesFor: #stonOn:!public!ston! !
 
-!View class methodsFor!
+!UI.View class methodsFor!
 
 stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
@@ -572,7 +554,7 @@ stonAllInstVarNames
 		ifTrue: 
 			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
 		ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!View class categoriesFor: #stonAllInstVarNames!public!ston! !
+!UI.View class categoriesFor: #stonAllInstVarNames!public!ston! !
 
 "End of package definition"!
 
