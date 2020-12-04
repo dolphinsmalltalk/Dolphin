@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #AbstractDocumentShell
+UI.Shell subclass: #'UI.AbstractDocumentShell'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractDocumentShell guid: (GUID fromString: '{7f3ab0c3-d1ed-4fb5-b64e-bfba5d74d038}')!
-AbstractDocumentShell isAbstract: true!
-AbstractDocumentShell comment: '`AbstractDocumentShell` is an abstract class of `<documentPresenter>`s, i.e. `Shell` presenters present a documented model which can be loaded from and saved to a file.
+UI.AbstractDocumentShell guid: (Core.GUID fromString: '{7f3ab0c3-d1ed-4fb5-b64e-bfba5d74d038}')!
+UI.AbstractDocumentShell isNonInstantiable: true!
+UI.AbstractDocumentShell comment: '`AbstractDocumentShell` is an abstract class of `<documentPresenter>`s, i.e. `Shell` presenters present a documented model which can be loaded from and saved to a file.
 
 Instance Variables:
 	filename		`<readableString>` or `nil`, describing the document filename (if it has been set).
 '!
-!AbstractDocumentShell categoriesForClass!MVP-Presenters! !
-!AbstractDocumentShell methodsFor!
+!UI.AbstractDocumentShell categoriesForClass!MVP-Presenters! !
+!UI.AbstractDocumentShell methodsFor!
 
 addToRecentList: aFilenameString 
 	"Adds aFilenameString to the <orderedCollection> of recently accessed files"
@@ -90,10 +90,10 @@ fileRevert
 	"Revert the contents of the receiver's document to those in the
 	associated file"
 
-	self isModified 
+	self isModified
 		ifTrue: 
-			[(MessageBox 
-				confirm: 'There are unsaved changes. Are you sure you wish to revert to the previously saved copy?') 
+			[(MessageBox
+				confirm: 'There are unsaved changes. Are you sure you wish to revert to the previously saved copy?')
 					ifTrue: [self fileLoad]]
 		ifFalse: [self fileLoad	"Load without prompt it not modified"]!
 
@@ -149,7 +149,7 @@ isText
 
 	^false!
 
-onAboutToDisplayMenu: fileRecentMenu 
+onAboutToDisplayMenu: fileRecentMenu
 	"Private - The system is about to display the <Menu>, popup, this is our chance
 	to fiddle with it and display the recent files list if appropriate."
 
@@ -157,12 +157,12 @@ onAboutToDisplayMenu: fileRecentMenu
 	fileRecentMenu name == #fileOpenRecentMenu ifFalse: [^self].
 	fileRecentMenu clear.
 	self getRecentList do: 
-			[:each | 
+			[:each |
 			| nameToDisplay |
 			nameToDisplay := each.
-			self hasFilename 
+			self hasFilename
 				ifTrue: 
-					[nameToDisplay := (FolderRelativeFileLocator basePath: (File splitPathFrom: self filename)) 
+					[nameToDisplay := (FolderRelativeFileLocator basePath: (File splitPathFrom: self filename))
 								relativePathTo: each].
 			fileRecentMenu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
 	fileRecentMenu
@@ -175,7 +175,7 @@ onCloseRequested: boolValueHolder
 
 	self onPromptToSaveChanges: boolValueHolder!
 
-onPromptToSaveChanges: aBooleanValue 
+onPromptToSaveChanges: aBooleanValue
 	"Private - The receiver is about to lose its current contents (or is being closed) as the
 	result of some user action. If the displayed document has been changed then prompt to see if
 	those changes should be retained, giving the user the option of:
@@ -184,9 +184,9 @@ onPromptToSaveChanges: aBooleanValue
 		(c) retaining the changes and aborting whatever operation brought us to this point.
 	If the operation is to be aborted, then the boolean <ValueHolder> argument is set to false."
 
-	self isModified 
+	self isModified
 		ifTrue: 
-			[(MessageBox new)
+			[MessageBox new
 				owner: self view;
 				confirm: self saveChangesPrompt
 					onYes: [aBooleanValue value: self fileSave]
@@ -251,17 +251,16 @@ saveDocument
 
 saveDocumentAs
 	| proceed newFilename |
-	newFilename := (FileSaveDialog on: self filename asValue)
+	newFilename := (UI.FileSaveDialog on: self filename asValue)
 				fileTypes: self class fileTypes;
 				defaultExtension: self class defaultFileExtension;
 				caption: 'Save Document As...';
 				showModal.
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 
-							[MessageBox 
-								confirm: ('<1s><n>This file already exists, are you sure you would like to overwrite it?' 
+							[MessageBox confirm: ('<1s><n>This file already exists, are you sure you would like to overwrite it?'
 										expandMacrosWith: newFilename)
-								caption: SessionManager current applicationName]]) 
+								caption: SessionManager current applicationName]])
 		ifTrue: 
 			["Install the new filename"
 			self
@@ -283,7 +282,7 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 	self class propertyAt: #documentRecentList put: anOrderedCollectionOfFilenameStrings!
 
 shortCaption
-	^self hasFilename 
+	^self hasFilename
 		ifTrue: 
 			[| stream |
 			stream := String writeStream: 32.
@@ -312,52 +311,52 @@ updateCaption
 	stream := String writeStream: 64.
 	stream nextPutAll: (self hasFilename ifTrue: [self filename] ifFalse: ['Untitled']).
 	suffix := self basicCaption.
-	suffix notEmpty 
+	suffix notEmpty
 		ifTrue: 
 			[stream
 				nextPutAll: ' - ';
 				nextPutAll: suffix].
 	self isModified ifTrue: [stream nextPut: $*].
 	self caption: stream contents! !
-!AbstractDocumentShell categoriesFor: #addToRecentList:!public! !
-!AbstractDocumentShell categoriesFor: #basicCaption!accessing!private! !
-!AbstractDocumentShell categoriesFor: #canSave!public!testing! !
-!AbstractDocumentShell categoriesFor: #canSaveState!private!saved state! !
-!AbstractDocumentShell categoriesFor: #createSchematicWiring!initializing!public! !
-!AbstractDocumentShell categoriesFor: #fileClearRecentList!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileLoad!commands!public! !
-!AbstractDocumentShell categoriesFor: #filename!accessing!public! !
-!AbstractDocumentShell categoriesFor: #filename:!accessing!public! !
-!AbstractDocumentShell categoriesFor: #fileOpen!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileRevert!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileSave!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileSaveAs!commands!public! !
-!AbstractDocumentShell categoriesFor: #getDocumentData!accessing!private! !
-!AbstractDocumentShell categoriesFor: #getRecentList!private! !
-!AbstractDocumentShell categoriesFor: #hasContents!public! !
-!AbstractDocumentShell categoriesFor: #hasFilename!public!testing! !
-!AbstractDocumentShell categoriesFor: #isModified!public!testing! !
-!AbstractDocumentShell categoriesFor: #isModified:!modes!not an aspect!public! !
-!AbstractDocumentShell categoriesFor: #isText!public!testing! !
-!AbstractDocumentShell categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
-!AbstractDocumentShell categoriesFor: #onCloseRequested:!event handling!private! !
-!AbstractDocumentShell categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!AbstractDocumentShell categoriesFor: #openOn:!public! !
-!AbstractDocumentShell categoriesFor: #promptToSaveChanges!commands!private! !
-!AbstractDocumentShell categoriesFor: #queryCommand:!commands!private! !
-!AbstractDocumentShell categoriesFor: #saveChangesPrompt!private! !
-!AbstractDocumentShell categoriesFor: #saveDocument!operations!private! !
-!AbstractDocumentShell categoriesFor: #saveDocumentAs!operations!private! !
-!AbstractDocumentShell categoriesFor: #setDocumentData:!accessing!private! !
-!AbstractDocumentShell categoriesFor: #setRecentList:!private! !
-!AbstractDocumentShell categoriesFor: #shortCaption!accessing!public! !
-!AbstractDocumentShell categoriesFor: #streamIn:!private!streaming! !
-!AbstractDocumentShell categoriesFor: #streamOut:!private!streaming! !
-!AbstractDocumentShell categoriesFor: #updateCaption!private!updating! !
+!UI.AbstractDocumentShell categoriesFor: #addToRecentList:!public! !
+!UI.AbstractDocumentShell categoriesFor: #basicCaption!accessing!private! !
+!UI.AbstractDocumentShell categoriesFor: #canSave!public!testing! !
+!UI.AbstractDocumentShell categoriesFor: #canSaveState!private!saved state! !
+!UI.AbstractDocumentShell categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileClearRecentList!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileLoad!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #filename!accessing!public! !
+!UI.AbstractDocumentShell categoriesFor: #filename:!accessing!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileOpen!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileRevert!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileSave!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #fileSaveAs!commands!public! !
+!UI.AbstractDocumentShell categoriesFor: #getDocumentData!accessing!private! !
+!UI.AbstractDocumentShell categoriesFor: #getRecentList!private! !
+!UI.AbstractDocumentShell categoriesFor: #hasContents!public! !
+!UI.AbstractDocumentShell categoriesFor: #hasFilename!public!testing! !
+!UI.AbstractDocumentShell categoriesFor: #isModified!public!testing! !
+!UI.AbstractDocumentShell categoriesFor: #isModified:!modes!not an aspect!public! !
+!UI.AbstractDocumentShell categoriesFor: #isText!public!testing! !
+!UI.AbstractDocumentShell categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
+!UI.AbstractDocumentShell categoriesFor: #onCloseRequested:!event handling!private! !
+!UI.AbstractDocumentShell categoriesFor: #onPromptToSaveChanges:!private!testing! !
+!UI.AbstractDocumentShell categoriesFor: #openOn:!public! !
+!UI.AbstractDocumentShell categoriesFor: #promptToSaveChanges!commands!private! !
+!UI.AbstractDocumentShell categoriesFor: #queryCommand:!commands!private! !
+!UI.AbstractDocumentShell categoriesFor: #saveChangesPrompt!private! !
+!UI.AbstractDocumentShell categoriesFor: #saveDocument!operations!private! !
+!UI.AbstractDocumentShell categoriesFor: #saveDocumentAs!operations!private! !
+!UI.AbstractDocumentShell categoriesFor: #setDocumentData:!accessing!private! !
+!UI.AbstractDocumentShell categoriesFor: #setRecentList:!private! !
+!UI.AbstractDocumentShell categoriesFor: #shortCaption!accessing!public! !
+!UI.AbstractDocumentShell categoriesFor: #streamIn:!private!streaming! !
+!UI.AbstractDocumentShell categoriesFor: #streamOut:!private!streaming! !
+!UI.AbstractDocumentShell categoriesFor: #updateCaption!private!updating! !
 
-AbstractDocumentShell methodProtocol: #documentPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #fileLoad #filename #filename: #fileOpen #fileRevert #fileSave #fileSaveAs #getDocumentData #hasFilename #isModified #isModified: #isText #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setDocumentData: #setFocus #show #streamIn: #streamOut: #topShell #view)!
+UI.AbstractDocumentShell methodProtocol: #documentPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #fileLoad #filename #filename: #fileOpen #fileRevert #fileSave #fileSaveAs #getDocumentData #hasFilename #isModified #isModified: #isText #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setDocumentData: #setFocus #show #streamIn: #streamOut: #topShell #view)!
 
-!AbstractDocumentShell class methodsFor!
+!UI.AbstractDocumentShell class methodsFor!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
@@ -375,11 +374,11 @@ fileTypes
 	class of document. Overidden by documents that have their own file
 	types"
 
-	^{FileDialog allFilesType}!
+	^{UI.FileDialog allFilesType}!
 
 getFilename
 	| openFilename |
-	openFilename := (FileOpenDialog new)
+	openFilename := UI.FileOpenDialog new
 				fileTypes: self fileTypes;
 				defaultExtension: self defaultFileExtension;
 				showModal.
@@ -406,11 +405,11 @@ openOn: aStringFilename
 	^(self show)
 		openOn: aStringFilename;
 		yourself! !
-!AbstractDocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
-!AbstractDocumentShell class categoriesFor: #filename:!instance creation!public! !
-!AbstractDocumentShell class categoriesFor: #fileTypes!constants!public! !
-!AbstractDocumentShell class categoriesFor: #getFilename!instance creation!private! !
-!AbstractDocumentShell class categoriesFor: #icon!constants!public! !
-!AbstractDocumentShell class categoriesFor: #open!instance creation!public! !
-!AbstractDocumentShell class categoriesFor: #openOn:!instance creation!public! !
+!UI.AbstractDocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
+!UI.AbstractDocumentShell class categoriesFor: #filename:!instance creation!public! !
+!UI.AbstractDocumentShell class categoriesFor: #fileTypes!constants!public! !
+!UI.AbstractDocumentShell class categoriesFor: #getFilename!instance creation!private! !
+!UI.AbstractDocumentShell class categoriesFor: #icon!constants!public! !
+!UI.AbstractDocumentShell class categoriesFor: #open!instance creation!public! !
+!UI.AbstractDocumentShell class categoriesFor: #openOn:!instance creation!public! !
 

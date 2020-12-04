@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Document Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Document Shell Presenter
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -9,7 +9,7 @@ This package contains the obsolete `DocumentShell` presenter, which has been sup
 
 
 package setClassNames: #(
-	#{DocumentShell}
+	#{UI.DocumentShell}
 ).
 
 package setPrerequisites: #(
@@ -21,10 +21,10 @@ package!
 
 "Class Definitions"!
 
-AbstractDocumentShell subclass: #DocumentShell
+UI.AbstractDocumentShell subclass: #'UI.DocumentShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
