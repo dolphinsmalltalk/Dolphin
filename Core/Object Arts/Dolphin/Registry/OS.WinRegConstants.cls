@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #WinRegConstants
+Kernel.SharedPool subclass: #'OS.WinRegConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -34,6 +34,7 @@ SharedPool subclass: #WinRegConstants
 		'REG_QWORD' -> 16rB.
 		'REG_SZ' -> 16r1
 	}!
-WinRegConstants guid: (GUID fromString: '{f3002953-4006-4fa4-a61b-fab719cf4784}')!
-WinRegConstants comment: ''!
-!WinRegConstants categoriesForClass!System-Support! !
+OS.WinRegConstants guid: (Core.GUID fromString: '{f3002953-4006-4fa4-a61b-fab719cf4784}')!
+OS.WinRegConstants isNonInstantiable: true!
+OS.WinRegConstants comment: ''!
+!OS.WinRegConstants categoriesForClass!System-Support! !

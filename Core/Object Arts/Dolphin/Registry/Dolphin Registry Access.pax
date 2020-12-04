@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Registry Access'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Registry Access.
 Copyright (c) Object Arts Ltd, 1998-2018.
@@ -20,25 +20,25 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{RegKey}
-	#{RegKeyAbstract}
-	#{RegKeyValues}
-	#{RegQueryInfo}
-	#{WinRegConstants}
+	#{OS.RegKey}
+	#{OS.RegKeyAbstract}
+	#{OS.RegKeyValues}
+	#{OS.RegQueryInfo}
+	#{OS.WinRegConstants}
 ).
 
 package setMethodNames: #(
-	#(#{AdvApiLibrary} #regCloseKey:)
-	#(#{AdvApiLibrary} #regConnectRegistry:hKey:phkResult:)
-	#(#{AdvApiLibrary} #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:)
-	#(#{AdvApiLibrary} #regDeleteKey:lpSubKey:)
-	#(#{AdvApiLibrary} #regDeleteValue:lpValueName:)
-	#(#{AdvApiLibrary} #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:)
-	#(#{AdvApiLibrary} #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:)
-	#(#{AdvApiLibrary} #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:)
-	#(#{AdvApiLibrary} #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:)
-	#(#{AdvApiLibrary} #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:)
-	#(#{AdvApiLibrary} #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:)
+	#(#{OS.AdvApiLibrary} #regCloseKey:)
+	#(#{OS.AdvApiLibrary} #regConnectRegistry:hKey:phkResult:)
+	#(#{OS.AdvApiLibrary} #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:)
+	#(#{OS.AdvApiLibrary} #regDeleteKey:lpSubKey:)
+	#(#{OS.AdvApiLibrary} #regDeleteValue:lpValueName:)
+	#(#{OS.AdvApiLibrary} #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:)
+	#(#{OS.AdvApiLibrary} #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:)
+	#(#{OS.AdvApiLibrary} #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:)
+	#(#{OS.AdvApiLibrary} #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:)
+	#(#{OS.AdvApiLibrary} #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:)
+	#(#{OS.AdvApiLibrary} #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:)
 ).
 
 package setPrerequisites: #(
@@ -49,7 +49,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #WinRegConstants
+Kernel.SharedPool subclass: #'OS.WinRegConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -83,25 +83,25 @@ SharedPool subclass: #WinRegConstants
 		'REG_QWORD' -> 16rB.
 		'REG_SZ' -> 16r1
 	}!
-Object subclass: #RegQueryInfo
+Core.Object subclass: #'OS.RegQueryInfo'
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dictionary variableSubclass: #RegKeyAbstract
+Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
-	imports: #(#{Win32Errors} #{WinRegConstants})
+	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKeyAbstract variableSubclass: #RegKey
+OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKeyAbstract variableSubclass: #RegKeyValues
+OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -110,7 +110,7 @@ RegKeyAbstract variableSubclass: #RegKeyValues
 
 "Loose Methods"!
 
-!AdvApiLibrary methodsFor!
+!OS.AdvApiLibrary methodsFor!
 
 regCloseKey: hKey
 	"Release the handle of the specified registry key.
@@ -272,17 +272,17 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 
 	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall: _failureCode! !
-!AdvApiLibrary categoriesFor: #regCloseKey:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regDeleteKey:lpSubKey:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regDeleteValue:lpValueName:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
-!AdvApiLibrary categoriesFor: #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regCloseKey:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regDeleteKey:lpSubKey:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regDeleteValue:lpValueName:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesFor: #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:!public!win32 functions-registry! !
 
 "End of package definition"!
 

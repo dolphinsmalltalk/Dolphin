@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RegKeyAbstract variableSubclass: #RegKey
+OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKey guid: (GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegKey comment: 'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
+OS.RegKey guid: (Core.GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RegKey comment: 'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
 
 RegKey implements the <abstractDictionary> protocol as operations against its sub-keys. In order to operate on the values under the key one must first acquire an instance of RegKeyValues using the #subValues message.'!
-!RegKey categoriesForClass!System-Support! !
-!RegKey methodsFor!
+!OS.RegKey categoriesForClass!System-Support! !
+!OS.RegKey methodsFor!
 
 at: key ifAbsent: exceptionHandler
 	"Answer the value named by the <readableString> argument, key.  If the key is not found,
@@ -52,14 +52,14 @@ includesKey: keyString
 	"Answer whether the receiver has a key equal to the argument, key"
 
 	| subKey dwErr lib |
-	subKey := ExternalHandle new.
+	subKey := Handle new.
 	lib := self registryLibrary.
 	dwErr := lib
-		regOpenKeyEx: self asParameter
-			lpSubKey: keyString
-			ulOptions: 0
-			samDesired: KEY_READ
-			phkResult: subKey.
+				regOpenKeyEx: self asParameter
+				lpSubKey: keyString
+				ulOptions: 0
+				samDesired: KEY_READ
+				phkResult: subKey.
 	lib regCloseKey: subKey.
 	self free.
 	^dwErr = ERROR_SUCCESS!
@@ -112,23 +112,23 @@ subValues
 			handle: self handle;
 			yourself
 	! !
-!RegKey categoriesFor: #at:ifAbsent:!accessing!public! !
-!RegKey categoriesFor: #at:put:!accessing!public! !
-!RegKey categoriesFor: #fileOutOn:!public!storing! !
-!RegKey categoriesFor: #includesKey:!public!searching! !
-!RegKey categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RegKey categoriesFor: #keysDo:!enumerating!public! !
-!RegKey categoriesFor: #privateAt:!accessing!private! !
-!RegKey categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RegKey categoriesFor: #size!accessing!public! !
-!RegKey categoriesFor: #subKeys!accessing!public! !
-!RegKey categoriesFor: #subValues!accessing!public! !
+!OS.RegKey categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.RegKey categoriesFor: #at:put:!accessing!public! !
+!OS.RegKey categoriesFor: #fileOutOn:!public!storing! !
+!OS.RegKey categoriesFor: #includesKey:!public!searching! !
+!OS.RegKey categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!OS.RegKey categoriesFor: #keysDo:!enumerating!public! !
+!OS.RegKey categoriesFor: #privateAt:!accessing!private! !
+!OS.RegKey categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.RegKey categoriesFor: #size!accessing!public! !
+!OS.RegKey categoriesFor: #subKeys!accessing!public! !
+!OS.RegKey categoriesFor: #subValues!accessing!public! !
 
-!RegKey class methodsFor!
+!OS.RegKey class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!RegKey class categoriesFor: #icon!constants!public! !
+!OS.RegKey class categoriesFor: #icon!constants!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RegKeyAbstract variableSubclass: #RegKeyValues
+OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKeyValues guid: (GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegKeyValues comment: 'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
+OS.RegKeyValues guid: (Core.GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RegKeyValues comment: 'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
 
 RegKeyValues implements the <abstractDictionary> protocol mapping value names to keys and the registry values to dictionary values.'!
-!RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
-!RegKeyValues methodsFor!
+!OS.RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
+!OS.RegKeyValues methodsFor!
 
 associationAt: key ifAbsent: exceptionHandler
 	"Answer a new <association> between the key and value of
@@ -48,14 +48,14 @@ changeKey: key to: newKey
 	self removeKey: key.
 	^assoc!
 
-fileOutOn: stream 
+fileOutOn: stream
 	"File out the receiver in the regedit text representation to the <puttableStream> argument, stream."
 
 	self keysAndValuesDo: 
-			[:k :v | 
+			[:k :v |
 			| wrapAt |
 			wrapAt := stream position + 76.
-			k isEmpty 
+			k isEmpty
 				ifTrue: [stream nextPut: $@]
 				ifFalse: 
 					[stream
@@ -63,13 +63,13 @@ fileOutOn: stream
 						nextPutAll: k;
 						nextPut: $"].
 			stream nextPut: $=.
-			v isInteger 
+			v isInteger
 				ifTrue: 
 					[stream
 						nextPutAll: 'dword:';
 						nextPutAll: ('%08x' sprintfWith: v)]
 				ifFalse: 
-					[(v isKindOf: String) 
+					[(v isKindOf: String)
 						ifTrue: 
 							[stream
 								nextPut: $";
@@ -78,8 +78,8 @@ fileOutOn: stream
 						ifFalse: 
 							[stream nextPutAll: 'hex:'.
 							v do: 
-									[:b | 
-									stream position > wrapAt 
+									[:b |
+									stream position > wrapAt
 										ifTrue: 
 											[stream
 												nextPut: $\;
@@ -136,24 +136,24 @@ subValues
 	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
 
 	^self! !
-!RegKeyValues categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!RegKeyValues categoriesFor: #at:ifAbsent:!accessing!public! !
-!RegKeyValues categoriesFor: #at:put:!accessing!public! !
-!RegKeyValues categoriesFor: #changeKey:to:!accessing!private! !
-!RegKeyValues categoriesFor: #fileOutOn:!public!storing! !
-!RegKeyValues categoriesFor: #includesKey:!public!searching! !
-!RegKeyValues categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RegKeyValues categoriesFor: #keysDo:!enumerating!public! !
-!RegKeyValues categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RegKeyValues categoriesFor: #size!accessing!public! !
-!RegKeyValues categoriesFor: #subKeys!accessing!public! !
-!RegKeyValues categoriesFor: #subValues!accessing!public! !
+!OS.RegKeyValues categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!OS.RegKeyValues categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.RegKeyValues categoriesFor: #at:put:!accessing!public! !
+!OS.RegKeyValues categoriesFor: #changeKey:to:!accessing!private! !
+!OS.RegKeyValues categoriesFor: #fileOutOn:!public!storing! !
+!OS.RegKeyValues categoriesFor: #includesKey:!public!searching! !
+!OS.RegKeyValues categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!OS.RegKeyValues categoriesFor: #keysDo:!enumerating!public! !
+!OS.RegKeyValues categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.RegKeyValues categoriesFor: #size!accessing!public! !
+!OS.RegKeyValues categoriesFor: #subKeys!accessing!public! !
+!OS.RegKeyValues categoriesFor: #subValues!accessing!public! !
 
-!RegKeyValues class methodsFor!
+!OS.RegKeyValues class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!RegKeyValues class categoriesFor: #icon!constants!public! !
+!OS.RegKeyValues class categoriesFor: #icon!constants!public! !
 

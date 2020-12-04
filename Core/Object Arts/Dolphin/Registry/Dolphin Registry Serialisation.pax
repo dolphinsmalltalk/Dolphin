@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Registry Serialisation'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Registry Serialisation.
 Copyright (c) Object Arts Ltd, 2004.
@@ -11,21 +11,21 @@ package basicPackageVersion: '6.1'.
 
 
 package setMethodNames: #(
-	#(#{ByteArray} #storeUnderRegKey:as:)
-	#(#{ClassDescription} #readFromRegKey:)
-	#(#{DWORDBytes} #regKeyType)
-	#(#{ExternalIntegerBytes} #regKeyType)
-	#(#{ExternalIntegerBytes} #storeUnderRegKey:as:)
-	#(#{LargeInteger} #storeUnderRegKey:as:)
-	#(#{LargeInteger class} #readFromRegKey:)
-	#(#{Object} #storeUnderRegKey:as:)
-	#(#{Object class} #fromRegKey:)
-	#(#{SmallInteger} #storeUnderRegKey:as:)
-	#(#{String} #storeUnderRegKey:as:)
-	#(#{Symbol} #storeUnderRegKey:as:)
-	#(#{Symbol class} #readFromRegKey:)
-	#(#{UIntPtrBytes} #regKeyType)
-	#(#{UndefinedObject} #storeUnderRegKey:as:)
+	#(#{Core.ByteArray} #storeUnderRegKey:as:)
+	#(#{Core.ClassDescription} #readFromRegKey:)
+	#(#{Core.LargeInteger} #storeUnderRegKey:as:)
+	#(#{Core.LargeInteger class} #readFromRegKey:)
+	#(#{Core.Object} #storeUnderRegKey:as:)
+	#(#{Core.Object class} #fromRegKey:)
+	#(#{Core.SmallInteger} #storeUnderRegKey:as:)
+	#(#{Core.String} #storeUnderRegKey:as:)
+	#(#{Core.Symbol} #storeUnderRegKey:as:)
+	#(#{Core.Symbol class} #readFromRegKey:)
+	#(#{Core.UndefinedObject} #storeUnderRegKey:as:)
+	#(#{External.DWORDBytes} #regKeyType)
+	#(#{External.IntegerBytes} #regKeyType)
+	#(#{External.IntegerBytes} #storeUnderRegKey:as:)
+	#(#{External.UIntPtrBytes} #regKeyType)
 ).
 
 package setPrerequisites: #(
@@ -36,7 +36,7 @@ package!
 
 "Loose Methods"!
 
-!ByteArray methodsFor!
+!Core.ByteArray methodsFor!
 
 storeUnderRegKey: aRegKey as: aString 
 	"Store a serialised representation of the receiver to the registry under the <RegKey>,
@@ -46,47 +46,197 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: aString
 		put: self
 		type: #binary! !
-!ByteArray categoriesFor: #storeUnderRegKey:as:!public! !
+!Core.ByteArray categoriesFor: #storeUnderRegKey:as:!public! !
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
-readFromRegKey: aRegKey 
+readFromRegKey: aRegKey
 	"Read an instance of the receiver previously serialised under the specified registry key."
 
 	| params inst basicSize instVars |
 	params := aRegKey value.
-	self assert: [params first = self name].
 	basicSize := params size > 1 ifTrue: [Integer fromString: params second] ifFalse: [0].
 	inst := basicSize > 0 ifTrue: [self basicNew: basicSize] ifFalse: [self basicNew].
 	instVars := LookupTable new.
 	self allInstVarNames keysAndValuesDo: [:i :name | instVars at: name put: i].
 	aRegKey subValues keysAndValuesDo: 
-			[:instVar :value | 
-			instVar isEmpty 
+			[:instVar :value |
+			instVar isEmpty
 				ifFalse: 
 					[| i |
 					i := Integer readFrom: instVar readStream.
-					i = 0 
+					i = 0
 						ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
 						ifFalse: [inst basicAt: i put: value]]].
 	aRegKey subKeys keysAndValuesDo: 
-			[:instVar :key | 
+			[:instVar :key |
 			| i value |
 			value := Object fromRegKey: key.
 			i := Integer readFrom: instVar readStream.
-			i = 0 
+			i = 0
 				ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
 				ifFalse: [inst basicAt: i put: value]].
 	^inst! !
-!ClassDescription categoriesFor: #readFromRegKey:!public! !
+!Core.ClassDescription categoriesFor: #readFromRegKey:!public! !
 
-!DWORDBytes methodsFor!
+!Core.LargeInteger methodsFor!
+
+storeUnderRegKey: aRegKey as: aString
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	self basicSize <= 4
+		ifTrue: 
+			[aRegKey
+				valueAt: aString
+				put: (External.DWORD fromInteger: self)
+				type: #dword]
+		ifFalse: 
+			[self basicSize <= 8
+				ifTrue: 
+					[aRegKey
+						valueAt: aString
+						put: (OS.ULARGE_INTEGER fromInteger: self)
+						type: #qword]
+				ifFalse: 
+					[| key size |
+					key := aRegKey createKey: aString.
+					size := self basicSize.
+					key
+						valueAt: nil
+						put: self class name
+						type: #stringArray.
+					((ByteArray new: self basicSize)
+						replaceFrom: 1
+						to: size
+						with: self
+						startingAt: 1) storeUnderRegKey: key as: 'value']]! !
+!Core.LargeInteger categoriesFor: #storeUnderRegKey:as:!public! !
+
+!Core.LargeInteger class methodsFor!
+
+readFromRegKey: aRegKey 
+	"N.B. Will only get here for cases outside 64-bit 2's complement range."
+
+	| size answer bytes |
+	bytes := aRegKey valueAt: 'value'.
+	size := bytes size.
+	self assert: [(size bitAnd: 3) = 0].
+	answer := self basicNew: size.
+	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
+	^answer! !
+!Core.LargeInteger class categoriesFor: #readFromRegKey:!public! !
+
+!Core.Object methodsFor!
+
+storeUnderRegKey: aRegKey as: aString
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	| key instVars size |
+	aRegKey removeKey: aString ifAbsent: [].
+	key := aRegKey createKey: aString.
+	size := self basicSize.
+	key
+		valueAt: nil
+		put: (size > 0
+				ifTrue: 
+					[String writeStream
+						display: self class;
+						nextPut: $\0;
+						display: size;
+						contents]
+				ifFalse: [self class name])
+		type: #stringArray.
+	instVars := self class allInstVarNames.
+	instVars
+		keysAndValuesDo: [:i :name | name first = $_ ifFalse: [(self instVarAt: i) storeUnderRegKey: key as: name]].
+	1 to: self basicSize do: [:i | (self basicAt: i) storeUnderRegKey: key as: i displayString]! !
+!Core.Object categoriesFor: #storeUnderRegKey:as:!public! !
+
+!Core.Object class methodsFor!
+
+fromRegKey: aRegKey
+	"Read an instance of the receiver previously serialised under the specified registry key."
+
+	| params |
+	params := aRegKey value.
+	^params first asQualifiedReference value readFromRegKey: aRegKey! !
+!Core.Object class categoriesFor: #fromRegKey:!public! !
+
+!Core.SmallInteger methodsFor!
+
+storeUnderRegKey: aRegKey as: aString
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	self isSDWORD
+		ifTrue: 
+			[aRegKey
+				valueAt: aString
+				put: (External.DWORD fromInteger: self)
+				type: #dword]
+		ifFalse: 
+			[aRegKey
+				valueAt: aString
+				put: (OS.ULARGE_INTEGER fromInteger: self)
+				type: #qword]! !
+!Core.SmallInteger categoriesFor: #storeUnderRegKey:as:!public! !
+
+!Core.String methodsFor!
+
+storeUnderRegKey: aRegKey as: aString 
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	aRegKey 
+		valueAt: aString
+		put: self asString
+		type: #string! !
+!Core.String categoriesFor: #storeUnderRegKey:as:!public! !
+
+!Core.Symbol methodsFor!
+
+storeUnderRegKey: aRegKey as: aString
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	(aRegKey createKey: aString)
+		valueAt: nil
+		put: (String writeStream
+				display: self class;
+				nextPut: Character null;
+				display: self;
+				contents)
+		type: #stringArray! !
+!Core.Symbol categoriesFor: #storeUnderRegKey:as:!public! !
+
+!Core.Symbol class methodsFor!
+
+readFromRegKey: aRegKey 
+	"Read an instance of the receiver previously serialised under the specified registry key."
+
+	| params |
+	params := aRegKey value.
+	^self intern: params second! !
+!Core.Symbol class categoriesFor: #readFromRegKey:!public! !
+
+!Core.UndefinedObject methodsFor!
+
+storeUnderRegKey: aRegKey as: aString 
+	"Store a serialised representation of the receiver to the registry under the <RegKey>,
+	aRegKey, with the <readableString> name, aString."
+
+	"Implementation Note: We don't need to store anything for nil's when performing serialisation to the registry."! !
+!Core.UndefinedObject categoriesFor: #storeUnderRegKey:as:!public! !
+
+!External.DWORDBytes methodsFor!
 
 regKeyType
 	^#dword! !
-!DWORDBytes categoriesFor: #regKeyType!constants!public! !
+!External.DWORDBytes categoriesFor: #regKeyType!constants!public! !
 
-!ExternalIntegerBytes methodsFor!
+!External.IntegerBytes methodsFor!
 
 regKeyType
 	^self subclassResponsibility!
@@ -102,164 +252,16 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: #value
 			put: self
 			type: self regKeyType! !
-!ExternalIntegerBytes categoriesFor: #regKeyType!constants!public! !
-!ExternalIntegerBytes categoriesFor: #storeUnderRegKey:as:!public! !
+!External.IntegerBytes categoriesFor: #regKeyType!constants!public! !
+!External.IntegerBytes categoriesFor: #storeUnderRegKey:as:!public! !
 
-!LargeInteger methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	self basicSize <= 4 
-		ifTrue: 
-			[aRegKey 
-				valueAt: aString
-				put: (DWORD fromInteger: self)
-				type: #dword]
-		ifFalse: 
-			[self basicSize <= 8 
-				ifTrue: 
-					[aRegKey 
-						valueAt: aString
-						put: (ULARGE_INTEGER fromInteger: self)
-						type: #qword]
-				ifFalse: 
-					[| key size |
-					key := aRegKey createKey: aString.
-					size := self basicSize.
-					key 
-						valueAt: nil
-						put: self class name
-						type: #stringArray.
-					((ByteArray new: self basicSize) 
-						replaceFrom: 1
-						to: size
-						with: self
-						startingAt: 1) storeUnderRegKey: key as: 'value']]! !
-!LargeInteger categoriesFor: #storeUnderRegKey:as:!public! !
-
-!LargeInteger class methodsFor!
-
-readFromRegKey: aRegKey 
-	"N.B. Will only get here for cases outside 64-bit 2's complement range."
-
-	| size answer bytes |
-	bytes := aRegKey valueAt: 'value'.
-	size := bytes size.
-	self assert: [(size bitAnd: 3) = 0].
-	answer := self basicNew: size.
-	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
-	^answer! !
-!LargeInteger class categoriesFor: #readFromRegKey:!public! !
-
-!Object methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	| key instVars size |
-	aRegKey removeKey: aString ifAbsent: [].
-	key := aRegKey createKey: aString.
-	size := self basicSize.
-	key 
-		valueAt: nil
-		put: (size > 0 
-				ifTrue: 
-					[(String writeStream)
-						display: self class;
-						nextPut: $\0;
-						display: size;
-						contents]
-				ifFalse: [self class name])
-		type: #stringArray.
-	instVars := self class allInstVarNames.
-	instVars 
-		keysAndValuesDo: [:i :name | name first = $_ ifFalse: [(self instVarAt: i) storeUnderRegKey: key as: name]].
-	1 to: self basicSize do: [:i | (self basicAt: i) storeUnderRegKey: key as: i displayString]! !
-!Object categoriesFor: #storeUnderRegKey:as:!public! !
-
-!Object class methodsFor!
-
-fromRegKey: aRegKey
-	"Read an instance of the receiver previously serialised under the specified registry key."
-
-	| params |
-	params := aRegKey value.
-	^params first asQualifiedReference value readFromRegKey: aRegKey! !
-!Object class categoriesFor: #fromRegKey:!public! !
-
-!SmallInteger methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	self isSDWORD 
-		ifTrue: 
-			[aRegKey 
-				valueAt: aString
-				put: (DWORD fromInteger: self)
-				type: #dword]
-		ifFalse: 
-			[aRegKey 
-				valueAt: aString
-				put: (ULARGE_INTEGER fromInteger: self)
-				type: #qword]! !
-!SmallInteger categoriesFor: #storeUnderRegKey:as:!public! !
-
-!String methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	aRegKey 
-		valueAt: aString
-		put: self asString
-		type: #string! !
-!String categoriesFor: #storeUnderRegKey:as:!public! !
-
-!Symbol methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	(aRegKey createKey: aString) 
-		valueAt: nil
-		put: (String writeStream display: self class; nextPut: Character null; display: self; contents)
-		type: #stringArray! !
-!Symbol categoriesFor: #storeUnderRegKey:as:!public! !
-
-!Symbol class methodsFor!
-
-readFromRegKey: aRegKey 
-	"Read an instance of the receiver previously serialised under the specified registry key."
-
-	| params |
-	params := aRegKey value.
-	self assert: [params first = self name].
-	^self intern: params second! !
-!Symbol class categoriesFor: #readFromRegKey:!public! !
-
-!UIntPtrBytes methodsFor!
+!External.UIntPtrBytes methodsFor!
 
 regKeyType
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
-!UIntPtrBytes categoriesFor: #regKeyType!public! !
-
-!UndefinedObject methodsFor!
-
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
-
-	"Implementation Note: We don't need to store anything for nil's when performing serialisation to the registry."! !
-!UndefinedObject categoriesFor: #storeUnderRegKey:as:!public! !
+!External.UIntPtrBytes categoriesFor: #regKeyType!public! !
 
 "End of package definition"!
 

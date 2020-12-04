@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RegQueryInfo
+Core.Object subclass: #'OS.RegQueryInfo'
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegQueryInfo guid: (GUID fromString: '{87b4c4ae-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegQueryInfo comment: ''!
-!RegQueryInfo categoriesForClass!System-Support! !
-!RegQueryInfo methodsFor!
+OS.RegQueryInfo guid: (Core.GUID fromString: '{87b4c4ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RegQueryInfo comment: ''!
+!OS.RegQueryInfo categoriesForClass!System-Support! !
+!OS.RegQueryInfo methodsFor!
 
 keyClass
 	"Answer the value of the receiver's instance variable keyClass.
@@ -118,22 +118,22 @@ valueCount: anObject
 	This method was automatically generated, but may be modified."
 
 	valueCount := anObject! !
-!RegQueryInfo categoriesFor: #keyClass!accessing!public! !
-!RegQueryInfo categoriesFor: #keyClass:!accessing!public! !
-!RegQueryInfo categoriesFor: #lastWriteTime!accessing!public! !
-!RegQueryInfo categoriesFor: #lastWriteTime:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxClassNameLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxClassNameLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxSubKeyLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxSubKeyLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueNameLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueNameLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #securityDescriptorLen!accessing!public! !
-!RegQueryInfo categoriesFor: #securityDescriptorLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #subKeyCount!accessing!public! !
-!RegQueryInfo categoriesFor: #subKeyCount:!accessing!public! !
-!RegQueryInfo categoriesFor: #valueCount!accessing!public! !
-!RegQueryInfo categoriesFor: #valueCount:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #keyClass!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #keyClass:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #lastWriteTime!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #lastWriteTime:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxClassNameLen!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxClassNameLen:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxSubKeyLen!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxSubKeyLen:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxValueLen!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxValueLen:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxValueNameLen!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #maxValueNameLen:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #securityDescriptorLen!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #securityDescriptorLen:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #subKeyCount!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #subKeyCount:!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #valueCount!accessing!public! !
+!OS.RegQueryInfo categoriesFor: #valueCount:!accessing!public! !
 

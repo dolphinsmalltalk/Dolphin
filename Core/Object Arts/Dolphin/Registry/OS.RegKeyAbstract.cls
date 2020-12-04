@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dictionary variableSubclass: #RegKeyAbstract
+Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
-	poolDictionaries: 'Win32Errors WinRegConstants'
+	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKeyAbstract guid: (GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegKeyAbstract isAbstract: true!
-RegKeyAbstract comment: ''!
-!RegKeyAbstract categoriesForClass!System-Support! !
-!RegKeyAbstract methodsFor!
+OS.RegKeyAbstract guid: (Core.GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RegKeyAbstract isNonInstantiable: true!
+OS.RegKeyAbstract comment: ''!
+!OS.RegKeyAbstract categoriesForClass!System-Support! !
+!OS.RegKeyAbstract methodsFor!
 
 = comperand
 	"Answer whether the receiver is considered equivalent to the argument."
@@ -76,17 +76,17 @@ basicRealize
 	"Private - Open the receiver's associated registry key."
 
 	| dwErr |
-	handle := ExternalHandle new.
+	handle := Handle new.
 	dwErr := self registryLibrary
-		regOpenKeyEx: self rootKey asParameter
-			lpSubKey: self pathFromRoot
-			ulOptions: 0
-			samDesired: self sam
-			phkResult: handle.
-	^dwErr = ERROR_SUCCESS 
+				regOpenKeyEx: self rootKey asParameter
+				lpSubKey: self pathFromRoot
+				ulOptions: 0
+				samDesired: self sam
+				phkResult: handle.
+	^dwErr = ERROR_SUCCESS
 		ifTrue: [handle]
-		ifFalse: [
-			dwErr == ERROR_FILE_NOT_FOUND 
+		ifFalse: 
+			[dwErr == ERROR_FILE_NOT_FOUND
 				ifTrue: [self errorNotFound: self]
 				ifFalse: [self registryLibrary systemError: dwErr]]!
 
@@ -110,7 +110,7 @@ decodeMultiSz: aByteArray size: anInteger
 	^strings contents!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	name displayOn: aPuttableStream!
 
@@ -177,7 +177,7 @@ key
 key: newName
 	"Set the lookup key of the receiver to the <readableString>, newName."
 
-	#todo "Implement registry key renaming".
+	#todo.	"Implement registry key renaming"
 	^Error notYetImplemented!
 
 keyInfo
@@ -300,16 +300,16 @@ printOn: aStream
 		print: self fullPath;
 		nextPut: $)!
 
-privateCreateKey: aString 
+privateCreateKey: aString
 	"Private - Create or open a registry key under the receiver with the specified relative path
 	from here (note that this implies that more than one level can be created at once, and this
 	is indeed the case!!). Answers the new key. N.B. The new key is still open at this time, and
 	MUST be freed."
 
 	| subKey dwErr rights |
-	subKey := ExternalHandle new.
+	subKey := Handle new.
 	rights := self sam.
-	dwErr := self registryLibrary 
+	dwErr := self registryLibrary
 				regCreateKeyEx: self asParameter
 				lpSubKey: aString
 				reserved: nil
@@ -329,12 +329,15 @@ privateCreateKey: aString
 queryKeyInfo
 	"Answer a bunch of information about the receiver."
 
-	| "classString cbClass" cSubKeys cbMaxSubKeyLen "cbMaxClassLen" cValues cbMaxValueNameLen
-	cbMaxValueLen "cbSecurityDescriptor" ftLastWriteTime dwErr prevHandle |
+	| cSubKeys cbMaxSubKeyLen cValues cbMaxValueNameLen cbMaxValueLen ftLastWriteTime dwErr prevHandle |
+	"classString cbClass"
+
+	"cbMaxClassLen"
+
+	"cbSecurityDescriptor"
 
 	"classString := String new: 256.
 	cbClass := DWORDBytes fromInteger: classString basicSize."
-
 	cSubKeys := DWORDBytes new.
 	cbMaxSubKeyLen := DWORDBytes new.
 	"cbMaxClassLen := DWORDBytes new."
@@ -345,45 +348,42 @@ queryKeyInfo
 	cbMaxValueLen := DWORDBytes new.
 	"cbSecurityDescriptor := DWORDBytes new."
 	ftLastWriteTime := FILETIME new.
-
 	prevHandle := self handle.
-
 	dwErr := ERROR_SUCCESS.
-	[dwErr := self registryLibrary regQueryInfoKey: self asParameter
-		lpClass: nil"classString"
-		lpcbClass: nil"cbClass "
-		lpReserved: nil
-		lpcSubKeys: cSubKeys
-		lpcbMaxSubKeyLen: cbMaxSubKeyLen
-		lpcbMaxClassLen: nil"cbMaxClassLen"
-		lpcValues: cValues
-		lpcbMaxValueNameLen: cbMaxValueNameLen
-		lpcbMaxValueLen: cbMaxValueLen
-		lpcbSecurityDescriptor: nil"cbSecurityDescriptor"
-		lpftLastWriteTime: ftLastWriteTime]
-	on: Win32Error do: [:e |
-		e tag = ERROR_ACCESS_DENIED 
-			ifTrue: [e notify]
-			ifFalse: [e pass]]
-	on: NotFoundError do: [:e | e notify].
-
-	dwErr = ERROR_SUCCESS
-		ifFalse: [^self registryLibrary systemError: dwErr].
+	
+	[dwErr := self registryLibrary
+				regQueryInfoKey: self asParameter
+				lpClass: nil
+				lpcbClass: nil
+				lpReserved: nil
+				lpcSubKeys: cSubKeys
+				lpcbMaxSubKeyLen: cbMaxSubKeyLen
+				lpcbMaxClassLen: nil
+				lpcValues: cValues
+				lpcbMaxValueNameLen: cbMaxValueNameLen
+				lpcbMaxValueLen: cbMaxValueLen
+				lpcbSecurityDescriptor: nil
+				lpftLastWriteTime: ftLastWriteTime	"classString"	"cbClass "	"cbMaxClassLen"	"cbSecurityDescriptor"]
+			on: Win32Error
+			do: [:e | e tag = ERROR_ACCESS_DENIED ifTrue: [e notify] ifFalse: [e pass]]
+			on: NotFoundError
+			do: [:e | e notify].
+	dwErr = ERROR_SUCCESS ifFalse: [^self registryLibrary systemError: dwErr].
 
 	"We avoid keeping the key open just to query the info ..."
 	prevHandle isNil ifTrue: [self free].
 
 	"Why on earth isn't all this in a structure?"
 	^RegQueryInfo new
-		"keyClass: (classString copyFrom: 1 to: cbClass asInteger);"
 		subKeyCount: cSubKeys asInteger;
 		maxSubKeyLen: cbMaxSubKeyLen asInteger;
-		"maxClassNameLen: cbMaxClassLen asInteger;"
 		valueCount: cValues asInteger;
 		maxValueNameLen: cbMaxValueNameLen asInteger;
 		maxValueLen: cbMaxValueLen asInteger;
-		"securityDescriptorLen: cbSecurityDescriptor asInteger;"
-		lastWriteTime: ftLastWriteTime!
+		lastWriteTime: ftLastWriteTime
+	"keyClass: (classString copyFrom: 1 to: cbClass asInteger);"
+	"maxClassNameLen: cbMaxClassLen asInteger;"
+	"securityDescriptorLen: cbSecurityDescriptor asInteger;"!
 
 realize
 	"Realize (create) the external resource associated with the receiver,
@@ -520,7 +520,7 @@ splitPath: path
 subKeyClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
-	
+
 	^RegKey!
 
 subKeyNamesDo: operation
@@ -563,7 +563,7 @@ subKeys
 subValueClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
-	
+
 	^RegKeyValues!
 
 subValueNamesAndValuesDo: operation
@@ -659,7 +659,7 @@ valueAt: key
 
 	^self valueAt: key ifAbsent: [self errorNotFound: key]!
 
-valueAt: key ifAbsent: exceptionHandler 
+valueAt: key ifAbsent: exceptionHandler
 	"Answer the value named by the argument, key.  If keyString is not found,
 	answer the result of evaluating the niladic valuable, exceptionHandler.
 	May raise a Win32Error exception if registry access fails for some
@@ -671,7 +671,7 @@ valueAt: key ifAbsent: exceptionHandler
 	size := self keyInfo maxValueLen.
 	valueBuf := ByteArray newFixed: size.
 	size := DWORDBytes fromInteger: size.
-	dwErr := self registryLibrary 
+	dwErr := self registryLibrary
 				regQueryValueEx: hKey
 				lpValueName: key
 				lpReserved: nil
@@ -679,14 +679,14 @@ valueAt: key ifAbsent: exceptionHandler
 				lpData: valueBuf
 				lpcbData: size.
 	self free.
-	^dwErr = ERROR_SUCCESS 
+	^dwErr = ERROR_SUCCESS
 		ifTrue: 
-			[self 
+			[self
 				objectFromValue: valueBuf
 				type: type asInteger
 				size: size asInteger]
 		ifFalse: 
-			[dwErr = ERROR_FILE_NOT_FOUND 
+			[dwErr = ERROR_FILE_NOT_FOUND
 				ifTrue: [exceptionHandler value]
 				ifFalse: [self registryLibrary systemError: dwErr]]!
 
@@ -751,78 +751,78 @@ valueFromObject: value
 						nextPut: Character null].
 			^#stringArray -> stream contents].
 	^#binary -> value asByteArray! !
-!RegKeyAbstract categoriesFor: #=!comparing!public! !
-!RegKeyAbstract categoriesFor: #add:!adding!public! !
-!RegKeyAbstract categoriesFor: #asParameter!converting!public! !
-!RegKeyAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #associationsDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #at:put:!accessing!public! !
-!RegKeyAbstract categoriesFor: #basicFree!private!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #basicRealize!private!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #createKey:!adding!public! !
-!RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
-!RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
-!RegKeyAbstract categoriesFor: #do:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #fileOutOn:!public!storing! !
-!RegKeyAbstract categoriesFor: #free!public!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #fullPath!accessing!public! !
-!RegKeyAbstract categoriesFor: #handle!accessing!public! !
-!RegKeyAbstract categoriesFor: #handle:!accessing!private! !
-!RegKeyAbstract categoriesFor: #hash!comparing!public! !
-!RegKeyAbstract categoriesFor: #includesKey:!public!searching! !
-!RegKeyAbstract categoriesFor: #isRoot!public!testing! !
-!RegKeyAbstract categoriesFor: #key!accessing!public! !
-!RegKeyAbstract categoriesFor: #key:!accessing!public! !
-!RegKeyAbstract categoriesFor: #keyInfo!accessing!public! !
-!RegKeyAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #keysDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #lookup:!accessing!public! !
-!RegKeyAbstract categoriesFor: #mode:!accessing!public! !
-!RegKeyAbstract categoriesFor: #name!accessing!public! !
-!RegKeyAbstract categoriesFor: #name:parentPath:rootKey:sam:!initializing!private! !
-!RegKeyAbstract categoriesFor: #newSubKey:sam:!helpers!private! !
-!RegKeyAbstract categoriesFor: #objectFromValue:type:size:!helpers!private! !
-!RegKeyAbstract categoriesFor: #parentKey!accessing!public! !
-!RegKeyAbstract categoriesFor: #parentPath!accessing!public! !
-!RegKeyAbstract categoriesFor: #pathFromRoot!accessing!public! !
-!RegKeyAbstract categoriesFor: #postCopy!copying!public! !
-!RegKeyAbstract categoriesFor: #printOn:!printing!public! !
-!RegKeyAbstract categoriesFor: #privateCreateKey:!helpers!private! !
-!RegKeyAbstract categoriesFor: #queryKeyInfo!accessing!public! !
-!RegKeyAbstract categoriesFor: #realize!public!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #registryLibrary!constants!private! !
-!RegKeyAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubKey:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubTree:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubValue:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #resize:!mutating!private! !
-!RegKeyAbstract categoriesFor: #rootHandle!accessing!public! !
-!RegKeyAbstract categoriesFor: #rootKey!accessing!public! !
-!RegKeyAbstract categoriesFor: #sam!accessing!public! !
-!RegKeyAbstract categoriesFor: #sam:!accessing!public! !
-!RegKeyAbstract categoriesFor: #shrink!mutating!public! !
-!RegKeyAbstract categoriesFor: #size!accessing!public! !
-!RegKeyAbstract categoriesFor: #species!accessing!public! !
-!RegKeyAbstract categoriesFor: #splitPath:!helpers!private! !
-!RegKeyAbstract categoriesFor: #subKeyClass!constants!private! !
-!RegKeyAbstract categoriesFor: #subKeyNamesDo:!enumerating!private! !
-!RegKeyAbstract categoriesFor: #subKeys!accessing!public! !
-!RegKeyAbstract categoriesFor: #subValueClass!constants!private! !
-!RegKeyAbstract categoriesFor: #subValueNamesAndValuesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #subValueNamesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #subValues!accessing!public! !
-!RegKeyAbstract categoriesFor: #value!accessing!public! !
-!RegKeyAbstract categoriesFor: #value:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:put:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:put:type:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueFromObject:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #=!comparing!public! !
+!OS.RegKeyAbstract categoriesFor: #add:!adding!public! !
+!OS.RegKeyAbstract categoriesFor: #asParameter!converting!public! !
+!OS.RegKeyAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #associationsDo:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #at:put:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.RegKeyAbstract categoriesFor: #basicRealize!private!realizing/unrealizing! !
+!OS.RegKeyAbstract categoriesFor: #createKey:!adding!public! !
+!OS.RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
+!OS.RegKeyAbstract categoriesFor: #do:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #fileOutOn:!public!storing! !
+!OS.RegKeyAbstract categoriesFor: #free!public!realizing/unrealizing! !
+!OS.RegKeyAbstract categoriesFor: #fullPath!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #handle!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #handle:!accessing!private! !
+!OS.RegKeyAbstract categoriesFor: #hash!comparing!public! !
+!OS.RegKeyAbstract categoriesFor: #includesKey:!public!searching! !
+!OS.RegKeyAbstract categoriesFor: #isRoot!public!testing! !
+!OS.RegKeyAbstract categoriesFor: #key!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #key:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #keyInfo!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #keysDo:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #lookup:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #mode:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #name!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #name:parentPath:rootKey:sam:!initializing!private! !
+!OS.RegKeyAbstract categoriesFor: #newSubKey:sam:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #objectFromValue:type:size:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #parentKey!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #parentPath!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #pathFromRoot!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #postCopy!copying!public! !
+!OS.RegKeyAbstract categoriesFor: #printOn:!printing!public! !
+!OS.RegKeyAbstract categoriesFor: #privateCreateKey:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #queryKeyInfo!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #realize!public!realizing/unrealizing! !
+!OS.RegKeyAbstract categoriesFor: #registryLibrary!constants!private! !
+!OS.RegKeyAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.RegKeyAbstract categoriesFor: #removeSubKey:ifAbsent:!public!removing! !
+!OS.RegKeyAbstract categoriesFor: #removeSubTree:ifAbsent:!public!removing! !
+!OS.RegKeyAbstract categoriesFor: #removeSubValue:ifAbsent:!public!removing! !
+!OS.RegKeyAbstract categoriesFor: #resize:!mutating!private! !
+!OS.RegKeyAbstract categoriesFor: #rootHandle!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #rootKey!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #sam!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #sam:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #shrink!mutating!public! !
+!OS.RegKeyAbstract categoriesFor: #size!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #species!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #splitPath:!helpers!private! !
+!OS.RegKeyAbstract categoriesFor: #subKeyClass!constants!private! !
+!OS.RegKeyAbstract categoriesFor: #subKeyNamesDo:!enumerating!private! !
+!OS.RegKeyAbstract categoriesFor: #subKeys!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #subValueClass!constants!private! !
+!OS.RegKeyAbstract categoriesFor: #subValueNamesAndValuesDo:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #subValueNamesDo:!enumerating!public! !
+!OS.RegKeyAbstract categoriesFor: #subValues!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #value!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #value:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #valueAt:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #valueAt:ifAbsent:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #valueAt:put:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #valueAt:put:type:!accessing!public! !
+!OS.RegKeyAbstract categoriesFor: #valueFromObject:!helpers!private! !
 
-RegKeyAbstract methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
+OS.RegKeyAbstract methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
-!RegKeyAbstract class methodsFor!
+!OS.RegKeyAbstract class methodsFor!
 
 branchClass
 	"Answer the class of object to use for branches of the registry tree."
@@ -885,7 +885,7 @@ initialize
 		RegKeyAbstract initialize
 	"
 
-	AccessModes := ##((IdentityDictionary new)
+	AccessModes := ##(IdentityDictionary new
 				at: #read put: KEY_READ;
 				at: #all put: KEY_ALL_ACCESS;
 				at: #readWrite put: KEY_READ | KEY_WRITE;
@@ -893,7 +893,7 @@ initialize
 				at: #execute put: KEY_EXECUTE;
 				shrink;
 				yourself).
-	ValueTypes := ##((IdentityDictionary new)
+	ValueTypes := ##(IdentityDictionary new
 				at: #dword put: REG_DWORD;
 				at: #binary put: REG_BINARY;
 				at: #string put: REG_SZ;
@@ -955,23 +955,23 @@ usersRoot: mode
 	"Answer a new instance of the receiver, rooted in HKEY_USERS"
 
 	^self fromPredefinedKey: 'HKEY_USERS' mode: mode! !
-!RegKeyAbstract class categoriesFor: #branchClass!constants!public! !
-!RegKeyAbstract class categoriesFor: #classesRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #classesRoot:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #configRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #defaultMode!constants!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:mode:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:sam:!instance creation!private! !
-!RegKeyAbstract class categoriesFor: #icon!constants!public! !
-!RegKeyAbstract class categoriesFor: #initialize!development!initializing!private! !
-!RegKeyAbstract class categoriesFor: #localMachineRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #localMachineRoot:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #myComputer!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #name:parentPath:rootKey:sam:!instance creation!private! !
-!RegKeyAbstract class categoriesFor: #new!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #roots!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #userRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #usersRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #usersRoot:!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #branchClass!constants!public! !
+!OS.RegKeyAbstract class categoriesFor: #classesRoot!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #classesRoot:!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #configRoot!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #defaultMode!constants!public! !
+!OS.RegKeyAbstract class categoriesFor: #fromPredefinedKey:!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #fromPredefinedKey:mode:!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #fromPredefinedKey:sam:!instance creation!private! !
+!OS.RegKeyAbstract class categoriesFor: #icon!constants!public! !
+!OS.RegKeyAbstract class categoriesFor: #initialize!development!initializing!private! !
+!OS.RegKeyAbstract class categoriesFor: #localMachineRoot!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #localMachineRoot:!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #myComputer!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #name:parentPath:rootKey:sam:!instance creation!private! !
+!OS.RegKeyAbstract class categoriesFor: #new!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #roots!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #userRoot!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #usersRoot!instance creation!public! !
+!OS.RegKeyAbstract class categoriesFor: #usersRoot:!instance creation!public! !
 
