@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Stream subclass: #DebugTraceStream
+Core.Stream subclass: #'Kernel.DebugTraceStream'
 	instanceVariableNames: 'buffer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DebugTraceStream guid: (GUID fromString: '{42675a9e-7ef6-4e38-8ff1-c6cd5d1563cc}')!
-DebugTraceStream comment: 'DebugTraceStream is a singleton class that implements the <puttableStream> protocol (and some) on top of the Win32 OutputDebugString() API. Like the Transcript the output is buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the singleton instance is assigned to the global named ''Trace''.
+Kernel.DebugTraceStream guid: (Core.GUID fromString: '{42675a9e-7ef6-4e38-8ff1-c6cd5d1563cc}')!
+Kernel.DebugTraceStream comment: 'DebugTraceStream is a singleton class that implements the <puttableStream> protocol (and some) on top of the Win32 OutputDebugString() API. Like the Transcript the output is buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the singleton instance is assigned to the global named ''Trace''.
 
 Instance Variables:
 	buffer		<WriteStream> on <Utf8String>. Stream used to buffer output until flushed.
@@ -15,8 +15,8 @@ Instance Variables:
 
 Class Variables:
 	Current 	<DebugTraceStream>. Singleton instance.'!
-!DebugTraceStream categoriesForClass!Collections-Streams! !
-!DebugTraceStream methodsFor!
+!Kernel.DebugTraceStream categoriesForClass!Collections-Streams! !
+!Kernel.DebugTraceStream methodsFor!
 
 atEnd
 	"Answer whether the receiver cannot access any more objects"
@@ -73,20 +73,20 @@ nextPutAll: insertString
 	"Append the <readableString>, insertString, to the text of the receiver."
 
 	^buffer nextPutAll: insertString! !
-!DebugTraceStream categoriesFor: #atEnd!public!testing! !
-!DebugTraceStream categoriesFor: #close!operations!public! !
-!DebugTraceStream categoriesFor: #cr!adding!public! !
-!DebugTraceStream categoriesFor: #flush!accessing!public! !
-!DebugTraceStream categoriesFor: #initialize!initializing!private! !
-!DebugTraceStream categoriesFor: #isEmpty!public! !
-!DebugTraceStream categoriesFor: #isWriteable!public!testing! !
-!DebugTraceStream categoriesFor: #locale!accessing!public! !
-!DebugTraceStream categoriesFor: #nextPut:!adding!public! !
-!DebugTraceStream categoriesFor: #nextPutAll:!adding!public! !
+!Kernel.DebugTraceStream categoriesFor: #atEnd!public!testing! !
+!Kernel.DebugTraceStream categoriesFor: #close!operations!public! !
+!Kernel.DebugTraceStream categoriesFor: #cr!adding!public! !
+!Kernel.DebugTraceStream categoriesFor: #flush!accessing!public! !
+!Kernel.DebugTraceStream categoriesFor: #initialize!initializing!private! !
+!Kernel.DebugTraceStream categoriesFor: #isEmpty!public! !
+!Kernel.DebugTraceStream categoriesFor: #isWriteable!public!testing! !
+!Kernel.DebugTraceStream categoriesFor: #locale!accessing!public! !
+!Kernel.DebugTraceStream categoriesFor: #nextPut:!adding!public! !
+!Kernel.DebugTraceStream categoriesFor: #nextPutAll:!adding!public! !
 
-DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+Kernel.DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 
-!DebugTraceStream class methodsFor!
+!Kernel.DebugTraceStream class methodsFor!
 
 current
 	^Processor activeProcess debugStream!
@@ -95,6 +95,6 @@ new
 	"Streams must be instantiated onto something."
 
 	^self basicNew initialize! !
-!DebugTraceStream class categoriesFor: #current!instance creation!public! !
-!DebugTraceStream class categoriesFor: #new!public! !
+!Kernel.DebugTraceStream class categoriesFor: #current!instance creation!public! !
+!Kernel.DebugTraceStream class categoriesFor: #new!public! !
 
