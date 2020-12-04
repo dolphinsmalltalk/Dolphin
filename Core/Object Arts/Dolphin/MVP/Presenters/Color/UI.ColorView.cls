@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticView subclass: #ColorView
+UI.StaticView subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorView guid: (GUID fromString: '{87b4c73c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. The <valueModel> associated with a ColorView must always yield a <color> value when mapped through the installed type converter. A ColorView will normally be used in conjunction with a <ColorPresenter>.'!
-!ColorView categoriesForClass!MVP-Views! !
-!ColorView methodsFor!
+UI.ColorView guid: (Core.GUID fromString: '{87b4c73c-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. The <valueModel> associated with a ColorView must always yield a <color> value when mapped through the installed type converter. A ColorView will normally be used in conjunction with a <ColorPresenter>.'!
+!UI.ColorView categoriesForClass!MVP-Views! !
+!UI.ColorView methodsFor!
 
 basicActualBackcolor
 	| color |
@@ -33,12 +33,12 @@ paintTransparentBackgroundOn: aCanvas
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);
 		fillRectangle: self clientRectangle! !
-!ColorView categoriesFor: #basicActualBackcolor!accessing!private! !
-!ColorView categoriesFor: #displayValue!private!updating! !
-!ColorView categoriesFor: #displayValue:!private!updating! !
-!ColorView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!UI.ColorView categoriesFor: #basicActualBackcolor!accessing!private! !
+!UI.ColorView categoriesFor: #displayValue!private!updating! !
+!UI.ColorView categoriesFor: #displayValue:!private!updating! !
+!UI.ColorView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
 
-!ColorView class methodsFor!
+!UI.ColorView class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -49,6 +49,6 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ColorView class categoriesFor: #defaultModel!models!public! !
-!ColorView class categoriesFor: #icon!constants!public! !
+!UI.ColorView class categoriesFor: #defaultModel!models!public! !
+!UI.ColorView class categoriesFor: #icon!constants!public! !
 

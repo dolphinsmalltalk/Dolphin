@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Color Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Color Presenter
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -9,8 +9,8 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{ColorPresenter}
-	#{ColorView}
+	#{UI.ColorPresenter}
+	#{UI.ColorView}
 ).
 
 package setPrerequisites: #(
@@ -25,16 +25,16 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #ColorPresenter
+UI.ValuePresenter subclass: #'UI.ColorPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticView subclass: #ColorView
+UI.StaticView subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
