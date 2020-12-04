@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #AnnouncerTest
+XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.AnnouncerTest'
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnnouncerTest guid: (GUID fromString: '{4fe1d4e3-9cb9-4d37-bb20-d8441f9eeb1e}')!
-AnnouncerTest comment: 'An AnnouncerTest is a test class used to test Announcer.
+Kernel.Tests.AnnouncerTest guid: (Core.GUID fromString: '{4fe1d4e3-9cb9-4d37-bb20-d8441f9eeb1e}')!
+Kernel.Tests.AnnouncerTest comment: 'An AnnouncerTest is a test class used to test Announcer.
 
 Instance Variables
 	announcer:		<Announcer>  the announcer to test
@@ -15,18 +15,19 @@ Instance Variables
 announcer
 	- the announcer that is tested
 '!
-!AnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
-!AnnouncerTest methodsFor!
+!Kernel.Tests.AnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
+!Kernel.Tests.AnnouncerTest methodsFor!
 
 newAnnouncer
-	^ Announcer new!
+	^Announcer new!
 
 setUp
 	super setUp.
 	announcer := self newAnnouncer!
 
 testAnnounceClass
-	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA!
+	self assert: (announcer announce: AnnouncementMockA) class
+		equals: AnnouncementMockA!
 
 testAnnounceInstance
 	| instance |
@@ -40,19 +41,16 @@ testAnnouncingReentrant
 	" self run: #testAnnouncingReentrant "
 
 	| bool ok |
-
 	ok := bool := false.
-	announcer when: Announcement do: [
-		bool ifFalse: [
-			bool := true.
-		announcer announce:  Announcement new. ]
-		ifTrue: [ ok := true ] 
-	].
-
+	announcer when: Announcement
+		do: 
+			[bool
+				ifFalse: 
+					[bool := true.
+					announcer announce: Announcement new]
+				ifTrue: [ok := true]].
 	announcer announce: Announcement new.
-	self assert: ok
-
-!
+	self assert: ok!
 
 testNoArgBlock
 	"we are supposed to accept zero-argument blocks as actions "
@@ -88,7 +86,8 @@ testSubscribeSend
 
 testSubscribeSet
 	| announcement instance |
-	announcer subscribe: AnnouncementMockA , AnnouncementMockC do: [:ann | announcement := ann].
+	announcer subscribe: AnnouncementMockA , AnnouncementMockC
+		do: [:ann | announcement := ann].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -116,20 +115,21 @@ testSymbolIdentifier
 	| passed |
 	passed := false.
 	
-	[announcer 
-		when: #FOO send: #bar to: nil;
-		announce: #FOO ] 
-		on: MessageNotUnderstood 
-		do: [ :ex | passed := (ex message selector = #bar). ].
-		
-	self assert: passed !
+	[announcer
+		when: #FOO
+			send: #bar
+			to: nil;
+		announce: #FOO] on: MessageNotUnderstood
+			do: [:ex | passed := ex message selector = #bar].
+	self assert: passed!
 
 testTwoArgBlock
 	"we are supposed to accept two-argument blocks as actions "
 
 	| flag |
 	flag := false.
-	announcer subscribe: AnnouncementMockA do: [ :ann :announcer2 | flag := announcer2 == announcer ].
+	announcer subscribe: AnnouncementMockA
+		do: [:ann :announcer2 | flag := announcer2 == announcer].
 	announcer announce: AnnouncementMockA new.
 	self assert: flag!
 
@@ -163,25 +163,25 @@ testUnsubscribeSet
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
 	self assertIsNil: announcement! !
-!AnnouncerTest categoriesFor: #newAnnouncer!private! !
-!AnnouncerTest categoriesFor: #setUp!private!running! !
-!AnnouncerTest categoriesFor: #testAnnounceClass!public!testing! !
-!AnnouncerTest categoriesFor: #testAnnounceInstance!public!testing! !
-!AnnouncerTest categoriesFor: #testAnnouncingReentrant!public!testing! !
-!AnnouncerTest categoriesFor: #testNoArgBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSend!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSet!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSubclass!public!testing! !
-!AnnouncerTest categoriesFor: #testSymbolIdentifier!public!testing! !
-!AnnouncerTest categoriesFor: #testTwoArgBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeSend!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeSet!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #newAnnouncer!private! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #setUp!private!running! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnounceClass!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnounceInstance!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnouncingReentrant!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testNoArgBlock!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeBlock!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSend!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSet!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSubclass!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testSymbolIdentifier!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testTwoArgBlock!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeBlock!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeSend!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeSet!public!testing! !
 
-!AnnouncerTest class methodsFor!
+!Kernel.Tests.AnnouncerTest class methodsFor!
 
 shouldInheritSelectors
 	^ true! !
-!AnnouncerTest class categoriesFor: #shouldInheritSelectors!public!testing! !
+!Kernel.Tests.AnnouncerTest class categoriesFor: #shouldInheritSelectors!public!testing! !
 

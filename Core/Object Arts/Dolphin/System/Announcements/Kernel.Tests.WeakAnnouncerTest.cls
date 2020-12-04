@@ -1,22 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AnnouncerTest subclass: #WeakAnnouncerTest
+Kernel.Tests.AnnouncerTest subclass: #'Kernel.Tests.WeakAnnouncerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakAnnouncerTest guid: (GUID fromString: '{26a69917-162e-4a6f-8383-df020cbf176f}')!
-WeakAnnouncerTest comment: 'SUnit tests for weak announcements'!
-!WeakAnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
-!WeakAnnouncerTest methodsFor!
+Kernel.Tests.WeakAnnouncerTest guid: (Core.GUID fromString: '{26a69917-162e-4a6f-8383-df020cbf176f}')!
+Kernel.Tests.WeakAnnouncerTest comment: 'SUnit tests for weak announcements'!
+!Kernel.Tests.WeakAnnouncerTest categoriesForClass!Announcements-Tests-Core-Tests! !
+!Kernel.Tests.WeakAnnouncerTest methodsFor!
 
 testNoWeakBlock
 	"Blocks are never weak"
 
 	| counter subscription |
 	counter := 0.
-	subscription := announcer subscribe: AnnouncementMockA do: [:ann | counter := counter + 1].
+	subscription := announcer subscribe: AnnouncementMockA
+				do: [:ann | counter := counter + 1].
 	MemoryManager current collectGarbage.
 	announcer announce: AnnouncementMockA.
 	self assert: counter equals: 1.
@@ -54,7 +55,7 @@ testWeakSubscription
 				send: #value
 				to: obj) makeWeak.
 	self assert: obj identicalTo: subscription subscriber! !
-!WeakAnnouncerTest categoriesFor: #testNoWeakBlock!public!testing! !
-!WeakAnnouncerTest categoriesFor: #testWeakObject!public!testing! !
-!WeakAnnouncerTest categoriesFor: #testWeakSubscription!public!testing! !
+!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testNoWeakBlock!public!testing! !
+!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testWeakObject!public!testing! !
+!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testWeakSubscription!public!testing! !
 

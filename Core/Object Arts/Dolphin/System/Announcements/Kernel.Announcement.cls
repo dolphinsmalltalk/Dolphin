@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Announcement
+Core.Object subclass: #'Kernel.Announcement'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Announcement guid: (GUID fromString: '{12525b20-16ef-4684-b01e-956b227a429d}')!
-Announcement comment: 'This class is the superclass for events that someone might want to announce, such as a button click or an attribute change. Typically you create subclasses for your own events you want to announce.
+Kernel.Announcement guid: (Core.GUID fromString: '{12525b20-16ef-4684-b01e-956b227a429d}')!
+Kernel.Announcement comment: 'This class is the superclass for events that someone might want to announce, such as a button click or an attribute change. Typically you create subclasses for your own events you want to announce.
 
  
 '!
-!Announcement categoriesForClass!Announcements-Core! !
-!Announcement methodsFor!
+!Kernel.Announcement categoriesForClass!Announcements-Core! !
+!Kernel.Announcement methodsFor!
 
 asAnnouncement
 	^ self! !
-!Announcement categoriesFor: #asAnnouncement!converting!public! !
+!Kernel.Announcement categoriesFor: #asAnnouncement!converting!public! !
 
-!Announcement class methodsFor!
+!Kernel.Announcement class methodsFor!
 
 , anAnnouncementClass
-	^ AnnouncementSet with: self with: anAnnouncementClass!
+	^AnnouncementSet with: self with: anAnnouncementClass!
 
 asAnnouncement
 	^ self new!
@@ -31,7 +31,7 @@ handlesAnnouncement: anAnnouncement
 
 
 	^ anAnnouncement class == self or: [ anAnnouncement class inheritsFrom: self ]! !
-!Announcement class categoriesFor: #,!public! !
-!Announcement class categoriesFor: #asAnnouncement!converting!public! !
-!Announcement class categoriesFor: #handlesAnnouncement:!public!testing! !
+!Kernel.Announcement class categoriesFor: #,!public! !
+!Kernel.Announcement class categoriesFor: #asAnnouncement!converting!public! !
+!Kernel.Announcement class categoriesFor: #handlesAnnouncement:!public!testing! !
 

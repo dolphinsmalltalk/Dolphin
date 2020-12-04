@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SubscriptionRegistry
+Core.Object subclass: #'Kernel.SubscriptionRegistry'
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SubscriptionRegistry guid: (GUID fromString: '{a785d939-edab-48ad-b4a7-0bf0a69ec5f3}')!
-SubscriptionRegistry comment: 'The subscription registry is a threadsafe storage for the subscriptions to an Announcer.
+Kernel.SubscriptionRegistry guid: (Core.GUID fromString: '{a785d939-edab-48ad-b4a7-0bf0a69ec5f3}')!
+Kernel.SubscriptionRegistry comment: 'The subscription registry is a threadsafe storage for the subscriptions to an Announcer.
 
 In Pharo, subscriptionsFor: protocol is not implemented.
 This is because Announcer does not provide public access to its registery for encapsulation reasons.
 (We do not want access to the announcer from action blocks to break encapsulation to other subscribers)'!
-!SubscriptionRegistry categoriesForClass!Announcements-Core! !
-!SubscriptionRegistry methodsFor!
+!Kernel.SubscriptionRegistry categoriesForClass!Announcements-Core! !
+!Kernel.SubscriptionRegistry methodsFor!
 
 add: subscription
 	^ self protected: [
@@ -47,8 +47,7 @@ glmSubscriptions
 
 initialize
 	monitor := Semaphore forMutualExclusion.
-	self reset
-!
+	self reset!
 
 numberOfSubscriptions
 	^ subscriptions size!
@@ -80,18 +79,13 @@ replace: subscription with: newOne
 
 reset
 	"subscriber -> subscriptions"
-	
-	subscriptions := IdentitySet new
-	
 
-
-!
+	subscriptions := IdentitySet new!
 
 subscriptionsHandling: anAnnouncement
-	^ Array streamContents: [ :s|
-			subscriptions do: [:each| 
-				(each handlesAnnouncement: anAnnouncement)
-					ifTrue: [ s nextPut: each ]]]!
+	^Array streamContents: 
+			[:s |
+			subscriptions do: [:each | (each handlesAnnouncement: anAnnouncement) ifTrue: [s nextPut: each]]]!
 
 subscriptionsOf: aSubscriber do: aBlock
 	| copy |
@@ -103,24 +97,24 @@ subscriptionsOf: aSubscriber do: aBlock
 			subscription subscriber == aSubscriber 
 				ifTrue: [ aBlock value: subscription ]	]
 ! !
-!SubscriptionRegistry categoriesFor: #add:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #deliver:!announcing!public! !
-!SubscriptionRegistry categoriesFor: #deliver:to:!private! !
-!SubscriptionRegistry categoriesFor: #deliver:to:startingAt:!private! !
-!SubscriptionRegistry categoriesFor: #glmSubscriptions!public! !
-!SubscriptionRegistry categoriesFor: #initialize!initialization!public! !
-!SubscriptionRegistry categoriesFor: #numberOfSubscriptions!accessing!public! !
-!SubscriptionRegistry categoriesFor: #protected:!private! !
-!SubscriptionRegistry categoriesFor: #remove:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #removeSubscriber:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #replace:with:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #reset!initialize/release!public! !
-!SubscriptionRegistry categoriesFor: #subscriptionsHandling:!accessing!public! !
-!SubscriptionRegistry categoriesFor: #subscriptionsOf:do:!iterating!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #add:!add/remove!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #deliver:!announcing!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #deliver:to:!private! !
+!Kernel.SubscriptionRegistry categoriesFor: #deliver:to:startingAt:!private! !
+!Kernel.SubscriptionRegistry categoriesFor: #glmSubscriptions!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #initialize!initialization!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #numberOfSubscriptions!accessing!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #protected:!private! !
+!Kernel.SubscriptionRegistry categoriesFor: #remove:!add/remove!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #removeSubscriber:!add/remove!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #replace:with:!add/remove!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #reset!initialize/release!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #subscriptionsHandling:!accessing!public! !
+!Kernel.SubscriptionRegistry categoriesFor: #subscriptionsOf:do:!iterating!public! !
 
-!SubscriptionRegistry class methodsFor!
+!Kernel.SubscriptionRegistry class methodsFor!
 
 new	
 	^super new initialize! !
-!SubscriptionRegistry class categoriesFor: #new!public! !
+!Kernel.SubscriptionRegistry class categoriesFor: #new!public! !
 

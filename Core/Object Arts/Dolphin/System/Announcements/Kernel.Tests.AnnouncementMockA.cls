@@ -1,11 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Announcement subclass: #AnnouncementMockA
+Kernel.Announcement subclass: #'Kernel.Tests.AnnouncementMockA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnnouncementMockA guid: (GUID fromString: '{53387dd4-90b1-44c7-bc41-2168c30504e6}')!
-AnnouncementMockA comment: 'This is a simple test mock.'!
-!AnnouncementMockA categoriesForClass!Announcements-Tests-Core-Mocks! !
+Kernel.Tests.AnnouncementMockA guid: (Core.GUID fromString: '{53387dd4-90b1-44c7-bc41-2168c30504e6}')!
+Kernel.Tests.AnnouncementMockA comment: 'This is a simple test mock.'!
+!Kernel.Tests.AnnouncementMockA categoriesForClass!Announcements-Tests-Core-Mocks! !

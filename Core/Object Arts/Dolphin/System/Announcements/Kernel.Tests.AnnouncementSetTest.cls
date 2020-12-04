@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #AnnouncementSetTest
+XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.AnnouncementSetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnnouncementSetTest guid: (GUID fromString: '{9dc83cf2-59b5-4c23-9dc7-c8b79487aa22}')!
-AnnouncementSetTest comment: 'SUnit tests for announcement sets'!
-!AnnouncementSetTest categoriesForClass!Announcements-Tests-Core-Tests! !
-!AnnouncementSetTest methodsFor!
+Kernel.Tests.AnnouncementSetTest guid: (Core.GUID fromString: '{9dc83cf2-59b5-4c23-9dc7-c8b79487aa22}')!
+Kernel.Tests.AnnouncementSetTest comment: 'SUnit tests for announcement sets'!
+!Kernel.Tests.AnnouncementSetTest categoriesForClass!Announcements-Tests-Core-Tests! !
+!Kernel.Tests.AnnouncementSetTest methodsFor!
 
 testIncludeOnlyOnce
 	| set |
@@ -20,6 +20,6 @@ testInstanceCreation
 	| set |
 	set := AnnouncementMockA , AnnouncementMockB.
 	self assert: set size equals: 2! !
-!AnnouncementSetTest categoriesFor: #testIncludeOnlyOnce!public!testing! !
-!AnnouncementSetTest categoriesFor: #testInstanceCreation!public!testing! !
+!Kernel.Tests.AnnouncementSetTest categoriesFor: #testIncludeOnlyOnce!public!testing! !
+!Kernel.Tests.AnnouncementSetTest categoriesFor: #testInstanceCreation!public!testing! !
 

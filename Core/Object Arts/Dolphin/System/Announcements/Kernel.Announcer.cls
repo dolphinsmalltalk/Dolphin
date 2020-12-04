@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Announcer
+Core.Object subclass: #'Kernel.Announcer'
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Announcer guid: (GUID fromString: '{1c9ed26a-0ea9-497c-af74-175569414ae7}')!
-Announcer comment: 'The code is based on the announcements as described by Vassili Bykov in <http://www.cincomsmalltalk.com/userblogs/vbykov/blogView?searchCategory=Announcements%20Framework>. The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
+Kernel.Announcer guid: (Core.GUID fromString: '{1c9ed26a-0ea9-497c-af74-175569414ae7}')!
+Kernel.Announcer comment: 'The code is based on the announcements as described by Vassili Bykov in <http://www.cincomsmalltalk.com/userblogs/vbykov/blogView?searchCategory=Announcements%20Framework>. The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
 
 For security reasons, registry is kept private, and has no accessor like in other implementations'!
-!Announcer categoriesForClass!Announcements-Core! !
-!Announcer methodsFor!
+!Kernel.Announcer categoriesForClass!Announcements-Core! !
+!Kernel.Announcer methodsFor!
 
 announce: anAnnouncement
 
@@ -32,7 +32,7 @@ hasSubscriber: anObject
 
 initialize
 	super initialize.
-	registry := SubscriptionRegistry new.!
+	registry := SubscriptionRegistry new!
 
 numberOfSubscriptions
 	^ registry numberOfSubscriptions
@@ -65,18 +65,22 @@ replace: subscription with: newOne
 	^ registry replace: subscription with: newOne
 !
 
-subscribe: anAnnouncementClass do: aValuable 
+subscribe: anAnnouncementClass do: aValuable
 	"Declare that when anAnnouncementClass is raised, aValuable is executed."
-	^ registry add: (
-		AnnouncementSubscription new 
-			announcer: self;
-			announcementClass: anAnnouncementClass;
-			valuable: aValuable)!
+
+	^registry add: (AnnouncementSubscription new
+				announcer: self;
+				announcementClass: anAnnouncementClass;
+				valuable: aValuable)!
 
 subscribe: anAnnouncementClass send: aSelector to: anObject
 	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector."
-	
-	^ self subscribe: anAnnouncementClass do: (MessageSend receiver: anObject selector: aSelector arguments: (Array new: aSelector numArgs))!
+
+	^self subscribe: anAnnouncementClass
+		do: (MessageSend
+				receiver: anObject
+				selector: aSelector
+				arguments: (Array new: aSelector numArgs))!
 
 subscriptions
 
@@ -89,7 +93,8 @@ unsubscribe: anObject
 
 weak
 	"announcer weak subscribe: foo"
-	^ WeakSubscriptionBuilder on: self!
+
+	^WeakSubscriptionBuilder on: self!
 
 when: anAnnouncementClass do: aValuable
 	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that ushc method as well as when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
@@ -108,27 +113,27 @@ when: anAnnouncementClass send: aSelector to: anObject
     are passed as argument"
 
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
-!Announcer categoriesFor: #announce:!announce!public! !
-!Announcer categoriesFor: #basicSubscribe:!private! !
-!Announcer categoriesFor: #hasSubscriber:!public! !
-!Announcer categoriesFor: #initialize!initialization!public! !
-!Announcer categoriesFor: #numberOfSubscriptions!public!statistics! !
-!Announcer categoriesFor: #on:do:!public! !
-!Announcer categoriesFor: #on:send:to:!public! !
-!Announcer categoriesFor: #removeSubscription:!public!subscription! !
-!Announcer categoriesFor: #replace:with:!private! !
-!Announcer categoriesFor: #subscribe:do:!public!subscription! !
-!Announcer categoriesFor: #subscribe:send:to:!public!subscription! !
-!Announcer categoriesFor: #subscriptions!public! !
-!Announcer categoriesFor: #unsubscribe:!public!subscription! !
-!Announcer categoriesFor: #weak!public!weak! !
-!Announcer categoriesFor: #when:do:!convenience!public! !
-!Announcer categoriesFor: #when:do:for:!convenience!public! !
-!Announcer categoriesFor: #when:send:to:!convenience!public! !
+!Kernel.Announcer categoriesFor: #announce:!announce!public! !
+!Kernel.Announcer categoriesFor: #basicSubscribe:!private! !
+!Kernel.Announcer categoriesFor: #hasSubscriber:!public! !
+!Kernel.Announcer categoriesFor: #initialize!initialization!public! !
+!Kernel.Announcer categoriesFor: #numberOfSubscriptions!public!statistics! !
+!Kernel.Announcer categoriesFor: #on:do:!public! !
+!Kernel.Announcer categoriesFor: #on:send:to:!public! !
+!Kernel.Announcer categoriesFor: #removeSubscription:!public!subscription! !
+!Kernel.Announcer categoriesFor: #replace:with:!private! !
+!Kernel.Announcer categoriesFor: #subscribe:do:!public!subscription! !
+!Kernel.Announcer categoriesFor: #subscribe:send:to:!public!subscription! !
+!Kernel.Announcer categoriesFor: #subscriptions!public! !
+!Kernel.Announcer categoriesFor: #unsubscribe:!public!subscription! !
+!Kernel.Announcer categoriesFor: #weak!public!weak! !
+!Kernel.Announcer categoriesFor: #when:do:!convenience!public! !
+!Kernel.Announcer categoriesFor: #when:do:for:!convenience!public! !
+!Kernel.Announcer categoriesFor: #when:send:to:!convenience!public! !
 
-!Announcer class methodsFor!
+!Kernel.Announcer class methodsFor!
 
 new	
 	^super new initialize! !
-!Announcer class categoriesFor: #new!public! !
+!Kernel.Announcer class categoriesFor: #new!public! !
 

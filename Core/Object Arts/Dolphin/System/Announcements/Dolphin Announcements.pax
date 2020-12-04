@@ -1,28 +1,35 @@
 ﻿| package |
 package := Package name: 'Dolphin Announcements'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{Announcement}
-	#{AnnouncementSet}
-	#{AnnouncementSubscription}
-	#{Announcer}
-	#{SubscriptionRegistry}
-	#{WeakAnnouncementSubscription}
-	#{WeakMessageSend}
-	#{WeakSubscriptionBuilder}
+	#{Kernel.Announcement}
+	#{Kernel.AnnouncementSet}
+	#{Kernel.AnnouncementSubscription}
+	#{Kernel.Announcer}
+	#{Kernel.SubscriptionRegistry}
+	#{Kernel.WeakAnnouncementSubscription}
+	#{Kernel.WeakSubscriptionBuilder}
 ).
 
 package setMethodNames: #(
-	#(#{BlockClosure} #announcementSubscriber)
-	#(#{BlockClosure} #asWeakMessageSend)
-	#(#{MessageSend} #asWeakMessageSend)
-	#(#{MessageSendAbstract} #announcementSubscriber)
-	#(#{Symbol} #asAnnouncement)
-	#(#{Symbol} #handlesAnnouncement:)
+	#(#{Core.MessageSend} #asWeakMessageSend)
+	#(#{Core.MessageSendAbstract} #announcementSubscriber)
+	#(#{Core.Symbol} #asAnnouncement)
+	#(#{Core.Symbol} #handlesAnnouncement:)
+	#(#{Kernel.BlockClosure} #announcementSubscriber)
+	#(#{Kernel.BlockClosure} #asWeakMessageSend)
+).
+
+package setVariableNames: #(
+	#{Kernel.WeakMessageSend}
+).
+
+package setAliasVariableNames: #(
+	#{Kernel.WeakMessageSend}
 ).
 
 package setPrerequisites: #(
@@ -33,85 +40,72 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #Announcement
+Core.Object subclass: #'Kernel.Announcement'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #AnnouncementSubscription
+Core.Object subclass: #'Kernel.AnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass subscriber action'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Announcer
+Core.Object subclass: #'Kernel.Announcer'
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SubscriptionRegistry
+Core.Object subclass: #'Kernel.SubscriptionRegistry'
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #WeakSubscriptionBuilder
+Core.Object subclass: #'Kernel.WeakSubscriptionBuilder'
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WeakArray variableSubclass: #WeakAnnouncementSubscription
+Core.WeakArray variableSubclass: #'Kernel.WeakAnnouncementSubscription'
 	instanceVariableNames: 'announcer announcementClass action'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Set variableSubclass: #AnnouncementSet
+Core.Set variableSubclass: #'Kernel.AnnouncementSet'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EventMessageSend variableSubclass: #WeakMessageSend
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+
+"Variable Aliases"!
+
+Kernel.WeakMessageSend := Kernel.EventMessageSend!
+
 
 "Loose Methods"!
 
-!BlockClosure methodsFor!
-
-announcementSubscriber
-	^self!
+!Core.MessageSend methodsFor!
 
 asWeakMessageSend
-	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
-	^self! !
-!BlockClosure categoriesFor: #announcementSubscriber!public! !
-!BlockClosure categoriesFor: #asWeakMessageSend!public! !
-
-!MessageSend methodsFor!
-
-asWeakMessageSend
-
-	^ WeakMessageSend
+	^WeakMessageSend
 		receiver: receiver
 		selector: selector
 		arguments: args copy! !
-!MessageSend categoriesFor: #asWeakMessageSend!commands!public! !
+!Core.MessageSend categoriesFor: #asWeakMessageSend!commands!public! !
 
-!MessageSendAbstract methodsFor!
+!Core.MessageSendAbstract methodsFor!
 
 announcementSubscriber
 	^self receiver! !
-!MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
+!Core.MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
 
-!Symbol methodsFor!
+!Core.Symbol methodsFor!
 
 asAnnouncement
 	^self!
@@ -125,8 +119,19 @@ handlesAnnouncement: anAnnouncement
 		announce: #FOO should raise DNU bar"
 
 	^anAnnouncement == self! !
-!Symbol categoriesFor: #asAnnouncement!converting!public! !
-!Symbol categoriesFor: #handlesAnnouncement:!converting!public! !
+!Core.Symbol categoriesFor: #asAnnouncement!converting!public! !
+!Core.Symbol categoriesFor: #handlesAnnouncement:!converting!public! !
+
+!Kernel.BlockClosure methodsFor!
+
+announcementSubscriber
+	^self!
+
+asWeakMessageSend
+	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
+	^self! !
+!Kernel.BlockClosure categoriesFor: #announcementSubscriber!public! !
+!Kernel.BlockClosure categoriesFor: #asWeakMessageSend!public! !
 
 "End of package definition"!
 
