@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #CHARFORMAT2W
+OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bAnimation' -> 16r71.
@@ -27,12 +27,12 @@ Win32Structure subclass: #CHARFORMAT2W
 		'_OffsetOf_yHeight' -> 16rC.
 		'_OffsetOf_yOffset' -> 16r10
 	}!
-CHARFORMAT2W guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.CHARFORMAT2W guid: (Core.GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
-!CHARFORMAT2W categoriesForClass!External-Data-Structured-Win32! !
-!CHARFORMAT2W methodsFor!
+!OS.CHARFORMAT2W categoriesForClass!External-Data-Structured-Win32! !
+!OS.CHARFORMAT2W methodsFor!
 
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
@@ -142,13 +142,13 @@ characterSet: anIntegerOrNil
 color
 	"Answer the character colour."
 
-	^Color fromCOLORREF: self crTextColor!
+	^Graphics.Color fromCOLORREF: self crTextColor!
 
 color: aColor
 	"Set the character colour."
 
 	self maskIn: CFM_COLOR.
-	self crTextColor: (aColor ifNil: [Color windowText]) asCOLORREF!
+	self crTextColor: (aColor ifNil: [Graphics.Color windowText]) asCOLORREF!
 
 crBackColor
 	"Answer the <Integer> value of the receiver's 'crBackColor' field."
@@ -209,7 +209,7 @@ faceName: aString
 	self szFaceName: aString asUtf16String!
 
 font
-	^Font fromLogFont: self logFont!
+	^Graphics.Font fromLogFont: self logFont!
 
 font: aFont 
 	"Set the character font."
@@ -294,7 +294,7 @@ logFont
 	| answer |
 	answer := LOGFONTW new.
 	answer faceName: self szFaceName.
-	answer lfHeight: (self pointSize * Canvas desktopResolution y / 72) rounded negated.
+	answer lfHeight: (self pointSize * Graphics.Canvas desktopResolution y / 72) rounded negated.
 	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
 	answer lfItalic: self isItalic asParameter.
 	answer lfUnderline: self isUnderlined asParameter.
@@ -450,84 +450,85 @@ yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yHeight put: anInteger! !
-!CHARFORMAT2W categoriesFor: #bAnimation!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bAnimation:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bCharSet!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bCharSet:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #beBold!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotBold!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #bePlain!modes!public! !
-!CHARFORMAT2W categoriesFor: #beUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #bPitchAndFamily!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bPitchAndFamily:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bRevAuthor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bRevAuthor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlineColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlineColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlyineType!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlyineType:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #characterSet!public! !
-!CHARFORMAT2W categoriesFor: #characterSet:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #color!accessing!public! !
-!CHARFORMAT2W categoriesFor: #color:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #crBackColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crBackColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crTextColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crTextColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwEffects!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwEffects:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwMask!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwMask:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #effectsAny:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #faceName:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #font!accessing!public! !
-!CHARFORMAT2W categoriesFor: #font:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #height:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isBold!public!testing! !
-!CHARFORMAT2W categoriesFor: #isBold:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isItalic:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isStruckThrough!public!testing! !
-!CHARFORMAT2W categoriesFor: #isStruckThrough:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isUnderlined:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #lcid!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #lcid:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #logFont!public! !
-!CHARFORMAT2W categoriesFor: #maskAny:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #maskIn:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #maskOut:!private! !
-!CHARFORMAT2W categoriesFor: #pointSize!accessing!public! !
-!CHARFORMAT2W categoriesFor: #pointSize:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #populateChooseFont:!private! !
-!CHARFORMAT2W categoriesFor: #populateFromChooseFont:!private! !
-!CHARFORMAT2W categoriesFor: #setEffect:mask:set:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #size:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #sSpacing!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sSpacing:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sStyle!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sStyle:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #szFaceName!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #szFaceName:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wKerning!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wKerning:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wWeight!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wWeight:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #yHeight!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #yHeight:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bAnimation!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bAnimation:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bCharSet!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bCharSet:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #beBold!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #beItalic!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #beNotBold!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #beNotItalic!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #beNotUnderlined!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #bePlain!modes!public! !
+!OS.CHARFORMAT2W categoriesFor: #beUnderlined!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #bPitchAndFamily!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bPitchAndFamily:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bRevAuthor!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bRevAuthor:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bUnderlineColor!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bUnderlineColor:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bUnderlyineType!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #bUnderlyineType:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #characterSet!public! !
+!OS.CHARFORMAT2W categoriesFor: #characterSet:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #color!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #color:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #crBackColor!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #crBackColor:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #crTextColor!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #crTextColor:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #dwEffects!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #dwEffects:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #dwMask!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #dwMask:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #effectsAny:!accessing!private! !
+!OS.CHARFORMAT2W categoriesFor: #faceName:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #font!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #font:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #height:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isBold!public!testing! !
+!OS.CHARFORMAT2W categoriesFor: #isBold:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isItalic!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isItalic:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isStruckThrough!public!testing! !
+!OS.CHARFORMAT2W categoriesFor: #isStruckThrough:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isUnderlined!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #isUnderlined:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #lcid!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #lcid:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #logFont!public! !
+!OS.CHARFORMAT2W categoriesFor: #maskAny:!accessing!private! !
+!OS.CHARFORMAT2W categoriesFor: #maskIn:!accessing!private! !
+!OS.CHARFORMAT2W categoriesFor: #maskOut:!private! !
+!OS.CHARFORMAT2W categoriesFor: #pointSize!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #pointSize:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #populateChooseFont:!private! !
+!OS.CHARFORMAT2W categoriesFor: #populateFromChooseFont:!private! !
+!OS.CHARFORMAT2W categoriesFor: #setEffect:mask:set:!accessing!private! !
+!OS.CHARFORMAT2W categoriesFor: #size:!accessing!public! !
+!OS.CHARFORMAT2W categoriesFor: #sSpacing!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #sSpacing:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #sStyle!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #sStyle:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #szFaceName!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #szFaceName:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #wKerning!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #wKerning:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #wWeight!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #wWeight:!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #yHeight!**compiled accessors**!public! !
+!OS.CHARFORMAT2W categoriesFor: #yHeight:!**compiled accessors**!public! !
 
-!CHARFORMAT2W class methodsFor!
+!OS.CHARFORMAT2W class methodsFor!
 
 defineFields
 	"Define the layout of the CHARFORMAT2 structure
 		self compileDefinition
 	"
 
-	self defineField: #dwSize type: DWORDField writeOnly beOverride;
+	self
+		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #dwMask type: DWORDField new;
 		defineField: #dwEffects type: DWORDField new;
 		defineField: #yHeight type: SDWORDField new;
@@ -555,7 +556,7 @@ fromChooseFont: aCHOOSEFRONT
 
 getFieldNames
 	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
-!CHARFORMAT2W class categoriesFor: #defineFields!public!template definition! !
-!CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
-!CHARFORMAT2W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CHARFORMAT2W class categoriesFor: #defineFields!public!template definition! !
+!OS.CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
+!OS.CHARFORMAT2W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

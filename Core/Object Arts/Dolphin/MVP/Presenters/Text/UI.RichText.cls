@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RichText
+Core.Object subclass: #'UI.RichText'
 	instanceVariableNames: 'rtf'
 	classVariableNames: 'Converter ConverterMutex'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RichText guid: (GUID fromString: '{87b4c4b2-026e-11d3-9fd7-00a0cc3e4a32}')!
-RichText comment: ''!
-!RichText categoriesForClass!System-Support! !
-!RichText methodsFor!
+UI.RichText guid: (Core.GUID fromString: '{87b4c4b2-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.RichText comment: ''!
+!UI.RichText categoriesForClass!System-Support! !
+!UI.RichText methodsFor!
 
 = anObject
 	"Answer whether the receiver and anObject are equivalent.
@@ -104,25 +104,25 @@ setTextInto: aView
 	message back to aView."
 	
 	aView richText: self! !
-!RichText categoriesFor: #=!comparing!public! !
-!RichText categoriesFor: #asParameter!converting!public! !
-!RichText categoriesFor: #asRichText!converting!public! !
-!RichText categoriesFor: #asString!converting!public! !
-!RichText categoriesFor: #copyToClipboard!copying!public! !
-!RichText categoriesFor: #displayOn:!displaying!public! !
-!RichText categoriesFor: #displayString!converting!displaying!public! !
-!RichText categoriesFor: #hash!comparing!public! !
-!RichText categoriesFor: #isEmpty!public!testing! !
-!RichText categoriesFor: #notEmpty!public!testing! !
-!RichText categoriesFor: #printOn:!development!printing!public! !
-!RichText categoriesFor: #replaceSelectionIn:!double dispatch!public! !
-!RichText categoriesFor: #rtf!accessing!private! !
-!RichText categoriesFor: #rtf:!accessing!private! !
-!RichText categoriesFor: #setTextInto:!double dispatch!private! !
+!UI.RichText categoriesFor: #=!comparing!public! !
+!UI.RichText categoriesFor: #asParameter!converting!public! !
+!UI.RichText categoriesFor: #asRichText!converting!public! !
+!UI.RichText categoriesFor: #asString!converting!public! !
+!UI.RichText categoriesFor: #copyToClipboard!copying!public! !
+!UI.RichText categoriesFor: #displayOn:!displaying!public! !
+!UI.RichText categoriesFor: #displayString!converting!displaying!public! !
+!UI.RichText categoriesFor: #hash!comparing!public! !
+!UI.RichText categoriesFor: #isEmpty!public!testing! !
+!UI.RichText categoriesFor: #notEmpty!public!testing! !
+!UI.RichText categoriesFor: #printOn:!development!printing!public! !
+!UI.RichText categoriesFor: #replaceSelectionIn:!double dispatch!public! !
+!UI.RichText categoriesFor: #rtf!accessing!private! !
+!UI.RichText categoriesFor: #rtf:!accessing!private! !
+!UI.RichText categoriesFor: #setTextInto:!double dispatch!private! !
 
-RichText methodProtocol: #richString attributes: #(#readOnly) selectors: #(#setTextInto:)!
+UI.RichText methodProtocol: #richString attributes: #(#readOnly) selectors: #(#setTextInto:)!
 
-!RichText class methodsFor!
+!UI.RichText class methodsFor!
 
 fromRtf: anRtfString
 	"Answers an instance of the receiver holding anRtfString"
@@ -163,7 +163,7 @@ registerClipboardFormat
 		addRegisteredFormat: #RichText
 		id: clipboardRtf
 		converter: (PluggableTypeConverter
-				leftToRight: [:richText | ExternalMemory copyBytesToGlobalHeap: richText rtf]
+				leftToRight: [:richText | External.Memory copyBytesToGlobalHeap: richText rtf]
 				rightToLeft: [:handle | RichText fromRtf: (Utf8String fromGlobalHandle: handle)])!
 
 rtfConverter
@@ -184,12 +184,12 @@ uninitialize
 	Converter isNil ifTrue: [^self].
 	Converter destroy.
 	Converter := nil! !
-!RichText class categoriesFor: #fromRtf:!instance creation!public! !
-!RichText class categoriesFor: #fromString:!instance creation!public! !
-!RichText class categoriesFor: #initialize!class initialization!public! !
-!RichText class categoriesFor: #new!instance creation!private! !
-!RichText class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!RichText class categoriesFor: #registerClipboardFormat!class initialization!private! !
-!RichText class categoriesFor: #rtfConverter!accessing!private! !
-!RichText class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!UI.RichText class categoriesFor: #fromRtf:!instance creation!public! !
+!UI.RichText class categoriesFor: #fromString:!instance creation!public! !
+!UI.RichText class categoriesFor: #initialize!class initialization!public! !
+!UI.RichText class categoriesFor: #new!instance creation!private! !
+!UI.RichText class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.RichText class categoriesFor: #registerClipboardFormat!class initialization!private! !
+!UI.RichText class categoriesFor: #rtfConverter!accessing!private! !
+!UI.RichText class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #ENLINK
+OS.NMHDR subclass: #'OS.ENLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrg' -> 16r18.
@@ -11,8 +11,8 @@ NMHDR subclass: #ENLINK
 		'_OffsetOf_msg' -> 16rC.
 		'_OffsetOf_wParam' -> 16r10
 	}!
-ENLINK guid: (GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
-ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.ENLINK guid: (Core.GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
+OS.ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ struct tagENLINK {
 	CHARRANGE chrg;
 } ENLINK;
 '!
-!ENLINK categoriesForClass!Win32-Structs! !
-!ENLINK methodsFor!
+!OS.ENLINK categoriesForClass!Win32-Structs! !
+!OS.ENLINK methodsFor!
 
 chrg
 	"Answer the <CHARRANGE> value of the receiver's 'chrg' field."
@@ -51,12 +51,12 @@ wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
-!ENLINK categoriesFor: #chrg!**compiled accessors**!public! !
-!ENLINK categoriesFor: #lParam!**compiled accessors**!public! !
-!ENLINK categoriesFor: #msg!**compiled accessors**!public! !
-!ENLINK categoriesFor: #wParam!**compiled accessors**!public! !
+!OS.ENLINK categoriesFor: #chrg!**compiled accessors**!public! !
+!OS.ENLINK categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.ENLINK categoriesFor: #msg!**compiled accessors**!public! !
+!OS.ENLINK categoriesFor: #wParam!**compiled accessors**!public! !
 
-!ENLINK class methodsFor!
+!OS.ENLINK class methodsFor!
 
 defineFields
 	"Define the fields of the ENLINK structure.
@@ -82,6 +82,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
-!ENLINK class categoriesFor: #defineFields!public!template definition! !
-!ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ENLINK class categoriesFor: #defineFields!public!template definition! !
+!OS.ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

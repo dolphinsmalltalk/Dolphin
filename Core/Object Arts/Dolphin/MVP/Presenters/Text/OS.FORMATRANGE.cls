@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #FORMATRANGE
+OS.Win32Structure subclass: #'OS.FORMATRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cpMax' -> 16r2C.
@@ -13,12 +13,12 @@ Win32Structure subclass: #FORMATRANGE
 		'_OffsetOf_rc' -> 16r8.
 		'_OffsetOf_rcPage' -> 16r18
 	}!
-FORMATRANGE guid: (GUID fromString: '{9bdca5bb-f238-4744-a903-f02b32617822}')!
-FORMATRANGE comment: 'FORMATRANGE is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.FORMATRANGE guid: (Core.GUID fromString: '{9bdca5bb-f238-4744-a903-f02b32617822}')!
+OS.FORMATRANGE comment: 'FORMATRANGE is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 FORMATRANGE is used in conjunction with the Rich Edit control''s EM_FORMATRANGE message. See the Win32 SDK documentation for further information.'!
-!FORMATRANGE categoriesForClass!Unclassified! !
-!FORMATRANGE methodsFor!
+!OS.FORMATRANGE categoriesForClass!Unclassified! !
+!OS.FORMATRANGE methodsFor!
 
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
@@ -30,53 +30,53 @@ cpMin: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger!
 
-hdc: anExternalHandle
-	"Set the receiver's 'hdc' field to the value of the argument, anExternalHandle"
+hdc: aHandle
+	"Set the receiver's 'hdc' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hdc put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hdc put: aHandle!
 
-hdcTarget: anExternalHandle
-	"Set the receiver's 'hdcTarget' field to the value of the argument, anExternalHandle"
+hdcTarget: aHandle
+	"Set the receiver's 'hdcTarget' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hdcTarget put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hdcTarget put: aHandle!
 
 rc
-	"Answer the <RECT> value of the receiver's 'rc' field."
+	"Answer the <RECTL> value of the receiver's 'rc' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rc!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rc!
 
-rc: aRECT
-	"Set the receiver's 'rc' field to the value of the argument, aRECT"
+rc: aRECTL
+	"Set the receiver's 'rc' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rc + 1)
-		to: ##(_OffsetOf_rc + RECT basicByteSize)
+		to: ##(_OffsetOf_rc + RECTL basicByteSize)
 		startingAt: 1!
 
 rcPage
-	"Answer the <RECT> value of the receiver's 'rcPage' field."
+	"Answer the <RECTL> value of the receiver's 'rcPage' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcPage!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcPage!
 
-rcPage: aRECT
-	"Set the receiver's 'rcPage' field to the value of the argument, aRECT"
+rcPage: aRECTL
+	"Set the receiver's 'rcPage' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcPage + 1)
-		to: ##(_OffsetOf_rcPage + RECT basicByteSize)
+		to: ##(_OffsetOf_rcPage + RECTL basicByteSize)
 		startingAt: 1! !
-!FORMATRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #cpMin:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #hdc:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #hdcTarget:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rc!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rc:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rcPage!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rcPage:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #cpMin:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #hdc:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #hdcTarget:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #rc!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #rc:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #rcPage!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesFor: #rcPage:!**compiled accessors**!public! !
 
-!FORMATRANGE class methodsFor!
+!OS.FORMATRANGE class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 FORMATRANGE structure.
@@ -87,16 +87,15 @@ defineFields
 	self
 		defineField: #hdc type: HANDLEField writeOnly;
 		defineField: #hdcTarget type: HANDLEField writeOnly;
-		defineField: #rc type: (StructureField type: RECT);
-		defineField: #rcPage type: (StructureField type: RECT);
-
-		"Expand CHARRANGE inline"
+		defineField: #rc type: (StructureField type: RECTL);
+		defineField: #rcPage type: (StructureField type: RECTL);
 		defineField: #cpMin type: SDWORDField writeOnly;
 		defineField: #cpMax type: SDWORDField writeOnly
-!
+
+	"Expand CHARRANGE inline"!
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
-!FORMATRANGE class categoriesFor: #defineFields!public!template definition! !
-!FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FORMATRANGE class categoriesFor: #defineFields!public!template definition! !
+!OS.FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

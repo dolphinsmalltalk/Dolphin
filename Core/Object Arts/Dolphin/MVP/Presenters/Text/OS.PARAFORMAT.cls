@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PARAFORMAT
+OS.Win32Structure subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'RichEditConstants'
+	imports: #(#{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cTabCount' -> 16r1A.
@@ -17,10 +17,10 @@ Win32Structure subclass: #PARAFORMAT
 		'_OffsetOf_wEffects' -> 16rA.
 		'_OffsetOf_wNumbering' -> 16r8
 	}!
-PARAFORMAT guid: (GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
-PARAFORMAT comment: ''!
-!PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !
-!PARAFORMAT methodsFor!
+OS.PARAFORMAT guid: (Core.GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.PARAFORMAT comment: ''!
+!OS.PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !
+!OS.PARAFORMAT methodsFor!
 
 alignment
 	"Answer the receiver's alignment as an integer value"
@@ -161,34 +161,34 @@ wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wNumbering put: anInteger! !
-!PARAFORMAT categoriesFor: #alignment!accessing!public! !
-!PARAFORMAT categoriesFor: #alignment:!accessing!public! !
-!PARAFORMAT categoriesFor: #cTabCount!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #cTabCount:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwMask!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwMask:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxOffset!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxOffset:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxRightIndent!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxRightIndent:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxStartIndent!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxStartIndent:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #maskIn:!accessing!private! !
-!PARAFORMAT categoriesFor: #offset!accessing!public! !
-!PARAFORMAT categoriesFor: #offset:!accessing!public! !
-!PARAFORMAT categoriesFor: #rgxTabs!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #rgxTabs:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #startIndent!accessing!public! !
-!PARAFORMAT categoriesFor: #startIndent:!accessing!public! !
-!PARAFORMAT categoriesFor: #wAlignment!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wAlignment:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wEffects!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wEffects:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wNumbering!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wNumbering:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #alignment!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #alignment:!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #cTabCount!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #cTabCount:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dwMask!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dwMask:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxOffset!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxOffset:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxRightIndent!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxRightIndent:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxStartIndent!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #dxStartIndent:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #maskIn:!accessing!private! !
+!OS.PARAFORMAT categoriesFor: #offset!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #offset:!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #rgxTabs!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #rgxTabs:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #startIndent!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #startIndent:!accessing!public! !
+!OS.PARAFORMAT categoriesFor: #wAlignment!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #wAlignment:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #wEffects!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #wEffects:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #wNumbering!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesFor: #wNumbering:!**compiled accessors**!public! !
 
-!PARAFORMAT class methodsFor!
+!OS.PARAFORMAT class methodsFor!
 
 defineFields
 	"Define the Win32 PARAFORMAT Structure (used for paragraph formatting
@@ -213,10 +213,8 @@ getFieldNames
 	^#(#dwSize #dwMask #wNumbering #wEffects #dxStartIndent #dxRightIndent #dxOffset #wAlignment #cTabCount #rgxTabs)!
 
 packing
-	"Note: The compiler will optimise out the conditional because it is constant."
-
-	^VMConstants.IsWin64 ifTrue: [8] ifFalse: [4]! !
-!PARAFORMAT class categoriesFor: #defineFields!public!template definition! !
-!PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PARAFORMAT class categoriesFor: #packing!constants!public! !
+	^VMConstants.IntPtrSize! !
+!OS.PARAFORMAT class categoriesFor: #defineFields!public!template definition! !
+!OS.PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PARAFORMAT class categoriesFor: #packing!constants!public! !
 

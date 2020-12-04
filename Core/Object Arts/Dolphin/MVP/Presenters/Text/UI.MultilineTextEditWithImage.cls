@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultilineTextEdit subclass: #MultilineTextEditWithImage
+UI.MultilineTextEdit subclass: #'UI.MultilineTextEditWithImage'
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BackModes' -> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
 	}!
-MultilineTextEditWithImage guid: (GUID fromString: '{eb99e6ab-3d20-4f85-852b-b521da845584}')!
-MultilineTextEditWithImage comment: 'MultilineTextEditWithImage is a specialised <MultilineTextEdit> that displays text transparently over a background bitmap. A common use case might be to display a watermark under the text. The bitmap can be tiled to fill the background, centred, or "docked" to one of the eight positions positions around the edges and in the corners of the client area. These modes are as follows:
+UI.MultilineTextEditWithImage guid: (Core.GUID fromString: '{eb99e6ab-3d20-4f85-852b-b521da845584}')!
+UI.MultilineTextEditWithImage comment: 'MultilineTextEditWithImage is a specialised <MultilineTextEdit> that displays text transparently over a background bitmap. A common use case might be to display a watermark under the text. The bitmap can be tiled to fill the background, centred, or "docked" to one of the eight positions positions around the edges and in the corners of the client area. These modes are as follows:
 
 	#tile		- tile the image at its natural size to fill the entire background
 	#topLeft 		- draw the image at its natural size in the top left corner of the client area
@@ -34,8 +34,8 @@ Instance Variables:
 	
 Copyright (c) Object Arts Ltd 2004
 '!
-!MultilineTextEditWithImage categoriesForClass!MVP-Views! !
-!MultilineTextEditWithImage methodsFor!
+!UI.MultilineTextEditWithImage categoriesForClass!MVP-Views! !
+!UI.MultilineTextEditWithImage methodsFor!
 
 backBitmap
 	backBitmap ifNil: [backBitmap := self defaultBackgroundImage].
@@ -105,9 +105,9 @@ defaultBackgroundImage
 	draw the icon from an image list, then the correct sized icon is used automatically and we
 	get the best results"
 	icon := Bitmap displayCompatibleWithExtent: extent.
-	(IconImageManager current imageListWithExtent: extent) 
+	(IconImageManager current imageListWithExtent: extent)
 		draw: SessionManager current iconImageIndex
-		on: ((icon canvas)
+		on: (icon canvas
 				backcolor: color;
 				erase;
 				yourself)
@@ -116,12 +116,14 @@ defaultBackgroundImage
 
 	"Now we're going to layer the image onto a white Bitmap to create a watermark image"
 	bmp := Bitmap displayCompatibleWithExtent: extent.
-	(bmp canvas)
+	bmp canvas
 		backcolor: color;
 		erase.
 	blend := BLENDFUNCTION new.
-	blend blendPercentage: percent; usePerPixelAlpha: false.
-	icon 
+	blend
+		blendPercentage: percent;
+		usePerPixelAlpha: false.
+	icon
 		alphaBlendOn: bmp canvas
 		at: 0 @ 0
 		extent: bmp extent
@@ -199,7 +201,7 @@ onMouseWheeled: aMouseWheelEvent
 	self repaintWindow.
 	^result!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"Handle a WM_PAINT event."
 
 	"Implementation Note: This is effectively a double-buffered repaint of the complete client
@@ -208,7 +210,7 @@ onPaintRequired: aPaintEvent
 	| bmp screenCanvas rect extent brush |
 	screenCanvas := aPaintEvent canvas.
 	extent := self clientExtent.
-	bmp := Bitmap 
+	bmp := Bitmap
 				compatible: screenCanvas
 				width: extent x
 				height: extent y.
@@ -218,12 +220,12 @@ onPaintRequired: aPaintEvent
 	bmp canvas fillRectangle: rect brush: brush.
 	brush free.
 	"Ask the control to paint itself onto the background dc"
-	self 
+	self
 		sendMessage: WM_PRINTCLIENT
 		wParam: bmp canvas asParameter
 		lParam: PRF_CLIENT.
 	"Finally blit the background dc over the display dc"
-	screenCanvas 
+	screenCanvas
 		bitBlt: bmp canvas
 		rectangle: rect
 		to: 0 @ 0
@@ -262,27 +264,27 @@ wmSize: message wParam: wParam lParam: lParam
 		wmSize: message
 		wParam: wParam
 		lParam: lParam! !
-!MultilineTextEditWithImage categoriesFor: #backBitmap!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backBitmap:!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backBrush!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backMode!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backMode:!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #createBackBrush!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #defaultBackgroundImage!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #enUpdate!event handling-win32!private! !
-!MultilineTextEditWithImage categoriesFor: #freeBackBrush!private!realizing/unrealizing! !
-!MultilineTextEditWithImage categoriesFor: #initialize!initializing!private! !
-!MultilineTextEditWithImage categoriesFor: #onColorRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onEraseRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onHScroll:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onMouseWheeled:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onPaintRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onVScroll:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #repaintWindow!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!MultilineTextEditWithImage categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #backBitmap!accessing!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #backBitmap:!accessing!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #backBrush!accessing!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #backMode!accessing!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #backMode:!accessing!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #createBackBrush!helpers!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #defaultBackgroundImage!helpers!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #enUpdate!event handling-win32!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #freeBackBrush!private!realizing/unrealizing! !
+!UI.MultilineTextEditWithImage categoriesFor: #initialize!initializing!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #onColorRequired:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #onEraseRequired:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #onHScroll:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #onMouseWheeled:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #onPaintRequired:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #onVScroll:!event handling!public! !
+!UI.MultilineTextEditWithImage categoriesFor: #repaintWindow!helpers!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
+!UI.MultilineTextEditWithImage categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
 
-!MultilineTextEditWithImage class methodsFor!
+!UI.MultilineTextEditWithImage class methodsFor!
 
 example1
 	"
@@ -298,9 +300,9 @@ example1
 	"Cycle through the different backmodes"
 	
 	[BackModes do: 
-			[:each | 
+			[:each |
 			SessionManager inputState queueDeferredAction: [t backMode: each].
-			Processor sleep: 3 seconds]] 
+			Processor sleep: 3 seconds]]
 			fork! !
-!MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
+!UI.MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValuePresenter subclass: #TextPresenter
+UI.ValuePresenter subclass: #'UI.TextPresenter'
 	instanceVariableNames: 'findDetails'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TextPresenter guid: (GUID fromString: '{87b4c6d2-026e-11d3-9fd7-00a0cc3e4a32}')!
-TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
-!TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !
-!TextPresenter methodsFor!
+UI.TextPresenter guid: (Core.GUID fromString: '{87b4c6d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+!UI.TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !
+!UI.TextPresenter methodsFor!
 
 clear
 	"Remove all contents in the receiver's view"
@@ -22,7 +22,7 @@ dragOver: session
 	to provide feedback to the user about allowable operations etc.
 	Implementation Note: Override this message to suggest a default drop action of 
 	pasting in the String at the drop position."
-	
+
 	session operation: ((session isFormatAvailable: #String) ifTrue: [session intendedOperation]).
 	"Superclass triggers event to allow observers to override."
 	super dragOver: session!
@@ -38,11 +38,14 @@ drop: session
 	| targetPos answer |
 	answer := super drop: session.
 	targetPos := session suggestedTarget.
-	targetPos isNil ifFalse: [
-		self view caretPosition: targetPos.
-		session dragObjects do: [:each | | text |
-			text := each format: #String.
-			self replaceSelection: text]].
+	targetPos isNil
+		ifFalse: 
+			[self view caretPosition: targetPos.
+			session dragObjects do: 
+					[:each |
+					| text |
+					text := each format: #String.
+					self replaceSelection: text]].
 	^answer!
 
 findDetails
@@ -92,23 +95,23 @@ selectionRange: anInterval
 	
 	^self view selectionRange: anInterval
 ! !
-!TextPresenter categoriesFor: #clear!operations!public! !
-!TextPresenter categoriesFor: #dragOver:!drag & drop!public! !
-!TextPresenter categoriesFor: #drop:!drag & drop!public! !
-!TextPresenter categoriesFor: #findDetails!accessing!public! !
-!TextPresenter categoriesFor: #findDetails:!public!searching! !
-!TextPresenter categoriesFor: #hasSelection!public!selection! !
-!TextPresenter categoriesFor: #isModified!public!testing! !
-!TextPresenter categoriesFor: #isModified:!modes!public! !
-!TextPresenter categoriesFor: #isReadOnly!public!testing! !
-!TextPresenter categoriesFor: #isReadOnly:!accessing!public! !
-!TextPresenter categoriesFor: #replaceSelection:!operations!public! !
-!TextPresenter categoriesFor: #selectionRange!public!selection! !
-!TextPresenter categoriesFor: #selectionRange:!public!selection! !
+!UI.TextPresenter categoriesFor: #clear!operations!public! !
+!UI.TextPresenter categoriesFor: #dragOver:!drag & drop!public! !
+!UI.TextPresenter categoriesFor: #drop:!drag & drop!public! !
+!UI.TextPresenter categoriesFor: #findDetails!accessing!public! !
+!UI.TextPresenter categoriesFor: #findDetails:!public!searching! !
+!UI.TextPresenter categoriesFor: #hasSelection!public!selection! !
+!UI.TextPresenter categoriesFor: #isModified!public!testing! !
+!UI.TextPresenter categoriesFor: #isModified:!modes!public! !
+!UI.TextPresenter categoriesFor: #isReadOnly!public!testing! !
+!UI.TextPresenter categoriesFor: #isReadOnly:!accessing!public! !
+!UI.TextPresenter categoriesFor: #replaceSelection:!operations!public! !
+!UI.TextPresenter categoriesFor: #selectionRange!public!selection! !
+!UI.TextPresenter categoriesFor: #selectionRange:!public!selection! !
 
-TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
+UI.TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 
-!TextPresenter class methodsFor!
+!UI.TextPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -129,7 +132,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140916352 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 674 241 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 247 7 0 0 29 0 0 0] 8 #() 674 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1140916352 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil nil 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 674 241 39 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 674 193 193 nil 27)!
 
 resource_Multiline_text
 	"Answer the literal data from which the 'Multiline text' resource can be reconstituted.
@@ -139,7 +142,7 @@ resource_Multiline_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiline_text)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.MultilineTextEdit) 34 16 nil nil 34 2 8 1143017796 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil nil 9 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 674 401 161 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 90 0 0 0] 8 #() 674 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.MultilineTextEdit) 34 16 nil nil 34 2 8 1143017796 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil nil 9 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 674 401 161 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 90 0 0 0] 8 #() 674 193 193 nil 27)!
 
 resource_Password_text
 	"Answer the literal data from which the 'Password text' resource can be reconstituted.
@@ -149,7 +152,7 @@ resource_Password_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Password_text)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140916384 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 674 241 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 247 7 0 0 29 0 0 0] 8 #() 674 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1140916384 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil nil 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 674 241 39 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 674 193 193 nil 27)!
 
 resource_Path_text
 	"Answer the literal data from which the 'Path text' resource can be reconstituted.
@@ -159,7 +162,7 @@ resource_Path_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Path_text)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 658 241 39 416 610 #text: 34 1 528 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 239 5 0 0 29 0 0 0] 8 #() 658 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 241 39 416 610 #text: 34 1 528 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)!
 
 resource_Static_text
 	"Answer the literal data from which the 'Static text' resource can be reconstituted.
@@ -169,12 +172,12 @@ resource_Static_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3359 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 8 #() 642 193 193 nil 27 )! !
-!TextPresenter class categoriesFor: #defaultModel!models!public! !
-!TextPresenter class categoriesFor: #icon!constants!public! !
-!TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 642 193 193 nil 27)! !
+!UI.TextPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.TextPresenter class categoriesFor: #icon!constants!public! !
+!UI.TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
+!UI.TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
+!UI.TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
+!UI.TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
 

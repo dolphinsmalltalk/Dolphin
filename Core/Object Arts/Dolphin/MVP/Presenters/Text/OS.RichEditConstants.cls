@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #RichEditConstants
+Kernel.SharedPool subclass: #'OS.RichEditConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -277,6 +277,7 @@ SharedPool subclass: #RichEditConstants
 		'WCH_EMBEDDING' -> 16rFFFC.
 		'yHeightCharPtsMost' -> 16r666
 	}!
-RichEditConstants guid: (GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
-RichEditConstants comment: ''!
-!RichEditConstants categoriesForClass!Unclassified! !
+OS.RichEditConstants guid: (Core.GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
+OS.RichEditConstants isNonInstantiable: true!
+OS.RichEditConstants comment: ''!
+!OS.RichEditConstants categoriesForClass!Unclassified! !

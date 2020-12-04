@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Text Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Text Presenter
 Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,18 +11,18 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{FINDTEXTEX}
-	#{MultilineTextEdit}
-	#{MultilineTextEditWithImage}
-	#{TextDocument}
-	#{TextEdit}
-	#{TextEditConstants}
-	#{TextPresenter}
-	#{TEXTRANGE}
+	#{OS.FINDTEXTEX}
+	#{OS.TextEditConstants}
+	#{OS.TEXTRANGE}
+	#{UI.MultilineTextEdit}
+	#{UI.MultilineTextEditWithImage}
+	#{UI.TextDocument}
+	#{UI.TextEdit}
+	#{UI.TextPresenter}
 ).
 
 package setMethodNames: #(
-	#(#{String} #replaceSelectionIn:)
+	#(#{Core.String} #replaceSelectionIn:)
 ).
 
 package setPrerequisites: #(
@@ -40,7 +40,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #TextEditConstants
+Kernel.SharedPool subclass: #'OS.TextEditConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -110,7 +110,19 @@ SharedPool subclass: #TextEditConstants
 		'ES_UPPERCASE' -> 16r8.
 		'ES_WANTRETURN' -> 16r1000
 	}!
-Win32Structure subclass: #TEXTRANGE
+UI.AbstractDocumentShell subclass: #'UI.TextDocument'
+	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ValuePresenter subclass: #'UI.TextPresenter'
+	instanceVariableNames: 'findDetails'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Win32Structure subclass: #'OS.TEXTRANGE'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()
@@ -119,7 +131,7 @@ Win32Structure subclass: #TEXTRANGE
 		'_OffsetOf_chrg' -> 16r0.
 		'_OffsetOf_lpstrText' -> 16r8
 	}!
-TEXTRANGE subclass: #FINDTEXTEX
+OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -127,22 +139,10 @@ TEXTRANGE subclass: #FINDTEXTEX
 	classConstants: {
 		'_OffsetOf_chrgText' -> 16rC
 	}!
-AbstractDocumentShell subclass: #TextDocument
-	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ValuePresenter subclass: #TextPresenter
-	instanceVariableNames: 'findDetails'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ValueConvertingControlView subclass: #TextEdit
+UI.ValueConvertingControlView subclass: #'UI.TextEdit'
 	instanceVariableNames: 'teFlags'
 	classVariableNames: 'AlignmentMap FindDialogMessage FormatMap'
-	imports: #(#{TextEditConstants})
+	imports: #(#{OS.TextEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FindDisabledMask' -> 16r20.
@@ -152,13 +152,13 @@ ValueConvertingControlView subclass: #TextEdit
 		'UpdatePerCharMask' -> 16r2.
 		'WantTabMask' -> 16r4
 	}!
-TextEdit subclass: #MultilineTextEdit
+UI.TextEdit subclass: #'UI.MultilineTextEdit'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ButtonConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultilineTextEdit subclass: #MultilineTextEditWithImage
+UI.MultilineTextEdit subclass: #'UI.MultilineTextEditWithImage'
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: ''
 	imports: #()
@@ -169,7 +169,7 @@ MultilineTextEdit subclass: #MultilineTextEditWithImage
 
 "Loose Methods"!
 
-!String methodsFor!
+!Core.String methodsFor!
 
 replaceSelectionIn: aTextEdit
 	"Sent as part of a double dispatch from View objects to set their text from
@@ -179,7 +179,7 @@ replaceSelectionIn: aTextEdit
 	and #selectionRtf: methods."
 
 	aTextEdit selectionPlainText: self! !
-!String categoriesFor: #replaceSelectionIn:!double dispatch!public! !
+!Core.String categoriesFor: #replaceSelectionIn:!double dispatch!public! !
 
 "End of package definition"!
 

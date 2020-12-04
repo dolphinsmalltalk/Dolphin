@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #GETTEXTEX
+OS.Win32Structure subclass: #'OS.GETTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cb' -> 16r0.
@@ -12,10 +12,10 @@ Win32Structure subclass: #GETTEXTEX
 		'_OffsetOf_lpDefaultChar' -> 16rC.
 		'_OffsetOf_lpUsedDefChar' -> 16r10
 	}!
-GETTEXTEX guid: (GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
-GETTEXTEX comment: ''!
-!GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !
-!GETTEXTEX methodsFor!
+OS.GETTEXTEX guid: (Core.GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
+OS.GETTEXTEX comment: ''!
+!OS.GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !
+!OS.GETTEXTEX methodsFor!
 
 cb
 	"Answer the <Integer> value of the receiver's 'cb' field."
@@ -36,12 +36,12 @@ flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_flags put: anInteger! !
-!GETTEXTEX categoriesFor: #cb!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #cb:!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #codepage:!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.GETTEXTEX categoriesFor: #cb!**compiled accessors**!public! !
+!OS.GETTEXTEX categoriesFor: #cb:!**compiled accessors**!public! !
+!OS.GETTEXTEX categoriesFor: #codepage:!**compiled accessors**!public! !
+!OS.GETTEXTEX categoriesFor: #flags:!**compiled accessors**!public! !
 
-!GETTEXTEX class methodsFor!
+!OS.GETTEXTEX class methodsFor!
 
 defineFields
 	"Define the fields of the GETTEXTEX structure.
@@ -57,6 +57,6 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
-!GETTEXTEX class categoriesFor: #defineFields!public!template definition! !
-!GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.GETTEXTEX class categoriesFor: #defineFields!public!template definition! !
+!OS.GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

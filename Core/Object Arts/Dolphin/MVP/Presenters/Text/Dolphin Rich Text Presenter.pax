@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Rich Text Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk RichTextEdit View.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,27 +11,27 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{CHARFORMAT2W}
-	#{EDITSTREAM}
-	#{ENLINK}
-	#{FORMATRANGE}
-	#{GETTEXTEX}
-	#{PARAFORMAT}
-	#{RichEditConstants}
-	#{RichText}
-	#{RichTextEdit}
-	#{RichTextPresenter}
+	#{OS.CHARFORMAT2W}
+	#{OS.EDITSTREAM}
+	#{OS.ENLINK}
+	#{OS.FORMATRANGE}
+	#{OS.GETTEXTEX}
+	#{OS.PARAFORMAT}
+	#{OS.RichEditConstants}
+	#{UI.RichText}
+	#{UI.RichTextEdit}
+	#{UI.RichTextPresenter}
 ).
 
 package setMethodNames: #(
-	#(#{Clipboard} #getRichText)
-	#(#{Clipboard} #getRichTextIfNone:)
-	#(#{String} #asRichText)
-	#(#{TextEdit} #richText)
-	#(#{TextEdit} #richTextClass)
-	#(#{TextEdit} #selectionRichText:)
-	#(#{TextEdit} #selectionRtf:)
-	#(#{View} #richText)
+	#(#{Core.String} #asRichText)
+	#(#{UI.Clipboard} #getRichText)
+	#(#{UI.Clipboard} #getRichTextIfNone:)
+	#(#{UI.TextEdit} #richText)
+	#(#{UI.TextEdit} #richTextClass)
+	#(#{UI.TextEdit} #selectionRichText:)
+	#(#{UI.TextEdit} #selectionRtf:)
+	#(#{UI.View} #richText)
 ).
 
 package setPrerequisites: #(
@@ -47,7 +47,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #RichEditConstants
+Kernel.SharedPool subclass: #'OS.RichEditConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -324,16 +324,22 @@ SharedPool subclass: #RichEditConstants
 		'WCH_EMBEDDING' -> 16rFFFC.
 		'yHeightCharPtsMost' -> 16r666
 	}!
-Object subclass: #RichText
+Core.Object subclass: #'UI.RichText'
 	instanceVariableNames: 'rtf'
 	classVariableNames: 'Converter ConverterMutex'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #CHARFORMAT2W
+UI.TextPresenter subclass: #'UI.RichTextPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CommonDialogConstants} #{RichEditConstants})
+	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bAnimation' -> 16r71.
@@ -357,7 +363,7 @@ Win32Structure subclass: #CHARFORMAT2W
 		'_OffsetOf_yHeight' -> 16rC.
 		'_OffsetOf_yOffset' -> 16r10
 	}!
-Win32Structure subclass: #EDITSTREAM
+OS.Win32Structure subclass: #'OS.EDITSTREAM'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -367,7 +373,7 @@ Win32Structure subclass: #EDITSTREAM
 		'_OffsetOf_dwError' -> 16r4.
 		'_OffsetOf_pfnCallback' -> 16r8
 	}!
-Win32Structure subclass: #FORMATRANGE
+OS.Win32Structure subclass: #'OS.FORMATRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -380,7 +386,7 @@ Win32Structure subclass: #FORMATRANGE
 		'_OffsetOf_rc' -> 16r8.
 		'_OffsetOf_rcPage' -> 16r18
 	}!
-Win32Structure subclass: #GETTEXTEX
+OS.Win32Structure subclass: #'OS.GETTEXTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -392,10 +398,10 @@ Win32Structure subclass: #GETTEXTEX
 		'_OffsetOf_lpDefaultChar' -> 16rC.
 		'_OffsetOf_lpUsedDefChar' -> 16r10
 	}!
-Win32Structure subclass: #PARAFORMAT
+OS.Win32Structure subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{RichEditConstants})
+	imports: #(#{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cTabCount' -> 16r1A.
@@ -409,7 +415,7 @@ Win32Structure subclass: #PARAFORMAT
 		'_OffsetOf_wEffects' -> 16rA.
 		'_OffsetOf_wNumbering' -> 16r8
 	}!
-NMHDR subclass: #ENLINK
+OS.NMHDR subclass: #'OS.ENLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -420,16 +426,10 @@ NMHDR subclass: #ENLINK
 		'_OffsetOf_msg' -> 16rC.
 		'_OffsetOf_wParam' -> 16r10
 	}!
-TextPresenter subclass: #RichTextPresenter
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{CommonDialogConstants} #{RichEditConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-MultilineTextEdit subclass: #RichTextEdit
+UI.MultilineTextEdit subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
-	imports: #(#{CommonDialogConstants} #{RichEditConstants})
+	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoUrlDetectionMask' -> 16r1000000.
@@ -438,10 +438,18 @@ MultilineTextEdit subclass: #RichTextEdit
 
 "Loose Methods"!
 
-!Clipboard methodsFor!
+!Core.String methodsFor!
+
+asRichText
+	"Answer the receiver converted to a RichText instance"
+
+	^UI.RichText fromString: self! !
+!Core.String categoriesFor: #asRichText!converting!public! !
+
+!UI.Clipboard methodsFor!
 
 getRichText
-        "Answer a <RichText> containing the the Rich Text contents 
+	"Answer a <RichText> containing the the Rich Text contents 
 	of the clipboard. If no rich text is currently available, raise 
 	an exception."
 
@@ -453,18 +461,10 @@ getRichTextIfNone: exceptionHandler
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
-!Clipboard categoriesFor: #getRichText!accessing!public! !
-!Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getRichText!accessing!public! !
+!UI.Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
 
-!String methodsFor!
-
-asRichText
-	"Answer the receiver converted to a RichText instance"
-
-	^RichText fromString: self! !
-!String categoriesFor: #asRichText!converting!public! !
-
-!TextEdit methodsFor!
+!UI.TextEdit methodsFor!
 
 richText
 	"Answer a RichText containing the rich text contents of the receiver.
@@ -494,19 +494,19 @@ selectionRtf: aString
 	RichText/Strings."
 
 	! !
-!TextEdit categoriesFor: #richText!accessing!public! !
-!TextEdit categoriesFor: #richTextClass!accessing!private! !
-!TextEdit categoriesFor: #selectionRichText:!private!selection! !
-!TextEdit categoriesFor: #selectionRtf:!private!selection! !
+!UI.TextEdit categoriesFor: #richText!accessing!public! !
+!UI.TextEdit categoriesFor: #richTextClass!accessing!private! !
+!UI.TextEdit categoriesFor: #selectionRichText:!private!selection! !
+!UI.TextEdit categoriesFor: #selectionRtf:!private!selection! !
 
-!View methodsFor!
+!UI.View methodsFor!
 
 richText
 	"Answer a RichText containing the rich text contents of the receiver.
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !
-!View categoriesFor: #richText!accessing!public! !
+!UI.View categoriesFor: #richText!accessing!public! !
 
 "End of package definition"!
 

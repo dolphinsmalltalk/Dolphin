@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultilineTextEdit subclass: #RichTextEdit
+UI.MultilineTextEdit subclass: #'UI.RichTextEdit'
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
-	poolDictionaries: 'CommonDialogConstants RichEditConstants'
+	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoUrlDetectionMask' -> 16r1000000.
 		'StreamInIndex' -> 16r11
 	}!
-RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
-RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
+UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 
 Note that the <richString> protocol relies on double dispatch (using #setTextInto:) to set either plain text or rich text into a destination <view> depending on it''s capabilities.
 
@@ -22,8 +22,8 @@ Class Variables:
 	StreamingDescriptor	<ExternalDescriptor> for stream-in callback parameters.
 
 '!
-!RichTextEdit categoriesForClass!MVP-Views! !
-!RichTextEdit methodsFor!
+!UI.RichTextEdit categoriesForClass!MVP-Views! !
+!UI.RichTextEdit methodsFor!
 
 ansiText
 	"Answer an <AnsiString> containing the plain text contents of the receiver with all formatting removed. See also #rtfText."
@@ -56,7 +56,10 @@ basicSelectionRange
 
 	| charRange |
 	charRange := POINTL new.
-	self sendMessage: EM_EXGETSEL wParam: 0 lpParam: charRange.
+	self
+		sendMessage: EM_EXGETSEL
+		wParam: 0
+		lpParam: charRange.
 	^charRange x to: charRange y!
 
 basicSelectionStart: start end: end
@@ -65,7 +68,10 @@ basicSelectionStart: start end: end
 
 	| charRange |
 	charRange := POINTL x: start y: end.
-	self sendMessage: EM_EXSETSEL wParam: 0 lpParam: charRange!
+	self
+		sendMessage: EM_EXSETSEL
+		wParam: 0
+		lpParam: charRange!
 
 beBold
 	"Set the receiver to bold text mode."
@@ -193,10 +199,10 @@ displayValue: aRichString
 	newValue := aRichString ?? ''.
 	self displayValue = newValue ifFalse: [self text: newValue]!
 
-enLink: anExternalAddress 
+enLink: anExternalAddress
 	| struct |
 	struct := ENLINK fromAddress: anExternalAddress.
-	struct msg = WM_LBUTTONUP 
+	struct msg = WM_LBUTTONUP
 		ifTrue: 
 			[| range text |
 			range := struct chrg.
@@ -301,7 +307,7 @@ getWindowText: flagsInteger length: lengthInteger
 	struct := GETTEXTEX newBuffer
 				cb: lengthInteger + 1 << 1;
 				flags: GT_USECRLF | flagsInteger;
-				codepage: WinNlsConstants.CP_UNICODE;
+				codepage: NlsConstants.CP_UNICODE;
 				yourself.
 	"The docs say the return value is the number of chars (not byte) copied including the null, but actually it is
 	the number of chars excluding the null. We ignore it anyway."
@@ -442,10 +448,7 @@ paragraphAlignment: aSymbol
 	pf := PARAFORMAT new.
 	pf alignment: (ParagraphAlignmentMap at: aSymbol).
 	self selectionParaFormat: pf.
-	self updatePerChar ifTrue: [self updateModel].
-
-
-	!
+	self updatePerChar ifTrue: [self updateModel]!
 
 paragraphIndent
 	"Answer an <Integer> indent for the receiver's current paragraph"
@@ -458,9 +461,7 @@ paragraphIndent: anInteger
 	| pf |
 	pf := PARAFORMAT new.
 	pf startIndent: anInteger.
-	self selectionParaFormat: pf.
-
-	!
+	self selectionParaFormat: pf!
 
 paragraphOffset
 	"Answer an <Integer> offset for the receiver's current paragraph"
@@ -473,9 +474,7 @@ paragraphOffset: anInteger
 	| pf |
 	pf := PARAFORMAT new.
 	pf offset: anInteger.
-	self selectionParaFormat: pf.
-
-	!
+	self selectionParaFormat: pf!
 
 pastePlainText
 	"Paste the clipboard text into the receiver's window."
@@ -525,13 +524,13 @@ positionAtLine: lineNumber
 	^super positionAtLine: lineNumber
 !
 
-positionOfChar: anInteger 
+positionOfChar: anInteger
 	"Map the one-based index of a character in the receiver to its client co-ordinates
 	within the receiver."
 
 	| pt |
 	pt := POINTL new.
-	self 
+	self
 		sendMessage: EM_POSFROMCHAR
 		wParam: pt yourAddress
 		lParam: anInteger - 1.
@@ -654,7 +653,10 @@ selectionParaFormat
 	pf := PARAFORMAT new.
 	"We want all attributes"
 	pf dwMask: 16rFFFFFFFF.
-	self sendMessage: EM_GETPARAFORMAT wParam: 0 lpParam: pf asParameter.
+	self
+		sendMessage: EM_GETPARAFORMAT
+		wParam: 0
+		lpParam: pf asParameter.
 	^pf!
 
 selectionParaFormat: options
@@ -687,7 +689,8 @@ selectionRichText: aRichText
 
 	| aStream |
 	aStream := Utf8String writeStream: 512.
-	self streamOutOn: aStream format: ##(SFF_SELECTION | (WinNlsConstants.CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
+	self streamOutOn: aStream
+		format: ##(SFF_SELECTION | (NlsConstants.CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 selectionRtf
@@ -703,7 +706,8 @@ selectionUrtf
 
 	| s |
 	s := Utf8String writeStream: 512.
-	self streamOutOn: s format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
+	self streamOutOn: s
+		format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
 	^s contents!
 
 setAutoUrlDetection: aBoolean 
@@ -778,7 +782,7 @@ state
 streamInFrom: aPositionableStream format: anInteger
 	| elementSize answer callback |
 	elementSize := aPositionableStream elementSize.
-	callback := ExternalCallback block: 
+	callback := External.Callback block: 
 					[:dwCookie :pbBuff :cb :pcb |
 					| text size |
 					text := aPositionableStream basicNextAvailable: cb // elementSize.
@@ -808,7 +812,7 @@ streamOutOn: aWriteStream format: anInteger
 	The stream is assumed to be backed by a buffer with an encoding matching that requested by the format, so the binary content streamed out by the RTE control is dumped directly into the stream. If the encoding of the stream does not match the format requested, e.g. the stream is over an AnsiString and UTF-8 RTF is requested, then the result may well be corrupt."
 
 	| result callback |
-	callback := ExternalCallback block: 
+	callback := External.Callback block: 
 					[:dwCookie :pbBuff :cb :pcb |
 					"We don't want the null terminator, if present. Note that this implies there cannot be any embedded nulls in the text."
 					aWriteStream
@@ -840,7 +844,7 @@ textLength
 	gtlex := ByteArray newFixed: 8.
 	gtlex
 		dwordAtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
-		dwordAtOffset: 4 put: WinNlsConstants.CP_UNICODE.
+		dwordAtOffset: 4 put: NlsConstants.CP_UNICODE.
 	^self sendMessage: EM_GETTEXTLENGTHEX wParam: gtlex yourAddress!
 
 textLimit: anInteger
@@ -856,7 +860,7 @@ urtfText
 
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
-	self streamOutOn: aStream format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
+	self streamOutOn: aStream format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
 	^aStream contents!
 
 utfText
@@ -865,7 +869,7 @@ utfText
 	| aStream |
 	aStream := Utf8String writeStream: 4096.
 	"Contrary to the documentation we can get the text directly in UTF-8, so we don't need to stream out as UTF-16"
-	self streamOutOn: aStream format: ##(WinNlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
+	self streamOutOn: aStream format: ##(NlsConstants.CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
 	^aStream contents!
 
 utfText: aUtfEncodedString
@@ -886,109 +890,112 @@ wmInitMenu: message wParam: wParam lParam: lParam
 	override back to the (correct) arrow cursor."
 
 	Cursor arrow setCursor.
-	^super wmInitMenu: message wParam: wParam lParam: lParam! !
-!RichTextEdit categoriesFor: #ansiText!public!streaming! !
-!RichTextEdit categoriesFor: #ansiText:!public!streaming! !
-!RichTextEdit categoriesFor: #basicLineFromPosition:!accessing!private! !
-!RichTextEdit categoriesFor: #basicSelectionRange!helpers!private! !
-!RichTextEdit categoriesFor: #basicSelectionStart:end:!helpers!private! !
-!RichTextEdit categoriesFor: #beBold!modes!public! !
-!RichTextEdit categoriesFor: #beItalic!modes!public! !
-!RichTextEdit categoriesFor: #beNonBold!modes!public! !
-!RichTextEdit categoriesFor: #beNonItalic!modes!public! !
-!RichTextEdit categoriesFor: #beNonUnderlined!modes!public! !
-!RichTextEdit categoriesFor: #bePlain!modes!public! !
-!RichTextEdit categoriesFor: #beUnderlined!modes!public! !
-!RichTextEdit categoriesFor: #calculateExtent:!geometry!private! !
-!RichTextEdit categoriesFor: #canPaste!public!testing! !
-!RichTextEdit categoriesFor: #canRedo!public!testing!undo & redo! !
-!RichTextEdit categoriesFor: #charNearestPosition:!accessing!public! !
-!RichTextEdit categoriesFor: #clear!operations!public! !
-!RichTextEdit categoriesFor: #color:!helpers!private! !
-!RichTextEdit categoriesFor: #defaultCharFormat!accessing!private! !
-!RichTextEdit categoriesFor: #defaultCharFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #defaultNotificationMask!constants!private! !
-!RichTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!RichTextEdit categoriesFor: #displayValue!private!updating! !
-!RichTextEdit categoriesFor: #displayValue:!private!updating! !
-!RichTextEdit categoriesFor: #enLink:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #enSelChange:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #eventMask!accessing!private! !
-!RichTextEdit categoriesFor: #eventMask:!accessing!private! !
-!RichTextEdit categoriesFor: #eventMask:set:!accessing!private! !
-!RichTextEdit categoriesFor: #filerProxy!binary filing!private! !
-!RichTextEdit categoriesFor: #find:range:!private!searching and replacing! !
-!RichTextEdit categoriesFor: #find:range:flags:!public!searching and replacing! !
-!RichTextEdit categoriesFor: #forecolor:!accessing!public! !
-!RichTextEdit categoriesFor: #getCharFormat:!helpers!private! !
-!RichTextEdit categoriesFor: #getWindowText:length:!accessing!private! !
-!RichTextEdit categoriesFor: #initialize!initializing!private! !
-!RichTextEdit categoriesFor: #isBold!helpers!public! !
-!RichTextEdit categoriesFor: #isBold:!helpers!private! !
-!RichTextEdit categoriesFor: #isItalic!helpers!public! !
-!RichTextEdit categoriesFor: #isItalic:!helpers!private! !
-!RichTextEdit categoriesFor: #isSelectionKept!accessing!public! !
-!RichTextEdit categoriesFor: #isSelectionKept:!accessing!public! !
-!RichTextEdit categoriesFor: #isUnderlined!helpers!public! !
-!RichTextEdit categoriesFor: #isUnderlined:!helpers!public! !
-!RichTextEdit categoriesFor: #isUrlDetectionEnabled!public!testing! !
-!RichTextEdit categoriesFor: #isUrlDetectionEnabled:!accessing!public! !
-!RichTextEdit categoriesFor: #nmNotify:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #onRightButtonReleased:!event handling!public! !
-!RichTextEdit categoriesFor: #onViewCreated!event handling!public! !
-!RichTextEdit categoriesFor: #onViewOpened!event handling!public! !
-!RichTextEdit categoriesFor: #paragraphAlignment!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphAlignment:!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphIndent!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphIndent:!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphOffset!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphOffset:!accessing!public! !
-!RichTextEdit categoriesFor: #pastePlainText!commands!public! !
-!RichTextEdit categoriesFor: #plainText!accessing!public! !
-!RichTextEdit categoriesFor: #plainTextFrom:to:!accessing!public! !
-!RichTextEdit categoriesFor: #pointSize:!accessing!private! !
-!RichTextEdit categoriesFor: #positionAtLine:!accessing!public! !
-!RichTextEdit categoriesFor: #positionOfChar:!accessing!public! !
-!RichTextEdit categoriesFor: #privGetRichText!private!updating! !
-!RichTextEdit categoriesFor: #queryCommand:!commands!private! !
-!RichTextEdit categoriesFor: #resetCharFormat!operations!public! !
-!RichTextEdit categoriesFor: #richText!accessing!public! !
-!RichTextEdit categoriesFor: #richText:!accessing!private! !
-!RichTextEdit categoriesFor: #rtfText!public!streaming! !
-!RichTextEdit categoriesFor: #rtfText:!public!streaming! !
-!RichTextEdit categoriesFor: #selection!accessing!public! !
-!RichTextEdit categoriesFor: #selectionCharFormat!accessing!private! !
-!RichTextEdit categoriesFor: #selectionCharFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #selectionColor!accessing!public! !
-!RichTextEdit categoriesFor: #selectionColor:!operations!public! !
-!RichTextEdit categoriesFor: #selectionFont!accessing!public! !
-!RichTextEdit categoriesFor: #selectionFont:!operations!public! !
-!RichTextEdit categoriesFor: #selectionParaFormat!accessing!private! !
-!RichTextEdit categoriesFor: #selectionParaFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #selectionPlainText:!private!selection! !
-!RichTextEdit categoriesFor: #selectionRichText!private!selection! !
-!RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
-!RichTextEdit categoriesFor: #selectionRtf!private!selection! !
-!RichTextEdit categoriesFor: #selectionUrtf!private!selection! !
-!RichTextEdit categoriesFor: #setAutoUrlDetection:!helpers!private! !
-!RichTextEdit categoriesFor: #setCharFormat:flags:!helpers!private! !
-!RichTextEdit categoriesFor: #setControlBackcolor:!helpers!private! !
-!RichTextEdit categoriesFor: #setFont:!helpers!private! !
-!RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
-!RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
-!RichTextEdit categoriesFor: #state!accessing!private! !
-!RichTextEdit categoriesFor: #streamInFrom:format:!private!streaming! !
-!RichTextEdit categoriesFor: #streamOutOn:format:!private!streaming! !
-!RichTextEdit categoriesFor: #text!accessing!public! !
-!RichTextEdit categoriesFor: #textLength!accessing!private! !
-!RichTextEdit categoriesFor: #textLimit:!operations!public! !
-!RichTextEdit categoriesFor: #urtfText!public!streaming! !
-!RichTextEdit categoriesFor: #utfText!public!streaming! !
-!RichTextEdit categoriesFor: #utfText:!public!streaming! !
-!RichTextEdit categoriesFor: #winFinalize!event handling!private! !
-!RichTextEdit categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
+	^super
+		wmInitMenu: message
+		wParam: wParam
+		lParam: lParam! !
+!UI.RichTextEdit categoriesFor: #ansiText!public!streaming! !
+!UI.RichTextEdit categoriesFor: #ansiText:!public!streaming! !
+!UI.RichTextEdit categoriesFor: #basicLineFromPosition:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #basicSelectionRange!helpers!private! !
+!UI.RichTextEdit categoriesFor: #basicSelectionStart:end:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #beBold!modes!public! !
+!UI.RichTextEdit categoriesFor: #beItalic!modes!public! !
+!UI.RichTextEdit categoriesFor: #beNonBold!modes!public! !
+!UI.RichTextEdit categoriesFor: #beNonItalic!modes!public! !
+!UI.RichTextEdit categoriesFor: #beNonUnderlined!modes!public! !
+!UI.RichTextEdit categoriesFor: #bePlain!modes!public! !
+!UI.RichTextEdit categoriesFor: #beUnderlined!modes!public! !
+!UI.RichTextEdit categoriesFor: #calculateExtent:!geometry!private! !
+!UI.RichTextEdit categoriesFor: #canPaste!public!testing! !
+!UI.RichTextEdit categoriesFor: #canRedo!public!testing!undo & redo! !
+!UI.RichTextEdit categoriesFor: #charNearestPosition:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #clear!operations!public! !
+!UI.RichTextEdit categoriesFor: #color:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #defaultCharFormat!accessing!private! !
+!UI.RichTextEdit categoriesFor: #defaultCharFormat:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #defaultNotificationMask!constants!private! !
+!UI.RichTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.RichTextEdit categoriesFor: #displayValue!private!updating! !
+!UI.RichTextEdit categoriesFor: #displayValue:!private!updating! !
+!UI.RichTextEdit categoriesFor: #enLink:!event handling-win32!private! !
+!UI.RichTextEdit categoriesFor: #enSelChange:!event handling-win32!private! !
+!UI.RichTextEdit categoriesFor: #eventMask!accessing!private! !
+!UI.RichTextEdit categoriesFor: #eventMask:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #eventMask:set:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #filerProxy!binary filing!private! !
+!UI.RichTextEdit categoriesFor: #find:range:!private!searching and replacing! !
+!UI.RichTextEdit categoriesFor: #find:range:flags:!public!searching and replacing! !
+!UI.RichTextEdit categoriesFor: #forecolor:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #getCharFormat:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #getWindowText:length:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #initialize!initializing!private! !
+!UI.RichTextEdit categoriesFor: #isBold!helpers!public! !
+!UI.RichTextEdit categoriesFor: #isBold:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #isItalic!helpers!public! !
+!UI.RichTextEdit categoriesFor: #isItalic:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #isSelectionKept!accessing!public! !
+!UI.RichTextEdit categoriesFor: #isSelectionKept:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #isUnderlined!helpers!public! !
+!UI.RichTextEdit categoriesFor: #isUnderlined:!helpers!public! !
+!UI.RichTextEdit categoriesFor: #isUrlDetectionEnabled!public!testing! !
+!UI.RichTextEdit categoriesFor: #isUrlDetectionEnabled:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #nmNotify:!event handling-win32!private! !
+!UI.RichTextEdit categoriesFor: #onRightButtonReleased:!event handling!public! !
+!UI.RichTextEdit categoriesFor: #onViewCreated!event handling!public! !
+!UI.RichTextEdit categoriesFor: #onViewOpened!event handling!public! !
+!UI.RichTextEdit categoriesFor: #paragraphAlignment!accessing!public! !
+!UI.RichTextEdit categoriesFor: #paragraphAlignment:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #paragraphIndent!accessing!public! !
+!UI.RichTextEdit categoriesFor: #paragraphIndent:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #paragraphOffset!accessing!public! !
+!UI.RichTextEdit categoriesFor: #paragraphOffset:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #pastePlainText!commands!public! !
+!UI.RichTextEdit categoriesFor: #plainText!accessing!public! !
+!UI.RichTextEdit categoriesFor: #plainTextFrom:to:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #pointSize:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #positionAtLine:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #positionOfChar:!accessing!public! !
+!UI.RichTextEdit categoriesFor: #privGetRichText!private!updating! !
+!UI.RichTextEdit categoriesFor: #queryCommand:!commands!private! !
+!UI.RichTextEdit categoriesFor: #resetCharFormat!operations!public! !
+!UI.RichTextEdit categoriesFor: #richText!accessing!public! !
+!UI.RichTextEdit categoriesFor: #richText:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #rtfText!public!streaming! !
+!UI.RichTextEdit categoriesFor: #rtfText:!public!streaming! !
+!UI.RichTextEdit categoriesFor: #selection!accessing!public! !
+!UI.RichTextEdit categoriesFor: #selectionCharFormat!accessing!private! !
+!UI.RichTextEdit categoriesFor: #selectionCharFormat:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #selectionColor!accessing!public! !
+!UI.RichTextEdit categoriesFor: #selectionColor:!operations!public! !
+!UI.RichTextEdit categoriesFor: #selectionFont!accessing!public! !
+!UI.RichTextEdit categoriesFor: #selectionFont:!operations!public! !
+!UI.RichTextEdit categoriesFor: #selectionParaFormat!accessing!private! !
+!UI.RichTextEdit categoriesFor: #selectionParaFormat:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #selectionPlainText:!private!selection! !
+!UI.RichTextEdit categoriesFor: #selectionRichText!private!selection! !
+!UI.RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
+!UI.RichTextEdit categoriesFor: #selectionRtf!private!selection! !
+!UI.RichTextEdit categoriesFor: #selectionUrtf!private!selection! !
+!UI.RichTextEdit categoriesFor: #setAutoUrlDetection:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #setCharFormat:flags:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #setControlBackcolor:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #setFont:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
+!UI.RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
+!UI.RichTextEdit categoriesFor: #state!accessing!private! !
+!UI.RichTextEdit categoriesFor: #streamInFrom:format:!private!streaming! !
+!UI.RichTextEdit categoriesFor: #streamOutOn:format:!private!streaming! !
+!UI.RichTextEdit categoriesFor: #text!accessing!public! !
+!UI.RichTextEdit categoriesFor: #textLength!accessing!private! !
+!UI.RichTextEdit categoriesFor: #textLimit:!operations!public! !
+!UI.RichTextEdit categoriesFor: #urtfText!public!streaming! !
+!UI.RichTextEdit categoriesFor: #utfText!public!streaming! !
+!UI.RichTextEdit categoriesFor: #utfText:!public!streaming! !
+!UI.RichTextEdit categoriesFor: #winFinalize!event handling!private! !
+!UI.RichTextEdit categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
 
-!RichTextEdit class methodsFor!
+!UI.RichTextEdit class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -999,8 +1006,8 @@ initialize
 	self addClassConstant: 'StreamInIndex' value: (self indexOfInstVar: 'streamIn').
 
 	"Descriptor for stream out callback"
-	StreamingDescriptor := ExternalDescriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
-	ParagraphAlignmentMap := (IdentityDictionary new)
+	StreamingDescriptor := External.Descriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
+	ParagraphAlignmentMap := IdentityDictionary new
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;
 				at: #center put: PFA_CENTER;
@@ -1017,7 +1024,7 @@ registerClass
 	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
 
 	(Library isNil or: [Library isOpen not])
-		ifTrue: [Library := ExternalLibrary open: self richEditDllName]!
+		ifTrue: [Library := External.Library open: self richEditDllName]!
 
 richEditDllName
 	^'riched20.dll'
@@ -1028,9 +1035,9 @@ winClassName
 
 	self registerClass.
 	^'RichEdit20W'! !
-!RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
-!RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
-!RichTextEdit class categoriesFor: #registerClass!initializing!private! !
-!RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
-!RichTextEdit class categoriesFor: #winClassName!constants!private! !
+!UI.RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
+!UI.RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
+!UI.RichTextEdit class categoriesFor: #registerClass!initializing!private! !
+!UI.RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
+!UI.RichTextEdit class categoriesFor: #winClassName!constants!private! !
 

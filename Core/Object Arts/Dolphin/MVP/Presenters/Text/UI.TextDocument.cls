@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractDocumentShell subclass: #TextDocument
+UI.AbstractDocumentShell subclass: #'UI.TextDocument'
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TextDocument guid: (GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
-TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
+UI.TextDocument guid: (Core.GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
 
 Instance Variables:
 	documentPresenter	`TextPresenter` holding the document text.
 
 '!
-!TextDocument categoriesForClass!MVP-Presenters! !
-!TextDocument methodsFor!
+!UI.TextDocument categoriesForClass!MVP-Presenters! !
+!UI.TextDocument methodsFor!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -79,11 +79,11 @@ onViewOpened
 		to: self.
 	self restoreUserSettings!
 
-openFile: pathString 
+openFile: pathString
 	"Open the file with the <readableString> path, pathString, prompting in the standard Notepad
 	fashion if it doesn't exist."
 
-	(File exists: pathString) 
+	(File exists: pathString)
 		ifTrue: 
 			[self
 				filename: pathString;
@@ -91,9 +91,8 @@ openFile: pathString
 		ifFalse: 
 			[| resp mb |
 			mb := MessageBox new.
-			mb
-				buttonStyle: #yesNoCancel.
-			resp := mb warning: ('Cannot find the <1p> file.<n><n>Do you want to create a new file?' 
+			mb buttonStyle: #yesNoCancel.
+			resp := mb warning: ('Cannot find the <1p> file.<n><n>Do you want to create a new file?'
 								expandMacrosWith: pathString).
 			resp == #yes ifTrue: [self filename: pathString] ifFalse: [resp == #cancel ifTrue: [self exit]]]!
 
@@ -110,22 +109,22 @@ saveUserSettings
 validateUserInterface
 	modifiedModel value: self isModified.
 	^super validateUserInterface! !
-!TextDocument categoriesFor: #createComponents!initializing!public! !
-!TextDocument categoriesFor: #documentPresenterClass!constants!public! !
-!TextDocument categoriesFor: #fileNew!commands!public! !
-!TextDocument categoriesFor: #getDocumentData!accessing!private! !
-!TextDocument categoriesFor: #isModified!public!testing! !
-!TextDocument categoriesFor: #isModified:!modes!public! !
-!TextDocument categoriesFor: #isText!public!testing! !
-!TextDocument categoriesFor: #model:!accessing!public! !
-!TextDocument categoriesFor: #onViewClosed!event handling!public! !
-!TextDocument categoriesFor: #onViewOpened!event handling!public! !
-!TextDocument categoriesFor: #openFile:!operations!public! !
-!TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
-!TextDocument categoriesFor: #saveUserSettings!helpers!private! !
-!TextDocument categoriesFor: #validateUserInterface!operations!public! !
+!UI.TextDocument categoriesFor: #createComponents!initializing!public! !
+!UI.TextDocument categoriesFor: #documentPresenterClass!constants!public! !
+!UI.TextDocument categoriesFor: #fileNew!commands!public! !
+!UI.TextDocument categoriesFor: #getDocumentData!accessing!private! !
+!UI.TextDocument categoriesFor: #isModified!public!testing! !
+!UI.TextDocument categoriesFor: #isModified:!modes!public! !
+!UI.TextDocument categoriesFor: #isText!public!testing! !
+!UI.TextDocument categoriesFor: #model:!accessing!public! !
+!UI.TextDocument categoriesFor: #onViewClosed!event handling!public! !
+!UI.TextDocument categoriesFor: #onViewOpened!event handling!public! !
+!UI.TextDocument categoriesFor: #openFile:!operations!public! !
+!UI.TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
+!UI.TextDocument categoriesFor: #saveUserSettings!helpers!private! !
+!UI.TextDocument categoriesFor: #validateUserInterface!operations!public! !
 
-!TextDocument class methodsFor!
+!UI.TextDocument class methodsFor!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
@@ -154,9 +153,9 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!TextDocument class categoriesFor: #defaultFileExtension!constants!public! !
-!TextDocument class categoriesFor: #defaultModel!models!public! !
-!TextDocument class categoriesFor: #fileTypes!constants!public! !
-!TextDocument class categoriesFor: #icon!constants!public! !
-!TextDocument class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.TextDocument class categoriesFor: #defaultFileExtension!constants!public! !
+!UI.TextDocument class categoriesFor: #defaultModel!models!public! !
+!UI.TextDocument class categoriesFor: #fileTypes!constants!public! !
+!UI.TextDocument class categoriesFor: #icon!constants!public! !
+!UI.TextDocument class categoriesFor: #shutdownOnExit!public!testing! !
 
