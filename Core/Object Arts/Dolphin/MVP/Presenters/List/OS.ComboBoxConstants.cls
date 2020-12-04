@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ComboBoxConstants
+Kernel.SharedPool subclass: #'OS.ComboBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -64,6 +64,7 @@ SharedPool subclass: #ComboBoxConstants
 		'CBS_SORT' -> 16r100.
 		'CBS_UPPERCASE' -> 16r2000
 	}!
-ComboBoxConstants guid: (GUID fromString: '{6358ea98-3267-4d2b-900c-2da6836d1331}')!
-ComboBoxConstants comment: ''!
-!ComboBoxConstants categoriesForClass!Unclassified! !
+OS.ComboBoxConstants guid: (Core.GUID fromString: '{6358ea98-3267-4d2b-900c-2da6836d1331}')!
+OS.ComboBoxConstants isNonInstantiable: true!
+OS.ComboBoxConstants comment: ''!
+!OS.ComboBoxConstants categoriesForClass!Unclassified! !

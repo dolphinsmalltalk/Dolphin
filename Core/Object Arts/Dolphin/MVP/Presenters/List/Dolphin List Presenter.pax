@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin List Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk List Presenter.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -13,18 +13,18 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{BasicListAbstract}
-	#{ComboBox}
-	#{ComboBoxConstants}
-	#{ListBox}
-	#{ListBoxConstants}
-	#{ListControlView}
-	#{ListPresenter}
+	#{OS.ComboBoxConstants}
+	#{OS.ListBoxConstants}
+	#{UI.BasicListAbstract}
+	#{UI.ComboBox}
+	#{UI.ListBox}
+	#{UI.ListControlView}
+	#{UI.ListPresenter}
 ).
 
 package setMethodNames: #(
-	#(#{SelectableItemsPresenter class} #icon)
-	#(#{View} #wmBeginDrag:wParam:lParam:)
+	#(#{UI.SelectableItemsPresenter class} #icon)
+	#(#{UI.View} #wmBeginDrag:wParam:lParam:)
 ).
 
 package setPrerequisites: #(
@@ -39,7 +39,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #ComboBoxConstants
+Kernel.SharedPool subclass: #'OS.ComboBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -103,7 +103,7 @@ SharedPool subclass: #ComboBoxConstants
 		'CBS_SORT' -> 16r100.
 		'CBS_UPPERCASE' -> 16r2000
 	}!
-SharedPool subclass: #ListBoxConstants
+Kernel.SharedPool subclass: #'OS.ListBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -170,36 +170,36 @@ SharedPool subclass: #ListBoxConstants
 		'LBS_USETABSTOPS' -> 16r80.
 		'LBS_WANTKEYBOARDINPUT' -> 16r400
 	}!
-SelectableItemsPresenter subclass: #ListPresenter
+UI.SelectableItemsPresenter subclass: #'UI.ListPresenter'
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #ListControlView
+UI.ControlView subclass: #'UI.ListControlView'
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListControlView subclass: #BasicListAbstract
+UI.ListControlView subclass: #'UI.BasicListAbstract'
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicListAbstract subclass: #ComboBox
+UI.BasicListAbstract subclass: #'UI.ComboBox'
 	instanceVariableNames: 'droppedHeight'
 	classVariableNames: ''
-	imports: #(#{ComboBoxConstants})
+	imports: #(#{OS.ComboBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Modes' -> #(#simple #dropDown #dropDownList)
 	}!
-BasicListAbstract subclass: #ListBox
+UI.BasicListAbstract subclass: #'UI.ListBox'
 	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModes'
-	imports: #(#{ListBoxConstants})
+	imports: #(#{OS.ListBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SelectionModeMask' -> 16r808
@@ -207,15 +207,15 @@ BasicListAbstract subclass: #ListBox
 
 "Loose Methods"!
 
-!SelectableItemsPresenter class methodsFor!
+!UI.SelectableItemsPresenter class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ListPresenter icon! !
-!SelectableItemsPresenter class categoriesFor: #icon!constants!public! !
+!UI.SelectableItemsPresenter class categoriesFor: #icon!constants!public! !
 
-!View methodsFor!
+!UI.View methodsFor!
 
 wmBeginDrag: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_BEGINNDRAG notification that dragging
@@ -225,7 +225,7 @@ wmBeginDrag: message wParam: wParam lParam: lParam
 	listbox := self class withHandle: lParam.
 	^listbox lbnBeginDrag: wParam.
 ! !
-!View categoriesFor: #wmBeginDrag:wParam:lParam:!event handling-win32!private! !
+!UI.View categoriesFor: #wmBeginDrag:wParam:lParam:!event handling-win32!private! !
 
 "End of package definition"!
 

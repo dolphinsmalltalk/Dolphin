@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableItemsPresenter subclass: #ListPresenter
+UI.SelectableItemsPresenter subclass: #'UI.ListPresenter'
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListPresenter guid: (GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
+UI.ListPresenter guid: (Core.GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
 
 Instance Variables:
 	sortBlock		<dyadicValuable> or nil, specifying how a objects should be sorted.
@@ -15,8 +15,8 @@ Instance Variables:
 
 
 '!
-!ListPresenter categoriesForClass!MVP-Presenters! !
-!ListPresenter methodsFor!
+!UI.ListPresenter categoriesForClass!MVP-Presenters! !
+!UI.ListPresenter methodsFor!
 
 basicBeSorted
 	"Private - Change the receiver's model sortblock to a default sort block.
@@ -74,11 +74,10 @@ list: aSequenceableCollection
 				ifFalse: [aSequenceableCollection].
 	^self viewModel list: list!
 
-onAboutToEditLabel: anObject
-	"The receiver's element, anObject, is about to have its label edited in the receiver.
-	Forward back to the view."
+onAboutToEditLabel: aLabelEditingEvent
+	"An in-place edit is being initiated in the receiver's view. Forward back to the view."
 
-	^self view onAboutToEditLabel: anObject!
+	self view onAboutToEditLabel: aLabelEditingEvent!
 
 onLabelOf: anObject editedTo: text
 	"The receiver's element, anObject, has had its label edited in the receiver to the 
@@ -130,31 +129,31 @@ sortBlock
 
 sortBlock: anObject
 	sortBlock := anObject! !
-!ListPresenter categoriesFor: #basicBeSorted!private!sorting! !
-!ListPresenter categoriesFor: #beNotSorted!public!sorting! !
-!ListPresenter categoriesFor: #beSorted!public!sorting! !
-!ListPresenter categoriesFor: #beSorted:!public!sorting! !
-!ListPresenter categoriesFor: #clear!operations!public! !
-!ListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
-!ListPresenter categoriesFor: #isSorted!public!sorting!testing! !
-!ListPresenter categoriesFor: #list!accessing!public! !
-!ListPresenter categoriesFor: #list:!accessing!public! !
-!ListPresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!ListPresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!ListPresenter categoriesFor: #selectableItems!accessing!private! !
-!ListPresenter categoriesFor: #selectionByIndex!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndex:!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndexIfNone:!public!selection! !
-!ListPresenter categoriesFor: #selectionsByIndex!public!selection! !
-!ListPresenter categoriesFor: #sortAlgorithmClass!accessing!public! !
-!ListPresenter categoriesFor: #sortBlock!accessing!private!sorting! !
-!ListPresenter categoriesFor: #sortBlock:!accessing!private!sorting! !
+!UI.ListPresenter categoriesFor: #basicBeSorted!private!sorting! !
+!UI.ListPresenter categoriesFor: #beNotSorted!public!sorting! !
+!UI.ListPresenter categoriesFor: #beSorted!public!sorting! !
+!UI.ListPresenter categoriesFor: #beSorted:!public!sorting! !
+!UI.ListPresenter categoriesFor: #clear!operations!public! !
+!UI.ListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
+!UI.ListPresenter categoriesFor: #isSorted!public!sorting!testing! !
+!UI.ListPresenter categoriesFor: #list!accessing!public! !
+!UI.ListPresenter categoriesFor: #list:!accessing!public! !
+!UI.ListPresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
+!UI.ListPresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
+!UI.ListPresenter categoriesFor: #selectableItems!accessing!private! !
+!UI.ListPresenter categoriesFor: #selectionByIndex!public!selection! !
+!UI.ListPresenter categoriesFor: #selectionByIndex:!public!selection! !
+!UI.ListPresenter categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
+!UI.ListPresenter categoriesFor: #selectionByIndexIfNone:!public!selection! !
+!UI.ListPresenter categoriesFor: #selectionsByIndex!public!selection! !
+!UI.ListPresenter categoriesFor: #sortAlgorithmClass!accessing!public! !
+!UI.ListPresenter categoriesFor: #sortBlock!accessing!private!sorting! !
+!UI.ListPresenter categoriesFor: #sortBlock:!accessing!private!sorting! !
 
-ListPresenter methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
-ListPresenter methodProtocol: #listPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #list #list: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
+UI.ListPresenter methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
+UI.ListPresenter methodProtocol: #listPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #list #list: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
 
-!ListPresenter class methodsFor!
+!UI.ListPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -175,7 +174,7 @@ resource_Combo_box
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Combo_box)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498946 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ComboBox) 34 17 nil nil 34 2 8 1412498946 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920475232 786950 ##(Core.Message) #displayString 8 #() 8 #() 401 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 49 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 34 0 0 0] 8 #() 802 193 193 nil 27)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -185,7 +184,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListBox) 34 17 nil nil 34 2 8 1412497665 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903732064 459270 ##(Smalltalk.Message) #displayString 8 #() 528 false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 351 416 738 #horizontalExtent: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 185 0 0 0] 8 #() 786 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListBox) 34 17 nil nil 34 2 8 1412497665 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920482304 786950 ##(Core.Message) #displayString 8 #() 8 #() false 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 351 416 754 #horizontalExtent: 8 #(0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 185 0 0 0] 8 #() 802 193 193 nil 27)!
 
 resource_Drop_down_list
 	"Answer the literal data from which the 'Drop down list' resource can be reconstituted.
@@ -195,10 +194,10 @@ resource_Drop_down_list
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Drop_down_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )! !
-!ListPresenter class categoriesFor: #defaultModel!models!public! !
-!ListPresenter class categoriesFor: #icon!constants!public! !
-!ListPresenter class categoriesFor: #resource_Combo_box!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920475232 786950 ##(Core.Message) #displayString 8 #() 8 #() 401 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 49 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 34 0 0 0] 8 #() 802 193 193 nil 27)! !
+!UI.ListPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.ListPresenter class categoriesFor: #icon!constants!public! !
+!UI.ListPresenter class categoriesFor: #resource_Combo_box!public!resources-views! !
+!UI.ListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.ListPresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
 

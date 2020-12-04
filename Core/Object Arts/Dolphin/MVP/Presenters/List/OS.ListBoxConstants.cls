@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ListBoxConstants
+Kernel.SharedPool subclass: #'OS.ListBoxConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -67,6 +67,7 @@ SharedPool subclass: #ListBoxConstants
 		'LBS_USETABSTOPS' -> 16r80.
 		'LBS_WANTKEYBOARDINPUT' -> 16r400
 	}!
-ListBoxConstants guid: (GUID fromString: '{c4c55da7-4db0-459e-92fd-fc4d5f563fce}')!
-ListBoxConstants comment: ''!
-!ListBoxConstants categoriesForClass!Unclassified! !
+OS.ListBoxConstants guid: (Core.GUID fromString: '{c4c55da7-4db0-459e-92fd-fc4d5f563fce}')!
+OS.ListBoxConstants isNonInstantiable: true!
+OS.ListBoxConstants comment: ''!
+!OS.ListBoxConstants categoriesForClass!Unclassified! !

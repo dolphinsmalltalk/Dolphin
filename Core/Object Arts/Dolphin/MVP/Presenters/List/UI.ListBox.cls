@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicListAbstract subclass: #ListBox
+UI.BasicListAbstract subclass: #'UI.ListBox'
 	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModes'
-	poolDictionaries: 'ListBoxConstants'
+	imports: #(#{OS.ListBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'SelectionModeMask' -> 16r808
 	}!
-ListBox guid: (GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
+UI.ListBox guid: (Core.GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:
 	dummy	<UndefinedObject> reserved for future use.
@@ -17,8 +17,8 @@ Instance Variables:
 Class Variables:
 	LbnMap	<IdentityDictionary> mapping Windows notification messages to <selector>s.
 '!
-!ListBox categoriesForClass!MVP-Views! !
-!ListBox methodsFor!
+!UI.ListBox categoriesForClass!MVP-Views! !
+!UI.ListBox methodsFor!
 
 anchorIndex
 	"Answer the 1-based <integer> index of the anchor (the item from which a multiple selection
@@ -341,8 +341,11 @@ itemRect: anIntegerIndex
 	the receiver"
 
 	| rect |
-	rect := RECT new.
-	self sendMessage: LB_GETITEMRECT wParam: anIntegerIndex-1 lpParam: rect asParameter.
+	rect := RECTL new.
+	self
+		sendMessage: LB_GETITEMRECT
+		wParam: anIntegerIndex - 1
+		lpParam: rect asParameter.
 	^rect asRectangle!
 
 lbnBeginDrag: itemIndex
@@ -616,75 +619,77 @@ state
 	instance variable"
 
 	^super state
-		add: (MessageSend receiver: self selector: #horizontalExtent: argument: self horizontalExtent);
-		yourself
-! !
-!ListBox categoriesFor: #anchorIndex!public!selection! !
-!ListBox categoriesFor: #anchorIndex:!public!selection! !
-!ListBox categoriesFor: #basicAdd:!adding!private! !
-!ListBox categoriesFor: #basicAdd:atIndex:!adding!private! !
-!ListBox categoriesFor: #basicClear!private!removing! !
-!ListBox categoriesFor: #basicItemFromPoint:!enquiries!private! !
-!ListBox categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!ListBox categoriesFor: #basicResetSelection!private!selection! !
-!ListBox categoriesFor: #canHScroll!public!testing! !
-!ListBox categoriesFor: #canHScroll:!accessing-styles!public! !
-!ListBox categoriesFor: #caretIndex!public!selection! !
-!ListBox categoriesFor: #caretIndex:!public!selection! !
-!ListBox categoriesFor: #clearSelectionsByIndex:!public!selection! !
-!ListBox categoriesFor: #command:id:!commands!private! !
-!ListBox categoriesFor: #defaultWindowStyle!constants!private! !
-!ListBox categoriesFor: #dragLeave:!event handling!public! !
-!ListBox categoriesFor: #dragOver:!event handling!public! !
-!ListBox categoriesFor: #drop:!event handling!public! !
-!ListBox categoriesFor: #dropHighlight!drag & drop!private! !
-!ListBox categoriesFor: #ensureSelectionVisible!public!selection! !
-!ListBox categoriesFor: #getMultipleSelections!private!selection! !
-!ListBox categoriesFor: #getSelectedCount!private!selection! !
-!ListBox categoriesFor: #getSelectionsByIndex!private!selection! !
-!ListBox categoriesFor: #getSingleSelection!helpers!private!selection! !
-!ListBox categoriesFor: #hasPermanentScrollbars!public!testing! !
-!ListBox categoriesFor: #hasPermanentScrollbars:!accessing-styles!public! !
-!ListBox categoriesFor: #hasToggleSelection!accessing-styles!public! !
-!ListBox categoriesFor: #hasToggleSelection:!accessing-styles!public! !
-!ListBox categoriesFor: #hideDropHighlight!drag & drop!private! !
-!ListBox categoriesFor: #horizontalExtent!accessing!public! !
-!ListBox categoriesFor: #horizontalExtent:!accessing!public! !
-!ListBox categoriesFor: #initStorageFor:!helpers!private! !
-!ListBox categoriesFor: #isDragSource:!accessing!public! !
-!ListBox categoriesFor: #isMultiSelect!public!selection!testing! !
-!ListBox categoriesFor: #isMultiSelect:!public!testing! !
-!ListBox categoriesFor: #itemCount!accessing!public! !
-!ListBox categoriesFor: #itemFromPoint:!enquiries!private! !
-!ListBox categoriesFor: #itemRect:!accessing!public! !
-!ListBox categoriesFor: #lbnBeginDrag:!event handling-win32!private! !
-!ListBox categoriesFor: #lbnDblClk!event handling-win32!private! !
-!ListBox categoriesFor: #lbnErrSpace!event handling-win32!private! !
-!ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
-!ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
-!ListBox categoriesFor: #maybeSelChanging:!event handling!private! !
-!ListBox categoriesFor: #newMultiSelectionsFromEvent:!private!selection! !
-!ListBox categoriesFor: #newSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #newSingleSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #newToggleSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #onLeftButtonPressed:!public! !
-!ListBox categoriesFor: #onRightButtonPressed:!event handling!public! !
-!ListBox categoriesFor: #onSelChanged:!event handling!private! !
-!ListBox categoriesFor: #onSelChanging:cause:!event handling!private! !
-!ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!ListBox categoriesFor: #selectAll!public!selection! !
-!ListBox categoriesFor: #selectedCount!public!selection! !
-!ListBox categoriesFor: #selectIndex:set:!private!selection! !
-!ListBox categoriesFor: #selectionMode!accessing-styles!public! !
-!ListBox categoriesFor: #selectionMode:!accessing-styles!public! !
-!ListBox categoriesFor: #setSingleSelection:!private!selection! !
-!ListBox categoriesFor: #showDropHighlight:!drag & drop!private! !
-!ListBox categoriesFor: #state!accessing!private! !
+		add: (MessageSend
+					receiver: self
+					selector: #horizontalExtent:
+					argument: self horizontalExtent);
+		yourself! !
+!UI.ListBox categoriesFor: #anchorIndex!public!selection! !
+!UI.ListBox categoriesFor: #anchorIndex:!public!selection! !
+!UI.ListBox categoriesFor: #basicAdd:!adding!private! !
+!UI.ListBox categoriesFor: #basicAdd:atIndex:!adding!private! !
+!UI.ListBox categoriesFor: #basicClear!private!removing! !
+!UI.ListBox categoriesFor: #basicItemFromPoint:!enquiries!private! !
+!UI.ListBox categoriesFor: #basicRemoveAtIndex:!private!removing! !
+!UI.ListBox categoriesFor: #basicResetSelection!private!selection! !
+!UI.ListBox categoriesFor: #canHScroll!public!testing! !
+!UI.ListBox categoriesFor: #canHScroll:!accessing-styles!public! !
+!UI.ListBox categoriesFor: #caretIndex!public!selection! !
+!UI.ListBox categoriesFor: #caretIndex:!public!selection! !
+!UI.ListBox categoriesFor: #clearSelectionsByIndex:!public!selection! !
+!UI.ListBox categoriesFor: #command:id:!commands!private! !
+!UI.ListBox categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.ListBox categoriesFor: #dragLeave:!event handling!public! !
+!UI.ListBox categoriesFor: #dragOver:!event handling!public! !
+!UI.ListBox categoriesFor: #drop:!event handling!public! !
+!UI.ListBox categoriesFor: #dropHighlight!drag & drop!private! !
+!UI.ListBox categoriesFor: #ensureSelectionVisible!public!selection! !
+!UI.ListBox categoriesFor: #getMultipleSelections!private!selection! !
+!UI.ListBox categoriesFor: #getSelectedCount!private!selection! !
+!UI.ListBox categoriesFor: #getSelectionsByIndex!private!selection! !
+!UI.ListBox categoriesFor: #getSingleSelection!helpers!private!selection! !
+!UI.ListBox categoriesFor: #hasPermanentScrollbars!public!testing! !
+!UI.ListBox categoriesFor: #hasPermanentScrollbars:!accessing-styles!public! !
+!UI.ListBox categoriesFor: #hasToggleSelection!accessing-styles!public! !
+!UI.ListBox categoriesFor: #hasToggleSelection:!accessing-styles!public! !
+!UI.ListBox categoriesFor: #hideDropHighlight!drag & drop!private! !
+!UI.ListBox categoriesFor: #horizontalExtent!accessing!public! !
+!UI.ListBox categoriesFor: #horizontalExtent:!accessing!public! !
+!UI.ListBox categoriesFor: #initStorageFor:!helpers!private! !
+!UI.ListBox categoriesFor: #isDragSource:!accessing!public! !
+!UI.ListBox categoriesFor: #isMultiSelect!public!selection!testing! !
+!UI.ListBox categoriesFor: #isMultiSelect:!public!testing! !
+!UI.ListBox categoriesFor: #itemCount!accessing!public! !
+!UI.ListBox categoriesFor: #itemFromPoint:!enquiries!private! !
+!UI.ListBox categoriesFor: #itemRect:!accessing!public! !
+!UI.ListBox categoriesFor: #lbnBeginDrag:!event handling-win32!private! !
+!UI.ListBox categoriesFor: #lbnDblClk!event handling-win32!private! !
+!UI.ListBox categoriesFor: #lbnErrSpace!event handling-win32!private! !
+!UI.ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
+!UI.ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
+!UI.ListBox categoriesFor: #maybeSelChanging:!event handling!private! !
+!UI.ListBox categoriesFor: #newMultiSelectionsFromEvent:!private!selection! !
+!UI.ListBox categoriesFor: #newSelectionsFromEvent:!event handling!private! !
+!UI.ListBox categoriesFor: #newSingleSelectionsFromEvent:!event handling!private! !
+!UI.ListBox categoriesFor: #newToggleSelectionsFromEvent:!event handling!private! !
+!UI.ListBox categoriesFor: #onLeftButtonPressed:!public! !
+!UI.ListBox categoriesFor: #onRightButtonPressed:!event handling!public! !
+!UI.ListBox categoriesFor: #onSelChanged:!event handling!private! !
+!UI.ListBox categoriesFor: #onSelChanging:cause:!event handling!private! !
+!UI.ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
+!UI.ListBox categoriesFor: #selectAll!public!selection! !
+!UI.ListBox categoriesFor: #selectedCount!public!selection! !
+!UI.ListBox categoriesFor: #selectIndex:set:!private!selection! !
+!UI.ListBox categoriesFor: #selectionMode!accessing-styles!public! !
+!UI.ListBox categoriesFor: #selectionMode:!accessing-styles!public! !
+!UI.ListBox categoriesFor: #setSingleSelection:!private!selection! !
+!UI.ListBox categoriesFor: #showDropHighlight:!drag & drop!private! !
+!UI.ListBox categoriesFor: #state!accessing!private! !
 
-ListBox methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!
-ListBox methodProtocol: #multipleSelectableItems attributes: #(#readOnly) selectors: #(#addSelections: #addSelections:ifAbsent: #hasSelection #selectAll #selections #selections: #selections:ifAbsent:)!
+UI.ListBox methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!
+UI.ListBox methodProtocol: #multipleSelectableItems attributes: #(#readOnly) selectors: #(#addSelections: #addSelections:ifAbsent: #hasSelection #selectAll #selections #selections: #selections:ifAbsent:)!
 
-!ListBox class methodsFor!
+!UI.ListBox class methodsFor!
 
 initialize
 	"Private - Initialise the receiver's class variables:
@@ -709,8 +714,7 @@ selectionModes
 	^SelectionModes!
 
 themePartName
-	^#ListBox
-!
+	^#ListBox!
 
 uninitialize
 	self unregisterMessageMappings: {WM_BEGINDRAG}!
@@ -720,10 +724,10 @@ winClassName
 
 	^'LISTBOX'
 ! !
-!ListBox class categoriesFor: #initialize!development!initializing!private! !
-!ListBox class categoriesFor: #listboxMessageMappings!constants!must not strip!private! !
-!ListBox class categoriesFor: #selectionModes!constants!public! !
-!ListBox class categoriesFor: #themePartName!constants!private! !
-!ListBox class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ListBox class categoriesFor: #winClassName!constants!private! !
+!UI.ListBox class categoriesFor: #initialize!development!initializing!private! !
+!UI.ListBox class categoriesFor: #listboxMessageMappings!constants!must not strip!private! !
+!UI.ListBox class categoriesFor: #selectionModes!constants!public! !
+!UI.ListBox class categoriesFor: #themePartName!constants!private! !
+!UI.ListBox class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.ListBox class categoriesFor: #winClassName!constants!private! !
 

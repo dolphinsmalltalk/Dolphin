@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListControlView subclass: #BasicListAbstract
+UI.ListControlView subclass: #'UI.BasicListAbstract'
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicListAbstract guid: (GUID fromString: '{87b4c725-026e-11d3-9fd7-00a0cc3e4a32}')!
-BasicListAbstract isAbstract: true!
-BasicListAbstract comment: 'BasicListAbstract is an abstract class conforming to the <listView> protocol. Its concrete subclasses are implementations of the original Windows list boxes and combination boxes. All <listView>s are intended to be used in conjunction with a <listModel> holding the list items.
+UI.BasicListAbstract guid: (Core.GUID fromString: '{87b4c725-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.BasicListAbstract isNonInstantiable: true!
+UI.BasicListAbstract comment: 'BasicListAbstract is an abstract class conforming to the <listView> protocol. Its concrete subclasses are implementations of the original Windows list boxes and combination boxes. All <listView>s are intended to be used in conjunction with a <listModel> holding the list items.
 
 Instance Variables:
 
@@ -16,8 +16,8 @@ Instance Variables:
 	lastSel		<integer> or <Array> indicating the index(es) of the last single or multiple selection.
 
 '!
-!BasicListAbstract categoriesForClass!MVP-Views! !
-!BasicListAbstract methodsFor!
+!UI.BasicListAbstract categoriesForClass!MVP-Views! !
+!UI.BasicListAbstract methodsFor!
 
 basicAdd: anObject 
 	"Private - Adds a string for the <Object> argument to the listbox control at the end of the
@@ -243,36 +243,36 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
-!BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
-!BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
-!BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
-!BasicListAbstract categoriesFor: #canHScroll!public! !
-!BasicListAbstract categoriesFor: #canHScroll:!public! !
-!BasicListAbstract categoriesFor: #defaultExtent!constants!private! !
-!BasicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
-!BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
-!BasicListAbstract categoriesFor: #initialize!initializing!public! !
-!BasicListAbstract categoriesFor: #lastSelIndices!private! !
-!BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
-!BasicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!BasicListAbstract categoriesFor: #onSelChanged:!event handling!private! !
-!BasicListAbstract categoriesFor: #onSelChanging!event handling!private! !
-!BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
-!BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
-!BasicListAbstract categoriesFor: #refreshContents!public!updating! !
-!BasicListAbstract categoriesFor: #selectionByIndex!public!selection! !
-!BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
-!BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
-!BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
-!BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
+!UI.BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
+!UI.BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
+!UI.BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
+!UI.BasicListAbstract categoriesFor: #canHScroll!public! !
+!UI.BasicListAbstract categoriesFor: #canHScroll:!public! !
+!UI.BasicListAbstract categoriesFor: #defaultExtent!constants!private! !
+!UI.BasicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
+!UI.BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
+!UI.BasicListAbstract categoriesFor: #initialize!initializing!public! !
+!UI.BasicListAbstract categoriesFor: #lastSelIndices!private! !
+!UI.BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #onSelChanged:!event handling!private! !
+!UI.BasicListAbstract categoriesFor: #onSelChanging!event handling!private! !
+!UI.BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
+!UI.BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #refreshContents!public!updating! !
+!UI.BasicListAbstract categoriesFor: #selectionByIndex!public!selection! !
+!UI.BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
+!UI.BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
+!UI.BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
+!UI.BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
+!UI.BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
+!UI.BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
 
-!BasicListAbstract class methodsFor!
+!UI.BasicListAbstract class methodsFor!
 
 value: anObject
 	"Private - Implement #value: in order to provide a default 'get text'
@@ -281,5 +281,5 @@ value: anObject
 	valuable, mainly to save space in view resources."
 
 	^anObject displayString! !
-!BasicListAbstract class categoriesFor: #value:!evaluating!private! !
+!UI.BasicListAbstract class categoriesFor: #value:!evaluating!private! !
 
