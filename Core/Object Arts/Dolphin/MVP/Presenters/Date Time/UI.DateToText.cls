@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractToTextConverter subclass: #DateToText
+UI.AbstractToTextConverter subclass: #'UI.DateToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateToText guid: (GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
-DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
+UI.DateToText guid: (Core.GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
 
 Instance Variables:
 	locale	<Locale> to use for the conversion.
@@ -18,8 +18,8 @@ Class Variables:
 
 
 '!
-!DateToText categoriesForClass!MVP-Type Converters-Text! !
-!DateToText methodsFor!
+!UI.DateToText categoriesForClass!MVP-Type Converters-Text! !
+!UI.DateToText methodsFor!
 
 actualFormat
 	"Private - Answers the actual date format to use for the conversion"
@@ -52,15 +52,15 @@ leftToRight: aDate
 
 rightToLeft: aString
 	"Answers the result of converting aString to a Date"
-	
-	^Date fromString: aString format: self actualFormat! !
-!DateToText categoriesFor: #actualFormat!accessing!private! !
-!DateToText categoriesFor: #format!accessing!public! !
-!DateToText categoriesFor: #format:!accessing!public! !
-!DateToText categoriesFor: #leftToRight:!operations!public! !
-!DateToText categoriesFor: #rightToLeft:!operations!public! !
 
-!DateToText class methodsFor!
+	^Date fromString: aString format: self actualFormat! !
+!UI.DateToText categoriesFor: #actualFormat!accessing!private! !
+!UI.DateToText categoriesFor: #format!accessing!public! !
+!UI.DateToText categoriesFor: #format:!accessing!public! !
+!UI.DateToText categoriesFor: #leftToRight:!operations!public! !
+!UI.DateToText categoriesFor: #rightToLeft:!operations!public! !
+
+!UI.DateToText class methodsFor!
 
 yearPivot
 	"Answers the pivot point for two digit years. Years greater or equal to this will be assumed to be
@@ -74,6 +74,6 @@ yearPivot: anInteger
 	Years less than the pivot will be assumed to be in the next century"
 
 	Date yearPivot: anInteger! !
-!DateToText class categoriesFor: #yearPivot!accessing!public! !
-!DateToText class categoriesFor: #yearPivot:!accessing!public! !
+!UI.DateToText class categoriesFor: #yearPivot!accessing!public! !
+!UI.DateToText class categoriesFor: #yearPivot:!accessing!public! !
 

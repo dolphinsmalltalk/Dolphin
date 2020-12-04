@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractToTextConverter subclass: #DurationToText
+UI.AbstractToTextConverter subclass: #'UI.DurationToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DurationToText guid: (GUID fromString: '{b7c9ede3-d5d2-494f-8569-58ec71e88b89}')!
-DurationToText comment: 'See [DolphinImageFolder]/Idb/Documentation for details
+UI.DurationToText guid: (Core.GUID fromString: '{b7c9ede3-d5d2-494f-8569-58ec71e88b89}')!
+UI.DurationToText comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
-!DurationToText categoriesForClass!IDB Goodies!MVP-Type Converters-Text! !
-!DurationToText methodsFor!
+!UI.DurationToText categoriesForClass!IDB Goodies!MVP-Type Converters-Text! !
+!UI.DurationToText methodsFor!
 
 actualFormat
 	"Private - Answers the actual <Duration> format to use for the conversion"
@@ -53,9 +53,9 @@ rightToLeft: aString
 		hours: (values at: 3) truncated
 		minutes: (values at: 2) truncated
 		seconds: (values at: 1)! !
-!DurationToText categoriesFor: #actualFormat!accessing!private! !
-!DurationToText categoriesFor: #format!accessing!public! !
-!DurationToText categoriesFor: #format:!accessing!public! !
-!DurationToText categoriesFor: #leftToRight:!operations!public! !
-!DurationToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.DurationToText categoriesFor: #actualFormat!accessing!private! !
+!UI.DurationToText categoriesFor: #format!accessing!public! !
+!UI.DurationToText categoriesFor: #format:!accessing!public! !
+!UI.DurationToText categoriesFor: #leftToRight:!operations!public! !
+!UI.DurationToText categoriesFor: #rightToLeft:!operations!public! !
 
