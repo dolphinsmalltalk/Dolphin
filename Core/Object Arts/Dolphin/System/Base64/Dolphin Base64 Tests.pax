@@ -1,12 +1,12 @@
 ﻿| package |
 package := Package name: 'Dolphin Base64 Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{Base64CodecTest}
+	#{Kernel.Tests.Base64CodecTest}
 ).
 
 package setPrerequisites: #(
@@ -20,10 +20,10 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #Base64CodecTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.Base64CodecTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

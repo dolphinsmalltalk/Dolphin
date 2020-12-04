@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #Base64CodecTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.Base64CodecTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Base64CodecTest guid: (GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
-Base64CodecTest comment: ''!
-!Base64CodecTest categoriesForClass!Unclassified! !
-!Base64CodecTest methodsFor!
+Kernel.Tests.Base64CodecTest guid: (Core.GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
+Kernel.Tests.Base64CodecTest comment: ''!
+!Kernel.Tests.Base64CodecTest categoriesForClass!Unclassified! !
+!Kernel.Tests.Base64CodecTest methodsFor!
 
 roundTrip: bytes
 	| stream bytes2 string |
@@ -98,10 +98,10 @@ testVM
 	decoded := ByteArray writeStream.
 	Base64Codec decodeFrom: encoded contents readStream onto: decoded.
 	self assert: decoded contents equals: f contents! !
-!Base64CodecTest categoriesFor: #roundTrip:!helpers!private! !
-!Base64CodecTest categoriesFor: #testLineLength!public!unit tests! !
-!Base64CodecTest categoriesFor: #testPadding!public!unit tests! !
-!Base64CodecTest categoriesFor: #testRFC2440!public!unit tests! !
-!Base64CodecTest categoriesFor: #testSmokeTest!public!unit tests! !
-!Base64CodecTest categoriesFor: #testVM!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #roundTrip:!helpers!private! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #testLineLength!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #testPadding!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #testRFC2440!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #testSmokeTest!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesFor: #testVM!public!unit tests! !
 

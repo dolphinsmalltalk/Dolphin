@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base64'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Base64 Codec
 Copyright (c) Object Arts Ltd, 2004.
@@ -13,13 +13,13 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{Base64Codec}
+	#{Kernel.Base64Codec}
 ).
 
 package setMethodNames: #(
-	#(#{ByteArray} #base64StoreOn:)
-	#(#{ByteArray} #printBase64On:)
-	#(#{ByteArray class} #fromBase64String:)
+	#(#{Core.ByteArray} #base64StoreOn:)
+	#(#{Core.ByteArray} #printBase64On:)
+	#(#{Core.ByteArray class} #fromBase64String:)
 ).
 
 package setPrerequisites: #(
@@ -30,10 +30,10 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #Base64Codec
+Core.Object subclass: #'Kernel.Base64Codec'
 	instanceVariableNames: 'quadsPerLine isPadded'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DecodingTable' -> #[255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 62 255 255 255 63 52 53 54 55 56 57 58 59 60 61 255 255 255 64 255 255 255 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 255 255 255 255 255 255 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255].
@@ -42,7 +42,7 @@ Object subclass: #Base64Codec
 
 "Loose Methods"!
 
-!ByteArray methodsFor!
+!Core.ByteArray methodsFor!
 
 base64StoreOn: puttableStream 
 	puttableStream
@@ -55,21 +55,21 @@ base64StoreOn: puttableStream
 	self printBase64On: puttableStream.
 	puttableStream nextPutAll: ''')'!
 
-printBase64On: aStream 
+printBase64On: aStream
 	"Append a base64 string representation of the receiver to the <puttableStream> argument."
 
 	Base64Codec encodeFrom: self readStream onto: aStream! !
-!ByteArray categoriesFor: #base64StoreOn:!printing!public! !
-!ByteArray categoriesFor: #printBase64On:!printing!public! !
+!Core.ByteArray categoriesFor: #base64StoreOn:!printing!public! !
+!Core.ByteArray categoriesFor: #printBase64On:!printing!public! !
 
-!ByteArray class methodsFor!
+!Core.ByteArray class methodsFor!
 
 fromBase64String: aString
 	| stream |
 	stream := self writeStream: (aString size * 3 bitShift: -2).
 	Base64Codec decodeFrom: aString readStream onto: stream.
 	^stream grabContents! !
-!ByteArray class categoriesFor: #fromBase64String:!instance creation!public! !
+!Core.ByteArray class categoriesFor: #fromBase64String:!instance creation!public! !
 
 "End of package definition"!
 
