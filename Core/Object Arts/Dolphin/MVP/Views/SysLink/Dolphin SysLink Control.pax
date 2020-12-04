@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin SysLink Control'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SysLink Common Control.
 Copyright (c) Object Arts Ltd, 2005.
@@ -17,16 +17,16 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{LHITTESTINFO}
-	#{LinkButton}
-	#{LITEM}
-	#{NMLINK}
-	#{SysLinkConstants}
-	#{SysLinkView}
+	#{OS.LHITTESTINFO}
+	#{OS.LITEM}
+	#{OS.NMLINK}
+	#{OS.SysLinkConstants}
+	#{UI.LinkButton}
+	#{UI.SysLinkView}
 ).
 
 package setMethodNames: #(
-	#(#{TextPresenter class} #resource_Link_text)
+	#(#{UI.TextPresenter class} #resource_Link_text)
 ).
 
 package setPrerequisites: #(
@@ -42,7 +42,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #SysLinkConstants
+Kernel.SharedPool subclass: #'OS.SysLinkConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -66,7 +66,7 @@ SharedPool subclass: #SysLinkConstants
 		'LWS_TRANSPARENT' -> 16r1.
 		'MAX_LINKID_TEXT' -> 16r30
 	}!
-Win32Structure subclass: #LHITTESTINFO
+OS.Win32Structure subclass: #'OS.LHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -75,10 +75,10 @@ Win32Structure subclass: #LHITTESTINFO
 		'_OffsetOf_item' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
-Win32Structure subclass: #LITEM
+OS.Win32Structure subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{SysLinkConstants})
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iLink' -> 16r4.
@@ -88,7 +88,7 @@ Win32Structure subclass: #LITEM
 		'_OffsetOf_szID' -> 16r10.
 		'_OffsetOf_szURL' -> 16r70
 	}!
-NMHDR subclass: #NMLINK
+OS.NMHDR subclass: #'OS.NMLINK'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -96,22 +96,22 @@ NMHDR subclass: #NMLINK
 	classConstants: {
 		'_OffsetOf_item' -> 16rC
 	}!
-CommandButton subclass: #LinkButton
+UI.CommandButton subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{SysLinkConstants})
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticView subclass: #SysLinkView
+UI.StaticView subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{SysLinkConstants})
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!TextPresenter class methodsFor!
+!UI.TextPresenter class methodsFor!
 
 resource_Link_text
 	"Answer the literal data from which the 'Link text' resource can be reconstituted.
@@ -121,8 +121,8 @@ resource_Link_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Link_text)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SysLinkView) 34 16 nil nil 34 2 8 1409286400 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 1915775360 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 706 181 31 416 658 #text: 34 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 209 5 0 0 25 0 0 0] 8 #() 706 193 193 nil 27 )! !
-!TextPresenter class categoriesFor: #resource_Link_text!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.SysLinkView) 34 16 nil nil 34 2 8 1409286400 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 1921159200 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 706 181 31 416 658 #text: 34 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 89 12 0 0 25 0 0 0] 8 #() 706 193 193 nil 27)! !
+!UI.TextPresenter class categoriesFor: #resource_Link_text!public!resources-views! !
 
 "End of package definition"!
 

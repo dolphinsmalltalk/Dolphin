@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommandButton subclass: #LinkButton
+UI.CommandButton subclass: #'UI.LinkButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LinkButton guid: (GUID fromString: '{d8fcab7f-b566-42da-b183-d925eaa9dc99}')!
-LinkButton comment: 'LinkButton is a <CommandButton> implemented using the Windows "SysLink" control. It has the appearance of a hyperlink, but acts as a <commandSource>.
+UI.LinkButton guid: (Core.GUID fromString: '{d8fcab7f-b566-42da-b183-d925eaa9dc99}')!
+UI.LinkButton comment: 'LinkButton is a <CommandButton> implemented using the Windows "SysLink" control. It has the appearance of a hyperlink, but acts as a <commandSource>.
 
 A LinkButton can contain a single link in its text, delimited by HTML link tags, e.g. ''<a>Press Me</a>''. The button can contain additional text that is not part of the hyperlink, but if the button text is set to a <String> that does not contain a hyperlink, then the text is automatically wrapped with link tags (i.e. the whole of the text is treated as the link). If the link is clicked (or the Enter key is pressed when the LinkButton has focus), then the command associated with the button is fired as if initiated from the button''s parent. Any URL associated with the link with an href attribute is ignored (but see also SysLinkView).
 
@@ -22,8 +22,8 @@ Class Variables:
 	IsDefaultMask		<integer> masks to determine whether a button is a default.
 
 '!
-!LinkButton categoriesForClass!MVP-Views! !
-!LinkButton methodsFor!
+!UI.LinkButton categoriesForClass!MVP-Views! !
+!UI.LinkButton methodsFor!
 
 calculateExtent: aLayoutContext 
 	"Private - Calculate an extent for the receiver that would allow it to display all the text
@@ -49,7 +49,7 @@ getWindowText
 
 	^super getWindowText trimNulls!
 
-isEnabled: aBoolean 
+isEnabled: aBoolean
 	"Implmentation Note: Must disable link before view, otherwise attempting to disable the view fails."
 
 	| litem |
@@ -57,7 +57,7 @@ isEnabled: aBoolean
 	litem
 		itemIndex: 1;
 		isEnabled: aBoolean.
-	self 
+	self
 		sendMessage: LM_SETITEM
 		wParam: 0
 		lpParam: litem.
@@ -81,7 +81,7 @@ preferredHeight
 
 	^self sendMessage: LM_GETIDEALHEIGHT!
 
-stripTags: aString 
+stripTags: aString
 	| newStream readStream |
 	newStream := String writeStream: aString size.
 	readStream := aString readStream.
@@ -97,16 +97,16 @@ text: aString
 	text := ('*<a*>*</a>*' match: aString) ifTrue: [aString] ifFalse: ['<a>' , aString , '</a>'].
 	super text: text.
 	commandDescription description: (self stripTags: text)! !
-!LinkButton categoriesFor: #calculateExtent:!geometry!private! !
-!LinkButton categoriesFor: #getWindowText!accessing!private! !
-!LinkButton categoriesFor: #isEnabled:!accessing!public! !
-!LinkButton categoriesFor: #nmClick:!event handling-win32!private! !
-!LinkButton categoriesFor: #nmReturn:!event handling-win32!private! !
-!LinkButton categoriesFor: #preferredHeight!enquiries!private! !
-!LinkButton categoriesFor: #stripTags:!helpers!private! !
-!LinkButton categoriesFor: #text:!accessing!public! !
+!UI.LinkButton categoriesFor: #calculateExtent:!geometry!private! !
+!UI.LinkButton categoriesFor: #getWindowText!accessing!private! !
+!UI.LinkButton categoriesFor: #isEnabled:!accessing!public! !
+!UI.LinkButton categoriesFor: #nmClick:!event handling-win32!private! !
+!UI.LinkButton categoriesFor: #nmReturn:!event handling-win32!private! !
+!UI.LinkButton categoriesFor: #preferredHeight!enquiries!private! !
+!UI.LinkButton categoriesFor: #stripTags:!helpers!private! !
+!UI.LinkButton categoriesFor: #text:!accessing!public! !
 
-!LinkButton class methodsFor!
+!UI.LinkButton class methodsFor!
 
 resource_Link_button
 	"Answer the literal data from which the 'Link button' resource can be reconstituted.
@@ -116,12 +116,12 @@ resource_Link_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Link_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.LinkButton) 34 15 nil nil 34 2 8 1140916224 1 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil nil nil 416 nil 8 1904508208 1180998 4 ##(Smalltalk.CommandDescription) #close 8 'Click to Close' 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 690 111 71 416 642 #text: 34 1 8 '<a>Click to Close</a>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 45 0 0 0] 8 #() 690 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.LinkButton) 34 15 nil nil 34 2 8 1140916224 1 416 nil 917510 ##(Graphics.Color) #default nil 519 nil nil nil 416 nil 8 1921159200 1377606 4 ##(UI.CommandDescription) #close 8 'Click to Close' 1 1 nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 111 71 416 642 #text: 34 1 8 '<a>Click to Close</a>' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 54 12 0 0 45 0 0 0] 8 #() 690 193 193 nil 27)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!LinkButton class categoriesFor: #resource_Link_button!public!resources-views! !
-!LinkButton class categoriesFor: #winClassName!constants!private! !
+!UI.LinkButton class categoriesFor: #resource_Link_button!public!resources-views! !
+!UI.LinkButton class categoriesFor: #winClassName!constants!private! !
 

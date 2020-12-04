@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #SysLinkConstants
+Kernel.SharedPool subclass: #'OS.SysLinkConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -24,6 +24,7 @@ SharedPool subclass: #SysLinkConstants
 		'LWS_TRANSPARENT' -> 16r1.
 		'MAX_LINKID_TEXT' -> 16r30
 	}!
-SysLinkConstants guid: (GUID fromString: '{54002e75-84c6-4186-99a4-0b0b1c9a909d}')!
-SysLinkConstants comment: ''!
-!SysLinkConstants categoriesForClass!Unclassified! !
+OS.SysLinkConstants guid: (Core.GUID fromString: '{54002e75-84c6-4186-99a4-0b0b1c9a909d}')!
+OS.SysLinkConstants isNonInstantiable: true!
+OS.SysLinkConstants comment: ''!
+!OS.SysLinkConstants categoriesForClass!Unclassified! !

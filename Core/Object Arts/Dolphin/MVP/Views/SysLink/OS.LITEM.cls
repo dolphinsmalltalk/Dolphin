@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #LITEM
+OS.Win32Structure subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iLink' -> 16r4.
@@ -13,8 +13,8 @@ Win32Structure subclass: #LITEM
 		'_OffsetOf_szID' -> 16r10.
 		'_OffsetOf_szURL' -> 16r70
 	}!
-LITEM guid: (GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
-LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
+OS.LITEM guid: (Core.GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
+OS.LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.
 
@@ -27,8 +27,8 @@ LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <
 	    WCHAR       szID[MAX_LINKID_TEXT] ;
 	    WCHAR       szUrl[L_MAX_URL_LENGTH] ;
 	} LITEM, * PLITEM ;'!
-!LITEM categoriesForClass!External-Data-Structured-Win32! !
-!LITEM methodsFor!
+!OS.LITEM categoriesForClass!External-Data-Structured-Win32! !
+!OS.LITEM methodsFor!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -165,32 +165,32 @@ url: aString
 	self
 		maskIn: LIF_URL;
 		szURL: text! !
-!LITEM categoriesFor: #handle!accessing!public! !
-!LITEM categoriesFor: #id!accessing!public! !
-!LITEM categoriesFor: #id:!accessing!public! !
-!LITEM categoriesFor: #iLink!**compiled accessors**!public! !
-!LITEM categoriesFor: #iLink:!**compiled accessors**!public! !
-!LITEM categoriesFor: #isEnabled!public!testing! !
-!LITEM categoriesFor: #isEnabled:!accessing!public! !
-!LITEM categoriesFor: #isFocused!public!testing! !
-!LITEM categoriesFor: #isVisited!public!testing! !
-!LITEM categoriesFor: #item!accessing!public! !
-!LITEM categoriesFor: #itemIndex:!accessing!public! !
-!LITEM categoriesFor: #mask!**compiled accessors**!public! !
-!LITEM categoriesFor: #mask:!**compiled accessors**!public! !
-!LITEM categoriesFor: #maskIn:!accessing!public! !
-!LITEM categoriesFor: #state!**compiled accessors**!public! !
-!LITEM categoriesFor: #state:!**compiled accessors**!public! !
-!LITEM categoriesFor: #stateMask!**compiled accessors**!public! !
-!LITEM categoriesFor: #stateMask:!**compiled accessors**!public! !
-!LITEM categoriesFor: #szID!**compiled accessors**!public! !
-!LITEM categoriesFor: #szID:!**compiled accessors**!public! !
-!LITEM categoriesFor: #szURL!**compiled accessors**!public! !
-!LITEM categoriesFor: #szURL:!**compiled accessors**!public! !
-!LITEM categoriesFor: #url!accessing!public! !
-!LITEM categoriesFor: #url:!accessing!public! !
+!OS.LITEM categoriesFor: #handle!accessing!public! !
+!OS.LITEM categoriesFor: #id!accessing!public! !
+!OS.LITEM categoriesFor: #id:!accessing!public! !
+!OS.LITEM categoriesFor: #iLink!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #iLink:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #isEnabled!public!testing! !
+!OS.LITEM categoriesFor: #isEnabled:!accessing!public! !
+!OS.LITEM categoriesFor: #isFocused!public!testing! !
+!OS.LITEM categoriesFor: #isVisited!public!testing! !
+!OS.LITEM categoriesFor: #item!accessing!public! !
+!OS.LITEM categoriesFor: #itemIndex:!accessing!public! !
+!OS.LITEM categoriesFor: #mask!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #mask:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #maskIn:!accessing!public! !
+!OS.LITEM categoriesFor: #state!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #state:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #stateMask!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #stateMask:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #szID!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #szID:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #szURL!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #szURL:!**compiled accessors**!public! !
+!OS.LITEM categoriesFor: #url!accessing!public! !
+!OS.LITEM categoriesFor: #url:!accessing!public! !
 
-!LITEM class methodsFor!
+!OS.LITEM class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 LITEM structure
@@ -208,6 +208,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
-!LITEM class categoriesFor: #defineFields!public!template definition! !
-!LITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LITEM class categoriesFor: #defineFields!public!template definition! !
+!OS.LITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticView subclass: #SysLinkView
+UI.StaticView subclass: #'UI.SysLinkView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SysLinkConstants'
+	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SysLinkView guid: (GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
-SysLinkView comment: 'SysLinkView is a <valueView> wrapper class for the Windows SysLink control. The SysLink control is similar to a normal <StaticText> control, but may contain embedded links, and triggers #linkClicked: notification events when the links are clicked. The <valueModel> associated with a SysLinkView must always yield a <readableString> value when mapped through the installed type converter. A SysLinkView will normally be used in conjunction with a <TextPresenter>.
+UI.SysLinkView guid: (Core.GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
+UI.SysLinkView comment: 'SysLinkView is a <valueView> wrapper class for the Windows SysLink control. The SysLink control is similar to a normal <StaticText> control, but may contain embedded links, and triggers #linkClicked: notification events when the links are clicked. The <valueModel> associated with a SysLinkView must always yield a <readableString> value when mapped through the installed type converter. A SysLinkView will normally be used in conjunction with a <TextPresenter>.
 
 Please Note: The underlying Windows control is not supported on Windows 2000 and earlier.'!
-!SysLinkView categoriesForClass!MVP-Views! !
-!SysLinkView methodsFor!
+!UI.SysLinkView categoriesForClass!MVP-Views! !
+!UI.SysLinkView methodsFor!
 
 calculateExtent: aLayoutContext 
 	"Private - Calculate an extent for the receiver that would allow it to display all the text
@@ -44,7 +44,7 @@ displayValue: anObject
 			["If the text has changed then set the new text for anObject"
 			self text: newText]!
 
-itemFromPoint: aPoint 
+itemFromPoint: aPoint
 	"Private - Answer the <integer> index of the link in the receiver under the <Point> argument
 	(expressed in client coordinates), or nil if none."
 
@@ -53,10 +53,10 @@ itemFromPoint: aPoint
 	struct pt: aPoint asParameter.
 	"Note that the MSDN docs for LM_HITTEST are in error: It doesn't return details of the
 	 last link clicked, but really is a hit testing function for finding the item under a point."
-	^(self 
+	^(self
 		sendMessage: LM_HITTEST
 		wParam: 0
-		lpParam: struct) asBoolean 
+		lpParam: struct) asBoolean
 		ifTrue: [struct item copy]!
 
 linkAt: anInteger 
@@ -94,13 +94,13 @@ links
 				i := i + 1].
 	^answer!
 
-lmGetItem: anInteger 
+lmGetItem: anInteger
 	| answer |
 	answer := LITEM new.
 	answer
 		mask: ##(LIF_ITEMINDEX | LIF_STATE | LIF_ITEMID | LIF_URL);
 		iLink: anInteger - 1.
-	^(self 
+	^(self
 		sendMessage: LM_GETITEM
 		wParam: 0
 		lpParam: answer) ~~ 0 ifTrue: [answer]!
@@ -111,7 +111,7 @@ lmSetItem: aLITEM
 		wParam: 0
 		lpParam: aLITEM) asBoolean!
 
-nmClick: pNMHDR 
+nmClick: pNMHDR
 	"Default handler for a NM_CLICK notification message."
 
 	| nmlink |
@@ -135,22 +135,22 @@ preferredHeight
 	ideal height, given its current width."
 
 	^self sendMessage: LM_GETIDEALHEIGHT! !
-!SysLinkView categoriesFor: #calculateExtent:!geometry!private! !
-!SysLinkView categoriesFor: #displayValue!private!updating! !
-!SysLinkView categoriesFor: #displayValue:!private!updating! !
-!SysLinkView categoriesFor: #itemFromPoint:!enquiries!private! !
-!SysLinkView categoriesFor: #linkAt:!accessing!public! !
-!SysLinkView categoriesFor: #linkAt:ifAbsent:!accessing!public! !
-!SysLinkView categoriesFor: #linkAt:put:!accessing!public! !
-!SysLinkView categoriesFor: #links!accessing!public! !
-!SysLinkView categoriesFor: #lmGetItem:!accessing!private! !
-!SysLinkView categoriesFor: #lmSetItem:!accessing!private! !
-!SysLinkView categoriesFor: #nmClick:!event handling-win32!private! !
-!SysLinkView categoriesFor: #nmReturn:!event handling-win32!private! !
-!SysLinkView categoriesFor: #onLinkClicked:!event handling!private! !
-!SysLinkView categoriesFor: #preferredHeight!enquiries!private! !
+!UI.SysLinkView categoriesFor: #calculateExtent:!geometry!private! !
+!UI.SysLinkView categoriesFor: #displayValue!private!updating! !
+!UI.SysLinkView categoriesFor: #displayValue:!private!updating! !
+!UI.SysLinkView categoriesFor: #itemFromPoint:!enquiries!private! !
+!UI.SysLinkView categoriesFor: #linkAt:!accessing!public! !
+!UI.SysLinkView categoriesFor: #linkAt:ifAbsent:!accessing!public! !
+!UI.SysLinkView categoriesFor: #linkAt:put:!accessing!public! !
+!UI.SysLinkView categoriesFor: #links!accessing!public! !
+!UI.SysLinkView categoriesFor: #lmGetItem:!accessing!private! !
+!UI.SysLinkView categoriesFor: #lmSetItem:!accessing!private! !
+!UI.SysLinkView categoriesFor: #nmClick:!event handling-win32!private! !
+!UI.SysLinkView categoriesFor: #nmReturn:!event handling-win32!private! !
+!UI.SysLinkView categoriesFor: #onLinkClicked:!event handling!private! !
+!UI.SysLinkView categoriesFor: #preferredHeight!enquiries!private! !
 
-!SysLinkView class methodsFor!
+!UI.SysLinkView class methodsFor!
 
 initialize
 	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskSet: ICC_LINK_CLASS)!
@@ -162,7 +162,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!SysLinkView class categoriesFor: #initialize!development!initializing!private! !
-!SysLinkView class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!SysLinkView class categoriesFor: #winClassName!constants!private! !
+!UI.SysLinkView class categoriesFor: #initialize!development!initializing!private! !
+!UI.SysLinkView class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!UI.SysLinkView class categoriesFor: #winClassName!constants!private! !
 
