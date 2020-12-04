@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ContainerView subclass: #AbstractCardContainer
+UI.ContainerView subclass: #'UI.AbstractCardContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractCardContainer guid: (GUID fromString: '{87b4c718-026e-11d3-9fd7-00a0cc3e4a32}')!
-AbstractCardContainer comment: 'AbstractCardContainer is an abstract <compositeView> class that implements the base <cardView> protocol for its concrete sub-classes. A <cardView> has a fixed CardLayout manager for arranging its sub-views (which are generally known as "cards"). The cards are arranged in a stack, one on top of the other, like cards in a card file box. The <cardView> protocol provides methods for bringing individual cards to the front of the stack and allowing them to be displayed.
+UI.AbstractCardContainer guid: (Core.GUID fromString: '{87b4c718-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.AbstractCardContainer comment: 'AbstractCardContainer is an abstract <compositeView> class that implements the base <cardView> protocol for its concrete sub-classes. A <cardView> has a fixed CardLayout manager for arranging its sub-views (which are generally known as "cards"). The cards are arranged in a stack, one on top of the other, like cards in a card file box. The <cardView> protocol provides methods for bringing individual cards to the front of the stack and allowing them to be displayed.
 
 Typically one would use a <cardView> to create "tabbed" dialog boxes or multi-page wizards. There are specific concrete subclasses, CardContainer and WizardCardContainer, to do this.'!
-!AbstractCardContainer categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
-!AbstractCardContainer methodsFor!
+!UI.AbstractCardContainer categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
+!UI.AbstractCardContainer methodsFor!
 
 cardLayout
 	^self layoutManager!
@@ -143,23 +143,23 @@ validateSubViewLayouts: aLayoutContext
 	"Private - Validate the layout of the visible sub-views of the receiver."
 
 	self currentCard ifNotNil: [:card | card validateLayout: aLayoutContext]! !
-!AbstractCardContainer categoriesFor: #cardLayout!accessing!private! !
-!AbstractCardContainer categoriesFor: #cards!accessing!public! !
-!AbstractCardContainer categoriesFor: #currentCard!accessing!public! !
-!AbstractCardContainer categoriesFor: #cycleNextCard!commands!public! !
-!AbstractCardContainer categoriesFor: #cyclePreviousCard!commands!public! !
-!AbstractCardContainer categoriesFor: #defaultLayoutManager!initializing!private! !
-!AbstractCardContainer categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!AbstractCardContainer categoriesFor: #firstCard!commands!public! !
-!AbstractCardContainer categoriesFor: #lastCard!commands!public! !
-!AbstractCardContainer categoriesFor: #nextCard!commands!public! !
-!AbstractCardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
-!AbstractCardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
-!AbstractCardContainer categoriesFor: #onViewCreated!event handling!private! !
-!AbstractCardContainer categoriesFor: #previousCard!commands!public! !
-!AbstractCardContainer categoriesFor: #queryCommand:!commands!private! !
-!AbstractCardContainer categoriesFor: #tabOntoCurrentCard!operations!private! !
-!AbstractCardContainer categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!UI.AbstractCardContainer categoriesFor: #cardLayout!accessing!private! !
+!UI.AbstractCardContainer categoriesFor: #cards!accessing!public! !
+!UI.AbstractCardContainer categoriesFor: #currentCard!accessing!public! !
+!UI.AbstractCardContainer categoriesFor: #cycleNextCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #cyclePreviousCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #defaultLayoutManager!initializing!private! !
+!UI.AbstractCardContainer categoriesFor: #ensureSubViewVisible:!public!sub views! !
+!UI.AbstractCardContainer categoriesFor: #firstCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #lastCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #nextCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
+!UI.AbstractCardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
+!UI.AbstractCardContainer categoriesFor: #onViewCreated!event handling!private! !
+!UI.AbstractCardContainer categoriesFor: #previousCard!commands!public! !
+!UI.AbstractCardContainer categoriesFor: #queryCommand:!commands!private! !
+!UI.AbstractCardContainer categoriesFor: #tabOntoCurrentCard!operations!private! !
+!UI.AbstractCardContainer categoriesFor: #validateSubViewLayouts:!geometry!private! !
 
-AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
+UI.AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
 

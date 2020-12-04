@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CardLabel
+Core.Object subclass: #'UI.CardLabel'
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CardLabel guid: (GUID fromString: '{50770bcc-1797-4efb-be30-f06da60566cf}')!
-CardLabel comment: '<CardLabel>s are used to ''label'' (that is specify the text and image) the tabs in a <CardContainer>. This is achieved by setting the #arrangement of the view for each tab (typically a <ContainerView> or <ReferenceView>) to be an appropriately configured CardLabel instance.
+UI.CardLabel guid: (Core.GUID fromString: '{50770bcc-1797-4efb-be30-f06da60566cf}')!
+UI.CardLabel comment: '<CardLabel>s are used to ''label'' (that is specify the text and image) the tabs in a <CardContainer>. This is achieved by setting the #arrangement of the view for each tab (typically a <ContainerView> or <ReferenceView>) to be an appropriately configured CardLabel instance.
 
 Instance Variables:
 	text			<String> to be displayed as the tab label.
 	iconBlock	<niladicValuable> that evaluates to the <Icon> to be displayed on the tab.
 '!
-!CardLabel categoriesForClass!Kernel-Objects! !
-!CardLabel methodsFor!
+!UI.CardLabel categoriesForClass!Kernel-Objects! !
+!UI.CardLabel methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -55,19 +55,19 @@ text
 
 text: aString 
 	text := aString! !
-!CardLabel categoriesFor: #displayOn:!displaying!public! !
-!CardLabel categoriesFor: #helpId!public! !
-!CardLabel categoriesFor: #helpId:!public! !
-!CardLabel categoriesFor: #icon!accessing!public! !
-!CardLabel categoriesFor: #iconBlock!accessing!public! !
-!CardLabel categoriesFor: #iconBlock:!accessing!public! !
-!CardLabel categoriesFor: #printOn:!printing!public! !
-!CardLabel categoriesFor: #text!accessing!public! !
-!CardLabel categoriesFor: #text:!accessing!public! !
+!UI.CardLabel categoriesFor: #displayOn:!displaying!public! !
+!UI.CardLabel categoriesFor: #helpId!public! !
+!UI.CardLabel categoriesFor: #helpId:!public! !
+!UI.CardLabel categoriesFor: #icon!accessing!public! !
+!UI.CardLabel categoriesFor: #iconBlock!accessing!public! !
+!UI.CardLabel categoriesFor: #iconBlock:!accessing!public! !
+!UI.CardLabel categoriesFor: #printOn:!printing!public! !
+!UI.CardLabel categoriesFor: #text!accessing!public! !
+!UI.CardLabel categoriesFor: #text:!accessing!public! !
 
-CardLabel methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
+UI.CardLabel methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
-!CardLabel class methodsFor!
+!UI.CardLabel class methodsFor!
 
 new
 	^self text: 'Label'!
@@ -95,9 +95,9 @@ text: aString iconBlock: aNiladicValuable
 		text: aString;
 		iconBlock: aNiladicValuable;
 		yourself! !
-!CardLabel class categoriesFor: #new!instance creation!public! !
-!CardLabel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!CardLabel class categoriesFor: #stbVersion!binary filing!public! !
-!CardLabel class categoriesFor: #text:!instance creation!public! !
-!CardLabel class categoriesFor: #text:iconBlock:!instance creation!public! !
+!UI.CardLabel class categoriesFor: #new!instance creation!public! !
+!UI.CardLabel class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.CardLabel class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CardLabel class categoriesFor: #text:!instance creation!public! !
+!UI.CardLabel class categoriesFor: #text:iconBlock:!instance creation!public! !
 

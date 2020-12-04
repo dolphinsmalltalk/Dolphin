@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Card Containers'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Card Containers.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -9,16 +9,16 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AbstractCardContainer}
-	#{CardContainer}
-	#{CardLabel}
-	#{CardLayout}
-	#{WizardCardContainer}
+	#{UI.AbstractCardContainer}
+	#{UI.CardContainer}
+	#{UI.CardLabel}
+	#{UI.CardLayout}
+	#{UI.WizardCardContainer}
 ).
 
 package setMethodNames: #(
-	#(#{Presenter class} #resource_Card_container)
-	#(#{Presenter class} #resource_Wizard_card_container)
+	#(#{UI.Presenter class} #resource_Card_container)
+	#(#{UI.Presenter class} #resource_Wizard_card_container)
 ).
 
 package setPrerequisites: #(
@@ -34,40 +34,40 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #CardLabel
+Core.Object subclass: #'UI.CardLabel'
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManager subclass: #CardLayout
+UI.LayoutManager subclass: #'UI.CardLayout'
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ContainerView subclass: #AbstractCardContainer
+UI.ContainerView subclass: #'UI.AbstractCardContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractCardContainer subclass: #CardContainer
+UI.AbstractCardContainer subclass: #'UI.CardContainer'
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractCardContainer subclass: #WizardCardContainer
+UI.AbstractCardContainer subclass: #'UI.WizardCardContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Presenter class methodsFor!
+!UI.Presenter class methodsFor!
 
 resource_Card_container
 	"Answer the literal data from which the 'Card container' resource can be reconstituted.
@@ -77,7 +77,7 @@ resource_Card_container
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Card_container)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 590662 2 ##(Smalltalk.ListModel) 138 144 560 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 482 #face3d nil 1 nil nil nil 592 nil 8 1921705120 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 962 701 501 592 914 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 962 193 193 nil 27 850 138 144 34 1 914 #createAt:extent: 34 2 962 3839 21 962 701 501 416 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 1 592 1104 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(UI.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 787270 2 ##(UI.ListModel) 138 144 560 nil 1638406 ##(Kernel.IdentitySearchPolicy) 482 #face3d nil 1 nil nil nil 592 nil 8 1920388864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 1 1 962 701 501 592 914 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 962 193 193 nil 27 850 138 144 34 1 914 #createAt:extent: 34 2 962 6143 21 962 701 501 416 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 1 592 1104 nil 27)!
 
 resource_Wizard_card_container
 	"Answer the literal data from which the 'Wizard card container' resource can be reconstituted.
@@ -87,9 +87,9 @@ resource_Wizard_card_container
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Wizard_card_container)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WizardCardContainer) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 706 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 706 193 193 nil 27 )! !
-!Presenter class categoriesFor: #resource_Card_container!public!resources-views! !
-!Presenter class categoriesFor: #resource_Wizard_card_container!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.WizardCardContainer) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 706 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 706 193 193 nil 27)! !
+!UI.Presenter class categoriesFor: #resource_Card_container!public!resources-views! !
+!UI.Presenter class categoriesFor: #resource_Wizard_card_container!public!resources-views! !
 
 "End of package definition"!
 

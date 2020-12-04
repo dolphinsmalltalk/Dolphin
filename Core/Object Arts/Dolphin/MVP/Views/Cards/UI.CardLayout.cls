@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #CardLayout
+UI.LayoutManager subclass: #'UI.CardLayout'
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CardLayout guid: (GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
-CardLayout comment: 'CardLayout implements a specialised <layoutManager> to layout <view> objects within a <cardView>. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
+UI.CardLayout guid: (Core.GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.CardLayout comment: 'CardLayout implements a specialised <layoutManager> to layout <view> objects within a <cardView>. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
 
 The arrangement aspects of the managed views are used as a descriptive names for the cards. The containing <cardView> may make use of these names as it sees fit. For example, a CardContainer uses these as the names for the tabs that it displays.
 
@@ -16,8 +16,8 @@ Instance Variables:
 	currentCard 	<view> that is currently visible in the container.
 
 '!
-!CardLayout categoriesForClass!MVP-Layout Managers-Specialized! !
-!CardLayout methodsFor!
+!UI.CardLayout categoriesForClass!MVP-Layout Managers-Specialized! !
+!UI.CardLayout methodsFor!
 
 arrangementOf: aView 
 	"Answer the arrangement parameter of aView in the receiver"
@@ -100,7 +100,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	names := OrderedCollection new.!
+	names := OrderedCollection new!
 
 lastCard
 	"Show the card which is last in the z-order sequence of the 
@@ -213,28 +213,28 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!CardLayout categoriesFor: #arrangementOf:!accessing!public! !
-!CardLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!CardLayout categoriesFor: #cards!accessing!private! !
-!CardLayout categoriesFor: #cardViews!accessing!private! !
-!CardLayout categoriesFor: #currentCard!accessing!public! !
-!CardLayout categoriesFor: #cycleNextCard!operations!public! !
-!CardLayout categoriesFor: #cyclePreviousCard!operations!public! !
-!CardLayout categoriesFor: #firstCard!operations!public! !
-!CardLayout categoriesFor: #getEvents!events!private! !
-!CardLayout categoriesFor: #initialize!initializing!private! !
-!CardLayout categoriesFor: #lastCard!operations!public! !
-!CardLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!CardLayout categoriesFor: #nextCard!operations!public! !
-!CardLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!CardLayout categoriesFor: #previousCard!operations!public! !
-!CardLayout categoriesFor: #removeSubView:!public!removing! !
-!CardLayout categoriesFor: #setEvents:!events!private! !
-!CardLayout categoriesFor: #showCard:!operations!public! !
-!CardLayout categoriesFor: #showCardWithArrangement:!operations!public! !
-!CardLayout categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.CardLayout categoriesFor: #arrangementOf:!accessing!public! !
+!UI.CardLayout categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.CardLayout categoriesFor: #cards!accessing!private! !
+!UI.CardLayout categoriesFor: #cardViews!accessing!private! !
+!UI.CardLayout categoriesFor: #currentCard!accessing!public! !
+!UI.CardLayout categoriesFor: #cycleNextCard!operations!public! !
+!UI.CardLayout categoriesFor: #cyclePreviousCard!operations!public! !
+!UI.CardLayout categoriesFor: #firstCard!operations!public! !
+!UI.CardLayout categoriesFor: #getEvents!events!private! !
+!UI.CardLayout categoriesFor: #initialize!initializing!private! !
+!UI.CardLayout categoriesFor: #lastCard!operations!public! !
+!UI.CardLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.CardLayout categoriesFor: #nextCard!operations!public! !
+!UI.CardLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
+!UI.CardLayout categoriesFor: #previousCard!operations!public! !
+!UI.CardLayout categoriesFor: #removeSubView:!public!removing! !
+!UI.CardLayout categoriesFor: #setEvents:!events!private! !
+!UI.CardLayout categoriesFor: #showCard:!operations!public! !
+!UI.CardLayout categoriesFor: #showCardWithArrangement:!operations!public! !
+!UI.CardLayout categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!CardLayout class methodsFor!
+!UI.CardLayout class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
 	"Version 1 adds event instance variable and two spares."
@@ -248,6 +248,6 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!CardLayout class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!CardLayout class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CardLayout class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.CardLayout class categoriesFor: #stbVersion!binary filing!public! !
 
