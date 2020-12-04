@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #ContinuationTest
+XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.ContinuationTest'
 	instanceVariableNames: 'tmp tmp2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ContinuationTest guid: (GUID fromString: '{5f9fdcb7-fd2f-4ec2-a1dd-68f43f8a41a6}')!
-ContinuationTest comment: ''!
-!ContinuationTest categoriesForClass!Seaside-Continuations! !
-!ContinuationTest methodsFor!
+Kernel.Tests.ContinuationTest guid: (Core.GUID fromString: '{5f9fdcb7-fd2f-4ec2-a1dd-68f43f8a41a6}')!
+Kernel.Tests.ContinuationTest comment: ''!
+!Kernel.Tests.ContinuationTest categoriesForClass!Seaside-Continuations! !
+!Kernel.Tests.ContinuationTest methodsFor!
 
 runCase
 	"Bodge to prevent problem of the continuation processes running on and executing further tests"
@@ -80,11 +80,11 @@ testSimplestCallCC
 
 testVMVersion
 	self assert: VMLibrary default versionString asNumber > 5.01! !
-!ContinuationTest categoriesFor: #runCase!public!Running! !
-!ContinuationTest categoriesFor: #testBlockTemps!public!unit tests! !
-!ContinuationTest categoriesFor: #testBlockVars!public!unit tests! !
-!ContinuationTest categoriesFor: #testMethodTemps!public!unit tests! !
-!ContinuationTest categoriesFor: #testSimpleCallCC!public!unit tests! !
-!ContinuationTest categoriesFor: #testSimplestCallCC!public!unit tests! !
-!ContinuationTest categoriesFor: #testVMVersion!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #runCase!public!Running! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testBlockTemps!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testBlockVars!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testMethodTemps!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testSimpleCallCC!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testSimplestCallCC!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesFor: #testVMVersion!public!unit tests! !
 

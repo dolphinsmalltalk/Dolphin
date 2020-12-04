@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Continuation
+Core.Object subclass: #'Kernel.Continuation'
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Continuation guid: (GUID fromString: '{04fb1134-b5e1-4651-b95b-aee8814a0ec6}')!
-Continuation comment: 'Dolphin implementation of the Call Continuation class inspired by that implemented for Seaside in Squeak by Avi Bryant.
+Kernel.Continuation guid: (Core.GUID fromString: '{04fb1134-b5e1-4651-b95b-aee8814a0ec6}')!
+Kernel.Continuation comment: 'Dolphin implementation of the Call Continuation class inspired by that implemented for Seaside in Squeak by Avi Bryant.
 
 A Continuation represents the pending execution stack of a partially completed computation (or process), captured at some particular point. The Contination can be resumed by restarting it with a particular value (Continuation supports the <monadicValuable> protocol), at which point the computation takes off again from the point at which it was captured. A Continuation may be continued in this way as many times as desired, and because it can be continued with different values the end result of each computation can be different.
 
@@ -15,8 +15,8 @@ In effect a Continuation reifies the dynamic execution state of a Process at a p
 
 We believe the implementation of this class to be largely portable with the exception of #continue:with:, which restarts the copied stack in a Dolphin specific manner, terminating the calling process too (though note that this is delegated off to the Process). The means by which the stack is actually copied is very Dolphin specific, see the <ProcessCopier> class for more details.
 '!
-!Continuation categoriesForClass!System-Continuations! !
-!Continuation methodsFor!
+!Kernel.Continuation categoriesForClass!System-Continuations! !
+!Kernel.Continuation methodsFor!
 
 argumentCount
 	"Answer the <integer> number of arguments expected by the receiver."
@@ -57,19 +57,19 @@ valueWithArguments: anArray
 	^anArray size == 1 
 		ifTrue: [self value: anArray first]
 		ifFalse: [self error: 'Continuation is only possible with a single argument']! !
-!Continuation categoriesFor: #argumentCount!accessing!public! !
-!Continuation categoriesFor: #continue:with:!helpers!private! !
-!Continuation categoriesFor: #oneShotValue!evaluating!public! !
-!Continuation categoriesFor: #oneShotValue:!evaluating!public! !
-!Continuation categoriesFor: #stack!accessing!private! !
-!Continuation categoriesFor: #stack:!accessing!private! !
-!Continuation categoriesFor: #value!evaluating!public! !
-!Continuation categoriesFor: #value:!evaluating!public! !
-!Continuation categoriesFor: #valueWithArguments:!evaluating!public! !
+!Kernel.Continuation categoriesFor: #argumentCount!accessing!public! !
+!Kernel.Continuation categoriesFor: #continue:with:!helpers!private! !
+!Kernel.Continuation categoriesFor: #oneShotValue!evaluating!public! !
+!Kernel.Continuation categoriesFor: #oneShotValue:!evaluating!public! !
+!Kernel.Continuation categoriesFor: #stack!accessing!private! !
+!Kernel.Continuation categoriesFor: #stack:!accessing!private! !
+!Kernel.Continuation categoriesFor: #value!evaluating!public! !
+!Kernel.Continuation categoriesFor: #value:!evaluating!public! !
+!Kernel.Continuation categoriesFor: #valueWithArguments:!evaluating!public! !
 
-Continuation methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
+Kernel.Continuation methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
-!Continuation class methodsFor!
+!Kernel.Continuation class methodsFor!
 
 factorialExample: x
 	"Modified from the example given in Dybvig p. 81 (the example is 
@@ -86,15 +86,15 @@ factorialExample: x
 	Smalltalk removeKey: #RetryCC
 	"
 
-	^x == 0 
+	^x == 0
 		ifTrue: [
-			[:continuation | 
+			[:continuation |
 			Smalltalk at: #RetryCC put: continuation.
 			1] callCC]
 		ifFalse: [x * (self factorialExample: x - 1)]!
 
 fromContext: aStackFrame
 	^self new stack: aStackFrame copyStack! !
-!Continuation class categoriesFor: #factorialExample:!examples!public! !
-!Continuation class categoriesFor: #fromContext:!instance creation!public! !
+!Kernel.Continuation class categoriesFor: #factorialExample:!examples!public! !
+!Kernel.Continuation class categoriesFor: #fromContext:!instance creation!public! !
 

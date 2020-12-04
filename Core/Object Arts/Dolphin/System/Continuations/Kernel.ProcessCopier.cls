@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ProcessCopier
+Core.Object subclass: #'Kernel.ProcessCopier'
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProcessCopier guid: (GUID fromString: '{8645a83f-7f36-4167-b325-234f811a2264}')!
-ProcessCopier comment: '<ProcessCopier> is responsible for copying the stack of a <Process> in such a way that the copy is an independent runnable process that can be continued from the point at which the source <Process> was when the copy was taken, but which shares no temporary variables (or other execution state) with the source process. This is required to implement <Continuation>s in Dolphin, but may have other uses.
+Kernel.ProcessCopier guid: (Core.GUID fromString: '{8645a83f-7f36-4167-b325-234f811a2264}')!
+Kernel.ProcessCopier comment: '<ProcessCopier> is responsible for copying the stack of a <Process> in such a way that the copy is an independent runnable process that can be continued from the point at which the source <Process> was when the copy was taken, but which shares no temporary variables (or other execution state) with the source process. This is required to implement <Continuation>s in Dolphin, but may have other uses.
 
 Copying a <Process> in Dolphin involves the following steps:
 1) Creating a shallow copy of the source Process, the stack being the indexable part of the Process object.
@@ -25,8 +25,8 @@ The resulting <Process> copy will be suspended at the requested frame, but expec
 	copyProcess interruptWith: [Process returnValue: nil toFrame: copyProcess basicSuspendedFrame].
 
 Alternatively the copy can be patched up by pushing an appropriate return value onto the stack, and then it can be directly #resume''d. See Process>>copy for an example.'!
-!ProcessCopier categoriesForClass!System-Continuations! !
-!ProcessCopier methodsFor!
+!Kernel.ProcessCopier categoriesForClass!System-Continuations! !
+!Kernel.ProcessCopier methodsFor!
 
 copyObject: anObject 
 	^copied at: anObject
@@ -54,7 +54,7 @@ createBasicCopyOfStack: aStackFrame
 	clone
 		suspendedFrame: aStackFrame asInteger;
 		resize: aStackFrame sp;
-		name: ((String writeStream)
+		name: (String writeStream
 					nextPutAll: 'Copy of ';
 					print: source id;
 					nextPut: $:;
@@ -72,8 +72,7 @@ hasVisited: anObject
 
 initializeCopiedMap
 	copied := IdentityDictionary new.
-	copied
-		at: source put: clone!
+	copied at: source put: clone!
 
 patchExceptionHandlers
 	clone exceptionEnvironment: (self visit: source exceptionEnvironment)!
@@ -101,25 +100,25 @@ recordVisitTo: anObject
 
 visit: anObject
 	^anObject acceptProcessCopier: self! !
-!ProcessCopier categoriesFor: #copyObject:!copying!public! !
-!ProcessCopier categoriesFor: #copyStack:!copying!private! !
-!ProcessCopier categoriesFor: #createBasicCopyOfStack:!copying!private! !
-!ProcessCopier categoriesFor: #delta!accessing!public! !
-!ProcessCopier categoriesFor: #existingCopyOf:!copying!public! !
-!ProcessCopier categoriesFor: #hasVisited:!private!testing! !
-!ProcessCopier categoriesFor: #initializeCopiedMap!copying!private! !
-!ProcessCopier categoriesFor: #patchExceptionHandlers!copying!private! !
-!ProcessCopier categoriesFor: #patchFrames!copying!private! !
-!ProcessCopier categoriesFor: #patchStackSlots!copying!private! !
-!ProcessCopier categoriesFor: #recordVisitTo:!copying!public! !
-!ProcessCopier categoriesFor: #visit:!copying!public! !
+!Kernel.ProcessCopier categoriesFor: #copyObject:!copying!public! !
+!Kernel.ProcessCopier categoriesFor: #copyStack:!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #createBasicCopyOfStack:!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #delta!accessing!public! !
+!Kernel.ProcessCopier categoriesFor: #existingCopyOf:!copying!public! !
+!Kernel.ProcessCopier categoriesFor: #hasVisited:!private!testing! !
+!Kernel.ProcessCopier categoriesFor: #initializeCopiedMap!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #patchExceptionHandlers!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #patchFrames!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #patchStackSlots!copying!private! !
+!Kernel.ProcessCopier categoriesFor: #recordVisitTo:!copying!public! !
+!Kernel.ProcessCopier categoriesFor: #visit:!copying!public! !
 
-!ProcessCopier class methodsFor!
+!Kernel.ProcessCopier class methodsFor!
 
 copyStack: aStackFrame
 	"Answer a <Process> which is a copy of the frames of the process up to and including
 	the <StackFrame> argument. The answer will be suspended, but continuable."
 
 	^self new copyStack: aStackFrame! !
-!ProcessCopier class categoriesFor: #copyStack:!operations!public! !
+!Kernel.ProcessCopier class categoriesFor: #copyStack:!operations!public! !
 

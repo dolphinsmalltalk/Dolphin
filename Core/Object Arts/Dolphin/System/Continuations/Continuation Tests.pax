@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Continuation Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,11 +8,12 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ContinuationTest}
+	#{Kernel.Tests.ContinuationTest}
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).
 
@@ -20,10 +21,10 @@ package!
 
 "Class Definitions"!
 
-TestCase subclass: #ContinuationTest
+XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.ContinuationTest'
 	instanceVariableNames: 'tmp tmp2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

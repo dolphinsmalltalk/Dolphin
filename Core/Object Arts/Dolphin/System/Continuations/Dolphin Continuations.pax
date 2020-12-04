@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Continuations'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Call Continuations.
 Copyright (c) Object Arts Ltd, 2002.
@@ -29,27 +29,27 @@ Debugger
 		type: 3!!'.
 
 package setClassNames: #(
-	#{Continuation}
-	#{ProcessCopier}
+	#{Kernel.Continuation}
+	#{Kernel.ProcessCopier}
 ).
 
 package setMethodNames: #(
-	#(#{BlockClosure} #acceptProcessCopier:)
-	#(#{BlockClosure} #callCC)
-	#(#{BlockClosure} #deepenProcessCopy:)
-	#(#{Context} #acceptProcessCopier:)
-	#(#{Context} #deepenProcessCopy:)
-	#(#{ExceptionHandler} #deepenProcessCopy:)
-	#(#{ExceptionHandlerAbstract} #acceptProcessCopier:)
-	#(#{ExceptionHandlerAbstract} #deepenProcessCopy:)
-	#(#{ExceptionHandlerSet} #deepenProcessCopy:)
-	#(#{Object} #acceptProcessCopier:)
-	#(#{Process} #acceptProcessCopier:)
-	#(#{Process} #continueWith:)
-	#(#{Process} #copy)
-	#(#{Process} #postCopy)
-	#(#{StackFrame} #copyStack)
-	#(#{StackFrame} #rebase:)
+	#(#{Core.Object} #acceptProcessCopier:)
+	#(#{Core.Process} #acceptProcessCopier:)
+	#(#{Core.Process} #continueWith:)
+	#(#{Core.Process} #copy)
+	#(#{Core.Process} #postCopy)
+	#(#{Kernel.BlockClosure} #acceptProcessCopier:)
+	#(#{Kernel.BlockClosure} #callCC)
+	#(#{Kernel.BlockClosure} #deepenProcessCopy:)
+	#(#{Kernel.Context} #acceptProcessCopier:)
+	#(#{Kernel.Context} #deepenProcessCopy:)
+	#(#{Kernel.ExceptionHandler} #deepenProcessCopy:)
+	#(#{Kernel.ExceptionHandlerAbstract} #acceptProcessCopier:)
+	#(#{Kernel.ExceptionHandlerAbstract} #deepenProcessCopy:)
+	#(#{Kernel.ExceptionHandlerSet} #deepenProcessCopy:)
+	#(#{Kernel.StackFrame} #copyStack)
+	#(#{Kernel.StackFrame} #rebase:)
 ).
 
 package setPrerequisites: #(
@@ -60,90 +60,28 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #Continuation
+Core.Object subclass: #'Kernel.Continuation'
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ProcessCopier
+Core.Object subclass: #'Kernel.ProcessCopier'
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!BlockClosure methodsFor!
-
-acceptProcessCopier: aProcessCopier 
-	^self isClean ifTrue: [self] ifFalse: [aProcessCopier copyObject: self]!
-
-callCC
-	"Answer a <Contination> which contains a copy of the active process.
-	When the continuation is later evaluated, it is like returning a value from 
-	this frame again."
-
-	^self value: (Continuation fromContext: Processor activeProcess topFrame sender)!
-
-deepenProcessCopy: aProcessCopier 
-	outer isNil ifFalse: [outer := aProcessCopier visit: outer].
-	"Visit the copied values in case referring to an object that must be copied"
-	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
-!BlockClosure categoriesFor: #acceptProcessCopier:!copying!public! !
-!BlockClosure categoriesFor: #callCC!evaluating!public! !
-!BlockClosure categoriesFor: #deepenProcessCopy:!copying!public! !
-
-!Context methodsFor!
-
-acceptProcessCopier: aProcessCopier
-	^aProcessCopier copyObject: self!
-
-deepenProcessCopy: aProcessCopier 
-	(outer isInteger and: [outer ~~ 0]) ifTrue: [outer := (outer + aProcessCopier delta) asStackPointer].
-	block := aProcessCopier visit: block.
-	"Visit the shared variables in case referring to an object that must be copied"
-	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
-!Context categoriesFor: #acceptProcessCopier:!copying!public! !
-!Context categoriesFor: #deepenProcessCopy:!copying!public! !
-
-!ExceptionHandler methodsFor!
-
-deepenProcessCopy: aProcessCopier
-	super deepenProcessCopy: aProcessCopier.
-	handler := aProcessCopier visit: handler! !
-!ExceptionHandler categoriesFor: #deepenProcessCopy:!copying!private! !
-
-!ExceptionHandlerAbstract methodsFor!
-
-acceptProcessCopier: aProcessCopier
-	^aProcessCopier copyObject: self!
-
-deepenProcessCopy: aProcessCopier
-	protectedBlock := aProcessCopier visit: protectedBlock.
-	returnContinuation := aProcessCopier visit: returnContinuation.
-	outer := aProcessCopier visit: outer! !
-!ExceptionHandlerAbstract categoriesFor: #acceptProcessCopier:!copying!public! !
-!ExceptionHandlerAbstract categoriesFor: #deepenProcessCopy:!copying!private! !
-
-!ExceptionHandlerSet methodsFor!
-
-deepenProcessCopy: aProcessCopier
-	super deepenProcessCopy: aProcessCopier.
-	handlers := handlers shallowCopy.
-	2 to: handlers size
-		by: 2
-		do: [:i | handlers at: i put: (aProcessCopier visit: (handlers at: i))]! !
-!ExceptionHandlerSet categoriesFor: #deepenProcessCopy:!copying!private! !
-
-!Object methodsFor!
+!Core.Object methodsFor!
 
 acceptProcessCopier: aProcessCopier
 	^self! !
-!Object categoriesFor: #acceptProcessCopier:!copying!public! !
+!Core.Object categoriesFor: #acceptProcessCopier:!copying!public! !
 
-!Process methodsFor!
+!Core.Process methodsFor!
 
 acceptProcessCopier: aProcessCopier
 	^aProcessCopier existingCopyOf: self!
@@ -163,7 +101,7 @@ copy
 	"Answer a suspended, but resumable, copy of this <Process>. Note that if the receiver is
 	waiting on a Semaphore, the copy will _not_ be, it will always be in a suspended state."
 
-	^self isActive 
+	^self isActive
 		ifTrue: 
 			[| copy sp suspended |
 			copy := ProcessCopier copyStack: self topFrame sender.
@@ -182,12 +120,74 @@ postCopy
 	nextLink := debugger := myList := thread := nil.
 	callbackDepth := 0.
 	^self! !
-!Process categoriesFor: #acceptProcessCopier:!copying!public! !
-!Process categoriesFor: #continueWith:!helpers!private! !
-!Process categoriesFor: #copy!copying!public! !
-!Process categoriesFor: #postCopy!copying!public! !
+!Core.Process categoriesFor: #acceptProcessCopier:!copying!public! !
+!Core.Process categoriesFor: #continueWith:!helpers!private! !
+!Core.Process categoriesFor: #copy!copying!public! !
+!Core.Process categoriesFor: #postCopy!copying!public! !
 
-!StackFrame methodsFor!
+!Kernel.BlockClosure methodsFor!
+
+acceptProcessCopier: aProcessCopier 
+	^self isClean ifTrue: [self] ifFalse: [aProcessCopier copyObject: self]!
+
+callCC
+	"Answer a <Contination> which contains a copy of the active process.
+	When the continuation is later evaluated, it is like returning a value from 
+	this frame again."
+
+	^self value: (Continuation fromContext: Processor activeProcess topFrame sender)!
+
+deepenProcessCopy: aProcessCopier 
+	outer isNil ifFalse: [outer := aProcessCopier visit: outer].
+	"Visit the copied values in case referring to an object that must be copied"
+	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+!Kernel.BlockClosure categoriesFor: #acceptProcessCopier:!copying!public! !
+!Kernel.BlockClosure categoriesFor: #callCC!evaluating!public! !
+!Kernel.BlockClosure categoriesFor: #deepenProcessCopy:!copying!public! !
+
+!Kernel.Context methodsFor!
+
+acceptProcessCopier: aProcessCopier
+	^aProcessCopier copyObject: self!
+
+deepenProcessCopy: aProcessCopier 
+	(outer isInteger and: [outer ~~ 0]) ifTrue: [outer := (outer + aProcessCopier delta) asStackPointer].
+	block := aProcessCopier visit: block.
+	"Visit the shared variables in case referring to an object that must be copied"
+	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+!Kernel.Context categoriesFor: #acceptProcessCopier:!copying!public! !
+!Kernel.Context categoriesFor: #deepenProcessCopy:!copying!public! !
+
+!Kernel.ExceptionHandler methodsFor!
+
+deepenProcessCopy: aProcessCopier
+	super deepenProcessCopy: aProcessCopier.
+	handler := aProcessCopier visit: handler! !
+!Kernel.ExceptionHandler categoriesFor: #deepenProcessCopy:!copying!private! !
+
+!Kernel.ExceptionHandlerAbstract methodsFor!
+
+acceptProcessCopier: aProcessCopier
+	^aProcessCopier copyObject: self!
+
+deepenProcessCopy: aProcessCopier
+	protectedBlock := aProcessCopier visit: protectedBlock.
+	returnContinuation := aProcessCopier visit: returnContinuation.
+	outer := aProcessCopier visit: outer! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #acceptProcessCopier:!copying!public! !
+!Kernel.ExceptionHandlerAbstract categoriesFor: #deepenProcessCopy:!copying!private! !
+
+!Kernel.ExceptionHandlerSet methodsFor!
+
+deepenProcessCopy: aProcessCopier
+	super deepenProcessCopy: aProcessCopier.
+	handlers := handlers shallowCopy.
+	2 to: handlers size
+		by: 2
+		do: [:i | handlers at: i put: (aProcessCopier visit: (handlers at: i))]! !
+!Kernel.ExceptionHandlerSet categoriesFor: #deepenProcessCopy:!copying!private! !
+
+!Kernel.StackFrame methodsFor!
 
 copyStack
 	^ProcessCopier copyStack: self!
@@ -199,8 +199,8 @@ rebase: aProcessCopier
 	senderAddress == 0 ifFalse: [self basicSender: (senderAddress + delta) asStackPointer].
 	self basicSP: (self basicSP + delta) asStackPointer.
 	self basicBP: (self basicBP + delta) asStackPointer! !
-!StackFrame categoriesFor: #copyStack!copying!public! !
-!StackFrame categoriesFor: #rebase:!copying!public! !
+!Kernel.StackFrame categoriesFor: #copyStack!copying!public! !
+!Kernel.StackFrame categoriesFor: #rebase:!copying!public! !
 
 "End of package definition"!
 
