@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree List Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree List Presenter.
 Copyright (c) Object Arts Ltd. 2002.
@@ -11,7 +11,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{TreeListPresenter}
+	#{UI.TreeListPresenter}
 ).
 
 package setPrerequisites: #(
@@ -28,10 +28,10 @@ package!
 
 "Class Definitions"!
 
-TreePresenter subclass: #TreeListPresenter
+UI.TreePresenter subclass: #'UI.TreeListPresenter'
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

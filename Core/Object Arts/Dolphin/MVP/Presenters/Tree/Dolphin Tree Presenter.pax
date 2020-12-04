@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree Presenter.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -11,7 +11,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{TreePresenter}
+	#{UI.TreePresenter}
 ).
 
 package setPrerequisites: #(
@@ -26,10 +26,10 @@ package!
 
 "Class Definitions"!
 
-SelectableItemsPresenter subclass: #TreePresenter
+UI.SelectableItemsPresenter subclass: #'UI.TreePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TreePresenter subclass: #TreeListPresenter
+UI.TreePresenter subclass: #'UI.TreeListPresenter'
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeListPresenter guid: (GUID fromString: '{2e6f856c-a8b4-4d90-8e8f-adf2452e4bbf}')!
-TreeListPresenter comment: 'TreeListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <treeView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list. The hierarchical presentation is controlled by a tree model (set separately using #treeModel:) but the actual visible nodes are determined by the contents of the list. Only those nodes that are actually in the list or are parents of those in the list will be displayed.
+UI.TreeListPresenter guid: (Core.GUID fromString: '{2e6f856c-a8b4-4d90-8e8f-adf2452e4bbf}')!
+UI.TreeListPresenter comment: 'TreeListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <treeView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list. The hierarchical presentation is controlled by a tree model (set separately using #treeModel:) but the actual visible nodes are determined by the contents of the list. Only those nodes that are actually in the list or are parents of those in the list will be displayed.
 
 Note the <treeModel> must be a VirtualTreeModel, and it is assumed that the list represents a view onto the full set (i.e. a subset) of items in the tree. Furthermore it is assumed that when a new item is added to the list, it is already in the underlying tree, therefore items added to the list are not automatically added into the tree model.
 
@@ -22,8 +22,8 @@ Class Variables:
 
 
 '!
-!TreeListPresenter categoriesForClass!MVP-Presenters! !
-!TreeListPresenter methodsFor!
+!UI.TreeListPresenter categoriesForClass!MVP-Presenters! !
+!UI.TreeListPresenter methodsFor!
 
 addNewNode: anObject 
 	"Private - The <Object> argument has been added to the receiver's model (the list). Update
@@ -116,7 +116,7 @@ model
 
 	^listModel!
 
-model: aListModel 
+model: aListModel
 	"Set the list model used to display the contents of the receiver"
 
 	listModel := aListModel.
@@ -280,35 +280,35 @@ viewModel
 	connected to the receiver's tree model - not the receiver's list model"
 
 	^self treeModel! !
-!TreeListPresenter categoriesFor: #addNewNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #addNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #connectModel!initializing!private! !
-!TreeListPresenter categoriesFor: #connectTreeModel!initializing!private! !
-!TreeListPresenter categoriesFor: #doModelUpdate:!helpers!private!updating! !
-!TreeListPresenter categoriesFor: #initialize!initializing!private! !
-!TreeListPresenter categoriesFor: #isInTree:!helpers!private! !
-!TreeListPresenter categoriesFor: #list!accessing!public! !
-!TreeListPresenter categoriesFor: #list:!accessing!public! !
-!TreeListPresenter categoriesFor: #model!accessing!private! !
-!TreeListPresenter categoriesFor: #model:!accessing!public! !
-!TreeListPresenter categoriesFor: #onListChanged!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:addedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:removedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:updatedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItem:addedInParent:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItem:movedToParent:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItemUpdated:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeRemovingItem:!event handling!private! !
-!TreeListPresenter categoriesFor: #rebuildFilter!private!updating! !
-!TreeListPresenter categoriesFor: #refresh!private!updating! !
-!TreeListPresenter categoriesFor: #removeNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #treeModel!accessing!private! !
-!TreeListPresenter categoriesFor: #treeModel:!accessing!public! !
-!TreeListPresenter categoriesFor: #updateTree!private!updating! !
-!TreeListPresenter categoriesFor: #viewModel!accessing!private! !
+!UI.TreeListPresenter categoriesFor: #addNewNode:!helpers!private! !
+!UI.TreeListPresenter categoriesFor: #addNode:!helpers!private! !
+!UI.TreeListPresenter categoriesFor: #connectModel!initializing!private! !
+!UI.TreeListPresenter categoriesFor: #connectTreeModel!initializing!private! !
+!UI.TreeListPresenter categoriesFor: #doModelUpdate:!helpers!private!updating! !
+!UI.TreeListPresenter categoriesFor: #initialize!initializing!private! !
+!UI.TreeListPresenter categoriesFor: #isInTree:!helpers!private! !
+!UI.TreeListPresenter categoriesFor: #list!accessing!public! !
+!UI.TreeListPresenter categoriesFor: #list:!accessing!public! !
+!UI.TreeListPresenter categoriesFor: #model!accessing!private! !
+!UI.TreeListPresenter categoriesFor: #model:!accessing!public! !
+!UI.TreeListPresenter categoriesFor: #onListChanged!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onListItem:addedAtIndex:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onListItem:removedAtIndex:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onListItem:updatedAtIndex:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onTreeChanged:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onTreeItem:addedInParent:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onTreeItem:movedToParent:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onTreeItemUpdated:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #onTreeRemovingItem:!event handling!private! !
+!UI.TreeListPresenter categoriesFor: #rebuildFilter!private!updating! !
+!UI.TreeListPresenter categoriesFor: #refresh!private!updating! !
+!UI.TreeListPresenter categoriesFor: #removeNode:!helpers!private! !
+!UI.TreeListPresenter categoriesFor: #treeModel!accessing!private! !
+!UI.TreeListPresenter categoriesFor: #treeModel:!accessing!public! !
+!UI.TreeListPresenter categoriesFor: #updateTree!private!updating! !
+!UI.TreeListPresenter categoriesFor: #viewModel!accessing!private! !
 
-!TreeListPresenter class methodsFor!
+!UI.TreeListPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -324,9 +324,9 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 9 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 787526 3 ##(UI.TreeModel) nil 1638406 ##(Kernel.IdentitySearchPolicy) 721670 ##(UI.TreeNode) nil nil nil 170 192 8 #() 917510 ##(Graphics.Color) #default nil 13 nil nil nil 416 nil 8 1920462864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 9 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 (ctx view presenter list includes: ctx item) 
-	ifFalse: [ctx forecolor: ctx forecolor faded]]' 8 #[37 105 17 158 159 160 17 161 180 220 6 233 0 163 164 183 106 60 106] #view #presenter #list #item #includes: #forecolor #faded #forecolor: 752 7 257 nil nil nil 170 176 592 33 #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 994 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 994 193 193 nil 27 )! !
-!TreeListPresenter class categoriesFor: #defaultModel!models!public! !
-!TreeListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+	ifFalse: [ctx forecolor: ctx forecolor faded]]' 8 #[37 105 17 158 159 160 17 161 180 220 6 233 0 163 164 183 106 60 106] #view #presenter #list #item #includes: #forecolor #faded #forecolor: 752 7 257 nil nil nil 170 176 592 33 #noIcons 1 170 192 592 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 994 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 994 193 193 nil 27)! !
+!UI.TreeListPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.TreeListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 
