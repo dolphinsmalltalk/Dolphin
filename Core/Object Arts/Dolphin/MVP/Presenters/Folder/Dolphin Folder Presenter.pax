@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Folder Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Folder Presenter.
 Copyright (c) Object Arts Ltd. 2002.'.
@@ -9,10 +9,11 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{FolderPresenter}
+	#{UI.FolderPresenter}
 ).
 
 package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'
@@ -23,10 +24,10 @@ package!
 
 "Class Definitions"!
 
-ListPresenter subclass: #FolderPresenter
+UI.ListPresenter subclass: #'UI.FolderPresenter'
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

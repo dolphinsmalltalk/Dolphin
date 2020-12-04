@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListPresenter subclass: #FolderPresenter
+UI.ListPresenter subclass: #'UI.FolderPresenter'
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FolderPresenter guid: (GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
-FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
+UI.FolderPresenter guid: (Core.GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 
 A FolderPresenter can navigate the tree hierarchy using the #expand:, #collapse: and #up <treePresenter> methods. 
 
@@ -18,8 +18,8 @@ Instance Variables:
 	openBlock		<dyadicValuable> specifying how an object should be opened.
 
 '!
-!FolderPresenter categoriesForClass!MVP-Presenters! !
-!FolderPresenter methodsFor!
+!UI.FolderPresenter categoriesForClass!MVP-Presenters! !
+!UI.FolderPresenter methodsFor!
 
 beNotSorted
 	"Change the receiver's view model to be unsorted. We override this
@@ -80,10 +80,9 @@ initialize
 	super initialize.
 	history := HistoryList new: 10.	"A fairly short history list is appropriate"
 	contentsModel := ListModel new.
-	self 
+	self
 		isAutoNavigate: true;
-		openBlock: [:presenter :object | presenter expand: object]
-!
+		openBlock: [:presenter :object | presenter expand: object]!
 
 isAutoNavigate
 	"Answer true if the receiver is in automatic navigation mode; i.e. it will
@@ -231,35 +230,35 @@ viewModel
 	connected to the receiver's contentsModel - not the receiver's tree model"
 
 	^self contents! !
-!FolderPresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
-!FolderPresenter categoriesFor: #collapse:!operations!public! !
-!FolderPresenter categoriesFor: #contents!accessing!public! !
-!FolderPresenter categoriesFor: #expand:!operations!public! !
-!FolderPresenter categoriesFor: #expandAll:!operations!public! !
-!FolderPresenter categoriesFor: #historyBack!commands!public! !
-!FolderPresenter categoriesFor: #historyForward!commands!public! !
-!FolderPresenter categoriesFor: #initialize!initializing!private! !
-!FolderPresenter categoriesFor: #isAutoNavigate!accessing!public! !
-!FolderPresenter categoriesFor: #isAutoNavigate:!accessing!public! !
-!FolderPresenter categoriesFor: #list!accessing!private! !
-!FolderPresenter categoriesFor: #list:!accessing!private! !
-!FolderPresenter categoriesFor: #model:!accessing!public! !
-!FolderPresenter categoriesFor: #onActionPerformed!event handling!public! !
-!FolderPresenter categoriesFor: #onItem:addedInParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItem:movedToParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItem:removedFromParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItemUpdated:!event handling!private! !
-!FolderPresenter categoriesFor: #onKeyTyped:!event handling!public! !
-!FolderPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!FolderPresenter categoriesFor: #openBlock!accessing!public! !
-!FolderPresenter categoriesFor: #openBlock:!accessing!public! !
-!FolderPresenter categoriesFor: #queryCommand:!commands!private! !
-!FolderPresenter categoriesFor: #up!commands!public! !
-!FolderPresenter categoriesFor: #viewModel!accessing!private! !
+!UI.FolderPresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
+!UI.FolderPresenter categoriesFor: #collapse:!operations!public! !
+!UI.FolderPresenter categoriesFor: #contents!accessing!public! !
+!UI.FolderPresenter categoriesFor: #expand:!operations!public! !
+!UI.FolderPresenter categoriesFor: #expandAll:!operations!public! !
+!UI.FolderPresenter categoriesFor: #historyBack!commands!public! !
+!UI.FolderPresenter categoriesFor: #historyForward!commands!public! !
+!UI.FolderPresenter categoriesFor: #initialize!initializing!private! !
+!UI.FolderPresenter categoriesFor: #isAutoNavigate!accessing!public! !
+!UI.FolderPresenter categoriesFor: #isAutoNavigate:!accessing!public! !
+!UI.FolderPresenter categoriesFor: #list!accessing!private! !
+!UI.FolderPresenter categoriesFor: #list:!accessing!private! !
+!UI.FolderPresenter categoriesFor: #model:!accessing!public! !
+!UI.FolderPresenter categoriesFor: #onActionPerformed!event handling!public! !
+!UI.FolderPresenter categoriesFor: #onItem:addedInParent:!event handling!private! !
+!UI.FolderPresenter categoriesFor: #onItem:movedToParent:!event handling!private! !
+!UI.FolderPresenter categoriesFor: #onItem:removedFromParent:!event handling!private! !
+!UI.FolderPresenter categoriesFor: #onItemUpdated:!event handling!private! !
+!UI.FolderPresenter categoriesFor: #onKeyTyped:!event handling!public! !
+!UI.FolderPresenter categoriesFor: #onTreeChanged:!event handling!private! !
+!UI.FolderPresenter categoriesFor: #openBlock!accessing!public! !
+!UI.FolderPresenter categoriesFor: #openBlock:!accessing!public! !
+!UI.FolderPresenter categoriesFor: #queryCommand:!commands!private! !
+!UI.FolderPresenter categoriesFor: #up!commands!public! !
+!UI.FolderPresenter categoriesFor: #viewModel!accessing!private! !
 
-FolderPresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
+UI.FolderPresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
-!FolderPresenter class methodsFor!
+!UI.FolderPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -271,6 +270,6 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) instanceClass defaultIcon! !
-!FolderPresenter class categoriesFor: #defaultModel!models!public! !
-!FolderPresenter class categoriesFor: #icon!constants!public! !
+!UI.FolderPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.FolderPresenter class categoriesFor: #icon!constants!public! !
 
