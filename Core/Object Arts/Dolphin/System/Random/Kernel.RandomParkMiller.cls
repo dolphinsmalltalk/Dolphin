@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RandomLinearCongruential subclass: #RandomParkMiller
+Kernel.RandomLinearCongruential subclass: #'Kernel.RandomParkMiller'
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RandomParkMiller guid: (GUID fromString: '{a3ea36ec-2371-4039-bc76-4dc1fe8e69c6}')!
-RandomParkMiller comment: '<RandomParkMiller> is a specialized <RandomLinearCongruential> stream that provides an optimised implementation of Park and Miller''s ''Minimum Standard''  linear congruential pseudo-random number generator (see ''Numerical Recipes in C'', 2nd Edition; Press, Flannery, Teukolsky and Vetterling; Cambridge University Press, 1992).
+Kernel.RandomParkMiller guid: (Core.GUID fromString: '{a3ea36ec-2371-4039-bc76-4dc1fe8e69c6}')!
+Kernel.RandomParkMiller comment: '<RandomParkMiller> is a specialized <RandomLinearCongruential> stream that provides an optimised implementation of Park and Miller''s ''Minimum Standard''  linear congruential pseudo-random number generator (see ''Numerical Recipes in C'', 2nd Edition; Press, Flannery, Teukolsky and Vetterling; Cambridge University Press, 1992).
 
 RandomParkMiller differs from a generic RandomLinearCongruential generator initialised with the same constants in that it is implemented using floating point arithmetic. This makes it about twice as fast as the RandomLinearCongruential equivalent, because the latter uses large-integer arithmetic when initialised with the Park-Miller constants.'!
-!RandomParkMiller categoriesForClass!Collections-Streams! !
-!RandomParkMiller methodsFor!
+!Kernel.RandomParkMiller categoriesForClass!Collections-Streams! !
+!Kernel.RandomParkMiller methodsFor!
 
 lcg
 	| remainder quotient answer |
@@ -33,11 +33,11 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	seed := 1.0.
 	quo := (modulus quo: multiplier) asFloat.
 	rem := (modulus \\ multiplier) asFloat! !
-!RandomParkMiller categoriesFor: #lcg!helpers!private! !
-!RandomParkMiller categoriesFor: #seed:!accessing!public! !
-!RandomParkMiller categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!Kernel.RandomParkMiller categoriesFor: #lcg!helpers!private! !
+!Kernel.RandomParkMiller categoriesFor: #seed:!accessing!public! !
+!Kernel.RandomParkMiller categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
 
-!RandomParkMiller class methodsFor!
+!Kernel.RandomParkMiller class methodsFor!
 
 new
 	^super 
@@ -49,6 +49,6 @@ newModulus: mInteger multiplier: aInteger increment: cInteger
 	"This generator only supports a fixed set of constants."
 
 	^self shouldNotImplement! !
-!RandomParkMiller class categoriesFor: #new!instance creation!public! !
-!RandomParkMiller class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
+!Kernel.RandomParkMiller class categoriesFor: #new!instance creation!public! !
+!Kernel.RandomParkMiller class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
 

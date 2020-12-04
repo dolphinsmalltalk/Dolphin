@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Random subclass: #RandomLinearCongruential
+Core.Random subclass: #'Kernel.RandomLinearCongruential'
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RandomLinearCongruential guid: (GUID fromString: '{23d4b049-ae11-4fd4-872a-7fa0b04b2e6b}')!
-RandomLinearCongruential comment: '<RandomLinearCongruential> is a specialized <Random> stream that provides generic implementation of the Linear Congruential class of pseudo-random number generators. 
+Kernel.RandomLinearCongruential guid: (Core.GUID fromString: '{23d4b049-ae11-4fd4-872a-7fa0b04b2e6b}')!
+Kernel.RandomLinearCongruential comment: '<RandomLinearCongruential> is a specialized <Random> stream that provides generic implementation of the Linear Congruential class of pseudo-random number generators. 
 
 LCG generators are of the form:
 	X[k] = ((a * X[k-1]) + c) mod m
 The values of a, c, and m are the multiplier, increment and modulus constants respectively. These values are configurable in instances of RandomLinearCongruential, but they must be chosen very carefully to give good results. The instance creation method #newParkMiller answers an instance configured as Park & Miller''s "minimum standard" generator, which is a reasonable choice as a default random number generator, but it is inadequate for crypographic applications. Other suitable values for a, c, and m can easily be found on the net, including those with much larger periods.'!
-!RandomLinearCongruential categoriesForClass!Collections-Streams! !
-!RandomLinearCongruential methodsFor!
+!Kernel.RandomLinearCongruential categoriesForClass!Collections-Streams! !
+!Kernel.RandomLinearCongruential methodsFor!
 
 lcg
 	^seed * multiplier + increment rem: modulus!
@@ -35,12 +35,12 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	multiplier := mulInteger.
 	increment := incInteger.
 	seed := 1! !
-!RandomLinearCongruential categoriesFor: #lcg!helpers!private! !
-!RandomLinearCongruential categoriesFor: #next!accessing!public! !
-!RandomLinearCongruential categoriesFor: #peek!accessing!public! !
-!RandomLinearCongruential categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!Kernel.RandomLinearCongruential categoriesFor: #lcg!helpers!private! !
+!Kernel.RandomLinearCongruential categoriesFor: #next!accessing!public! !
+!Kernel.RandomLinearCongruential categoriesFor: #peek!accessing!public! !
+!Kernel.RandomLinearCongruential categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
 
-!RandomLinearCongruential class methodsFor!
+!Kernel.RandomLinearCongruential class methodsFor!
 
 newANSIC
 	"Answer a new <RandomLinearCongruential> configured as the ANSI C rand() generator."
@@ -78,8 +78,8 @@ newParkMiller2
 		newModulus: 16r7FFFFFFF
 		multiplier: 48271
 		increment: 0! !
-!RandomLinearCongruential class categoriesFor: #newANSIC!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newParkMiller!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newParkMiller2!instance creation!public! !
+!Kernel.RandomLinearCongruential class categoriesFor: #newANSIC!instance creation!public! !
+!Kernel.RandomLinearCongruential class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
+!Kernel.RandomLinearCongruential class categoriesFor: #newParkMiller!instance creation!public! !
+!Kernel.RandomLinearCongruential class categoriesFor: #newParkMiller2!instance creation!public! !
 

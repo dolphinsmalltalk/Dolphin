@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Random subclass: #RandomCRT
+Core.Random subclass: #'OS.RandomCRT'
 	instanceVariableNames: 'next'
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RandomCRT guid: (GUID fromString: '{f895d18e-e50f-4651-8a7d-9d04137dd05e}')!
-RandomCRT comment: ''!
-!RandomCRT categoriesForClass!Collections-Streams! !
-!RandomCRT methodsFor!
+OS.RandomCRT guid: (Core.GUID fromString: '{f895d18e-e50f-4651-8a7d-9d04137dd05e}')!
+OS.RandomCRT comment: ''!
+!OS.RandomCRT categoriesForClass!Collections-Streams! !
+!OS.RandomCRT methodsFor!
 
 next
 	"Answer a pseudo-Random floating point number between 0 and 1.
@@ -33,12 +33,12 @@ peek
 
 	^next ifNil: [next := CRTLibrary default rand / ##(RAND_MAX + 1 asFloat)]!
 
-seed: anInteger 
+seed: anInteger
 	"Set the seed of the Random stream to anInteger (or 1 if zero)."
 
 	CRTLibrary default srand: anInteger.
 	super seed: anInteger! !
-!RandomCRT categoriesFor: #next!accessing!public! !
-!RandomCRT categoriesFor: #peek!accessing!public! !
-!RandomCRT categoriesFor: #seed:!accessing!public! !
+!OS.RandomCRT categoriesFor: #next!accessing!public! !
+!OS.RandomCRT categoriesFor: #peek!accessing!public! !
+!OS.RandomCRT categoriesFor: #seed:!accessing!public! !
 

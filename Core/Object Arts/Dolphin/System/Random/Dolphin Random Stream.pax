@@ -1,14 +1,14 @@
 ﻿| package |
 package := Package name: 'Dolphin Random Stream'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{Random}
-	#{RandomLinearCongruential}
-	#{RandomParkMiller}
+	#{Core.Random}
+	#{Kernel.RandomLinearCongruential}
+	#{Kernel.RandomParkMiller}
 ).
 
 package setPrerequisites: #(
@@ -19,22 +19,22 @@ package!
 
 "Class Definitions"!
 
-Stream subclass: #Random
+Core.Stream subclass: #'Core.Random'
 	instanceVariableNames: 'seed'
 	classVariableNames: 'Default DefaultGeneratorClass'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Random subclass: #RandomLinearCongruential
+Core.Random subclass: #'Kernel.RandomLinearCongruential'
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RandomLinearCongruential subclass: #RandomParkMiller
+Kernel.RandomLinearCongruential subclass: #'Kernel.RandomParkMiller'
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
