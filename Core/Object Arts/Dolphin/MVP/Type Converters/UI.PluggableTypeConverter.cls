@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TypeConverter subclass: #PluggableTypeConverter
+UI.TypeConverter subclass: #'UI.PluggableTypeConverter'
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableTypeConverter guid: (GUID fromString: '{54bed5f3-b28b-4731-9baa-db8de92bef40}')!
-PluggableTypeConverter comment: '<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
+UI.PluggableTypeConverter guid: (Core.GUID fromString: '{54bed5f3-b28b-4731-9baa-db8de92bef40}')!
+UI.PluggableTypeConverter comment: '<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
 
 Instance Variables:
 	leftToRightBlock		<monadicValuable> which, when evaluated against left value, yields right value
 	rightToLeftBlock		<monadicValuable> which, when evaluated against right value, yields left value
 
 '!
-!PluggableTypeConverter categoriesForClass!MVP-Type Converters-General! !
-!PluggableTypeConverter methodsFor!
+!UI.PluggableTypeConverter categoriesForClass!MVP-Type Converters-General! !
+!UI.PluggableTypeConverter methodsFor!
 
 leftToRight: anObject
 	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
@@ -46,15 +46,15 @@ setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
 	noop := [:obj | obj].
 	leftToRightBlock := leftMonadicValuable ?? noop.
 	rightToLeftBlock := rightMonadicValuable ?? noop! !
-!PluggableTypeConverter categoriesFor: #leftToRight:!operations!private! !
-!PluggableTypeConverter categoriesFor: #leftToRightBlock!accessing!public! !
-!PluggableTypeConverter categoriesFor: #leftToRightBlock:!accessing!public! !
-!PluggableTypeConverter categoriesFor: #rightToLeft:!operations!private! !
-!PluggableTypeConverter categoriesFor: #rightToLeftBlock!accessing!public! !
-!PluggableTypeConverter categoriesFor: #rightToLeftBlock:!accessing!public! !
-!PluggableTypeConverter categoriesFor: #setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
+!UI.PluggableTypeConverter categoriesFor: #leftToRight:!operations!private! !
+!UI.PluggableTypeConverter categoriesFor: #leftToRightBlock!accessing!public! !
+!UI.PluggableTypeConverter categoriesFor: #leftToRightBlock:!accessing!public! !
+!UI.PluggableTypeConverter categoriesFor: #rightToLeft:!operations!private! !
+!UI.PluggableTypeConverter categoriesFor: #rightToLeftBlock!accessing!public! !
+!UI.PluggableTypeConverter categoriesFor: #rightToLeftBlock:!accessing!public! !
+!UI.PluggableTypeConverter categoriesFor: #setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
 
-!PluggableTypeConverter class methodsFor!
+!UI.PluggableTypeConverter class methodsFor!
 
 leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable 
 	"Answer a new instance of the receiver that converts between values 
@@ -68,6 +68,6 @@ leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable
 
 new
 	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
-!PluggableTypeConverter class categoriesFor: #leftToRight:rightToLeft:!instance creation!public! !
-!PluggableTypeConverter class categoriesFor: #new!public! !
+!UI.PluggableTypeConverter class categoriesFor: #leftToRight:rightToLeft:!instance creation!public! !
+!UI.PluggableTypeConverter class categoriesFor: #new!public! !
 

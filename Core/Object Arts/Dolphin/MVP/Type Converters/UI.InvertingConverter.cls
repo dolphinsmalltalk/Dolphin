@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TypeConverter subclass: #InvertingConverter
+UI.TypeConverter subclass: #'UI.InvertingConverter'
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InvertingConverter guid: (GUID fromString: '{87b4c705-026e-11d3-9fd7-00a0cc3e4a32}')!
-InvertingConverter comment: 'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
+UI.InvertingConverter guid: (Core.GUID fromString: '{87b4c705-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.InvertingConverter comment: 'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
 
 Example:
 
@@ -20,8 +20,8 @@ Instance Variables:
 	wrapped	<typeConverter> being inverted.
 
 '!
-!InvertingConverter categoriesForClass!MVP-Type Converters-General! !
-!InvertingConverter methodsFor!
+!UI.InvertingConverter categoriesForClass!MVP-Type Converters-General! !
+!UI.InvertingConverter methodsFor!
 
 convertFromLeftToRight: anObject
 	"Converts anObject, to another type by applying the reverse of our
@@ -55,13 +55,13 @@ wrappedConverter: aTypeConverter
 
 	wrappedConverter := aTypeConverter
 ! !
-!InvertingConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
-!InvertingConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
-!InvertingConverter categoriesFor: #inverted!operations!public! !
-!InvertingConverter categoriesFor: #wrappedConverter!accessing!private! !
-!InvertingConverter categoriesFor: #wrappedConverter:!accessing!private! !
+!UI.InvertingConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
+!UI.InvertingConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
+!UI.InvertingConverter categoriesFor: #inverted!operations!public! !
+!UI.InvertingConverter categoriesFor: #wrappedConverter!accessing!private! !
+!UI.InvertingConverter categoriesFor: #wrappedConverter:!accessing!private! !
 
-!InvertingConverter class methodsFor!
+!UI.InvertingConverter class methodsFor!
 
 inverting: aTypeConverter
 	"Create an instance of the receiver that wraps aTypeConverter to effectively
@@ -73,6 +73,6 @@ new
 	"Use #inverting:"
 
 	self shouldNotImplement! !
-!InvertingConverter class categoriesFor: #inverting:!instance creation!public! !
-!InvertingConverter class categoriesFor: #new!instance creation!public! !
+!UI.InvertingConverter class categoriesFor: #inverting:!instance creation!public! !
+!UI.InvertingConverter class categoriesFor: #new!instance creation!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Type Converters'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework Type Converters.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -9,13 +9,13 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{AbstractToTextConverter}
-	#{EvaluationConverter}
-	#{InvertingConverter}
-	#{MappingConverter}
-	#{NullConverter}
-	#{PluggableTypeConverter}
-	#{TypeConverter}
+	#{UI.AbstractToTextConverter}
+	#{UI.EvaluationConverter}
+	#{UI.InvertingConverter}
+	#{UI.MappingConverter}
+	#{UI.NullConverter}
+	#{UI.PluggableTypeConverter}
+	#{UI.TypeConverter}
 ).
 
 package setPrerequisites: #(
@@ -26,46 +26,46 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #TypeConverter
+Core.Object subclass: #'UI.TypeConverter'
 	instanceVariableNames: 'leftNullValue rightNullValue'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #AbstractToTextConverter
+UI.TypeConverter subclass: #'UI.AbstractToTextConverter'
 	instanceVariableNames: 'locale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #EvaluationConverter
+UI.TypeConverter subclass: #'UI.EvaluationConverter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #InvertingConverter
+UI.TypeConverter subclass: #'UI.InvertingConverter'
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #MappingConverter
+UI.TypeConverter subclass: #'UI.MappingConverter'
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #NullConverter
+UI.TypeConverter subclass: #'UI.NullConverter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverter subclass: #PluggableTypeConverter
+UI.TypeConverter subclass: #'UI.PluggableTypeConverter'
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
