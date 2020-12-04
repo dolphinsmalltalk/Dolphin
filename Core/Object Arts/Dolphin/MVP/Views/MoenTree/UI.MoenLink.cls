@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Link subclass: #MoenLink
+Core.Link subclass: #'UI.MoenLink'
 	instanceVariableNames: 'x y'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoenLink guid: (GUID fromString: '{68f4ac02-2f95-11d3-93ba-00a024ca708a}')!
-MoenLink comment: 'MoenLink is a private helper class that is part of the implementation of the <MoenTreeView>'!
-!MoenLink categoriesForClass!Collections-Support!MVP-Views-Support! !
-!MoenLink methodsFor!
+UI.MoenLink guid: (Core.GUID fromString: '{68f4ac02-2f95-11d3-93ba-00a024ca708a}')!
+UI.MoenLink comment: 'MoenLink is a private helper class that is part of the implementation of the <MoenTreeView>'!
+!UI.MoenLink categoriesForClass!Collections-Support!MVP-Views-Support! !
+!UI.MoenLink methodsFor!
 
 printOn: aStream
 	"Append a textual representation of the receiver to the <puttableStream> argument
@@ -37,16 +37,16 @@ y
 	"Private - Answer the y-coordinate."
 
 	^y! !
-!MoenLink categoriesFor: #printOn:!development!printing!public! !
-!MoenLink categoriesFor: #setX:y:!initializing!private! !
-!MoenLink categoriesFor: #x!accessing!private! !
-!MoenLink categoriesFor: #y!accessing!private! !
+!UI.MoenLink categoriesFor: #printOn:!development!printing!public! !
+!UI.MoenLink categoriesFor: #setX:y:!initializing!private! !
+!UI.MoenLink categoriesFor: #x!accessing!private! !
+!UI.MoenLink categoriesFor: #y!accessing!private! !
 
-!MoenLink class methodsFor!
+!UI.MoenLink class methodsFor!
 
 x: x y: y nextLink: aLink
 	"Answer a new, initialized, instance of the receiver."
 
 	^(self nextLink: aLink) setX: x y: y! !
-!MoenLink class categoriesFor: #x:y:nextLink:!instance creation!public! !
+!UI.MoenLink class categoriesFor: #x:y:nextLink:!instance creation!public! !
 

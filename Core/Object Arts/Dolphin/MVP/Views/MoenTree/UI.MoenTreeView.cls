@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #MoenTreeView
+UI.View subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
 	classVariableNames: 'ViewModes'
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoExpandingMask' -> 16r8000000.
@@ -11,8 +11,8 @@ View subclass: #MoenTreeView
 		'MultilineMask' -> 16rA010.
 		'SingleLineMask' -> 16r8024
 	}!
-MoenTreeView guid: (GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
-MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
+UI.MoenTreeView guid: (Core.GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
+UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
 	''Drawing Dynamic Trees''
@@ -46,8 +46,8 @@ Class Variables:
 	MultilineMask		<integer>. DrawText() flags combination for multiline text node labels.
 	SingleLineMask		<integer>. DrawText() flags combination for singleline text node labels.
 '!
-!MoenTreeView categoriesForClass!MVP-Views! !
-!MoenTreeView methodsFor!
+!UI.MoenTreeView categoriesForClass!MVP-Views! !
+!UI.MoenTreeView methodsFor!
 
 addTreeFor: anObject parentNode: aMoenTreeNode
 	"Private - Add a new node for anObject and for each of its children if auto-expanding,, under the 
@@ -75,17 +75,17 @@ attachParent: aMoenTreeNode height: anInteger
 	aMoenTreeNode child offset: (parentSpacing + nodeWidth) @ y1.
 	contour := aMoenTreeNode contour.
 	contour
-		upperHead: (MoenLink 
+		upperHead: (MoenLink
 					x: nodeWidth
 					y: 0
-					nextLink: (MoenLink 
+					nextLink: (MoenLink
 							x: parentSpacing
 							y: y1
 							nextLink: contour upperHead));
-		lowerHead: (MoenLink 
+		lowerHead: (MoenLink
 					x: nodeWidth
 					y: 0
-					nextLink: (MoenLink 
+					nextLink: (MoenLink
 							x: parentSpacing
 							y: y2
 							nextLink: contour lowerHead))!
@@ -141,24 +141,24 @@ basicSelection: aMoenTreeNode cause: aSymbol
 					self onSelChanged]].
 	^selection!
 
-bridge: line1 and: x1 and: y1 and: line2 and: x2 and: y2 
+bridge: line1 and: x1 and: y1 and: line2 and: x2 and: y2
 	"Private - "
 
 	| dy dx r x y |
 	x := line2 x.
 	dx := x2 + x - x1.
 	y := line2 y.
-	x == 0 
+	x == 0
 		ifTrue: [dy := y]
 		ifFalse: 
 			[| s |
 			s := dx * y.
 			dy := s // x].
-	r := MoenLink 
+	r := MoenLink
 				x: dx
 				y: dy
 				nextLink: line2 nextLink.
-	line1 nextLink: (MoenLink 
+	line1 nextLink: (MoenLink
 				x: 0
 				y: y2 + y - dy - y1
 				nextLink: r).
@@ -221,34 +221,34 @@ calculateNodeExtents: aMoenTreeNode
 	self calculateNodeExtents: aMoenTreeNode forCanvas: canvas.
 	canvas free!
 
-calculateNodeExtents: aMoenTreeNode forCanvas: aCanvas 
+calculateNodeExtents: aMoenTreeNode forCanvas: aCanvas
 	"Private - Generate the cached extent of each node in the tree including and below the
 	<MoenTreeNode> argument using the <Canvas> argument as the hypothetical display medium."
 
 	| getImage dtf rect lead2 getText hasIcons |
 	getText := self getTextBlock.
 	getImage := self getImageBlock ?? [:each | nil].
-	rect := RECT new.
+	rect := RECTL new.
 	dtf := (dtFlags maskSet: DT_CALCRECT) maskClear: DT_VCENTER.
 	lead2 := (self leadingForCanvas: aCanvas) * 2.
 	hasIcons := self hasIcons.
 	aMoenTreeNode visiblePreOrderDo: 
-			[:each | 
-			each extent: (each object 
+			[:each |
+			each extent: (each object
 						ifNil: [0 @ 0]
 						ifNotNil: 
-							[:elem | 
+							[:elem |
 							| txt nodeExtent |
 							rect
 								right: maxTextExtent x;
 								bottom: 0.
 							txt := (getText value: elem) displayString.
-							aCanvas 
+							aCanvas
 								formatText: (txt isEmpty ifTrue: ['.'] ifFalse: [txt])
 								in: rect
 								flags: dtf.
 							nodeExtent := (rect right + lead2 x) @ (rect bottom + lead2 y + 1) min: maxTextExtent.
-							(hasIcons and: [(getImage value: elem) notNil]) 
+							(hasIcons and: [(getImage value: elem) notNil])
 								ifTrue: [(textInset x + nodeExtent x) @ (iconExtent y max: nodeExtent y)]
 								ifFalse: [nodeExtent]])]!
 
@@ -647,7 +647,7 @@ initialize
 	getTextBlock := self defaultGetTextBlock.
 	getImageBlock := self defaultGetImageBlock.
 	imageManager := IconImageManager current.
-	self linePen: (Pen 
+	self linePen: (Pen
 				withStyle: PS_SOLID
 				width: 1
 				color: Color face3d).
@@ -755,16 +755,16 @@ layoutLeaf: aMoenTreeNode
 	width := extent x.
 	height := extent y.
 	(contour := aMoenTreeNode contour)
-		upperTail: (MoenLink 
+		upperTail: (MoenLink
 					x: width
 					y: 0
 					nextLink: nil);
 		upperHead: contour upperTail;
-		lowerTail: (MoenLink 
+		lowerTail: (MoenLink
 					x: 0
 					y: height negated
 					nextLink: nil);
-		lowerHead: (MoenLink 
+		lowerHead: (MoenLink
 					x: width
 					y: 0
 					nextLink: contour lowerTail)!
@@ -1103,11 +1103,11 @@ onButtonDown: aMouseEvent
 onInputMaskRequired: anEvent
 	"Handler for a WM_GETDLGCODE request from Windows. Answer a combination
 	of DLGC_xxxx flags which specify the set of keyboard inputs desired."
-	
+
 	^Keyboard default isCtrlDown
 		ifTrue: [0]
-		ifFalse: [
-			"Arrow keys move selection if the Ctrl key is not down"
+		ifFalse: 
+			["Arrow keys move selection if the Ctrl key is not down"
 			DLGC_WANTARROWS]!
 
 onItem: anObject addedInParent: parentObject
@@ -1362,12 +1362,12 @@ paintButton: aRectangle on: aCanvas isExpanded: aBoolean
 				on: aCanvas
 				isExpanded: aBoolean]!
 
-paintClassicButton: aRectangle on: aCanvas isExpanded: aBoolean 
+paintClassicButton: aRectangle on: aCanvas isExpanded: aBoolean
 	| pen |
 	aCanvas rectangle: aRectangle.
 	pen := aCanvas pen: Pen black.
 	aCanvas lineFrom: aRectangle leftCenter + (2 @ 0) to: aRectangle rightCenter - (2 @ 0).
-	aBoolean 
+	aBoolean
 		ifFalse: [aCanvas lineFrom: aRectangle topCenter + (0 @ 2) to: aRectangle bottomCenter - (0 @ 2)].
 	aCanvas pen: pen!
 
@@ -1410,8 +1410,8 @@ paintNode: aMoenTreeNode on: aCanvas
 	drawFocus ifTrue: [self drawFocusRect: rect].
 	isSel ifTrue: [aCanvas restore]!
 
-paintThemeButton: aRectangle on: aCanvas isExpanded: aBoolean 
-	ThemeLibrary default 
+paintThemeButton: aRectangle on: aCanvas isExpanded: aBoolean
+	ThemeLibrary default
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TVP_GLYPH
@@ -1432,6 +1432,7 @@ parentSpacing: anInteger
 populateNode: aMoenTreeNode
 	| child |
 	self assert: [aMoenTreeNode hasExpanded not].
+	child := nil.
 	(self model childrenOf: aMoenTreeNode object) reverseDo: 
 			[:each | 
 			child := (self addTreeFor: each parentNode: aMoenTreeNode)
@@ -1619,7 +1620,7 @@ showDropHighlight: node
 
 toggleExpanded: aMoenTreeNode cause: aSymbol
 	Cursor wait showWhile: 
-			[aMoenTreeNode isExpanded 
+			[aMoenTreeNode isExpanded
 				ifTrue: [self collapseNode: aMoenTreeNode cause: aSymbol]
 				ifFalse: [self expandNode: aMoenTreeNode]]!
 
@@ -1779,167 +1780,167 @@ zip: aMoenTreeNode
 		ifTrue: [self attachParent: aMoenTreeNode height: (self join: aMoenTreeNode)]
 		ifFalse: [self layoutLeaf: aMoenTreeNode].
 	self zip: aMoenTreeNode parent! !
-!MoenTreeView categoriesFor: #addTreeFor:parentNode:!adding!private! !
-!MoenTreeView categoriesFor: #anchorNode!accessing!private! !
-!MoenTreeView categoriesFor: #attachParent:height:!private!tree layout! !
-!MoenTreeView categoriesFor: #autoExpandNode:!adding!private! !
-!MoenTreeView categoriesFor: #basicExpandNode:!operations!private! !
-!MoenTreeView categoriesFor: #basicSelection:cause:!private!selection! !
-!MoenTreeView categoriesFor: #bridge:and:and:and:and:and:!private!tree layout! !
-!MoenTreeView categoriesFor: #buttonSize!constants!private! !
-!MoenTreeView categoriesFor: #calculateClientExtent!geometry!private! !
-!MoenTreeView categoriesFor: #calculateExtent:!accessing!private! !
-!MoenTreeView categoriesFor: #calculateNodeExtents!geometry!private! !
-!MoenTreeView categoriesFor: #calculateNodeExtents:!geometry!private! !
-!MoenTreeView categoriesFor: #calculateNodeExtents:forCanvas:!geometry!private! !
-!MoenTreeView categoriesFor: #collapse!commands!public! !
-!MoenTreeView categoriesFor: #collapse:!operations!public! !
-!MoenTreeView categoriesFor: #collapseAll!commands!public! !
-!MoenTreeView categoriesFor: #collapseAll:!expanding/collapsing!public! !
-!MoenTreeView categoriesFor: #collapseNode:cause:!operations!private! !
-!MoenTreeView categoriesFor: #collapseSubtree:!operations!private! !
-!MoenTreeView categoriesFor: #connectModel!models!public! !
-!MoenTreeView categoriesFor: #defaultDrawTextFlags!adapters!constants!private! !
-!MoenTreeView categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!MoenTreeView categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
-!MoenTreeView categoriesFor: #dragLeave:!drag & drop!public! !
-!MoenTreeView categoriesFor: #dragOver:!drag & drop!public! !
-!MoenTreeView categoriesFor: #drop:!drag & drop!public! !
-!MoenTreeView categoriesFor: #dropHighlight!drag & drop!private! !
-!MoenTreeView categoriesFor: #editSelectionLabel!operations!public! !
-!MoenTreeView categoriesFor: #ensureNodeVisible:!operations!private! !
-!MoenTreeView categoriesFor: #ensureSelectionVisible!helpers!public! !
-!MoenTreeView categoriesFor: #errorNoSelection!exceptions!private! !
-!MoenTreeView categoriesFor: #expand!commands!public! !
-!MoenTreeView categoriesFor: #expand:!operations!public! !
-!MoenTreeView categoriesFor: #expandAll!commands!public! !
-!MoenTreeView categoriesFor: #expandAll:!expanding/collapsing!public! !
-!MoenTreeView categoriesFor: #expandNode:!operations!private! !
-!MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
-!MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
-!MoenTreeView categoriesFor: #fontChanged!private!updating! !
-!MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
-!MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
-!MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !
-!MoenTreeView categoriesFor: #getImageBlock!adapters!public! !
-!MoenTreeView categoriesFor: #getImageBlock:!adapters!public! !
-!MoenTreeView categoriesFor: #getTextBlock!adapters!public! !
-!MoenTreeView categoriesFor: #getTextBlock:!adapters!public! !
-!MoenTreeView categoriesFor: #hasButtons!accessing-styles!public!testing! !
-!MoenTreeView categoriesFor: #hasButtons:!accessing-styles!public! !
-!MoenTreeView categoriesFor: #hasChildren:!private!searching! !
-!MoenTreeView categoriesFor: #hasIcons!geometry!private! !
-!MoenTreeView categoriesFor: #hasSelection!public!testing! !
-!MoenTreeView categoriesFor: #hasWordWrap!private!testing! !
-!MoenTreeView categoriesFor: #hasWordWrap:!private!testing! !
-!MoenTreeView categoriesFor: #hideDropHighlight!drag & drop!private! !
-!MoenTreeView categoriesFor: #hitTest:!helpers!private! !
-!MoenTreeView categoriesFor: #hitTest:search:!helpers!private! !
-!MoenTreeView categoriesFor: #iconExtent:!accessing!private! !
-!MoenTreeView categoriesFor: #imageManager!accessing!public! !
-!MoenTreeView categoriesFor: #imageManager:!accessing!public! !
-!MoenTreeView categoriesFor: #imagePositionIn:!painting!private! !
-!MoenTreeView categoriesFor: #includesItem:!enquiries!public! !
-!MoenTreeView categoriesFor: #initialize!initializing!private! !
-!MoenTreeView categoriesFor: #invalidateGeometry!private!updating! !
-!MoenTreeView categoriesFor: #invalidateItem:!painting!public! !
-!MoenTreeView categoriesFor: #invalidateItem:andChildren:imagesOnly:!painting!public! !
-!MoenTreeView categoriesFor: #invalidateNode:imagesOnly:!painting!private! !
-!MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
-!MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
-!MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
-!MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
-!MoenTreeView categoriesFor: #join:!private!tree layout! !
-!MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !
-!MoenTreeView categoriesFor: #leadingForCanvas:!geometry!private! !
-!MoenTreeView categoriesFor: #linePen!accessing!private! !
-!MoenTreeView categoriesFor: #linePen:!accessing!private! !
-!MoenTreeView categoriesFor: #linkChild:toParent:!adding!private! !
-!MoenTreeView categoriesFor: #linkChild:toParent:after:!adding!private! !
-!MoenTreeView categoriesFor: #margin!accessing!public! !
-!MoenTreeView categoriesFor: #margin:!accessing!public! !
-!MoenTreeView categoriesFor: #maxTextExtent!accessing!private! !
-!MoenTreeView categoriesFor: #maxTextExtent:!accessing!private! !
-!MoenTreeView categoriesFor: #merge:with:!private!tree layout! !
-!MoenTreeView categoriesFor: #minimumHorizontalSpacing!constants!private! !
-!MoenTreeView categoriesFor: #moveSelectionDown!private!selection! !
-!MoenTreeView categoriesFor: #moveSelectionLeft!private!selection! !
-!MoenTreeView categoriesFor: #moveSelectionRight!private!selection! !
-!MoenTreeView categoriesFor: #moveSelectionUp!private!selection! !
-!MoenTreeView categoriesFor: #nearestNodeTo:!helpers!private! !
-!MoenTreeView categoriesFor: #nodeAtPosition:ifNone:!helpers!private! !
-!MoenTreeView categoriesFor: #nodeAtPosition:search:!helpers!private! !
-!MoenTreeView categoriesFor: #nodeForObject:!private!searching! !
-!MoenTreeView categoriesFor: #nodeForObject:ifAbsent:!private!searching! !
-!MoenTreeView categoriesFor: #nodesForObject:!private!searching! !
-!MoenTreeView categoriesFor: #offset:and:and:and:and:and:!private!tree layout! !
-!MoenTreeView categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!MoenTreeView categoriesFor: #onButtonDown:!event handling!private! !
-!MoenTreeView categoriesFor: #onInputMaskRequired:!event handling!public! !
-!MoenTreeView categoriesFor: #onItem:addedInParent:!event handling!private! !
-!MoenTreeView categoriesFor: #onItem:movedToParent:!event handling!private! !
-!MoenTreeView categoriesFor: #onItem:removedFromParent:!event handling!private! !
-!MoenTreeView categoriesFor: #onItemUpdated:!event handling!public! !
-!MoenTreeView categoriesFor: #onKeyPressed:!event handling!public! !
-!MoenTreeView categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!MoenTreeView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!MoenTreeView categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!MoenTreeView categoriesFor: #onModelChanged!event handling!public! !
-!MoenTreeView categoriesFor: #onPaintRequired:!event handling!painting!private! !
-!MoenTreeView categoriesFor: #onRightButtonPressed:!event handling!public! !
-!MoenTreeView categoriesFor: #onSelChanged!event handling!private! !
-!MoenTreeView categoriesFor: #onSelChanging:cause:!event handling!private! !
-!MoenTreeView categoriesFor: #onSelectionChanged!event handling!public! !
-!MoenTreeView categoriesFor: #onSelectionChanging:!event handling!public! !
-!MoenTreeView categoriesFor: #onTreeChanged:!event handling!public! !
-!MoenTreeView categoriesFor: #paint:on:fromPoint:!painting!private! !
-!MoenTreeView categoriesFor: #paintButton:on:isExpanded:!painting!private! !
-!MoenTreeView categoriesFor: #paintClassicButton:on:isExpanded:!painting!private! !
-!MoenTreeView categoriesFor: #paintNode:on:!painting!private! !
-!MoenTreeView categoriesFor: #paintThemeButton:on:isExpanded:!painting!private! !
-!MoenTreeView categoriesFor: #parentSpacing!accessing!public! !
-!MoenTreeView categoriesFor: #parentSpacing:!accessing!public! !
-!MoenTreeView categoriesFor: #populateNode:!operations!private! !
-!MoenTreeView categoriesFor: #previousSibling:!accessing!private! !
-!MoenTreeView categoriesFor: #queryCommand:!commands!private! !
-!MoenTreeView categoriesFor: #rectanglesChanged!event handling!public! !
-!MoenTreeView categoriesFor: #refreshContents!public!updating! !
-!MoenTreeView categoriesFor: #removeNode:!event handling!public! !
-!MoenTreeView categoriesFor: #removeTree:!private!removing! !
-!MoenTreeView categoriesFor: #requestDragObjects:!drag & drop!public! !
-!MoenTreeView categoriesFor: #resetSelection!public!selection! !
-!MoenTreeView categoriesFor: #selectedNode!private!selection! !
-!MoenTreeView categoriesFor: #selection!public!selection! !
-!MoenTreeView categoriesFor: #selection:!public!selection! !
-!MoenTreeView categoriesFor: #selection:ifAbsent:!public!selection! !
-!MoenTreeView categoriesFor: #selectionIfNone:!public!selection! !
-!MoenTreeView categoriesFor: #selectionOrNil!public!selection! !
-!MoenTreeView categoriesFor: #selectionOrNil:!public!selection! !
-!MoenTreeView categoriesFor: #setDefaultCanvasColors:!helpers!private! !
-!MoenTreeView categoriesFor: #showDropHighlight:!drag & drop!private! !
-!MoenTreeView categoriesFor: #toggleExpanded:cause:!operations!private! !
-!MoenTreeView categoriesFor: #treeLayout!accessing!private! !
-!MoenTreeView categoriesFor: #treeLayout:!operations!private! !
-!MoenTreeView categoriesFor: #unlink:!private!removing! !
-!MoenTreeView categoriesFor: #unzip:!private!tree layout! !
-!MoenTreeView categoriesFor: #updateAll!painting!public! !
-!MoenTreeView categoriesFor: #updateGeometry!private!updating! !
-!MoenTreeView categoriesFor: #updateItem:!event handling!public! !
-!MoenTreeView categoriesFor: #updateNode:!helpers!private! !
-!MoenTreeView categoriesFor: #updateSelection!private!selection! !
-!MoenTreeView categoriesFor: #updateTree:imagesOnly:!painting!public! !
-!MoenTreeView categoriesFor: #value:!evaluating!private! !
-!MoenTreeView categoriesFor: #viewMode!public! !
-!MoenTreeView categoriesFor: #viewMode:!public! !
-!MoenTreeView categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
-!MoenTreeView categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
-!MoenTreeView categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
-!MoenTreeView categoriesFor: #zip:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #addTreeFor:parentNode:!adding!private! !
+!UI.MoenTreeView categoriesFor: #anchorNode!accessing!private! !
+!UI.MoenTreeView categoriesFor: #attachParent:height:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #autoExpandNode:!adding!private! !
+!UI.MoenTreeView categoriesFor: #basicExpandNode:!operations!private! !
+!UI.MoenTreeView categoriesFor: #basicSelection:cause:!private!selection! !
+!UI.MoenTreeView categoriesFor: #bridge:and:and:and:and:and:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #buttonSize!constants!private! !
+!UI.MoenTreeView categoriesFor: #calculateClientExtent!geometry!private! !
+!UI.MoenTreeView categoriesFor: #calculateExtent:!accessing!private! !
+!UI.MoenTreeView categoriesFor: #calculateNodeExtents!geometry!private! !
+!UI.MoenTreeView categoriesFor: #calculateNodeExtents:!geometry!private! !
+!UI.MoenTreeView categoriesFor: #calculateNodeExtents:forCanvas:!geometry!private! !
+!UI.MoenTreeView categoriesFor: #collapse!commands!public! !
+!UI.MoenTreeView categoriesFor: #collapse:!operations!public! !
+!UI.MoenTreeView categoriesFor: #collapseAll!commands!public! !
+!UI.MoenTreeView categoriesFor: #collapseAll:!expanding/collapsing!public! !
+!UI.MoenTreeView categoriesFor: #collapseNode:cause:!operations!private! !
+!UI.MoenTreeView categoriesFor: #collapseSubtree:!operations!private! !
+!UI.MoenTreeView categoriesFor: #connectModel!models!public! !
+!UI.MoenTreeView categoriesFor: #defaultDrawTextFlags!adapters!constants!private! !
+!UI.MoenTreeView categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
+!UI.MoenTreeView categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
+!UI.MoenTreeView categoriesFor: #dragLeave:!drag & drop!public! !
+!UI.MoenTreeView categoriesFor: #dragOver:!drag & drop!public! !
+!UI.MoenTreeView categoriesFor: #drop:!drag & drop!public! !
+!UI.MoenTreeView categoriesFor: #dropHighlight!drag & drop!private! !
+!UI.MoenTreeView categoriesFor: #editSelectionLabel!operations!public! !
+!UI.MoenTreeView categoriesFor: #ensureNodeVisible:!operations!private! !
+!UI.MoenTreeView categoriesFor: #ensureSelectionVisible!helpers!public! !
+!UI.MoenTreeView categoriesFor: #errorNoSelection!exceptions!private! !
+!UI.MoenTreeView categoriesFor: #expand!commands!public! !
+!UI.MoenTreeView categoriesFor: #expand:!operations!public! !
+!UI.MoenTreeView categoriesFor: #expandAll!commands!public! !
+!UI.MoenTreeView categoriesFor: #expandAll:!expanding/collapsing!public! !
+!UI.MoenTreeView categoriesFor: #expandNode:!operations!private! !
+!UI.MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
+!UI.MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
+!UI.MoenTreeView categoriesFor: #fontChanged!private!updating! !
+!UI.MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
+!UI.MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !
+!UI.MoenTreeView categoriesFor: #getImageBlock!adapters!public! !
+!UI.MoenTreeView categoriesFor: #getImageBlock:!adapters!public! !
+!UI.MoenTreeView categoriesFor: #getTextBlock!adapters!public! !
+!UI.MoenTreeView categoriesFor: #getTextBlock:!adapters!public! !
+!UI.MoenTreeView categoriesFor: #hasButtons!accessing-styles!public!testing! !
+!UI.MoenTreeView categoriesFor: #hasButtons:!accessing-styles!public! !
+!UI.MoenTreeView categoriesFor: #hasChildren:!private!searching! !
+!UI.MoenTreeView categoriesFor: #hasIcons!geometry!private! !
+!UI.MoenTreeView categoriesFor: #hasSelection!public!testing! !
+!UI.MoenTreeView categoriesFor: #hasWordWrap!private!testing! !
+!UI.MoenTreeView categoriesFor: #hasWordWrap:!private!testing! !
+!UI.MoenTreeView categoriesFor: #hideDropHighlight!drag & drop!private! !
+!UI.MoenTreeView categoriesFor: #hitTest:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #hitTest:search:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #iconExtent:!accessing!private! !
+!UI.MoenTreeView categoriesFor: #imageManager!accessing!public! !
+!UI.MoenTreeView categoriesFor: #imageManager:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #imagePositionIn:!painting!private! !
+!UI.MoenTreeView categoriesFor: #includesItem:!enquiries!public! !
+!UI.MoenTreeView categoriesFor: #initialize!initializing!private! !
+!UI.MoenTreeView categoriesFor: #invalidateGeometry!private!updating! !
+!UI.MoenTreeView categoriesFor: #invalidateItem:!painting!public! !
+!UI.MoenTreeView categoriesFor: #invalidateItem:andChildren:imagesOnly:!painting!public! !
+!UI.MoenTreeView categoriesFor: #invalidateNode:imagesOnly:!painting!private! !
+!UI.MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
+!UI.MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
+!UI.MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #join:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #leadingForCanvas:!geometry!private! !
+!UI.MoenTreeView categoriesFor: #linePen!accessing!private! !
+!UI.MoenTreeView categoriesFor: #linePen:!accessing!private! !
+!UI.MoenTreeView categoriesFor: #linkChild:toParent:!adding!private! !
+!UI.MoenTreeView categoriesFor: #linkChild:toParent:after:!adding!private! !
+!UI.MoenTreeView categoriesFor: #margin!accessing!public! !
+!UI.MoenTreeView categoriesFor: #margin:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #maxTextExtent!accessing!private! !
+!UI.MoenTreeView categoriesFor: #maxTextExtent:!accessing!private! !
+!UI.MoenTreeView categoriesFor: #merge:with:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #minimumHorizontalSpacing!constants!private! !
+!UI.MoenTreeView categoriesFor: #moveSelectionDown!private!selection! !
+!UI.MoenTreeView categoriesFor: #moveSelectionLeft!private!selection! !
+!UI.MoenTreeView categoriesFor: #moveSelectionRight!private!selection! !
+!UI.MoenTreeView categoriesFor: #moveSelectionUp!private!selection! !
+!UI.MoenTreeView categoriesFor: #nearestNodeTo:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #nodeAtPosition:ifNone:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #nodeAtPosition:search:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #nodeForObject:!private!searching! !
+!UI.MoenTreeView categoriesFor: #nodeForObject:ifAbsent:!private!searching! !
+!UI.MoenTreeView categoriesFor: #nodesForObject:!private!searching! !
+!UI.MoenTreeView categoriesFor: #offset:and:and:and:and:and:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #onAboutToEditLabel:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onButtonDown:!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onInputMaskRequired:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onItem:addedInParent:!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onItem:movedToParent:!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onItem:removedFromParent:!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onItemUpdated:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onKeyPressed:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onLabelOf:editedTo:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onLeftButtonPressed:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onModelChanged!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onPaintRequired:!event handling!painting!private! !
+!UI.MoenTreeView categoriesFor: #onRightButtonPressed:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onSelChanged!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onSelChanging:cause:!event handling!private! !
+!UI.MoenTreeView categoriesFor: #onSelectionChanged!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onSelectionChanging:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #onTreeChanged:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #paint:on:fromPoint:!painting!private! !
+!UI.MoenTreeView categoriesFor: #paintButton:on:isExpanded:!painting!private! !
+!UI.MoenTreeView categoriesFor: #paintClassicButton:on:isExpanded:!painting!private! !
+!UI.MoenTreeView categoriesFor: #paintNode:on:!painting!private! !
+!UI.MoenTreeView categoriesFor: #paintThemeButton:on:isExpanded:!painting!private! !
+!UI.MoenTreeView categoriesFor: #parentSpacing!accessing!public! !
+!UI.MoenTreeView categoriesFor: #parentSpacing:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #populateNode:!operations!private! !
+!UI.MoenTreeView categoriesFor: #previousSibling:!accessing!private! !
+!UI.MoenTreeView categoriesFor: #queryCommand:!commands!private! !
+!UI.MoenTreeView categoriesFor: #rectanglesChanged!event handling!public! !
+!UI.MoenTreeView categoriesFor: #refreshContents!public!updating! !
+!UI.MoenTreeView categoriesFor: #removeNode:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #removeTree:!private!removing! !
+!UI.MoenTreeView categoriesFor: #requestDragObjects:!drag & drop!public! !
+!UI.MoenTreeView categoriesFor: #resetSelection!public!selection! !
+!UI.MoenTreeView categoriesFor: #selectedNode!private!selection! !
+!UI.MoenTreeView categoriesFor: #selection!public!selection! !
+!UI.MoenTreeView categoriesFor: #selection:!public!selection! !
+!UI.MoenTreeView categoriesFor: #selection:ifAbsent:!public!selection! !
+!UI.MoenTreeView categoriesFor: #selectionIfNone:!public!selection! !
+!UI.MoenTreeView categoriesFor: #selectionOrNil!public!selection! !
+!UI.MoenTreeView categoriesFor: #selectionOrNil:!public!selection! !
+!UI.MoenTreeView categoriesFor: #setDefaultCanvasColors:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #showDropHighlight:!drag & drop!private! !
+!UI.MoenTreeView categoriesFor: #toggleExpanded:cause:!operations!private! !
+!UI.MoenTreeView categoriesFor: #treeLayout!accessing!private! !
+!UI.MoenTreeView categoriesFor: #treeLayout:!operations!private! !
+!UI.MoenTreeView categoriesFor: #unlink:!private!removing! !
+!UI.MoenTreeView categoriesFor: #unzip:!private!tree layout! !
+!UI.MoenTreeView categoriesFor: #updateAll!painting!public! !
+!UI.MoenTreeView categoriesFor: #updateGeometry!private!updating! !
+!UI.MoenTreeView categoriesFor: #updateItem:!event handling!public! !
+!UI.MoenTreeView categoriesFor: #updateNode:!helpers!private! !
+!UI.MoenTreeView categoriesFor: #updateSelection!private!selection! !
+!UI.MoenTreeView categoriesFor: #updateTree:imagesOnly:!painting!public! !
+!UI.MoenTreeView categoriesFor: #value:!evaluating!private! !
+!UI.MoenTreeView categoriesFor: #viewMode!public! !
+!UI.MoenTreeView categoriesFor: #viewMode:!public! !
+!UI.MoenTreeView categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
+!UI.MoenTreeView categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
+!UI.MoenTreeView categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!UI.MoenTreeView categoriesFor: #zip:!private!tree layout! !
 
-MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
-MoenTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
+UI.MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
+UI.MoenTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
 
-!MoenTreeView class methodsFor!
+!UI.MoenTreeView class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -1974,7 +1975,7 @@ initialize
 				isImmutable: true;
 				yourself)!
 
-stbConvertFromVersion10: anArray 
+stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
 	i.e. use #reserved1 inst. var. for flags."
 
@@ -1984,7 +1985,7 @@ stbConvertFromVersion10: anArray
 	roots := array at: 13.
 	lastRoot := nil.
 	roots reverseDo: 
-			[:each | 
+			[:each |
 			each sibling: lastRoot.
 			lastRoot := each].
 	anchorNode child: lastRoot.
@@ -2025,13 +2026,13 @@ value: anObject
 
 viewModes
 	^ViewModes! !
-!MoenTreeView class categoriesFor: #defaultModel!models!public! !
-!MoenTreeView class categoriesFor: #icon!constants!public! !
-!MoenTreeView class categoriesFor: #initialize!development!initializing!private! !
-!MoenTreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
-!MoenTreeView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
-!MoenTreeView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!MoenTreeView class categoriesFor: #themePartName!constants!public!theming! !
-!MoenTreeView class categoriesFor: #value:!evaluating!private! !
-!MoenTreeView class categoriesFor: #viewModes!constants!public! !
+!UI.MoenTreeView class categoriesFor: #defaultModel!models!public! !
+!UI.MoenTreeView class categoriesFor: #icon!constants!public! !
+!UI.MoenTreeView class categoriesFor: #initialize!development!initializing!private! !
+!UI.MoenTreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
+!UI.MoenTreeView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
+!UI.MoenTreeView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.MoenTreeView class categoriesFor: #themePartName!constants!public!theming! !
+!UI.MoenTreeView class categoriesFor: #value:!evaluating!private! !
+!UI.MoenTreeView class categoriesFor: #viewModes!constants!public! !
 

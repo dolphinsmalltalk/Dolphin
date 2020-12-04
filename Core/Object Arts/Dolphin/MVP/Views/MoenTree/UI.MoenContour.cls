@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MoenContour
+Core.Object subclass: #'UI.MoenContour'
 	instanceVariableNames: 'lowerHead lowerTail upperHead upperTail'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoenContour guid: (GUID fromString: '{68f4ac01-2f95-11d3-93ba-00a024ca708a}')!
-MoenContour comment: 'MoenContour is a private helper class which is part of the implementation of the <MoenTreeView>
+UI.MoenContour guid: (Core.GUID fromString: '{68f4ac01-2f95-11d3-93ba-00a024ca708a}')!
+UI.MoenContour comment: 'MoenContour is a private helper class which is part of the implementation of the <MoenTreeView>
 
 Instance Variables:
 	lowerHead	<MoenLink>
@@ -15,8 +15,8 @@ Instance Variables:
 	upperHead	<MoenLink>
 	upperTail		<MoenLink>
 '!
-!MoenContour categoriesForClass!MVP-Views-Support! !
-!MoenContour methodsFor!
+!UI.MoenContour categoriesForClass!MVP-Views-Support! !
+!UI.MoenContour methodsFor!
 
 lowerHead
 	^lowerHead!
@@ -57,13 +57,13 @@ upperTail
 
 upperTail: aMoenLink
 	upperTail := aMoenLink! !
-!MoenContour categoriesFor: #lowerHead!accessing!private! !
-!MoenContour categoriesFor: #lowerHead:!accessing!private! !
-!MoenContour categoriesFor: #lowerTail!accessing!private! !
-!MoenContour categoriesFor: #lowerTail:!accessing!private! !
-!MoenContour categoriesFor: #printOn:!development!printing!public! !
-!MoenContour categoriesFor: #upperHead!accessing!private! !
-!MoenContour categoriesFor: #upperHead:!accessing!private! !
-!MoenContour categoriesFor: #upperTail!accessing!private! !
-!MoenContour categoriesFor: #upperTail:!accessing!private! !
+!UI.MoenContour categoriesFor: #lowerHead!accessing!private! !
+!UI.MoenContour categoriesFor: #lowerHead:!accessing!private! !
+!UI.MoenContour categoriesFor: #lowerTail!accessing!private! !
+!UI.MoenContour categoriesFor: #lowerTail:!accessing!private! !
+!UI.MoenContour categoriesFor: #printOn:!development!printing!public! !
+!UI.MoenContour categoriesFor: #upperHead!accessing!private! !
+!UI.MoenContour categoriesFor: #upperHead:!accessing!private! !
+!UI.MoenContour categoriesFor: #upperTail!accessing!private! !
+!UI.MoenContour categoriesFor: #upperTail:!accessing!private! !
 
