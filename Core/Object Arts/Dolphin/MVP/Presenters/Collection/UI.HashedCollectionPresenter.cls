@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CollectionPresenter subclass: #HashedCollectionPresenter
+UI.CollectionPresenter subclass: #'UI.HashedCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HashedCollectionPresenter guid: (GUID fromString: '{1a16cca4-5c91-49d9-9a87-4b4a340299d9}')!
-HashedCollectionPresenter comment: ''!
-!HashedCollectionPresenter categoriesForClass!MVP-Presenters! !
-!HashedCollectionPresenter methodsFor!
+UI.HashedCollectionPresenter guid: (Core.GUID fromString: '{1a16cca4-5c91-49d9-9a87-4b4a340299d9}')!
+UI.HashedCollectionPresenter comment: ''!
+!UI.HashedCollectionPresenter categoriesForClass!MVP-Presenters! !
+!UI.HashedCollectionPresenter methodsFor!
 
 addElement: anObject
 	self value: ((self value)
@@ -56,12 +56,12 @@ removeItem
 	item := listPresenter selection.
 	self removeElement: item.
 	self onValueChanged! !
-!HashedCollectionPresenter categoriesFor: #addElement:!adding!private! !
-!HashedCollectionPresenter categoriesFor: #addItem:!operations!public! !
-!HashedCollectionPresenter categoriesFor: #canGrow!private!testing! !
-!HashedCollectionPresenter categoriesFor: #elements!accessing!public! !
-!HashedCollectionPresenter categoriesFor: #onListChanged!event handling!public! !
-!HashedCollectionPresenter categoriesFor: #onValueChanged!event handling!public! !
-!HashedCollectionPresenter categoriesFor: #removeElement:!private!removing! !
-!HashedCollectionPresenter categoriesFor: #removeItem!commands!public!removing! !
+!UI.HashedCollectionPresenter categoriesFor: #addElement:!adding!private! !
+!UI.HashedCollectionPresenter categoriesFor: #addItem:!operations!public! !
+!UI.HashedCollectionPresenter categoriesFor: #canGrow!private!testing! !
+!UI.HashedCollectionPresenter categoriesFor: #elements!accessing!public! !
+!UI.HashedCollectionPresenter categoriesFor: #onListChanged!event handling!public! !
+!UI.HashedCollectionPresenter categoriesFor: #onValueChanged!event handling!public! !
+!UI.HashedCollectionPresenter categoriesFor: #removeElement:!private!removing! !
+!UI.HashedCollectionPresenter categoriesFor: #removeItem!commands!public!removing! !
 

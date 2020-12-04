@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HashedCollectionPresenter subclass: #DictionaryPresenter
+UI.HashedCollectionPresenter subclass: #'UI.DictionaryPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DictionaryPresenter guid: (GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
-DictionaryPresenter comment: ''!
-!DictionaryPresenter categoriesForClass!MVP-Presenters! !
-!DictionaryPresenter methodsFor!
+UI.DictionaryPresenter guid: (Core.GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
+UI.DictionaryPresenter comment: ''!
+!UI.DictionaryPresenter categoriesForClass!MVP-Presenters! !
+!UI.DictionaryPresenter methodsFor!
 
 defaultAddItem
 	"Private - Prompts to add an item to the receiver. Used if no addItemBlock has been specified"
@@ -51,16 +51,16 @@ removeElement: anAssociation
 	self value: ((self value)
 				removeKey: anAssociation key;
 				yourself)! !
-!DictionaryPresenter categoriesFor: #defaultAddItem!helpers!private! !
-!DictionaryPresenter categoriesFor: #elements!accessing!public! !
-!DictionaryPresenter categoriesFor: #removeElement:!private!removing! !
+!UI.DictionaryPresenter categoriesFor: #defaultAddItem!helpers!private! !
+!UI.DictionaryPresenter categoriesFor: #elements!accessing!public! !
+!UI.DictionaryPresenter categoriesFor: #removeElement:!private!removing! !
 
-!DictionaryPresenter class methodsFor!
+!UI.DictionaryPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
 	^Dictionary new asValue! !
-!DictionaryPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.DictionaryPresenter class categoriesFor: #defaultModel!models!public! !
 

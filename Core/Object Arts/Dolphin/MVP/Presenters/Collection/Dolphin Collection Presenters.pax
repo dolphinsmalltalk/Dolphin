@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Collection Presenters'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Collection Presenters.
 Copyright (c) Object Arts Ltd. 2002.
@@ -10,14 +10,14 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{CollectionPresenter}
-	#{DictionaryPresenter}
-	#{HashedCollectionPresenter}
-	#{SequenceableCollectionPresenter}
+	#{UI.CollectionPresenter}
+	#{UI.DictionaryPresenter}
+	#{UI.HashedCollectionPresenter}
+	#{UI.SequenceableCollectionPresenter}
 ).
 
 package setMethodNames: #(
-	#(#{Toolbar class} #resource_List_tools)
+	#(#{UI.Toolbar class} #resource_List_tools)
 ).
 
 package setPrerequisites: #(
@@ -38,36 +38,36 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #CollectionPresenter
+UI.ValuePresenter subclass: #'UI.CollectionPresenter'
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ReadOnlyMask' -> 16r1
 	}!
-CollectionPresenter subclass: #HashedCollectionPresenter
+UI.CollectionPresenter subclass: #'UI.HashedCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CollectionPresenter subclass: #SequenceableCollectionPresenter
+UI.CollectionPresenter subclass: #'UI.SequenceableCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HashedCollectionPresenter subclass: #DictionaryPresenter
+UI.HashedCollectionPresenter subclass: #'UI.DictionaryPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_List_tools
 	"Answer the literal data from which the 'List tools' resource can be reconstituted.
@@ -77,8 +77,8 @@ resource_List_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_List_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil 327686 ##(Smalltalk.Color) #face3d nil 517 nil nil nil 416 482 #default 8 1903898080 170 192 8 #() 170 192 34 12 51561 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #moveDown 8 'Move Down' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x25BC nil nil 482 #highlight nil nil 1 nil nil 51561 51557 610 416 1 642 #moveFirst 8 'Move First' 1 1 690 $\x23EE 8 'Georgia' nil 720 nil nil 3 nil nil 51557 51553 610 416 1 642 #addItem 8 'New Item' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewThing.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51553 51563 610 416 1 642 #moveLast 8 'Move Last' 1 1 690 $\x23ED 8 'Georgia' nil 720 nil nil 3 nil nil 51563 51559 610 416 1 642 #moveUp 8 'Move Up' 1 1 690 $\x25B2 8 'Segoe UI' nil 720 nil nil 1 nil nil 51559 51555 610 416 1 642 #removeItem 8 'Delete Item' 1 1 866 nil true 912 8 'EditClear.ico' 960 51555 34 8 816 1152 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 736 1072 624 992 1250 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1410 321 51 416 1362 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 31 8 0 0 35 0 0 0] 8 #() 1410 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_List_tools!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil 917510 ##(Graphics.Color) #face3d nil 517 nil nil nil 416 482 #default 8 1920642432 170 192 8 #() 170 192 34 12 23971 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #moveFirst 8 'Move First' 1 1 1378630 1 ##(Graphics.TextTileIcon) $\x23EE 8 'Georgia' nil 482 #highlight nil nil 3 nil nil 23971 23967 610 416 1 642 #addItem 8 'New Item' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'NewThing.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 23967 23977 610 416 1 642 #moveLast 8 'Move Last' 1 1 690 $\x23ED 8 'Georgia' nil 736 nil nil 3 nil nil 23977 23973 610 416 1 642 #moveUp 8 'Move Up' 1 1 690 $\x25B2 8 'Segoe UI' nil 736 nil nil 1 nil nil 23973 23969 610 416 1 642 #removeItem 8 'Delete Item' 1 1 802 nil true 848 8 'EditClear.ico' 896 23969 23975 610 416 1 642 #moveDown 8 'Move Down' 1 1 690 $\x25BC nil nil 736 nil nil 1 nil nil 23975 34 8 752 1088 1245766 1 ##(UI.ToolbarSeparator) 416 1 624 1008 1168 928 1250 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1410 321 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 159 12 0 0 35 0 0 0] 8 #() 1410 193 193 nil 27)! !
+!UI.Toolbar class categoriesFor: #resource_List_tools!public!resources-views! !
 
 "End of package definition"!
 

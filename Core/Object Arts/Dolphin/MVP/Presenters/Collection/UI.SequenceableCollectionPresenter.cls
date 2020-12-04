@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CollectionPresenter subclass: #SequenceableCollectionPresenter
+UI.CollectionPresenter subclass: #'UI.SequenceableCollectionPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequenceableCollectionPresenter guid: (GUID fromString: '{87b4c68c-026e-11d3-9fd7-00a0cc3e4a32}')!
-SequenceableCollectionPresenter comment: 'SequenceableCollectionPresenter is a <valuePresenter> that presents a <sequencedCollection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
+UI.SequenceableCollectionPresenter guid: (Core.GUID fromString: '{87b4c68c-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.SequenceableCollectionPresenter comment: 'SequenceableCollectionPresenter is a <valuePresenter> that presents a <sequencedCollection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
 
 '!
-!SequenceableCollectionPresenter categoriesForClass!MVP-Presenters! !
-!SequenceableCollectionPresenter methodsFor!
+!UI.SequenceableCollectionPresenter categoriesForClass!MVP-Presenters! !
+!UI.SequenceableCollectionPresenter methodsFor!
 
 canReorder
 	"Private - Answer true if it is valid to reorder the receiver's collection"
@@ -100,15 +100,15 @@ queryCommand: query
 							selected > 0 and: [selected < self listModel size]]).
 			^true].
 	^super queryCommand: query! !
-!SequenceableCollectionPresenter categoriesFor: #canReorder!private!testing! !
-!SequenceableCollectionPresenter categoriesFor: #moveDown!commands!operations!public! !
-!SequenceableCollectionPresenter categoriesFor: #moveFirst!commands!operations!public! !
-!SequenceableCollectionPresenter categoriesFor: #moveLast!commands!operations!public! !
-!SequenceableCollectionPresenter categoriesFor: #moveUp!commands!operations!public! !
-!SequenceableCollectionPresenter categoriesFor: #onValueChanged!event handling!private! !
-!SequenceableCollectionPresenter categoriesFor: #queryCommand:!commands!private! !
+!UI.SequenceableCollectionPresenter categoriesFor: #canReorder!private!testing! !
+!UI.SequenceableCollectionPresenter categoriesFor: #moveDown!commands!operations!public! !
+!UI.SequenceableCollectionPresenter categoriesFor: #moveFirst!commands!operations!public! !
+!UI.SequenceableCollectionPresenter categoriesFor: #moveLast!commands!operations!public! !
+!UI.SequenceableCollectionPresenter categoriesFor: #moveUp!commands!operations!public! !
+!UI.SequenceableCollectionPresenter categoriesFor: #onValueChanged!event handling!private! !
+!UI.SequenceableCollectionPresenter categoriesFor: #queryCommand:!commands!private! !
 
-!SequenceableCollectionPresenter class methodsFor!
+!UI.SequenceableCollectionPresenter class methodsFor!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -118,6 +118,6 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Toolbar) #resource_List_tools nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 722 501 51 512 674 #text: 34 1 8 'toolbar' 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 250 0 0 0 25 0 0 0] 8 #() 722 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140936781 1025 896 590662 2 ##(Smalltalk.ListModel) 138 144 864 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 4 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #moveFirst 8 'Move to &First' 1 1 nil nil nil 1122 1 1154 #moveUp 8 'Move to &Previous' 1 1 nil nil nil 1122 1 1154 #moveDown 8 'Move to &Next' 1 1 nil nil nil 1122 1 1154 #moveLast 8 'Move to &Last' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 896 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 '' 493 #left 1378 #displayString 1408 1378 #<= 8 #() nil nil 896 nil 3 nil nil #report 864 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 610 138 144 34 2 674 #createAt:extent: 34 2 722 1 51 722 501 251 896 674 #contextMenu: 34 1 1088 896 818 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 250 0 0 0 150 0 0 0] 8 #() 880 nil 35 170 192 34 2 896 8 'list' nil 610 138 144 34 1 674 #createAt:extent: 34 2 722 7039 21 722 501 301 416 818 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 185 14 0 0 160 0 0 0] 34 2 512 896 880 nil 27 )! !
-!SequenceableCollectionPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Toolbar) #resource_List_tools nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 1 1 722 501 51 512 674 #text: 34 1 8 'toolbar' 512 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 250 0 0 0 25 0 0 0] 8 #() 722 193 193 nil 27 nil nil nil 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140936781 1025 896 787270 2 ##(UI.ListModel) 138 144 864 nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 461638 4 ##(UI.Menu) nil true 34 4 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #moveFirst 8 'Move to &First' 1 1 nil nil nil 1122 1 1154 #moveUp 8 'Move to &Previous' 1 1 nil nil nil 1122 1 1154 #moveDown 8 'Move to &Next' 1 1 nil nil nil 1122 1 1154 #moveLast 8 'Move to &Last' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 896 nil 8 1920618720 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 '' 493 #left 1378 #displayString 1408 1378 #<= 8 #() nil nil 896 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 610 138 144 34 2 674 #createAt:extent: 34 2 722 1 51 722 501 251 896 674 #contextMenu: 34 1 1088 896 818 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 250 0 0 0 150 0 0 0] 8 #() 880 nil 35 170 192 34 2 896 8 'list' nil 610 138 144 34 1 674 #createAt:extent: 34 2 722 6143 21 722 501 301 416 818 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 249 12 0 0 160 0 0 0] 34 2 512 896 880 nil 27)! !
+!UI.SequenceableCollectionPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 
