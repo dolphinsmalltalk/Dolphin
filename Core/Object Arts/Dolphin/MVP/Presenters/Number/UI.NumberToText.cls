@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractToTextConverter subclass: #NumberToText
+UI.AbstractToTextConverter subclass: #'UI.NumberToText'
 	instanceVariableNames: '_reserved1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NumberToText guid: (GUID fromString: '{87b4c709-026e-11d3-9fd7-00a0cc3e4a32}')!
-NumberToText comment: 'A NumberToString is a <textTypeConverter> that transforms a numeric subject value to a <readableString> for use by its client. If the subject value is nil it is converted to an empty string and vice versa. When converting a client string back to a subject value the most appropriate class of Number is chosen to represent the value.
+UI.NumberToText guid: (Core.GUID fromString: '{87b4c709-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.NumberToText comment: 'A NumberToString is a <textTypeConverter> that transforms a numeric subject value to a <readableString> for use by its client. If the subject value is nil it is converted to an empty string and vice versa. When converting a client string back to a subject value the most appropriate class of Number is chosen to represent the value.
 
 Instance Variables:
 	format	<readableString> or nil, reserved for future use.
 
 
 '!
-!NumberToText categoriesForClass!MVP-Type Converters-Text! !
-!NumberToText methodsFor!
+!UI.NumberToText categoriesForClass!MVP-Type Converters-Text! !
+!UI.NumberToText methodsFor!
 
 leftToRight: aNumber
 	"Answers the result of converting aNumber to a String"
@@ -27,6 +27,6 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Number."
 
 	^Number fromString: aString! !
-!NumberToText categoriesFor: #leftToRight:!operations!public! !
-!NumberToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.NumberToText categoriesFor: #leftToRight:!operations!public! !
+!UI.NumberToText categoriesFor: #rightToLeft:!operations!public! !
 

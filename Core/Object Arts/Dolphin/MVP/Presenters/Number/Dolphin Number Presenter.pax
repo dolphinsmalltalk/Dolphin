@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Number Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Number Presenter
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,9 +11,9 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{IntegerToText}
-	#{NumberPresenter}
-	#{NumberToText}
+	#{UI.IntegerToText}
+	#{UI.NumberPresenter}
+	#{UI.NumberToText}
 ).
 
 package setPrerequisites: #(
@@ -28,22 +28,22 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #NumberPresenter
+UI.ValuePresenter subclass: #'UI.NumberPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractToTextConverter subclass: #NumberToText
+UI.AbstractToTextConverter subclass: #'UI.NumberToText'
 	instanceVariableNames: '_reserved1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NumberToText subclass: #IntegerToText
+UI.NumberToText subclass: #'UI.IntegerToText'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
