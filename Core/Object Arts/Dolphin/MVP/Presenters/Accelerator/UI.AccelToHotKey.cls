@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TypeConverter subclass: #AccelToHotKey
+UI.TypeConverter subclass: #'UI.AccelToHotKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'HotKeyConstants Win32Constants'
+	imports: #(#{OS.HotKeyConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ModifierMap' -> #(1 4 2 8 4 16)
+		'ModifierMap' -> #(16r1 16r4 16r2 16r8 16r4 16r10)
 	}!
-AccelToHotKey guid: (GUID fromString: '{87b4c704-026e-11d3-9fd7-00a0cc3e4a32}')!
-AccelToHotKey comment: 'AccelToHotKey is the class of <typeConverter> for use with the <HotKey> control to convert from a hot key code to the usual display representation of such key combinations, e.g. CTRL+C.
+UI.AccelToHotKey guid: (Core.GUID fromString: '{87b4c704-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.AccelToHotKey comment: 'AccelToHotKey is the class of <typeConverter> for use with the <HotKey> control to convert from a hot key code to the usual display representation of such key combinations, e.g. CTRL+C.
 
 Class Variables:
 	ModifierMap	<Array> of <association>s for mapping hot key modifier masks to accelerator table masks.
 
 
 '!
-!AccelToHotKey categoriesForClass!MVP-Type Converters-General! !
-!AccelToHotKey methodsFor!
+!UI.AccelToHotKey categoriesForClass!MVP-Type Converters-General! !
+!UI.AccelToHotKey methodsFor!
 
 leftToRight: accelKeyCode
 	"Private - Answers an <integer> hot key code which is the result of converting
@@ -45,10 +45,10 @@ rightToLeft: anInteger
 	"Preserve the HOTKEYF_EXT flag by combining KF_EXTENDED with the VK_"
 	(hotKeyModifiers allMask: HOTKEYF_EXT) ifTrue: [vKey := vKey bitOr: KF_EXTENDED].
 	^AcceleratorTable keyCode: vKey modifiers: (self class hotKeyToAccelModifiers: hotKeyModifiers)! !
-!AccelToHotKey categoriesFor: #leftToRight:!operations!private! !
-!AccelToHotKey categoriesFor: #rightToLeft:!operations!private! !
+!UI.AccelToHotKey categoriesFor: #leftToRight:!operations!private! !
+!UI.AccelToHotKey categoriesFor: #rightToLeft:!operations!private! !
 
-!AccelToHotKey class methodsFor!
+!UI.AccelToHotKey class methodsFor!
 
 accelToHotKeyModifiers: accelKeyModMask
 	"Private - Convert an accelerator table modifier mask to the equivalent hot key mask."
@@ -84,7 +84,7 @@ initialize
 
 	self addClassConstant: 'ModifierMap'
 		value: {HOTKEYF_SHIFT. FSHIFT. HOTKEYF_CONTROL. FCONTROL. HOTKEYF_ALT. FALT}! !
-!AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
-!AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
-!AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !
+!UI.AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
+!UI.AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
+!UI.AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !
 

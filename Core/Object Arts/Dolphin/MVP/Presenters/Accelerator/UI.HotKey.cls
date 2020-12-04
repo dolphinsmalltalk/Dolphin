@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #HotKey
+UI.ValueConvertingControlView subclass: #'UI.HotKey'
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
 	classVariableNames: ''
-	poolDictionaries: 'HotKeyConstants'
+	imports: #(#{OS.HotKeyConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HotKey guid: (GUID fromString: '{87b4c736-026e-11d3-9fd7-00a0cc3e4a32}')!
-HotKey comment: 'HotKey is a <valueView> implementing the Windows "msctls_hotkey32" common control. The <valueModel> associated with a HotKey must always yield an <integer> hot-key value when mapped through the installed type converter. Typically, a HotKey view is configured with an AccelToHotKey <typeConverter> and used to display/edit accelerator key definitions. A HotKey will normally be used in conjunction with a <NumberPresenter>.
+UI.HotKey guid: (Core.GUID fromString: '{87b4c736-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.HotKey comment: 'HotKey is a <valueView> implementing the Windows "msctls_hotkey32" common control. The <valueModel> associated with a HotKey must always yield an <integer> hot-key value when mapped through the installed type converter. Typically, a HotKey view is configured with an AccelToHotKey <typeConverter> and used to display/edit accelerator key definitions. A HotKey will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:
 	invalidCombinationsRule	<integer> or nil, describing the key combinations which are invalid.
@@ -15,8 +15,8 @@ Instance Variables:
 
 
 '!
-!HotKey categoriesForClass!MVP-Views! !
-!HotKey methodsFor!
+!UI.HotKey categoriesForClass!MVP-Views! !
+!UI.HotKey methodsFor!
 
 currentModifiers
 	"Private - Answer the a bit mask of the hot key modifiers corresponding
@@ -86,11 +86,11 @@ onViewCreated
 	super onViewCreated.
 	self setRules!
 
-preTranslateKeyboardInput: aMSG 
+preTranslateKeyboardInput: aMSG
 	"Private - Dispatch keyboard input in the receiver directly to avoid accelerator table
 	translation in containing shell."
 
-	(UserLibrary default)
+	UserLibrary default
 		translateMessage: aMSG;
 		dispatchMessage: aMSG.
 	^true!
@@ -152,25 +152,25 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 
 	self updateModel.
 	^false! !
-!HotKey categoriesFor: #currentModifiers!accessing!private! !
-!HotKey categoriesFor: #defaultExtent!accessing!constants!private! !
-!HotKey categoriesFor: #defaultKeyMask!accessing!public! !
-!HotKey categoriesFor: #defaultKeyMask:!accessing!public! !
-!HotKey categoriesFor: #displayValue!private!updating! !
-!HotKey categoriesFor: #displayValue:!private!updating! !
-!HotKey categoriesFor: #initialize!initializing!private! !
-!HotKey categoriesFor: #invalidCombinationsMask!accessing!public! !
-!HotKey categoriesFor: #invalidCombinationsMask:!accessing!public! !
-!HotKey categoriesFor: #onViewCreated!event handling!public! !
-!HotKey categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!HotKey categoriesFor: #setHotKey:!accessing!private! !
-!HotKey categoriesFor: #setHotKey:modifiers:!accessing!private! !
-!HotKey categoriesFor: #setRules!accessing!private! !
-!HotKey categoriesFor: #wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
-!HotKey categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
-!HotKey categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+!UI.HotKey categoriesFor: #currentModifiers!accessing!private! !
+!UI.HotKey categoriesFor: #defaultExtent!accessing!constants!private! !
+!UI.HotKey categoriesFor: #defaultKeyMask!accessing!public! !
+!UI.HotKey categoriesFor: #defaultKeyMask:!accessing!public! !
+!UI.HotKey categoriesFor: #displayValue!private!updating! !
+!UI.HotKey categoriesFor: #displayValue:!private!updating! !
+!UI.HotKey categoriesFor: #initialize!initializing!private! !
+!UI.HotKey categoriesFor: #invalidCombinationsMask!accessing!public! !
+!UI.HotKey categoriesFor: #invalidCombinationsMask:!accessing!public! !
+!UI.HotKey categoriesFor: #onViewCreated!event handling!public! !
+!UI.HotKey categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!UI.HotKey categoriesFor: #setHotKey:!accessing!private! !
+!UI.HotKey categoriesFor: #setHotKey:modifiers:!accessing!private! !
+!UI.HotKey categoriesFor: #setRules!accessing!private! !
+!UI.HotKey categoriesFor: #wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
+!UI.HotKey categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
+!UI.HotKey categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
 
-!HotKey class methodsFor!
+!UI.HotKey class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -181,6 +181,6 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_hotkey32'! !
-!HotKey class categoriesFor: #icon!constants!public! !
-!HotKey class categoriesFor: #winClassName!constants!private! !
+!UI.HotKey class categoriesFor: #icon!constants!public! !
+!UI.HotKey class categoriesFor: #winClassName!constants!private! !
 
