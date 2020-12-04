@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Diff Algorithm'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Diff Algorithm Package
 Copyright (c) Mario Wolczko, 1993, portions copyright (c) Ian Bartholomew 2002.
@@ -50,14 +50,14 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{LinkElement}
+	#{UI.LinkElement}
 ).
 
 package setMethodNames: #(
-	#(#{Dictionary class} #withPositionsOf:inInterval:)
-	#(#{SequenceableCollection} #inverseMatchVector:)
-	#(#{SequenceableCollection} #longestCommonSubsequenceInInterval:withCollection:inInterval:)
-	#(#{SortedCollection} #replaceNextLargerWith:)
+	#(#{Core.Dictionary class} #withPositionsOf:inInterval:)
+	#(#{Core.SequenceableCollection} #inverseMatchVector:)
+	#(#{Core.SequenceableCollection} #longestCommonSubsequenceInInterval:withCollection:inInterval:)
+	#(#{Core.SortedCollection} #replaceNextLargerWith:)
 ).
 
 package setPrerequisites: #(
@@ -68,16 +68,16 @@ package!
 
 "Class Definitions"!
 
-Link subclass: #LinkElement
+Core.Link subclass: #'UI.LinkElement'
 	instanceVariableNames: 'value'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Dictionary class methodsFor!
+!Core.Dictionary class methodsFor!
 
 withPositionsOf: aCollection inInterval: anInterval
 	"Create a Dictionary that maps each element of aCollection to the set of positions it occupies in aCollection, restricted to the elements within the range of indexes specified by anInterval."
@@ -87,9 +87,9 @@ withPositionsOf: aCollection inInterval: anInterval
 	anInterval 
 		do: [:index | (d at: (aCollection at: index) ifAbsentPut: [OrderedCollection new]) add: index].
 	^d! !
-!Dictionary class categoriesFor: #withPositionsOf:inInterval:!equivalence classes!public! !
+!Core.Dictionary class categoriesFor: #withPositionsOf:inInterval:!equivalence classes!public! !
 
-!SequenceableCollection methodsFor!
+!Core.SequenceableCollection methodsFor!
 
 inverseMatchVector: matchVector
 	"If matchVector maps the matching elements of another collection onto me, compute the matchVector that maps me onto the collection."
@@ -146,7 +146,7 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 							k notNil
 								ifTrue: 
 									[| link |
-									link := LinkElement new.
+									link := UI.LinkElement new.
 									k > 1 ifTrue: [link nextLink: (links at: k - 1)].
 									link value: {i. j}.
 									links at: k put: link]]]].
@@ -159,10 +159,10 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 			link nextLink notNil]
 					whileTrue: [link := link nextLink]].
 	^matchVector! !
-!SequenceableCollection categoriesFor: #inverseMatchVector:!computing differences!public! !
-!SequenceableCollection categoriesFor: #longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
+!Core.SequenceableCollection categoriesFor: #inverseMatchVector:!computing differences!public! !
+!Core.SequenceableCollection categoriesFor: #longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
 
-!SortedCollection methodsFor!
+!Core.SortedCollection methodsFor!
 
 replaceNextLargerWith: aValue
 	"Find the place at which aValue would normally be inserted into
@@ -183,7 +183,7 @@ replaceNextLargerWith: aValue
 	(self basicAt: index) = aValue ifTrue: [^nil].
 	self basicAt: index put: aValue.
 	^index - firstIndex + 1! !
-!SortedCollection categoriesFor: #replaceNextLargerWith:!adding!public! !
+!Core.SortedCollection categoriesFor: #replaceNextLargerWith:!adding!public! !
 
 "End of package definition"!
 
