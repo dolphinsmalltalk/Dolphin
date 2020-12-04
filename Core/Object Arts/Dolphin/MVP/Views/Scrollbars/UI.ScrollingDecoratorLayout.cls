@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #ScrollingDecoratorLayout
+UI.LayoutManager subclass: #'UI.ScrollingDecoratorLayout'
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScrollingDecoratorLayout guid: (GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrolllingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
+UI.ScrollingDecoratorLayout guid: (Core.GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrolllingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
 
 
 
 
 '!
-!ScrollingDecoratorLayout categoriesForClass!MVP-Layout Managers-Specialized! !
-!ScrollingDecoratorLayout methodsFor!
+!UI.ScrollingDecoratorLayout categoriesForClass!MVP-Layout Managers-Specialized! !
+!UI.ScrollingDecoratorLayout methodsFor!
 
 initialize
 	stretchToFit := true!
@@ -75,15 +75,15 @@ shouldStretchToFit
 
 shouldStretchToFit: aBoolean 
 	stretchToFit := aBoolean! !
-!ScrollingDecoratorLayout categoriesFor: #initialize!initializing!public! !
-!ScrollingDecoratorLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!ScrollingDecoratorLayout categoriesFor: #positionScrolledViewOf:context:!helpers!private! !
-!ScrollingDecoratorLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!ScrollingDecoratorLayout categoriesFor: #scrolledChildOf:!helpers!private! !
-!ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit!accessing!public! !
-!ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit:!accessing!public! !
+!UI.ScrollingDecoratorLayout categoriesFor: #initialize!initializing!public! !
+!UI.ScrollingDecoratorLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.ScrollingDecoratorLayout categoriesFor: #positionScrolledViewOf:context:!helpers!private! !
+!UI.ScrollingDecoratorLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
+!UI.ScrollingDecoratorLayout categoriesFor: #scrolledChildOf:!helpers!private! !
+!UI.ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit!accessing!public! !
+!UI.ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit:!accessing!public! !
 
-!ScrollingDecoratorLayout class methodsFor!
+!UI.ScrollingDecoratorLayout class methodsFor!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier schema."
@@ -97,6 +97,6 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!ScrollingDecoratorLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ScrollingDecoratorLayout class categoriesFor: #stbVersion!constants!public! !
+!UI.ScrollingDecoratorLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.ScrollingDecoratorLayout class categoriesFor: #stbVersion!constants!public! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #ScrollBar
+UI.ValueConvertingControlView subclass: #'UI.ScrollBar'
 	instanceVariableNames: 'continuousTracking'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScrollBar guid: (GUID fromString: '{87b4c738-026e-11d3-9fd7-00a0cc3e4a32}')!
-ScrollBar comment: 'ScrollBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ScrollBar must always yield an <integer> value when mapped through the installed type converter. A ScrollBar will normally be used in conjunction with a <NumberPresenter>.
+UI.ScrollBar guid: (Core.GUID fromString: '{87b4c738-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ScrollBar comment: 'ScrollBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ScrollBar must always yield an <integer> value when mapped through the installed type converter. A ScrollBar will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:
 	continuousTracking	<boolean> indicating whether the bar issues notification messages while being dragged.
 
 '!
-!ScrollBar categoriesForClass!MVP-Views! !
-!ScrollBar methodsFor!
+!UI.ScrollBar categoriesForClass!MVP-Views! !
+!UI.ScrollBar methodsFor!
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a
@@ -44,7 +44,9 @@ getScrollInfo: siStruct
 	Answer true if values were retrieved successfully."
 
 	^UserLibrary default
-		getScrollInfo: self asParameter fnBar: SB_CTL lpsi: siStruct!
+		getScrollInfo: self asParameter
+		fnBar: SB_CTL
+		lpsi: siStruct!
 
 isTrackingContinuous
 	"Answer whether the receiver will update the model as the thumb
@@ -123,37 +125,45 @@ pageSize
 	"Answer the page size of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_PAGE; yourself.
+	struct := SCROLLINFO new
+				maskIn: SIF_PAGE;
+				yourself.
 	self getScrollInfo: struct.
 	^struct page!
 
 pageSize: page
 	"Set the page size of the receiver."
 
-	self setScrollInfo: (SCROLLINFO new page: page; yourself).
-!
+	self setScrollInfo: (SCROLLINFO new
+				page: page;
+				yourself)!
 
 range
 	"Answer the Interval range of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_RANGE; yourself.
+	struct := SCROLLINFO new
+				maskIn: SIF_RANGE;
+				yourself.
 	self getScrollInfo: struct.
 	^struct range!
 
 range: rangeInterval
 	"Set the range of the receiver to rangeInterval."
 
-	self setScrollInfo: (SCROLLINFO new range: rangeInterval; yourself).
-	self refreshContents.
-!
+	self setScrollInfo: (SCROLLINFO new
+				range: rangeInterval;
+				yourself).
+	self refreshContents!
 
 scrollPosition
 	"Private - Answer the Integer scroll position of the scroll bars thumb. This is relative
-	to its range rather than spatial position." 
+	to its range rather than spatial position."
 
 	| struct |
-	struct := SCROLLINFO new maskIn: SIF_POS; yourself.
+	struct := SCROLLINFO new
+				maskIn: SIF_POS;
+				yourself.
 	self getScrollInfo: struct.
 	^struct pos!
 
@@ -161,49 +171,55 @@ scrollPosition: positionInteger
 	"Private - Set the scroll position of the receiver. This is an Integer within
 	the scrollRange of the receiver."
 
-	self setScrollInfo: (SCROLLINFO new pos: positionInteger; yourself)!
+	self setScrollInfo: (SCROLLINFO new
+				pos: positionInteger;
+				yourself)!
 
 setScrollInfo: siStruct
 	"Private - Set the specified scroll info for the receiver.
 	A wrapper for the Win32 function. Answer the current position of the thumb."
 
-	^UserLibrary default 
-		setScrollInfo: self asParameter 
-			fnBar: SB_CTL 
-			lpsi: siStruct 
-			fRedraw: true!
+	^UserLibrary default
+		setScrollInfo: self asParameter
+		fnBar: SB_CTL
+		lpsi: siStruct
+		fRedraw: true!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
 	^super state
-		add: (MessageSend receiver: self selector: #range: argument: self range);
-		add: (MessageSend receiver: self selector: #pageSize: argument: self pageSize);
-		yourself
+		add: (MessageSend
+					receiver: self
+					selector: #range:
+					argument: self range);
+		add: (MessageSend
+					receiver: self
+					selector: #pageSize:
+					argument: self pageSize);
+		yourself! !
+!UI.ScrollBar categoriesFor: #calculateExtent:!geometry!private! !
+!UI.ScrollBar categoriesFor: #defaultExtent!constants!private! !
+!UI.ScrollBar categoriesFor: #displayValue!private!updating! !
+!UI.ScrollBar categoriesFor: #displayValue:!private!updating! !
+!UI.ScrollBar categoriesFor: #getScrollInfo:!accessing!private! !
+!UI.ScrollBar categoriesFor: #isTrackingContinuous!accessing!public! !
+!UI.ScrollBar categoriesFor: #isTrackingContinuous:!accessing!public! !
+!UI.ScrollBar categoriesFor: #isVertical!modes!public! !
+!UI.ScrollBar categoriesFor: #isVertical:!modes!public! !
+!UI.ScrollBar categoriesFor: #onHScroll:!event handling!public! !
+!UI.ScrollBar categoriesFor: #onVScroll:!event handling!public! !
+!UI.ScrollBar categoriesFor: #pageSize!accessing!public! !
+!UI.ScrollBar categoriesFor: #pageSize:!accessing!public! !
+!UI.ScrollBar categoriesFor: #range!accessing!public! !
+!UI.ScrollBar categoriesFor: #range:!accessing!public! !
+!UI.ScrollBar categoriesFor: #scrollPosition!accessing!private! !
+!UI.ScrollBar categoriesFor: #scrollPosition:!accessing!private! !
+!UI.ScrollBar categoriesFor: #setScrollInfo:!accessing!private! !
+!UI.ScrollBar categoriesFor: #state!accessing!private! !
 
-! !
-!ScrollBar categoriesFor: #calculateExtent:!geometry!private! !
-!ScrollBar categoriesFor: #defaultExtent!constants!private! !
-!ScrollBar categoriesFor: #displayValue!private!updating! !
-!ScrollBar categoriesFor: #displayValue:!private!updating! !
-!ScrollBar categoriesFor: #getScrollInfo:!accessing!private! !
-!ScrollBar categoriesFor: #isTrackingContinuous!accessing!public! !
-!ScrollBar categoriesFor: #isTrackingContinuous:!accessing!public! !
-!ScrollBar categoriesFor: #isVertical!modes!public! !
-!ScrollBar categoriesFor: #isVertical:!modes!public! !
-!ScrollBar categoriesFor: #onHScroll:!event handling!public! !
-!ScrollBar categoriesFor: #onVScroll:!event handling!public! !
-!ScrollBar categoriesFor: #pageSize!accessing!public! !
-!ScrollBar categoriesFor: #pageSize:!accessing!public! !
-!ScrollBar categoriesFor: #range!accessing!public! !
-!ScrollBar categoriesFor: #range:!accessing!public! !
-!ScrollBar categoriesFor: #scrollPosition!accessing!private! !
-!ScrollBar categoriesFor: #scrollPosition:!accessing!private! !
-!ScrollBar categoriesFor: #setScrollInfo:!accessing!private! !
-!ScrollBar categoriesFor: #state!accessing!private! !
-
-!ScrollBar class methodsFor!
+!UI.ScrollBar class methodsFor!
 
 defaultHeight
 	^SystemMetrics current scrollThumbExtent y!
@@ -229,10 +245,10 @@ winClassName
 
 	^'SCROLLBAR'
 ! !
-!ScrollBar class categoriesFor: #defaultHeight!constants!public! !
-!ScrollBar class categoriesFor: #defaultModel!models!public! !
-!ScrollBar class categoriesFor: #defaultWidth!constants!public! !
-!ScrollBar class categoriesFor: #icon!constants!public! !
-!ScrollBar class categoriesFor: #themePartName!constants!private! !
-!ScrollBar class categoriesFor: #winClassName!constants!private! !
+!UI.ScrollBar class categoriesFor: #defaultHeight!constants!public! !
+!UI.ScrollBar class categoriesFor: #defaultModel!models!public! !
+!UI.ScrollBar class categoriesFor: #defaultWidth!constants!public! !
+!UI.ScrollBar class categoriesFor: #icon!constants!public! !
+!UI.ScrollBar class categoriesFor: #themePartName!constants!private! !
+!UI.ScrollBar class categoriesFor: #winClassName!constants!private! !
 

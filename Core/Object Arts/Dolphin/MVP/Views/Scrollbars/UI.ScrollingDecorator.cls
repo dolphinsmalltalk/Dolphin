@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ContainerView subclass: #ScrollingDecorator
+UI.ContainerView subclass: #'UI.ScrollingDecorator'
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScrollingDecorator guid: (GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
-ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
+UI.ScrollingDecorator guid: (Core.GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
 
 Instance Variables:
 	scrollOffset	<Point> holding the current horizontal and vertical scroll offsets.
@@ -15,8 +15,8 @@ Instance Variables:
 	lineExtent	<Point> holding the scroll amount representing a scroll distance of one line.
 
 For example, the View Composer uses a ScrollingDecorator to scroll around the editing arena. Another common usage is with the MoenTreeView, which may have quite large extent when displaying large trees, but which has no scrolling capability of its own.'!
-!ScrollingDecorator categoriesForClass!MVP-Views! !
-!ScrollingDecorator methodsFor!
+!UI.ScrollingDecorator categoriesForClass!MVP-Views! !
+!UI.ScrollingDecorator methodsFor!
 
 addSubView: aView 
 	"Adds aView as a subview of the receiver. Informs the receiver that the view
@@ -53,7 +53,7 @@ ensureSubView: aView rectangleVisible: aRectangle
 
 getScrollPage: anInteger
 	| struct |
-	struct := (SCROLLINFO new)
+	struct := SCROLLINFO new
 				maskIn: SIF_PAGE;
 				yourself.
 	UserLibrary default
@@ -64,7 +64,7 @@ getScrollPage: anInteger
 
 getScrollRange: anInteger
 	| struct |
-	struct := (SCROLLINFO new)
+	struct := SCROLLINFO new
 				maskIn: SIF_RANGE;
 				yourself.
 	UserLibrary default
@@ -173,13 +173,14 @@ placement: aWINDOWPLACEMENT
 	super placement: aWINDOWPLACEMENT.
 	self deferLayout: [:context | self updateScrollBars: context]!
 
-preTranslateKeyboardInput: aMSG 
+preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG,
 	which is a keyboard message. Handle keyboard navigation."
 
 	"First ask the original view for its input mask"
+
 	| msg mask vk |
-	mask := UserLibrary default 
+	mask := UserLibrary default
 				sendMessage: aMSG hwnd
 				msg: WM_GETDLGCODE
 				wParam: 0
@@ -190,27 +191,27 @@ preTranslateKeyboardInput: aMSG
 	Keyboard default isModifierDown ifTrue: [^false].
 	msg := aMSG message.
 	vk := aMSG wParam.
-	(vk >= VK_LEFT and: [vk <= VK_DOWN]) 
+	(vk >= VK_LEFT and: [vk <= VK_DOWN])
 		ifTrue: 
 			["Arrow keys"
 
 			"If control wants arrows, then don't absorb..."
 			(mask allMask: DLGC_WANTARROWS) ifTrue: [^false].
 			"...otherwise use keydowns for line scrolling"
-			msg == WM_KEYDOWN 
+			msg == WM_KEYDOWN
 				ifTrue: 
-					[(vk == VK_LEFT or: [vk == VK_RIGHT]) 
+					[(vk == VK_LEFT or: [vk == VK_RIGHT])
 						ifTrue: [self sendMessage: WM_HSCROLL wParam: (vk - VK_LEFT) // 2 + SB_LINELEFT].
-					(vk == VK_DOWN or: [vk == VK_UP]) 
+					(vk == VK_DOWN or: [vk == VK_UP])
 						ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_UP) // 2 + SB_LINEUP].
 					^true	"absorbed for line scrolling"].
 			^false].
-	(vk == VK_END or: [vk == VK_HOME]) 
+	(vk == VK_END or: [vk == VK_HOME])
 		ifTrue: 
 			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: (vk - VK_HOME) abs + SB_TOP].
 			"Absorb home/end for scrolling to top/bottom"
 			^true].
-	(vk == VK_NEXT or: [vk == VK_PRIOR]) 
+	(vk == VK_NEXT or: [vk == VK_PRIOR])
 		ifTrue: 
 			[msg == WM_KEYDOWN ifTrue: [self sendMessage: WM_VSCROLL wParam: vk - VK_PRIOR + SB_PAGEUP].
 			"Absorb page-up/page-down for page scrolling"
@@ -283,7 +284,7 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 	"Private - Set the position, range and page size of bar in one operation."
 
 	| scrollinfo |
-	scrollinfo := (SCROLLINFO new)
+	scrollinfo := SCROLLINFO new
 				range: rangeInterval;
 				pos: positionInteger;
 				page: pageInteger;
@@ -344,43 +345,43 @@ verticalScrollTo: anInteger
 
 wheelScrollLines
 	^SystemMetrics current getSysParamSdword: SPI_GETWHEELSCROLLLINES! !
-!ScrollingDecorator categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!ScrollingDecorator categoriesFor: #defaultLayoutManager!constants!private! !
-!ScrollingDecorator categoriesFor: #defaultWindowStyle!constants!private! !
-!ScrollingDecorator categoriesFor: #ensureSubView:rectangleVisible:!accessing!private! !
-!ScrollingDecorator categoriesFor: #getScrollPage:!accessing!private! !
-!ScrollingDecorator categoriesFor: #getScrollRange:!accessing!private! !
-!ScrollingDecorator categoriesFor: #horizontalRange!accessing!private! !
-!ScrollingDecorator categoriesFor: #horizontalScrollTo:!operations!private! !
-!ScrollingDecorator categoriesFor: #initialize!initializing!private! !
-!ScrollingDecorator categoriesFor: #isTrackingContinuous!accessing-styles!public! !
-!ScrollingDecorator categoriesFor: #isTrackingContinuous:!accessing-styles!public! !
-!ScrollingDecorator categoriesFor: #lineExtent!accessing!public! !
-!ScrollingDecorator categoriesFor: #lineExtent:!accessing!public! !
-!ScrollingDecorator categoriesFor: #onHScroll:!event handling!public! !
-!ScrollingDecorator categoriesFor: #onMouseWheeled:!event handling!public! !
-!ScrollingDecorator categoriesFor: #onVScroll:!event handling!public! !
-!ScrollingDecorator categoriesFor: #placement:!geometry!public! !
-!ScrollingDecorator categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!ScrollingDecorator categoriesFor: #scrollColumns:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollHorizontalPages:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollLines:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset!accessing!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:context:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollPage!accessing!private! !
-!ScrollingDecorator categoriesFor: #scrollPages:!operations!public! !
-!ScrollingDecorator categoriesFor: #setScrollInfo:!private!updating! !
-!ScrollingDecorator categoriesFor: #setScrollInfo:position:range:page:!accessing!private! !
-!ScrollingDecorator categoriesFor: #updateScrollBarOffsets:!private!updating! !
-!ScrollingDecorator categoriesFor: #updateScrollBars:!private!updating! !
-!ScrollingDecorator categoriesFor: #verticalRange!accessing!private! !
-!ScrollingDecorator categoriesFor: #verticalScrollTo:!operations!private! !
-!ScrollingDecorator categoriesFor: #wheelScrollLines!constants!private! !
+!UI.ScrollingDecorator categoriesFor: #addSubView:!hierarchy!public!sub views! !
+!UI.ScrollingDecorator categoriesFor: #defaultLayoutManager!constants!private! !
+!UI.ScrollingDecorator categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.ScrollingDecorator categoriesFor: #ensureSubView:rectangleVisible:!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #getScrollPage:!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #getScrollRange:!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #horizontalRange!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #horizontalScrollTo:!operations!private! !
+!UI.ScrollingDecorator categoriesFor: #initialize!initializing!private! !
+!UI.ScrollingDecorator categoriesFor: #isTrackingContinuous!accessing-styles!public! !
+!UI.ScrollingDecorator categoriesFor: #isTrackingContinuous:!accessing-styles!public! !
+!UI.ScrollingDecorator categoriesFor: #lineExtent!accessing!public! !
+!UI.ScrollingDecorator categoriesFor: #lineExtent:!accessing!public! !
+!UI.ScrollingDecorator categoriesFor: #onHScroll:!event handling!public! !
+!UI.ScrollingDecorator categoriesFor: #onMouseWheeled:!event handling!public! !
+!UI.ScrollingDecorator categoriesFor: #onVScroll:!event handling!public! !
+!UI.ScrollingDecorator categoriesFor: #placement:!geometry!public! !
+!UI.ScrollingDecorator categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollColumns:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollHorizontalPages:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollLines:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollOffset!accessing!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollOffset:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollOffset:context:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #scrollPage!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #scrollPages:!operations!public! !
+!UI.ScrollingDecorator categoriesFor: #setScrollInfo:!private!updating! !
+!UI.ScrollingDecorator categoriesFor: #setScrollInfo:position:range:page:!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #updateScrollBarOffsets:!private!updating! !
+!UI.ScrollingDecorator categoriesFor: #updateScrollBars:!private!updating! !
+!UI.ScrollingDecorator categoriesFor: #verticalRange!accessing!private! !
+!UI.ScrollingDecorator categoriesFor: #verticalScrollTo:!operations!private! !
+!UI.ScrollingDecorator categoriesFor: #wheelScrollLines!constants!private! !
 
-ScrollingDecorator methodProtocol: #scrollingDecoratorView attributes: #(#readOnly) selectors: #(#isTrackingContinuous #isTrackingContinuous: #lineExtent #lineExtent: #onHScroll: #onVScroll: #scrollOffset #scrollOffset:context: #scrollPage)!
+UI.ScrollingDecorator methodProtocol: #scrollingDecoratorView attributes: #(#readOnly) selectors: #(#isTrackingContinuous #isTrackingContinuous: #lineExtent #lineExtent: #onHScroll: #onVScroll: #scrollOffset #scrollOffset:context: #scrollPage)!
 
-!ScrollingDecorator class methodsFor!
+!UI.ScrollingDecorator class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -395,7 +396,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 1 1 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 546 193 193 nil 27 )! !
-!ScrollingDecorator class categoriesFor: #icon!constants!public! !
-!ScrollingDecorator class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 7 nil nil nil 416 1769798 1 ##(UI.ScrollingDecoratorLayout) true 170 192 8 #() nil 655878 ##(Graphics.Point) 1 1 true 546 17 17 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 546 6143 21 546 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 546 193 193 nil 27)! !
+!UI.ScrollingDecorator class categoriesFor: #icon!constants!public! !
+!UI.ScrollingDecorator class categoriesFor: #resource_Default_view!public!resources-views! !
 
