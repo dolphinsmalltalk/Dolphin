@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #UpDownControlConstants
+Kernel.SharedPool subclass: #'OS.UpDownControlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -35,6 +35,7 @@ SharedPool subclass: #UpDownControlConstants
 		'UDS_SETBUDDYINT' -> 16r2.
 		'UDS_WRAP' -> 16r1
 	}!
-UpDownControlConstants guid: (GUID fromString: '{43828364-486d-4e85-b11c-ab07f6b6c5b6}')!
-UpDownControlConstants comment: ''!
-!UpDownControlConstants categoriesForClass!Unclassified! !
+OS.UpDownControlConstants guid: (Core.GUID fromString: '{43828364-486d-4e85-b11c-ab07f6b6c5b6}')!
+OS.UpDownControlConstants isNonInstantiable: true!
+OS.UpDownControlConstants comment: ''!
+!OS.UpDownControlConstants categoriesForClass!Unclassified! !

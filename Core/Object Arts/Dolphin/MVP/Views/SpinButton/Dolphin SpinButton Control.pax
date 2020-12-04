@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin SpinButton Control'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
 Copyright (c) Object Arts Ltd 2005.
@@ -13,16 +13,16 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{NMUPDOWN}
-	#{SpinButton}
-	#{UDACCEL}
-	#{UpDownControlConstants}
+	#{OS.NMUPDOWN}
+	#{OS.UDACCEL}
+	#{OS.UpDownControlConstants}
+	#{UI.SpinButton}
 ).
 
 package setMethodNames: #(
-	#(#{IntegerPrompter class} #defaultView)
-	#(#{IntegerPrompter class} #resource_Spinner_view)
-	#(#{NumberPresenter class} #resource_Spin_button)
+	#(#{UI.IntegerPrompter class} #defaultView)
+	#(#{UI.IntegerPrompter class} #resource_Spinner_view)
+	#(#{UI.NumberPresenter class} #resource_Spin_button)
 ).
 
 package setPrerequisites: #(
@@ -40,7 +40,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #UpDownControlConstants
+Kernel.SharedPool subclass: #'OS.UpDownControlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -75,7 +75,7 @@ SharedPool subclass: #UpDownControlConstants
 		'UDS_SETBUDDYINT' -> 16r2.
 		'UDS_WRAP' -> 16r1
 	}!
-Win32Structure subclass: #UDACCEL
+OS.Win32Structure subclass: #'OS.UDACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -84,7 +84,7 @@ Win32Structure subclass: #UDACCEL
 		'_OffsetOf_nInc' -> 16r4.
 		'_OffsetOf_nSec' -> 16r0
 	}!
-NMHDR subclass: #NMUPDOWN
+OS.NMHDR subclass: #'OS.NMUPDOWN'
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
 	imports: #()
@@ -93,10 +93,10 @@ NMHDR subclass: #NMUPDOWN
 		'_OffsetOf_iDelta' -> 16r10.
 		'_OffsetOf_iPos' -> 16rC
 	}!
-ValueConvertingControlView subclass: #SpinButton
+UI.ValueConvertingControlView subclass: #'UI.SpinButton'
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	imports: #(#{UpDownControlConstants})
+	imports: #(#{OS.UpDownControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignmentMask' -> 16rC
@@ -104,7 +104,7 @@ ValueConvertingControlView subclass: #SpinButton
 
 "Loose Methods"!
 
-!IntegerPrompter class methodsFor!
+!UI.IntegerPrompter class methodsFor!
 
 defaultView
 	^'Spinner view'!
@@ -117,11 +117,11 @@ resource_Spinner_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Spinner_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 852230 ##(Smalltalk.FramingLayout) 170 176 34 8 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 25 129 578 419 63 672 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 64 0 0 0 221 0 0 0 95 0 0 0] 8 #() 578 193 193 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 5 1026 #fixedParentRight 5 1026 #fixedViewBottom -61 1026 #fixedParentBottom 7 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140924544 1025 1104 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 1104 nil 8 1903872368 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 770 138 144 34 4 834 #createAt:extent: 34 2 578 291 31 578 121 41 1104 834 #text: 34 1 8 '0' 1104 834 #selectionRange: 34 1 525062 ##(Smalltalk.Interval) 3 3 3 1104 834 #setMarginWidths: 34 1 8 #(3 3) 1104 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 145 0 0 0 15 0 0 0 205 0 0 0 35 0 0 0] 8 #() 976 nil 27 994 1026 #fixedPreviousRight 21 1026 #fixedViewLeft 121 1026 #fixedParentTop 1 1026 #fixedViewTop 41 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 1 1664 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 8 '' nil nil 7 nil nil nil 1664 nil 8 1903849936 852486 ##(Smalltalk.NullConverter) nil nil true 770 138 144 34 2 834 #createAt:extent: 34 2 578 41 31 578 231 81 1664 834 #text: 34 1 8 'Enter number:' 1664 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 15 0 0 0 135 0 0 0 55 0 0 0] 8 #() 976 nil 27 994 1040 21 1616 231 1632 1 1648 81 410 ##(Smalltalk.SpinButton) 34 15 nil 416 34 2 8 1140916276 1 2080 1730 nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 2194 #hash 8 #() 1 1184 nil 7 nil nil nil 2080 nil 8 1903809120 1826 nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 578 411 31 578 29 41 2080 834 #setRange: 34 1 1458 3 201 3 2080 834 #udmSetAccel: 34 1 918854 1 ##(Smalltalk.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(Smalltalk.UDACCEL) nil 17 2080 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 15 0 0 0 219 0 0 0 35 0 0 0] 8 #() 976 nil 27 994 1600 1 1616 29 1026 #fixedPreviousTop 1 1026 #fixedPreviousBottom 1 170 192 34 6 1664 8 'prompt' 1104 8 'reply' 2080 8 'spinner' 590342 ##(Smalltalk.Rectangle) 578 21 31 578 21 21 nil nil nil nil 13151 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 1998684880 770 138 144 34 3 834 #createAt:extent: 34 2 578 3839 21 578 491 283 416 834 #text: 34 1 8 'Please respond:' 416 834 #updateMenuBar 960 416 914 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 116 8 0 0 151 0 0 0] 34 4 1664 1104 2080 672 976 nil 27 )! !
-!IntegerPrompter class categoriesFor: #defaultView!constants!public! !
-!IntegerPrompter class categoriesFor: #resource_Spinner_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #dialog nil 165 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 655878 ##(Graphics.Point) 193 193 nil 416 1048838 ##(UI.FramingLayout) 170 176 34 8 410 ##(UI.TextEdit) 34 16 nil 416 34 2 8 1140924544 1025 672 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 672 nil 8 1920675248 1049670 1 ##(UI.IntegerToText) nil 8 '' 1049350 ##(OS.WindowsLocale) 852998 ##(OS.NUMBERFMTW) 8 #[2 0 0 0 1 0 0 0 3 0 0 0 232 149 214 5 200 149 214 5 1 0 0 0] 8 '.' nil 8 ',' 4115 170 192 34 26 8225 3 85 8 'Monday' 37 3 95 8 'Saturday' 31 8 ',' 89 8 'Wednesday' 35 5 93 8 'Friday' 29 8 '.' 87 8 'Tuesday' 97 8 'Sunday' 33 8 '3;0' 91 8 'Thursday' nil 1 1310982 ##(Core.MessageSequence) 138 144 34 4 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 291 31 578 121 41 672 1202 #text: 34 1 8 '0' 672 1202 #selectionRange: 34 1 852742 ##(Core.Interval) 3 3 3 672 1202 #setMarginWidths: 34 1 8 #(3 3) 672 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 145 0 0 0 15 0 0 0 205 0 0 0 35 0 0 0] 8 #() 578 193 193 nil 27 1378374 2 ##(UI.FramingConstraints) 1377286 ##(UI.FramingCalculation) #fixedPreviousRight 21 1554 #fixedViewLeft 121 1554 #fixedParentTop 1 1554 #fixedViewTop 41 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1632 nil nil nil 7 nil nil nil 1632 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 1138 138 144 34 1 1202 #createAt:extent: 34 2 578 25 129 578 419 63 1632 1442 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 64 0 0 0 221 0 0 0 95 0 0 0] 8 #() 1504 nil 27 1522 1554 #fixedParentLeft 5 1554 #fixedParentRight 5 1554 #fixedViewBottom -61 1554 #fixedParentBottom 7 410 ##(UI.SpinButton) 34 15 nil 416 34 2 8 1140916276 1 1968 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 2098 #hash 8 #() 1 752 nil 7 nil nil nil 1968 nil 8 1920411104 1049094 ##(UI.NullConverter) nil nil 1138 138 144 34 3 1202 #createAt:extent: 34 2 578 411 31 578 29 41 1968 1202 #setRange: 34 1 1362 3 201 3 1968 1202 #udmSetAccel: 34 1 1508678 1 ##(External.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(OS.UDACCEL) nil 17 1968 1442 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 15 0 0 0 219 0 0 0 35 0 0 0] 8 #() 1504 nil 27 1522 1568 1 1584 29 1554 #fixedPreviousTop 1 1554 #fixedPreviousBottom 1 410 ##(UI.StaticText) 34 16 nil 416 34 2 8 1140850944 1 2560 2034 nil nil 1441798 ##(Kernel.NeverSearchPolicy) 8 '' nil nil 7 nil nil nil 2560 nil 8 1920531648 2194 nil nil true 1138 138 144 34 2 1202 #createAt:extent: 34 2 578 41 31 578 231 81 2560 1202 #text: 34 1 8 'Enter number:' 2560 1442 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 15 0 0 0 135 0 0 0 55 0 0 0] 8 #() 1504 nil 27 1522 1904 21 1584 231 1600 1 1616 81 170 192 34 6 1968 8 'spinner' 2560 8 'prompt' 672 8 'reply' 1180166 ##(Graphics.Rectangle) 578 21 31 578 21 21 nil nil nil nil 26033 nil nil nil nil 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 2005493520 1138 138 144 34 2 1202 #createAt:extent: 34 2 578 6143 21 578 491 283 416 1202 #text: 34 1 8 'Please respond:' 416 1442 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 151 0 0 0] 34 4 2560 672 1968 1632 1504 nil 27)! !
+!UI.IntegerPrompter class categoriesFor: #defaultView!constants!public! !
+!UI.IntegerPrompter class categoriesFor: #resource_Spinner_view!public!resources-views! !
 
-!NumberPresenter class methodsFor!
+!UI.NumberPresenter class methodsFor!
 
 resource_Spin_button
 	"Answer the literal data from which the 'Spin button' resource can be reconstituted.
@@ -131,8 +131,8 @@ resource_Spin_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Spin_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SpinButton) 34 15 nil nil 34 2 8 1140916240 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 1 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903809120 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 35 51 416 770 #setRange: 34 1 525062 ##(Smalltalk.Interval) 3 201 3 416 770 #udmSetAccel: 34 1 918854 1 ##(Smalltalk.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(Smalltalk.UDACCEL) nil 17 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 144 7 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )! !
-!NumberPresenter class categoriesFor: #resource_Spin_button!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.SpinButton) 34 15 nil nil 34 2 8 1140916240 1 416 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 546 #hash 8 #() 1 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920411104 1049094 ##(UI.NullConverter) nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 818 35 51 416 770 #setRange: 34 1 852742 ##(Core.Interval) 3 201 3 416 770 #udmSetAccel: 34 1 1508678 1 ##(External.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(OS.UDACCEL) nil 17 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 16 12 0 0 35 0 0 0] 8 #() 818 193 193 nil 27)! !
+!UI.NumberPresenter class categoriesFor: #resource_Spin_button!public!resources-views! !
 
 "End of package definition"!
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #UDACCEL
+OS.Win32Structure subclass: #'OS.UDACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nInc' -> 16r4.
 		'_OffsetOf_nSec' -> 16r0
 	}!
-UDACCEL guid: (GUID fromString: '{425d0ea4-542e-11d3-998b-d5ca2c3c1d61}')!
-UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct ''UpDownLib.UDACCEL'' from type information in the ''Microsoft Windows Up-Down Control'' library.'!
-!UDACCEL categoriesForClass!External-Data-Structured-Win32! !
-!UDACCEL methodsFor!
+OS.UDACCEL guid: (Core.GUID fromString: '{425d0ea4-542e-11d3-998b-d5ca2c3c1d61}')!
+OS.UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct ''UpDownLib.UDACCEL'' from type information in the ''Microsoft Windows Up-Down Control'' library.'!
+!OS.UDACCEL categoriesForClass!External-Data-Structured-Win32! !
+!OS.UDACCEL methodsFor!
 
 nInc
 	"Answer the <Integer> value of the receiver's 'nInc' field."
@@ -33,12 +33,12 @@ nSec: anInteger
 	"Set the receiver's 'nSec' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSec put: anInteger! !
-!UDACCEL categoriesFor: #nInc!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nInc:!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nSec!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nSec:!**compiled accessors**!public! !
+!OS.UDACCEL categoriesFor: #nInc!**compiled accessors**!public! !
+!OS.UDACCEL categoriesFor: #nInc:!**compiled accessors**!public! !
+!OS.UDACCEL categoriesFor: #nSec!**compiled accessors**!public! !
+!OS.UDACCEL categoriesFor: #nSec:!**compiled accessors**!public! !
 
-!UDACCEL class methodsFor!
+!OS.UDACCEL class methodsFor!
 
 defineFields
 	"Define the fields of the UDACCEL structure.
@@ -56,6 +56,6 @@ defineFields
 
 getFieldNames
 	^#(#nSec #nInc)! !
-!UDACCEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.UDACCEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

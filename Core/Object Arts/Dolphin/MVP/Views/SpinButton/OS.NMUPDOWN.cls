@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMUPDOWN
+OS.NMHDR subclass: #'OS.NMUPDOWN'
 	instanceVariableNames: 'allow'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iDelta' -> 16r10.
 		'_OffsetOf_iPos' -> 16rC
 	}!
-NMUPDOWN guid: (GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
-NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
+OS.NMUPDOWN guid: (Core.GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
+OS.NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
 
 NMUPDOWN accompanies the UDN_DELTAPOS notifications that are sent by an up-down control to its parent when it has been nudged and is about to change its value. The notification is forwarded as a #nudge: event off the <SpinButton> view''s presenter.
 
@@ -22,8 +22,8 @@ typedef struct tagNMUPDOWN {
 	int iDelta;
 } NMUPDOWN;
 '!
-!NMUPDOWN categoriesForClass!External-Data-Structured-Win32! !
-!NMUPDOWN methodsFor!
+!OS.NMUPDOWN categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMUPDOWN methodsFor!
 
 allow
 	"Answer whether the action associated with this notification should be permitted to proceed."
@@ -50,13 +50,13 @@ newPosition
 	receiver be accepted."
 
 	^self iPos + self iDelta! !
-!NMUPDOWN categoriesFor: #allow!accessing!public! !
-!NMUPDOWN categoriesFor: #allow:!accessing!public! !
-!NMUPDOWN categoriesFor: #iDelta!**compiled accessors**!public! !
-!NMUPDOWN categoriesFor: #iPos!**compiled accessors**!public! !
-!NMUPDOWN categoriesFor: #newPosition!accessing!public! !
+!OS.NMUPDOWN categoriesFor: #allow!accessing!public! !
+!OS.NMUPDOWN categoriesFor: #allow:!accessing!public! !
+!OS.NMUPDOWN categoriesFor: #iDelta!**compiled accessors**!public! !
+!OS.NMUPDOWN categoriesFor: #iPos!**compiled accessors**!public! !
+!OS.NMUPDOWN categoriesFor: #newPosition!accessing!public! !
 
-!NMUPDOWN class methodsFor!
+!OS.NMUPDOWN class methodsFor!
 
 defineFields
 	"Define the fields of the NMUPDOWN structure.
@@ -76,6 +76,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
-!NMUPDOWN class categoriesFor: #defineFields!public!template definition! !
-!NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMUPDOWN class categoriesFor: #defineFields!public!template definition! !
+!OS.NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

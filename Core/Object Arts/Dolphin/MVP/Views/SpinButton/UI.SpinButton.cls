@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #SpinButton
+UI.ValueConvertingControlView subclass: #'UI.SpinButton'
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'UpDownControlConstants'
+	imports: #(#{OS.UpDownControlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlignmentMask' -> 16rC
 	}!
-SpinButton guid: (GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
-SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
+UI.SpinButton guid: (Core.GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
+UI.SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
 
 Note that comctl32.dll version 5.80 or later is required, mandating at least Internet Explorer 5 on the target machine. This is to support the 32-bit integer range, 16-bit seeming hardly worthwhile.
 
@@ -29,8 +29,8 @@ Class Variables:
 	UdnMap		<Array> of <Symbol>. Notification message selectors.
 
 '!
-!SpinButton categoriesForClass!MVP-Views! !
-!SpinButton methodsFor!
+!UI.SpinButton categoriesForClass!MVP-Views! !
+!UI.SpinButton methodsFor!
 
 alignment
 	"Answer a <Symbol> identifiying the receiver's current alignment mode in relation
@@ -87,7 +87,7 @@ getRange
 	| min max |
 	min := SDWORD new.
 	max := SDWORD new.
-	self 
+	self
 		sendMessage: UDM_GETRANGE32
 		wParam: min yourAddress
 		lParam: max yourAddress.
@@ -99,10 +99,10 @@ getStep
 
 	| accel |
 	accel := UDACCEL new.
-	^(self 
+	^(self
 		sendMessage: UDM_GETACCEL
 		wParam: 1
-		lpParam: accel) = 0 
+		lpParam: accel) = 0
 		ifTrue: [1]
 		ifFalse: [accel nInc]!
 
@@ -243,20 +243,20 @@ setRange: anInterval
 		wParam: anInterval start
 		lParam: anInterval stop!
 
-setStep: anInteger 
+setStep: anInteger
 	"Private - Set the amount by which the spin button's value changes each time a button is
 	pressed. Note that this adjusts all the accelerated jumps to be multiples of the step,
 	attempting to maintain approximately the existing acceleration ratios."
 
 	| accels prevStep |
 	accels := self udmGetAccel.
-	prevStep := accels isEmpty 
+	prevStep := accels isEmpty
 				ifTrue: 
 					[accels := StructureArray length: 1 elementClass: UDACCEL.
 					accels beUnfinalizable.
 					1]
 				ifFalse: [accels first nInc].
-	(accels first)
+	accels first
 		nInc: anInteger;
 		nSec: 0.
 	accels from: 2 do: [:each | each nInc: (each nInc / prevStep * anInteger) truncated].
@@ -269,11 +269,11 @@ state
 	| answer |
 	answer := super state.
 	answer
-		add: (MessageSend 
+		add: (MessageSend
 					receiver: self
 					selector: #setRange:
 					argument: self getRange);
-		add: (MessageSend 
+		add: (MessageSend
 					receiver: self
 					selector: #udmSetAccel:
 					argument: self udmGetAccel).
@@ -286,7 +286,7 @@ udmGetAccel
 	count := self sendMessage: UDM_GETACCEL.
 	answer := StructureArray length: count elementClass: UDACCEL.
 	answer beUnfinalizable.
-	self 
+	self
 		sendMessage: UDM_GETACCEL
 		wParam: count
 		lpParam: answer.
@@ -301,7 +301,7 @@ udmSetAccel: aStructureArrayOfUDACCEL
 		wParam: aStructureArrayOfUDACCEL size
 		lpParam: aStructureArrayOfUDACCEL!
 
-udnDeltaPos: anExternalAddress 
+udnDeltaPos: anExternalAddress
 	"Private - Handle the UDN_DELTAPOS notification from the control, sent when the position of
 	the up-down control is about to change. An event is triggered and observers may veto the
 	position change by setting the #allow property of the event argument to false."
@@ -325,45 +325,45 @@ wantArrowKeys: aBoolean
 		baseStyleMask: UDS_ARROWKEYS
 		set: aBoolean
 		recreateIfChanged: false! !
-!SpinButton categoriesFor: #alignment!accessing!public! !
-!SpinButton categoriesFor: #alignment:!accessing!public! !
-!SpinButton categoriesFor: #buddy!accessing!public! !
-!SpinButton categoriesFor: #buddy:!accessing!public! !
-!SpinButton categoriesFor: #displayValue!private!updating! !
-!SpinButton categoriesFor: #displayValue:!private!updating! !
-!SpinButton categoriesFor: #getRange!accessing!private! !
-!SpinButton categoriesFor: #getStep!accessing!private! !
-!SpinButton categoriesFor: #hasHotTracking!accessing-styles!public! !
-!SpinButton categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!SpinButton categoriesFor: #hasThousandsSeparators!accessing-styles!public! !
-!SpinButton categoriesFor: #hasThousandsSeparators:!accessing-styles!public! !
-!SpinButton categoriesFor: #initialize!initializing!public! !
-!SpinButton categoriesFor: #isAutoBuddy!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoBuddy:!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoSync!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoSync:!accessing-styles!public! !
-!SpinButton categoriesFor: #isVertical!accessing-styles!public! !
-!SpinButton categoriesFor: #isVertical:!accessing-styles!public! !
-!SpinButton categoriesFor: #isWraparound!accessing-styles!public! !
-!SpinButton categoriesFor: #isWraparound:!accessing-styles!public! !
-!SpinButton categoriesFor: #nmNotify:!event handling-win32!private! !
-!SpinButton categoriesFor: #onHScroll:!event handling!private! !
-!SpinButton categoriesFor: #onPositionChanged:!event handling!public! !
-!SpinButton categoriesFor: #onVScroll:!event handling!private! !
-!SpinButton categoriesFor: #radix!accessing!public! !
-!SpinButton categoriesFor: #radix:!accessing!public! !
-!SpinButton categoriesFor: #range!accessing!public! !
-!SpinButton categoriesFor: #range:!accessing!public! !
-!SpinButton categoriesFor: #setRange:!accessing!private! !
-!SpinButton categoriesFor: #setStep:!accessing!private! !
-!SpinButton categoriesFor: #state!accessing!private! !
-!SpinButton categoriesFor: #udmGetAccel!accessing!private! !
-!SpinButton categoriesFor: #udmSetAccel:!accessing!private! !
-!SpinButton categoriesFor: #udnDeltaPos:!event handling-win32!private! !
-!SpinButton categoriesFor: #wantArrowKeys!accessing-styles!public! !
-!SpinButton categoriesFor: #wantArrowKeys:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #alignment!accessing!public! !
+!UI.SpinButton categoriesFor: #alignment:!accessing!public! !
+!UI.SpinButton categoriesFor: #buddy!accessing!public! !
+!UI.SpinButton categoriesFor: #buddy:!accessing!public! !
+!UI.SpinButton categoriesFor: #displayValue!private!updating! !
+!UI.SpinButton categoriesFor: #displayValue:!private!updating! !
+!UI.SpinButton categoriesFor: #getRange!accessing!private! !
+!UI.SpinButton categoriesFor: #getStep!accessing!private! !
+!UI.SpinButton categoriesFor: #hasHotTracking!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #hasHotTracking:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #hasThousandsSeparators!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #hasThousandsSeparators:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #initialize!initializing!public! !
+!UI.SpinButton categoriesFor: #isAutoBuddy!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isAutoBuddy:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isAutoSync!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isAutoSync:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isVertical!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isVertical:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isWraparound!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #isWraparound:!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #nmNotify:!event handling-win32!private! !
+!UI.SpinButton categoriesFor: #onHScroll:!event handling!private! !
+!UI.SpinButton categoriesFor: #onPositionChanged:!event handling!public! !
+!UI.SpinButton categoriesFor: #onVScroll:!event handling!private! !
+!UI.SpinButton categoriesFor: #radix!accessing!public! !
+!UI.SpinButton categoriesFor: #radix:!accessing!public! !
+!UI.SpinButton categoriesFor: #range!accessing!public! !
+!UI.SpinButton categoriesFor: #range:!accessing!public! !
+!UI.SpinButton categoriesFor: #setRange:!accessing!private! !
+!UI.SpinButton categoriesFor: #setStep:!accessing!private! !
+!UI.SpinButton categoriesFor: #state!accessing!private! !
+!UI.SpinButton categoriesFor: #udmGetAccel!accessing!private! !
+!UI.SpinButton categoriesFor: #udmSetAccel:!accessing!private! !
+!UI.SpinButton categoriesFor: #udnDeltaPos:!event handling-win32!private! !
+!UI.SpinButton categoriesFor: #wantArrowKeys!accessing-styles!public! !
+!UI.SpinButton categoriesFor: #wantArrowKeys:!accessing-styles!public! !
 
-!SpinButton class methodsFor!
+!UI.SpinButton class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -397,9 +397,9 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_updown32'! !
-!SpinButton class categoriesFor: #defaultModel!models!public! !
-!SpinButton class categoriesFor: #icon!constants!public! !
-!SpinButton class categoriesFor: #initialize!development!initializing!private! !
-!SpinButton class categoriesFor: #themePartName!constants!private! !
-!SpinButton class categoriesFor: #winClassName!constants!private! !
+!UI.SpinButton class categoriesFor: #defaultModel!models!public! !
+!UI.SpinButton class categoriesFor: #icon!constants!public! !
+!UI.SpinButton class categoriesFor: #initialize!development!initializing!private! !
+!UI.SpinButton class categoriesFor: #themePartName!constants!private! !
+!UI.SpinButton class categoriesFor: #winClassName!constants!private! !
 
