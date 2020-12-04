@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticView subclass: #StaticImage
+UI.StaticView subclass: #'UI.StaticImage'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticImage guid: (GUID fromString: '{87b4c73f-026e-11d3-9fd7-00a0cc3e4a32}')!
-StaticImage isAbstract: true!
-StaticImage comment: 'StaticImage is an abstract superclass for Windows STATIC controls that display <images>. The <valueModel> associated with a StaticImage must always yield an <image> value when mapped through the installed type converter. A StaticImage will normally be used in conjunction with a <ImagePresenter>.
+UI.StaticImage guid: (Core.GUID fromString: '{87b4c73f-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StaticImage isNonInstantiable: true!
+UI.StaticImage comment: 'StaticImage is an abstract superclass for Windows STATIC controls that display <images>. The <valueModel> associated with a StaticImage must always yield an <image> value when mapped through the installed type converter. A StaticImage will normally be used in conjunction with a <ImagePresenter>.
 
 Instance Variables:
 	image		<image> which is a cache for the image being displayed.
 
 '!
-!StaticImage categoriesForClass!MVP-Views! !
-!StaticImage methodsFor!
+!UI.StaticImage categoriesForClass!MVP-Views! !
+!UI.StaticImage methodsFor!
 
 displayValue
 	"Private - Answer the displayed contents, the current image,
@@ -46,17 +46,17 @@ image: anImage
 
 setImage: anImage
 	^self subclassResponsibility! !
-!StaticImage categoriesFor: #displayValue!private!updating! !
-!StaticImage categoriesFor: #displayValue:!private!updating! !
-!StaticImage categoriesFor: #image!accessing!private! !
-!StaticImage categoriesFor: #image:!accessing!public! !
-!StaticImage categoriesFor: #setImage:!accessing!private! !
+!UI.StaticImage categoriesFor: #displayValue!private!updating! !
+!UI.StaticImage categoriesFor: #displayValue:!private!updating! !
+!UI.StaticImage categoriesFor: #image!accessing!private! !
+!UI.StaticImage categoriesFor: #image:!accessing!public! !
+!UI.StaticImage categoriesFor: #setImage:!accessing!private! !
 
-!StaticImage class methodsFor!
+!UI.StaticImage class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!StaticImage class categoriesFor: #icon!constants!public! !
+!UI.StaticImage class categoriesFor: #icon!constants!public! !
 

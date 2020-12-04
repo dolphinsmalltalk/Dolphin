@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Image Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Image Presenter and Views.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -9,12 +9,12 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AnimatedImageView}
-	#{ImagePresenter}
-	#{ImageView}
-	#{StaticBitmap}
-	#{StaticIcon}
-	#{StaticImage}
+	#{UI.AnimatedImageView}
+	#{UI.ImagePresenter}
+	#{UI.ImageView}
+	#{UI.StaticBitmap}
+	#{UI.StaticIcon}
+	#{UI.StaticImage}
 ).
 
 package setPrerequisites: #(
@@ -29,40 +29,40 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #ImagePresenter
+UI.ValuePresenter subclass: #'UI.ImagePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticView subclass: #StaticImage
+UI.StaticView subclass: #'UI.StaticImage'
 	instanceVariableNames: 'image'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ImageViewAbstract subclass: #ImageView
+UI.ImageViewAbstract subclass: #'UI.ImageView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticImage subclass: #StaticBitmap
+UI.StaticImage subclass: #'UI.StaticBitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticImage subclass: #StaticIcon
+UI.StaticImage subclass: #'UI.StaticIcon'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DoubleBufferedView subclass: #AnimatedImageView
+UI.DoubleBufferedView subclass: #'UI.AnimatedImageView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

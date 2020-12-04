@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticImage subclass: #StaticBitmap
+UI.StaticImage subclass: #'UI.StaticBitmap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticBitmap guid: (GUID fromString: '{87b4c741-026e-11d3-9fd7-00a0cc3e4a32}')!
-StaticBitmap comment: 'StaticBitmap is a <valueView> class for a Window STATIC control using the SS_BITMAP style. The <valueModel> associated with a StaticBitmap must always yield a <Bitmap> value when mapped through the installed type converter. A StaticBitmap will normally be used in conjunction with a <ImagePresenter>.'!
-!StaticBitmap categoriesForClass!MVP-Views! !
-!StaticBitmap methodsFor!
+UI.StaticBitmap guid: (Core.GUID fromString: '{87b4c741-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StaticBitmap comment: 'StaticBitmap is a <valueView> class for a Window STATIC control using the SS_BITMAP style. The <valueModel> associated with a StaticBitmap must always yield a <Bitmap> value when mapped through the installed type converter. A StaticBitmap will normally be used in conjunction with a <ImagePresenter>.'!
+!UI.StaticBitmap categoriesForClass!MVP-Views! !
+!UI.StaticBitmap methodsFor!
 
 defaultWindowStyle
 	"Private - Answer a default base style to use for the receiver"
@@ -22,6 +22,6 @@ setImage: aBitmapOrNil
 
 	image := aBitmapOrNil notNil ifTrue: [aBitmapOrNil freeDC; yourself].
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_BITMAP lParam: image asParameter! !
-!StaticBitmap categoriesFor: #defaultWindowStyle!constants!private! !
-!StaticBitmap categoriesFor: #setImage:!accessing!private! !
+!UI.StaticBitmap categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.StaticBitmap categoriesFor: #setImage:!accessing!private! !
 
