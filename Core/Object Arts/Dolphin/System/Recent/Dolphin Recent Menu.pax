@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Recent Menu'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,8 +8,8 @@ package basicPackageVersion: '6.2.2'.
 
 
 package setClassNames: #(
-	#{AbstractRecentMenu}
-	#{RegistryRecentMenu}
+	#{UI.AbstractRecentMenu}
+	#{UI.RegistryRecentMenu}
 ).
 
 package setPrerequisites: #(
@@ -21,16 +21,16 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #AbstractRecentMenu
+Core.Object subclass: #'UI.AbstractRecentMenu'
 	instanceVariableNames: 'openSelector recentMenuName isFullPathAlwaysRequired'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRecentMenu subclass: #RegistryRecentMenu
+UI.AbstractRecentMenu subclass: #'UI.RegistryRecentMenu'
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

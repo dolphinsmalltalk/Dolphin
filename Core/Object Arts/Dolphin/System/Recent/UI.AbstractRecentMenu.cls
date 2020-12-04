@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AbstractRecentMenu
+Core.Object subclass: #'UI.AbstractRecentMenu'
 	instanceVariableNames: 'openSelector recentMenuName isFullPathAlwaysRequired'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRecentMenu guid: (GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
-AbstractRecentMenu isAbstract: true!
-AbstractRecentMenu comment: ''!
-!AbstractRecentMenu categoriesForClass!Kernel-Objects! !
-!AbstractRecentMenu methodsFor!
+UI.AbstractRecentMenu guid: (Core.GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
+UI.AbstractRecentMenu isNonInstantiable: true!
+UI.AbstractRecentMenu comment: ''!
+!UI.AbstractRecentMenu categoriesForClass!Kernel-Objects! !
+!UI.AbstractRecentMenu methodsFor!
 
 addToRecentList: aRecentString 
 	"Adds aFilenameString to the <orderedCollection> of recently accessed files"
@@ -83,23 +83,23 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 	"Private - Save anOrderedCollectionOfFilenameStrings as the list of recently opened files."
 
 	self subclassResponsibility! !
-!AbstractRecentMenu categoriesFor: #addToRecentList:!public! !
-!AbstractRecentMenu categoriesFor: #clearRecentList!public! !
-!AbstractRecentMenu categoriesFor: #getRecentList!helpers!private! !
-!AbstractRecentMenu categoriesFor: #initialize!initializing!private! !
-!AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired!accessing!private! !
-!AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired:!accessing!private! !
-!AbstractRecentMenu categoriesFor: #notEmpty!public! !
-!AbstractRecentMenu categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
-!AbstractRecentMenu categoriesFor: #openSelector!accessing!private! !
-!AbstractRecentMenu categoriesFor: #openSelector:!accessing!private! !
-!AbstractRecentMenu categoriesFor: #recentMenuName!accessing!private! !
-!AbstractRecentMenu categoriesFor: #recentMenuName:!accessing!private! !
-!AbstractRecentMenu categoriesFor: #setRecentList:!helpers!private! !
+!UI.AbstractRecentMenu categoriesFor: #addToRecentList:!public! !
+!UI.AbstractRecentMenu categoriesFor: #clearRecentList!public! !
+!UI.AbstractRecentMenu categoriesFor: #getRecentList!helpers!private! !
+!UI.AbstractRecentMenu categoriesFor: #initialize!initializing!private! !
+!UI.AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired:!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #notEmpty!public! !
+!UI.AbstractRecentMenu categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
+!UI.AbstractRecentMenu categoriesFor: #openSelector!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #openSelector:!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #recentMenuName!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #recentMenuName:!accessing!private! !
+!UI.AbstractRecentMenu categoriesFor: #setRecentList:!helpers!private! !
 
-!AbstractRecentMenu class methodsFor!
+!UI.AbstractRecentMenu class methodsFor!
 
 new
 	^super new initialize! !
-!AbstractRecentMenu class categoriesFor: #new!instance creation!public! !
+!UI.AbstractRecentMenu class categoriesFor: #new!instance creation!public! !
 
