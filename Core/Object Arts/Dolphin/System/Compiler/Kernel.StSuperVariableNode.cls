@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSpecialVariableNode subclass: #StSuperVariableNode
+Kernel.StSpecialVariableNode subclass: #'Kernel.StSuperVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSuperVariableNode guid: (GUID fromString: '{8e51ff15-67ba-464c-965a-d091253784a5}')!
-StSuperVariableNode comment: 'StSuperVariableNode is an parse tree node that represents the special variable ''super'', which is only valid as the target of a message send.
+Kernel.StSuperVariableNode guid: (Core.GUID fromString: '{8e51ff15-67ba-464c-965a-d091253784a5}')!
+Kernel.StSuperVariableNode comment: 'StSuperVariableNode is an parse tree node that represents the special variable ''super'', which is only valid as the target of a message send.
 '!
-!StSuperVariableNode categoriesForClass!System-Compiler! !
-!StSuperVariableNode methodsFor!
+!Kernel.StSuperVariableNode categoriesForClass!System-Compiler! !
+!Kernel.StSuperVariableNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitSuperVariableNode: self!
@@ -25,8 +25,8 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope superVariable! !
-!StSuperVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StSuperVariableNode categoriesFor: #isSuperVariable!public!testing! !
-!StSuperVariableNode categoriesFor: #name!constants!public! !
-!StSuperVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StSuperVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StSuperVariableNode categoriesFor: #isSuperVariable!public!testing! !
+!Kernel.StSuperVariableNode categoriesFor: #name!constants!public! !
+!Kernel.StSuperVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 

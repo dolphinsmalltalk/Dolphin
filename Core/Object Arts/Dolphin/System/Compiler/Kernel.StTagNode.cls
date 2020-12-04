@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StProgramNode subclass: #StTagNode
+Kernel.StProgramNode subclass: #'Kernel.StTagNode'
 	instanceVariableNames: 'start stop'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StTagNode guid: (GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
-StTagNode isAbstract: true!
-StTagNode comment: ''!
-!StTagNode categoriesForClass!System-Compiler! !
-!StTagNode methodsFor!
+Kernel.StTagNode guid: (Core.GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
+Kernel.StTagNode isNonInstantiable: true!
+Kernel.StTagNode comment: ''!
+!Kernel.StTagNode categoriesForClass!System-Compiler! !
+!Kernel.StTagNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor 
 	^self subclassResponsibility!
@@ -32,11 +32,11 @@ stop
 
 stop: anInteger
 	stop := anInteger! !
-!StTagNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StTagNode categoriesFor: #isExternalCall!public!testing! !
-!StTagNode categoriesFor: #primitiveIndex!accessing!public! !
-!StTagNode categoriesFor: #start!accessing!public! !
-!StTagNode categoriesFor: #start:!accessing!private! !
-!StTagNode categoriesFor: #stop!accessing!public! !
-!StTagNode categoriesFor: #stop:!accessing!private! !
+!Kernel.StTagNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StTagNode categoriesFor: #isExternalCall!public!testing! !
+!Kernel.StTagNode categoriesFor: #primitiveIndex!accessing!public! !
+!Kernel.StTagNode categoriesFor: #start!accessing!public! !
+!Kernel.StTagNode categoriesFor: #start:!accessing!private! !
+!Kernel.StTagNode categoriesFor: #stop!accessing!public! !
+!Kernel.StTagNode categoriesFor: #stop:!accessing!private! !
 

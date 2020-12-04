@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLocalVariable subclass: #StArgumentVariable
+Kernel.StLocalVariable subclass: #'Kernel.StArgumentVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StArgumentVariable guid: (GUID fromString: '{724d61eb-4b75-4eec-9d01-58a4af61ee45}')!
-StArgumentVariable comment: '<StArgumentVariable> is a specialised class of <StLocalVariable> to describe method and block parameters (argument definitions).'!
-!StArgumentVariable categoriesForClass!Kernel-Objects! !
-!StArgumentVariable methodsFor!
+Kernel.StArgumentVariable guid: (Core.GUID fromString: '{724d61eb-4b75-4eec-9d01-58a4af61ee45}')!
+Kernel.StArgumentVariable comment: '<StArgumentVariable> is a specialised class of <StLocalVariable> to describe method and block parameters (argument definitions).'!
+!Kernel.StArgumentVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StArgumentVariable methodsFor!
 
 isArgument
 	"Answer whether the receiver describes an argument variable."
@@ -21,6 +21,6 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
-!StArgumentVariable categoriesFor: #isArgument!public!testing! !
-!StArgumentVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StArgumentVariable categoriesFor: #isArgument!public!testing! !
+!Kernel.StArgumentVariable categoriesFor: #isConstant!public!testing! !
 

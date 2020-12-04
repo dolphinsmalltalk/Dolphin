@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StToken subclass: #StOptimizedToken
+Kernel.StToken subclass: #'Kernel.StOptimizedToken'
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StOptimizedToken guid: (GUID fromString: '{6fd2c057-1eef-416c-99a2-60958de98eb1}')!
-StOptimizedToken comment: ''!
-!StOptimizedToken categoriesForClass!System-Compiler! !
-!StOptimizedToken methodsFor!
+Kernel.StOptimizedToken guid: (Core.GUID fromString: '{6fd2c057-1eef-416c-99a2-60958de98eb1}')!
+Kernel.StOptimizedToken comment: ''!
+!Kernel.StOptimizedToken categoriesForClass!System-Compiler! !
+!Kernel.StOptimizedToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitOptimizedToken: self!
@@ -25,13 +25,13 @@ stop
 
 stop: anInteger
 	stopPosition := anInteger! !
-!StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StOptimizedToken categoriesFor: #isOptimized!public!testing! !
-!StOptimizedToken categoriesFor: #length!accessing!private! !
-!StOptimizedToken categoriesFor: #stop!accessing!public! !
-!StOptimizedToken categoriesFor: #stop:!initializing!private! !
+!Kernel.StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StOptimizedToken categoriesFor: #isOptimized!public!testing! !
+!Kernel.StOptimizedToken categoriesFor: #length!accessing!private! !
+!Kernel.StOptimizedToken categoriesFor: #stop!accessing!public! !
+!Kernel.StOptimizedToken categoriesFor: #stop:!initializing!private! !
 
-!StOptimizedToken class methodsFor!
+!Kernel.StOptimizedToken class methodsFor!
 
 start: anInteger comments: aCollectionOrNil stop: stopInteger
 	<primitive: 157>
@@ -40,5 +40,5 @@ start: anInteger comments: aCollectionOrNil stop: stopInteger
 		comments: aCollectionOrNil;
 		stop: stopInteger;
 		yourself! !
-!StOptimizedToken class categoriesFor: #start:comments:stop:!instance creation!public! !
+!Kernel.StOptimizedToken class categoriesFor: #start:comments:stop:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SmalltalkParser
+Core.Object subclass: #'Kernel.Parser'
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
 	classVariableNames: 'AllowEmptyStatements'
-	imports: #(#{ExtCallArgTypes} #{SmalltalkParseErrorCodes})
+	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
-SmalltalkParser comment: 'Instance Variables:
+Kernel.Parser guid: (Core.GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
+Kernel.Parser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
 	nextToken	<StToken>
@@ -26,8 +26,8 @@ Class Variables:
 Pools:
 	ExtCallArgTypes 		Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
 	SmalltalkParseErrorCodes	Maps compiler error/warning names to their corresponding integer code'!
-!SmalltalkParser categoriesForClass!System-Compiler! !
-!SmalltalkParser methodsFor!
+!Kernel.Parser categoriesForClass!System-Compiler! !
+!Kernel.Parser methodsFor!
 
 addCommentsTo: aNode 
 	comments isNil ifTrue: [^self].
@@ -73,14 +73,14 @@ errorBlock: aBlock
 errorPosition
 	^currentToken start!
 
-externalReferenceTypeFor: anInteger 
-	^(ExternalDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
+externalReferenceTypeFor: anInteger
+	^(External.Descriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
 
 initialize
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
 	st80Syntax := false!
 
-initializeParserWith: aString 
+initializeParserWith: aString
 	source := aString.
 	self scanner: (self scannerClass on: (ReadStream on: self source) errorHandler: self)!
 
@@ -100,15 +100,15 @@ lookupExternalStructType: anStIdentifierToken
 	| structClass |
 	structClass := anStIdentifierToken value asQualifiedReference bindingOrNil
 				ifNil: 
-					[self parserError: CErrUndefinedClass range: anStIdentifierToken sourceInterval.
+					[self parserError: CErrUndeclared range: anStIdentifierToken sourceInterval.
 					"Error ignored, attempt to recover..."
-					DWORD]
+					External.DWORD]
 				ifNotNil: [:var | var value].
 	((structClass isKindOf: Class) not or: [structClass isPointers and: [structClass instSize < 1]])
 		ifTrue: 
 			[self parserError: CErrInvalidStructArg range: anStIdentifierToken sourceInterval.
 			"Error ignored, attempt to recover..."
-			structClass := DWORD].
+			structClass := External.DWORD].
 	^structClass!
 
 messageNodeClass
@@ -275,7 +275,7 @@ parseCascadeMessage
 	[currentToken isKeyword ifTrue: [node := self parseKeywordMessageWith: node].
 	currentToken isBinary ifTrue: [node := self parseBinaryMessageWith: node].
 	currentToken isIdentifier ifTrue: [node := self parseUnaryMessageWith: node].
-	(currentToken isSpecial: $;) and: [node isMessage]] 
+	(currentToken isSpecial: $;) and: [node isMessage]]
 			whileTrue: 
 				[| receiver messages semicolons |
 				receiver := node receiver.
@@ -297,7 +297,9 @@ parseExpression: aString
 							comments: nil
 							value: 'doIt'}
 				arguments: #().
-	method source: aString.
+	method
+		source: aString;
+		methodClass: methodClass.
 	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
@@ -331,39 +333,36 @@ parseExtendedTags: startInteger
 parseExternalArgType
 	| valueType indirections typeToken structClass stop start |
 	start := currentToken sourceInterval start.
-	currentToken isIdentifier 
+	currentToken isIdentifier
 		ifFalse: 
 			[self parserError: CErrExpectExtType range: currentToken sourceInterval.
 			"Error ignored, attempt to recover by creating a dummy arg type node and
 			stepping over the offending token..."
 			self step.
-			^(StExternalArgTypeNode new)
+			^StExternalArgTypeNode new
 				start: currentToken start;
 				stop: currentToken stop;
 				typeOrdinal: ExtCallArgLPVOID;
 				indirections: 0;
 				yourself].
 	structClass := nil.
-	valueType := ExternalDescriptor typeFromName: currentToken value ifAbsent: [ExtCallArgSTRUCT].
-	structClass := valueType == ExtCallArgSTRUCT 
-				ifTrue: [self lookupExternalStructType: currentToken]
-				ifFalse: [nil].
+	valueType := External.Descriptor typeFromName: currentToken value ifAbsent: [ExtCallArgSTRUCT].
+	"We can't look up the struct class until semantic analysis, so hold as a variable for later resolution"
+	structClass := valueType == ExtCallArgSTRUCT ifTrue: [StVariableNode identifierToken: currentToken].
 	typeToken := currentToken.
 	self step.
 	indirections := self parseExternalArgTypeQualifier.
-	indirections > 0 
+	indirections > 0
 		ifTrue: 
 			[| refType |
 			refType := valueType.
-			indirections > 1 
+			indirections > 1
 				ifTrue: 
-					[valueType == ExtCallArgSTRUCT 
-						ifTrue: [structClass isIndirection ifTrue: [refType := ExtCallArgLPPVOID]]
-						ifFalse: [refType := self externalReferenceTypeFor: valueType]].
+					[valueType == ExtCallArgSTRUCT ifFalse: [refType := self externalReferenceTypeFor: valueType]].
 			stop := currentToken stop.
-			refType == ExtCallArgLPPVOID 
+			refType == ExtCallArgLPPVOID
 				ifTrue: 
-					[self 
+					[self
 						parserError: CErrNotIndirectable
 						range: (start to: stop)
 						extra: typeToken value.
@@ -372,7 +371,7 @@ parseExternalArgType
 			"Step over the qualifier now we know it is valid"
 			self step]
 		ifFalse: [stop := typeToken stop].
-	^(StExternalArgTypeNode new)
+	^StExternalArgTypeNode new
 		start: typeToken start;
 		stop: stop;
 		typeOrdinal: valueType;
@@ -424,7 +423,7 @@ parseExternalCallArgList
 	[self atEnd or: [currentToken isBinary: #>]] whileFalse: 
 			[| arg |
 			arg := self parseExternalArgType.
-			(arg typeOrdinal == ExtCallArgVOID and: [arg indirections == 0]) 
+			(arg typeOrdinal == ExtCallArgVOID and: [arg indirections == 0])
 				ifTrue: 
 					[self parserError: CErrArgTypeCannotBeVoid range: arg sourceInterval
 					"Error ignored, no recovery required since this is a semantic rather than syntax error"].
@@ -449,16 +448,16 @@ parseExternalCallArgs: anStExternalCallNode
 	^types!
 
 parseExternalCallingConvention
-	currentToken isKeyword 
+	currentToken isKeyword
 		ifTrue: 
 			[| answer |
-			answer := ExternalDescriptor conventionFromName: currentToken value.
-			answer < 0 
+			answer := External.Descriptor conventionFromName: currentToken value.
+			answer < 0
 				ifTrue: 
 					[self parserError: CErrBadPrimCallType.
 					"Error ignored, attempt to recover by using a sensible default..."
 					1].
-			answer > 1 
+			answer > 1
 				ifTrue: 
 					[self parserError: CErrUnsupportedCallConv.
 					"Error ignored, attempt to recover by using a sensible default.."
@@ -742,34 +741,55 @@ parsePrimitiveValueLiteral
 	^self literalValueNodeClass literalToken: token!
 
 parseQualifiedReference
-	| start identifier stop meta |
+	| start stop node |
 	start := currentToken start.
+	stop := currentToken stop.
 	self step.
 	currentToken isIdentifier
 		ifTrue: 
-			[identifier := currentToken.
+			[node := self qualifiedReferenceNodeClass pathString: currentToken value start: start.
+			stop := self parseQualifiedRefModifiers: node]
+		ifFalse: 
+			[node := self qualifiedReferenceNodeClass pathString: '' start: start.
+			self parserError: CErrExpectVariable].
+	(currentToken isSpecial: $})
+		ifTrue: 
+			[stop := currentToken stop.
 			self step]
 		ifFalse: 
-			[identifier := scanner identifierTokenClass
-						start: start
-						comments: nil
-						value: ''.
-			self parserError: CErrExpectVariable.
-			"Attempt to recover - Skip over any invalid identifier if the next token is the closing brace"
-			((currentToken isSpecial: $}) not and: [self nextToken isSpecial: $}]) ifTrue: [self step]].
-	meta := currentToken isIdentifier
-				and: [currentToken value = 'class' and: 
-							[self step.
-							true]].
+			["Attempt to recover - Skip over any invalid identifier/modifier if the next token is the closing brace"
+			(self nextToken isSpecial: $})
+				ifTrue: 
+					[self parserError: CErrBadQualifiedRefModifier.
+					self step.
+					stop := currentToken stop.
+					self step]
+				ifFalse: 
+					["If one token lookahead doesn't find the closing brace, assume the current token is part of a subsequent message and the close brace is missing"
+					self parserError: CErrQualifiedRefNotClosed range: (start to: stop)]].
+	node stop: stop.
+	^node!
+
+parseQualifiedRefModifiers: anStQualifiedReferenceNode
+	| stop |
 	stop := currentToken stop.
-	(currentToken isSpecial: $})
-		ifTrue: [self step]
-		ifFalse: [self parserError: CErrQualifiedRefNotClosed range: (start to: identifier stop)].
-	^self qualifiedReferenceNodeClass
-		pathString: identifier value
-		meta: meta
-		start: start
-		stop: stop!
+	self step.
+	[currentToken isIdentifier] whileTrue: 
+			[| qualifier |
+			qualifier := currentToken value.
+			qualifier = 'class'
+				ifTrue: 
+					[anStQualifiedReferenceNode isMeta: true.
+					stop := currentToken stop.
+					self step]
+				ifFalse: 
+					[qualifier = 'private'
+						ifTrue: 
+							[anStQualifiedReferenceNode isPrivate: true.
+							stop := currentToken stop.
+							self step]
+						ifFalse: [^stop]]].
+	^stop!
 
 parserError: anInteger
 	"Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
@@ -1087,7 +1107,7 @@ scanner: aScanner
 	self step!
 
 scannerClass
-	^SmalltalkScanner!
+	^Scanner!
 
 sequenceNodeClass
 	^StSequenceNode!
@@ -1145,102 +1165,103 @@ validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 
 variableNodeClass
 	^StVariableNode! !
-!SmalltalkParser categoriesFor: #addCommentsTo:!helpers!private! !
-!SmalltalkParser categoriesFor: #assignmentNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #atEnd!public!testing! !
-!SmalltalkParser categoriesFor: #blockNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #braceArrayNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
-!SmalltalkParser categoriesFor: #cascadeNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #errorBlock:!accessing!public! !
-!SmalltalkParser categoriesFor: #errorPosition!error handling!public! !
-!SmalltalkParser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
-!SmalltalkParser categoriesFor: #initialize!initializing!public! !
-!SmalltalkParser categoriesFor: #initializeParserWith:!initializing!private! !
-!SmalltalkParser categoriesFor: #line!accessing!public! !
-!SmalltalkParser categoriesFor: #literalArrayNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #literalValueNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #lookupExternalStructType:!parsing!private! !
-!SmalltalkParser categoriesFor: #messageNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #methodClass:!accessing!public! !
-!SmalltalkParser categoriesFor: #methodNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #nextToken!helpers!private! !
-!SmalltalkParser categoriesFor: #optimizedNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #parameterNodeClass!parsing!private! !
-!SmalltalkParser categoriesFor: #parseAssignment!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlock!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlockArgsInto:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlockParameter!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBraceArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
-!SmalltalkParser categoriesFor: #parseExtendedTags:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalArgType!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallArgList!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallArgs:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallingConvention!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallName!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralArrayObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralByteArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMessagePattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMethod!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMethod:!accessing!private! !
-!SmalltalkParser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
-!SmalltalkParser categoriesFor: #parseMethodParameter!parsing!private! !
-!SmalltalkParser categoriesFor: #parseNumberLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parseOptimizedExpression!parsing!private! !
-!SmalltalkParser categoriesFor: #parseOverlappedCall:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseParenthesizedExpression!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveValueLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parseQualifiedReference!parsing!private! !
-!SmalltalkParser categoriesFor: #parserError:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:extra:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:extras:!error handling!private! !
-!SmalltalkParser categoriesFor: #parseStatementList:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseStatementsOf:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTag:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTags!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTempDecl!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTempsOf:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseVariableNode:!parsing!private! !
-!SmalltalkParser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
-!SmalltalkParser categoriesFor: #patchLiteralArrayToken!parsing!private! !
-!SmalltalkParser categoriesFor: #patchLiteralMessage!helpers!private! !
-!SmalltalkParser categoriesFor: #patchNegativeLiteral!helpers!private! !
-!SmalltalkParser categoriesFor: #qualifiedReferenceNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!SmalltalkParser categoriesFor: #returnNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #scanner:!accessing!public! !
-!SmalltalkParser categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParser categoriesFor: #sequenceNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #source!accessing!private! !
-!SmalltalkParser categoriesFor: #step!parsing!private! !
-!SmalltalkParser categoriesFor: #tempDeclClass!parsing!private! !
-!SmalltalkParser categoriesFor: #validateArg:args:!parsing!private! !
-!SmalltalkParser categoriesFor: #validateTemp:of:temps:!parsing!private! !
-!SmalltalkParser categoriesFor: #variableNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #addCommentsTo:!helpers!private! !
+!Kernel.Parser categoriesFor: #assignmentNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #atEnd!public!testing! !
+!Kernel.Parser categoriesFor: #blockNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #braceArrayNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
+!Kernel.Parser categoriesFor: #cascadeNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #errorBlock:!accessing!public! !
+!Kernel.Parser categoriesFor: #errorPosition!error handling!public! !
+!Kernel.Parser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
+!Kernel.Parser categoriesFor: #initialize!initializing!public! !
+!Kernel.Parser categoriesFor: #initializeParserWith:!initializing!private! !
+!Kernel.Parser categoriesFor: #line!accessing!public! !
+!Kernel.Parser categoriesFor: #literalArrayNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #literalValueNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #lookupExternalStructType:!parsing!private! !
+!Kernel.Parser categoriesFor: #messageNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #methodClass:!accessing!public! !
+!Kernel.Parser categoriesFor: #methodNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #nextToken!helpers!private! !
+!Kernel.Parser categoriesFor: #optimizedNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #parameterNodeClass!parsing!private! !
+!Kernel.Parser categoriesFor: #parseAssignment!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBinaryMessage!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBinaryPattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBlock!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBlockArgsInto:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBlockParameter!parsing!private! !
+!Kernel.Parser categoriesFor: #parseBraceArray!parsing!private! !
+!Kernel.Parser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseCascadeMessage!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExpression:!parsing!public! !
+!Kernel.Parser categoriesFor: #parseExtendedTags:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalArgType!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCallArgList!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCallArgs:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCallingConvention!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCallName!parsing!private! !
+!Kernel.Parser categoriesFor: #parseKeywordMessage!parsing!private! !
+!Kernel.Parser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseKeywordPattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseLiteralArray!parsing!private! !
+!Kernel.Parser categoriesFor: #parseLiteralArrayObject!parsing!private! !
+!Kernel.Parser categoriesFor: #parseLiteralByteArray!parsing!private! !
+!Kernel.Parser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
+!Kernel.Parser categoriesFor: #parseMessagePattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseMethod!parsing!private! !
+!Kernel.Parser categoriesFor: #parseMethod:!accessing!private! !
+!Kernel.Parser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
+!Kernel.Parser categoriesFor: #parseMethodParameter!parsing!private! !
+!Kernel.Parser categoriesFor: #parseNumberLiteral!parsing!private! !
+!Kernel.Parser categoriesFor: #parseOptimizedExpression!parsing!private! !
+!Kernel.Parser categoriesFor: #parseOverlappedCall:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseParenthesizedExpression!parsing!private! !
+!Kernel.Parser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
+!Kernel.Parser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
+!Kernel.Parser categoriesFor: #parsePrimitiveObject!parsing!private! !
+!Kernel.Parser categoriesFor: #parsePrimitiveValueLiteral!parsing!private! !
+!Kernel.Parser categoriesFor: #parseQualifiedReference!parsing!private! !
+!Kernel.Parser categoriesFor: #parseQualifiedRefModifiers:!parsing!private! !
+!Kernel.Parser categoriesFor: #parserError:!error handling!private! !
+!Kernel.Parser categoriesFor: #parserError:range:!error handling!private! !
+!Kernel.Parser categoriesFor: #parserError:range:extra:!error handling!private! !
+!Kernel.Parser categoriesFor: #parserError:range:extras:!error handling!private! !
+!Kernel.Parser categoriesFor: #parseStatementList:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseStatementsOf:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseTag:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseTags!parsing!private! !
+!Kernel.Parser categoriesFor: #parseTempDecl!parsing!private! !
+!Kernel.Parser categoriesFor: #parseTempsOf:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseUnaryMessage!parsing!private! !
+!Kernel.Parser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseUnaryPattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseVariableNode:!parsing!private! !
+!Kernel.Parser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
+!Kernel.Parser categoriesFor: #patchLiteralArrayToken!parsing!private! !
+!Kernel.Parser categoriesFor: #patchLiteralMessage!helpers!private! !
+!Kernel.Parser categoriesFor: #patchNegativeLiteral!helpers!private! !
+!Kernel.Parser categoriesFor: #qualifiedReferenceNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!Kernel.Parser categoriesFor: #returnNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #scanner:!accessing!public! !
+!Kernel.Parser categoriesFor: #scannerClass!constants!private! !
+!Kernel.Parser categoriesFor: #sequenceNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #source!accessing!private! !
+!Kernel.Parser categoriesFor: #step!parsing!private! !
+!Kernel.Parser categoriesFor: #tempDeclClass!parsing!private! !
+!Kernel.Parser categoriesFor: #validateArg:args:!parsing!private! !
+!Kernel.Parser categoriesFor: #validateTemp:of:temps:!parsing!private! !
+!Kernel.Parser categoriesFor: #variableNodeClass!constants!private! !
 
-SmalltalkParser methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
+Kernel.Parser methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
-!SmalltalkParser class methodsFor!
+!Kernel.Parser class methodsFor!
 
 allowEmptyStatements
 	^AllowEmptyStatements!
@@ -1296,8 +1317,11 @@ parseExpression: aString in: aClass onError: aBlock
 		ifTrue: [node statements first]
 		ifFalse: [node]!
 
-parseExpression: aString onError: aBlock 
-	^self parseExpression: aString in: Object onError: aBlock!
+parseExpression: aString onError: aBlock
+	^self
+		parseExpression: aString
+		in: Object
+		onError: aBlock!
 
 parseExpressionNoError: aString in: aClass 
 	^self 
@@ -1305,7 +1329,7 @@ parseExpressionNoError: aString in: aClass
 		in: aClass
 		onError: [:ex | ^nil]!
 
-parseMethod: aString 
+parseMethod: aString
 	^self parseMethod: aString in: UndefinedObject!
 
 parseMethod: aString in: aClass 
@@ -1320,13 +1344,13 @@ parseMethod: aString in: aClass onError: aBlock
 		in: aClass
 		errorBlock: aBlock!
 
-parseMethod: aString onError: aBlock 
-	^self 
+parseMethod: aString onError: aBlock
+	^self
 		parseMethod: aString
 		in: UndefinedObject
 		onError: aBlock!
 
-parseMethodNoError: aString 
+parseMethodNoError: aString
 	^self parseMethodNoError: aString in: UndefinedObject!
 
 parseMethodNoError: aString in: methodClass 
@@ -1342,26 +1366,34 @@ parseMethodPattern: aString
 	parser initializeParserWith: aString.
 	^parser parseMessagePattern selector!
 
+parseRewriteExpression: aString 
+	^self parseRewriteExpression: aString onError: nil!
+
+parseRewriteMethod: aString 
+	^self parseRewriteMethod: aString onError: nil!
+
 warningClass
 	^CompilerWarningNotification! !
-!SmalltalkParser class categoriesFor: #allowEmptyStatements!accessing!public! !
-!SmalltalkParser class categoriesFor: #allowEmptyStatements:!accessing!public! !
-!SmalltalkParser class categoriesFor: #errorClass!constants!public! !
-!SmalltalkParser class categoriesFor: #initialize!development!initializing!public! !
-!SmalltalkParser class categoriesFor: #new!instance creation!public! !
-!SmalltalkParser class categoriesFor: #notificationClass!constants!public! !
-!SmalltalkParser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:in:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodNoError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodNoError:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodPattern:!parsing!public! !
-!SmalltalkParser class categoriesFor: #warningClass!constants!public! !
+!Kernel.Parser class categoriesFor: #allowEmptyStatements!accessing!public! !
+!Kernel.Parser class categoriesFor: #allowEmptyStatements:!accessing!public! !
+!Kernel.Parser class categoriesFor: #errorClass!constants!public! !
+!Kernel.Parser class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.Parser class categoriesFor: #new!instance creation!public! !
+!Kernel.Parser class categoriesFor: #notificationClass!constants!public! !
+!Kernel.Parser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:in:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:in:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:in:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethodNoError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethodNoError:in:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethodPattern:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseRewriteExpression:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseRewriteMethod:!parsing!public! !
+!Kernel.Parser class categoriesFor: #warningClass!constants!public! !
 

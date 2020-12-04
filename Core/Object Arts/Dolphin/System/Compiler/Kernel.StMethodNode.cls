@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StProgramNode subclass: #StMethodNode
+Kernel.StProgramNode subclass: #'Kernel.StMethodNode'
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StMethodNode guid: (GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
-StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
+Kernel.StMethodNode guid: (Core.GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
+Kernel.StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 
 Instance Variables:
 	arguments	<SequenceableCollection> of <StVariableNode>	the arguments to the method
@@ -18,8 +18,8 @@ Instance Variables:
 	tag	<Interval | nil>	the source location of any resource/primitive tags
 
 '!
-!StMethodNode categoriesForClass!System-Compiler! !
-!StMethodNode methodsFor!
+!Kernel.StMethodNode categoriesForClass!System-Compiler! !
+!Kernel.StMethodNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -197,50 +197,50 @@ tag: anStTagNodeOrNil
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !
-!StMethodNode categoriesFor: #=!comparing!public! !
-!StMethodNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StMethodNode categoriesFor: #actualScope!public! !
-!StMethodNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
-!StMethodNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!StMethodNode categoriesFor: #argumentCount!accessing!public! !
-!StMethodNode categoriesFor: #argumentNames!accessing!public! !
-!StMethodNode categoriesFor: #arguments!accessing!public! !
-!StMethodNode categoriesFor: #arguments:!accessing!public! !
-!StMethodNode categoriesFor: #body!accessing!public! !
-!StMethodNode categoriesFor: #body:!accessing!public! !
-!StMethodNode categoriesFor: #buildSelector!helpers!private! !
-!StMethodNode categoriesFor: #childrenDo:!accessing!public! !
-!StMethodNode categoriesFor: #defines:!public!testing! !
-!StMethodNode categoriesFor: #displayOn:!printing!public! !
-!StMethodNode categoriesFor: #hash!comparing!public! !
-!StMethodNode categoriesFor: #isExternalCall!public!testing! !
-!StMethodNode categoriesFor: #isInlined!public!testing! !
-!StMethodNode categoriesFor: #isLast:!public!testing! !
-!StMethodNode categoriesFor: #isMethod!public!testing! !
-!StMethodNode categoriesFor: #isPrimitive!public!testing! !
-!StMethodNode categoriesFor: #lastIsReturn!public!testing! !
-!StMethodNode categoriesFor: #methodClass!accessing!public! !
-!StMethodNode categoriesFor: #methodClass:!accessing!public! !
-!StMethodNode categoriesFor: #methodComments!accessing!public! !
-!StMethodNode categoriesFor: #methodNode!accessing!public! !
-!StMethodNode categoriesFor: #numArgs!accessing!public! !
-!StMethodNode categoriesFor: #outer!public! !
-!StMethodNode categoriesFor: #postCopy!copying!public! !
-!StMethodNode categoriesFor: #printOn:!printing!public! !
-!StMethodNode categoriesFor: #selector!accessing!public! !
-!StMethodNode categoriesFor: #selector:!accessing!public! !
-!StMethodNode categoriesFor: #selectorParts!accessing!private! !
-!StMethodNode categoriesFor: #selectorParts:!accessing!private! !
-!StMethodNode categoriesFor: #selectorParts:arguments:!initializing!public! !
-!StMethodNode categoriesFor: #source!accessing!public! !
-!StMethodNode categoriesFor: #source:!accessing!public! !
-!StMethodNode categoriesFor: #start!accessing!public! !
-!StMethodNode categoriesFor: #stop!accessing!public! !
-!StMethodNode categoriesFor: #tag!accessing!public! !
-!StMethodNode categoriesFor: #tag:!accessing!private! !
-!StMethodNode categoriesFor: #uses:!public!testing! !
+!Kernel.StMethodNode categoriesFor: #=!comparing!public! !
+!Kernel.StMethodNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StMethodNode categoriesFor: #actualScope!public! !
+!Kernel.StMethodNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #argumentCount!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #argumentNames!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #arguments!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #arguments:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #body!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #body:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #buildSelector!helpers!private! !
+!Kernel.StMethodNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #defines:!public!testing! !
+!Kernel.StMethodNode categoriesFor: #displayOn:!printing!public! !
+!Kernel.StMethodNode categoriesFor: #hash!comparing!public! !
+!Kernel.StMethodNode categoriesFor: #isExternalCall!public!testing! !
+!Kernel.StMethodNode categoriesFor: #isInlined!public!testing! !
+!Kernel.StMethodNode categoriesFor: #isLast:!public!testing! !
+!Kernel.StMethodNode categoriesFor: #isMethod!public!testing! !
+!Kernel.StMethodNode categoriesFor: #isPrimitive!public!testing! !
+!Kernel.StMethodNode categoriesFor: #lastIsReturn!public!testing! !
+!Kernel.StMethodNode categoriesFor: #methodClass!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #methodClass:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #methodComments!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #methodNode!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #numArgs!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #outer!public! !
+!Kernel.StMethodNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StMethodNode categoriesFor: #printOn:!printing!public! !
+!Kernel.StMethodNode categoriesFor: #selector!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #selector:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #selectorParts!accessing!private! !
+!Kernel.StMethodNode categoriesFor: #selectorParts:!accessing!private! !
+!Kernel.StMethodNode categoriesFor: #selectorParts:arguments:!initializing!public! !
+!Kernel.StMethodNode categoriesFor: #source!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #source:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #start!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #stop!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #tag!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #tag:!accessing!private! !
+!Kernel.StMethodNode categoriesFor: #uses:!public!testing! !
 
-!StMethodNode class methodsFor!
+!Kernel.StMethodNode class methodsFor!
 
 new
 	^(super new)
@@ -264,8 +264,8 @@ selectorParts: tokenCollection arguments: variableNodes
 	^(self new)
 		selectorParts: tokenCollection arguments: variableNodes;
 		yourself! !
-!StMethodNode class categoriesFor: #new!instance creation!public! !
-!StMethodNode class categoriesFor: #selector:arguments:body:!instance creation!public! !
-!StMethodNode class categoriesFor: #selector:body:!instance creation!public! !
-!StMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+!Kernel.StMethodNode class categoriesFor: #new!instance creation!public! !
+!Kernel.StMethodNode class categoriesFor: #selector:arguments:body:!instance creation!public! !
+!Kernel.StMethodNode class categoriesFor: #selector:body:!instance creation!public! !
+!Kernel.StMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
 

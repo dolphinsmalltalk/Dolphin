@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueNode subclass: #StBlockNode
+Kernel.StValueNode subclass: #'Kernel.StBlockNode'
 	instanceVariableNames: 'left right body arguments bar'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StBlockNode guid: (GUID fromString: '{74b8b736-f1fe-4d03-911f-c6f7f11620e8}')!
-StBlockNode comment: 'StBlockNode is a parse tree node that represents a block "[...]".
+Kernel.StBlockNode guid: (Core.GUID fromString: '{74b8b736-f1fe-4d03-911f-c6f7f11620e8}')!
+Kernel.StBlockNode comment: 'StBlockNode is a parse tree node that represents a block "[...]".
 
 Instance Variables:
 	arguments	<SequenceableCollection> of <StVariableNode>	the arguments for the block
@@ -18,8 +18,8 @@ Instance Variables:
 	right	<Integer>	position of ]
 
 '!
-!StBlockNode categoriesForClass!System-Compiler! !
-!StBlockNode methodsFor!
+!Kernel.StBlockNode categoriesForClass!System-Compiler! !
+!Kernel.StBlockNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -149,43 +149,43 @@ uses: aNode
 				includes: parent selector) not 
 				or: [parent isUsed]]
 		ifFalse: [self isUsed]! !
-!StBlockNode categoriesFor: #=!comparing!public! !
-!StBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StBlockNode categoriesFor: #actualScope!public! !
-!StBlockNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!StBlockNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
-!StBlockNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!StBlockNode categoriesFor: #argumentCount!accessing!public! !
-!StBlockNode categoriesFor: #argumentNames!accessing!public! !
-!StBlockNode categoriesFor: #arguments!accessing!public! !
-!StBlockNode categoriesFor: #arguments:!accessing!public! !
-!StBlockNode categoriesFor: #bar!accessing!public! !
-!StBlockNode categoriesFor: #bar:!accessing!public! !
-!StBlockNode categoriesFor: #barOrStop!accessing!public! !
-!StBlockNode categoriesFor: #blockVariables!accessing!public! !
-!StBlockNode categoriesFor: #body!accessing!public! !
-!StBlockNode categoriesFor: #body:!accessing!public! !
-!StBlockNode categoriesFor: #childrenDo:!accessing!public! !
-!StBlockNode categoriesFor: #defines:!public!testing! !
-!StBlockNode categoriesFor: #directlyUses:!public!testing! !
-!StBlockNode categoriesFor: #hash!comparing!public! !
-!StBlockNode categoriesFor: #isBlock!public!testing! !
-!StBlockNode categoriesFor: #isEmptyBlock!public!testing! !
-!StBlockNode categoriesFor: #isImmediateNode!public!testing! !
-!StBlockNode categoriesFor: #isInlined!public! !
-!StBlockNode categoriesFor: #isLast:!public!testing! !
-!StBlockNode categoriesFor: #left!accessing!public! !
-!StBlockNode categoriesFor: #left:!accessing!public! !
-!StBlockNode categoriesFor: #needsParenthesis!public!testing! !
-!StBlockNode categoriesFor: #postCopy!copying!public! !
-!StBlockNode categoriesFor: #precedence!accessing!public! !
-!StBlockNode categoriesFor: #right!accessing!public! !
-!StBlockNode categoriesFor: #right:!accessing!public! !
-!StBlockNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StBlockNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StBlockNode categoriesFor: #uses:!public!testing! !
+!Kernel.StBlockNode categoriesFor: #=!comparing!public! !
+!Kernel.StBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StBlockNode categoriesFor: #actualScope!public! !
+!Kernel.StBlockNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
+!Kernel.StBlockNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #argumentCount!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #argumentNames!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #arguments!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #arguments:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #bar!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #bar:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #barOrStop!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #blockVariables!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #body!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #body:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #defines:!public!testing! !
+!Kernel.StBlockNode categoriesFor: #directlyUses:!public!testing! !
+!Kernel.StBlockNode categoriesFor: #hash!comparing!public! !
+!Kernel.StBlockNode categoriesFor: #isBlock!public!testing! !
+!Kernel.StBlockNode categoriesFor: #isEmptyBlock!public!testing! !
+!Kernel.StBlockNode categoriesFor: #isImmediateNode!public!testing! !
+!Kernel.StBlockNode categoriesFor: #isInlined!public! !
+!Kernel.StBlockNode categoriesFor: #isLast:!public!testing! !
+!Kernel.StBlockNode categoriesFor: #left!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #left:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #needsParenthesis!public!testing! !
+!Kernel.StBlockNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StBlockNode categoriesFor: #precedence!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #right!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #right:!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StBlockNode categoriesFor: #uses:!public!testing! !
 
-!StBlockNode class methodsFor!
+!Kernel.StBlockNode class methodsFor!
 
 arguments: argNodes body: sequenceNode 
 	^(self new)
@@ -195,6 +195,6 @@ arguments: argNodes body: sequenceNode
 
 body: sequenceNode 
 	^self arguments: #() body: sequenceNode! !
-!StBlockNode class categoriesFor: #arguments:body:!instance creation!public! !
-!StBlockNode class categoriesFor: #body:!instance creation!public! !
+!Kernel.StBlockNode class categoriesFor: #arguments:body:!instance creation!public! !
+!Kernel.StBlockNode class categoriesFor: #body:!instance creation!public! !
 

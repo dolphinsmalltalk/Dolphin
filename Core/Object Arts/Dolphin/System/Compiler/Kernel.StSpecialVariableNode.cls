@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StAbstractVariableNode subclass: #StSpecialVariableNode
+Kernel.StAbstractVariableNode subclass: #'Kernel.StSpecialVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSpecialVariableNode guid: (GUID fromString: '{e1481f19-627f-4ee4-9c94-e58a0d603fe6}')!
-StSpecialVariableNode isAbstract: true!
-StSpecialVariableNode comment: 'StSpecialVariableNode is an abstract parse tree node with subclasses to represent each of the special variables ''self'', ''super'' or ''thisContext''. All are constants.
+Kernel.StSpecialVariableNode guid: (Core.GUID fromString: '{e1481f19-627f-4ee4-9c94-e58a0d603fe6}')!
+Kernel.StSpecialVariableNode isNonInstantiable: true!
+Kernel.StSpecialVariableNode comment: 'StSpecialVariableNode is an abstract parse tree node with subclasses to represent each of the special variables ''self'', ''super'' or ''thisContext''. All are constants.
 '!
-!StSpecialVariableNode categoriesForClass!System-Compiler! !
-!StSpecialVariableNode methodsFor!
+!Kernel.StSpecialVariableNode categoriesForClass!System-Compiler! !
+!Kernel.StSpecialVariableNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitSpecialVariableNode: self!
@@ -29,16 +29,16 @@ isSpecialVariable
 
 specialVariableInScope: anStSemanticScope
 	^self subclassResponsibility! !
-!StSpecialVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StSpecialVariableNode categoriesFor: #isConstantNode!public!testing! !
-!StSpecialVariableNode categoriesFor: #isSpecialVariable!public!testing! !
-!StSpecialVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StSpecialVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StSpecialVariableNode categoriesFor: #isConstantNode!public!testing! !
+!Kernel.StSpecialVariableNode categoriesFor: #isSpecialVariable!public!testing! !
+!Kernel.StSpecialVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 
-!StSpecialVariableNode class methodsFor!
+!Kernel.StSpecialVariableNode class methodsFor!
 
 start: anInteger
 	^(self new)
 		setStart: anInteger;
 		yourself! !
-!StSpecialVariableNode class categoriesFor: #start:!public! !
+!Kernel.StSpecialVariableNode class categoriesFor: #start:!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StVariable subclass: #StStaticVariable
+Kernel.StVariable subclass: #'Kernel.StStaticVariable'
 	instanceVariableNames: 'binding'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StStaticVariable guid: (GUID fromString: '{b667998a-be56-4e79-bf77-13e991611554}')!
-StStaticVariable comment: '<StStaticVariable> is a concrete class of <StVariable> to describe static variables, i.e. class variables, pool variables, and global variables.'!
-!StStaticVariable categoriesForClass!Kernel-Objects! !
-!StStaticVariable methodsFor!
+Kernel.StStaticVariable guid: (Core.GUID fromString: '{b667998a-be56-4e79-bf77-13e991611554}')!
+Kernel.StStaticVariable comment: '<StStaticVariable> is a concrete class of <StVariable> to describe static variables, i.e. class variables, pool variables, and global variables.'!
+!Kernel.StStaticVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StStaticVariable methodsFor!
 
 binding
 	"Answer the <VariableBinding> which is the underlying representation of the static variable
@@ -37,15 +37,15 @@ setScope: anStLexicalScope binding: aVariableBinding
 	scope := anStLexicalScope.
 	binding := aVariableBinding.
 	self initialize! !
-!StStaticVariable categoriesFor: #binding!public! !
-!StStaticVariable categoriesFor: #isConstant!public!testing! !
-!StStaticVariable categoriesFor: #isStaticVariable!constants!public! !
-!StStaticVariable categoriesFor: #name!accessing!public! !
-!StStaticVariable categoriesFor: #setScope:binding:!initializing!private! !
+!Kernel.StStaticVariable categoriesFor: #binding!public! !
+!Kernel.StStaticVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StStaticVariable categoriesFor: #isStaticVariable!constants!public! !
+!Kernel.StStaticVariable categoriesFor: #name!accessing!public! !
+!Kernel.StStaticVariable categoriesFor: #setScope:binding:!initializing!private! !
 
-!StStaticVariable class methodsFor!
+!Kernel.StStaticVariable class methodsFor!
 
 scope: anStLexicalScope binding: aVariableBinding
 	^self new setScope: anStLexicalScope binding: aVariableBinding! !
-!StStaticVariable class categoriesFor: #scope:binding:!public! !
+!Kernel.StStaticVariable class categoriesFor: #scope:binding:!public! !
 

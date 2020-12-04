@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StBlockScope subclass: #StOptimizedBlockScope
+Kernel.StBlockScope subclass: #'Kernel.StOptimizedBlockScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StOptimizedBlockScope guid: (GUID fromString: '{c2ebf9a0-55a4-4d52-922c-923b6953482c}')!
-StOptimizedBlockScope comment: ''!
-!StOptimizedBlockScope categoriesForClass!Kernel-Objects! !
-!StOptimizedBlockScope methodsFor!
+Kernel.StOptimizedBlockScope guid: (Core.GUID fromString: '{c2ebf9a0-55a4-4d52-922c-923b6953482c}')!
+Kernel.StOptimizedBlockScope comment: ''!
+!Kernel.StOptimizedBlockScope categoriesForClass!Kernel-Objects! !
+!Kernel.StOptimizedBlockScope methodsFor!
 
 hasFarReturn
 	^self realScope hasFarReturn!
@@ -29,9 +29,9 @@ realScope
 	the receiver will actually be allocated."
 
 	^self outer realScope! !
-!StOptimizedBlockScope categoriesFor: #hasFarReturn!accessing!public! !
-!StOptimizedBlockScope categoriesFor: #markFarReturn!public!visiting! !
-!StOptimizedBlockScope categoriesFor: #markNeedsSelf!public!visiting! !
-!StOptimizedBlockScope categoriesFor: #needsSelf!accessing!public! !
-!StOptimizedBlockScope categoriesFor: #realScope!public! !
+!Kernel.StOptimizedBlockScope categoriesFor: #hasFarReturn!accessing!public! !
+!Kernel.StOptimizedBlockScope categoriesFor: #markFarReturn!public!visiting! !
+!Kernel.StOptimizedBlockScope categoriesFor: #markNeedsSelf!public!visiting! !
+!Kernel.StOptimizedBlockScope categoriesFor: #needsSelf!accessing!public! !
+!Kernel.StOptimizedBlockScope categoriesFor: #realScope!public! !
 

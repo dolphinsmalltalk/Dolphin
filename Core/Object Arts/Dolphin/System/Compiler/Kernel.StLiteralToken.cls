@@ -1,24 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StLiteralToken
+Kernel.StValueToken subclass: #'Kernel.StLiteralToken'
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StLiteralToken guid: (GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
-StLiteralToken comment: ''!
-!StLiteralToken categoriesForClass!System-Compiler! !
-!StLiteralToken methodsFor!
+Kernel.StLiteralToken guid: (Core.GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
+Kernel.StLiteralToken comment: ''!
+!Kernel.StLiteralToken categoriesForClass!System-Compiler! !
+!Kernel.StLiteralToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitLiteralToken: self!
 
-formatOn: aStream source: aString 
-	(value isKindOf: Symbol) 
+formatOn: aStream source: aString
+	(value isKindOf: Symbol)
 		ifTrue: 
 			[aStream nextPut: $#.
-			((SmalltalkScanner isSelector: value) and: [value ~~ #'||']) 
+			((Scanner isSelector: value) and: [value ~~ #'||'])
 				ifTrue: [aStream nextPutAll: value]
 				ifFalse: [value asString printOn: aStream].
 			^self].
@@ -50,18 +50,18 @@ stop: anInteger
 
 valueClass
 	^self value basicClass! !
-!StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
-!StLiteralToken categoriesFor: #isLiteralToken!public!testing! !
-!StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
-!StLiteralToken categoriesFor: #length!accessing!private! !
-!StLiteralToken categoriesFor: #realValue!accessing!public! !
-!StLiteralToken categoriesFor: #stop!accessing!public! !
-!StLiteralToken categoriesFor: #stop:!initializing!private! !
-!StLiteralToken categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
+!Kernel.StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
+!Kernel.StLiteralToken categoriesFor: #isLiteralToken!public!testing! !
+!Kernel.StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
+!Kernel.StLiteralToken categoriesFor: #length!accessing!private! !
+!Kernel.StLiteralToken categoriesFor: #realValue!accessing!public! !
+!Kernel.StLiteralToken categoriesFor: #stop!accessing!public! !
+!Kernel.StLiteralToken categoriesFor: #stop:!initializing!private! !
+!Kernel.StLiteralToken categoriesFor: #valueClass!accessing!public! !
 
-!StLiteralToken class methodsFor!
+!Kernel.StLiteralToken class methodsFor!
 
 start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger
 	<primitive: 157>
@@ -83,6 +83,6 @@ value: anObject
 		comments: nil
 		value: literal
 		stop: nil! !
-!StLiteralToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
-!StLiteralToken class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
+!Kernel.StLiteralToken class categoriesFor: #value:!instance creation!public! !
 

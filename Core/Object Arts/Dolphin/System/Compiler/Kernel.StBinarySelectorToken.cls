@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StBinarySelectorToken
+Kernel.StValueToken subclass: #'Kernel.StBinarySelectorToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StBinarySelectorToken guid: (GUID fromString: '{d3aa3980-63d1-4ea8-9654-f8fb9cba525d}')!
-StBinarySelectorToken comment: ''!
-!StBinarySelectorToken categoriesForClass!System-Compiler! !
-!StBinarySelectorToken methodsFor!
+Kernel.StBinarySelectorToken guid: (Core.GUID fromString: '{d3aa3980-63d1-4ea8-9654-f8fb9cba525d}')!
+Kernel.StBinarySelectorToken comment: ''!
+!Kernel.StBinarySelectorToken categoriesForClass!System-Compiler! !
+!Kernel.StBinarySelectorToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitBinarySelectorToken: self!
@@ -21,7 +21,7 @@ isBinary: aSymbol
 	"Answer whether the receiver is a binary token with the specified value."
 
 	^self value == aSymbol! !
-!StBinarySelectorToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StBinarySelectorToken categoriesFor: #isBinary!public!testing! !
-!StBinarySelectorToken categoriesFor: #isBinary:!public!testing! !
+!Kernel.StBinarySelectorToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StBinarySelectorToken categoriesFor: #isBinary!public!testing! !
+!Kernel.StBinarySelectorToken categoriesFor: #isBinary:!public!testing! !
 

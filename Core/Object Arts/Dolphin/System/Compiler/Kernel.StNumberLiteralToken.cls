@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLiteralToken subclass: #StNumberLiteralToken
+Kernel.StLiteralToken subclass: #'Kernel.StNumberLiteralToken'
 	instanceVariableNames: 'source'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StNumberLiteralToken guid: (GUID fromString: '{777f55ae-a939-4a73-9cc8-2cef3a91f41e}')!
-StNumberLiteralToken comment: ''!
-!StNumberLiteralToken categoriesForClass!Unclassified! !
-!StNumberLiteralToken methodsFor!
+Kernel.StNumberLiteralToken guid: (Core.GUID fromString: '{777f55ae-a939-4a73-9cc8-2cef3a91f41e}')!
+Kernel.StNumberLiteralToken comment: ''!
+!Kernel.StNumberLiteralToken categoriesForClass!Unclassified! !
+!Kernel.StNumberLiteralToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitNumberLiteralToken: self!
@@ -46,16 +46,16 @@ source
 
 source: aString 
 	source := aString! !
-!StNumberLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
-!StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
-!StNumberLiteralToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!StNumberLiteralToken categoriesFor: #printOn:!public! !
-!StNumberLiteralToken categoriesFor: #source!accessing!public! !
-!StNumberLiteralToken categoriesFor: #source:!initializing!private! !
+!Kernel.StNumberLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
+!Kernel.StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
+!Kernel.StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
+!Kernel.StNumberLiteralToken categoriesFor: #isNumberLiteralToken!public!testing! !
+!Kernel.StNumberLiteralToken categoriesFor: #printOn:!public! !
+!Kernel.StNumberLiteralToken categoriesFor: #source!accessing!public! !
+!Kernel.StNumberLiteralToken categoriesFor: #source:!initializing!private! !
 
-!StNumberLiteralToken class methodsFor!
+!Kernel.StNumberLiteralToken class methodsFor!
 
 start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger source: sourceString
 	<primitive: 157>
@@ -66,5 +66,5 @@ start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger 
 		stop: stopInteger;
 		source: sourceString;
 		yourself! !
-!StNumberLiteralToken class categoriesFor: #start:comments:value:stop:source:!public! !
+!Kernel.StNumberLiteralToken class categoriesFor: #start:comments:value:stop:source:!public! !
 

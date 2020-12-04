@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StSpecialCharacterToken
+Kernel.StValueToken subclass: #'Kernel.StSpecialCharacterToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSpecialCharacterToken guid: (GUID fromString: '{6d27cd5e-b145-43c8-b556-242906a6b9d8}')!
-StSpecialCharacterToken comment: ''!
-!StSpecialCharacterToken categoriesForClass!System-Compiler! !
-!StSpecialCharacterToken methodsFor!
+Kernel.StSpecialCharacterToken guid: (Core.GUID fromString: '{6d27cd5e-b145-43c8-b556-242906a6b9d8}')!
+Kernel.StSpecialCharacterToken comment: ''!
+!Kernel.StSpecialCharacterToken categoriesForClass!System-Compiler! !
+!Kernel.StSpecialCharacterToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitSpecialCharacterToken: self!
@@ -22,8 +22,8 @@ isSpecial: aCharacter
 
 length
 	^1! !
-!StSpecialCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StSpecialCharacterToken categoriesFor: #isSpecial!public!testing! !
-!StSpecialCharacterToken categoriesFor: #isSpecial:!public!testing! !
-!StSpecialCharacterToken categoriesFor: #length!accessing!private! !
+!Kernel.StSpecialCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StSpecialCharacterToken categoriesFor: #isSpecial!public!testing! !
+!Kernel.StSpecialCharacterToken categoriesFor: #isSpecial:!public!testing! !
+!Kernel.StSpecialCharacterToken categoriesFor: #length!accessing!private! !
 

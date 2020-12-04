@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueNode subclass: #StCascadeNode
+Kernel.StValueNode subclass: #'Kernel.StCascadeNode'
 	instanceVariableNames: 'messages semicolons'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StCascadeNode guid: (GUID fromString: '{b29f06cb-e796-47d8-baf3-b24f873b0474}')!
-StCascadeNode comment: 'StCascadeNode is a parse tree node for cascaded messages (e.g., "self print1 ; print2").
+Kernel.StCascadeNode guid: (Core.GUID fromString: '{b29f06cb-e796-47d8-baf3-b24f873b0474}')!
+Kernel.StCascadeNode comment: 'StCascadeNode is a parse tree node for cascaded messages (e.g., "self print1 ; print2").
 
 Instance Variables:
 	messages		<SequenceableCollection> of <StMessageNode> the messages 
 	semicolons	<SequenceableCollection> of <Integer> positions of the ; between messages
 
 '!
-!StCascadeNode categoriesForClass!System-Compiler! !
-!StCascadeNode methodsFor!
+!Kernel.StCascadeNode categoriesForClass!System-Compiler! !
+!Kernel.StCascadeNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -108,35 +108,35 @@ whichNodeIsContainedBy: anInterval
 				collect: [:each | each whichNodeIsContainedBy: anInterval]) 
 					reject: [:each | each isNil].
 	^selectedChildren detect: [:each | true] ifNone: [nil]! !
-!StCascadeNode categoriesFor: #=!comparing!public! !
-!StCascadeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StCascadeNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!StCascadeNode categoriesFor: #bestNodeFor:!public!querying! !
-!StCascadeNode categoriesFor: #children!accessing!public! !
-!StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
-!StCascadeNode categoriesFor: #directlyUses:!public!testing! !
-!StCascadeNode categoriesFor: #hash!comparing!public! !
-!StCascadeNode categoriesFor: #isCascade!public!testing! !
-!StCascadeNode categoriesFor: #messages!accessing!public! !
-!StCascadeNode categoriesFor: #messages:!accessing!public! !
-!StCascadeNode categoriesFor: #messages:semicolons:!initializing!public! !
-!StCascadeNode categoriesFor: #needsParenthesis!public!testing! !
-!StCascadeNode categoriesFor: #postCopy!copying!public! !
-!StCascadeNode categoriesFor: #precedence!accessing!public! !
-!StCascadeNode categoriesFor: #receiver!accessing!public! !
-!StCascadeNode categoriesFor: #semicolons!accessing!public! !
-!StCascadeNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StCascadeNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StCascadeNode categoriesFor: #uses:!public!testing! !
-!StCascadeNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
+!Kernel.StCascadeNode categoriesFor: #=!comparing!public! !
+!Kernel.StCascadeNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StCascadeNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
+!Kernel.StCascadeNode categoriesFor: #bestNodeFor:!public!querying! !
+!Kernel.StCascadeNode categoriesFor: #children!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #directlyUses:!public!testing! !
+!Kernel.StCascadeNode categoriesFor: #hash!comparing!public! !
+!Kernel.StCascadeNode categoriesFor: #isCascade!public!testing! !
+!Kernel.StCascadeNode categoriesFor: #messages!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #messages:!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #messages:semicolons:!initializing!public! !
+!Kernel.StCascadeNode categoriesFor: #needsParenthesis!public!testing! !
+!Kernel.StCascadeNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StCascadeNode categoriesFor: #precedence!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #receiver!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #semicolons!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StCascadeNode categoriesFor: #uses:!public!testing! !
+!Kernel.StCascadeNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
 
-!StCascadeNode class methodsFor!
+!Kernel.StCascadeNode class methodsFor!
 
 messages: messageNodes 
 	^self new messages: messageNodes!
 
 messages: messageNodes semicolons: integerCollection 
 	^self new messages: messageNodes semicolons: integerCollection! !
-!StCascadeNode class categoriesFor: #messages:!instance creation!public! !
-!StCascadeNode class categoriesFor: #messages:semicolons:!instance creation!public! !
+!Kernel.StCascadeNode class categoriesFor: #messages:!instance creation!public! !
+!Kernel.StCascadeNode class categoriesFor: #messages:semicolons:!instance creation!public! !
 

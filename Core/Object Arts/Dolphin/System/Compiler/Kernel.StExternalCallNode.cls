@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StTagNode subclass: #StExternalCallNode
+Kernel.StTagNode subclass: #'Kernel.StExternalCallNode'
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'OverlappedMask' -> 16r1.
 		'VirtualMask' -> 16r2
 	}!
-StExternalCallNode guid: (GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
-StExternalCallNode comment: ''!
-!StExternalCallNode categoriesForClass!System-Compiler! !
-!StExternalCallNode methodsFor!
+Kernel.StExternalCallNode guid: (Core.GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
+Kernel.StExternalCallNode comment: ''!
+!Kernel.StExternalCallNode categoriesForClass!System-Compiler! !
+!Kernel.StExternalCallNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -68,27 +68,27 @@ returnType
 
 returnType: anAssociation 
 	returnType := anAssociation! !
-!StExternalCallNode categoriesFor: #=!comparing!public! !
-!StExternalCallNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StExternalCallNode categoriesFor: #argumentTypes!accessing!public! !
-!StExternalCallNode categoriesFor: #argumentTypes:!accessing!public! !
-!StExternalCallNode categoriesFor: #callingConvention!accessing!public! !
-!StExternalCallNode categoriesFor: #callingConvention:!accessing!public! !
-!StExternalCallNode categoriesFor: #initialize!initializing!public! !
-!StExternalCallNode categoriesFor: #isExternalCall!public!testing! !
-!StExternalCallNode categoriesFor: #isOverlapped!public!testing! !
-!StExternalCallNode categoriesFor: #isOverlapped:!accessing!public! !
-!StExternalCallNode categoriesFor: #isVirtual!public!testing! !
-!StExternalCallNode categoriesFor: #isVirtual:!accessing!public! !
-!StExternalCallNode categoriesFor: #nameOrOrdinal!accessing!public! !
-!StExternalCallNode categoriesFor: #nameOrOrdinal:!accessing!public! !
-!StExternalCallNode categoriesFor: #primitiveIndex!accessing!public! !
-!StExternalCallNode categoriesFor: #returnType!accessing!public! !
-!StExternalCallNode categoriesFor: #returnType:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #=!comparing!public! !
+!Kernel.StExternalCallNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StExternalCallNode categoriesFor: #argumentTypes!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #argumentTypes:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #callingConvention!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #callingConvention:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #initialize!initializing!public! !
+!Kernel.StExternalCallNode categoriesFor: #isExternalCall!public!testing! !
+!Kernel.StExternalCallNode categoriesFor: #isOverlapped!public!testing! !
+!Kernel.StExternalCallNode categoriesFor: #isOverlapped:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #isVirtual!public!testing! !
+!Kernel.StExternalCallNode categoriesFor: #isVirtual:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #nameOrOrdinal!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #nameOrOrdinal:!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #primitiveIndex!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #returnType!accessing!public! !
+!Kernel.StExternalCallNode categoriesFor: #returnType:!accessing!public! !
 
-!StExternalCallNode class methodsFor!
+!Kernel.StExternalCallNode class methodsFor!
 
 new
 	^super new initialize! !
-!StExternalCallNode class categoriesFor: #new!instance creation!public! !
+!Kernel.StExternalCallNode class categoriesFor: #new!instance creation!public! !
 

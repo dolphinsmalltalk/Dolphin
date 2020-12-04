@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSpecialVariableNode subclass: #StThisContextVariableNode
+Kernel.StSpecialVariableNode subclass: #'Kernel.StThisContextVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StThisContextVariableNode guid: (GUID fromString: '{20db816b-6c32-4239-97e8-c3a90a63e126}')!
-StThisContextVariableNode comment: ''!
-!StThisContextVariableNode categoriesForClass!System-Compiler! !
-!StThisContextVariableNode methodsFor!
+Kernel.StThisContextVariableNode guid: (Core.GUID fromString: '{20db816b-6c32-4239-97e8-c3a90a63e126}')!
+Kernel.StThisContextVariableNode comment: ''!
+!Kernel.StThisContextVariableNode categoriesForClass!System-Compiler! !
+!Kernel.StThisContextVariableNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitThisContextVariableNode: self!
@@ -19,7 +19,7 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope thisContextVariable! !
-!StThisContextVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StThisContextVariableNode categoriesFor: #name!constants!public! !
-!StThisContextVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StThisContextVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StThisContextVariableNode categoriesFor: #name!constants!public! !
+!Kernel.StThisContextVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 

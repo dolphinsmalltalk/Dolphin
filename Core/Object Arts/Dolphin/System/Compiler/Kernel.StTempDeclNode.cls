@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StVariableNode subclass: #StTempDeclNode
+Kernel.StVariableNode subclass: #'Kernel.StTempDeclNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StTempDeclNode guid: (GUID fromString: '{3b692e52-8be1-41d2-8300-e8a0e286426a}')!
-StTempDeclNode comment: 'StTempDeclNode is a parse tree node that represents a temp definition for a method or block.
+Kernel.StTempDeclNode guid: (Core.GUID fromString: '{3b692e52-8be1-41d2-8300-e8a0e286426a}')!
+Kernel.StTempDeclNode comment: 'StTempDeclNode is a parse tree node that represents a temp definition for a method or block.
 '!
-!StTempDeclNode categoriesForClass!System-Compiler! !
-!StTempDeclNode methodsFor!
+!Kernel.StTempDeclNode categoriesForClass!System-Compiler! !
+!Kernel.StTempDeclNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitTempDeclNode: self! !
-!StTempDeclNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StTempDeclNode categoriesFor: #acceptVisitor:!public!visitor! !
 

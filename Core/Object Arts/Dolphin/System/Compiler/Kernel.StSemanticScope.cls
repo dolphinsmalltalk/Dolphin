@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #StSemanticScope
+Core.Object subclass: #'Kernel.StSemanticScope'
 	instanceVariableNames: 'outer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSemanticScope guid: (GUID fromString: '{6613bf75-bf16-4a7f-92f0-72a8a84738c9}')!
-StSemanticScope isAbstract: true!
-StSemanticScope comment: ''!
-!StSemanticScope categoriesForClass!Kernel-Objects! !
-!StSemanticScope methodsFor!
+Kernel.StSemanticScope guid: (Core.GUID fromString: '{6613bf75-bf16-4a7f-92f0-72a8a84738c9}')!
+Kernel.StSemanticScope isNonInstantiable: true!
+Kernel.StSemanticScope comment: ''!
+!Kernel.StSemanticScope categoriesForClass!Kernel-Objects! !
+!Kernel.StSemanticScope methodsFor!
 
 isInlined
 	^false!
@@ -38,12 +38,12 @@ temps
 
 thisContextVariable
 	^self shouldNotImplement! !
-!StSemanticScope categoriesFor: #isInlined!accessing!public! !
-!StSemanticScope categoriesFor: #lookupVariable:!operations!public! !
-!StSemanticScope categoriesFor: #outer!accessing!public! !
-!StSemanticScope categoriesFor: #outer:!accessing!public! !
-!StSemanticScope categoriesFor: #selfVariable!public! !
-!StSemanticScope categoriesFor: #superVariable!public! !
-!StSemanticScope categoriesFor: #temps!accessing!private! !
-!StSemanticScope categoriesFor: #thisContextVariable!public! !
+!Kernel.StSemanticScope categoriesFor: #isInlined!accessing!public! !
+!Kernel.StSemanticScope categoriesFor: #lookupVariable:!operations!public! !
+!Kernel.StSemanticScope categoriesFor: #outer!accessing!public! !
+!Kernel.StSemanticScope categoriesFor: #outer:!accessing!public! !
+!Kernel.StSemanticScope categoriesFor: #selfVariable!public! !
+!Kernel.StSemanticScope categoriesFor: #superVariable!public! !
+!Kernel.StSemanticScope categoriesFor: #temps!accessing!private! !
+!Kernel.StSemanticScope categoriesFor: #thisContextVariable!public! !
 

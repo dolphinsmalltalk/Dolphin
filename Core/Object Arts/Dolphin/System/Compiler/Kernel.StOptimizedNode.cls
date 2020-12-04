@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueNode subclass: #StOptimizedNode
+Kernel.StValueNode subclass: #'Kernel.StOptimizedNode'
 	instanceVariableNames: 'left right body value methodClass source'
 	classVariableNames: 'UnevaluatedCookie'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StOptimizedNode guid: (GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
-StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
+Kernel.StOptimizedNode guid: (Core.GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
+Kernel.StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
 
 Instance Variables:
 	body	<StSequenceNode> the body of the expression
@@ -15,8 +15,8 @@ Instance Variables:
 	right	<Integer>	position of )
 
 '!
-!StOptimizedNode categoriesForClass!System-Compiler! !
-!StOptimizedNode methodsFor!
+!Kernel.StOptimizedNode categoriesForClass!System-Compiler! !
+!Kernel.StOptimizedNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -43,7 +43,6 @@ childrenDo: aMonadicValuable
 	aMonadicValuable value: body!
 
 evaluateStatements
-	| s |
 	methodClass isNil ifTrue: [^nil].
 	^self source
 		ifNotNil: [:s | Compiler evaluate: (s copyFrom: body start to: body stop) for: methodClass instanceClass]!
@@ -102,32 +101,32 @@ value
 
 value: anObject
 	value := anObject! !
-!StOptimizedNode categoriesFor: #=!comparing!public! !
-!StOptimizedNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StOptimizedNode categoriesFor: #argumentCount!public! !
-!StOptimizedNode categoriesFor: #arguments!accessing!public! !
-!StOptimizedNode categoriesFor: #body!accessing!public! !
-!StOptimizedNode categoriesFor: #body:!accessing!public! !
-!StOptimizedNode categoriesFor: #childrenDo:!accessing!public! !
-!StOptimizedNode categoriesFor: #evaluateStatements!helpers!private! !
-!StOptimizedNode categoriesFor: #hash!comparing!public! !
-!StOptimizedNode categoriesFor: #initialize!public! !
-!StOptimizedNode categoriesFor: #isImmediateNode!public!testing! !
-!StOptimizedNode categoriesFor: #isInlined!public! !
-!StOptimizedNode categoriesFor: #left:body:right:!initializing!public! !
-!StOptimizedNode categoriesFor: #methodClass!accessing!private! !
-!StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
-!StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
-!StOptimizedNode categoriesFor: #postCopy!copying!public! !
-!StOptimizedNode categoriesFor: #precedence!accessing!public! !
-!StOptimizedNode categoriesFor: #source!accessing!public! !
-!StOptimizedNode categoriesFor: #source:!accessing!private! !
-!StOptimizedNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StOptimizedNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StOptimizedNode categoriesFor: #value!accessing!public! !
-!StOptimizedNode categoriesFor: #value:!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #=!comparing!public! !
+!Kernel.StOptimizedNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StOptimizedNode categoriesFor: #argumentCount!public! !
+!Kernel.StOptimizedNode categoriesFor: #arguments!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #body!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #body:!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #evaluateStatements!helpers!private! !
+!Kernel.StOptimizedNode categoriesFor: #hash!comparing!public! !
+!Kernel.StOptimizedNode categoriesFor: #initialize!public! !
+!Kernel.StOptimizedNode categoriesFor: #isImmediateNode!public!testing! !
+!Kernel.StOptimizedNode categoriesFor: #isInlined!public! !
+!Kernel.StOptimizedNode categoriesFor: #left:body:right:!initializing!public! !
+!Kernel.StOptimizedNode categoriesFor: #methodClass!accessing!private! !
+!Kernel.StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
+!Kernel.StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
+!Kernel.StOptimizedNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StOptimizedNode categoriesFor: #precedence!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #source!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #source:!accessing!private! !
+!Kernel.StOptimizedNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #value!accessing!public! !
+!Kernel.StOptimizedNode categoriesFor: #value:!accessing!public! !
 
-!StOptimizedNode class methodsFor!
+!Kernel.StOptimizedNode class methodsFor!
 
 body: aSequenceNode 
 	^self new body: aSequenceNode!
@@ -144,8 +143,8 @@ left: leftInteger body: aSequenceNode right: rightInteger
 
 new
 	^super new initialize! !
-!StOptimizedNode class categoriesFor: #body:!instance creation!public! !
-!StOptimizedNode class categoriesFor: #initialize!public! !
-!StOptimizedNode class categoriesFor: #left:body:right:!instance creation!public! !
-!StOptimizedNode class categoriesFor: #new!instance creation!public! !
+!Kernel.StOptimizedNode class categoriesFor: #body:!instance creation!public! !
+!Kernel.StOptimizedNode class categoriesFor: #initialize!public! !
+!Kernel.StOptimizedNode class categoriesFor: #left:body:right:!instance creation!public! !
+!Kernel.StOptimizedNode class categoriesFor: #new!instance creation!public! !
 

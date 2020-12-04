@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StKeywordToken
+Kernel.StValueToken subclass: #'Kernel.StKeywordToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StKeywordToken guid: (GUID fromString: '{e61c129a-266f-46b1-a320-25df7d71ac8f}')!
-StKeywordToken comment: ''!
-!StKeywordToken categoriesForClass!System-Compiler! !
-!StKeywordToken methodsFor!
+Kernel.StKeywordToken guid: (Core.GUID fromString: '{e61c129a-266f-46b1-a320-25df7d71ac8f}')!
+Kernel.StKeywordToken comment: ''!
+!Kernel.StKeywordToken categoriesForClass!System-Compiler! !
+!Kernel.StKeywordToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitKeywordToken: self!
@@ -18,8 +18,8 @@ isKeyword
 	^true!
 
 isPatternVariable
-	^value first == SmalltalkScanner patternVariableCharacter! !
-!StKeywordToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StKeywordToken categoriesFor: #isKeyword!public!testing! !
-!StKeywordToken categoriesFor: #isPatternVariable!public!testing! !
+	^value first == Scanner patternVariableCharacter! !
+!Kernel.StKeywordToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StKeywordToken categoriesFor: #isKeyword!public!testing! !
+!Kernel.StKeywordToken categoriesFor: #isPatternVariable!public!testing! !
 

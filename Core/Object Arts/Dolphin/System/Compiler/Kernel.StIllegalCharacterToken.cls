@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StIllegalCharacterToken
+Kernel.StValueToken subclass: #'Kernel.StIllegalCharacterToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StIllegalCharacterToken guid: (GUID fromString: '{3aa6518c-788d-479b-b7c3-2988a870dde6}')!
-StIllegalCharacterToken comment: ''!
-!StIllegalCharacterToken categoriesForClass!System-Compiler! !
-!StIllegalCharacterToken methodsFor!
+Kernel.StIllegalCharacterToken guid: (Core.GUID fromString: '{3aa6518c-788d-479b-b7c3-2988a870dde6}')!
+Kernel.StIllegalCharacterToken comment: ''!
+!Kernel.StIllegalCharacterToken categoriesForClass!System-Compiler! !
+!Kernel.StIllegalCharacterToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitIllegalCharacterToken: self!
 
 length
 	^1! !
-!StIllegalCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StIllegalCharacterToken categoriesFor: #length!accessing!private! !
+!Kernel.StIllegalCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StIllegalCharacterToken categoriesFor: #length!accessing!private! !
 

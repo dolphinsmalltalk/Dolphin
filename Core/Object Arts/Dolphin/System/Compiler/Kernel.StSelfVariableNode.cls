@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSpecialVariableNode subclass: #StSelfVariableNode
+Kernel.StSpecialVariableNode subclass: #'Kernel.StSelfVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSelfVariableNode guid: (GUID fromString: '{29220d9b-e07e-475a-95e2-b31f4bf41079}')!
-StSelfVariableNode comment: 'StSelfVariableNode is an parse tree node that represents the special variable ''self''.
+Kernel.StSelfVariableNode guid: (Core.GUID fromString: '{29220d9b-e07e-475a-95e2-b31f4bf41079}')!
+Kernel.StSelfVariableNode comment: 'StSelfVariableNode is an parse tree node that represents the special variable ''self''.
 '!
-!StSelfVariableNode categoriesForClass!System-Compiler! !
-!StSelfVariableNode methodsFor!
+!Kernel.StSelfVariableNode categoriesForClass!System-Compiler! !
+!Kernel.StSelfVariableNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitSelfVariableNode: self!
@@ -25,8 +25,8 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope selfVariable! !
-!StSelfVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StSelfVariableNode categoriesFor: #isSelfVariable!public!testing! !
-!StSelfVariableNode categoriesFor: #name!constants!public! !
-!StSelfVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StSelfVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StSelfVariableNode categoriesFor: #isSelfVariable!public!testing! !
+!Kernel.StSelfVariableNode categoriesFor: #name!constants!public! !
+!Kernel.StSelfVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
 

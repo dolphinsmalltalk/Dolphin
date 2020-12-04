@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSpecialVariable subclass: #StSuperVariable
+Kernel.StSpecialVariable subclass: #'Kernel.StSuperVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StSuperVariable guid: (GUID fromString: '{23a2ad6e-f898-4e60-813c-54d499b62609}')!
-StSuperVariable comment: '<StSuperVariable> is a concrete class of <StSpecialVariable> to describe the ''super'' pseudo-variable in a particular <StClassScope>.'!
-!StSuperVariable categoriesForClass!Kernel-Objects! !
-!StSuperVariable methodsFor!
+Kernel.StSuperVariable guid: (Core.GUID fromString: '{23a2ad6e-f898-4e60-813c-54d499b62609}')!
+Kernel.StSuperVariable comment: '<StSuperVariable> is a concrete class of <StSpecialVariable> to describe the ''super'' pseudo-variable in a particular <StClassScope>.'!
+!Kernel.StSuperVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StSuperVariable methodsFor!
 
 name
 	"Answer the <readableString> identifier of the variable described by the receiver."
 
 	^'super'! !
-!StSuperVariable categoriesFor: #name!accessing!public! !
+!Kernel.StSuperVariable categoriesFor: #name!accessing!public! !
 

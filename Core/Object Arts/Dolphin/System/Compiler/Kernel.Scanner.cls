@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SmalltalkScanner
+Core.Object subclass: #'Kernel.Scanner'
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
 	classVariableNames: 'EscapeChars'
-	poolDictionaries: 'SmalltalkParseErrorCodes'
+	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassificationTable' -> #(#separator nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #binary nil).
 		'PatternVariableCharacter' -> $`
 	}!
-SmalltalkScanner guid: (GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
-SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
+Kernel.Scanner guid: (Core.GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
+Kernel.Scanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
 Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
 
@@ -32,8 +32,8 @@ Class Instance Variables:
 	classificationTable	<Array>. Used to classify characters into types.
 
 '!
-!SmalltalkScanner categoriesForClass!System-Compiler! !
-!SmalltalkScanner methodsFor!
+!Kernel.Scanner categoriesForClass!System-Compiler! !
+!Kernel.Scanner methodsFor!
 
 addComment: anInterval
 	(comments ifNil: [comments := OrderedCollection new: 1]) addLast: anInterval!
@@ -213,7 +213,7 @@ next
 	^token!
 
 notificationClass
-	^SmalltalkParser notificationClass!
+	^Parser notificationClass!
 
 numberTokenClass
 	^StNumberLiteralToken!
@@ -265,8 +265,7 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 
 scanAnySymbol
 	characterType == #alphabetic ifTrue: [^self scanSymbol].
-	characterType == #binary 
-		ifTrue: [^self scanBinary: self literalTokenClass].
+	characterType == #binary ifTrue: [^self scanBinary: self literalTokenClass].
 	^StEofToken new!
 
 scanBinary: aClass
@@ -537,22 +536,6 @@ scanOptimized
 		comments: nil
 		stop: self previousStepPosition!
 
-scanPatternVariable
-	buffer nextPut: currentCharacter.
-	self step.
-	currentCharacter == ${
-		ifTrue: 
-			[self step.
-			^PatternBlockToken
-				start: tokenStart
-				comments: nil
-				value: '`{'].
-	[characterType == #alphabetic] whileFalse: 
-			[characterType == #eof ifTrue: [^self metaVariableExpected].
-			buffer nextPut: currentCharacter.
-			self step].
-	^self scanIdentifierOrKeyword!
-
 scanQualifiedReference
 	"Scan the opening quote of literal qualified reference, i.e. the #{ of e.g. #{Root.Smalltalk}."
 	"In the original RBScanner, qualified references were scanned in their entirety as a literal token with no special token or node type to represent them. That design has a couple of issues:
@@ -744,71 +727,70 @@ unterminatedComment: anInteger
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
-!SmalltalkScanner categoriesFor: #addComment:!private!scanning! !
-!SmalltalkScanner categoriesFor: #atEnd!public!testing! !
-!SmalltalkScanner categoriesFor: #classify:!private!scanning! !
-!SmalltalkScanner categoriesFor: #constantExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #contents!accessing!public! !
-!SmalltalkScanner categoriesFor: #do:!enumerating!public! !
-!SmalltalkScanner categoriesFor: #environment!accessing!public! !
-!SmalltalkScanner categoriesFor: #environment:!accessing!public! !
-!SmalltalkScanner categoriesFor: #errorHandler:!initializing!private! !
-!SmalltalkScanner categoriesFor: #errorPosition!accessing!error handling!public! !
-!SmalltalkScanner categoriesFor: #extendedLiteralExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #getComments!accessing!public! !
-!SmalltalkScanner categoriesFor: #identifierTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #illegalCharacter!error handling!private! !
-!SmalltalkScanner categoriesFor: #illegalNumber!error handling!private! !
-!SmalltalkScanner categoriesFor: #lexicalError:!error handling!private! !
-!SmalltalkScanner categoriesFor: #lexicalError:range:!error handling!private! !
-!SmalltalkScanner categoriesFor: #line!accessing!public! !
-!SmalltalkScanner categoriesFor: #literalCharacterTokenClass!public!scanning! !
-!SmalltalkScanner categoriesFor: #literalErrorToken:stop:!error handling!private! !
-!SmalltalkScanner categoriesFor: #literalTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #metaVariableExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
-!SmalltalkScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
-!SmalltalkScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
-!SmalltalkScanner categoriesFor: #next!accessing!public! !
-!SmalltalkScanner categoriesFor: #notificationClass!constants!error handling!private! !
-!SmalltalkScanner categoriesFor: #numberTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #on:!initializing!private! !
-!SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
-!SmalltalkScanner categoriesFor: #qualifiedReferenceTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
-!SmalltalkScanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
-!SmalltalkScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!SmalltalkScanner categoriesFor: #scanAnySymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanBinary:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanExponentInteger:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanExtendedLiterals!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanIdentifierOrKeyword!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanKeyword!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteral!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralArrayToken!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralCharacter!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralString!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanName!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanNameSpaceName!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanNumber:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanOptimized!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanPatternVariable!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanQualifiedReference!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSign!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSmalltalkReal:sign:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSpecialCharacter!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanStringSymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
-!SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stepBackTo:!helpers!private! !
-!SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
-!SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
-!SmalltalkScanner categoriesFor: #unterminatedString!error handling!private! !
+!Kernel.Scanner categoriesFor: #addComment:!private!scanning! !
+!Kernel.Scanner categoriesFor: #atEnd!public!testing! !
+!Kernel.Scanner categoriesFor: #classify:!private!scanning! !
+!Kernel.Scanner categoriesFor: #constantExpected!error handling!private! !
+!Kernel.Scanner categoriesFor: #contents!accessing!public! !
+!Kernel.Scanner categoriesFor: #do:!enumerating!public! !
+!Kernel.Scanner categoriesFor: #environment!accessing!public! !
+!Kernel.Scanner categoriesFor: #environment:!accessing!public! !
+!Kernel.Scanner categoriesFor: #errorHandler:!initializing!private! !
+!Kernel.Scanner categoriesFor: #errorPosition!accessing!error handling!public! !
+!Kernel.Scanner categoriesFor: #extendedLiteralExpected!error handling!private! !
+!Kernel.Scanner categoriesFor: #getComments!accessing!public! !
+!Kernel.Scanner categoriesFor: #identifierTokenClass!constants!private! !
+!Kernel.Scanner categoriesFor: #illegalCharacter!error handling!private! !
+!Kernel.Scanner categoriesFor: #illegalNumber!error handling!private! !
+!Kernel.Scanner categoriesFor: #lexicalError:!error handling!private! !
+!Kernel.Scanner categoriesFor: #lexicalError:range:!error handling!private! !
+!Kernel.Scanner categoriesFor: #line!accessing!public! !
+!Kernel.Scanner categoriesFor: #literalCharacterTokenClass!public!scanning! !
+!Kernel.Scanner categoriesFor: #literalErrorToken:stop:!error handling!private! !
+!Kernel.Scanner categoriesFor: #literalTokenClass!constants!private! !
+!Kernel.Scanner categoriesFor: #metaVariableExpected!error handling!private! !
+!Kernel.Scanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
+!Kernel.Scanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
+!Kernel.Scanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
+!Kernel.Scanner categoriesFor: #next!accessing!public! !
+!Kernel.Scanner categoriesFor: #notificationClass!constants!error handling!private! !
+!Kernel.Scanner categoriesFor: #numberTokenClass!constants!private! !
+!Kernel.Scanner categoriesFor: #on:!initializing!private! !
+!Kernel.Scanner categoriesFor: #previousStepPosition!accessing!private! !
+!Kernel.Scanner categoriesFor: #qualifiedReferenceTokenClass!constants!private! !
+!Kernel.Scanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
+!Kernel.Scanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
+!Kernel.Scanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!Kernel.Scanner categoriesFor: #scanAnySymbol!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanBinary:!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanExponentInteger:!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanExtendedLiterals!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanIdentifierOrKeyword!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanKeyword!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanLiteral!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanLiteralArrayToken!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanLiteralCharacter!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanLiteralString!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanName!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanNameSpaceName!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanNumber:!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanOptimized!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanQualifiedReference!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanSign!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanSmalltalkReal:sign:!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanSpecialCharacter!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanStringSymbol!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanSymbol!private!scanning! !
+!Kernel.Scanner categoriesFor: #scanToken!accessing!public! !
+!Kernel.Scanner categoriesFor: #step!operations!private! !
+!Kernel.Scanner categoriesFor: #stepBackTo:!helpers!private! !
+!Kernel.Scanner categoriesFor: #stripSeparators!private!scanning! !
+!Kernel.Scanner categoriesFor: #unterminatedComment:!error handling!private! !
+!Kernel.Scanner categoriesFor: #unterminatedString!error handling!private! !
 
-SmalltalkScanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
+Kernel.Scanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
-!SmalltalkScanner class methodsFor!
+!Kernel.Scanner class methodsFor!
 
 classify: aCharacter
 	"May be asked to classify nil if peek at end of stream"
@@ -882,12 +864,12 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
-!SmalltalkScanner class categoriesFor: #classify:!public!scanning! !
-!SmalltalkScanner class categoriesFor: #initialize!development!initializing!public! !
-!SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
-!SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
-!SmalltalkScanner class categoriesFor: #isVariable:!public!testing! !
-!SmalltalkScanner class categoriesFor: #on:!instance creation!public! !
-!SmalltalkScanner class categoriesFor: #on:errorHandler:!instance creation!public! !
-!SmalltalkScanner class categoriesFor: #patternVariableCharacter!accessing!public! !
+!Kernel.Scanner class categoriesFor: #classify:!public!scanning! !
+!Kernel.Scanner class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.Scanner class categoriesFor: #initializeClassificationTable!initializing!private! !
+!Kernel.Scanner class categoriesFor: #isSelector:!public!testing! !
+!Kernel.Scanner class categoriesFor: #isVariable:!public!testing! !
+!Kernel.Scanner class categoriesFor: #on:!instance creation!public! !
+!Kernel.Scanner class categoriesFor: #on:errorHandler:!instance creation!public! !
+!Kernel.Scanner class categoriesFor: #patternVariableCharacter!accessing!public! !
 

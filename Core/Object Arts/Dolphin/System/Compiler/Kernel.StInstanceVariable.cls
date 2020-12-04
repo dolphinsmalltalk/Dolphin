@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StVariable subclass: #StInstanceVariable
+Kernel.StVariable subclass: #'Kernel.StInstanceVariable'
 	instanceVariableNames: 'index name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StInstanceVariable guid: (GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
-StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
+Kernel.StInstanceVariable guid: (Core.GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
+Kernel.StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
 
 Instance Variables:
 	index		<SmallInteger> index of the instance variable slot in object''s of the type of which the receiver describes an instance variable.
 	name		<String> identifier of the instance variable.
 
 '!
-!StInstanceVariable categoriesForClass!Kernel-Objects! !
-!StInstanceVariable methodsFor!
+!Kernel.StInstanceVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StInstanceVariable methodsFor!
 
 index
 	"Answer the one-based <integer> index of the instance variable slot in the class of object of the reference instance variable."
@@ -37,14 +37,14 @@ setIndex: anInteger name: aString
 	index := anInteger.
 	name := aString.
 	self initialize! !
-!StInstanceVariable categoriesFor: #index!accessing!public! !
-!StInstanceVariable categoriesFor: #isInstanceVariable!public!testing! !
-!StInstanceVariable categoriesFor: #name!accessing!public! !
-!StInstanceVariable categoriesFor: #setIndex:name:!initializing!private! !
+!Kernel.StInstanceVariable categoriesFor: #index!accessing!public! !
+!Kernel.StInstanceVariable categoriesFor: #isInstanceVariable!public!testing! !
+!Kernel.StInstanceVariable categoriesFor: #name!accessing!public! !
+!Kernel.StInstanceVariable categoriesFor: #setIndex:name:!initializing!private! !
 
-!StInstanceVariable class methodsFor!
+!Kernel.StInstanceVariable class methodsFor!
 
 index: anInteger name: aString
 	^self new setIndex: anInteger name: aString! !
-!StInstanceVariable class categoriesFor: #index:name:!public! !
+!Kernel.StInstanceVariable class categoriesFor: #index:name:!public! !
 

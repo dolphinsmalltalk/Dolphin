@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLiteralNode subclass: #StLiteralValueNode
+Kernel.StLiteralNode subclass: #'Kernel.StLiteralValueNode'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StLiteralValueNode guid: (GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
-StLiteralValueNode comment: ''!
-!StLiteralValueNode categoriesForClass!Unclassified! !
-!StLiteralValueNode methodsFor!
+Kernel.StLiteralValueNode guid: (Core.GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
+Kernel.StLiteralValueNode comment: ''!
+!Kernel.StLiteralValueNode categoriesForClass!Unclassified! !
+!Kernel.StLiteralValueNode methodsFor!
 
 = anObject 
 	^super = anObject and: 
@@ -39,25 +39,25 @@ value
 
 valueClass
 	^token value class! !
-!StLiteralValueNode categoriesFor: #=!comparing!public! !
-!StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralValueNode categoriesFor: #formattedCode!accessing!public! !
-!StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
-!StLiteralValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StLiteralValueNode categoriesFor: #token!accessing!public! !
-!StLiteralValueNode categoriesFor: #value!accessing!public! !
-!StLiteralValueNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #=!comparing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StLiteralValueNode categoriesFor: #formattedCode!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
+!Kernel.StLiteralValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #token!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #value!accessing!public! !
+!Kernel.StLiteralValueNode categoriesFor: #valueClass!accessing!public! !
 
-!StLiteralValueNode class methodsFor!
+!Kernel.StLiteralValueNode class methodsFor!
 
 literalToken: aLiteralToken 
 	^(self new)
 		literalToken: aLiteralToken;
 		yourself!
 
-value: aValue 
+value: aValue
 	^self literalToken: (StLiteralToken value: aValue)! !
-!StLiteralValueNode class categoriesFor: #literalToken:!instance creation!public! !
-!StLiteralValueNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralValueNode class categoriesFor: #literalToken:!instance creation!public! !
+!Kernel.StLiteralValueNode class categoriesFor: #value:!instance creation!public! !
 

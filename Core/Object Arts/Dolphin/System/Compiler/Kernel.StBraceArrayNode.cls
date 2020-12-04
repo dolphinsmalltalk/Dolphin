@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueNode subclass: #StBraceArrayNode
+Kernel.StValueNode subclass: #'Kernel.StBraceArrayNode'
 	instanceVariableNames: 'left statements periods right'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StBraceArrayNode guid: (GUID fromString: '{296a5d5c-f22a-48c3-a889-53df20fcd4b2}')!
-StBraceArrayNode comment: 'StBraceArrayNode is a parse tree node for runtime arrays.
+Kernel.StBraceArrayNode guid: (Core.GUID fromString: '{296a5d5c-f22a-48c3-a889-53df20fcd4b2}')!
+Kernel.StBraceArrayNode comment: 'StBraceArrayNode is a parse tree node for runtime arrays.
 
 Instance Variables
 	left:	 		<Integer | nil> position of {
 	periods: 		<SequenceableCollection> of <Integer> the positions of all the periods that separate the statements
 	right: 		<Integer | nil> position of }
 	statements: 	<SequenceableCollection> of <StStatementNode> the statement nodes'!
-!StBraceArrayNode categoriesForClass!System-Compiler! !
-!StBraceArrayNode methodsFor!
+!Kernel.StBraceArrayNode categoriesForClass!System-Compiler! !
+!Kernel.StBraceArrayNode methodsFor!
 
 = anObject
 	self == anObject ifTrue: [^true].
@@ -87,31 +87,31 @@ stopWithoutParentheses
 
 uses: aNode
 	^(statements anySatisfy: [:each | each == aNode]) or: [self isUsed]! !
-!StBraceArrayNode categoriesFor: #=!comparing!public! !
-!StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StBraceArrayNode categoriesFor: #children!accessing!public! !
-!StBraceArrayNode categoriesFor: #childrenDo:!accessing!enumerating!public! !
-!StBraceArrayNode categoriesFor: #hash!comparing!public! !
-!StBraceArrayNode categoriesFor: #isDynamicArray!public!testing! !
-!StBraceArrayNode categoriesFor: #lastIsReturn!public!testing! !
-!StBraceArrayNode categoriesFor: #left!accessing!public! !
-!StBraceArrayNode categoriesFor: #left:!accessing!public! !
-!StBraceArrayNode categoriesFor: #needsParenthesis!public!testing! !
-!StBraceArrayNode categoriesFor: #periods!accessing!public! !
-!StBraceArrayNode categoriesFor: #periods:!accessing!public! !
-!StBraceArrayNode categoriesFor: #postCopy!copying!public! !
-!StBraceArrayNode categoriesFor: #precedence!constants!public! !
-!StBraceArrayNode categoriesFor: #right!accessing!public! !
-!StBraceArrayNode categoriesFor: #right:!accessing!public! !
-!StBraceArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StBraceArrayNode categoriesFor: #statements!accessing!public! !
-!StBraceArrayNode categoriesFor: #statements:!accessing!public! !
-!StBraceArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StBraceArrayNode categoriesFor: #uses:!public!testing! !
+!Kernel.StBraceArrayNode categoriesFor: #=!comparing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StBraceArrayNode categoriesFor: #children!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #childrenDo:!accessing!enumerating!public! !
+!Kernel.StBraceArrayNode categoriesFor: #hash!comparing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #isDynamicArray!public!testing! !
+!Kernel.StBraceArrayNode categoriesFor: #lastIsReturn!public!testing! !
+!Kernel.StBraceArrayNode categoriesFor: #left!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #left:!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #needsParenthesis!public!testing! !
+!Kernel.StBraceArrayNode categoriesFor: #periods!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #periods:!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StBraceArrayNode categoriesFor: #precedence!constants!public! !
+!Kernel.StBraceArrayNode categoriesFor: #right!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #right:!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #statements!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #statements:!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #uses:!public!testing! !
 
-!StBraceArrayNode class methodsFor!
+!Kernel.StBraceArrayNode class methodsFor!
 
 statements: statements
 	^self new statements: statements! !
-!StBraceArrayNode class categoriesFor: #statements:!instance creation!public! !
+!Kernel.StBraceArrayNode class categoriesFor: #statements:!instance creation!public! !
 

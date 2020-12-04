@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLexicalScope subclass: #StMethodScope
+Kernel.StLexicalScope subclass: #'Kernel.StMethodScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StMethodScope guid: (GUID fromString: '{c3f6496d-702b-4c3b-91b9-3864d62dbca8}')!
-StMethodScope comment: ''!
-!StMethodScope categoriesForClass!Kernel-Objects! !
-!StMethodScope class methodsFor!
+Kernel.StMethodScope guid: (Core.GUID fromString: '{c3f6496d-702b-4c3b-91b9-3864d62dbca8}')!
+Kernel.StMethodScope comment: ''!
+!Kernel.StMethodScope categoriesForClass!Kernel-Objects! !
+!Kernel.StMethodScope class methodsFor!
 
 forScopeNode: anStMethodNode outer: anStLexicalScope
 	^(self new)
 		setNode: anStMethodNode outer: anStLexicalScope;
 		yourself! !
-!StMethodScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
+!Kernel.StMethodScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
 

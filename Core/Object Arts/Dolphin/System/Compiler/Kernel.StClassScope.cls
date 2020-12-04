@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSemanticScope subclass: #StClassScope
+Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
 	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StClassScope guid: (GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90fca0050}')!
-StClassScope comment: ''!
-!StClassScope categoriesForClass!Kernel-Objects! !
-!StClassScope methodsFor!
+Kernel.StClassScope guid: (Core.GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90fca0050}')!
+Kernel.StClassScope comment: ''!
+!Kernel.StClassScope categoriesForClass!Kernel-Objects! !
+!Kernel.StClassScope methodsFor!
 
 lookupVariable: anStVariableNode
 	"Lookup and return an <StVariable> describing the variable definition in this scope matching
@@ -33,7 +33,7 @@ methodClass
 selfVariable
 	^selfVariable
 		ifNil: 
-			[selfVariable := (StSelfVariable new)
+			[selfVariable := StSelfVariable new
 						scope: self;
 						yourself]!
 
@@ -44,18 +44,18 @@ setMethodClass: aClassDescription
 superVariable
 	^superVariable
 		ifNil: 
-			[superVariable := (StSuperVariable new)
+			[superVariable := StSuperVariable new
 						scope: self;
 						yourself]! !
-!StClassScope categoriesFor: #lookupVariable:!operations!public! !
-!StClassScope categoriesFor: #methodClass!accessing!public! !
-!StClassScope categoriesFor: #selfVariable!operations!public! !
-!StClassScope categoriesFor: #setMethodClass:!accessing!initializing!private! !
-!StClassScope categoriesFor: #superVariable!operations!public! !
+!Kernel.StClassScope categoriesFor: #lookupVariable:!operations!public! !
+!Kernel.StClassScope categoriesFor: #methodClass!accessing!public! !
+!Kernel.StClassScope categoriesFor: #selfVariable!operations!public! !
+!Kernel.StClassScope categoriesFor: #setMethodClass:!accessing!initializing!private! !
+!Kernel.StClassScope categoriesFor: #superVariable!operations!public! !
 
-!StClassScope class methodsFor!
+!Kernel.StClassScope class methodsFor!
 
 methodClass: aClassDescription
 	^self new setMethodClass: aClassDescription! !
-!StClassScope class categoriesFor: #methodClass:!instance creation!public! !
+!Kernel.StClassScope class categoriesFor: #methodClass:!instance creation!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #StParseNodeVisitor
+Core.Object subclass: #'Kernel.ParseNodeVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StParseNodeVisitor guid: (GUID fromString: '{8cf81be6-059c-46da-86e3-b21a6781066b}')!
-StParseNodeVisitor comment: 'BRProgramNodeVisitor is an abstract visitor for the BRProgramNodes.
+Kernel.ParseNodeVisitor guid: (Core.GUID fromString: '{8cf81be6-059c-46da-86e3-b21a6781066b}')!
+Kernel.ParseNodeVisitor comment: 'BRProgramNodeVisitor is an abstract visitor for the BRProgramNodes.
 
 '!
-!StParseNodeVisitor categoriesForClass!Refactory-ParseTree Matching! !
-!StParseNodeVisitor methodsFor!
+!Kernel.ParseNodeVisitor categoriesForClass!Refactory-ParseTree Matching! !
+!Kernel.ParseNodeVisitor methodsFor!
 
 processBlock: aBlockNode
 	self visitArgumentNodes: aBlockNode arguments.
@@ -40,7 +40,7 @@ visitBlockNode: aBlockNode
 visitCascadeNode: aCascadeNode
 	aCascadeNode messages do: [:each | self visitNode: each]!
 
-visitExternalArgTypeNode: anAssignmentNode
+visitExternalArgTypeNode: anStExternalArgTypeNode
 	"Dolphin specific extension"
 
 	!
@@ -48,7 +48,8 @@ visitExternalArgTypeNode: anAssignmentNode
 visitExternalCallNode: anStExternalCallNode
 	"Dolphin specific extension"
 
-	!
+	self visitNode: anStExternalCallNode returnType.
+	anStExternalCallNode argumentTypes do: [:each | self visitNode: each]!
 
 visitLiteralArrayNode: aLiteralArrayNode
 	aLiteralArrayNode contents do: [:each | self visitNode: each]!
@@ -113,39 +114,39 @@ visitThisContextVariableNode: anStSelfVariableNode
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !
-!StParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
-!StParseNodeVisitor categoriesFor: #visitAnnotationNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitBlockNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitLiteralNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSelfVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSpecialVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
-!StParseNodeVisitor categoriesFor: #visitSuperVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitThisContextVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitAnnotationNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitBlockNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitLiteralNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitMessageNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitMethodNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitSelfVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitSpecialVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitSuperVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitThisContextVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
 
-!StParseNodeVisitor class methodsFor!
+!Kernel.ParseNodeVisitor class methodsFor!
 
 new
 	^super new initialize! !
-!StParseNodeVisitor class categoriesFor: #new!instance creation!public! !
+!Kernel.ParseNodeVisitor class categoriesFor: #new!instance creation!public! !
 

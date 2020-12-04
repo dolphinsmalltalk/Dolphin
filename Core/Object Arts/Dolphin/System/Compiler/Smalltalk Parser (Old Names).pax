@@ -1,0 +1,37 @@
+﻿| package |
+package := Package name: 'Smalltalk Parser (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Parser Old Names
+
+This package includes aliases for the old (pre-namespace) names of some classes in the ''Smalltalk Parser'' package in order to support loading pre-7.2 packages.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.SmalltalkParser}
+	#{Smalltalk.SmalltalkScanner}
+	#{Smalltalk.StParseNodeVisitor}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.SmalltalkParser}
+	#{Smalltalk.SmalltalkScanner}
+	#{Smalltalk.StParseNodeVisitor}
+).
+
+package setPrerequisites: #(
+	'Smalltalk Parser'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.SmalltalkParser := Kernel.Parser!
+
+Smalltalk.SmalltalkScanner := Kernel.Scanner!
+
+Smalltalk.StParseNodeVisitor := Kernel.ParseNodeVisitor!
+
+
+"End of package definition"!
+

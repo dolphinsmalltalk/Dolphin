@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueNode subclass: #StAssignmentNode
+Kernel.StValueNode subclass: #'Kernel.StAssignmentNode'
 	instanceVariableNames: 'variable assignment value'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StAssignmentNode guid: (GUID fromString: '{3a82c1ca-7ed8-4a69-9e9e-b58b738abc85}')!
-StAssignmentNode comment: 'StAssignmentNode is a parse tree node for assignment statements
+Kernel.StAssignmentNode guid: (Core.GUID fromString: '{3a82c1ca-7ed8-4a69-9e9e-b58b738abc85}')!
+Kernel.StAssignmentNode comment: 'StAssignmentNode is a parse tree node for assignment statements
 
 Instance Variables:
 	assignment	<Integer>	position of the :=
@@ -15,8 +15,8 @@ Instance Variables:
 	variable	<StVariableNode>	the variable being assigned
 
 '!
-!StAssignmentNode categoriesForClass!System-Compiler! !
-!StAssignmentNode methodsFor!
+!Kernel.StAssignmentNode categoriesForClass!System-Compiler! !
+!Kernel.StAssignmentNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -98,28 +98,28 @@ variable: aVariableNode value: aValueNode position: anInteger
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger! !
-!StAssignmentNode categoriesFor: #=!comparing!public! !
-!StAssignmentNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StAssignmentNode categoriesFor: #assignmentPosition!accessing!public! !
-!StAssignmentNode categoriesFor: #assigns:!public!testing! !
-!StAssignmentNode categoriesFor: #bestNodeFor:!public!querying! !
-!StAssignmentNode categoriesFor: #childrenDo:!accessing!public! !
-!StAssignmentNode categoriesFor: #directlyUses:!public!testing! !
-!StAssignmentNode categoriesFor: #hash!comparing!public! !
-!StAssignmentNode categoriesFor: #isAssignment!public!testing! !
-!StAssignmentNode categoriesFor: #needsParenthesis!public!testing! !
-!StAssignmentNode categoriesFor: #postCopy!copying!public! !
-!StAssignmentNode categoriesFor: #precedence!accessing!public! !
-!StAssignmentNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StAssignmentNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StAssignmentNode categoriesFor: #uses:!public!testing! !
-!StAssignmentNode categoriesFor: #value!accessing!public! !
-!StAssignmentNode categoriesFor: #value:!accessing!public! !
-!StAssignmentNode categoriesFor: #variable!accessing!public! !
-!StAssignmentNode categoriesFor: #variable:!accessing!public! !
-!StAssignmentNode categoriesFor: #variable:value:position:!initializing!private! !
+!Kernel.StAssignmentNode categoriesFor: #=!comparing!public! !
+!Kernel.StAssignmentNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StAssignmentNode categoriesFor: #assignmentPosition!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #assigns:!public!testing! !
+!Kernel.StAssignmentNode categoriesFor: #bestNodeFor:!public!querying! !
+!Kernel.StAssignmentNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #directlyUses:!public!testing! !
+!Kernel.StAssignmentNode categoriesFor: #hash!comparing!public! !
+!Kernel.StAssignmentNode categoriesFor: #isAssignment!public!testing! !
+!Kernel.StAssignmentNode categoriesFor: #needsParenthesis!public!testing! !
+!Kernel.StAssignmentNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StAssignmentNode categoriesFor: #precedence!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #uses:!public!testing! !
+!Kernel.StAssignmentNode categoriesFor: #value!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #value:!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #variable!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #variable:!accessing!public! !
+!Kernel.StAssignmentNode categoriesFor: #variable:value:position:!initializing!private! !
 
-!StAssignmentNode class methodsFor!
+!Kernel.StAssignmentNode class methodsFor!
 
 variable: aVariableNode value: aValueNode 
 	^self 
@@ -133,6 +133,6 @@ variable: aVariableNode value: aValueNode position: anInteger
 			value: aValueNode
 			position: anInteger;
 		yourself! !
-!StAssignmentNode class categoriesFor: #variable:value:!instance creation!public! !
-!StAssignmentNode class categoriesFor: #variable:value:position:!instance creation!public! !
+!Kernel.StAssignmentNode class categoriesFor: #variable:value:!instance creation!public! !
+!Kernel.StAssignmentNode class categoriesFor: #variable:value:position:!instance creation!public! !
 

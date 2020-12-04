@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StVariable subclass: #StLocalVariable
+Kernel.StVariable subclass: #'Kernel.StLocalVariable'
 	instanceVariableNames: 'node storage'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StLocalVariable guid: (GUID fromString: '{0a285b01-fe92-41ca-97c5-99914ab50746}')!
-StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVariable> with concrete subclasses to describe local variables, either temporaries or arguments. '!
-!StLocalVariable categoriesForClass!Kernel-Objects! !
-!StLocalVariable methodsFor!
+Kernel.StLocalVariable guid: (Core.GUID fromString: '{0a285b01-fe92-41ca-97c5-99914ab50746}')!
+Kernel.StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVariable> with concrete subclasses to describe local variables, either temporaries or arguments. '!
+!Kernel.StLocalVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StLocalVariable methodsFor!
 
 addAssignment: anStVariableNode fromScope: anStSemanticScope
 	super addAssignment: anStVariableNode fromScope: anStSemanticScope.
@@ -73,18 +73,18 @@ setNode: anStVariableNode
 
 storage
 	^storage! !
-!StLocalVariable categoriesFor: #addAssignment:fromScope:!public! !
-!StLocalVariable categoriesFor: #addRead:fromScope:!public! !
-!StLocalVariable categoriesFor: #isLocalVariable!public!testing! !
-!StLocalVariable categoriesFor: #markNestedRead!private! !
-!StLocalVariable categoriesFor: #name!accessing!public! !
-!StLocalVariable categoriesFor: #node!accessing!public! !
-!StLocalVariable categoriesFor: #setNode:!accessing!initializing!private! !
-!StLocalVariable categoriesFor: #storage!accessing!private! !
+!Kernel.StLocalVariable categoriesFor: #addAssignment:fromScope:!public! !
+!Kernel.StLocalVariable categoriesFor: #addRead:fromScope:!public! !
+!Kernel.StLocalVariable categoriesFor: #isLocalVariable!public!testing! !
+!Kernel.StLocalVariable categoriesFor: #markNestedRead!private! !
+!Kernel.StLocalVariable categoriesFor: #name!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #node!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #setNode:!accessing!initializing!private! !
+!Kernel.StLocalVariable categoriesFor: #storage!accessing!private! !
 
-!StLocalVariable class methodsFor!
+!Kernel.StLocalVariable class methodsFor!
 
 node: anStTempDecl
 	^self new setNode: anStTempDecl! !
-!StLocalVariable class categoriesFor: #node:!public! !
+!Kernel.StLocalVariable class categoriesFor: #node:!public! !
 

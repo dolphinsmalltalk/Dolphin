@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StToken subclass: #StValueToken
+Kernel.StToken subclass: #'Kernel.StValueToken'
 	instanceVariableNames: 'value'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StValueToken guid: (GUID fromString: '{c37072cc-edda-4bac-aa9f-a73b3f4255d5}')!
-StValueToken comment: ''!
-!StValueToken categoriesForClass!System-Compiler! !
-!StValueToken methodsFor!
+Kernel.StValueToken guid: (Core.GUID fromString: '{c37072cc-edda-4bac-aa9f-a73b3f4255d5}')!
+Kernel.StValueToken comment: ''!
+!Kernel.StValueToken categoriesForClass!System-Compiler! !
+!Kernel.StValueToken methodsFor!
 
 length
 	^value size!
@@ -26,12 +26,12 @@ value
 
 value: anObject
 	value := anObject! !
-!StValueToken categoriesFor: #length!accessing!private! !
-!StValueToken categoriesFor: #printOn:!printing!public! !
-!StValueToken categoriesFor: #value!accessing!public! !
-!StValueToken categoriesFor: #value:!initializing!private! !
+!Kernel.StValueToken categoriesFor: #length!accessing!private! !
+!Kernel.StValueToken categoriesFor: #printOn:!printing!public! !
+!Kernel.StValueToken categoriesFor: #value!accessing!public! !
+!Kernel.StValueToken categoriesFor: #value:!initializing!private! !
 
-!StValueToken class methodsFor!
+!Kernel.StValueToken class methodsFor!
 
 start: anInteger comments: aCollectionOrNil value: aString
 	<primitive: 157>
@@ -40,5 +40,5 @@ start: anInteger comments: aCollectionOrNil value: aString
 		comments: aCollectionOrNil;
 		value: aString;
 		yourself! !
-!StValueToken class categoriesFor: #start:comments:value:!instance creation!public! !
+!Kernel.StValueToken class categoriesFor: #start:comments:value:!instance creation!public! !
 

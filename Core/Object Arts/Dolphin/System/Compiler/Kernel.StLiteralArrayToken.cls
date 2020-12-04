@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueToken subclass: #StLiteralArrayToken
+Kernel.StValueToken subclass: #'Kernel.StLiteralArrayToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StLiteralArrayToken guid: (GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
-StLiteralArrayToken comment: ''!
-!StLiteralArrayToken categoriesForClass!Unclassified! !
-!StLiteralArrayToken methodsFor!
+Kernel.StLiteralArrayToken guid: (Core.GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
+Kernel.StLiteralArrayToken comment: ''!
+!Kernel.StLiteralArrayToken categoriesForClass!Unclassified! !
+!Kernel.StLiteralArrayToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitLiteralArrayToken: self!
@@ -19,7 +19,7 @@ isForByteArray
 
 isLiteralArrayToken
 	^true! !
-!StLiteralArrayToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralArrayToken categoriesFor: #isForByteArray!public!testing! !
-!StLiteralArrayToken categoriesFor: #isLiteralArrayToken!public!testing! !
+!Kernel.StLiteralArrayToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StLiteralArrayToken categoriesFor: #isForByteArray!public!testing! !
+!Kernel.StLiteralArrayToken categoriesFor: #isLiteralArrayToken!public!testing! !
 

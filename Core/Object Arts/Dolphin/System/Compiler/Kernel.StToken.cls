@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #StToken
+Core.Object subclass: #'Kernel.StToken'
 	instanceVariableNames: 'start comments'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StToken guid: (GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
-StToken isAbstract: true!
-StToken comment: 'StToken is the abstract superclass of <SmalltalkScanner>tokens.
+Kernel.StToken guid: (Core.GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
+Kernel.StToken isNonInstantiable: true!
+Kernel.StToken comment: 'StToken is the abstract superclass of <SmalltalkScanner>tokens.
 
 Instance Variables:
 	sourcePointer	<Integer>	The starting position in the original source code of this token.
 '!
-!StToken categoriesForClass!System-Compiler! !
-!StToken methodsFor!
+!Kernel.StToken categoriesForClass!System-Compiler! !
+!Kernel.StToken methodsFor!
 
 acceptVisitor: aTokenVisitor 
 	^self subclassResponsibility!
@@ -87,7 +87,7 @@ removePositions
 	start := nil!
 
 scannerClass
-	^SmalltalkScanner!
+	^Scanner!
 
 sourceInterval
 	"Answer an <Interval> that specifies the range of source positions occuppied by the receiver."
@@ -102,34 +102,34 @@ start: anInteger
 
 stop
 	^self start + self length - 1! !
-!StToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StToken categoriesFor: #comments!accessing!public! !
-!StToken categoriesFor: #comments:!accessing!private! !
-!StToken categoriesFor: #isAssignment!public!testing! !
-!StToken categoriesFor: #isBinary!public!testing! !
-!StToken categoriesFor: #isBinary:!public!testing! !
-!StToken categoriesFor: #isEof!public!testing! !
-!StToken categoriesFor: #isIdentifier!public!testing! !
-!StToken categoriesFor: #isKeyword!public!testing! !
-!StToken categoriesFor: #isLiteralArrayToken!public!testing! !
-!StToken categoriesFor: #isLiteralToken!public!testing! !
-!StToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!StToken categoriesFor: #isOptimized!public!testing! !
-!StToken categoriesFor: #isPatternBlock!public!testing! !
-!StToken categoriesFor: #isPatternVariable!public!testing! !
-!StToken categoriesFor: #isQualifiedReference!public!testing! !
-!StToken categoriesFor: #isSpecial!public!testing! !
-!StToken categoriesFor: #isSpecial:!public!testing! !
-!StToken categoriesFor: #length!accessing!public! !
-!StToken categoriesFor: #printOn:!printing!public! !
-!StToken categoriesFor: #removePositions!accessing!public! !
-!StToken categoriesFor: #scannerClass!constants!public! !
-!StToken categoriesFor: #sourceInterval!accessing!public! !
-!StToken categoriesFor: #start!accessing!public! !
-!StToken categoriesFor: #start:!initializing!private! !
-!StToken categoriesFor: #stop!accessing!public! !
+!Kernel.StToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StToken categoriesFor: #comments!accessing!public! !
+!Kernel.StToken categoriesFor: #comments:!accessing!private! !
+!Kernel.StToken categoriesFor: #isAssignment!public!testing! !
+!Kernel.StToken categoriesFor: #isBinary!public!testing! !
+!Kernel.StToken categoriesFor: #isBinary:!public!testing! !
+!Kernel.StToken categoriesFor: #isEof!public!testing! !
+!Kernel.StToken categoriesFor: #isIdentifier!public!testing! !
+!Kernel.StToken categoriesFor: #isKeyword!public!testing! !
+!Kernel.StToken categoriesFor: #isLiteralArrayToken!public!testing! !
+!Kernel.StToken categoriesFor: #isLiteralToken!public!testing! !
+!Kernel.StToken categoriesFor: #isNumberLiteralToken!public!testing! !
+!Kernel.StToken categoriesFor: #isOptimized!public!testing! !
+!Kernel.StToken categoriesFor: #isPatternBlock!public!testing! !
+!Kernel.StToken categoriesFor: #isPatternVariable!public!testing! !
+!Kernel.StToken categoriesFor: #isQualifiedReference!public!testing! !
+!Kernel.StToken categoriesFor: #isSpecial!public!testing! !
+!Kernel.StToken categoriesFor: #isSpecial:!public!testing! !
+!Kernel.StToken categoriesFor: #length!accessing!public! !
+!Kernel.StToken categoriesFor: #printOn:!printing!public! !
+!Kernel.StToken categoriesFor: #removePositions!accessing!public! !
+!Kernel.StToken categoriesFor: #scannerClass!constants!public! !
+!Kernel.StToken categoriesFor: #sourceInterval!accessing!public! !
+!Kernel.StToken categoriesFor: #start!accessing!public! !
+!Kernel.StToken categoriesFor: #start:!initializing!private! !
+!Kernel.StToken categoriesFor: #stop!accessing!public! !
 
-!StToken class methodsFor!
+!Kernel.StToken class methodsFor!
 
 start: anInteger 
 	<primitive: 157>
@@ -142,6 +142,6 @@ start: anInteger comments: aCollectionOrNil
 		start: anInteger;
 		comments: aCollectionOrNil;
 		yourself! !
-!StToken class categoriesFor: #start:!instance creation!public! !
-!StToken class categoriesFor: #start:comments:!instance creation!public! !
+!Kernel.StToken class categoriesFor: #start:!instance creation!public! !
+!Kernel.StToken class categoriesFor: #start:comments:!instance creation!public! !
 

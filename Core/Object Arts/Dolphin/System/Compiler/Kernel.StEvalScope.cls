@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSemanticScope subclass: #StEvalScope
+Kernel.StSemanticScope subclass: #'Kernel.StEvalScope'
 	instanceVariableNames: 'pools'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StEvalScope guid: (GUID fromString: '{c90dad3d-8211-445e-aa23-907eee35e6b8}')!
-StEvalScope comment: ''!
-!StEvalScope categoriesForClass!Kernel-Objects! !
-!StEvalScope methodsFor!
+Kernel.StEvalScope guid: (Core.GUID fromString: '{c90dad3d-8211-445e-aa23-907eee35e6b8}')!
+Kernel.StEvalScope comment: ''!
+!Kernel.StEvalScope categoriesForClass!Kernel-Objects! !
+!Kernel.StEvalScope methodsFor!
 
 lookupVariable: anStVariableNode
 	"Lookup and return an <StVariable> describing the variable definition in this scope matching
@@ -24,12 +24,12 @@ lookupVariable: anStVariableNode
 
 setPools: anArray
 	pools := anArray! !
-!StEvalScope categoriesFor: #lookupVariable:!operations!public! !
-!StEvalScope categoriesFor: #setPools:!initializing!private! !
+!Kernel.StEvalScope categoriesFor: #lookupVariable:!operations!public! !
+!Kernel.StEvalScope categoriesFor: #setPools:!initializing!private! !
 
-!StEvalScope class methodsFor!
+!Kernel.StEvalScope class methodsFor!
 
 pools: pools
 	^self new setPools: pools! !
-!StEvalScope class categoriesFor: #pools:!instance creation!public! !
+!Kernel.StEvalScope class categoriesFor: #pools:!instance creation!public! !
 

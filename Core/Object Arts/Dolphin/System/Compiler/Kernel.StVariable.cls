@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #StVariable
+Core.Object subclass: #'Kernel.StVariable'
 	instanceVariableNames: 'scope reads writes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StVariable guid: (GUID fromString: '{c0f71430-b170-427f-a259-f06ca5fc44d7}')!
-StVariable isAbstract: true!
-StVariable comment: '<StVariable> is an abstract metadata type used by the Smalltalk compiler''s semantic analyzer to describe variable definitions. There are subtypes to describe instance variables, arguments, temporaries, static variables (i.e. class, pool, and global variables), and the special (aka pseudo) variables ''self'', ''super'' and ''thisContext''.
+Kernel.StVariable guid: (Core.GUID fromString: '{c0f71430-b170-427f-a259-f06ca5fc44d7}')!
+Kernel.StVariable isNonInstantiable: true!
+Kernel.StVariable comment: '<StVariable> is an abstract metadata type used by the Smalltalk compiler''s semantic analyzer to describe variable definitions. There are subtypes to describe instance variables, arguments, temporaries, static variables (i.e. class, pool, and global variables), and the special (aka pseudo) variables ''self'', ''super'' and ''thisContext''.
 
 Instance Variables:
 	scope		<StSemanticScope>. The defining (declaring) scope of the variable.
@@ -16,8 +16,8 @@ Instance Variables:
 	writes		<OrderedCollection> of <StVariableNode>, being writes to the variable that assign a value.
 
 '!
-!StVariable categoriesForClass!Kernel-Objects! !
-!StVariable methodsFor!
+!Kernel.StVariable categoriesForClass!Kernel-Objects! !
+!Kernel.StVariable methodsFor!
 
 addAssignment: anStVariableNode fromScope: anStSemanticScope
 	self isConstant ifTrue: [self error: 'Illegal assignment to constant.'].
@@ -102,20 +102,20 @@ writes
 	the variable described by the receiver."
 
 	^writes ?? #()! !
-!StVariable categoriesFor: #addAssignment:fromScope:!public! !
-!StVariable categoriesFor: #addRead:fromScope:!public! !
-!StVariable categoriesFor: #isArgument!public!testing! !
-!StVariable categoriesFor: #isConstant!public!testing! !
-!StVariable categoriesFor: #isInstanceVariable!public!testing! !
-!StVariable categoriesFor: #isLocalVariable!public!testing! !
-!StVariable categoriesFor: #isRead!public!testing! !
-!StVariable categoriesFor: #isStaticVariable!public!testing! !
-!StVariable categoriesFor: #isTempVariable!public!testing! !
-!StVariable categoriesFor: #isWritten!public!testing! !
-!StVariable categoriesFor: #name!accessing!public! !
-!StVariable categoriesFor: #printOn:!public! !
-!StVariable categoriesFor: #reads!accessing!public! !
-!StVariable categoriesFor: #scope!accessing!public! !
-!StVariable categoriesFor: #scope:!accessing!public! !
-!StVariable categoriesFor: #writes!accessing!public! !
+!Kernel.StVariable categoriesFor: #addAssignment:fromScope:!public! !
+!Kernel.StVariable categoriesFor: #addRead:fromScope:!public! !
+!Kernel.StVariable categoriesFor: #isArgument!public!testing! !
+!Kernel.StVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StVariable categoriesFor: #isInstanceVariable!public!testing! !
+!Kernel.StVariable categoriesFor: #isLocalVariable!public!testing! !
+!Kernel.StVariable categoriesFor: #isRead!public!testing! !
+!Kernel.StVariable categoriesFor: #isStaticVariable!public!testing! !
+!Kernel.StVariable categoriesFor: #isTempVariable!public!testing! !
+!Kernel.StVariable categoriesFor: #isWritten!public!testing! !
+!Kernel.StVariable categoriesFor: #name!accessing!public! !
+!Kernel.StVariable categoriesFor: #printOn:!public! !
+!Kernel.StVariable categoriesFor: #reads!accessing!public! !
+!Kernel.StVariable categoriesFor: #scope!accessing!public! !
+!Kernel.StVariable categoriesFor: #scope:!accessing!public! !
+!Kernel.StVariable categoriesFor: #writes!accessing!public! !
 

@@ -1,13 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLiteralNode subclass: #StQualifiedReferenceNode
-	instanceVariableNames: 'pathString meta start stop'
+Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
+	instanceVariableNames: 'pathString flags private start stop'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-StQualifiedReferenceNode guid: (GUID fromString: '{48916d12-a942-4b84-b786-71ba3d982f2e}')!
-StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLiteralNode` to represent qualified reference literals.
+	classConstants: {
+		'MetaMask' -> 16r1.
+		'PrivateMask' -> 16r2
+	}!
+Kernel.StQualifiedReferenceNode guid: (Core.GUID fromString: '{48916d12-a942-4b84-b786-71ba3d982f2e}')!
+Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLiteralNode` to represent qualified reference literals.
 
 ## Instance Variables:
   `pathString`		`<readableString>` fully qualified name
@@ -15,11 +18,23 @@ StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLi
   `stop`		`<integer>` position of the closing token
 
 '!
-!StQualifiedReferenceNode categoriesForClass!System-Compiler! !
-!StQualifiedReferenceNode methodsFor!
+!Kernel.StQualifiedReferenceNode categoriesForClass!System-Compiler! !
+!Kernel.StQualifiedReferenceNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
+
+isMeta
+	^flags allMask: MetaMask!
+
+isMeta: aBoolean
+	flags := flags mask: MetaMask set: aBoolean!
+
+isPrivate
+	^flags allMask: PrivateMask!
+
+isPrivate: aBoolean
+	flags := flags mask: PrivateMask set: aBoolean!
 
 isQualifiedReference
 	^true!
@@ -27,40 +42,47 @@ isQualifiedReference
 pathString
 	^pathString!
 
-pathString: aString meta: aBoolean start: startInteger stop: stopInteger
+pathString: aString start: startInteger
 	pathString := aString.
-	meta := aBoolean.
+	flags := 0.
 	start := startInteger.
-	stop := stopInteger.
+	stop := -1.
 	^self!
 
 startWithoutParentheses
 	^start!
 
+stop: anInteger
+	stop := anInteger!
+
 stopWithoutParentheses
 	^stop!
 
 value
-	^self valueClass pathString: self pathString context: nil meta: meta!
+	^self valueClass
+		pathString: self pathString
+		context: nil
+		flags: flags!
 
 valueClass
 	^BindingReference! !
-!StQualifiedReferenceNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StQualifiedReferenceNode categoriesFor: #isQualifiedReference!public!testing! !
-!StQualifiedReferenceNode categoriesFor: #pathString!accessing!public! !
-!StQualifiedReferenceNode categoriesFor: #pathString:meta:start:stop:!initializing!private! !
-!StQualifiedReferenceNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StQualifiedReferenceNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StQualifiedReferenceNode categoriesFor: #value!accessing!public! !
-!StQualifiedReferenceNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #isMeta!public!testing! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #isMeta:!accessing!public!testing! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #isPrivate!public!testing! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #isPrivate:!accessing!public!testing! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #isQualifiedReference!public!testing! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #pathString!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #pathString:start:!initializing!private! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #stop:!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #value!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesFor: #valueClass!accessing!public! !
 
-!StQualifiedReferenceNode class methodsFor!
+!Kernel.StQualifiedReferenceNode class methodsFor!
 
-pathString: aString meta: aBoolean start: startInteger stop: stopInteger
-	^self new
-		pathString: aString
-		meta: aBoolean
-		start: startInteger
-		stop: stopInteger! !
-!StQualifiedReferenceNode class categoriesFor: #pathString:meta:start:stop:!instance creation!public! !
+pathString: aString start: startInteger
+	^self new pathString: aString start: startInteger! !
+!Kernel.StQualifiedReferenceNode class categoriesFor: #pathString:start:!instance creation!public! !
 

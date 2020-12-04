@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLiteralNode subclass: #StLiteralArrayNode
+Kernel.StLiteralNode subclass: #'Kernel.StLiteralArrayNode'
 	instanceVariableNames: 'isByteArray stop contents start'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StLiteralArrayNode guid: (GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
-StLiteralArrayNode comment: ''!
-!StLiteralArrayNode categoriesForClass!Unclassified! !
-!StLiteralArrayNode methodsFor!
+Kernel.StLiteralArrayNode guid: (Core.GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
+Kernel.StLiteralArrayNode comment: ''!
+!Kernel.StLiteralArrayNode categoriesForClass!Unclassified! !
+!Kernel.StLiteralArrayNode methodsFor!
 
 = anObject 
 	super = anObject ifFalse: [^false].
@@ -66,22 +66,22 @@ value
 
 valueClass
 	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
-!StLiteralArrayNode categoriesFor: #=!comparing!public! !
-!StLiteralArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralArrayNode categoriesFor: #children!accessing!public! !
-!StLiteralArrayNode categoriesFor: #childrenDo:!accessing!public! !
-!StLiteralArrayNode categoriesFor: #contents!accessing!public! !
-!StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
-!StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
-!StLiteralArrayNode categoriesFor: #isLiteralArray!public!testing! !
-!StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
-!StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !
-!StLiteralArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StLiteralArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StLiteralArrayNode categoriesFor: #value!accessing!public! !
-!StLiteralArrayNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #=!comparing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StLiteralArrayNode categoriesFor: #children!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #childrenDo:!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #contents!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
+!Kernel.StLiteralArrayNode categoriesFor: #isLiteralArray!public!testing! !
+!Kernel.StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #value!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #valueClass!accessing!public! !
 
-!StLiteralArrayNode class methodsFor!
+!Kernel.StLiteralArrayNode class methodsFor!
 
 startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean 
 	^(self new)
@@ -97,6 +97,6 @@ value: aValue
 		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
 		stopPosition: nil
 		isByteArray: aValue class ~~ Array! !
-!StLiteralArrayNode class categoriesFor: #startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
-!StLiteralArrayNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralArrayNode class categoriesFor: #startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
+!Kernel.StLiteralArrayNode class categoriesFor: #value:!instance creation!public! !
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StSemanticScope subclass: #StLexicalScope
+Kernel.StSemanticScope subclass: #'Kernel.StLexicalScope'
 	instanceVariableNames: 'locals node thisContextVariable flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FarReturnMask' -> 16r2.
 		'NeedsSelfMask' -> 16r1
 	}!
-StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
-StLexicalScope comment: ''!
-!StLexicalScope categoriesForClass!Kernel-Objects! !
-!StLexicalScope methodsFor!
+Kernel.StLexicalScope guid: (Core.GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
+Kernel.StLexicalScope comment: ''!
+!Kernel.StLexicalScope categoriesForClass!Kernel-Objects! !
+!Kernel.StLexicalScope methodsFor!
 
 argumentCount
 	^node argumentCount!
@@ -122,7 +122,7 @@ temporaries
 thisContextVariable
 	^thisContextVariable
 		ifNil: 
-			[thisContextVariable := (StThisContextVariable new)
+			[thisContextVariable := StThisContextVariable new
 						scope: self;
 						yourself]!
 
@@ -132,29 +132,29 @@ unreferencedArguments
 			["All arguments to primitive methods are implicitly referenced"
 			#()]
 		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]! !
-!StLexicalScope categoriesFor: #argumentCount!accessing!public! !
-!StLexicalScope categoriesFor: #declareArgument:!helpers!private! !
-!StLexicalScope categoriesFor: #declareLocalVariable:!helpers!private! !
-!StLexicalScope categoriesFor: #declareTemp:!helpers!private! !
-!StLexicalScope categoriesFor: #envTempCount!accessing!development!public! !
-!StLexicalScope categoriesFor: #hasFarReturn!accessing!public! !
-!StLexicalScope categoriesFor: #includesArg:!enquiries!public! !
-!StLexicalScope categoriesFor: #includesLocal:!enquiries!public! !
-!StLexicalScope categoriesFor: #includesTemp:!enquiries!public! !
-!StLexicalScope categoriesFor: #initialize!initializing!private! !
-!StLexicalScope categoriesFor: #isInlined!accessing!public! !
-!StLexicalScope categoriesFor: #localCount!accessing!public! !
-!StLexicalScope categoriesFor: #locals!accessing!public! !
-!StLexicalScope categoriesFor: #lookupVariable:!operations!public! !
-!StLexicalScope categoriesFor: #markFarReturn!public!visiting! !
-!StLexicalScope categoriesFor: #markNeedsSelf!public!visiting! !
-!StLexicalScope categoriesFor: #needsContext!accessing!public! !
-!StLexicalScope categoriesFor: #needsSelf!accessing!public! !
-!StLexicalScope categoriesFor: #node!accessing!public! !
-!StLexicalScope categoriesFor: #printOn:!printing!public! !
-!StLexicalScope categoriesFor: #realScope!public! !
-!StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
-!StLexicalScope categoriesFor: #temporaries!accessing!private! !
-!StLexicalScope categoriesFor: #thisContextVariable!public! !
-!StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #argumentCount!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #declareArgument:!helpers!private! !
+!Kernel.StLexicalScope categoriesFor: #declareLocalVariable:!helpers!private! !
+!Kernel.StLexicalScope categoriesFor: #declareTemp:!helpers!private! !
+!Kernel.StLexicalScope categoriesFor: #envTempCount!accessing!development!public! !
+!Kernel.StLexicalScope categoriesFor: #hasFarReturn!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #includesArg:!enquiries!public! !
+!Kernel.StLexicalScope categoriesFor: #includesLocal:!enquiries!public! !
+!Kernel.StLexicalScope categoriesFor: #includesTemp:!enquiries!public! !
+!Kernel.StLexicalScope categoriesFor: #initialize!initializing!private! !
+!Kernel.StLexicalScope categoriesFor: #isInlined!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #localCount!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #locals!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #lookupVariable:!operations!public! !
+!Kernel.StLexicalScope categoriesFor: #markFarReturn!public!visiting! !
+!Kernel.StLexicalScope categoriesFor: #markNeedsSelf!public!visiting! !
+!Kernel.StLexicalScope categoriesFor: #needsContext!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #needsSelf!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #node!accessing!public! !
+!Kernel.StLexicalScope categoriesFor: #printOn:!printing!public! !
+!Kernel.StLexicalScope categoriesFor: #realScope!public! !
+!Kernel.StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
+!Kernel.StLexicalScope categoriesFor: #temporaries!accessing!private! !
+!Kernel.StLexicalScope categoriesFor: #thisContextVariable!public! !
+!Kernel.StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
 

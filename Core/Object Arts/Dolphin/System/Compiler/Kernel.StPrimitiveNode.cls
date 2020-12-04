@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StTagNode subclass: #StPrimitiveNode
+Kernel.StTagNode subclass: #'Kernel.StPrimitiveNode'
 	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StPrimitiveNode guid: (GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
-StPrimitiveNode comment: ''!
-!StPrimitiveNode categoriesForClass!System-Compiler! !
-!StPrimitiveNode methodsFor!
+Kernel.StPrimitiveNode guid: (Core.GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
+Kernel.StPrimitiveNode comment: ''!
+!Kernel.StPrimitiveNode categoriesForClass!System-Compiler! !
+!Kernel.StPrimitiveNode methodsFor!
 
 = anObject 
 	self == anObject ifTrue: [^true].
@@ -30,18 +30,18 @@ primitiveIndex
 
 primitiveIndex: anInteger 
 	primitiveIndex := anInteger! !
-!StPrimitiveNode categoriesFor: #=!comparing!public! !
-!StPrimitiveNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StPrimitiveNode categoriesFor: #errorTemp!accessing!public! !
-!StPrimitiveNode categoriesFor: #errorTemp:!accessing!private! !
-!StPrimitiveNode categoriesFor: #primitiveIndex!accessing!public! !
-!StPrimitiveNode categoriesFor: #primitiveIndex:!accessing!private! !
+!Kernel.StPrimitiveNode categoriesFor: #=!comparing!public! !
+!Kernel.StPrimitiveNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StPrimitiveNode categoriesFor: #errorTemp!accessing!public! !
+!Kernel.StPrimitiveNode categoriesFor: #errorTemp:!accessing!private! !
+!Kernel.StPrimitiveNode categoriesFor: #primitiveIndex!accessing!public! !
+!Kernel.StPrimitiveNode categoriesFor: #primitiveIndex:!accessing!private! !
 
-!StPrimitiveNode class methodsFor!
+!Kernel.StPrimitiveNode class methodsFor!
 
 primitiveIndex: anInteger
 	^self new
 		primitiveIndex: anInteger;
 		yourself! !
-!StPrimitiveNode class categoriesFor: #primitiveIndex:!instance creation!public! !
+!Kernel.StPrimitiveNode class categoriesFor: #primitiveIndex:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StToken subclass: #StAssignmentToken
+Kernel.StToken subclass: #'Kernel.StAssignmentToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StAssignmentToken guid: (GUID fromString: '{6aeed410-71e0-440f-a815-2307b61f7693}')!
-StAssignmentToken comment: ''!
-!StAssignmentToken categoriesForClass!System-Compiler! !
-!StAssignmentToken methodsFor!
+Kernel.StAssignmentToken guid: (Core.GUID fromString: '{6aeed410-71e0-440f-a815-2307b61f7693}')!
+Kernel.StAssignmentToken comment: ''!
+!Kernel.StAssignmentToken categoriesForClass!System-Compiler! !
+!Kernel.StAssignmentToken methodsFor!
 
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitAssignmentToken: self!
@@ -19,7 +19,7 @@ isAssignment
 
 length
 	^2! !
-!StAssignmentToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StAssignmentToken categoriesFor: #isAssignment!public!testing! !
-!StAssignmentToken categoriesFor: #length!accessing!private! !
+!Kernel.StAssignmentToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StAssignmentToken categoriesFor: #isAssignment!public!testing! !
+!Kernel.StAssignmentToken categoriesFor: #length!accessing!private! !
 

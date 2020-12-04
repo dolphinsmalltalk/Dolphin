@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StToken subclass: #StEofToken
+Kernel.StToken subclass: #'Kernel.StEofToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StEofToken guid: (GUID fromString: '{0bce1c26-bdfc-4d18-bba2-99d89eeea71a}')!
-StEofToken comment: ''!
-!StEofToken categoriesForClass!System-Compiler! !
-!StEofToken methodsFor!
+Kernel.StEofToken guid: (Core.GUID fromString: '{0bce1c26-bdfc-4d18-bba2-99d89eeea71a}')!
+Kernel.StEofToken comment: ''!
+!Kernel.StEofToken categoriesForClass!System-Compiler! !
+!Kernel.StEofToken methodsFor!
 
 acceptVisitor: aTokenVisitor 
 	self error: 'End of token stream'!
@@ -19,7 +19,7 @@ isEof
 
 length
 	^0! !
-!StEofToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StEofToken categoriesFor: #isEof!public!testing! !
-!StEofToken categoriesFor: #length!accessing!public! !
+!Kernel.StEofToken categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StEofToken categoriesFor: #isEof!public!testing! !
+!Kernel.StEofToken categoriesFor: #length!accessing!public! !
 

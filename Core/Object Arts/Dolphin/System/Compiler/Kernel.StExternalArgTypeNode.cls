@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StProgramNode subclass: #StExternalArgTypeNode
+Kernel.StProgramNode subclass: #'Kernel.StExternalArgTypeNode'
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StExternalArgTypeNode guid: (GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
-StExternalArgTypeNode comment: ''!
-!StExternalArgTypeNode categoriesForClass!System-Compiler! !
-!StExternalArgTypeNode methodsFor!
+Kernel.StExternalArgTypeNode guid: (Core.GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
+Kernel.StExternalArgTypeNode comment: ''!
+!Kernel.StExternalArgTypeNode categoriesForClass!System-Compiler! !
+!Kernel.StExternalArgTypeNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	aProgramNodeVisitor visitExternalArgTypeNode: self!
@@ -35,23 +35,23 @@ stop: anObject
 structClass
 	^structClass!
 
-structClass: aClass 
-	structClass := aClass!
+structClass: anStVariableNode
+	structClass := anStVariableNode!
 
 typeOrdinal
 	^typeOrdinal!
 
 typeOrdinal: anInteger 
 	typeOrdinal := anInteger! !
-!StExternalArgTypeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StExternalArgTypeNode categoriesFor: #indirections!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #indirections:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #start!accessing!public! !
-!StExternalArgTypeNode categoriesFor: #start:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #stop!accessing!public! !
-!StExternalArgTypeNode categoriesFor: #stop:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #structClass!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #structClass:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #typeOrdinal!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #typeOrdinal:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StExternalArgTypeNode categoriesFor: #indirections!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #indirections:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #start!accessing!public! !
+!Kernel.StExternalArgTypeNode categoriesFor: #start:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #stop!accessing!public! !
+!Kernel.StExternalArgTypeNode categoriesFor: #stop:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #structClass!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #structClass:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #typeOrdinal!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesFor: #typeOrdinal:!accessing!private! !
 

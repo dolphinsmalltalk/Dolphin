@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StLexicalScope subclass: #StBlockScope
+Kernel.StLexicalScope subclass: #'Kernel.StBlockScope'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EmptyBlockMask' -> 16r200.
 		'NeedsOuterMask' -> 16r100
 	}!
-StBlockScope guid: (GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
-StBlockScope comment: ''!
-!StBlockScope categoriesForClass!Kernel-Objects! !
-!StBlockScope methodsFor!
+Kernel.StBlockScope guid: (Core.GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
+Kernel.StBlockScope comment: ''!
+!Kernel.StBlockScope categoriesForClass!Kernel-Objects! !
+!Kernel.StBlockScope methodsFor!
 
 isEmptyBlock
 	^flags allMask: EmptyBlockMask!
@@ -34,15 +34,15 @@ needsOuter
 	to escape from the method context active when the block was created."
 
 	^flags anyMask: NeedsOuterMask! !
-!StBlockScope categoriesFor: #isEmptyBlock!public! !
-!StBlockScope categoriesFor: #markEmpty!public! !
-!StBlockScope categoriesFor: #needsOuter!accessing!public! !
+!Kernel.StBlockScope categoriesFor: #isEmptyBlock!public! !
+!Kernel.StBlockScope categoriesFor: #markEmpty!public! !
+!Kernel.StBlockScope categoriesFor: #needsOuter!accessing!public! !
 
-!StBlockScope class methodsFor!
+!Kernel.StBlockScope class methodsFor!
 
 forScopeNode: anStBlockNode outer: anStLexicalScope
-	^((anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new)
+	^(anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
 		setNode: anStBlockNode outer: anStLexicalScope;
 		yourself! !
-!StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
+!Kernel.StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
 

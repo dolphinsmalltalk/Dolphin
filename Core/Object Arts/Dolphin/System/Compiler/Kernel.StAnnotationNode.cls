@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StTagNode subclass: #StAnnotationNode
+Kernel.StTagNode subclass: #'Kernel.StAnnotationNode'
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StAnnotationNode guid: (GUID fromString: '{e65cb014-8373-4447-9994-f337d37f7544}')!
-StAnnotationNode comment: ''!
-!StAnnotationNode categoriesForClass!System-Compiler! !
-!StAnnotationNode methodsFor!
+Kernel.StAnnotationNode guid: (Core.GUID fromString: '{e65cb014-8373-4447-9994-f337d37f7544}')!
+Kernel.StAnnotationNode comment: ''!
+!Kernel.StAnnotationNode categoriesForClass!System-Compiler! !
+!Kernel.StAnnotationNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitAnnotationNode: self!
@@ -24,16 +24,16 @@ selector
 
 selector: aString
 	selector := aString asSymbol! !
-!StAnnotationNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StAnnotationNode categoriesFor: #arguments!public! !
-!StAnnotationNode categoriesFor: #selector!accessing!public! !
-!StAnnotationNode categoriesFor: #selector:!accessing!public! !
+!Kernel.StAnnotationNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StAnnotationNode categoriesFor: #arguments!accessing!public! !
+!Kernel.StAnnotationNode categoriesFor: #selector!accessing!public! !
+!Kernel.StAnnotationNode categoriesFor: #selector:!accessing!public! !
 
-!StAnnotationNode class methodsFor!
+!Kernel.StAnnotationNode class methodsFor!
 
 selector: aString
 	^self new
 		selector: aString;
 		yourself! !
-!StAnnotationNode class categoriesFor: #selector:!accessing!public! !
+!Kernel.StAnnotationNode class categoriesFor: #selector:!accessing!public! !
 
