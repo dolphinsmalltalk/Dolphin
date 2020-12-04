@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValuePresenter subclass: #ChoicePresenter
+UI.ValuePresenter subclass: #'UI.ChoicePresenter'
 	instanceVariableNames: 'choicesModel nilChoice'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChoicePresenter guid: (GUID fromString: '{87b4c6cc-026e-11d3-9fd7-00a0cc3e4a32}')!
-ChoicePresenter comment: 'ChoicePresenter is <valuePresenter> which allows a value to be chosen from a list of alternatives. The range of choices may be supplied as any <sequencedCollection> by using the #choices: method once the ChoicePresenter has been instantiated. The initial selection in the visible list will match the initial value in the ChoicePresenter''s <valueModel>. As different selections are made in list they are transferred directly into the associated model.
+UI.ChoicePresenter guid: (Core.GUID fromString: '{87b4c6cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ChoicePresenter comment: 'ChoicePresenter is <valuePresenter> which allows a value to be chosen from a list of alternatives. The range of choices may be supplied as any <sequencedCollection> by using the #choices: method once the ChoicePresenter has been instantiated. The initial selection in the visible list will match the initial value in the ChoicePresenter''s <valueModel>. As different selections are made in list they are transferred directly into the associated model.
 
 By default, a ChoicePresenter allows single selection choices to be made. It is also possible, however, to allow multiple selections by attaching an appropriate <listView> supporting the <multipleSelectableItems> protocol. In this case, the value held by the model will be an <Array> of the chosen items.
 
@@ -30,8 +30,8 @@ Instance Variables:
 	nilChoice		<Object> specifying the object in list that can be used to represent a nil. value.
 
 '!
-!ChoicePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
-!ChoicePresenter methodsFor!
+!UI.ChoicePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
+!UI.ChoicePresenter methodsFor!
 
 choices: aSequenceableCollection 
 	"Sets the choice list to choose from to be aSequenceableCollection"
@@ -144,23 +144,23 @@ viewModel
 	connected to the receiver's choicesModel - not the receiver's value model"
 
 	^choicesModel! !
-!ChoicePresenter categoriesFor: #choices:!accessing!public! !
-!ChoicePresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!ChoicePresenter categoriesFor: #getValue!helpers!private! !
-!ChoicePresenter categoriesFor: #initialize!initializing!private! !
-!ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
-!ChoicePresenter categoriesFor: #model:!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
-!ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
-!ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
-!ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !
-!ChoicePresenter categoriesFor: #onValueChanged!event handling!public! !
-!ChoicePresenter categoriesFor: #updateChoice!accessing!private! !
-!ChoicePresenter categoriesFor: #view:!accessing!public! !
-!ChoicePresenter categoriesFor: #viewModel!accessing!private! !
+!UI.ChoicePresenter categoriesFor: #choices:!accessing!public! !
+!UI.ChoicePresenter categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.ChoicePresenter categoriesFor: #getValue!helpers!private! !
+!UI.ChoicePresenter categoriesFor: #initialize!initializing!private! !
+!UI.ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
+!UI.ChoicePresenter categoriesFor: #model:!accessing!public! !
+!UI.ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
+!UI.ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
+!UI.ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
+!UI.ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
+!UI.ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !
+!UI.ChoicePresenter categoriesFor: #onValueChanged!event handling!public! !
+!UI.ChoicePresenter categoriesFor: #updateChoice!accessing!private! !
+!UI.ChoicePresenter categoriesFor: #view:!accessing!public! !
+!UI.ChoicePresenter categoriesFor: #viewModel!accessing!private! !
 
-!ChoicePresenter class methodsFor!
+!UI.ChoicePresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -181,7 +181,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListBox) 34 17 nil nil 34 2 8 1412497665 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903732064 459270 ##(Smalltalk.Message) #displayString 8 #() 528 false 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 501 501 416 738 #horizontalExtent: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 121 8 0 0 4 1 0 0] 8 #() 786 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListBox) 34 17 nil nil 34 2 8 1412497665 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920482304 786950 ##(Core.Message) #displayString 8 #() 8 #() false 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 501 501 416 754 #horizontalExtent: 8 #(0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 249 12 0 0 4 1 0 0] 8 #() 802 193 193 nil 27)!
 
 resource_Drop_down_list
 	"Answer the literal data from which the 'Drop down list' resource can be reconstituted.
@@ -191,7 +191,7 @@ resource_Drop_down_list
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Drop_down_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920475232 786950 ##(Core.Message) #displayString 8 #() 8 #() 401 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 49 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 34 0 0 0] 8 #() 802 193 193 nil 27)!
 
 resource_Enhanced_list_view
 	"Answer the literal data from which the 'Enhanced list view' resource can be reconstituted.
@@ -201,10 +201,10 @@ resource_Enhanced_list_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Enhanced_list_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 528 nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 946 491 311 416 898 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 180 14 0 0 165 0 0 0] 8 #() 946 193 193 nil 35 )! !
-!ChoicePresenter class categoriesFor: #defaultModel!models!public! !
-!ChoicePresenter class categoriesFor: #icon!constants!public! !
-!ChoicePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ChoicePresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
-!ChoicePresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920618720 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 962 491 311 416 914 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 962 193 193 nil 35)! !
+!UI.ChoicePresenter class categoriesFor: #defaultModel!models!public! !
+!UI.ChoicePresenter class categoriesFor: #icon!constants!public! !
+!UI.ChoicePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.ChoicePresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
+!UI.ChoicePresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
 
