@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CardContainer subclass: #SlidingCardTray
+UI.CardContainer subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
-	poolDictionaries: 'TabViewConstants ThemeConstants'
+	imports: #(#{OS.TabViewConstants} #{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SlidingCardTray guid: (GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
-SlidingCardTray comment: 'A SlidingCardTray is a specialised <CardContainer> for use in conjunction with a <SlideyInneyOuteyView> to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
+UI.SlidingCardTray guid: (Core.GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
+UI.SlidingCardTray comment: 'A SlidingCardTray is a specialised <CardContainer> for use in conjunction with a <SlideyInneyOuteyView> to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
 
 Instance Variables:
 	theme		<ExternalHandle>. XP theme handle.
@@ -15,8 +15,8 @@ Instance Variables:
 	pinSize		<Point>. Size of the pin displayed on the tray caption bar.
 	pinInteractor	<ButtonInteractor> for the pin.
 	'!
-!SlidingCardTray categoriesForClass!MVP-Views! !
-!SlidingCardTray methodsFor!
+!UI.SlidingCardTray categoriesForClass!MVP-Views! !
+!UI.SlidingCardTray methodsFor!
 
 calcClientRectangleFromRectangle: aRectangle 
 	| rect |
@@ -120,19 +120,19 @@ onResize
 	| rect frameExtent |
 	rect := 0 @ 0 extent: self extent.
 	frameExtent := self edgeExtent.
-	self isVertical 
+	self isVertical
 		ifTrue: 
 			[self
-				invalidateRect: (RECT origin: rect topLeft extent: rect width @ frameExtent y);
-				invalidateRect: (RECT 
+				invalidateRect: (RECTL origin: rect topLeft extent: rect width @ frameExtent y);
+				invalidateRect: (RECTL
 							left: rect left
 							top: rect bottom - frameExtent y
 							right: rect right
 							bottom: rect bottom)]
 		ifFalse: 
 			[self
-				invalidateRect: (RECT origin: rect topLeft extent: frameExtent x @ rect height);
-				invalidateRect: (RECT 
+				invalidateRect: (RECTL origin: rect topLeft extent: frameExtent x @ rect height);
+				invalidateRect: (RECTL
 							left: rect right - frameExtent x
 							top: rect top
 							right: rect right
@@ -162,10 +162,10 @@ openTheme
 paintClassicBackgroundOn: aCanvas
 	aCanvas fillRectangle: self headerRectangle color: Color inactiveCaption!
 
-paintClassicEdgesOn: aCanvas 
+paintClassicEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
 	"Note that we omit one line of the top-edge in order to give the same appearance as the tab control when pinned"
-	UserLibrary default 
+	UserLibrary default
 		drawEdge: aCanvas asParameter
 		qrc: (0 @ -1 corner: self extent) asParameter
 		edge: (self isResizable ifTrue: [EDGE_RAISED] ifFalse: [EDGE_ETCHED])
@@ -188,8 +188,8 @@ paintEdgesOn: aCanvas
 		ifTrue: [self paintThemedEdgesOn: aCanvas]
 		ifFalse: [self paintClassicEdgesOn: aCanvas]!
 
-paintThemedBackgroundOn: aCanvas 
-	ThemeLibrary default 
+paintThemedBackgroundOn: aCanvas
+	ThemeLibrary default
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: self headerBackgroundPart
@@ -197,9 +197,9 @@ paintThemedBackgroundOn: aCanvas
 		pRect: self headerRectangle asParameter
 		pClipRect: nil!
 
-paintThemedEdgesOn: aCanvas 
+paintThemedEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
-	ThemeLibrary default 
+	ThemeLibrary default
 		drawThemeBackground: tabs theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -211,8 +211,8 @@ paintThemedOn: aCanvas
 	self paintThemedBackgroundOn: aCanvas.
 	self paintThemedPinOn: aCanvas!
 
-paintThemedPinOn: aCanvas 
-	ThemeLibrary default 
+paintThemedPinOn: aCanvas
+	ThemeLibrary default
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: EBP_HEADERPIN
@@ -222,10 +222,10 @@ paintThemedPinOn: aCanvas
 
 pinImageList
 	| bitmap |
-	(PinImageList isNil or: [PinImageList isRealized not]) 
+	(PinImageList isNil or: [PinImageList isRealized not])
 		ifTrue: 
 			[| imageList |
-			imageList := WinImageList 
+			imageList := ImageList
 						newExtent: 16 @ 16
 						depth: 8
 						initialSize: 6
@@ -258,7 +258,7 @@ pinStateId
 				ifTrue: [self isPinPressed ifTrue: [EBHP_PRESSED] ifFalse: [EBHP_HOT]]
 				ifFalse: [EBHP_NORMAL]]!
 
-setSlider: aSlideyInneyOuteyThing 
+setSlider: aSlideyInneyOuteyThing
 	slider := aSlideyInneyOuteyThing.
 	tabs := slider tabs.
 	pinInteractor := (ButtonInteractor forPresenter: self)
@@ -270,9 +270,9 @@ sizingEdgeInfo
 	| rect frameExtent hit |
 	rect := self screenRectangle.
 	frameExtent := SystemMetrics current sizingFrameExtent.
-	hit := self isVertical 
+	hit := self isVertical
 				ifTrue: 
-					[self isInverted 
+					[self isInverted
 						ifTrue: 
 							[rect right: rect left + frameExtent x.
 							HTLEFT]
@@ -280,7 +280,7 @@ sizingEdgeInfo
 							[rect left: rect right - frameExtent x.
 							HTRIGHT]]
 				ifFalse: 
-					[self isInverted 
+					[self isInverted
 						ifTrue: 
 							[rect bottom: rect top + frameExtent y.
 							HTTOP]
@@ -303,7 +303,7 @@ togglePin
 trackMouseOverPin: aMouseEvent 
 	pinInteractor startCaptureOn: aMouseEvent!
 
-wmNcCalcSize: message wParam: wParam lParam: lParam 
+wmNcCalcSize: message wParam: wParam lParam: lParam
 	"Private - Handler for a WM_NCCALCSIZE message. Allow for the resizing frame on 3-sides of
 	the window (even though only one edge is moveable) when unpinned."
 
@@ -348,56 +348,56 @@ wmPrint: message wParam: wParam lParam: lParam
 				lParam: lParam.
 	(lParam allMask: PRF_NONCLIENT) ifTrue: [self paintEdgesOn: (Canvas withNonOwnedDC: wParam)].
 	^result! !
-!SlidingCardTray categoriesFor: #calcClientRectangleFromRectangle:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #calculateExtent:!geometry!private! !
-!SlidingCardTray categoriesFor: #captionGeometryChanged!event handling!private! !
-!SlidingCardTray categoriesFor: #edgeExtent!constants!private! !
-!SlidingCardTray categoriesFor: #headerBackgroundPart!constants!private! !
-!SlidingCardTray categoriesFor: #headerHeight!constants!private! !
-!SlidingCardTray categoriesFor: #headerRectangle!painting!private! !
-!SlidingCardTray categoriesFor: #hitTest:!painting!private! !
-!SlidingCardTray categoriesFor: #implicitInsets:!accessing!private! !
-!SlidingCardTray categoriesFor: #isPinHot!private!testing! !
-!SlidingCardTray categoriesFor: #isPinned!private!testing! !
-!SlidingCardTray categoriesFor: #isPinPressed!private!testing! !
-!SlidingCardTray categoriesFor: #isResizable!private!testing! !
-!SlidingCardTray categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!SlidingCardTray categoriesFor: #onMouseMoved:!event handling!private! !
-!SlidingCardTray categoriesFor: #onPaintRequired:!event handling!private! !
-!SlidingCardTray categoriesFor: #onPositionChanged:!event handling!private! !
-!SlidingCardTray categoriesFor: #onResize!helpers!private! !
-!SlidingCardTray categoriesFor: #onViewDestroyed!event handling!private! !
-!SlidingCardTray categoriesFor: #openTheme!helpers!private! !
-!SlidingCardTray categoriesFor: #paintClassicBackgroundOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintClassicEdgesOn:!event handling!private! !
-!SlidingCardTray categoriesFor: #paintClassicOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintClassicPinOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintEdgesOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedBackgroundOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedEdgesOn:!event handling!private! !
-!SlidingCardTray categoriesFor: #paintThemedOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedPinOn:!painting!private! !
-!SlidingCardTray categoriesFor: #pinImageList!accessing!private! !
-!SlidingCardTray categoriesFor: #pinInset!constants!private! !
-!SlidingCardTray categoriesFor: #pinRectangle!accessing!private! !
-!SlidingCardTray categoriesFor: #pinStateId!accessing!private! !
-!SlidingCardTray categoriesFor: #setSlider:!initializing!private! !
-!SlidingCardTray categoriesFor: #sizingEdgeInfo!helpers!private! !
-!SlidingCardTray categoriesFor: #tabOrientation:!accessing-styles!public! !
-!SlidingCardTray categoriesFor: #togglePin!commands!public! !
-!SlidingCardTray categoriesFor: #trackMouseOverPin:!helpers!private! !
-!SlidingCardTray categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmNcPaint:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
+!UI.SlidingCardTray categoriesFor: #calcClientRectangleFromRectangle:!event handling-win32!private! !
+!UI.SlidingCardTray categoriesFor: #calculateExtent:!geometry!private! !
+!UI.SlidingCardTray categoriesFor: #captionGeometryChanged!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #edgeExtent!constants!private! !
+!UI.SlidingCardTray categoriesFor: #headerBackgroundPart!constants!private! !
+!UI.SlidingCardTray categoriesFor: #headerHeight!constants!private! !
+!UI.SlidingCardTray categoriesFor: #headerRectangle!painting!private! !
+!UI.SlidingCardTray categoriesFor: #hitTest:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #implicitInsets:!accessing!private! !
+!UI.SlidingCardTray categoriesFor: #isPinHot!private!testing! !
+!UI.SlidingCardTray categoriesFor: #isPinned!private!testing! !
+!UI.SlidingCardTray categoriesFor: #isPinPressed!private!testing! !
+!UI.SlidingCardTray categoriesFor: #isResizable!private!testing! !
+!UI.SlidingCardTray categoriesFor: #onLeftButtonPressed:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #onMouseMoved:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #onPaintRequired:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #onPositionChanged:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #onResize!helpers!private! !
+!UI.SlidingCardTray categoriesFor: #onViewDestroyed!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #openTheme!helpers!private! !
+!UI.SlidingCardTray categoriesFor: #paintClassicBackgroundOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintClassicEdgesOn:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #paintClassicOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintClassicPinOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintEdgesOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintThemedBackgroundOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintThemedEdgesOn:!event handling!private! !
+!UI.SlidingCardTray categoriesFor: #paintThemedOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #paintThemedPinOn:!painting!private! !
+!UI.SlidingCardTray categoriesFor: #pinImageList!accessing!private! !
+!UI.SlidingCardTray categoriesFor: #pinInset!constants!private! !
+!UI.SlidingCardTray categoriesFor: #pinRectangle!accessing!private! !
+!UI.SlidingCardTray categoriesFor: #pinStateId!accessing!private! !
+!UI.SlidingCardTray categoriesFor: #setSlider:!initializing!private! !
+!UI.SlidingCardTray categoriesFor: #sizingEdgeInfo!helpers!private! !
+!UI.SlidingCardTray categoriesFor: #tabOrientation:!accessing-styles!public! !
+!UI.SlidingCardTray categoriesFor: #togglePin!commands!public! !
+!UI.SlidingCardTray categoriesFor: #trackMouseOverPin:!helpers!private! !
+!UI.SlidingCardTray categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
+!UI.SlidingCardTray categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!UI.SlidingCardTray categoriesFor: #wmNcPaint:wParam:lParam:!event handling-win32!private! !
+!UI.SlidingCardTray categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
 
-!SlidingCardTray class methodsFor!
+!UI.SlidingCardTray class methodsFor!
 
 initialize
 	PinImageList := nil!
 
 themePartName
 	^'EXPLORERBAR'! !
-!SlidingCardTray class categoriesFor: #initialize!initializing!private! !
-!SlidingCardTray class categoriesFor: #themePartName!constants!public!theming! !
+!UI.SlidingCardTray class categoriesFor: #initialize!initializing!private! !
+!UI.SlidingCardTray class categoriesFor: #themePartName!constants!public!theming! !
 
