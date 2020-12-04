@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Radio Buttons'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Radio Buttons.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) Ian Bartholomew.
@@ -11,12 +11,12 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{RadioButton}
-	#{RadioButtonSetPresenter}
+	#{UI.RadioButton}
+	#{UI.RadioButtonSetPresenter}
 ).
 
 package setMethodNames: #(
-	#(#{BooleanPresenter class} #resource_Radio_button)
+	#(#{UI.BooleanPresenter class} #resource_Radio_button)
 ).
 
 package setPrerequisites: #(
@@ -32,22 +32,22 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #RadioButtonSetPresenter
+UI.ValuePresenter subclass: #'UI.RadioButtonSetPresenter'
 	instanceVariableNames: 'ownedRadioButtons'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CheckButton subclass: #RadioButton
+UI.CheckButton subclass: #'UI.RadioButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!BooleanPresenter class methodsFor!
+!UI.BooleanPresenter class methodsFor!
 
 resource_Radio_button
 	"Answer the literal data from which the 'Radio button' resource can be reconstituted.
@@ -57,8 +57,8 @@ resource_Radio_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Radio_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.RadioButton) 34 16 nil nil 34 2 8 1141058825 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() false nil nil 7 nil nil nil 416 nil 8 1915188384 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 225 55 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 239 7 0 0 37 0 0 0] 8 #() 786 193 193 nil 27 )! !
-!BooleanPresenter class categoriesFor: #resource_Radio_button!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.RadioButton) 34 16 nil nil 34 2 8 1141058825 1 416 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 546 #hash 8 #() false nil nil 7 nil nil nil 416 nil 8 1920683440 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 786 225 55 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 12 0 0 37 0 0 0] 8 #() 786 193 193 nil 27)! !
+!UI.BooleanPresenter class categoriesFor: #resource_Radio_button!public!resources-views! !
 
 "End of package definition"!
 
