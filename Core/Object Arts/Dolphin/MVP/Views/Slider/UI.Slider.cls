@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #Slider
+UI.ValueConvertingControlView subclass: #'UI.Slider'
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
 	classVariableNames: 'HorizontalTickStyles VerticalTickStyles'
-	poolDictionaries: 'TrackBarConstants'
+	imports: #(#{OS.TrackBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TickStyleMask' -> 16rC
 	}!
-Slider guid: (GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
-Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
+UI.Slider guid: (Core.GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
+UI.Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
 
 Thanks to Ian Bartholomew for donating his original version of this class.'!
-!Slider categoriesForClass!MVP-Views! !
-!Slider methodsFor!
+!UI.Slider categoriesForClass!MVP-Views! !
+!UI.Slider methodsFor!
 
 applicableTickStyles
 	^self isVertical ifTrue: [VerticalTickStyles] ifFalse: [HorizontalTickStyles]!
@@ -58,10 +58,10 @@ displayValue: anInteger
 		wParam: true asParameter
 		lParam: anInteger!
 
-getRect: msgInteger 
+getRect: msgInteger
 	| rect |
-	rect := RECT new.
-	self 
+	rect := RECTL new.
+	self
 		sendMessage: msgInteger
 		wParam: 0
 		lpParam: rect.
@@ -249,23 +249,23 @@ state
 	| state |
 	state := super state.
 	"If auto-ticks is on, we must avoid manually setting the ticks, which will turn off auto-ticks"
-	self hasAutoTicks 
+	self hasAutoTicks
 		ifFalse: 
-			[self ticks 
+			[self ticks
 				ifNotNil: 
-					[:ticks | 
-					state add: (MessageSend 
+					[:ticks |
+					state add: (MessageSend
 								receiver: self
 								selector: #ticks:
 								argument: ticks)]].
-	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selectionRange: #selectionRange nil) #(#thumbLength: #thumbLength nil)) 
+	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selectionRange: #selectionRange nil) #(#thumbLength: #thumbLength nil))
 		do: 
-			[:each | 
+			[:each |
 			| value |
 			value := self perform: each second.
-			value = each last 
+			value = each last
 				ifFalse: 
-					[state add: (MessageSend 
+					[state add: (MessageSend
 								receiver: self
 								selector: each first
 								argument: value)]].
@@ -343,14 +343,15 @@ ticks
 	range := self range.
 	self hasAutoTicks ifTrue: [^range asArray].
 	count := self sendMessage: TBM_GETNUMTICS.
-	count = 0 
+	count = 0
 		ifTrue: 
 			["#hasTicks = false"
 			^#()].
 	ticks := Array writeStream.
 	ticks nextPut: range start.
 	pdw := self sendMessage: TBM_GETPTICS.
-	pdw isNull ifFalse: [ticks nextPutAll: (DWORDArray fromAddress: pdw asExternalAddress length: count - 2) asArray].
+	pdw isNull
+		ifFalse: [ticks nextPutAll: (DWORDArray fromAddress: pdw asExternalAddress length: count - 2) asArray].
 	ticks nextPut: range stop.
 	^ticks contents!
 
@@ -393,58 +394,58 @@ tickStyle: aSymbol
 		baseStyle: (HorizontalTickStyles at: aSymbol ifAbsent: [VerticalTickStyles at: aSymbol])
 		maskedBy: TickStyleMask
 		recreateIfChanged: false! !
-!Slider categoriesFor: #applicableTickStyles!constants!private! !
-!Slider categoriesFor: #autoTickFrequency:!accessing!private! !
-!Slider categoriesFor: #backcolorChanged!accessing!helpers!private! !
-!Slider categoriesFor: #channelRectangle!accessing!public! !
-!Slider categoriesFor: #clearTicks!operations!public! !
-!Slider categoriesFor: #defaultExtent!constants!private! !
-!Slider categoriesFor: #displayValue!private!updating! !
-!Slider categoriesFor: #displayValue:!private!updating! !
-!Slider categoriesFor: #getRect:!helpers!private! !
-!Slider categoriesFor: #hasAutoTicks!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasAutoTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasFixedLength!accessing-styles!private!updating! !
-!Slider categoriesFor: #hasFixedLength:!accessing-styles!private!updating! !
-!Slider categoriesFor: #hasThumb!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasThumb:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicks!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasToolTips!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasToolTips:!accessing-styles!public!updating! !
-!Slider categoriesFor: #initialize!initializing!public! !
-!Slider categoriesFor: #isSelectionEnabled!accessing-styles!private! !
-!Slider categoriesFor: #isSelectionEnabled:!accessing-styles!private! !
-!Slider categoriesFor: #isVertical!accessing-styles!public! !
-!Slider categoriesFor: #isVertical:!accessing-styles!public! !
-!Slider categoriesFor: #lineSize!accessing!public! !
-!Slider categoriesFor: #lineSize:!accessing!public! !
-!Slider categoriesFor: #onHScroll:!event handling!private! !
-!Slider categoriesFor: #onVScroll:!event handling!private! !
-!Slider categoriesFor: #pageSize!accessing!public! !
-!Slider categoriesFor: #pageSize:!accessing!public! !
-!Slider categoriesFor: #range!accessing!public! !
-!Slider categoriesFor: #range:!accessing!public! !
-!Slider categoriesFor: #selectionRange!accessing!public! !
-!Slider categoriesFor: #selectionRange:!accessing!public! !
-!Slider categoriesFor: #state!accessing!private! !
-!Slider categoriesFor: #tbmClearSel!helpers!private! !
-!Slider categoriesFor: #tbmGetBuddy:!helpers!private! !
-!Slider categoriesFor: #tbmGetTicPos:!helpers!private! !
-!Slider categoriesFor: #tbmGetToolTips!helpers!private! !
-!Slider categoriesFor: #tbmGetUnicodeFormat!helpers!private! !
-!Slider categoriesFor: #tbmSetBuddy:handle:!helpers!private! !
-!Slider categoriesFor: #tbmSetTipSide:!helpers!private! !
-!Slider categoriesFor: #tbmSetToolTips:!helpers!private! !
-!Slider categoriesFor: #thumbLength!accessing!public! !
-!Slider categoriesFor: #thumbLength:!accessing!public! !
-!Slider categoriesFor: #thumbRectangle!accessing!public! !
-!Slider categoriesFor: #ticks!accessing!public! !
-!Slider categoriesFor: #ticks:!operations!public! !
-!Slider categoriesFor: #tickStyle!accessing!public! !
-!Slider categoriesFor: #tickStyle:!accessing!public! !
+!UI.Slider categoriesFor: #applicableTickStyles!constants!private! !
+!UI.Slider categoriesFor: #autoTickFrequency:!accessing!private! !
+!UI.Slider categoriesFor: #backcolorChanged!accessing!helpers!private! !
+!UI.Slider categoriesFor: #channelRectangle!accessing!public! !
+!UI.Slider categoriesFor: #clearTicks!operations!public! !
+!UI.Slider categoriesFor: #defaultExtent!constants!private! !
+!UI.Slider categoriesFor: #displayValue!private!updating! !
+!UI.Slider categoriesFor: #displayValue:!private!updating! !
+!UI.Slider categoriesFor: #getRect:!helpers!private! !
+!UI.Slider categoriesFor: #hasAutoTicks!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasAutoTicks:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasFixedLength!accessing-styles!private!updating! !
+!UI.Slider categoriesFor: #hasFixedLength:!accessing-styles!private!updating! !
+!UI.Slider categoriesFor: #hasThumb!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasThumb:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasTicks!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasTicks:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasToolTips!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasToolTips:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #initialize!initializing!public! !
+!UI.Slider categoriesFor: #isSelectionEnabled!accessing-styles!private! !
+!UI.Slider categoriesFor: #isSelectionEnabled:!accessing-styles!private! !
+!UI.Slider categoriesFor: #isVertical!accessing-styles!public! !
+!UI.Slider categoriesFor: #isVertical:!accessing-styles!public! !
+!UI.Slider categoriesFor: #lineSize!accessing!public! !
+!UI.Slider categoriesFor: #lineSize:!accessing!public! !
+!UI.Slider categoriesFor: #onHScroll:!event handling!private! !
+!UI.Slider categoriesFor: #onVScroll:!event handling!private! !
+!UI.Slider categoriesFor: #pageSize!accessing!public! !
+!UI.Slider categoriesFor: #pageSize:!accessing!public! !
+!UI.Slider categoriesFor: #range!accessing!public! !
+!UI.Slider categoriesFor: #range:!accessing!public! !
+!UI.Slider categoriesFor: #selectionRange!accessing!public! !
+!UI.Slider categoriesFor: #selectionRange:!accessing!public! !
+!UI.Slider categoriesFor: #state!accessing!private! !
+!UI.Slider categoriesFor: #tbmClearSel!helpers!private! !
+!UI.Slider categoriesFor: #tbmGetBuddy:!helpers!private! !
+!UI.Slider categoriesFor: #tbmGetTicPos:!helpers!private! !
+!UI.Slider categoriesFor: #tbmGetToolTips!helpers!private! !
+!UI.Slider categoriesFor: #tbmGetUnicodeFormat!helpers!private! !
+!UI.Slider categoriesFor: #tbmSetBuddy:handle:!helpers!private! !
+!UI.Slider categoriesFor: #tbmSetTipSide:!helpers!private! !
+!UI.Slider categoriesFor: #tbmSetToolTips:!helpers!private! !
+!UI.Slider categoriesFor: #thumbLength!accessing!public! !
+!UI.Slider categoriesFor: #thumbLength:!accessing!public! !
+!UI.Slider categoriesFor: #thumbRectangle!accessing!public! !
+!UI.Slider categoriesFor: #ticks!accessing!public! !
+!UI.Slider categoriesFor: #ticks:!operations!public! !
+!UI.Slider categoriesFor: #tickStyle!accessing!public! !
+!UI.Slider categoriesFor: #tickStyle:!accessing!public! !
 
-!Slider class methodsFor!
+!UI.Slider class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -492,10 +493,10 @@ winClassName
 	"Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_trackbar32'! !
-!Slider class categoriesFor: #defaultModel!models!public! !
-!Slider class categoriesFor: #icon!constants!public! !
-!Slider class categoriesFor: #initialize!development!initializing!private! !
-!Slider class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!Slider class categoriesFor: #themePartName!constants!private! !
-!Slider class categoriesFor: #winClassName!constants!private! !
+!UI.Slider class categoriesFor: #defaultModel!models!public! !
+!UI.Slider class categoriesFor: #icon!constants!public! !
+!UI.Slider class categoriesFor: #initialize!development!initializing!private! !
+!UI.Slider class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.Slider class categoriesFor: #themePartName!constants!private! !
+!UI.Slider class categoriesFor: #winClassName!constants!private! !
 

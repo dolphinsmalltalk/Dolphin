@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #TrackBarConstants
+Kernel.SharedPool subclass: #'OS.TrackBarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -59,6 +59,7 @@ SharedPool subclass: #TrackBarConstants
 		'TBTS_RIGHT' -> 16r3.
 		'TBTS_TOP' -> 16r0
 	}!
-TrackBarConstants guid: (GUID fromString: '{6abda823-2244-4c63-8344-b1225795298a}')!
-TrackBarConstants comment: ''!
-!TrackBarConstants categoriesForClass!Unclassified! !
+OS.TrackBarConstants guid: (Core.GUID fromString: '{6abda823-2244-4c63-8344-b1225795298a}')!
+OS.TrackBarConstants isNonInstantiable: true!
+OS.TrackBarConstants comment: ''!
+!OS.TrackBarConstants categoriesForClass!Unclassified! !
