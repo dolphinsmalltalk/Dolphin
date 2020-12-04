@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Key-Value Prompter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Key-Value Pair Prompter.
 Copyright (c) Object Arts Ltd. 2005.'.
@@ -9,7 +9,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{KeyValuePrompter}
+	#{UI.KeyValuePrompter}
 ).
 
 package setPrerequisites: #(
@@ -25,10 +25,10 @@ package!
 
 "Class Definitions"!
 
-Dialog subclass: #KeyValuePrompter
+UI.Dialog subclass: #'UI.KeyValuePrompter'
 	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter validationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

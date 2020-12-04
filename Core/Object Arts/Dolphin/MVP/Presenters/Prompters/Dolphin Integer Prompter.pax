@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Integer Prompter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Integer Prompter.
 Copyright (c) Object Arts Ltd. 2003.'.
@@ -9,7 +9,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{IntegerPrompter}
+	#{UI.IntegerPrompter}
 ).
 
 package setPrerequisites: #(
@@ -27,10 +27,10 @@ package!
 
 "Class Definitions"!
 
-Prompter subclass: #IntegerPrompter
+UI.Prompter subclass: #'UI.IntegerPrompter'
 	instanceVariableNames: 'intervalPresenter interval'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

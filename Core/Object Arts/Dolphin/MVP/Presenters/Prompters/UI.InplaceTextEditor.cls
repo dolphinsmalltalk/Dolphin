@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #InplaceTextEditor
+UI.Presenter subclass: #'UI.InplaceTextEditor'
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InplaceTextEditor guid: (GUID fromString: '{772412aa-7ca7-476c-b034-e5397984a86d}')!
-InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the called until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
+UI.InplaceTextEditor guid: (Core.GUID fromString: '{772412aa-7ca7-476c-b034-e5397984a86d}')!
+UI.InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the called until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
 
 The in-place text editor is shown with an initial size that is sufficient to display the existing edited text (with the edit controls adornments such as borders and margins), plus sufficient extra space for any character in the current font to be typed. As more characters are typed, the edit box grows dynamically. If characters are deleted then the edit control shrinks, but never below the initial size.
 
@@ -23,8 +23,8 @@ Instance Variables:
 	ownerView		<View>. The view for which text is being edited in place. Defaults to the view with focus.
 	validationBlock		<monadicValuable> used to validate the input when a commit action is attempted.
 '!
-!InplaceTextEditor categoriesForClass!MVP-Presenters! !
-!InplaceTextEditor methodsFor!
+!UI.InplaceTextEditor categoriesForClass!MVP-Presenters! !
+!UI.InplaceTextEditor methodsFor!
 
 answer
 	"Answer the model if the receiver was confirmed (with #apply, #ok) or nil otherwise"
@@ -37,18 +37,16 @@ apply
 	by the #ok method just before closing the associated view."
 
 	| focus |
-
 	"First ensure that any changes cached in the view with focus (if any) are flushed"
 	focus := View focus.
 	focus isNil ifFalse: [focus updateModel].
-
 	self model apply.
-	confirmed := true.!
+	confirmed := true!
 
 bufferClass
 	^ValueBuffer!
 
-bufferedModelFor: aSubjectValueModel 
+bufferedModelFor: aSubjectValueModel
 	"Private - Answers a buffer suitable for the receiver on aSubjectValueModel. This will become the
 	actual model to which the receiver is bound."
 
@@ -71,7 +69,7 @@ createSchematicWiring
 		to: self.
 	^super createSchematicWiring!
 
-createView: aResourceNameString 
+createView: aResourceNameString
 	"Private - Creates and connects a view for the receiver from the resource identified by
 	aResourceNameString. Answers the new view created"
 
@@ -142,18 +140,18 @@ onFocusLost
 
 	self view isWindowVisible ifTrue: [self isInputValid ifTrue: [self ok] ifFalse: [self cancel]]!
 
-onGetCursor: aSymbol 
+onGetCursor: aSymbol
 	"The named area of the view associated with the receiver has been hit. Answer the
 	appropriate mouse cursor or nil to accept the default."
 
 	^Cursor iBeam!
 
-onKeyTyped: aKeyEvent 
-	aKeyEvent code == VK_ESCAPE 
+onKeyTyped: aKeyEvent
+	aKeyEvent code == VK_ESCAPE
 		ifTrue: 
 			[self commandPolicy route: (CommandDescription command: #cancel).
 			^0].
-	aKeyEvent code == VK_RETURN 
+	aKeyEvent code == VK_RETURN
 		ifTrue: 
 			[self commandPolicy route: (CommandDescription command: #ok).
 			^0].
@@ -257,44 +255,44 @@ value: anObject
 	the original subject model until #apply is received"
 
 	self model value: anObject.! !
-!InplaceTextEditor categoriesFor: #answer!accessing!public! !
-!InplaceTextEditor categoriesFor: #apply!commands!public! !
-!InplaceTextEditor categoriesFor: #bufferClass!accessing!private! !
-!InplaceTextEditor categoriesFor: #bufferedModelFor:!accessing!private! !
-!InplaceTextEditor categoriesFor: #cancel!commands!public! !
-!InplaceTextEditor categoriesFor: #createSchematicWiring!initializing!public! !
-!InplaceTextEditor categoriesFor: #createView:!operations!private! !
-!InplaceTextEditor categoriesFor: #editBox!helpers!private! !
-!InplaceTextEditor categoriesFor: #findDetails!public!searching & replacing! !
-!InplaceTextEditor categoriesFor: #font:!initializing!public! !
-!InplaceTextEditor categoriesFor: #implicitBorder!constants!private! !
-!InplaceTextEditor categoriesFor: #initialize!initializing!private! !
-!InplaceTextEditor categoriesFor: #isConfirmed!public!testing! !
-!InplaceTextEditor categoriesFor: #isInputValid!private!testing! !
-!InplaceTextEditor categoriesFor: #model:!accessing!public! !
-!InplaceTextEditor categoriesFor: #ok!commands!public! !
-!InplaceTextEditor categoriesFor: #onFocusLost!event handling!private! !
-!InplaceTextEditor categoriesFor: #onGetCursor:!event handling!public! !
-!InplaceTextEditor categoriesFor: #onKeyTyped:!event handling!private! !
-!InplaceTextEditor categoriesFor: #onTextChanged!event handling!private! !
-!InplaceTextEditor categoriesFor: #onValueChanged!event handling!public! !
-!InplaceTextEditor categoriesFor: #onViewOpened!event handling!private! !
-!InplaceTextEditor categoriesFor: #ownerView!accessing!public! !
-!InplaceTextEditor categoriesFor: #ownerView:!accessing!public! !
-!InplaceTextEditor categoriesFor: #queryCommand:!commands!private! !
-!InplaceTextEditor categoriesFor: #requiredExtent!helpers!private! !
-!InplaceTextEditor categoriesFor: #resizeToFit!helpers!private! !
-!InplaceTextEditor categoriesFor: #runModalInProcessLoop!helpers!private! !
-!InplaceTextEditor categoriesFor: #setInitialFocus!operations!public! !
-!InplaceTextEditor categoriesFor: #showModal!public!realizing/unrealizing! !
-!InplaceTextEditor categoriesFor: #showModalView!helpers!private! !
-!InplaceTextEditor categoriesFor: #textRectangle:!initializing!public! !
-!InplaceTextEditor categoriesFor: #validationBlock!accessing!public! !
-!InplaceTextEditor categoriesFor: #validationBlock:!accessing!public! !
-!InplaceTextEditor categoriesFor: #value!accessing!public! !
-!InplaceTextEditor categoriesFor: #value:!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #answer!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #apply!commands!public! !
+!UI.InplaceTextEditor categoriesFor: #bufferClass!accessing!private! !
+!UI.InplaceTextEditor categoriesFor: #bufferedModelFor:!accessing!private! !
+!UI.InplaceTextEditor categoriesFor: #cancel!commands!public! !
+!UI.InplaceTextEditor categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.InplaceTextEditor categoriesFor: #createView:!operations!private! !
+!UI.InplaceTextEditor categoriesFor: #editBox!helpers!private! !
+!UI.InplaceTextEditor categoriesFor: #findDetails!public!searching & replacing! !
+!UI.InplaceTextEditor categoriesFor: #font:!initializing!public! !
+!UI.InplaceTextEditor categoriesFor: #implicitBorder!constants!private! !
+!UI.InplaceTextEditor categoriesFor: #initialize!initializing!private! !
+!UI.InplaceTextEditor categoriesFor: #isConfirmed!public!testing! !
+!UI.InplaceTextEditor categoriesFor: #isInputValid!private!testing! !
+!UI.InplaceTextEditor categoriesFor: #model:!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #ok!commands!public! !
+!UI.InplaceTextEditor categoriesFor: #onFocusLost!event handling!private! !
+!UI.InplaceTextEditor categoriesFor: #onGetCursor:!event handling!public! !
+!UI.InplaceTextEditor categoriesFor: #onKeyTyped:!event handling!private! !
+!UI.InplaceTextEditor categoriesFor: #onTextChanged!event handling!private! !
+!UI.InplaceTextEditor categoriesFor: #onValueChanged!event handling!public! !
+!UI.InplaceTextEditor categoriesFor: #onViewOpened!event handling!private! !
+!UI.InplaceTextEditor categoriesFor: #ownerView!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #ownerView:!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #queryCommand:!commands!private! !
+!UI.InplaceTextEditor categoriesFor: #requiredExtent!helpers!private! !
+!UI.InplaceTextEditor categoriesFor: #resizeToFit!helpers!private! !
+!UI.InplaceTextEditor categoriesFor: #runModalInProcessLoop!helpers!private! !
+!UI.InplaceTextEditor categoriesFor: #setInitialFocus!operations!public! !
+!UI.InplaceTextEditor categoriesFor: #showModal!public!realizing/unrealizing! !
+!UI.InplaceTextEditor categoriesFor: #showModalView!helpers!private! !
+!UI.InplaceTextEditor categoriesFor: #textRectangle:!initializing!public! !
+!UI.InplaceTextEditor categoriesFor: #validationBlock!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #validationBlock:!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #value!accessing!public! !
+!UI.InplaceTextEditor categoriesFor: #value:!accessing!public! !
 
-!InplaceTextEditor class methodsFor!
+!UI.InplaceTextEditor class methodsFor!
 
 createOn: aValueHolder 
 	^(super createOn: aValueHolder)
@@ -317,9 +315,9 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #window nil 1543 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil 8 '' 65 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 222 7 0 0 30 0 0 0] 8 #() 754 193 193 nil 27 )! !
-!InplaceTextEditor class categoriesFor: #createOn:!public! !
-!InplaceTextEditor class categoriesFor: #defaultModel!models!public! !
-!InplaceTextEditor class categoriesFor: #icon!constants!public! !
-!InplaceTextEditor class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #window nil 1543 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil 8 '' 65 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 94 12 0 0 30 0 0 0] 8 #() 754 193 193 nil 27)! !
+!UI.InplaceTextEditor class categoriesFor: #createOn:!public! !
+!UI.InplaceTextEditor class categoriesFor: #defaultModel!models!public! !
+!UI.InplaceTextEditor class categoriesFor: #icon!constants!public! !
+!UI.InplaceTextEditor class categoriesFor: #resource_Default_view!public!resources-views! !
 

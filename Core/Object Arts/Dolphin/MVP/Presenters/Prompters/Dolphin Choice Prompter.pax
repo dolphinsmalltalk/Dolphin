@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Choice Prompter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Choice Dialog
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,7 +10,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{ChoicePrompter}
+	#{UI.ChoicePrompter}
 ).
 
 package setPrerequisites: #(
@@ -28,10 +28,10 @@ package!
 
 "Class Definitions"!
 
-ValueDialog subclass: #ChoicePrompter
+UI.ValueDialog subclass: #'UI.ChoicePrompter'
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

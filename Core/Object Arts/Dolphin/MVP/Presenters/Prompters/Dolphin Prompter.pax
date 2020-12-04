@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Prompter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Prompter.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,7 +10,7 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{Prompter}
+	#{UI.Prompter}
 ).
 
 package setPrerequisites: #(
@@ -26,10 +26,10 @@ package!
 
 "Class Definitions"!
 
-ValueDialog subclass: #Prompter
+UI.ValueDialog subclass: #'UI.Prompter'
 	instanceVariableNames: 'promptPresenter replyPresenter validationBlock'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
