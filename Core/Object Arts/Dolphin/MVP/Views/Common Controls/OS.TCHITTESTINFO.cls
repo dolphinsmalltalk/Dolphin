@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CCHITTESTINFO subclass: #TCHITTESTINFO
+OS.CCHITTESTINFO subclass: #'OS.TCHITTESTINFO'
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TCHITTESTINFO guid: (GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
-TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
+OS.TCHITTESTINFO guid: (Core.GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
+OS.TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 TCHISTTESTINFO is used for hit-testing with Tab View controls.
 '!
-!TCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
-!TCHITTESTINFO methodsFor!
+!OS.TCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.TCHITTESTINFO methodsFor!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver.
@@ -22,6 +22,6 @@ handle
 
 iItem: anInteger 
 	iItem := anInteger! !
-!TCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!TCHITTESTINFO categoriesFor: #iItem:!accessing!private! !
+!OS.TCHITTESTINFO categoriesFor: #handle!accessing!private! !
+!OS.TCHITTESTINFO categoriesFor: #iItem:!accessing!private! !
 

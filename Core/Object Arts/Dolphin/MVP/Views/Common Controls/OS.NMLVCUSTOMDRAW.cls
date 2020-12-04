@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
+OS.NMCUSTOMDRAW subclass: #'OS.NMLVCUSTOMDRAW'
 	instanceVariableNames: 'column'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_clrText' -> 16r30.
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iSubItem' -> 16r38
 	}!
-NMLVCUSTOMDRAW guid: (GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
-NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
+OS.NMLVCUSTOMDRAW guid: (Core.GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
+OS.NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMLVCUSTOMDRAW` is sent by `ListView` controls to request custom draw information for the text of individual items (and optionally sub-items). We implement the `customDrawContext` protocol against it in order that it can be passed directly to the views customDrawBlock.'!
-!NMLVCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
-!NMLVCUSTOMDRAW methodsFor!
+!OS.NMLVCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMLVCUSTOMDRAW methodsFor!
 
 applyFont
 	
@@ -29,7 +29,7 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [Color fromCOLORREF: clrTextBk]!
+	^clrTextBk = CLR_DEFAULT ifTrue: [Graphics.Color window] ifFalse: [Graphics.Color fromCOLORREF: clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>.
@@ -78,7 +78,7 @@ forecolor
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [Color fromCOLORREF: clrText]!
+	^clrText = CLR_DEFAULT ifTrue: [Graphics.Color windowText] ifFalse: [Graphics.Color fromCOLORREF: clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."
@@ -98,31 +98,31 @@ itemHandle
 reset
 	"Reset the canvas to default settings."
 
-	self forecolor: (self view forecolor ifNil: [Color windowText])!
+	self forecolor: (self view forecolor ifNil: [Graphics.Color windowText])!
 
 subItem
-	| item |
-	item := self item.
-	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: item]].
-	^item! !
-!NMLVCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
-!NMLVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
-!NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
-!NMLVCUSTOMDRAW categoriesFor: #reset!public! !
-!NMLVCUSTOMDRAW categoriesFor: #subItem!accessing!public! !
+	| row |
+	row := self item.
+	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: row]].
+	^row! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #reset!public! !
+!OS.NMLVCUSTOMDRAW categoriesFor: #subItem!accessing!public! !
 
-!NMLVCUSTOMDRAW class methodsFor!
+!OS.NMLVCUSTOMDRAW class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMLVCUSTOMDRAW structure.
@@ -130,13 +130,13 @@ defineFields
 	"
 
 	super defineFields.
-	self 
+	self
 		defineField: #clrText type: DWORDField new;
 		defineField: #clrTextBk type: DWORDField new;
 		defineField: #iSubItem type: SDWORDField readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
-!NMLVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #LVCOLUMNW
+OS.Win32Structure subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -18,15 +18,15 @@ Win32Structure subclass: #LVCOLUMNW
 		'_OffsetOf_mask' -> 16r0.
 		'_OffsetOf_pszText' -> 16rC
 	}!
-LVCOLUMNW guid: (GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
+OS.LVCOLUMNW guid: (Core.GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.
 
 Instance Variables:
 	text	<String> column header text whose address is stored in the structure.'!
-!LVCOLUMNW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
-!LVCOLUMNW methodsFor!
+!OS.LVCOLUMNW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+!OS.LVCOLUMNW methodsFor!
 
 alignment: alignmentSymbol
 	"Set the alignment of the text within this column to the
@@ -187,38 +187,38 @@ width: pixelWidth
 	"Set the width of the column to pixelWidth."
 
 	self cx: pixelWidth; maskIn: LVCF_WIDTH! !
-!LVCOLUMNW categoriesFor: #alignment:!accessing!public! !
-!LVCOLUMNW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cx!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cx:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxDefault!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxDefault:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxIdeal!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxIdeal:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxMin!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxMin:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #fmt!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #fmt:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #format:!accessing!public! !
-!LVCOLUMNW categoriesFor: #iImage!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iImage:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #image:!accessing!public! !
-!LVCOLUMNW categoriesFor: #iOrder!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iOrder:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iSubItem:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #mask!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #mask:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #maskIn:!accessing!public! !
-!LVCOLUMNW categoriesFor: #newTextBuffer:!helpers!public! !
-!LVCOLUMNW categoriesFor: #order:!accessing!public! !
-!LVCOLUMNW categoriesFor: #pszText!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #pszText:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #text!accessing!public! !
-!LVCOLUMNW categoriesFor: #text:!accessing!public! !
-!LVCOLUMNW categoriesFor: #width:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #alignment:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cx!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cx:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxDefault!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxDefault:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxIdeal!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxIdeal:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxMin!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #cxMin:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #fmt!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #fmt:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #format:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #iImage!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #image:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #iOrder!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #iOrder:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #iSubItem:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #mask!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #mask:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #maskIn:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #newTextBuffer:!helpers!public! !
+!OS.LVCOLUMNW categoriesFor: #order:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #pszText:!**compiled accessors**!public! !
+!OS.LVCOLUMNW categoriesFor: #text!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #text:!accessing!public! !
+!OS.LVCOLUMNW categoriesFor: #width:!accessing!public! !
 
-!LVCOLUMNW class methodsFor!
+!OS.LVCOLUMNW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 LVCOLUMNW structure
@@ -226,17 +226,39 @@ defineFields
 	"
 
 	self
-		defineField: #mask type: DWORDField new offset: 0;
-		defineField: #fmt type: SDWORDField new offset: 4;
-		defineField: #cx type: SDWORDField new offset: 8;
-		defineField: #pszText type: (PointerField type: Utf16String) offset: 12;
-		defineField: #cchTextMax type: SDWORDField writeOnly offset: 16;
-		defineField: #iSubItem type: SDWORDField new offset: 20;
-		defineField: #iImage type: SDWORDField new offset: 24;
-		defineField: #iOrder type: SDWORDField new offset: 28;
-		defineField: #cxMin type: SDWORDField new offset: 32;
-		defineField: #cxDefault type: SDWORDField new offset: 36;
-		defineField: #cxIdeal type: SDWORDField new offset: 40.!
+		defineField: #mask
+			type: DWORDField new
+			offset: 0;
+		defineField: #fmt
+			type: SDWORDField new
+			offset: 4;
+		defineField: #cx
+			type: SDWORDField new
+			offset: 8;
+		defineField: #pszText
+			type: (PointerField type: Utf16String)
+			offset: 12;
+		defineField: #cchTextMax
+			type: SDWORDField writeOnly
+			offset: 16;
+		defineField: #iSubItem
+			type: SDWORDField new
+			offset: 20;
+		defineField: #iImage
+			type: SDWORDField new
+			offset: 24;
+		defineField: #iOrder
+			type: SDWORDField new
+			offset: 28;
+		defineField: #cxMin
+			type: SDWORDField new
+			offset: 32;
+		defineField: #cxDefault
+			type: SDWORDField new
+			offset: 36;
+		defineField: #cxIdeal
+			type: SDWORDField new
+			offset: 40!
 
 fromColumn: aListViewColumn in: aListView
 	"Answer an LVCOLUMN generated from aListViewColumn using the
@@ -255,15 +277,14 @@ getFieldNames
 initialize
 	"Private - Initialize the class variables of the receiver."
 
-	AlignmentMap := 
-		##(IdentityDictionary new
-			at: #left put: LVCFMT_LEFT;
-			at: #right put: LVCFMT_RIGHT;
-			at: #center put: LVCFMT_CENTER;
-			shrink;
-			yourself)! !
-!LVCOLUMNW class categoriesFor: #defineFields!public!template definition! !
-!LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
-!LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !
+	AlignmentMap := ##(IdentityDictionary new
+				at: #left put: LVCFMT_LEFT;
+				at: #right put: LVCFMT_RIGHT;
+				at: #center put: LVCFMT_CENTER;
+				shrink;
+				yourself)! !
+!OS.LVCOLUMNW class categoriesFor: #defineFields!public!template definition! !
+!OS.LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
+!OS.LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !
 

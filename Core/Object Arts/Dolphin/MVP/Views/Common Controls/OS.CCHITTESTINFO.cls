@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #CCHITTESTINFO
+OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
-CCHITTESTINFO guid: (GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
-CCHITTESTINFO isAbstract: true!
-CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
-!CCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
-!CCHITTESTINFO methodsFor!
+OS.CCHITTESTINFO guid: (Core.GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.CCHITTESTINFO isNonInstantiable: true!
+OS.CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
+!OS.CCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.CCHITTESTINFO methodsFor!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -38,12 +38,12 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
-!CCHITTESTINFO categoriesFor: #flags!**compiled accessors**!public! !
-!CCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!CCHITTESTINFO categoriesFor: #isItemHit!public!testing! !
-!CCHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
+!OS.CCHITTESTINFO categoriesFor: #flags!**compiled accessors**!public! !
+!OS.CCHITTESTINFO categoriesFor: #handle!accessing!private! !
+!OS.CCHITTESTINFO categoriesFor: #isItemHit!public!testing! !
+!OS.CCHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
 
-!CCHITTESTINFO class methodsFor!
+!OS.CCHITTESTINFO class methodsFor!
 
 defineFields
 	"Define the common fields of the common control hit test structures.
@@ -57,6 +57,6 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags)! !
-!CCHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
-!CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
+!OS.CCHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
+!OS.CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
 

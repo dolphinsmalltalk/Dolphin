@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #LVFINDINFOW
+OS.Win32Structure subclass: #'OS.LVFINDINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r0.
@@ -12,15 +12,15 @@ Win32Structure subclass: #LVFINDINFOW
 		'_OffsetOf_pt' -> 16rC.
 		'_OffsetOf_vkDirection' -> 16r14
 	}!
-LVFINDINFOW guid: (GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVFINDINFOW comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
+OS.LVFINDINFOW guid: (Core.GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LVFINDINFOW comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVFINDINFO is used to contain information to search for items in a List View.
 
 Instance Variables:
 	None'!
-!LVFINDINFOW categoriesForClass!External-Data-Structured-Win32! !
-!LVFINDINFOW methodsFor!
+!OS.LVFINDINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.LVFINDINFOW methodsFor!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -57,15 +57,15 @@ vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
 	^bytes dwordAtOffset: _OffsetOf_vkDirection! !
-!LVFINDINFOW categoriesFor: #flags!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #maskIn:!accessing!public! !
-!LVFINDINFOW categoriesFor: #param:!accessing!public! !
-!LVFINDINFOW categoriesFor: #psz!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #pt!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #vkDirection!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesFor: #maskIn:!accessing!public! !
+!OS.LVFINDINFOW categoriesFor: #param:!accessing!public! !
+!OS.LVFINDINFOW categoriesFor: #psz!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesFor: #pt!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesFor: #vkDirection!**compiled accessors**!public! !
 
-!LVFINDINFOW class methodsFor!
+!OS.LVFINDINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 LVFINDINFO structure.
@@ -81,6 +81,6 @@ defineFields
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
-!LVFINDINFOW class categoriesFor: #defineFields!public!template definition! !
-!LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LVFINDINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

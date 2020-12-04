@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Common Controls'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Common Controls.
 Copyright (c) Object Arts Ltd, 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
@@ -11,46 +11,46 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{CCHITTESTINFO}
-	#{CCITEM}
-	#{IconicListAbstract}
-	#{ListView}
-	#{ListViewColumn}
-	#{ListViewConstants}
-	#{LVBKIMAGEW}
-	#{LVCOLUMNW}
-	#{LVFINDINFOW}
-	#{LVHITTESTINFO}
-	#{LVITEMW}
-	#{NMCUSTOMDRAW}
-	#{NMGETINFOTIP}
-	#{NMITEMACTIVATE}
-	#{NMKEYDOWN}
-	#{NMLISTVIEW}
-	#{NMLVCUSTOMDRAW}
-	#{NMLVFINDITEMW}
-	#{NMLVGETINFOTIPW}
-	#{NMLVODSTATECHANGE}
-	#{NMTREEVIEWW}
-	#{NMTVCUSTOMDRAW}
-	#{NMTVGETINFOTIPW}
-	#{TabView}
-	#{TabViewConstants}
-	#{TabViewXP}
-	#{TCHITTESTINFO}
-	#{TCITEMW}
-	#{TreeView}
-	#{TreeViewConstants}
-	#{TVHITTESTINFO}
-	#{TVINSERTSTRUCTW}
-	#{TVITEMEXW}
-	#{TVITEMW}
+	#{OS.CCHITTESTINFO}
+	#{OS.CCITEM}
+	#{OS.ListViewConstants}
+	#{OS.LVBKIMAGEW}
+	#{OS.LVCOLUMNW}
+	#{OS.LVFINDINFOW}
+	#{OS.LVHITTESTINFO}
+	#{OS.LVITEMW}
+	#{OS.NMCUSTOMDRAW}
+	#{OS.NMGETINFOTIP}
+	#{OS.NMITEMACTIVATE}
+	#{OS.NMKEYDOWN}
+	#{OS.NMLISTVIEW}
+	#{OS.NMLVCUSTOMDRAW}
+	#{OS.NMLVFINDITEMW}
+	#{OS.NMLVGETINFOTIPW}
+	#{OS.NMLVODSTATECHANGE}
+	#{OS.NMTREEVIEWW}
+	#{OS.NMTVCUSTOMDRAW}
+	#{OS.NMTVGETINFOTIPW}
+	#{OS.TabViewConstants}
+	#{OS.TCHITTESTINFO}
+	#{OS.TCITEMW}
+	#{OS.TreeViewConstants}
+	#{OS.TVHITTESTINFO}
+	#{OS.TVINSERTSTRUCTW}
+	#{OS.TVITEMEXW}
+	#{OS.TVITEMW}
+	#{UI.IconicListAbstract}
+	#{UI.ListView}
+	#{UI.ListViewColumn}
+	#{UI.TabView}
+	#{UI.TabViewXP}
+	#{UI.TreeView}
 ).
 
 package setMethodNames: #(
-	#(#{FolderPresenter class} #resource_Default_view)
-	#(#{ListPresenter class} #resource_Enhanced_list_view)
-	#(#{ListPresenter class} #resource_Tab_view)
+	#(#{UI.FolderPresenter class} #resource_Default_view)
+	#(#{UI.ListPresenter class} #resource_Enhanced_list_view)
+	#(#{UI.ListPresenter class} #resource_Tab_view)
 ).
 
 package setPrerequisites: #(
@@ -68,7 +68,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #ListViewConstants
+Kernel.SharedPool subclass: #'OS.ListViewConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -293,7 +293,7 @@ SharedPool subclass: #ListViewConstants
 		'ODT_HEADER' -> 16r64.
 		'ODT_LISTVIEW' -> 16r66
 	}!
-SharedPool subclass: #TabViewConstants
+Kernel.SharedPool subclass: #'OS.TabViewConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -360,7 +360,7 @@ SharedPool subclass: #TabViewConstants
 		'TCS_TOOLTIPS' -> 16r4000.
 		'TCS_VERTICAL' -> 16r80
 	}!
-SharedPool subclass: #TreeViewConstants
+Kernel.SharedPool subclass: #'OS.TreeViewConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -468,36 +468,36 @@ SharedPool subclass: #TreeViewConstants
 		'TVSIL_NORMAL' -> 16r0.
 		'TVSIL_STATE' -> 16r2
 	}!
-Object subclass: #ListViewColumn
+Core.Object subclass: #'UI.ListViewColumn'
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
 	classVariableNames: ''
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoResizeMask' -> 16r1.
 		'SortInvertedMask' -> 16r2
 	}!
-Win32Structure subclass: #CCHITTESTINFO
+OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CommCtrlConstants})
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
-Win32Structure subclass: #CCITEM
+OS.Win32Structure subclass: #'OS.CCITEM'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	imports: #(#{CommCtrlConstants})
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_mask' -> 16r0
 	}!
-Win32Structure subclass: #LVBKIMAGEW
+OS.Win32Structure subclass: #'OS.LVBKIMAGEW'
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchImageMax' -> 16rC.
@@ -507,10 +507,10 @@ Win32Structure subclass: #LVBKIMAGEW
 		'_OffsetOf_xOffsetPercent' -> 16r10.
 		'_OffsetOf_yOffsetPercent' -> 16r14
 	}!
-Win32Structure subclass: #LVCOLUMNW
+OS.Win32Structure subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -525,10 +525,10 @@ Win32Structure subclass: #LVCOLUMNW
 		'_OffsetOf_mask' -> 16r0.
 		'_OffsetOf_pszText' -> 16rC
 	}!
-Win32Structure subclass: #LVFINDINFOW
+OS.Win32Structure subclass: #'OS.LVFINDINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r0.
@@ -537,7 +537,7 @@ Win32Structure subclass: #LVFINDINFOW
 		'_OffsetOf_pt' -> 16rC.
 		'_OffsetOf_vkDirection' -> 16r14
 	}!
-Win32Structure subclass: #TVINSERTSTRUCTW
+OS.Win32Structure subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -547,22 +547,22 @@ Win32Structure subclass: #TVINSERTSTRUCTW
 		'_OffsetOf_hParent' -> 16r0.
 		'_OffsetOf_item' -> 16r8
 	}!
-CCHITTESTINFO subclass: #LVHITTESTINFO
+OS.CCHITTESTINFO subclass: #'OS.LVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10
 	}!
-CCHITTESTINFO subclass: #TCHITTESTINFO
+OS.CCHITTESTINFO subclass: #'OS.TCHITTESTINFO'
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CCHITTESTINFO subclass: #TVHITTESTINFO
+OS.CCHITTESTINFO subclass: #'OS.TVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -570,10 +570,10 @@ CCHITTESTINFO subclass: #TVHITTESTINFO
 	classConstants: {
 		'_OffsetOf_hItem' -> 16rC
 	}!
-CCITEM subclass: #LVITEMW
+OS.CCITEM subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: 'CallbackPrototype'
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r18.
@@ -591,10 +591,10 @@ CCITEM subclass: #LVITEMW
 		'_OffsetOf_puColumns' -> 16r30.
 		'_OffsetOf_stateMask' -> 16r10
 	}!
-CCITEM subclass: #TCITEMW
+OS.CCITEM subclass: #'OS.TCITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{TabViewConstants})
+	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -604,10 +604,10 @@ CCITEM subclass: #TCITEMW
 		'_OffsetOf_pszText' -> 16rC.
 		'_OffsetOf_stateMask' -> 16r8
 	}!
-CCITEM subclass: #TVITEMW
+OS.CCITEM subclass: #'OS.TVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{TreeViewConstants})
+	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cChildren' -> 16r20.
@@ -620,7 +620,7 @@ CCITEM subclass: #TVITEMW
 		'_OffsetOf_pszText' -> 16r10.
 		'_OffsetOf_stateMask' -> 16rC
 	}!
-TVITEMW subclass: #TVITEMEXW
+OS.TVITEMW subclass: #'OS.TVITEMEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -631,7 +631,7 @@ TVITEMW subclass: #TVITEMEXW
 		'_OffsetOf_iIntegral' -> 16r28.
 		'_OffsetOf_uStateEx' -> 16r2C
 	}!
-NMHDR subclass: #NMCUSTOMDRAW
+OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: ''
 	imports: #()
@@ -644,13 +644,13 @@ NMHDR subclass: #NMCUSTOMDRAW
 		'_OffsetOf_rc' -> 16r14.
 		'_OffsetOf_uItemState' -> 16r28
 	}!
-NMHDR subclass: #NMGETINFOTIP
+OS.NMHDR subclass: #'OS.NMGETINFOTIP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NMHDR subclass: #NMITEMACTIVATE
+OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -665,7 +665,7 @@ NMHDR subclass: #NMITEMACTIVATE
 		'_OffsetOf_uNewState' -> 16r14.
 		'_OffsetOf_uOldState' -> 16r18
 	}!
-NMHDR subclass: #NMKEYDOWN
+OS.NMHDR subclass: #'OS.NMKEYDOWN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -674,7 +674,7 @@ NMHDR subclass: #NMKEYDOWN
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_wVKey' -> 16rC
 	}!
-NMHDR subclass: #NMLISTVIEW
+OS.NMHDR subclass: #'OS.NMLISTVIEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -688,7 +688,7 @@ NMHDR subclass: #NMLISTVIEW
 		'_OffsetOf_uNewState' -> 16r14.
 		'_OffsetOf_uOldState' -> 16r18
 	}!
-NMHDR subclass: #NMLVFINDITEMW
+OS.NMHDR subclass: #'OS.NMLVFINDITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -697,7 +697,7 @@ NMHDR subclass: #NMLVFINDITEMW
 		'_OffsetOf_iStart' -> 16rC.
 		'_OffsetOf_lvfi' -> 16r10
 	}!
-NMHDR subclass: #NMLVODSTATECHANGE
+OS.NMHDR subclass: #'OS.NMLVODSTATECHANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -708,7 +708,7 @@ NMHDR subclass: #NMLVODSTATECHANGE
 		'_OffsetOf_uNewState' -> 16r14.
 		'_OffsetOf_uOldState' -> 16r18
 	}!
-NMHDR subclass: #NMTREEVIEWW
+OS.NMHDR subclass: #'OS.NMTREEVIEWW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -719,7 +719,7 @@ NMHDR subclass: #NMTREEVIEWW
 		'_OffsetOf_itemOld' -> 16r10.
 		'_OffsetOf_ptDrag' -> 16r60
 	}!
-NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
+OS.NMCUSTOMDRAW subclass: #'OS.NMLVCUSTOMDRAW'
 	instanceVariableNames: 'column'
 	classVariableNames: ''
 	imports: #()
@@ -729,7 +729,7 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iSubItem' -> 16r38
 	}!
-NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
+OS.NMCUSTOMDRAW subclass: #'OS.NMTVCUSTOMDRAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -739,7 +739,7 @@ NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iLevel' -> 16r38
 	}!
-NMGETINFOTIP subclass: #NMLVGETINFOTIPW
+OS.NMGETINFOTIP subclass: #'OS.NMLVGETINFOTIPW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -752,7 +752,7 @@ NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 		'_OffsetOf_lParam' -> 16r20.
 		'_OffsetOf_pszText' -> 16r10
 	}!
-NMGETINFOTIP subclass: #NMTVGETINFOTIPW
+OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -763,33 +763,33 @@ NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 		'_OffsetOf_lParam' -> 16r18.
 		'_OffsetOf_pszText' -> 16rC
 	}!
-ListControlView subclass: #IconicListAbstract
+UI.ListControlView subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: 'ViewModes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IconicListAbstract subclass: #ListView
+UI.IconicListAbstract subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
-	imports: #(#{ListViewConstants})
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'BackImageIsTiledMask' -> 16r1.
 		'NoImageIndex' -> 16r0
 	}!
-IconicListAbstract subclass: #TabView
+UI.IconicListAbstract subclass: #'UI.TabView'
 	instanceVariableNames: 'viewMode'
 	classVariableNames: 'TabOrientations TabViewModes'
-	imports: #(#{TabViewConstants})
+	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'OrientationMask' -> 16r82
 	}!
-IconicListAbstract subclass: #TreeView
+UI.IconicListAbstract subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
 	classVariableNames: ''
-	imports: #(#{TreeViewConstants})
+	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DisableExpandAllMask' -> 16r1.
@@ -797,16 +797,16 @@ IconicListAbstract subclass: #TreeView
 		'UpdateModeMask' -> 16r6.
 		'UpdateModes' -> #(#dynamic #static #lazy)
 	}!
-TabView subclass: #TabViewXP
+UI.TabView subclass: #'UI.TabViewXP'
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
-	imports: #(#{ThemeConstants})
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!FolderPresenter class methodsFor!
+!UI.FolderPresenter class methodsFor!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -816,10 +816,10 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 45 nil nil 34 2 8 1409372236 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil 328198 ##(Smalltalk.Point) 65 65 nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 416 nil 1 nil nil #largeIcons 528 nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 658 7039 21 658 491 311 416 882 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 180 14 0 0 165 0 0 0] 8 #() 658 193 193 nil 35 )! !
-!FolderPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409372236 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920618720 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil 655878 ##(Graphics.Point) 65 65 nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 201 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 416 nil 1 nil nil #largeIcons 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 658 6143 21 658 491 311 416 898 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 658 193 193 nil 35)! !
+!UI.FolderPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 
-!ListPresenter class methodsFor!
+!UI.ListPresenter class methodsFor!
 
 resource_Enhanced_list_view
 	"Answer the literal data from which the 'Enhanced list view' resource can be reconstituted.
@@ -829,7 +829,7 @@ resource_Enhanced_list_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Enhanced_list_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 528 nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 946 491 311 416 898 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 180 14 0 0 165 0 0 0] 8 #() 946 193 193 nil 35 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920618720 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 962 491 311 416 914 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 962 193 193 nil 35)!
 
 resource_Tab_view
 	"Answer the literal data from which the 'Tab view' resource can be reconstituted.
@@ -839,9 +839,9 @@ resource_Tab_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Tab_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TabViewXP) 34 28 nil nil 34 2 8 1409352192 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #face3d nil 5 nil nil nil 416 nil 8 1904010400 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 701 61 416 770 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 40 0 0 0] 8 #() 818 193 193 nil 27 )! !
-!ListPresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Tab_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TabViewXP) 34 28 nil nil 34 2 8 1409352192 1 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #face3d nil 5 nil nil nil 416 nil 8 1920388864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 818 701 61 416 770 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 40 0 0 0] 8 #() 818 193 193 nil 27)! !
+!UI.ListPresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
+!UI.ListPresenter class categoriesFor: #resource_Tab_view!public!resources-views! !
 
 "End of package definition"!
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMLVFINDITEMW
+OS.NMHDR subclass: #'OS.NMLVFINDITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iStart' -> 16rC.
 		'_OffsetOf_lvfi' -> 16r10
 	}!
-NMLVFINDITEMW guid: (GUID fromString: '{87b4c626-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMLVFINDITEMW comment: ''!
-!NMLVFINDITEMW categoriesForClass!External-Data-Structured-Win32! !
-!NMLVFINDITEMW methodsFor!
+OS.NMLVFINDITEMW guid: (Core.GUID fromString: '{87b4c626-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.NMLVFINDITEMW comment: ''!
+!OS.NMLVFINDITEMW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMLVFINDITEMW methodsFor!
 
 iStart
 	"Answer the <Integer> value of the receiver's 'iStart' field."
@@ -23,10 +23,10 @@ lvfi
 	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
 
 	^LVFINDINFOW fromAddress: bytes yourAddress + _OffsetOf_lvfi! !
-!NMLVFINDITEMW categoriesFor: #iStart!**compiled accessors**!public! !
-!NMLVFINDITEMW categoriesFor: #lvfi!**compiled accessors**!public! !
+!OS.NMLVFINDITEMW categoriesFor: #iStart!**compiled accessors**!public! !
+!OS.NMLVFINDITEMW categoriesFor: #lvfi!**compiled accessors**!public! !
 
-!NMLVFINDITEMW class methodsFor!
+!OS.NMLVFINDITEMW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 NMLVFINDITEM structure.
@@ -40,6 +40,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
-!NMLVFINDITEMW class categoriesFor: #defineFields!public!template definition! !
-!NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVFINDITEMW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

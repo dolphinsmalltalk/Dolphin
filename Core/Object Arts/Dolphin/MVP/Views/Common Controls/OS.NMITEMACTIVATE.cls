@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMITEMACTIVATE
+OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
@@ -15,10 +15,10 @@ NMHDR subclass: #NMITEMACTIVATE
 		'_OffsetOf_uNewState' -> 16r14.
 		'_OffsetOf_uOldState' -> 16r18
 	}!
-NMITEMACTIVATE guid: (GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
-NMITEMACTIVATE comment: ''!
-!NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !
-!NMITEMACTIVATE methodsFor!
+OS.NMITEMACTIVATE guid: (Core.GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
+OS.NMITEMACTIVATE comment: ''!
+!OS.NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMITEMACTIVATE methodsFor!
 
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
@@ -57,16 +57,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #position!accessing!public! !
-!NMITEMACTIVATE categoriesFor: #ptAction!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uChanged!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uKeyFlags!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uNewState!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uOldState!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #position!accessing!public! !
+!OS.NMITEMACTIVATE categoriesFor: #ptAction!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #uChanged!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #uKeyFlags!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #uNewState!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesFor: #uOldState!**compiled accessors**!public! !
 
-!NMITEMACTIVATE class methodsFor!
+!OS.NMITEMACTIVATE class methodsFor!
 
 defineFields
 	"
@@ -79,7 +79,7 @@ defineFields
 			UINT uNewState; 
 			UINT uOldState; 
 			UINT uChanged; 
-			POINT ptAction; 
+			POINTL ptAction; 
 			LPARAM lParam; 
 			UINT uKeyFlags; 
 		} NMITEMACTIVATE, *LPNMITEMACTIVATE; "
@@ -97,6 +97,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
-!NMITEMACTIVATE class categoriesFor: #defineFields!public!template definition! !
-!NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMITEMACTIVATE class categoriesFor: #defineFields!public!template definition! !
+!OS.NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

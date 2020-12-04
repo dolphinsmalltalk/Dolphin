@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ListViewConstants
+Kernel.SharedPool subclass: #'OS.ListViewConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -225,6 +225,7 @@ SharedPool subclass: #ListViewConstants
 		'ODT_HEADER' -> 16r64.
 		'ODT_LISTVIEW' -> 16r66
 	}!
-ListViewConstants guid: (GUID fromString: '{b86fc801-bc08-4396-9ffa-1175b2e3518e}')!
-ListViewConstants comment: ''!
-!ListViewConstants categoriesForClass!Unclassified! !
+OS.ListViewConstants guid: (Core.GUID fromString: '{b86fc801-bc08-4396-9ffa-1175b2e3518e}')!
+OS.ListViewConstants isNonInstantiable: true!
+OS.ListViewConstants comment: ''!
+!OS.ListViewConstants categoriesForClass!Unclassified! !

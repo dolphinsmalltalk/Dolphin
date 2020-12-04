@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMCUSTOMDRAW
+OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDrawStage' -> 16rC.
@@ -13,16 +13,16 @@ NMHDR subclass: #NMCUSTOMDRAW
 		'_OffsetOf_rc' -> 16r14.
 		'_OffsetOf_uItemState' -> 16r28
 	}!
-NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
-NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
+OS.NMCUSTOMDRAW guid: (Core.GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
+OS.NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
 
 All the fields in this structure are read-only. Specialized sub-structures provide fields which can be written to in order to pass custom draw settings back to the control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.
 
 '!
-!NMCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
-!NMCUSTOMDRAW methodsFor!
+!OS.NMCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMCUSTOMDRAW methodsFor!
 
 applyFont
 	"Private - Apply the new font (if changed) to the custom draw DC and answer whether
@@ -58,7 +58,7 @@ canvas
 	"Answer the <Canvas> associated with the receiver (useful for custom modifications,
 	but private because care is needed to avoid leaks)."
 
-	canvas isNil ifTrue: [canvas := Canvas withNonOwnedDC: self hdc].
+	canvas isNil ifTrue: [canvas := Graphics.Canvas withNonOwnedDC: self hdc].
 	^canvas!
 
 dwDrawStage
@@ -171,9 +171,9 @@ lParam
 	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 rc
-	"Answer the <RECT> value of the receiver's 'rc' field."
+	"Answer the <RECTL> value of the receiver's 'rc' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rc!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rc!
 
 uItemState
 	"Answer the <Integer> value of the receiver's 'uItemState' field."
@@ -188,40 +188,40 @@ view
 view: anIconListAbstract
 	"Private -"
 	view := anIconListAbstract! !
-!NMCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
-!NMCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #boundingRectangle!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #canvas!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #dwDrawStage!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #dwItemSpec!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #evaluateDrawBlock:!operations!public! !
-!NMCUSTOMDRAW categoriesFor: #font!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #font:!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #hasFocus!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #hdc!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #isChecked!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isDefault!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isDisabled!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isGrayed!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isHot!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isIndeterminate!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isMarked!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #isSelected!public!testing! !
-!NMCUSTOMDRAW categoriesFor: #item!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #item:!accessing!private! !
-!NMCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
-!NMCUSTOMDRAW categoriesFor: #lParam!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #rc!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #uItemState!**compiled accessors**!public! !
-!NMCUSTOMDRAW categoriesFor: #view!accessing!public! !
-!NMCUSTOMDRAW categoriesFor: #view:!accessing!private! !
+!OS.NMCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
+!OS.NMCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #boundingRectangle!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #canvas!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #dwDrawStage!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #dwItemSpec!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #evaluateDrawBlock:!operations!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #font!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #font:!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #hasFocus!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #hdc!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #isChecked!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isDefault!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isDisabled!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isGrayed!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isHot!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isIndeterminate!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isMarked!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #isSelected!public!testing! !
+!OS.NMCUSTOMDRAW categoriesFor: #item!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #item:!accessing!private! !
+!OS.NMCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
+!OS.NMCUSTOMDRAW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #rc!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #uItemState!**compiled accessors**!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #view!accessing!public! !
+!OS.NMCUSTOMDRAW categoriesFor: #view:!accessing!private! !
 
-NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) selectors: #(#backcolor #backcolor: #boundingRectangle #canvas #font #font: #forecolor #forecolor: #hasFocus #isChecked #isDefault #isDisabled #isGrayed #isHot #isIndeterminate #isSelected #view)!
+OS.NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) selectors: #(#backcolor #backcolor: #boundingRectangle #canvas #font #font: #forecolor #forecolor: #hasFocus #isChecked #isDefault #isDisabled #isGrayed #isHot #isIndeterminate #isSelected #view)!
 
-!NMCUSTOMDRAW class methodsFor!
+!OS.NMCUSTOMDRAW class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMCUSTOMDRAW structure.
@@ -232,13 +232,13 @@ defineFields
 	self
 		defineField: #dwDrawStage type: DWORDField readOnly;
 		defineField: #hdc type: HANDLEField readOnly;
-		defineField: #rc type: (StructureField type: RECT) beReadOnly;
+		defineField: #rc type: (StructureField type: RECTL) beReadOnly;
 		defineField: #dwItemSpec type: DWORDField readOnly;
 		defineField: #uItemState type: DWORDField readOnly;
 		defineField: #lParam type: UINT_PTRField readOnly!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
-!NMCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

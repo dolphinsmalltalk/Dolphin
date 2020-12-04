@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TabView subclass: #TabViewXP
+UI.TabView subclass: #'UI.TabViewXP'
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TabViewXP guid: (GUID fromString: '{160cce99-d70d-49cc-9308-00476ce82b28}')!
-TabViewXP comment: 'TabViewXP is a custom <TabView> that replaces the control''s default painting with its own implementation using the XP theme engine if running in a themed app on XP/2k3. In an unthemed app (or in Windows 2000) it degrades back to use the control''s own ''classic'' drawing.
+UI.TabViewXP guid: (Core.GUID fromString: '{160cce99-d70d-49cc-9308-00476ce82b28}')!
+UI.TabViewXP comment: 'TabViewXP is a custom <TabView> that replaces the control''s default painting with its own implementation using the XP theme engine if running in a themed app on XP/2k3. In an unthemed app (or in Windows 2000) it degrades back to use the control''s own ''classic'' drawing.
 
 TabViewXP is needed because the themed control implementation provided by Microsoft only works correctly when the tab orientation is ''top'' (i.e. the tab strip is along the top). The ''bottom'' tab orientation is useable in the standard control with themes enabled (e.g. see Outlook Express'' e-mail editor window), but is aesthetically unpleasing because the bottom tabs are painted using the same bitmaps used to paint the top tabs, and the selection and hot highlighting are thus in the wrong place. The two vertical orientations (left and right) are completely unusable with themes enabled, so when using the standard control one has to turn off theming for vertical (address book) tabs, but the classic appearance looks poor alongside other themed controls because it has a heavy old-fashioned 3-d edge and no hot/selection hightlight. TabViewXP makes use of the XP theme engine to draw the correct themed appearance for the control when in ''top'' orientation, and our interpretation of what the appearance should have been like for the other orientations if MS had bothered to implement it correctly. Note that we don''t even use the control''s standard painting for the ''top'' orientation, as this allows us to support a configurable background colour.
 
 '!
-!TabViewXP categoriesForClass!MVP-Views! !
-!TabViewXP methodsFor!
+!UI.TabViewXP categoriesForClass!MVP-Views! !
+!UI.TabViewXP methodsFor!
 
 calcClientRectangleFromRectangle: aRectangle 
 	"Private - Given a window rectangle represented by the <Rectangle> argument, answer the
@@ -37,7 +37,7 @@ onEraseRequired: aColorEvent
 	self isThemed ifFalse: [^super onEraseRequired: aColorEvent].
 	^true!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"Private - Default handler for paint.
 	N.B. Do not invoke default processing from this event because BeginPaint() has already
 	been called. If you need to invoke default processing then you will have to override
@@ -51,57 +51,57 @@ onPaintRequired: aPaintEvent
 	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
 	pageRect := clientRect copy.
 	tabOrientation := self tabOrientation.
-	tabOrientation == #top 
+	tabOrientation == #top
 		ifTrue: 
-			[pageRect := clientRect left @ (clientRect top + insets top - (insets bottom // 2)) 
+			[pageRect := clientRect left @ (clientRect top + insets top - (insets bottom // 2))
 						corner: clientRect corner.
 			self paintThemedBackgroundOn: canvas in: pageRect.
 			itemTransform := [:rc | rc].
 			self paintThemedTabsOn: canvas offset: itemTransform.
 			self paintTabLabelsOn: canvas.
 			^0].
-	tabOrientation == #bottom 
+	tabOrientation == #bottom
 		ifTrue: 
 			[| offset |
-			pageRect := clientRect left @ (clientRect top + insets bottom - (insets top // 2)) 
+			pageRect := clientRect left @ (clientRect top + insets bottom - (insets top // 2))
 						corner: clientRect corner.
 			offset := 0 @ (-1 * (clientRect height - insets bottom)).
 			itemTransform := [:rc | rc translatedBy: offset]].
-	tabOrientation == #left 
+	tabOrientation == #left
 		ifTrue: 
 			[extent := extent transpose.
-			pageRect := clientRect left @ (clientRect top + insets left - (insets right // 2)) 
+			pageRect := clientRect left @ (clientRect top + insets left - (insets right // 2))
 						corner: clientRect corner transpose.
 			itemTransform := [:rc | rc topLeft transpose extent: rc extent transpose]].
-	tabOrientation == #right 
+	tabOrientation == #right
 		ifTrue: 
 			[extent := extent transpose.
-			pageRect := clientRect left @ (clientRect top + insets right - (insets left // 2)) 
+			pageRect := clientRect left @ (clientRect top + insets right - (insets left // 2))
 						corner: clientRect corner transpose.
 			itemTransform := [:rc | rc top @ (clientRect right - rc right) extent: rc extent transpose]].
 	backBitmap := Bitmap compatible: canvas extent: extent.
 	backSurface := backBitmap canvas.
 	self paintThemedBackgroundOn: backSurface in: pageRect.
 	self paintThemedTabsOn: backSurface offset: itemTransform.
-	tabOrientation == #bottom 
+	tabOrientation == #bottom
 		ifTrue: 
-			[backBitmap 
+			[backBitmap
 				drawOn: canvas
 				at: clientRect bottomLeft - (0 @ 1)
 				extent: extent * (1 @ -1).
 			self paintTabLabelsOn: canvas].
-	tabOrientation == #right 
+	tabOrientation == #right
 		ifTrue: 
-			[canvas 
+			[canvas
 				plgBlt: backSurface
 				rectangle: (0 @ 0 extent: extent)
 				topLeft: clientRect topRight
 				topRight: clientRect bottomRight
 				bottomLeft: clientRect topLeft.
 			self paintVerticalTabLabelsOn: canvas].
-	tabOrientation == #left 
+	tabOrientation == #left
 		ifTrue: 
-			[canvas 
+			[canvas
 				plgBlt: backSurface
 				rectangle: (0 @ 0 extent: extent)
 				topLeft: clientRect topLeft
@@ -187,7 +187,8 @@ paintTabLabelsOn: aCanvas
 				paintLabel: selectedIndex
 				on: aCanvas
 				in: (rect translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
-			self hasFocus ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
+			self hasFocus
+				ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
 	selectedIndex + 1 to: itemCount
 		do: 
 			[:i |
@@ -199,9 +200,9 @@ paintTabLabelsOn: aCanvas
 		backgroundMode: nOldMode;
 		font: oldFont!
 
-paintThemedBackgroundOn: aCanvas in: aRectangle 
+paintThemedBackgroundOn: aCanvas in: aRectangle
 	| bkColor |
-	ThemeLibrary default 
+	ThemeLibrary default
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -209,7 +210,7 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 		pRect: aRectangle asParameter
 		pClipRect: nil.
 	bkColor := self actualBackcolor.
-	bkColor isNone 
+	bkColor isNone
 		ifFalse: 
 			["This is the background fill behind the tabs"
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
@@ -286,14 +287,14 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		pRect: rcItem asParameter
 		pClipRect: nil!
 
-paintVerticalLabel: anInteger on: aCanvas in: aRectangle 
+paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 	| text inverted textExtent textOffset labelRect tcItem imageIndex |
 	inverted := self isInverted.
 	tcItem := self getItem: anInteger.
 	text := tcItem text copyWithout: $&.
 	imageIndex := self hasIcons ifTrue: [tcItem iImage + 1] ifFalse: [-1].
 	textExtent := (aCanvas textExtent: text) transpose.
-	imageIndex <= 0 
+	imageIndex <= 0
 		ifTrue: 
 			[textOffset := 0.
 			labelRect := Rectangle center: aRectangle center extent: textExtent]
@@ -302,16 +303,16 @@ paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 			imageExtent := self imageExtent.
 			textOffset := imageExtent y + self imageTextGap.
 			labelRect := Rectangle center: aRectangle center
-						extent: (textExtent isZero 
+						extent: (textExtent isZero
 								ifTrue: [imageExtent]
 								ifFalse: [(imageExtent x max: textExtent x) @ (textOffset + textExtent y)]).
 			space := labelRect width - imageExtent x.
-			inverted 
+			inverted
 				ifTrue: 
 					[imagePos := (labelRect left + (space // 2)) @ labelRect top.
 					labelRect := labelRect insetOriginBy: 0 @ textOffset]
 				ifFalse: [imagePos := (labelRect left + (space - (space // 2))) @ (labelRect bottom - imageExtent y)].
-			(self imageManager imageListWithExtent: imageExtent) 
+			(self imageManager imageListWithExtent: imageExtent)
 				draw: imageIndex
 				on: aCanvas
 				at: imagePos].
@@ -324,32 +325,31 @@ paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 	aCanvas setTextAlign: (inverted ifTrue: [TA_BOTTOM] ifFalse: [TA_RIGHT]).
 	aCanvas text: text at: (labelRect left + ((labelRect width - textExtent x) // 2)) @ labelRect top!
 
-paintVerticalTabLabelsOn: aCanvas 
+paintVerticalTabLabelsOn: aCanvas
 	| selectedIndex nOldMode oldFont rect itemCount |
 	itemCount := self itemCount.
 	itemCount < 1 ifTrue: [^self].
 	oldFont := aCanvas font: self createVerticalFont.
 	nOldMode := aCanvas backgroundMode: TRANSPARENT.
-	selectedIndex := self selectionByIndex .
+	selectedIndex := self selectionByIndex.
 	1 to: selectedIndex - 1
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				paintVerticalLabel: i
 				on: aCanvas
 				in: (self itemRect: i)].
 	rect := self itemRect: selectedIndex.
-	self 
+	self
 		paintVerticalLabel: selectedIndex
 		on: aCanvas
-		in: (rect 
-				translateBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
-	self hasFocus 
+		in: (rect translateBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
+	self hasFocus
 		ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
 	selectedIndex + 1 to: itemCount
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				paintVerticalLabel: i
 				on: aCanvas
 				in: (self itemRect: i)].
@@ -395,28 +395,28 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						wParam: 0
 						hdc: wParam
 						paintStruct: nil)]! !
-!TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
-!TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
-!TabViewXP categoriesFor: #imageTextGap!constants!private! !
-!TabViewXP categoriesFor: #onEraseRequired:!event handling!private! !
-!TabViewXP categoriesFor: #onPaintRequired:!event handling!private! !
-!TabViewXP categoriesFor: #onSelChanged:!event handling!private! !
-!TabViewXP categoriesFor: #onSelectionChanging:!event handling!private! !
-!TabViewXP categoriesFor: #onViewDestroyed!event handling!private! !
-!TabViewXP categoriesFor: #paintLabel:on:in:!painting!private! !
-!TabViewXP categoriesFor: #paintTabLabelsOn:!event handling!private! !
-!TabViewXP categoriesFor: #paintThemedBackgroundOn:in:!painting!private! !
-!TabViewXP categoriesFor: #paintThemedTabsOn:offset:!painting!private! !
-!TabViewXP categoriesFor: #paintVerticalLabel:on:in:!painting!private! !
-!TabViewXP categoriesFor: #paintVerticalTabLabelsOn:!event handling!private! !
-!TabViewXP categoriesFor: #selExtra!constants!private! !
-!TabViewXP categoriesFor: #supportsThemedVertical!constants!private! !
-!TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!UI.TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
+!UI.TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
+!UI.TabViewXP categoriesFor: #imageTextGap!constants!private! !
+!UI.TabViewXP categoriesFor: #onEraseRequired:!event handling!private! !
+!UI.TabViewXP categoriesFor: #onPaintRequired:!event handling!private! !
+!UI.TabViewXP categoriesFor: #onSelChanged:!event handling!private! !
+!UI.TabViewXP categoriesFor: #onSelectionChanging:!event handling!private! !
+!UI.TabViewXP categoriesFor: #onViewDestroyed!event handling!private! !
+!UI.TabViewXP categoriesFor: #paintLabel:on:in:!painting!private! !
+!UI.TabViewXP categoriesFor: #paintTabLabelsOn:!event handling!private! !
+!UI.TabViewXP categoriesFor: #paintThemedBackgroundOn:in:!painting!private! !
+!UI.TabViewXP categoriesFor: #paintThemedTabsOn:offset:!painting!private! !
+!UI.TabViewXP categoriesFor: #paintVerticalLabel:on:in:!painting!private! !
+!UI.TabViewXP categoriesFor: #paintVerticalTabLabelsOn:!event handling!private! !
+!UI.TabViewXP categoriesFor: #selExtra!constants!private! !
+!UI.TabViewXP categoriesFor: #supportsThemedVertical!constants!private! !
+!UI.TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
+!UI.TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
 
-!TabViewXP class methodsFor!
+!UI.TabViewXP class methodsFor!
 
 themePartName
 	^'TAB'! !
-!TabViewXP class categoriesFor: #themePartName!public! !
+!UI.TabViewXP class categoriesFor: #themePartName!public! !
 

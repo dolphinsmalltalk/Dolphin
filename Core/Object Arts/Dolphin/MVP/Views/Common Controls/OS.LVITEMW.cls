@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CCITEM subclass: #LVITEMW
+OS.CCITEM subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: 'CallbackPrototype'
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r18.
@@ -21,8 +21,8 @@ CCITEM subclass: #LVITEMW
 		'_OffsetOf_puColumns' -> 16r30.
 		'_OffsetOf_stateMask' -> 16r10
 	}!
-LVITEMW guid: (GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
+OS.LVITEMW guid: (Core.GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEMW is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.
 
@@ -45,8 +45,8 @@ struct tagLVITEMW {
 	[readonly] int iGroup;
 } LVITEMW;
 '!
-!LVITEMW categoriesForClass!Win32-Structs! !
-!LVITEMW methodsFor!
+!OS.LVITEMW categoriesForClass!Win32-Structs! !
+!OS.LVITEMW methodsFor!
 
 allCallbacks
 	bytes
@@ -219,7 +219,7 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 		ifFalse:
 			[self iIndent: indentInteger.
 			mask := mask bitOr: LVIF_INDENT.
-			indentInteger < 0 ifTrue: [iImage := ListView.NoImageIndex]].
+			indentInteger < 0 ifTrue: [iImage := UI.ListView.NoImageIndex]].
 	iImage
 		ifNotNil: 
 			[self iImage: iImage - 1.
@@ -265,46 +265,46 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!LVITEMW categoriesFor: #allCallbacks!accessing!public! !
-!LVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!LVITEMW categoriesFor: #cColumns!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #cColumns:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #column:!accessing!public! !
-!LVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #handle!accessing!public! !
-!LVITEMW categoriesFor: #iGroup!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iGroupId!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iGroupId:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iIndent!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iIndent:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iItem!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iItem:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #indent:!accessing!public! !
-!LVITEMW categoriesFor: #iStateImage!accessing!public! !
-!LVITEMW categoriesFor: #iStateImage:!accessing!public! !
-!LVITEMW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #iSubItem:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #piColFmt!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #piColFmt:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #puColumns!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #puColumns:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #row:text:imageIndex:indent:!accessing!private! !
-!LVITEMW categoriesFor: #row:text:imageIndex:indent:stateImageIndex:!accessing!private! !
-!LVITEMW categoriesFor: #stateImageIndex:!accessing!public! !
-!LVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!LVITEMW categoriesFor: #textPointerOffset!constants!private! !
+!OS.LVITEMW categoriesFor: #allCallbacks!accessing!public! !
+!OS.LVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
+!OS.LVITEMW categoriesFor: #cColumns!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #cColumns:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #column:!accessing!public! !
+!OS.LVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #handle!accessing!public! !
+!OS.LVITEMW categoriesFor: #iGroup!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iGroupId!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iGroupId:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iIndent!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iIndent:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iItem!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iItem:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #indent:!accessing!public! !
+!OS.LVITEMW categoriesFor: #iStateImage!accessing!public! !
+!OS.LVITEMW categoriesFor: #iStateImage:!accessing!public! !
+!OS.LVITEMW categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #iSubItem:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #piColFmt!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #piColFmt:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #puColumns!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #puColumns:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #row:text:imageIndex:indent:!accessing!private! !
+!OS.LVITEMW categoriesFor: #row:text:imageIndex:indent:stateImageIndex:!accessing!private! !
+!OS.LVITEMW categoriesFor: #stateImageIndex:!accessing!public! !
+!OS.LVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
+!OS.LVITEMW categoriesFor: #textPointerOffset!constants!private! !
 
-!LVITEMW class methodsFor!
+!OS.LVITEMW class methodsFor!
 
 allCallbacks
 	^self basicNew
@@ -389,8 +389,8 @@ getFieldNames
 
 initialize
 	CallbackPrototype := self new allCallbacks; bytes! !
-!LVITEMW class categoriesFor: #allCallbacks!public! !
-!LVITEMW class categoriesFor: #defineFields!public!template definition! !
-!LVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LVITEMW class categoriesFor: #initialize!development!public! !
+!OS.LVITEMW class categoriesFor: #allCallbacks!public! !
+!OS.LVITEMW class categoriesFor: #defineFields!public!template definition! !
+!OS.LVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LVITEMW class categoriesFor: #initialize!development!public! !
 

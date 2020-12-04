@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMGETINFOTIP
+OS.NMHDR subclass: #'OS.NMGETINFOTIP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NMGETINFOTIP guid: (GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
-NMGETINFOTIP isAbstract: true!
-NMGETINFOTIP comment: ''!
-!NMGETINFOTIP categoriesForClass!External-Data-Structured-Win32! !
-!NMGETINFOTIP methodsFor!
+OS.NMGETINFOTIP guid: (Core.GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
+OS.NMGETINFOTIP isNonInstantiable: true!
+OS.NMGETINFOTIP comment: ''!
+!OS.NMGETINFOTIP categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMGETINFOTIP methodsFor!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
@@ -42,8 +42,8 @@ text: text
 			tipText := (tipText copyFrom: 1 to: last) , '...'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText! !
-!NMGETINFOTIP categoriesFor: #cchTextMax!accessing!public! !
-!NMGETINFOTIP categoriesFor: #pszText!accessing!public! !
-!NMGETINFOTIP categoriesFor: #text!accessing!public! !
-!NMGETINFOTIP categoriesFor: #text:!accessing!public! !
+!OS.NMGETINFOTIP categoriesFor: #cchTextMax!accessing!public! !
+!OS.NMGETINFOTIP categoriesFor: #pszText!accessing!public! !
+!OS.NMGETINFOTIP categoriesFor: #text!accessing!public! !
+!OS.NMGETINFOTIP categoriesFor: #text:!accessing!public! !
 

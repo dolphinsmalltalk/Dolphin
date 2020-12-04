@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMGETINFOTIP subclass: #NMLVGETINFOTIPW
+OS.NMGETINFOTIP subclass: #'OS.NMLVGETINFOTIPW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r14.
@@ -13,10 +13,10 @@ NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 		'_OffsetOf_lParam' -> 16r20.
 		'_OffsetOf_pszText' -> 16r10
 	}!
-NMLVGETINFOTIPW guid: (GUID fromString: '{cfd19e11-86a3-4b65-ae78-55b3c8c34b0c}')!
-NMLVGETINFOTIPW comment: ''!
-!NMLVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
-!NMLVGETINFOTIPW methodsFor!
+OS.NMLVGETINFOTIPW guid: (Core.GUID fromString: '{cfd19e11-86a3-4b65-ae78-55b3c8c34b0c}')!
+OS.NMLVGETINFOTIPW comment: ''!
+!OS.NMLVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMLVGETINFOTIPW methodsFor!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
@@ -47,14 +47,14 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
-!NMLVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
-!NMLVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #iItem!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
+!OS.NMLVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
 
-!NMLVGETINFOTIPW class methodsFor!
+!OS.NMLVGETINFOTIPW class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMLVGETINFOTIPW structure.
@@ -86,6 +86,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
-!NMLVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
-!NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

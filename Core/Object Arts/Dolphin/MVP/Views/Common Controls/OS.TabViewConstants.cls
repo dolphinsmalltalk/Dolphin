@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #TabViewConstants
+Kernel.SharedPool subclass: #'OS.TabViewConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -67,6 +67,7 @@ SharedPool subclass: #TabViewConstants
 		'TCS_TOOLTIPS' -> 16r4000.
 		'TCS_VERTICAL' -> 16r80
 	}!
-TabViewConstants guid: (GUID fromString: '{b17ee2d0-3b54-4ffd-a62e-eac4ee36000b}')!
-TabViewConstants comment: ''!
-!TabViewConstants categoriesForClass!Unclassified! !
+OS.TabViewConstants guid: (Core.GUID fromString: '{b17ee2d0-3b54-4ffd-a62e-eac4ee36000b}')!
+OS.TabViewConstants isNonInstantiable: true!
+OS.TabViewConstants comment: ''!
+!OS.TabViewConstants categoriesForClass!Unclassified! !

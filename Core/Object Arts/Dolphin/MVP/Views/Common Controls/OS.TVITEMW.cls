@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CCITEM subclass: #TVITEMW
+OS.CCITEM subclass: #'OS.TVITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TreeViewConstants'
+	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cChildren' -> 16r20.
@@ -16,8 +16,8 @@ CCITEM subclass: #TVITEMW
 		'_OffsetOf_pszText' -> 16r10.
 		'_OffsetOf_stateMask' -> 16rC
 	}!
-TVITEMW guid: (GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
-TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
+OS.TVITEMW guid: (Core.GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TVITEM is used to communicate information about the items (nodes) in a Tree View control such as the text, icon, state, etc.
 
@@ -33,8 +33,8 @@ TVITEM is used to communicate information about the items (nodes) in a Tree View
         int       cChildren;
         LPARAM	lParam;
     } TVITEM;'!
-!TVITEMW categoriesForClass!External-Data-Structured-Win32! !
-!TVITEMW methodsFor!
+!OS.TVITEMW categoriesForClass!External-Data-Structured-Win32! !
+!OS.TVITEMW methodsFor!
 
 allCallbacks
 	"Set up the receiver to specify that callbacks are required for image, children count, and label text."
@@ -170,12 +170,6 @@ pszText: anUtf16String
 
 	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
-saveDetails
-	"Private - Set the flag in the receiver's mask which informs the TreeView to save
-	any details included in this item and not ask for them again."
-
-	self maskIn: TVIF_DI_SETITEM!
-
 selectedImage: anInteger
 	"Set contents' iSelectedImage member to anInteger"
 
@@ -196,37 +190,36 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!TVITEMW categoriesFor: #allCallbacks!accessing!public! !
-!TVITEMW categoriesFor: #beStateExpandedOnce!accessing!public! !
-!TVITEMW categoriesFor: #cChildren!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cChildren:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!TVITEMW categoriesFor: #children:!accessing!public! !
-!TVITEMW categoriesFor: #childrenCallback!accessing!public! !
-!TVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #getValidFields!accessing!private! !
-!TVITEMW categoriesFor: #handle!accessing!public! !
-!TVITEMW categoriesFor: #hItem!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #hItem:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iSelectedImage!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iSelectedImage:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #isStateExpandedOnce!public!testing! !
-!TVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #saveDetails!accessing!private! !
-!TVITEMW categoriesFor: #selectedImage:!accessing!public! !
-!TVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #textPointerOffset!constants!private! !
+!OS.TVITEMW categoriesFor: #allCallbacks!accessing!public! !
+!OS.TVITEMW categoriesFor: #beStateExpandedOnce!accessing!public! !
+!OS.TVITEMW categoriesFor: #cChildren!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #cChildren:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
+!OS.TVITEMW categoriesFor: #children:!accessing!public! !
+!OS.TVITEMW categoriesFor: #childrenCallback!accessing!public! !
+!OS.TVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #getValidFields!accessing!private! !
+!OS.TVITEMW categoriesFor: #handle!accessing!public! !
+!OS.TVITEMW categoriesFor: #hItem!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #hItem:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #iSelectedImage!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #iSelectedImage:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #isStateExpandedOnce!public!testing! !
+!OS.TVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #selectedImage:!accessing!public! !
+!OS.TVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
+!OS.TVITEMW categoriesFor: #textPointerOffset!constants!private! !
 
-!TVITEMW class methodsFor!
+!OS.TVITEMW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 TVITEMW structure
@@ -267,6 +260,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
-!TVITEMW class categoriesFor: #defineFields!public!template definition! !
-!TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TVITEMW class categoriesFor: #defineFields!public!template definition! !
+!OS.TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

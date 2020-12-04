@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMGETINFOTIP subclass: #NMTVGETINFOTIPW
+OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -11,10 +11,10 @@ NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 		'_OffsetOf_lParam' -> 16r18.
 		'_OffsetOf_pszText' -> 16rC
 	}!
-NMTVGETINFOTIPW guid: (GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
-NMTVGETINFOTIPW comment: ''!
-!NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
-!NMTVGETINFOTIPW methodsFor!
+OS.NMTVGETINFOTIPW guid: (Core.GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
+OS.NMTVGETINFOTIPW comment: ''!
+!OS.NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMTVGETINFOTIPW methodsFor!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
@@ -40,13 +40,13 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
-!NMTVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!NMTVGETINFOTIPW categoriesFor: #hItem!**compiled accessors**!public! !
-!NMTVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
-!NMTVGETINFOTIPW categoriesFor: #lParam!**compiled accessors**!public! !
-!NMTVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.NMTVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!OS.NMTVGETINFOTIPW categoriesFor: #hItem!**compiled accessors**!public! !
+!OS.NMTVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
+!OS.NMTVGETINFOTIPW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.NMTVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
 
-!NMTVGETINFOTIPW class methodsFor!
+!OS.NMTVGETINFOTIPW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 NMTVGETINFOTIPW structure.
@@ -62,6 +62,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
-!NMTVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
-!NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

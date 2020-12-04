@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CCITEM subclass: #TCITEMW
+OS.CCITEM subclass: #'OS.TCITEMW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TabViewConstants'
+	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchTextMax' -> 16r10.
@@ -13,8 +13,8 @@ CCITEM subclass: #TCITEMW
 		'_OffsetOf_pszText' -> 16rC.
 		'_OffsetOf_stateMask' -> 16r8
 	}!
-TCITEMW guid: (GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
-TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
+OS.TCITEMW guid: (Core.GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TCITEM is used to communicate information about the items (tabs) in a Tab Control.
 
@@ -29,8 +29,8 @@ TCITEM is used to communicate information about the items (tabs) in a Tab Contro
 
         LPARAM	lParam;  
     } TCITEMA, *LPTCITEMA;'!
-!TCITEMW categoriesForClass!External-Data-Structured-Win32! !
-!TCITEMW methodsFor!
+!OS.TCITEMW categoriesForClass!External-Data-Structured-Win32! !
+!OS.TCITEMW methodsFor!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
@@ -121,26 +121,26 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!TCITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!TCITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #handle!accessing!public! !
-!TCITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #paramValidMask!constants!private! !
-!TCITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateValidMask!constants!private! !
-!TCITEMW categoriesFor: #text!accessing!public! !
-!TCITEMW categoriesFor: #textPointerOffset!constants!private! !
+!OS.TCITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
+!OS.TCITEMW categoriesFor: #dwState!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #handle!accessing!public! !
+!OS.TCITEMW categoriesFor: #iImage!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #paramValidMask!constants!private! !
+!OS.TCITEMW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
+!OS.TCITEMW categoriesFor: #stateValidMask!constants!private! !
+!OS.TCITEMW categoriesFor: #text!accessing!public! !
+!OS.TCITEMW categoriesFor: #textPointerOffset!constants!private! !
 
-!TCITEMW class methodsFor!
+!OS.TCITEMW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 TCITEM structure.
@@ -160,15 +160,27 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwState type: DWORDField new offset: 4;
-		defineField: #stateMask type: DWORDField new offset: 8;
-		defineField: #pszText type: (PointerField type: Utf16String) offset: 12;
-		defineField: #cchTextMax type: SDWORDField new offset: 16;
-		defineField: #iImage type: SDWORDField new offset: 20;
-		defineField: #lParam type: UINT_PTRField new offset: 24!
+		defineField: #dwState
+			type: DWORDField new
+			offset: 4;
+		defineField: #stateMask
+			type: DWORDField new
+			offset: 8;
+		defineField: #pszText
+			type: (PointerField type: Utf16String)
+			offset: 12;
+		defineField: #cchTextMax
+			type: SDWORDField new
+			offset: 16;
+		defineField: #iImage
+			type: SDWORDField new
+			offset: 20;
+		defineField: #lParam
+			type: UINT_PTRField new
+			offset: 24!
 
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
-!TCITEMW class categoriesFor: #defineFields!public!template definition! !
-!TCITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TCITEMW class categoriesFor: #defineFields!public!template definition! !
+!OS.TCITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

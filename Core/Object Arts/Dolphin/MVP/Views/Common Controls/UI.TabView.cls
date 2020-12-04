@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IconicListAbstract subclass: #TabView
+UI.IconicListAbstract subclass: #'UI.TabView'
 	instanceVariableNames: 'viewMode'
 	classVariableNames: 'TabOrientations TabViewModes'
-	poolDictionaries: 'TabViewConstants'
+	imports: #(#{OS.TabViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'OrientationMask' -> 16r82
 	}!
-TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
-TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
+UI.TabView guid: (Core.GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.
 
@@ -20,8 +20,8 @@ Class Variables:
 	TcnMap		<IdentityDictionary> mapping Windows notification messages to <selectors>.
 
 '!
-!TabView categoriesForClass!MVP-Views! !
-!TabView methodsFor!
+!UI.TabView categoriesForClass!MVP-Views! !
+!UI.TabView methodsFor!
 
 applyImageLists
 	"Private - Set the receiver's image list from the image manager."
@@ -41,14 +41,14 @@ basicClear
 
 	(self sendMessage: TCM_DELETEALLITEMS) == 0 ifTrue: [^self errorInCommonControlCall]!
 
-basicItemFromPoint: aPoint 
+basicItemFromPoint: aPoint
 	"Private - Answer a TCHITTESTINFO populated with details of the item under the <Point>
 	argument."
 
 	| struct |
 	struct := TCHITTESTINFO new.
 	struct pt: aPoint asParameter.
-	struct iItem: (self 
+	struct iItem: (self
 				sendMessage: TCM_HITTEST
 				wParam: 0
 				lpParam: struct).
@@ -136,6 +136,11 @@ fontChanged
 
 	super fontChanged.
 	self invalidateLayout!
+
+getEditControl
+	^self shouldNotImplement
+
+!
 
 getItem: anInteger
 	| tcItem |
@@ -324,14 +329,14 @@ onItem: anObject removedAtIndex: anInteger
 				ifTrue: [self selectionByIndex: (selIndex - 1 max: 1)]
 				ifFalse: [self onSelChanged: nil]]!
 
-onMouseHovering: aMouseEvent 
+onMouseHovering: aMouseEvent
 	"The user is hovering the mouse over the receiver. If hot-tracking is enabled, then select the tab under the mouse."
 
-	self hasHotTracking 
+	self hasHotTracking
 		ifTrue: 
 			[| hit |
 			hit := self basicItemFromPoint: aMouseEvent position.
-			(hit isItemHit and: [self selectionByIndex ~= hit handle]) 
+			(hit isItemHit and: [self selectionByIndex ~= hit handle])
 				ifTrue: 
 					[| event |
 					event := SelectionChangingEvent forSource: self.
@@ -358,19 +363,19 @@ onViewCreated
 	(self isVertical and: [self supportsThemedVertical not]) ifTrue: [self beNotThemed].
 	self refreshContents!
 
-preTranslateKeyboardInput: aMSG 
+preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard
 	message."
 
 	| vk |
 	vk := aMSG wParam.
-	((vk == VK_TAB or: [vk == VK_PRIOR or: [vk == VK_NEXT]]) and: [Keyboard default isCtrlDown]) 
+	((vk == VK_TAB or: [vk == VK_PRIOR or: [vk == VK_NEXT]]) and: [Keyboard default isCtrlDown])
 		ifTrue: 
-			[aMSG message == WM_KEYDOWN 
+			[aMSG message == WM_KEYDOWN
 				ifTrue: 
 					[| index |
 					index := self selectionByIndex.
-					index := (vk == VK_PRIOR or: [vk == VK_TAB and: [Keyboard default isShiftDown]]) 
+					index := (vk == VK_PRIOR or: [vk == VK_TAB and: [Keyboard default isShiftDown]])
 								ifTrue: [index = 1 ifTrue: [self size] ifFalse: [index - 1]]
 								ifFalse: [index \\ self size + 1].
 					self selectionByIndex: index].
@@ -487,21 +492,21 @@ tabViewStyleMask: mask set: aBoolean
 
 	^self tcmSetExtendedStyle: mask dwExStyle: aBoolean asParameter negated!
 
-tcmAdjustRect: aBooleanMode for: aRectangle 
+tcmAdjustRect: aBooleanMode for: aRectangle
 	"Private - Calculates the display area for a given window rectangle or calculates
 	the window rectangle that would correspond to a specified display area. The operation
 	is determined by aBooleanMode being false or true respectively. Answers the calculated
 	rectangle"
 
-	| wr |
+	| rect |
 	"The control has a bug whereby TCM_ADJUSTRECT sometimes GPFs when it has no extent"
 	aRectangle extent isZero ifTrue: [^aRectangle].
-	wr := aRectangle asParameter.
-	self 
+	rect := RECTL fromRectangle: aRectangle.
+	self
 		sendMessage: TCM_ADJUSTRECT
 		wParam: aBooleanMode asParameter
-		lpParam: wr asParameter.
-	^wr asRectangle!
+		lpParam: rect.
+	^rect asRectangle!
 
 tcmGetCurFocus
 	"Private - Answer the zero-based <integer> index of the tab with focus."
@@ -513,14 +518,14 @@ tcmGetExtendedStyle
 
 	^self sendMessage: TCM_GETEXTENDEDSTYLE wParam: 0 lpParam: 0!
 
-tcmGetItemRect: anInteger 
+tcmGetItemRect: anInteger
 	"Private - Answer the bounding rectangle for the tree-view item identified by aHandle. If aBoolean is true,
 	the bounding rectangle includes only the text of the item, otherwise, it includes the entire line
 	that the item occupies in the tree-view control."
 
 	| rect |
-	rect := RECT new.
-	self 
+	rect := RECTL new.
+	self
 		sendMessage: TCM_GETITEMRECT
 		wParam: anInteger
 		lpParam: rect.
@@ -559,7 +564,7 @@ tcnSelChanging: pNMHDR
 			currently is and what it will be."
 			event oldSelection: self selectionOrNil.
 			self presenter onSelectionChanging: event.
-			event value]) 
+			event value])
 		not!
 
 updateAllNonVirtual
@@ -601,82 +606,83 @@ viewMode
 viewModeChanged
 	super viewModeChanged.
 	self invalidateLayout! !
-!TabView categoriesFor: #applyImageLists!image management!private! !
-!TabView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!TabView categoriesFor: #basicClear!public!removing! !
-!TabView categoriesFor: #basicItemFromPoint:!accessing!private! !
-!TabView categoriesFor: #basicRefreshContents!private!updating! !
-!TabView categoriesFor: #basicRemoveAtIndex:!public!removing! !
-!TabView categoriesFor: #beNoIcons!modes!public! !
-!TabView categoriesFor: #calcClientRectangleFromRectangle:!private! !
-!TabView categoriesFor: #calcRectangleFromClientRectangle:!geometry!private! !
-!TabView categoriesFor: #canEditLabels!accessing-styles!public!testing! !
-!TabView categoriesFor: #defaultBackcolor!private! !
-!TabView categoriesFor: #defaultExtent!constants!private! !
-!TabView categoriesFor: #defaultWindowExStyle!constants!private! !
-!TabView categoriesFor: #defaultWindowStyle!constants!public! !
-!TabView categoriesFor: #dragOver:!drag & drop!public! !
-!TabView categoriesFor: #ensureVisible:!public! !
-!TabView categoriesFor: #fontChanged!public!updating! !
-!TabView categoriesFor: #getItem:!helpers!private! !
-!TabView categoriesFor: #getSelectionsByIndex!private!selection! !
-!TabView categoriesFor: #getSingleSelection!public!selection! !
-!TabView categoriesFor: #hasButtons!accessing-styles!public! !
-!TabView categoriesFor: #hasButtons:!accessing-styles!public! !
-!TabView categoriesFor: #hasFlatSeparators!accessing-styles!public! !
-!TabView categoriesFor: #hasFlatSeparators:!accessing-styles!public! !
-!TabView categoriesFor: #hasHotTracking!accessing-styles!public! !
-!TabView categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!TabView categoriesFor: #hasIcons!public!testing! !
-!TabView categoriesFor: #hasToolTips!accessing-styles!public! !
-!TabView categoriesFor: #hasToolTips:!accessing-styles!public! !
-!TabView categoriesFor: #initialize!initializing!private! !
-!TabView categoriesFor: #isInverted!accessing-styles!public! !
-!TabView categoriesFor: #isInverted:!accessing-styles!public! !
-!TabView categoriesFor: #isMultiline!accessing!public! !
-!TabView categoriesFor: #isMultiline:!accessing!public! !
-!TabView categoriesFor: #isVertical!accessing-styles!public! !
-!TabView categoriesFor: #isVertical:!accessing-styles!public! !
-!TabView categoriesFor: #itemCount!accessing!public! !
-!TabView categoriesFor: #itemFromNMHDRA:!helpers!private! !
-!TabView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
-!TabView categoriesFor: #itemRect:textOnly:!public! !
-!TabView categoriesFor: #makeTcItemStruct:!adding!private! !
-!TabView categoriesFor: #nmNotify:!event handling-win32!private! !
-!TabView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!TabView categoriesFor: #onMouseHovering:!constants!public! !
-!TabView categoriesFor: #onMouseMoved:!event handling!public! !
-!TabView categoriesFor: #onViewCreated!event handling!public! !
-!TabView categoriesFor: #preTranslateKeyboardInput:!public! !
-!TabView categoriesFor: #queryCommand:!private! !
-!TabView categoriesFor: #refreshContents!public!updating! !
-!TabView categoriesFor: #rows!geometry!public! !
-!TabView categoriesFor: #selectionByIndex!public!selection! !
-!TabView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!TabView categoriesFor: #selectionState!accessing!private! !
-!TabView categoriesFor: #setSingleSelection:!public!selection! !
-!TabView categoriesFor: #setViewMode:!accessing!private! !
-!TabView categoriesFor: #state!accessing!private! !
-!TabView categoriesFor: #supportsThemedVertical!constants!private! !
-!TabView categoriesFor: #tabOrientation!event handling!public! !
-!TabView categoriesFor: #tabOrientation:!event handling!public! !
-!TabView categoriesFor: #tabViewStyleAllMask:!accessing-styles!private! !
-!TabView categoriesFor: #tabViewStyleMask:set:!accessing-styles!private! !
-!TabView categoriesFor: #tcmAdjustRect:for:!geometry!private! !
-!TabView categoriesFor: #tcmGetCurFocus!private!selection! !
-!TabView categoriesFor: #tcmGetExtendedStyle!accessing-styles!private! !
-!TabView categoriesFor: #tcmGetItemRect:!private! !
-!TabView categoriesFor: #tcmInsertItem:atOffset:!adding!private! !
-!TabView categoriesFor: #tcmSetExtendedStyle:dwExStyle:!accessing-styles!private! !
-!TabView categoriesFor: #tcmSetImageList:!image management!private! !
-!TabView categoriesFor: #tcnSelChanging:!event handling-win32!private! !
-!TabView categoriesFor: #updateAllNonVirtual!private!updating! !
-!TabView categoriesFor: #updateItem:atIndex:!event handling!public! !
-!TabView categoriesFor: #updateSelectionCache!event handling!private! !
-!TabView categoriesFor: #viewMode!accessing!public! !
-!TabView categoriesFor: #viewModeChanged!helpers!private! !
+!UI.TabView categoriesFor: #applyImageLists!image management!private! !
+!UI.TabView categoriesFor: #basicAdd:atIndex:!adding!private! !
+!UI.TabView categoriesFor: #basicClear!public!removing! !
+!UI.TabView categoriesFor: #basicItemFromPoint:!accessing!private! !
+!UI.TabView categoriesFor: #basicRefreshContents!private!updating! !
+!UI.TabView categoriesFor: #basicRemoveAtIndex:!public!removing! !
+!UI.TabView categoriesFor: #beNoIcons!modes!public! !
+!UI.TabView categoriesFor: #calcClientRectangleFromRectangle:!private! !
+!UI.TabView categoriesFor: #calcRectangleFromClientRectangle:!geometry!private! !
+!UI.TabView categoriesFor: #canEditLabels!accessing-styles!public!testing! !
+!UI.TabView categoriesFor: #defaultBackcolor!private! !
+!UI.TabView categoriesFor: #defaultExtent!constants!private! !
+!UI.TabView categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.TabView categoriesFor: #defaultWindowStyle!constants!public! !
+!UI.TabView categoriesFor: #dragOver:!drag & drop!public! !
+!UI.TabView categoriesFor: #ensureVisible:!public! !
+!UI.TabView categoriesFor: #fontChanged!public!updating! !
+!UI.TabView categoriesFor: #getEditControl!accessing!private! !
+!UI.TabView categoriesFor: #getItem:!helpers!private! !
+!UI.TabView categoriesFor: #getSelectionsByIndex!private!selection! !
+!UI.TabView categoriesFor: #getSingleSelection!public!selection! !
+!UI.TabView categoriesFor: #hasButtons!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasButtons:!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasFlatSeparators!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasFlatSeparators:!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasHotTracking!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasHotTracking:!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasIcons!public!testing! !
+!UI.TabView categoriesFor: #hasToolTips!accessing-styles!public! !
+!UI.TabView categoriesFor: #hasToolTips:!accessing-styles!public! !
+!UI.TabView categoriesFor: #initialize!initializing!private! !
+!UI.TabView categoriesFor: #isInverted!accessing-styles!public! !
+!UI.TabView categoriesFor: #isInverted:!accessing-styles!public! !
+!UI.TabView categoriesFor: #isMultiline!accessing!public! !
+!UI.TabView categoriesFor: #isMultiline:!accessing!public! !
+!UI.TabView categoriesFor: #isVertical!accessing-styles!public! !
+!UI.TabView categoriesFor: #isVertical:!accessing-styles!public! !
+!UI.TabView categoriesFor: #itemCount!accessing!public! !
+!UI.TabView categoriesFor: #itemFromNMHDRA:!helpers!private! !
+!UI.TabView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
+!UI.TabView categoriesFor: #itemRect:textOnly:!public! !
+!UI.TabView categoriesFor: #makeTcItemStruct:!adding!private! !
+!UI.TabView categoriesFor: #nmNotify:!event handling-win32!private! !
+!UI.TabView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!UI.TabView categoriesFor: #onMouseHovering:!constants!public! !
+!UI.TabView categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.TabView categoriesFor: #onViewCreated!event handling!public! !
+!UI.TabView categoriesFor: #preTranslateKeyboardInput:!public! !
+!UI.TabView categoriesFor: #queryCommand:!private! !
+!UI.TabView categoriesFor: #refreshContents!public!updating! !
+!UI.TabView categoriesFor: #rows!geometry!public! !
+!UI.TabView categoriesFor: #selectionByIndex!public!selection! !
+!UI.TabView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
+!UI.TabView categoriesFor: #selectionState!accessing!private! !
+!UI.TabView categoriesFor: #setSingleSelection:!public!selection! !
+!UI.TabView categoriesFor: #setViewMode:!accessing!private! !
+!UI.TabView categoriesFor: #state!accessing!private! !
+!UI.TabView categoriesFor: #supportsThemedVertical!constants!private! !
+!UI.TabView categoriesFor: #tabOrientation!event handling!public! !
+!UI.TabView categoriesFor: #tabOrientation:!event handling!public! !
+!UI.TabView categoriesFor: #tabViewStyleAllMask:!accessing-styles!private! !
+!UI.TabView categoriesFor: #tabViewStyleMask:set:!accessing-styles!private! !
+!UI.TabView categoriesFor: #tcmAdjustRect:for:!geometry!private! !
+!UI.TabView categoriesFor: #tcmGetCurFocus!private!selection! !
+!UI.TabView categoriesFor: #tcmGetExtendedStyle!accessing-styles!private! !
+!UI.TabView categoriesFor: #tcmGetItemRect:!private! !
+!UI.TabView categoriesFor: #tcmInsertItem:atOffset:!adding!private! !
+!UI.TabView categoriesFor: #tcmSetExtendedStyle:dwExStyle:!accessing-styles!private! !
+!UI.TabView categoriesFor: #tcmSetImageList:!image management!private! !
+!UI.TabView categoriesFor: #tcnSelChanging:!event handling-win32!private! !
+!UI.TabView categoriesFor: #updateAllNonVirtual!private!updating! !
+!UI.TabView categoriesFor: #updateItem:atIndex:!event handling!public! !
+!UI.TabView categoriesFor: #updateSelectionCache!event handling!private! !
+!UI.TabView categoriesFor: #viewMode!accessing!public! !
+!UI.TabView categoriesFor: #viewModeChanged!helpers!private! !
 
-!TabView class methodsFor!
+!UI.TabView class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -722,9 +728,9 @@ winClassName
 
 	^'SysTabControl32'
 ! !
-!TabView class categoriesFor: #icon!constants!public! !
-!TabView class categoriesFor: #initialize!development!initializing!private! !
-!TabView class categoriesFor: #tabOrientations!accessing!constants!public! !
-!TabView class categoriesFor: #viewModes!accessing!public! !
-!TabView class categoriesFor: #winClassName!constants!private! !
+!UI.TabView class categoriesFor: #icon!constants!public! !
+!UI.TabView class categoriesFor: #initialize!development!initializing!private! !
+!UI.TabView class categoriesFor: #tabOrientations!accessing!constants!public! !
+!UI.TabView class categoriesFor: #viewModes!accessing!public! !
+!UI.TabView class categoriesFor: #winClassName!constants!private! !
 

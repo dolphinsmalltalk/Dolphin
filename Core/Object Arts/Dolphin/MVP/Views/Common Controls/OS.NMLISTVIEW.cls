@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMLISTVIEW
+OS.NMHDR subclass: #'OS.NMLISTVIEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iItem' -> 16rC.
@@ -14,10 +14,10 @@ NMHDR subclass: #NMLISTVIEW
 		'_OffsetOf_uNewState' -> 16r14.
 		'_OffsetOf_uOldState' -> 16r18
 	}!
-NMLISTVIEW guid: (GUID fromString: '{87b4c624-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMLISTVIEW comment: ''!
-!NMLISTVIEW categoriesForClass!External-Data-Structured-Win32! !
-!NMLISTVIEW methodsFor!
+OS.NMLISTVIEW guid: (Core.GUID fromString: '{87b4c624-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.NMLISTVIEW comment: ''!
+!OS.NMLISTVIEW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMLISTVIEW methodsFor!
 
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
@@ -58,16 +58,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #itemHandle!accessing!public! !
-!NMLISTVIEW categoriesFor: #lParam!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #ptAction!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uChanged!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uNewState!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uOldState!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #itemHandle!accessing!public! !
+!OS.NMLISTVIEW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #ptAction!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #uChanged!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #uNewState!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesFor: #uOldState!**compiled accessors**!public! !
 
-!NMLISTVIEW class methodsFor!
+!OS.NMLISTVIEW class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMLISTVIEW structure.
@@ -86,6 +86,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
-!NMLISTVIEW class categoriesFor: #defineFields!public!template definition! !
-!NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLISTVIEW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
