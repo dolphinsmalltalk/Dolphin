@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #TreeModelAbstract
+Core.Model subclass: #'UI.TreeModelAbstract'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModelAbstract guid: (GUID fromString: '{87b4c66d-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeModelAbstract isAbstract: true!
-TreeModelAbstract comment: 'TreeModelAbstract is the abstract superclass for classes implementing the <treeModel> protocol. All of the manipulations that modify  the underlying tree structure will trigger notification events such that Observers will be informed of the changes. The <treeModel> protocol defines the following events:
+UI.TreeModelAbstract guid: (Core.GUID fromString: '{87b4c66d-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TreeModelAbstract isNonInstantiable: true!
+UI.TreeModelAbstract comment: 'TreeModelAbstract is the abstract superclass for classes implementing the <treeModel> protocol. All of the manipulations that modify  the underlying tree structure will trigger notification events such that Observers will be informed of the changes. The <treeModel> protocol defines the following events:
 
 #treeChanged:
 #item:addedInParent:
@@ -20,8 +20,8 @@ Instance Variables:
 	searchPolicy		Pluggable <searchPolicy> used for comparing objects against those in the tree.
 
 '!
-!TreeModelAbstract categoriesForClass!MVP-Models! !
-!TreeModelAbstract methodsFor!
+!UI.TreeModelAbstract categoriesForClass!MVP-Models! !
+!UI.TreeModelAbstract methodsFor!
 
 add: leaf asChildOf: branch
 	"Adds the <Object>, leaf, to the receiver as a child of the <Object>,
@@ -70,10 +70,9 @@ asArray
 asBag
 	"Answer a Bag whose elements are those stored in the receiver"
 
-	^(Bag new: self size) 
-		addAll: self; 
-		yourself
-!
+	^(Bag new: self size)
+		addAll: self;
+		yourself!
 
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
@@ -90,19 +89,17 @@ asSet
 	"Answer a Set whose elements are those stored in the receiver (any duplicates are therefore 
 	eliminated)."
 
-	^(Set new: self approxSize) 
-		addAll: self; 
-		yourself
-!
+	^(Set new: self approxSize)
+		addAll: self;
+		yourself!
 
 asSortedCollection
 	"Answer a SortedCollection whose elements are those of the receiver, sorted so that each 
 	element is less than or equal to (<=) its successors. The elements must understand #<=."
 
-	^(SortedCollection new: self approxSize) 
-		addAll: self; 
-		yourself
-!
+	^(SortedCollection new: self approxSize)
+		addAll: self;
+		yourself!
 
 asSortedCollection: discriminator
 	"Answer a SortedCollection whose elements are those of the receiver, sorted according to 
@@ -113,8 +110,7 @@ asSortedCollection: discriminator
 	^(SortedCollection new: self approxSize)
 		sortBlock: discriminator;
 		addAll: self;
-		yourself
-!
+		yourself!
 
 basicRoots: aCollection
 	"Private - Set the roots of the receiver's hierarchy to be
@@ -385,8 +381,7 @@ select: discriminator
 	| stream |
 	stream := Array writeStream: self approxSize.
 	self do: [:each | (discriminator value: each) ifTrue: [stream nextPut: each]].
-	^stream contents
-!
+	^stream contents!
 
 setRoots: aCollection
 	"Private - Initialize the receiver with the roots in the <Collection> argument."
@@ -427,59 +422,59 @@ withAllParents: anObject
 	^(self allParentsOf: anObject)
 		addLast: anObject;
 		yourself! !
-!TreeModelAbstract categoriesFor: #add:asChildOf:!adding!public! !
-!TreeModelAbstract categoriesFor: #addRoot:!accessing!public! !
-!TreeModelAbstract categoriesFor: #allParentsOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #approxSize!accessing!private! !
-!TreeModelAbstract categoriesFor: #asArray!converting!public! !
-!TreeModelAbstract categoriesFor: #asBag!converting!public! !
-!TreeModelAbstract categoriesFor: #asOrderedCollection!converting!public! !
-!TreeModelAbstract categoriesFor: #asSet!converting!public! !
-!TreeModelAbstract categoriesFor: #asSortedCollection!converting!public! !
-!TreeModelAbstract categoriesFor: #asSortedCollection:!converting!public! !
-!TreeModelAbstract categoriesFor: #basicRoots:!accessing!private! !
-!TreeModelAbstract categoriesFor: #childrenOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #clear!public!removing! !
-!TreeModelAbstract categoriesFor: #collapse:!public!removing! !
-!TreeModelAbstract categoriesFor: #collapse:ifAbsent:!public!removing! !
-!TreeModelAbstract categoriesFor: #countElements!accessing!private! !
-!TreeModelAbstract categoriesFor: #depthOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #detect:ifNone:!converting!public! !
-!TreeModelAbstract categoriesFor: #do:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #endOrderDo:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #endOrderDo:on:!enumerating!private! !
-!TreeModelAbstract categoriesFor: #formattedPrintOn:!development!printing!public! !
-!TreeModelAbstract categoriesFor: #getChildrenOf:!hierarchy!private! !
-!TreeModelAbstract categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!TreeModelAbstract categoriesFor: #includes:!hierarchy!public!searching! !
-!TreeModelAbstract categoriesFor: #isEmpty!public!testing! !
-!TreeModelAbstract categoriesFor: #keyOfNode:in:ifAbsent:!public!searching! !
-!TreeModelAbstract categoriesFor: #move:asChildOf:!public!updating! !
-!TreeModelAbstract categoriesFor: #notEmpty!public!testing! !
-!TreeModelAbstract categoriesFor: #parentOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #preOrderDo:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #preOrderDo:on:!enumerating!private! !
-!TreeModelAbstract categoriesFor: #refresh:!public!updating! !
-!TreeModelAbstract categoriesFor: #refresh:ifAbsent:!public!updating! !
-!TreeModelAbstract categoriesFor: #refreshTree:!public!updating! !
-!TreeModelAbstract categoriesFor: #remove:!public!removing! !
-!TreeModelAbstract categoriesFor: #remove:ifAbsent:!public!removing! !
-!TreeModelAbstract categoriesFor: #removeAll!public!removing! !
-!TreeModelAbstract categoriesFor: #reset!private!removing! !
-!TreeModelAbstract categoriesFor: #roots!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #roots:!accessing!public! !
-!TreeModelAbstract categoriesFor: #searchPolicy!accessing!public! !
-!TreeModelAbstract categoriesFor: #searchPolicy:!initializing!private! !
-!TreeModelAbstract categoriesFor: #select:!converting!public! !
-!TreeModelAbstract categoriesFor: #setRoots:!initializing!private! !
-!TreeModelAbstract categoriesFor: #setRoots:searchPolicy:!initializing!private! !
-!TreeModelAbstract categoriesFor: #size!accessing!public! !
-!TreeModelAbstract categoriesFor: #withAllChildren:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #withAllParents:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #add:asChildOf:!adding!public! !
+!UI.TreeModelAbstract categoriesFor: #addRoot:!accessing!public! !
+!UI.TreeModelAbstract categoriesFor: #allParentsOf:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #approxSize!accessing!private! !
+!UI.TreeModelAbstract categoriesFor: #asArray!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #asBag!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #asOrderedCollection!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #asSet!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #asSortedCollection!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #asSortedCollection:!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #basicRoots:!accessing!private! !
+!UI.TreeModelAbstract categoriesFor: #childrenOf:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #clear!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #collapse:!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #collapse:ifAbsent:!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #countElements!accessing!private! !
+!UI.TreeModelAbstract categoriesFor: #depthOf:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #detect:ifNone:!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #do:!enumerating!public! !
+!UI.TreeModelAbstract categoriesFor: #endOrderDo:!enumerating!public! !
+!UI.TreeModelAbstract categoriesFor: #endOrderDo:on:!enumerating!private! !
+!UI.TreeModelAbstract categoriesFor: #formattedPrintOn:!development!printing!public! !
+!UI.TreeModelAbstract categoriesFor: #getChildrenOf:!hierarchy!private! !
+!UI.TreeModelAbstract categoriesFor: #hasChildren:!hierarchy!public!testing! !
+!UI.TreeModelAbstract categoriesFor: #includes:!hierarchy!public!searching! !
+!UI.TreeModelAbstract categoriesFor: #isEmpty!public!testing! !
+!UI.TreeModelAbstract categoriesFor: #keyOfNode:in:ifAbsent:!public!searching! !
+!UI.TreeModelAbstract categoriesFor: #move:asChildOf:!public!updating! !
+!UI.TreeModelAbstract categoriesFor: #notEmpty!public!testing! !
+!UI.TreeModelAbstract categoriesFor: #parentOf:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #preOrderDo:!enumerating!public! !
+!UI.TreeModelAbstract categoriesFor: #preOrderDo:on:!enumerating!private! !
+!UI.TreeModelAbstract categoriesFor: #refresh:!public!updating! !
+!UI.TreeModelAbstract categoriesFor: #refresh:ifAbsent:!public!updating! !
+!UI.TreeModelAbstract categoriesFor: #refreshTree:!public!updating! !
+!UI.TreeModelAbstract categoriesFor: #remove:!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #remove:ifAbsent:!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #removeAll!public!removing! !
+!UI.TreeModelAbstract categoriesFor: #reset!private!removing! !
+!UI.TreeModelAbstract categoriesFor: #roots!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #roots:!accessing!public! !
+!UI.TreeModelAbstract categoriesFor: #searchPolicy!accessing!public! !
+!UI.TreeModelAbstract categoriesFor: #searchPolicy:!initializing!private! !
+!UI.TreeModelAbstract categoriesFor: #select:!converting!public! !
+!UI.TreeModelAbstract categoriesFor: #setRoots:!initializing!private! !
+!UI.TreeModelAbstract categoriesFor: #setRoots:searchPolicy:!initializing!private! !
+!UI.TreeModelAbstract categoriesFor: #size!accessing!public! !
+!UI.TreeModelAbstract categoriesFor: #withAllChildren:!hierarchy!public! !
+!UI.TreeModelAbstract categoriesFor: #withAllParents:!hierarchy!public! !
 
-TreeModelAbstract methodProtocol: #treeModel attributes: #(#readOnly) selectors: #(#add:asChildOf: #addRoot: #allParentsOf: #childrenOf: #clear #do: #endOrderDo: #hasChildren: #includes: #isEmpty #move:asChildOf: #parentOf: #preOrderDo: #refresh: #refreshTree: #remove: #remove:ifAbsent: #removeAll #roots #roots: #size #withAllChildren: #withAllParents:)!
+UI.TreeModelAbstract methodProtocol: #treeModel attributes: #(#readOnly) selectors: #(#add:asChildOf: #addRoot: #allParentsOf: #childrenOf: #clear #do: #endOrderDo: #hasChildren: #includes: #isEmpty #move:asChildOf: #parentOf: #preOrderDo: #refresh: #refreshTree: #remove: #remove:ifAbsent: #removeAll #roots #roots: #size #withAllChildren: #withAllParents:)!
 
-!TreeModelAbstract class methodsFor!
+!UI.TreeModelAbstract class methodsFor!
 
 defaultSearchPolicy
 	"Answer the default <searchPolicy> used by instances of the receiver."
@@ -496,7 +491,7 @@ new
 
 	^self withRoots: OrderedCollection new!
 
-stbConvertFromVersion2: anArray 
+stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 <TreeModelAbstract> to version 3.
 	Version 3 adds 'searchPolicy' instance variable."
 
@@ -504,7 +499,7 @@ stbConvertFromVersion2: anArray
 	answer := Array new: anArray size + 1.
 	answer at: 1 put: (anArray at: 1).
 	answer at: 2 put: self defaultSearchPolicy.
-	answer 
+	answer
 		replaceFrom: 3
 		to: answer size
 		with: anArray
@@ -524,11 +519,11 @@ withRoots: aCollection searchPolicy: aSearchPolicy
 
 	^self basicNew
 		setRoots: aCollection searchPolicy: aSearchPolicy! !
-!TreeModelAbstract class categoriesFor: #defaultSearchPolicy!constants!public! !
-!TreeModelAbstract class categoriesFor: #icon!constants!public! !
-!TreeModelAbstract class categoriesFor: #new!instance creation!public! !
-!TreeModelAbstract class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!TreeModelAbstract class categoriesFor: #stbVersion!binary filing!public! !
-!TreeModelAbstract class categoriesFor: #withRoots:!instance creation!public! !
-!TreeModelAbstract class categoriesFor: #withRoots:searchPolicy:!instance creation!public! !
+!UI.TreeModelAbstract class categoriesFor: #defaultSearchPolicy!constants!public! !
+!UI.TreeModelAbstract class categoriesFor: #icon!constants!public! !
+!UI.TreeModelAbstract class categoriesFor: #new!instance creation!public! !
+!UI.TreeModelAbstract class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+!UI.TreeModelAbstract class categoriesFor: #stbVersion!binary filing!public! !
+!UI.TreeModelAbstract class categoriesFor: #withRoots:!instance creation!public! !
+!UI.TreeModelAbstract class categoriesFor: #withRoots:searchPolicy:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TreeModel subclass: #ExpandingTreeModel
+UI.TreeModel subclass: #'UI.ExpandingTreeModel'
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExpandingTreeModel guid: (GUID fromString: '{14185f62-d296-4f25-80ad-ee85ed9d2e08}')!
-ExpandingTreeModel comment: 'ExpandingTreeModel is a specialized <TreeModel> that dynamically generates the set of child nodes for a node, but only on first request. The tree is still built with a hierarchy of <TreeNodes>, but starts off only with the roots. As the user navigates through the tree (actually as the client view requests them) the tree is fleshed out.
+UI.ExpandingTreeModel guid: (Core.GUID fromString: '{14185f62-d296-4f25-80ad-ee85ed9d2e08}')!
+UI.ExpandingTreeModel comment: 'ExpandingTreeModel is a specialized <TreeModel> that dynamically generates the set of child nodes for a node, but only on first request. The tree is still built with a hierarchy of <TreeNodes>, but starts off only with the roots. As the user navigates through the tree (actually as the client view requests them) the tree is fleshed out.
 
 See also VirtualTreeModel, which is a fully dynamic tree model.
 
@@ -15,8 +15,8 @@ Instance Variables:
 	getChildrenBlock 	<monadicValuable> used to identify the children of an object in the tree.
 
 '!
-!ExpandingTreeModel categoriesForClass!MVP-Models! !
-!ExpandingTreeModel methodsFor!
+!UI.ExpandingTreeModel categoriesForClass!MVP-Models! !
+!UI.ExpandingTreeModel methodsFor!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -112,17 +112,17 @@ size
 	count the number of nodes in the tree when fully expanded."
 
 	^self countElements! !
-!ExpandingTreeModel categoriesFor: #approxSize!accessing!private! !
-!ExpandingTreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!ExpandingTreeModel categoriesFor: #expandNodeChildren:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #getChildrenBlock!accessing!public! !
-!ExpandingTreeModel categoriesFor: #getChildrenBlock:!accessing!public! !
-!ExpandingTreeModel categoriesFor: #getChildrenOfNode:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!ExpandingTreeModel categoriesFor: #hasChildrenBlock!accessing!public! !
-!ExpandingTreeModel categoriesFor: #hasChildrenBlock:!accessing!public! !
-!ExpandingTreeModel categoriesFor: #initialize!initializing!private! !
-!ExpandingTreeModel categoriesFor: #roots!hierarchy!public! !
-!ExpandingTreeModel categoriesFor: #size!accessing!public! !
+!UI.ExpandingTreeModel categoriesFor: #approxSize!accessing!private! !
+!UI.ExpandingTreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
+!UI.ExpandingTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
+!UI.ExpandingTreeModel categoriesFor: #expandNodeChildren:!hierarchy!private! !
+!UI.ExpandingTreeModel categoriesFor: #getChildrenBlock!accessing!public! !
+!UI.ExpandingTreeModel categoriesFor: #getChildrenBlock:!accessing!public! !
+!UI.ExpandingTreeModel categoriesFor: #getChildrenOfNode:!hierarchy!private! !
+!UI.ExpandingTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
+!UI.ExpandingTreeModel categoriesFor: #hasChildrenBlock!accessing!public! !
+!UI.ExpandingTreeModel categoriesFor: #hasChildrenBlock:!accessing!public! !
+!UI.ExpandingTreeModel categoriesFor: #initialize!initializing!private! !
+!UI.ExpandingTreeModel categoriesFor: #roots!hierarchy!public! !
+!UI.ExpandingTreeModel categoriesFor: #size!accessing!public! !
 

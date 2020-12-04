@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TreeModelAbstract subclass: #TreeModel
+UI.TreeModelAbstract subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModel guid: (GUID fromString: '{87b4c66f-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeModel comment: 'TreeModel implements the <treeModel> protocol and organises a collection of objects into a tree like data structure. The tree is built of a hierarchy of <TreeNodes>. Objects can be added to the tree using #add:asChildOf: and they can be removed using #remove:. An object already in the tree can be moved from one location in the hierarchy to another by using the #move:asChildOf: message. Root nodes in the tree can be considered as having a parent of nil. 
+UI.TreeModel guid: (Core.GUID fromString: '{87b4c66f-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TreeModel comment: 'TreeModel implements the <treeModel> protocol and organises a collection of objects into a tree like data structure. The tree is built of a hierarchy of <TreeNodes>. Objects can be added to the tree using #add:asChildOf: and they can be removed using #remove:. An object already in the tree can be moved from one location in the hierarchy to another by using the #move:asChildOf: message. Root nodes in the tree can be considered as having a parent of nil. 
 
 Instance Variables:
 	anchorNode	<TreeNode> or nil, representing the root of the tree.
 	objectNodeMap	<IdentityDictionary> mapping tree objects to <TreeNodes>
 
 '!
-!TreeModel categoriesForClass!MVP-Models! !
-!TreeModel methodsFor!
+!UI.TreeModel categoriesForClass!MVP-Models! !
+!UI.TreeModel methodsFor!
 
 add: leafObject asChildOf: parentObject
 	"Adds the <Object>, leafObject, to the receiver as a child of the <Object>, parentObject,
@@ -244,37 +244,37 @@ size
 	"Answer the number of elements in the receiver"
 
 	^objectNodeMap size! !
-!TreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!TreeModel categoriesFor: #add:asChildOfNode:!adding!private! !
-!TreeModel categoriesFor: #addChild:parentNode:!adding!private! !
-!TreeModel categoriesFor: #approxSize!accessing!private! !
-!TreeModel categoriesFor: #asBag!converting!public! !
-!TreeModel categoriesFor: #asSet!converting!public! !
-!TreeModel categoriesFor: #basicRoots:!accessing!private! !
-!TreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!TreeModel categoriesFor: #clear!public!removing! !
-!TreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!TreeModel categoriesFor: #depthOf:!hierarchy!public! !
-!TreeModel categoriesFor: #forgetChildrenOfNode:!operations!private! !
-!TreeModel categoriesFor: #forgetNode:!operations!private! !
-!TreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!TreeModel categoriesFor: #getNodeFor:!hierarchy!private! !
-!TreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!TreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!TreeModel categoriesFor: #initialize!initializing!private! !
-!TreeModel categoriesFor: #lookupNode:!operations!private! !
-!TreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!TreeModel categoriesFor: #newNode:!adding!private! !
-!TreeModel categoriesFor: #nodeClass!constants!public! !
-!TreeModel categoriesFor: #parentNodeOf:!hierarchy!private! !
-!TreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!TreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!TreeModel categoriesFor: #reset!private!removing! !
-!TreeModel categoriesFor: #rootNodes!hierarchy!private! !
-!TreeModel categoriesFor: #roots!hierarchy!public! !
-!TreeModel categoriesFor: #size!accessing!public! !
+!UI.TreeModel categoriesFor: #add:asChildOf:!adding!public! !
+!UI.TreeModel categoriesFor: #add:asChildOfNode:!adding!private! !
+!UI.TreeModel categoriesFor: #addChild:parentNode:!adding!private! !
+!UI.TreeModel categoriesFor: #approxSize!accessing!private! !
+!UI.TreeModel categoriesFor: #asBag!converting!public! !
+!UI.TreeModel categoriesFor: #asSet!converting!public! !
+!UI.TreeModel categoriesFor: #basicRoots:!accessing!private! !
+!UI.TreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
+!UI.TreeModel categoriesFor: #clear!public!removing! !
+!UI.TreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
+!UI.TreeModel categoriesFor: #depthOf:!hierarchy!public! !
+!UI.TreeModel categoriesFor: #forgetChildrenOfNode:!operations!private! !
+!UI.TreeModel categoriesFor: #forgetNode:!operations!private! !
+!UI.TreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
+!UI.TreeModel categoriesFor: #getNodeFor:!hierarchy!private! !
+!UI.TreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
+!UI.TreeModel categoriesFor: #includes:!hierarchy!public!searching! !
+!UI.TreeModel categoriesFor: #initialize!initializing!private! !
+!UI.TreeModel categoriesFor: #lookupNode:!operations!private! !
+!UI.TreeModel categoriesFor: #move:asChildOf:!public!updating! !
+!UI.TreeModel categoriesFor: #newNode:!adding!private! !
+!UI.TreeModel categoriesFor: #nodeClass!constants!public! !
+!UI.TreeModel categoriesFor: #parentNodeOf:!hierarchy!private! !
+!UI.TreeModel categoriesFor: #parentOf:!hierarchy!public! !
+!UI.TreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
+!UI.TreeModel categoriesFor: #reset!private!removing! !
+!UI.TreeModel categoriesFor: #rootNodes!hierarchy!private! !
+!UI.TreeModel categoriesFor: #roots!hierarchy!public! !
+!UI.TreeModel categoriesFor: #size!accessing!public! !
 
-!TreeModel class methodsFor!
+!UI.TreeModel class methodsFor!
 
 new
 	"Answer a new empty instance of the receiver with the 
@@ -282,18 +282,26 @@ new
 
 	^self withRoots: #()!
 
-stbConvertFromVersion1: anArray 
+stbConvertFromVersion1: anArray
 	"Private - Perform an STB conversion from a version 1 <Model> to version 2.
 	Version 2 added 'searchPolicy' instance variable."
 
 	| answer |
 	answer := Array new: anArray size + 1.
-	answer replaceFrom: 1 to: 3 with: anArray startingAt: 1.
+	answer
+		replaceFrom: 1
+		to: 3
+		with: anArray
+		startingAt: 1.
 	answer at: 4 put: self defaultSearchPolicy.
-	answer replaceFrom: 5 to: anArray size + 1 with: anArray startingAt: 4.
+	answer
+		replaceFrom: 5
+		to: anArray size + 1
+		with: anArray
+		startingAt: 4.
 	^answer!
 
-stbConvertFromVersion2: anArray 
+stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 <Model> to version 3.
 	Version 3 moves 'searchPolicy' instance variable (pushed up)."
 
@@ -301,12 +309,18 @@ stbConvertFromVersion2: anArray
 	answer := Array new: anArray size.
 	answer at: 1 put: (anArray at: 1).
 	answer at: 2 put: (anArray at: 4).
-	answer replaceFrom: 3 to: 4 with: anArray startingAt: 2.
-	answer replaceFrom: 5 to: anArray size with: anArray startingAt: 5.
-	^answer
-
-! !
-!TreeModel class categoriesFor: #new!instance creation!public! !
-!TreeModel class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!TreeModel class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+	answer
+		replaceFrom: 3
+		to: 4
+		with: anArray
+		startingAt: 2.
+	answer
+		replaceFrom: 5
+		to: anArray size
+		with: anArray
+		startingAt: 5.
+	^answer! !
+!UI.TreeModel class categoriesFor: #new!instance creation!public! !
+!UI.TreeModel class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
+!UI.TreeModel class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
 

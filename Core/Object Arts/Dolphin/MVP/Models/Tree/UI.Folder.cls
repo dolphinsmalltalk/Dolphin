@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Folder
+Core.Object subclass: #'UI.Folder'
 	instanceVariableNames: 'pathname canonicalPath'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Folder guid: (GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
-Folder comment: ''!
-!Folder categoriesForClass!MVP-Models! !
-!Folder methodsFor!
+UI.Folder guid: (Core.GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
+UI.Folder comment: ''!
+!UI.Folder categoriesForClass!MVP-Models! !
+!UI.Folder methodsFor!
 
 <= comperand
 	"Answer whether the receiver is less than or equal to the <PackageFolder>,
@@ -34,7 +34,7 @@ displayOn: aPuttableStream
 folderName
 	"Answer the folder name of the receiver"
 
-	^(File isRootPath: self pathname) 
+	^(File isRootPath: self pathname)
 		ifTrue: [self volumeName]
 		ifFalse: [File composePath: self rootName subPath: self pathname]!
 
@@ -46,10 +46,10 @@ hash
 name
 	"Answer the folder name of the receiver"
 
-	^self pathname isEmpty 
+	^self pathname isEmpty
 		ifTrue: [self rootName]
 		ifFalse: 
-			[(File isRootPath: self pathname) 
+			[(File isRootPath: self pathname)
 				ifTrue: [self volumeName]
 				ifFalse: [File splitFilenameFrom: (File removePathDelimiter: self pathname)]]!
 
@@ -95,24 +95,23 @@ volumeName
 	"Answer the name of the volume of this package folder in the form that Windows explorer
 	would display it."
 
-	^[(DiskVolumeInformation forPath: self pathname) explorerName] 
-		on: Win32Error
+	^[(DiskVolumeInformation forPath: self pathname) explorerName] on: Win32Error
 		do: [:ex | File removePathDelimiter: self pathname]! !
-!Folder categoriesFor: #<=!comparing!public! !
-!Folder categoriesFor: #=!comparing!public! !
-!Folder categoriesFor: #canonicalPath!accessing!private! !
-!Folder categoriesFor: #displayOn:!displaying!public! !
-!Folder categoriesFor: #folderName!accessing!public! !
-!Folder categoriesFor: #hash!comparing!public! !
-!Folder categoriesFor: #name!accessing!public! !
-!Folder categoriesFor: #parent!accessing!public! !
-!Folder categoriesFor: #pathname!accessing!public! !
-!Folder categoriesFor: #pathname:!accessing!private! !
-!Folder categoriesFor: #printOn:!printing!public! !
-!Folder categoriesFor: #rootName!constants!private! !
-!Folder categoriesFor: #volumeName!accessing!private! !
+!UI.Folder categoriesFor: #<=!comparing!public! !
+!UI.Folder categoriesFor: #=!comparing!public! !
+!UI.Folder categoriesFor: #canonicalPath!accessing!private! !
+!UI.Folder categoriesFor: #displayOn:!displaying!public! !
+!UI.Folder categoriesFor: #folderName!accessing!public! !
+!UI.Folder categoriesFor: #hash!comparing!public! !
+!UI.Folder categoriesFor: #name!accessing!public! !
+!UI.Folder categoriesFor: #parent!accessing!public! !
+!UI.Folder categoriesFor: #pathname!accessing!public! !
+!UI.Folder categoriesFor: #pathname:!accessing!private! !
+!UI.Folder categoriesFor: #printOn:!printing!public! !
+!UI.Folder categoriesFor: #rootName!constants!private! !
+!UI.Folder categoriesFor: #volumeName!accessing!private! !
 
-!Folder class methodsFor!
+!UI.Folder class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class. "
@@ -135,8 +134,8 @@ root
 	"Answer an instance of the receiver representing the current root folder."
 
 	^self pathname: ''! !
-!Folder class categoriesFor: #icon!constants!development!public! !
-!Folder class categoriesFor: #new!instance creation!public! !
-!Folder class categoriesFor: #pathname:!instance creation!public! !
-!Folder class categoriesFor: #root!instance creation!public! !
+!UI.Folder class categoriesFor: #icon!constants!development!public! !
+!UI.Folder class categoriesFor: #new!instance creation!public! !
+!UI.Folder class categoriesFor: #pathname:!instance creation!public! !
+!UI.Folder class categoriesFor: #root!instance creation!public! !
 

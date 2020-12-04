@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TreeModelAbstract subclass: #VirtualTreeModel
+UI.TreeModelAbstract subclass: #'UI.VirtualTreeModel'
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualTreeModel guid: (GUID fromString: '{87b4c670-026e-11d3-9fd7-00a0cc3e4a32}')!
-VirtualTreeModel comment: 'VirtualTreeModel provides an <treeModel> interface onto a tree like data structure where the elements in the tree are always aware of their position in the hierarchy. In general, Smalltalk Collections organise objects into groups, but the objects are unaware of their grouping. In this way an object can belong to more than one Collection at a time. For a tree that follows this behaviour use a <TreeModel>. However, some objects are implicitly aware of their location within a tree hierarchy (e.g. Smalltalk classes); in such cases a VirtualTreeModel can be used to represent the structure without having to duplicate it as a hierarchy of <TreeNode>s.  
+UI.VirtualTreeModel guid: (Core.GUID fromString: '{87b4c670-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.VirtualTreeModel comment: 'VirtualTreeModel provides an <treeModel> interface onto a tree like data structure where the elements in the tree are always aware of their position in the hierarchy. In general, Smalltalk Collections organise objects into groups, but the objects are unaware of their grouping. In this way an object can belong to more than one Collection at a time. For a tree that follows this behaviour use a <TreeModel>. However, some objects are implicitly aware of their location within a tree hierarchy (e.g. Smalltalk classes); in such cases a VirtualTreeModel can be used to represent the structure without having to duplicate it as a hierarchy of <TreeNode>s.  
 
 VirtualTreeModel triggers the same modification events as a standard <treeModel>. However, the methods #add:asChildOf:, #move:asChildOf: and #remove: are only used to inform the tree model of changes that have been made externally to its structure. They do not actually modify the structure, though, since the VirtualTreeModel cannot be considered as owning it elements; they simply trigger the appropriate change notifications to inform the tree''s Observers. 
 
@@ -25,8 +25,8 @@ Instance Variables:
 	getParentBlock 		<monadicValuable> used to identify the parent of an object in the tree.
 	hasChildrenBlock 	<monadicValuable> used to determine whether an object has children.
 	filter				<monadicValuable> used to determine whether a object should be treated as part of the tree.'!
-!VirtualTreeModel categoriesForClass!MVP-Models! !
-!VirtualTreeModel methodsFor!
+!UI.VirtualTreeModel categoriesForClass!MVP-Models! !
+!UI.VirtualTreeModel methodsFor!
 
 add: anObject asChildOf: aParentObject 
 	"Pseudo-adds anObject to the receiver as a child of aParentObject. 
@@ -227,28 +227,28 @@ roots
 	"Answer the roots of the receiver's hierarchies."
 
 	^roots select: filter! !
-!VirtualTreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!VirtualTreeModel categoriesFor: #basicRoots:!accessing!private! !
-!VirtualTreeModel categoriesFor: #clear!public!removing! !
-!VirtualTreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!VirtualTreeModel categoriesFor: #defaultFilterBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultGetChildrenBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultGetParentBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #filter!accessing!public! !
-!VirtualTreeModel categoriesFor: #filter:!accessing!public! !
-!VirtualTreeModel categoriesFor: #getChildrenBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!VirtualTreeModel categoriesFor: #getParentBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!VirtualTreeModel categoriesFor: #hasChildrenBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #hasRoot:!hierarchy!public!testing! !
-!VirtualTreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!VirtualTreeModel categoriesFor: #initialize!initializing!private! !
-!VirtualTreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!VirtualTreeModel categoriesFor: #notifyAdded:toParent:!events!private! !
-!VirtualTreeModel categoriesFor: #notifyRemove:around:!events!private! !
-!VirtualTreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!VirtualTreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!VirtualTreeModel categoriesFor: #roots!accessing!public! !
+!UI.VirtualTreeModel categoriesFor: #add:asChildOf:!adding!public! !
+!UI.VirtualTreeModel categoriesFor: #basicRoots:!accessing!private! !
+!UI.VirtualTreeModel categoriesFor: #clear!public!removing! !
+!UI.VirtualTreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
+!UI.VirtualTreeModel categoriesFor: #defaultFilterBlock!constants!private! !
+!UI.VirtualTreeModel categoriesFor: #defaultGetChildrenBlock!constants!private! !
+!UI.VirtualTreeModel categoriesFor: #defaultGetParentBlock!constants!private! !
+!UI.VirtualTreeModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
+!UI.VirtualTreeModel categoriesFor: #filter!accessing!public! !
+!UI.VirtualTreeModel categoriesFor: #filter:!accessing!public! !
+!UI.VirtualTreeModel categoriesFor: #getChildrenBlock:!adapters!public! !
+!UI.VirtualTreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
+!UI.VirtualTreeModel categoriesFor: #getParentBlock:!adapters!public! !
+!UI.VirtualTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
+!UI.VirtualTreeModel categoriesFor: #hasChildrenBlock:!adapters!public! !
+!UI.VirtualTreeModel categoriesFor: #hasRoot:!hierarchy!public!testing! !
+!UI.VirtualTreeModel categoriesFor: #includes:!hierarchy!public!searching! !
+!UI.VirtualTreeModel categoriesFor: #initialize!initializing!private! !
+!UI.VirtualTreeModel categoriesFor: #move:asChildOf:!public!updating! !
+!UI.VirtualTreeModel categoriesFor: #notifyAdded:toParent:!events!private! !
+!UI.VirtualTreeModel categoriesFor: #notifyRemove:around:!events!private! !
+!UI.VirtualTreeModel categoriesFor: #parentOf:!hierarchy!public! !
+!UI.VirtualTreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
+!UI.VirtualTreeModel categoriesFor: #roots!accessing!public! !
 

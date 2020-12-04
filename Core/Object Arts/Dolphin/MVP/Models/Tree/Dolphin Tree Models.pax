@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree Models'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree Models.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1996.
@@ -14,63 +14,64 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ExpandingTreeModel}
-	#{Folder}
-	#{FolderHierarchyModel}
-	#{TreeModel}
-	#{TreeModelAbstract}
-	#{TreeNode}
-	#{VirtualTreeModel}
+	#{UI.ExpandingTreeModel}
+	#{UI.Folder}
+	#{UI.FolderHierarchyModel}
+	#{UI.TreeModel}
+	#{UI.TreeModelAbstract}
+	#{UI.TreeNode}
+	#{UI.VirtualTreeModel}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\..\System\Win32\Dolphin File System Info'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #Folder
+Core.Object subclass: #'UI.Folder'
 	instanceVariableNames: 'pathname canonicalPath'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #TreeNode
+Core.Object subclass: #'UI.TreeNode'
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #TreeModelAbstract
+Core.Model subclass: #'UI.TreeModelAbstract'
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModelAbstract subclass: #TreeModel
+UI.TreeModelAbstract subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModelAbstract subclass: #VirtualTreeModel
+UI.TreeModelAbstract subclass: #'UI.VirtualTreeModel'
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModel subclass: #ExpandingTreeModel
+UI.TreeModel subclass: #'UI.ExpandingTreeModel'
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeModel subclass: #FolderHierarchyModel
+UI.TreeModel subclass: #'UI.FolderHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

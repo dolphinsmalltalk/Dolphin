@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TreeNode
+Core.Object subclass: #'UI.TreeNode'
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeNode guid: (GUID fromString: '{87b4c4c7-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeNode comment: 'TreeNode represents a node of a tree in a <TreeModel> hierarchy.
+UI.TreeNode guid: (Core.GUID fromString: '{87b4c4c7-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TreeNode comment: 'TreeNode represents a node of a tree in a <TreeModel> hierarchy.
 
 Instance Variables:
 	parent	<TreeNode> which is the parent of this node in the tree.
@@ -17,8 +17,8 @@ Instance Variables:
 
 
 '!
-!TreeNode categoriesForClass!MVP-Models-Support! !
-!TreeNode methodsFor!
+!UI.TreeNode categoriesForClass!MVP-Models-Support! !
+!UI.TreeNode methodsFor!
 
 addChildNode: aTreeNode
 	"Adds aTreeNode as a child of the receiver. Answer aTreeNode"
@@ -114,25 +114,25 @@ removeChildNode: aTreeNode ifAbsent: exceptionHandler
 
 
 ! !
-!TreeNode categoriesFor: #addChildNode:!adding!public! !
-!TreeNode categoriesFor: #beChildless!modes!public! !
-!TreeNode categoriesFor: #children!accessing!public! !
-!TreeNode categoriesFor: #children:!accessing!public! !
-!TreeNode categoriesFor: #getChildren!accessing!private! !
-!TreeNode categoriesFor: #newChildCollection!accessing!public! !
-!TreeNode categoriesFor: #object!accessing!public! !
-!TreeNode categoriesFor: #object:!accessing!private! !
-!TreeNode categoriesFor: #parent!accessing!public! !
-!TreeNode categoriesFor: #parent:!accessing!private! !
-!TreeNode categoriesFor: #printOn:!printing!public! !
-!TreeNode categoriesFor: #removeChildNode:!public!removing! !
-!TreeNode categoriesFor: #removeChildNode:ifAbsent:!public!removing! !
+!UI.TreeNode categoriesFor: #addChildNode:!adding!public! !
+!UI.TreeNode categoriesFor: #beChildless!modes!public! !
+!UI.TreeNode categoriesFor: #children!accessing!public! !
+!UI.TreeNode categoriesFor: #children:!accessing!public! !
+!UI.TreeNode categoriesFor: #getChildren!accessing!private! !
+!UI.TreeNode categoriesFor: #newChildCollection!accessing!public! !
+!UI.TreeNode categoriesFor: #object!accessing!public! !
+!UI.TreeNode categoriesFor: #object:!accessing!private! !
+!UI.TreeNode categoriesFor: #parent!accessing!public! !
+!UI.TreeNode categoriesFor: #parent:!accessing!private! !
+!UI.TreeNode categoriesFor: #printOn:!printing!public! !
+!UI.TreeNode categoriesFor: #removeChildNode:!public!removing! !
+!UI.TreeNode categoriesFor: #removeChildNode:ifAbsent:!public!removing! !
 
-!TreeNode class methodsFor!
+!UI.TreeNode class methodsFor!
 
 for: anObject
 	"Answer an instance of the receiver that is to represent anObject"
 
 	^self new object: anObject! !
-!TreeNode class categoriesFor: #for:!instance creation!public! !
+!UI.TreeNode class categoriesFor: #for:!instance creation!public! !
 
