@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STLInFiler subclass: #STLDebugger
+Kernel.STLInFiler subclass: #'Kernel.STLDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STLDebugger guid: (GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
-STLDebugger comment: 'The <STLDebugger> is an <STLInFiler> that prints an indented trace of the contents of the STL file it is reading as it proceeds. 
+Kernel.STLDebugger guid: (Core.GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
+Kernel.STLDebugger comment: 'The <STLDebugger> is an <STLInFiler> that prints an indented trace of the contents of the STL file it is reading as it proceeds. 
 It is useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
 
 For example to view the contents of a view resource, one can proceed as follows:
@@ -16,8 +16,8 @@ For example to view the contents of a view resource, one can proceed as follows:
 	in := (STLDebugger on: rid resource readStream).
 	in next.
 	in traceStream contents.	"Display-it"'!
-!STLDebugger categoriesForClass!System-Binary storage! !
-!STLDebugger methodsFor!
+!Kernel.STLDebugger categoriesForClass!System-Binary storage! !
+!Kernel.STLDebugger methodsFor!
 
 basicNext
 	"Private - Answer the next object from the receiver's stream."
@@ -186,14 +186,14 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
-!STLDebugger categoriesFor: #basicNext!accessing!private! !
-!STLDebugger categoriesFor: #initialize!initializing!private! !
-!STLDebugger categoriesFor: #next!accessing!public! !
-!STLDebugger categoriesFor: #objectAt:!accessing!private! !
-!STLDebugger categoriesFor: #printOffsets!accessing!public! !
-!STLDebugger categoriesFor: #printOffsets:!accessing!public! !
-!STLDebugger categoriesFor: #printValueToTrace:!accessing!private! !
-!STLDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
-!STLDebugger categoriesFor: #traceStream!accessing!public! !
-!STLDebugger categoriesFor: #traceStream:!accessing!public! !
+!Kernel.STLDebugger categoriesFor: #basicNext!accessing!private! !
+!Kernel.STLDebugger categoriesFor: #initialize!initializing!private! !
+!Kernel.STLDebugger categoriesFor: #next!accessing!public! !
+!Kernel.STLDebugger categoriesFor: #objectAt:!accessing!private! !
+!Kernel.STLDebugger categoriesFor: #printOffsets!accessing!public! !
+!Kernel.STLDebugger categoriesFor: #printOffsets:!accessing!public! !
+!Kernel.STLDebugger categoriesFor: #printValueToTrace:!accessing!private! !
+!Kernel.STLDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
+!Kernel.STLDebugger categoriesFor: #traceStream!accessing!public! !
+!Kernel.STLDebugger categoriesFor: #traceStream:!accessing!public! !
 

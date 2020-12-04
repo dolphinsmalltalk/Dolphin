@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBOutFiler subclass: #STLOutFiler
+Kernel.STBOutFiler subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STLOutFiler guid: (GUID fromString: '{72dee7e2-3402-4813-99f6-379ffc717b86}')!
-STLOutFiler comment: ''!
-!STLOutFiler categoriesForClass!System-Binary storage! !
-!STLOutFiler methodsFor!
+Kernel.STLOutFiler guid: (Core.GUID fromString: '{72dee7e2-3402-4813-99f6-379ffc717b86}')!
+Kernel.STLOutFiler comment: ''!
+!Kernel.STLOutFiler categoriesForClass!System-Binary storage! !
+!Kernel.STLOutFiler methodsFor!
 
 putCharacter: aCharacter
 	stream nextPut: aCharacter!
@@ -56,21 +56,21 @@ writeInteger: anInteger
 
 writeNil
 	stream nextPut: nil! !
-!STLOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!STLOutFiler categoriesFor: #putLiteral:!private! !
-!STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!STLOutFiler categoriesFor: #resetStream!initializing!private! !
-!STLOutFiler categoriesFor: #serializeObject:!operations!private! !
-!STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!STLOutFiler categoriesFor: #writeNil!operations!private! !
+!Kernel.STLOutFiler categoriesFor: #putCharacter:!helpers!private! !
+!Kernel.STLOutFiler categoriesFor: #putLiteral:!private! !
+!Kernel.STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
+!Kernel.STLOutFiler categoriesFor: #resetStream!initializing!private! !
+!Kernel.STLOutFiler categoriesFor: #serializeObject:!operations!private! !
+!Kernel.STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
+!Kernel.STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
+!Kernel.STLOutFiler categoriesFor: #writeNil!operations!private! !
 
-!STLOutFiler class methodsFor!
+!Kernel.STLOutFiler class methodsFor!
 
 signature
 	"Private - Answer the signature that identifies the data as
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!STLOutFiler class categoriesFor: #signature!constants!private! !
+!Kernel.STLOutFiler class categoriesFor: #signature!constants!private! !
 

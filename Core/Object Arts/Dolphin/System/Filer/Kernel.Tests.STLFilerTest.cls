@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #STLFilerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STLFilerTest guid: (GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
-STLFilerTest comment: ''!
-!STLFilerTest categoriesForClass!Unclassified! !
-!STLFilerTest methodsFor!
+Kernel.Tests.STLFilerTest guid: (Core.GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
+Kernel.Tests.STLFilerTest comment: ''!
+!Kernel.Tests.STLFilerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.STLFilerTest methodsFor!
 
 checkSimpleReadWriteOf: value 
 	^self checkSimpleReadWriteOf: value context: nil!
@@ -45,7 +45,7 @@ testClassReadWrite
 	self assert: answer first identicalTo: answer last!
 
 testEmptyStream
-	self should: [STLInFiler on: #() readStream] raise: STBError.!
+	self should: [STLInFiler on: #() readStream] raise: STBError!
 
 testIntegerReadWrite
 
@@ -62,8 +62,7 @@ testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
 	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError.
 	self should: [STLInFiler on: #('') readStream] raise: STBError.
-	self should: [STLInFiler on: #(#[]) readStream] raise: STBError.
-!
+	self should: [STLInFiler on: #(#[]) readStream] raise: STBError!
 
 testSymbolReadWrite
 	| contents deserialized data testSymbol |
@@ -94,15 +93,15 @@ writeLiteralsFor: value
 	out := STLOutFiler on: Array writeStream.
 	out nextPut: value.
 	^out stream contents! !
-!STLFilerTest categoriesFor: #checkSimpleReadWriteOf:!private!unit tests! !
-!STLFilerTest categoriesFor: #checkSimpleReadWriteOf:context:!private!unit tests! !
-!STLFilerTest categoriesFor: #simpleReadWriteOf:!private!unit tests! !
-!STLFilerTest categoriesFor: #simpleReadWriteOf:context:!private!unit tests! !
-!STLFilerTest categoriesFor: #testClassReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testEmptyStream!public!unit tests! !
-!STLFilerTest categoriesFor: #testIntegerReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testInvalidStream!public!unit tests! !
-!STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testSystemDictionaryReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #writeLiteralsFor:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #checkSimpleReadWriteOf:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #checkSimpleReadWriteOf:context:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #simpleReadWriteOf:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #simpleReadWriteOf:context:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testClassReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testEmptyStream!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testIntegerReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testInvalidStream!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testSystemDictionaryReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #writeLiteralsFor:!private!unit tests! !
 

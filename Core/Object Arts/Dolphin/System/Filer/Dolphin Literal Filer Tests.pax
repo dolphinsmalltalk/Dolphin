@@ -1,12 +1,12 @@
 ﻿| package |
 package := Package name: 'Dolphin Literal Filer Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{STLFilerTest}
+	#{Kernel.Tests.STLFilerTest}
 ).
 
 package setPrerequisites: #(
@@ -19,10 +19,10 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #STLFilerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

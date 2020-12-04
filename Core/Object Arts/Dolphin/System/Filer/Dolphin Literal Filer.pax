@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Literal Filer'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,31 +8,30 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{STLDebugger}
-	#{STLInFiler}
-	#{STLOutFiler}
+	#{Kernel.STLDebugger}
+	#{Kernel.STLInFiler}
+	#{Kernel.STLOutFiler}
 ).
 
 package setMethodNames: #(
-	#(#{Array} #literalPrintOn:)
-	#(#{Boolean} #literalPrintOn:)
-	#(#{ByteArray} #literalPrintOn:)
-	#(#{Character} #literalPrintOn:)
-	#(#{Class} #literalPrintOn:)
-	#(#{Number} #literalPrintOn:)
-	#(#{Object} #literalStoreArray)
-	#(#{Object} #literalStoreEvaluationOn:)
-	#(#{Object} #literalStoreEvaluationString)
-	#(#{Object} #literalStoreOn:)
-	#(#{Object class} #fromLiteralStoreArray:)
-	#(#{Object class} #fromLiteralStoreArray:context:)
-	#(#{Object class} #literalReadFrom:)
-	#(#{Object class} #literalReadFrom:context:)
-	#(#{ProcessorScheduler} #literalPrintOn:)
-	#(#{String} #literalPrintOn:)
-	#(#{Symbol} #literalPrintOn:)
-	#(#{SystemDictionary} #literalPrintOn:)
-	#(#{UndefinedObject} #literalPrintOn:)
+	#(#{Core.Array} #literalPrintOn:)
+	#(#{Core.Boolean} #literalPrintOn:)
+	#(#{Core.ByteArray} #literalPrintOn:)
+	#(#{Core.Character} #literalPrintOn:)
+	#(#{Core.ClassDescription} #literalPrintOn:)
+	#(#{Core.Number} #literalPrintOn:)
+	#(#{Core.Object} #literalStoreArray)
+	#(#{Core.Object} #literalStoreEvaluationOn:)
+	#(#{Core.Object} #literalStoreEvaluationString)
+	#(#{Core.Object} #literalStoreOn:)
+	#(#{Core.Object class} #fromLiteralStoreArray:)
+	#(#{Core.Object class} #fromLiteralStoreArray:context:)
+	#(#{Core.Object class} #literalReadFrom:)
+	#(#{Core.Object class} #literalReadFrom:context:)
+	#(#{Core.String} #literalPrintOn:)
+	#(#{Core.Symbol} #literalPrintOn:)
+	#(#{Core.UndefinedObject} #literalPrintOn:)
+	#(#{Kernel.ProcessorScheduler} #literalPrintOn:)
 ).
 
 package setPrerequisites: #(
@@ -43,19 +42,19 @@ package!
 
 "Class Definitions"!
 
-STBInFiler subclass: #STLInFiler
+Kernel.STBInFiler subclass: #'Kernel.STLInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STLInFiler subclass: #STLDebugger
+Kernel.STLInFiler subclass: #'Kernel.STLDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBOutFiler subclass: #STLOutFiler
+Kernel.STBOutFiler subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -64,47 +63,47 @@ STBOutFiler subclass: #STLOutFiler
 
 "Loose Methods"!
 
-!Array methodsFor!
+!Core.Array methodsFor!
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '#('.
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
 	aWriteStream nextPut: $)! !
-!Array categoriesFor: #literalPrintOn:!public! !
+!Core.Array categoriesFor: #literalPrintOn:!public! !
 
-!Boolean methodsFor!
-
-literalPrintOn: aWriteStream
-	self printOn: aWriteStream! !
-!Boolean categoriesFor: #literalPrintOn:!public! !
-
-!ByteArray methodsFor!
+!Core.Boolean methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!ByteArray categoriesFor: #literalPrintOn:!public! !
+!Core.Boolean categoriesFor: #literalPrintOn:!public! !
 
-!Character methodsFor!
+!Core.ByteArray methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Character categoriesFor: #literalPrintOn:!public! !
+!Core.ByteArray categoriesFor: #literalPrintOn:!public! !
 
-!Class methodsFor!
+!Core.Character methodsFor!
+
+literalPrintOn: aWriteStream
+	self printOn: aWriteStream! !
+!Core.Character categoriesFor: #literalPrintOn:!public! !
+
+!Core.ClassDescription methodsFor!
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##('.
-	self printNameOn: aWriteStream relativeTo: Smalltalk.
+	self printFullNameOn: aWriteStream.
 	aWriteStream nextPut: $)! !
-!Class categoriesFor: #literalPrintOn:!printing!public! !
+!Core.ClassDescription categoriesFor: #literalPrintOn:!printing!public! !
 
-!Number methodsFor!
+!Core.Number methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Number categoriesFor: #literalPrintOn:!public! !
+!Core.Number categoriesFor: #literalPrintOn:!public! !
 
-!Object methodsFor!
+!Core.Object methodsFor!
 
 literalStoreArray
 	"Answers an Array representation of the receiver stored in a literal form.
@@ -149,12 +148,12 @@ literalStoreOn: aStream
 	method to perform such isolation"
 
 	(STLOutFiler on: aStream) nextPut: self! !
-!Object categoriesFor: #literalStoreArray!literal filing!public! !
-!Object categoriesFor: #literalStoreEvaluationOn:!literal filing!public! !
-!Object categoriesFor: #literalStoreEvaluationString!literal filing!public! !
-!Object categoriesFor: #literalStoreOn:!literal filing!public! !
+!Core.Object categoriesFor: #literalStoreArray!literal filing!public! !
+!Core.Object categoriesFor: #literalStoreEvaluationOn:!literal filing!public! !
+!Core.Object categoriesFor: #literalStoreEvaluationString!literal filing!public! !
+!Core.Object categoriesFor: #literalStoreOn:!literal filing!public! !
 
-!Object class methodsFor!
+!Core.Object class methodsFor!
 
 fromLiteralStoreArray: anArray 
 	"Answers an object read from its literal representation in anArray.
@@ -187,18 +186,12 @@ literalReadFrom: aStream context: anObject
 	^(STLInFiler on: aStream)
 		context: anObject;
 		next! !
-!Object class categoriesFor: #fromLiteralStoreArray:!literal filing!public! !
-!Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
-!Object class categoriesFor: #literalReadFrom:!literal filing!public! !
-!Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
+!Core.Object class categoriesFor: #fromLiteralStoreArray:!literal filing!public! !
+!Core.Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
+!Core.Object class categoriesFor: #literalReadFrom:!literal filing!public! !
+!Core.Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
 
-!ProcessorScheduler methodsFor!
-
-literalPrintOn: aWriteStream
-	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
-!ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
-
-!String methodsFor!
+!Core.String methodsFor!
 
 literalPrintOn: aWriteStream 
 	"Note: 
@@ -206,25 +199,25 @@ literalPrintOn: aWriteStream
 	Prints incorrectly, so trim nulls"
 
 	self trimNulls printOn: aWriteStream! !
-!String categoriesFor: #literalPrintOn:!public! !
+!Core.String categoriesFor: #literalPrintOn:!public! !
 
-!Symbol methodsFor!
+!Core.Symbol methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Symbol categoriesFor: #literalPrintOn:!public! !
+!Core.Symbol categoriesFor: #literalPrintOn:!public! !
 
-!SystemDictionary methodsFor!
-
-literalPrintOn: aWriteStream
-	aWriteStream nextPutAll: '##(Smalltalk)'! !
-!SystemDictionary categoriesFor: #literalPrintOn:!public! !
-
-!UndefinedObject methodsFor!
+!Core.UndefinedObject methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!UndefinedObject categoriesFor: #literalPrintOn:!public! !
+!Core.UndefinedObject categoriesFor: #literalPrintOn:!public! !
+
+!Kernel.ProcessorScheduler methodsFor!
+
+literalPrintOn: aWriteStream
+	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
+!Kernel.ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
 
 "End of package definition"!
 

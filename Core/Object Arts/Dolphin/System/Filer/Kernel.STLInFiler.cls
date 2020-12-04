@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBInFiler subclass: #STLInFiler
+Kernel.STBInFiler subclass: #'Kernel.STLInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STLInFiler guid: (GUID fromString: '{0eb5f19a-a120-4002-83d9-c520f502de6d}')!
-STLInFiler comment: ''!
-!STLInFiler categoriesForClass!System-Binary storage! !
-!STLInFiler methodsFor!
+Kernel.STLInFiler guid: (Core.GUID fromString: '{0eb5f19a-a120-4002-83d9-c520f502de6d}')!
+Kernel.STLInFiler comment: ''!
+!Kernel.STLInFiler categoriesForClass!System-Binary storage! !
+!Kernel.STLInFiler methodsFor!
 
 basicNext
 	| prefixOrLiteral |
@@ -45,15 +45,15 @@ registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
 	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
-!STLInFiler categoriesFor: #basicNext!accessing!private! !
-!STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!STLInFiler categoriesFor: #readInteger!helpers!private! !
-!STLInFiler categoriesFor: #readLiteralData!private! !
-!STLInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!STLInFiler categoriesFor: #readVersion!initializing!private! !
-!STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
+!Kernel.STLInFiler categoriesFor: #basicNext!accessing!private! !
+!Kernel.STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
+!Kernel.STLInFiler categoriesFor: #readInteger!helpers!private! !
+!Kernel.STLInFiler categoriesFor: #readLiteralData!private! !
+!Kernel.STLInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
+!Kernel.STLInFiler categoriesFor: #readVersion!initializing!private! !
+!Kernel.STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
 
-!STLInFiler class methodsFor!
+!Kernel.STLInFiler class methodsFor!
 
 peekForSignatureIn: aReadStream 
 	"Answer whether the <readableStream> argument, aReadStream, appears to
@@ -72,6 +72,6 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!STLInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
-!STLInFiler class categoriesFor: #signature!constants!private! !
+!Kernel.STLInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
+!Kernel.STLInFiler class categoriesFor: #signature!constants!private! !
 
