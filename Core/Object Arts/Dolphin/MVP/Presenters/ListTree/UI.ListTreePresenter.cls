@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListPresenter subclass: #ListTreePresenter
+UI.ListPresenter subclass: #'UI.ListTreePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListTreePresenter guid: (GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
-ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
+UI.ListTreePresenter guid: (Core.GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
+UI.ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
 chris.uppal@metagnostic.org
 
 These presenters are intended to pair with ListTreeViews, however in almost all cases they are not needed since it suffices to clip a ListPresenter or TreePresenter to the TreeView.  One case where that wouldn''t work is where you need a TreePresenter that understands that the selection may be multiple (which TreePresenter doesn''t) *and* knows about trees (which ListPresenter) doesn''t.
@@ -19,8 +19,8 @@ Here''s an example:
 See the class comment of ListTreeView for more information.
 
 	-- chris'!
-!ListTreePresenter categoriesForClass!MVP-Presenters! !
-!ListTreePresenter methodsFor!
+!UI.ListTreePresenter categoriesForClass!MVP-Presenters! !
+!UI.ListTreePresenter methodsFor!
 
 beNotSorted
 	"remove any sorting of the model. This is almost a null-op since we
@@ -104,28 +104,28 @@ up
 	sels := self view selectionsAsSet.
 	sels := sels collect: [:each | self view parentOf: each].
 	self view selections: sels asOrderedCollection.! !
-!ListTreePresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
-!ListTreePresenter categoriesFor: #beSorted!accessing!public!sorting! !
-!ListTreePresenter categoriesFor: #beSorted:!accessing!public!sorting! !
-!ListTreePresenter categoriesFor: #collapse:!operations!public! !
-!ListTreePresenter categoriesFor: #expand:!operations!public! !
-!ListTreePresenter categoriesFor: #expandAll:!operations!public! !
-!ListTreePresenter categoriesFor: #isMultiSelect!public!testing! !
-!ListTreePresenter categoriesFor: #list!accessing!public! !
-!ListTreePresenter categoriesFor: #list:!accessing!public! !
-!ListTreePresenter categoriesFor: #model:!accessing!public! !
-!ListTreePresenter categoriesFor: #treeModel!accessing!operations!public! !
-!ListTreePresenter categoriesFor: #up!operations!public! !
+!UI.ListTreePresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
+!UI.ListTreePresenter categoriesFor: #beSorted!accessing!public!sorting! !
+!UI.ListTreePresenter categoriesFor: #beSorted:!accessing!public!sorting! !
+!UI.ListTreePresenter categoriesFor: #collapse:!operations!public! !
+!UI.ListTreePresenter categoriesFor: #expand:!operations!public! !
+!UI.ListTreePresenter categoriesFor: #expandAll:!operations!public! !
+!UI.ListTreePresenter categoriesFor: #isMultiSelect!public!testing! !
+!UI.ListTreePresenter categoriesFor: #list!accessing!public! !
+!UI.ListTreePresenter categoriesFor: #list:!accessing!public! !
+!UI.ListTreePresenter categoriesFor: #model:!accessing!public! !
+!UI.ListTreePresenter categoriesFor: #treeModel!accessing!operations!public! !
+!UI.ListTreePresenter categoriesFor: #up!operations!public! !
 
-ListTreePresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
+UI.ListTreePresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
-!ListTreePresenter class methodsFor!
+!UI.ListTreePresenter class methodsFor!
 
 defaultModel
 	"answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^ TreeModel new.!
+	^TreeModel new!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -135,7 +135,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 391 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 528 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1050438 3 ##(Smalltalk.VirtualTreeModel) nil 560 138 144 528 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 784 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 848 7 257 nil 834 0 nil 866 2 3 784 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 912 7 257 nil 834 0 nil 866 2 3 784 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 800 834 0 nil 866 1 83886083 784 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1008 7 257 nil nil 138 ##(Smalltalk.PluggableSet) 528 138 ##(Smalltalk.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1202 399 701 416 1154 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 134 14 0 0 104 1 0 0] 8 #() 1202 193 193 nil 2029 )! !
-!ListTreePresenter class categoriesFor: #defaultModel!models!public! !
-!ListTreePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920618720 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 391 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1247046 3 ##(UI.VirtualTreeModel) nil 560 138 144 528 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 800 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 864 7 257 nil 850 0 nil 882 2 3 800 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 928 7 257 nil 850 0 nil 882 2 3 800 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 816 850 0 nil 882 1 83886083 800 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1024 7 257 nil nil 138 ##(Core.PluggableSet) 528 138 ##(Core.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1218 399 701 416 1170 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 198 12 0 0 104 1 0 0] 8 #() 1218 193 193 nil 2029)! !
+!UI.ListTreePresenter class categoriesFor: #defaultModel!models!public! !
+!UI.ListTreePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 

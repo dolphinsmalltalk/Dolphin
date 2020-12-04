@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListView subclass: #ListTreeView
+UI.ListView subclass: #'UI.ListTreeView'
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'
 	classConstants: {
 		'ClosedImageIndex' -> 16r3.
@@ -16,8 +16,8 @@ ListView subclass: #ListTreeView
 		'OpenImageIndex' -> 16r2.
 		'UseSmartRefreshMask' -> 16r20
 	}!
-ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
-ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
+UI.ListTreeView guid: (Core.GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
+UI.ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
 An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.  There is also a version of this class that supports multiple-selection, but is otherwise identical (see MultipleSelectionListTreeView).
@@ -81,8 +81,8 @@ Instances can be set not to keep a record of which nodes were expanded when thei
 Instances can be set not to collapse the entire subtree below a node in response to #onTreeChanged: notification.  The default is to collapse the sub-tree because that''s what TreeView does.  This is controlled by the #useSmartUpdate aspect.
 
 	-- chris'!
-!ListTreeView categoriesForClass!MVP-Views! !
-!ListTreeView methodsFor!
+!UI.ListTreeView categoriesForClass!MVP-Views! !
+!UI.ListTreeView methodsFor!
 
 addAll: aCollection afterIndex: anIndex
 	"private -- add all the objects in aCollection after the given index in the displayed list"
@@ -199,7 +199,7 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	that we rely on the caller reseting all the status icons, since otherwise
 	there's no way to ensure that the *old* parent's icon will be correct"
 
-	| itemDisplayed itemExpanded parentDisplayed parentExpanded |
+	| itemDisplayed itemExpanded parentExpanded |
 
 	"Warning: sin is prettier than this horribly fragile logic"
 
@@ -211,9 +211,9 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	"ditto for the new parent.  We treat a nil parent (child is a root) as 'expanded' to simplify (ha!!) the logic"
 	aParentObject notNil
 		ifTrue: [(self isItemDisplayed: aParentObject)
-			ifTrue: [parentDisplayed := true. parentExpanded := self isItemExpanded: aParentObject]
-			ifFalse: [parentDisplayed := parentExpanded := false]]
-		ifFalse: [parentDisplayed := parentExpanded := true].
+			ifTrue: [parentExpanded := self isItemExpanded: aParentObject]
+			ifFalse: [parentExpanded := false]]
+		ifFalse: [parentExpanded := true].
 
 	"if the item wasn't visible before, then we can early-out, just ensuring that it's added to the new
 	parent if necessary.  Remember that the caller will update the status icons for us"
@@ -269,17 +269,13 @@ checkChangeSelectionFrom: anOldCollection to: aNewCollection because: aSymbol
 	Observers thereof were happy for the selection change to go ahead"
 
 	| event |
-
 	event := (SelectionChangingEvent forSource: self)
-			oldSelections: anOldCollection;
-			newSelections: aNewCollection;
-			cause: aSymbol;
-			yourself.
-
+				oldSelections: anOldCollection;
+				newSelections: aNewCollection;
+				cause: aSymbol;
+				yourself.
 	self presenter onSelectionChanging: event.
-
-	^ event value.
-!
+	^event value!
 
 checkSelectAll: aCollection because: aSymbol
 	"private -- trigger a #selectionChanging: notification and answer whether the
@@ -353,7 +349,7 @@ collapseList: aCollection because: aSymbol
 	For the same reason, the directly affected nodes are not made hidden-expanded
 	since the user has set their preferred status"
 
-	| oldSelections collapse newSelections |
+	| collapse newSelections |
 
 	collapse := aCollection select: [:each | self isItemExpanded: each].
 	collapse isEmpty ifTrue: [^ self].
@@ -1317,7 +1313,7 @@ refreshFromModelBelow: anObject
 	what the *display* thinks is included and what the *displayed* parent-child relationships
 	are"
 
-	| oldSels newOrder legit newSels comparator |
+	| oldSels newOrder legit newSels |
 
 	"there may be nodes (now removed) that are still on our hidden-expanded list; there is no
 	way that we can check for that case so just we discard the whole hidden-expanded list"
@@ -1682,17 +1678,13 @@ sortOnColumn: aListViewColumn
 	"sort the receiver according to the sort block in aListViewColumn"
 
 	| sorter |
-
-	aListViewColumn isSortable ifFalse: [^ self].
-
+	aListViewColumn isSortable ifFalse: [^self].
 	sorter := self presenter.
 
 	"ugly hack: don't go back to vanilla presenters -- they don't understand how to sort trees"
-	#CUtodo.  "make this more flexible"
-	(sorter == self or: [sorter isKindOf: ListTreePresenter])
-		ifFalse: [sorter := self].
-
-	Cursor wait showWhile: [sorter beSorted: aListViewColumn rowSortBlock].!
+	#CUtodo.	"make this more flexible"
+	(sorter == self or: [sorter isKindOf: ListTreePresenter]) ifFalse: [sorter := self].
+	Cursor wait showWhile: [sorter beSorted: aListViewColumn rowSortBlock]!
 
 stateImageFromRow: anObject
 	"private -- answer the index of the state image that is appropriate for anObject"
@@ -1799,7 +1791,7 @@ unorderedTreeOf: aParent do: a1Block
 updateDisplayOrder
 	"private -- ensure that the 'real' list model is showing items in the same order as we expect"
 
-	| oldOrder newOrder comparator firstDiff lastDiff |
+	| oldOrder newOrder |
 
 	"work out what order we are in"
 	oldOrder := self allDisplayedItems.
@@ -1935,180 +1927,180 @@ wantExtendedSelection
 	extend the selection"
 
 	^self isMultiSelect and: [Keyboard default isShiftDown]! !
-!ListTreeView categoriesFor: #addAll:afterIndex:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #addExpanded:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #addHiddenExpanded:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #addItem:afterIndex:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #additem:toParent:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #additem:toParent:withSiblings:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #allDisplayedItems!accessing!do copy!public! !
-!ListTreeView categoriesFor: #allExpandedItems!accessing!do copy!public! !
-!ListTreeView categoriesFor: #allHiddenExpandedItems!accessing!do copy!public! !
-!ListTreeView categoriesFor: #basicCollapse:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #basicOnItem:movedToParent:!do copy!event handling!private! !
-!ListTreeView categoriesFor: #basicSetItemAt:stateImage:!do copy!private!states! !
-!ListTreeView categoriesFor: #beNoIcons!do copy!modes!public! !
-!ListTreeView categoriesFor: #beSorted:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
-!ListTreeView categoriesFor: #checkSelectAll:because:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #childrenOf:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #collapse!commands!do copy!public! !
-!ListTreeView categoriesFor: #collapse:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #collapse:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #collapseAll!commands!do copy!public! !
-!ListTreeView categoriesFor: #collapseList:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #collapseOrSelectParentBecause:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #collapseSelectedBecause:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #connectModel!do not copy!initializing!models!public! !
-!ListTreeView categoriesFor: #connectTreeModel!do copy!initializing!models!private! !
-!ListTreeView categoriesFor: #countDisplayedChildrenOf:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #defaultIndentSeparation!constants!do copy!private! !
-!ListTreeView categoriesFor: #disableExpandAll!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #disableExpandAll:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #discardAllExpanded!do copy!helpers!private! !
-!ListTreeView categoriesFor: #discardExpanded!do copy!helpers!private! !
-!ListTreeView categoriesFor: #discardHiddenExpanded!do copy!helpers!operations!public! !
-!ListTreeView categoriesFor: #disconnectFromModel!do copy!initializing!models!public! !
-!ListTreeView categoriesFor: #displayedContents!accessing!do copy!public! !
-!ListTreeView categoriesFor: #displayedOrHiddenTreeBelow:do:!do copy!enumerating!private! !
-!ListTreeView categoriesFor: #displayedTreeBelow:do:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #displayedTreeDo:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #displayedTreeOf:do:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #doSortChildrenBlock!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #doSortChildrenBlock:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #doSortRoots!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #doSortRoots:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #ensureItemDisplayed:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #expand!commands!do copy!public! !
-!ListTreeView categoriesFor: #expand:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #expand:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandAll!commands!do copy!public! !
-!ListTreeView categoriesFor: #expandAll:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #expandAllList:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandAllOrCollapseSelectedBecause:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandList:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandOrCollapse:because:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandOrSelectFirstChildBecause:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #expandSelectedBecause:!do copy!private!user initiated actions! !
-!ListTreeView categoriesFor: #filerProxy!binary filing!private! !
-!ListTreeView categoriesFor: #getChildrenBlock!accessing!do copy!public! !
-!ListTreeView categoriesFor: #getChildrenBlock:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #getParentBlock!accessing!do copy!public! !
-!ListTreeView categoriesFor: #getParentBlock:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #hasButtons!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasButtons:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #hasCheckBoxes!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #hasCheckBoxes:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #hasChildren:!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasChildrenBlock!accessing!do copy!public! !
-!ListTreeView categoriesFor: #hasChildrenBlock:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #hasHotTracking!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasHotTracking:!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasIcons!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasLines!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasLines:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #hasLinesAtRoot!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #hasLinesAtRoot:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #includesItem:!public! !
-!ListTreeView categoriesFor: #indentFromRow:!adapters!do copy!private! !
-!ListTreeView categoriesFor: #indentSeparation!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #indentSeparation:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #initialize!do copy!initializing!private! !
-!ListTreeView categoriesFor: #inOrder:parent:!do copy!private!sorting! !
-!ListTreeView categoriesFor: #inRootOrder:!do copy!private!sorting! !
-!ListTreeView categoriesFor: #invalidateItemAt:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #isItemDisplayed:!do copy!public!testing! !
-!ListTreeView categoriesFor: #isItemExpandable:!do copy!public!testing! !
-!ListTreeView categoriesFor: #isItemExpanded:!do copy!public!testing! !
-!ListTreeView categoriesFor: #isItemHiddenExpanded:!do copy!public!testing! !
-!ListTreeView categoriesFor: #isLargeIcons!do copy!public!testing! !
-!ListTreeView categoriesFor: #isMonoExpandable!accessing-styles!do copy!public!testing! !
-!ListTreeView categoriesFor: #isMonoExpandable:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #isSelected:!do copy!public!testing! !
-!ListTreeView categoriesFor: #isSmallIcons!do copy!public!testing! !
-!ListTreeView categoriesFor: #listModel:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #makeInternalListModel:searchPolicy:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #makeInternalTreeModel:searchPolicy:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #makeSet!do copy!helpers!private! !
-!ListTreeView categoriesFor: #makeSetFrom:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #minimumIndent!constants!do copy!public! !
-!ListTreeView categoriesFor: #notifyNodeAdded:!do copy!events!private! !
-!ListTreeView categoriesFor: #notifyNodeCollapsed:!do copy!events!private! !
-!ListTreeView categoriesFor: #notifyNodeExpanded:!do copy!events!private! !
-!ListTreeView categoriesFor: #notifyNodeRemoved:!do copy!events!private! !
-!ListTreeView categoriesFor: #onDestroyed!do copy!event handling!models!private! !
-!ListTreeView categoriesFor: #onItem:addedInParent:!do copy!event handling!public! !
-!ListTreeView categoriesFor: #onItem:movedToParent:!do copy!event handling!public! !
-!ListTreeView categoriesFor: #onItem:removedFromParent:!do copy!event handling!public! !
-!ListTreeView categoriesFor: #onItemUpdated:!do copy!event handling!public! !
-!ListTreeView categoriesFor: #onKeyPressed:!do copy!event handling!public!user initiated actions! !
-!ListTreeView categoriesFor: #onLeftButtonDoubleClicked:!do copy!event handling!public!user initiated actions! !
-!ListTreeView categoriesFor: #onLeftButtonPressed:!do copy!event handling!public!user initiated actions! !
-!ListTreeView categoriesFor: #onTreeChanged:!do copy!event handling!public! !
-!ListTreeView categoriesFor: #onViewCreated!do copy!event handling!public! !
-!ListTreeView categoriesFor: #parentOf:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #parentsOf:includesAny:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #previousDisplayedSiblingOf:in:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #refreshContents!do copy!public!updating! !
-!ListTreeView categoriesFor: #refreshFromModel!do copy!public!updating! !
-!ListTreeView categoriesFor: #refreshFromModelBelow:!do copy!public!updating! !
-!ListTreeView categoriesFor: #refreshItemState:!do copy!private!states! !
-!ListTreeView categoriesFor: #removeAllExcept:!do copy!expanding/collapsing!private!updating! !
-!ListTreeView categoriesFor: #removeExpanded:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #removeFromDisplay:!do copy!private! !
-!ListTreeView categoriesFor: #removeHiddenExpanded:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #removeZombies!do copy!private!updating! !
-!ListTreeView categoriesFor: #resetTreeToRoots!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #resolutionScaledBy:!do copy!geometry!private! !
-!ListTreeView categoriesFor: #retainExpanded!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #retainExpanded:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #roots!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #searchPolicy!accessing!do copy!public! !
-!ListTreeView categoriesFor: #selectFirstChildOf:because:!do copy!private!selection!user initiated actions! !
-!ListTreeView categoriesFor: #selection:ifAbsent:!do not copy!public!selection! !
-!ListTreeView categoriesFor: #selectionAfterCollapseList:!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionAfterExpandAllList:!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionAfterExpandList:!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionOrRoots!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionRoots!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionRootsOrRoots!do copy!private!selection! !
-!ListTreeView categoriesFor: #selectionsAsSet!accessing!do copy!public!selection! !
-!ListTreeView categoriesFor: #selectParentOf:because:!do copy!private!selection!user initiated actions! !
-!ListTreeView categoriesFor: #setItem:indentation:!do copy!private!states! !
-!ListTreeView categoriesFor: #setItemAt:stateImage:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #setItemIndentation:!do copy!private!states! !
-!ListTreeView categoriesFor: #setModel:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #sortBlock!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #sortBlock:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #sortOnColumn:!columns!do copy!public!sorting! !
-!ListTreeView categoriesFor: #stateImageFromRow:!adapters!do copy!private! !
-!ListTreeView categoriesFor: #stateImageManager!do copy!image management!private! !
-!ListTreeView categoriesFor: #toggleExpandAll:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #toggleExpanded:!do copy!expanding/collapsing!public! !
-!ListTreeView categoriesFor: #treeModel!accessing!do copy!models!public! !
-!ListTreeView categoriesFor: #treeModel:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #treeModel:listModel:!accessing!do copy!models!private! !
-!ListTreeView categoriesFor: #unorderedChildrenOf:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #unorderedRoots!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #unorderedTreeBelow:do:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #unorderedTreeDo:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #unorderedTreeOf:do:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #updateDisplayOrder!do copy!private!updating! !
-!ListTreeView categoriesFor: #updateDisplayOrderFrom:to:!do copy!private!updating! !
-!ListTreeView categoriesFor: #updateExpanded!do copy!private!updating! !
-!ListTreeView categoriesFor: #updateItem:!public! !
-!ListTreeView categoriesFor: #updateMode!accessing!do copy!public! !
-!ListTreeView categoriesFor: #updateMode:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #updateStates!do copy!private!states!updating! !
-!ListTreeView categoriesFor: #useSmartRefresh!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #useSmartRefresh:!accessing-styles!do copy!public! !
-!ListTreeView categoriesFor: #veryBasicCollapse:!do copy!expanding/collapsing!private! !
-!ListTreeView categoriesFor: #viewMode:!accessing!do copy!public! !
-!ListTreeView categoriesFor: #wantExtendedSelection!do copy!private!testing! !
+!UI.ListTreeView categoriesFor: #addAll:afterIndex:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #addExpanded:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #addHiddenExpanded:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #addItem:afterIndex:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #additem:toParent:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #additem:toParent:withSiblings:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #allDisplayedItems!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #allExpandedItems!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #allHiddenExpandedItems!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #basicCollapse:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #basicOnItem:movedToParent:!do copy!event handling!private! !
+!UI.ListTreeView categoriesFor: #basicSetItemAt:stateImage:!do copy!private!states! !
+!UI.ListTreeView categoriesFor: #beNoIcons!do copy!modes!public! !
+!UI.ListTreeView categoriesFor: #beSorted:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
+!UI.ListTreeView categoriesFor: #checkSelectAll:because:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #childrenOf:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #collapse!commands!do copy!public! !
+!UI.ListTreeView categoriesFor: #collapse:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #collapse:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #collapseAll!commands!do copy!public! !
+!UI.ListTreeView categoriesFor: #collapseList:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #collapseOrSelectParentBecause:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #collapseSelectedBecause:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #connectModel!do not copy!initializing!models!public! !
+!UI.ListTreeView categoriesFor: #connectTreeModel!do copy!initializing!models!private! !
+!UI.ListTreeView categoriesFor: #countDisplayedChildrenOf:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #defaultIndentSeparation!constants!do copy!private! !
+!UI.ListTreeView categoriesFor: #disableExpandAll!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #disableExpandAll:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #discardAllExpanded!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #discardExpanded!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #discardHiddenExpanded!do copy!helpers!operations!public! !
+!UI.ListTreeView categoriesFor: #disconnectFromModel!do copy!initializing!models!public! !
+!UI.ListTreeView categoriesFor: #displayedContents!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #displayedOrHiddenTreeBelow:do:!do copy!enumerating!private! !
+!UI.ListTreeView categoriesFor: #displayedTreeBelow:do:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #displayedTreeDo:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #displayedTreeOf:do:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #doSortChildrenBlock!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #doSortChildrenBlock:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #doSortRoots!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #doSortRoots:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #ensureItemDisplayed:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #expand!commands!do copy!public! !
+!UI.ListTreeView categoriesFor: #expand:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #expand:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandAll!commands!do copy!public! !
+!UI.ListTreeView categoriesFor: #expandAll:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #expandAllList:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandAllOrCollapseSelectedBecause:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandList:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandOrCollapse:because:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandOrSelectFirstChildBecause:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #expandSelectedBecause:!do copy!private!user initiated actions! !
+!UI.ListTreeView categoriesFor: #filerProxy!binary filing!private! !
+!UI.ListTreeView categoriesFor: #getChildrenBlock!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #getChildrenBlock:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #getParentBlock!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #getParentBlock:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasButtons!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasButtons:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasCheckBoxes!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasCheckBoxes:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasChildren:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasChildrenBlock!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasChildrenBlock:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasHotTracking!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasHotTracking:!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasIcons!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasLines!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasLines:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #hasLinesAtRoot!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #hasLinesAtRoot:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #includesItem:!public! !
+!UI.ListTreeView categoriesFor: #indentFromRow:!adapters!do copy!private! !
+!UI.ListTreeView categoriesFor: #indentSeparation!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #indentSeparation:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #initialize!do copy!initializing!private! !
+!UI.ListTreeView categoriesFor: #inOrder:parent:!do copy!private!sorting! !
+!UI.ListTreeView categoriesFor: #inRootOrder:!do copy!private!sorting! !
+!UI.ListTreeView categoriesFor: #invalidateItemAt:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #isItemDisplayed:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isItemExpandable:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isItemExpanded:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isItemHiddenExpanded:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isLargeIcons!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isMonoExpandable!accessing-styles!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isMonoExpandable:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #isSelected:!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #isSmallIcons!do copy!public!testing! !
+!UI.ListTreeView categoriesFor: #listModel:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #makeInternalListModel:searchPolicy:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #makeInternalTreeModel:searchPolicy:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #makeSet!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #makeSetFrom:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #minimumIndent!constants!do copy!public! !
+!UI.ListTreeView categoriesFor: #notifyNodeAdded:!do copy!events!private! !
+!UI.ListTreeView categoriesFor: #notifyNodeCollapsed:!do copy!events!private! !
+!UI.ListTreeView categoriesFor: #notifyNodeExpanded:!do copy!events!private! !
+!UI.ListTreeView categoriesFor: #notifyNodeRemoved:!do copy!events!private! !
+!UI.ListTreeView categoriesFor: #onDestroyed!do copy!event handling!models!private! !
+!UI.ListTreeView categoriesFor: #onItem:addedInParent:!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #onItem:movedToParent:!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #onItem:removedFromParent:!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #onItemUpdated:!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #onKeyPressed:!do copy!event handling!public!user initiated actions! !
+!UI.ListTreeView categoriesFor: #onLeftButtonDoubleClicked:!do copy!event handling!public!user initiated actions! !
+!UI.ListTreeView categoriesFor: #onLeftButtonPressed:!do copy!event handling!public!user initiated actions! !
+!UI.ListTreeView categoriesFor: #onTreeChanged:!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #onViewCreated!do copy!event handling!public! !
+!UI.ListTreeView categoriesFor: #parentOf:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #parentsOf:includesAny:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #previousDisplayedSiblingOf:in:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #refreshContents!do copy!public!updating! !
+!UI.ListTreeView categoriesFor: #refreshFromModel!do copy!public!updating! !
+!UI.ListTreeView categoriesFor: #refreshFromModelBelow:!do copy!public!updating! !
+!UI.ListTreeView categoriesFor: #refreshItemState:!do copy!private!states! !
+!UI.ListTreeView categoriesFor: #removeAllExcept:!do copy!expanding/collapsing!private!updating! !
+!UI.ListTreeView categoriesFor: #removeExpanded:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #removeFromDisplay:!do copy!private! !
+!UI.ListTreeView categoriesFor: #removeHiddenExpanded:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #removeZombies!do copy!private!updating! !
+!UI.ListTreeView categoriesFor: #resetTreeToRoots!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #resolutionScaledBy:!do copy!geometry!private! !
+!UI.ListTreeView categoriesFor: #retainExpanded!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #retainExpanded:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #roots!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #searchPolicy!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #selectFirstChildOf:because:!do copy!private!selection!user initiated actions! !
+!UI.ListTreeView categoriesFor: #selection:ifAbsent:!do not copy!public!selection! !
+!UI.ListTreeView categoriesFor: #selectionAfterCollapseList:!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionAfterExpandAllList:!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionAfterExpandList:!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionOrRoots!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionRoots!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionRootsOrRoots!do copy!private!selection! !
+!UI.ListTreeView categoriesFor: #selectionsAsSet!accessing!do copy!public!selection! !
+!UI.ListTreeView categoriesFor: #selectParentOf:because:!do copy!private!selection!user initiated actions! !
+!UI.ListTreeView categoriesFor: #setItem:indentation:!do copy!private!states! !
+!UI.ListTreeView categoriesFor: #setItemAt:stateImage:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #setItemIndentation:!do copy!private!states! !
+!UI.ListTreeView categoriesFor: #setModel:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #sortBlock!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #sortBlock:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #sortOnColumn:!columns!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #stateImageFromRow:!adapters!do copy!private! !
+!UI.ListTreeView categoriesFor: #stateImageManager!do copy!image management!private! !
+!UI.ListTreeView categoriesFor: #toggleExpandAll:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #toggleExpanded:!do copy!expanding/collapsing!public! !
+!UI.ListTreeView categoriesFor: #treeModel!accessing!do copy!models!public! !
+!UI.ListTreeView categoriesFor: #treeModel:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #treeModel:listModel:!accessing!do copy!models!private! !
+!UI.ListTreeView categoriesFor: #unorderedChildrenOf:!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #unorderedRoots!accessing!do copy!public!sorting! !
+!UI.ListTreeView categoriesFor: #unorderedTreeBelow:do:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #unorderedTreeDo:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #unorderedTreeOf:do:!do copy!enumerating!public! !
+!UI.ListTreeView categoriesFor: #updateDisplayOrder!do copy!private!updating! !
+!UI.ListTreeView categoriesFor: #updateDisplayOrderFrom:to:!do copy!private!updating! !
+!UI.ListTreeView categoriesFor: #updateExpanded!do copy!private!updating! !
+!UI.ListTreeView categoriesFor: #updateItem:!public! !
+!UI.ListTreeView categoriesFor: #updateMode!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #updateMode:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #updateStates!do copy!private!states!updating! !
+!UI.ListTreeView categoriesFor: #useSmartRefresh!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #useSmartRefresh:!accessing-styles!do copy!public! !
+!UI.ListTreeView categoriesFor: #veryBasicCollapse:!do copy!expanding/collapsing!private! !
+!UI.ListTreeView categoriesFor: #viewMode:!accessing!do copy!public! !
+!UI.ListTreeView categoriesFor: #wantExtendedSelection!do copy!private!testing! !
 
-ListTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
+UI.ListTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
 
-!ListTreeView class methodsFor!
+!UI.ListTreeView class methodsFor!
 
 convertToLocalVersion0: anArray from: anInteger
 	"private -- answer a version of anArray that represents at least version 0 of our instances'
@@ -2198,34 +2190,34 @@ fillStateImageManagerFrom: anImage
 	leaf/expanded/not-expanded images"
 
 	| zero extent srcOrigin image |
-
 	stateImageManager maskcolor: Color white.
-
 	extent := self stateImageExtent.
-	zero := 0@0.
-	srcOrigin := 0@0.
+	zero := 0 @ 0.
+	srcOrigin := 0 @ 0.
 
 	"NB: the order of insertion of images *must* match the output of:
 		self stateNames.
 	"
-	1 to: 5 do:
-		[:i |
-		image := (Bitmap displayCompatibleWithExtent: extent).
-		(image canvas)
-			drawBitmap: anImage at: zero extent: extent from: srcOrigin extent: extent rop: SRCCOPY;
-			free.
-		stateImageManager addImage: image.
-		srcOrigin x: (srcOrigin x + extent x)].
-!
+	1 to: 5
+		do: 
+			[:i |
+			image := Bitmap displayCompatibleWithExtent: extent.
+			image canvas
+				drawBitmap: anImage
+					at: zero
+					extent: extent
+					from: srcOrigin
+					extent: extent
+					rop: SRCCOPY;
+				free.
+			stateImageManager addImage: image.
+			srcOrigin x: srcOrigin x + extent x]!
 
 fillStateImageManagerThemed
-
-	| extent theme image rect canvas |
+	| extent treeViewTheme image rect canvas |
 	extent := self stateImageExtent.
-	rect := RECT extent: extent.
-
-	theme := (ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView').
-
+	rect := RECTL extent: extent.
+	treeViewTheme := ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView'.
 	stateImageManager maskcolor: Color white.
 
 	"image for state leaf"
@@ -2237,8 +2229,8 @@ fillStateImageManagerThemed
 	"image for state expanded"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default 
-		drawThemeBackground: theme
+	ThemeLibrary default
+		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
 		iStateId: ThemeConstants.GLPS_OPENED
@@ -2250,8 +2242,8 @@ fillStateImageManagerThemed
 	"image for state collapsed"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default 
-		drawThemeBackground: theme
+	ThemeLibrary default
+		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
 		iStateId: ThemeConstants.GLPS_CLOSED
@@ -2259,21 +2251,19 @@ fillStateImageManagerThemed
 		pClipRect: nil.
 	stateImageManager addImage: image.
 	image freeDC.
-
-	ThemeLibrary default closeThemeData: theme.
-	!
+	ThemeLibrary default closeThemeData: treeViewTheme!
 
 internalListModelClass
 	"answer the factory object to use for our instances' internally
 	created list models"
 
-	^ ListModel.!
+	^ListModel!
 
 internalTreeModelClass
 	"answer the factory object to use for our instances' internal tree
 	models (i.e. when one has not been set explicitly)"
 
-	^ VirtualTreeModel!
+	^VirtualTreeModel!
 
 localStbVersion
 	"private -- answer the 'real' binary filer version number for instances of the receiver.
@@ -2320,18 +2310,21 @@ stateImageManager
 	leaf/expanded/not-expanded images"
 
 	stateImageManager isNil ifTrue: [stateImageManager := ImageManager new].
-
-	stateImageManager size = 0 ifTrue:
-		[| image |
-		[stateImageBlock isNil ifFalse: [image := stateImageBlock value]]
-			on: Exception
-			do: [:ex | ex notify. ex return: nil].
-		image isNil
-			ifTrue: [
-				ThemeLibrary isAppThemed ifTrue: [self fillStateImageManagerThemed] ifFalse: [self fillStateImageManager]]
-			ifFalse: [self fillStateImageManagerFrom: image]].
-
-	^ stateImageManager.!
+	stateImageManager size = 0
+		ifTrue: 
+			[| image |
+			[stateImageBlock isNil ifFalse: [image := stateImageBlock value]] on: Exception
+				do: 
+					[:ex |
+					ex notify.
+					ex return: nil].
+			image isNil
+				ifTrue: 
+					[ThemeLibrary isAppThemed
+						ifTrue: [self fillStateImageManagerThemed]
+						ifFalse: [self fillStateImageManager]]
+				ifFalse: [self fillStateImageManagerFrom: image]].
+	^stateImageManager!
 
 stbConvert: anArray fromLocalVersion: anInteger
 	"private -- answer a version of anArray that represents the current version of our instances'
@@ -2374,21 +2367,21 @@ stbVersion
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
 	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
-!ListTreeView class categoriesFor: #convertToLocalVersion0:from:!binary filing!do copy!private! !
-!ListTreeView class categoriesFor: #convertToLocalVersion1:from:!binary filing!do copy!private! !
-!ListTreeView class categoriesFor: #defaultOptions!constants!do copy!public! !
-!ListTreeView class categoriesFor: #fillStateImageManager!do not copy!initializing!private! !
-!ListTreeView class categoriesFor: #fillStateImageManagerFrom:!do not copy!initializing!private! !
-!ListTreeView class categoriesFor: #fillStateImageManagerThemed!do not copy!initializing!private! !
-!ListTreeView class categoriesFor: #internalListModelClass!constants!do not copy!public! !
-!ListTreeView class categoriesFor: #internalTreeModelClass!constants!do copy!public! !
-!ListTreeView class categoriesFor: #localStbVersion!binary filing!constants!do copy!private! !
-!ListTreeView class categoriesFor: #onStartup!do not copy!events!public! !
-!ListTreeView class categoriesFor: #stateImageBlock:!accessing!do not copy!public! !
-!ListTreeView class categoriesFor: #stateImageExtent!constants!do copy!public! !
-!ListTreeView class categoriesFor: #stateImageManager!accessing!do not copy!public! !
-!ListTreeView class categoriesFor: #stbConvert:fromLocalVersion:!binary filing!do copy!private! !
-!ListTreeView class categoriesFor: #stbConvert:fromVersion:!binary filing!do copy!private! !
-!ListTreeView class categoriesFor: #stbEncodingPrime!binary filing!constants!do copy!private! !
-!ListTreeView class categoriesFor: #stbVersion!binary filing!do copy!public! !
+!UI.ListTreeView class categoriesFor: #convertToLocalVersion0:from:!binary filing!do copy!private! !
+!UI.ListTreeView class categoriesFor: #convertToLocalVersion1:from:!binary filing!do copy!private! !
+!UI.ListTreeView class categoriesFor: #defaultOptions!constants!do copy!public! !
+!UI.ListTreeView class categoriesFor: #fillStateImageManager!do not copy!initializing!private! !
+!UI.ListTreeView class categoriesFor: #fillStateImageManagerFrom:!do not copy!initializing!private! !
+!UI.ListTreeView class categoriesFor: #fillStateImageManagerThemed!do not copy!initializing!private! !
+!UI.ListTreeView class categoriesFor: #internalListModelClass!constants!do not copy!public! !
+!UI.ListTreeView class categoriesFor: #internalTreeModelClass!constants!do copy!public! !
+!UI.ListTreeView class categoriesFor: #localStbVersion!binary filing!constants!do copy!private! !
+!UI.ListTreeView class categoriesFor: #onStartup!do not copy!events!public! !
+!UI.ListTreeView class categoriesFor: #stateImageBlock:!accessing!do not copy!public! !
+!UI.ListTreeView class categoriesFor: #stateImageExtent!constants!do copy!public! !
+!UI.ListTreeView class categoriesFor: #stateImageManager!accessing!do not copy!public! !
+!UI.ListTreeView class categoriesFor: #stbConvert:fromLocalVersion:!binary filing!do copy!private! !
+!UI.ListTreeView class categoriesFor: #stbConvert:fromVersion:!binary filing!do copy!private! !
+!UI.ListTreeView class categoriesFor: #stbEncodingPrime!binary filing!constants!do copy!private! !
+!UI.ListTreeView class categoriesFor: #stbVersion!binary filing!do copy!public! !
 

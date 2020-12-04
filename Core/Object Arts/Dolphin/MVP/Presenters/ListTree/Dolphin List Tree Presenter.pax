@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin List Tree Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
@@ -77,22 +77,22 @@ package basicPackageVersion: '7.01'.
 
 
 package setClassNames: #(
-	#{ListTreePresenter}
-	#{ListTreeView}
+	#{UI.ListTreePresenter}
+	#{UI.ListTreeView}
 ).
 
 package setMethodNames: #(
-	#(#{ListPresenter class} #resource_ListTree_view)
-	#(#{LVHITTESTINFO} #isAboveClientArea)
-	#(#{LVHITTESTINFO} #isBelowClientArea)
-	#(#{LVHITTESTINFO} #isNowhere)
-	#(#{LVHITTESTINFO} #isOnItem)
-	#(#{LVHITTESTINFO} #isOnItemIcon)
-	#(#{LVHITTESTINFO} #isOnItemLabel)
-	#(#{LVHITTESTINFO} #isOnItemStateIcon)
-	#(#{LVHITTESTINFO} #isToLeft)
-	#(#{LVHITTESTINFO} #isToRight)
-	#(#{TreePresenter class} #resource_ListTree_view)
+	#(#{OS.LVHITTESTINFO} #isAboveClientArea)
+	#(#{OS.LVHITTESTINFO} #isBelowClientArea)
+	#(#{OS.LVHITTESTINFO} #isNowhere)
+	#(#{OS.LVHITTESTINFO} #isOnItem)
+	#(#{OS.LVHITTESTINFO} #isOnItemIcon)
+	#(#{OS.LVHITTESTINFO} #isOnItemLabel)
+	#(#{OS.LVHITTESTINFO} #isOnItemStateIcon)
+	#(#{OS.LVHITTESTINFO} #isToLeft)
+	#(#{OS.LVHITTESTINFO} #isToRight)
+	#(#{UI.ListPresenter class} #resource_ListTree_view)
+	#(#{UI.TreePresenter class} #resource_ListTree_view)
 ).
 
 package setPrerequisites: #(
@@ -110,16 +110,16 @@ package!
 
 "Class Definitions"!
 
-ListPresenter subclass: #ListTreePresenter
+UI.ListPresenter subclass: #'UI.ListTreePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListView subclass: #ListTreeView
+UI.ListView subclass: #'UI.ListTreeView'
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'
 	classConstants: {
 		'ClosedImageIndex' -> 16r3.
@@ -135,20 +135,7 @@ ListView subclass: #ListTreeView
 
 "Loose Methods"!
 
-!ListPresenter class methodsFor!
-
-resource_ListTree_view
-	"Answer the literal data from which the 'ListTree view' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ListTree_view)
-	"
-
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 393 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 528 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1050438 3 ##(Smalltalk.VirtualTreeModel) nil 560 138 144 528 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 784 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 848 7 257 nil 834 0 nil 866 2 3 784 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 912 7 257 nil 834 0 nil 866 2 3 784 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 800 834 0 nil 866 1 83886083 784 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1008 7 257 nil nil 138 ##(Smalltalk.PluggableSet) 528 138 ##(Smalltalk.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1202 401 701 416 1154 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 135 14 0 0 104 1 0 0] 8 #() 1202 193 193 nil 2029 )! !
-!ListPresenter class categoriesFor: #resource_ListTree_view!public!resources-views! !
-
-!LVHITTESTINFO methodsFor!
+!OS.LVHITTESTINFO methodsFor!
 
 isAboveClientArea
 	"Answers whether the position is above the control's client area."
@@ -206,17 +193,17 @@ isToRight
 	"Answers whether the position is to the right of the control's client area."
 #CUadded.
 	^ self flags allMask: LVHT_TORIGHT.! !
-!LVHITTESTINFO categoriesFor: #isAboveClientArea!public!testing! !
-!LVHITTESTINFO categoriesFor: #isBelowClientArea!public!testing! !
-!LVHITTESTINFO categoriesFor: #isNowhere!public!testing! !
-!LVHITTESTINFO categoriesFor: #isOnItem!public!testing! !
-!LVHITTESTINFO categoriesFor: #isOnItemIcon!public!testing! !
-!LVHITTESTINFO categoriesFor: #isOnItemLabel!public!testing! !
-!LVHITTESTINFO categoriesFor: #isOnItemStateIcon!public!testing! !
-!LVHITTESTINFO categoriesFor: #isToLeft!public!testing! !
-!LVHITTESTINFO categoriesFor: #isToRight!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isAboveClientArea!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isBelowClientArea!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isNowhere!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isOnItem!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isOnItemIcon!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isOnItemLabel!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isOnItemStateIcon!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isToLeft!public!testing! !
+!OS.LVHITTESTINFO categoriesFor: #isToRight!public!testing! !
 
-!TreePresenter class methodsFor!
+!UI.ListPresenter class methodsFor!
 
 resource_ListTree_view
 	"Answer the literal data from which the 'ListTree view' resource can be reconstituted.
@@ -226,8 +213,21 @@ resource_ListTree_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ListTree_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 397 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 528 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1050438 3 ##(Smalltalk.VirtualTreeModel) nil 560 138 144 528 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 784 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 848 7 257 nil 834 0 nil 866 2 3 784 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 912 7 257 nil 834 0 nil 866 2 3 784 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 800 834 0 nil 866 1 83886083 784 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1008 7 257 nil nil 138 ##(Smalltalk.PluggableSet) 528 138 ##(Smalltalk.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1202 405 701 416 1154 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 137 14 0 0 104 1 0 0] 8 #() 1202 193 193 nil 2029 )! !
-!TreePresenter class categoriesFor: #resource_ListTree_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920618720 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 393 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1247046 3 ##(UI.VirtualTreeModel) nil 560 138 144 528 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 800 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 864 7 257 nil 850 0 nil 882 2 3 800 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 928 7 257 nil 850 0 nil 882 2 3 800 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 816 850 0 nil 882 1 83886083 800 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1024 7 257 nil nil 138 ##(Core.PluggableSet) 528 138 ##(Core.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1218 401 701 416 1170 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 104 1 0 0] 8 #() 1218 193 193 nil 2029)! !
+!UI.ListPresenter class categoriesFor: #resource_ListTree_view!public!resources-views! !
+
+!UI.TreePresenter class methodsFor!
+
+resource_ListTree_view
+	"Answer the literal data from which the 'ListTree view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ListTree_view)
+	"
+
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920618720 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 397 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1247046 3 ##(UI.VirtualTreeModel) nil 560 138 144 528 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 800 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 864 7 257 nil 850 0 nil 882 2 3 800 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 928 7 257 nil 850 0 nil 882 2 3 800 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 816 850 0 nil 882 1 83886083 800 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1024 7 257 nil nil 138 ##(Core.PluggableSet) 528 138 ##(Core.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1218 405 701 416 1170 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 201 12 0 0 104 1 0 0] 8 #() 1218 193 193 nil 2029)! !
+!UI.TreePresenter class categoriesFor: #resource_ListTree_view!public!resources-views! !
 
 "End of package definition"!
 
