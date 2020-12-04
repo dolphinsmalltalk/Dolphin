@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractToTextConverter subclass: #BooleanToText
+UI.AbstractToTextConverter subclass: #'UI.BooleanToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BooleanToText guid: (GUID fromString: '{87b4c707-026e-11d3-9fd7-00a0cc3e4a32}')!
-BooleanToText comment: 'BooleanToString is a <textTypeConverter> that transforms a Boolean subject value to/from a String. If the subject value is nil it is converted to an empty String and vice versa. A format array (e.g. #(''no'' ''yes''), see Boolean) can be specified to dictate the way the subject value is formatted when converted to text. If no explicit format is provided the default is used.
+UI.BooleanToText guid: (Core.GUID fromString: '{87b4c707-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.BooleanToText comment: 'BooleanToString is a <textTypeConverter> that transforms a Boolean subject value to/from a String. If the subject value is nil it is converted to an empty String and vice versa. A format array (e.g. #(''no'' ''yes''), see Boolean) can be specified to dictate the way the subject value is formatted when converted to text. If no explicit format is provided the default is used.
 
 Instance Variables:
 	format	<Array> of <readableString> or nil, indicating the text to use for <boolean> values.
 
 '!
-!BooleanToText categoriesForClass!MVP-Type Converters-Text! !
-!BooleanToText methodsFor!
+!UI.BooleanToText categoriesForClass!MVP-Type Converters-Text! !
+!UI.BooleanToText methodsFor!
 
 actualFormat
 	"Private - Answers the actual format to use for this conversion. If unspecified, use the default format for the <Locale>."
@@ -53,10 +53,10 @@ rightToLeft: aString
 
 	"Raise an error for no match"
 	^self errorInvalidFormat! !
-!BooleanToText categoriesFor: #actualFormat!accessing!private! !
-!BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
-!BooleanToText categoriesFor: #format!accessing!public! !
-!BooleanToText categoriesFor: #format:!accessing!public! !
-!BooleanToText categoriesFor: #leftToRight:!operations!private! !
-!BooleanToText categoriesFor: #rightToLeft:!operations!private! !
+!UI.BooleanToText categoriesFor: #actualFormat!accessing!private! !
+!UI.BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
+!UI.BooleanToText categoriesFor: #format!accessing!public! !
+!UI.BooleanToText categoriesFor: #format:!accessing!public! !
+!UI.BooleanToText categoriesFor: #leftToRight:!operations!private! !
+!UI.BooleanToText categoriesFor: #rightToLeft:!operations!private! !
 

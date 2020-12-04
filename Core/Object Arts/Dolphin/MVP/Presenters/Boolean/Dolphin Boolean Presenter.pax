@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Boolean Presenter'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Boolean Presenter
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -11,8 +11,8 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{BooleanPresenter}
-	#{BooleanToText}
+	#{UI.BooleanPresenter}
+	#{UI.BooleanToText}
 ).
 
 package setPrerequisites: #(
@@ -27,16 +27,16 @@ package!
 
 "Class Definitions"!
 
-ValuePresenter subclass: #BooleanPresenter
+UI.ValuePresenter subclass: #'UI.BooleanPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractToTextConverter subclass: #BooleanToText
+UI.AbstractToTextConverter subclass: #'UI.BooleanToText'
 	instanceVariableNames: 'format'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
