@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractNonReferenceDelegatingView subclass: #ToolButton
+UI.AbstractNonReferenceDelegatingView subclass: #'UI.ToolButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolButton guid: (GUID fromString: '{075420d9-dc3b-4222-b99e-abd8769d41b8}')!
-ToolButton comment: ''!
-!ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !
-!ToolButton methodsFor!
+UI.ToolButton guid: (Core.GUID fromString: '{075420d9-dc3b-4222-b99e-abd8769d41b8}')!
+UI.ToolButton comment: ''!
+!UI.ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !
+!UI.ToolButton methodsFor!
 
 backcolor: aColorOrNil 
 	"We need to set the internal toolbar's forecolor to match in order to avoid gradients"
@@ -202,48 +202,48 @@ toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
 	^self commandDescription toolTipText! !
-!ToolButton categoriesFor: #backcolor:!accessing!public! !
-!ToolButton categoriesFor: #bitmapSize!accessing!geometry!public! !
-!ToolButton categoriesFor: #bitmapSize:!accessing!geometry!public! !
-!ToolButton categoriesFor: #buttonSize!accessing!geometry!public! !
-!ToolButton categoriesFor: #buttonSize:!accessing!geometry!public! !
-!ToolButton categoriesFor: #commandDescription!accessing!public! !
-!ToolButton categoriesFor: #commandDescription:!accessing!public! !
-!ToolButton categoriesFor: #createDelegate!event handling!private! !
-!ToolButton categoriesFor: #createInternalButton!event handling!private! !
-!ToolButton categoriesFor: #defaultBackcolor!private! !
-!ToolButton categoriesFor: #defaultBitmapSize!constants!private! !
-!ToolButton categoriesFor: #defaultExtent!constants!private! !
-!ToolButton categoriesFor: #fontChanged!private!updating! !
-!ToolButton categoriesFor: #hasFlatAppearance!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasFlatAppearance:!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasLabels!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasLabels:!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasListAppearance!accessing!public! !
-!ToolButton categoriesFor: #hasListAppearance:!accessing!public! !
-!ToolButton categoriesFor: #internalButton!private! !
-!ToolButton categoriesFor: #isChecked!accessing!public!testing! !
-!ToolButton categoriesFor: #isChecked:!accessing!public!state! !
-!ToolButton categoriesFor: #isCheckStyle!accessing!public! !
-!ToolButton categoriesFor: #isCheckStyle:!accessing!public! !
-!ToolButton categoriesFor: #isDropDownOnly!accessing!public! !
-!ToolButton categoriesFor: #isDropDownOnly:!accessing!public! !
-!ToolButton categoriesFor: #isDropdownStyle!accessing!public! !
-!ToolButton categoriesFor: #isDropdownStyle:!accessing!public! !
-!ToolButton categoriesFor: #isEnabled!accessing!public!testing! !
-!ToolButton categoriesFor: #isEnabled:!accessing!public!state! !
-!ToolButton categoriesFor: #isGroupStyle!accessing!public! !
-!ToolButton categoriesFor: #isGroupStyle:!accessing!public!style! !
-!ToolButton categoriesFor: #isIndeterminate!accessing!public!testing! !
-!ToolButton categoriesFor: #isIndeterminate:!accessing!public!state! !
-!ToolButton categoriesFor: #isPressed!accessing!public!testing! !
-!ToolButton categoriesFor: #isPressed:!accessing!public!state! !
-!ToolButton categoriesFor: #onPositionChanged:!event handling!private! !
-!ToolButton categoriesFor: #onResize!private! !
-!ToolButton categoriesFor: #onTipTextRequired!event handling!public! !
-!ToolButton categoriesFor: #toolTipText!operations!public! !
+!UI.ToolButton categoriesFor: #backcolor:!accessing!public! !
+!UI.ToolButton categoriesFor: #bitmapSize!accessing!geometry!public! !
+!UI.ToolButton categoriesFor: #bitmapSize:!accessing!geometry!public! !
+!UI.ToolButton categoriesFor: #buttonSize!accessing!geometry!public! !
+!UI.ToolButton categoriesFor: #buttonSize:!accessing!geometry!public! !
+!UI.ToolButton categoriesFor: #commandDescription!accessing!public! !
+!UI.ToolButton categoriesFor: #commandDescription:!accessing!public! !
+!UI.ToolButton categoriesFor: #createDelegate!event handling!private! !
+!UI.ToolButton categoriesFor: #createInternalButton!event handling!private! !
+!UI.ToolButton categoriesFor: #defaultBackcolor!private! !
+!UI.ToolButton categoriesFor: #defaultBitmapSize!constants!private! !
+!UI.ToolButton categoriesFor: #defaultExtent!constants!private! !
+!UI.ToolButton categoriesFor: #fontChanged!private!updating! !
+!UI.ToolButton categoriesFor: #hasFlatAppearance!accessing!accessing-styles!public! !
+!UI.ToolButton categoriesFor: #hasFlatAppearance:!accessing!accessing-styles!public! !
+!UI.ToolButton categoriesFor: #hasLabels!accessing!accessing-styles!public! !
+!UI.ToolButton categoriesFor: #hasLabels:!accessing!accessing-styles!public! !
+!UI.ToolButton categoriesFor: #hasListAppearance!accessing!public! !
+!UI.ToolButton categoriesFor: #hasListAppearance:!accessing!public! !
+!UI.ToolButton categoriesFor: #internalButton!private! !
+!UI.ToolButton categoriesFor: #isChecked!accessing!public!testing! !
+!UI.ToolButton categoriesFor: #isChecked:!accessing!public!state! !
+!UI.ToolButton categoriesFor: #isCheckStyle!accessing!public! !
+!UI.ToolButton categoriesFor: #isCheckStyle:!accessing!public! !
+!UI.ToolButton categoriesFor: #isDropDownOnly!accessing!public! !
+!UI.ToolButton categoriesFor: #isDropDownOnly:!accessing!public! !
+!UI.ToolButton categoriesFor: #isDropdownStyle!accessing!public! !
+!UI.ToolButton categoriesFor: #isDropdownStyle:!accessing!public! !
+!UI.ToolButton categoriesFor: #isEnabled!accessing!public!testing! !
+!UI.ToolButton categoriesFor: #isEnabled:!accessing!public!state! !
+!UI.ToolButton categoriesFor: #isGroupStyle!accessing!public! !
+!UI.ToolButton categoriesFor: #isGroupStyle:!accessing!public!style! !
+!UI.ToolButton categoriesFor: #isIndeterminate!accessing!public!testing! !
+!UI.ToolButton categoriesFor: #isIndeterminate:!accessing!public!state! !
+!UI.ToolButton categoriesFor: #isPressed!accessing!public!testing! !
+!UI.ToolButton categoriesFor: #isPressed:!accessing!public!state! !
+!UI.ToolButton categoriesFor: #onPositionChanged:!event handling!private! !
+!UI.ToolButton categoriesFor: #onResize!private! !
+!UI.ToolButton categoriesFor: #onTipTextRequired!event handling!public! !
+!UI.ToolButton categoriesFor: #toolTipText!operations!public! !
 
-!ToolButton class methodsFor!
+!UI.ToolButton class methodsFor!
 
 icon
 	^PushButton icon!
@@ -256,7 +256,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ToolButton) 34 14 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853580 131137 480 nil nil nil 3 nil nil nil 480 nil 8 1915204752 nil 170 192 34 2 48155 1115206 1 ##(Smalltalk.ToolbarIconButton) 480 1 1180998 4 ##(Smalltalk.CommandDescription) #noCommand 8 'No command' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Object.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 48155 34 1 608 nil nil 3 nil 328198 ##(Smalltalk.Point) 49 49 818 183 87 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 1 1 818 193 97 480 930 #updateSizePosted 8 #() 480 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 818 193 193 nil 27 866 138 144 34 1 930 #createAt:extent: 34 2 818 3839 21 818 193 97 416 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 223 7 0 0 58 0 0 0] 34 1 480 1104 nil 27 )! !
-!ToolButton class categoriesFor: #icon!public! !
-!ToolButton class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ToolButton) 34 14 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 410 ##(UI.Toolbar) 34 25 nil 416 34 2 8 1140853580 131137 480 nil nil nil 3 nil nil nil 480 nil 8 1920642432 nil 170 192 34 2 45015 1311814 1 ##(UI.ToolbarIconButton) 480 1 1377606 4 ##(UI.CommandDescription) #noCommand 8 'No command' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Object.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 45015 34 1 608 nil nil 3 nil 655878 ##(Graphics.Point) 49 49 818 183 87 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 818 1 1 818 193 97 480 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 818 193 193 nil 27 866 138 144 34 1 930 #createAt:extent: 34 2 818 6143 21 818 193 97 416 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 95 12 0 0 58 0 0 0] 34 1 480 1072 nil 27)! !
+!UI.ToolButton class categoriesFor: #icon!public! !
+!UI.ToolButton class categoriesFor: #resource_Default_view!public!resources-views! !
 

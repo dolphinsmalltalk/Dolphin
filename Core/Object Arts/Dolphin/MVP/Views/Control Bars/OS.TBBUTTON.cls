@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TBBUTTON
+OS.Win32Structure subclass: #'OS.TBBUTTON'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwData' -> 16rC.
@@ -13,10 +13,10 @@ Win32Structure subclass: #TBBUTTON
 		'_OffsetOf_idCommand' -> 16r4.
 		'_OffsetOf_iString' -> 16r10
 	}!
-TBBUTTON guid: (GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
-TBBUTTON comment: ''!
-!TBBUTTON categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
-!TBBUTTON methodsFor!
+OS.TBBUTTON guid: (Core.GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.TBBUTTON comment: ''!
+!OS.TBBUTTON categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+!OS.TBBUTTON methodsFor!
 
 dwData
 	"Answer the <Integer> value of the receiver's 'dwData' field."
@@ -77,20 +77,20 @@ iString: anInteger
 	"Set the receiver's 'iString' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_iString put: anInteger! !
-!TBBUTTON categoriesFor: #dwData!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #dwData:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsState!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsState:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsStyle!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iBitmap!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iBitmap:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #idCommand!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #idCommand:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iString!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iString:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #dwData!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #dwData:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #fsState!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #fsState:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #fsStyle!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #fsStyle:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #iBitmap!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #iBitmap:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #idCommand!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #idCommand:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #iString!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesFor: #iString:!**compiled accessors**!public! !
 
-!TBBUTTON class methodsFor!
+!OS.TBBUTTON class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 TBBUTTON structure.
@@ -118,6 +118,6 @@ defineFields
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
-!TBBUTTON class categoriesFor: #defineFields!public!template definition! !
-!TBBUTTON class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBBUTTON class categoriesFor: #defineFields!public!template definition! !
+!OS.TBBUTTON class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

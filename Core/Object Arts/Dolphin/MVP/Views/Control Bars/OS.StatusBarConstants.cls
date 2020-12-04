@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #StatusBarConstants
+Kernel.SharedPool subclass: #'OS.StatusBarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -29,6 +29,7 @@ SharedPool subclass: #StatusBarConstants
 		'SBT_POPOUT' -> 16r200.
 		'SBT_RTLREADING' -> 16r400
 	}!
-StatusBarConstants guid: (GUID fromString: '{5eb59648-a696-4acd-8357-fd9eaae3010f}')!
-StatusBarConstants comment: ''!
-!StatusBarConstants categoriesForClass!Unclassified! !
+OS.StatusBarConstants guid: (Core.GUID fromString: '{5eb59648-a696-4acd-8357-fd9eaae3010f}')!
+OS.StatusBarConstants isNonInstantiable: true!
+OS.StatusBarConstants comment: ''!
+!OS.StatusBarConstants categoriesForClass!Unclassified! !

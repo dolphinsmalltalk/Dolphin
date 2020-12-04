@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ToolbarButton subclass: #ToolbarBitmapButton
+UI.ToolbarButton subclass: #'UI.ToolbarBitmapButton'
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarBitmapButton guid: (GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined button for a `Toolbar` where the image for the button is sourced from a `Bitmap`, typically containing a strip of tool images. The image within the bitmap strip to be used for the button is identified by an index within the supplied `Bitmap`.
+UI.ToolbarBitmapButton guid: (Core.GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined button for a `Toolbar` where the image for the button is sourced from a `Bitmap`, typically containing a strip of tool images. The image within the bitmap strip to be used for the button is identified by an index within the supplied `Bitmap`.
 
 ## Instance Variables:
   `bitmap`			`Bitmap` containing one or more button images.
@@ -16,8 +16,8 @@ ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined bu
 
 
 '!
-!ToolbarBitmapButton categoriesForClass!MVP-Views-Support! !
-!ToolbarBitmapButton methodsFor!
+!UI.ToolbarBitmapButton categoriesForClass!MVP-Views-Support! !
+!UI.ToolbarBitmapButton methodsFor!
 
 bitmap
 	"Answer the bitmap for the receiver."
@@ -56,16 +56,16 @@ imageIndexIn: aToolbar
 
 	^aToolbar addBitmap: self bitmap index: self bitmapIndex
 ! !
-!ToolbarBitmapButton categoriesFor: #bitmap!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmap:!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmap:index:commandDescription:!initializing!private! !
-!ToolbarBitmapButton categoriesFor: #bitmapIndex!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmapIndex:!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarBitmapButton categoriesFor: #bitmap!accessing!public! !
+!UI.ToolbarBitmapButton categoriesFor: #bitmap:!accessing!public! !
+!UI.ToolbarBitmapButton categoriesFor: #bitmap:index:commandDescription:!initializing!private! !
+!UI.ToolbarBitmapButton categoriesFor: #bitmapIndex!accessing!public! !
+!UI.ToolbarBitmapButton categoriesFor: #bitmapIndex:!accessing!public! !
+!UI.ToolbarBitmapButton categoriesFor: #imageIndexIn:!operations!private! !
 
-ToolbarBitmapButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
+UI.ToolbarBitmapButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
-!ToolbarBitmapButton class methodsFor!
+!UI.ToolbarBitmapButton class methodsFor!
 
 bitmap: aBitmap index: bitmapIndex commandDescription: aCommandDescription
 	"Answer a new instance of the receiver containing the bitmapIndex'd subimage of aBitmap."
@@ -79,6 +79,6 @@ new
 	"Answer a new default ToolbarButton"
 
 	^self dolphinImage: 35 command: #noCommand description: 'No command'! !
-!ToolbarBitmapButton class categoriesFor: #bitmap:index:commandDescription:!instance creation!public! !
-!ToolbarBitmapButton class categoriesFor: #new!instance creation!public! !
+!UI.ToolbarBitmapButton class categoriesFor: #bitmap:index:commandDescription:!instance creation!public! !
+!UI.ToolbarBitmapButton class categoriesFor: #new!instance creation!public! !
 

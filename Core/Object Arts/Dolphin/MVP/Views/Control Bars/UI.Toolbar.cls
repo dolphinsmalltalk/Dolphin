@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlBarAbstract subclass: #Toolbar
+UI.ControlBarAbstract subclass: #'UI.Toolbar'
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
 	classVariableNames: ''
-	poolDictionaries: 'ToolbarConstants'
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LabelsMask' -> 16r1
 	}!
-Toolbar guid: (GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
-Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
+UI.Toolbar guid: (Core.GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
 Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the control. Items may be added and deleted once the view has been created.  It also allows a name to be associated with each item. 
 
@@ -31,8 +31,8 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 
 
 '!
-!Toolbar categoriesForClass!MVP-Views! !
-!Toolbar methodsFor!
+!UI.Toolbar categoriesForClass!MVP-Views! !
+!UI.Toolbar methodsFor!
 
 actualBitmapSize
 	"Answer the size of bitmaps shown on the toolbar. This can be visually inherited from a
@@ -117,7 +117,7 @@ addString: aString
 
 	^self tbAddString: aString!
 
-addSystemBitmap: systemBitmapId index: anIntegerIndex 
+addSystemBitmap: systemBitmapId index: anIntegerIndex
 	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within
 	the bitmap identified by systemBitmapId"
 
@@ -428,11 +428,11 @@ insets
 
 	^insets ifNil: [Rectangle new]!
 
-insets: aRectangle 
+insets: aRectangle
 	"Set the <Rectangle> whose edges specify the distance (in pixels) by which the sub views are
 	inset from the border of the receiver."
 
-	insets := aRectangle = Rectangle new ifFalse: [aRectangle].
+	insets := aRectangle = Rectangle.Empty ifFalse: [aRectangle].
 	self invalidateLayout!
 
 itemAtIndex: index
@@ -697,10 +697,12 @@ tbGetButton: anInteger
 
 	| tbButton |
 	tbButton := TBBUTTON new.
-	^(self sendMessage: TB_GETBUTTON wParam: anInteger-1 lpParam: tbButton asParameter) == 0
+	^(self
+		sendMessage: TB_GETBUTTON
+		wParam: anInteger - 1
+		lpParam: tbButton asParameter) == 0
 		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [tbButton]
-!
+		ifFalse: [tbButton]!
 
 tbGetButtonInfo: iID tbbi: binfo
 	"Private - Populate the <TBBUTTONINFO>, binfo,  argument with information about the 
@@ -723,8 +725,8 @@ tbGetIdealHeight
 	"Private - Answer the ideal height for the receiver."
 
 	| size |
-	size := SIZE new.
-	self 
+	size := SIZEL new.
+	self
 		sendMessage: TB_GETIDEALSIZE
 		wParam: true asParameter
 		lpParam: size.
@@ -734,20 +736,23 @@ tbGetIdealWidth
 	"Private - Answer the ideal width for the receiver."
 
 	| size |
-	size := SIZE new.
-	self 
+	size := SIZEL new.
+	self
 		sendMessage: TB_GETIDEALSIZE
 		wParam: false asParameter
 		lpParam: size.
 	^size cx!
 
 tbGetItemRect: anInteger
-	"Private - Answer the bounding RECT for the receiver's button with the zero-based
+	"Private - Answer the bounding RECTL for the receiver's button with the zero-based
 	<Integer> index."
 
 	| rect |
-	rect := RECT new.
-	(self sendMessage: TB_GETITEMRECT wParam: anInteger lpParam: rect) == 0
+	rect := RECTL new.
+	(self
+		sendMessage: TB_GETITEMRECT
+		wParam: anInteger
+		lpParam: rect) == 0
 		ifTrue: [^self errorInCommonControlCall].
 	^rect!
 
@@ -756,9 +761,11 @@ tbGetMaxSize
 
 	| size |
 	size := POINTL new.
-	self sendMessage: TB_GETMAXSIZE wParam: 0 lpParam: size.
-	^size asPoint
-!
+	self
+		sendMessage: TB_GETMAXSIZE
+		wParam: 0
+		lpParam: size.
+	^size asPoint!
 
 tbGetPadding
 	"Private - Answer the padding between buttons of the the receiver."
@@ -769,12 +776,15 @@ tbGetPadding
 !
 
 tbGetRect: id
-	"Private - Answer the bounding RECT for the receiver's button with the specified
+	"Private - Answer the bounding RECTL for the receiver's button with the specified
 	<Integer> command id."
 
 	| rect |
-	rect := RECT new.
-	(self sendMessage: TB_GETRECT wParam: id lpParam: rect) == 0
+	rect := RECTL new.
+	(self
+		sendMessage: TB_GETRECT
+		wParam: id
+		lpParam: rect) == 0
 		ifTrue: [^self errorInCommonControlCall].
 	^rect!
 
@@ -968,9 +978,10 @@ tbSetRows: anIntegerRows large: largerBoolean
 	Answer a Rectangle marking the new boundary of the receiver."
 
 	| rect |
-	rect := RECT new.
-	self sendMessage: TB_SETROWS
-		wParam: (anIntegerRows bitOr: (largerBoolean asParameter << 16))
+	rect := RECTL new.
+	self
+		sendMessage: TB_SETROWS
+		wParam: (anIntegerRows bitOr: largerBoolean asParameter << 16)
 		lpParam: rect.
 	^rect asRectangle!
 
@@ -1055,128 +1066,128 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
-!Toolbar categoriesFor: #actualBitmapSize!geometry!public! !
-!Toolbar categoriesFor: #addBitmap:index:!helpers!private! !
-!Toolbar categoriesFor: #addEditTools!adding!private! !
-!Toolbar categoriesFor: #addFileTools!adding!private! !
-!Toolbar categoriesFor: #addFindTools!adding!private! !
-!Toolbar categoriesFor: #addItem:!adding!public! !
-!Toolbar categoriesFor: #addItems:!adding!public! !
-!Toolbar categoriesFor: #addSeparator!adding!public! !
-!Toolbar categoriesFor: #addString:!helpers!private! !
-!Toolbar categoriesFor: #addSystemBitmap:index:!helpers!private! !
-!Toolbar categoriesFor: #basicActualForecolor!accessing!private! !
-!Toolbar categoriesFor: #basicAddItems:!adding!private! !
-!Toolbar categoriesFor: #bitmapSize!geometry!public! !
-!Toolbar categoriesFor: #bitmapSize:!geometry!public! !
-!Toolbar categoriesFor: #buttonSize!geometry!public! !
-!Toolbar categoriesFor: #buttonSize:!geometry!public! !
-!Toolbar categoriesFor: #calculateExtent:!geometry!private! !
-!Toolbar categoriesFor: #canCustomize!accessing-styles!public! !
-!Toolbar categoriesFor: #canCustomize:!accessing-styles!public! !
-!Toolbar categoriesFor: #changeButtonSize:!helpers!private! !
-!Toolbar categoriesFor: #clearIdMap!initializing!private! !
-!Toolbar categoriesFor: #command:id:!commands!private! !
-!Toolbar categoriesFor: #commandSource!commands!public! !
-!Toolbar categoriesFor: #defaultBitmapSize!constants!private! !
-!Toolbar categoriesFor: #defaultButtonSize!constants!private! !
-!Toolbar categoriesFor: #defaultExtent!constants!private! !
-!Toolbar categoriesFor: #defaultGradientBackcolor!colors!constants!private! !
-!Toolbar categoriesFor: #defaultGradientForecolor!colors!constants!private! !
-!Toolbar categoriesFor: #defaultWindowStyle!constants!private! !
-!Toolbar categoriesFor: #filerProxy!binary filing!private! !
-!Toolbar categoriesFor: #fontChanged!private!updating! !
-!Toolbar categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!Toolbar categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasLabels!accessing-styles!public! !
-!Toolbar categoriesFor: #hasLabels:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasListAppearance!accessing-styles!public! !
-!Toolbar categoriesFor: #hasListAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasTransparentAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasTransparentBackground!accessing-styles!private! !
-!Toolbar categoriesFor: #indent!accessing!public! !
-!Toolbar categoriesFor: #indent:!accessing!public! !
-!Toolbar categoriesFor: #indexOfItem:!accessing!private! !
-!Toolbar categoriesFor: #initialize!initializing!private! !
-!Toolbar categoriesFor: #insets!accessing!public! !
-!Toolbar categoriesFor: #insets:!accessing!public! !
-!Toolbar categoriesFor: #itemAtIndex:!accessing!public! !
-!Toolbar categoriesFor: #itemClass!constants!public! !
-!Toolbar categoriesFor: #itemFromId:!accessing!private! !
-!Toolbar categoriesFor: #itemRect:!geometry!public! !
-!Toolbar categoriesFor: #items!accessing!private! !
-!Toolbar categoriesFor: #items:!accessing!private! !
-!Toolbar categoriesFor: #layoutManager!geometry!public! !
-!Toolbar categoriesFor: #layoutManager:!geometry!public! !
-!Toolbar categoriesFor: #nmNotify:!event handling-win32!private! !
-!Toolbar categoriesFor: #onDropDown:!event handling!private! !
-!Toolbar categoriesFor: #onEraseRequired:!event handling!private! !
-!Toolbar categoriesFor: #onPositionChanged:!event handling!public! !
-!Toolbar categoriesFor: #onStateRestored!binary filing!private! !
-!Toolbar categoriesFor: #onTipTextRequired:!event handling!public! !
-!Toolbar categoriesFor: #onViewCreated!event handling!public! !
-!Toolbar categoriesFor: #removeAllItems!public!removing! !
-!Toolbar categoriesFor: #removeItem:!public!removing! !
-!Toolbar categoriesFor: #size!geometry!public! !
-!Toolbar categoriesFor: #tbAddBitmap:size:!helpers!private! !
-!Toolbar categoriesFor: #tbAddButtons:!helpers!private! !
-!Toolbar categoriesFor: #tbAddString:!adding!private! !
-!Toolbar categoriesFor: #tbAutoSize!operations!private! !
-!Toolbar categoriesFor: #tbButtonCount!geometry!private! !
-!Toolbar categoriesFor: #tbButtonStructSize:!helpers!private! !
-!Toolbar categoriesFor: #tbCheckButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbCustomize!operations!private! !
-!Toolbar categoriesFor: #tbDeleteButton:!helpers!private! !
-!Toolbar categoriesFor: #tbEnableButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbGetButton:!accessing!private! !
-!Toolbar categoriesFor: #tbGetButtonInfo:tbbi:!accessing!private! !
-!Toolbar categoriesFor: #tbGetButtonSize!geometry!private! !
-!Toolbar categoriesFor: #tbGetIdealHeight!geometry!private! !
-!Toolbar categoriesFor: #tbGetIdealWidth!geometry!private! !
-!Toolbar categoriesFor: #tbGetItemRect:!geometry!private! !
-!Toolbar categoriesFor: #tbGetMaxSize!geometry!private! !
-!Toolbar categoriesFor: #tbGetPadding!geometry!private! !
-!Toolbar categoriesFor: #tbGetRect:!geometry!private! !
-!Toolbar categoriesFor: #tbGetRows!geometry!private! !
-!Toolbar categoriesFor: #tbGetState:!accessing!private! !
-!Toolbar categoriesFor: #tbGetToolTips!accessing!private! !
-!Toolbar categoriesFor: #tbHideButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbIndeterminate:state:!operations!private! !
-!Toolbar categoriesFor: #tbIsButtonChecked:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonEnabled:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonHidden:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonIndeterminate:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonPressed:!private!testing! !
-!Toolbar categoriesFor: #tbnBeginAdjust:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnBeginDrag:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnCloseUp:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnCustHelp:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnDropDown:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnEndAdjust:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnEndDrag:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnGetButtonInfo:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnQueryDelete:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnQueryInsert:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnReset:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnToolbarChange:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbPressButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbSetBitmapSize:!geometry!private! !
-!Toolbar categoriesFor: #tbSetButtonSize:!geometry!private! !
-!Toolbar categoriesFor: #tbSetCmdID:id:!commands!private! !
-!Toolbar categoriesFor: #tbSetExtendedStyle:!helpers!private! !
-!Toolbar categoriesFor: #tbSetIndent:!operations!private! !
-!Toolbar categoriesFor: #tbSetRows:large:!geometry!private! !
-!Toolbar categoriesFor: #tbSetState:state:!helpers!private! !
-!Toolbar categoriesFor: #tbSetToolTips:!accessing!private! !
-!Toolbar categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
-!Toolbar categoriesFor: #updateAllItems!operations!private! !
-!Toolbar categoriesFor: #updateSize!operations!private! !
-!Toolbar categoriesFor: #updateSizePosted!operations!private! !
-!Toolbar categoriesFor: #validateUserInterface!operations!public! !
-!Toolbar categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
-!Toolbar categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #actualBitmapSize!geometry!public! !
+!UI.Toolbar categoriesFor: #addBitmap:index:!helpers!private! !
+!UI.Toolbar categoriesFor: #addEditTools!adding!private! !
+!UI.Toolbar categoriesFor: #addFileTools!adding!private! !
+!UI.Toolbar categoriesFor: #addFindTools!adding!private! !
+!UI.Toolbar categoriesFor: #addItem:!adding!public! !
+!UI.Toolbar categoriesFor: #addItems:!adding!public! !
+!UI.Toolbar categoriesFor: #addSeparator!adding!public! !
+!UI.Toolbar categoriesFor: #addString:!helpers!private! !
+!UI.Toolbar categoriesFor: #addSystemBitmap:index:!helpers!private! !
+!UI.Toolbar categoriesFor: #basicActualForecolor!accessing!private! !
+!UI.Toolbar categoriesFor: #basicAddItems:!adding!private! !
+!UI.Toolbar categoriesFor: #bitmapSize!geometry!public! !
+!UI.Toolbar categoriesFor: #bitmapSize:!geometry!public! !
+!UI.Toolbar categoriesFor: #buttonSize!geometry!public! !
+!UI.Toolbar categoriesFor: #buttonSize:!geometry!public! !
+!UI.Toolbar categoriesFor: #calculateExtent:!geometry!private! !
+!UI.Toolbar categoriesFor: #canCustomize!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #canCustomize:!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #changeButtonSize:!helpers!private! !
+!UI.Toolbar categoriesFor: #clearIdMap!initializing!private! !
+!UI.Toolbar categoriesFor: #command:id:!commands!private! !
+!UI.Toolbar categoriesFor: #commandSource!commands!public! !
+!UI.Toolbar categoriesFor: #defaultBitmapSize!constants!private! !
+!UI.Toolbar categoriesFor: #defaultButtonSize!constants!private! !
+!UI.Toolbar categoriesFor: #defaultExtent!constants!private! !
+!UI.Toolbar categoriesFor: #defaultGradientBackcolor!colors!constants!private! !
+!UI.Toolbar categoriesFor: #defaultGradientForecolor!colors!constants!private! !
+!UI.Toolbar categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.Toolbar categoriesFor: #filerProxy!binary filing!private! !
+!UI.Toolbar categoriesFor: #fontChanged!private!updating! !
+!UI.Toolbar categoriesFor: #hasFlatAppearance!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasLabels!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasLabels:!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasListAppearance!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasListAppearance:!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasTransparentAppearance:!accessing-styles!public! !
+!UI.Toolbar categoriesFor: #hasTransparentBackground!accessing-styles!private! !
+!UI.Toolbar categoriesFor: #indent!accessing!public! !
+!UI.Toolbar categoriesFor: #indent:!accessing!public! !
+!UI.Toolbar categoriesFor: #indexOfItem:!accessing!private! !
+!UI.Toolbar categoriesFor: #initialize!initializing!private! !
+!UI.Toolbar categoriesFor: #insets!accessing!public! !
+!UI.Toolbar categoriesFor: #insets:!accessing!public! !
+!UI.Toolbar categoriesFor: #itemAtIndex:!accessing!public! !
+!UI.Toolbar categoriesFor: #itemClass!constants!public! !
+!UI.Toolbar categoriesFor: #itemFromId:!accessing!private! !
+!UI.Toolbar categoriesFor: #itemRect:!geometry!public! !
+!UI.Toolbar categoriesFor: #items!accessing!private! !
+!UI.Toolbar categoriesFor: #items:!accessing!private! !
+!UI.Toolbar categoriesFor: #layoutManager!geometry!public! !
+!UI.Toolbar categoriesFor: #layoutManager:!geometry!public! !
+!UI.Toolbar categoriesFor: #nmNotify:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #onDropDown:!event handling!private! !
+!UI.Toolbar categoriesFor: #onEraseRequired:!event handling!private! !
+!UI.Toolbar categoriesFor: #onPositionChanged:!event handling!public! !
+!UI.Toolbar categoriesFor: #onStateRestored!binary filing!private! !
+!UI.Toolbar categoriesFor: #onTipTextRequired:!event handling!public! !
+!UI.Toolbar categoriesFor: #onViewCreated!event handling!public! !
+!UI.Toolbar categoriesFor: #removeAllItems!public!removing! !
+!UI.Toolbar categoriesFor: #removeItem:!public!removing! !
+!UI.Toolbar categoriesFor: #size!geometry!public! !
+!UI.Toolbar categoriesFor: #tbAddBitmap:size:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbAddButtons:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbAddString:!adding!private! !
+!UI.Toolbar categoriesFor: #tbAutoSize!operations!private! !
+!UI.Toolbar categoriesFor: #tbButtonCount!geometry!private! !
+!UI.Toolbar categoriesFor: #tbButtonStructSize:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbCheckButton:state:!operations!private! !
+!UI.Toolbar categoriesFor: #tbCustomize!operations!private! !
+!UI.Toolbar categoriesFor: #tbDeleteButton:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbEnableButton:state:!operations!private! !
+!UI.Toolbar categoriesFor: #tbGetButton:!accessing!private! !
+!UI.Toolbar categoriesFor: #tbGetButtonInfo:tbbi:!accessing!private! !
+!UI.Toolbar categoriesFor: #tbGetButtonSize!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetIdealHeight!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetIdealWidth!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetItemRect:!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetMaxSize!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetPadding!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetRect:!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetRows!geometry!private! !
+!UI.Toolbar categoriesFor: #tbGetState:!accessing!private! !
+!UI.Toolbar categoriesFor: #tbGetToolTips!accessing!private! !
+!UI.Toolbar categoriesFor: #tbHideButton:state:!operations!private! !
+!UI.Toolbar categoriesFor: #tbIndeterminate:state:!operations!private! !
+!UI.Toolbar categoriesFor: #tbIsButtonChecked:!private!testing! !
+!UI.Toolbar categoriesFor: #tbIsButtonEnabled:!private!testing! !
+!UI.Toolbar categoriesFor: #tbIsButtonHidden:!private!testing! !
+!UI.Toolbar categoriesFor: #tbIsButtonIndeterminate:!private!testing! !
+!UI.Toolbar categoriesFor: #tbIsButtonPressed:!private!testing! !
+!UI.Toolbar categoriesFor: #tbnBeginAdjust:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnBeginDrag:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnCloseUp:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnCustHelp:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnDropDown:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnEndAdjust:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnEndDrag:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnGetButtonInfo:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnQueryDelete:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnQueryInsert:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnReset:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbnToolbarChange:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #tbPressButton:state:!operations!private! !
+!UI.Toolbar categoriesFor: #tbSetBitmapSize:!geometry!private! !
+!UI.Toolbar categoriesFor: #tbSetButtonSize:!geometry!private! !
+!UI.Toolbar categoriesFor: #tbSetCmdID:id:!commands!private! !
+!UI.Toolbar categoriesFor: #tbSetExtendedStyle:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbSetIndent:!operations!private! !
+!UI.Toolbar categoriesFor: #tbSetRows:large:!geometry!private! !
+!UI.Toolbar categoriesFor: #tbSetState:state:!helpers!private! !
+!UI.Toolbar categoriesFor: #tbSetToolTips:!accessing!private! !
+!UI.Toolbar categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #updateAllItems!operations!private! !
+!UI.Toolbar categoriesFor: #updateSize!operations!private! !
+!UI.Toolbar categoriesFor: #updateSizePosted!operations!private! !
+!UI.Toolbar categoriesFor: #validateUserInterface!operations!public! !
+!UI.Toolbar categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
+!UI.Toolbar categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
 
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1186,7 +1197,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131073 416 nil nil nil 7 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 nil 170 192 8 #() 8 #() nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 690 401 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 135 14 0 0 35 0 0 0] 8 #() 690 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1140853580 131073 416 nil nil nil 7 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 nil 170 192 8 #() 8 #() nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 401 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 35 0 0 0] 8 #() 690 193 193 nil 27)!
 
 resource_Edit_tools
 	"Answer the literal data from which the 'Edit tools' resource can be reconstituted.
@@ -1196,7 +1207,7 @@ resource_Edit_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Edit_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 10 54685 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #undo 8 'Undo' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditUndo.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 54685 54681 594 416 1 626 #pasteClipboard 8 'Paste' 1 1 674 nil true 720 8 'EditPaste.ico' 768 54681 54677 594 416 1 626 #cutSelection 8 'Cut' 1 1 674 nil true 720 8 'EditCut.ico' 768 54677 54683 594 416 1 626 #clearSelection 8 'Delete' 1 1 674 nil true 720 8 'EditClear.ico' 768 54683 54679 594 416 1 626 #copySelection 8 'Copy' 1 1 674 nil true 720 8 'EditCopy.ico' 768 54679 34 6 880 1040 800 960 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1282 247 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 58 14 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 10 22365 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #undo 8 'Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 22365 22361 594 416 1 626 #pasteClipboard 8 'Paste' 1 1 674 nil true 720 8 'EditPaste.ico' 768 22361 22357 594 416 1 626 #cutSelection 8 'Cut' 1 1 674 nil true 720 8 'EditCut.ico' 768 22357 22363 594 416 1 626 #clearSelection 8 'Delete' 1 1 674 nil true 720 8 'EditClear.ico' 768 22363 22359 594 416 1 626 #copySelection 8 'Copy' 1 1 674 nil true 720 8 'EditCopy.ico' 768 22359 34 6 880 1040 800 960 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1282 247 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 122 12 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27)!
 
 resource_File_tools
 	"Answer the literal data from which the 'File tools' resource can be reconstituted.
@@ -1206,7 +1217,7 @@ resource_File_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_File_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 6 54353 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #fileSave 8 'Save' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'FileSave.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 54353 54351 594 416 1 626 #fileOpen 8 'Open' 1 1 674 nil true 720 8 'FileOpen.ico' 768 54351 54349 594 416 1 626 #fileNew 8 'New' 1 1 674 nil true 720 8 'FileNew.ico' 768 54349 34 4 880 800 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1122 155 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 12 14 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 6 22689 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #fileSave 8 'Save' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'FileSave.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 22689 22687 594 416 1 626 #fileOpen 8 'Open' 1 1 674 nil true 720 8 'FileOpen.ico' 768 22687 22685 594 416 1 626 #fileNew 8 'New' 1 1 674 nil true 720 8 'FileNew.ico' 768 22685 34 4 880 800 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1122 155 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 76 12 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27)!
 
 resource_Find_tools
 	"Answer the literal data from which the 'Find tools' resource can be reconstituted.
@@ -1216,7 +1227,7 @@ resource_Find_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Find_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 4 54027 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #find 8 'Find' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Find.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 54027 54029 594 416 1 626 #findNext 8 'Find Next' 1 1 674 nil true 720 8 'FindNext.ico' 768 54029 34 3 608 800 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1042 109 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 245 13 0 0 35 0 0 0] 8 #() 1042 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 4 23007 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #find 8 'Find' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Find.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 23007 23009 594 416 1 626 #findNext 8 'Find Next' 1 1 674 nil true 720 8 'FindNext.ico' 768 23009 34 3 608 800 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1042 109 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 53 12 0 0 35 0 0 0] 8 #() 1042 193 193 nil 27)!
 
 resource_History_tools
 	"Answer the literal data from which the 'History tools' resource can be reconstituted.
@@ -1226,7 +1237,7 @@ resource_History_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_History_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 4 53709 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 17 1180998 4 ##(Smalltalk.CommandDescription) 459270 ##(Smalltalk.Message) #historyForward 8 #() 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 53709 53707 594 416 17 626 658 #historyBack 8 #() 8 'Back' 1 1 722 nil true 768 8 'HistoryBack.ico' 816 53707 34 3 848 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1122 169 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 19 14 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 4 23329 1311814 1 ##(UI.ToolbarIconButton) 416 17 1377606 4 ##(UI.CommandDescription) 786950 ##(Core.Message) #historyForward 8 #() 8 'Forward' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 23329 23327 594 416 17 626 658 #historyBack 8 #() 8 'Back' 1 1 722 nil true 768 8 'HistoryBack.ico' 816 23327 34 3 848 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1122 169 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 83 12 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27)!
 
 resource_Tool_bar
 	"Answer the literal data from which the 'Tool bar' resource can be reconstituted.
@@ -1236,7 +1247,7 @@ resource_Tool_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Tool_bar)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409288972 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 496 8 1867527152 170 192 8 #() 170 192 544 138 144 544 nil nil 1 nil nil nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 738 701 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 29 15 0 0 35 0 0 0] 8 #() 738 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409288972 131137 416 nil 917510 ##(Graphics.Color) #default nil 517 nil nil nil 416 496 8 1920642432 170 192 8 #() 170 192 544 138 144 544 nil nil 1 nil nil nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 701 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)!
 
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."
@@ -1253,21 +1264,20 @@ stbConvertFromVersion12: anArray
 	^super stbConvertFromVersion12: anArray!
 
 themePartName
-	^#Toolbar
-!
+	^#Toolbar!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'ToolbarWindow32'
 ! !
-!Toolbar class categoriesFor: #resource_Default_view!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Edit_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_File_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Find_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_History_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Tool_bar!public!resources-views! !
-!Toolbar class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!Toolbar class categoriesFor: #themePartName!constants!private! !
-!Toolbar class categoriesFor: #winClassName!constants!private! !
+!UI.Toolbar class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_Edit_tools!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_File_tools!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_Find_tools!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_History_tools!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_Tool_bar!public!resources-views! !
+!UI.Toolbar class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.Toolbar class categoriesFor: #themePartName!constants!private! !
+!UI.Toolbar class categoriesFor: #winClassName!constants!private! !
 

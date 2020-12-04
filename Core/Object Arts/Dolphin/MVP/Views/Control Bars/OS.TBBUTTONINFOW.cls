@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TBBUTTONINFOW
+OS.Win32Structure subclass: #'OS.TBBUTTONINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchText' -> 16r1C.
@@ -17,10 +17,10 @@ Win32Structure subclass: #TBBUTTONINFOW
 		'_OffsetOf_lParam' -> 16r14.
 		'_OffsetOf_pszText' -> 16r18
 	}!
-TBBUTTONINFOW guid: (GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
-TBBUTTONINFOW comment: ''!
-!TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
-!TBBUTTONINFOW methodsFor!
+OS.TBBUTTONINFOW guid: (Core.GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
+OS.TBBUTTONINFOW comment: ''!
+!OS.TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.TBBUTTONINFOW methodsFor!
 
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
@@ -86,21 +86,21 @@ iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
-!TBBUTTONINFOW categoriesFor: #cx!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #cx:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwMask!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwMask:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsState!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsState:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsStyle!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #idCommand!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #idCommand:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #iImage!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #cx!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #cx:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #dwMask!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #dwMask:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #fsState!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #fsState:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #fsStyle!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #fsStyle:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #idCommand!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #idCommand:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #iImage!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesFor: #iImage:!**compiled accessors**!public! !
 
-!TBBUTTONINFOW class methodsFor!
+!OS.TBBUTTONINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 TBBUTTONINFO structure.
@@ -133,6 +133,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
-!TBBUTTONINFOW class categoriesFor: #defineFields!public!template definition! !
-!TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBBUTTONINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

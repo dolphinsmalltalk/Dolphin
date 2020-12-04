@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ToolbarItem subclass: #ToolbarSeparator
+UI.ToolbarItem subclass: #'UI.ToolbarSeparator'
 	instanceVariableNames: 'width'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarSeparator guid: (GUID fromString: '{87b4c701-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item within a `Toolbar`. A separator can assume a default width, or an explicit pixel width can be set using the `#width` aspect. Separators can be used as a cheap and cheerful way to reserve space in a toolbar for a child window, although the separator will be visible unless completely overlapped by the child.
+UI.ToolbarSeparator guid: (Core.GUID fromString: '{87b4c701-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item within a `Toolbar`. A separator can assume a default width, or an explicit pixel width can be set using the `#width` aspect. Separators can be used as a cheap and cheerful way to reserve space in a toolbar for a child window, although the separator will be visible unless completely overlapped by the child.
 
 ## Instance Variables:
   `width`		`<integer>` specifying the pixel width of the separator. To use the default width specify 0.
@@ -15,8 +15,8 @@ ToolbarSeparator comment: '`ToolbarSeparator` represents a separator item within
 
 
 '!
-!ToolbarSeparator categoriesForClass!MVP-Views-Support! !
-!ToolbarSeparator methodsFor!
+!UI.ToolbarSeparator categoriesForClass!MVP-Views-Support! !
+!UI.ToolbarSeparator methodsFor!
 
 imageIndexIn: aToolbar
 	"Private - Answer the index of the image for the receiver. Note that in the case
@@ -54,15 +54,15 @@ width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
 	width := pixelWidth! !
-!ToolbarSeparator categoriesFor: #imageIndexIn:!operations!private! !
-!ToolbarSeparator categoriesFor: #isDivider!public!testing! !
-!ToolbarSeparator categoriesFor: #setWidth:!accessing!initializing!private! !
-!ToolbarSeparator categoriesFor: #style!private!style! !
-!ToolbarSeparator categoriesFor: #textIndexIn:!operations!private! !
-!ToolbarSeparator categoriesFor: #width!accessing!public! !
-!ToolbarSeparator categoriesFor: #width:!accessing!public! !
+!UI.ToolbarSeparator categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarSeparator categoriesFor: #isDivider!public!testing! !
+!UI.ToolbarSeparator categoriesFor: #setWidth:!accessing!initializing!private! !
+!UI.ToolbarSeparator categoriesFor: #style!private!style! !
+!UI.ToolbarSeparator categoriesFor: #textIndexIn:!operations!private! !
+!UI.ToolbarSeparator categoriesFor: #width!accessing!public! !
+!UI.ToolbarSeparator categoriesFor: #width:!accessing!public! !
 
-!ToolbarSeparator class methodsFor!
+!UI.ToolbarSeparator class methodsFor!
 
 new
 	^self width: 0!
@@ -96,7 +96,7 @@ width: pixelWidth
 	"Answer a new instance of the receiver whose width is set to pixelWidth."
 
 	^self basicNew setWidth: pixelWidth! !
-!ToolbarSeparator class categoriesFor: #new!instance creation!public! !
-!ToolbarSeparator class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ToolbarSeparator class categoriesFor: #width:!instance creation!public! !
+!UI.ToolbarSeparator class categoriesFor: #new!instance creation!public! !
+!UI.ToolbarSeparator class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.ToolbarSeparator class categoriesFor: #width:!instance creation!public! !
 

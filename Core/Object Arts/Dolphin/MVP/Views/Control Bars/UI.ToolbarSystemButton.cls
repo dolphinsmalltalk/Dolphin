@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ToolbarButton subclass: #ToolbarSystemButton
+UI.ToolbarButton subclass: #'UI.ToolbarSystemButton'
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarSystemButton guid: (GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
+UI.ToolbarSystemButton guid: (Core.GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
 
 For example (evaluated one expression at a time):
 ```
@@ -17,8 +17,8 @@ tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 30
 	each selector argumentCount = 0 ifTrue: [tb addItem: (ToolbarButton perform: each selector)]].
 tb destroy.
 ```'!
-!ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
-!ToolbarSystemButton methodsFor!
+!UI.ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
+!UI.ToolbarSystemButton methodsFor!
 
 bitmapId
 	"Answer the id of the system bitmap from which the receiver's bitmap is drawn."
@@ -54,14 +54,14 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
 	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
-!ToolbarSystemButton categoriesFor: #bitmapId!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapId:!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapId:index:commandDescription:!initializing!private! !
-!ToolbarSystemButton categoriesFor: #bitmapIndex!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapIndex:!accessing!public! !
-!ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarSystemButton categoriesFor: #bitmapId!accessing!public! !
+!UI.ToolbarSystemButton categoriesFor: #bitmapId:!accessing!public! !
+!UI.ToolbarSystemButton categoriesFor: #bitmapId:index:commandDescription:!initializing!private! !
+!UI.ToolbarSystemButton categoriesFor: #bitmapIndex!accessing!public! !
+!UI.ToolbarSystemButton categoriesFor: #bitmapIndex:!accessing!public! !
+!UI.ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
 
-!ToolbarSystemButton class methodsFor!
+!UI.ToolbarSystemButton class methodsFor!
 
 bitmapId: idInteger index: bitmapIndex commandDescription: aCommandDescription
 	"Answer a new instance of the receiver containing the bitmapIndex'd subimage of aBitmap."
@@ -76,7 +76,7 @@ initialize
 	self initialize
 	"
 
-	StandardButtons := (IdentityDictionary new)
+	StandardButtons := IdentityDictionary new
 				at: #copySelection put: STD_COPY;
 				at: #cutSelection put: STD_CUT;
 				at: #clearSelection put: STD_DELETE;
@@ -94,7 +94,7 @@ initialize
 				at: #undo put: STD_UNDO;
 				shrink;
 				yourself.
-	ViewButtons := (IdentityDictionary new)
+	ViewButtons := IdentityDictionary new
 				at: #largeIcons put: VIEW_LARGEICONS;
 				at: #smallIcons put: VIEW_SMALLICONS;
 				at: #list put: VIEW_LIST;
@@ -110,13 +110,13 @@ initialize
 				at: #viewMenu put: VIEW_VIEWMENU;
 				shrink;
 				yourself.
-	Bitmaps := (IdentityDictionary new)
+	Bitmaps := IdentityDictionary new
 				at: #standard put: IDB_STD_SMALL_COLOR;
 				at: #view put: IDB_VIEW_SMALL_COLOR;
 				at: #history put: IDB_HIST_SMALL_COLOR;
 				shrink;
 				yourself.
-	HistoryButtons := (IdentityDictionary new)
+	HistoryButtons := IdentityDictionary new
 				at: #historyBack put: HIST_BACK;
 				at: #historyForward put: HIST_FORWARD;
 				at: #favorites put: HIST_FAVORITES;
@@ -124,7 +124,7 @@ initialize
 				at: #historyTree put: HIST_VIEWTREE;
 				shrink;
 				yourself.
-	BitmapButtons := (IdentityDictionary new)
+	BitmapButtons := IdentityDictionary new
 				at: IDB_STD_SMALL_COLOR put: StandardButtons;
 				at: IDB_VIEW_SMALL_COLOR put: ViewButtons;
 				at: IDB_HIST_SMALL_COLOR put: HistoryButtons;
@@ -175,8 +175,8 @@ stbConvertFrom: anSTBClassFormat
 	newInstance instVarAt: 4 put: (data at: 1).
 	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
 	newInstance]! !
-!ToolbarSystemButton class categoriesFor: #bitmapId:index:commandDescription:!instance creation!public! !
-!ToolbarSystemButton class categoriesFor: #initialize!development!initializing!public! !
-!ToolbarSystemButton class categoriesFor: #new!instance creation!public! !
-!ToolbarSystemButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.ToolbarSystemButton class categoriesFor: #bitmapId:index:commandDescription:!instance creation!public! !
+!UI.ToolbarSystemButton class categoriesFor: #initialize!development!initializing!public! !
+!UI.ToolbarSystemButton class categoriesFor: #new!instance creation!public! !
+!UI.ToolbarSystemButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
 

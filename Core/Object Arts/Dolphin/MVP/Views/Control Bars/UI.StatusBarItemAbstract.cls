@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #StatusBarItemAbstract
+Core.Object subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'
-	poolDictionaries: 'StatusBarConstants'
+	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StatusBarItemAbstract guid: (GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
-StatusBarItemAbstract isAbstract: true!
-StatusBarItemAbstract comment: 'StatusBarItemAbstract is an abstract class whose subclasses represent the items held by a <StatusBar> view.
+UI.StatusBarItemAbstract guid: (Core.GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StatusBarItemAbstract isNonInstantiable: true!
+UI.StatusBarItemAbstract comment: 'StatusBarItemAbstract is an abstract class whose subclasses represent the items held by a <StatusBar> view.
 
 Subclasses should redefine the #drawItem:bounding: to paint in the desired manner.
 
@@ -24,8 +24,8 @@ Class Variables:
 
 
 '!
-!StatusBarItemAbstract categoriesForClass!MVP-Views-Support! !
-!StatusBarItemAbstract methodsFor!
+!UI.StatusBarItemAbstract categoriesForClass!MVP-Views-Support! !
+!UI.StatusBarItemAbstract methodsFor!
 
 beFullWidth
 	"Set the width of the receiver so it will stretch to the far
@@ -214,52 +214,52 @@ width: widthInteger
 
 	width := widthInteger.
 	self update! !
-!StatusBarItemAbstract categoriesFor: #beFullWidth!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #border!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #border:!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #borderStyle!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #borderStyle:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #drawItem:bounding:!drawing!private! !
-!StatusBarItemAbstract categoriesFor: #extent:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #getText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #getTipText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #hasParentView!private!views! !
-!StatusBarItemAbstract categoriesFor: #initialize!initializing!private! !
-!StatusBarItemAbstract categoriesFor: #invalidate!drawing!public! !
-!StatusBarItemAbstract categoriesFor: #model!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #model:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #name!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #name:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #onClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onDoubleClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onRightClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onValueChanged!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onViewOpened!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #parentView!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #parentView:!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #presenter:!initializing!public! !
-!StatusBarItemAbstract categoriesFor: #presenterConnectionPoint!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #rectangle!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #refreshContents!public!updating! !
-!StatusBarItemAbstract categoriesFor: #style!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #update!private!updating! !
-!StatusBarItemAbstract categoriesFor: #updateTipText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #width!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #width:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #beFullWidth!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #border!accessing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #border:!accessing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #borderStyle!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #borderStyle:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #drawItem:bounding:!drawing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #extent:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #getText!private!updating! !
+!UI.StatusBarItemAbstract categoriesFor: #getTipText!private!updating! !
+!UI.StatusBarItemAbstract categoriesFor: #hasParentView!private!views! !
+!UI.StatusBarItemAbstract categoriesFor: #initialize!initializing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #invalidate!drawing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #model!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #model:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #name!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #name:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #onClick:!event handling!public! !
+!UI.StatusBarItemAbstract categoriesFor: #onDoubleClick:!event handling!public! !
+!UI.StatusBarItemAbstract categoriesFor: #onRightClick:!event handling!public! !
+!UI.StatusBarItemAbstract categoriesFor: #onValueChanged!event handling!public! !
+!UI.StatusBarItemAbstract categoriesFor: #onViewOpened!event handling!public! !
+!UI.StatusBarItemAbstract categoriesFor: #parentView!accessing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #parentView:!accessing!private! !
+!UI.StatusBarItemAbstract categoriesFor: #presenter:!initializing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #presenterConnectionPoint!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #rectangle!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #refreshContents!public!updating! !
+!UI.StatusBarItemAbstract categoriesFor: #style!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #update!private!updating! !
+!UI.StatusBarItemAbstract categoriesFor: #updateTipText!private!updating! !
+!UI.StatusBarItemAbstract categoriesFor: #width!accessing!public! !
+!UI.StatusBarItemAbstract categoriesFor: #width:!accessing!public! !
 
-!StatusBarItemAbstract class methodsFor!
+!UI.StatusBarItemAbstract class methodsFor!
 
 initialize
 	"Private - Initialize the receiver.
 
 	self initialize.
 "
+
 	BorderStyles := ##(IdentityDictionary new
-		at: #noBorder put: SBT_NOBORDERS;
-		at: #sunkenBorder put: 0;
-		at: #raisedBorder put: SBT_POPOUT;
-		yourself).
-!
+				at: #noBorder put: SBT_NOBORDERS;
+				at: #sunkenBorder put: 0;
+				at: #raisedBorder put: SBT_POPOUT;
+				yourself)!
 
 new
 	"Answer a new initialize instance of the receiver."
@@ -273,7 +273,7 @@ separator: width
 		width: width;
 		borderStyle: #noBorder;
 		yourself! !
-!StatusBarItemAbstract class categoriesFor: #initialize!development!initializing!private! !
-!StatusBarItemAbstract class categoriesFor: #new!instance creation!public! !
-!StatusBarItemAbstract class categoriesFor: #separator:!instance creation!public! !
+!UI.StatusBarItemAbstract class categoriesFor: #initialize!development!initializing!private! !
+!UI.StatusBarItemAbstract class categoriesFor: #new!instance creation!public! !
+!UI.StatusBarItemAbstract class categoriesFor: #separator:!instance creation!public! !
 

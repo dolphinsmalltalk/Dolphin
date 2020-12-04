@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Control Bars'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Control Bars.
 Copyright (c) Object Arts Ltd, 1997-2002. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
@@ -11,26 +11,27 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{ControlBarAbstract}
-	#{NMMOUSE}
-	#{NMTOOLBARW}
-	#{StatusBar}
-	#{StatusBarConstants}
-	#{StatusBarItem}
-	#{StatusBarItemAbstract}
-	#{StatusBarNullItem}
-	#{TBADDBITMAP}
-	#{TBBUTTON}
-	#{TBBUTTONINFOW}
-	#{Toolbar}
-	#{ToolbarBitmapButton}
-	#{ToolbarButton}
-	#{ToolbarConstants}
-	#{ToolbarIconButton}
-	#{ToolbarItem}
-	#{ToolbarSeparator}
-	#{ToolbarSystemButton}
-	#{ToolButton}
+	#{OS.NMMOUSE}
+	#{OS.NMTBDISPINFOW}
+	#{OS.NMTOOLBARW}
+	#{OS.StatusBarConstants}
+	#{OS.TBADDBITMAP}
+	#{OS.TBBUTTON}
+	#{OS.TBBUTTONINFOW}
+	#{OS.ToolbarConstants}
+	#{UI.ControlBarAbstract}
+	#{UI.StatusBar}
+	#{UI.StatusBarItem}
+	#{UI.StatusBarItemAbstract}
+	#{UI.StatusBarNullItem}
+	#{UI.Toolbar}
+	#{UI.ToolbarBitmapButton}
+	#{UI.ToolbarButton}
+	#{UI.ToolbarIconButton}
+	#{UI.ToolbarItem}
+	#{UI.ToolbarSeparator}
+	#{UI.ToolbarSystemButton}
+	#{UI.ToolButton}
 ).
 
 package setPrerequisites: #(
@@ -43,7 +44,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #StatusBarConstants
+Kernel.SharedPool subclass: #'OS.StatusBarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -72,7 +73,7 @@ SharedPool subclass: #StatusBarConstants
 		'SBT_POPOUT' -> 16r200.
 		'SBT_RTLREADING' -> 16r400
 	}!
-SharedPool subclass: #ToolbarConstants
+Kernel.SharedPool subclass: #'OS.ToolbarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -248,19 +249,31 @@ SharedPool subclass: #ToolbarConstants
 		'VIEW_SORTTYPE' -> 16r7.
 		'VIEW_VIEWMENU' -> 16rC
 	}!
-Object subclass: #StatusBarItemAbstract
+Core.Object subclass: #'UI.StatusBarItemAbstract'
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'
-	imports: #(#{StatusBarConstants})
+	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ToolbarItem
+Core.Object subclass: #'UI.ToolbarItem'
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
-	imports: #(#{ToolbarConstants})
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #TBADDBITMAP
+UI.StatusBarItemAbstract subclass: #'UI.StatusBarItem'
+	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.StatusBarItemAbstract subclass: #'UI.StatusBarNullItem'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Win32Structure subclass: #'OS.TBADDBITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -269,7 +282,7 @@ Win32Structure subclass: #TBADDBITMAP
 		'_OffsetOf_hInst' -> 16r0.
 		'_OffsetOf_nID' -> 16r4
 	}!
-Win32Structure subclass: #TBBUTTON
+OS.Win32Structure subclass: #'OS.TBBUTTON'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -282,7 +295,7 @@ Win32Structure subclass: #TBBUTTON
 		'_OffsetOf_idCommand' -> 16r4.
 		'_OffsetOf_iString' -> 16r10
 	}!
-Win32Structure subclass: #TBBUTTONINFOW
+OS.Win32Structure subclass: #'OS.TBBUTTONINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -299,7 +312,7 @@ Win32Structure subclass: #TBBUTTONINFOW
 		'_OffsetOf_lParam' -> 16r14.
 		'_OffsetOf_pszText' -> 16r18
 	}!
-NMHDR subclass: #NMMOUSE
+OS.NMHDR subclass: #'OS.NMMOUSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -310,7 +323,20 @@ NMHDR subclass: #NMMOUSE
 		'_OffsetOf_dwItemSpec' -> 16rC.
 		'_OffsetOf_pt' -> 16r14
 	}!
-NMHDR subclass: #NMTOOLBARW
+OS.NMHDR subclass: #'OS.NMTBDISPINFOW'
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchText' -> 16r20.
+		'_OffsetOf_dwMask' -> 16rC.
+		'_OffsetOf_idCommand' -> 16r10.
+		'_OffsetOf_iImage' -> 16r18.
+		'_OffsetOf_lParam' -> 16r14.
+		'_OffsetOf_pszText' -> 16r1C
+	}!
+OS.NMHDR subclass: #'OS.NMTOOLBARW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -321,70 +347,58 @@ NMHDR subclass: #NMTOOLBARW
 		'_OffsetOf_pszText' -> 16r28.
 		'_OffsetOf_tbButton' -> 16r10
 	}!
-StatusBarItemAbstract subclass: #StatusBarItem
-	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
-	classVariableNames: ''
-	imports: #(#{Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-StatusBarItemAbstract subclass: #StatusBarNullItem
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ToolbarItem subclass: #ToolbarButton
+UI.ToolbarItem subclass: #'UI.ToolbarButton'
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarItem subclass: #ToolbarSeparator
+UI.ToolbarItem subclass: #'UI.ToolbarSeparator'
 	instanceVariableNames: 'width'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarButton subclass: #ToolbarBitmapButton
+UI.ToolbarButton subclass: #'UI.ToolbarBitmapButton'
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarButton subclass: #ToolbarIconButton
+UI.ToolbarButton subclass: #'UI.ToolbarIconButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarButton subclass: #ToolbarSystemButton
+UI.ToolbarButton subclass: #'UI.ToolbarSystemButton'
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractNonReferenceDelegatingView subclass: #ToolButton
+UI.AbstractNonReferenceDelegatingView subclass: #'UI.ToolButton'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #ControlBarAbstract
+UI.ControlView subclass: #'UI.ControlBarAbstract'
 	instanceVariableNames: 'names'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlBarAbstract subclass: #StatusBar
+UI.ControlBarAbstract subclass: #'UI.StatusBar'
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
-	imports: #(#{StatusBarConstants})
+	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlBarAbstract subclass: #Toolbar
+UI.ControlBarAbstract subclass: #'UI.Toolbar'
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
 	classVariableNames: ''
-	imports: #(#{ToolbarConstants})
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'LabelsMask' -> 16r1

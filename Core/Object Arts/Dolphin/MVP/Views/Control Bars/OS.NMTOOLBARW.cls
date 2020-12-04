@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMTOOLBARW
+OS.NMHDR subclass: #'OS.NMTOOLBARW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cchText' -> 16r24.
@@ -11,13 +11,13 @@ NMHDR subclass: #NMTOOLBARW
 		'_OffsetOf_pszText' -> 16r28.
 		'_OffsetOf_tbButton' -> 16r10
 	}!
-NMTOOLBARW guid: (GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMTOOLBARW comment: 'NMTOOLBARW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
+OS.NMTOOLBARW guid: (Core.GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.NMTOOLBARW comment: 'NMTOOLBARW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTOOLBARW accompanies certain notifications that are sent by a Toolbar control to its parent, e.g. when a drop-down button is pressed, such as the browser history list buttons (TBN_DROPDOWN). See the Win32 documentation for further details.
 '!
-!NMTOOLBARW categoriesForClass!External-Data-Structured-Win32! !
-!NMTOOLBARW methodsFor!
+!OS.NMTOOLBARW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMTOOLBARW methodsFor!
 
 cchText
 	"Answer the <Integer> value of the receiver's 'cchText' field."
@@ -38,12 +38,12 @@ tbButton
 	"Answer the <TBBUTTON> value of the receiver's 'tbButton' field."
 
 	^TBBUTTON fromAddress: bytes yourAddress + _OffsetOf_tbButton! !
-!NMTOOLBARW categoriesFor: #cchText!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #pszText!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #tbButton!**compiled accessors**!public! !
+!OS.NMTOOLBARW categoriesFor: #cchText!**compiled accessors**!public! !
+!OS.NMTOOLBARW categoriesFor: #iItem!**compiled accessors**!public! !
+!OS.NMTOOLBARW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.NMTOOLBARW categoriesFor: #tbButton!**compiled accessors**!public! !
 
-!NMTOOLBARW class methodsFor!
+!OS.NMTOOLBARW class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMTOOLBARW structure.
@@ -67,6 +67,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
-!NMTOOLBARW class categoriesFor: #defineFields!public!template definition! !
-!NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTOOLBARW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlBarAbstract subclass: #StatusBar
+UI.ControlBarAbstract subclass: #'UI.StatusBar'
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
-	poolDictionaries: 'StatusBarConstants'
+	imports: #(#{OS.StatusBarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StatusBar guid: (GUID fromString: '{87b4c72e-026e-11d3-9fd7-00a0cc3e4a32}')!
-StatusBar comment: 'StatusBar is a <compositeView> implementing the Windows "Msctls_Statusbar32" common control.
+UI.StatusBar guid: (Core.GUID fromString: '{87b4c72e-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StatusBar comment: 'StatusBar is a <compositeView> implementing the Windows "Msctls_Statusbar32" common control.
 
 StatusBar holds a list of items, sub-instances of <StatusItem>, matching the order of items in the control. Items may be added and deleted once the view has been created. It also allows a name to be associated with each item. 
 
@@ -19,8 +19,8 @@ Instance Variables:
 	layoutManager		<layoutManager> or nil, for managing the layout of sub-views.
 
 '!
-!StatusBar categoriesForClass!MVP-Views! !
-!StatusBar methodsFor!
+!UI.StatusBar categoriesForClass!MVP-Views! !
+!UI.StatusBar methodsFor!
 
 addItem: aStatusBarItem 
 	"Append a new <StatusBarItem> to the list of items displayed in the receiver. Answer the new
@@ -39,30 +39,30 @@ addItem: aStatusBarItem name: aString
 	self name: aStatusBarItem as: aString.
 	^aStatusBarItem!
 
-calculateEdgesForWidth: anInteger 
+calculateEdgesForWidth: anInteger
 	| edges right fixedWidth numResizable widths numParts borders rectBorder share |
 	numParts := parts size.
 	self assert: [numParts < 256].	"common control limitation"
-	numParts < 1 
+	numParts < 1
 		ifTrue: 
 			["Control can't actually contain no parts, so we put a dummy one in."
 			^SDWORDArray with: -1].
 	numResizable := 0.
 	fixedWidth := 0.
 	widths := parts collect: 
-					[:each | 
+					[:each |
 					| width |
 					width := each width.
 					width = -1 ifTrue: [numResizable := numResizable + 1] ifFalse: [fixedWidth := fixedWidth + width].
 					width].
 	borders := self sbGetBorders.
 	right := borders at: 2.
-	share := numResizable = 0 
+	share := numResizable = 0
 				ifFalse: [(anInteger - right - fixedWidth - self scrollbarWidth) // numResizable].
 	rectBorder := borders at: 3.
 	edges := SDWORDArray new: numParts.
 	widths keysAndValuesDo: 
-			[:i :cx | 
+			[:i :cx |
 			| width |
 			width := cx = -1 ifTrue: [share] ifFalse: [cx].
 			right := right + width + rectBorder.
@@ -261,19 +261,19 @@ sbGetBorders
 
 	| answer |
 	answer := SDWORDArray new: 3.
-	self 
+	self
 		sendMessage: SB_GETBORDERS
 		wParam: 0
 		lpParam: answer.
 	^answer!
 
-sbGetRect: anInteger 
+sbGetRect: anInteger
 	| rect |
-	rect := RECT new.
-	(self 
+	rect := RECTL new.
+	(self
 		sendMessage: SB_GETRECT
 		wParam: anInteger
-		lpParam: rect) == 0 
+		lpParam: rect) == 0
 		ifTrue: 
 			["self errorInCommonControlCall"
 			].
@@ -348,47 +348,47 @@ updateItem: aStatusBarItem
 	self setRightEdges.
 	self setText: aStatusBarItem.
 	self invalidateRect: (self rectangleOfItem: aStatusBarItem)! !
-!StatusBar categoriesFor: #addItem:!adding!items!public! !
-!StatusBar categoriesFor: #addItem:name:!adding!items!public! !
-!StatusBar categoriesFor: #calculateEdgesForWidth:!geometry!private! !
-!StatusBar categoriesFor: #contents!accessing!public! !
-!StatusBar categoriesFor: #defaultExtent!constants!private! !
-!StatusBar categoriesFor: #defaultWindowStyle!constants!private! !
-!StatusBar categoriesFor: #getWindowText!accessing!private!win32 bug fix! !
-!StatusBar categoriesFor: #getWindowTextLength!accessing!private!win32 bug fix! !
-!StatusBar categoriesFor: #hasSizeGrip!accessing-styles!public! !
-!StatusBar categoriesFor: #hasSizeGrip:!accessing-styles!public! !
-!StatusBar categoriesFor: #hasToolTips!accessing-styles!public! !
-!StatusBar categoriesFor: #hasToolTips:!accessing-styles!public! !
-!StatusBar categoriesFor: #indexFromPoint:!accessing!enquiries!private! !
-!StatusBar categoriesFor: #indexOfItem:!items!private! !
-!StatusBar categoriesFor: #initialize!initializing!private! !
-!StatusBar categoriesFor: #itemAtIndex:!items!public! !
-!StatusBar categoriesFor: #itemFromId:!accessing!private! !
-!StatusBar categoriesFor: #itemRect:!geometry!public! !
-!StatusBar categoriesFor: #items!accessing!private! !
-!StatusBar categoriesFor: #items:!accessing!private! !
-!StatusBar categoriesFor: #layout:!geometry!private! !
-!StatusBar categoriesFor: #layoutManager!geometry!public! !
-!StatusBar categoriesFor: #layoutManager:!geometry!public! !
-!StatusBar categoriesFor: #onDrawItem:!event handling-win32!public! !
-!StatusBar categoriesFor: #onViewCreated!event handling!public! !
-!StatusBar categoriesFor: #rectangleOfItem:!accessing!private! !
-!StatusBar categoriesFor: #removeItem:!items!public!removing! !
-!StatusBar categoriesFor: #sbGetBorders!accessing!private! !
-!StatusBar categoriesFor: #sbGetRect:!accessing!private! !
-!StatusBar categoriesFor: #sbSetTipText:text:!operations!private! !
-!StatusBar categoriesFor: #scrollbarWidth!constants!private! !
-!StatusBar categoriesFor: #setControlBackcolor:!helpers!private! !
-!StatusBar categoriesFor: #setItem:tipText:!operations!private! !
-!StatusBar categoriesFor: #setRightEdges!helpers!private! !
-!StatusBar categoriesFor: #setRightEdges:!helpers!private! !
-!StatusBar categoriesFor: #setText:!accessing!private! !
-!StatusBar categoriesFor: #setWindowText:!accessing!private!win32 bug fix! !
-!StatusBar categoriesFor: #size!accessing!public! !
-!StatusBar categoriesFor: #updateItem:!private!updating! !
+!UI.StatusBar categoriesFor: #addItem:!adding!items!public! !
+!UI.StatusBar categoriesFor: #addItem:name:!adding!items!public! !
+!UI.StatusBar categoriesFor: #calculateEdgesForWidth:!geometry!private! !
+!UI.StatusBar categoriesFor: #contents!accessing!public! !
+!UI.StatusBar categoriesFor: #defaultExtent!constants!private! !
+!UI.StatusBar categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.StatusBar categoriesFor: #getWindowText!accessing!private!win32 bug fix! !
+!UI.StatusBar categoriesFor: #getWindowTextLength!accessing!private!win32 bug fix! !
+!UI.StatusBar categoriesFor: #hasSizeGrip!accessing-styles!public! !
+!UI.StatusBar categoriesFor: #hasSizeGrip:!accessing-styles!public! !
+!UI.StatusBar categoriesFor: #hasToolTips!accessing-styles!public! !
+!UI.StatusBar categoriesFor: #hasToolTips:!accessing-styles!public! !
+!UI.StatusBar categoriesFor: #indexFromPoint:!accessing!enquiries!private! !
+!UI.StatusBar categoriesFor: #indexOfItem:!items!private! !
+!UI.StatusBar categoriesFor: #initialize!initializing!private! !
+!UI.StatusBar categoriesFor: #itemAtIndex:!items!public! !
+!UI.StatusBar categoriesFor: #itemFromId:!accessing!private! !
+!UI.StatusBar categoriesFor: #itemRect:!geometry!public! !
+!UI.StatusBar categoriesFor: #items!accessing!private! !
+!UI.StatusBar categoriesFor: #items:!accessing!private! !
+!UI.StatusBar categoriesFor: #layout:!geometry!private! !
+!UI.StatusBar categoriesFor: #layoutManager!geometry!public! !
+!UI.StatusBar categoriesFor: #layoutManager:!geometry!public! !
+!UI.StatusBar categoriesFor: #onDrawItem:!event handling-win32!public! !
+!UI.StatusBar categoriesFor: #onViewCreated!event handling!public! !
+!UI.StatusBar categoriesFor: #rectangleOfItem:!accessing!private! !
+!UI.StatusBar categoriesFor: #removeItem:!items!public!removing! !
+!UI.StatusBar categoriesFor: #sbGetBorders!accessing!private! !
+!UI.StatusBar categoriesFor: #sbGetRect:!accessing!private! !
+!UI.StatusBar categoriesFor: #sbSetTipText:text:!operations!private! !
+!UI.StatusBar categoriesFor: #scrollbarWidth!constants!private! !
+!UI.StatusBar categoriesFor: #setControlBackcolor:!helpers!private! !
+!UI.StatusBar categoriesFor: #setItem:tipText:!operations!private! !
+!UI.StatusBar categoriesFor: #setRightEdges!helpers!private! !
+!UI.StatusBar categoriesFor: #setRightEdges:!helpers!private! !
+!UI.StatusBar categoriesFor: #setText:!accessing!private! !
+!UI.StatusBar categoriesFor: #setWindowText:!accessing!private!win32 bug fix! !
+!UI.StatusBar categoriesFor: #size!accessing!public! !
+!UI.StatusBar categoriesFor: #updateItem:!private!updating! !
 
-!StatusBar class methodsFor!
+!UI.StatusBar class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -403,7 +403,7 @@ resource_Status_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Status_bar)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StatusBar) 34 18 nil nil 34 2 8 1409288460 1 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 328198 ##(Smalltalk.Point) 193 193 nil 416 nil 8 1903688272 170 192 8 #() 34 1 853766 ##(Smalltalk.StatusBarItem) 1 -1 416 nil 459270 ##(Smalltalk.Message) #displayString 8 #() 722 #iconImageIndex 8 #() nil 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 416 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 594 3839 21 594 701 45 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 32 0 0 0] 8 #() 594 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StatusBar) 34 18 nil nil 34 2 8 1409288460 1 416 nil 917510 ##(Graphics.Color) #default nil 5 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 655878 ##(Graphics.Point) 193 193 nil 416 nil 8 1920343920 170 192 8 #() 34 1 1050374 ##(UI.StatusBarItem) 1 -1 416 nil 786950 ##(Core.Message) #displayString 8 #() 722 #iconImageIndex 8 #() nil 1311750 ##(UI.StatusBarNullItem) 513 1 416 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 594 6143 21 594 701 45 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 32 0 0 0] 8 #() 594 193 193 nil 27)!
 
 themePartName
 	^'STATUS'
@@ -413,8 +413,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_statusbar32'! !
-!StatusBar class categoriesFor: #icon!constants!public! !
-!StatusBar class categoriesFor: #resource_Status_bar!public!resources-views! !
-!StatusBar class categoriesFor: #themePartName!constants!private! !
-!StatusBar class categoriesFor: #winClassName!constants!private! !
+!UI.StatusBar class categoriesFor: #icon!constants!public! !
+!UI.StatusBar class categoriesFor: #resource_Status_bar!public!resources-views! !
+!UI.StatusBar class categoriesFor: #themePartName!constants!private! !
+!UI.StatusBar class categoriesFor: #winClassName!constants!private! !
 

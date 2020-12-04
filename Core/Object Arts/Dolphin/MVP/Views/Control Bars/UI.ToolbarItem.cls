@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ToolbarItem
+Core.Object subclass: #'UI.ToolbarItem'
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
-	poolDictionaries: 'ToolbarConstants'
+	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ToolbarItem guid: (GUID fromString: '{87b4c4c6-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarItem isAbstract: true!
-ToolbarItem comment: '`ToolbarItem` is an abstract class whose subclasses represent the items held by a `Toolbar`.
+UI.ToolbarItem guid: (Core.GUID fromString: '{87b4c4c6-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ToolbarItem isNonInstantiable: true!
+UI.ToolbarItem comment: '`ToolbarItem` is an abstract class whose subclasses represent the items held by a `Toolbar`.
 
 ## Instance Variables:
   `toolbar`		`Toolbar`
 
 '!
-!ToolbarItem categoriesForClass!MVP-Views-Support! !
-!ToolbarItem methodsFor!
+!UI.ToolbarItem categoriesForClass!MVP-Views-Support! !
+!UI.ToolbarItem methodsFor!
 
 commandId
 	"Private - Answer the Integer command identifier for the receiver"
@@ -94,23 +94,23 @@ update
 
 validateUserInterface: route
 	"Set the UI state of the receiver. Overridden in subclasses"! !
-!ToolbarItem categoriesFor: #commandId!commands!private! !
-!ToolbarItem categoriesFor: #getCommandId!commands!private! !
-!ToolbarItem categoriesFor: #imageIndexIn:!operations!private! !
-!ToolbarItem categoriesFor: #isDivider!public!testing! !
-!ToolbarItem categoriesFor: #isDropdownStyle!public!style! !
-!ToolbarItem categoriesFor: #onClick:!event handling!public! !
-!ToolbarItem categoriesFor: #onDoubleClick:!event handling!public! !
-!ToolbarItem categoriesFor: #onRightClick:!event handling!public! !
-!ToolbarItem categoriesFor: #parent!operations!public! !
-!ToolbarItem categoriesFor: #style!private!style! !
-!ToolbarItem categoriesFor: #textIndexIn:!operations!private! !
-!ToolbarItem categoriesFor: #toolbar!accessing!private! !
-!ToolbarItem categoriesFor: #toolbar:!accessing!private! !
-!ToolbarItem categoriesFor: #update!accessing!private! !
-!ToolbarItem categoriesFor: #validateUserInterface:!operations!public! !
+!UI.ToolbarItem categoriesFor: #commandId!commands!private! !
+!UI.ToolbarItem categoriesFor: #getCommandId!commands!private! !
+!UI.ToolbarItem categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarItem categoriesFor: #isDivider!public!testing! !
+!UI.ToolbarItem categoriesFor: #isDropdownStyle!public!style! !
+!UI.ToolbarItem categoriesFor: #onClick:!event handling!public! !
+!UI.ToolbarItem categoriesFor: #onDoubleClick:!event handling!public! !
+!UI.ToolbarItem categoriesFor: #onRightClick:!event handling!public! !
+!UI.ToolbarItem categoriesFor: #parent!operations!public! !
+!UI.ToolbarItem categoriesFor: #style!private!style! !
+!UI.ToolbarItem categoriesFor: #textIndexIn:!operations!private! !
+!UI.ToolbarItem categoriesFor: #toolbar!accessing!private! !
+!UI.ToolbarItem categoriesFor: #toolbar:!accessing!private! !
+!UI.ToolbarItem categoriesFor: #update!accessing!private! !
+!UI.ToolbarItem categoriesFor: #validateUserInterface:!operations!public! !
 
-!ToolbarItem class methodsFor!
+!UI.ToolbarItem class methodsFor!
 
 buttonClass
 	"Answer the subclass used to represent Toolbar buttons."
@@ -143,9 +143,9 @@ findTools
 
 stbVersion
 	^1! !
-!ToolbarItem class categoriesFor: #buttonClass!constants!public! !
-!ToolbarItem class categoriesFor: #editTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #fileTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #findTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #stbVersion!public! !
+!UI.ToolbarItem class categoriesFor: #buttonClass!constants!public! !
+!UI.ToolbarItem class categoriesFor: #editTools!instance creation!public! !
+!UI.ToolbarItem class categoriesFor: #fileTools!instance creation!public! !
+!UI.ToolbarItem class categoriesFor: #findTools!instance creation!public! !
+!UI.ToolbarItem class categoriesFor: #stbVersion!public! !
 

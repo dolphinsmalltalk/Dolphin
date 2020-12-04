@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StatusBarItemAbstract subclass: #StatusBarItem
+UI.StatusBarItemAbstract subclass: #'UI.StatusBarItem'
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StatusBarItem guid: (GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
-StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
+UI.StatusBarItem guid: (Core.GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
 
 Instance Variables:
 	getTextBlock	<monadicValuable> for mapping a list item to its display text.
@@ -15,8 +15,8 @@ Instance Variables:
 	imageManager	<IconImageManager>
 
 '!
-!StatusBarItem categoriesForClass!MVP-Views-Support! !
-!StatusBarItem methodsFor!
+!UI.StatusBarItem categoriesForClass!MVP-Views-Support! !
+!UI.StatusBarItem methodsFor!
 
 defaultGetImageBlock
 	"Private - Answer a default block to use to find out the image index of an object 
@@ -134,25 +134,25 @@ printOn: aStream
 		nextPut: $(;
 		print: (self parentView notNil ifTrue: [self name]);
 		nextPut: $)! !
-!StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
-!StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
-!StatusBarItem categoriesFor: #drawItem:bounding:!drawing!private! !
-!StatusBarItem categoriesFor: #drawTextOn:offset:!drawing!private! !
-!StatusBarItem categoriesFor: #getImageBlock!adapters!public! !
-!StatusBarItem categoriesFor: #getImageBlock:!adapters!public! !
-!StatusBarItem categoriesFor: #getText!private!updating! !
-!StatusBarItem categoriesFor: #getTextBlock!adapters!public! !
-!StatusBarItem categoriesFor: #getTextBlock:!adapters!public! !
-!StatusBarItem categoriesFor: #imageManager!accessing!public! !
-!StatusBarItem categoriesFor: #initialize!initializing!private! !
-!StatusBarItem categoriesFor: #printOn:!development!printing!public! !
+!UI.StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
+!UI.StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
+!UI.StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
+!UI.StatusBarItem categoriesFor: #drawItem:bounding:!drawing!private! !
+!UI.StatusBarItem categoriesFor: #drawTextOn:offset:!drawing!private! !
+!UI.StatusBarItem categoriesFor: #getImageBlock!adapters!public! !
+!UI.StatusBarItem categoriesFor: #getImageBlock:!adapters!public! !
+!UI.StatusBarItem categoriesFor: #getText!private!updating! !
+!UI.StatusBarItem categoriesFor: #getTextBlock!adapters!public! !
+!UI.StatusBarItem categoriesFor: #getTextBlock:!adapters!public! !
+!UI.StatusBarItem categoriesFor: #imageManager!accessing!public! !
+!UI.StatusBarItem categoriesFor: #initialize!initializing!private! !
+!UI.StatusBarItem categoriesFor: #printOn:!development!printing!public! !
 
-!StatusBarItem class methodsFor!
+!UI.StatusBarItem class methodsFor!
 
 value: anObject 
 	"#deprecated."
 
 	^anObject iconImageIndex! !
-!StatusBarItem class categoriesFor: #value:!evaluating!private! !
+!UI.StatusBarItem class categoriesFor: #value:!evaluating!private! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #ControlBarAbstract
+UI.ControlView subclass: #'UI.ControlBarAbstract'
 	instanceVariableNames: 'names'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlBarAbstract guid: (GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a32}')!
-ControlBarAbstract isAbstract: true!
-ControlBarAbstract comment: 'ControlBarAbstract is an abstract <compositeView> whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support <compositeView> so that they are able to host additional sub-views under the management of a layout manager.
+UI.ControlBarAbstract guid: (Core.GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ControlBarAbstract isNonInstantiable: true!
+UI.ControlBarAbstract comment: 'ControlBarAbstract is an abstract <compositeView> whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support <compositeView> so that they are able to host additional sub-views under the management of a layout manager.
 
 Instance Variables:
 	names	<IdentityDictionary> mapping sub-views to their names.
 
 '!
-!ControlBarAbstract categoriesForClass!MVP-Resources-Tool/Status bars!MVP-Views! !
-!ControlBarAbstract methodsFor!
+!UI.ControlBarAbstract categoriesForClass!MVP-Resources-Tool/Status bars!MVP-Views! !
+!UI.ControlBarAbstract methodsFor!
 
 actualInsets: aLayoutContext 
 	"Private - Answer a Rectangle whose edges specify the actual inset (in pixels) by which the
@@ -158,20 +158,21 @@ name: aView as: aNameStringOrNil
 
 	"Redirect name request to the immediate parent of aView
 	if we are not that parent"
-	aView parentView == self ifFalse: [
-		^aView parentView name: aView as: aNameStringOrNil].
+
+	aView parentView == self ifFalse: [^aView parentView name: aView as: aNameStringOrNil].
 
 	"Check that aView is one of our managed sub-views"
 	"self assert: [ self managedSubViews  includes: aView ]."
-
 	names isNil
-		ifTrue: [
-			(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty]) ifFalse: [
-				(names := IdentityDictionary new) at: aView put: aNameStringOrNil]]
-		ifFalse: [ | exists |
-			(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty]) ifTrue: [
-				"Request to remove name for aView"
-				^names removeKey: aView ifAbsent: []].
+		ifTrue: 
+			[(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty])
+				ifFalse: [(names := IdentityDictionary new) at: aView put: aNameStringOrNil]]
+		ifFalse: 
+			[| exists |
+			(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty])
+				ifTrue: 
+					["Request to remove name for aView"
+					^names removeKey: aView ifAbsent: []].
 
 			"Otherwise name is specified so check that it is unique"
 			exists := names keyAtEqualValue: aNameStringOrNil ifAbsent: [].
@@ -189,7 +190,7 @@ nameOf: aView
 	aView parentView == self ifFalse: [^aView parentView nameOf: aView].
 	^names isNil ifFalse: [names lookup: aView]!
 
-nmClick: pNMHDR 
+nmClick: pNMHDR
 	"Default handler for a NM_CLICK notification message, pass 
 	on to the clicked item, or answer nil to accept default processing."
 
@@ -197,24 +198,22 @@ nmClick: pNMHDR
 	struct := NMMOUSE fromAddress: pNMHDR.
 	^(self itemFromId: struct dwItemSpec) ifNotNil: [:item | item onClick: struct position]!
 
-nmDblClk: pNMHDR 
+nmDblClk: pNMHDR
 	"Default handler for a NM_DBLCLK notification message.
 	Pass on to the clicked item, or answer nil to accept default processing.
 	Note that this is never actually received for Toolbars."
 
 	| struct |
 	struct := NMMOUSE fromAddress: pNMHDR.
-	^(self itemFromId: struct dwItemSpec) 
-		ifNotNil: [:item | item onDoubleClick: struct position]!
+	^(self itemFromId: struct dwItemSpec) ifNotNil: [:item | item onDoubleClick: struct position]!
 
-nmRClick: pNMHDR 
+nmRClick: pNMHDR
 	"Default handler for a NM_RCLICK notification message.
 	Pass on to the clicked item, or answer nil to accept default processing."
 
 	| struct |
 	struct := NMMOUSE fromAddress: pNMHDR.
-	^(self itemFromId: struct dwItemSpec) 
-		ifNotNil: [:item | item onRightClick: struct position]!
+	^(self itemFromId: struct dwItemSpec) ifNotNil: [:item | item onRightClick: struct position]!
 
 onSubViewAdded: aView
 	"Received when aView has been added to the receiver.
@@ -269,41 +268,41 @@ viewNamed: aString ifNone: aBlock
 			found := each viewNamed: aString ifNone: [].
 			found notNil ifTrue: [^found]].
 	^aBlock value! !
-!ControlBarAbstract categoriesFor: #actualInsets:!accessing!private! !
-!ControlBarAbstract categoriesFor: #actualPreferredExtent:!private! !
-!ControlBarAbstract categoriesFor: #addSubView:name:!public!sub views! !
-!ControlBarAbstract categoriesFor: #arrangementOf:!accessing!public! !
-!ControlBarAbstract categoriesFor: #arrangementOf:put:!accessing!public! !
-!ControlBarAbstract categoriesFor: #canAcceptSubViews!hierarchy!public!sub views!testing! !
-!ControlBarAbstract categoriesFor: #defaultBackcolor!colors!constants!private! !
-!ControlBarAbstract categoriesFor: #defaultExtentOf:!public! !
-!ControlBarAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!ControlBarAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!ControlBarAbstract categoriesFor: #errorDuplicateName:!exceptions!public! !
-!ControlBarAbstract categoriesFor: #hasDivider!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #hasDivider:!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #indexFromPoint:!enquiries!private! !
-!ControlBarAbstract categoriesFor: #initialize!initializing!private! !
-!ControlBarAbstract categoriesFor: #insets!accessing!private! !
-!ControlBarAbstract categoriesFor: #isVertical!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #isVertical:!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #layout:!geometry!private! !
-!ControlBarAbstract categoriesFor: #layoutManager:!geometry!public! !
-!ControlBarAbstract categoriesFor: #name:as:!public!subpresenters! !
-!ControlBarAbstract categoriesFor: #nameOf:!public!subpresenters! !
-!ControlBarAbstract categoriesFor: #nmClick:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #nmDblClk:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #nmRClick:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #onSubViewAdded:!event handling!public! !
-!ControlBarAbstract categoriesFor: #onZOrderChanged!event handling!public! !
-!ControlBarAbstract categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!ControlBarAbstract categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!ControlBarAbstract categoriesFor: #validateUserInterface!operations!public! !
-!ControlBarAbstract categoriesFor: #viewNamed:ifNone:!public!sub views! !
+!UI.ControlBarAbstract categoriesFor: #actualInsets:!accessing!private! !
+!UI.ControlBarAbstract categoriesFor: #actualPreferredExtent:!private! !
+!UI.ControlBarAbstract categoriesFor: #addSubView:name:!public!sub views! !
+!UI.ControlBarAbstract categoriesFor: #arrangementOf:!accessing!public! !
+!UI.ControlBarAbstract categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.ControlBarAbstract categoriesFor: #canAcceptSubViews!hierarchy!public!sub views!testing! !
+!UI.ControlBarAbstract categoriesFor: #defaultBackcolor!colors!constants!private! !
+!UI.ControlBarAbstract categoriesFor: #defaultExtentOf:!public! !
+!UI.ControlBarAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.ControlBarAbstract categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.ControlBarAbstract categoriesFor: #errorDuplicateName:!exceptions!public! !
+!UI.ControlBarAbstract categoriesFor: #hasDivider!accessing-styles!public! !
+!UI.ControlBarAbstract categoriesFor: #hasDivider:!accessing-styles!public! !
+!UI.ControlBarAbstract categoriesFor: #indexFromPoint:!enquiries!private! !
+!UI.ControlBarAbstract categoriesFor: #initialize!initializing!private! !
+!UI.ControlBarAbstract categoriesFor: #insets!accessing!private! !
+!UI.ControlBarAbstract categoriesFor: #isVertical!accessing-styles!public! !
+!UI.ControlBarAbstract categoriesFor: #isVertical:!accessing-styles!public! !
+!UI.ControlBarAbstract categoriesFor: #layout:!geometry!private! !
+!UI.ControlBarAbstract categoriesFor: #layoutManager:!geometry!public! !
+!UI.ControlBarAbstract categoriesFor: #name:as:!public!subpresenters! !
+!UI.ControlBarAbstract categoriesFor: #nameOf:!public!subpresenters! !
+!UI.ControlBarAbstract categoriesFor: #nmClick:!event handling-win32!public! !
+!UI.ControlBarAbstract categoriesFor: #nmDblClk:!event handling-win32!public! !
+!UI.ControlBarAbstract categoriesFor: #nmRClick:!event handling-win32!public! !
+!UI.ControlBarAbstract categoriesFor: #onSubViewAdded:!event handling!public! !
+!UI.ControlBarAbstract categoriesFor: #onZOrderChanged!event handling!public! !
+!UI.ControlBarAbstract categoriesFor: #removeSubView:!hierarchy!public!sub views! !
+!UI.ControlBarAbstract categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!UI.ControlBarAbstract categoriesFor: #validateUserInterface!operations!public! !
+!UI.ControlBarAbstract categoriesFor: #viewNamed:ifNone:!public!sub views! !
 
-ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
+UI.ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 
-!ControlBarAbstract class methodsFor!
+!UI.ControlBarAbstract class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -317,6 +316,6 @@ stbConvertFromVersion12: anArray
 	creationStyle := anArray at: 3.
 	creationStyle at: 1 put: ((creationStyle at: 1) bitOr: CCS_NOPARENTALIGN).
 	^super stbConvertFromVersion12: anArray! !
-!ControlBarAbstract class categoriesFor: #icon!constants!public! !
-!ControlBarAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.ControlBarAbstract class categoriesFor: #icon!constants!public! !
+!UI.ControlBarAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
 

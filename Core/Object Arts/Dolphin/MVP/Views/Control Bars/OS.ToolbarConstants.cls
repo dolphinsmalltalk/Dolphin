@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ToolbarConstants
+Kernel.SharedPool subclass: #'OS.ToolbarConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -176,6 +176,7 @@ SharedPool subclass: #ToolbarConstants
 		'VIEW_SORTTYPE' -> 16r7.
 		'VIEW_VIEWMENU' -> 16rC
 	}!
-ToolbarConstants guid: (GUID fromString: '{b3db8126-a20b-4003-9446-48a9f5b8c3af}')!
-ToolbarConstants comment: ''!
-!ToolbarConstants categoriesForClass!Unclassified! !
+OS.ToolbarConstants guid: (Core.GUID fromString: '{b3db8126-a20b-4003-9446-48a9f5b8c3af}')!
+OS.ToolbarConstants isNonInstantiable: true!
+OS.ToolbarConstants comment: ''!
+!OS.ToolbarConstants categoriesForClass!Unclassified! !

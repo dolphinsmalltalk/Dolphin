@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TBADDBITMAP
+OS.Win32Structure subclass: #'OS.TBADDBITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hInst' -> 16r0.
 		'_OffsetOf_nID' -> 16r4
 	}!
-TBADDBITMAP guid: (GUID fromString: '{87b4c613-026e-11d3-9fd7-00a0cc3e4a32}')!
-TBADDBITMAP comment: ''!
-!TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
-!TBADDBITMAP methodsFor!
+OS.TBADDBITMAP guid: (Core.GUID fromString: '{87b4c613-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.TBADDBITMAP comment: ''!
+!OS.TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+!OS.TBADDBITMAP methodsFor!
 
 hInst: anInteger
 	"Set the receiver's 'hInst' field to the value of the argument, anInteger"
@@ -23,10 +23,10 @@ nID: anInteger
 	"Set the receiver's 'nID' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_nID put: anInteger! !
-!TBADDBITMAP categoriesFor: #hInst:!**compiled accessors**!public! !
-!TBADDBITMAP categoriesFor: #nID:!**compiled accessors**!public! !
+!OS.TBADDBITMAP categoriesFor: #hInst:!**compiled accessors**!public! !
+!OS.TBADDBITMAP categoriesFor: #nID:!**compiled accessors**!public! !
 
-!TBADDBITMAP class methodsFor!
+!OS.TBADDBITMAP class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 TBADDBITMAP structure.
@@ -44,6 +44,6 @@ defineFields
 
 getFieldNames
 	^#(#hInst #nID)! !
-!TBADDBITMAP class categoriesFor: #defineFields!public!template definition! !
-!TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBADDBITMAP class categoriesFor: #defineFields!public!template definition! !
+!OS.TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

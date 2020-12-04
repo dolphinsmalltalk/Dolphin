@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMMOUSE
+OS.NMHDR subclass: #'OS.NMMOUSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHitInfo' -> 16r1C.
@@ -11,13 +11,13 @@ NMHDR subclass: #NMMOUSE
 		'_OffsetOf_dwItemSpec' -> 16rC.
 		'_OffsetOf_pt' -> 16r14
 	}!
-NMMOUSE guid: (GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
-NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
+OS.NMMOUSE guid: (Core.GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
+OS.NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. toolbars, statusbars) when a mouse action occurs such as a click.
 '!
-!NMMOUSE categoriesForClass!External-Data-Structured-Win32! !
-!NMMOUSE methodsFor!
+!OS.NMMOUSE categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMMOUSE methodsFor!
 
 dwHitInfo
 	"Answer the <Integer> value of the receiver's 'dwHitInfo' field."
@@ -47,14 +47,14 @@ pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt! !
-!NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #dwItemData!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #dwItemSpec!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #iItem!accessing!public! !
-!NMMOUSE categoriesFor: #position!accessing!public! !
-!NMMOUSE categoriesFor: #pt!**compiled accessors**!public! !
+!OS.NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
+!OS.NMMOUSE categoriesFor: #dwItemData!**compiled accessors**!public! !
+!OS.NMMOUSE categoriesFor: #dwItemSpec!**compiled accessors**!public! !
+!OS.NMMOUSE categoriesFor: #iItem!accessing!public! !
+!OS.NMMOUSE categoriesFor: #position!accessing!public! !
+!OS.NMMOUSE categoriesFor: #pt!**compiled accessors**!public! !
 
-!NMMOUSE class methodsFor!
+!OS.NMMOUSE class methodsFor!
 
 defineFields
 	"Define the structure template for Win32 NMMOUSE structure.
@@ -62,7 +62,7 @@ defineFields
 	"
 
 	super defineFields.
-	self 
+	self
 		defineField: #dwItemSpec type: DWORDField readOnly;
 		defineField: #dwItemData type: DWORDField readOnly;
 		defineField: #pt type: (StructureField type: POINTL) beReadOnly;
@@ -70,6 +70,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
-!NMMOUSE class categoriesFor: #defineFields!public!template definition! !
-!NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMMOUSE class categoriesFor: #defineFields!public!template definition! !
+!OS.NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
