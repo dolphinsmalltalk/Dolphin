@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DateTimeCommonControl subclass: #DateTimePicker
+UI.DateTimeCommonControl subclass: #'UI.DateTimePicker'
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateTimePicker guid: (GUID fromString: '{87b4c735-026e-11d3-9fd7-00a0cc3e4a32}')!
-DateTimePicker comment: '`DateTimePicker` is a `<valueView>` implementing the Windows "SysDateTimePick32" common control, referred to as the "Date and Time Picker Control" in the MSDN documentation. 
+UI.DateTimePicker guid: (Core.GUID fromString: '{87b4c735-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DateTimePicker comment: '`DateTimePicker` is a `<valueView>` implementing the Windows "SysDateTimePick32" common control, referred to as the "Date and Time Picker Control" in the MSDN documentation. 
 
 The `<valueModel>` associated with a `DateTimePicker` must always yield a value that can be converted to a `SYSTEMTIME` by sending it `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A `DateTimePicker` will normally be used in conjunction with a `DatePresenter` or a `TimePresenter`, and indeed when the class'' package is installed a `DateTimePicker` is used as the default views for both presenters.
 
@@ -29,8 +29,8 @@ Or:
   `displayFormat`		`String` or nil
 
 '!
-!DateTimePicker categoriesForClass!MVP-Views! !
-!DateTimePicker methodsFor!
+!UI.DateTimePicker categoriesForClass!MVP-Views! !
+!UI.DateTimePicker methodsFor!
 
 canShowNone
 	"Answers true if the receiver can set no date or time"
@@ -95,11 +95,11 @@ getSystemTime
 
 	| time messageAnswer |
 	time := SYSTEMTIME new.
-	messageAnswer := self 
+	messageAnswer := self
 				sendMessage: DTM_GETSYSTEMTIME
 				wParam: 0
 				lpParam: time asParameter.
-	^messageAnswer == GDT_VALID 
+	^messageAnswer == GDT_VALID
 		ifTrue: [time]
 		ifFalse: [messageAnswer == GDT_NONE ifFalse: [self errorInCommonControlCall]]!
 
@@ -159,8 +159,7 @@ modelClass
 	"Private - Answer the expected class of model, either Date or Time depending
 	on the current mode set"
 
-	^self isTimeMode ifTrue: [Time] ifFalse: [Date]
-!
+	^self isTimeMode ifTrue: [Time] ifFalse: [Date]!
 
 nmFirst
 	^DTN_FIRST + 1!
@@ -175,42 +174,41 @@ onViewCreated
 setRangeMessage
 	^DTM_SETRANGE!
 
-setSystemTime: aSYSTEMTIMEOrNil 
+setSystemTime: aSYSTEMTIMEOrNil
 	"Private - Set the control's current date/time to the <SYSTEMTIME> argument, or 'none' if the argument is nil."
 
 	| gd st |
 	gd := GDT_VALID.
 	st := aSYSTEMTIMEOrNil.
-	aSYSTEMTIMEOrNil isNil 
-		ifTrue: 
-			[self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asSYSTEMTIME]].
+	aSYSTEMTIMEOrNil isNil
+		ifTrue: [self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asSYSTEMTIME]].
 	self dtmSetSystemTime: gd lpSysTime: st! !
-!DateTimePicker categoriesFor: #canShowNone!accessing-styles!public! !
-!DateTimePicker categoriesFor: #canShowNone:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #defaultExtent!constants!private! !
-!DateTimePicker categoriesFor: #displayFormat!accessing!public! !
-!DateTimePicker categoriesFor: #displayFormat:!accessing!public! !
-!DateTimePicker categoriesFor: #dtmSetFormat:!accessing!public! !
-!DateTimePicker categoriesFor: #dtmSetSystemTime:lpSysTime:!accessing!public! !
-!DateTimePicker categoriesFor: #dtnDateTimeChange:!event handling-win32!public! !
-!DateTimePicker categoriesFor: #dtNotificationMap!private! !
-!DateTimePicker categoriesFor: #getRangeMessage!constants!private! !
-!DateTimePicker categoriesFor: #getSystemTime!accessing!private! !
-!DateTimePicker categoriesFor: #hasLongDateFormat!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasLongDateFormat:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasUpDown!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasUpDown:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isRightAligned!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isRightAligned:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isTimeMode!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isTimeMode:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #modelClass!accessing!private! !
-!DateTimePicker categoriesFor: #nmFirst!constants!private! !
-!DateTimePicker categoriesFor: #onViewCreated!event handling!public! !
-!DateTimePicker categoriesFor: #setRangeMessage!constants!private! !
-!DateTimePicker categoriesFor: #setSystemTime:!accessing!private! !
+!UI.DateTimePicker categoriesFor: #canShowNone!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #canShowNone:!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #defaultExtent!constants!private! !
+!UI.DateTimePicker categoriesFor: #displayFormat!accessing!public! !
+!UI.DateTimePicker categoriesFor: #displayFormat:!accessing!public! !
+!UI.DateTimePicker categoriesFor: #dtmSetFormat:!accessing!public! !
+!UI.DateTimePicker categoriesFor: #dtmSetSystemTime:lpSysTime:!accessing!public! !
+!UI.DateTimePicker categoriesFor: #dtnDateTimeChange:!event handling-win32!public! !
+!UI.DateTimePicker categoriesFor: #dtNotificationMap!private! !
+!UI.DateTimePicker categoriesFor: #getRangeMessage!constants!private! !
+!UI.DateTimePicker categoriesFor: #getSystemTime!accessing!private! !
+!UI.DateTimePicker categoriesFor: #hasLongDateFormat!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #hasLongDateFormat:!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #hasUpDown!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #hasUpDown:!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #isRightAligned!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #isRightAligned:!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #isTimeMode!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #isTimeMode:!accessing-styles!public! !
+!UI.DateTimePicker categoriesFor: #modelClass!accessing!private! !
+!UI.DateTimePicker categoriesFor: #nmFirst!constants!private! !
+!UI.DateTimePicker categoriesFor: #onViewCreated!event handling!public! !
+!UI.DateTimePicker categoriesFor: #setRangeMessage!constants!private! !
+!UI.DateTimePicker categoriesFor: #setSystemTime:!accessing!private! !
 
-!DateTimePicker class methodsFor!
+!UI.DateTimePicker class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -224,7 +222,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysDateTimePick32'! !
-!DateTimePicker class categoriesFor: #defaultModel!models!public! !
-!DateTimePicker class categoriesFor: #themePartName!constants!private!theming! !
-!DateTimePicker class categoriesFor: #winClassName!constants!private! !
+!UI.DateTimePicker class categoriesFor: #defaultModel!models!public! !
+!UI.DateTimePicker class categoriesFor: #themePartName!constants!private!theming! !
+!UI.DateTimePicker class categoriesFor: #winClassName!constants!private! !
 

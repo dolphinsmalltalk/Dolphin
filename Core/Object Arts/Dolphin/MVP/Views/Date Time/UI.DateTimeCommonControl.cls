@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #DateTimeCommonControl
+UI.ValueConvertingControlView subclass: #'UI.DateTimeCommonControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'DateTimeCommCtrlConstants'
+	imports: #(#{OS.DateTimeCommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
-DateTimeCommonControl isAbstract: true!
-DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 
+UI.DateTimeCommonControl guid: (Core.GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
+UI.DateTimeCommonControl isNonInstantiable: true!
+UI.DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 
 
 The `<valueModel>` associated with a `DateTimeCommonControl` must always yield a value that can be converted to a `SYSTEMTIME` using `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
 
 
 
 '!
-!DateTimeCommonControl categoriesForClass!MVP-Views! !
-!DateTimeCommonControl methodsFor!
+!UI.DateTimeCommonControl categoriesForClass!MVP-Views! !
+!UI.DateTimeCommonControl methodsFor!
 
 displayValue
 	"Private - Answer the displayed contents of the receiver as a <Date> or <Time>,
@@ -99,7 +99,7 @@ range
 	^{(gd anyMask: GDTR_MIN) ifTrue: [(array at: 1) copy].
 		(gd anyMask: GDTR_MAX) ifTrue: [(array at: 2) copy]}!
 
-range: interval 
+range: interval
 	"Set the allowable range of values. The first element of interval if either the
 	minimum allowable SYSTEMTIME or nil if there isn't one. The last element is either the
 	maximum allowable SYSTEMTIME or nil if there isn't one."
@@ -108,18 +108,18 @@ range: interval
 	gd := 0.
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
 	array beUnfinalizable.
-	interval first notNil 
+	interval first notNil
 		ifTrue: 
 			[array at: 1 put: interval first asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MIN].
-	interval last notNil 
+	interval last notNil
 		ifTrue: 
 			[array at: 2 put: interval last asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MAX].
-	(self 
+	(self
 		sendMessage: self setRangeMessage
 		wParam: gd
-		lpParam: array asParameter) asBoolean 
+		lpParam: array asParameter) asBoolean
 		ifFalse: [^self errorInCommonControlCall]!
 
 setRangeMessage
@@ -136,27 +136,30 @@ state
 	to its current state"
 
 	^super state
-		add: (MessageSend receiver: self selector: #range: argument: self range);
+		add: (MessageSend
+					receiver: self
+					selector: #range:
+					argument: self range);
 		yourself! !
-!DateTimeCommonControl categoriesFor: #displayValue!private!updating! !
-!DateTimeCommonControl categoriesFor: #displayValue:!private!updating! !
-!DateTimeCommonControl categoriesFor: #dtNotificationMap!private! !
-!DateTimeCommonControl categoriesFor: #getRangeMessage!constants!private! !
-!DateTimeCommonControl categoriesFor: #getSystemTime!accessing!private! !
-!DateTimeCommonControl categoriesFor: #maximum!accessing!public! !
-!DateTimeCommonControl categoriesFor: #maximum:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #minimum!accessing!public! !
-!DateTimeCommonControl categoriesFor: #minimum:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #modelClass!accessing!private! !
-!DateTimeCommonControl categoriesFor: #nmFirst!constants!private! !
-!DateTimeCommonControl categoriesFor: #nmNotify:!event handling-win32!private! !
-!DateTimeCommonControl categoriesFor: #range!accessing!public! !
-!DateTimeCommonControl categoriesFor: #range:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #setRangeMessage!constants!private! !
-!DateTimeCommonControl categoriesFor: #setSystemTime:!accessing!private! !
-!DateTimeCommonControl categoriesFor: #state!accessing!private! !
+!UI.DateTimeCommonControl categoriesFor: #displayValue!private!updating! !
+!UI.DateTimeCommonControl categoriesFor: #displayValue:!private!updating! !
+!UI.DateTimeCommonControl categoriesFor: #dtNotificationMap!private! !
+!UI.DateTimeCommonControl categoriesFor: #getRangeMessage!constants!private! !
+!UI.DateTimeCommonControl categoriesFor: #getSystemTime!accessing!private! !
+!UI.DateTimeCommonControl categoriesFor: #maximum!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #maximum:!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #minimum!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #minimum:!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #modelClass!accessing!private! !
+!UI.DateTimeCommonControl categoriesFor: #nmFirst!constants!private! !
+!UI.DateTimeCommonControl categoriesFor: #nmNotify:!event handling-win32!private! !
+!UI.DateTimeCommonControl categoriesFor: #range!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #range:!accessing!public! !
+!UI.DateTimeCommonControl categoriesFor: #setRangeMessage!constants!private! !
+!UI.DateTimeCommonControl categoriesFor: #setSystemTime:!accessing!private! !
+!UI.DateTimeCommonControl categoriesFor: #state!accessing!private! !
 
-!DateTimeCommonControl class methodsFor!
+!UI.DateTimeCommonControl class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -174,7 +177,7 @@ initialize
 
 uninitialize
 	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_DATE_CLASSES)! !
-!DateTimeCommonControl class categoriesFor: #icon!constants!public! !
-!DateTimeCommonControl class categoriesFor: #initialize!development!initializing!private! !
-!DateTimeCommonControl class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!UI.DateTimeCommonControl class categoriesFor: #icon!constants!public! !
+!UI.DateTimeCommonControl class categoriesFor: #initialize!development!initializing!private! !
+!UI.DateTimeCommonControl class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

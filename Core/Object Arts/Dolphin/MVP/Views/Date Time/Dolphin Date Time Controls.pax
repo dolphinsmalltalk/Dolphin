@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Date Time Controls'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Date & Time Common Controls.
 Copyright (c) Object Arts Ltd, 1997-2003.
@@ -12,17 +12,17 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{DateTimeCommCtrlConstants}
-	#{DateTimeCommonControl}
-	#{DateTimePicker}
-	#{MonthCalendarView}
-	#{NMSELCHANGE}
+	#{OS.DateTimeCommCtrlConstants}
+	#{OS.NMSELCHANGE}
+	#{UI.DateTimeCommonControl}
+	#{UI.DateTimePicker}
+	#{UI.MonthCalendarView}
 ).
 
 package setMethodNames: #(
-	#(#{DatePresenter class} #resource_Month_calendar_view)
-	#(#{DatePresenter class} #resource_Picker_view)
-	#(#{TimePresenter class} #resource_Picker_view)
+	#(#{UI.DatePresenter class} #resource_Month_calendar_view)
+	#(#{UI.DatePresenter class} #resource_Picker_view)
+	#(#{UI.TimePresenter class} #resource_Picker_view)
 ).
 
 package setPrerequisites: #(
@@ -39,7 +39,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #DateTimeCommCtrlConstants
+Kernel.SharedPool subclass: #'OS.DateTimeCommCtrlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -140,7 +140,7 @@ SharedPool subclass: #DateTimeCommCtrlConstants
 		'MCSC_TITLETEXT' -> 16r3.
 		'MCSC_TRAILINGTEXT' -> 16r5
 	}!
-NMHDR subclass: #NMSELCHANGE
+OS.NMHDR subclass: #'OS.NMSELCHANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -149,19 +149,19 @@ NMHDR subclass: #NMSELCHANGE
 		'_OffsetOf_stSelEnd' -> 16r1C.
 		'_OffsetOf_stSelStart' -> 16rC
 	}!
-ValueConvertingControlView subclass: #DateTimeCommonControl
+UI.ValueConvertingControlView subclass: #'UI.DateTimeCommonControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{DateTimeCommCtrlConstants})
+	imports: #(#{OS.DateTimeCommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateTimeCommonControl subclass: #DateTimePicker
+UI.DateTimeCommonControl subclass: #'UI.DateTimePicker'
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateTimeCommonControl subclass: #MonthCalendarView
+UI.DateTimeCommonControl subclass: #'UI.MonthCalendarView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -170,7 +170,7 @@ DateTimeCommonControl subclass: #MonthCalendarView
 
 "Loose Methods"!
 
-!DatePresenter class methodsFor!
+!UI.DatePresenter class methodsFor!
 
 resource_Month_calendar_view
 	"Answer the literal data from which the 'Month calendar view' resource can be reconstituted.
@@ -180,7 +180,7 @@ resource_Month_calendar_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Month_calendar_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.MonthCalendarView) 34 15 nil nil 34 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) 262406 ##(Smalltalk.Date) 74655 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 395 307 5 nil nil nil 416 nil 8 1904635520 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 610 3839 21 610 395 307 416 754 #range: 34 1 8 #(nil nil) 416 754 #mcmSetFirstDayOfWeek: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 68 8 0 0 163 0 0 0] 8 #() 610 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.MonthCalendarView) 34 15 nil nil 34 2 8 1409351680 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) 917766 ##(Core.Date) 74655 917510 ##(Graphics.Color) #default 655878 ##(Graphics.Point) 395 307 5 nil nil nil 416 nil 8 1921288960 1049094 ##(UI.NullConverter) nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 610 6143 21 610 395 307 416 754 #range: 34 1 8 #(nil nil) 416 754 #mcmSetFirstDayOfWeek: 8 #(0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 196 12 0 0 163 0 0 0] 8 #() 610 193 193 nil 27)!
 
 resource_Picker_view
 	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
@@ -190,11 +190,11 @@ resource_Picker_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916230 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 262406 ##(Smalltalk.Date) 70769 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1904605520 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 850 521 51 416 802 #text: 34 1 8 '17 November 1997' 416 802 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 131 8 0 0 35 0 0 0] 8 #() 850 193 193 nil 27 )! !
-!DatePresenter class categoriesFor: #resource_Month_calendar_view!public!resources-views! !
-!DatePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DateTimePicker) 34 16 nil nil 34 2 8 1140916230 1 416 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 546 #hash 8 #() 917766 ##(Core.Date) 70769 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1921258976 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 850 521 51 416 802 #text: 34 1 8 '17 November 1997' 416 802 #range: 34 1 8 #(nil nil) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 35 0 0 0] 8 #() 850 193 193 nil 27)! !
+!UI.DatePresenter class categoriesFor: #resource_Month_calendar_view!public!resources-views! !
+!UI.DatePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
 
-!TimePresenter class methodsFor!
+!UI.TimePresenter class methodsFor!
 
 resource_Picker_view
 	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
@@ -204,8 +204,8 @@ resource_Picker_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916235 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1904605520 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 251 51 416 690 #text: 34 1 8 '21:29:40' 416 690 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 738 193 193 nil 27 )! !
-!TimePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DateTimePicker) 34 16 nil nil 34 2 8 1140916235 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1921258976 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 251 51 416 690 #text: 34 1 8 '11:35:07' 416 690 #range: 34 1 8 #(nil nil) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)! !
+!UI.TimePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
 
 "End of package definition"!
 

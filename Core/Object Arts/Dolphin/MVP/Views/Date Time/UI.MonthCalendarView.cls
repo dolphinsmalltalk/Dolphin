@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DateTimeCommonControl subclass: #MonthCalendarView
+UI.DateTimeCommonControl subclass: #'UI.MonthCalendarView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MonthCalendarView guid: (GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
-MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
+UI.MonthCalendarView guid: (Core.GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
+UI.MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 
 The `<valueModel>` associated with a `MonthCalendarView` must always yield a value that can be converted to a `SYSTEMTIME` using `#asSYSTEMTIME` after mapping through the installed type converter (e.g. a `DateAndTime`), although any time portion is ignored. A `MonthCalendarView` will normally be used in conjunction with a `DatePresenter`.
 '!
-!MonthCalendarView categoriesForClass!MVP-Views! !
-!MonthCalendarView methodsFor!
+!UI.MonthCalendarView categoriesForClass!MVP-Views! !
+!UI.MonthCalendarView methodsFor!
 
 calculateExtent: aLayoutContext 
 	"Private - Answer a calculated preferred extent for the receiver."
@@ -49,11 +49,10 @@ getRangeMessage
 getSystemTime
 	| answer |
 	answer := SYSTEMTIME new.
-	^(self 
+	^(self
 		sendMessage: MCM_GETCURSEL
 		wParam: 0
-		lpParam: answer) asBoolean 
-		ifTrue: [answer]!
+		lpParam: answer) asBoolean ifTrue: [answer]!
 
 hasToday
 	"Answers whether the receiver displays todays date in  text at the bottom
@@ -96,8 +95,8 @@ mcmGetFirstDayOfWeek
 
 mcmGetMinReqRect
 	| rect |
-	rect := RECT new.
-	self 
+	rect := RECTL new.
+	self
 		sendMessage: MCM_GETMINREQRECT
 		wParam: 0
 		lpParam: rect.
@@ -106,11 +105,10 @@ mcmGetMinReqRect
 mcmGetToday
 	| answer |
 	answer := SYSTEMTIME new.
-	^(self 
+	^(self
 		sendMessage: MCM_GETTODAY
 		wParam: 0
-		lpParam: answer) asBoolean 
-		ifTrue: [answer]!
+		lpParam: answer) asBoolean ifTrue: [answer]!
 
 mcmSetFirstDayOfWeek: anInteger 
 	^self 
@@ -165,40 +163,43 @@ state
 	to its current state"
 
 	^super state
-		add: (MessageSend receiver: self selector: #mcmSetFirstDayOfWeek: argument: self mcmGetFirstDayOfWeek lowWord);
+		add: (MessageSend
+					receiver: self
+					selector: #mcmSetFirstDayOfWeek:
+					argument: self mcmGetFirstDayOfWeek lowWord);
 		yourself!
 
 today
 	^self mcmGetToday asDate! !
-!MonthCalendarView categoriesFor: #calculateExtent:!geometry!private! !
-!MonthCalendarView categoriesFor: #defaultExtent!constants!private! !
-!MonthCalendarView categoriesFor: #dtNotificationMap!private! !
-!MonthCalendarView categoriesFor: #firstDayOfWeek!accessing!public! !
-!MonthCalendarView categoriesFor: #firstDayOfWeek:!accessing!public! !
-!MonthCalendarView categoriesFor: #getRangeMessage!constants!private! !
-!MonthCalendarView categoriesFor: #getSystemTime!accessing!private! !
-!MonthCalendarView categoriesFor: #hasToday!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasToday:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasTodayCircle!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasTodayCircle:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasWeekNumbers!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasWeekNumbers:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #mcmGetFirstDayOfWeek!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmGetMinReqRect!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmGetToday!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmSetFirstDayOfWeek:!accessing!private! !
-!MonthCalendarView categoriesFor: #mcnSelChange:!event handling-win32!private! !
-!MonthCalendarView categoriesFor: #mcnSelect:!event handling-win32!private! !
-!MonthCalendarView categoriesFor: #modelClass!accessing!private! !
-!MonthCalendarView categoriesFor: #nmFirst!constants!private! !
-!MonthCalendarView categoriesFor: #onViewCreated!event handling!public! !
-!MonthCalendarView categoriesFor: #setControlBackcolor:!accessing!private! !
-!MonthCalendarView categoriesFor: #setRangeMessage!constants!private! !
-!MonthCalendarView categoriesFor: #setSystemTime:!accessing!private! !
-!MonthCalendarView categoriesFor: #state!accessing!private! !
-!MonthCalendarView categoriesFor: #today!accessing!public! !
+!UI.MonthCalendarView categoriesFor: #calculateExtent:!geometry!private! !
+!UI.MonthCalendarView categoriesFor: #defaultExtent!constants!private! !
+!UI.MonthCalendarView categoriesFor: #dtNotificationMap!private! !
+!UI.MonthCalendarView categoriesFor: #firstDayOfWeek!accessing!public! !
+!UI.MonthCalendarView categoriesFor: #firstDayOfWeek:!accessing!public! !
+!UI.MonthCalendarView categoriesFor: #getRangeMessage!constants!private! !
+!UI.MonthCalendarView categoriesFor: #getSystemTime!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #hasToday!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #hasToday:!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #hasTodayCircle!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #hasTodayCircle:!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #hasWeekNumbers!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #hasWeekNumbers:!accessing-styles!public! !
+!UI.MonthCalendarView categoriesFor: #mcmGetFirstDayOfWeek!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #mcmGetMinReqRect!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #mcmGetToday!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #mcmSetFirstDayOfWeek:!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #mcnSelChange:!event handling-win32!private! !
+!UI.MonthCalendarView categoriesFor: #mcnSelect:!event handling-win32!private! !
+!UI.MonthCalendarView categoriesFor: #modelClass!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #nmFirst!constants!private! !
+!UI.MonthCalendarView categoriesFor: #onViewCreated!event handling!public! !
+!UI.MonthCalendarView categoriesFor: #setControlBackcolor:!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #setRangeMessage!constants!private! !
+!UI.MonthCalendarView categoriesFor: #setSystemTime:!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #state!accessing!private! !
+!UI.MonthCalendarView categoriesFor: #today!accessing!public! !
 
-!MonthCalendarView class methodsFor!
+!UI.MonthCalendarView class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -209,6 +210,6 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysMonthCal32'! !
-!MonthCalendarView class categoriesFor: #defaultModel!models!public! !
-!MonthCalendarView class categoriesFor: #winClassName!constants!private! !
+!UI.MonthCalendarView class categoriesFor: #defaultModel!models!public! !
+!UI.MonthCalendarView class categoriesFor: #winClassName!constants!private! !
 

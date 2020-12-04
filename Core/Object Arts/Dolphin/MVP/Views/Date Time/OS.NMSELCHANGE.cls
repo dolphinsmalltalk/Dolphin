@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMSELCHANGE
+OS.NMHDR subclass: #'OS.NMSELCHANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_stSelEnd' -> 16r1C.
 		'_OffsetOf_stSelStart' -> 16rC
 	}!
-NMSELCHANGE guid: (GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
-NMSELCHANGE comment: ''!
-!NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !
-!NMSELCHANGE methodsFor!
+OS.NMSELCHANGE guid: (Core.GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
+OS.NMSELCHANGE comment: ''!
+!OS.NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMSELCHANGE methodsFor!
 
 stSelEnd
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelEnd' field."
@@ -23,10 +23,10 @@ stSelStart
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
 	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_stSelStart! !
-!NMSELCHANGE categoriesFor: #stSelEnd!**compiled accessors**!public! !
-!NMSELCHANGE categoriesFor: #stSelStart!**compiled accessors**!public! !
+!OS.NMSELCHANGE categoriesFor: #stSelEnd!**compiled accessors**!public! !
+!OS.NMSELCHANGE categoriesFor: #stSelStart!**compiled accessors**!public! !
 
-!NMSELCHANGE class methodsFor!
+!OS.NMSELCHANGE class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 NMSELCHANGE structure.
@@ -40,6 +40,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
-!NMSELCHANGE class categoriesFor: #defineFields!public!template definition! !
-!NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMSELCHANGE class categoriesFor: #defineFields!public!template definition! !
+!OS.NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

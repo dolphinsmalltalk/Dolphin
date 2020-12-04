@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #DateTimeCommCtrlConstants
+Kernel.SharedPool subclass: #'OS.DateTimeCommCtrlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -101,6 +101,7 @@ SharedPool subclass: #DateTimeCommCtrlConstants
 		'MCSC_TITLETEXT' -> 16r3.
 		'MCSC_TRAILINGTEXT' -> 16r5
 	}!
-DateTimeCommCtrlConstants guid: (GUID fromString: '{c283cb09-f08f-4bcb-a25f-9bb3eb1967f2}')!
-DateTimeCommCtrlConstants comment: ''!
-!DateTimeCommCtrlConstants categoriesForClass!Unclassified! !
+OS.DateTimeCommCtrlConstants guid: (Core.GUID fromString: '{c283cb09-f08f-4bcb-a25f-9bb3eb1967f2}')!
+OS.DateTimeCommCtrlConstants isNonInstantiable: true!
+OS.DateTimeCommCtrlConstants comment: ''!
+!OS.DateTimeCommCtrlConstants categoriesForClass!Unclassified! !
