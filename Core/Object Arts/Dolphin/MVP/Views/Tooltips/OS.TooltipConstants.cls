@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #TooltipConstants
+Kernel.SharedPool subclass: #'OS.TooltipConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -68,6 +68,7 @@ SharedPool subclass: #TooltipConstants
 		'TTS_NOFADE' -> 16r20.
 		'TTS_NOPREFIX' -> 16r2
 	}!
-TooltipConstants guid: (GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
-TooltipConstants comment: ''!
-!TooltipConstants categoriesForClass!Unclassified! !
+OS.TooltipConstants guid: (Core.GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
+OS.TooltipConstants isNonInstantiable: true!
+OS.TooltipConstants comment: ''!
+!OS.TooltipConstants categoriesForClass!Unclassified! !

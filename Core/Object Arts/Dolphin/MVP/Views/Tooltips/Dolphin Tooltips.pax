@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tooltips'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tooltips
 Copyright (c) Object Arts Ltd 2003-2018.
@@ -11,15 +11,15 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{MessageBubble}
-	#{OneOffNoteBubble}
-	#{TOOLINFOW}
-	#{Tooltip}
-	#{TooltipConstants}
+	#{OS.TOOLINFOW}
+	#{OS.TooltipConstants}
+	#{UI.MessageBubble}
+	#{UI.OneOffNoteBubble}
+	#{UI.Tooltip}
 ).
 
 package setMethodNames: #(
-	#(#{NMTTDISPINFOW} #toolTipWindow)
+	#(#{OS.NMTTDISPINFOW} #toolTipWindow)
 ).
 
 package setPrerequisites: #(
@@ -34,7 +34,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #TooltipConstants
+Kernel.SharedPool subclass: #'OS.TooltipConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -102,16 +102,24 @@ SharedPool subclass: #TooltipConstants
 		'TTS_NOFADE' -> 16r20.
 		'TTS_NOPREFIX' -> 16r2
 	}!
-Object subclass: #OneOffNoteBubble
+Core.Object subclass: #'UI.OneOffNoteBubble'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #TOOLINFOW
+UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
+	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
+	classVariableNames: ''
+	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IconIds' -> #[64 48 16]
+	}!
+OS.Win32Structure subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	imports: #(#{TooltipConstants})
+	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -124,28 +132,20 @@ Win32Structure subclass: #TOOLINFOW
 		'_OffsetOf_uFlags' -> 16r4.
 		'_OffsetOf_uId' -> 16rC
 	}!
-MessageBoxAbstract subclass: #MessageBubble
-	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
-	classVariableNames: ''
-	imports: #(#{TooltipConstants} #{Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {
-		'IconIds' -> #[64 48 16]
-	}!
-ControlView subclass: #Tooltip
+UI.ControlView subclass: #'UI.Tooltip'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{TooltipConstants})
+	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!NMTTDISPINFOW methodsFor!
+!OS.NMTTDISPINFOW methodsFor!
 
 toolTipWindow
-	^Tooltip fromHandle: self hwndFrom! !
-!NMTTDISPINFOW categoriesFor: #toolTipWindow!accessing!public! !
+	^UI.Tooltip fromHandle: self hwndFrom! !
+!OS.NMTTDISPINFOW categoriesFor: #toolTipWindow!accessing!public! !
 
 "End of package definition"!
 

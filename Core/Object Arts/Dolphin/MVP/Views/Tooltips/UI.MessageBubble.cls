@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MessageBoxAbstract subclass: #MessageBubble
+UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants Win32Constants'
+	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IconIds' -> #[64 48 16]
 	}!
-MessageBubble guid: (GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
-MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principle difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
+UI.MessageBubble guid: (Core.GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
+UI.MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principle difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
 
 The other main differences from <MessageBox> are:
 - MessageBubbles can only be used to display information, not garner a response (i.e. prompting for a yes/no or abort/retry/ignore response is not supported). 
@@ -44,8 +44,8 @@ Instance Variables:
 	maxWidth	<integer> soft maximum width of the message text, or nil if default.
 
 '!
-!MessageBubble categoriesForClass!Kernel-Objects! !
-!MessageBubble methodsFor!
+!UI.MessageBubble categoriesForClass!Kernel-Objects! !
+!UI.MessageBubble methodsFor!
 
 activateTooltip: aTOOLINFO 
 	tooltip startTracking: aTOOLINFO.
@@ -99,7 +99,7 @@ close
 createTooltip
 	tooltip := Tooltip new.
 	tooltip bePopupFor: (owner ifNil: [View active]).
-	tooltip 
+	tooltip
 		baseStyle: tooltipStyle
 		maskedBy: ##(TTS_BALLOON | TTS_ALWAYSTIP | TTS_CLOSE | TTS_NOANIMATE | TTS_NOFADE | TTS_NOPREFIX)
 		recreateIfChanged: false.
@@ -308,7 +308,7 @@ startTimeout
 	timeout isZero
 		ifFalse: 
 			[timeoutProcess := 
-					[Processor sleep: timeout.
+					[(Delay forDuration: timeout) wait.
 					[self close] postToMessageQueue] fork]!
 
 timeout
@@ -338,51 +338,51 @@ willFade: aBoolean
 	style has no effect after opening."
 
 	tooltipStyle := tooltipStyle mask: TTS_NOFADE set: aBoolean not! !
-!MessageBubble categoriesFor: #activateTooltip:!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #addTool!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #areLinksParsed!public!testing! !
-!MessageBubble categoriesFor: #areLinksParsed:!accessing-styles!public! !
-!MessageBubble categoriesFor: #backcolor!accessing!public! !
-!MessageBubble categoriesFor: #backcolor:!accessing!public! !
-!MessageBubble categoriesFor: #close!public!realizing/unrealizing! !
-!MessageBubble categoriesFor: #createTooltip!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #defaultCaption!displaying!private! !
-!MessageBubble categoriesFor: #font!accessing!public! !
-!MessageBubble categoriesFor: #font:!accessing!public! !
-!MessageBubble categoriesFor: #forecolor!accessing!public! !
-!MessageBubble categoriesFor: #forecolor:!accessing!public! !
-!MessageBubble categoriesFor: #hasCloseButton!public!testing! !
-!MessageBubble categoriesFor: #hasCloseButton:!public!testing! !
-!MessageBubble categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!MessageBubble categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBubble categoriesFor: #initialize!initializing!private! !
-!MessageBubble categoriesFor: #initializeTooltip!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #isAnimated!accessing!public!testing! !
-!MessageBubble categoriesFor: #isAnimated:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isBalloon!accessing!public!testing! !
-!MessageBubble categoriesFor: #isBalloon:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isCentered!public!testing! !
-!MessageBubble categoriesFor: #isCentered:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isModal!accessing-styles!public!testing! !
-!MessageBubble categoriesFor: #margins!accessing!public! !
-!MessageBubble categoriesFor: #margins:!accessing!public! !
-!MessageBubble categoriesFor: #maxWidth!accessing!public! !
-!MessageBubble categoriesFor: #maxWidth:!accessing!public! !
-!MessageBubble categoriesFor: #onPopped!event handling!private! !
-!MessageBubble categoriesFor: #onShowTip:!event handling!private! !
-!MessageBubble categoriesFor: #open!public!realizing/unrealizing! !
-!MessageBubble categoriesFor: #owner!public! !
-!MessageBubble categoriesFor: #position!accessing!public! !
-!MessageBubble categoriesFor: #position:!accessing!public! !
-!MessageBubble categoriesFor: #startTimeout!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #timeout!accessing!public! !
-!MessageBubble categoriesFor: #timeout:!accessing!public! !
-!MessageBubble categoriesFor: #tooltip!accessing!private! !
-!MessageBubble categoriesFor: #trackPosition!operations!private! !
-!MessageBubble categoriesFor: #willFade!accessing-styles!public!testing! !
-!MessageBubble categoriesFor: #willFade:!accessing-styles!public! !
+!UI.MessageBubble categoriesFor: #activateTooltip:!private!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #addTool!private!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #areLinksParsed!public!testing! !
+!UI.MessageBubble categoriesFor: #areLinksParsed:!accessing-styles!public! !
+!UI.MessageBubble categoriesFor: #backcolor!accessing!public! !
+!UI.MessageBubble categoriesFor: #backcolor:!accessing!public! !
+!UI.MessageBubble categoriesFor: #close!public!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #createTooltip!private!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #defaultCaption!displaying!private! !
+!UI.MessageBubble categoriesFor: #font!accessing!public! !
+!UI.MessageBubble categoriesFor: #font:!accessing!public! !
+!UI.MessageBubble categoriesFor: #forecolor!accessing!public! !
+!UI.MessageBubble categoriesFor: #forecolor:!accessing!public! !
+!UI.MessageBubble categoriesFor: #hasCloseButton!public!testing! !
+!UI.MessageBubble categoriesFor: #hasCloseButton:!public!testing! !
+!UI.MessageBubble categoriesFor: #iconStyleFlag!accessing-styles!private! !
+!UI.MessageBubble categoriesFor: #iconStyleFlag:!accessing-styles!private! !
+!UI.MessageBubble categoriesFor: #initialize!initializing!private! !
+!UI.MessageBubble categoriesFor: #initializeTooltip!private!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #isAnimated!accessing!public!testing! !
+!UI.MessageBubble categoriesFor: #isAnimated:!accessing-styles!public! !
+!UI.MessageBubble categoriesFor: #isBalloon!accessing!public!testing! !
+!UI.MessageBubble categoriesFor: #isBalloon:!accessing-styles!public! !
+!UI.MessageBubble categoriesFor: #isCentered!public!testing! !
+!UI.MessageBubble categoriesFor: #isCentered:!accessing-styles!public! !
+!UI.MessageBubble categoriesFor: #isModal!accessing-styles!public!testing! !
+!UI.MessageBubble categoriesFor: #margins!accessing!public! !
+!UI.MessageBubble categoriesFor: #margins:!accessing!public! !
+!UI.MessageBubble categoriesFor: #maxWidth!accessing!public! !
+!UI.MessageBubble categoriesFor: #maxWidth:!accessing!public! !
+!UI.MessageBubble categoriesFor: #onPopped!event handling!private! !
+!UI.MessageBubble categoriesFor: #onShowTip:!event handling!private! !
+!UI.MessageBubble categoriesFor: #open!public!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #owner!public! !
+!UI.MessageBubble categoriesFor: #position!accessing!public! !
+!UI.MessageBubble categoriesFor: #position:!accessing!public! !
+!UI.MessageBubble categoriesFor: #startTimeout!private!realizing/unrealizing! !
+!UI.MessageBubble categoriesFor: #timeout!accessing!public! !
+!UI.MessageBubble categoriesFor: #timeout:!accessing!public! !
+!UI.MessageBubble categoriesFor: #tooltip!accessing!private! !
+!UI.MessageBubble categoriesFor: #trackPosition!operations!private! !
+!UI.MessageBubble categoriesFor: #willFade!accessing-styles!public!testing! !
+!UI.MessageBubble categoriesFor: #willFade:!accessing-styles!public! !
 
-!MessageBubble class methodsFor!
+!UI.MessageBubble class methodsFor!
 
 icon
 	^Tooltip icon!
@@ -397,6 +397,6 @@ initialize
 				with: MB_ICONINFORMATION
 				with: MB_ICONWARNING
 				with: MB_ICONERROR)! !
-!MessageBubble class categoriesFor: #icon!constants!development!public! !
-!MessageBubble class categoriesFor: #initialize!class initialization!development!private! !
+!UI.MessageBubble class categoriesFor: #icon!constants!development!public! !
+!UI.MessageBubble class categoriesFor: #initialize!class initialization!development!private! !
 

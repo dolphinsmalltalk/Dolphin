@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #OneOffNoteBubble
+Core.Object subclass: #'UI.OneOffNoteBubble'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OneOffNoteBubble guid: (GUID fromString: '{1b63c41e-9df7-4c2c-b128-3fc143dac05a}')!
-OneOffNoteBubble comment: ''!
-!OneOffNoteBubble categoriesForClass!Kernel-Objects! !
-!OneOffNoteBubble class methodsFor!
+UI.OneOffNoteBubble guid: (Core.GUID fromString: '{1b63c41e-9df7-4c2c-b128-3fc143dac05a}')!
+UI.OneOffNoteBubble comment: ''!
+!UI.OneOffNoteBubble categoriesForClass!Kernel-Objects! !
+!UI.OneOffNoteBubble class methodsFor!
 
 addPreviouslyViewedNote: aSymbol
 	self registryKey valueAt: aSymbol put: DateAndTime now printString!
@@ -101,18 +101,18 @@ resetPreviouslyViewedNotes
 	"
 
 	RegKey userRoot removeKey: self registryKeyName ifAbsent: []! !
-!OneOffNoteBubble class categoriesFor: #addPreviouslyViewedNote:!private! !
-!OneOffNoteBubble class categoriesFor: #defaultCaption!constants!private! !
-!OneOffNoteBubble class categoriesFor: #defaultTimeout!constants!private! !
-!OneOffNoteBubble class categoriesFor: #defaultWidth!constants!private! !
-!OneOffNoteBubble class categoriesFor: #icon!constants!development!public! !
-!OneOffNoteBubble class categoriesFor: #name:text:!instance creation!public! !
-!OneOffNoteBubble class categoriesFor: #name:text:for:!instance creation!public! !
-!OneOffNoteBubble class categoriesFor: #name:text:for:timeout:!instance creation!public! !
-!OneOffNoteBubble class categoriesFor: #previouslyViewedNotes!accessing!public! !
-!OneOffNoteBubble class categoriesFor: #previouslyViewedNotes:!accessing!public! !
-!OneOffNoteBubble class categoriesFor: #registryKey!private! !
-!OneOffNoteBubble class categoriesFor: #registryKeyName!constants!private! !
-!OneOffNoteBubble class categoriesFor: #removePreviouslyViewedNote:!private! !
-!OneOffNoteBubble class categoriesFor: #resetPreviouslyViewedNotes!private! !
+!UI.OneOffNoteBubble class categoriesFor: #addPreviouslyViewedNote:!private! !
+!UI.OneOffNoteBubble class categoriesFor: #defaultCaption!constants!private! !
+!UI.OneOffNoteBubble class categoriesFor: #defaultTimeout!constants!private! !
+!UI.OneOffNoteBubble class categoriesFor: #defaultWidth!constants!private! !
+!UI.OneOffNoteBubble class categoriesFor: #icon!constants!development!public! !
+!UI.OneOffNoteBubble class categoriesFor: #name:text:!instance creation!public! !
+!UI.OneOffNoteBubble class categoriesFor: #name:text:for:!instance creation!public! !
+!UI.OneOffNoteBubble class categoriesFor: #name:text:for:timeout:!instance creation!public! !
+!UI.OneOffNoteBubble class categoriesFor: #previouslyViewedNotes!accessing!public! !
+!UI.OneOffNoteBubble class categoriesFor: #previouslyViewedNotes:!accessing!public! !
+!UI.OneOffNoteBubble class categoriesFor: #registryKey!private! !
+!UI.OneOffNoteBubble class categoriesFor: #registryKeyName!constants!private! !
+!UI.OneOffNoteBubble class categoriesFor: #removePreviouslyViewedNote:!private! !
+!UI.OneOffNoteBubble class categoriesFor: #resetPreviouslyViewedNotes!private! !
 

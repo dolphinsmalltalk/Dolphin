@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TOOLINFOW
+OS.Win32Structure subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants'
+	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -16,8 +16,8 @@ Win32Structure subclass: #TOOLINFOW
 		'_OffsetOf_uFlags' -> 16r4.
 		'_OffsetOf_uId' -> 16rC
 	}!
-TOOLINFOW guid: (GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
-TOOLINFOW comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.TOOLINFOW comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.
 
@@ -25,8 +25,8 @@ Instance Variables:
 	text	<String>. Used to maintain a reference to the tip text string to prevent its premature GC.
 
 '!
-!TOOLINFOW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
-!TOOLINFOW methodsFor!
+!OS.TOOLINFOW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+!OS.TOOLINFOW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -58,7 +58,7 @@ lpszText: anUtf16String
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszText put: anUtf16String yourAddress!
 
-printOn: aStream 
+printOn: aStream
 	"Append a debugging representation of the receiver to aStream."
 
 	| flags |
@@ -66,24 +66,27 @@ printOn: aStream
 		basicPrint: self;
 		nextPutAll: '(uFlags='.
 	flags := self uFlags.
-	flags printOn: aStream base: 16 showRadix: true.
+	flags
+		printOn: aStream
+		base: 16
+		showRadix: true.
 	aStream
 		nextPutAll: ', hwnd=';
-		print: (View fromHandle: self hwnd);
+		print: (UI.View fromHandle: self hwnd);
 		nextPutAll: ', tool='.
-	(flags allMask: TTF_IDISHWND) 
+	(flags allMask: TTF_IDISHWND)
 		ifFalse: 
 			[aStream
 				print: self uId;
 				nextPutAll: ', rect=';
 				display: self rect]
-		ifTrue: [aStream print: (View fromHandle: self uId)].
+		ifTrue: [aStream print: (UI.View fromHandle: self uId)].
 	aStream nextPut: $)!
 
 rect
-	"Answer the <RECT> value of the receiver's 'rect' field."
+	"Answer the <RECTL> value of the receiver's 'rect' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rect!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rect!
 
 rect: aRECT
 	"Set the receiver's 'rect' field to the value of the argument, aRECT"
@@ -91,7 +94,7 @@ rect: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rect + 1)
-		to: ##(_OffsetOf_rect + RECT basicByteSize)
+		to: ##(_OffsetOf_rect + RECTL basicByteSize)
 		startingAt: 1!
 
 text: aString
@@ -128,23 +131,23 @@ uId: anInteger
 	"Set the receiver's 'uId' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
-!TOOLINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hinst!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hwnd!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hwnd:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #printOn:!development!printing!public! !
-!TOOLINFOW categoriesFor: #rect!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #rect:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #text:!accessing!public! !
-!TOOLINFOW categoriesFor: #textCallback!accessing!public! !
-!TOOLINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uId!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uId:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #hinst!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #hwnd!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #hwnd:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #lParam!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #printOn:!development!printing!public! !
+!OS.TOOLINFOW categoriesFor: #rect!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #rect:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #text:!accessing!public! !
+!OS.TOOLINFOW categoriesFor: #textCallback!accessing!public! !
+!OS.TOOLINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #uFlags:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #uId!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesFor: #uId:!**compiled accessors**!public! !
 
-!TOOLINFOW class methodsFor!
+!OS.TOOLINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the TOOLINFO structure.
@@ -155,7 +158,7 @@ defineFields
 			unsigned int uFlags;
 			unsigned long hwnd;
 			UINT_PTR uId;
-			RECT rect;
+			RECTL rect;
 			HINSTANCE hinst;
 			LPWSTR lpszText;
 			LPARAM lParam;
@@ -168,7 +171,7 @@ defineFields
 		defineField: #uFlags type: DWORDField new;
 		defineField: #hwnd type: HANDLEField new;
 		defineField: #uId type: UINT_PTRField new;
-		defineField: #rect type: (StructureField type: RECT);
+		defineField: #rect type: (StructureField type: RECTL);
 		defineField: #hinst type: HANDLEField readOnly;
 		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lParam type: INT_PTRField readOnly;
@@ -176,6 +179,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
-!TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
-!TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

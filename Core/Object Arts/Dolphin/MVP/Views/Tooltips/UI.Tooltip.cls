@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #Tooltip
+UI.ControlView subclass: #'UI.Tooltip'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'TooltipConstants'
+	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tooltip guid: (GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
-Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
-!Tooltip categoriesForClass!MVP-Views! !
-!Tooltip methodsFor!
+UI.Tooltip guid: (Core.GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
+UI.Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
+!UI.Tooltip categoriesForClass!MVP-Views! !
+!UI.Tooltip methodsFor!
 
 add: aTOOLINFOA tool: aView 
 	"Adds a tool tip for aWinWindow to the receiever."
@@ -78,8 +78,8 @@ margins
 	Each margin is the distance in pixels between the relevant edge and the tip text."
 
 	| rect |
-	rect := RECT new.
-	self 
+	rect := RECTL new.
+	self
 		sendMessage: TTM_GETMARGIN
 		wParam: 0
 		lpParam: rect.
@@ -261,11 +261,11 @@ ttmGetDelayTime: anInteger
 
 ttmGetMargin
 	| answer |
-	answer := RECT new.
-	(self 
+	answer := RECTL new.
+	(self
 		sendMessage: TTM_GETMARGIN
 		wParam: 0
-		lpParam: answer) == 0 
+		lpParam: answer) == 0
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [answer]!
 
@@ -322,54 +322,54 @@ ttnShow: anNMHDR
 	"Private - Handler for the TTN_SHOW message, which is forwarded to the presenter."
 
 	^self presenter onShow! !
-!Tooltip categoriesFor: #add:tool:!operations!private! !
-!Tooltip categoriesFor: #alwaysTip!public!testing! !
-!Tooltip categoriesFor: #alwaysTip:!accessing!public! !
-!Tooltip categoriesFor: #defaultBackcolor!colors!constants!public! !
-!Tooltip categoriesFor: #endTracking!operations!public! !
-!Tooltip categoriesFor: #forecolor:!accessing!public! !
-!Tooltip categoriesFor: #hasCloseButton!public!testing! !
-!Tooltip categoriesFor: #hasCloseButton:!accessing!public! !
-!Tooltip categoriesFor: #isActive:!accessing!public! !
-!Tooltip categoriesFor: #isBalloon!public!testing! !
-!Tooltip categoriesFor: #isBalloon:!accessing!public! !
-!Tooltip categoriesFor: #margins!accessing!public! !
-!Tooltip categoriesFor: #margins:!accessing!public! !
-!Tooltip categoriesFor: #maxWidth!accessing!public! !
-!Tooltip categoriesFor: #maxWidth:!accessing!public! !
-!Tooltip categoriesFor: #nmNotify:!events-win32!private! !
-!Tooltip categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!Tooltip categoriesFor: #onLinkClicked!event handling!public! !
-!Tooltip categoriesFor: #onPop!events-win32!public! !
-!Tooltip categoriesFor: #onShow!events-win32!public! !
-!Tooltip categoriesFor: #pop!operations!public! !
-!Tooltip categoriesFor: #registerView:!operations!private! !
-!Tooltip categoriesFor: #reshowDelay!accessing!public! !
-!Tooltip categoriesFor: #reshowDelay:!accessing!public! !
-!Tooltip categoriesFor: #setControlBackcolor:!helpers!private! !
-!Tooltip categoriesFor: #showDelay!accessing!public! !
-!Tooltip categoriesFor: #showDelay:!accessing!public! !
-!Tooltip categoriesFor: #showDuration!accessing!public! !
-!Tooltip categoriesFor: #showDuration:!accessing!public! !
-!Tooltip categoriesFor: #startTracking:!operations!public! !
-!Tooltip categoriesFor: #tools!operations!private! !
-!Tooltip categoriesFor: #trackPosition:!geometry!public! !
-!Tooltip categoriesFor: #ttmAddTool:!operations!private! !
-!Tooltip categoriesFor: #ttmDelTool:!operations!private! !
-!Tooltip categoriesFor: #ttmEnumTools:info:!operations!private! !
-!Tooltip categoriesFor: #ttmGetCurrentTool!accessing!private! !
-!Tooltip categoriesFor: #ttmGetDelayTime:!accessing!private! !
-!Tooltip categoriesFor: #ttmGetMargin!accessing!private! !
-!Tooltip categoriesFor: #ttmGetToolCount!accessing!private! !
-!Tooltip categoriesFor: #ttmGetToolInfo:!accessing!private! !
-!Tooltip categoriesFor: #ttmRelayEvent:!operations!private! !
-!Tooltip categoriesFor: #ttmSetDelayTime:milliseconds:!accessing!private! !
-!Tooltip categoriesFor: #ttmSetTitle:icon:!operations!private! !
-!Tooltip categoriesFor: #ttnLinkClick:!events-win32!private! !
-!Tooltip categoriesFor: #ttnPop:!events-win32!private! !
-!Tooltip categoriesFor: #ttnShow:!events-win32!private! !
+!UI.Tooltip categoriesFor: #add:tool:!operations!private! !
+!UI.Tooltip categoriesFor: #alwaysTip!public!testing! !
+!UI.Tooltip categoriesFor: #alwaysTip:!accessing!public! !
+!UI.Tooltip categoriesFor: #defaultBackcolor!colors!constants!public! !
+!UI.Tooltip categoriesFor: #endTracking!operations!public! !
+!UI.Tooltip categoriesFor: #forecolor:!accessing!public! !
+!UI.Tooltip categoriesFor: #hasCloseButton!public!testing! !
+!UI.Tooltip categoriesFor: #hasCloseButton:!accessing!public! !
+!UI.Tooltip categoriesFor: #isActive:!accessing!public! !
+!UI.Tooltip categoriesFor: #isBalloon!public!testing! !
+!UI.Tooltip categoriesFor: #isBalloon:!accessing!public! !
+!UI.Tooltip categoriesFor: #margins!accessing!public! !
+!UI.Tooltip categoriesFor: #margins:!accessing!public! !
+!UI.Tooltip categoriesFor: #maxWidth!accessing!public! !
+!UI.Tooltip categoriesFor: #maxWidth:!accessing!public! !
+!UI.Tooltip categoriesFor: #nmNotify:!events-win32!private! !
+!UI.Tooltip categoriesFor: #onLeftButtonReleased:!event handling!public! !
+!UI.Tooltip categoriesFor: #onLinkClicked!event handling!public! !
+!UI.Tooltip categoriesFor: #onPop!events-win32!public! !
+!UI.Tooltip categoriesFor: #onShow!events-win32!public! !
+!UI.Tooltip categoriesFor: #pop!operations!public! !
+!UI.Tooltip categoriesFor: #registerView:!operations!private! !
+!UI.Tooltip categoriesFor: #reshowDelay!accessing!public! !
+!UI.Tooltip categoriesFor: #reshowDelay:!accessing!public! !
+!UI.Tooltip categoriesFor: #setControlBackcolor:!helpers!private! !
+!UI.Tooltip categoriesFor: #showDelay!accessing!public! !
+!UI.Tooltip categoriesFor: #showDelay:!accessing!public! !
+!UI.Tooltip categoriesFor: #showDuration!accessing!public! !
+!UI.Tooltip categoriesFor: #showDuration:!accessing!public! !
+!UI.Tooltip categoriesFor: #startTracking:!operations!public! !
+!UI.Tooltip categoriesFor: #tools!operations!private! !
+!UI.Tooltip categoriesFor: #trackPosition:!geometry!public! !
+!UI.Tooltip categoriesFor: #ttmAddTool:!operations!private! !
+!UI.Tooltip categoriesFor: #ttmDelTool:!operations!private! !
+!UI.Tooltip categoriesFor: #ttmEnumTools:info:!operations!private! !
+!UI.Tooltip categoriesFor: #ttmGetCurrentTool!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmGetDelayTime:!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmGetMargin!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmGetToolCount!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmGetToolInfo:!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmRelayEvent:!operations!private! !
+!UI.Tooltip categoriesFor: #ttmSetDelayTime:milliseconds:!accessing!private! !
+!UI.Tooltip categoriesFor: #ttmSetTitle:icon:!operations!private! !
+!UI.Tooltip categoriesFor: #ttnLinkClick:!events-win32!private! !
+!UI.Tooltip categoriesFor: #ttnPop:!events-win32!private! !
+!UI.Tooltip categoriesFor: #ttnShow:!events-win32!private! !
 
-!Tooltip class methodsFor!
+!UI.Tooltip class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -377,15 +377,14 @@ icon
 	^##(self) defaultIcon!
 
 themePartName
-	^#Tooltip
-!
+	^#Tooltip!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'tooltips_class32'
 ! !
-!Tooltip class categoriesFor: #icon!constants!public! !
-!Tooltip class categoriesFor: #themePartName!constants!private! !
-!Tooltip class categoriesFor: #winClassName!constants!private! !
+!UI.Tooltip class categoriesFor: #icon!constants!public! !
+!UI.Tooltip class categoriesFor: #themePartName!constants!private! !
+!UI.Tooltip class categoriesFor: #winClassName!constants!private! !
 
