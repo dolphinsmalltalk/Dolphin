@@ -278,7 +278,7 @@ QueryInterface: pIID ppvObject: ppvOut
 			indirection of lppvoid parameter types - with the benefit of hindsight, perhaps
 			this wasn't the best of ideas, but..."
 			| pi |
-			pi := ExternalAddress new.
+			pi := External.Address new.
 			outerUnknown QueryInterface: pIID ppvObject: pi.
 			ppvOut value: pi]!
 

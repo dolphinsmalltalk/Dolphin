@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #ITEMIDLIST
+OLEStructure subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ITEMIDLIST guid: (GUID fromString: '{928070c1-45d5-4739-b2b1-01e8c27361dc}')!
-ITEMIDLIST comment: 'ITEMIDLIST is an <ExternalStructure> that wraps the Windows ITEMIDLIST struct.  ITEMIDLIST serves the same purpose as a file system path, i.e., to identify objects (be they files, folders, virtual or part of the filesystem) in the Windows Shell namespace.  An ITEMIDLIST contains one or more item IDs (a Windows SHITEMID structure), terminated by a two-byte null.
+OS.ITEMIDLIST guid: (Core.GUID fromString: '{928070c1-45d5-4739-b2b1-01e8c27361dc}')!
+OS.ITEMIDLIST comment: 'ITEMIDLIST is an <ExternalStructure> that wraps the Windows ITEMIDLIST struct.  ITEMIDLIST serves the same purpose as a file system path, i.e., to identify objects (be they files, folders, virtual or part of the filesystem) in the Windows Shell namespace.  An ITEMIDLIST contains one or more item IDs (a Windows SHITEMID structure), terminated by a two-byte null.
 
 There are two types of ITEMIDLIST -- full and relative.  A full (or absolute) ITEMIDLIST contains a packed list of item ids that together uniquely identifies a shell object relative to the desktop.  A relative ITEMIDLIST contains a packed list of item ids that together uniquely identifies a shell object relative to its parent folder.  In most cases, a relative ITEMIDLIST will contain only one item id.  However, multi-level relative ITEMIDLISTs are also used.  See individual method comments for which type of ITEMIDLIST is expected.
 
@@ -15,8 +15,8 @@ For the Shell API, namespace objects are usually identified by a pointer to thei
 
 Instance Variables:
 	back	<ITEMIDLIST>	Used to prevent an ITEMIDLIST being garbage collected when a new ITEMIDLIST has been constructed on the same memory.'!
-!ITEMIDLIST categoriesForClass!Unclassified! !
-!ITEMIDLIST methodsFor!
+!OS.ITEMIDLIST categoriesForClass!Unclassified! !
+!OS.ITEMIDLIST methodsFor!
 
 append: anITEMIDLIST 
 	"Answer a copy of the receiver with anITEMIDLIST appended"
@@ -140,24 +140,24 @@ pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^WindowsShellMemory! !
-!ITEMIDLIST categoriesFor: #append:!operations!public! !
-!ITEMIDLIST categoriesFor: #back!accessing!private! !
-!ITEMIDLIST categoriesFor: #back:!accessing!private! !
-!ITEMIDLIST categoriesFor: #bufferClass!constants!private! !
-!ITEMIDLIST categoriesFor: #cb!accessing!public! !
-!ITEMIDLIST categoriesFor: #cb:!accessing!public! !
-!ITEMIDLIST categoriesFor: #getSize!operations!public! !
-!ITEMIDLIST categoriesFor: #idCopy!operations!public! !
-!ITEMIDLIST categoriesFor: #idLast!operations!public! !
-!ITEMIDLIST categoriesFor: #idNext!operations!public! !
-!ITEMIDLIST categoriesFor: #idParent!operations!public! !
-!ITEMIDLIST categoriesFor: #isDesktopID!public!testing! !
-!ITEMIDLIST categoriesFor: #isSingle!public!testing! !
-!ITEMIDLIST categoriesFor: #isValid!public!testing! !
-!ITEMIDLIST categoriesFor: #onStartup!event handling!public! !
-!ITEMIDLIST categoriesFor: #pointerClass!constants!private! !
+!OS.ITEMIDLIST categoriesFor: #append:!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #back!accessing!private! !
+!OS.ITEMIDLIST categoriesFor: #back:!accessing!private! !
+!OS.ITEMIDLIST categoriesFor: #bufferClass!constants!private! !
+!OS.ITEMIDLIST categoriesFor: #cb!accessing!public! !
+!OS.ITEMIDLIST categoriesFor: #cb:!accessing!public! !
+!OS.ITEMIDLIST categoriesFor: #getSize!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #idCopy!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #idLast!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #idNext!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #idParent!operations!public! !
+!OS.ITEMIDLIST categoriesFor: #isDesktopID!public!testing! !
+!OS.ITEMIDLIST categoriesFor: #isSingle!public!testing! !
+!OS.ITEMIDLIST categoriesFor: #isValid!public!testing! !
+!OS.ITEMIDLIST categoriesFor: #onStartup!event handling!public! !
+!OS.ITEMIDLIST categoriesFor: #pointerClass!constants!private! !
 
-!ITEMIDLIST class methodsFor!
+!OS.ITEMIDLIST class methodsFor!
 
 defineFields
 	"Define the fields of the ITEMIDLIST structure.
@@ -204,7 +204,7 @@ exampleWalking
 	id2 := id1 idNext.
 	id2 getSize!
 
-exampleWalkPath: aString 
+exampleWalkPath: aString
 	"Create an instance of the receiver based on the full pathname, aString, and step through each item id.
 	Answer a collection of Associations, each consisting of an item id and its length.
 		self exampleWalkPath: 'c:\program files'	
@@ -222,7 +222,7 @@ initialize
 		ITEMIDLIST initialize
 	"
 
-	SessionManager current 
+	SessionManager current
 		when: #sessionStarted
 		send: #onStartup
 		to: self!
@@ -248,15 +248,15 @@ pointerClass
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!ITEMIDLIST class categoriesFor: #defineFields!public!template definition! !
-!ITEMIDLIST class categoriesFor: #exampleCopying!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalkPath:!examples!public! !
-!ITEMIDLIST class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ITEMIDLIST class categoriesFor: #initialize!development!initializing!private! !
-!ITEMIDLIST class categoriesFor: #new!instance creation!public! !
-!ITEMIDLIST class categoriesFor: #onStartup!event handling!private! !
-!ITEMIDLIST class categoriesFor: #pointerClass!constants!private! !
-!ITEMIDLIST class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.ITEMIDLIST class categoriesFor: #defineFields!public!template definition! !
+!OS.ITEMIDLIST class categoriesFor: #exampleCopying!examples!public! !
+!OS.ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
+!OS.ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !
+!OS.ITEMIDLIST class categoriesFor: #exampleWalkPath:!examples!public! !
+!OS.ITEMIDLIST class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ITEMIDLIST class categoriesFor: #initialize!development!initializing!private! !
+!OS.ITEMIDLIST class categoriesFor: #new!instance creation!public! !
+!OS.ITEMIDLIST class categoriesFor: #onStartup!event handling!private! !
+!OS.ITEMIDLIST class categoriesFor: #pointerClass!constants!private! !
+!OS.ITEMIDLIST class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

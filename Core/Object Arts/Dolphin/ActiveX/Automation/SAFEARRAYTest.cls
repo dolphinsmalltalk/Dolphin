@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GenericExternalArrayTest subclass: #SAFEARRAYTest
+External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'

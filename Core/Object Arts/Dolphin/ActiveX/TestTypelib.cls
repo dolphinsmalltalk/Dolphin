@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestResource subclass: #TestTypelib
+XProgramming.SUnit.TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestTypelib guid: (GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
+TestTypelib guid: (Core.GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
 TestTypelib comment: ''!
 !TestTypelib categoriesForClass!Unclassified! !
 !TestTypelib methodsFor!
@@ -24,7 +24,7 @@ setUp
 				load: self libid
 				major: 1
 				minor: 0
-				locale: WinNlsConstants.LOCALE_USER_DEFAULT]
+				locale: NlsConstants.LOCALE_USER_DEFAULT]
 			on: HRESULTError
 			do: [:ex | ex hresult asInteger = AXAutomationErrors.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
 

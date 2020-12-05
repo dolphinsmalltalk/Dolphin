@@ -217,7 +217,7 @@ registerAsInProcServer: aRegKey
 registerAsLocalServer: aRegKey
 	| commandLine sesh |
 	commandLine := String writeStream.
-	commandLine nextPutAll: (ExternalLibrary moduleFileName: nil).
+	commandLine nextPutAll: (External.Library moduleFileName: nil).
 	sesh := SessionManager current.
 	sesh isRuntime 
 		ifFalse: 

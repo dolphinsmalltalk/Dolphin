@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE COM'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE COM Support. 
 Copyright (c) Object Arts Ltd 1997-2006. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -58,60 +58,60 @@ COMInterface initializeRegister.
 '.
 
 package setClassNames: #(
-	#{BSTR}
-	#{CADWORD}
-	#{CALPOLESTR}
-	#{CLSID}
-	#{COAUTHIDENTITY}
-	#{COAUTHINFO}
-	#{COMClassFactory}
-	#{COMEnumerator}
-	#{COMFunction}
-	#{COMFunctionAbstract}
-	#{COMInterface}
-	#{COMInterfaceEnumerator}
-	#{COMInterfaceImp}
-	#{COMObjectStub}
-	#{COMSingletonClassFactory}
-	#{COMTaskMemory}
-	#{COSERVERINFO}
-	#{EXCEPINFO}
-	#{IClassFactory}
-	#{IClassFactory2}
-	#{IEnumString}
-	#{IEnumStruct}
-	#{IEnumUnknown}
-	#{IEnumXXXX}
-	#{IErrorInfo}
-	#{IID}
-	#{IMalloc}
-	#{IServiceProvider}
-	#{ISupportErrorInfo}
-	#{IUnknown}
-	#{LICINFO}
-	#{MULTI_QI}
-	#{OLEAutLibrary}
-	#{OLEConstants}
-	#{OLECountedArray}
-	#{OLEEnumerator}
-	#{OLEFinalizableStructure}
-	#{OLELibrary}
-	#{OLEStructure}
-	#{UnkAddRefFunction}
-	#{UnkQIFunction}
-	#{UnkReleaseFunction}
+	#{Smalltalk.BSTR}
+	#{Smalltalk.CADWORD}
+	#{Smalltalk.CALPOLESTR}
+	#{Smalltalk.CLSID}
+	#{Smalltalk.COAUTHIDENTITY}
+	#{Smalltalk.COAUTHINFO}
+	#{Smalltalk.COMClassFactory}
+	#{Smalltalk.COMEnumerator}
+	#{Smalltalk.COMFunction}
+	#{Smalltalk.COMFunctionAbstract}
+	#{Smalltalk.COMInterface}
+	#{Smalltalk.COMInterfaceEnumerator}
+	#{Smalltalk.COMInterfaceImp}
+	#{Smalltalk.COMObjectStub}
+	#{Smalltalk.COMSingletonClassFactory}
+	#{Smalltalk.COMTaskMemory}
+	#{Smalltalk.COSERVERINFO}
+	#{Smalltalk.EXCEPINFO}
+	#{Smalltalk.IClassFactory}
+	#{Smalltalk.IClassFactory2}
+	#{Smalltalk.IEnumString}
+	#{Smalltalk.IEnumStruct}
+	#{Smalltalk.IEnumUnknown}
+	#{Smalltalk.IEnumXXXX}
+	#{Smalltalk.IErrorInfo}
+	#{Smalltalk.IID}
+	#{Smalltalk.IMalloc}
+	#{Smalltalk.IServiceProvider}
+	#{Smalltalk.ISupportErrorInfo}
+	#{Smalltalk.IUnknown}
+	#{Smalltalk.LICINFO}
+	#{Smalltalk.MULTI_QI}
+	#{Smalltalk.OLEAutLibrary}
+	#{Smalltalk.OLEConstants}
+	#{Smalltalk.OLECountedArray}
+	#{Smalltalk.OLEEnumerator}
+	#{Smalltalk.OLEFinalizableStructure}
+	#{Smalltalk.OLELibrary}
+	#{Smalltalk.OLEStructure}
+	#{Smalltalk.UnkAddRefFunction}
+	#{Smalltalk.UnkQIFunction}
+	#{Smalltalk.UnkReleaseFunction}
 ).
 
 package setMethodNames: #(
-	#(#{ByteArray} #copyToCOMTaskMemory)
-	#(#{ExternalMemory class} #queryInterface:ifNone:)
-	#(#{ExternalStructure} #copyToCOMTaskMemory)
-	#(#{ProcessorScheduler} #comCallback:id:subId:withArgumentsAt:cookie:)
-	#(#{ProcessorScheduler} #registerCOMStub:)
-	#(#{ProcessorScheduler} #unregisterCOMStub:)
-	#(#{SessionManager} #comStartup)
-	#(#{String} #asBSTR)
-	#(#{String} #copyToCOMTaskMemory)
+	#(#{Core.ByteArray} #copyToCOMTaskMemory)
+	#(#{Core.SessionManager} #comStartup)
+	#(#{Core.String} #asBSTR)
+	#(#{Core.String} #copyToCOMTaskMemory)
+	#(#{External.Memory class} #queryInterface:ifNone:)
+	#(#{External.Structure} #copyToCOMTaskMemory)
+	#(#{Kernel.ProcessorScheduler} #comCallback:id:subId:withArgumentsAt:cookie:)
+	#(#{Kernel.ProcessorScheduler} #registerCOMStub:)
+	#(#{Kernel.ProcessorScheduler} #unregisterCOMStub:)
 ).
 
 package setPrerequisites: #(
@@ -124,7 +124,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #OLEConstants
+Kernel.SharedPool subclass: #OLEConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -139,37 +139,37 @@ SharedPool subclass: #OLEConstants
 		'REGCLS_MULTI_SEPARATE' -> 16r2.
 		'REGCLS_MULTIPLEUSE' -> 16r1
 	}!
-Object subclass: #COMFunctionAbstract
+Core.Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #COMInterfaceImp
+Core.Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEConstants} #{Win32Errors})
+	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #COMObjectStub
+Core.Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
-	imports: #(#{Win32Errors})
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequenceableCollection subclass: #OLEEnumerator
+Core.SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalAddress variableByteSubclass: #BSTR
+External.Address variableByteSubclass: #BSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalMemory variableByteSubclass: #COMTaskMemory
+External.Memory variableByteSubclass: #COMTaskMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -223,22 +223,34 @@ COMEnumerator subclass: #COMInterfaceEnumerator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #OLEAutLibrary
+Core.GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #OLELibrary
+Core.GUID variableByteSubclass: #IID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Library subclass: #OLEAutLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Library subclass: #OLELibrary
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #COMInterface
+External.Structure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{OLEConstants} #{Win32Constants} #{Win32Errors})
+	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Constants} #{OS.Win32Errors})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 		'_OffsetOf_argSizes' -> 16r4.
@@ -246,10 +258,10 @@ ExternalStructure subclass: #COMInterface
 		'_OffsetOf_objectCookie' -> 16r8.
 		'_OffsetOf_vtbl' -> 16r0
 	}!
-ExternalStructure subclass: #OLEStructure
+External.Structure subclass: #OLEStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEConstants})
+	imports: #(#{Smalltalk.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterface subclass: #IUnknown
@@ -318,7 +330,7 @@ IEnumXXXX subclass: #IEnumUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalArray subclass: #OLECountedArray
+External.ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	imports: #()
@@ -397,7 +409,7 @@ OLEStructure subclass: #OLEFinalizableStructure
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Win32Errors})
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHelpContext' -> 16r10.
@@ -420,22 +432,10 @@ OLEFinalizableStructure subclass: #MULTI_QI
 		'_OffsetOf_pIID' -> 16r0.
 		'_OffsetOf_pItf' -> 16r4
 	}!
-GUID variableByteSubclass: #CLSID
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GUID variableByteSubclass: #IID
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!ByteArray methodsFor!
+!Core.ByteArray methodsFor!
 
 copyToCOMTaskMemory
 	"Answer a COMTaskMemory object containing a copy of the receiver's
@@ -443,11 +443,41 @@ copyToCOMTaskMemory
 
 	| size |
 	size := self byteSize.
-	^(COMTaskMemory new: size)
+	^(Smalltalk.COMTaskMemory new: size)
 		replaceFrom: 1 to: size with: self startingAt: 1! !
-!ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!Core.ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
 
-!ExternalMemory class methodsFor!
+!Core.SessionManager methodsFor!
+
+comStartup
+	"Private - Start up the COM sub-system."
+
+	"Implementation Note: This used to be delayed until tertiary startup and hung off the #sessionStarted
+	event, but that relied on COMInterface having registered itself before certain other event targets
+	and was therefore not reliable."
+
+	Smalltalk.IUnknown onStartup.
+	"Attach the outer unknown passed by the stub, if any"
+	self outer notNull ifTrue: [startupArgs at: 2 put: (Smalltalk.IUnknown attach: self outer)]! !
+!Core.SessionManager categoriesFor: #comStartup!operations-startup!private! !
+
+!Core.String methodsFor!
+
+asBSTR
+	"Answer the BSTR (AX Automation string) representation of the receiver.
+	This conversion will also work fine for Utf16String."
+
+	^Smalltalk.BSTR fromString: self!
+
+copyToCOMTaskMemory
+	"Answer a COMTaskMemory object containing a copy of the receiver's
+	characters."
+
+	^Smalltalk.COMTaskMemory fromString: self! !
+!Core.String categoriesFor: #asBSTR!converting!public! !
+!Core.String categoriesFor: #copyToCOMTaskMemory!copying!public! !
+
+!External.Memory class methodsFor!
 
 queryInterface: interfaceClass ifNone: exceptionHandler
 	"Answer a new interface which supports the specified interface protocol
@@ -457,21 +487,21 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^interfaceClass == IMalloc
+	^interfaceClass == Smalltalk.IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
-!ExternalMemory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!External.Memory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
 
-!ExternalStructure methodsFor!
+!External.Structure methodsFor!
 
 copyToCOMTaskMemory
 	"Answer a block of COM Task Memory into which the bytes of the 
 	receiver have been copied."
 
-	^self copy: COMTaskMemory from: 1 to: self byteSize! !
-!ExternalStructure categoriesFor: #copyToCOMTaskMemory!copying!public! !
+	^self copy: Smalltalk.COMTaskMemory from: 1 to: self byteSize! !
+!External.Structure categoriesFor: #copyToCOMTaskMemory!copying!public! !
 
-!ProcessorScheduler methodsFor!
+!Kernel.ProcessorScheduler methodsFor!
 
 comCallback: vfnIndex 
 		id: objectCookie 
@@ -500,39 +530,9 @@ unregisterCOMStub: cookie
 
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
-!ProcessorScheduler categoriesFor: #comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #registerCOMStub:!accessing!private! !
-!ProcessorScheduler categoriesFor: #unregisterCOMStub:!callbacks!private! !
-
-!SessionManager methodsFor!
-
-comStartup
-	"Private - Start up the COM sub-system."
-
-	"Implementation Note: This used to be delayed until tertiary startup and hung off the #sessionStarted
-	event, but that relied on COMInterface having registered itself before certain other event targets
-	and was therefore not reliable."
-
-	IUnknown onStartup.
-	"Attach the outer unknown passed by the stub, if any"
-	self outer notNull ifTrue: [startupArgs at: 2 put: (IUnknown attach: self outer)]! !
-!SessionManager categoriesFor: #comStartup!operations-startup!private! !
-
-!String methodsFor!
-
-asBSTR
-	"Answer the BSTR (AX Automation string) representation of the receiver.
-	This conversion will also work fine for Utf16String."
-
-	^BSTR fromString: self!
-
-copyToCOMTaskMemory
-	"Answer a COMTaskMemory object containing a copy of the receiver's
-	characters."
-
-	^COMTaskMemory fromString: self! !
-!String categoriesFor: #asBSTR!converting!public! !
-!String categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!Kernel.ProcessorScheduler categoriesFor: #comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+!Kernel.ProcessorScheduler categoriesFor: #registerCOMStub:!accessing!private! !
+!Kernel.ProcessorScheduler categoriesFor: #unregisterCOMStub:!callbacks!private! !
 
 "End of package definition"!
 

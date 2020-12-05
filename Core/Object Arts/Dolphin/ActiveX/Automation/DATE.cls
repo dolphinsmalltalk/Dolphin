@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DOUBLE subclass: #DATE
+External.DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{AXAutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DATE guid: (GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
+DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
 DATE comment: ''!
 !DATE categoriesForClass!External-Data-Structured! !
 !DATE methodsFor!
@@ -30,6 +30,7 @@ fromString: aString
 	"
 		self fromString: '3 February 1995'.
 	"
+
 	^self fromString: aString locale: Locale userDefault!
 
 fromString: aString locale: aLocale
@@ -67,8 +68,7 @@ minimum
 now
 	"Answer the current date and time as an instance of the receiver."
 
-	^SYSTEMTIME now asFloat
-	!
+	^SYSTEMTIME now asFloat!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.

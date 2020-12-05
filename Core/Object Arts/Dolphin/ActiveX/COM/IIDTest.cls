@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GUIDTest subclass: #IIDTest
+External.Tests.GUIDTest subclass: #IIDTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IIDTest guid: (GUID fromString: '{e9fe24b9-00fe-42fb-9fda-bcf25e367989}')!
+IIDTest guid: (Core.GUID fromString: '{e9fe24b9-00fe-42fb-9fda-bcf25e367989}')!
 IIDTest comment: ''!
 !IIDTest categoriesForClass!Tests-Network-UUID! !
 !IIDTest methodsFor!

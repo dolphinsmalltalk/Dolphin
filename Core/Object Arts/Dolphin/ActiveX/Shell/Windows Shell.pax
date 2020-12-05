@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Shell'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Shell Basics
 Copyright (c) Object Arts Ltd, 1998-2000. 
@@ -13,18 +13,18 @@ package basicScriptAt: #postinstall put: 'View registerShellMessages.'.
 package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
 
 package setClassNames: #(
-	#{DroppedFilesList}
-	#{ShellConstants}
-	#{ShellLibrary}
+	#{OS.ShellConstants}
+	#{OS.ShellLibrary}
+	#{UI.DroppedFilesList}
 ).
 
 package setMethodNames: #(
-	#(#{SessionManager} #documentsDirectory)
-	#(#{View} #acceptDroppedFiles:)
-	#(#{View} #wmDropFiles:wParam:lParam:)
-	#(#{View class} #registerShellMessages)
-	#(#{View class} #shellMessageMappings)
-	#(#{View class} #unregisterShellMessages)
+	#(#{Core.SessionManager} #documentsDirectory)
+	#(#{UI.View} #acceptDroppedFiles:)
+	#(#{UI.View} #wmDropFiles:wParam:lParam:)
+	#(#{UI.View class} #registerShellMessages)
+	#(#{UI.View class} #shellMessageMappings)
+	#(#{UI.View class} #unregisterShellMessages)
 ).
 
 package setPrerequisites: #(
@@ -37,7 +37,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #ShellConstants
+Kernel.SharedPool subclass: #'OS.ShellConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -142,42 +142,42 @@ SharedPool subclass: #ShellConstants
 		'SHGFP_TYPE_CURRENT' -> 16r0.
 		'SHGFP_TYPE_DEFAULT' -> 16r1
 	}!
-SequenceableCollection subclass: #DroppedFilesList
+Core.SequenceableCollection subclass: #'UI.DroppedFilesList'
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #ShellLibrary
+External.Library subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ShellConstants} #{Win32Constants})
+	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!SessionManager methodsFor!
+!Core.SessionManager methodsFor!
 
 documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
 	^ShellLibrary default getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
-!SessionManager categoriesFor: #documentsDirectory!accessing!public! !
+!Core.SessionManager categoriesFor: #documentsDirectory!accessing!public! !
 
-!View methodsFor!
+!UI.View methodsFor!
 
 acceptDroppedFiles: aBoolean
 	ShellLibrary default dragAcceptFiles: handle fAccept: aBoolean!
 
-wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger 
+wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |
 	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
 	self presenter trigger: #dropFiles: with: files! !
-!View categoriesFor: #acceptDroppedFiles:!public! !
-!View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
+!UI.View categoriesFor: #acceptDroppedFiles:!public! !
+!UI.View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
 
-!View class methodsFor!
+!UI.View class methodsFor!
 
 registerShellMessages
 	self registerMessageMappings: self shellMessageMappings!
@@ -187,9 +187,9 @@ shellMessageMappings
 
 unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
-!View class categoriesFor: #registerShellMessages!development!initializing!public! !
-!View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
-!View class categoriesFor: #unregisterShellMessages!class hierarchy-removing!public! !
+!UI.View class categoriesFor: #registerShellMessages!development!initializing!public! !
+!UI.View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
+!UI.View class categoriesFor: #unregisterShellMessages!class hierarchy-removing!public! !
 
 "End of package definition"!
 

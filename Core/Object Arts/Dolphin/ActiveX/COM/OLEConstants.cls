@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #OLEConstants
+Kernel.SharedPool subclass: #OLEConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -15,6 +15,7 @@ SharedPool subclass: #OLEConstants
 		'REGCLS_MULTI_SEPARATE' -> 16r2.
 		'REGCLS_MULTIPLEUSE' -> 16r1
 	}!
-OLEConstants guid: (GUID fromString: '{b8d7a4c0-475a-4a59-abad-fd589aef1b2f}')!
+OLEConstants guid: (Core.GUID fromString: '{b8d7a4c0-475a-4a59-abad-fd589aef1b2f}')!
+OLEConstants isNonInstantiable: true!
 OLEConstants comment: ''!
 !OLEConstants categoriesForClass!Unclassified! !

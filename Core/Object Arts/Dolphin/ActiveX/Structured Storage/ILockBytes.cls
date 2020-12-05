@@ -62,7 +62,7 @@ handle
 	with CreateILockBytesOnHGlobal())."
 
 	| hglobal |
-	hglobal := ExternalHandle new.
+	hglobal := External.Handle new.
 	OLELibrary default getHGlobalFromILockBytes: self phglobal: hglobal.
 	^hglobal!
 

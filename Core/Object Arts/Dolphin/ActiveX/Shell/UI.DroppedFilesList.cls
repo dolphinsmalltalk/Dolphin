@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #DroppedFilesList
+Core.SequenceableCollection subclass: #'UI.DroppedFilesList'
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DroppedFilesList guid: (GUID fromString: '{63eb134a-0edd-49f3-85eb-253b0f48741b}')!
-DroppedFilesList comment: 'DroppedFilesList represents a <sequencedReadableCollection> of dropped files. The elements are the <readableString> paths of the files that were dropped over a window which has called the DragAcceptFiles API.'!
-!DroppedFilesList categoriesForClass!Kernel-Objects! !
-!DroppedFilesList methodsFor!
+UI.DroppedFilesList guid: (Core.GUID fromString: '{63eb134a-0edd-49f3-85eb-253b0f48741b}')!
+UI.DroppedFilesList comment: 'DroppedFilesList represents a <sequencedReadableCollection> of dropped files. The elements are the <readableString> paths of the files that were dropped over a window which has called the DragAcceptFiles API.'!
+!UI.DroppedFilesList categoriesForClass!Kernel-Objects! !
+!UI.DroppedFilesList methodsFor!
 
 add: newElement 
 	^self shouldNotImplement!
 
-at: index 
+at: index
 	"Answer the element at the specified <integer> index of the receiver."
 
 	| cch answer |
 	(index < 1 or: [index > self size]) ifTrue: [^self errorSubscriptBounds: index].
-	cch := ShellLibrary default 
+	cch := ShellLibrary default
 				dragQueryFile: handle
 				iFile: index - 1
 				lpszFile: nil
@@ -28,7 +28,7 @@ at: index
 	"Note that although DragQueryFile returns the number of chars required excluding the null
 	terminator, one has to tell it the complete length of the buffer including the null
 	terminator."
-	ShellLibrary default 
+	ShellLibrary default
 		dragQueryFile: handle
 		iFile: index - 1
 		lpszFile: answer
@@ -64,26 +64,26 @@ setHandle: anExternalHandle
 size
 	"Answer the element at the specified <integer> index of the receiver."
 
-	size 
+	size
 		ifNil: 
-			[size := ShellLibrary default 
+			[size := ShellLibrary default
 						dragQueryFile: handle
 						iFile: -1
 						lpszFile: nil
 						cch: 0].
 	^size! !
-!DroppedFilesList categoriesFor: #add:!adding!public! !
-!DroppedFilesList categoriesFor: #at:!accessing!public! !
-!DroppedFilesList categoriesFor: #at:put:!accessing!public! !
-!DroppedFilesList categoriesFor: #basicFree!finalizing!private! !
-!DroppedFilesList categoriesFor: #free!finalizing!public! !
-!DroppedFilesList categoriesFor: #position!public! !
-!DroppedFilesList categoriesFor: #setHandle:!initializing!private! !
-!DroppedFilesList categoriesFor: #size!accessing!public! !
+!UI.DroppedFilesList categoriesFor: #add:!adding!public! !
+!UI.DroppedFilesList categoriesFor: #at:!accessing!public! !
+!UI.DroppedFilesList categoriesFor: #at:put:!accessing!public! !
+!UI.DroppedFilesList categoriesFor: #basicFree!finalizing!private! !
+!UI.DroppedFilesList categoriesFor: #free!finalizing!public! !
+!UI.DroppedFilesList categoriesFor: #position!public! !
+!UI.DroppedFilesList categoriesFor: #setHandle:!initializing!private! !
+!UI.DroppedFilesList categoriesFor: #size!accessing!public! !
 
-!DroppedFilesList class methodsFor!
+!UI.DroppedFilesList class methodsFor!
 
 fromHandle: anExternalHandle 
 	^self new setHandle: anExternalHandle! !
-!DroppedFilesList class categoriesFor: #fromHandle:!public! !
+!UI.DroppedFilesList class categoriesFor: #fromHandle:!public! !
 

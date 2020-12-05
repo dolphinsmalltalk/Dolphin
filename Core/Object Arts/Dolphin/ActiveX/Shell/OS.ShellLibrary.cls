@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #ShellLibrary
+External.Library subclass: #'OS.ShellLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ShellConstants Win32Constants'
+	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ShellLibrary guid: (GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
-ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent the Win32 system library, Shell32.DLL'!
-!ShellLibrary categoriesForClass!External-Libraries-Win32! !
-!ShellLibrary methodsFor!
+OS.ShellLibrary guid: (Core.GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
+OS.ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent the Win32 system library, Shell32.DLL'!
+!OS.ShellLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.ShellLibrary methodsFor!
 
 dragAcceptFiles: hwnd fAccept: fAccept
 	"Invoke the DragAcceptFiles() function of the module wrapped by the receiver.
@@ -190,28 +190,28 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragQueryPoint:lppt:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #findExecutable:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #findExecutable:directory:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #getSpecialFolderLocation:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #isUserAnAdmin!**auto generated**!public! !
-!ShellLibrary categoriesFor: #SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #dragQueryPoint:lppt:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #findExecutable:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #findExecutable:directory:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #getSpecialFolderLocation:!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #isUserAnAdmin!**auto generated**!public! !
+!OS.ShellLibrary categoriesFor: #SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shellOpen:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
 
-!ShellLibrary class methodsFor!
+!OS.ShellLibrary class methodsFor!
 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'Shell32'! !
-!ShellLibrary class categoriesFor: #fileName!constants!public! !
+!OS.ShellLibrary class categoriesFor: #fileName!constants!public! !
 

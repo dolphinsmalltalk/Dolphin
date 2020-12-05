@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialog subclass: #BrowseFolderDialog
+UI.CommonDialog subclass: #'UI.BrowseFolderDialog'
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: ''
-	poolDictionaries: 'ShellConstants'
+	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'InitializedMask' -> 16r1
 	}!
-BrowseFolderDialog guid: (GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
-BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
+UI.BrowseFolderDialog guid: (Core.GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
 
 Instance Variables:
 	style	<integer> Windows style flags for the common dialog.
@@ -25,8 +25,8 @@ Example Usage:
 		root: ''c:\windows'';			"Root of tree"
 		value: ''c:\windows\system'';		"Initial selection"
 		showModal'!
-!BrowseFolderDialog categoriesForClass!MVP-Presenters! !
-!BrowseFolderDialog methodsFor!
+!UI.BrowseFolderDialog categoriesForClass!MVP-Presenters! !
+!UI.BrowseFolderDialog methodsFor!
 
 basicShowModal
 	"Private - Open a common folder browse dialog."
@@ -74,7 +74,7 @@ iunknown: hWnd wParam: wParam lParam: lParam
 
 	!
 
-pathFromIDList: idList 
+pathFromIDList: idList
 	"Private - Answer the <readableString> path corresponding to the IDLIST
 	argument."
 
@@ -89,7 +89,7 @@ prepareStruct
 
 root: path
 	"Sets the root for the receiver to the <readableString>, path."
-	
+
 	| pi |
 	pi := ShellLibrary default getDesktopFolder.
 	self winStruct pidlRoot: (pi pidlFromPath: path).
@@ -123,7 +123,7 @@ title: aString
 
 	self winStruct title: aString!
 
-validateFailed: msgInteger wParam: wParam lParam: lParam 
+validateFailed: msgInteger wParam: wParam lParam: lParam
 	"Private - Handler for BFFM_VALIDATEFAILEDW message sent through hook. lParam is address of
 	data which failed validation (i.e. path string). Answer 0 to dismiss dialog, non-zero to
 	leave open."
@@ -155,32 +155,31 @@ wmInitDialog: msgInteger wParam: wParam lParam: lParam
 				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
-!BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!BrowseFolderDialog categoriesFor: #caption:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #defaultStyle!constants!private! !
-!BrowseFolderDialog categoriesFor: #extractResult:!operations!private! !
-!BrowseFolderDialog categoriesFor: #initialize!initializing!private! !
-!BrowseFolderDialog categoriesFor: #isInitialized!private!testing! !
-!BrowseFolderDialog categoriesFor: #iunknown:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #pathFromIDList:!helpers!private! !
-!BrowseFolderDialog categoriesFor: #prepareStruct!helpers!private! !
-!BrowseFolderDialog categoriesFor: #root:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #selChanged:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #style!accessing!public! !
-!BrowseFolderDialog categoriesFor: #style:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #title:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #validateFailed:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #winStructClass!constants!private! !
-!BrowseFolderDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling!private! !
+!UI.BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
+!UI.BrowseFolderDialog categoriesFor: #caption:!accessing!public! !
+!UI.BrowseFolderDialog categoriesFor: #defaultStyle!constants!private! !
+!UI.BrowseFolderDialog categoriesFor: #extractResult:!operations!private! !
+!UI.BrowseFolderDialog categoriesFor: #initialize!initializing!private! !
+!UI.BrowseFolderDialog categoriesFor: #isInitialized!private!testing! !
+!UI.BrowseFolderDialog categoriesFor: #iunknown:wParam:lParam:!event handling!private! !
+!UI.BrowseFolderDialog categoriesFor: #pathFromIDList:!helpers!private! !
+!UI.BrowseFolderDialog categoriesFor: #prepareStruct!helpers!private! !
+!UI.BrowseFolderDialog categoriesFor: #root:!accessing!public! !
+!UI.BrowseFolderDialog categoriesFor: #selChanged:wParam:lParam:!event handling!private! !
+!UI.BrowseFolderDialog categoriesFor: #style!accessing!public! !
+!UI.BrowseFolderDialog categoriesFor: #style:!accessing!public! !
+!UI.BrowseFolderDialog categoriesFor: #title:!accessing!public! !
+!UI.BrowseFolderDialog categoriesFor: #validateFailed:wParam:lParam:!event handling!private! !
+!UI.BrowseFolderDialog categoriesFor: #winStructClass!constants!private! !
+!UI.BrowseFolderDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling!private! !
 
-!BrowseFolderDialog class methodsFor!
+!UI.BrowseFolderDialog class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^String new asValue
-!
+	^String new asValue!
 
 icon
 	^##(self) defaultIcon!
@@ -197,7 +196,7 @@ initialize
 		at: BFFM_VALIDATEFAILEDA put: #validateFailed:wParam:lParam:;
 		at: 4 put: nil;
 		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:! !
-!BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
-!BrowseFolderDialog class categoriesFor: #icon!constants!public! !
-!BrowseFolderDialog class categoriesFor: #initialize!initializing!private! !
+!UI.BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
+!UI.BrowseFolderDialog class categoriesFor: #icon!constants!public! !
+!UI.BrowseFolderDialog class categoriesFor: #initialize!initializing!private! !
 

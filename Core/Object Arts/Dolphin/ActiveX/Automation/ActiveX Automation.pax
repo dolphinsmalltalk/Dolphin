@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Support.
 Copyright (c) Object Arts Ltd, 2000-2003.
@@ -21,250 +21,250 @@ ExternalStructure registerSubclasses.'.
 package basicScriptAt: #postuninstall put: 'ExternalStructure classPool at: ''RecordClasses'' put: nil.'.
 
 package setClassNames: #(
-	#{AbstractELEMDESC}
-	#{ARRAYDESC}
-	#{AXAPIInfoAnalyzer}
-	#{AXAutomationConstants}
-	#{AXAutomationErrors}
-	#{AXDispatchImpAbstract}
-	#{AXDualImp}
-	#{AXForwardingDualImp}
-	#{AXInterfaceTypeAnalyzer}
-	#{AXMemberDesc}
-	#{AXRecord}
-	#{AXStructureTypeAnalyzer}
-	#{AXTypeGenerationFlags}
-	#{AXTypeInfoAnalyzer}
-	#{AXTypeInfoObject}
-	#{AXTypeInfoStructure}
-	#{AXTypeLibDocumentation}
-	#{AXTypeLibraryAnalyzer}
-	#{COMVariantEnumerator}
-	#{CURRENCY}
-	#{CUSTDATA}
-	#{CUSTDATAITEM}
-	#{DATE}
-	#{DECIMAL}
-	#{DispFunction}
-	#{DISPPARAMS}
-	#{ELEMDESC}
-	#{FONTDESC}
-	#{FUNCDESC}
-	#{ICreateErrorInfo}
-	#{IDispatch}
-	#{IDLDESC}
-	#{IEnumVARIANT}
-	#{IPerPropertyBrowsing}
-	#{IProvideClassInfo}
-	#{IProvideClassInfo2}
-	#{IRecordInfo}
-	#{ITypeComp}
-	#{ITypeInfo}
-	#{ITypeInfo2}
-	#{ITypeLib}
-	#{ITypeLib2}
-	#{LPBSTR}
-	#{PARAMDESC}
-	#{PARAMDESCEX}
-	#{SAFEARRAY}
-	#{SAFEARRAYBOUND}
-	#{TKindAliasAnalyzer}
-	#{TKindCoclassAnalyzer}
-	#{TKindDispatchAnalyzer}
-	#{TKindEnumAnalyzer}
-	#{TKindInterfaceAnalyzer}
-	#{TKindModuleAnalyzer}
-	#{TKindRecordAnalyzer}
-	#{TKindUnionAnalyzer}
-	#{TLIBATTR}
-	#{TYPEATTR}
-	#{TYPEDESC}
-	#{VARDESC}
-	#{VARIANT}
-	#{VARIANT_BOOL}
+	#{Smalltalk.AbstractELEMDESC}
+	#{Smalltalk.ARRAYDESC}
+	#{Smalltalk.AXAPIInfoAnalyzer}
+	#{Smalltalk.AXAutomationConstants}
+	#{Smalltalk.AXAutomationErrors}
+	#{Smalltalk.AXDispatchImpAbstract}
+	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXForwardingDualImp}
+	#{Smalltalk.AXInterfaceTypeAnalyzer}
+	#{Smalltalk.AXMemberDesc}
+	#{Smalltalk.AXRecord}
+	#{Smalltalk.AXStructureTypeAnalyzer}
+	#{Smalltalk.AXTypeGenerationFlags}
+	#{Smalltalk.AXTypeInfoAnalyzer}
+	#{Smalltalk.AXTypeInfoObject}
+	#{Smalltalk.AXTypeInfoStructure}
+	#{Smalltalk.AXTypeLibDocumentation}
+	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.COMVariantEnumerator}
+	#{Smalltalk.CURRENCY}
+	#{Smalltalk.CUSTDATA}
+	#{Smalltalk.CUSTDATAITEM}
+	#{Smalltalk.DATE}
+	#{Smalltalk.DECIMAL}
+	#{Smalltalk.DispFunction}
+	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.ELEMDESC}
+	#{Smalltalk.FONTDESC}
+	#{Smalltalk.FUNCDESC}
+	#{Smalltalk.ICreateErrorInfo}
+	#{Smalltalk.IDispatch}
+	#{Smalltalk.IDLDESC}
+	#{Smalltalk.IEnumVARIANT}
+	#{Smalltalk.IPerPropertyBrowsing}
+	#{Smalltalk.IProvideClassInfo}
+	#{Smalltalk.IProvideClassInfo2}
+	#{Smalltalk.IRecordInfo}
+	#{Smalltalk.ITypeComp}
+	#{Smalltalk.ITypeInfo}
+	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib}
+	#{Smalltalk.ITypeLib2}
+	#{Smalltalk.LPBSTR}
+	#{Smalltalk.PARAMDESC}
+	#{Smalltalk.PARAMDESCEX}
+	#{Smalltalk.SAFEARRAY}
+	#{Smalltalk.SAFEARRAYBOUND}
+	#{Smalltalk.TKindAliasAnalyzer}
+	#{Smalltalk.TKindCoclassAnalyzer}
+	#{Smalltalk.TKindDispatchAnalyzer}
+	#{Smalltalk.TKindEnumAnalyzer}
+	#{Smalltalk.TKindInterfaceAnalyzer}
+	#{Smalltalk.TKindModuleAnalyzer}
+	#{Smalltalk.TKindRecordAnalyzer}
+	#{Smalltalk.TKindUnionAnalyzer}
+	#{Smalltalk.TLIBATTR}
+	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.TYPEDESC}
+	#{Smalltalk.VARDESC}
+	#{Smalltalk.VARIANT}
+	#{Smalltalk.VARIANT_BOOL}
 ).
 
 package setMethodNames: #(
-	#(#{BOOL class} #typeName)
-	#(#{Boolean} #asVariant)
-	#(#{BOOLEAN class} #typeName)
-	#(#{BSTR} #asSAFEARRAY)
-	#(#{BSTR} #asVariant)
-	#(#{BSTR class} #fromObject:)
-	#(#{BSTR class} #newSAFEARRAY:)
-	#(#{BSTR class} #typeName)
-	#(#{BSTR class} #vt)
-	#(#{BYTE class} #typeName)
-	#(#{BYTE class} #vt)
-	#(#{ByteArray} #asSAFEARRAY)
-	#(#{ByteArray class} #typeName)
-	#(#{Character} #asVariant)
-	#(#{CLSID class} #newSAFEARRAY:)
-	#(#{CLSID class} #vt)
-	#(#{Collection} #asSAFEARRAY)
-	#(#{Collection} #asVariant)
-	#(#{COMInterface} #coclassTypeInfo)
-	#(#{COMInterface} #coclassTypeInfoIfNone:)
-	#(#{COMInterface} #typeInfo)
-	#(#{COMInterface} #typeInfoIfNone:)
-	#(#{COMInterface class} #coclassTypeInfo)
-	#(#{COMInterface class} #coclassTypeInfoIfNone:)
-	#(#{COMInterface class} #errorNoTypeInfo)
-	#(#{COMInterface class} #fromObject:)
-	#(#{COMInterface class} #newSAFEARRAY:)
-	#(#{COMInterface class} #registerDispinterface:)
-	#(#{COMInterface class} #typeInfoIfNone:)
-	#(#{COMInterface class} #typeLib)
-	#(#{Date} #asFloat)
-	#(#{Date} #asVariant)
-	#(#{DateAndTime} #asFloat)
-	#(#{DateAndTime} #asVariant)
-	#(#{DOUBLE class} #typeName)
-	#(#{DOUBLE class} #vt)
-	#(#{DWORD class} #typeName)
-	#(#{DWORD class} #vt)
-	#(#{ExternalAddress class} #typeName)
-	#(#{ExternalAddress class} #vt)
-	#(#{ExternalArray} #asSAFEARRAY)
-	#(#{ExternalArray} #asVariant)
-	#(#{ExternalArray class} #vt)
-	#(#{ExternalHandle class} #typeName)
-	#(#{ExternalInteger class} #typeName)
-	#(#{ExternalInteger class} #vt)
-	#(#{ExternalScalar} #asVariant)
-	#(#{ExternalStructure} #asVariant)
-	#(#{ExternalStructure} #recordInfo)
-	#(#{ExternalStructure} #vt)
-	#(#{ExternalStructure class} #classForGUID:ifNone:)
-	#(#{ExternalStructure class} #clearGuid)
-	#(#{ExternalStructure class} #finalRelease)
-	#(#{ExternalStructure class} #fromAddress:recordInfo:owner:)
-	#(#{ExternalStructure class} #fromObject:)
-	#(#{ExternalStructure class} #GetField:szFieldName:pvarField:)
-	#(#{ExternalStructure class} #GetFieldNames:rgBstrNames:)
-	#(#{ExternalStructure class} #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:)
-	#(#{ExternalStructure class} #GetGuid:)
-	#(#{ExternalStructure class} #GetName:)
-	#(#{ExternalStructure class} #GetSize:)
-	#(#{ExternalStructure class} #GetTypeInfo:)
-	#(#{ExternalStructure class} #initializeRegister)
-	#(#{ExternalStructure class} #IsMatchingType:)
-	#(#{ExternalStructure class} #newSAFEARRAY:)
-	#(#{ExternalStructure class} #pointerFieldType)
-	#(#{ExternalStructure class} #PutField:pvData:szFieldName:pvarField:)
-	#(#{ExternalStructure class} #PutFieldNoCopy:pvData:szFieldName:pvarField:)
-	#(#{ExternalStructure class} #queryInterface:)
-	#(#{ExternalStructure class} #queryInterface:ifNone:)
-	#(#{ExternalStructure class} #RecordClear:)
-	#(#{ExternalStructure class} #RecordCopy:pvNew:)
-	#(#{ExternalStructure class} #RecordCreate)
-	#(#{ExternalStructure class} #RecordCreateCopy:ppvDest:)
-	#(#{ExternalStructure class} #RecordDestroy:)
-	#(#{ExternalStructure class} #recordInfo)
-	#(#{ExternalStructure class} #RecordInit:)
-	#(#{ExternalStructure class} #registerSubclasses)
-	#(#{ExternalStructure class} #supportedInterfaces)
-	#(#{ExternalStructure class} #typeInfo)
-	#(#{ExternalStructure class} #typeInfoIfNone:)
-	#(#{ExternalStructure class} #typeLib)
-	#(#{ExternalStructure class} #typeName)
-	#(#{ExternalStructure class} #vt)
-	#(#{FILETIME class} #vt)
-	#(#{Float} #asVariant)
-	#(#{FLOAT class} #typeName)
-	#(#{FLOAT class} #vt)
-	#(#{Fraction} #asVariant)
-	#(#{GUID class} #typeName)
-	#(#{HRESULT class} #typeName)
-	#(#{HRESULT class} #vt)
-	#(#{IErrorInfo class} #fromEXCEPINFO:guid:)
-	#(#{IErrorInfo class} #source:description:helpContext:helpFile:guid:)
-	#(#{INT_PTR class} #typeName)
-	#(#{INT_PTR class} #vt)
-	#(#{Integer} #asVariant)
-	#(#{IUnknown} #asVariant)
-	#(#{IUnknown class} #vt)
-	#(#{LARGE_INTEGER class} #typeName)
-	#(#{LARGE_INTEGER class} #vt)
-	#(#{LargeInteger} #asVariant)
-	#(#{Locale} #variantBool:)
-	#(#{LPVOID class} #typeName)
-	#(#{LPVOID class} #vt)
-	#(#{OLEAutLibrary} #clearCustData:)
-	#(#{OLEAutLibrary} #createErrorInfo:)
-	#(#{OLEAutLibrary} #getRecordInfoFromTypeInfo:ppRecInfo:)
-	#(#{OLEAutLibrary} #lHashValOfNameSys:lcid:szName:)
-	#(#{OLEAutLibrary} #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:)
-	#(#{OLEAutLibrary} #loadTypeLib:pptlib:)
-	#(#{OLEAutLibrary} #loadTypeLibEx:regkind:pptlib:)
-	#(#{OLEAutLibrary} #oleCreateFontIndirect:riid:ppvObj:)
-	#(#{OLEAutLibrary} #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:)
-	#(#{OLEAutLibrary} #registerTypeLib:wszFullPath:wszHelpDir:)
-	#(#{OLEAutLibrary} #registerTypeLibForUser:szFullPath:szHelpDir:)
-	#(#{OLEAutLibrary} #safeArrayAccessData:ppvData:)
-	#(#{OLEAutLibrary} #safeArrayCopy:ppsaout:)
-	#(#{OLEAutLibrary} #safeArrayCreateEx:cDims:rgsabound:pvExtra:)
-	#(#{OLEAutLibrary} #safeArrayCreateVectorEx:lLbound:cElements:pvExtra:)
-	#(#{OLEAutLibrary} #safeArrayDestroy:)
-	#(#{OLEAutLibrary} #safeArrayGetDim:)
-	#(#{OLEAutLibrary} #safeArrayGetElement:rgIndices:pv:)
-	#(#{OLEAutLibrary} #safeArrayGetIID:pguid:)
-	#(#{OLEAutLibrary} #safeArrayGetLBound:nDim:plLbound:)
-	#(#{OLEAutLibrary} #safeArrayGetRecordInfo:prinfo:)
-	#(#{OLEAutLibrary} #safeArrayGetUBound:nDim:plUbound:)
-	#(#{OLEAutLibrary} #safeArrayGetVartype:pvt:)
-	#(#{OLEAutLibrary} #safeArrayPtrOfIndex:rgIndices:ppvData:)
-	#(#{OLEAutLibrary} #safeArrayPutElement:rgIndices:pv:)
-	#(#{OLEAutLibrary} #safeArrayRedim:psaboundNew:)
-	#(#{OLEAutLibrary} #safeArraySetIID:pguid:)
-	#(#{OLEAutLibrary} #safeArrayUnaccessData:)
-	#(#{OLEAutLibrary} #safeArrayUnlock:)
-	#(#{OLEAutLibrary} #setErrorInfo:perrinfo:)
-	#(#{OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
-	#(#{OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
-	#(#{OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
-	#(#{OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
-	#(#{OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
-	#(#{OLEAutLibrary} #variantChangeType:pvarSrc:wFlags:vt:)
-	#(#{OLEAutLibrary} #variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:)
-	#(#{OLEAutLibrary} #variantClear:)
-	#(#{OLEAutLibrary} #variantCopy:pvargSrc:)
-	#(#{OLEAutLibrary} #variantCopyInd:pvargSrc:)
-	#(#{OLEAutLibrary} #variantInit:)
-	#(#{OLEAutLibrary} #variantTimeToSystemTime:lpSystemTime:)
-	#(#{QWORD class} #vt)
-	#(#{SBYTE class} #typeName)
-	#(#{SBYTE class} #vt)
-	#(#{ScaledDecimal} #asVariant)
-	#(#{SDWORD class} #typeName)
-	#(#{SDWORD class} #vt)
-	#(#{SmallInteger} #asVariant)
-	#(#{SmalltalkLocale} #variantBool:)
-	#(#{String} #asVariant)
-	#(#{String class} #pointerType)
-	#(#{String class} #typeName)
-	#(#{String class} #vt)
-	#(#{SWORD class} #typeName)
-	#(#{SWORD class} #vt)
-	#(#{SYSTEMTIME} #asFloat)
-	#(#{SYSTEMTIME} #asVariant)
-	#(#{SYSTEMTIME class} #fromDATE:)
-	#(#{UINT_PTR class} #typeName)
-	#(#{UINT_PTR class} #vt)
-	#(#{ULARGE_INTEGER class} #typeName)
-	#(#{UndefinedObject} #asVariant)
-	#(#{UndefinedObject class} #typeName)
-	#(#{UndefinedObject class} #vt)
-	#(#{Utf16String class} #pointerType)
-	#(#{Utf16String class} #typeName)
-	#(#{Utf16String class} #vt)
-	#(#{VOID class} #typeName)
-	#(#{VOID class} #vt)
-	#(#{WindowsLocale} #boolFormat)
-	#(#{WindowsLocale} #getVariantBoolString:)
-	#(#{WindowsLocale} #variantBool:)
-	#(#{WORD class} #typeName)
-	#(#{WORD class} #vt)
+	#(#{Core.Boolean} #asVariant)
+	#(#{Core.ByteArray} #asSAFEARRAY)
+	#(#{Core.ByteArray class} #typeName)
+	#(#{Core.Character} #asVariant)
+	#(#{Core.Collection} #asSAFEARRAY)
+	#(#{Core.Collection} #asVariant)
+	#(#{Core.Date} #asFloat)
+	#(#{Core.Date} #asVariant)
+	#(#{Core.DateAndTime} #asFloat)
+	#(#{Core.DateAndTime} #asVariant)
+	#(#{Core.Float} #asVariant)
+	#(#{Core.Fraction} #asVariant)
+	#(#{Core.GUID class} #typeName)
+	#(#{Core.Integer} #asVariant)
+	#(#{Core.LargeInteger} #asVariant)
+	#(#{Core.Locale} #variantBool:)
+	#(#{Core.ScaledDecimal} #asVariant)
+	#(#{Core.SmallInteger} #asVariant)
+	#(#{Core.String} #asVariant)
+	#(#{Core.String class} #pointerType)
+	#(#{Core.String class} #typeName)
+	#(#{Core.String class} #vt)
+	#(#{Core.UndefinedObject} #asVariant)
+	#(#{Core.UndefinedObject class} #typeName)
+	#(#{Core.UndefinedObject class} #vt)
+	#(#{Core.Utf16String class} #pointerType)
+	#(#{Core.Utf16String class} #typeName)
+	#(#{Core.Utf16String class} #vt)
+	#(#{External.Address class} #typeName)
+	#(#{External.Address class} #vt)
+	#(#{External.BOOL class} #typeName)
+	#(#{External.BOOLEAN class} #typeName)
+	#(#{External.BYTE class} #typeName)
+	#(#{External.BYTE class} #vt)
+	#(#{External.DOUBLE class} #typeName)
+	#(#{External.DOUBLE class} #vt)
+	#(#{External.DWORD class} #typeName)
+	#(#{External.DWORD class} #vt)
+	#(#{External.ExternalArray} #asSAFEARRAY)
+	#(#{External.ExternalArray} #asVariant)
+	#(#{External.ExternalArray class} #vt)
+	#(#{External.FLOAT class} #typeName)
+	#(#{External.FLOAT class} #vt)
+	#(#{External.Handle class} #typeName)
+	#(#{External.INT_PTR class} #typeName)
+	#(#{External.INT_PTR class} #vt)
+	#(#{External.INTEGER class} #typeName)
+	#(#{External.INTEGER class} #vt)
+	#(#{External.LPVOID class} #typeName)
+	#(#{External.LPVOID class} #vt)
+	#(#{External.QWORD class} #vt)
+	#(#{External.SBYTE class} #typeName)
+	#(#{External.SBYTE class} #vt)
+	#(#{External.SCALAR} #asVariant)
+	#(#{External.SDWORD class} #typeName)
+	#(#{External.SDWORD class} #vt)
+	#(#{External.Structure} #asVariant)
+	#(#{External.Structure} #recordInfo)
+	#(#{External.Structure} #vt)
+	#(#{External.Structure class} #classForGUID:ifNone:)
+	#(#{External.Structure class} #clearGuid)
+	#(#{External.Structure class} #finalRelease)
+	#(#{External.Structure class} #fromAddress:recordInfo:owner:)
+	#(#{External.Structure class} #fromObject:)
+	#(#{External.Structure class} #GetField:szFieldName:pvarField:)
+	#(#{External.Structure class} #GetFieldNames:rgBstrNames:)
+	#(#{External.Structure class} #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:)
+	#(#{External.Structure class} #GetGuid:)
+	#(#{External.Structure class} #GetName:)
+	#(#{External.Structure class} #GetSize:)
+	#(#{External.Structure class} #GetTypeInfo:)
+	#(#{External.Structure class} #initializeRegister)
+	#(#{External.Structure class} #IsMatchingType:)
+	#(#{External.Structure class} #newSAFEARRAY:)
+	#(#{External.Structure class} #pointerFieldType)
+	#(#{External.Structure class} #PutField:pvData:szFieldName:pvarField:)
+	#(#{External.Structure class} #PutFieldNoCopy:pvData:szFieldName:pvarField:)
+	#(#{External.Structure class} #queryInterface:)
+	#(#{External.Structure class} #queryInterface:ifNone:)
+	#(#{External.Structure class} #RecordClear:)
+	#(#{External.Structure class} #RecordCopy:pvNew:)
+	#(#{External.Structure class} #RecordCreate)
+	#(#{External.Structure class} #RecordCreateCopy:ppvDest:)
+	#(#{External.Structure class} #RecordDestroy:)
+	#(#{External.Structure class} #recordInfo)
+	#(#{External.Structure class} #RecordInit:)
+	#(#{External.Structure class} #registerSubclasses)
+	#(#{External.Structure class} #supportedInterfaces)
+	#(#{External.Structure class} #typeInfo)
+	#(#{External.Structure class} #typeInfoIfNone:)
+	#(#{External.Structure class} #typeLib)
+	#(#{External.Structure class} #typeName)
+	#(#{External.Structure class} #vt)
+	#(#{External.SWORD class} #typeName)
+	#(#{External.SWORD class} #vt)
+	#(#{External.UINT_PTR class} #typeName)
+	#(#{External.UINT_PTR class} #vt)
+	#(#{External.VOID class} #typeName)
+	#(#{External.VOID class} #vt)
+	#(#{External.WORD class} #typeName)
+	#(#{External.WORD class} #vt)
+	#(#{Kernel.SmalltalkLocale} #variantBool:)
+	#(#{OS.FILETIME class} #vt)
+	#(#{OS.HRESULT class} #typeName)
+	#(#{OS.HRESULT class} #vt)
+	#(#{OS.LARGE_INTEGER class} #typeName)
+	#(#{OS.LARGE_INTEGER class} #vt)
+	#(#{OS.SYSTEMTIME} #asFloat)
+	#(#{OS.SYSTEMTIME} #asVariant)
+	#(#{OS.SYSTEMTIME class} #fromDATE:)
+	#(#{OS.ULARGE_INTEGER class} #typeName)
+	#(#{OS.WindowsLocale} #boolFormat)
+	#(#{OS.WindowsLocale} #getVariantBoolString:)
+	#(#{OS.WindowsLocale} #variantBool:)
+	#(#{Smalltalk.BSTR} #asSAFEARRAY)
+	#(#{Smalltalk.BSTR} #asVariant)
+	#(#{Smalltalk.BSTR class} #fromObject:)
+	#(#{Smalltalk.BSTR class} #newSAFEARRAY:)
+	#(#{Smalltalk.BSTR class} #typeName)
+	#(#{Smalltalk.BSTR class} #vt)
+	#(#{Smalltalk.CLSID class} #newSAFEARRAY:)
+	#(#{Smalltalk.CLSID class} #vt)
+	#(#{Smalltalk.COMInterface} #coclassTypeInfo)
+	#(#{Smalltalk.COMInterface} #coclassTypeInfoIfNone:)
+	#(#{Smalltalk.COMInterface} #typeInfo)
+	#(#{Smalltalk.COMInterface} #typeInfoIfNone:)
+	#(#{Smalltalk.COMInterface class} #coclassTypeInfo)
+	#(#{Smalltalk.COMInterface class} #coclassTypeInfoIfNone:)
+	#(#{Smalltalk.COMInterface class} #errorNoTypeInfo)
+	#(#{Smalltalk.COMInterface class} #fromObject:)
+	#(#{Smalltalk.COMInterface class} #newSAFEARRAY:)
+	#(#{Smalltalk.COMInterface class} #registerDispinterface:)
+	#(#{Smalltalk.COMInterface class} #typeInfoIfNone:)
+	#(#{Smalltalk.COMInterface class} #typeLib)
+	#(#{Smalltalk.IErrorInfo class} #fromEXCEPINFO:guid:)
+	#(#{Smalltalk.IErrorInfo class} #source:description:helpContext:helpFile:guid:)
+	#(#{Smalltalk.IUnknown} #asVariant)
+	#(#{Smalltalk.IUnknown class} #vt)
+	#(#{Smalltalk.OLEAutLibrary} #clearCustData:)
+	#(#{Smalltalk.OLEAutLibrary} #createErrorInfo:)
+	#(#{Smalltalk.OLEAutLibrary} #getRecordInfoFromTypeInfo:ppRecInfo:)
+	#(#{Smalltalk.OLEAutLibrary} #lHashValOfNameSys:lcid:szName:)
+	#(#{Smalltalk.OLEAutLibrary} #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:)
+	#(#{Smalltalk.OLEAutLibrary} #loadTypeLib:pptlib:)
+	#(#{Smalltalk.OLEAutLibrary} #loadTypeLibEx:regkind:pptlib:)
+	#(#{Smalltalk.OLEAutLibrary} #oleCreateFontIndirect:riid:ppvObj:)
+	#(#{Smalltalk.OLEAutLibrary} #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:)
+	#(#{Smalltalk.OLEAutLibrary} #registerTypeLib:wszFullPath:wszHelpDir:)
+	#(#{Smalltalk.OLEAutLibrary} #registerTypeLibForUser:szFullPath:szHelpDir:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayAccessData:ppvData:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayCopy:ppsaout:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayCreateEx:cDims:rgsabound:pvExtra:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayCreateVectorEx:lLbound:cElements:pvExtra:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayDestroy:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetDim:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetElement:rgIndices:pv:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetIID:pguid:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetLBound:nDim:plLbound:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetRecordInfo:prinfo:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetUBound:nDim:plUbound:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayGetVartype:pvt:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayPtrOfIndex:rgIndices:ppvData:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayPutElement:rgIndices:pv:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayRedim:psaboundNew:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArraySetIID:pguid:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayUnaccessData:)
+	#(#{Smalltalk.OLEAutLibrary} #safeArrayUnlock:)
+	#(#{Smalltalk.OLEAutLibrary} #setErrorInfo:perrinfo:)
+	#(#{Smalltalk.OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
+	#(#{Smalltalk.OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
+	#(#{Smalltalk.OLEAutLibrary} #varBstrFromBool:lcid:dwFlags:pbstrOut:)
+	#(#{Smalltalk.OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
+	#(#{Smalltalk.OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
+	#(#{Smalltalk.OLEAutLibrary} #variantChangeType:pvarSrc:wFlags:vt:)
+	#(#{Smalltalk.OLEAutLibrary} #variantChangeTypeEx:pvarSrc:lcid:wFlags:vt:)
+	#(#{Smalltalk.OLEAutLibrary} #variantClear:)
+	#(#{Smalltalk.OLEAutLibrary} #variantCopy:pvargSrc:)
+	#(#{Smalltalk.OLEAutLibrary} #variantCopyInd:pvargSrc:)
+	#(#{Smalltalk.OLEAutLibrary} #variantInit:)
+	#(#{Smalltalk.OLEAutLibrary} #variantTimeToSystemTime:lpSystemTime:)
 ).
 
 package setPrerequisites: #(
@@ -278,7 +278,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #AXAutomationConstants
+Kernel.SharedPool subclass: #AXAutomationConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -470,7 +470,7 @@ SharedPool subclass: #AXAutomationConstants
 		'VT_VECTOR' -> 16r1000.
 		'VT_VOID' -> 16r18
 	}!
-SharedPool subclass: #AXAutomationErrors
+Kernel.SharedPool subclass: #AXAutomationErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -493,7 +493,7 @@ SharedPool subclass: #AXAutomationErrors
 		'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 		'WCODE_HRESULT_LAST' -> -16r7FFB0001
 	}!
-SharedPool subclass: #AXTypeGenerationFlags
+Kernel.SharedPool subclass: #AXTypeGenerationFlags
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -515,13 +515,13 @@ SharedPool subclass: #AXTypeGenerationFlags
 		'Verbose' -> 16r800.
 		'WrapperStyleMask' -> 16r90
 	}!
-Object subclass: #AXTypeInfoObject
+Core.Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	imports: #(#{AXAutomationConstants} #{AXTypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #AXTypeLibDocumentation
+Core.Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
 	imports: #()
@@ -610,7 +610,7 @@ AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Win32Errors})
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterfaceImp subclass: #AXDispatchImpAbstract
@@ -709,7 +709,7 @@ ITypeLib subclass: #ITypeLib2
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GenericExternalArray subclass: #SAFEARRAY
+External.GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
 	imports: #(#{AXAutomationConstants} #{AXAutomationErrors})
@@ -722,24 +722,6 @@ GenericExternalArray subclass: #SAFEARRAY
 		'_OffsetOf_pvData' -> 16rC.
 		'_OffsetOf_rgsabound' -> 16r10
 	}!
-DOUBLE subclass: #DATE
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SWORD subclass: #VARIANT_BOOL
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LPVOID subclass: #LPBSTR
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
@@ -980,252 +962,80 @@ AXMemberDesc subclass: #VARDESC
 		'_OffsetOf_varkind' -> 16r20.
 		'_OffsetOf_wVarFlags' -> 16r1C
 	}!
+External.DOUBLE subclass: #DATE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{AXAutomationConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.SWORD subclass: #VARIANT_BOOL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.LPVOID subclass: #LPBSTR
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
-!BOOL class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#bool! !
-!BOOL class categoriesFor: #typeName!constants!private! !
-
-!Boolean methodsFor!
+!Core.Boolean methodsFor!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
-	^VARIANT fromBoolean: self! !
-!Boolean categoriesFor: #asVariant!converting!public! !
+	^Smalltalk.VARIANT fromBoolean: self! !
+!Core.Boolean categoriesFor: #asVariant!converting!public! !
 
-!BOOLEAN class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#bool! !
-!BOOLEAN class categoriesFor: #typeName!constants!private! !
-
-!BSTR methodsFor!
+!Core.ByteArray methodsFor!
 
 asSAFEARRAY
 	"Answer the <SAFEARRAY> representation of the receiver.
 	N.B. The result will be a single-dimensioed array of the variant representations
 	of the receiver's elements, assuming that such a representation is possible."
 
-	^SAFEARRAY withAll: self elementClass: SWORD!
+	^Smalltalk.SAFEARRAY withAll: self elementClass: External.BYTE! !
+!Core.ByteArray categoriesFor: #asSAFEARRAY!converting!public! !
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for Utf16String."
-
-	^VARIANT fromString: self! !
-!BSTR categoriesFor: #asSAFEARRAY!converting!public! !
-!BSTR categoriesFor: #asVariant!converting!public! !
-
-!BSTR class methodsFor!
-
-fromObject: anObject
-	^self fromString: anObject!
-
-newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
-	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
-
-	^SAFEARRAY length: length vt: self vt elementClass: self!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#bstr!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_BSTR! !
-!BSTR class categoriesFor: #fromObject:!instance creation!public! !
-!BSTR class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!BSTR class categoriesFor: #typeName!constants!private! !
-!BSTR class categoriesFor: #vt!constants!public! !
-
-!BYTE class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#byte!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_UI1! !
-!BYTE class categoriesFor: #typeName!constants!private! !
-!BYTE class categoriesFor: #vt!constants!public! !
-
-!ByteArray methodsFor!
-
-asSAFEARRAY
-	"Answer the <SAFEARRAY> representation of the receiver.
-	N.B. The result will be a single-dimensioed array of the variant representations
-	of the receiver's elements, assuming that such a representation is possible."
-
-	^SAFEARRAY withAll: self elementClass: BYTE! !
-!ByteArray categoriesFor: #asSAFEARRAY!converting!public! !
-
-!ByteArray class methodsFor!
+!Core.ByteArray class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self name! !
-!ByteArray class categoriesFor: #typeName!constants!private! !
+!Core.ByteArray class categoriesFor: #typeName!constants!private! !
 
-!Character methodsFor!
+!Core.Character methodsFor!
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_I2). This will fail for code points not in the BMP."
 
-	^VARIANT new
+	^Smalltalk.VARIANT new
 		sword: self codePoint;
 		yourself! !
-!Character categoriesFor: #asVariant!converting!public! !
+!Core.Character categoriesFor: #asVariant!converting!public! !
 
-!CLSID class methodsFor!
-
-newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
-	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
-
-	^SAFEARRAY length: length 	vt: self vt elementClass: self!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_CLSID
-! !
-!CLSID class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!CLSID class categoriesFor: #vt!constants!public! !
-
-!Collection methodsFor!
+!Core.Collection methodsFor!
 
 asSAFEARRAY
 	"Answer the <SAFEARRAY> representation of the receiver.
 	N.B. The result will be a single-dimensioed array of the variant representations
 	of the receiver's elements, assuming that such a representation is possible."
 
-	^SAFEARRAY withAll: self!
+	^Smalltalk.SAFEARRAY withAll: self!
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a SAFEARRAY of VARIANT)."
 
-	^VARIANT fromCollection: self! !
-!Collection categoriesFor: #asSAFEARRAY!converting!public! !
-!Collection categoriesFor: #asVariant!converting!public! !
+	^Smalltalk.VARIANT fromCollection: self! !
+!Core.Collection categoriesFor: #asSAFEARRAY!converting!public! !
+!Core.Collection categoriesFor: #asVariant!converting!public! !
 
-!COMInterface methodsFor!
-
-coclassTypeInfo
-	"Answer any type information that exists for the object on which the receiver is an interface."
-
-	^self coclassTypeInfoIfNone: [self class errorNoTypeInfo]!
-
-coclassTypeInfoIfNone: exceptionHandler
-	"Answer any type information that exists for the object on which the receiver is an interface."
-
-	^(self queryInterface: IProvideClassInfo) 
-		ifNil: [self class coclassTypeInfoIfNone: [^exceptionHandler value]]
-		ifNotNil: 
-			[:ipc | 
-			[AXTypeInfoAnalyzer onTypeInfo: ipc getClassInfo] on: HRESULTError
-				do: [:ex | ^exceptionHandler value]]!
-
-typeInfo
-	"Answer any type information that exists for the receiver.
-	Not all custom interfaces have an associated type library, but many do."
-
-	^self typeInfoIfNone: [self class errorNoTypeInfo]!
-
-typeInfoIfNone: exceptionHandler
-	"Answer any type information that exists for the receiver.
-	Not all custom interfaces have an associated type library, but many do."
-
-	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
-!COMInterface categoriesFor: #coclassTypeInfo!accessing!public! !
-!COMInterface categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
-!COMInterface categoriesFor: #typeInfo!accessing!public! !
-!COMInterface categoriesFor: #typeInfoIfNone:!accessing!public! !
-
-!COMInterface class methodsFor!
-
-coclassTypeInfo
-	"Answer any type information that exists for the object on which the receiver is an interface."
-
-	^self coclassTypeInfoIfNone: [self errorNoTypeInfo]!
-
-coclassTypeInfoIfNone: exceptionHandler 
-	"Answer any type information that exists for the object on which the receiver is the default interface.
-	This link can only be made if the #clsid method is defined and a type library with the relevant
-	information is available."
-
-	| tlb |
-	^(tlb := self typeLib) isNil 
-		ifTrue: [exceptionHandler value]
-		ifFalse: [tlb typeInfoForGuid: self clsid ifNone: [^exceptionHandler value]]!
-
-errorNoTypeInfo
-	"Private - Raise an exception to the effect that the receiver has no associated
-	type information available."
-
-	^self error: 'No type information available.'!
-
-fromObject: anObject 
-	"Answer an instance of the receiver whose value is the argument."
-
-	^anObject queryInterface: self!
-
-newSAFEARRAY: length
-	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver."
-
-	^SAFEARRAY length: length interfaceClass: self!
-
-registerDispinterface: anIID
-	"Register the specified <IID> as another dispinterface (i.e. an IID implemented by IDispatch)."
-
-	InterfaceClasses at: anIID put: IDispatch!
-
-typeInfoIfNone: exceptionHandler
-	"Answer an <AXInterfaceTypeAnalyzer> on the receiver's type information,
-	or if no type information is available the result of evaluating the
-	<niladicValuable>, exceptionHandler."
-
-	| tlb |
-	^(tlb := self typeLib) isNil 
-		ifTrue: [exceptionHandler value]
-		ifFalse: [(tlb typeInfoForGuid: self guid ifNone: [^exceptionHandler value]) asImplType]!
-
-typeLib
-	"Answer an <AXTypeLibraryAnalyzer> on the receiver's type library,
-	or nil if the receiver does not have a type library."
-
-	^typeLib! !
-!COMInterface class categoriesFor: #coclassTypeInfo!accessing!public! !
-!COMInterface class categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
-!COMInterface class categoriesFor: #errorNoTypeInfo!exceptions!private! !
-!COMInterface class categoriesFor: #fromObject:!instance creation!public! !
-!COMInterface class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!COMInterface class categoriesFor: #registerDispinterface:!adding!public! !
-!COMInterface class categoriesFor: #typeInfoIfNone:!accessing!public! !
-!COMInterface class categoriesFor: #typeLib!accessing!public! !
-
-!Date methodsFor!
+!Core.Date methodsFor!
 
 asFloat
 	"Answer the OLEDATE representation of the receiver."
@@ -1236,10 +1046,10 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
-!Date categoriesFor: #asFloat!converting!public! !
-!Date categoriesFor: #asVariant!converting!public! !
+!Core.Date categoriesFor: #asFloat!converting!public! !
+!Core.Date categoriesFor: #asVariant!converting!public! !
 
-!DateAndTime methodsFor!
+!Core.DateAndTime methodsFor!
 
 asFloat
 	"Answer the OLEDATE representation of the receiver."
@@ -1250,42 +1060,161 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
-!DateAndTime categoriesFor: #asFloat!converting!public! !
-!DateAndTime categoriesFor: #asVariant!converting!public! !
+!Core.DateAndTime categoriesFor: #asFloat!converting!public! !
+!Core.DateAndTime categoriesFor: #asVariant!converting!public! !
 
-!DOUBLE class methodsFor!
+!Core.Float methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_R8)."
+
+	^Smalltalk.VARIANT fromFloat: self! !
+!Core.Float categoriesFor: #asVariant!converting!public! !
+
+!Core.Fraction methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_R8).
+	Note that precision may be lost."
+
+	^self asFloat asVariant! !
+!Core.Fraction categoriesFor: #asVariant!converting!public! !
+
+!Core.GUID class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name associated with the receiver."
+
+	^self name! !
+!Core.GUID class categoriesFor: #typeName!constants!private! !
+
+!Core.Integer methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_I4, VT_I8, or VT_UI8)."
+
+	^self subclassResponsibility! !
+!Core.Integer categoriesFor: #asVariant!converting!public! !
+
+!Core.LargeInteger methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_I8).
+	It is an error if the receiver is too large to be represented in 64-bits."
+
+	^Smalltalk.VARIANT fromLargeInteger: self! !
+!Core.LargeInteger categoriesFor: #asVariant!converting!public! !
+
+!Core.Locale methodsFor!
+
+variantBool: aBoolean
+	^self subclassResponsibility! !
+!Core.Locale categoriesFor: #variantBool:!constants!public! !
+
+!Core.ScaledDecimal methodsFor!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver.
+	Both VT_CY (currency) and VT_DECIMAL types convert to ScaledDecimals
+	but the latter has a wider (64-bit unsigned) range and a variable scale, so it
+	is more likely to suit."
+
+	^Smalltalk.VARIANT new 
+		decimal: self;
+		yourself! !
+!Core.ScaledDecimal categoriesFor: #asVariant!converting!public! !
+
+!Core.SmallInteger methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_I4 or VT_I8, depending on the
+	bitness of the host machine)."
+
+	^Smalltalk.VARIANT fromSmallInteger: self! !
+!Core.SmallInteger categoriesFor: #asVariant!converting!public! !
+
+!Core.String methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_BSTR).
+	This will also work fine for Utf16String."
+
+	^Smalltalk.VARIANT fromString: self! !
+!Core.String categoriesFor: #asVariant!converting!public! !
+
+!Core.String class methodsFor!
+
+pointerType
+	"Answer the <ExternalStructure> class to represent pointers to this external type with the
+	another indirection."
+
+	^External.LPSTR!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#double!
+	^#lpstr!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_R8! !
-!DOUBLE class categoriesFor: #typeName!constants!private! !
-!DOUBLE class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_LPSTR! !
+!Core.String class categoriesFor: #pointerType!constants!private! !
+!Core.String class categoriesFor: #typeName!constants!private! !
+!Core.String class categoriesFor: #vt!constants!public! !
 
-!DWORD class methodsFor!
+!Core.UndefinedObject methodsFor!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_EMPTY).
+	Implementation Note: VT_EMPTY is chosen for compatibility with VB which
+	uses VT_EMPTY for null object references, even though VT_NULL might
+	appear more appropriate at first glance."
+
+	^Smalltalk.VARIANT new! !
+!Core.UndefinedObject categoriesFor: #asVariant!converting!public! !
+
+!Core.UndefinedObject class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver."
+
+	^#nil!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_EMPTY! !
+!Core.UndefinedObject class categoriesFor: #typeName!constants!private! !
+!Core.UndefinedObject class categoriesFor: #vt!constants!public! !
+
+!Core.Utf16String class methodsFor!
+
+pointerType
+	"Answer the <ExternalStructure> class to represent pointers to this external type with the
+	another indirection."
+
+	^External.LPWSTR!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#dword!
+	^#lpwstr!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_UI4! !
-!DWORD class categoriesFor: #typeName!constants!private! !
-!DWORD class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_LPWSTR! !
+!Core.Utf16String class categoriesFor: #pointerType!constants!private! !
+!Core.Utf16String class categoriesFor: #typeName!constants!private! !
+!Core.Utf16String class categoriesFor: #vt!constants!public! !
 
-!ExternalAddress class methodsFor!
+!External.Address class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1297,43 +1226,143 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_PTR! !
-!ExternalAddress class categoriesFor: #typeName!constants!private! !
-!ExternalAddress class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_PTR! !
+!External.Address class categoriesFor: #typeName!constants!private! !
+!External.Address class categoriesFor: #vt!constants!public! !
 
-!ExternalArray methodsFor!
+!External.BOOL class methodsFor!
 
-asSAFEARRAY
-	"Answer the <SAFEARRAY> representation of the receiver."
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
 
-	^SAFEARRAY withAll: self elementClass: self elementClass!
+	^#bool! !
+!External.BOOL class categoriesFor: #typeName!constants!private! !
 
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
+!External.BOOLEAN class methodsFor!
 
-	^VARIANT fromCollection: self! !
-!ExternalArray categoriesFor: #asSAFEARRAY!converting!public! !
-!ExternalArray categoriesFor: #asVariant!converting!public! !
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
 
-!ExternalArray class methodsFor!
+	^#bool! !
+!External.BOOLEAN class categoriesFor: #typeName!constants!private! !
+
+!External.BYTE class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#byte!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_CARRAY! !
-!ExternalArray class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_UI1! !
+!External.BYTE class categoriesFor: #typeName!constants!private! !
+!External.BYTE class categoriesFor: #vt!constants!public! !
 
-!ExternalHandle class methodsFor!
+!External.DOUBLE class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#double!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_R8! !
+!External.DOUBLE class categoriesFor: #typeName!constants!private! !
+!External.DOUBLE class categoriesFor: #vt!constants!public! !
+
+!External.DWORD class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#dword!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_UI4! !
+!External.DWORD class categoriesFor: #typeName!constants!private! !
+!External.DWORD class categoriesFor: #vt!constants!public! !
+
+!External.ExternalArray methodsFor!
+
+asSAFEARRAY
+	"Answer the <SAFEARRAY> representation of the receiver."
+
+	^Smalltalk.SAFEARRAY withAll: self elementClass: self elementClass!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
+
+	^Smalltalk.VARIANT fromCollection: self! !
+!External.ExternalArray categoriesFor: #asSAFEARRAY!converting!public! !
+!External.ExternalArray categoriesFor: #asVariant!converting!public! !
+
+!External.ExternalArray class methodsFor!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_CARRAY! !
+!External.ExternalArray class categoriesFor: #vt!constants!public! !
+
+!External.FLOAT class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#float!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_R4! !
+!External.FLOAT class categoriesFor: #typeName!constants!private! !
+!External.FLOAT class categoriesFor: #vt!constants!public! !
+
+!External.Handle class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
 	^#handle! !
-!ExternalHandle class categoriesFor: #typeName!constants!private! !
+!External.Handle class categoriesFor: #typeName!constants!private! !
 
-!ExternalInteger class methodsFor!
+!External.INT_PTR class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#intptr!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	"Note: The compiler will optimise out the conditional because it is constant."
+
+	^VMConstants.IsWin64 ifTrue: [Smalltalk.AXAutomationConstants.VT_I8] ifFalse: [Smalltalk.AXAutomationConstants.VT_I4]! !
+!External.INT_PTR class categoriesFor: #typeName!constants!private! !
+!External.INT_PTR class categoriesFor: #vt!constants!public! !
+
+!External.INTEGER class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1345,26 +1374,85 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self subclassResponsibility! !
-!ExternalInteger class categoriesFor: #typeName!constants!private! !
-!ExternalInteger class categoriesFor: #vt!constants!private! !
+!External.INTEGER class categoriesFor: #typeName!constants!private! !
+!External.INTEGER class categoriesFor: #vt!constants!private! !
 
-!ExternalScalar methodsFor!
+!External.LPVOID class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	#todo "Is this right?".
+	^#void!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	#todo "Is this right?".
+	^Smalltalk.AXAutomationConstants.VT_VOID! !
+!External.LPVOID class categoriesFor: #typeName!constants!private! !
+!External.LPVOID class categoriesFor: #vt!constants!public! !
+
+!External.QWORD class methodsFor!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_UI8! !
+!External.QWORD class categoriesFor: #vt!constants!public! !
+
+!External.SBYTE class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#sbyte!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_I1! !
+!External.SBYTE class categoriesFor: #typeName!constants!private! !
+!External.SBYTE class categoriesFor: #vt!constants!public! !
+
+!External.SCALAR methodsFor!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
-	^(VARIANT new)
-		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
+	^(Smalltalk.VARIANT new)
+		vt: (self vt bitOr: Smalltalk.AXAutomationConstants.VT_BYREF);
 		reference: self! !
-!ExternalScalar categoriesFor: #asVariant!converting!public! !
+!External.SCALAR categoriesFor: #asVariant!converting!public! !
 
-!ExternalStructure methodsFor!
+!External.SDWORD class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#sdword!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_I4! !
+!External.SDWORD class categoriesFor: #typeName!constants!private! !
+!External.SDWORD class categoriesFor: #vt!constants!public! !
+
+!External.Structure methodsFor!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver.
 	Note that shis will be a reference to the receiver not a copy."
 
-	^VARIANT new
+	^Smalltalk.VARIANT new
 		struct: self;
 		yourself!
 
@@ -1377,14 +1465,14 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self class vt! !
-!ExternalStructure categoriesFor: #asVariant!converting!public! !
-!ExternalStructure categoriesFor: #recordInfo!accessing!public! !
-!ExternalStructure categoriesFor: #vt!constants!private! !
+!External.Structure categoriesFor: #asVariant!converting!public! !
+!External.Structure categoriesFor: #recordInfo!accessing!public! !
+!External.Structure categoriesFor: #vt!constants!private! !
 
-!ExternalStructure class methodsFor!
+!External.Structure class methodsFor!
 
 classForGUID: aGUID ifNone: exceptionHandler
-	"Private - Answer the <ExternalStructure> class (a subclass of the receiver) which
+	"Private - Answer the <External.Structure> class (a subclass of the receiver) which
 	represents the Record with <GUID>, aGUID, or if none is registered for that GUID
 	then the result of evaluating the <niladicValuable>, exceptionHandler."
 
@@ -1416,7 +1504,7 @@ fromAddress: address recordInfo: recInfo owner: owner
 
 	^(self 
 		classForGUID: recInfo guid 
-		ifNone: [^AXRecord 
+		ifNone: [^Smalltalk.AXRecord 
 				fromAddress: address
 				recordInfo: recInfo
 				owner: owner])
@@ -1429,7 +1517,7 @@ fromObject: anObject
 		value: anObject;
 		yourself!
 
-GetField: pvData szFieldName: szFieldName pvarField: pvarField 
+GetField: pvData szFieldName: szFieldName pvarField: pvarField
 	"Implement the IRecordInfo::GetField() method for the UDT described by the receiver.
 
 		HRESULT __stdcall GetField(
@@ -1536,9 +1624,7 @@ GetTypeInfo: ppTypeInfo
 initializeRegister
 	"Private - Initialize the register of GUIDs to record classes."
 
-	RecordClasses := LookupTable new
-
-!
+	RecordClasses := LookupTable new!
 
 IsMatchingType: pRecordInfo
 	"Implement the IRecordInfo::IsMatchingType() method for the UDT described by the receiver.
@@ -1554,10 +1640,10 @@ newSAFEARRAY: length
 	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
 
 	| vt |
-	^(vt := self vt) == AXAutomationConstants.VT_RECORD 
-		ifTrue: [SAFEARRAY length: length recordClass: self]
+	^(vt := self vt) == Smalltalk.AXAutomationConstants.VT_RECORD 
+		ifTrue: [Smalltalk.SAFEARRAY length: length recordClass: self]
 		ifFalse: 
-			[SAFEARRAY 
+			[Smalltalk.SAFEARRAY 
 				length: length
 				vt: vt
 				elementClass: self]!
@@ -1580,19 +1666,19 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 
 	| refInst value |
 	refInst := self fromAddress: pvData.
-	wFlags = AXAutomationConstants.INVOKE_PROPERTYPUT
+	wFlags = Smalltalk.AXAutomationConstants.INVOKE_PROPERTYPUT
 		ifTrue: 
 			[| fieldValue |
 			fieldValue := [refInst getField: szFieldName] on: MessageNotUnderstood
 						do: [:x | ^Win32Errors.E_INVALIDARG].
 			value := pvarField isDispatch ifTrue: [pvarField dispatch value] ifFalse: [pvarField value].
-			(fieldValue isKindOf: IDispatch)
+			(fieldValue isKindOf: Smalltalk.IDispatch)
 				ifTrue: 
 					[fieldValue isNull ifTrue: [^Win32Errors.E_POINTER].
 					fieldValue value: value]
 				ifFalse: [refInst setField: szFieldName value: value]]
 		ifFalse: 
-			[wFlags = AXAutomationConstants.INVOKE_PROPERTYPUTREF
+			[wFlags = Smalltalk.AXAutomationConstants.INVOKE_PROPERTYPUTREF
 				ifTrue: [value := pvarField value]
 				ifFalse: [^Win32Errors.E_INVALIDARG]].
 	^
@@ -1672,7 +1758,7 @@ RecordCreate
 		void* __stdcall RecordCreate();
 	"
 
-	^(COMTaskMemory new: self byteSize) detach
+	^(Smalltalk.COMTaskMemory new: self byteSize) detach
 !
 
 RecordCreateCopy: pvSource ppvDest: ppvDest
@@ -1698,7 +1784,7 @@ RecordDestroy: pvRecord
 	"
 
 	self RecordClear: pvRecord.
-	COMTaskMemory free: pvRecord.
+	Smalltalk.COMTaskMemory free: pvRecord.
 	^0 "S_OK"!
 
 recordInfo
@@ -1710,7 +1796,7 @@ recordInfo
 	| ti ri |
 	ti := self typeInfoIfNone: [].
 	ri := ti notNil ifTrue: [ti recordInfoIfNone: []].
-	^ri ifNil: [IRecordInfo on: self]!
+	^ri ifNil: [Smalltalk.IRecordInfo on: self]!
 
 RecordInit: pvNew
 	"Implement the IRecordInfo::RecordInit() method for the UDT described by the receiver.
@@ -1747,7 +1833,7 @@ supportedInterfaces
 	it seems that DX-7 actually ignores the IRecordInfo (perhaps not surprisingly for a C library), so it is only 
 	really needed in order to create VT_RECORD SAFEARRAYs and VARIANTs."
 
-	^#(##(IRecordInfo))!
+	^#(##(Smalltalk.IRecordInfo))!
 
 typeInfo
 	"Answer an <ITypeInfo> on the receiver's type information."
@@ -1782,93 +1868,124 @@ vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_RECORD! !
-!ExternalStructure class categoriesFor: #classForGUID:ifNone:!enquiries!private! !
-!ExternalStructure class categoriesFor: #clearGuid!accessing!private! !
-!ExternalStructure class categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!ExternalStructure class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
-!ExternalStructure class categoriesFor: #fromObject:!instance creation!public! !
-!ExternalStructure class categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetGuid:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetName:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetSize:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetTypeInfo:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #initializeRegister!initializing!private! !
-!ExternalStructure class categoriesFor: #IsMatchingType:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!ExternalStructure class categoriesFor: #pointerFieldType!constants!private! !
-!ExternalStructure class categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!ExternalStructure class categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!ExternalStructure class categoriesFor: #RecordClear:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCopy:pvNew:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCreate!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCreateCopy:ppvDest:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordDestroy:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #recordInfo!accessing!public! !
-!ExternalStructure class categoriesFor: #RecordInit:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #registerSubclasses!initializing!public! !
-!ExternalStructure class categoriesFor: #supportedInterfaces!constants!private! !
-!ExternalStructure class categoriesFor: #typeInfo!accessing!public! !
-!ExternalStructure class categoriesFor: #typeInfoIfNone:!accessing!public! !
-!ExternalStructure class categoriesFor: #typeLib!accessing!public! !
-!ExternalStructure class categoriesFor: #typeName!constants!private! !
-!ExternalStructure class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_RECORD! !
+!External.Structure class categoriesFor: #classForGUID:ifNone:!enquiries!private! !
+!External.Structure class categoriesFor: #clearGuid!accessing!private! !
+!External.Structure class categoriesFor: #finalRelease!public!realizing/unrealizing! !
+!External.Structure class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
+!External.Structure class categoriesFor: #fromObject:!instance creation!public! !
+!External.Structure class categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetGuid:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetName:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetSize:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #GetTypeInfo:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #initializeRegister!initializing!private! !
+!External.Structure class categoriesFor: #IsMatchingType:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
+!External.Structure class categoriesFor: #pointerFieldType!constants!private! !
+!External.Structure class categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!External.Structure class categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+!External.Structure class categoriesFor: #RecordClear:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #RecordCopy:pvNew:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #RecordCreate!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #RecordCreateCopy:ppvDest:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #RecordDestroy:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #recordInfo!accessing!public! !
+!External.Structure class categoriesFor: #RecordInit:!COM Interfaces-IRecordInfo!public! !
+!External.Structure class categoriesFor: #registerSubclasses!initializing!public! !
+!External.Structure class categoriesFor: #supportedInterfaces!constants!private! !
+!External.Structure class categoriesFor: #typeInfo!accessing!public! !
+!External.Structure class categoriesFor: #typeInfoIfNone:!accessing!public! !
+!External.Structure class categoriesFor: #typeLib!accessing!public! !
+!External.Structure class categoriesFor: #typeName!constants!private! !
+!External.Structure class categoriesFor: #vt!constants!public! !
 
-!FILETIME class methodsFor!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_FILETIME! !
-!FILETIME class categoriesFor: #vt!constants!public! !
-
-!Float methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_R8)."
-
-	^VARIANT fromFloat: self! !
-!Float categoriesFor: #asVariant!converting!public! !
-
-!FLOAT class methodsFor!
+!External.SWORD class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
 
-	^#float!
+	^#sword!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
-	^AXAutomationConstants.VT_R4! !
-!FLOAT class categoriesFor: #typeName!constants!private! !
-!FLOAT class categoriesFor: #vt!constants!public! !
+	^Smalltalk.AXAutomationConstants.VT_I2! !
+!External.SWORD class categoriesFor: #typeName!constants!private! !
+!External.SWORD class categoriesFor: #vt!constants!public! !
 
-!Fraction methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_R8).
-	Note that precision may be lost."
-
-	^self asFloat asVariant! !
-!Fraction categoriesFor: #asVariant!converting!public! !
-
-!GUID class methodsFor!
+!External.UINT_PTR class methodsFor!
 
 typeName
-	"Private - Answer the Dolphin external type name associated with the receiver."
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
 
-	^self name! !
-!GUID class categoriesFor: #typeName!constants!private! !
+	^#uintptr!
 
-!HRESULT class methodsFor!
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	"Note: The compiler will optimise out the conditional because it is constant."
+
+	^VMConstants.IsWin64 ifTrue: [Smalltalk.AXAutomationConstants.VT_UI8] ifFalse: [Smalltalk.AXAutomationConstants.VT_UI4]! !
+!External.UINT_PTR class categoriesFor: #typeName!constants!private! !
+!External.UINT_PTR class categoriesFor: #vt!constants!public! !
+
+!External.VOID class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#void!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_VOID! !
+!External.VOID class categoriesFor: #typeName!constants!private! !
+!External.VOID class categoriesFor: #vt!constants!public! !
+
+!External.WORD class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#word!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_UI2! !
+!External.WORD class categoriesFor: #typeName!constants!private! !
+!External.WORD class categoriesFor: #vt!constants!public! !
+
+!Kernel.SmalltalkLocale methodsFor!
+
+variantBool: aBoolean
+	^aBoolean class name! !
+!Kernel.SmalltalkLocale categoriesFor: #variantBool:!constants!public! !
+
+!OS.FILETIME class methodsFor!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_FILETIME! !
+!OS.FILETIME class categoriesFor: #vt!constants!public! !
+
+!OS.HRESULT class methodsFor!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1879,9 +1996,245 @@ typeName
 vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
-	^AXAutomationConstants.VT_ERROR! !
-!HRESULT class categoriesFor: #typeName!constants!private! !
-!HRESULT class categoriesFor: #vt!constants!private! !
+	^Smalltalk.AXAutomationConstants.VT_ERROR! !
+!OS.HRESULT class categoriesFor: #typeName!constants!private! !
+!OS.HRESULT class categoriesFor: #vt!constants!private! !
+
+!OS.LARGE_INTEGER class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#sqword!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^Smalltalk.AXAutomationConstants.VT_I8! !
+!OS.LARGE_INTEGER class categoriesFor: #typeName!constants!private! !
+!OS.LARGE_INTEGER class categoriesFor: #vt!constants!public! !
+
+!OS.SYSTEMTIME methodsFor!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	| vtime |
+	vtime := Smalltalk.DATE new.
+	Smalltalk.OLEAutLibrary default systemTimeToVariantTime: self pvtime: vtime.
+	^vtime!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_DATE)"
+
+	^Smalltalk.VARIANT fromDATE: self asFloat! !
+!OS.SYSTEMTIME categoriesFor: #asFloat!converting!public! !
+!OS.SYSTEMTIME categoriesFor: #asVariant!converting!public! !
+
+!OS.SYSTEMTIME class methodsFor!
+
+fromDATE: aFloat 
+	| systime |
+	systime := self new.
+	Smalltalk.OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
+	^systime! !
+!OS.SYSTEMTIME class categoriesFor: #fromDATE:!public! !
+
+!OS.ULARGE_INTEGER class methodsFor!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#qword! !
+!OS.ULARGE_INTEGER class categoriesFor: #typeName!constants!private! !
+
+!OS.WindowsLocale methodsFor!
+
+boolFormat
+	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
+
+	^{self variantBool: false. self variantBool: true}!
+
+getVariantBoolString: anInteger
+	| bstr str |
+	bstr := Smalltalk.BSTR new.
+	Smalltalk.OLEAutLibrary default
+		varBstrFromBool: anInteger
+		lcid: self lcid
+		dwFlags: Smalltalk.AXAutomationConstants.VARIANT_LOCALBOOL
+		pbstrOut: bstr.
+	str := bstr asUtf8String.
+	bstr free.
+	^str!
+
+variantBool: aBoolean
+	^info at: aBoolean class name
+		ifAbsentPut: 
+			[self getVariantBoolString: (aBoolean
+						ifTrue: [Smalltalk.AXAutomationConstants.VARIANT_TRUE]
+						ifFalse: [Smalltalk.AXAutomationConstants.VARIANT_FALSE])]! !
+!OS.WindowsLocale categoriesFor: #boolFormat!constants!public! !
+!OS.WindowsLocale categoriesFor: #getVariantBoolString:!constants!public! !
+!OS.WindowsLocale categoriesFor: #variantBool:!constants!public! !
+
+!BSTR methodsFor!
+
+asSAFEARRAY
+	"Answer the <SAFEARRAY> representation of the receiver.
+	N.B. The result will be a single-dimensioed array of the variant representations
+	of the receiver's elements, assuming that such a representation is possible."
+
+	^SAFEARRAY withAll: self elementClass: SWORD!
+
+asVariant
+	"Answer the VARIANT representation of the receiver (a VT_BSTR).
+	This will also work fine for Utf16String."
+
+	^VARIANT fromString: self! !
+!BSTR categoriesFor: #asSAFEARRAY!converting!public! !
+!BSTR categoriesFor: #asVariant!converting!public! !
+
+!BSTR class methodsFor!
+
+fromObject: anObject
+	^self fromString: anObject!
+
+newSAFEARRAY: length
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
+	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
+
+	^SAFEARRAY length: length vt: self vt elementClass: self!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#bstr!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^AXAutomationConstants.VT_BSTR! !
+!BSTR class categoriesFor: #fromObject:!instance creation!public! !
+!BSTR class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
+!BSTR class categoriesFor: #typeName!constants!private! !
+!BSTR class categoriesFor: #vt!constants!public! !
+
+!CLSID class methodsFor!
+
+newSAFEARRAY: length
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver.
+	Part of a double-dispatch protocol originating in SAFEARRAY>>length:elementClass:"
+
+	^SAFEARRAY length: length 	vt: self vt elementClass: self!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^AXAutomationConstants.VT_CLSID
+! !
+!CLSID class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
+!CLSID class categoriesFor: #vt!constants!public! !
+
+!COMInterface methodsFor!
+
+coclassTypeInfo
+	"Answer any type information that exists for the object on which the receiver is an interface."
+
+	^self coclassTypeInfoIfNone: [self class errorNoTypeInfo]!
+
+coclassTypeInfoIfNone: exceptionHandler
+	"Answer any type information that exists for the object on which the receiver is an interface."
+
+	^(self queryInterface: IProvideClassInfo)
+		ifNil: [self class coclassTypeInfoIfNone: [^exceptionHandler value]]
+		ifNotNil: 
+			[:ipc |
+			[AXTypeInfoAnalyzer onTypeInfo: ipc getClassInfo] on: HRESULTError
+				do: [:ex | ^exceptionHandler value]]!
+
+typeInfo
+	"Answer any type information that exists for the receiver.
+	Not all custom interfaces have an associated type library, but many do."
+
+	^self typeInfoIfNone: [self class errorNoTypeInfo]!
+
+typeInfoIfNone: exceptionHandler
+	"Answer any type information that exists for the receiver.
+	Not all custom interfaces have an associated type library, but many do."
+
+	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
+!COMInterface categoriesFor: #coclassTypeInfo!accessing!public! !
+!COMInterface categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
+!COMInterface categoriesFor: #typeInfo!accessing!public! !
+!COMInterface categoriesFor: #typeInfoIfNone:!accessing!public! !
+
+!COMInterface class methodsFor!
+
+coclassTypeInfo
+	"Answer any type information that exists for the object on which the receiver is an interface."
+
+	^self coclassTypeInfoIfNone: [self errorNoTypeInfo]!
+
+coclassTypeInfoIfNone: exceptionHandler 
+	"Answer any type information that exists for the object on which the receiver is the default interface.
+	This link can only be made if the #clsid method is defined and a type library with the relevant
+	information is available."
+
+	| tlb |
+	^(tlb := self typeLib) isNil 
+		ifTrue: [exceptionHandler value]
+		ifFalse: [tlb typeInfoForGuid: self clsid ifNone: [^exceptionHandler value]]!
+
+errorNoTypeInfo
+	"Private - Raise an exception to the effect that the receiver has no associated
+	type information available."
+
+	^self error: 'No type information available.'!
+
+fromObject: anObject 
+	"Answer an instance of the receiver whose value is the argument."
+
+	^anObject queryInterface: self!
+
+newSAFEARRAY: length
+	"Answer a new SAFEARRAY initialized to hold <integer>, length, instances of the receiver."
+
+	^SAFEARRAY length: length interfaceClass: self!
+
+registerDispinterface: anIID
+	"Register the specified <IID> as another dispinterface (i.e. an IID implemented by IDispatch)."
+
+	InterfaceClasses at: anIID put: IDispatch!
+
+typeInfoIfNone: exceptionHandler
+	"Answer an <AXInterfaceTypeAnalyzer> on the receiver's type information,
+	or if no type information is available the result of evaluating the
+	<niladicValuable>, exceptionHandler."
+
+	| tlb |
+	^(tlb := self typeLib) isNil 
+		ifTrue: [exceptionHandler value]
+		ifFalse: [(tlb typeInfoForGuid: self guid ifNone: [^exceptionHandler value]) asImplType]!
+
+typeLib
+	"Answer an <AXTypeLibraryAnalyzer> on the receiver's type library,
+	or nil if the receiver does not have a type library."
+
+	^typeLib! !
+!COMInterface class categoriesFor: #coclassTypeInfo!accessing!public! !
+!COMInterface class categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
+!COMInterface class categoriesFor: #errorNoTypeInfo!exceptions!private! !
+!COMInterface class categoriesFor: #fromObject:!instance creation!public! !
+!COMInterface class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
+!COMInterface class categoriesFor: #registerDispinterface:!adding!public! !
+!COMInterface class categoriesFor: #typeInfoIfNone:!accessing!public! !
+!COMInterface class categoriesFor: #typeLib!accessing!public! !
 
 !IErrorInfo class methodsFor!
 
@@ -1909,32 +2262,6 @@ source: sourceString description: descriptionString helpContext: anInteger helpF
 !IErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
 !IErrorInfo class categoriesFor: #source:description:helpContext:helpFile:guid:!instance creation!public! !
 
-!INT_PTR class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#intptr!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	"Note: The compiler will optimise out the conditional because it is constant."
-
-	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_I8] ifFalse: [AXAutomationConstants.VT_I4]! !
-!INT_PTR class categoriesFor: #typeName!constants!private! !
-!INT_PTR class categoriesFor: #vt!constants!public! !
-
-!Integer methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I4, VT_I8, or VT_UI8)."
-
-	^self subclassResponsibility! !
-!Integer categoriesFor: #asVariant!converting!public! !
-
 !IUnknown methodsFor!
 
 asVariant
@@ -1951,55 +2278,6 @@ vt
 
 	^AXAutomationConstants.VT_UNKNOWN! !
 !IUnknown class categoriesFor: #vt!constants!public! !
-
-!LARGE_INTEGER class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sqword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_I8! !
-!LARGE_INTEGER class categoriesFor: #typeName!constants!private! !
-!LARGE_INTEGER class categoriesFor: #vt!constants!public! !
-
-!LargeInteger methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I8).
-	It is an error if the receiver is too large to be represented in 64-bits."
-
-	^VARIANT fromLargeInteger: self! !
-!LargeInteger categoriesFor: #asVariant!converting!public! !
-
-!Locale methodsFor!
-
-variantBool: aBoolean
-	^self subclassResponsibility! !
-!Locale categoriesFor: #variantBool:!constants!public! !
-
-!LPVOID class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	#todo "Is this right?".
-	^#void!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	#todo "Is this right?".
-	^AXAutomationConstants.VT_VOID! !
-!LPVOID class categoriesFor: #typeName!constants!private! !
-!LPVOID class categoriesFor: #vt!constants!public! !
 
 !OLEAutLibrary methodsFor!
 
@@ -2497,286 +2775,6 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 !OLEAutLibrary categoriesFor: #variantCopyInd:pvargSrc:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantInit:!Automation Functions-Variant Manipulation!public! !
 !OLEAutLibrary categoriesFor: #variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!public! !
-
-!QWORD class methodsFor!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_UI8! !
-!QWORD class categoriesFor: #vt!constants!public! !
-
-!SBYTE class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sbyte!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_I1! !
-!SBYTE class categoriesFor: #typeName!constants!private! !
-!SBYTE class categoriesFor: #vt!constants!public! !
-
-!ScaledDecimal methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver.
-	Both VT_CY (currency) and VT_DECIMAL types convert to ScaledDecimals
-	but the latter has a wider (64-bit unsigned) range and a variable scale, so it
-	is more likely to suit."
-
-	^VARIANT new 
-		decimal: self;
-		yourself! !
-!ScaledDecimal categoriesFor: #asVariant!converting!public! !
-
-!SDWORD class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sdword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_I4! !
-!SDWORD class categoriesFor: #typeName!constants!private! !
-!SDWORD class categoriesFor: #vt!constants!public! !
-
-!SmallInteger methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I4 or VT_I8, depending on the
-	bitness of the host machine)."
-
-	^VARIANT fromSmallInteger: self! !
-!SmallInteger categoriesFor: #asVariant!converting!public! !
-
-!SmalltalkLocale methodsFor!
-
-variantBool: aBoolean
-	^aBoolean class name! !
-!SmalltalkLocale categoriesFor: #variantBool:!constants!public! !
-
-!String methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for Utf16String."
-
-	^VARIANT fromString: self! !
-!String categoriesFor: #asVariant!converting!public! !
-
-!String class methodsFor!
-
-pointerType
-	"Answer the <ExternalStructure> class to represent pointers to this external type with the
-	another indirection."
-
-	^LPSTR!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#lpstr!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_LPSTR! !
-!String class categoriesFor: #pointerType!constants!private! !
-!String class categoriesFor: #typeName!constants!private! !
-!String class categoriesFor: #vt!constants!public! !
-
-!SWORD class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#sword!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_I2! !
-!SWORD class categoriesFor: #typeName!constants!private! !
-!SWORD class categoriesFor: #vt!constants!public! !
-
-!SYSTEMTIME methodsFor!
-
-asFloat
-	"Answer the OLEDATE representation of the receiver."
-
-	| vtime |
-	vtime := DATE new.
-	OLEAutLibrary default systemTimeToVariantTime: self pvtime: vtime.
-	^vtime!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_DATE)"
-
-	^VARIANT fromDATE: self asFloat! !
-!SYSTEMTIME categoriesFor: #asFloat!converting!public! !
-!SYSTEMTIME categoriesFor: #asVariant!converting!public! !
-
-!SYSTEMTIME class methodsFor!
-
-fromDATE: aFloat 
-	| systime |
-	systime := self new.
-	OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
-	^systime! !
-!SYSTEMTIME class categoriesFor: #fromDATE:!public! !
-
-!UINT_PTR class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#uintptr!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	"Note: The compiler will optimise out the conditional because it is constant."
-
-	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_UI8] ifFalse: [AXAutomationConstants.VT_UI4]! !
-!UINT_PTR class categoriesFor: #typeName!constants!private! !
-!UINT_PTR class categoriesFor: #vt!constants!public! !
-
-!ULARGE_INTEGER class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#qword! !
-!ULARGE_INTEGER class categoriesFor: #typeName!constants!private! !
-
-!UndefinedObject methodsFor!
-
-asVariant
-	"Answer the VARIANT representation of the receiver (a VT_EMPTY).
-	Implementation Note: VT_EMPTY is chosen for compatibility with VB which
-	uses VT_EMPTY for null object references, even though VT_NULL might
-	appear more appropriate at first glance."
-
-	^VARIANT new! !
-!UndefinedObject categoriesFor: #asVariant!converting!public! !
-
-!UndefinedObject class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver."
-
-	^#nil!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_EMPTY! !
-!UndefinedObject class categoriesFor: #typeName!constants!private! !
-!UndefinedObject class categoriesFor: #vt!constants!public! !
-
-!Utf16String class methodsFor!
-
-pointerType
-	"Answer the <ExternalStructure> class to represent pointers to this external type with the
-	another indirection."
-
-	^LPWSTR!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#lpwstr!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_LPWSTR! !
-!Utf16String class categoriesFor: #pointerType!constants!private! !
-!Utf16String class categoriesFor: #typeName!constants!private! !
-!Utf16String class categoriesFor: #vt!constants!public! !
-
-!VOID class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#void!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_VOID! !
-!VOID class categoriesFor: #typeName!constants!private! !
-!VOID class categoriesFor: #vt!constants!public! !
-
-!WindowsLocale methodsFor!
-
-boolFormat
-	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
-
-	^{self variantBool: false. self variantBool: true}!
-
-getVariantBoolString: anInteger
-	| bstr str |
-	bstr := BSTR new.
-	OLEAutLibrary default
-		varBstrFromBool: anInteger
-		lcid: self lcid
-		dwFlags: AXAutomationConstants.VARIANT_LOCALBOOL
-		pbstrOut: bstr.
-	str := bstr asUtf8String.
-	bstr free.
-	^str!
-
-variantBool: aBoolean
-	^info at: aBoolean class name
-		ifAbsentPut: 
-			[self getVariantBoolString: (aBoolean
-						ifTrue: [AXAutomationConstants.VARIANT_TRUE]
-						ifFalse: [AXAutomationConstants.VARIANT_FALSE])]! !
-!WindowsLocale categoriesFor: #boolFormat!constants!public! !
-!WindowsLocale categoriesFor: #getVariantBoolString:!constants!public! !
-!WindowsLocale categoriesFor: #variantBool:!constants!public! !
-
-!WORD class methodsFor!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#word!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^AXAutomationConstants.VT_UI2! !
-!WORD class categoriesFor: #typeName!constants!private! !
-!WORD class categoriesFor: #vt!constants!public! !
 
 "End of package definition"!
 

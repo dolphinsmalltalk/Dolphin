@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #SHITEMID
+OS.Win32Structure subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abID' -> 16r2.
 		'_OffsetOf_cb' -> 16r0
 	}!
-SHITEMID guid: (GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
-SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
+OS.SHITEMID guid: (Core.GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
+OS.SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
 
 The type library contains no documentation for this struct.
 
@@ -23,8 +23,8 @@ typedef struct tagSHITEMID {
 	BYTE abID[1];
 } SHITEMID;
 '!
-!SHITEMID categoriesForClass!Win32-Structs! !
-!SHITEMID methodsFor!
+!OS.SHITEMID categoriesForClass!Win32-Structs! !
+!OS.SHITEMID methodsFor!
 
 abID
 	"Answer the <ExternalArray> value of the receiver's 'abID' field."
@@ -35,10 +35,10 @@ cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
 	^bytes wordAtOffset: _OffsetOf_cb! !
-!SHITEMID categoriesFor: #abID!**compiled accessors**!public! !
-!SHITEMID categoriesFor: #cb!**compiled accessors**!private! !
+!OS.SHITEMID categoriesFor: #abID!**compiled accessors**!public! !
+!OS.SHITEMID categoriesFor: #cb!**compiled accessors**!private! !
 
-!SHITEMID class methodsFor!
+!OS.SHITEMID class methodsFor!
 
 defineFields
 	"Define the fields of the SHITEMID structure.
@@ -69,7 +69,7 @@ packing
 	"Uses byte packing"
 
 	^1! !
-!SHITEMID class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SHITEMID class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!SHITEMID class categoriesFor: #packing!constants!public! !
+!OS.SHITEMID class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SHITEMID class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SHITEMID class categoriesFor: #packing!constants!public! !
 

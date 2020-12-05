@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Shell Namespace'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Shell Namespace Support
 Copyright (c) Object Arts Ltd, 1998-2000. 
@@ -13,22 +13,22 @@ For example:
 
 
 package setClassNames: #(
-	#{BrowseFolderDialog}
-	#{BROWSEINFOW}
-	#{IShellFolder}
-	#{ITEMIDLIST}
-	#{SHITEMID}
-	#{WindowsShellMemory}
+	#{OS.BROWSEINFOW}
+	#{OS.ITEMIDLIST}
+	#{OS.SHITEMID}
+	#{OS.WindowsShellMemory}
+	#{Smalltalk.IShellFolder}
+	#{UI.BrowseFolderDialog}
 ).
 
 package setMethodNames: #(
-	#(#{ShellLibrary} #allocator)
-	#(#{ShellLibrary} #getDesktopFolder)
-	#(#{ShellLibrary} #pathFromIDList:)
-	#(#{ShellLibrary} #SHBrowseForFolder:)
-	#(#{ShellLibrary} #SHGetDesktopFolder:)
-	#(#{ShellLibrary} #SHGetMalloc:)
-	#(#{ShellLibrary} #SHGetPathFromIDList:pszPath:)
+	#(#{OS.ShellLibrary} #allocator)
+	#(#{OS.ShellLibrary} #getDesktopFolder)
+	#(#{OS.ShellLibrary} #pathFromIDList:)
+	#(#{OS.ShellLibrary} #SHBrowseForFolder:)
+	#(#{OS.ShellLibrary} #SHGetDesktopFolder:)
+	#(#{OS.ShellLibrary} #SHGetMalloc:)
+	#(#{OS.ShellLibrary} #SHGetPathFromIDList:pszPath:)
 ).
 
 package setPrerequisites: #(
@@ -43,37 +43,45 @@ package!
 
 "Class Definitions"!
 
-ExternalMemory variableByteSubclass: #WindowsShellMemory
+External.Memory variableByteSubclass: #'OS.WindowsShellMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.CommonDialog subclass: #'UI.BrowseFolderDialog'
+	instanceVariableNames: 'style bfFlags'
+	classVariableNames: ''
+	imports: #(#{OS.ShellConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InitializedMask' -> 16r1
+	}!
 IUnknown subclass: #IShellFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #ITEMIDLIST
+OLEStructure subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Structure subclass: #SHITEMID
+OS.Win32Structure subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abID' -> 16r2.
 		'_OffsetOf_cb' -> 16r0
 	}!
-CommonDialogStructure subclass: #BROWSEINFOW
+OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r10.
@@ -85,24 +93,16 @@ CommonDialogStructure subclass: #BROWSEINFOW
 		'_OffsetOf_pidlRoot' -> 16r4.
 		'_OffsetOf_pszDisplayName' -> 16r8
 	}!
-CommonDialog subclass: #BrowseFolderDialog
-	instanceVariableNames: 'style bfFlags'
-	classVariableNames: ''
-	poolDictionaries: 'ShellConstants'
-	classInstanceVariableNames: ''
-	classConstants: {
-		'InitializedMask' -> 16r1
-	}!
 
 "Loose Methods"!
 
-!ShellLibrary methodsFor!
+!OS.ShellLibrary methodsFor!
 
 allocator
 	"Answer the shell's <IMalloc>."
 
 	| answer |
-	answer := IMalloc newPointer.
+	answer := Smalltalk.IMalloc newPointer.
 	self SHGetMalloc: answer.
 	^answer!
 
@@ -113,7 +113,7 @@ getDesktopFolder
 	"
 
 	| answer |
-	answer := IShellFolder newPointer.
+	answer := Smalltalk.IShellFolder newPointer.
 	self SHGetDesktopFolder: answer.
 	^answer
 !
@@ -128,25 +128,25 @@ SHBrowseForFolder: aWin32BROWSEINFO
 	^self invalidCall: _failureCode!
 
 SHGetDesktopFolder: ppshf
-	<stdcall: hresult SHGetDesktopFolder IShellFolder**>
+	<stdcall: hresult SHGetDesktopFolder Smalltalk.IShellFolder**>
 	^self invalidCall: _failureCode!
 
 SHGetMalloc: ppMalloc
 	"Get a pointer to the shell's IMalloc."
 
-	<stdcall: hresult SHGetMalloc IMalloc**>
+	<stdcall: hresult SHGetMalloc Smalltalk.IMalloc**>
 	^self invalidCall: _failureCode!
 
 SHGetPathFromIDList: pidl pszPath: pszPath
 	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall: _failureCode! !
-!ShellLibrary categoriesFor: #allocator!accessing!public! !
-!ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
-!ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !
-!ShellLibrary categoriesFor: #SHBrowseForFolder:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetDesktopFolder:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetMalloc:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #allocator!accessing!public! !
+!OS.ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
+!OS.ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !
+!OS.ShellLibrary categoriesFor: #SHBrowseForFolder:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #SHGetDesktopFolder:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #SHGetMalloc:!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
 
 "End of package definition"!
 

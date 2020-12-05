@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Structured Storage'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
 Copyright (c) Object Arts Ltd 1997-2003. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -20,54 +20,54 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ILockBytes}
-	#{IRootStorage}
-	#{ISequentialStream}
-	#{IStorage}
-	#{IStream}
-	#{OLELockBytes}
-	#{OLELockBytesAbstract}
-	#{OLELockFileBytes}
-	#{OLEStructuredStorageConstants}
-	#{STATSTG}
-	#{URLMonLibrary}
+	#{Smalltalk.ILockBytes}
+	#{Smalltalk.IRootStorage}
+	#{Smalltalk.ISequentialStream}
+	#{Smalltalk.IStorage}
+	#{Smalltalk.IStream}
+	#{Smalltalk.OLELockBytes}
+	#{Smalltalk.OLELockBytesAbstract}
+	#{Smalltalk.OLELockFileBytes}
+	#{Smalltalk.OLEStructuredStorageConstants}
+	#{Smalltalk.STATSTG}
+	#{Smalltalk.URLMonLibrary}
 ).
 
 package setMethodNames: #(
-	#(#{OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
-	#(#{OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
-	#(#{OLELibrary} #getConvertStg:)
-	#(#{OLELibrary} #getHGlobalFromILockBytes:phglobal:)
-	#(#{OLELibrary} #getHGlobalFromStream:phglobal:)
-	#(#{OLELibrary} #oleDoAutoConvert:pClsidNew:)
-	#(#{OLELibrary} #readClassStg:pclsid:)
-	#(#{OLELibrary} #readClassStm:pclsid:)
-	#(#{OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
-	#(#{OLELibrary} #setConvertStg:fConvert:)
-	#(#{OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
-	#(#{OLELibrary} #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:)
-	#(#{OLELibrary} #stgIsStorageFile:)
-	#(#{OLELibrary} #stgIsStorageILockBytes:)
-	#(#{OLELibrary} #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
-	#(#{OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
-	#(#{OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
-	#(#{OLELibrary} #writeClassStg:rclsid:)
-	#(#{OLELibrary} #writeClassStm:rclsid:)
-	#(#{OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
-	#(#{SequencedStream} #Commit:)
-	#(#{SequencedStream} #CopyTo:cb:pcbRead:pcbWritten:)
-	#(#{SequencedStream} #finalRelease)
-	#(#{SequencedStream} #LockRegion:cb:dwLockType:)
-	#(#{SequencedStream} #queryInterface:)
-	#(#{SequencedStream} #queryInterface:ifNone:)
-	#(#{SequencedStream} #Read:cb:pcbRead:)
-	#(#{SequencedStream} #Revert)
-	#(#{SequencedStream} #Seek:dwOrigin:plibNewPosition:)
-	#(#{SequencedStream} #SetSize:)
-	#(#{SequencedStream} #Stat:grfStatFlag:)
-	#(#{SequencedStream} #UnlockRegion:cb:dwLockType:)
-	#(#{SequencedStream} #Write:cb:pcbWritten:)
-	#(#{ShlwapiLibrary} #shCreateMemStream:cbInit:)
+	#(#{Core.SequencedStream} #Commit:)
+	#(#{Core.SequencedStream} #CopyTo:cb:pcbRead:pcbWritten:)
+	#(#{Core.SequencedStream} #finalRelease)
+	#(#{Core.SequencedStream} #LockRegion:cb:dwLockType:)
+	#(#{Core.SequencedStream} #queryInterface:)
+	#(#{Core.SequencedStream} #queryInterface:ifNone:)
+	#(#{Core.SequencedStream} #Read:cb:pcbRead:)
+	#(#{Core.SequencedStream} #Revert)
+	#(#{Core.SequencedStream} #Seek:dwOrigin:plibNewPosition:)
+	#(#{Core.SequencedStream} #SetSize:)
+	#(#{Core.SequencedStream} #Stat:grfStatFlag:)
+	#(#{Core.SequencedStream} #UnlockRegion:cb:dwLockType:)
+	#(#{Core.SequencedStream} #Write:cb:pcbWritten:)
+	#(#{OS.ShlwapiLibrary} #shCreateMemStream:cbInit:)
+	#(#{Smalltalk.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
+	#(#{Smalltalk.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
+	#(#{Smalltalk.OLELibrary} #getConvertStg:)
+	#(#{Smalltalk.OLELibrary} #getHGlobalFromILockBytes:phglobal:)
+	#(#{Smalltalk.OLELibrary} #getHGlobalFromStream:phglobal:)
+	#(#{Smalltalk.OLELibrary} #oleDoAutoConvert:pClsidNew:)
+	#(#{Smalltalk.OLELibrary} #readClassStg:pclsid:)
+	#(#{Smalltalk.OLELibrary} #readClassStm:pclsid:)
+	#(#{Smalltalk.OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
+	#(#{Smalltalk.OLELibrary} #setConvertStg:fConvert:)
+	#(#{Smalltalk.OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
+	#(#{Smalltalk.OLELibrary} #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:)
+	#(#{Smalltalk.OLELibrary} #stgIsStorageFile:)
+	#(#{Smalltalk.OLELibrary} #stgIsStorageILockBytes:)
+	#(#{Smalltalk.OLELibrary} #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{Smalltalk.OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{Smalltalk.OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
+	#(#{Smalltalk.OLELibrary} #writeClassStg:rclsid:)
+	#(#{Smalltalk.OLELibrary} #writeClassStm:rclsid:)
+	#(#{Smalltalk.OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
 ).
 
 package setPrerequisites: #(
@@ -79,7 +79,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #OLEStructuredStorageConstants
+Kernel.SharedPool subclass: #OLEStructuredStorageConstants
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -147,7 +147,7 @@ OLELockBytesAbstract subclass: #OLELockFileBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #URLMonLibrary
+External.Library subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -203,6 +203,229 @@ OLEFinalizableStructure subclass: #STATSTG
 	}!
 
 "Loose Methods"!
+
+!Core.SequencedStream methodsFor!
+
+Commit: grfCommitFlags 
+	"Implement the IStream::Commit() method.
+	
+		HRESULT __stdcall Commit(
+			[in] unsigned long grfCommitFlags);
+	"
+
+	"Implementation Note: Transactions are not supported, so this method has no effect other
+	than to flush the stream. The flags are ignored."
+
+	self flush.
+	^OS.Win32Errors.S_OK!
+
+CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
+	"Implement the IStream::CopyTo() method.
+	
+		HRESULT __stdcall CopyTo(
+			[in] IStream* pstm,
+			[in] ULARGE_INTEGER cb,
+			[out] ULARGE_INTEGER* pcbRead,
+			[out] ULARGE_INTEGER* pcbWritten);
+	"
+
+	| read written block countWritten |
+	read := 0.
+	countWritten := pcbWritten bytes notNull.
+	written := 0.
+	[self atEnd or: [read > cb]] whileFalse: 
+			[block := self nextAvailable: 8192.
+			read := read + block size.
+			pstm 
+				Write: block
+				cb: block size
+				pcbWritten: pcbWritten.
+			countWritten ifTrue: [written := written + pcbWritten value]].
+	pcbRead bytes notNull ifTrue: [pcbRead value: read].
+	countWritten ifTrue: [pcbWritten value: written].
+	^OS.Win32Errors.S_OK!
+
+finalRelease
+	"The last reference to the receiver (as a COM object) has been released.
+	This is an opportunity to actively clean up, rather than passively waiting 
+	for finalization which might is asynchronous and may never happen if the 
+	object doesn't become garbage."
+
+	"Override as necessary"
+
+	"Transcript print: self; display: ' final release'; cr"
+
+	!
+
+LockRegion: libOffset cb: cb dwLockType: dwLockType 
+	"Implement the IStream::LockRegion() method.
+	
+		HRESULT __stdcall LockRegion(
+			[in] ULARGE_INTEGER libOffset,
+			[in] ULARGE_INTEGER cb,
+			[in] unsigned long dwLockType);
+	"
+
+	"From MSDN: Support for this method is optional for implementations of stream objects since
+	it may not be supported by the underlying file system. The type of locking supported is also
+	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
+	not supported."
+
+	^Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
+
+queryInterface: anInterfaceClass 
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class), or nil if the receiver does not support the interface."
+
+	^self queryInterface: anInterfaceClass ifNone: []!
+
+queryInterface: interfaceClass ifNone: exceptionHandler 
+	"Answer a new interface which supports the specified interface protocol
+	(usually a class). If the receiver does not support the interface,
+	answer the result of evaluating the niladic valuable, exceptionHandler.
+	N.B. It is not necessary to answer an instance of the requested interface class,
+	a subinstance will do, or even a completely different class, as long as the
+	protocol of the requested class is supported.."
+
+	^(Smalltalk.IStream supportsInterface: interfaceClass) 
+		ifTrue: [Smalltalk.IStream on: self]
+		ifFalse: [exceptionHandler value]!
+
+Read: pv cb: cb pcbRead: pcbRead 
+	"Implement the IStream::Read().
+	
+		HRESULT __stdcall Read(
+			[out] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbRead);
+	"
+
+	| count |
+	count := cb min: self size - self position.
+	self 
+		basicNext: count
+		into: pv
+		startingAt: 1.
+	pcbRead bytes notNull ifTrue: [pcbRead value: count].
+	^OS.Win32Errors.S_OK!
+
+Revert
+	"Implement the IStream::Revert() method
+
+		HRESULT __stdcall Revert();
+	"
+
+	"Implementation Note: Transactions are not supported, so this method has no effect."
+
+	^OS.Win32Errors.S_FALSE!
+
+Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
+	"Implement the IStream::Seek() method..
+	
+		HRESULT __stdcall Seek(
+			[in] LARGE_INTEGER dlibMove,
+			[in] unsigned long dwOrigin,
+			[out] ULARGE_INTEGER* plibNewPosition);
+	"
+
+	| hr |
+	hr := 
+			[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_SET
+				ifTrue: [self position: dlibMove]
+				ifFalse: 
+					[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_CUR
+						ifTrue: [self skip: dlibMove]
+						ifFalse: 
+							[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_END
+								ifTrue: [self position: self size - dlibMove]
+								ifFalse: [self errorSubscriptBounds: -1]]].
+			OS.Win32Errors.S_OK]
+					on: BoundsError
+					do: [:ex | Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION].
+	plibNewPosition bytes notNull
+		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
+	^hr!
+
+SetSize: libNewSize 
+	"Invoke the SetSize() method of the object wrapped by the receiver.
+	
+		HRESULT __stdcall SetSize(
+			[in] ULARGE_INTEGER libNewSize);
+	"
+
+	^OS.Win32Errors.E_NOTIMPL!
+
+Stat: pstatstg grfStatFlag: grfStatFlag 
+	"Implement the IStream::Stat() method.
+	
+		HRESULT __stdcall Stat(
+			[out] STATSTG* pstatstg,
+			[in] unsigned long grfStatFlag);
+	"
+
+	"Make sure it is zeroed out"
+
+	pstatstg class init: pstatstg.
+	pstatstg
+		type: ##(Smalltalk.OLEStructuredStorageConstants at: 'STGTY_STREAM');
+		cbSize: self size.
+	^OS.Win32Errors.S_OK!
+
+UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
+	"Implement the IStream::UnlockRegion() method.
+	
+		HRESULT __stdcall UnlockRegion(
+			[in] ULARGE_INTEGER libOffset,
+			[in] ULARGE_INTEGER cb,
+			[in] unsigned long dwLockType);
+	"
+
+	"Implementation Note: Locking is not supported."
+
+	^Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
+
+Write: pv cb: cb pcbWritten: pcbWritten 
+	"Implement the IStream::Write() method.
+	
+		HRESULT __stdcall Write(
+			[in] byte* pv,
+			[in] unsigned long cb,
+			[out] unsigned long* pcbWritten);
+	"
+
+	self 
+		next: cb
+		putAll: pv
+		startingAt: 1.
+	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
+	^OS.Win32Errors.S_OK! !
+!Core.SequencedStream categoriesFor: #Commit:!public! !
+!Core.SequencedStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!public! !
+!Core.SequencedStream categoriesFor: #finalRelease!public! !
+!Core.SequencedStream categoriesFor: #LockRegion:cb:dwLockType:!public! !
+!Core.SequencedStream categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!Core.SequencedStream categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!Core.SequencedStream categoriesFor: #Read:cb:pcbRead:!public! !
+!Core.SequencedStream categoriesFor: #Revert!public! !
+!Core.SequencedStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!public! !
+!Core.SequencedStream categoriesFor: #SetSize:!public! !
+!Core.SequencedStream categoriesFor: #Stat:grfStatFlag:!public! !
+!Core.SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
+!Core.SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
+
+!OS.ShlwapiLibrary methodsFor!
+
+shCreateMemStream: pInit cbInit: cbInit
+	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
+	Helpstring: Creates a memory stream on a copy of a byte buffer
+
+		IStream* __stdcall SHCreateMemStream(
+			[in]BYTE* pInit,
+			[in]unsigned int cbInit);"
+
+	<stdcall: Smalltalk.IStream* 12 byte* dword>
+	^self invalidCall: _failureCode! !
+!OS.ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
 
 !OLELibrary methodsFor!
 
@@ -462,229 +685,6 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 !OLELibrary categoriesFor: #writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
 !OLELibrary categoriesFor: #writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
 !OLELibrary categoriesFor: #writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
-
-!SequencedStream methodsFor!
-
-Commit: grfCommitFlags 
-	"Implement the IStream::Commit() method.
-	
-		HRESULT __stdcall Commit(
-			[in] unsigned long grfCommitFlags);
-	"
-
-	"Implementation Note: Transactions are not supported, so this method has no effect other
-	than to flush the stream. The flags are ignored."
-
-	self flush.
-	^Win32Errors.S_OK!
-
-CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
-	"Implement the IStream::CopyTo() method.
-	
-		HRESULT __stdcall CopyTo(
-			[in] IStream* pstm,
-			[in] ULARGE_INTEGER cb,
-			[out] ULARGE_INTEGER* pcbRead,
-			[out] ULARGE_INTEGER* pcbWritten);
-	"
-
-	| read written block countWritten |
-	read := 0.
-	countWritten := pcbWritten bytes notNull.
-	written := 0.
-	[self atEnd or: [read > cb]] whileFalse: 
-			[block := self nextAvailable: 8192.
-			read := read + block size.
-			pstm 
-				Write: block
-				cb: block size
-				pcbWritten: pcbWritten.
-			countWritten ifTrue: [written := written + pcbWritten value]].
-	pcbRead bytes notNull ifTrue: [pcbRead value: read].
-	countWritten ifTrue: [pcbWritten value: written].
-	^Win32Errors.S_OK!
-
-finalRelease
-	"The last reference to the receiver (as a COM object) has been released.
-	This is an opportunity to actively clean up, rather than passively waiting 
-	for finalization which might is asynchronous and may never happen if the 
-	object doesn't become garbage."
-
-	"Override as necessary"
-
-	"Transcript print: self; display: ' final release'; cr"
-
-	!
-
-LockRegion: libOffset cb: cb dwLockType: dwLockType 
-	"Implement the IStream::LockRegion() method.
-	
-		HRESULT __stdcall LockRegion(
-			[in] ULARGE_INTEGER libOffset,
-			[in] ULARGE_INTEGER cb,
-			[in] unsigned long dwLockType);
-	"
-
-	"From MSDN: Support for this method is optional for implementations of stream objects since
-	it may not be supported by the underlying file system. The type of locking supported is also
-	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
-	not supported."
-
-	^OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
-
-queryInterface: anInterfaceClass 
-	"Answer a new interface which supports the specified interface protocol
-	(usually a class), or nil if the receiver does not support the interface."
-
-	^self queryInterface: anInterfaceClass ifNone: []!
-
-queryInterface: interfaceClass ifNone: exceptionHandler 
-	"Answer a new interface which supports the specified interface protocol
-	(usually a class). If the receiver does not support the interface,
-	answer the result of evaluating the niladic valuable, exceptionHandler.
-	N.B. It is not necessary to answer an instance of the requested interface class,
-	a subinstance will do, or even a completely different class, as long as the
-	protocol of the requested class is supported.."
-
-	^(IStream supportsInterface: interfaceClass) 
-		ifTrue: [IStream on: self]
-		ifFalse: [exceptionHandler value]!
-
-Read: pv cb: cb pcbRead: pcbRead 
-	"Implement the IStream::Read().
-	
-		HRESULT __stdcall Read(
-			[out] byte* pv,
-			[in] unsigned long cb,
-			[out] unsigned long* pcbRead);
-	"
-
-	| count |
-	count := cb min: self size - self position.
-	self 
-		basicNext: count
-		into: pv
-		startingAt: 1.
-	pcbRead bytes notNull ifTrue: [pcbRead value: count].
-	^Win32Errors.S_OK!
-
-Revert
-	"Implement the IStream::Revert() method
-
-		HRESULT __stdcall Revert();
-	"
-
-	"Implementation Note: Transactions are not supported, so this method has no effect."
-
-	^Win32Errors.S_FALSE!
-
-Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
-	"Implement the IStream::Seek() method..
-	
-		HRESULT __stdcall Seek(
-			[in] LARGE_INTEGER dlibMove,
-			[in] unsigned long dwOrigin,
-			[out] ULARGE_INTEGER* plibNewPosition);
-	"
-
-	| hr |
-	hr := 
-			[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_SET
-				ifTrue: [self position: dlibMove]
-				ifFalse: 
-					[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_CUR
-						ifTrue: [self skip: dlibMove]
-						ifFalse: 
-							[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_END
-								ifTrue: [self position: self size - dlibMove]
-								ifFalse: [self errorSubscriptBounds: -1]]].
-			Win32Errors.S_OK]
-					on: BoundsError
-					do: [:ex | OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION].
-	plibNewPosition bytes notNull
-		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
-	^hr!
-
-SetSize: libNewSize 
-	"Invoke the SetSize() method of the object wrapped by the receiver.
-	
-		HRESULT __stdcall SetSize(
-			[in] ULARGE_INTEGER libNewSize);
-	"
-
-	^Win32Errors.E_NOTIMPL!
-
-Stat: pstatstg grfStatFlag: grfStatFlag 
-	"Implement the IStream::Stat() method.
-	
-		HRESULT __stdcall Stat(
-			[out] STATSTG* pstatstg,
-			[in] unsigned long grfStatFlag);
-	"
-
-	"Make sure it is zeroed out"
-
-	pstatstg class init: pstatstg.
-	pstatstg
-		type: ##(OLEStructuredStorageConstants at: 'STGTY_STREAM');
-		cbSize: self size.
-	^Win32Errors.S_OK!
-
-UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
-	"Implement the IStream::UnlockRegion() method.
-	
-		HRESULT __stdcall UnlockRegion(
-			[in] ULARGE_INTEGER libOffset,
-			[in] ULARGE_INTEGER cb,
-			[in] unsigned long dwLockType);
-	"
-
-	"Implementation Note: Locking is not supported."
-
-	^OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
-
-Write: pv cb: cb pcbWritten: pcbWritten 
-	"Implement the IStream::Write() method.
-	
-		HRESULT __stdcall Write(
-			[in] byte* pv,
-			[in] unsigned long cb,
-			[out] unsigned long* pcbWritten);
-	"
-
-	self 
-		next: cb
-		putAll: pv
-		startingAt: 1.
-	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
-	^Win32Errors.S_OK! !
-!SequencedStream categoriesFor: #Commit:!public! !
-!SequencedStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!public! !
-!SequencedStream categoriesFor: #finalRelease!public! !
-!SequencedStream categoriesFor: #LockRegion:cb:dwLockType:!public! !
-!SequencedStream categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!SequencedStream categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!SequencedStream categoriesFor: #Read:cb:pcbRead:!public! !
-!SequencedStream categoriesFor: #Revert!public! !
-!SequencedStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!public! !
-!SequencedStream categoriesFor: #SetSize:!public! !
-!SequencedStream categoriesFor: #Stat:grfStatFlag:!public! !
-!SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
-!SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
-
-!ShlwapiLibrary methodsFor!
-
-shCreateMemStream: pInit cbInit: cbInit
-	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
-	Helpstring: Creates a memory stream on a copy of a byte buffer
-
-		IStream* __stdcall SHCreateMemStream(
-			[in]BYTE* pInit,
-			[in]unsigned int cbInit);"
-
-	<stdcall: IStream* 12 byte* dword>
-	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
 
 "End of package definition"!
 

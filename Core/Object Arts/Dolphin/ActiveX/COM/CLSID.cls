@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GUID variableByteSubclass: #CLSID
+Core.GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CLSID guid: (GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
+CLSID guid: (Core.GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
 CLSID comment: 'CLSID the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 
 The CLSIDs of all coclasses registered on your machine can be found under the HKCR\CLSID key in your registry. Each correctly formed entry will have a human (are VB programmers human?) readable form (a ProgID) directly under HKCR.'!
@@ -46,13 +46,9 @@ fromProgID: aString
 fromString: aString
 	"Answer an instance of the receiver instantiated from the argument, aString."
 
-	| answer |
 	aString isEmpty ifTrue: [^self null].
 	aString first ~~ ${ ifTrue: [^self fromProgID: aString].
-	answer := self newNull.
-	OLELibrary default clsidFromString: aString pclsid: answer.
-	^answer
-!
+	^super fromString: aString!
 
 initialize
 	"Private - Initialize the receiver's class variables.

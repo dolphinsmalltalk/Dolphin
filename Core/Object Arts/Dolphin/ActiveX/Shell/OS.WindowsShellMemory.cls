@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalMemory variableByteSubclass: #WindowsShellMemory
+External.Memory variableByteSubclass: #'OS.WindowsShellMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsShellMemory guid: (GUID fromString: '{7d4a2961-9f62-11d3-b376-080046056106}')!
-WindowsShellMemory isIndirection: true!
-WindowsShellMemory comment: ''!
-!WindowsShellMemory categoriesForClass!Unclassified! !
-!WindowsShellMemory class methodsFor!
+OS.WindowsShellMemory guid: (Core.GUID fromString: '{7d4a2961-9f62-11d3-b376-080046056106}')!
+OS.WindowsShellMemory isIndirection: true!
+OS.WindowsShellMemory comment: ''!
+!OS.WindowsShellMemory categoriesForClass!Unclassified! !
+!OS.WindowsShellMemory class methodsFor!
 
 allocator
 	"Private - Answer the appropriate allocator for the receiver.
@@ -25,6 +25,6 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!WindowsShellMemory class categoriesFor: #allocator!accessing!private! !
-!WindowsShellMemory class categoriesFor: #initialize!development!initializing!private! !
+!OS.WindowsShellMemory class categoriesFor: #allocator!accessing!private! !
+!OS.WindowsShellMemory class categoriesFor: #initialize!development!initializing!private! !
 

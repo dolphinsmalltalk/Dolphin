@@ -1,18 +1,18 @@
 ﻿| package |
 package := Package name: 'ActiveX Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{ADODBTest}
-	#{AXEventSinkTest}
-	#{AXTypeLibraryAnalyzerTest}
-	#{CLSIDTest}
-	#{COMInterfaceTest}
-	#{IIDTest}
-	#{TestTypelib}
-	#{XmlFormatterTest}
+	#{Smalltalk.ADODBTest}
+	#{Smalltalk.AXEventSinkTest}
+	#{Smalltalk.AXTypeLibraryAnalyzerTest}
+	#{Smalltalk.CLSIDTest}
+	#{Smalltalk.COMInterfaceTest}
+	#{Smalltalk.IIDTest}
+	#{Smalltalk.TestTypelib}
+	#{Smalltalk.XmlFormatterTest}
 ).
 
 package setPrerequisites: #(
@@ -33,52 +33,52 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #AXEventSinkTest
+Core.Tests.DolphinTest subclass: #AXEventSinkTest
 	instanceVariableNames: 'sink object received'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #AXTypeLibraryAnalyzerTest
+Core.Tests.DolphinTest subclass: #AXTypeLibraryAnalyzerTest
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #COMInterfaceTest
+Core.Tests.DolphinTest subclass: #COMInterfaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #XmlFormatterTest
+Core.Tests.DolphinTest subclass: #XmlFormatterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 DBTest subclass: #ADODBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GUIDTest subclass: #CLSIDTest
+External.Tests.GUIDTest subclass: #CLSIDTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GUIDTest subclass: #IIDTest
+External.Tests.GUIDTest subclass: #IIDTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestResource subclass: #TestTypelib
+XProgramming.SUnit.TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

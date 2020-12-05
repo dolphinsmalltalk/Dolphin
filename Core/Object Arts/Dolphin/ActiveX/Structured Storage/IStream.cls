@@ -157,7 +157,7 @@ handle
 	with CreateStreamOnHGlobal())."
 
 	| hglobal |
-	hglobal := ExternalHandle new.
+	hglobal := External.Handle new.
 	OLELibrary default getHGlobalFromStream: self phglobal: hglobal.
 	^hglobal!
 

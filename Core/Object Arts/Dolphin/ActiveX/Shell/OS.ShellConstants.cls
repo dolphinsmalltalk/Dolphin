@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ShellConstants
+Kernel.SharedPool subclass: #'OS.ShellConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -105,6 +105,7 @@ SharedPool subclass: #ShellConstants
 		'SHGFP_TYPE_CURRENT' -> 16r0.
 		'SHGFP_TYPE_DEFAULT' -> 16r1
 	}!
-ShellConstants guid: (GUID fromString: '{6a23b879-50e2-472a-a9e4-cafafa121755}')!
-ShellConstants comment: ''!
-!ShellConstants categoriesForClass!Unclassified! !
+OS.ShellConstants guid: (Core.GUID fromString: '{6a23b879-50e2-472a-a9e4-cafafa121755}')!
+OS.ShellConstants isNonInstantiable: true!
+OS.ShellConstants comment: ''!
+!OS.ShellConstants categoriesForClass!Unclassified! !

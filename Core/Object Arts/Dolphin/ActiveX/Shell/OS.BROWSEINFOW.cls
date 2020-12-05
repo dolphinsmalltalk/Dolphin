@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommonDialogStructure subclass: #BROWSEINFOW
+OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_flags' -> 16r10.
@@ -15,12 +15,12 @@ CommonDialogStructure subclass: #BROWSEINFOW
 		'_OffsetOf_pidlRoot' -> 16r4.
 		'_OffsetOf_pszDisplayName' -> 16r8
 	}!
-BROWSEINFOW guid: (GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
-BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
+OS.BROWSEINFOW guid: (Core.GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!
-!BROWSEINFOW categoriesForClass!External-Data-Structured-Win32! !
-!BROWSEINFOW methodsFor!
+!OS.BROWSEINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.BROWSEINFOW methodsFor!
 
 displayName
 	"Answer selected folder's display name."
@@ -89,21 +89,21 @@ title: text
 	We must hold onto the string to prevent it being prematurely GC'd."
 
 	self lpszTitle: (title := text asUtf16String)! !
-!BROWSEINFOW categoriesFor: #displayName!accessing!public! !
-!BROWSEINFOW categoriesFor: #flags!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #flags:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #hookFlag!constants!public! !
-!BROWSEINFOW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #initialize:!initializing!private! !
-!BROWSEINFOW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #lpszTitle:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #ownerView:!accessing!public! !
-!BROWSEINFOW categoriesFor: #pidlRoot!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #pidlRoot:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #pszDisplayName:!**compiled accessors**!public! !
-!BROWSEINFOW categoriesFor: #title:!accessing!public! !
+!OS.BROWSEINFOW categoriesFor: #displayName!accessing!public! !
+!OS.BROWSEINFOW categoriesFor: #flags!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #hookFlag!constants!public! !
+!OS.BROWSEINFOW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #initialize:!initializing!private! !
+!OS.BROWSEINFOW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #lpszTitle:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #ownerView:!accessing!public! !
+!OS.BROWSEINFOW categoriesFor: #pidlRoot!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #pidlRoot:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #pszDisplayName:!**compiled accessors**!public! !
+!OS.BROWSEINFOW categoriesFor: #title:!accessing!public! !
 
-!BROWSEINFOW class methodsFor!
+!OS.BROWSEINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 BROWSEINFOW structure
@@ -133,6 +133,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
-!BROWSEINFOW class categoriesFor: #defineFields!public!template definition! !
-!BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BROWSEINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

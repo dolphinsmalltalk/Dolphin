@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Font'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Font component. 
 Copyright (c) Object Arts Ltd 1997-2001.
@@ -11,13 +11,13 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{IFont}
-	#{IFontDisp}
+	#{Smalltalk.IFont}
+	#{Smalltalk.IFontDisp}
 ).
 
 package setMethodNames: #(
-	#(#{AbstractLOGFONT class} #fromOleFont:)
-	#(#{Font class} #fromOleFont:)
+	#(#{Graphics.Font class} #fromOleFont:)
+	#(#{OS.AbstractLOGFONT class} #fromOleFont:)
 ).
 
 package setPrerequisites: #(
@@ -34,50 +34,52 @@ package!
 IUnknown subclass: #IFont
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IDispatch subclass: #IFontDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!AbstractLOGFONT class methodsFor!
-
-fromOleFont: pFont
-	"Answer a new instance of the receiver populated with details from the OLE font on which the
-	<IFont>|<IFontDisp> argument, anIFont, is an interface."
-
-	^self new
-		lfHeight: (pFont size * View desktop resolution y / 72) asInteger;
-"		lfWidth:
-		lfEscapement:
-		lfOrientation:
-"		lfWeight: pFont weight;
-		lfItalic: pFont italic asParameter;
-		lfUnderline: pFont underline asParameter;
-		lfStrikeOut: pFont strikethrough asParameter;
-		lfCharSet: pFont charset;
-"		lfOutPrecision:
-		lfClipPrecision:
-		lfQuality:
-		lfPitchAndFamily:
-"		faceName: pFont name;
-		yourself! !
-!AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
-
-!Font class methodsFor!
+!Graphics.Font class methodsFor!
 
 fromOleFont: pFont
 	"Answer a new instance of the receiver which is equivalent to the OLE font on which the
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
-!Font class categoriesFor: #fromOleFont:!instance creation!public! !
+!Graphics.Font class categoriesFor: #fromOleFont:!instance creation!public! !
+
+!OS.AbstractLOGFONT class methodsFor!
+
+fromOleFont: pFont
+	"Answer a new instance of the receiver populated with details from the OLE font on which the
+	<IFont>|<IFontDisp> argument, anIFont, is an interface."
+
+	^self new
+		lfHeight: (pFont size * UI.View desktop resolution y / 72) asInteger;
+		lfWeight: pFont weight;
+		lfItalic: pFont italic asParameter;
+		lfUnderline: pFont underline asParameter;
+		lfStrikeOut: pFont strikethrough asParameter;
+		lfCharSet: pFont charset;
+		faceName: pFont name;
+		yourself
+	"		lfWidth:
+		lfEscapement:
+		lfOrientation:
+"
+	"		lfOutPrecision:
+		lfClipPrecision:
+		lfQuality:
+		lfPitchAndFamily:
+"! !
+!OS.AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
 
 "End of package definition"!
 
