@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_Collection subclass: #ADODBFields15
+ADODB._Collection subclass: #'ADODB.Fields15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBFields15 guid: (IID fromString: '{00001506-0000-0010-8000-00aa006d2ea4}')!
-ADODBFields15 comment: '`ADODBFields15` is a wrapper class for the COM interface ''ADODB.Fields15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Fields15 guid: (OS.COM.IID fromString: '{00001506-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Fields15 comment: '`ADODBFields15` is a wrapper class for the COM interface ''ADODB.Fields15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -32,8 +32,8 @@ interface Fields15 : _Collection
 };
 ```
 '!
-!ADODBFields15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBFields15 methodsFor!
+!ADODB.Fields15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Fields15 methodsFor!
 
 get_Item: index ppvObject: ppvObject
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -42,28 +42,28 @@ get_Item: index ppvObject: ppvObject
 			[in]VARIANT Index,
 			[out, retval]Field** ppvObject);"
 
-	<virtual stdcall: hresult 11 variant ADODBField**>
+	<virtual stdcall: hresult 11 variant Field**>
 	^self invalidCall: _failureCode!
 
 item: index
-	"Answer the <ADODBField> value of the 'Item' property of the receiver."
+	"Answer the <Field> value of the 'Item' property of the receiver."
 
 	| answer |
-	answer := ADODBField newPointer.
+	answer := Field newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBFields15 categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
-!ADODBFields15 categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Fields15 categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
+!ADODB.Fields15 categoriesFor: #item:!**auto generated**!properties!public! !
 
-!ADODBFields15 class methodsFor!
+!ADODB.Fields15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Fields15'
-		ADODBFields15 defineTemplate"
+		Fields15 defineTemplate"
 
 	self
 		defineFunction: #get_Item:ppvObject:
-			argumentTypes: 'variant ADODBField**'
+			argumentTypes: 'variant Field**'
 ! !
-!ADODBFields15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Fields15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

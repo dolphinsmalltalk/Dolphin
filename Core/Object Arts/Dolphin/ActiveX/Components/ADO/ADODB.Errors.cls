@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_Collection subclass: #ADODBErrors
+ADODB._Collection subclass: #'ADODB.Errors'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBErrors guid: (IID fromString: '{00000501-0000-0010-8000-00aa006d2ea4}')!
-ADODBErrors comment: '`ADODBErrors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Errors guid: (OS.COM.IID fromString: '{00000501-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Errors comment: '`ADODBErrors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface Errors : _Collection
 };
 ```
 '!
-!ADODBErrors categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBErrors methodsFor!
+!ADODB.Errors categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Errors methodsFor!
 
 Clear
 	"Invoke the Clear() method of the COM object.
@@ -51,30 +51,30 @@ get_Item: index ppvObject: ppvObject
 			[in]VARIANT Index,
 			[out, retval]Error** ppvObject);"
 
-	<virtual stdcall: hresult 11 variant ADODBError**>
+	<virtual stdcall: hresult 11 variant Error**>
 	^self invalidCall: _failureCode!
 
 item: index
-	"Answer the <ADODBError> value of the 'Item' property of the receiver."
+	"Answer the <Error> value of the 'Item' property of the receiver."
 
 	| answer |
-	answer := ADODBError newPointer.
+	answer := Error newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBErrors categoriesFor: #Clear!**auto generated**!COM Interfaces-Errors!public! !
-!ADODBErrors categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
-!ADODBErrors categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Errors categoriesFor: #Clear!**auto generated**!COM Interfaces-Errors!public! !
+!ADODB.Errors categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
+!ADODB.Errors categoriesFor: #item:!**auto generated**!properties!public! !
 
-!ADODBErrors class methodsFor!
+!ADODB.Errors class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Errors'
-		ADODBErrors defineTemplate"
+		Errors defineTemplate"
 
 	self
 		defineFunction: #get_Item:ppvObject:
-			argumentTypes: 'variant ADODBError**';
+			argumentTypes: 'variant Error**';
 		defineFunction: #Clear
 ! !
-!ADODBErrors class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Errors class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

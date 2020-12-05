@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODBADORecordConstruction
+OS.COM.IDispatch subclass: #'ADODB.ADORecordConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBADORecordConstruction guid: (IID fromString: '{00000567-0000-0010-8000-00aa006d2ea4}')!
-ADODBADORecordConstruction comment: '`ADODBADORecordConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.ADORecordConstruction guid: (OS.COM.IID fromString: '{00000567-0000-0010-8000-00aa006d2ea4}')!
+ADODB.ADORecordConstruction comment: '`ADODBADORecordConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface ADORecordConstruction : IDispatch
 };
 ```
 '!
-!ADODBADORecordConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBADORecordConstruction methodsFor!
+!ADODB.ADORecordConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.ADORecordConstruction methodsFor!
 
 get_Row: ppRow
 	"Private - Get the value of the 'Row' property of the receiver.
@@ -83,18 +83,18 @@ row: ppRow
 	"Set the 'Row' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Row: ppRow! !
-!ADODBADORecordConstruction categoriesFor: #get_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #parentRow:!**auto generated**!properties!public! !
-!ADODBADORecordConstruction categoriesFor: #put_ParentRow:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #put_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #row!**auto generated**!properties!public! !
-!ADODBADORecordConstruction categoriesFor: #row:!**auto generated**!properties!public! !
+!ADODB.ADORecordConstruction categoriesFor: #get_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+!ADODB.ADORecordConstruction categoriesFor: #parentRow:!**auto generated**!properties!public! !
+!ADODB.ADORecordConstruction categoriesFor: #put_ParentRow:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+!ADODB.ADORecordConstruction categoriesFor: #put_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+!ADODB.ADORecordConstruction categoriesFor: #row!**auto generated**!properties!public! !
+!ADODB.ADORecordConstruction categoriesFor: #row:!**auto generated**!properties!public! !
 
-!ADODBADORecordConstruction class methodsFor!
+!ADODB.ADORecordConstruction class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.ADORecordConstruction'
-		ADODBADORecordConstruction defineTemplate"
+		ADORecordConstruction defineTemplate"
 
 	self
 		defineFunction: #get_Row:
@@ -104,5 +104,5 @@ defineFunctions
 		defineFunction: #put_ParentRow:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADORecordConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADORecordConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

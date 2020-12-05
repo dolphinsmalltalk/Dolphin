@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODBProperty
+OS.COM.IDispatch subclass: #'ADODB.Property'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBProperty guid: (IID fromString: '{00000503-0000-0010-8000-00aa006d2ea4}')!
-ADODBProperty comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Property guid: (OS.COM.IID fromString: '{00000503-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Property comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -45,8 +45,8 @@ interface Property : IDispatch
 };
 ```
 '!
-!ADODBProperty categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBProperty methodsFor!
+!ADODB.Property categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Property methodsFor!
 
 attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
@@ -161,27 +161,27 @@ value: pval
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pval asVariant! !
-!ADODBProperty categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODBProperty categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODBProperty categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #printValueOn:!printing!private! !
-!ADODBProperty categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #type!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #value!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #attributes!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #attributes:!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB.Property categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB.Property categoriesFor: #name!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #printValueOn:!printing!private! !
+!ADODB.Property categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Property!private! !
+!ADODB.Property categoriesFor: #type!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Property categoriesFor: #value:!**auto generated**!properties!public! !
 
-!ADODBProperty class methodsFor!
+!ADODB.Property class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Property'
-		ADODBProperty defineTemplate"
+		Property defineTemplate"
 
 	self
 		defineFunction: #get_Value:
@@ -197,5 +197,5 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODBProperty class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Property class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

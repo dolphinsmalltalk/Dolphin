@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_Collection subclass: #ADODB_DynaCollection
+ADODB._Collection subclass: #'ADODB._DynaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_DynaCollection guid: (IID fromString: '{00000513-0000-0010-8000-00aa006d2ea4}')!
-ADODB_DynaCollection comment: '`ADODB_DynaCollection` is a wrapper class for the COM interface ''ADODB._DynaCollection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._DynaCollection guid: (OS.COM.IID fromString: '{00000513-0000-0010-8000-00aa006d2ea4}')!
+ADODB._DynaCollection comment: '`ADODB_DynaCollection` is a wrapper class for the COM interface ''ADODB._DynaCollection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -32,8 +32,8 @@ interface _DynaCollection : _Collection
 };
 ```
 '!
-!ADODB_DynaCollection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_DynaCollection methodsFor!
+!ADODB._DynaCollection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._DynaCollection methodsFor!
 
 Append: object
 	"Invoke the Append() method of the COM object.
@@ -57,15 +57,15 @@ Delete: index
 
 	<virtual stdcall: hresult 12 variant>
 	^self invalidCall: _failureCode! !
-!ADODB_DynaCollection categoriesFor: #Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
-!ADODB_DynaCollection categoriesFor: #delete:!**auto generated**!methods!public! !
-!ADODB_DynaCollection categoriesFor: #Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
+!ADODB._DynaCollection categoriesFor: #Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
+!ADODB._DynaCollection categoriesFor: #delete:!**auto generated**!methods!public! !
+!ADODB._DynaCollection categoriesFor: #Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
 
-!ADODB_DynaCollection class methodsFor!
+!ADODB._DynaCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._DynaCollection'
-		ADODB_DynaCollection defineTemplate"
+		_DynaCollection defineTemplate"
 
 	self
 		defineFunction: #Append:
@@ -73,5 +73,5 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
-!ADODB_DynaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._DynaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

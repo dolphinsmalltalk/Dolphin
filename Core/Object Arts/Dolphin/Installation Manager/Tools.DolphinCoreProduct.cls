@@ -91,6 +91,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Sockets\Sockets Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\CDO\CDO.pax' #plain #imageBased);
 		yourself.
 

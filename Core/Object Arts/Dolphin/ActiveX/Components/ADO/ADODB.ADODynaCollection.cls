@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADOCollection subclass: #ADODynaCollection
+ADODB.ADOCollection subclass: #'ADODB.ADODynaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODynaCollection guid: (GUID fromString: '{cf1fb266-a204-4f8e-b6bb-bcb2806ef724}')!
-ADODynaCollection comment: ''!
-!ADODynaCollection categoriesForClass!Unclassified! !
-!ADODynaCollection methodsFor!
+ADODB.ADODynaCollection guid: (Core.GUID fromString: '{cf1fb266-a204-4f8e-b6bb-bcb2806ef724}')!
+ADODB.ADODynaCollection comment: ''!
+!ADODB.ADODynaCollection categoriesForClass!Unclassified! !
+!ADODB.ADODynaCollection methodsFor!
 
 add: newElement
 	"Append a new element to the receiver."
@@ -22,6 +22,6 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^interface Delete: (index-1) asVariant! !
-!ADODynaCollection categoriesFor: #add:!adding!public! !
-!ADODynaCollection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODB.ADODynaCollection categoriesFor: #add:!adding!public! !
+!ADODB.ADODynaCollection categoriesFor: #removeAtIndex:!public!removing! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_ADO subclass: #ADODB_Record
+ADODB._ADO subclass: #'ADODB._Record'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Record guid: (IID fromString: '{00001562-0000-0010-8000-00aa006d2ea4}')!
-ADODB_Record comment: '`ADODB_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Record guid: (OS.COM.IID fromString: '{00001562-0000-0010-8000-00aa006d2ea4}')!
+ADODB._Record comment: '`ADODB_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -101,8 +101,8 @@ interface _Record : _ADO
 };
 ```
 '!
-!ADODB_Record categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_Record methodsFor!
+!ADODB._Record categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._Record methodsFor!
 
 activeConnection
 	"Answer the <variant> value of the 'ActiveConnection' property of the receiver."
@@ -192,12 +192,12 @@ DeleteRecord: source Async: async
 	^self invalidCall: _failureCode!
 
 fields
-	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
+	"Answer the <ADODB.Fields> value of the 'Fields' property of the receiver.
 	Implementation Note: Originally auto-generated from the ADO type library,
 	this method has been modified to answer a Smalltalk <sequencedReadableCollection>."
 
 	| answer |
-	answer := ADODBFields newPointer.
+	answer := Fields newPointer.
 	self get_Fields: answer.
 	^ADOCollection on: answer!
 
@@ -216,7 +216,7 @@ get_Fields: ppFlds
 		HRESULT __stdcall Fields(
 			[out, retval]Fields** ppFlds);"
 
-	<virtual stdcall: hresult 24 ADODBFields**>
+	<virtual stdcall: hresult 24 Fields**>
 	^self invalidCall: _failureCode!
 
 get_Mode: pMode
@@ -265,10 +265,10 @@ get_State: pState
 	^self invalidCall: _failureCode!
 
 getChildren
-	"Answer the <ADODB_Recordset> result of invoking the GetChildren() method of the COM object."
+	"Answer the <_Recordset> result of invoking the GetChildren() method of the COM object."
 
 	| answer |
-	answer := ADODB_Recordset newPointer.
+	answer := _Recordset newPointer.
 	self GetChildren: answer.
 	^answer asObject!
 
@@ -278,7 +278,7 @@ GetChildren: pprset
 		HRESULT __stdcall GetChildren(
 			[out, retval]_Recordset** pprset);"
 
-	<virtual stdcall: hresult 26 ADODB_Recordset**>
+	<virtual stdcall: hresult 26 _Recordset**>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -428,12 +428,12 @@ put_Source: pvar
 
 putref_ActiveConnection: pvar
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
-	 receiver to the <ADODB_Connection*> argument, pvar.
+	 receiver to the <_Connection*> argument, pvar.
 
 		HRESULT __stdcall ActiveConnection(
 			[in]_Connection* pvar);"
 
-	<virtual stdcall: hresult 11 ADODB_Connection*>
+	<virtual stdcall: hresult 11 _Connection*>
 	^self invalidCall: _failureCode!
 
 putref_Source: pvar
@@ -455,7 +455,7 @@ recordType
 	^answer asObject!
 
 setActiveConnection: pvar
-	"Set the 'ActiveConnection' property of the receiver to the <ADODB_Connection*> value of the argument."
+	"Set the 'ActiveConnection' property of the receiver to the <_Connection*> value of the argument."
 
 	self putref_ActiveConnection: pvar!
 
@@ -486,54 +486,54 @@ state
 	^answer asObject!
 
 value
-	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
+	"Answer the <ADODB.Fields> value of the 'Fields' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
-!ADODB_Record categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #activeConnection:!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Record!public! !
-!ADODB_Record categoriesFor: #Close!**auto generated**!COM Interfaces-_Record!public! !
-!ADODB_Record categoriesFor: #copyRecord!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #copyRecord:destination:userName:password:options:async:!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #CopyRecord:Destination:UserName:Password:Options:Async:pbstrNewURL:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #deleteRecord!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #DeleteRecord:Async:!**auto generated**!COM Interfaces-_Record!public! !
-!ADODB_Record categoriesFor: #fields!properties!public! !
-!ADODB_Record categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_ParentURL:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_RecordType:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_Source:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #get_State:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #getChildren!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #GetChildren:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB_Record categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB_Record categoriesFor: #mode!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #mode:!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #moveRecord!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #moveRecord:destination:userName:password:options:async:!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #MoveRecord:Destination:UserName:Password:Options:Async:pbstrNewURL:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #open!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #open:activeConnection:mode:createOptions:options:userName:password:!**auto generated**!methods!public! !
-!ADODB_Record categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #parentURL!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #put_Source:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #putref_Source:!**auto generated**!COM Interfaces-_Record!private! !
-!ADODB_Record categoriesFor: #recordType!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #setSource:!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #source!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #source:!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #state!**auto generated**!properties!public! !
-!ADODB_Record categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #activeConnection!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #activeConnection:!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Record!public! !
+!ADODB._Record categoriesFor: #Close!**auto generated**!COM Interfaces-_Record!public! !
+!ADODB._Record categoriesFor: #copyRecord!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #copyRecord:destination:userName:password:options:async:!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #CopyRecord:Destination:UserName:Password:Options:Async:pbstrNewURL:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #deleteRecord!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #DeleteRecord:Async:!**auto generated**!COM Interfaces-_Record!public! !
+!ADODB._Record categoriesFor: #fields!properties!public! !
+!ADODB._Record categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_ParentURL:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_RecordType:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_Source:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #get_State:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #getChildren!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #GetChildren:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB._Record categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB._Record categoriesFor: #mode!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #mode:!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #moveRecord!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #moveRecord:destination:userName:password:options:async:!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #MoveRecord:Destination:UserName:Password:Options:Async:pbstrNewURL:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #open!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #open:activeConnection:mode:createOptions:options:userName:password:!**auto generated**!methods!public! !
+!ADODB._Record categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #parentURL!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #put_Source:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #putref_Source:!**auto generated**!COM Interfaces-_Record!private! !
+!ADODB._Record categoriesFor: #recordType!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #setSource:!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #source!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #source:!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB._Record categoriesFor: #value!**auto generated**!properties!public! !
 
-!ADODB_Record class methodsFor!
+!ADODB._Record class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Record) for which the receiver is the default interface."
@@ -543,7 +543,7 @@ clsid
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._Record'
-		ADODB_Record defineTemplate"
+		_Record defineTemplate"
 
 	self
 		defineFunction: #get_ActiveConnection:
@@ -551,7 +551,7 @@ defineFunctions
 		defineFunction: #put_ActiveConnection:
 			argumentTypes: 'bstr';
 		defineFunction: #putref_ActiveConnection:
-			argumentTypes: 'ADODB_Connection*';
+			argumentTypes: '_Connection*';
 		defineFunction: #get_State:
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Source:
@@ -576,13 +576,13 @@ defineFunctions
 			argumentTypes: 'variant variant sdword sdword sdword bstr bstr';
 		defineFunction: #Close;
 		defineFunction: #get_Fields:
-			argumentTypes: 'ADODBFields**';
+			argumentTypes: 'Fields**';
 		defineFunction: #get_RecordType:
 			argumentTypes: 'sdword*';
 		defineFunction: #GetChildren:
-			argumentTypes: 'ADODB_Recordset**';
+			argumentTypes: '_Recordset**';
 		defineFunction: #Cancel
 ! !
-!ADODB_Record class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Record class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Record class categoriesFor: #clsid!**auto generated**!constants!private! !
+!ADODB._Record class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

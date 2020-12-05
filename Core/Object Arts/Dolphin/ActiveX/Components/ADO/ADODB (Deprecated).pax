@@ -1,0 +1,80 @@
+﻿| package |
+package := Package name: 'ADODB (Deprecated)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk ADODB deprecated classes, methods and names. 
+'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.ADOCollection}
+	#{Smalltalk.ADODB_Collection}
+	#{Smalltalk.ADODB_Command}
+	#{Smalltalk.ADODB_Connection}
+	#{Smalltalk.ADODB_Parameter}
+	#{Smalltalk.ADODB_Recordset}
+	#{Smalltalk.ADODB_Stream}
+	#{Smalltalk.ADODBConstants}
+	#{Smalltalk.ADODBError}
+	#{Smalltalk.ADODBField}
+	#{Smalltalk.ADODBFields}
+	#{Smalltalk.ADODBParameters}
+	#{Smalltalk.ADODBProperties}
+	#{Smalltalk.ADODBProperty}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.ADOCollection}
+	#{Smalltalk.ADODB_Collection}
+	#{Smalltalk.ADODB_Command}
+	#{Smalltalk.ADODB_Connection}
+	#{Smalltalk.ADODB_Parameter}
+	#{Smalltalk.ADODB_Recordset}
+	#{Smalltalk.ADODB_Stream}
+	#{Smalltalk.ADODBConstants}
+	#{Smalltalk.ADODBError}
+	#{Smalltalk.ADODBField}
+	#{Smalltalk.ADODBFields}
+	#{Smalltalk.ADODBParameters}
+	#{Smalltalk.ADODBProperties}
+	#{Smalltalk.ADODBProperty}
+).
+
+package setPrerequisites: #(
+	'ADODB'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.ADOCollection := ADODB.ADOCollection!
+
+Smalltalk.ADODB_Collection := ADODB._Collection!
+
+Smalltalk.ADODB_Command := ADODB._Command!
+
+Smalltalk.ADODB_Connection := ADODB._Connection!
+
+Smalltalk.ADODB_Parameter := ADODB._Parameter!
+
+Smalltalk.ADODB_Recordset := ADODB._Recordset!
+
+Smalltalk.ADODB_Stream := ADODB._Stream!
+
+Smalltalk.ADODBConstants := ADODB.ADODBConstants!
+
+Smalltalk.ADODBError := ADODB.Error!
+
+Smalltalk.ADODBField := ADODB.Field!
+
+Smalltalk.ADODBFields := ADODB.Fields!
+
+Smalltalk.ADODBParameters := ADODB.Parameters!
+
+Smalltalk.ADODBProperties := ADODB.Properties!
+
+Smalltalk.ADODBProperty := ADODB.Property!
+
+
+"End of package definition"!
+

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODB_Stream
+OS.COM.IDispatch subclass: #'ADODB._Stream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Stream guid: (IID fromString: '{00001565-0000-0010-8000-00aa006d2ea4}')!
-ADODB_Stream comment: '`ADODB_Stream` is a wrapper class for the COM interface ''ADODB._Stream'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Stream guid: (OS.COM.IID fromString: '{00001565-0000-0010-8000-00aa006d2ea4}')!
+ADODB._Stream comment: '`ADODB_Stream` is a wrapper class for the COM interface ''ADODB._Stream'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -109,8 +109,8 @@ interface _Stream : IDispatch
 };
 ```
 '!
-!ADODB_Stream categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_Stream methodsFor!
+!ADODB._Stream categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._Stream methodsFor!
 
 Cancel
 	"Invoke the Cancel() method of the COM object.
@@ -154,7 +154,7 @@ CopyTo: destStream CharNumber: charNumber
 			[in]_Stream* DestStream,
 			[in, defaultvalue(-1)]long CharNumber);"
 
-	<virtual stdcall: hresult 27 ADODB_Stream* sdword>
+	<virtual stdcall: hresult 27 _Stream* sdword>
 	^self invalidCall: _failureCode!
 
 eos
@@ -515,57 +515,57 @@ WriteText: data Options: options
 
 	<virtual stdcall: hresult 32 bstr sdword>
 	^self invalidCall: _failureCode! !
-!ADODB_Stream categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #charset!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #charset:!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #Close!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #copyTo:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #CopyTo:CharNumber:!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #eos!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #Flush!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_EOS:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_LineSeparator:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_Position:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_Size:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_State:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #get_Type:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #lineSeparator!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #lineSeparator:!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #LoadFromFile:!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #mode!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #mode:!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #open!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #open:mode:options:userName:password:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #Open:Mode:Options:UserName:Password:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #position!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #position:!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #put_LineSeparator:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #put_Position:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #put_Type:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #read!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #read:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #Read:pval:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #readText!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #readText:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #ReadText:pbstr:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #saveToFile:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #SaveToFile:Options:!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #SetEOS!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #size!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #SkipLine!**auto generated**!COM Interfaces-_Stream!public! !
-!ADODB_Stream categoriesFor: #state!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #type!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #type:!**auto generated**!properties!public! !
-!ADODB_Stream categoriesFor: #write:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #Write:!**auto generated**!COM Interfaces-_Stream!private! !
-!ADODB_Stream categoriesFor: #writeText:!**auto generated**!methods!public! !
-!ADODB_Stream categoriesFor: #WriteText:Options:!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #charset!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #charset:!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #Close!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #copyTo:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #CopyTo:CharNumber:!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #eos!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #Flush!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_EOS:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_LineSeparator:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_Position:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_Size:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_State:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #get_Type:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #lineSeparator!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #lineSeparator:!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #LoadFromFile:!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #mode!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #mode:!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #open!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #open:mode:options:userName:password:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #Open:Mode:Options:UserName:Password:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #position!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #position:!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #put_LineSeparator:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #put_Position:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #put_Type:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #read!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #read:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #Read:pval:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #readText!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #readText:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #ReadText:pbstr:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #saveToFile:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #SaveToFile:Options:!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #SetEOS!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #size!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #SkipLine!**auto generated**!COM Interfaces-_Stream!public! !
+!ADODB._Stream categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #type!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #type:!**auto generated**!properties!public! !
+!ADODB._Stream categoriesFor: #write:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #Write:!**auto generated**!COM Interfaces-_Stream!private! !
+!ADODB._Stream categoriesFor: #writeText:!**auto generated**!methods!public! !
+!ADODB._Stream categoriesFor: #WriteText:Options:!**auto generated**!COM Interfaces-_Stream!public! !
 
-!ADODB_Stream class methodsFor!
+!ADODB._Stream class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Stream) for which the receiver is the default interface."
@@ -575,7 +575,7 @@ clsid
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._Stream'
-		ADODB_Stream defineTemplate"
+		_Stream defineTemplate"
 
 	self
 		defineFunction: #get_Size:
@@ -614,7 +614,7 @@ defineFunctions
 			argumentTypes: 'variant';
 		defineFunction: #SetEOS;
 		defineFunction: #CopyTo:CharNumber:
-			argumentTypes: 'ADODB_Stream* sdword';
+			argumentTypes: '_Stream* sdword';
 		defineFunction: #Flush;
 		defineFunction: #SaveToFile:Options:
 			argumentTypes: 'bstr sdword';
@@ -626,6 +626,6 @@ defineFunctions
 			argumentTypes: 'bstr sdword';
 		defineFunction: #Cancel
 ! !
-!ADODB_Stream class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Stream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Stream class categoriesFor: #clsid!**auto generated**!constants!private! !
+!ADODB._Stream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

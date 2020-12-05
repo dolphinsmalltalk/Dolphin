@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_ADO subclass: #ADODBRecordset15
+ADODB._ADO subclass: #'ADODB.Recordset15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset15 guid: (IID fromString: '{0000150e-0000-0010-8000-00aa006d2ea4}')!
-ADODBRecordset15 comment: '`ADODBRecordset15` is a wrapper class for the COM interface ''ADODB.Recordset15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Recordset15 guid: (OS.COM.IID fromString: '{0000150e-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Recordset15 comment: '`ADODBRecordset15` is a wrapper class for the COM interface ''ADODB.Recordset15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -219,14 +219,14 @@ interface Recordset15 : _ADO
 };
 ```
 '!
-!ADODBRecordset15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBRecordset15 methodsFor!
+!ADODB.Recordset15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Recordset15 methodsFor!
 
 _xClone
-	"Answer the <ADODB_Recordset> result of invoking the _xClone() method of the COM object."
+	"Answer the <_Recordset> result of invoking the _xClone() method of the COM object."
 
 	| answer |
-	answer := ADODB_Recordset newPointer.
+	answer := _Recordset newPointer.
 	self _xClone: answer.
 	^answer asObject!
 
@@ -236,7 +236,7 @@ _xClone: ppvObject
 		HRESULT __stdcall _xClone(
 			[out, retval]_Recordset** ppvObject);"
 
-	<virtual stdcall: hresult 57 ADODB_Recordset**>
+	<virtual stdcall: hresult 57 _Recordset**>
 	^self invalidCall: _failureCode!
 
 _xResync
@@ -466,12 +466,12 @@ eof
 	^answer asObject!
 
 fields
-	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
+	"Answer the <Fields> value of the 'Fields' property of the receiver.
 	Implementation Note: Originally auto-generated from the ADO type library,
 	this method has been modified to answer a Smalltalk sequenceable collection."
 
 	| answer |
-	answer := ADODBFields newPointer.
+	answer := Fields newPointer.
 	self get_Fields: answer.
 	^ADOCollection on: answer
 !
@@ -626,7 +626,7 @@ get_Fields: ppvObject
 		HRESULT __stdcall Fields(
 			[out, retval]Fields** ppvObject);"
 
-	<virtual stdcall: hresult 22 ADODBFields**>
+	<virtual stdcall: hresult 22 Fields**>
 	^self invalidCall: _failureCode!
 
 get_Filter: criteria
@@ -862,7 +862,7 @@ nextRecordset
 	"Invoke the NextRecordset() method of the COM object."
 
 	| outputs |
-	outputs := {VARIANT new. ADODB_Recordset newPointer}.
+	outputs := {VARIANT new. _Recordset newPointer}.
 	self NextRecordset: (outputs basicAt: 1) ppiRs: (outputs basicAt: 2).
 	^outputs collect: [:each | each asObject]!
 
@@ -873,7 +873,7 @@ NextRecordset: recordsAffected ppiRs: ppiRs
 			[out, optional]VARIANT* RecordsAffected,
 			[out, retval]_Recordset** ppiRs);"
 
-	<virtual stdcall: hresult 62 variant* ADODB_Recordset**>
+	<virtual stdcall: hresult 62 variant* _Recordset**>
 	^self invalidCall: _failureCode!
 
 open
@@ -1249,143 +1249,143 @@ UpdateBatch: affectRecords
 	^self invalidCall: _failureCode!
 
 value
-	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
+	"Answer the <Fields> value of the 'Fields' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
-!ADODBRecordset15 categoriesFor: #_xClone!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #_xClone:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #_xResync!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #_xResync:!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #absolutePage!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #absolutePage:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #absolutePosition!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #absolutePosition:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #activeConnection:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #addNew!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #addNew:values:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #AddNew:Values:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #bof!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #bookmark!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #bookmark:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cacheSize!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cacheSize:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cancelBatch!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #CancelBatch:!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #close!operations!public! !
-!ADODBRecordset15 categoriesFor: #Close!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #collect:!enumerating!public! !
-!ADODBRecordset15 categoriesFor: #collect:pvar:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cursorLocation!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cursorLocation:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cursorType!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #cursorType:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #delete!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Delete:!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #do:!enumerating!public! !
-!ADODBRecordset15 categoriesFor: #editMode!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #eof!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #fields!properties!public! !
-!ADODBRecordset15 categoriesFor: #filter!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #filter:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #find:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #find:skipRecords:searchDirection:start:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Find:SkipRecords:SearchDirection:Start:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_AbsolutePage:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_AbsolutePosition:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_BOF:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Bookmark:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_CacheSize:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Collect:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_CursorLocation:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_CursorType:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_EditMode:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_EOF:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Filter:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_LockType:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_MarshalOptions:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_MaxRecords:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_PageCount:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_PageSize:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_RecordCount:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Sort:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #getRows!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #getRows:start:fields:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #GetRows:Start:Fields:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #isEmpty!public!testing! !
-!ADODBRecordset15 categoriesFor: #lockType!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #lockType:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #marshalOptions!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #marshalOptions:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #maxRecords!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #maxRecords:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #move:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #move:start:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Move:Start:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #MoveFirst!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #MoveLast!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #MoveNext!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #MovePrevious!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #nextRecordset!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #NextRecordset:ppiRs:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #open!methods!public! !
-!ADODBRecordset15 categoriesFor: #open:!methods!public! !
-!ADODBRecordset15 categoriesFor: #open:activeConnection:!methods!public! !
-!ADODBRecordset15 categoriesFor: #open:activeConnection:cursorType:lockType:options:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Open:ActiveConnection:CursorType:LockType:Options:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #pageCount!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #pageSize!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #pageSize:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #put_AbsolutePage:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_AbsolutePosition:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_Bookmark:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_CacheSize:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_Collect:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_CursorLocation:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_CursorType:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_Filter:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_LockType:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_MarshalOptions:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_MaxRecords:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_PageSize:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_Sort:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #put_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #putref_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #recordCount!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #requery!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Requery:!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #setSource:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #size!properties!public! !
-!ADODBRecordset15 categoriesFor: #sort!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #sort:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #source!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #source:!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #state!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #status!**auto generated**!properties!public! !
-!ADODBRecordset15 categoriesFor: #supports:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Supports:pb:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #update!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #update:values:!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #Update:Values:!**auto generated**!COM Interfaces-Recordset15!private! !
-!ADODBRecordset15 categoriesFor: #updateBatch!**auto generated**!methods!public! !
-!ADODBRecordset15 categoriesFor: #UpdateBatch:!**auto generated**!COM Interfaces-Recordset15!public! !
-!ADODBRecordset15 categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #_xClone!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #_xClone:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #_xResync!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #_xResync:!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #absolutePage!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #absolutePage:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #absolutePosition!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #absolutePosition:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #activeConnection!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #activeConnection:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #addNew!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #addNew:values:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #AddNew:Values:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #bof!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #bookmark!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #bookmark:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cacheSize!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cacheSize:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cancelBatch!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #CancelBatch:!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #close!operations!public! !
+!ADODB.Recordset15 categoriesFor: #Close!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #collect:!enumerating!public! !
+!ADODB.Recordset15 categoriesFor: #collect:pvar:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cursorLocation!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cursorLocation:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cursorType!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #cursorType:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #delete!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Delete:!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #do:!enumerating!public! !
+!ADODB.Recordset15 categoriesFor: #editMode!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #eof!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #fields!properties!public! !
+!ADODB.Recordset15 categoriesFor: #filter!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #filter:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #find:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #find:skipRecords:searchDirection:start:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Find:SkipRecords:SearchDirection:Start:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_AbsolutePage:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_AbsolutePosition:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_BOF:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Bookmark:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_CacheSize:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Collect:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_CursorLocation:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_CursorType:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_EditMode:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_EOF:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Filter:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_LockType:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_MarshalOptions:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_MaxRecords:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_PageCount:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_PageSize:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_RecordCount:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Sort:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #getRows!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #getRows:start:fields:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #GetRows:Start:Fields:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #isEmpty!public!testing! !
+!ADODB.Recordset15 categoriesFor: #lockType!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #lockType:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #marshalOptions!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #marshalOptions:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #maxRecords!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #maxRecords:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #move:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #move:start:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Move:Start:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #MoveFirst!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #MoveLast!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #MoveNext!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #MovePrevious!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #nextRecordset!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #NextRecordset:ppiRs:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #open!methods!public! !
+!ADODB.Recordset15 categoriesFor: #open:!methods!public! !
+!ADODB.Recordset15 categoriesFor: #open:activeConnection:!methods!public! !
+!ADODB.Recordset15 categoriesFor: #open:activeConnection:cursorType:lockType:options:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Open:ActiveConnection:CursorType:LockType:Options:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #pageCount!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #pageSize!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #pageSize:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #put_AbsolutePage:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_AbsolutePosition:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_Bookmark:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_CacheSize:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_Collect:pvar:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_CursorLocation:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_CursorType:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_Filter:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_LockType:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_MarshalOptions:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_MaxRecords:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_PageSize:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_Sort:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #put_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #putref_Source:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #recordCount!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #requery!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Requery:!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #setSource:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #size!properties!public! !
+!ADODB.Recordset15 categoriesFor: #sort!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #sort:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #source!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #source:!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #status!**auto generated**!properties!public! !
+!ADODB.Recordset15 categoriesFor: #supports:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Supports:pb:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #update!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #update:values:!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #Update:Values:!**auto generated**!COM Interfaces-Recordset15!private! !
+!ADODB.Recordset15 categoriesFor: #updateBatch!**auto generated**!methods!public! !
+!ADODB.Recordset15 categoriesFor: #UpdateBatch:!**auto generated**!COM Interfaces-Recordset15!public! !
+!ADODB.Recordset15 categoriesFor: #value!**auto generated**!properties!public! !
 
-!ADODBRecordset15 class methodsFor!
+!ADODB.Recordset15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Recordset15'
-		ADODBRecordset15 defineTemplate"
+		Recordset15 defineTemplate"
 
 	self
 		defineFunction: #get_AbsolutePosition:
@@ -1415,7 +1415,7 @@ defineFunctions
 		defineFunction: #get_EOF:
 			argumentTypes: 'varbool*';
 		defineFunction: #get_Fields:
-			argumentTypes: 'ADODBFields**';
+			argumentTypes: 'Fields**';
 		defineFunction: #get_LockType:
 			argumentTypes: 'sdword*';
 		defineFunction: #put_LockType:
@@ -1479,7 +1479,7 @@ defineFunctions
 		defineFunction: #get_State:
 			argumentTypes: 'sdword*';
 		defineFunction: #_xClone:
-			argumentTypes: 'ADODB_Recordset**';
+			argumentTypes: '_Recordset**';
 		defineFunction: #UpdateBatch:
 			argumentTypes: 'sdword';
 		defineFunction: #CancelBatch:
@@ -1489,7 +1489,7 @@ defineFunctions
 		defineFunction: #put_CursorLocation:
 			argumentTypes: 'sdword';
 		defineFunction: #NextRecordset:ppiRs:
-			argumentTypes: 'variant* ADODB_Recordset**';
+			argumentTypes: 'variant* _Recordset**';
 		defineFunction: #Supports:pb:
 			argumentTypes: 'sdword varbool*';
 		defineFunction: #get_Collect:pvar:
@@ -1503,5 +1503,5 @@ defineFunctions
 		defineFunction: #Find:SkipRecords:SearchDirection:Start:
 			argumentTypes: 'bstr sdword sdword variant'
 ! !
-!ADODBRecordset15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Recordset15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

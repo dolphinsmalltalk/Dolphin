@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_DynaCollection subclass: #ADODBParameters
+ADODB._DynaCollection subclass: #'ADODB.Parameters'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBParameters guid: (IID fromString: '{0000150d-0000-0010-8000-00aa006d2ea4}')!
-ADODBParameters comment: '`ADODBParameters` is a wrapper class for the COM interface ''ADODB.Parameters'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Parameters guid: (OS.COM.IID fromString: '{0000150d-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Parameters comment: '`ADODBParameters` is a wrapper class for the COM interface ''ADODB.Parameters'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface Parameters : _DynaCollection
 };
 ```
 '!
-!ADODBParameters categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBParameters methodsFor!
+!ADODB.Parameters categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Parameters methodsFor!
 
 get_Item: index ppvObject: ppvObject
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -41,28 +41,28 @@ get_Item: index ppvObject: ppvObject
 			[in]VARIANT Index,
 			[out, retval]_Parameter** ppvObject);"
 
-	<virtual stdcall: hresult 13 variant ADODB_Parameter**>
+	<virtual stdcall: hresult 13 variant _Parameter**>
 	^self invalidCall: _failureCode!
 
 item: index
-	"Answer the <ADODB_Parameter> value of the 'Item' property of the receiver."
+	"Answer the <_Parameter> value of the 'Item' property of the receiver."
 
 	| answer |
-	answer := ADODB_Parameter newPointer.
+	answer := _Parameter newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBParameters categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
-!ADODBParameters categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Parameters categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
+!ADODB.Parameters categoriesFor: #item:!**auto generated**!properties!public! !
 
-!ADODBParameters class methodsFor!
+!ADODB.Parameters class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Parameters'
-		ADODBParameters defineTemplate"
+		Parameters defineTemplate"
 
 	self
 		defineFunction: #get_Item:ppvObject:
-			argumentTypes: 'variant ADODB_Parameter**'
+			argumentTypes: 'variant _Parameter**'
 ! !
-!ADODBParameters class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Parameters class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

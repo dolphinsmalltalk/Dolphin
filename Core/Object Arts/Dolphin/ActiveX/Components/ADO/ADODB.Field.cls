@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBField20 subclass: #ADODBField
+ADODB.Field20 subclass: #'ADODB.Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBField guid: (IID fromString: '{00001569-0000-0010-8000-00aa006d2ea4}')!
-ADODBField comment: '`ADODBField` is a wrapper class for the COM interface ''ADODB.Field'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Field guid: (OS.COM.IID fromString: '{00001569-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Field comment: '`ADODBField` is a wrapper class for the COM interface ''ADODB.Field'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface Field : Field20
 };
 ```
 '!
-!ADODBField categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBField methodsFor!
+!ADODB.Field categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Field methodsFor!
 
 get_Status: pFStatus
 	"Private - Get the value of the 'Status' property of the receiver.
@@ -50,18 +50,18 @@ status
 	answer := SDWORD new.
 	self get_Status: answer.
 	^answer asObject! !
-!ADODBField categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Field!private! !
-!ADODBField categoriesFor: #status!**auto generated**!properties!public! !
+!ADODB.Field categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Field!private! !
+!ADODB.Field categoriesFor: #status!**auto generated**!properties!public! !
 
-!ADODBField class methodsFor!
+!ADODB.Field class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Field'
-		ADODBField defineTemplate"
+		Field defineTemplate"
 
 	self
 		defineFunction: #get_Status:
 			argumentTypes: 'sdword*'
 ! !
-!ADODBField class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Field class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

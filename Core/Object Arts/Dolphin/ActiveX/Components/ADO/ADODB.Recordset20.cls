@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBRecordset15 subclass: #ADODBRecordset20
+ADODB.Recordset15 subclass: #'ADODB.Recordset20'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset20 guid: (IID fromString: '{0000154f-0000-0010-8000-00aa006d2ea4}')!
-ADODBRecordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Recordset20 guid: (OS.COM.IID fromString: '{0000154f-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Recordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -76,8 +76,8 @@ interface Recordset20 : Recordset15
 };
 ```
 '!
-!ADODBRecordset20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBRecordset20 methodsFor!
+!ADODB.Recordset20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Recordset20 methodsFor!
 
 _xSave
 	"Invoke the _xSave() method of the COM object.
@@ -112,16 +112,16 @@ Cancel
 	^self invalidCall: _failureCode!
 
 clone
-	"Answer the <ADODB_Recordset> result of invoking the Clone() method of the COM object.
+	"Answer the <_Recordset> result of invoking the Clone() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self clone: -1!
 
 clone: lockType
-	"Answer the <ADODB_Recordset> result of invoking the Clone() method of the COM object."
+	"Answer the <_Recordset> result of invoking the Clone() method of the COM object."
 
 	| answer |
-	answer := ADODB_Recordset newPointer.
+	answer := _Recordset newPointer.
 	self Clone: lockType ppvObject: answer.
 	^answer asObject!
 
@@ -132,7 +132,7 @@ Clone: lockType ppvObject: ppvObject
 			[in, defaultvalue(-1)]LockTypeEnum LockType,
 			[out, retval]_Recordset** ppvObject);"
 
-	<virtual stdcall: hresult 80 sdword ADODB_Recordset**>
+	<virtual stdcall: hresult 80 sdword _Recordset**>
 	^self invalidCall: _failureCode!
 
 compareBookmarks: bookmark1 bookmark2: bookmark2
@@ -316,39 +316,39 @@ stayInSync: pbStayInSync
 	"Set the 'StayInSync' property of the receiver to the <varbool> value of the argument."
 
 	self put_StayInSync: pbStayInSync! !
-!ADODBRecordset20 categoriesFor: #_xSave!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #_xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #activeCommand!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #clone!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #clone:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #Clone:ppvObject:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #compareBookmarks:bookmark2:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #CompareBookmarks:Bookmark2:pCompare:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #dataMember!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #dataMember:!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #dataSource!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #get_ActiveCommand:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #getString!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #getString:numRows:columnDelimeter:rowDelimeter:nullExpr:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #GetString:NumRows:ColumnDelimeter:RowDelimeter:NullExpr:pRetString:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #put_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #put_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #putref_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #resync!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #Resync:ResyncValues:!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #setDataSource:!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #stayInSync!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #stayInSync:!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #_xSave!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #_xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
+!ADODB.Recordset20 categoriesFor: #activeCommand!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Recordset20!public! !
+!ADODB.Recordset20 categoriesFor: #clone!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #clone:!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #Clone:ppvObject:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #compareBookmarks:bookmark2:!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #CompareBookmarks:Bookmark2:pCompare:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #dataMember!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #dataMember:!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #dataSource!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #get_ActiveCommand:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #get_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #get_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #getString!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #getString:numRows:columnDelimeter:rowDelimeter:nullExpr:!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #GetString:NumRows:ColumnDelimeter:RowDelimeter:NullExpr:pRetString:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #put_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #put_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #putref_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
+!ADODB.Recordset20 categoriesFor: #resync!**auto generated**!methods!public! !
+!ADODB.Recordset20 categoriesFor: #Resync:ResyncValues:!**auto generated**!COM Interfaces-Recordset20!public! !
+!ADODB.Recordset20 categoriesFor: #setDataSource:!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #stayInSync!**auto generated**!properties!public! !
+!ADODB.Recordset20 categoriesFor: #stayInSync:!**auto generated**!properties!public! !
 
-!ADODBRecordset20 class methodsFor!
+!ADODB.Recordset20 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Recordset20'
-		ADODBRecordset20 defineTemplate"
+		Recordset20 defineTemplate"
 
 	self
 		defineFunction: #Cancel;
@@ -373,9 +373,9 @@ defineFunctions
 		defineFunction: #CompareBookmarks:Bookmark2:pCompare:
 			argumentTypes: 'variant variant sdword*';
 		defineFunction: #Clone:ppvObject:
-			argumentTypes: 'sdword ADODB_Recordset**';
+			argumentTypes: 'sdword _Recordset**';
 		defineFunction: #Resync:ResyncValues:
 			argumentTypes: 'sdword sdword'
 ! !
-!ADODBRecordset20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Recordset20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

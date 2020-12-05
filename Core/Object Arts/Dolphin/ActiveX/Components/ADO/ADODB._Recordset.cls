@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBRecordset21 subclass: #ADODB_Recordset
+ADODB.Recordset21 subclass: #'ADODB._Recordset'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Recordset guid: (IID fromString: '{00001556-0000-0010-8000-00aa006d2ea4}')!
-ADODB_Recordset comment: '`ADODB_Recordset` is a wrapper class for the COM interface ''ADODB._Recordset'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Recordset guid: (OS.COM.IID fromString: '{00001556-0000-0010-8000-00aa006d2ea4}')!
+ADODB._Recordset comment: '`ADODB_Recordset` is a wrapper class for the COM interface ''ADODB._Recordset'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -32,8 +32,8 @@ interface _Recordset : Recordset21
 };
 ```
 '!
-!ADODB_Recordset categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_Recordset methodsFor!
+!ADODB._Recordset categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._Recordset methodsFor!
 
 save
 	"Invoke the Save() method of the COM object.
@@ -55,11 +55,11 @@ Save: destination PersistFormat: persistFormat
 
 	<virtual stdcall: hresult 85 variant sdword>
 	^self invalidCall: _failureCode! !
-!ADODB_Recordset categoriesFor: #save!**auto generated**!methods!public! !
-!ADODB_Recordset categoriesFor: #save:persistFormat:!**auto generated**!methods!public! !
-!ADODB_Recordset categoriesFor: #Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
+!ADODB._Recordset categoriesFor: #save!**auto generated**!methods!public! !
+!ADODB._Recordset categoriesFor: #save:persistFormat:!**auto generated**!methods!public! !
+!ADODB._Recordset categoriesFor: #Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
 
-!ADODB_Recordset class methodsFor!
+!ADODB._Recordset class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Recordset) for which the receiver is the default interface."
@@ -69,7 +69,7 @@ clsid
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._Recordset'
-		ADODB_Recordset defineTemplate"
+		_Recordset defineTemplate"
 
 	self
 		defineFunction: #Save:PersistFormat:
@@ -78,12 +78,12 @@ defineFunctions
 
 example1
 	| rs |
-	rs := ADODB_Recordset new.
+	rs := _Recordset new.
 	"Assumes an ODBC DSN is defined for the Microsoft Northwind sample database"
 	rs open: 'Employees' activeConnection: 'DSN=Northwind'.
 	"Get the employees names"
-	rs collect: [:each | (each item: 'LastName') value].! !
-!ADODB_Recordset class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ADODB_Recordset class categoriesFor: #example1!examples!public! !
+	rs collect: [:each | (each item: 'LastName') value]! !
+!ADODB._Recordset class categoriesFor: #clsid!**auto generated**!constants!private! !
+!ADODB._Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Recordset class categoriesFor: #example1!examples!public! !
 

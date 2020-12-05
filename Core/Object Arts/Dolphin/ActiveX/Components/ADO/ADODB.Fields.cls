@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBFields20 subclass: #ADODBFields
+ADODB.Fields20 subclass: #'ADODB.Fields'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBFields guid: (IID fromString: '{00001564-0000-0010-8000-00aa006d2ea4}')!
-ADODBFields comment: '`ADODBFields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Fields guid: (OS.COM.IID fromString: '{00001564-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Fields comment: '`ADODBFields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -42,8 +42,8 @@ interface Fields : Fields20
 };
 ```
 '!
-!ADODBFields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBFields methodsFor!
+!ADODB.Fields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Fields methodsFor!
 
 append: name type: type
 	"Invoke the Append() method of the COM object.
@@ -109,19 +109,19 @@ Update
 
 	<virtual stdcall: hresult 15>
 	^self invalidCall: _failureCode! !
-!ADODBFields categoriesFor: #append:type:!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
-!ADODBFields categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
-!ADODBFields categoriesFor: #resync!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #Resync:!**auto generated**!COM Interfaces-Fields!public! !
-!ADODBFields categoriesFor: #Update!**auto generated**!COM Interfaces-Fields!public! !
+!ADODB.Fields categoriesFor: #append:type:!**auto generated**!methods!public! !
+!ADODB.Fields categoriesFor: #append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
+!ADODB.Fields categoriesFor: #Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
+!ADODB.Fields categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
+!ADODB.Fields categoriesFor: #resync!**auto generated**!methods!public! !
+!ADODB.Fields categoriesFor: #Resync:!**auto generated**!COM Interfaces-Fields!public! !
+!ADODB.Fields categoriesFor: #Update!**auto generated**!COM Interfaces-Fields!public! !
 
-!ADODBFields class methodsFor!
+!ADODB.Fields class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Fields'
-		ADODBFields defineTemplate"
+		Fields defineTemplate"
 
 	self
 		defineFunction: #Append:Type:DefinedSize:Attrib:FieldValue:
@@ -131,5 +131,5 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #CancelUpdate
 ! !
-!ADODBFields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Fields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

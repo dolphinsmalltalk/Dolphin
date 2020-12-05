@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_ADO subclass: #ADODBCommand15
+ADODB._ADO subclass: #'ADODB.Command15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBCommand15 guid: (IID fromString: '{00001508-0000-0010-8000-00aa006d2ea4}')!
-ADODBCommand15 comment: '`ADODBCommand15` is a wrapper class for the COM interface ''ADODB.Command15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Command15 guid: (OS.COM.IID fromString: '{00001508-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Command15 comment: '`ADODBCommand15` is a wrapper class for the COM interface ''ADODB.Command15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -84,14 +84,14 @@ interface Command15 : _ADO
 };
 ```
 '!
-!ADODBCommand15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBCommand15 methodsFor!
+!ADODB.Command15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Command15 methodsFor!
 
 activeConnection
-	"Answer the <ADODB_Connection> value of the 'ActiveConnection' property of the receiver."
+	"Answer the <_Connection> value of the 'ActiveConnection' property of the receiver."
 
 	| answer |
-	answer := ADODB_Connection newPointer.
+	answer := _Connection newPointer.
 	self get_ActiveConnection: answer.
 	^answer asObject!
 
@@ -140,7 +140,7 @@ commandType: plCmdType
 	self put_CommandType: plCmdType!
 
 createParameter
-	"Answer the <ADODB_Parameter> result of invoking the CreateParameter() method of the COM object.
+	"Answer the <_Parameter> result of invoking the CreateParameter() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -151,10 +151,10 @@ createParameter
 		value: VARIANT unspecified!
 
 createParameter: name type: type direction: direction size: size value: value
-	"Answer the <ADODB_Parameter> result of invoking the CreateParameter() method of the COM object."
+	"Answer the <_Parameter> result of invoking the CreateParameter() method of the COM object."
 
 	| answer |
-	answer := ADODB_Parameter newPointer.
+	answer := _Parameter newPointer.
 	self
 		CreateParameter: name
 		Type: type
@@ -175,7 +175,7 @@ CreateParameter: name Type: type Direction: direction Size: size Value: value pp
 			[in, optional]VARIANT Value,
 			[out, retval]_Parameter** ppiprm);"
 
-	<virtual stdcall: hresult 19 bstr sdword sdword sdword variant ADODB_Parameter**>
+	<virtual stdcall: hresult 19 bstr sdword sdword sdword variant _Parameter**>
 	^self invalidCall: _failureCode!
 
 execute
@@ -188,7 +188,7 @@ execute: parameters options: options
 	"Invoke the Execute() method of the COM object."
 
 	| outputs |
-	outputs := {VARIANT new. ADODB_Recordset newPointer}.
+	outputs := {VARIANT new. _Recordset newPointer}.
 	self
 		Execute: (outputs basicAt: 1)
 		Parameters: parameters asVariant
@@ -205,7 +205,7 @@ Execute: recordsAffected Parameters: parameters Options: options ppiRs: ppiRs
 			[in, defaultvalue(-1)]long Options,
 			[out, retval]_Recordset** ppiRs);"
 
-	<virtual stdcall: hresult 18 variant* variant* sdword ADODB_Recordset**>
+	<virtual stdcall: hresult 18 variant* variant* sdword _Recordset**>
 	^self invalidCall: _failureCode!
 
 get_ActiveConnection: ppvObject
@@ -214,7 +214,7 @@ get_ActiveConnection: ppvObject
 		HRESULT __stdcall ActiveConnection(
 			[out, retval]_Connection** ppvObject);"
 
-	<virtual stdcall: hresult 9 ADODB_Connection**>
+	<virtual stdcall: hresult 9 _Connection**>
 	^self invalidCall: _failureCode!
 
 get_CommandText: pbstr
@@ -259,7 +259,7 @@ get_Parameters: ppvObject
 		HRESULT __stdcall Parameters(
 			[out, retval]Parameters** ppvObject);"
 
-	<virtual stdcall: hresult 20 ADODBParameters**>
+	<virtual stdcall: hresult 20 Parameters**>
 	^self invalidCall: _failureCode!
 
 get_Prepared: pfPrepared
@@ -285,12 +285,12 @@ name: pbstrName
 	self put_Name: pbstrName!
 
 parameters
-	"Answer the <ADODBParameters> value of the 'Parameters' property of the receiver.
+	"Answer the <Parameters> value of the 'Parameters' property of the receiver.
 	Implementation Note: Originally auto-generated from the ADO type library,
 	this method has been modified to answer a Smalltalk sequenceable collection."
 
 	| answer |
-	answer := ADODBParameters newPointer.
+	answer := Parameters newPointer.
 	self get_Parameters: answer.
 	^ADODynaCollection on: answer!
 
@@ -369,71 +369,71 @@ put_Prepared: pfPrepared
 
 putref_ActiveConnection: ppvObject
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
-	 receiver to the <ADODB_Connection*> argument, ppvObject.
+	 receiver to the <_Connection*> argument, ppvObject.
 
 		HRESULT __stdcall ActiveConnection(
 			[in]_Connection* ppvObject);"
 
-	<virtual stdcall: hresult 10 ADODB_Connection*>
+	<virtual stdcall: hresult 10 _Connection*>
 	^self invalidCall: _failureCode!
 
 setActiveConnection: ppvObject
-	"Set the 'ActiveConnection' property of the receiver to the <ADODB_Connection*> value of the argument."
+	"Set the 'ActiveConnection' property of the receiver to the <_Connection*> value of the argument."
 
 	self putref_ActiveConnection: ppvObject!
 
 value
-	"Answer the <ADODBParameters> value of the 'Parameters' property of the receiver.
+	"Answer the <Parameters> value of the 'Parameters' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self parameters! !
-!ADODBCommand15 categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #activeConnection:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandText!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandText:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandType!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandType:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #createParameter!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #createParameter:type:direction:size:value:!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #CreateParameter:Type:Direction:Size:Value:ppiprm:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #execute!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #Execute:Parameters:Options:ppiRs:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Parameters:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #name:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #parameters!properties!public! !
-!ADODBCommand15 categoriesFor: #prepared!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #prepared:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_Name:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #activeConnection!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #activeConnection:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandText!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandText:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandType!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #commandType:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #createParameter!**auto generated**!methods!public! !
+!ADODB.Command15 categoriesFor: #createParameter:type:direction:size:value:!**auto generated**!methods!public! !
+!ADODB.Command15 categoriesFor: #CreateParameter:Type:Direction:Size:Value:ppiprm:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #execute!**auto generated**!methods!public! !
+!ADODB.Command15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
+!ADODB.Command15 categoriesFor: #Execute:Parameters:Options:ppiRs:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_Parameters:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #get_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #name!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #name:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #parameters!properties!public! !
+!ADODB.Command15 categoriesFor: #prepared!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #prepared:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #put_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #put_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #put_Name:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #put_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+!ADODB.Command15 categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
+!ADODB.Command15 categoriesFor: #value!**auto generated**!properties!public! !
 
-!ADODBCommand15 class methodsFor!
+!ADODB.Command15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Command15'
-		ADODBCommand15 defineTemplate"
+		Command15 defineTemplate"
 
 	self
 		defineFunction: #get_ActiveConnection:
-			argumentTypes: 'ADODB_Connection**';
+			argumentTypes: '_Connection**';
 		defineFunction: #putref_ActiveConnection:
-			argumentTypes: 'ADODB_Connection*';
+			argumentTypes: '_Connection*';
 		defineFunction: #put_ActiveConnection:
 			argumentTypes: 'variant';
 		defineFunction: #get_CommandText:
@@ -449,11 +449,11 @@ defineFunctions
 		defineFunction: #put_Prepared:
 			argumentTypes: 'varbool';
 		defineFunction: #Execute:Parameters:Options:ppiRs:
-			argumentTypes: 'variant* variant* sdword ADODB_Recordset**';
+			argumentTypes: 'variant* variant* sdword _Recordset**';
 		defineFunction: #CreateParameter:Type:Direction:Size:Value:ppiprm:
-			argumentTypes: 'bstr sdword sdword sdword variant ADODB_Parameter**';
+			argumentTypes: 'bstr sdword sdword sdword variant _Parameter**';
 		defineFunction: #get_Parameters:
-			argumentTypes: 'ADODBParameters**';
+			argumentTypes: 'Parameters**';
 		defineFunction: #put_CommandType:
 			argumentTypes: 'sdword';
 		defineFunction: #get_CommandType:
@@ -463,5 +463,5 @@ defineFunctions
 		defineFunction: #put_Name:
 			argumentTypes: 'bstr'
 ! !
-!ADODBCommand15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Command15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

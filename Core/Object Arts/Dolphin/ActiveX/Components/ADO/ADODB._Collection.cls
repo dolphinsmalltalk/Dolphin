@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODB_Collection
+OS.COM.IDispatch subclass: #'ADODB._Collection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Collection guid: (IID fromString: '{00000512-0000-0010-8000-00aa006d2ea4}')!
-ADODB_Collection comment: '`ADODB_Collection` is a wrapper class for the COM interface ''ADODB._Collection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._Collection guid: (OS.COM.IID fromString: '{00000512-0000-0010-8000-00aa006d2ea4}')!
+ADODB._Collection comment: '`ADODB_Collection` is a wrapper class for the COM interface ''ADODB._Collection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface _Collection : IDispatch
 };
 ```
 '!
-!ADODB_Collection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_Collection methodsFor!
+!ADODB._Collection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._Collection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> result of invoking the _NewEnum() method of the COM object."
@@ -95,20 +95,20 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^self shouldNotImplement! !
-!ADODB_Collection categoriesFor: #_newEnum!**auto generated**!methods!public! !
-!ADODB_Collection categoriesFor: #_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB_Collection categoriesFor: #count!**auto generated**!properties!public! !
-!ADODB_Collection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB_Collection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB_Collection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB_Collection categoriesFor: #Refresh!**auto generated**!COM Interfaces-_Collection!public! !
-!ADODB_Collection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODB._Collection categoriesFor: #_newEnum!**auto generated**!methods!public! !
+!ADODB._Collection categoriesFor: #_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
+!ADODB._Collection categoriesFor: #count!**auto generated**!properties!public! !
+!ADODB._Collection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
+!ADODB._Collection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB._Collection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB._Collection categoriesFor: #Refresh!**auto generated**!COM Interfaces-_Collection!public! !
+!ADODB._Collection categoriesFor: #removeAtIndex:!public!removing! !
 
-!ADODB_Collection class methodsFor!
+!ADODB._Collection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._Collection'
-		ADODB_Collection defineTemplate"
+		_Collection defineTemplate"
 
 	self
 		defineFunction: #get_Count:
@@ -117,5 +117,5 @@ defineFunctions
 			argumentTypes: 'IUnknown**';
 		defineFunction: #Refresh
 ! !
-!ADODB_Collection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._Collection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

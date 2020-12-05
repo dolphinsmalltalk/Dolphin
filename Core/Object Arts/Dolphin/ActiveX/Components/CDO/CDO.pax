@@ -57,6 +57,7 @@ package setBinaryVariableNames: #(
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\ADO\ADODB'
+	'..\ADO\ADODB (Deprecated)'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
 ).

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_ADO subclass: #ADODBField15
+ADODB._ADO subclass: #'ADODB.Field15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBField15 guid: (IID fromString: '{00001505-0000-0010-8000-00aa006d2ea4}')!
-ADODBField15 comment: '<ADODBField15> is a wrapper class for the COM interface ''ADODB.Field15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Field15 guid: (OS.COM.IID fromString: '{00001505-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Field15 comment: '<ADODBField15> is a wrapper class for the COM interface ''ADODB.Field15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -66,8 +66,8 @@ interface Field15 : _ADO {
 		[out, retval] VARIANT* pvar);
 };
 '!
-!ADODBField15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBField15 methodsFor!
+!ADODB.Field15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Field15 methodsFor!
 
 actualSize
 	"Answer the <sdword> value of the 'ActualSize' property of the receiver."
@@ -285,38 +285,38 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
-!ADODBField15 categoriesFor: #actualSize!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #appendChunk:!**auto generated**!methods!public! !
-!ADODBField15 categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #definedSize!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #get_ActualSize:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_DefinedSize:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_NumericScale:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_OriginalValue:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_Precision:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_UnderlyingValue:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #getChunk:!**auto generated**!methods!public! !
-!ADODBField15 categoriesFor: #GetChunk:pvar:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #numericScale!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #originalValue!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #precision!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODBField15 categoriesFor: #type!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #underlyingValue!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #value!**auto generated**!properties!public! !
-!ADODBField15 categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #actualSize!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #appendChunk:!**auto generated**!methods!public! !
+!ADODB.Field15 categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #attributes!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #definedSize!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #get_ActualSize:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_DefinedSize:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_NumericScale:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_OriginalValue:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_Precision:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_UnderlyingValue:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #getChunk:!**auto generated**!methods!public! !
+!ADODB.Field15 categoriesFor: #GetChunk:pvar:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #name!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #numericScale!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #originalValue!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #precision!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Field15!private! !
+!ADODB.Field15 categoriesFor: #type!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #underlyingValue!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesFor: #value:!**auto generated**!properties!public! !
 
-!ADODBField15 class methodsFor!
+!ADODB.Field15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Field15'
-		ADODBField15 defineTemplate"
+		Field15 defineTemplate"
 
 	self
 		defineFunction: #get_ActualSize:
@@ -346,5 +346,5 @@ defineFunctions
 		defineFunction: #get_UnderlyingValue:
 			argumentTypes: 'variant*'
 ! !
-!ADODBField15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Field15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

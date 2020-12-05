@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ADODB'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ADODB 6.1 Package. 
 Copyright © Object Arts Ltd, 2000-2002
@@ -18,52 +18,53 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ADOCollection}
-	#{ADODB_ADO}
-	#{ADODB_Collection}
-	#{ADODB_Command}
-	#{ADODB_Connection}
-	#{ADODB_DynaCollection}
-	#{ADODB_Parameter}
-	#{ADODB_Record}
-	#{ADODB_Recordset}
-	#{ADODB_Stream}
-	#{ADODBADOCommandConstruction}
-	#{ADODBADOConnectionConstruction}
-	#{ADODBADOConnectionConstruction15}
-	#{ADODBADORecordConstruction}
-	#{ADODBADORecordsetConstruction}
-	#{ADODBADOStreamConstruction}
-	#{ADODBCommand15}
-	#{ADODBCommand25}
-	#{ADODBConnection15}
-	#{ADODBConnectionEventsVt}
-	#{ADODBConstants}
-	#{ADODBError}
-	#{ADODBErrors}
-	#{ADODBField}
-	#{ADODBField15}
-	#{ADODBField20}
-	#{ADODBFields}
-	#{ADODBFields15}
-	#{ADODBFields20}
-	#{ADODBIRecFields}
-	#{ADODBParameters}
-	#{ADODBProperties}
-	#{ADODBProperty}
-	#{ADODBRecordset15}
-	#{ADODBRecordset20}
-	#{ADODBRecordset21}
-	#{ADODBRecordsetEventsVt}
-	#{ADODynaCollection}
+	#{ADODB}
+	#{ADODB._ADO}
+	#{ADODB._Collection}
+	#{ADODB._Command}
+	#{ADODB._Connection}
+	#{ADODB._DynaCollection}
+	#{ADODB._Parameter}
+	#{ADODB._Record}
+	#{ADODB._Recordset}
+	#{ADODB._Stream}
+	#{ADODB.ADOCollection}
+	#{ADODB.ADOCommandConstruction}
+	#{ADODB.ADOConnectionConstruction}
+	#{ADODB.ADOConnectionConstruction15}
+	#{ADODB.ADODBConstants}
+	#{ADODB.ADODynaCollection}
+	#{ADODB.ADORecordConstruction}
+	#{ADODB.ADORecordsetConstruction}
+	#{ADODB.ADOStreamConstruction}
+	#{ADODB.Command15}
+	#{ADODB.Command25}
+	#{ADODB.Connection15}
+	#{ADODB.ConnectionEventsVt}
+	#{ADODB.Error}
+	#{ADODB.Errors}
+	#{ADODB.Field}
+	#{ADODB.Field15}
+	#{ADODB.Field20}
+	#{ADODB.Fields}
+	#{ADODB.Fields15}
+	#{ADODB.Fields20}
+	#{ADODB.IRecFields}
+	#{ADODB.Parameters}
+	#{ADODB.Properties}
+	#{ADODB.Property}
+	#{ADODB.Recordset15}
+	#{ADODB.Recordset20}
+	#{ADODB.Recordset21}
+	#{ADODB.RecordsetEventsVt}
 ).
 
 package setVariableNames: #(
-	#{ADODBLib}
+	#{ADODB.ADODBLib}
 ).
 
 package setBinaryVariableNames: #(
-	#{ADODBLib}
+	#{ADODB.ADODBLib}
 ).
 
 package setPrerequisites: #(
@@ -76,7 +77,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #ADODBConstants
+Kernel.Namespace subclass: #ADODB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM private} #{External private} #{Core private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -495,226 +502,226 @@ SharedPool subclass: #ADODBConstants
 		'stWriteChar' -> 16r0.
 		'stWriteLine' -> 16r1
 	}!
-SequenceableCollection subclass: #ADOCollection
+Core.SequenceableCollection subclass: #'ADODB.ADOCollection'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADOCollection subclass: #ADODynaCollection
+ADODB.ADOCollection subclass: #'ADODB.ADODynaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ADODBADOCommandConstruction
+OS.COM.IUnknown subclass: #'ADODB.ADOCommandConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ADODBADOConnectionConstruction15
+OS.COM.IUnknown subclass: #'ADODB.ADOConnectionConstruction15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ADODBConnectionEventsVt
+OS.COM.IUnknown subclass: #'ADODB.ConnectionEventsVt'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ADODBIRecFields
+OS.COM.IUnknown subclass: #'ADODB.IRecFields'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ADODBRecordsetEventsVt
+OS.COM.IUnknown subclass: #'ADODB.RecordsetEventsVt'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBADOConnectionConstruction15 subclass: #ADODBADOConnectionConstruction
+ADODB.ADOConnectionConstruction15 subclass: #'ADODB.ADOConnectionConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODB_ADO
+OS.COM.IDispatch subclass: #'ADODB._ADO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODB_Collection
+OS.COM.IDispatch subclass: #'ADODB._Collection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODB_Stream
+OS.COM.IDispatch subclass: #'ADODB._Stream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODBADORecordConstruction
+OS.COM.IDispatch subclass: #'ADODB.ADORecordConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODBADORecordsetConstruction
+OS.COM.IDispatch subclass: #'ADODB.ADORecordsetConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODBADOStreamConstruction
+OS.COM.IDispatch subclass: #'ADODB.ADOStreamConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODBError
+OS.COM.IDispatch subclass: #'ADODB.Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #ADODBProperty
+OS.COM.IDispatch subclass: #'ADODB.Property'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODB_Parameter
+ADODB._ADO subclass: #'ADODB._Parameter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODB_Record
+ADODB._ADO subclass: #'ADODB._Record'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODBCommand15
+ADODB._ADO subclass: #'ADODB.Command15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODBConnection15
+ADODB._ADO subclass: #'ADODB.Connection15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #(#{ADODB.ADODBConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODBField15
+ADODB._ADO subclass: #'ADODB.Field15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODBField20
+ADODB._ADO subclass: #'ADODB.Field20'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO subclass: #ADODBRecordset15
+ADODB._ADO subclass: #'ADODB.Recordset15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBCommand15 subclass: #ADODBCommand25
+ADODB.Command15 subclass: #'ADODB.Command25'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBCommand25 subclass: #ADODB_Command
+ADODB.Command25 subclass: #'ADODB._Command'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBConnection15 subclass: #ADODB_Connection
+ADODB.Connection15 subclass: #'ADODB._Connection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBField20 subclass: #ADODBField
+ADODB.Field20 subclass: #'ADODB.Field'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset15 subclass: #ADODBRecordset20
+ADODB.Recordset15 subclass: #'ADODB.Recordset20'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset20 subclass: #ADODBRecordset21
+ADODB.Recordset20 subclass: #'ADODB.Recordset21'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset21 subclass: #ADODB_Recordset
+ADODB.Recordset21 subclass: #'ADODB._Recordset'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Collection subclass: #ADODB_DynaCollection
+ADODB._Collection subclass: #'ADODB._DynaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Collection subclass: #ADODBErrors
+ADODB._Collection subclass: #'ADODB.Errors'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Collection subclass: #ADODBFields15
+ADODB._Collection subclass: #'ADODB.Fields15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_Collection subclass: #ADODBProperties
+ADODB._Collection subclass: #'ADODB.Properties'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_DynaCollection subclass: #ADODBParameters
+ADODB._DynaCollection subclass: #'ADODB.Parameters'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBFields15 subclass: #ADODBFields20
+ADODB.Fields15 subclass: #'ADODB.Fields20'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBFields20 subclass: #ADODBFields
+ADODB.Fields20 subclass: #'ADODB.Fields'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ADODBConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

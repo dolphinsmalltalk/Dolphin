@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODB_ADO
+OS.COM.IDispatch subclass: #'ADODB._ADO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODB_ADO guid: (IID fromString: '{00000534-0000-0010-8000-00aa006d2ea4}')!
-ADODB_ADO comment: '`ADODB_ADO` is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB._ADO guid: (OS.COM.IID fromString: '{00000534-0000-0010-8000-00aa006d2ea4}')!
+ADODB._ADO comment: '`ADODB_ADO` is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -29,8 +29,8 @@ interface _ADO : IDispatch
 };
 ```
 '!
-!ADODB_ADO categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODB_ADO methodsFor!
+!ADODB._ADO categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB._ADO methodsFor!
 
 get_Properties: ppvObject
 	"Private - Get the value of the 'Properties' property of the receiver.
@@ -38,7 +38,7 @@ get_Properties: ppvObject
 		HRESULT __stdcall Properties(
 			[out, retval]Properties** ppvObject);"
 
-	<virtual stdcall: hresult 8 ADODBProperties**>
+	<virtual stdcall: hresult 8 Properties**>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -52,26 +52,26 @@ isVBCollection
 	^false!
 
 properties
-	"Answer the <ADODBProperties> value of the 'Properties' property of the receiver."
+	"Answer the <Properties> value of the 'Properties' property of the receiver."
 
 	| answer |
-	answer := ADODBProperties newPointer.
+	answer := Properties newPointer.
 	self get_Properties: answer.
 	^answer asObject! !
-!ADODB_ADO categoriesFor: #get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
-!ADODB_ADO categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB_ADO categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB_ADO categoriesFor: #properties!**auto generated**!properties!public! !
+!ADODB._ADO categoriesFor: #get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
+!ADODB._ADO categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB._ADO categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB._ADO categoriesFor: #properties!**auto generated**!properties!public! !
 
-!ADODB_ADO class methodsFor!
+!ADODB._ADO class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB._ADO'
-		ADODB_ADO defineTemplate"
+		_ADO defineTemplate"
 
 	self
 		defineFunction: #get_Properties:
-			argumentTypes: 'ADODBProperties**'
+			argumentTypes: 'Properties**'
 ! !
-!ADODB_ADO class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB._ADO class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

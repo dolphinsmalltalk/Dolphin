@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #ADOCollection
+Core.SequenceableCollection subclass: #'ADODB.ADOCollection'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADOCollection guid: (GUID fromString: '{34245405-a032-4a2a-95c0-96cc6854b57b}')!
-ADOCollection comment: 'ADOCollection is a <sequencedReadableCollection> wrapper around the ADODB <ADO_Collection> interfaces. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited ADO interfaces, and to provide seamless integration into the Smalltalk development environment (i.e. so that the ADO collections print, inspect, and generally act like arrays). 
+ADODB.ADOCollection guid: (Core.GUID fromString: '{34245405-a032-4a2a-95c0-96cc6854b57b}')!
+ADODB.ADOCollection comment: 'ADOCollection is a <sequencedReadableCollection> wrapper around the ADODB <ADO_Collection> interfaces. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited ADO interfaces, and to provide seamless integration into the Smalltalk development environment (i.e. so that the ADO collections print, inspect, and generally act like arrays). 
 All ADO interface methods that return a collection of some sort have been modified to return a subinstance of this class.
 
 Instance Variables:
 	interface		<ADO_Collection> subinstance.'!
-!ADOCollection categoriesForClass!Unclassified! !
-!ADOCollection methodsFor!
+!ADODB.ADOCollection categoriesForClass!Unclassified! !
+!ADODB.ADOCollection methodsFor!
 
 add: newElement
 	"ADOCollections are not extensible."
@@ -96,20 +96,20 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			[:i | 
 			subscript sdword: i - 1.
 			aDyadicValuable value: i value: (interface item: subscript)]! !
-!ADOCollection categoriesFor: #add:!adding!public! !
-!ADOCollection categoriesFor: #at:!accessing!public! !
-!ADOCollection categoriesFor: #at:put:!accessing!public! !
-!ADOCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
-!ADOCollection categoriesFor: #free!public!realizing/unrealizing! !
-!ADOCollection categoriesFor: #interface!accessing!public! !
-!ADOCollection categoriesFor: #interface:!accessing!private! !
-!ADOCollection categoriesFor: #item:!accessing!public! !
-!ADOCollection categoriesFor: #reset!methods!public! !
-!ADOCollection categoriesFor: #size!accessing!public! !
-!ADOCollection categoriesFor: #species!constants!public! !
-!ADOCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!ADODB.ADOCollection categoriesFor: #add:!adding!public! !
+!ADODB.ADOCollection categoriesFor: #at:!accessing!public! !
+!ADODB.ADOCollection categoriesFor: #at:put:!accessing!public! !
+!ADODB.ADOCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
+!ADODB.ADOCollection categoriesFor: #free!public!realizing/unrealizing! !
+!ADODB.ADOCollection categoriesFor: #interface!accessing!public! !
+!ADODB.ADOCollection categoriesFor: #interface:!accessing!private! !
+!ADODB.ADOCollection categoriesFor: #item:!accessing!public! !
+!ADODB.ADOCollection categoriesFor: #reset!methods!public! !
+!ADODB.ADOCollection categoriesFor: #size!accessing!public! !
+!ADODB.ADOCollection categoriesFor: #species!constants!public! !
+!ADODB.ADOCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
-!ADOCollection class methodsFor!
+!ADODB.ADOCollection class methodsFor!
 
 on: anADO_Collection
 	"Answer a new instance of the receiver which implements the entire
@@ -119,5 +119,5 @@ on: anADO_Collection
 		interface: anADO_Collection
 
 	! !
-!ADOCollection class categoriesFor: #on:!instance creation!public! !
+!ADODB.ADOCollection class categoriesFor: #on:!instance creation!public! !
 

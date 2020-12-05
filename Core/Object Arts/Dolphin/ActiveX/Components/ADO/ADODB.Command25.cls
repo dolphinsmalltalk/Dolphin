@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBCommand15 subclass: #ADODBCommand25
+ADODB.Command15 subclass: #'ADODB.Command25'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBCommand25 guid: (IID fromString: '{0000154e-0000-0010-8000-00aa006d2ea4}')!
-ADODBCommand25 comment: '`ADODBCommand25` is a wrapper class for the COM interface ''ADODB.Command25'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Command25 guid: (OS.COM.IID fromString: '{0000154e-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Command25 comment: '`ADODBCommand25` is a wrapper class for the COM interface ''ADODB.Command25'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface Command25 : Command15
 };
 ```
 '!
-!ADODBCommand25 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBCommand25 methodsFor!
+!ADODB.Command25 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Command25 methodsFor!
 
 Cancel
 	"Invoke the Cancel() method of the COM object.
@@ -60,20 +60,20 @@ state
 	answer := SDWORD new.
 	self get_State: answer.
 	^answer asObject! !
-!ADODBCommand25 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Command25!public! !
-!ADODBCommand25 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Command25!private! !
-!ADODBCommand25 categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB.Command25 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Command25!public! !
+!ADODB.Command25 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Command25!private! !
+!ADODB.Command25 categoriesFor: #state!**auto generated**!properties!public! !
 
-!ADODBCommand25 class methodsFor!
+!ADODB.Command25 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Command25'
-		ADODBCommand25 defineTemplate"
+		Command25 defineTemplate"
 
 	self
 		defineFunction: #get_State:
 			argumentTypes: 'sdword*';
 		defineFunction: #Cancel
 ! !
-!ADODBCommand25 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Command25 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

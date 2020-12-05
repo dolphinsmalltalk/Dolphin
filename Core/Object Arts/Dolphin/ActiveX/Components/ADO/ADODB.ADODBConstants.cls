@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ADODBConstants
+Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -419,6 +419,6 @@ SharedPool subclass: #ADODBConstants
 		'stWriteChar' -> 16r0.
 		'stWriteLine' -> 16r1
 	}!
-ADODBConstants guid: (GUID fromString: '{3160a50a-0666-4ba6-8f83-87065c268ccf}')!
-ADODBConstants comment: ''!
-!ADODBConstants categoriesForClass!Unclassified! !
+ADODB.ADODBConstants guid: (Core.GUID fromString: '{3160a50a-0666-4ba6-8f83-87065c268ccf}')!
+ADODB.ADODBConstants comment: ''!
+!ADODB.ADODBConstants categoriesForClass!Unclassified! !

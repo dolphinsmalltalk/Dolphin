@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ADODBRecordsetEventsVt
+OS.COM.IUnknown subclass: #'ADODB.RecordsetEventsVt'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordsetEventsVt guid: (IID fromString: '{00001403-0000-0010-8000-00aa006d2ea4}')!
-ADODBRecordsetEventsVt comment: '`ADODBRecordsetEventsVt` is a wrapper class for the COM interface ''ADODB.RecordsetEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.RecordsetEventsVt guid: (OS.COM.IID fromString: '{00001403-0000-0010-8000-00aa006d2ea4}')!
+ADODB.RecordsetEventsVt comment: '`ADODBRecordsetEventsVt` is a wrapper class for the COM interface ''ADODB.RecordsetEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -89,8 +89,8 @@ interface RecordsetEventsVt : IUnknown
 };
 ```
 '!
-!ADODBRecordsetEventsVt categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBRecordsetEventsVt methodsFor!
+!ADODB.RecordsetEventsVt categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.RecordsetEventsVt methodsFor!
 
 endOfRecordset: fMoreData adStatus: adStatus pRecordset: pRecordset
 	"Invoke the EndOfRecordset() method of the COM object."
@@ -116,7 +116,7 @@ EndOfRecordset: fMoreData adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 12 varbool* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 12 varbool* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fetchComplete: pError adStatus: adStatus pRecordset: pRecordset
@@ -137,7 +137,7 @@ FetchComplete: pError adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 14 ADODBError* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 14 Error* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fetchProgress: progress maxProgress: maxProgress adStatus: adStatus pRecordset: pRecordset
@@ -160,7 +160,7 @@ FetchProgress: progress MaxProgress: maxProgress adStatus: adStatus pRecordset: 
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 13 sdword sdword sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 13 sdword sdword sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 fieldChangeComplete: cFields fields: fields pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -185,7 +185,7 @@ FieldChangeComplete: cFields Fields: fields pError: pError adStatus: adStatus pR
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 5 sdword variant ADODBError* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 5 sdword variant Error* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 moveComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -208,7 +208,7 @@ MoveComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 11 sdword ADODBError* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 11 sdword Error* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 recordChangeComplete: adReason cRecords: cRecords pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -233,7 +233,7 @@ RecordChangeComplete: adReason cRecords: cRecords pError: pError adStatus: adSta
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 7 sdword sdword ADODBError* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 7 sdword sdword Error* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 recordsetChangeComplete: adReason pError: pError adStatus: adStatus pRecordset: pRecordset
@@ -256,7 +256,7 @@ RecordsetChangeComplete: adReason pError: pError adStatus: adStatus pRecordset: 
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 9 sdword ADODBError* sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 9 sdword Error* sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeField: cFields fields: fields adStatus: adStatus pRecordset: pRecordset
@@ -279,7 +279,7 @@ WillChangeField: cFields Fields: fields adStatus: adStatus pRecordset: pRecordse
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 4 sdword variant sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 4 sdword variant sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeRecord: adReason cRecords: cRecords adStatus: adStatus pRecordset: pRecordset
@@ -302,7 +302,7 @@ WillChangeRecord: adReason cRecords: cRecords adStatus: adStatus pRecordset: pRe
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 6 sdword sdword sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 6 sdword sdword sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willChangeRecordset: adReason adStatus: adStatus pRecordset: pRecordset
@@ -323,7 +323,7 @@ WillChangeRecordset: adReason adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 8 sdword sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 8 sdword sdword* _Recordset*>
 	^self invalidCall: _failureCode!
 
 willMove: adReason adStatus: adStatus pRecordset: pRecordset
@@ -344,60 +344,60 @@ WillMove: adReason adStatus: adStatus pRecordset: pRecordset
 			[in, out]EventStatusEnum* adStatus,
 			[in]_Recordset* pRecordset);"
 
-	<virtual stdcall: hresult 10 sdword sdword* ADODB_Recordset*>
+	<virtual stdcall: hresult 10 sdword sdword* _Recordset*>
 	^self invalidCall: _failureCode! !
-!ADODBRecordsetEventsVt categoriesFor: #endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #EndOfRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #fetchComplete:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #FetchComplete:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #fetchProgress:maxProgress:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #FetchProgress:MaxProgress:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #fieldChangeComplete:fields:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #FieldChangeComplete:Fields:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #moveComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #MoveComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #recordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #RecordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #recordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #RecordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #willChangeField:fields:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #WillChangeField:Fields:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #willChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #WillChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #willChangeRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #WillChangeRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODBRecordsetEventsVt categoriesFor: #willMove:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODBRecordsetEventsVt categoriesFor: #WillMove:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #EndOfRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #fetchComplete:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #FetchComplete:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #fetchProgress:maxProgress:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #FetchProgress:MaxProgress:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #fieldChangeComplete:fields:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #FieldChangeComplete:Fields:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #moveComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #MoveComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #recordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #RecordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #recordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #RecordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #willChangeField:fields:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #WillChangeField:Fields:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #willChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #WillChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #willChangeRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #WillChangeRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesFor: #willMove:adStatus:pRecordset:!**auto generated**!methods!public! !
+!ADODB.RecordsetEventsVt categoriesFor: #WillMove:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
 
-!ADODBRecordsetEventsVt class methodsFor!
+!ADODB.RecordsetEventsVt class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.RecordsetEventsVt'
-		ADODBRecordsetEventsVt defineTemplate"
+		RecordsetEventsVt defineTemplate"
 
 	self
 		defineFunction: #WillChangeField:Fields:adStatus:pRecordset:
-			argumentTypes: 'sdword variant sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword variant sdword* _Recordset*';
 		defineFunction: #FieldChangeComplete:Fields:pError:adStatus:pRecordset:
-			argumentTypes: 'sdword variant ADODBError* sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword variant Error* sdword* _Recordset*';
 		defineFunction: #WillChangeRecord:cRecords:adStatus:pRecordset:
-			argumentTypes: 'sdword sdword sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword sdword sdword* _Recordset*';
 		defineFunction: #RecordChangeComplete:cRecords:pError:adStatus:pRecordset:
-			argumentTypes: 'sdword sdword ADODBError* sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword sdword Error* sdword* _Recordset*';
 		defineFunction: #WillChangeRecordset:adStatus:pRecordset:
-			argumentTypes: 'sdword sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword sdword* _Recordset*';
 		defineFunction: #RecordsetChangeComplete:pError:adStatus:pRecordset:
-			argumentTypes: 'sdword ADODBError* sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword Error* sdword* _Recordset*';
 		defineFunction: #WillMove:adStatus:pRecordset:
-			argumentTypes: 'sdword sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword sdword* _Recordset*';
 		defineFunction: #MoveComplete:pError:adStatus:pRecordset:
-			argumentTypes: 'sdword ADODBError* sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword Error* sdword* _Recordset*';
 		defineFunction: #EndOfRecordset:adStatus:pRecordset:
-			argumentTypes: 'varbool* sdword* ADODB_Recordset*';
+			argumentTypes: 'varbool* sdword* _Recordset*';
 		defineFunction: #FetchProgress:MaxProgress:adStatus:pRecordset:
-			argumentTypes: 'sdword sdword sdword* ADODB_Recordset*';
+			argumentTypes: 'sdword sdword sdword* _Recordset*';
 		defineFunction: #FetchComplete:adStatus:pRecordset:
-			argumentTypes: 'ADODBError* sdword* ADODB_Recordset*'
+			argumentTypes: 'Error* sdword* _Recordset*'
 ! !
-!ADODBRecordsetEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.RecordsetEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

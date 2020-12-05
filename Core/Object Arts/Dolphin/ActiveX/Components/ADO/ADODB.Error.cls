@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODBError
+OS.COM.IDispatch subclass: #'ADODB.Error'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBError guid: (IID fromString: '{00000500-0000-0010-8000-00aa006d2ea4}')!
-ADODBError comment: '`ADODBError` is a wrapper class for the COM interface ''ADODB.Error'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Error guid: (OS.COM.IID fromString: '{00000500-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Error comment: '`ADODBError` is a wrapper class for the COM interface ''ADODB.Error'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -48,8 +48,8 @@ interface Error : IDispatch
 };
 ```
 '!
-!ADODBError categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBError methodsFor!
+!ADODB.Error categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Error methodsFor!
 
 description
 	"Answer the <bstr> value of the 'Description' property of the receiver."
@@ -188,30 +188,30 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self description! !
-!ADODBError categoriesFor: #description!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_NativeError:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_SQLState:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #helpContext!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #helpFile!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODBError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODBError categoriesFor: #nativeError!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #number!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #printValueOn:!printing!private! !
-!ADODBError categoriesFor: #source!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #sqlState!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #description!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #get_Description:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_NativeError:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_Number:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_Source:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #get_SQLState:!**auto generated**!COM Interfaces-Error!private! !
+!ADODB.Error categoriesFor: #helpContext!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #helpFile!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB.Error categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB.Error categoriesFor: #nativeError!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #number!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #printValueOn:!printing!private! !
+!ADODB.Error categoriesFor: #source!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #sqlState!**auto generated**!properties!public! !
+!ADODB.Error categoriesFor: #value!**auto generated**!properties!public! !
 
-!ADODBError class methodsFor!
+!ADODB.Error class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Error'
-		ADODBError defineTemplate"
+		Error defineTemplate"
 
 	self
 		defineFunction: #get_Number:
@@ -229,5 +229,5 @@ defineFunctions
 		defineFunction: #get_NativeError:
 			argumentTypes: 'sdword*'
 ! !
-!ADODBError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Error class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

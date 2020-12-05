@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ADODBADORecordsetConstruction
+OS.COM.IDispatch subclass: #'ADODB.ADORecordsetConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBADORecordsetConstruction guid: (IID fromString: '{00000283-0000-0010-8000-00aa006d2ea4}')!
-ADODBADORecordsetConstruction comment: '`ADODBADORecordsetConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordsetConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.ADORecordsetConstruction guid: (OS.COM.IID fromString: '{00000283-0000-0010-8000-00aa006d2ea4}')!
+ADODB.ADORecordsetConstruction comment: '`ADODBADORecordsetConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordsetConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -44,8 +44,8 @@ interface ADORecordsetConstruction : IDispatch
 };
 ```
 '!
-!ADODBADORecordsetConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBADORecordsetConstruction methodsFor!
+!ADODB.ADORecordsetConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.ADORecordsetConstruction methodsFor!
 
 chapter
 	"Answer the <sdword> value of the 'Chapter' property of the receiver."
@@ -142,24 +142,24 @@ rowset: ppRowset
 	"Set the 'Rowset' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Rowset: ppRowset! !
-!ADODBADORecordsetConstruction categoriesFor: #chapter!**auto generated**!properties!public! !
-!ADODBADORecordsetConstruction categoriesFor: #chapter:!**auto generated**!properties!public! !
-!ADODBADORecordsetConstruction categoriesFor: #get_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #get_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #get_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #put_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #put_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #put_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODBADORecordsetConstruction categoriesFor: #rowPosition!**auto generated**!properties!public! !
-!ADODBADORecordsetConstruction categoriesFor: #rowPosition:!**auto generated**!properties!public! !
-!ADODBADORecordsetConstruction categoriesFor: #rowset!**auto generated**!properties!public! !
-!ADODBADORecordsetConstruction categoriesFor: #rowset:!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #chapter!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #chapter:!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #get_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #get_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #get_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #put_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #put_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #put_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+!ADODB.ADORecordsetConstruction categoriesFor: #rowPosition!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #rowPosition:!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #rowset!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesFor: #rowset:!**auto generated**!properties!public! !
 
-!ADODBADORecordsetConstruction class methodsFor!
+!ADODB.ADORecordsetConstruction class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.ADORecordsetConstruction'
-		ADODBADORecordsetConstruction defineTemplate"
+		ADORecordsetConstruction defineTemplate"
 
 	self
 		defineFunction: #get_Rowset:
@@ -175,5 +175,5 @@ defineFunctions
 		defineFunction: #put_RowPosition:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADORecordsetConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADORecordsetConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

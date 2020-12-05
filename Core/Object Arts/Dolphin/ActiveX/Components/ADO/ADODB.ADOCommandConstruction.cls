@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ADODBADOCommandConstruction
+OS.COM.IUnknown subclass: #'ADODB.ADOCommandConstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBADOCommandConstruction guid: (IID fromString: '{00000517-0000-0010-8000-00aa006d2ea4}')!
-ADODBADOCommandConstruction comment: '<ADODBADOCommandConstruction> is a wrapper class for the COM interface ''ADODB.ADOCommandConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.ADOCommandConstruction guid: (OS.COM.IID fromString: '{00000517-0000-0010-8000-00aa006d2ea4}')!
+ADODB.ADOCommandConstruction comment: '<ADODBADOCommandConstruction> is a wrapper class for the COM interface ''ADODB.ADOCommandConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!ADODBADOCommandConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBADOCommandConstruction methodsFor!
+!ADODB.ADOCommandConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.ADOCommandConstruction methodsFor!
 
 get_OLEDBCommand: ppOLEDBCommand
 	"Private - Get the value of the 'OLEDBCommand' property of the receiver.
@@ -46,16 +46,16 @@ put_OLEDBCommand: ppOLEDBCommand
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
-!ADODBADOCommandConstruction categoriesFor: #get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
-!ADODBADOCommandConstruction categoriesFor: #oledbCommand!**auto generated**!properties!public! !
-!ADODBADOCommandConstruction categoriesFor: #oledbCommand:!**auto generated**!properties!public! !
-!ADODBADOCommandConstruction categoriesFor: #put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!ADODB.ADOCommandConstruction categoriesFor: #get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!ADODB.ADOCommandConstruction categoriesFor: #oledbCommand!**auto generated**!properties!public! !
+!ADODB.ADOCommandConstruction categoriesFor: #oledbCommand:!**auto generated**!properties!public! !
+!ADODB.ADOCommandConstruction categoriesFor: #put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
 
-!ADODBADOCommandConstruction class methodsFor!
+!ADODB.ADOCommandConstruction class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.ADOCommandConstruction'
-		ADODBADOCommandConstruction defineTemplate"
+		ADOCommandConstruction defineTemplate"
 
 	self
 		defineFunction: #get_OLEDBCommand:
@@ -63,5 +63,5 @@ defineFunctions
 		defineFunction: #put_OLEDBCommand:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.ADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

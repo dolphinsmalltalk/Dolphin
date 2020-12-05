@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_Collection subclass: #ADODBProperties
+ADODB._Collection subclass: #'ADODB.Properties'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBProperties guid: (IID fromString: '{00000504-0000-0010-8000-00aa006d2ea4}')!
-ADODBProperties comment: '`ADODBProperties` is a wrapper class for the COM interface ''ADODB.Properties'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Properties guid: (OS.COM.IID fromString: '{00000504-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Properties comment: '`ADODBProperties` is a wrapper class for the COM interface ''ADODB.Properties'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface Properties : _Collection
 };
 ```
 '!
-!ADODBProperties categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBProperties methodsFor!
+!ADODB.Properties categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Properties methodsFor!
 
 get_Item: index ppvObject: ppvObject
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -41,28 +41,28 @@ get_Item: index ppvObject: ppvObject
 			[in]VARIANT Index,
 			[out, retval]Property** ppvObject);"
 
-	<virtual stdcall: hresult 11 variant ADODBProperty**>
+	<virtual stdcall: hresult 11 variant Property**>
 	^self invalidCall: _failureCode!
 
 item: index
-	"Answer the <ADODBProperty> value of the 'Item' property of the receiver."
+	"Answer the <Property> value of the 'Item' property of the receiver."
 
 	| answer |
-	answer := ADODBProperty newPointer.
+	answer := Property newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBProperties categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
-!ADODBProperties categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Properties categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
+!ADODB.Properties categoriesFor: #item:!**auto generated**!properties!public! !
 
-!ADODBProperties class methodsFor!
+!ADODB.Properties class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Properties'
-		ADODBProperties defineTemplate"
+		Properties defineTemplate"
 
 	self
 		defineFunction: #get_Item:ppvObject:
-			argumentTypes: 'variant ADODBProperty**'
+			argumentTypes: 'variant Property**'
 ! !
-!ADODBProperties class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Properties class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

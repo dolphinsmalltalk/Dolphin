@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODBRecordset20 subclass: #ADODBRecordset21
+ADODB.Recordset20 subclass: #'ADODB.Recordset21'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBRecordset21 guid: (IID fromString: '{00001555-0000-0010-8000-00aa006d2ea4}')!
-ADODBRecordset21 comment: '`ADODBRecordset21` is a wrapper class for the COM interface ''ADODB.Recordset21'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Recordset21 guid: (OS.COM.IID fromString: '{00001555-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Recordset21 comment: '`ADODBRecordset21` is a wrapper class for the COM interface ''ADODB.Recordset21'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -38,8 +38,8 @@ interface Recordset21 : Recordset20
 };
 ```
 '!
-!ADODBRecordset21 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBRecordset21 methodsFor!
+!ADODB.Recordset21 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Recordset21 methodsFor!
 
 get_Index: pbstrIndex
 	"Private - Get the value of the 'Index' property of the receiver.
@@ -93,19 +93,19 @@ Seek: keyValues SeekOption: seekOption
 
 	<virtual stdcall: hresult 82 variant sdword>
 	^self invalidCall: _failureCode! !
-!ADODBRecordset21 categoriesFor: #get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
-!ADODBRecordset21 categoriesFor: #index!**auto generated**!properties!public! !
-!ADODBRecordset21 categoriesFor: #index:!**auto generated**!properties!public! !
-!ADODBRecordset21 categoriesFor: #put_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
-!ADODBRecordset21 categoriesFor: #seek:!**auto generated**!methods!public! !
-!ADODBRecordset21 categoriesFor: #seek:seekOption:!**auto generated**!methods!public! !
-!ADODBRecordset21 categoriesFor: #Seek:SeekOption:!**auto generated**!COM Interfaces-Recordset21!private! !
+!ADODB.Recordset21 categoriesFor: #get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
+!ADODB.Recordset21 categoriesFor: #index!**auto generated**!properties!public! !
+!ADODB.Recordset21 categoriesFor: #index:!**auto generated**!properties!public! !
+!ADODB.Recordset21 categoriesFor: #put_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
+!ADODB.Recordset21 categoriesFor: #seek:!**auto generated**!methods!public! !
+!ADODB.Recordset21 categoriesFor: #seek:seekOption:!**auto generated**!methods!public! !
+!ADODB.Recordset21 categoriesFor: #Seek:SeekOption:!**auto generated**!COM Interfaces-Recordset21!private! !
 
-!ADODBRecordset21 class methodsFor!
+!ADODB.Recordset21 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Recordset21'
-		ADODBRecordset21 defineTemplate"
+		Recordset21 defineTemplate"
 
 	self
 		defineFunction: #Seek:SeekOption:
@@ -115,5 +115,5 @@ defineFunctions
 		defineFunction: #get_Index:
 			argumentTypes: 'bstr*'
 ! !
-!ADODBRecordset21 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Recordset21 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ADODB_ADO subclass: #ADODBConnection15
+ADODB._ADO subclass: #'ADODB.Connection15'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ADODBConstants'
+	imports: #(#{ADODB.ADODBConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ADODBConnection15 guid: (IID fromString: '{00001515-0000-0010-8000-00aa006d2ea4}')!
-ADODBConnection15 comment: '`ADODBConnection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB.Connection15 guid: (OS.COM.IID fromString: '{00001515-0000-0010-8000-00aa006d2ea4}')!
+ADODB.Connection15 comment: '`ADODBConnection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -117,8 +117,8 @@ interface Connection15 : _ADO
 };
 ```
 '!
-!ADODBConnection15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
-!ADODBConnection15 methodsFor!
+!ADODB.Connection15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+!ADODB.Connection15 methodsFor!
 
 attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
@@ -232,10 +232,10 @@ defaultDatabase: pbstr
 	self put_DefaultDatabase: pbstr!
 
 errors
-	"Answer the <ADODBErrors> value of the 'Errors' property of the receiver."
+	"Answer the <Errors> value of the 'Errors' property of the receiver."
 
 	| answer |
-	answer := ADODBErrors newPointer.
+	answer := Errors newPointer.
 	self get_Errors: answer.
 	^answer asObject!
 
@@ -249,7 +249,7 @@ execute: commandText options: options
 	"Invoke the Execute() method of the COM object."
 
 	| outputs |
-	outputs := {VARIANT new. ADODB_Recordset newPointer}.
+	outputs := {VARIANT new. _Recordset newPointer}.
 	self
 		Execute: commandText
 		RecordsAffected: (outputs basicAt: 1)
@@ -266,7 +266,7 @@ Execute: commandText RecordsAffected: recordsAffected Options: options ppiRset: 
 			[in, defaultvalue(-1)]long Options,
 			[out, retval]_Recordset** ppiRset);"
 
-	<virtual stdcall: hresult 17 bstr variant* sdword ADODB_Recordset**>
+	<virtual stdcall: hresult 17 bstr variant* sdword _Recordset**>
 	^self invalidCall: _failureCode!
 
 get_Attributes: plAttr
@@ -329,7 +329,7 @@ get_Errors: ppvObject
 		HRESULT __stdcall Errors(
 			[out, retval]Errors** ppvObject);"
 
-	<virtual stdcall: hresult 22 ADODBErrors**>
+	<virtual stdcall: hresult 22 Errors**>
 	^self invalidCall: _failureCode!
 
 get_IsolationLevel: level
@@ -447,7 +447,7 @@ Open: connectionString UserID: userID Password: password Options: options
 	^self invalidCall: _failureCode!
 
 openSchema: schema
-	"Answer the <ADODB_Recordset> result of invoking the OpenSchema() method of the COM object.
+	"Answer the <_Recordset> result of invoking the OpenSchema() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
@@ -456,10 +456,10 @@ openSchema: schema
 		schemaID: VARIANT unspecified!
 
 openSchema: schema restrictions: restrictions schemaID: schemaID
-	"Answer the <ADODB_Recordset> result of invoking the OpenSchema() method of the COM object."
+	"Answer the <_Recordset> result of invoking the OpenSchema() method of the COM object."
 
 	| answer |
-	answer := ADODB_Recordset newPointer.
+	answer := _Recordset newPointer.
 	self
 		OpenSchema: schema
 		Restrictions: restrictions asVariant
@@ -476,7 +476,7 @@ OpenSchema: schema Restrictions: restrictions SchemaID: schemaID pprset: pprset
 			[in, optional]VARIANT SchemaID,
 			[out, retval]_Recordset** pprset);"
 
-	<virtual stdcall: hresult 36 sdword variant variant ADODB_Recordset**>
+	<virtual stdcall: hresult 36 sdword variant variant _Recordset**>
 	^self invalidCall: _failureCode!
 
 provider
@@ -584,7 +584,7 @@ put_Provider: pbstr
 
 query: aString 
 	"Execute the SQL in aString.
-	Answer an <ADODB_Recordset> representing the resultant result set."
+	Answer an <_Recordset> representing the resultant result set."
 
 	^(self execute: aString options: adCmdText) second!
 
@@ -623,73 +623,73 @@ version
 	answer := BSTR new.
 	self get_Version: answer.
 	^answer asObject! !
-!ADODBConnection15 categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #beginTrans!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #BeginTrans:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #Close!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODBConnection15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #CommitTrans!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODBConnection15 categoriesFor: #connectionString!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #connectionString:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #connectionTimeout!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #connectionTimeout:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #cursorLocation!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #cursorLocation:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #defaultDatabase!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #defaultDatabase:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #errors!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #execute:!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #Execute:RecordsAffected:Options:ppiRset:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_Errors:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #get_Version:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODBConnection15 categoriesFor: #isolationLevel!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #isolationLevel:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODBConnection15 categoriesFor: #mode!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #mode:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #open!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #open:!operations!public! !
-!ADODBConnection15 categoriesFor: #Open:UserID:Password:Options:!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODBConnection15 categoriesFor: #openSchema:!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #openSchema:restrictions:schemaID:!**auto generated**!methods!public! !
-!ADODBConnection15 categoriesFor: #OpenSchema:Restrictions:SchemaID:pprset:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #provider!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #provider:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #put_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODBConnection15 categoriesFor: #query:!executing!public! !
-!ADODBConnection15 categoriesFor: #RollbackTrans!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODBConnection15 categoriesFor: #state!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #value!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #value:!**auto generated**!properties!public! !
-!ADODBConnection15 categoriesFor: #version!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #attributes!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #attributes:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #beginTrans!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #BeginTrans:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #Close!**auto generated**!COM Interfaces-Connection15!public! !
+!ADODB.Connection15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #CommitTrans!**auto generated**!COM Interfaces-Connection15!public! !
+!ADODB.Connection15 categoriesFor: #connectionString!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #connectionString:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #connectionTimeout!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #connectionTimeout:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #cursorLocation!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #cursorLocation:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #defaultDatabase!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #defaultDatabase:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #errors!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #execute:!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #Execute:RecordsAffected:Options:ppiRset:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_Errors:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #get_Version:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!ADODB.Connection15 categoriesFor: #isolationLevel!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #isolationLevel:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!ADODB.Connection15 categoriesFor: #mode!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #mode:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #open!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #open:!operations!public! !
+!ADODB.Connection15 categoriesFor: #Open:UserID:Password:Options:!**auto generated**!COM Interfaces-Connection15!public! !
+!ADODB.Connection15 categoriesFor: #openSchema:!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #openSchema:restrictions:schemaID:!**auto generated**!methods!public! !
+!ADODB.Connection15 categoriesFor: #OpenSchema:Restrictions:SchemaID:pprset:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #provider!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #provider:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #put_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
+!ADODB.Connection15 categoriesFor: #query:!executing!public! !
+!ADODB.Connection15 categoriesFor: #RollbackTrans!**auto generated**!COM Interfaces-Connection15!public! !
+!ADODB.Connection15 categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #value!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesFor: #version!**auto generated**!properties!public! !
 
-!ADODBConnection15 class methodsFor!
+!ADODB.Connection15 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ADODB.Connection15'
-		ADODBConnection15 defineTemplate"
+		Connection15 defineTemplate"
 
 	self
 		defineFunction: #get_ConnectionString:
@@ -708,7 +708,7 @@ defineFunctions
 			argumentTypes: 'bstr*';
 		defineFunction: #Close;
 		defineFunction: #Execute:RecordsAffected:Options:ppiRset:
-			argumentTypes: 'bstr variant* sdword ADODB_Recordset**';
+			argumentTypes: 'bstr variant* sdword _Recordset**';
 		defineFunction: #BeginTrans:
 			argumentTypes: 'sdword*';
 		defineFunction: #CommitTrans;
@@ -716,7 +716,7 @@ defineFunctions
 		defineFunction: #Open:UserID:Password:Options:
 			argumentTypes: 'bstr bstr bstr sdword';
 		defineFunction: #get_Errors:
-			argumentTypes: 'ADODBErrors**';
+			argumentTypes: 'Errors**';
 		defineFunction: #get_DefaultDatabase:
 			argumentTypes: 'bstr*';
 		defineFunction: #put_DefaultDatabase:
@@ -744,7 +744,7 @@ defineFunctions
 		defineFunction: #get_State:
 			argumentTypes: 'sdword*';
 		defineFunction: #OpenSchema:Restrictions:SchemaID:pprset:
-			argumentTypes: 'sdword variant variant ADODB_Recordset**'
+			argumentTypes: 'sdword variant variant _Recordset**'
 ! !
-!ADODBConnection15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.Connection15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 
