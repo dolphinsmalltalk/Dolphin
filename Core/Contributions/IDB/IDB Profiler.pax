@@ -57,6 +57,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'

@@ -62,6 +62,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
@@ -69,7 +70,7 @@ package setPrerequisites: #(
 	'IDB Common'
 	'IDB Method History'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
-	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser (Old Names)'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 

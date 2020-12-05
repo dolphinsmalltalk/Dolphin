@@ -6,20 +6,20 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{UI.Scintilla.Tests}
-	#{UI.Scintilla.Tests.MockScintillaView}
+	#{UI.Scintilla.Tests.ScintillaIndicatorTest}
+	#{UI.Scintilla.Tests.ScintillaLexerMetadataTest}
+	#{UI.Scintilla.Tests.ScintillaLexerPropertyTest}
 	#{UI.Scintilla.Tests.ScintillaViewTest}
-	#{UI.Scintilla.Tests.StStyler}
 ).
 
 package setPrerequisites: #(
-	'..\..\..\IDE\Base\Development System'
-	'..\..\..\Base\Dolphin'
-	'..\..\Base\Dolphin MVP Base'
-	'..\..\Dolphin MVP Tests'
-	'Dolphin Scintilla View'
-	'..\..\..\System\Compiler\Smalltalk Parser'
-	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin MVP Tests'
+	'..\Dolphin Scintilla View'
+	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).
 
 package!
@@ -32,14 +32,20 @@ UI.Scintilla subclass: #'UI.Scintilla.Tests'
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'UI.Scintilla.Tests.MockScintillaView'
-	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
+Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaIndicatorTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
-	instanceVariableNames: 'view arrayDepth'
+Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.Tests.ScintillaLexerMetadataTest subclass: #'UI.Scintilla.Tests.ScintillaLexerPropertyTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -47,7 +53,7 @@ Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
 UI.Tests.MultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
+UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
 	classVariableNames: 'HoverForecolor HoverStyle'
 	imports: #()
@@ -8,8 +8,8 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	classConstants: {
 		'IndicatorStyles' -> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)
 	}!
-ScintillaIndicatorStyle guid: (Core.GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
-ScintillaIndicatorStyle comment: '`ScintillaIndicatorStyle` instances represent the indicator configuration for a particular `ScintillaView`.
+UI.Scintilla.IndicatorStyle guid: (Core.GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
+UI.Scintilla.IndicatorStyle comment: '`ScintillaIndicatorStyle` instances represent the indicator configuration for a particular `ScintillaView`.
 
 Indicators are orthogonal to visual styles, and can be used to highlight areas of text regardless of styling. A common example usage would be highlight erroneous text by underlining it with a squiggly line.
 
@@ -62,8 +62,8 @@ A fixed set of named styles is supported, although this tends to get added to ov
   `IndicatorStyles`	`Array`
   `StyleNames`		`<Object>`
 '!
-!ScintillaIndicatorStyle categoriesForClass!MVP-Views-Support! !
-!ScintillaIndicatorStyle methodsFor!
+!UI.Scintilla.IndicatorStyle categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.IndicatorStyle methodsFor!
 
 alpha
 	"Answer the alpha value for the transparency of the background of box indicator styles"
@@ -213,51 +213,51 @@ validateAlpha: anInteger
 	^(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
-!ScintillaIndicatorStyle categoriesFor: #alpha!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #alpha:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #applyToView:initializing:!helpers!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverForecolor:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicId!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
-!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicStyle!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #flags!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #flags:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #foreAlpha!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #foreAlpha:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor:!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverForecolor!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverStyle!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverStyle:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #isUnderText!public!testing! !
-!ScintillaIndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #name!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #name:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #style!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #style:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
-!ScintillaIndicatorStyle categoriesFor: #validateAlpha:!helpers!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #alpha!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #alpha:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #applyToView:initializing:!helpers!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverForecolor:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicId!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #flags!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #flags:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #foreAlpha!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #foreAlpha:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #forecolor!accessing!colors!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #forecolor:!accessing!colors!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #hoverForecolor!accessing!colors!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText!public!testing! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #name!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #name:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #style!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #style:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #validateAlpha:!helpers!private! !
 
-!ScintillaIndicatorStyle class methodsFor!
+!UI.Scintilla.IndicatorStyle class methodsFor!
 
 buildPropertyMap
 	"Some magic numbers for default values are from the Scintilla code - no consts for these"
 
-	HoverStyle := ScintillaPropertyDescriptor
+	HoverStyle := PropertyDescriptor
 				getSelector: #basicHoverStyle
 				defaultValue: INDIC_SQUIGGLE
 				setMessage: SCI_INDICSETHOVERSTYLE
 				setSelector: #basicHoverStyle:
 				getMessage: SCI_INDICGETHOVERSTYLE.
-	HoverForecolor := ScintillaColorPropertyDescriptor
+	HoverForecolor := ColorPropertyDescriptor
 				getSelector: #hoverForecolor
 				defaultValue: Color black
 				setMessage: SCI_INDICSETHOVERFORE
@@ -265,14 +265,14 @@ buildPropertyMap
 				getMessage: SCI_INDICGETHOVERFORE.
 	^IdentityDictionary new
 		at: #forecolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_INDICSETFORE
 					setSelector: #basicForecolor:
 					getMessage: SCI_INDICGETFORE);
 		at: #style
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicStyle
 					defaultValue: nil
 					setMessage: SCI_INDICSETSTYLE
@@ -280,14 +280,14 @@ buildPropertyMap
 					getMessage: SCI_INDICGETSTYLE);
 		at: #hoverStyle put: HoverStyle;
 		at: #isUnderText
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicIsUnderText
 					defaultValue: 0
 					setMessage: SCI_INDICSETUNDER
 					setSelector: #basicIsUnderText:
 					getMessage: SCI_INDICGETUNDER);
 		at: #alpha
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #alpha
 					defaultValue: 30
 					setMessage: SCI_INDICSETALPHA
@@ -295,14 +295,14 @@ buildPropertyMap
 					getMessage: SCI_INDICGETALPHA);
 		at: #hoverForecolor put: HoverForecolor;
 		at: #flags
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #flags
 					defaultValue: 0
 					setMessage: SCI_INDICSETFLAGS
 					setSelector: #flags:
 					getMessage: SCI_INDICGETFLAGS);
 		at: #foreAlpha
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #foreAlpha
 					defaultValue: 50
 					setMessage: SCI_INDICSETOUTLINEALPHA
@@ -339,9 +339,9 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
-!ScintillaIndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaIndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaIndicatorStyle class categoriesFor: #new!public! !
-!ScintillaIndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaIndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #new!public! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !
 

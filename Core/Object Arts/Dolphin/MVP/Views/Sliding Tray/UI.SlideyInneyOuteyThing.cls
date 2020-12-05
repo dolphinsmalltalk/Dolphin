@@ -122,6 +122,7 @@ createTray
 	self createTabs.
 	self isStateRestoring ifTrue: [^self].
 	tray := SlidingCardTray new
+				beDefaultThemed;
 				layoutManager: self layoutManager;
 				setSlider: self;
 				parentView: self;

@@ -1,0 +1,53 @@
+﻿| package |
+package := Package name: 'Dolphin Scintilla View (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Scintilla Old Names(Pre-namespace Names).
+
+This package includes legacy aliases for Scintilla classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.NullScintillaStyler}
+	#{Smalltalk.ScintillaIndicatorDefinition}
+	#{Smalltalk.ScintillaIndicatorStyle}
+	#{Smalltalk.ScintillaMargin}
+	#{Smalltalk.ScintillaMarkerDefinition}
+	#{Smalltalk.ScintillaTextStyle}
+	#{Smalltalk.ScintillaView}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.NullScintillaStyler}
+	#{Smalltalk.ScintillaIndicatorDefinition}
+	#{Smalltalk.ScintillaIndicatorStyle}
+	#{Smalltalk.ScintillaMargin}
+	#{Smalltalk.ScintillaMarkerDefinition}
+	#{Smalltalk.ScintillaTextStyle}
+	#{Smalltalk.ScintillaView}
+).
+
+package setPrerequisites: #(
+	'Dolphin Scintilla View'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.NullScintillaStyler := UI.Scintilla.NullStyler!
+
+Smalltalk.ScintillaIndicatorDefinition := UI.Scintilla.IndicatorStyle!
+
+Smalltalk.ScintillaIndicatorStyle := UI.Scintilla.IndicatorStyle!
+
+Smalltalk.ScintillaMargin := UI.Scintilla.Margin!
+
+Smalltalk.ScintillaMarkerDefinition := UI.Scintilla.MarkerDefinition!
+
+Smalltalk.ScintillaTextStyle := UI.Scintilla.TextStyle!
+
+Smalltalk.ScintillaView := UI.Scintilla.ScintillaView!
+
+
+"End of package definition"!
+

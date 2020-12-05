@@ -17,28 +17,23 @@ Instance Variables:
 !Refactory.Browser.MethodCategoryEnvironment methodsFor!
 
 categories: aCollection
-	categories := aCollection asArray!
+	categories := aCollection!
 
 categoryNames: aCollection
-	self categories: (aCollection collect: [:each | each asMethodCategory])!
+	categories := aCollection collect: [:each | each asMethodCategory]!
 
 classesAndSelectorsDo: aBlock
-	self allClassesDo: 
-			[:eachClass |
-			(environment includesClass: eachClass)
-				ifTrue: 
-					["Use open-coded loops to reduce block instantiations, which is especially beneficial for the innermost loop that may be evaluated 1000's of times. This is only of real benefit because we know the collections enumerated over are Arrays."
-					1 to: categories size
-						do: 
-							[:i |
-							| selectors |
-							selectors := (categories at: i) selectorsInBehavior: eachClass.
-							1 to: selectors size
+	categories do: 
+			[:each |
+			each behaviorsDo: 
+					[:eachClass |
+					(super includesClass: eachClass)
+						ifTrue: 
+							[each methodsInBehavior: eachClass
 								do: 
-									[:j |
-									| selector |
-									(environment includesSelector: (selector := selectors at: j) in: eachClass)
-										ifTrue: [aBlock value: eachClass value: selector]]]]]!
+									[:eachMethod |
+									(environment includesSelector: eachMethod selector in: eachClass)
+										ifTrue: [aBlock value: eachClass value: eachMethod selector]]]]]!
 
 defaultLabel
 	| stream |
@@ -49,20 +44,15 @@ defaultLabel
 		display: environment.
 	^stream contents!
 
-includesClass: aClass
-	(super includesClass: aClass)
-		ifTrue: 
-			[1 to: categories size do: [:i | ((categories at: i) includesBehavior: aClass) ifTrue: [^true]]].
-	^false!
+includesClass: aClass 
+	^(super includesClass: aClass) 
+		and: [categories anySatisfy: [:each | (each methodsInBehavior: aClass) notEmpty]]!
 
-includesSelector: aSelector in: aClass
-	(super includesSelector: aSelector in: aClass)
-		ifTrue: 
-			[(aClass compiledMethodAt: aSelector ifAbsent: [])
-				ifNotNil: 
-					[:method |
-					1 to: categories size do: [:i | ((categories at: i) includesMethod: method) ifTrue: [^true]]]].
-	^false!
+includesSelector: aSelector in: aClass 
+	^(super includesSelector: aSelector in: aClass) and: 
+			[| method |
+			method := aClass compiledMethodAt: aSelector ifAbsent: [].
+			method notNil and: [categories anySatisfy: [:each | each includesMethod: method]]]!
 
 isEmpty
 	^categories allSatisfy: [:each | each isEmpty]!

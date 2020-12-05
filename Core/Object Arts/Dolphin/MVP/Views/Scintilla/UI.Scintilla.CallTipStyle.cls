@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaTextStyle subclass: #ScintillaCallTipStyle
+UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScintillaCallTipStyle guid: (GUID fromString: '{81c766f0-616e-4cf1-bc4b-8eba6720f2d7}')!
-ScintillaCallTipStyle comment: ''!
-!ScintillaCallTipStyle categoriesForClass!MVP-Views-Support! !
-!ScintillaCallTipStyle methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.CallTipStyle guid: (Core.GUID fromString: '{81c766f0-616e-4cf1-bc4b-8eba6720f2d7}')!
+UI.Scintilla.CallTipStyle comment: ''!
+!UI.Scintilla.CallTipStyle categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.CallTipStyle methodsFor!
 
 initialize
 	super initialize.
 	backcolor := Color tooltip.
 	forecolor := Color tooltipText.
 	self name: #callTip! !
-!ScintillaCallTipStyle categoriesFor: #initialize!initializing!private! !
+!UI.Scintilla.CallTipStyle categoriesFor: #initialize!initializing!private! !
 
-!ScintillaCallTipStyle class methodsFor!
+!UI.Scintilla.CallTipStyle class methodsFor!
 
 initialize
 	"
@@ -26,11 +27,11 @@ initialize
 
 	propertyMap := self buildPropertyMap
 				at: #forecolor
-					put: (ScintillaColorPropertyDescriptor
+					put: (ColorPropertyDescriptor
 							getSelector: #forecolor
 							defaultValue: Color gray
 							setMessage: SCI_STYLESETFORE);
 				isImmutable: true;
 				yourself! !
-!ScintillaCallTipStyle class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.CallTipStyle class categoriesFor: #initialize!development!initializing!public! !
 

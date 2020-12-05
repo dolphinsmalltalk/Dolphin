@@ -31,6 +31,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Base (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 ).

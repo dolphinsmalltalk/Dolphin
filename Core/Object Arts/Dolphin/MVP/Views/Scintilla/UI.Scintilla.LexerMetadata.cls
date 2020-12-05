@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaLexerMetadata
+Core.Object subclass: #'UI.Scintilla.LexerMetadata'
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaLexerMetadata guid: (Core.GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
-ScintillaLexerMetadata isNonInstantiable: true!
-ScintillaLexerMetadata comment: ''!
-!ScintillaLexerMetadata categoriesForClass!Kernel-Objects! !
-!ScintillaLexerMetadata methodsFor!
+UI.Scintilla.LexerMetadata guid: (Core.GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
+UI.Scintilla.LexerMetadata isNonInstantiable: true!
+UI.Scintilla.LexerMetadata comment: ''!
+!UI.Scintilla.LexerMetadata categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.LexerMetadata methodsFor!
 
 description
 	^self getDescription!
@@ -44,16 +44,16 @@ view
 view: aScintillaView id: anObject
 	view := aScintillaView.
 	id := anObject! !
-!ScintillaLexerMetadata categoriesFor: #description!accessing!public! !
-!ScintillaLexerMetadata categoriesFor: #displayOn:!printing!public! !
-!ScintillaLexerMetadata categoriesFor: #getDescription!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #id!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #name!accessing!public! !
-!ScintillaLexerMetadata categoriesFor: #printOn:!printing!public! !
-!ScintillaLexerMetadata categoriesFor: #view!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #view:id:!public! !
+!UI.Scintilla.LexerMetadata categoriesFor: #description!accessing!public! !
+!UI.Scintilla.LexerMetadata categoriesFor: #displayOn:!printing!public! !
+!UI.Scintilla.LexerMetadata categoriesFor: #getDescription!accessing!private! !
+!UI.Scintilla.LexerMetadata categoriesFor: #id!accessing!private! !
+!UI.Scintilla.LexerMetadata categoriesFor: #name!accessing!public! !
+!UI.Scintilla.LexerMetadata categoriesFor: #printOn:!printing!public! !
+!UI.Scintilla.LexerMetadata categoriesFor: #view!accessing!private! !
+!UI.Scintilla.LexerMetadata categoriesFor: #view:id:!initializing!private! !
 
-!ScintillaLexerMetadata class methodsFor!
+!UI.Scintilla.LexerMetadata class methodsFor!
 
 icon
 	^ScintillaView icon!
@@ -61,6 +61,6 @@ icon
 view: aScintillaView id: anObject
 	<primitive: 157>
 	^self new view: aScintillaView id: anObject! !
-!ScintillaLexerMetadata class categoriesFor: #icon!constants!development!public! !
-!ScintillaLexerMetadata class categoriesFor: #view:id:!instance creation!public! !
+!UI.Scintilla.LexerMetadata class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.LexerMetadata class categoriesFor: #view:id:!instance creation!public! !
 

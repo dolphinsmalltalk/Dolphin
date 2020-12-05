@@ -46,6 +46,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View (Deprecated)'
 	'..\..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OS.NMHDR subclass: #SCNotification
+OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
 	instanceVariableNames: 'view textString'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_annotationLinesAdded' -> 16r54.
@@ -29,12 +29,12 @@ OS.NMHDR subclass: #SCNotification
 		'_OffsetOf_x' -> 16r48.
 		'_OffsetOf_y' -> 16r4C
 	}!
-SCNotification guid: (Core.GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
-SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
+UI.Scintilla.SCNotification guid: (Core.GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
+UI.Scintilla.SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
-!SCNotification categoriesForClass!ScintillaLib-Structs! !
-!SCNotification methodsFor!
+!UI.Scintilla.SCNotification categoriesForClass!ScintillaLib-Structs! !
+!UI.Scintilla.SCNotification methodsFor!
 
 annotationLinesAdded
 	"Answer the <Integer> value of the receiver's 'annotationLinesAdded' field."
@@ -273,40 +273,40 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
-!SCNotification categoriesFor: #ch!**compiled accessors**!public! !
-!SCNotification categoriesFor: #character!accessing!public! !
-!SCNotification categoriesFor: #characterSource!**compiled accessors**!public! !
-!SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
-!SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
-!SCNotification categoriesFor: #getValidFields!accessing!private! !
-!SCNotification categoriesFor: #isAltKeyDown!public!testing! !
-!SCNotification categoriesFor: #isSelectionUpdate!public!testing! !
-!SCNotification categoriesFor: #isShiftDown!public!testing! !
-!SCNotification categoriesFor: #length!**compiled accessors**!public! !
-!SCNotification categoriesFor: #line!accessing!public! !
-!SCNotification categoriesFor: #linesAdded!**compiled accessors**!public! !
-!SCNotification categoriesFor: #listCompletionMethod!**compiled accessors**!public! !
-!SCNotification categoriesFor: #listType!**compiled accessors**!public! !
-!SCNotification categoriesFor: #lParam!**compiled accessors**!public! !
-!SCNotification categoriesFor: #margin!**compiled accessors**!public! !
-!SCNotification categoriesFor: #message!**compiled accessors**!public! !
-!SCNotification categoriesFor: #modificationType!**compiled accessors**!public! !
-!SCNotification categoriesFor: #modifiers!**compiled accessors**!public! !
-!SCNotification categoriesFor: #point!accessing!public! !
-!SCNotification categoriesFor: #position!accessing!public! !
-!SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
-!SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
-!SCNotification categoriesFor: #text!**compiled accessors**!public! !
-!SCNotification categoriesFor: #textString!accessing!public! !
-!SCNotification categoriesFor: #token!**compiled accessors**!public! !
-!SCNotification categoriesFor: #updated!**compiled accessors**!public! !
-!SCNotification categoriesFor: #view:!accessing!private! !
-!SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
-!SCNotification categoriesFor: #x!**compiled accessors**!public! !
-!SCNotification categoriesFor: #y!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #ch!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #character!accessing!public! !
+!UI.Scintilla.SCNotification categoriesFor: #characterSource!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #getValidFields!accessing!private! !
+!UI.Scintilla.SCNotification categoriesFor: #isAltKeyDown!public!testing! !
+!UI.Scintilla.SCNotification categoriesFor: #isSelectionUpdate!public!testing! !
+!UI.Scintilla.SCNotification categoriesFor: #isShiftDown!public!testing! !
+!UI.Scintilla.SCNotification categoriesFor: #length!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #line!accessing!public! !
+!UI.Scintilla.SCNotification categoriesFor: #linesAdded!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #listCompletionMethod!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #listType!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #lParam!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #margin!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #message!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #modificationType!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #modifiers!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #point!accessing!public! !
+!UI.Scintilla.SCNotification categoriesFor: #position!accessing!public! !
+!UI.Scintilla.SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #text!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #textString!accessing!public! !
+!UI.Scintilla.SCNotification categoriesFor: #token!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #updated!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #x!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesFor: #y!**compiled accessors**!public! !
 
-!SCNotification class methodsFor!
+!UI.Scintilla.SCNotification class methodsFor!
 
 defineFields
 	"Define the fields of the SCNotification structure.
@@ -340,6 +340,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
-!SCNotification class categoriesFor: #defineFields!public!template definition! !
-!SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!UI.Scintilla.SCNotification class categoriesFor: #defineFields!public!template definition! !
+!UI.Scintilla.SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

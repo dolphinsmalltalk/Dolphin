@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaStyler
+Core.Object subclass: #'UI.Scintilla.Styler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaStyler guid: (Core.GUID fromString: '{7dc234ba-44c2-490a-a7a1-7aafd6b577ec}')!
-ScintillaStyler isNonInstantiable: true!
-ScintillaStyler comment: 'ScintillaStyler is the abstract class of objects responsible for dynamically ''colouring'' the text in a <ScintillaView>. This is done by applying text styles in runs between start and end points. Initially the control will request that the entire text be styled, then as the view is edited it will send further requests to style modified text. Concrete subclasses define the manner in which the text is styled, for example to do syntax colouring for a particular programming language.
+UI.Scintilla.Styler guid: (Core.GUID fromString: '{7dc234ba-44c2-490a-a7a1-7aafd6b577ec}')!
+UI.Scintilla.Styler isNonInstantiable: true!
+UI.Scintilla.Styler comment: 'ScintillaStyler is the abstract class of objects responsible for dynamically ''colouring'' the text in a <ScintillaView>. This is done by applying text styles in runs between start and end points. Initially the control will request that the entire text be styled, then as the view is edited it will send further requests to style modified text. Concrete subclasses define the manner in which the text is styled, for example to do syntax colouring for a particular programming language.
 '!
-!ScintillaStyler categoriesForClass!Kernel-Objects! !
-!ScintillaStyler methodsFor!
+!UI.Scintilla.Styler categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.Styler methodsFor!
 
 blockSize
 	"Private - Style in blocks of a maximum of 16k characters. This allows the editor to remain
@@ -94,21 +94,21 @@ stylingStartBefore: startInteger in: aScintillaView
 			[prev > 0 and: [(aScintillaView styleIdAt: prev) == id]] whileTrue: [prev := prev - 1].
 			[prev == 0 or: [(aScintillaView styleIdAt: prev) == id]] whileFalse: [prev := prev - 1]].
 	^prev + 1! !
-!ScintillaStyler categoriesFor: #blockSize!constants!private! !
-!ScintillaStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
-!ScintillaStyler categoriesFor: #colorTextFrom:to:in:!event handling!public! !
-!ScintillaStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!ScintillaStyler categoriesFor: #prepareToStyleView:!initializing!public! !
-!ScintillaStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
-!ScintillaStyler categoriesFor: #stylingStartBefore:in:!event handling!public! !
+!UI.Scintilla.Styler categoriesFor: #blockSize!constants!private! !
+!UI.Scintilla.Styler categoriesFor: #colorText:in:startingAt:!operations!private! !
+!UI.Scintilla.Styler categoriesFor: #colorTextFrom:to:in:!event handling!public! !
+!UI.Scintilla.Styler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
+!UI.Scintilla.Styler categoriesFor: #prepareToStyleView:!initializing!public! !
+!UI.Scintilla.Styler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
+!UI.Scintilla.Styler categoriesFor: #stylingStartBefore:in:!event handling!public! !
 
-!ScintillaStyler class methodsFor!
+!UI.Scintilla.Styler class methodsFor!
 
 icon
 	^ScintillaView icon!
 
 new
 	^super new initialize! !
-!ScintillaStyler class categoriesFor: #icon!constants!development!public! !
-!ScintillaStyler class categoriesFor: #new!instance creation!public! !
+!UI.Scintilla.Styler class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.Styler class categoriesFor: #new!instance creation!public! !
 

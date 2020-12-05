@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaAttribute subclass: #ScintillaMarkerDefinition
+UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaMarkerDefinition guid: (Core.GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
-ScintillaMarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
+UI.Scintilla.MarkerDefinition guid: (Core.GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
+UI.Scintilla.MarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
 
 Markers can be displayed in any symbol margins configured for the view to mark particular lines.
 
@@ -26,8 +26,8 @@ Markers can be displayed in any symbol margins configured for the view to mark p
 
 
 '!
-!ScintillaMarkerDefinition categoriesForClass!MVP-Views-Support! !
-!ScintillaMarkerDefinition methodsFor!
+!UI.Scintilla.MarkerDefinition categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.MarkerDefinition methodsFor!
 
 alpha
 	^alpha!
@@ -117,7 +117,7 @@ newForLine: anInteger
 
 	"This method is in the 'must not strip' category to prevent ScintillaMarker being removed if not otherwise referenced."
 
-	^ScintillaMarker definition: self line: anInteger!
+	^Marker definition: self line: anInteger!
 
 selectionBackcolor
 	"Answer the background <Color> used to draw the marker when selector, or nil if the marker definition does not specify a selection background colour and the Scintilla default (red) should be used."
@@ -136,31 +136,31 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
-!ScintillaMarkerDefinition categoriesFor: #alpha!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #alpha:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #alphaValue!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #backcolor!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicId!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #code!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #code:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #glyphName!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #glyphName:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
-!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaMarkerDefinition categoriesFor: #view!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #alpha!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #alpha:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #alphaValue!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #backcolor!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #backcolor:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicId!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #code!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #code:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #glyphName!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #glyphName:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #name!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #name:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #view!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #view:!accessing!private! !
 
-!ScintillaMarkerDefinition class methodsFor!
+!UI.Scintilla.MarkerDefinition class methodsFor!
 
 arrows
 	"Answer a set of marker definitions for fold margin markers in the Macintosh 'Arrow' style.
@@ -270,29 +270,29 @@ boxTree
 buildPropertyMap
 	^IdentityDictionary new
 		at: #backcolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color white
 					setMessage: SCI_MARKERSETBACK);
 		at: #forecolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_MARKERSETFORE);
 		at: #glyphName
-			put: ((ScintillaPropertyDescriptor
+			put: ((PropertyDescriptor
 					getSelector: #code
 					defaultValue: 0
 					setMessage: SCI_MARKERDEFINE)
 					alwaysPrint: true;
 					yourself);
 		at: #alpha
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #alpha
 					defaultValue: SC_ALPHA_NOALPHA
 					setMessage: SCI_MARKERSETALPHA);
 		at: #selectionBackcolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #selectionBackcolor
 					defaultValue: Color red
 					setMessage: SCI_MARKERSETBACKSELECTED);
@@ -499,16 +499,16 @@ stbVersion
 visibleCharacterGlyphs
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray
 		collect: [:each | each asSymbol]! !
-!ScintillaMarkerDefinition class categoriesFor: #arrows!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #boxTree!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaMarkerDefinition class categoriesFor: #circleTree!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #folderIds!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #glyphNames!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #plusMinus!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaMarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #arrows!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #boxTree!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #circleTree!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #folderIds!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #glyphNames!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #plusMinus!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!public! !
 

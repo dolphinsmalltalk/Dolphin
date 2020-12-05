@@ -40,6 +40,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names)'
 ).
 
 package!

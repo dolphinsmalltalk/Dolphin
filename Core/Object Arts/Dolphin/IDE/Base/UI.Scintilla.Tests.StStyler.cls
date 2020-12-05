@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Kernel.ParseNodeVisitor subclass: #StStyler
+Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StStyler guid: (Core.GUID fromString: '{c4f1cf3f-646a-4233-9f38-c110bf4f4dfb}')!
-StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generates visual style runs for Smalltalk source code from a parse tree. It is intended solely for testing the syntax colouring in DX6.'!
-!StStyler categoriesForClass!Refactory-ParseTree Matching! !
-!StStyler methodsFor!
+UI.Scintilla.Tests.StStyler guid: (Core.GUID fromString: '{c4f1cf3f-646a-4233-9f38-c110bf4f4dfb}')!
+UI.Scintilla.Tests.StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generates visual style runs for Smalltalk source code from a parse tree. It is intended solely for testing the syntax colouring in DX6.'!
+!UI.Scintilla.Tests.StStyler categoriesForClass!Refactory-ParseTree Matching! !
+!UI.Scintilla.Tests.StStyler methodsFor!
 
 acceptLiteralByteArrayNode: aStLiteralArrayNode 
 	| style |
@@ -256,33 +256,33 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	view applyStyle: #identifier toNext: aVariableNode name size! !
-!StStyler categoriesFor: #acceptLiteralByteArrayNode:!public!unit tests! !
-!StStyler categoriesFor: #colorComments:!helpers!private! !
-!StStyler categoriesFor: #colourBefore:!helpers!private! !
-!StStyler categoriesFor: #emitWhitespaceBefore:!private!unit tests! !
-!StStyler categoriesFor: #emitWhitespaceFrom:to:!helpers!private! !
-!StStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!StStyler categoriesFor: #prepareToStyleView:!event handling!public! !
-!StStyler categoriesFor: #style:in:!operations!public! !
-!StStyler categoriesFor: #styleIntersticesUpTo:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleMethodPatternFor:!private!unit tests! !
-!StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
-!StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
-!StStyler categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitNode:!public!visiting! !
-!StStyler categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #acceptLiteralByteArrayNode:!public!unit tests! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #colorComments:!helpers!private! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #colourBefore:!helpers!private! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #emitWhitespaceBefore:!private!unit tests! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #emitWhitespaceFrom:to:!helpers!private! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #prepareToStyleView:!event handling!public! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #style:in:!operations!public! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleIntersticesUpTo:!private!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleMethodPatternFor:!private!unit tests! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitNode:!public!visiting! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!UI.Scintilla.Tests.StStyler categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 

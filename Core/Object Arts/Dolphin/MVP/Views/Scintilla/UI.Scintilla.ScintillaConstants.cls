@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Kernel.SharedPool subclass: #ScintillaConstants
+Kernel.SharedPool subclass: #'UI.Scintilla.ScintillaConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1271,7 +1271,7 @@ Kernel.SharedPool subclass: #ScintillaConstants
 		'VISIBLE_SLOP' -> 16r1.
 		'VISIBLE_STRICT' -> 16r4
 	}!
-ScintillaConstants guid: (Core.GUID fromString: '{7ee9ff4e-157d-4f90-905b-11142e7ed8c3}')!
-ScintillaConstants isNonInstantiable: true!
-ScintillaConstants comment: ''!
-!ScintillaConstants categoriesForClass!Unclassified! !
+UI.Scintilla.ScintillaConstants guid: (Core.GUID fromString: '{7ee9ff4e-157d-4f90-905b-11142e7ed8c3}')!
+UI.Scintilla.ScintillaConstants isNonInstantiable: true!
+UI.Scintilla.ScintillaConstants comment: ''!
+!UI.Scintilla.ScintillaConstants categoriesForClass!Unclassified! !

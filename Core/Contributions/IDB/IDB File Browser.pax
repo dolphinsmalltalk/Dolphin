@@ -41,6 +41,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models'

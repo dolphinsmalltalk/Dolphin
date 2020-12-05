@@ -614,9 +614,13 @@ fileOutClassDefinitionsOn: aSourceFiler
 	aSourceFiler
 		emitComment: 'Class Definitions';
 		cr.
-	"The namespaces should be defined first as these may be referenced by other class definitions."
+	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
+	classes do: 
+			[:each |
+			((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
+				ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	classes
-		do: [:each | (each inheritsFrom: Namespace) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+		do: [:each | (each inheritsFrom: SharedPool) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	classes
 		do: [:each | (each inheritsFrom: Namespace) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
 	aSourceFiler cr!

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaMarker
+Core.Object subclass: #'UI.Scintilla.Marker'
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaMarker guid: (Core.GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
-ScintillaMarker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
+UI.Scintilla.Marker guid: (Core.GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
+UI.Scintilla.Marker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
 
 Instance Variables:
 	view		<ScintillaView>. View in which currently installed, or nil if inactive.
@@ -16,8 +16,8 @@ Instance Variables:
 	handle		<integer>. Handle allocated by Scintilla to uniquely identify the marker.
 
 '!
-!ScintillaMarker categoriesForClass!MVP-Views-Support! !
-!ScintillaMarker methodsFor!
+!UI.Scintilla.Marker categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.Marker methodsFor!
 
 addToView: aScintillaView 
 	"Add this marker to the view at its currently recorded line"
@@ -84,22 +84,22 @@ view
 
 view: anObject
 	view := anObject! !
-!ScintillaMarker categoriesFor: #addToView:!helpers!public! !
-!ScintillaMarker categoriesFor: #cacheCurrentLine!accessing!public! !
-!ScintillaMarker categoriesFor: #currentLine!accessing!public! !
-!ScintillaMarker categoriesFor: #currentPosition!accessing!public! !
-!ScintillaMarker categoriesFor: #currentRange!accessing!public! !
-!ScintillaMarker categoriesFor: #definition!helpers!public! !
-!ScintillaMarker categoriesFor: #handle!accessing!private! !
-!ScintillaMarker categoriesFor: #line!accessing!public! !
-!ScintillaMarker categoriesFor: #removedFromView!private!removing! !
-!ScintillaMarker categoriesFor: #removeFromView!public!removing! !
-!ScintillaMarker categoriesFor: #setDefinition:line:!initializing!private! !
-!ScintillaMarker categoriesFor: #type!accessing!public! !
-!ScintillaMarker categoriesFor: #view!accessing!private! !
-!ScintillaMarker categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.Marker categoriesFor: #addToView:!helpers!public! !
+!UI.Scintilla.Marker categoriesFor: #cacheCurrentLine!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #currentLine!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #currentPosition!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #currentRange!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #definition!helpers!public! !
+!UI.Scintilla.Marker categoriesFor: #handle!accessing!private! !
+!UI.Scintilla.Marker categoriesFor: #line!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #removedFromView!private!removing! !
+!UI.Scintilla.Marker categoriesFor: #removeFromView!public!removing! !
+!UI.Scintilla.Marker categoriesFor: #setDefinition:line:!initializing!private! !
+!UI.Scintilla.Marker categoriesFor: #type!accessing!public! !
+!UI.Scintilla.Marker categoriesFor: #view!accessing!private! !
+!UI.Scintilla.Marker categoriesFor: #view:!accessing!private! !
 
-!ScintillaMarker class methodsFor!
+!UI.Scintilla.Marker class methodsFor!
 
 definition: aScintillaMarkerDefinition line: anInteger 
 	^(self new)
@@ -108,6 +108,6 @@ definition: aScintillaMarkerDefinition line: anInteger
 
 icon
 	^ScintillaView icon! !
-!ScintillaMarker class categoriesFor: #definition:line:!instance creation!public! !
-!ScintillaMarker class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.Marker class categoriesFor: #definition:line:!instance creation!public! !
+!UI.Scintilla.Marker class categoriesFor: #icon!constants!development!public! !
 

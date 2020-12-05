@@ -39,7 +39,6 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler class} #fromSton:)
 	#(#{Kernel.SingletonSearchPolicy} #stonOn:)
 	#(#{Kernel.SingletonSearchPolicy class} #stonName)
-	#(#{Smalltalk.ScintillaView class} #stonAllInstVarNames)
 	#(#{Smalltalk.SmalltalkSystem} #stonOn:)
 	#(#{STON class} #icon)
 	#(#{STON.CStyleCommentsSkipStream} #skipSeparators)
@@ -59,6 +58,7 @@ package setMethodNames: #(
 	#(#{UI.FramingCalculation class} #fromSton:)
 	#(#{UI.ReferenceView} #stonExtras)
 	#(#{UI.ReferenceView class} #stonAllInstVarNames)
+	#(#{UI.Scintilla.ScintillaView class} #stonAllInstVarNames)
 	#(#{UI.Toolbar class} #stonAllInstVarNames)
 	#(#{UI.View} #stonExtras)
 	#(#{UI.View} #stonOn:)
@@ -382,14 +382,6 @@ stonName
 	^#SearchPolicy! !
 !Kernel.SingletonSearchPolicy class categoriesFor: #stonName!public!ston! !
 
-!ScintillaView class methodsFor!
-
-stonAllInstVarNames
-	"Override to exclude the number of instance variables we never want to serialize."
-
-	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
-!ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
-
 !SmalltalkSystem methodsFor!
 
 stonOn: stonWriter
@@ -517,6 +509,14 @@ stonAllInstVarNames
 
 	^super stonAllInstVarNames copyWithout: 'referee'! !
 !UI.ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.Scintilla.ScintillaView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
+!UI.Scintilla.ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
 
 !UI.Toolbar class methodsFor!
 

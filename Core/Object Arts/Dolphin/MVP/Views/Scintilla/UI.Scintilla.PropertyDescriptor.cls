@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaPropertyDescriptor
+Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
-	classVariableNames: 'AlwaysPrintMask'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AlwaysPrintMask' -> 16r1
 	}!
-ScintillaPropertyDescriptor guid: (Core.GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
-ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
+UI.Scintilla.PropertyDescriptor guid: (Core.GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
+UI.Scintilla.PropertyDescriptor comment: '`Scintilla PropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
 
 ## Instance Variables:
   `getSelector`		`Symbol`. Accessor message to send to object that represents the composite Scintilla attribute in order to retrieve the property value to send to the control.
@@ -26,8 +26,8 @@ ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide met
 
 
 '!
-!ScintillaPropertyDescriptor categoriesForClass!Kernel-Objects! !
-!ScintillaPropertyDescriptor methodsFor!
+!UI.Scintilla.PropertyDescriptor categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.PropertyDescriptor methodsFor!
 
 alwaysPrint
 	^flags allMask: AlwaysPrintMask!
@@ -87,19 +87,19 @@ setSelector: aSymbol getMessage: anInteger
 
 valueFromLResult: anObject 
 	^anObject! !
-!ScintillaPropertyDescriptor categoriesFor: #alwaysPrint!public!testing! !
-!ScintillaPropertyDescriptor categoriesFor: #alwaysPrint:!accessing!public! !
-!ScintillaPropertyDescriptor categoriesFor: #getAttribute:ofView:!operations!private! !
-!ScintillaPropertyDescriptor categoriesFor: #getAttributeValue:!operations!private! !
-!ScintillaPropertyDescriptor categoriesFor: #getSelector:defaultValue:setMessage:!initializing!private! !
-!ScintillaPropertyDescriptor categoriesFor: #isDefaultValue:!operations!private! !
-!ScintillaPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
-!ScintillaPropertyDescriptor categoriesFor: #printOn:!displaying!public! !
-!ScintillaPropertyDescriptor categoriesFor: #setAttribute:ofView:initializing:!helpers!private! !
-!ScintillaPropertyDescriptor categoriesFor: #setSelector:getMessage:!initializing!private! !
-!ScintillaPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint!public!testing! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint:!accessing!public! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #getAttribute:ofView:!operations!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #getAttributeValue:!helpers!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #getSelector:defaultValue:setMessage:!initializing!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #isDefaultValue:!operations!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #printOn:!displaying!public! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #setAttribute:ofView:initializing:!operations!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #setSelector:getMessage:!initializing!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
 
-!ScintillaPropertyDescriptor class methodsFor!
+!UI.Scintilla.PropertyDescriptor class methodsFor!
 
 getSelector: aSymbol defaultValue: anObject setMessage: anInteger
 	^self new
@@ -115,7 +115,7 @@ getSelector: getSymbol defaultValue: anObject setMessage: setInteger setSelector
 
 icon
 	^ScintillaView icon! !
-!ScintillaPropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:!instance creation!public! !
-!ScintillaPropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !
-!ScintillaPropertyDescriptor class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.PropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:!instance creation!public! !
+!UI.Scintilla.PropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !
+!UI.Scintilla.PropertyDescriptor class categoriesFor: #icon!constants!development!public! !
 

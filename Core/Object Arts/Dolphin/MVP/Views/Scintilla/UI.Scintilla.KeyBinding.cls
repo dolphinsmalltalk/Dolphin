@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaKeyBinding
+Core.Object subclass: #'UI.Scintilla.KeyBinding'
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
-	imports: #(#{ScintillaConstants} #{Win32Constants})
+	imports: #(#{OS.Win32Constants} #{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaKeyBinding guid: (Core.GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
-ScintillaKeyBinding comment: 'ScintillaKeyBinding is a support class for the ScintillaView, used to represent the key bindings defined in a particular instance. The control itself defines a large set of default mappings, but these can be replaced and/or augmented.
+UI.Scintilla.KeyBinding guid: (Core.GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
+UI.Scintilla.KeyBinding comment: 'ScintillaKeyBinding is a support class for the ScintillaView, used to represent the key bindings defined in a particular instance. The control itself defines a large set of default mappings, but these can be replaced and/or augmented.
 
 Instance Variables:
 	acceleratorKey		<integer>. Dolphin format accelerator key combination (combines a VK_xxx, and FALT/FSHIFT/FCONTROL flags)
@@ -18,8 +18,8 @@ Class Variables:
 	Commands		<IdentityDictionary> mapping Dolphin accelerator key codes to command symbols.
 
 '!
-!ScintillaKeyBinding categoriesForClass!MVP-Views-Support! !
-!ScintillaKeyBinding methodsFor!
+!UI.Scintilla.KeyBinding categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.KeyBinding methodsFor!
 
 = comparand 
 	^self species == comparand species 
@@ -96,23 +96,23 @@ translateVirtualKey: vkInteger
 	key code (SCK_xxx)"
 
 	^VirtualKeyMap at: (vkInteger bitAnd: 16rFF) + 1! !
-!ScintillaKeyBinding categoriesFor: #=!comparing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKey!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKey:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyString!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyString:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #commandSymbol!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #commandSymbol:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #displayOn:!printing!public! !
-!ScintillaKeyBinding categoriesFor: #hash!comparing!public! !
-!ScintillaKeyBinding categoriesFor: #message!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #message:!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #printOn:!printing!public! !
-!ScintillaKeyBinding categoriesFor: #scintillaKeyCode!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #translateVirtualKey:!helpers!private! !
+!UI.Scintilla.KeyBinding categoriesFor: #=!comparing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKey!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKey:!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyString!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyString:!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #commandSymbol!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #commandSymbol:!accessing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #displayOn:!printing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #hash!comparing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #message!accessing!private! !
+!UI.Scintilla.KeyBinding categoriesFor: #message:!accessing!private! !
+!UI.Scintilla.KeyBinding categoriesFor: #printOn:!printing!public! !
+!UI.Scintilla.KeyBinding categoriesFor: #scintillaKeyCode!accessing!private! !
+!UI.Scintilla.KeyBinding categoriesFor: #translateVirtualKey:!helpers!private! !
 
-!ScintillaKeyBinding class methodsFor!
+!UI.Scintilla.KeyBinding class methodsFor!
 
 icon
 	^ScintillaView icon!
@@ -281,11 +281,11 @@ newAcceleratorKey: keyInteger message: sciInteger
 
 newChord: aString message: sciInteger
 	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
-!ScintillaKeyBinding class categoriesFor: #icon!constants!development!public! !
-!ScintillaKeyBinding class categoriesFor: #initialize!development!initializing!private! !
-!ScintillaKeyBinding class categoriesFor: #initializeCommands!**auto generated**!development!private!scintilla interface! !
-!ScintillaKeyBinding class categoriesFor: #initializeVirtualKeyMap!development!initializing!private! !
-!ScintillaKeyBinding class categoriesFor: #new!instance creation!public! !
-!ScintillaKeyBinding class categoriesFor: #newAcceleratorKey:message:!instance creation!public! !
-!ScintillaKeyBinding class categoriesFor: #newChord:message:!instance creation!public! !
+!UI.Scintilla.KeyBinding class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.KeyBinding class categoriesFor: #initialize!development!initializing!private! !
+!UI.Scintilla.KeyBinding class categoriesFor: #initializeCommands!**auto generated**!development!private!scintilla interface! !
+!UI.Scintilla.KeyBinding class categoriesFor: #initializeVirtualKeyMap!development!initializing!private! !
+!UI.Scintilla.KeyBinding class categoriesFor: #new!instance creation!public! !
+!UI.Scintilla.KeyBinding class categoriesFor: #newAcceleratorKey:message:!instance creation!public! !
+!UI.Scintilla.KeyBinding class categoriesFor: #newChord:message:!instance creation!public! !
 

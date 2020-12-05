@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaLexerMetadata subclass: #ScintillaLexerProperty
+UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerProperty'
 	instanceVariableNames: 'type'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaLexerProperty guid: (Core.GUID fromString: '{edef3c1e-b9c0-4eed-8b80-7ecdaeef15d7}')!
-ScintillaLexerProperty comment: ''!
-!ScintillaLexerProperty categoriesForClass!Kernel-Objects! !
-!ScintillaLexerProperty methodsFor!
+UI.Scintilla.LexerProperty guid: (Core.GUID fromString: '{edef3c1e-b9c0-4eed-8b80-7ecdaeef15d7}')!
+UI.Scintilla.LexerProperty comment: ''!
+!UI.Scintilla.LexerProperty categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.LexerProperty methodsFor!
 
 getDescription
 	^view sciDescribeProperty: id!
@@ -33,9 +33,9 @@ value: anObject
 		value: (self type < ScintillaConstants.SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
-!ScintillaLexerProperty categoriesFor: #getDescription!accessing!private! !
-!ScintillaLexerProperty categoriesFor: #name!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #type!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #value!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #value:!accessing!public! !
+!UI.Scintilla.LexerProperty categoriesFor: #getDescription!accessing!private! !
+!UI.Scintilla.LexerProperty categoriesFor: #name!accessing!public! !
+!UI.Scintilla.LexerProperty categoriesFor: #type!accessing!public! !
+!UI.Scintilla.LexerProperty categoriesFor: #value!accessing!public! !
+!UI.Scintilla.LexerProperty categoriesFor: #value:!accessing!public! !
 

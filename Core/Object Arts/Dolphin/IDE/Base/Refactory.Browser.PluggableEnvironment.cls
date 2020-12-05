@@ -54,7 +54,7 @@ selectorsForClass: aClass do: aBlock
 snapshot
 	"Answer a static snapshot of this dynamic method environment."
 
-	^(SelectorEnvironment onMethods: self allMethods in: environment)
+	^(Refactory.Browser.SelectorEnvironment onMethods: self allMethods in: environment)
 		label: self label;
 		yourself!
 

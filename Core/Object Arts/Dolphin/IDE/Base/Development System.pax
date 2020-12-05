@@ -497,16 +497,6 @@ package setMethodNames: #(
 	#(#{Smalltalk class} #renameVariable:to:)
 	#(#{Smalltalk.AXControlSite class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.AXValueConvertingControlSite class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaAttribute class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaIndicatorStyle class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaKeyBinding class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaMargin class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaMarkerDefinition class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaTextStyle class} #newInstanceAspect:class:)
-	#(#{Smalltalk.ScintillaTextStyle class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaView} #publishedAspects)
-	#(#{Smalltalk.ScintillaView class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ScintillaView class} #publishedEventsOfInstances)
 	#(#{Smalltalk.StyledGradientBrush class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.StyledPen class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.TranscriptShell} #help)
@@ -599,6 +589,16 @@ package setMethodNames: #(
 	#(#{UI.ResourceIdentifier class} #publishedAspectsOfInstances)
 	#(#{UI.RichTextEdit class} #publishedAspectsOfInstances)
 	#(#{UI.RichTextPresenter class} #publishedEventsOfInstances)
+	#(#{UI.Scintilla.Attribute class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.IndicatorStyle class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.KeyBinding class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.Margin class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.MarkerDefinition class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.ScintillaView} #publishedAspects)
+	#(#{UI.Scintilla.ScintillaView class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.ScintillaView class} #publishedEventsOfInstances)
+	#(#{UI.Scintilla.TextStyle class} #newInstanceAspect:class:)
+	#(#{UI.Scintilla.TextStyle class} #publishedAspectsOfInstances)
 	#(#{UI.ScrollBar class} #publishedAspectsOfInstances)
 	#(#{UI.ScrollingDecorator class} #publishedAspectsOfInstances)
 	#(#{UI.ScrollingDecoratorLayout class} #publishedAspectsOfInstances)
@@ -1065,13 +1065,13 @@ UI.Presenter subclass: #PackageDependencyPresenter
 UI.Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
-	imports: #(#{Smalltalk.ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{Smalltalk.ScintillaConstants})
+	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'AutoCompleteMask' -> 16r1.
@@ -1426,24 +1426,6 @@ Kernel.Scanner subclass: #SmalltalkStylingScanner
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaStyler subclass: #SmalltalkStyler
-	instanceVariableNames: 'arrayDepth view last inTag stack'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SmalltalkStyler subclass: #SmalltalkExpressionStyler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SmalltalkStyler subclass: #SmalltalkMethodStyler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Kernel.SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1464,6 +1446,24 @@ SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	classConstants: {}!
 Kernel.STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.Styler subclass: #SmalltalkStyler
+	instanceVariableNames: 'arrayDepth view last inTag stack'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+SmalltalkStyler subclass: #SmalltalkExpressionStyler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+SmalltalkStyler subclass: #SmalltalkMethodStyler
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -5362,211 +5362,6 @@ publishedAspectsOfInstances
 		yourself! !
 !AXValueConvertingControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
 
-!ScintillaAttribute class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect integer: #id) beReadOnly;
-		yourself! !
-!ScintillaAttribute class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaIndicatorStyle class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #hoverForecolor);
-		add: (Aspect choice: #style from: IndicatorStyles);
-		add: (Aspect choice: #hoverStyle from: IndicatorStyles);
-		add: (Aspect name: #name);
-		add: (Aspect integer: #alpha);
-		add: (Aspect integer: #foreAlpha);
-		yourself! !
-!ScintillaIndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaKeyBinding class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect choice: #commandSymbol from: Commands values asSortedCollection);
-		add: (Aspect hotkey: #acceleratorKey);
-		yourself! !
-!ScintillaKeyBinding class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaMargin class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect boolean: #isSensitive);
-		add: (Aspect choice: #type from: MarginTypes);
-		add: (Aspect integer: #width);
-		add: (Aspect integer: #mask);
-		add: (Aspect choice: #cursorType from: CursorTypes values);
-		add: (Aspect color: #backcolor);
-		yourself! !
-!ScintillaMargin class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaMarkerDefinition class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect name: #name);
-		add: (Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #backcolor);
-		add: (Aspect integer: #alpha);
-		add: (Aspect color: #selectionBackcolor);
-		yourself! !
-!ScintillaMarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaTextStyle class methodsFor!
-
-newInstanceAspect: aSymbol class: aspectClass 
-	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
-    	which is appropriate for representing aspects of the receiver's type."
-
-	^(aspectClass name: aSymbol
-		presenterBlock: 
-			[:p :m | 
-			ScintillaTextStylePresenter 
-				create: 'Developer view'
-				in: p
-				on: m])
-		yourself!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| answer |
-	answer := super publishedAspectsOfInstances.
-	"Don't bother exposing the changeable style flag, since it doesn't work at present"
-	#(#isItalic #isBold #isUnderlined #isBackcolorExtendedToEndOfLine #isHotspot #isInvisible) 
-		do: [:each | answer add: ((Aspect boolean: each)
-						isNullable: true;
-						yourself)].
-	^answer
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #backcolor);
-		add: (Aspect 
-					choice: #fontName
-					from: Canvas forDesktop fontNames asSortedCollection
-					andNil: nil);
-		add: (Aspect number: #pointSize);
-		add: (Aspect integer: #characterSet);
-		add: (Aspect 
-					choice: #caseName
-					from: self caseNames
-					andNil: nil);
-		add: (Aspect name: #name);
-		add: (Aspect number: #weight);
-		yourself! !
-!ScintillaTextStyle class categoriesFor: #newInstanceAspect:class:!adapters!private! !
-!ScintillaTextStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!ScintillaView methodsFor!
-
-publishedAspects
-	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
-
-	| createPresenter |
-	createPresenter := 
-			[:p :m |
-			(ScintillaStylesCollectionPresenter
-				create: 'Developer view'
-				in: p
-				on: m)
-				defaultStyle: ((ScintillaTextStyle new)
-							backcolor: self backcolor;
-							font: self actualFont;
-							yourself);
-				normalStyle: (self styleNamed: #normal);
-				yourself].
-	^(super publishedAspects)
-		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
-		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
-		yourself! !
-!ScintillaView categoriesFor: #publishedAspects!constants!public! !
-
-!ScintillaView class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| answer choices |
-	answer := super publishedAspectsOfInstances.
-	answer
-		removeKey: #format;
-		removeKey: #alignment;
-		add: (Aspect sequenceableCollection: #keyBindings
-					addEvaluationFrom: {ScintillaKeyBinding name , ' new'}) beImmutable;
-		add: (Aspect sequenceableCollection: #margins);
-		add: (Aspect sequenceableCollection: #indicatorStyles
-					addEvaluationFrom: {ScintillaIndicatorStyle name , ' new'}) beImmutable;
-		add: (Aspect sequenceableCollection: #markerDefinitions
-					addEvaluationFrom: {ScintillaMarkerDefinition name , ' new'}) beImmutable;
-		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
-		add: (Aspect dictionary: #braceChars) beImmutable;
-		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
-		add: (Aspect choice: #foldMarkerStyle from: {nil} , self foldMarkerStyles asSortedCollection);
-		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
-		add: (Aspect choice: #indentationGuides from: {nil} , self indentationGuideStyles asSortedCollection);
-		add: (Aspect choice: #annotationMode from: self annotationModes);
-		add: (Aspect choice: #wrapIndentMode from: self wrapIndentModes);
-		add: (Aspect choice: #fontQuality from: self fontQualities);
-		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
-		add: (Aspect integer: #whitespaceMarkerSize);
-		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
-		add: (Aspect choice: #endOfLineMode from: self lineEndings);
-		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
-		add: (Aspect choice: #endOfLineAnnotationMode from: self annotationModes);
-		yourself.
-	choices := OrderedCollection with: 'nil'.
-	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
-		do: [:each | choices add: each name , ' new'].
-	answer add: (Aspect choice: #styler evaluationFrom: choices).
-	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
-		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount #currentLineFrameWidth)
-		do: [:each | answer add: (Aspect integer: each)].
-	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
-		do: [:each | answer add: (Aspect color: each)].
-	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
-		do: [:each | answer add: (Aspect boolean: each)].
-	^answer!
-
-publishedEventsOfInstances
-	"Answer a Set of Symbols that describe the published events triggered
-    	by instances of the receiver."
-
-	^(super publishedEventsOfInstances)
-		remove: #textOverflow;
-		add: #charAdded:;
-		add: #callTipClicked:;
-		add: #hoverStart:;
-		add: #hoverEnd:;
-		add: #hotSpotClicked:;
-		add: #hotSpotDoubleClicked:;
-		add: #savePointLeft;
-		add: #marginClicked:;
-		add: #userList:selection:;
-		add: #painted;
-		add: #macroRecord:;
-		add: #updateUI:;
-		add: #zoomed;
-		yourself! !
-!ScintillaView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!ScintillaView class categoriesFor: #publishedEventsOfInstances!events!public! !
-
 !StyledGradientBrush class methodsFor!
 
 publishedAspectsOfInstances
@@ -5618,7 +5413,7 @@ resource_Scintilla_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scintilla_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 nil nil nil 416 788230 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ScintillaView) 34 50 nil 416 34 2 8 1174470916 262145 560 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 23 265030 4 ##(UI.Menu) nil true 34 8 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 738 1 770 #selectAll 8 'Select &All' 8323 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 1 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 983366 1 ##(UI.DividerMenuItem) 4097 738 1 770 #find 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 1074 4097 690 nil true 34 5 738 1 770 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 738 1 770 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 738 1 770 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 738 1 770 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 738 1 770 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 818 nil true 864 8 'Preferences.ico' 912 nil nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 560 nil 8 1870544360 852486 ##(UI.NullConverter) nil 8 '' 3 1686439121 170 192 34 10 #indentGuide 1182790 1 ##(Smalltalk.ScintillaTextStyle) 75 466 #gray nil 1 nil nil nil nil #indentGuide 8 'Indentation guides, when visible' nil nil #whitespace 1762 53 466 #silver nil 1 nil nil nil nil #whitespace 8 'Whitespace, when visible' nil nil #lineNumber 1762 67 nil nil 1 nil 1601 nil nil #lineNumber nil nil nil #callTip 1762 77 1792 466 #white 1 nil nil nil nil #callTip nil nil nil #normal 1762 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) nil nil nil nil 560 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 2048 nil nil nil nil 466 #mediumSlateBlue 1840 nil nil nil nil nil nil nil 1 170 192 34 4 #null 1728 #text 170 192 34 10 #indentGuide 1776 #whitespace 1824 #lineNumber 1872 #callTip 1888 #normal 1920 nil nil nil nil 208 nil nil nil nil 170 192 34 6 #Warning 1762 5 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 1762 7 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 1762 3 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 14 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 560 2386 #contextMenu: 34 1 704 560 2386 #caretForecolor: 34 1 466 #gray 560 2386 #caretPeriod: 8 #(0) 560 2386 #wordWrap: 8 #(true) 560 2386 #margins: 34 1 34 5 985158 3 ##(Smalltalk.ScintillaMargin) 1 560 1 3 nil nil nil nil 2658 3 560 1 nil nil 67108863 nil nil 2658 5 560 1 nil nil nil nil nil 2658 7 560 1 nil nil nil nil nil 2658 9 560 1 nil nil nil nil nil 560 2386 #canHScroll: 8 #(false) 560 2386 #tabWidth: 8 #(4) 560 2386 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 560 2386 #maxCompletionListHeight: 8 #(9) 560 2386 #edgeColumn: 8 #(1) 560 2386 #setLexerLanguage: 8 #(#null) 560 2386 #sciSetFontQuality: 8 #(3) 560 2386 #whitespaceMarkerSize: 8 #(2) 560 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 31 170 192 34 2 560 8 'workspace' nil 461638 4 ##(UI.MenuBar) nil true 34 5 690 nil true 34 9 738 1 770 #fileNew 8 '&New Workspace' 9373 1 818 nil true 864 8 'NewWorkspace.ico' 912 nil nil 738 1 770 #fileOpen 8 '&Open Workspace...' 9375 1 818 nil true 864 8 'OpenWorkspace.ico' 912 nil nil 738 1 770 #fileFileIn 8 '&File In...' 1 1 nil nil nil 1074 4097 738 1 770 #saveImage 8 'Sa&ve Image' 1 1 818 nil true 864 8 'Snapshot.ico' 912 nil nil 738 1 770 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 738 1 770 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 1074 4097 738 1 770 #smalltalkExit 8 'E&xit Dolphin' 1 1 818 nil true 864 8 'PowerSwitch.ico' 912 nil nil 8 '&File' nil 134217729 nil nil 55293 nil nil 690 nil true 34 8 738 1 770 #cr 8 'New&line' 1 1 nil nil nil 1074 4097 738 1 770 #copySelection 8 '&Copy' 9351 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 738 1 770 #selectAll 8 'Select &All' 9347 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 9393 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 1074 4097 738 1 770 #editFind 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 8 '&Edit' nil 134217729 nil nil 55307 nil nil 690 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 55309 nil nil 690 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 55311 nil nil 690 nil true 34 6 738 1 770 #help 8 '&Help on this tool' 1249 1 818 nil true 864 8 'Help.ico' 912 nil nil 1074 4097 738 1 770 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 738 1 770 #educationCenter 8 '&Education centre' 1 1 nil nil nil 1074 4097 738 1 770 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 55321 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2322 138 144 34 2 2386 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 2386 #text: 34 1 8 'System Transcript' 416 3042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 560 3104 nil 27)! !
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 nil nil nil 416 788230 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.Scintilla.ScintillaView) 34 50 nil 416 34 2 8 1174470916 262145 560 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 23 265030 4 ##(UI.Menu) nil true 34 8 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 738 1 770 #selectAll 8 'Select &All' 8323 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 1 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 983366 1 ##(UI.DividerMenuItem) 4097 738 1 770 #find 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 1074 4097 690 nil true 34 5 738 1 770 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 738 1 770 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 738 1 770 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 738 1 770 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 738 1 770 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 818 nil true 864 8 'Preferences.ico' 912 nil nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 560 nil 8 1870544360 852486 ##(UI.NullConverter) nil 8 '' 3 1686439121 170 192 34 10 #indentGuide 1182790 1 ##(UI.Scintilla.TextStyle) 75 466 #gray nil 1 nil nil nil nil #indentGuide 8 'Indentation guides, when visible' nil nil #whitespace 1762 53 466 #silver nil 1 nil nil nil nil #whitespace 8 'Whitespace, when visible' nil nil #lineNumber 1762 67 nil nil 1 nil 1601 nil nil #lineNumber nil nil nil #callTip 1762 77 1792 466 #white 1 nil nil nil nil #callTip nil nil nil #normal 1762 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1245510 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 2 #default 1641542 2 ##(UI.Scintilla.MarkerDefinition) nil nil nil nil 560 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 2048 nil nil nil nil 466 #mediumSlateBlue 1840 nil nil nil nil nil nil nil 1 170 192 34 4 #null 1728 #text 170 192 34 10 #indentGuide 1776 #whitespace 1824 #lineNumber 1872 #callTip 1888 #normal 1920 nil nil nil nil 208 nil nil nil nil 170 192 34 6 #Warning 1762 5 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 1762 7 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 1762 3 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 14 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 560 2386 #contextMenu: 34 1 704 560 2386 #caretForecolor: 34 1 466 #gray 560 2386 #caretPeriod: 8 #(0) 560 2386 #wordWrap: 8 #(true) 560 2386 #margins: 34 1 34 5 985158 3 ##(UI.Scintilla.Margin) 1 560 1 3 nil nil nil nil 2658 3 560 1 nil nil 67108863 nil nil 2658 5 560 1 nil nil nil nil nil 2658 7 560 1 nil nil nil nil nil 2658 9 560 1 nil nil nil nil nil 560 2386 #canHScroll: 8 #(false) 560 2386 #tabWidth: 8 #(4) 560 2386 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 560 2386 #maxCompletionListHeight: 8 #(9) 560 2386 #edgeColumn: 8 #(1) 560 2386 #setLexerLanguage: 8 #(#null) 560 2386 #sciSetFontQuality: 8 #(3) 560 2386 #whitespaceMarkerSize: 8 #(2) 560 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 31 170 192 34 2 560 8 'workspace' nil 461638 4 ##(UI.MenuBar) nil true 34 5 690 nil true 34 9 738 1 770 #fileNew 8 '&New Workspace' 9373 1 818 nil true 864 8 'NewWorkspace.ico' 912 nil nil 738 1 770 #fileOpen 8 '&Open Workspace...' 9375 1 818 nil true 864 8 'OpenWorkspace.ico' 912 nil nil 738 1 770 #fileFileIn 8 '&File In...' 1 1 nil nil nil 1074 4097 738 1 770 #saveImage 8 'Sa&ve Image' 1 1 818 nil true 864 8 'Snapshot.ico' 912 nil nil 738 1 770 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 738 1 770 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 1074 4097 738 1 770 #smalltalkExit 8 'E&xit Dolphin' 1 1 818 nil true 864 8 'PowerSwitch.ico' 912 nil nil 8 '&File' nil 134217729 nil nil 55293 nil nil 690 nil true 34 8 738 1 770 #cr 8 'New&line' 1 1 nil nil nil 1074 4097 738 1 770 #copySelection 8 '&Copy' 9351 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 738 1 770 #selectAll 8 'Select &All' 9347 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 9393 1 818 nil true 864 8 'ClearDocument.ico' 912 nil nil 1074 4097 738 1 770 #editFind 8 '&Find...' 9357 1 818 nil true 864 8 'Find.ico' 912 nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 864 8 'FindNext.ico' 912 nil nil 8 '&Edit' nil 134217729 nil nil 55307 nil nil 690 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 55309 nil nil 690 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 55311 nil nil 690 nil true 34 6 738 1 770 #help 8 '&Help on this tool' 1249 1 818 nil true 864 8 'Help.ico' 912 nil nil 1074 4097 738 1 770 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 738 1 770 #educationCenter 8 '&Education centre' 1 1 nil nil nil 1074 4097 738 1 770 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 55321 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2322 138 144 34 2 2386 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 2386 #text: 34 1 8 'System Transcript' 416 3042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 560 3104 nil 27)! !
 !TranscriptShell class categoriesFor: #publishedAspects!public! !
 !TranscriptShell class categoriesFor: #resource_Scintilla_view!public!resources-views! !
 
@@ -6731,6 +6526,213 @@ publishedEventsOfInstances
 		add: #linkClicked:;
 		yourself! !
 !UI.RichTextPresenter class categoriesFor: #publishedEventsOfInstances!events!public! !
+
+!UI.Scintilla.Attribute class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Smalltalk.Aspect integer: #id) beReadOnly;
+		yourself! !
+!UI.Scintilla.Attribute class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.Scintilla.IndicatorStyle class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Smalltalk.Aspect color: #forecolor);
+		add: (Smalltalk.Aspect color: #hoverForecolor);
+		add: (Smalltalk.Aspect choice: #style from: IndicatorStyles);
+		add: (Smalltalk.Aspect choice: #hoverStyle from: IndicatorStyles);
+		add: (Smalltalk.Aspect name: #name);
+		add: (Smalltalk.Aspect integer: #alpha);
+		add: (Smalltalk.Aspect integer: #foreAlpha);
+		yourself! !
+!UI.Scintilla.IndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.Scintilla.KeyBinding class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Smalltalk.Aspect choice: #commandSymbol from: Commands values asSortedCollection);
+		add: (Smalltalk.Aspect hotkey: #acceleratorKey);
+		yourself! !
+!UI.Scintilla.KeyBinding class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.Scintilla.Margin class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Smalltalk.Aspect boolean: #isSensitive);
+		add: (Smalltalk.Aspect choice: #type from: MarginTypes);
+		add: (Smalltalk.Aspect integer: #width);
+		add: (Smalltalk.Aspect integer: #mask);
+		add: (Smalltalk.Aspect choice: #cursorType from: CursorTypes values);
+		add: (Smalltalk.Aspect color: #backcolor);
+		yourself! !
+!UI.Scintilla.Margin class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.Scintilla.MarkerDefinition class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Smalltalk.Aspect name: #name);
+		add: (Smalltalk.Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
+		add: (Smalltalk.Aspect color: #forecolor);
+		add: (Smalltalk.Aspect color: #backcolor);
+		add: (Smalltalk.Aspect integer: #alpha);
+		add: (Smalltalk.Aspect color: #selectionBackcolor);
+		yourself! !
+!UI.Scintilla.MarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.Scintilla.ScintillaView methodsFor!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	| createPresenter |
+	createPresenter := 
+			[:p :m |
+			(StylesCollectionPresenter
+				create: 'Developer view'
+				in: p
+				on: m)
+				defaultStyle: ((TextStyle new)
+							backcolor: self backcolor;
+							font: self actualFont;
+							yourself);
+				normalStyle: (self styleNamed: #normal);
+				yourself].
+	^(super publishedAspects)
+		add: (Smalltalk.Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
+		add: (Smalltalk.Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
+		yourself! !
+!UI.Scintilla.ScintillaView categoriesFor: #publishedAspects!constants!public! !
+
+!UI.Scintilla.ScintillaView class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| answer choices |
+	answer := super publishedAspectsOfInstances.
+	answer
+		removeKey: #format;
+		removeKey: #alignment;
+		add: (Smalltalk.Aspect sequenceableCollection: #keyBindings
+					addEvaluationFrom: {KeyBinding name , ' new'}) beImmutable;
+		add: (Smalltalk.Aspect sequenceableCollection: #margins);
+		add: (Smalltalk.Aspect sequenceableCollection: #indicatorStyles
+					addEvaluationFrom: {IndicatorStyle name , ' new'}) beImmutable;
+		add: (Smalltalk.Aspect sequenceableCollection: #markerDefinitions
+					addEvaluationFrom: {MarkerDefinition name , ' new'}) beImmutable;
+		add: (Smalltalk.Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
+		add: (Smalltalk.Aspect dictionary: #braceChars) beImmutable;
+		add: (Smalltalk.Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
+		add: (Smalltalk.Aspect choice: #foldMarkerStyle
+					from: {nil} , self foldMarkerStyles asSortedCollection);
+		add: (Smalltalk.Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
+		add: (Smalltalk.Aspect choice: #indentationGuides
+					from: {nil} , self indentationGuideStyles asSortedCollection);
+		add: (Smalltalk.Aspect choice: #annotationMode from: self annotationModes);
+		add: (Smalltalk.Aspect choice: #wrapIndentMode from: self wrapIndentModes);
+		add: (Smalltalk.Aspect choice: #fontQuality from: self fontQualities);
+		add: (Smalltalk.Aspect choice: #multiPasteMode from: self multiPasteModes);
+		add: (Smalltalk.Aspect integer: #whitespaceMarkerSize);
+		add: (Smalltalk.Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Smalltalk.Aspect choice: #endOfLineMode from: self lineEndings);
+		add: (Smalltalk.Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Smalltalk.Aspect choice: #endOfLineAnnotationMode from: self annotationModes);
+		yourself.
+	choices := OrderedCollection with: 'nil'.
+	(Styler allSubclasses reject: [:each | each isAbstract])
+		do: [:each | choices add: each name , ' new'].
+	answer add: (Smalltalk.Aspect choice: #styler evaluationFrom: choices).
+	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
+		do: [:each | answer add: (Smalltalk.Aspect string: each)].
+	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount #currentLineFrameWidth)
+		do: [:each | answer add: (Smalltalk.Aspect integer: each)].
+	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
+		do: [:each | answer add: (Smalltalk.Aspect color: each)].
+	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
+		do: [:each | answer add: (Smalltalk.Aspect boolean: each)].
+	^answer!
+
+publishedEventsOfInstances
+	"Answer a Set of Symbols that describe the published events triggered
+    	by instances of the receiver."
+
+	^(super publishedEventsOfInstances)
+		remove: #textOverflow;
+		add: #charAdded:;
+		add: #callTipClicked:;
+		add: #hoverStart:;
+		add: #hoverEnd:;
+		add: #hotSpotClicked:;
+		add: #hotSpotDoubleClicked:;
+		add: #savePointLeft;
+		add: #marginClicked:;
+		add: #userList:selection:;
+		add: #painted;
+		add: #macroRecord:;
+		add: #updateUI:;
+		add: #zoomed;
+		yourself! !
+!UI.Scintilla.ScintillaView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!UI.Scintilla.ScintillaView class categoriesFor: #publishedEventsOfInstances!events!public! !
+
+!UI.Scintilla.TextStyle class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^(aspectClass name: aSymbol
+		presenterBlock: 
+			[:p :m |
+			TextStylePresenter
+				create: 'Developer view'
+				in: p
+				on: m])
+			yourself!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| answer |
+	answer := super publishedAspectsOfInstances.
+	"Don't bother exposing the changeable style flag, since it doesn't work at present"
+	#(#isItalic #isBold #isUnderlined #isBackcolorExtendedToEndOfLine #isHotspot #isInvisible) 
+		do: [:each | answer add: ((Smalltalk.Aspect boolean: each)
+						isNullable: true;
+						yourself)].
+	^answer
+		add: (Smalltalk.Aspect color: #forecolor);
+		add: (Smalltalk.Aspect color: #backcolor);
+		add: (Smalltalk.Aspect 
+					choice: #fontName
+					from: Canvas forDesktop fontNames asSortedCollection
+					andNil: nil);
+		add: (Smalltalk.Aspect number: #pointSize);
+		add: (Smalltalk.Aspect integer: #characterSet);
+		add: (Smalltalk.Aspect 
+					choice: #caseName
+					from: self caseNames
+					andNil: nil);
+		add: (Smalltalk.Aspect name: #name);
+		add: (Smalltalk.Aspect number: #weight);
+		yourself! !
+!UI.Scintilla.TextStyle class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+!UI.Scintilla.TextStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !UI.ScrollBar class methodsFor!
 

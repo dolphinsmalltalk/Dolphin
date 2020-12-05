@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaListItem
+Core.Object subclass: #'UI.Scintilla.ListItem'
 	instanceVariableNames: 'text icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaListItem guid: (Core.GUID fromString: '{a81939ba-1e36-4fe9-9be0-575c3c7f91df}')!
-ScintillaListItem comment: 'ScintillaListItems can be used to populate auto-completion and user lists in ScintillaViews when the #displayString and #icon methods of the type being listed does not provide the text and icon (respectively) that are desired in the pop-up list.
+UI.Scintilla.ListItem guid: (Core.GUID fromString: '{a81939ba-1e36-4fe9-9be0-575c3c7f91df}')!
+UI.Scintilla.ListItem comment: 'ScintillaListItems can be used to populate auto-completion and user lists in ScintillaViews when the #displayString and #icon methods of the type being listed does not provide the text and icon (respectively) that are desired in the pop-up list.
 
 Instance Variables:
 	text		<string> displayed as the text of the item in the list
 	icon		<Icon> displayed alongside the item text when the list is shown with icons
 '!
-!ScintillaListItem categoriesForClass!Kernel-Objects! !
-!ScintillaListItem methodsFor!
+!UI.Scintilla.ListItem categoriesForClass!Kernel-Objects! !
+!UI.Scintilla.ListItem methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -33,19 +33,19 @@ text
 text: aString icon: anIcon
 	text := aString.
 	icon := anIcon! !
-!ScintillaListItem categoriesFor: #displayOn:!displaying!public! !
-!ScintillaListItem categoriesFor: #displayString!displaying!public! !
-!ScintillaListItem categoriesFor: #icon!accessing!public! !
-!ScintillaListItem categoriesFor: #text!accessing!public! !
-!ScintillaListItem categoriesFor: #text:icon:!initializing!private! !
+!UI.Scintilla.ListItem categoriesFor: #displayOn:!displaying!public! !
+!UI.Scintilla.ListItem categoriesFor: #displayString!displaying!public! !
+!UI.Scintilla.ListItem categoriesFor: #icon!accessing!public! !
+!UI.Scintilla.ListItem categoriesFor: #text!accessing!public! !
+!UI.Scintilla.ListItem categoriesFor: #text:icon:!initializing!private! !
 
-!ScintillaListItem class methodsFor!
+!UI.Scintilla.ListItem class methodsFor!
 
 icon
 	^ScintillaView icon!
 
 text: aString icon: anIcon
 	^self new text: aString icon: anIcon! !
-!ScintillaListItem class categoriesFor: #icon!constants!development!public! !
-!ScintillaListItem class categoriesFor: #text:icon:!initializing!public! !
+!UI.Scintilla.ListItem class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.ListItem class categoriesFor: #text:icon:!initializing!public! !
 

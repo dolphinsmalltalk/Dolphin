@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaAttribute subclass: #ScintillaTextStyle
+UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'PredefinedStyleNames'
 	imports: #()
@@ -13,8 +13,8 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 		'ReadOnlyMask' -> 16r300.
 		'UnderlinedMask' -> 16r30
 	}!
-ScintillaTextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
-ScintillaTextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
+UI.Scintilla.TextStyle guid: (Core.GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
+UI.Scintilla.TextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:
   `#normal` - the default style used to draw all unstyled text, and from which user-defined styles inherit.
@@ -56,8 +56,8 @@ Note that Scintilla style information is now queryable from the control, but thi
 	`ReadOnlyMask`		`<integer>` bitmask used to specify whether the text should be read-only.
 	`UnderlinedMask`		`<integer>` bitmask used to specify an underlined font in `flags` inst. var.
 '!
-!ScintillaTextStyle categoriesForClass!MVP-Views-Support! !
-!ScintillaTextStyle methodsFor!
+!UI.Scintilla.TextStyle categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.TextStyle methodsFor!
 
 = anObject
 	"Answer whether the receiver and the <Object> argument are considered equivalent. A pair of
@@ -348,135 +348,135 @@ weight
 
 weight: anInteger 
 	weight := anInteger! !
-!ScintillaTextStyle categoriesFor: #=!comparing!public! !
-!ScintillaTextStyle categoriesFor: #backcolor!accessing!public! !
-!ScintillaTextStyle categoriesFor: #backcolor:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #basicId!accessing!private! !
-!ScintillaTextStyle categoriesFor: #case!accessing!public! !
-!ScintillaTextStyle categoriesFor: #case:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #caseName!accessing!public! !
-!ScintillaTextStyle categoriesFor: #caseName:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #centiPointSize!accessing!public! !
-!ScintillaTextStyle categoriesFor: #centiPointSize:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #characterSet!accessing!public! !
-!ScintillaTextStyle categoriesFor: #characterSet:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #clearFont!accessing!public! !
-!ScintillaTextStyle categoriesFor: #description!accessing!public! !
-!ScintillaTextStyle categoriesFor: #description:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #displayOn:!displaying!public! !
-!ScintillaTextStyle categoriesFor: #flags!accessing!public! !
-!ScintillaTextStyle categoriesFor: #font!accessing!public! !
-!ScintillaTextStyle categoriesFor: #font:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #fontName!accessing!public! !
-!ScintillaTextStyle categoriesFor: #fontName:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #forecolor!accessing!public! !
-!ScintillaTextStyle categoriesFor: #forecolor:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #getThreeStateFlag:!helpers!private! !
-!ScintillaTextStyle categoriesFor: #initialize!initializing!private! !
-!ScintillaTextStyle categoriesFor: #isBackcolorExtendedToEndOfLine!public!testing! !
-!ScintillaTextStyle categoriesFor: #isBackcolorExtendedToEndOfLine:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isBold!public!testing! !
-!ScintillaTextStyle categoriesFor: #isBold:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isChangeable!private!testing! !
-!ScintillaTextStyle categoriesFor: #isHotspot!public!testing! !
-!ScintillaTextStyle categoriesFor: #isHotspot:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isInvisible!public!testing! !
-!ScintillaTextStyle categoriesFor: #isInvisible:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isItalic!public!testing! !
-!ScintillaTextStyle categoriesFor: #isItalic:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isPredefined!public!testing! !
-!ScintillaTextStyle categoriesFor: #isReadOnly!public!testing! !
-!ScintillaTextStyle categoriesFor: #isReadOnly:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isUnderlined!public!testing! !
-!ScintillaTextStyle categoriesFor: #isUnderlined:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isVisible!private!testing! !
-!ScintillaTextStyle categoriesFor: #key!accessing!public! !
-!ScintillaTextStyle categoriesFor: #mergeFont:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #name!accessing!public! !
-!ScintillaTextStyle categoriesFor: #name:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #pointSize!accessing!public! !
-!ScintillaTextStyle categoriesFor: #pointSize:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #restyleFont:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #setPredefinedId!accessing!private! !
-!ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
-!ScintillaTextStyle categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaTextStyle categoriesFor: #value!accessing!public! !
-!ScintillaTextStyle categoriesFor: #view!accessing!private! !
-!ScintillaTextStyle categoriesFor: #view:!accessing!private! !
-!ScintillaTextStyle categoriesFor: #weight!accessing!public! !
-!ScintillaTextStyle categoriesFor: #weight:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #=!comparing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #backcolor!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #backcolor:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #basicId!accessing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #case!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #case:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #caseName!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #caseName:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #centiPointSize!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #centiPointSize:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #characterSet!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #characterSet:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #clearFont!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #description!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #description:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #displayOn:!displaying!public! !
+!UI.Scintilla.TextStyle categoriesFor: #flags!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #font!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #font:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #fontName!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #fontName:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #forecolor!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #forecolor:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #getThreeStateFlag:!helpers!private! !
+!UI.Scintilla.TextStyle categoriesFor: #initialize!initializing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #isBackcolorExtendedToEndOfLine!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isBackcolorExtendedToEndOfLine:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isBold!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isBold:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isChangeable!private!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isHotspot!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isHotspot:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isInvisible!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isInvisible:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isItalic!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isItalic:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isPredefined!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isReadOnly!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isReadOnly:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isUnderlined!public!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #isUnderlined:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #isVisible!private!testing! !
+!UI.Scintilla.TextStyle categoriesFor: #key!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #mergeFont:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #name!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #name:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #pointSize!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #pointSize:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #restyleFont:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #setPredefinedId!accessing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
+!UI.Scintilla.TextStyle categoriesFor: #storeableProperties!development!printing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #value!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #view!accessing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.TextStyle categoriesFor: #weight!accessing!public! !
+!UI.Scintilla.TextStyle categoriesFor: #weight:!accessing!public! !
 
-!ScintillaTextStyle class methodsFor!
+!UI.Scintilla.TextStyle class methodsFor!
 
 buildPropertyMap
 	^IdentityDictionary new
 		at: #forecolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_STYLESETFORE);
 		at: #backcolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color white
 					setMessage: SCI_STYLESETBACK);
 		at: #fontName
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #fontName
 					defaultValue: nil
 					setMessage: SCI_STYLESETFONT);
 		at: #isBold
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isBold
 					defaultValue: false
 					setMessage: SCI_STYLESETBOLD);
 		at: #isItalic
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isItalic
 					defaultValue: false
 					setMessage: SCI_STYLESETITALIC);
 		at: #isUnderlined
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isUnderlined
 					defaultValue: false
 					setMessage: SCI_STYLESETUNDERLINE);
 		at: #case
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #case
 					defaultValue: SC_CASE_MIXED
 					setMessage: SCI_STYLESETCASE);
 		at: #characterSet
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #characterSet
 					defaultValue: SC_CHARSET_DEFAULT
 					setMessage: SCI_STYLESETCHARACTERSET);
 		at: #pointSize
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #centiPointSize
 					defaultValue: nil
 					setMessage: SCI_STYLESETSIZEFRACTIONAL);
 		at: #isBackcolorExtendedToEndOfLine
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isBackcolorExtendedToEndOfLine
 					defaultValue: false
 					setMessage: SCI_STYLESETEOLFILLED);
 		at: #isChangeable
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isChangeable
 					defaultValue: true
 					setMessage: SCI_STYLESETCHANGEABLE);
 		at: #isHotspot
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isHotspot
 					defaultValue: false
 					setMessage: SCI_STYLESETHOTSPOT);
 		at: #isVisible
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #isVisible
 					defaultValue: true
 					setMessage: SCI_STYLESETVISIBLE);
 		at: #weight
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #weight
 					defaultValue: SC_WEIGHT_NORMAL
 					setMessage: SCI_STYLESETWEIGHT);
@@ -558,13 +558,13 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!ScintillaTextStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaTextStyle class categoriesFor: #caseNames!constants!public! !
-!ScintillaTextStyle class categoriesFor: #icon!constants!public! !
-!ScintillaTextStyle class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaTextStyle class categoriesFor: #name:!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #new!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #normal!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaTextStyle class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!UI.Scintilla.TextStyle class categoriesFor: #caseNames!constants!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #icon!constants!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #name:!instance creation!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #new!instance creation!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #normal!instance creation!public! !
+!UI.Scintilla.TextStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.Scintilla.TextStyle class categoriesFor: #stbVersion!binary filing!public! !
 

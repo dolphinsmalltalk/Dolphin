@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaAttribute
+Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: 'propertyMap'
 	classConstants: {}!
-ScintillaAttribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
-ScintillaAttribute isNonInstantiable: true!
-ScintillaAttribute comment: '`ScintillaAttribute` is the abstract superclass of objects that wrap various attributes of `ScintillaView`s. It provides a generic mechanism for setting the attribute value into the underlying control.
+UI.Scintilla.Attribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
+UI.Scintilla.Attribute isNonInstantiable: true!
+UI.Scintilla.Attribute comment: '`ScintillaAttribute` is the abstract superclass of objects that wrap various attributes of `ScintillaView`s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
 ## Instance Variables:
   `id`		`<integer>`. Identifier of the attribute instance.
@@ -19,8 +19,8 @@ ScintillaAttribute comment: '`ScintillaAttribute` is the abstract superclass of 
 
 
 '!
-!ScintillaAttribute categoriesForClass!MVP-Views-Support! !
-!ScintillaAttribute methodsFor!
+!UI.Scintilla.Attribute categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.Attribute methodsFor!
 
 = aScintillaAttribute 
 	^self class == aScintillaAttribute and: [self name = aScintillaAttribute name]!
@@ -123,25 +123,25 @@ view
 
 view: aScintillaView 
 	self subclassResponsibility! !
-!ScintillaAttribute categoriesFor: #=!comparing!public! !
-!ScintillaAttribute categoriesFor: #applyToView:initializing:!helpers!private! !
-!ScintillaAttribute categoriesFor: #asParameter!converting!public! !
-!ScintillaAttribute categoriesFor: #basicId!accessing!private! !
-!ScintillaAttribute categoriesFor: #basicId:!accessing!private! !
-!ScintillaAttribute categoriesFor: #hash!comparing!public! !
-!ScintillaAttribute categoriesFor: #id!accessing!public! !
-!ScintillaAttribute categoriesFor: #id:!accessing!public! !
-!ScintillaAttribute categoriesFor: #name!accessing!public! !
-!ScintillaAttribute categoriesFor: #printOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #printPropertiesOn:!development!helpers!printing!private! !
-!ScintillaAttribute categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaAttribute categoriesFor: #storeOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #updateView:property:!helpers!private! !
-!ScintillaAttribute categoriesFor: #updateViewProperty:!helpers!private! !
-!ScintillaAttribute categoriesFor: #view!accessing!private! !
-!ScintillaAttribute categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.Attribute categoriesFor: #=!comparing!public! !
+!UI.Scintilla.Attribute categoriesFor: #applyToView:initializing:!helpers!private! !
+!UI.Scintilla.Attribute categoriesFor: #asParameter!converting!public! !
+!UI.Scintilla.Attribute categoriesFor: #basicId!accessing!private! !
+!UI.Scintilla.Attribute categoriesFor: #basicId:!accessing!private! !
+!UI.Scintilla.Attribute categoriesFor: #hash!comparing!public! !
+!UI.Scintilla.Attribute categoriesFor: #id!accessing!public! !
+!UI.Scintilla.Attribute categoriesFor: #id:!accessing!public! !
+!UI.Scintilla.Attribute categoriesFor: #name!accessing!public! !
+!UI.Scintilla.Attribute categoriesFor: #printOn:!development!printing!public! !
+!UI.Scintilla.Attribute categoriesFor: #printPropertiesOn:!development!helpers!printing!private! !
+!UI.Scintilla.Attribute categoriesFor: #storeableProperties!development!printing!private! !
+!UI.Scintilla.Attribute categoriesFor: #storeOn:!development!printing!public! !
+!UI.Scintilla.Attribute categoriesFor: #updateView:property:!helpers!private! !
+!UI.Scintilla.Attribute categoriesFor: #updateViewProperty:!helpers!private! !
+!UI.Scintilla.Attribute categoriesFor: #view!accessing!private! !
+!UI.Scintilla.Attribute categoriesFor: #view:!accessing!private! !
 
-!ScintillaAttribute class methodsFor!
+!UI.Scintilla.Attribute class methodsFor!
 
 icon
 	^ScintillaView icon!
@@ -151,7 +151,7 @@ propertyMap
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
-!ScintillaAttribute class categoriesFor: #icon!constants!development!public! !
-!ScintillaAttribute class categoriesFor: #propertyMap!constants!private! !
-!ScintillaAttribute class categoriesFor: #sortByIdBlock!constants!public! !
+!UI.Scintilla.Attribute class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.Attribute class categoriesFor: #propertyMap!constants!private! !
+!UI.Scintilla.Attribute class categoriesFor: #sortByIdBlock!constants!public! !
 

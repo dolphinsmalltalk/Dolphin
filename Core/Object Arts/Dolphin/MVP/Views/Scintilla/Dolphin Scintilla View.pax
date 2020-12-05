@@ -38,44 +38,37 @@ package basicPackageVersion: '3.6.6'.
 
 
 package setClassNames: #(
-	#{Smalltalk.NullScintillaStyler}
-	#{Smalltalk.QueryableScintillaAttribute}
-	#{Smalltalk.ScintillaAnnotation}
-	#{Smalltalk.ScintillaAttribute}
-	#{Smalltalk.ScintillaCallTipStyle}
-	#{Smalltalk.ScintillaColorPropertyDescriptor}
-	#{Smalltalk.ScintillaConstants}
-	#{Smalltalk.ScintillaIndicator}
-	#{Smalltalk.ScintillaIndicatorStyle}
-	#{Smalltalk.ScintillaKeyBinding}
-	#{Smalltalk.ScintillaLexerMetadata}
-	#{Smalltalk.ScintillaLexerNamedStyle}
-	#{Smalltalk.ScintillaLexerProperty}
-	#{Smalltalk.ScintillaLibrary}
-	#{Smalltalk.ScintillaListItem}
-	#{Smalltalk.ScintillaMargin}
-	#{Smalltalk.ScintillaMarker}
-	#{Smalltalk.ScintillaMarkerDefinition}
-	#{Smalltalk.ScintillaPropertyDescriptor}
-	#{Smalltalk.ScintillaStyler}
-	#{Smalltalk.ScintillaStylesCollectionPresenter}
-	#{Smalltalk.ScintillaTextStyle}
-	#{Smalltalk.ScintillaTextStylePresenter}
-	#{Smalltalk.ScintillaTextStylesDialog}
-	#{Smalltalk.ScintillaView}
-	#{Smalltalk.SCNotification}
+	#{UI.Scintilla}
+	#{UI.Scintilla.Annotation}
+	#{UI.Scintilla.Attribute}
+	#{UI.Scintilla.CallTipStyle}
+	#{UI.Scintilla.ColorPropertyDescriptor}
+	#{UI.Scintilla.Indicator}
+	#{UI.Scintilla.IndicatorStyle}
+	#{UI.Scintilla.KeyBinding}
+	#{UI.Scintilla.LexerMetadata}
+	#{UI.Scintilla.LexerNamedStyle}
+	#{UI.Scintilla.LexerProperty}
+	#{UI.Scintilla.ListItem}
+	#{UI.Scintilla.Margin}
+	#{UI.Scintilla.Marker}
+	#{UI.Scintilla.MarkerDefinition}
+	#{UI.Scintilla.NullStyler}
+	#{UI.Scintilla.PropertyDescriptor}
+	#{UI.Scintilla.QueryableAttribute}
+	#{UI.Scintilla.ScintillaConstants}
+	#{UI.Scintilla.ScintillaLibrary}
+	#{UI.Scintilla.ScintillaView}
+	#{UI.Scintilla.SCNotification}
+	#{UI.Scintilla.Styler}
+	#{UI.Scintilla.StylesCollectionPresenter}
+	#{UI.Scintilla.TextStyle}
+	#{UI.Scintilla.TextStylePresenter}
+	#{UI.Scintilla.TextStylesDialog}
 ).
 
 package setMethodNames: #(
 	#(#{UI.TextPresenter class} #resource_Scintilla_view)
-).
-
-package setVariableNames: #(
-	#{Smalltalk.ScintillaIndicatorDefinition}
-).
-
-package setAliasVariableNames: #(
-	#{Smalltalk.ScintillaIndicatorDefinition}
 ).
 
 package setPrerequisites: #(
@@ -107,7 +100,13 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #ScintillaConstants
+UI subclass: #'UI.Scintilla'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'UI.Scintilla.ScintillaConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1378,49 +1377,49 @@ Kernel.SharedPool subclass: #ScintillaConstants
 		'VISIBLE_SLOP' -> 16r1.
 		'VISIBLE_STRICT' -> 16r4
 	}!
-Core.Object subclass: #ScintillaAnnotation
+Core.Object subclass: #'UI.Scintilla.Annotation'
 	instanceVariableNames: 'line text styles'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaAttribute
+Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: 'propertyMap'
 	classConstants: {}!
-Core.Object subclass: #ScintillaIndicator
+Core.Object subclass: #'UI.Scintilla.Indicator'
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaKeyBinding
+Core.Object subclass: #'UI.Scintilla.KeyBinding'
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
-	imports: #(#{ScintillaConstants} #{Win32Constants})
+	imports: #(#{OS.Win32Constants} #{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaLexerMetadata
+Core.Object subclass: #'UI.Scintilla.LexerMetadata'
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaListItem
+Core.Object subclass: #'UI.Scintilla.ListItem'
 	instanceVariableNames: 'text icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaMarker
+Core.Object subclass: #'UI.Scintilla.Marker'
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaPropertyDescriptor
+Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
 	classVariableNames: ''
 	imports: #()
@@ -1428,49 +1427,25 @@ Core.Object subclass: #ScintillaPropertyDescriptor
 	classConstants: {
 		'AlwaysPrintMask' -> 16r1
 	}!
-Core.Object subclass: #ScintillaStyler
+Core.Object subclass: #'UI.Scintilla.Styler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #ScintillaLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ValueDialog subclass: #ScintillaTextStylesDialog
-	instanceVariableNames: 'stylesPresenter'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ValuePresenter subclass: #ScintillaStylesCollectionPresenter
-	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ValuePresenter subclass: #ScintillaTextStylePresenter
-	instanceVariableNames: 'facePresenter pointSizePresenter forecolorPresenter backcolorPresenter isItalicPresenter isBoldPresenter isUnderlinedPresenter casePresenter characterSetPresenter previewPresenter fillToEndOfLinePresenter normalStyle defaultStyle isInvisiblePresenter isHotspotPresenter isReadOnlyPresenter namePresenter idPresenter'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ScintillaAttribute subclass: #QueryableScintillaAttribute
-	instanceVariableNames: 'view'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ScintillaAttribute subclass: #ScintillaMarkerDefinition
+UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaAttribute subclass: #ScintillaTextStyle
+UI.Scintilla.Attribute subclass: #'UI.Scintilla.QueryableAttribute'
+	instanceVariableNames: 'view'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'PredefinedStyleNames'
 	imports: #()
@@ -1483,7 +1458,7 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 		'ReadOnlyMask' -> 16r300.
 		'UnderlinedMask' -> 16r30
 	}!
-QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
+UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
 	classVariableNames: 'HoverForecolor HoverStyle'
 	imports: #()
@@ -1491,7 +1466,7 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	classConstants: {
 		'IndicatorStyles' -> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)
 	}!
-QueryableScintillaAttribute subclass: #ScintillaMargin
+UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes'
 	imports: #()
@@ -1499,40 +1474,58 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	classConstants: {
 		'MarginTypes' -> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
 	}!
-ScintillaTextStyle subclass: #ScintillaCallTipStyle
+UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
+External.DynamicLinkLibrary subclass: #'UI.Scintilla.ScintillaLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerNamedStyle'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaLexerMetadata subclass: #ScintillaLexerProperty
+UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerProperty'
 	instanceVariableNames: 'type'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaPropertyDescriptor subclass: #ScintillaColorPropertyDescriptor
+UI.ValueDialog subclass: #'UI.Scintilla.TextStylesDialog'
+	instanceVariableNames: 'stylesPresenter'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ValuePresenter subclass: #'UI.Scintilla.StylesCollectionPresenter'
+	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ValuePresenter subclass: #'UI.Scintilla.TextStylePresenter'
+	instanceVariableNames: 'facePresenter pointSizePresenter forecolorPresenter backcolorPresenter isItalicPresenter isBoldPresenter isUnderlinedPresenter casePresenter characterSetPresenter previewPresenter fillToEndOfLinePresenter normalStyle defaultStyle isInvisiblePresenter isHotspotPresenter isReadOnlyPresenter namePresenter idPresenter'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColorPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaStyler subclass: #NullScintillaStyler
-	instanceVariableNames: 'normalStyleName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.NMHDR subclass: #SCNotification
+OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
 	instanceVariableNames: 'view textString'
 	classVariableNames: ''
-	imports: #(#{ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_annotationLinesAdded' -> 16r54.
@@ -1558,10 +1551,16 @@ OS.NMHDR subclass: #SCNotification
 		'_OffsetOf_x' -> 16r48.
 		'_OffsetOf_y' -> 16r4C
 	}!
-UI.MultilineTextEdit subclass: #ScintillaView
+UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
+	instanceVariableNames: 'normalStyleName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles Library'
-	imports: #(#{Smalltalk.ScintillaConstants})
+	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AnnotationStylesOffset' -> 16r200.
@@ -1571,11 +1570,6 @@ UI.MultilineTextEdit subclass: #ScintillaView
 		'FoldingMask' -> 16r2.
 		'MarginStylesOffset' -> 16r100
 	}!
-
-"Variable Aliases"!
-
-Smalltalk.ScintillaIndicatorDefinition := Smalltalk.ScintillaIndicatorStyle!
-
 
 "Loose Methods"!
 
@@ -1589,7 +1583,7 @@ resource_Scintilla_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scintilla_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 130003 nil 170 192 34 6 1 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 8 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1362 631 501 416 1314 #textLimit: 8 #(1073741823) 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1522 3 416 33 nil 3 67108863 nil nil 1522 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 250 14 0 0 4 1 0 0] 8 #() 1362 193 193 nil 29)! !
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1245510 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 2 #default 1641542 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 130003 nil 170 192 34 6 1 1510470 3 ##(UI.Scintilla.IndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 8 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1362 631 501 416 1314 #textLimit: 8 #(1073741823) 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 985158 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 1522 3 416 33 nil 3 67108863 nil nil 1522 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 250 14 0 0 4 1 0 0] 8 #() 1362 193 193 nil 29)! !
 !UI.TextPresenter class categoriesFor: #resource_Scintilla_view!public!resources-views! !
 
 "End of package definition"!

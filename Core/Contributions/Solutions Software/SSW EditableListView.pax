@@ -38,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Radio\Dolphin Radio Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'

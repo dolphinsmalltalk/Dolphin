@@ -52,7 +52,6 @@ package setClassNames: #(
 	#{UI.Tests.ListControlTest}
 	#{UI.Tests.ListPresenterTest}
 	#{UI.Tests.ListViewTest}
-	#{UI.Tests.MockScintillaView}
 	#{UI.Tests.MoenTreeViewTest}
 	#{UI.Tests.MoenTreeViewTest2}
 	#{UI.Tests.MultilineTextEditTest}
@@ -67,10 +66,6 @@ package setClassNames: #(
 	#{UI.Tests.ReferenceViewTest}
 	#{UI.Tests.ResourceIdentifierTest}
 	#{UI.Tests.RichTextEditTest}
-	#{UI.Tests.ScintillaIndicatorTest}
-	#{UI.Tests.ScintillaLexerMetadataTest}
-	#{UI.Tests.ScintillaLexerPropertyTest}
-	#{UI.Tests.ScintillaViewTest}
 	#{UI.Tests.ScrollingDecoratorTest}
 	#{UI.Tests.SelectableItemsTest}
 	#{UI.Tests.SelectableListItemsTest}
@@ -99,6 +94,7 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Anonymous Classes'
 	'..\Base\Dolphin Base Tests'
@@ -122,9 +118,7 @@ package setPrerequisites: #(
 	'Base\Dolphin MVP Base'
 	'Presenters\Number\Dolphin Number Presenter'
 	'Presenters\Radio\Dolphin Radio Buttons'
-	'..\System\Random\Dolphin Random Stream'
 	'Presenters\Text\Dolphin Rich Text Presenter'
-	'Views\Scintilla\Dolphin Scintilla View'
 	'Views\Scrollbars\Dolphin Scrollbars'
 	'Views\Slider\Dolphin Slider Control'
 	'Views\Styled Views\Dolphin Styled Views'
@@ -150,12 +144,6 @@ UI subclass: #'UI.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object subclass: #'UI.Tests.MockScintillaView'
-	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
-	classVariableNames: ''
-	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
@@ -298,18 +286,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ScintillaIndicatorTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.ScintillaLexerMetadataTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -530,12 +506,6 @@ UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.ScintillaViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{Smalltalk.ScintillaConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Tests.ImageViewAbstractTest subclass: #'UI.Tests.ImageViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -627,12 +597,6 @@ UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreePresenterTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.ScintillaLexerMetadataTest subclass: #'UI.Tests.ScintillaLexerPropertyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

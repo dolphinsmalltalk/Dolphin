@@ -3,7 +3,7 @@
 UI.Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{ScintillaConstants})
+	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'AutoCompleteMask' -> 16r1.
@@ -684,11 +684,11 @@ highlightCompilationErrors: anInteger
 	annotations := OrderedCollection new.
 	compilationErrors do: 
 			[:each |
-			indicators add: (ScintillaIndicator
+			indicators add: (Scintilla.Indicator
 						styleName: each severityClass name
 						range: each range + anInteger
 						tag: each).
-			annotations add: (ScintillaAnnotation
+			annotations add: (Scintilla.Annotation
 						line: each line
 						text: ('<1s>: <2s>' expandMacrosWith: each severityName with: each errorMessage)
 						style: each severityClass name)].
@@ -729,7 +729,7 @@ identifiersStartingWith: aString maxItems: anInteger
 	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
 		ifTrue: 
 			[(#(nil true false) select: filter)
-				do: [:each | accum value: (ScintillaListItem text: each printString icon: each icon)].
+				do: [:each | accum value: (Scintilla.ListItem text: each printString icon: each icon)].
 			(#('thisContext' 'super' 'self') select: filter) do: accum.
 			self allDefinedVariablesDo: selectVars.
 			self selfClass allInstVarNames do: selectVars].
@@ -918,7 +918,7 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 				ifTrue: 
 					[selectors add: each.
 					selectors size > anInteger ifTrue: [^#()]]].
-	^selectors collect: [:each | ScintillaListItem text: each icon: icon]!
+	^selectors collect: [:each | Scintilla.ListItem text: each icon: icon]!
 
 modifiedModel
 	^modifiedModel!
@@ -1725,8 +1725,8 @@ customEditorKeyBindings
 	bindings := KeyBindings asOrderedCollection.
 	self additionalKeyBindings do: 
 			[:each |
-			(ScintillaView.DefaultKeyBindings includesKey: each acceleratorKey)
-				ifTrue: [bindings add: (ScintillaKeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
+			(Scintilla.ScintillaView.DefaultKeyBindings includesKey: each acceleratorKey)
+				ifTrue: [bindings add: (Scintilla.KeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
 	^bindings!
 
 defaultAdditionalAccelerators
@@ -1769,7 +1769,8 @@ defaultEditorKeyBindings
 	"Answer any differences from standard Scintilla key bindings to apply by default in workspaces.
 	Note that the defaultAdditionalAccelerators will also supplant any Scintilla commands normally associated with those key bindings."
 
-	^{ScintillaKeyBinding newChord: 'CTRL+SHIFT+D' message: ScintillaConstants.SCI_SELECTIONDUPLICATE}!
+	^{Scintilla.KeyBinding newChord: 'CTRL+SHIFT+D'
+			message: Scintilla.ScintillaConstants.SCI_SELECTIONDUPLICATE}!
 
 defaultFont
 	"Answer the default  font to use for instances of the receiver"
@@ -1787,36 +1788,36 @@ defaultIndicatorStyles
 	"Answer the default indicators styles to be used in workspaces."
 
 	^OrderedCollection new
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					forecolor: Color commonGreen;
 					style: #hidden;
 					name: #Notification;
 					yourself);
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					forecolor: Color blue;
 					style: #squiggle;
 					name: #Warning;
 					yourself);
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					forecolor: Color red;
 					style: #squiggle;
 					name: #Error;
 					yourself);
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					alpha: 40;
 					foreAlpha: 65;
 					forecolor: Color darkCyan;
 					style: #straightBox;
 					name: #braceHighlight;
 					yourself);
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					alpha: 55;
 					foreAlpha: 128;
 					forecolor: Color red;
 					style: #straightBox;
 					name: #braceMismatch;
 					yourself);
-		add: (ScintillaIndicatorStyle new
+		add: (Scintilla.IndicatorStyle new
 					alpha: 15;
 					style: #roundBox;
 					name: #secondarySelection;
@@ -1867,7 +1868,7 @@ defaultTabWidth: anInteger
 
 defaultTextStyle
 	| style |
-	style := ScintillaTextStyle new.
+	style := Scintilla.TextStyle new.
 	self defaultBackcolor ifNotNil: [:color | style backcolor: color].
 	^style
 		font: self actualFont;
@@ -1885,112 +1886,112 @@ defaultTextStyles
 	| answer |
 	answer := IdentityDictionary new.
 	answer
-		add: ((ScintillaTextStyle name: #illegal)
+		add: ((Scintilla.TextStyle name: #illegal)
 					description: 'Illegal characters, e.g. £';
 					forecolor: Color red;
 					isBold: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #comment)
+		add: ((Scintilla.TextStyle name: #comment)
 					description: 'Comments in method source';
 					forecolor: Color commonGreen;
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #identifier)
+		add: ((Scintilla.TextStyle name: #identifier)
 					description: 'Variables references (instance, temporary and class)';
 					yourself);
-		add: ((ScintillaTextStyle name: #argDecl)
+		add: ((Scintilla.TextStyle name: #argDecl)
 					description: 'Argument declaration in method signature';
 					isItalic: true;
 					isBold: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #blockArgDecl)
+		add: ((Scintilla.TextStyle name: #blockArgDecl)
 					description: 'Block argument declaration';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #tempDecl)
+		add: ((Scintilla.TextStyle name: #tempDecl)
 					description: 'Temporary variable declaration';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #unarySelector)
+		add: ((Scintilla.TextStyle name: #unarySelector)
 					description: 'Unary selectors (method signature)';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #unaryMessage)
+		add: ((Scintilla.TextStyle name: #unaryMessage)
 					description: 'Unary (no argument) messages';
 					forecolor: Color blue;
 					yourself);
-		add: ((ScintillaTextStyle name: #binarySelector)
+		add: ((Scintilla.TextStyle name: #binarySelector)
 					description: 'Binary in-fix selectors such as + and - (method signature)';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #binaryMessage)
+		add: ((Scintilla.TextStyle name: #binaryMessage)
 					description: 'Binary in-fix messages such as + and -';
 					forecolor: Color blue;
 					yourself);
-		add: ((ScintillaTextStyle name: #keywordSelector)
+		add: ((Scintilla.TextStyle name: #keywordSelector)
 					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #keywordMessage)
+		add: ((Scintilla.TextStyle name: #keywordMessage)
 					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalPseudo)
+		add: ((Scintilla.TextStyle name: #literalPseudo)
 					description: 'The literal constants true, false and nil';
 					forecolor: Color teal;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalNumber)
+		add: ((Scintilla.TextStyle name: #literalNumber)
 					description: 'Numeric literal constants, e.g. 1.2e6';
 					forecolor: Color maroon;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalString)
+		add: ((Scintilla.TextStyle name: #literalString)
 					description: 'Literal string constants, e.g. ''abc''';
 					forecolor: Color purple;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalSymbol)
+		add: ((Scintilla.TextStyle name: #literalSymbol)
 					description: 'Literal symbol constants, e.g. #abc';
 					forecolor: Color navy;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalCharacter)
+		add: ((Scintilla.TextStyle name: #literalCharacter)
 					description: 'Literal character constants, e.g. $A';
 					forecolor: Color navy;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalBytes)
+		add: ((Scintilla.TextStyle name: #literalBytes)
 					description: 'Literal byte arrays, e.g. #[0 1 2]';
 					forecolor: Color olive;
 					yourself);
-		add: ((ScintillaTextStyle name: #literalBindingReference)
+		add: ((Scintilla.TextStyle name: #literalBindingReference)
 					description: 'Literal binding references, e.g. #{Object}';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #assignment)
+		add: ((Scintilla.TextStyle name: #assignment)
 					description: 'Assignment operation, i.e. :=';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #tempOpenBar)
+		add: ((Scintilla.TextStyle name: #tempOpenBar)
 					description: 'Temporary declarations opening bar';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #tempCloseBar)
+		add: ((Scintilla.TextStyle name: #tempCloseBar)
 					description: 'Temporary declarations closing bar';
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #specialCharacter)
+		add: ((Scintilla.TextStyle name: #specialCharacter)
 					description: 'Special characters, e.g. normal and block parentheses';
 					yourself);
-		add: ((ScintillaTextStyle name: #literalArray)
+		add: ((Scintilla.TextStyle name: #literalArray)
 					description: 'Opening/closing token of literal array, i.e. #()';
 					weight: SC_WEIGHT_SEMIBOLD;
 					yourself);
-		add: ((ScintillaTextStyle name: #tag)
+		add: ((Scintilla.TextStyle name: #tag)
 					description: 'Primitive or external call tag, e.g. <primitive: 1>';
 					forecolor: Color gray;
 					isItalic: true;
 					yourself);
-		add: ((ScintillaTextStyle name: #whitespace)
+		add: ((Scintilla.TextStyle name: #whitespace)
 					description: 'Whitespace, when visible';
 					forecolor: Color silver;
 					yourself);
@@ -1999,8 +2000,8 @@ defaultTextStyles
 	"Scintilla pre-defined styles - note how #normal style inherits font of the view (which in turn should be the default system font).
 	braces and mismatch braces are styled using indicators now (see defaultIndicatorStyles)"
 	answer
-		add: ScintillaTextStyle normal yourself;
-		add: ((ScintillaTextStyle name: #indentGuide)
+		add: Scintilla.TextStyle normal yourself;
+		add: ((Scintilla.TextStyle name: #indentGuide)
 					description: 'Indentation guides, when visible';
 					forecolor: Color gray;
 					yourself);
@@ -2023,13 +2024,13 @@ defaultUnaryReturnTypes
 editorKeyBindings
 	"Answer the full set of editor key bindings. This only includes the Scintilla commands and is constructed from the default Scintilla key bindings and any workspace overrides."
 
-	^(ScintillaView mergeKeyBindings: KeyBindings)
+	^(Scintilla.ScintillaView mergeKeyBindings: KeyBindings)
 		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
 
 editorKeyBindings: aCollectionOfScintillaKeyBindings
 	KeyBindings := aCollectionOfScintillaKeyBindings
 				ifNil: [self defaultEditorKeyBindings]
-				ifNotNil: [ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
+				ifNotNil: [Scintilla.ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
 
 fontQuality
 	^FontQuality ?? #lcdOptimized!
@@ -2064,7 +2065,7 @@ indicatorStyles: aCollectionOfScintillaIndicatorStyles
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: {ScintillaIndicatorStyle name , ' new'})
+		addEvaluationFrom: {Scintilla.IndicatorStyle name , ' new'})
 		beImmutable;
 		yourself!
 
@@ -2162,14 +2163,14 @@ publishedAspects
 		do: [:each | answer add: (Aspect integer: each)].
 	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
 	^answer
-		add: (Aspect choice: #annotationMode from: ScintillaView annotationModes);
-		add: (Aspect choice: #wrapIndentMode from: ScintillaView wrapIndentModes);
+		add: (Aspect choice: #annotationMode from: Scintilla.ScintillaView annotationModes);
+		add: (Aspect choice: #wrapIndentMode from: Scintilla.ScintillaView wrapIndentModes);
 		add: (Aspect sequenceableCollection: #editorKeyBindings
-					addEvaluationFrom: {ScintillaKeyBinding name , ' new'}) beImmutable;
+					addEvaluationFrom: {Scintilla.KeyBinding name , ' new'}) beImmutable;
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
-		add: (Aspect choice: #fontQuality from: ScintillaView fontQualities);
+		add: (Aspect choice: #fontQuality from: Scintilla.ScintillaView fontQualities);
 		add: (Aspect font: #defaultFont);
 		yourself!
 
@@ -2190,7 +2191,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411453252 1 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 265030 4 ##(UI.Menu) nil true 34 13 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditUndo.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 327686 ##(Smalltalk.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 2896 nil 170 176 2896 nil nil nil nil nil 2802 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 130003 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 12 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 3442 461 311 416 3394 #contextMenu: 34 1 592 416 3394 #textLimit: 8 #(1073741823) 416 3394 #hoverTime: 8 #(500) 416 3394 #caretPeriod: 8 #(530) 416 3394 #wordWrap: 8 #(true) 416 3394 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 3698 3 416 1 nil nil 67108863 nil nil 3698 5 416 1 nil nil nil nil nil 416 3394 #tabWidth: 8 #(4) 416 3394 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 3394 #maxCompletionListHeight: 8 #(9) 416 3394 #edgeColumn: 8 #(1) 416 3394 #hasAdditionalSelectionTyping: 8 #(true) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 165 14 0 0 165 0 0 0] 8 #() 3442 193 193 nil 29)!
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 50 nil nil 34 2 8 1411453252 1 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 265030 4 ##(UI.Menu) nil true 34 13 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditUndo.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 327686 ##(Smalltalk.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1641542 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 2896 nil 170 176 2896 nil nil nil nil nil 2802 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 130003 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 12 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 3442 461 311 416 3394 #contextMenu: 34 1 592 416 3394 #textLimit: 8 #(1073741823) 416 3394 #hoverTime: 8 #(500) 416 3394 #caretPeriod: 8 #(530) 416 3394 #wordWrap: 8 #(true) 416 3394 #margins: 34 1 34 3 985158 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3698 3 416 1 nil nil 67108863 nil nil 3698 5 416 1 nil nil nil nil nil 416 3394 #tabWidth: 8 #(4) 416 3394 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 3394 #maxCompletionListHeight: 8 #(9) 416 3394 #edgeColumn: 8 #(1) 416 3394 #hasAdditionalSelectionTyping: 8 #(true) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 165 14 0 0 165 0 0 0] 8 #() 3442 193 193 nil 29)!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray ifNotNil: [anArray]!
@@ -2213,8 +2214,8 @@ textStyles: aCollectionOfScintillaTextStyles
 textStylesAspect
 	^(Aspect name: #textStyles
 		presenterBlock: 
-			[:p :m | 
-			(ScintillaStylesCollectionPresenter createIn: p on: m)
+			[:p :m |
+			(Scintilla.StylesCollectionPresenter createIn: p on: m)
 				defaultStyle: self defaultTextStyle;
 				yourself])
 		beImmutable;

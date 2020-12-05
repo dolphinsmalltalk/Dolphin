@@ -438,6 +438,9 @@ publishedAspectsOfInstances
 !UI.SlideyInneyOuteyThing class methodsFor!
 
 example1
+	"
+	self example1UI.SlideyInneyOuteyThing
+	"
 	| s cards tree l t |
 	s := SlideyInneyOuteyThing new showShell.
 	s isTrayResizable: true.
@@ -449,7 +452,7 @@ example1
 	tree := cards addSubView: TreeView new.
 	tree model: Smalltalk.ClassHierarchyModel withAllClasses.
 	tree viewMode: #smallIcons.
-	t := s parentView addSubView: Smalltalk.ScintillaView new.
+	t := s parentView addSubView: Scintilla.ScintillaView new.
 	t text: Object comment.
 	tree arrangement: 'Tree'.
 	l := cards addSubView: ListView new.

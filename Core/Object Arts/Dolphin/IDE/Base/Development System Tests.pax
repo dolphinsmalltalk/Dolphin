@@ -19,17 +19,18 @@ package setClassNames: #(
 	#{Smalltalk.RewriteTestCase}
 	#{Smalltalk.SmalltalkSystemTest}
 	#{Smalltalk.SmalltalkWorkspaceTest}
-	#{Smalltalk.StStyler}
 	#{Smalltalk.VersionResourceTest}
 	#{Smalltalk.XMLDOMNodeTest}
+	#{UI.Scintilla.Tests.MockScintillaView}
+	#{UI.Scintilla.Tests.StStyler}
 ).
 
 package setMethodNames: #(
 	#(#{External.Tests.INTEGERTest} #testPrintOnNull)
 	#(#{External.Tests.INTEGERTest} #testPrintOnSigned)
 	#(#{External.Tests.INTEGERTest} #testPrintOnUnsigned)
+	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
-	#(#{UI.Tests.ScintillaViewTest} #testTokensFromTo)
 ).
 
 package setPrerequisites: #(
@@ -42,6 +43,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
 	'..\..\Registry\Dolphin Registry Access'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
@@ -57,7 +60,13 @@ package!
 
 "Class Definitions"!
 
-Kernel.ParseNodeVisitor subclass: #StStyler
+Core.Object subclass: #'UI.Scintilla.Tests.MockScintillaView'
+	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
+	classVariableNames: ''
+	imports: #(#{UI.Scintilla.ScintillaConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	imports: #()
@@ -176,6 +185,23 @@ testPrintOnUnsigned
 !External.Tests.INTEGERTest categoriesFor: #testPrintOnSigned!public!unit tests! !
 !External.Tests.INTEGERTest categoriesFor: #testPrintOnUnsigned!public!unit tests! !
 
+!UI.Scintilla.Tests.ScintillaViewTest methodsFor!
+
+testTokensFromTo
+	| tokens expected styler |
+	presenter textStyles: Smalltalk.SmalltalkWorkspace textStyles.
+	presenter stylerClass: Smalltalk.SmalltalkExpressionStyler.
+	styler := StStyler new.
+	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
+			[:text |
+			presenter text: text.
+			presenter restyleAll.
+			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
+			expected := (Scanner on: presenter text readStream) contents
+						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
+			self assert: tokens equals: expected]! !
+!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
+
 !UI.Tests.BorderLayoutTest methodsFor!
 
 testResourceBrowserPreview
@@ -197,23 +223,6 @@ testResourceBrowserPreview
 	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
 	resourceView destroy! !
 !UI.Tests.BorderLayoutTest categoriesFor: #testResourceBrowserPreview!public!unit tests! !
-
-!UI.Tests.ScintillaViewTest methodsFor!
-
-testTokensFromTo
-	| tokens expected styler |
-	presenter textStyles: Smalltalk.SmalltalkWorkspace textStyles.
-	presenter stylerClass: Smalltalk.SmalltalkExpressionStyler.
-	styler := Smalltalk.StStyler new.
-	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
-			[:text |
-			presenter text: text.
-			presenter restyleAll.
-			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
-			expected := (Scanner on: presenter text readStream) contents
-						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
-			self assert: tokens equals: expected]! !
-!UI.Tests.ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 
 "End of package definition"!
 

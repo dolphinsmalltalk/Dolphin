@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaStyler subclass: #SmalltalkStyler
+UI.Scintilla.Styler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkStyler guid: (GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
-SmalltalkStyler isAbstract: true!
+SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
+SmalltalkStyler isNonInstantiable: true!
 SmalltalkStyler comment: 'SmalltalkStyler is a <ScintillaStyler> that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
 
 #argDecl			Formal parameter name in method signature

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-QueryableScintillaAttribute subclass: #ScintillaMargin
+UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes'
 	imports: #()
@@ -8,8 +8,8 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	classConstants: {
 		'MarginTypes' -> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
 	}!
-ScintillaMargin guid: (Core.GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
-ScintillaMargin comment: '`ScintillaMargin` instances represent the ''margin'' attributes of a `ScintillaView`.
+UI.Scintilla.Margin guid: (Core.GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
+UI.Scintilla.Margin comment: '`ScintillaMargin` instances represent the ''margin'' attributes of a `ScintillaView`.
 
 There may be multiple margins to the left of the text display, plus a gap either side of the text. Each margin can be set to display either "marker" symbols, line numbers or text, as specified by the `#style` aspect. The markers that can be displayed in each margin are set with `#mask` aspect. Any markers not associated with a visible margin will be displayed as changes in background colour in the text. A width in pixels can be set for each margin using the `#width` aspect. Margins with a zero width are ignored completely. The `#isSensitive` aspect controls whether a mouse click in a margin triggers a `#marginClicked` event or selects the corresponding line of text.
 
@@ -40,8 +40,8 @@ The margin `#style` can be one of the following:
 
 
 '!
-!ScintillaMargin categoriesForClass!MVP-Views-Support! !
-!ScintillaMargin methodsFor!
+!UI.Scintilla.Margin categoriesForClass!MVP-Views-Support! !
+!UI.Scintilla.Margin methodsFor!
 
 backcolor
 	"Answer the background colour used to draw the margin to the <Color> argument. Can be nil, indicatoring that the colour is unspecified, in which case Scintilla's default margin colour (black) is used, but only when the margin has the #color type."
@@ -176,71 +176,71 @@ width: anInteger
 
 	self basicWidth: (anInteger ifNotNil: [anInteger]).
 	self updateViewProperty: #width! !
-!ScintillaMargin categoriesFor: #backcolor!accessing!public! !
-!ScintillaMargin categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMargin categoriesFor: #basicBackcolor:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicCursorType!accessing!private! !
-!ScintillaMargin categoriesFor: #basicCursorType:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicIsSensitive!accessing!private! !
-!ScintillaMargin categoriesFor: #basicIsSensitive:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicType!accessing!private! !
-!ScintillaMargin categoriesFor: #basicType:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicWidth!accessing!private! !
-!ScintillaMargin categoriesFor: #basicWidth:!accessing!private! !
-!ScintillaMargin categoriesFor: #cursorType!accessing!public! !
-!ScintillaMargin categoriesFor: #cursorType:!accessing!public! !
-!ScintillaMargin categoriesFor: #isFolders!accessing!public! !
-!ScintillaMargin categoriesFor: #isFolders:!accessing!public! !
-!ScintillaMargin categoriesFor: #isSensitive!public!testing! !
-!ScintillaMargin categoriesFor: #isSensitive:!accessing!public! !
-!ScintillaMargin categoriesFor: #mask!accessing!public! !
-!ScintillaMargin categoriesFor: #mask:!accessing!public! !
-!ScintillaMargin categoriesFor: #type!accessing!public! !
-!ScintillaMargin categoriesFor: #type:!accessing!public! !
-!ScintillaMargin categoriesFor: #width!accessing!public! !
-!ScintillaMargin categoriesFor: #width:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #backcolor!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #backcolor:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #basicBackcolor:!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicCursorType!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicCursorType:!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicIsSensitive!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicIsSensitive:!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicType!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicType:!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicWidth!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #basicWidth:!accessing!private! !
+!UI.Scintilla.Margin categoriesFor: #cursorType!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #cursorType:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #isFolders!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #isFolders:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #isSensitive!public!testing! !
+!UI.Scintilla.Margin categoriesFor: #isSensitive:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #mask!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #mask:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #type!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #type:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #width!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #width:!accessing!public! !
 
-!ScintillaMargin class methodsFor!
+!UI.Scintilla.Margin class methodsFor!
 
 buildPropertyMap
 	^IdentityDictionary new
 		at: #isSensitive
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicIsSensitive
 					defaultValue: 0
 					setMessage: SCI_SETMARGINSENSITIVEN
 					setSelector: #basicIsSensitive:
 					getMessage: SCI_GETMARGINSENSITIVEN);
 		at: #mask
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #mask
 					defaultValue: 0
 					setMessage: SCI_SETMARGINMASKN
 					setSelector: #mask:
 					getMessage: SCI_GETMARGINMASKN);
 		at: #type
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicType
 					defaultValue: SC_MARGIN_SYMBOL
 					setMessage: SCI_SETMARGINTYPEN
 					setSelector: #basicType:
 					getMessage: SCI_GETMARGINTYPEN);
 		at: #width
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicWidth
 					defaultValue: nil
 					setMessage: SCI_SETMARGINWIDTHN
 					setSelector: #basicWidth:
 					getMessage: SCI_GETMARGINWIDTHN);
 		at: #cursorType
-			put: (ScintillaPropertyDescriptor
+			put: (PropertyDescriptor
 					getSelector: #basicCursorType
 					defaultValue: SC_CURSORREVERSEARROW
 					setMessage: SCI_SETMARGINCURSORN
 					setSelector: #basicCursorType:
 					getMessage: SCI_GETMARGINCURSORN);
 		at: #backcolor
-			put: (ScintillaColorPropertyDescriptor
+			put: (ColorPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color black
 					setMessage: SCI_SETMARGINBACKN
@@ -281,8 +281,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
-!ScintillaMargin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaMargin class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaMargin class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaMargin class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.Margin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!UI.Scintilla.Margin class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.Margin class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.Scintilla.Margin class categoriesFor: #stbVersion!binary filing!public! !
 
