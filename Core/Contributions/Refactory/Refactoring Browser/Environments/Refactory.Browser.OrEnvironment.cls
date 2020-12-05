@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #OrEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.OrEnvironment'
 	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OrEnvironment guid: (GUID fromString: '{72c876b4-b565-41f0-85a5-957532328c69}')!
-OrEnvironment comment: ''!
-!OrEnvironment categoriesForClass!Refactoring-Environment! !
-!OrEnvironment methodsFor!
+Refactory.Browser.OrEnvironment guid: (Core.GUID fromString: '{72c876b4-b565-41f0-85a5-957532328c69}')!
+Refactory.Browser.OrEnvironment comment: ''!
+!Refactory.Browser.OrEnvironment categoriesForClass!Refactoring-Environment! !
+!Refactory.Browser.OrEnvironment methodsFor!
 
 classesDo: aBlock
 	| enumerated |
@@ -57,21 +57,21 @@ storeOn: aStream
 	aStream nextPutAll: ' | '.
 	oredEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!OrEnvironment categoriesFor: #classesDo:!accessing!public! !
-!OrEnvironment categoriesFor: #definesClass:!public!testing! !
-!OrEnvironment categoriesFor: #includesCategory:!public!testing! !
-!OrEnvironment categoriesFor: #includesClass:!public!testing! !
-!OrEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!OrEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!OrEnvironment categoriesFor: #oredEnvironment:!initialization!private! !
-!OrEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!OrEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.OrEnvironment categoriesFor: #classesDo:!accessing!public! !
+!Refactory.Browser.OrEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.OrEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.OrEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.OrEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
+!Refactory.Browser.OrEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.OrEnvironment categoriesFor: #oredEnvironment:!initialization!private! !
+!Refactory.Browser.OrEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
+!Refactory.Browser.OrEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!OrEnvironment class methodsFor!
+!Refactory.Browser.OrEnvironment class methodsFor!
 
 onEnvironment: anEnvironment or: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		oredEnvironment: anotherEnvironment;
 		yourself! !
-!OrEnvironment class categoriesFor: #onEnvironment:or:!instance creation!public! !
+!Refactory.Browser.OrEnvironment class categoriesFor: #onEnvironment:or:!instance creation!public! !
 

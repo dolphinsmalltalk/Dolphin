@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #CreateAccessorsForVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.CreateAccessorsForVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CreateAccessorsForVariableTest guid: (GUID fromString: '{cf036663-3be7-40e4-9e4f-c090ff6abb4b}')!
-CreateAccessorsForVariableTest comment: ''!
-!CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !
-!CreateAccessorsForVariableTest methodsFor!
+Refactory.Browser.Tests.CreateAccessorsForVariableTest guid: (Core.GUID fromString: '{cf036663-3be7-40e4-9e4f-c090ff6abb4b}')!
+Refactory.Browser.Tests.CreateAccessorsForVariableTest comment: ''!
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest methodsFor!
 
 setUp
 	super setUp.
@@ -33,7 +33,7 @@ testNewClassVariableAccessors
 				class: LintRuleTest
 				classVariable: true.
 	self executeRefactoring: ref.
-	class := ref model metaclassNamed: #LintRuleTest.
+	class := ref model metaclassNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.
@@ -48,7 +48,7 @@ testNewInstanceVariableAccessors
 				class: LintRuleTest
 				classVariable: false.
 	self executeRefactoring: ref.
-	class := ref model classNamed: #LintRuleTest.
+	class := ref model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.
@@ -58,17 +58,17 @@ testNewInstanceVariableAccessors
 
 testNonExistantName
 	self
-		shouldFail: (CreateAccessorsForVariableRefactoring 
+		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: #Foo
 					class: BasicLintRuleTest
 					classVariable: true);
-		shouldFail: (CreateAccessorsForVariableRefactoring 
+		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: 'foo'
 					class: BasicLintRuleTest
 					classVariable: true)! !
-!CreateAccessorsForVariableTest categoriesFor: #setUp!public!set up! !
-!CreateAccessorsForVariableTest categoriesFor: #testExistingInstanceVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNewClassVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNewInstanceVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testExistingInstanceVariableAccessors!public!tests! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNewClassVariableAccessors!public!tests! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNewInstanceVariableAccessors!public!tests! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
 

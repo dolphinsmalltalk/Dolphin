@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #PullUpInstanceVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.PullUpInstanceVariableRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PullUpInstanceVariableRefactoring guid: (GUID fromString: '{7845ee3c-dfb0-412e-8fa3-318fdfdd63c2}')!
-PullUpInstanceVariableRefactoring comment: ''!
-!PullUpInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!PullUpInstanceVariableRefactoring methodsFor!
+Refactory.Browser.PullUpInstanceVariableRefactoring guid: (Core.GUID fromString: '{7845ee3c-dfb0-412e-8fa3-318fdfdd63c2}')!
+Refactory.Browser.PullUpInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.PullUpInstanceVariableRefactoring methodsFor!
 
 preconditions
 	^RBCondition withBlock: 
@@ -29,6 +29,6 @@ transform
 			(each directlyDefinesInstanceVariable: variableName) 
 				ifTrue: [each removeInstanceVariable: variableName]].
 	class addInstanceVariable: variableName! !
-!PullUpInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PullUpInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 

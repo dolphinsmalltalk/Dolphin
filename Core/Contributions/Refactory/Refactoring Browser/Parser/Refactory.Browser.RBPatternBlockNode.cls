@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StBlockNode subclass: #RBPatternBlockNode
+Kernel.StBlockNode subclass: #'Refactory.Browser.RBPatternBlockNode'
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternBlockNode guid: (GUID fromString: '{63f4ab8a-d94e-4a65-bdae-742311429c7c}')!
-RBPatternBlockNode comment: ''!
-!RBPatternBlockNode categoriesForClass!Refactory-Parser! !
-!RBPatternBlockNode methodsFor!
+Refactory.Browser.RBPatternBlockNode guid: (Core.GUID fromString: '{63f4ab8a-d94e-4a65-bdae-742311429c7c}')!
+Refactory.Browser.RBPatternBlockNode comment: ''!
+!Refactory.Browser.RBPatternBlockNode categoriesForClass!Refactory-Parser! !
+!Refactory.Browser.RBPatternBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitPatternBlockNode: self!
@@ -40,13 +40,11 @@ constructLookupNodeFor: aString in: aRBBlockNode
 copyInContext: aDictionary 
 	^self replacingBlock value: aDictionary!
 
-createBlockFor: aRBBlockNode 
+createBlockFor: aRBBlockNode
 	| source |
 	self replacePatternNodesIn: aRBBlockNode.
 	source := aRBBlockNode formattedCode.
-	^Compiler 
-		evaluate: source
-		for: self!
+	^Compiler evaluate: source for: self!
 
 createMatchingBlock
 	| newBlock |
@@ -72,7 +70,7 @@ createReplacingBlock
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	^self createBlockFor: newBlock!
 
-lookupMatchFor: aString in: aDictionary 
+lookupMatchFor: aString in: aDictionary
 	^aDictionary at: aString
 		ifAbsent: 
 			[| variableNode |
@@ -102,17 +100,17 @@ replacingBlock
 
 sentMessages
 	^OrderedCollection new! !
-!RBPatternBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!RBPatternBlockNode categoriesFor: #addArgumentWithNameBasedOn:to:!matching!public! !
-!RBPatternBlockNode categoriesFor: #constructLookupNodeFor:in:!matching!public! !
-!RBPatternBlockNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternBlockNode categoriesFor: #createBlockFor:!matching!public! !
-!RBPatternBlockNode categoriesFor: #createMatchingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #createReplacingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #lookupMatchFor:in:!matching!public! !
-!RBPatternBlockNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternBlockNode categoriesFor: #matchingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #replacePatternNodesIn:!matching!public! !
-!RBPatternBlockNode categoriesFor: #replacingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #addArgumentWithNameBasedOn:to:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #constructLookupNodeFor:in:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #copyInContext:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #createBlockFor:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #createMatchingBlock!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #createReplacingBlock!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #lookupMatchFor:in:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #match:inContext:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #matchingBlock!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #replacePatternNodesIn:!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #replacingBlock!matching!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesFor: #sentMessages!accessing!public! !
 

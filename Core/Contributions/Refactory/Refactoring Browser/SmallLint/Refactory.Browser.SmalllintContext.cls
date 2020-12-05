@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SmalllintContext
+Core.Object subclass: #'Refactory.Browser.SmalllintContext'
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintContext guid: (GUID fromString: '{3cc8c7db-8970-4652-bff7-519cda9ca376}')!
-SmalllintContext comment: ''!
-!SmalllintContext categoriesForClass!Refactory-Lint! !
-!SmalllintContext methodsFor!
+Refactory.Browser.SmalllintContext guid: (Core.GUID fromString: '{3cc8c7db-8970-4652-bff7-519cda9ca376}')!
+Refactory.Browser.SmalllintContext comment: ''!
+!Refactory.Browser.SmalllintContext categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.SmalllintContext methodsFor!
 
 addImplementationSpecificLiterals
 	#rbFix.	"Dolphin's VM references symbols"
@@ -21,17 +21,17 @@ buildParseTree
 	tree isNil ifTrue: [^RBParser parseMethod: 'method'].
 	^tree!
 
-checkLiteral: aLiteral 
-	aLiteral isSymbol 
+checkLiteral: aLiteral
+	aLiteral isSymbol
 		ifTrue: 
 			[literals add: aLiteral.
 			^self].
 	#rbFix.	"In Dolphin X6 and later class refs are stored as constants in the literal frame, rather than variable bindings."
-	aLiteral isBehavior 
+	aLiteral isBehavior
 		ifTrue: 
 			[literals add: aLiteral.
 			^self].
-	aLiteral isVariableBinding 
+	aLiteral isVariableBinding
 		ifTrue: 
 			[#rbFix.	"An optimization - because we only need to know of literal refs to variables that ref classes, we can
 				ignore all other variables. This also avoids the cached literals collection preventing the GC of objects
@@ -60,12 +60,9 @@ computeMessages
 	messages := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher
-		matches: 'self `@message: ``@args'
-			do: [:aNode :answer | selfMessages add: aNode selector];
-		matches: 'super `@message: ``@args'
-			do: [:aNode :answer | superMessages add: aNode selector];
-		matches: '``@receiver `@message: ``@args'
-			do: [:aNode :answer | messages add: aNode selector].
+		matches: 'self `@message: ``@args' do: [:aNode :answer | selfMessages add: aNode selector];
+		matches: 'super `@message: ``@args' do: [:aNode :answer | superMessages add: aNode selector];
+		matches: '``@receiver `@message: ``@args' do: [:aNode :answer | messages add: aNode selector].
 	searcher executeTree: self parseTree initialAnswer: nil!
 
 implements: aSelector 
@@ -164,9 +161,8 @@ signalProcesses: aSemaphore
 
 specialSelectors
 	#rbFix.
-"	^(OpcodePool at: #SpecialSelectorDictionary) keys"
-	^VMLibrary default specialSelectors
-!
+	"	^(OpcodePool at: #SpecialSelectorDictionary) keys"
+	^VMLibrary default specialSelectors!
 
 superMessages
 	superMessages isNil ifTrue: [self computeMessages].
@@ -174,37 +170,37 @@ superMessages
 
 uses: anObject 
 	^self literals includes: anObject! !
-!SmalllintContext categoriesFor: #addImplementationSpecificLiterals!private! !
-!SmalllintContext categoriesFor: #buildParseTree!helpers!private! !
-!SmalllintContext categoriesFor: #checkLiteral:!helpers!private! !
-!SmalllintContext categoriesFor: #compiledMethod!accessing!public! !
-!SmalllintContext categoriesFor: #computeLiterals!helpers!private! !
-!SmalllintContext categoriesFor: #computeLiteralsForClass:!helpers!private! !
-!SmalllintContext categoriesFor: #computeMessages!helpers!private! !
-!SmalllintContext categoriesFor: #implements:!public!testing! !
-!SmalllintContext categoriesFor: #initialize!initialize/release!public! !
-!SmalllintContext categoriesFor: #instVarNames!accessing!public! !
-!SmalllintContext categoriesFor: #isAbstract:!public!testing! !
-!SmalllintContext categoriesFor: #lintProtocols!accessing!public! !
-!SmalllintContext categoriesFor: #literals!accessing!public! !
-!SmalllintContext categoriesFor: #messages!accessing!public! !
-!SmalllintContext categoriesFor: #parseTree!accessing!public! !
-!SmalllintContext categoriesFor: #primitiveComputeLiterals!helpers!private! !
-!SmalllintContext categoriesFor: #protocol!accessing!public! !
-!SmalllintContext categoriesFor: #protocols!accessing!public! !
-!SmalllintContext categoriesFor: #release!initialize/release!public! !
-!SmalllintContext categoriesFor: #selectedClass!accessing!public! !
-!SmalllintContext categoriesFor: #selectedClass:!accessing!public! !
-!SmalllintContext categoriesFor: #selector!accessing!public! !
-!SmalllintContext categoriesFor: #selector:!accessing!public! !
-!SmalllintContext categoriesFor: #selectors!accessing!public! !
-!SmalllintContext categoriesFor: #selfMessages!accessing!public! !
-!SmalllintContext categoriesFor: #signalProcesses:!helpers!private! !
-!SmalllintContext categoriesFor: #specialSelectors!helpers!private! !
-!SmalllintContext categoriesFor: #superMessages!accessing!public! !
-!SmalllintContext categoriesFor: #uses:!public!testing! !
+!Refactory.Browser.SmalllintContext categoriesFor: #addImplementationSpecificLiterals!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #buildParseTree!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #checkLiteral:!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #compiledMethod!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #computeLiterals!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #computeLiteralsForClass:!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #computeMessages!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #implements:!public!testing! !
+!Refactory.Browser.SmalllintContext categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #instVarNames!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #isAbstract:!public!testing! !
+!Refactory.Browser.SmalllintContext categoriesFor: #lintProtocols!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #literals!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #messages!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #parseTree!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #primitiveComputeLiterals!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #protocol!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #protocols!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #release!initialize/release!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selectedClass!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selectedClass:!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selector!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selector:!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selectors!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #selfMessages!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #signalProcesses:!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #specialSelectors!helpers!private! !
+!Refactory.Browser.SmalllintContext categoriesFor: #superMessages!accessing!public! !
+!Refactory.Browser.SmalllintContext categoriesFor: #uses:!public!testing! !
 
-!SmalllintContext class methodsFor!
+!Refactory.Browser.SmalllintContext class methodsFor!
 
 new
 	^(super new)
@@ -213,6 +209,6 @@ new
 
 newNoCache
 	^self basicNew! !
-!SmalllintContext class categoriesFor: #new!instance creation!public! !
-!SmalllintContext class categoriesFor: #newNoCache!instance creation!public! !
+!Refactory.Browser.SmalllintContext class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.SmalllintContext class categoriesFor: #newNoCache!instance creation!public! !
 

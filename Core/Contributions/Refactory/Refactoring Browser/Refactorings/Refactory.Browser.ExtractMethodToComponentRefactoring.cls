@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #ExtractMethodToComponentRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractMethodToComponentRefactoring'
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractMethodToComponentRefactoring guid: (GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
-ExtractMethodToComponentRefactoring comment: ''!
-!ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !
-!ExtractMethodToComponentRefactoring methodsFor!
+Refactory.Browser.ExtractMethodToComponentRefactoring guid: (Core.GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
+Refactory.Browser.ExtractMethodToComponentRefactoring comment: ''!
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring methodsFor!
 
 extract: anInterval from: aSelector in: aClass 
 	#rbFix. "Ensure the displayString works when the model name is initialized"
@@ -21,16 +21,15 @@ extract: anInterval from: aSelector in: aClass
 
 extractMethod
 	| refactoring |
-	refactoring := ExtractMethodRefactoring 
+	refactoring := ExtractMethodRefactoring
 				model: self model
 				extract: extractionInterval
 				from: selector
 				in: class.
 	refactoring setOption: #methodName
 		toUse: 
-			[:ref :methodName | 
-			extractedMethodSelector := ref 
-						uniqueMethodNameFor: methodName arguments size.
+			[:ref :methodName |
+			extractedMethodSelector := ref uniqueMethodNameFor: methodName arguments size.
 			methodName
 				selector: extractedMethodSelector;
 				yourself].
@@ -38,7 +37,7 @@ extractMethod
 
 inlineForwarder
 	| refactoring |
-	refactoring := InlineAllSendersRefactoring 
+	refactoring := InlineAllSendersRefactoring
 				model: self model
 				sendersOf: extractedMethodSelector
 				in: class.
@@ -47,11 +46,9 @@ inlineForwarder
 
 moveMethod
 	| variable refactoring |
-	variable := self selectVariableToMoveMethodTo: extractedMethodSelector
-				class: class.
-	variable isNil 
-		ifTrue: [^self refactoringAborted: 'Did not extract method'].
-	refactoring := MoveMethodRefactoring 
+	variable := self selectVariableToMoveMethodTo: extractedMethodSelector class: class.
+	variable isNil ifTrue: [^self refactoringAborted: 'Did not extract method'].
+	refactoring := MoveMethodRefactoring
 				model: self model
 				selector: extractedMethodSelector
 				class: class
@@ -78,15 +75,15 @@ transform
 		extractMethod;
 		moveMethod;
 		inlineForwarder! !
-!ExtractMethodToComponentRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #extractMethod!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #inlineForwarder!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #moveMethod!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #extractMethod!public!transforming! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #inlineForwarder!public!transforming! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #moveMethod!public!transforming! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #transform!public!transforming! !
 
-!ExtractMethodToComponentRefactoring class methodsFor!
+!Refactory.Browser.ExtractMethodToComponentRefactoring class methodsFor!
 
 extract: anInterval from: aSelector in: aClass 
 	^self new
@@ -101,6 +98,6 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractMethodToComponentRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!ExtractMethodToComponentRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #MoveMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoveMethodTest guid: (GUID fromString: '{7313b46f-a4cc-4401-8345-57823fb459af}')!
-MoveMethodTest comment: ''!
-!MoveMethodTest categoriesForClass!Refactory-Testing! !
-!MoveMethodTest methodsFor!
+Refactory.Browser.Tests.MoveMethodTest guid: (Core.GUID fromString: '{7313b46f-a4cc-4401-8345-57823fb459af}')!
+Refactory.Browser.Tests.MoveMethodTest comment: ''!
+!Refactory.Browser.Tests.MoveMethodTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.MoveMethodTest methodsFor!
 
 testMoveMethodIntoArgument
 	| refactoring class |
@@ -19,13 +19,15 @@ testMoveMethodIntoArgument
 						class: TransformationRuleTest
 						variable: 'aSmalllintContext'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #SmalllintContext}.
+			self setupVariableTypesFor: refactoring
+				toReturn: {refactoring model classNamed: #'Refactory.Browser.SmalllintContext'}.
 			self setupMethodNameFor: refactoring toReturn: #foo:.
 			self executeRefactoring: refactoring].
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (RBParser parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
-	self assert: ((refactoring model classNamed: #SmalllintContext) parseTreeFor: #foo:)
+	self
+		assert: ((refactoring model classNamed: #'Refactory.Browser.SmalllintContext') parseTreeFor: #foo:)
 		equals: (RBParser
 				parseMethod: 'foo: transformationRule
 	transformationRule class: self selectedClass.
@@ -58,17 +60,19 @@ testMoveMethodIntoClassVariable
 						class: TransformationRuleTest
 						variable: 'RecursiveSelfRule'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #ParseTreeSearcher}.
+			self setupVariableTypesFor: refactoring
+				toReturn: {refactoring model classNamed: #'Refactory.Browser.ParseTreeSearcher'}.
 			self
 				setupMethodNameFor: refactoring
 				toReturn: #foo:foo:
 				withArguments: #('transformationRule' 'aSmalllintContext').
 			self executeRefactoring: refactoring].
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (RBParser
 				parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
-	self assert: ((refactoring model classNamed: #ParseTreeSearcher) parseTreeFor: #foo:foo:)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.ParseTreeSearcher')
+				parseTreeFor: #foo:foo:)
 		equals: (RBParser
 				parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
@@ -97,17 +101,19 @@ testMoveMethodIntoInstanceVariable
 						class: TransformationRuleTest
 						variable: 'rewriteRule'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #ParseTreeRewriter}.
+			self setupVariableTypesFor: refactoring
+				toReturn: {refactoring model classNamed: #'Refactory.Browser.ParseTreeRewriter'}.
 			self
 				setupMethodNameFor: refactoring
 				toReturn: #foo:foo:
 				withArguments: #('transformationRule' 'aSmalllintContext').
 			self executeRefactoring: refactoring].
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (RBParser
 				parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').
-	self assert: ((refactoring model classNamed: #ParseTreeRewriter) parseTreeFor: #foo:foo:)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.ParseTreeRewriter')
+				parseTreeFor: #foo:foo:)
 		equals: (RBParser
 				parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
@@ -137,32 +143,31 @@ testMoveMethodThatReferencesPoolDictionary
 						class: LintRuleTest
 						variable: 'RefactoryTestDataApp'.
 			self setupSelfArgumentNameFor: refactoring toReturn: 'transformationRule'.
-			refactoringTestDataClass := refactoring model metaclassNamed: #RefactoryTestDataApp.
+			refactoringTestDataClass := refactoring model metaclassNamed: RefactoryTestDataApp fullName.
 			self setupVariableTypesFor: refactoring toReturn: {refactoringTestDataClass}.
 			self setupMethodNameFor: refactoring toReturn: #junk1.
 			self executeRefactoring: refactoring].
-	class := refactoring model classNamed: #LintRuleTest.
+	class := refactoring model classNamed: LintRuleTest fullName.
 	self assert: (class parseTreeFor: #junk)
 		equals: (RBParser parseMethod: 'junk ^RefactoryTestDataApp junk1').
-	self assert: ((refactoring model metaclassNamed: #RefactoryTestDataApp) parseTreeFor: #junk1)
+	self assert: ((refactoring model metaclassNamed: RefactoryTestDataApp fullName) parseTreeFor: #junk1)
 		equals: (RBParser parseMethod: 'junk1
 	^self printString copyFrom: 1 to: _EM_INVALID').
-	self assert: (class directlyDefinesPoolDictionary: 'CRTConstants' asSymbol)!
+	self assert: (class directlyImportsNamespace: 'OS.CRTConstants' asSymbol)!
 
 testMovePrimitiveMethod
 	| refactoring |
-	(model classNamed: #Object) 
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
+	(model classNamed: #'Core.Object') compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
-	refactoring := MoveMethodRefactoring 
+	refactoring := MoveMethodRefactoring
 				model: model
 				selector: #foo
 				class: Object
 				variable: 'OrderedCollection'.
 	self shouldFail: refactoring! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoArgument!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoClassVariable!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoInstanceVariable!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodThatReferencesPoolDictionary!public!tests! !
-!MoveMethodTest categoriesFor: #testMovePrimitiveMethod!failure tests!public! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoArgument!public!tests! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoClassVariable!public!tests! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodThatReferencesPoolDictionary!public!tests! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMovePrimitiveMethod!failure tests!public! !
 

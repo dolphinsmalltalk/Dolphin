@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-InlineMethodRefactoring subclass: #InlineMethodFromComponentRefactoring
+Refactory.Browser.InlineMethodRefactoring subclass: #'Refactory.Browser.InlineMethodFromComponentRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineMethodFromComponentRefactoring guid: (GUID fromString: '{f56f3dba-48f3-4b00-8281-fcdff1f92c33}')!
-InlineMethodFromComponentRefactoring comment: ''!
-!InlineMethodFromComponentRefactoring categoriesForClass!Refactory-Refactorings! !
-!InlineMethodFromComponentRefactoring methodsFor!
+Refactory.Browser.InlineMethodFromComponentRefactoring guid: (Core.GUID fromString: '{f56f3dba-48f3-4b00-8281-fcdff1f92c33}')!
+Refactory.Browser.InlineMethodFromComponentRefactoring comment: ''!
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring methodsFor!
 
 abstractVariableReferences
 	| refactoring |
@@ -84,15 +84,14 @@ isOverridden
 		anySatisfy: [:each | each directlyDefinesMethod: self inlineSelector]!
 
 newNameForSelf
-	| variableName index originalName nonMetaClass |
+	| variableName index originalName nonMetaClass name |
 	nonMetaClass := inlineClass nonMetaclass.
-	variableName := originalName := (nonMetaClass name first isVowel 
-						ifTrue: ['an']
-						ifFalse: ['a']) , nonMetaClass name.
+	name := nonMetaClass unqualifiedName.
+	variableName := originalName := (name first isVowel ifTrue: ['an'] ifFalse: ['a']) , name.
 	index := 1.
 	
 	[variableName := self safeVariableNameBasedOn: variableName.
-	inlineParseTree allDefinedVariables includes: variableName] 
+	inlineParseTree allDefinedVariables includes: variableName]
 			whileTrue: 
 				[variableName := originalName , index printString.
 				index := index + 1].
@@ -123,16 +122,16 @@ transform
 	self abstractVariableReferences.
 	self renameSelfReferences.
 	super transform! !
-!InlineMethodFromComponentRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addArgumentToSelector:!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToInlineParseTree!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToSourceMessage!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #inlineClass!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #isOverridden!public! !
-!InlineMethodFromComponentRefactoring categoriesFor: #newNameForSelf!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #renameSelfReferences!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #safeVariableNameBasedOn:!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addArgumentToSelector:!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToInlineParseTree!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToSourceMessage!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #inlineClass!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #isOverridden!public! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #newNameForSelf!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #renameSelfReferences!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #safeVariableNameBasedOn:!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #transform!public!transforming! !
 

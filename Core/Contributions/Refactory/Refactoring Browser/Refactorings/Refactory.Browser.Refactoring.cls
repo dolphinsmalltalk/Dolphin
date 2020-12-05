@@ -1,20 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Refactoring
+Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
 	classVariableNames: 'AbortSignal RefactoringOptions'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactoring guid: (GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
-Refactoring isAbstract: true!
-Refactoring comment: ''!
-!Refactoring categoriesForClass!Refactory-Refactorings! !
-!Refactoring methodsFor!
+Refactory.Browser.Refactoring guid: (Core.GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
+Refactory.Browser.Refactoring isNonInstantiable: true!
+Refactory.Browser.Refactoring comment: ''!
+!Refactory.Browser.Refactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.Refactoring methodsFor!
 
 associationForClassVariable: aName in: aClass ifAbsent: aBlock 
 	^aClass realClass classPool associationAt: aName asSymbol
 		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]!
+
+browseEnvironments: aCollectionOfBrowserEnvironments
+	^(self options at: #browseEnvironments) value: self value: aCollectionOfBrowserEnvironments!
 
 canReferenceVariable: aString in: aClass 
 	(aClass definesVariable: aString) ifTrue: [^true].
@@ -53,23 +56,12 @@ classObjectFor: anObject
 	anObject isSymbol ifTrue: [^self model classNamed: anObject].
 	^anObject!
 
-convertAllReferencesTo: aSymbol using: searchReplacer 
-	self model allReferencesTo: aSymbol
-		do: 
-			[:method | 
-			self 
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]!
+convertAllReferencesTo: aSymbol using: searchReplacer
+	self model allReferencesTo: aSymbol do: [:method | self convertMethod: method using: searchReplacer]!
 
-convertAllReferencesToClass: aRBClass using: searchReplacer 
+convertAllReferencesToClass: aRBClass using: searchReplacer
 	self model allReferencesToClass: aRBClass
-		do: 
-			[:method | 
-			self 
-				convertMethod: method selector
-				for: method modelClass
-				using: searchReplacer]!
+		do: [:method | self convertMethod: method using: searchReplacer]!
 
 convertClasses: classSet select: aBlock using: searchReplacer 
 	classSet do: 
@@ -77,19 +69,17 @@ convertClasses: classSet select: aBlock using: searchReplacer
 			(aBlock value: aClass) do: 
 					[:selector | 
 					self 
-						convertMethod: selector
-						for: aClass
+						convertMethod: (aClass methodFor: selector)
 						using: searchReplacer]]!
 
-convertMethod: selector for: aClass using: searchReplacer 
-	"Convert the parse tree for selector using the searchReplacer. If a
-	change is made then compile it into the changeBuilder."
+convertMethod: anRBMethod using: searchReplacer
+	"Convert the parse tree for selector using the searchReplacer. If a change is made then compile it into the changeBuilder."
 
 	| parseTree |
-	parseTree := aClass parseTreeFor: selector.
+	parseTree := anRBMethod parseTree.
 	parseTree isNil ifTrue: [^self].
-	(searchReplacer executeTree: parseTree) 
-		ifTrue: [aClass compileTree: searchReplacer tree]!
+	(searchReplacer executeTree: parseTree)
+		ifTrue: [anRBMethod modelClass compileTree: searchReplacer tree]!
 
 copyOptionsFrom: aDictionary 
 	| dict |
@@ -107,15 +97,16 @@ defaultEnvironment
 
 execute
 	self primitiveExecute.
-	RefactoringManager instance addRefactoring: self 
-
-!
+	RefactoringManager instance addRefactoring: self!
 
 getOptionAlreadyDefined: aClass selector: aSelection
 	^self
 		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting it to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?'
 				expandMacrosWith: aSelection
 				with: aClass)!
+
+getOptionBrowseEnvironments: aCollectionOfBrowserEnvironments
+	^Smalltalk developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironments!
 
 getOptionExtractAssignment: aString
 	^self confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?'
@@ -127,7 +118,7 @@ getOptionInlineExpression: aString
 
 getOptionMethodName: anRBMethodName
 	| mname |
-	mname := Prompter prompt: 'Enter the new method name (without the ''#'') '.
+	mname := UI.Prompter prompt: 'Enter the new method name (without the ''#'') '.
 	^mname notNil 
 		ifTrue: 
 			[mname := mname asSymbol.
@@ -137,16 +128,16 @@ getOptionOpenBrowser: anRBEnvironment
 	^anRBEnvironment openEditor!
 
 getOptionSelfArgumentName
-	^Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
+	^UI.Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
 
 getOptionUseExistingMethod: aSelector
 	^self
 		confirm: ('Use existing method <1p> instead of creating a new method?' expandMacrosWith: aSelector)!
 
-getOptionVariableToMoveToOf: aClass in: aSelector 
+getOptionVariableToMoveToOf: aClass in: aSelector
 	| parseTree nameList |
 	parseTree := aClass parseTreeFor: aSelector.
-	parseTree isNil 
+	parseTree isNil
 		ifTrue: [parseTree := RBMethodNode selector: #value body: (RBSequenceNode statements: #())].
 	nameList := OrderedCollection new.
 	nameList
@@ -154,18 +145,18 @@ getOptionVariableToMoveToOf: aClass in: aSelector
 		addAll: parseTree argumentNames asSortedCollection;
 		add: '---- Instance Variables ----'.
 	nameList addAll: aClass allInstanceVariableNames asSortedCollection.
-	^ChoicePrompter choices: nameList caption: 'Select variable to move method into:'!
+	^UI.ChoicePrompter choices: nameList caption: 'Select variable to move method into:'!
 
 getOptionVariableTypes: types selected: selected
 	| classSelected |
 	selected.
-	classSelected := ChoicePrompter choices: types asOrderedCollection
+	classSelected := UI.ChoicePrompter choices: types asOrderedCollection
 				caption: 'Select class of new method...'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
 model
-	#rbFix. "Use #displayString instead of #printString for the name"
-	^model isNil 
+	#rbFix.	"Use #displayString instead of #printString for the name"
+	^model isNil
 		ifTrue: 
 			[model := (RBNamespace onEnvironment: self defaultEnvironment)
 						name: self displayString;
@@ -200,7 +191,7 @@ poolVariableNamesFor: aClass
 	pools := Set new.
 	aClass withAllSuperclassesDo: 
 			[:each |
-			each allPoolDictionaryNames
+			each allImports
 				do: [:pool | pool asQualifiedReference value keys do: [:name | pools add: name asString]]].
 	^pools!
 
@@ -215,18 +206,20 @@ refactoringAborted: aString
 	#rbFix.	"Added so can trap user cancellation separately from actual errors and avoid annoying extra message box"
 	^AbortSignal signal: aString!
 
-refactoringError: aString 
-	#rbFix. "Non-ANSI VisualWorks specific signal"
+refactoringError: aString
+	#rbFix.	"Non-ANSI VisualWorks specific signal"
 	"RefactoringError raiseSignal: aString"
-
 	RefactoringError refactoring: self signal: aString!
 
-refactoringError: aString with: aBlock 
-	#rbFix. "Include a reference to the receiver in the exception for improved error reporting."
-	RefactoringError refactoring: self signal: aString with: aBlock!
+refactoringError: aString with: aBlock
+	#rbFix.	"Include a reference to the receiver in the exception for improved error reporting."
+	RefactoringError
+		refactoring: self
+		signal: aString
+		with: aBlock!
 
-refactoringWarning: aString 
-	#rbFix. "Use ANSI standard #signal:with: message, and include the Refactoring in the exception too"
+refactoringWarning: aString
+	#rbFix.	"Use ANSI standard #signal:with: message, and include the Refactoring in the exception too"
 	"RefactoringWarning raiseSignal: aString"
 	RefactoringWarning refactoring: self signal: aString!
 
@@ -286,7 +279,7 @@ shouldUseExistingMethod: aSelector
 transform
 	self subclassResponsibility!
 
-uniqueMethodNameFor: anInteger 
+uniqueMethodNameFor: anInteger
 	| before after index name |
 	before := 'a'.
 	after := ''.
@@ -294,75 +287,75 @@ uniqueMethodNameFor: anInteger
 	index := 0.
 	
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil] 
+	(Symbol findInterned: name) notNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol!
 
-whichVariableNode: aParseTree inInterval: anInterval name: aName 
+whichVariableNode: aParseTree inInterval: anInterval name: aName
 	| matcher block |
 	matcher := ParseTreeSearcher new.
-	block := 
-			[:aNode :answer | 
-			(aNode intersectsInterval: anInterval) ifTrue: [aNode] ifFalse: [answer]].
+	block := [:aNode :answer | (aNode intersectsInterval: anInterval) ifTrue: [aNode] ifFalse: [answer]].
 	matcher
 		matches: aName do: block;
 		matchesArgument: aName do: block.
 	^matcher executeTree: aParseTree initialAnswer: nil! !
-!Refactoring categoriesFor: #associationForClassVariable:in:ifAbsent:!public!utilities! !
-!Refactoring categoriesFor: #canReferenceVariable:in:!public!testing! !
-!Refactoring categoriesFor: #changes!accessing!public! !
-!Refactoring categoriesFor: #checkClass:selector:using:!public!support! !
-!Refactoring categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
-!Refactoring categoriesFor: #checkMethodName:in:!public!utilities! !
-!Refactoring categoriesFor: #checkPreconditions!preconditions!public! !
-!Refactoring categoriesFor: #checkPreconditions:!preconditions!public! !
-!Refactoring categoriesFor: #classObjectFor:!accessing!private! !
-!Refactoring categoriesFor: #convertAllReferencesTo:using:!public!support! !
-!Refactoring categoriesFor: #convertAllReferencesToClass:using:!public!support! !
-!Refactoring categoriesFor: #convertClasses:select:using:!public!support! !
-!Refactoring categoriesFor: #convertMethod:for:using:!public!support! !
-!Refactoring categoriesFor: #copyOptionsFrom:!accessing!public! !
-!Refactoring categoriesFor: #defaultEnvironment!public!transforming! !
-!Refactoring categoriesFor: #execute!public!transforming! !
-!Refactoring categoriesFor: #getOptionAlreadyDefined:selector:!options!public! !
-!Refactoring categoriesFor: #getOptionExtractAssignment:!options!public! !
-!Refactoring categoriesFor: #getOptionInlineExpression:!options!public! !
-!Refactoring categoriesFor: #getOptionMethodName:!options!public! !
-!Refactoring categoriesFor: #getOptionOpenBrowser:!options!public! !
-!Refactoring categoriesFor: #getOptionSelfArgumentName!options!public! !
-!Refactoring categoriesFor: #getOptionUseExistingMethod:!options!public! !
-!Refactoring categoriesFor: #getOptionVariableToMoveToOf:in:!options!public! !
-!Refactoring categoriesFor: #getOptionVariableTypes:selected:!options!public! !
-!Refactoring categoriesFor: #model!public!transforming! !
-!Refactoring categoriesFor: #model:!initialize/release!public! !
-!Refactoring categoriesFor: #onError:do:!exceptions!private! !
-!Refactoring categoriesFor: #openBrowserOn:!public!requests! !
-!Refactoring categoriesFor: #options!accessing!public! !
-!Refactoring categoriesFor: #options:!accessing!public! !
-!Refactoring categoriesFor: #performComponentRefactoring:!public!transforming! !
-!Refactoring categoriesFor: #poolVariableNamesFor:!public!utilities! !
-!Refactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactoring categoriesFor: #primitiveExecute!operations!private! !
-!Refactoring categoriesFor: #refactoringAborted:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringError:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringError:with:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringWarning:!exceptions!private! !
-!Refactoring categoriesFor: #requestImplementorToInline:!public!requests! !
-!Refactoring categoriesFor: #requestMethodNameFor:!public!requests! !
-!Refactoring categoriesFor: #requestSelfArgumentName!public!requests! !
-!Refactoring categoriesFor: #safeMethodNameFor:basedOn:!public!utilities! !
-!Refactoring categoriesFor: #selectVariableToMoveMethodTo:class:!public!requests! !
-!Refactoring categoriesFor: #selectVariableTypesFrom:selected:!public!requests! !
-!Refactoring categoriesFor: #setOption:toUse:!accessing!public! !
-!Refactoring categoriesFor: #shouldExtractAssignmentTo:!public!requests! !
-!Refactoring categoriesFor: #shouldInlineExpression:!public!requests! !
-!Refactoring categoriesFor: #shouldOverride:in:!public!requests! !
-!Refactoring categoriesFor: #shouldUseExistingMethod:!public!requests! !
-!Refactoring categoriesFor: #transform!public!transforming! !
-!Refactoring categoriesFor: #uniqueMethodNameFor:!helpers!private! !
-!Refactoring categoriesFor: #whichVariableNode:inInterval:name:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #associationForClassVariable:in:ifAbsent:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #browseEnvironments:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #canReferenceVariable:in:!public!testing! !
+!Refactory.Browser.Refactoring categoriesFor: #changes!accessing!public! !
+!Refactory.Browser.Refactoring categoriesFor: #checkClass:selector:using:!public!support! !
+!Refactory.Browser.Refactoring categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #checkMethodName:in:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #checkPreconditions!preconditions!public! !
+!Refactory.Browser.Refactoring categoriesFor: #checkPreconditions:!preconditions!public! !
+!Refactory.Browser.Refactoring categoriesFor: #classObjectFor:!accessing!private! !
+!Refactory.Browser.Refactoring categoriesFor: #convertAllReferencesTo:using:!public!support! !
+!Refactory.Browser.Refactoring categoriesFor: #convertAllReferencesToClass:using:!public!support! !
+!Refactory.Browser.Refactoring categoriesFor: #convertClasses:select:using:!public!support! !
+!Refactory.Browser.Refactoring categoriesFor: #convertMethod:using:!public!support! !
+!Refactory.Browser.Refactoring categoriesFor: #copyOptionsFrom:!accessing!public! !
+!Refactory.Browser.Refactoring categoriesFor: #defaultEnvironment!public!transforming! !
+!Refactory.Browser.Refactoring categoriesFor: #execute!public!transforming! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionAlreadyDefined:selector:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionBrowseEnvironments:!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionExtractAssignment:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionInlineExpression:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionMethodName:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionOpenBrowser:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionSelfArgumentName!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionUseExistingMethod:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionVariableToMoveToOf:in:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #getOptionVariableTypes:selected:!options!public! !
+!Refactory.Browser.Refactoring categoriesFor: #model!public!transforming! !
+!Refactory.Browser.Refactoring categoriesFor: #model:!initialize/release!public! !
+!Refactory.Browser.Refactoring categoriesFor: #onError:do:!exceptions!private! !
+!Refactory.Browser.Refactoring categoriesFor: #openBrowserOn:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #options!accessing!public! !
+!Refactory.Browser.Refactoring categoriesFor: #options:!accessing!public! !
+!Refactory.Browser.Refactoring categoriesFor: #performComponentRefactoring:!public!transforming! !
+!Refactory.Browser.Refactoring categoriesFor: #poolVariableNamesFor:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.Refactoring categoriesFor: #primitiveExecute!operations!private! !
+!Refactory.Browser.Refactoring categoriesFor: #refactoringAborted:!exceptions!private! !
+!Refactory.Browser.Refactoring categoriesFor: #refactoringError:!exceptions!private! !
+!Refactory.Browser.Refactoring categoriesFor: #refactoringError:with:!exceptions!private! !
+!Refactory.Browser.Refactoring categoriesFor: #refactoringWarning:!exceptions!private! !
+!Refactory.Browser.Refactoring categoriesFor: #requestImplementorToInline:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #requestMethodNameFor:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #requestSelfArgumentName!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #safeMethodNameFor:basedOn:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesFor: #selectVariableToMoveMethodTo:class:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #selectVariableTypesFrom:selected:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #setOption:toUse:!accessing!public! !
+!Refactory.Browser.Refactoring categoriesFor: #shouldExtractAssignmentTo:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #shouldInlineExpression:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #shouldOverride:in:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #shouldUseExistingMethod:!public!requests! !
+!Refactory.Browser.Refactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.Refactoring categoriesFor: #uniqueMethodNameFor:!helpers!private! !
+!Refactory.Browser.Refactoring categoriesFor: #whichVariableNode:inInterval:name:!public!utilities! !
 
-!Refactoring class methodsFor!
+!Refactory.Browser.Refactoring class methodsFor!
 
 abortSignal
 	^AbortSignal!
@@ -386,7 +379,8 @@ initializeRefactoringOptions
 		setDefaultOption: #inlineExpression toMessage: #getOptionInlineExpression:;
 		setDefaultOption: #alreadyDefined toMessage: #getOptionAlreadyDefined:selector:;
 		setDefaultOption: #useExistingMethod toMessage: #getOptionUseExistingMethod:;
-		setDefaultOption: #openBrowser toMessage: #getOptionOpenBrowser:!
+		setDefaultOption: #openBrowser toMessage: #getOptionOpenBrowser:;
+		setDefaultOption: #browseEnvironments toMessage: #getOptionBrowseEnvironments:!
 
 new
 	^(super new)
@@ -414,14 +408,14 @@ setDefaultOption: aSymbol toMessage: aSelector
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
-!Refactoring class categoriesFor: #abortSignal!accessing!public! !
-!Refactoring class categoriesFor: #initialize!public! !
-!Refactoring class categoriesFor: #initializeRefactoringOptions!accessing!public! !
-!Refactoring class categoriesFor: #new!instance creation!public! !
-!Refactoring class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!Refactoring class categoriesFor: #preconditionSignal!accessing signal!public! !
-!Refactoring class categoriesFor: #refactoringOptions!accessing!public! !
-!Refactoring class categoriesFor: #setDefaultOption:to:!accessing!public! !
-!Refactoring class categoriesFor: #setDefaultOption:toMessage:!accessing!public! !
-!Refactoring class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #abortSignal!accessing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #initialize!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #initializeRefactoringOptions!accessing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #preconditionSignal!accessing signal!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #refactoringOptions!accessing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #setDefaultOption:to:!accessing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #setDefaultOption:toMessage:!accessing!public! !
+!Refactory.Browser.Refactoring class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

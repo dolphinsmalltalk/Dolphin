@@ -1,33 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RemoveParameterRefactoring subclass: #InlineParameterRefactoring
+Refactory.Browser.RemoveParameterRefactoring subclass: #'Refactory.Browser.InlineParameterRefactoring'
 	instanceVariableNames: 'expressions'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineParameterRefactoring guid: (GUID fromString: '{9e2f3b66-4a50-4da3-97d8-7b1af9c59ea5}')!
-InlineParameterRefactoring comment: ''!
-!InlineParameterRefactoring categoriesForClass!Refactory-Refactorings! !
-!InlineParameterRefactoring methodsFor!
+Refactory.Browser.InlineParameterRefactoring guid: (Core.GUID fromString: '{9e2f3b66-4a50-4da3-97d8-7b1af9c59ea5}')!
+Refactory.Browser.InlineParameterRefactoring comment: ''!
+!Refactory.Browser.InlineParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.InlineParameterRefactoring methodsFor!
 
 allExpressionsToInline
 	| coll |
 	coll := Set new.
 	self model allReferencesTo: oldSelector
 		do: 
-			[:each | 
+			[:each |
 			| tree |
 			tree := each parseTree.
 			tree notNil ifTrue: [coll addAll: (self expressionsToInlineFrom: tree)]].
 	^coll asOrderedCollection!
 
-expressionsToInlineFrom: aTree 
+expressionsToInlineFrom: aTree
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: '``@obj ' , (self buildSelectorString: oldSelector)
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				add: (aNode arguments at: parameterIndex);
 				yourself].
@@ -72,14 +72,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector;
 		nextPut: $)! !
-!InlineParameterRefactoring categoriesFor: #allExpressionsToInline!enquiries!private! !
-!InlineParameterRefactoring categoriesFor: #expressionsToInlineFrom:!private! !
-!InlineParameterRefactoring categoriesFor: #inlineParameter:in:selector:!initialize/release!public! !
-!InlineParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!public!transforming! !
-!InlineParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!InlineParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #allExpressionsToInline!enquiries!private! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #expressionsToInlineFrom:!private! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #inlineParameter:in:selector:!initialize/release!public! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!public!transforming! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
+!Refactory.Browser.InlineParameterRefactoring categoriesFor: #storeOn:!printing!public! !
 
-!InlineParameterRefactoring class methodsFor!
+!Refactory.Browser.InlineParameterRefactoring class methodsFor!
 
 inlineParameter: aString in: aClass selector: aSelector 
 	^self new 
@@ -94,6 +94,6 @@ model: aRBNamespace inlineParameter: aString in: aClass selector: aSelector
 			in: aClass
 			selector: aSelector;
 		yourself! !
-!InlineParameterRefactoring class categoriesFor: #inlineParameter:in:selector:!instance creation!public! !
-!InlineParameterRefactoring class categoriesFor: #model:inlineParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.InlineParameterRefactoring class categoriesFor: #inlineParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.InlineParameterRefactoring class categoriesFor: #model:inlineParameter:in:selector:!instance creation!public! !
 

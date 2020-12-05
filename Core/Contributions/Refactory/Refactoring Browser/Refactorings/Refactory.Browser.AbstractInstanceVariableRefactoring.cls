@@ -1,37 +1,36 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #AbstractInstanceVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.AbstractInstanceVariableRefactoring'
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractInstanceVariableRefactoring guid: (GUID fromString: '{0d72d85d-4099-47a8-8916-be81b11662df}')!
-AbstractInstanceVariableRefactoring comment: ''!
-!AbstractInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!AbstractInstanceVariableRefactoring methodsFor!
+Refactory.Browser.AbstractInstanceVariableRefactoring guid: (Core.GUID fromString: '{0d72d85d-4099-47a8-8916-be81b11662df}')!
+Refactory.Browser.AbstractInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring methodsFor!
 
 abstractReferences
 	| replacer |
-	replacer := ParseTreeRewriter 
+	replacer := ParseTreeRewriter
 				variable: variableName
 				getter: self accessorsRefactoring getterMethod
 				setter: self accessorsRefactoring setterMethod.
-	self 
+	self
 		convertClasses: class withAllSubclasses
 		select: 
-			[:aClass | 
+			[:aClass |
 			(aClass whichSelectorsReferToInstanceVariable: variableName) reject: 
-					[:each | 
+					[:each |
 					aClass == class and: 
-							[each == self accessorsRefactoring getterMethod 
-								or: [each == self accessorsRefactoring setterMethod]]]]
+							[each == self accessorsRefactoring getterMethod or: [each == self accessorsRefactoring setterMethod]]]]
 		using: replacer!
 
 accessorsRefactoring
-	^accessorsRefactoring isNil 
+	^accessorsRefactoring isNil
 		ifTrue: 
-			[accessorsRefactoring := CreateAccessorsForVariableRefactoring 
+			[accessorsRefactoring := CreateAccessorsForVariableRefactoring
 						model: self model
 						variable: variableName
 						class: class
@@ -47,9 +46,9 @@ preconditions
 transform
 	self createAccessors.
 	self abstractReferences! !
-!AbstractInstanceVariableRefactoring categoriesFor: #abstractReferences!public!transforming! !
-!AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
-!AbstractInstanceVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
-!AbstractInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AbstractInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #abstractReferences!public!transforming! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 

@@ -1,24 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #ExtractMethodToComponentTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodToComponentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractMethodToComponentTest guid: (GUID fromString: '{8281473f-8cd8-45ac-ad39-f2858913ecae}')!
-ExtractMethodToComponentTest comment: ''!
-!ExtractMethodToComponentTest categoriesForClass!Refactory-Testing! !
-!ExtractMethodToComponentTest methodsFor!
+Refactory.Browser.Tests.ExtractMethodToComponentTest guid: (Core.GUID fromString: '{8281473f-8cd8-45ac-ad39-f2858913ecae}')!
+Refactory.Browser.Tests.ExtractMethodToComponentTest comment: ''!
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest methodsFor!
 
 testBadInterval
 	self
-		shouldFail: (ExtractMethodToComponentRefactoring 
-					extract: (self convertInterval: (24 to: 30)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (ExtractMethodToComponentRefactoring
+					extract: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					from: #testMethod
 					in: RefactoryTestDataApp);
-		shouldFail: (ExtractMethodToComponentRefactoring 
+		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (80 to: 147)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
@@ -26,20 +25,19 @@ testBadInterval
 
 testExtractFailure
 	self
-		shouldFail: (ExtractMethodToComponentRefactoring 
+		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (80 to: 269)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
 					in: BasicLintRuleTest class);
-		shouldFail: (ExtractMethodToComponentRefactoring 
+		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (53 to: 56)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
 					in: BasicLintRuleTest class);
-		shouldFail: (ExtractMethodToComponentRefactoring 
+		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (77 to: 222)
-							for: (BasicLintRuleTest class 
-									sourceCodeAt: #subclassResponsibilityNotDefined))
+							for: (BasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
 					from: #subclassResponsibilityNotDefined
 					in: BasicLintRuleTest class)!
 
@@ -52,8 +50,8 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
-	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #Collection}.
-	class := refactoring model classNamed: #LintRuleTest.
+	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: Collection fullName}.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
 	self assert: (class parseTreeFor: #openEditor)
@@ -62,7 +60,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
-	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:)
+	self assert: ((refactoring model classNamed: Collection fullName) parseTreeFor: #foo:)
 		equals: (RBParser
 				parseMethod: 'foo: asdf
 								self isEmpty ifTrue: [^asdf].
@@ -80,13 +78,13 @@ testMoveWithoutSelfReference
 				in: RBReadBeforeWrittenTester.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
-	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: #Dictionary}.
-	class := refactoring model classNamed: #RBReadBeforeWrittenTester.
+	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: Dictionary fullName}.
+	class := refactoring model classNamed: #'Refactory.Browser.RBReadBeforeWrittenTester'.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #copyDictionary:)
 		equals: (RBParser parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
-	self assert: ((refactoring model classNamed: #Dictionary) parseTreeFor: #copyWithAssociations)
+	self assert: ((refactoring model classNamed: Dictionary fullName) parseTreeFor: #copyWithAssociations)
 		equals: (RBParser
 				parseMethod: 'copyWithAssociations 
 							| newDictionary |
@@ -97,13 +95,13 @@ testMoveWithoutSelfReference
 	self assert: class selectors size equals: selectorsSize!
 
 testNonExistantSelector
-	self shouldFail: (ExtractMethodToComponentRefactoring 
+	self shouldFail: (ExtractMethodToComponentRefactoring
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!ExtractMethodToComponentTest categoriesFor: #testBadInterval!failure tests!public! !
-!ExtractMethodToComponentTest categoriesFor: #testExtractFailure!failure tests!public! !
-!ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
-!ExtractMethodToComponentTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testBadInterval!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testExtractFailure!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testNonExistantSelector!failure tests!public! !
 

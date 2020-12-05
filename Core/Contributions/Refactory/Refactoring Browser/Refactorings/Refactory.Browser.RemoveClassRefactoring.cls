@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactoring subclass: #RemoveClassRefactoring
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.RemoveClassRefactoring'
 	instanceVariableNames: 'classNames'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveClassRefactoring guid: (GUID fromString: '{80687cb5-257c-4125-9d59-58ebcea2ebcb}')!
-RemoveClassRefactoring comment: ''!
-!RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!RemoveClassRefactoring methodsFor!
+Refactory.Browser.RemoveClassRefactoring guid: (Core.GUID fromString: '{80687cb5-257c-4125-9d59-58ebcea2ebcb}')!
+Refactory.Browser.RemoveClassRefactoring comment: ''!
+!Refactory.Browser.RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RemoveClassRefactoring methodsFor!
 
 checkMethodReferencesTo: aSymbol
 	(self hasReferencesTo: aSymbol)
@@ -18,9 +18,12 @@ checkMethodReferencesTo: aSymbol
 				refactoringError: ('<1s> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
 						expandMacrosWith: aSymbol)
 				with: 
-					[#rbFix.	"Should use refactoring environment to scope the search"
-					self openBrowserOn: (self model environment
-								referencesTo: aSymbol asQualifiedReference bindingOrNil ?? aSymbol)]]!
+					[| searches |
+					searches := OrderedCollection new.
+					aSymbol asQualifiedReference bindingOrNil
+						ifNotNil: [:binding | searches add: (self model environment referencesTo: binding)].
+					searches add: (self model environment referencesTo: aSymbol).
+					self browseEnvironments: searches]]!
 
 checkReferencesTo: aString 
 	| className |
@@ -33,7 +36,7 @@ classNames: aClassNameCollection
 	classNames := aClassNameCollection!
 
 hasReferencesTo: aSymbol
-	| binding bindingRef |
+	| bindingRef |
 	bindingRef := aSymbol asQualifiedReference.
 	BrowserEnvironment new methodsDo: 
 			[:each |
@@ -80,17 +83,17 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
-!RemoveClassRefactoring categoriesFor: #checkMethodReferencesTo:!preconditions!private! !
-!RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #classNames:!initialize/release!public! !
-!RemoveClassRefactoring categoriesFor: #hasReferencesTo:!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #removeClasses!public!transforming! !
-!RemoveClassRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!RemoveClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!RemoveClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkMethodReferencesTo:!preconditions!private! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #classNames:!initialize/release!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #hasReferencesTo:!preconditions!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #removeClasses!public!transforming! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #transform!public!transforming! !
 
-!RemoveClassRefactoring class methodsFor!
+!Refactory.Browser.RemoveClassRefactoring class methodsFor!
 
 classNames: aClassNameCollection 
 	^self new classNames: aClassNameCollection!
@@ -100,6 +103,6 @@ model: aRBNamespace classNames: aClassNameCollection
 		model: aRBNamespace;
 		classNames: aClassNameCollection;
 		yourself! !
-!RemoveClassRefactoring class categoriesFor: #classNames:!instance creation!public! !
-!RemoveClassRefactoring class categoriesFor: #model:classNames:!instance creation!public! !
+!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #classNames:!instance creation!public! !
+!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #model:classNames:!instance creation!public! !
 

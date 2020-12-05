@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBParser'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin RBParser Package
 Copyright John Brant and Don Roberts.
@@ -11,213 +11,214 @@ Should be used in place of the full RBParser package, which contains the ''...pa
 
 
 package setClassNames: #(
-	#{ParseTreeRewriter}
-	#{ParseTreeSearcher}
-	#{RBBlockReplaceRule}
-	#{RBParseTreeRule}
-	#{RBPatternBlockNode}
-	#{RBPatternMessageNode}
-	#{RBPatternMethodNode}
-	#{RBPatternParser}
-	#{RBPatternScanner}
-	#{RBPatternVariableNode}
-	#{RBPatternWrapperBlockNode}
-	#{RBReplaceRule}
-	#{RBSearchRule}
-	#{RBSmallDictionary}
-	#{RBStringReplacement}
-	#{RBStringReplaceRule}
+	#{Refactory.Browser.ParseTreeRewriter}
+	#{Refactory.Browser.ParseTreeSearcher}
+	#{Refactory.Browser.PatternBlockToken}
+	#{Refactory.Browser.RBBlockReplaceRule}
+	#{Refactory.Browser.RBParseTreeRule}
+	#{Refactory.Browser.RBPatternBlockNode}
+	#{Refactory.Browser.RBPatternMessageNode}
+	#{Refactory.Browser.RBPatternMethodNode}
+	#{Refactory.Browser.RBPatternParser}
+	#{Refactory.Browser.RBPatternScanner}
+	#{Refactory.Browser.RBPatternVariableNode}
+	#{Refactory.Browser.RBPatternWrapperBlockNode}
+	#{Refactory.Browser.RBReplaceRule}
+	#{Refactory.Browser.RBSearchRule}
+	#{Refactory.Browser.RBSmallDictionary}
+	#{Refactory.Browser.RBStringReplacement}
+	#{Refactory.Browser.RBStringReplaceRule}
 ).
 
 package setMethodNames: #(
-	#(#{CompileFailedMethod} #refersToVariable:)
-	#(#{RBConfigurableFormatter} #visitPatternWrapperBlockNode:)
-	#(#{RBFormatter} #visitPatternWrapperBlockNode:)
-	#(#{SmalltalkParser class} #parseRewriteExpression:)
-	#(#{SmalltalkParser class} #parseRewriteExpression:onError:)
-	#(#{SmalltalkParser class} #parseRewriteMethod:)
-	#(#{SmalltalkParser class} #parseRewriteMethod:onError:)
-	#(#{StAbstractVariableNode} #copyInContext:)
-	#(#{StAbstractVariableNode} #equalTo:withMapping:)
-	#(#{StAbstractVariableNode} #references:)
-	#(#{StAbstractVariableNode} #replaceSourceFrom:)
-	#(#{StAbstractVariableNode} #replaceSourceWith:)
-	#(#{StAssignmentNode} #copyInContext:)
-	#(#{StAssignmentNode} #equalTo:withMapping:)
-	#(#{StAssignmentNode} #match:inContext:)
-	#(#{StAssignmentNode} #replaceNode:withNode:)
-	#(#{StAssignmentNode} #replaceSourceWith:)
-	#(#{StBlockNode} #copyInContext:)
-	#(#{StBlockNode} #equalTo:withMapping:)
-	#(#{StBlockNode} #match:inContext:)
-	#(#{StBlockNode} #references:)
-	#(#{StBlockNode} #replaceNode:withNode:)
-	#(#{StBraceArrayNode} #addNode:)
-	#(#{StBraceArrayNode} #addNode:before:)
-	#(#{StBraceArrayNode} #addNodeFirst:)
-	#(#{StBraceArrayNode} #addNodes:)
-	#(#{StBraceArrayNode} #addNodes:before:)
-	#(#{StBraceArrayNode} #addNodesFirst:)
-	#(#{StBraceArrayNode} #copyInContext:)
-	#(#{StBraceArrayNode} #equalTo:withMapping:)
-	#(#{StBraceArrayNode} #indexOfNode:)
-	#(#{StBraceArrayNode} #match:inContext:)
-	#(#{StBraceArrayNode} #references:)
-	#(#{StBraceArrayNode} #replaceNode:withNode:)
-	#(#{StCascadeNode} #copyInContext:)
-	#(#{StCascadeNode} #equalTo:withMapping:)
-	#(#{StCascadeNode} #match:inContext:)
-	#(#{StCascadeNode} #replaceNode:withNode:)
-	#(#{StLiteralArrayNode} #copyInContext:)
-	#(#{StLiteralArrayNode} #equalTo:withMapping:)
-	#(#{StLiteralArrayNode} #match:inContext:)
-	#(#{StLiteralArrayNode} #replaceNode:withNode:)
-	#(#{StLiteralNode} #replaceSourceFrom:)
-	#(#{StLiteralNode} #replaceSourceWith:)
-	#(#{StLiteralValueNode} #copyInContext:)
-	#(#{StMessageNode} #copyInContext:)
-	#(#{StMessageNode} #equalTo:withMapping:)
-	#(#{StMessageNode} #isContainmentReplacement:)
-	#(#{StMessageNode} #match:inContext:)
-	#(#{StMessageNode} #replaceContainmentSourceWith:)
-	#(#{StMessageNode} #replaceNode:withNode:)
-	#(#{StMessageNode} #replaceSourceWith:)
-	#(#{StMessageNode} #replaceSourceWithMessageNode:)
-	#(#{StMethodNode} #addNode:)
-	#(#{StMethodNode} #addReplacement:)
-	#(#{StMethodNode} #addReturn)
-	#(#{StMethodNode} #addSelfReturn)
-	#(#{StMethodNode} #changeSourceSelectors:arguments:)
-	#(#{StMethodNode} #clearReplacements)
-	#(#{StMethodNode} #copyInContext:)
-	#(#{StMethodNode} #equalTo:withMapping:)
-	#(#{StMethodNode} #initialize)
-	#(#{StMethodNode} #map:to:)
-	#(#{StMethodNode} #mappingFor:)
-	#(#{StMethodNode} #match:inContext:)
-	#(#{StMethodNode} #newSource)
-	#(#{StMethodNode} #references:)
-	#(#{StMethodNode} #reformatSource)
-	#(#{StMethodNode} #renameSelector:andArguments:)
-	#(#{StMethodNode} #replaceNode:withNode:)
-	#(#{StOptimizedNode} #copyInContext:)
-	#(#{StOptimizedNode} #equalTo:withMapping:)
-	#(#{StOptimizedNode} #match:inContext:)
-	#(#{StOptimizedNode} #replaceNode:withNode:)
-	#(#{StParseNodeVisitor} #visitPatternBlockNode:)
-	#(#{StParseNodeVisitor} #visitPatternWrapperBlockNode:)
-	#(#{StProgramNode} #addReplacement:)
-	#(#{StProgramNode} #asReturn)
-	#(#{StProgramNode} #clearReplacements)
-	#(#{StProgramNode} #copyInContext:)
-	#(#{StProgramNode} #copyList:inContext:)
-	#(#{StProgramNode} #equalTo:withMapping:)
-	#(#{StProgramNode} #mappingFor:)
-	#(#{StProgramNode} #match:inContext:)
-	#(#{StProgramNode} #matchList:against:inContext:)
-	#(#{StProgramNode} #matchList:index:against:index:inContext:)
-	#(#{StProgramNode} #references:)
-	#(#{StProgramNode} #removeDeadCode)
-	#(#{StProgramNode} #replaceMethodSource:)
-	#(#{StProgramNode} #replaceNode:withNode:)
-	#(#{StProgramNode} #replaceSourceFrom:)
-	#(#{StProgramNode} #replaceSourceWith:)
-	#(#{StProgramNode} #replaceWith:)
-	#(#{StProgramNode} #selfMessages)
-	#(#{StProgramNode} #superMessages)
-	#(#{StReturnNode} #copyInContext:)
-	#(#{StReturnNode} #equalTo:withMapping:)
-	#(#{StReturnNode} #match:inContext:)
-	#(#{StReturnNode} #replaceNode:withNode:)
-	#(#{StSequenceNode} #addNode:)
-	#(#{StSequenceNode} #addNode:before:)
-	#(#{StSequenceNode} #addNodeFirst:)
-	#(#{StSequenceNode} #addNodes:)
-	#(#{StSequenceNode} #addNodes:before:)
-	#(#{StSequenceNode} #addNodesFirst:)
-	#(#{StSequenceNode} #addReturn)
-	#(#{StSequenceNode} #addSelfReturn)
-	#(#{StSequenceNode} #addTemporariesNamed:)
-	#(#{StSequenceNode} #addTemporaryNamed:)
-	#(#{StSequenceNode} #copyInContext:)
-	#(#{StSequenceNode} #equalTo:withMapping:)
-	#(#{StSequenceNode} #indexOfNode:)
-	#(#{StSequenceNode} #match:inContext:)
-	#(#{StSequenceNode} #references:)
-	#(#{StSequenceNode} #removeDeadCode)
-	#(#{StSequenceNode} #removeNode:)
-	#(#{StSequenceNode} #removeTemporaryNamed:)
-	#(#{StSequenceNode} #replaceNode:withNode:)
-	#(#{StSequenceNode} #replaceNode:withNodes:)
+	#(#{Kernel.CompileFailedMethod} #refersToVariable:)
+	#(#{Kernel.ParseNodeVisitor} #visitPatternBlockNode:)
+	#(#{Kernel.ParseNodeVisitor} #visitPatternWrapperBlockNode:)
+	#(#{Kernel.Parser class} #parseRewriteExpression:onError:)
+	#(#{Kernel.Parser class} #parseRewriteMethod:onError:)
+	#(#{Kernel.Scanner} #scanPatternVariable)
+	#(#{Kernel.StAbstractVariableNode} #copyInContext:)
+	#(#{Kernel.StAbstractVariableNode} #equalTo:withMapping:)
+	#(#{Kernel.StAbstractVariableNode} #references:)
+	#(#{Kernel.StAbstractVariableNode} #replaceSourceFrom:)
+	#(#{Kernel.StAbstractVariableNode} #replaceSourceWith:)
+	#(#{Kernel.StAssignmentNode} #copyInContext:)
+	#(#{Kernel.StAssignmentNode} #equalTo:withMapping:)
+	#(#{Kernel.StAssignmentNode} #match:inContext:)
+	#(#{Kernel.StAssignmentNode} #replaceNode:withNode:)
+	#(#{Kernel.StAssignmentNode} #replaceSourceWith:)
+	#(#{Kernel.StBlockNode} #copyInContext:)
+	#(#{Kernel.StBlockNode} #equalTo:withMapping:)
+	#(#{Kernel.StBlockNode} #match:inContext:)
+	#(#{Kernel.StBlockNode} #references:)
+	#(#{Kernel.StBlockNode} #replaceNode:withNode:)
+	#(#{Kernel.StBraceArrayNode} #addNode:)
+	#(#{Kernel.StBraceArrayNode} #addNode:before:)
+	#(#{Kernel.StBraceArrayNode} #addNodeFirst:)
+	#(#{Kernel.StBraceArrayNode} #addNodes:)
+	#(#{Kernel.StBraceArrayNode} #addNodes:before:)
+	#(#{Kernel.StBraceArrayNode} #addNodesFirst:)
+	#(#{Kernel.StBraceArrayNode} #copyInContext:)
+	#(#{Kernel.StBraceArrayNode} #equalTo:withMapping:)
+	#(#{Kernel.StBraceArrayNode} #indexOfNode:)
+	#(#{Kernel.StBraceArrayNode} #match:inContext:)
+	#(#{Kernel.StBraceArrayNode} #references:)
+	#(#{Kernel.StBraceArrayNode} #replaceNode:withNode:)
+	#(#{Kernel.StCascadeNode} #copyInContext:)
+	#(#{Kernel.StCascadeNode} #equalTo:withMapping:)
+	#(#{Kernel.StCascadeNode} #match:inContext:)
+	#(#{Kernel.StCascadeNode} #replaceNode:withNode:)
+	#(#{Kernel.StLiteralArrayNode} #copyInContext:)
+	#(#{Kernel.StLiteralArrayNode} #equalTo:withMapping:)
+	#(#{Kernel.StLiteralArrayNode} #match:inContext:)
+	#(#{Kernel.StLiteralArrayNode} #replaceNode:withNode:)
+	#(#{Kernel.StLiteralNode} #replaceSourceFrom:)
+	#(#{Kernel.StLiteralNode} #replaceSourceWith:)
+	#(#{Kernel.StLiteralValueNode} #copyInContext:)
+	#(#{Kernel.StMessageNode} #copyInContext:)
+	#(#{Kernel.StMessageNode} #equalTo:withMapping:)
+	#(#{Kernel.StMessageNode} #isContainmentReplacement:)
+	#(#{Kernel.StMessageNode} #match:inContext:)
+	#(#{Kernel.StMessageNode} #replaceContainmentSourceWith:)
+	#(#{Kernel.StMessageNode} #replaceNode:withNode:)
+	#(#{Kernel.StMessageNode} #replaceSourceWith:)
+	#(#{Kernel.StMessageNode} #replaceSourceWithMessageNode:)
+	#(#{Kernel.StMethodNode} #addNode:)
+	#(#{Kernel.StMethodNode} #addReplacement:)
+	#(#{Kernel.StMethodNode} #addReturn)
+	#(#{Kernel.StMethodNode} #addSelfReturn)
+	#(#{Kernel.StMethodNode} #changeSourceSelectors:arguments:)
+	#(#{Kernel.StMethodNode} #clearReplacements)
+	#(#{Kernel.StMethodNode} #copyInContext:)
+	#(#{Kernel.StMethodNode} #equalTo:withMapping:)
+	#(#{Kernel.StMethodNode} #initialize)
+	#(#{Kernel.StMethodNode} #map:to:)
+	#(#{Kernel.StMethodNode} #mappingFor:)
+	#(#{Kernel.StMethodNode} #match:inContext:)
+	#(#{Kernel.StMethodNode} #newSource)
+	#(#{Kernel.StMethodNode} #references:)
+	#(#{Kernel.StMethodNode} #reformatSource)
+	#(#{Kernel.StMethodNode} #renameSelector:andArguments:)
+	#(#{Kernel.StMethodNode} #replaceNode:withNode:)
+	#(#{Kernel.StOptimizedNode} #copyInContext:)
+	#(#{Kernel.StOptimizedNode} #equalTo:withMapping:)
+	#(#{Kernel.StOptimizedNode} #match:inContext:)
+	#(#{Kernel.StOptimizedNode} #replaceNode:withNode:)
+	#(#{Kernel.StProgramNode} #addReplacement:)
+	#(#{Kernel.StProgramNode} #asReturn)
+	#(#{Kernel.StProgramNode} #clearReplacements)
+	#(#{Kernel.StProgramNode} #copyInContext:)
+	#(#{Kernel.StProgramNode} #copyList:inContext:)
+	#(#{Kernel.StProgramNode} #equalTo:withMapping:)
+	#(#{Kernel.StProgramNode} #mappingFor:)
+	#(#{Kernel.StProgramNode} #match:inContext:)
+	#(#{Kernel.StProgramNode} #matchList:against:inContext:)
+	#(#{Kernel.StProgramNode} #matchList:index:against:index:inContext:)
+	#(#{Kernel.StProgramNode} #references:)
+	#(#{Kernel.StProgramNode} #removeDeadCode)
+	#(#{Kernel.StProgramNode} #replaceMethodSource:)
+	#(#{Kernel.StProgramNode} #replaceNode:withNode:)
+	#(#{Kernel.StProgramNode} #replaceSourceFrom:)
+	#(#{Kernel.StProgramNode} #replaceSourceWith:)
+	#(#{Kernel.StProgramNode} #replaceWith:)
+	#(#{Kernel.StProgramNode} #selfMessages)
+	#(#{Kernel.StProgramNode} #superMessages)
+	#(#{Kernel.StReturnNode} #copyInContext:)
+	#(#{Kernel.StReturnNode} #equalTo:withMapping:)
+	#(#{Kernel.StReturnNode} #match:inContext:)
+	#(#{Kernel.StReturnNode} #replaceNode:withNode:)
+	#(#{Kernel.StSequenceNode} #addNode:)
+	#(#{Kernel.StSequenceNode} #addNode:before:)
+	#(#{Kernel.StSequenceNode} #addNodeFirst:)
+	#(#{Kernel.StSequenceNode} #addNodes:)
+	#(#{Kernel.StSequenceNode} #addNodes:before:)
+	#(#{Kernel.StSequenceNode} #addNodesFirst:)
+	#(#{Kernel.StSequenceNode} #addReturn)
+	#(#{Kernel.StSequenceNode} #addSelfReturn)
+	#(#{Kernel.StSequenceNode} #addTemporariesNamed:)
+	#(#{Kernel.StSequenceNode} #addTemporaryNamed:)
+	#(#{Kernel.StSequenceNode} #copyInContext:)
+	#(#{Kernel.StSequenceNode} #equalTo:withMapping:)
+	#(#{Kernel.StSequenceNode} #indexOfNode:)
+	#(#{Kernel.StSequenceNode} #match:inContext:)
+	#(#{Kernel.StSequenceNode} #references:)
+	#(#{Kernel.StSequenceNode} #removeDeadCode)
+	#(#{Kernel.StSequenceNode} #removeNode:)
+	#(#{Kernel.StSequenceNode} #removeTemporaryNamed:)
+	#(#{Kernel.StSequenceNode} #replaceNode:withNode:)
+	#(#{Kernel.StSequenceNode} #replaceNode:withNodes:)
+	#(#{Refactory.Browser.RBConfigurableFormatter} #visitPatternWrapperBlockNode:)
+	#(#{Refactory.Browser.RBFormatter} #visitPatternWrapperBlockNode:)
 ).
 
 package setVariableNames: #(
-	#{RBAssignmentNode}
-	#{RBAssignmentToken}
-	#{RBBinarySelectorToken}
-	#{RBBlockNode}
-	#{RBCascadeNode}
-	#{RBIdentifierToken}
-	#{RBKeywordToken}
-	#{RBLiteralArrayNode}
-	#{RBLiteralArrayToken}
-	#{RBLiteralNode}
-	#{RBLiteralToken}
-	#{RBLiteralValueNode}
-	#{RBMessageNode}
-	#{RBMethodNode}
-	#{RBMultiKeywordLiteralToken}
-	#{RBNumberLiteralToken}
-	#{RBOptimizedNode}
-	#{RBOptimizedToken}
-	#{RBParser}
-	#{RBProgramNode}
-	#{RBProgramNodeVisitor}
-	#{RBReturnNode}
-	#{RBScanner}
-	#{RBSequenceNode}
-	#{RBSpecialCharacterToken}
-	#{RBToken}
-	#{RBValueNode}
-	#{RBValueToken}
-	#{RBVariableNode}
+	#{Refactory.Browser.RBAssignmentNode}
+	#{Refactory.Browser.RBAssignmentToken}
+	#{Refactory.Browser.RBBinarySelectorToken}
+	#{Refactory.Browser.RBBlockNode}
+	#{Refactory.Browser.RBCascadeNode}
+	#{Refactory.Browser.RBIdentifierToken}
+	#{Refactory.Browser.RBKeywordToken}
+	#{Refactory.Browser.RBLiteralArrayNode}
+	#{Refactory.Browser.RBLiteralArrayToken}
+	#{Refactory.Browser.RBLiteralNode}
+	#{Refactory.Browser.RBLiteralToken}
+	#{Refactory.Browser.RBLiteralValueNode}
+	#{Refactory.Browser.RBMessageNode}
+	#{Refactory.Browser.RBMethodNode}
+	#{Refactory.Browser.RBMultiKeywordLiteralToken}
+	#{Refactory.Browser.RBNumberLiteralToken}
+	#{Refactory.Browser.RBOptimizedNode}
+	#{Refactory.Browser.RBOptimizedToken}
+	#{Refactory.Browser.RBParser}
+	#{Refactory.Browser.RBProgramNode}
+	#{Refactory.Browser.RBProgramNodeVisitor}
+	#{Refactory.Browser.RBReturnNode}
+	#{Refactory.Browser.RBScanner}
+	#{Refactory.Browser.RBSequenceNode}
+	#{Refactory.Browser.RBSpecialCharacterToken}
+	#{Refactory.Browser.RBToken}
+	#{Refactory.Browser.RBValueNode}
+	#{Refactory.Browser.RBValueToken}
+	#{Refactory.Browser.RBVariableNode}
 ).
 
 package setAliasVariableNames: #(
-	#{RBAssignmentNode}
-	#{RBAssignmentToken}
-	#{RBBinarySelectorToken}
-	#{RBBlockNode}
-	#{RBCascadeNode}
-	#{RBIdentifierToken}
-	#{RBKeywordToken}
-	#{RBLiteralArrayNode}
-	#{RBLiteralArrayToken}
-	#{RBLiteralNode}
-	#{RBLiteralToken}
-	#{RBLiteralValueNode}
-	#{RBMessageNode}
-	#{RBMethodNode}
-	#{RBMultiKeywordLiteralToken}
-	#{RBNumberLiteralToken}
-	#{RBOptimizedNode}
-	#{RBOptimizedToken}
-	#{RBParser}
-	#{RBProgramNode}
-	#{RBProgramNodeVisitor}
-	#{RBReturnNode}
-	#{RBScanner}
-	#{RBSequenceNode}
-	#{RBSpecialCharacterToken}
-	#{RBToken}
-	#{RBValueNode}
-	#{RBValueToken}
-	#{RBVariableNode}
+	#{Refactory.Browser.RBAssignmentNode}
+	#{Refactory.Browser.RBAssignmentToken}
+	#{Refactory.Browser.RBBinarySelectorToken}
+	#{Refactory.Browser.RBBlockNode}
+	#{Refactory.Browser.RBCascadeNode}
+	#{Refactory.Browser.RBIdentifierToken}
+	#{Refactory.Browser.RBKeywordToken}
+	#{Refactory.Browser.RBLiteralArrayNode}
+	#{Refactory.Browser.RBLiteralArrayToken}
+	#{Refactory.Browser.RBLiteralNode}
+	#{Refactory.Browser.RBLiteralToken}
+	#{Refactory.Browser.RBLiteralValueNode}
+	#{Refactory.Browser.RBMessageNode}
+	#{Refactory.Browser.RBMethodNode}
+	#{Refactory.Browser.RBMultiKeywordLiteralToken}
+	#{Refactory.Browser.RBNumberLiteralToken}
+	#{Refactory.Browser.RBOptimizedNode}
+	#{Refactory.Browser.RBOptimizedToken}
+	#{Refactory.Browser.RBParser}
+	#{Refactory.Browser.RBProgramNode}
+	#{Refactory.Browser.RBProgramNodeVisitor}
+	#{Refactory.Browser.RBReturnNode}
+	#{Refactory.Browser.RBScanner}
+	#{Refactory.Browser.RBSequenceNode}
+	#{Refactory.Browser.RBSpecialCharacterToken}
+	#{Refactory.Browser.RBToken}
+	#{Refactory.Browser.RBValueNode}
+	#{Refactory.Browser.RBValueToken}
+	#{Refactory.Browser.RBVariableNode}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Formatters\RBFormatters'
+	'..\..\RBNamespaces'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
@@ -229,216 +230,233 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #RBParseTreeRule
+Core.Object subclass: #'Refactory.Browser.RBParseTreeRule'
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #RBStringReplacement
+Core.Object subclass: #'Refactory.Browser.RBStringReplacement'
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Collection subclass: #RBSmallDictionary
+Core.Collection subclass: #'Refactory.Browser.RBSmallDictionary'
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBParseTreeRule subclass: #RBReplaceRule
-	instanceVariableNames: 'verificationBlock'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-RBParseTreeRule subclass: #RBSearchRule
-	instanceVariableNames: 'answerBlock'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-RBReplaceRule subclass: #RBBlockReplaceRule
-	instanceVariableNames: 'replaceBlock'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-RBReplaceRule subclass: #RBStringReplaceRule
-	instanceVariableNames: 'replaceTree'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SmalltalkParser subclass: #RBPatternParser
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SmalltalkScanner subclass: #RBPatternScanner
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-StParseNodeVisitor subclass: #ParseTreeSearcher
+Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ParseTreeSearcher subclass: #ParseTreeRewriter
+Refactory.Browser.ParseTreeSearcher subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StMethodNode subclass: #RBPatternMethodNode
+Kernel.Parser subclass: #'Refactory.Browser.RBPatternParser'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBReplaceRule'
+	instanceVariableNames: 'verificationBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBSearchRule'
+	instanceVariableNames: 'answerBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBBlockReplaceRule'
+	instanceVariableNames: 'replaceBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBStringReplaceRule'
+	instanceVariableNames: 'replaceTree'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Scanner subclass: #'Refactory.Browser.RBPatternScanner'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StVariableNode subclass: #RBPatternVariableNode
+Kernel.StVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StBlockNode subclass: #RBPatternBlockNode
+Kernel.StBlockNode subclass: #'Refactory.Browser.RBPatternBlockNode'
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
+Refactory.Browser.RBPatternBlockNode subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StMessageNode subclass: #RBPatternMessageNode
+Kernel.StMessageNode subclass: #'Refactory.Browser.RBPatternMessageNode'
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StValueToken subclass: #'Refactory.Browser.PatternBlockToken'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Variable Aliases"!
 
-RBAssignmentNode := StAssignmentNode!
+Refactory.Browser.RBAssignmentNode := Kernel.StAssignmentNode!
 
-RBAssignmentToken := StAssignmentToken!
+Refactory.Browser.RBAssignmentToken := Kernel.StAssignmentToken!
 
-RBBinarySelectorToken := StBinarySelectorToken!
+Refactory.Browser.RBBinarySelectorToken := Kernel.StBinarySelectorToken!
 
-RBBlockNode := StBlockNode!
+Refactory.Browser.RBBlockNode := Kernel.StBlockNode!
 
-RBCascadeNode := StCascadeNode!
+Refactory.Browser.RBCascadeNode := Kernel.StCascadeNode!
 
-RBIdentifierToken := StIdentifierToken!
+Refactory.Browser.RBIdentifierToken := Kernel.StIdentifierToken!
 
-RBKeywordToken := StKeywordToken!
+Refactory.Browser.RBKeywordToken := Kernel.StKeywordToken!
 
-RBLiteralArrayNode := StLiteralArrayNode!
+Refactory.Browser.RBLiteralArrayNode := Kernel.StLiteralArrayNode!
 
-RBLiteralArrayToken := StLiteralArrayToken!
+Refactory.Browser.RBLiteralArrayToken := Kernel.StLiteralArrayToken!
 
-RBLiteralNode := StLiteralNode!
+Refactory.Browser.RBLiteralNode := Kernel.StLiteralNode!
 
-RBLiteralToken := StLiteralToken!
+Refactory.Browser.RBLiteralToken := Kernel.StLiteralToken!
 
-RBLiteralValueNode := StLiteralValueNode!
+Refactory.Browser.RBLiteralValueNode := Kernel.StLiteralValueNode!
 
-RBMessageNode := StMessageNode!
+Refactory.Browser.RBMessageNode := Kernel.StMessageNode!
 
-RBMethodNode := StMethodNode!
+Refactory.Browser.RBMethodNode := Kernel.StMethodNode!
 
-RBMultiKeywordLiteralToken := StMultiKeywordLiteralToken!
+Refactory.Browser.RBMultiKeywordLiteralToken := Kernel.StMultiKeywordLiteralToken!
 
-RBNumberLiteralToken := StNumberLiteralToken!
+Refactory.Browser.RBNumberLiteralToken := Kernel.StNumberLiteralToken!
 
-RBOptimizedNode := StOptimizedNode!
+Refactory.Browser.RBOptimizedNode := Kernel.StOptimizedNode!
 
-RBOptimizedToken := StOptimizedToken!
+Refactory.Browser.RBOptimizedToken := Kernel.StOptimizedToken!
 
-RBParser := SmalltalkParser!
+Refactory.Browser.RBParser := Kernel.Parser!
 
-RBProgramNode := StProgramNode!
+Refactory.Browser.RBProgramNode := Kernel.StProgramNode!
 
-RBProgramNodeVisitor := StParseNodeVisitor!
+Refactory.Browser.RBProgramNodeVisitor := Kernel.ParseNodeVisitor!
 
-RBReturnNode := StReturnNode!
+Refactory.Browser.RBReturnNode := Kernel.StReturnNode!
 
-RBScanner := SmalltalkScanner!
+Refactory.Browser.RBScanner := Kernel.Scanner!
 
-RBSequenceNode := StSequenceNode!
+Refactory.Browser.RBSequenceNode := Kernel.StSequenceNode!
 
-RBSpecialCharacterToken := StSpecialCharacterToken!
+Refactory.Browser.RBSpecialCharacterToken := Kernel.StSpecialCharacterToken!
 
-RBToken := StToken!
+Refactory.Browser.RBToken := Kernel.StToken!
 
-RBValueNode := StValueNode!
+Refactory.Browser.RBValueNode := Kernel.StValueNode!
 
-RBValueToken := StValueToken!
+Refactory.Browser.RBValueToken := Kernel.StValueToken!
 
-RBVariableNode := StVariableNode!
+Refactory.Browser.RBVariableNode := Kernel.StVariableNode!
 
 
 "Loose Methods"!
 
-!CompileFailedMethod methodsFor!
+!Kernel.CompileFailedMethod methodsFor!
 
-refersToVariable: aString 
+refersToVariable: aString
 	| tree searcher |
 	tree := self parseTreeNoError.
 	(tree isNil or: [(tree defines: aString) or: [tree body defines: aString]]) ifTrue: [^false].
-	searcher := ParseTreeSearcher new.
+	searcher := Refactory.Browser.ParseTreeSearcher new.
 	searcher
 		matches: aString do: [:node :answer | true];
-		matches: '[:`@vars | | `@temps | `@.Stmts]' do: [:node :answer | answer or: [((node defines: aString) or: [node body defines: aString]) not and: [searcher executeTree: node body initialAnswer: false]]].
+		matches: '[:`@vars | | `@temps | `@.Stmts]'
+			do: 
+				[:node :answer |
+				answer or: 
+						[((node defines: aString) or: [node body defines: aString]) not
+							and: [searcher executeTree: node body initialAnswer: false]]].
 	^searcher executeTree: self parseTree initialAnswer: false! !
-!CompileFailedMethod categoriesFor: #refersToVariable:!development!private!testing! !
+!Kernel.CompileFailedMethod categoriesFor: #refersToVariable:!development!private!testing! !
 
-!RBConfigurableFormatter methodsFor!
+!Kernel.ParseNodeVisitor methodsFor!
 
-visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	codeStream nextPut: $`.
-	self bracketWith: '{}' around: [self formatBlock: aRBPatternWrapperBlockNode]! !
-!RBConfigurableFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
-
-!RBFormatter methodsFor!
+visitPatternBlockNode: aRBPatternBlockNode
+	self visitArgumentNodes: aRBPatternBlockNode arguments.
+	self visitNode: aRBPatternBlockNode body!
 
 visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self
-		acceptBlockNode: aRBPatternWrapperBlockNode
-		startBlockString: '`{'
-		endBlockString: '}'! !
-!RBFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
+	self visitNode: aRBPatternWrapperBlockNode body! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitPatternBlockNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesFor: #visitPatternWrapperBlockNode:!public!visiting! !
 
-!SmalltalkParser class methodsFor!
+!Kernel.Parser class methodsFor!
 
-parseRewriteExpression: aString 
-	^self parseRewriteExpression: aString onError: nil!
+parseRewriteExpression: aString onError: aBlock
+	^Refactory.Browser.RBPatternParser parseExpression: aString onError: aBlock!
 
-parseRewriteExpression: aString onError: aBlock 
-	^RBPatternParser parseExpression: aString onError: aBlock!
+parseRewriteMethod: aString onError: aBlock
+	^Refactory.Browser.RBPatternParser parseMethod: aString onError: aBlock! !
+!Kernel.Parser class categoriesFor: #parseRewriteExpression:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseRewriteMethod:onError:!parsing!public! !
 
-parseRewriteMethod: aString 
-	^self parseRewriteMethod: aString onError: nil!
+!Kernel.Scanner methodsFor!
 
-parseRewriteMethod: aString onError: aBlock 
-	^RBPatternParser parseMethod: aString onError: aBlock! !
-!SmalltalkParser class categoriesFor: #parseRewriteExpression:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteExpression:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteMethod:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteMethod:onError:!parsing!public! !
+scanPatternVariable
+	buffer nextPut: currentCharacter.
+	self step.
+	currentCharacter == ${
+		ifTrue: 
+			[self step.
+			^Refactory.Browser.PatternBlockToken
+				start: tokenStart
+				comments: nil
+				value: '`{'].
+	[characterType == #alphabetic] whileFalse: 
+			[characterType == #eof ifTrue: [^self metaVariableExpected].
+			buffer nextPut: currentCharacter.
+			self step].
+	^self scanIdentifierOrKeyword! !
+!Kernel.Scanner categoriesFor: #scanPatternVariable!private!scanning! !
 
-!StAbstractVariableNode methodsFor!
+!Kernel.StAbstractVariableNode methodsFor!
 
 copyInContext: aDictionary
 	^self class named: self name!
@@ -449,24 +467,24 @@ equalTo: anObject withMapping: aDictionary
 references: aVariableName 
 	^self name = aVariableName!
 
-replaceSourceFrom: aNode 
-	self addReplacement: (RBStringReplacement 
+replaceSourceFrom: aNode
+	self addReplacement: (Refactory.Browser.RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self name)!
 
 replaceSourceWith: aNode
-	self addReplacement: (RBStringReplacement 
+	self addReplacement: (Refactory.Browser.RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
-!StAbstractVariableNode categoriesFor: #copyInContext:!matching!public! !
-!StAbstractVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StAbstractVariableNode categoriesFor: #references:!public!testing! !
-!StAbstractVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
-!StAbstractVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
+!Kernel.StAbstractVariableNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StAbstractVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StAbstractVariableNode categoriesFor: #references:!public!testing! !
+!Kernel.StAbstractVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
+!Kernel.StAbstractVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
 
-!StAssignmentNode methodsFor!
+!Kernel.StAssignmentNode methodsFor!
 
 copyInContext: aDictionary 
 	^(self class new)
@@ -488,37 +506,35 @@ replaceNode: aNode withNode: anotherNode
 	value == aNode ifTrue: [self value: anotherNode].
 	variable == aNode ifTrue: [self variable: anotherNode]!
 
-replaceSourceWith: aNode 
+replaceSourceWith: aNode
 	"Check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
 
 	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
 	aNode receiver isVariable ifFalse: [^super replaceSourceWith: aNode].
 	aNode numArgs = 1 ifFalse: [^super replaceSourceWith: aNode].
-	(self mappingFor: self value) = aNode arguments first 
-		ifFalse: [^super replaceSourceWith: aNode].
-	(self value hasParentheses not 
-		and: [aNode arguments first precedence >= aNode precedence]) 
-			ifTrue: 
-				[self
-					addReplacement: (RBStringReplacement 
-								replaceFrom: self value start
-								to: self value start - 1
-								with: '(');
-					addReplacement: (RBStringReplacement 
-								replaceFrom: self value stop + 1
-								to: self value stop
-								with: ')')].
-	self addReplacement: (RBStringReplacement 
+	(self mappingFor: self value) = aNode arguments first ifFalse: [^super replaceSourceWith: aNode].
+	(self value hasParentheses not and: [aNode arguments first precedence >= aNode precedence])
+		ifTrue: 
+			[self
+				addReplacement: (Refactory.Browser.RBStringReplacement
+							replaceFrom: self value start
+							to: self value start - 1
+							with: '(');
+				addReplacement: (Refactory.Browser.RBStringReplacement
+							replaceFrom: self value stop + 1
+							to: self value stop
+							with: ')')].
+	self addReplacement: (Refactory.Browser.RBStringReplacement
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
-!StAssignmentNode categoriesFor: #copyInContext:!matching!public! !
-!StAssignmentNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StAssignmentNode categoriesFor: #match:inContext:!matching!public! !
-!StAssignmentNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StAssignmentNode categoriesFor: #replaceSourceWith:!public!replacing! !
+!Kernel.StAssignmentNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StAssignmentNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StAssignmentNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StAssignmentNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StAssignmentNode categoriesFor: #replaceSourceWith:!public!replacing! !
 
-!StBlockNode methodsFor!
+!Kernel.StBlockNode methodsFor!
 
 copyInContext: aDictionary 
 	^(self class new)
@@ -554,13 +570,13 @@ replaceNode: aNode withNode: anotherNode
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StBlockNode categoriesFor: #copyInContext:!matching!public! !
-!StBlockNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StBlockNode categoriesFor: #match:inContext:!matching!public! !
-!StBlockNode categoriesFor: #references:!public!testing! !
-!StBlockNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StBlockNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StBlockNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StBlockNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StBlockNode categoriesFor: #references:!public!testing! !
+!Kernel.StBlockNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StBraceArrayNode methodsFor!
+!Kernel.StBraceArrayNode methodsFor!
 
 addNode: aNode
 	statements := statements asOrderedCollection
@@ -635,20 +651,20 @@ references: aVariableName
 
 replaceNode: aNode withNode: anotherNode
 	self statements: (statements collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StBraceArrayNode categoriesFor: #addNode:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNode:before:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodeFirst:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodes:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodes:before:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodesFirst:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #copyInContext:!matching!public! !
-!StBraceArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StBraceArrayNode categoriesFor: #indexOfNode:!helpers!private! !
-!StBraceArrayNode categoriesFor: #match:inContext:!matching!public! !
-!StBraceArrayNode categoriesFor: #references:!public!testing! !
-!StBraceArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StBraceArrayNode categoriesFor: #addNode:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #addNode:before:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #addNodeFirst:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #addNodes:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #addNodes:before:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #addNodesFirst:!adding nodes!public! !
+!Kernel.StBraceArrayNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StBraceArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StBraceArrayNode categoriesFor: #indexOfNode:!helpers!private! !
+!Kernel.StBraceArrayNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StBraceArrayNode categoriesFor: #references:!public!testing! !
+!Kernel.StBraceArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StCascadeNode methodsFor!
+!Kernel.StCascadeNode methodsFor!
 
 copyInContext: aDictionary 
 	^(self class new)
@@ -675,12 +691,12 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StCascadeNode categoriesFor: #copyInContext:!matching!public! !
-!StCascadeNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StCascadeNode categoriesFor: #match:inContext:!matching!public! !
-!StCascadeNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StCascadeNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StCascadeNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StCascadeNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StCascadeNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StLiteralArrayNode methodsFor!
+!Kernel.StLiteralArrayNode methodsFor!
 
 copyInContext: aDictionary 
 	^self class 
@@ -711,34 +727,34 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self contents: (contents 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StLiteralArrayNode categoriesFor: #copyInContext:!matching!public! !
-!StLiteralArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StLiteralArrayNode categoriesFor: #match:inContext:!matching!public! !
-!StLiteralArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StLiteralArrayNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StLiteralArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StLiteralNode methodsFor!
+!Kernel.StLiteralNode methodsFor!
 
-replaceSourceFrom: aNode 
-	self addReplacement: (RBStringReplacement 
+replaceSourceFrom: aNode
+	self addReplacement: (Refactory.Browser.RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self formattedCode)!
 
-replaceSourceWith: aNode 
-	self addReplacement: (RBStringReplacement 
+replaceSourceWith: aNode
+	self addReplacement: (Refactory.Browser.RBStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
-!StLiteralNode categoriesFor: #replaceSourceFrom:!private!replacing! !
-!StLiteralNode categoriesFor: #replaceSourceWith:!private!replacing! !
+!Kernel.StLiteralNode categoriesFor: #replaceSourceFrom:!private!replacing! !
+!Kernel.StLiteralNode categoriesFor: #replaceSourceWith:!private!replacing! !
 
-!StLiteralValueNode methodsFor!
+!Kernel.StLiteralValueNode methodsFor!
 
 copyInContext: aDictionary
 	^self class literalToken: token removePositions! !
-!StLiteralValueNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StLiteralValueNode categoriesFor: #copyInContext:!matching!public! !
 
-!StMessageNode methodsFor!
+!Kernel.StMessageNode methodsFor!
 
 copyInContext: aDictionary 
 	^(self class new)
@@ -773,18 +789,18 @@ match: aNode inContext: aDictionary
 				ifFalse: [^false]].
 	^true!
 
-replaceContainmentSourceWith: aNode 
+replaceContainmentSourceWith: aNode
 	| originalNode needsParenthesis |
 	needsParenthesis := aNode hasParentheses not and: [aNode needsParenthesis].
-	originalNode := (self mappingFor: self receiver) = aNode 
+	originalNode := (self mappingFor: self receiver) = aNode
 				ifTrue: [self receiver]
 				ifFalse: [self arguments detect: [:each | (self mappingFor: each) = aNode]].
 	self
-		addReplacement: (RBStringReplacement 
+		addReplacement: (Refactory.Browser.RBStringReplacement
 					replaceFrom: self start
 					to: originalNode start - 1
 					with: (needsParenthesis ifTrue: ['('] ifFalse: ['']));
-		addReplacement: (RBStringReplacement 
+		addReplacement: (Refactory.Browser.RBStringReplacement
 					replaceFrom: originalNode stop + 1
 					to: self stop
 					with: (needsParenthesis ifTrue: [')'] ifFalse: ['']))!
@@ -806,48 +822,46 @@ replaceSourceWith: aNode
 	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
 	^self replaceSourceWithMessageNode: aNode!
 
-replaceSourceWithMessageNode: aNode 
+replaceSourceWithMessageNode: aNode
 	| isBinaryToKeyword |
 	self numArgs = aNode numArgs ifFalse: [^super replaceSourceWith: aNode].
-	(self mappingFor: self receiver) = aNode receiver 
-		ifFalse: [^super replaceSourceWith: aNode].
+	(self mappingFor: self receiver) = aNode receiver ifFalse: [^super replaceSourceWith: aNode].
 	self arguments with: aNode arguments
 		do: [:old :new | (self mappingFor: old) = new ifFalse: [^super replaceSourceWith: aNode]].
-	(isBinaryToKeyword := self isBinary and: [aNode isKeyword]) 
+	(isBinaryToKeyword := self isBinary and: [aNode isKeyword])
 		ifTrue: 
-			[(self hasParentheses not and: [self parent precedence <= aNode precedence]) 
+			[(self hasParentheses not and: [self parent precedence <= aNode precedence])
 				ifTrue: 
 					[self
-						addReplacement: (RBStringReplacement 
+						addReplacement: (Refactory.Browser.RBStringReplacement
 									replaceFrom: self start
 									to: self start - 1
 									with: '(');
-						addReplacement: (RBStringReplacement 
+						addReplacement: (Refactory.Browser.RBStringReplacement
 									replaceFrom: self stop + 1
 									to: self stop
 									with: ')')]].
 	self selectorParts with: aNode selectorParts
 		do: 
-			[:old :new | 
-			old value ~= new value 
+			[:old :new |
+			old value ~= new value
 				ifTrue: 
-					[self addReplacement: (RBStringReplacement 
+					[self addReplacement: (Refactory.Browser.RBStringReplacement
 								replaceFrom: old start
 								to: old stop
-								with: ((isBinaryToKeyword 
-										and: [(self source at: old start - 1) isSeparator not]) 
-											ifTrue: [' ' , new value]
-											ifFalse: [new value]))]]! !
-!StMessageNode categoriesFor: #copyInContext:!matching!public! !
-!StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StMessageNode categoriesFor: #isContainmentReplacement:!private!replacing! !
-!StMessageNode categoriesFor: #match:inContext:!matching!public! !
-!StMessageNode categoriesFor: #replaceContainmentSourceWith:!private!replacing! !
-!StMessageNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StMessageNode categoriesFor: #replaceSourceWith:!private!replacing! !
-!StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private!replacing! !
+								with: ((isBinaryToKeyword and: [(self source at: old start - 1) isSeparator not])
+										ifTrue: [' ' , new value]
+										ifFalse: [new value]))]]! !
+!Kernel.StMessageNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StMessageNode categoriesFor: #isContainmentReplacement:!private!replacing! !
+!Kernel.StMessageNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StMessageNode categoriesFor: #replaceContainmentSourceWith:!private!replacing! !
+!Kernel.StMessageNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StMessageNode categoriesFor: #replaceSourceWith:!private!replacing! !
+!Kernel.StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private!replacing! !
 
-!StMethodNode methodsFor!
+!Kernel.StMethodNode methodsFor!
 
 addNode: aNode 
 	^body addNode: aNode!
@@ -862,24 +876,24 @@ addReturn
 addSelfReturn
 	^body addSelfReturn!
 
-changeSourceSelectors: oldSelectorParts arguments: oldArguments 
+changeSourceSelectors: oldSelectorParts arguments: oldArguments
 	
 	[oldSelectorParts size = selectorParts size ifFalse: [^self].
 	oldArguments size = arguments size ifFalse: [^self].
 	oldSelectorParts with: selectorParts
 		do: 
-			[:old :new | 
-			self addReplacement: (RBStringReplacement 
+			[:old :new |
+			self addReplacement: (Refactory.Browser.RBStringReplacement
 						replaceFrom: old start
 						to: old stop
 						with: new value)].
 	oldArguments with: arguments
 		do: 
-			[:old :new | 
-			self addReplacement: (RBStringReplacement 
+			[:old :new |
+			self addReplacement: (Refactory.Browser.RBStringReplacement
 						replaceFrom: old start
 						to: old stop
-						with: new value)]] 
+						with: new value)]]
 			on: Error
 			do: [:ex | ex return]!
 
@@ -909,8 +923,8 @@ equalTo: anObject withMapping: aDictionary
 
 initialize
 	replacements := SortedCollection sortBlock: 
-					[:a :b | 
-					a startPosition < b startPosition 
+					[:a :b |
+					a startPosition < b startPosition
 						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]]!
 
 map: oldNode to: newNode
@@ -939,19 +953,18 @@ references: aVariableName
 reformatSource
 	| newSource stream |
 	stream := WriteStream on: (Utf8String new: source size + 100).
-	stream 
+	stream
 		nextPutAll: (source copyFrom: (replacements inject: 1
 						into: 
-							[:sum :each | 
+							[:sum :each |
 							stream
 								nextPutAll: (source copyFrom: sum to: each startPosition - 1);
 								nextPutAll: each string.
 							each stopPosition + 1])
 				to: source size).
 	newSource := stream contents.
-	self 
-		= (RBParser parseMethod: newSource onError: [:s :p | ^self formattedCode]) 
-			ifFalse: [^self formattedCode].	"Sanity check -- make sure the formatted code is = self"
+	self = (Refactory.Browser.RBParser parseMethod: newSource onError: [:s :p | ^self formattedCode])
+		ifFalse: [^self formattedCode].	"Sanity check -- make sure the formatted code is = self"
 	^newSource!
 
 renameSelector: newSelector andArguments: varNodeCollection 
@@ -967,25 +980,25 @@ replaceNode: aNode withNode: anotherNode
 	aNode == body ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StMethodNode categoriesFor: #addNode:!accessing!public! !
-!StMethodNode categoriesFor: #addReplacement:!public!replacing! !
-!StMethodNode categoriesFor: #addReturn!accessing!public! !
-!StMethodNode categoriesFor: #addSelfReturn!accessing!public! !
-!StMethodNode categoriesFor: #changeSourceSelectors:arguments:!private!replacing! !
-!StMethodNode categoriesFor: #clearReplacements!public!replacing! !
-!StMethodNode categoriesFor: #copyInContext:!matching!public! !
-!StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StMethodNode categoriesFor: #initialize!initializing!public! !
-!StMethodNode categoriesFor: #map:to:!public!replacing! !
-!StMethodNode categoriesFor: #mappingFor:!public!replacing! !
-!StMethodNode categoriesFor: #match:inContext:!matching!public! !
-!StMethodNode categoriesFor: #newSource!accessing!public! !
-!StMethodNode categoriesFor: #references:!public!testing! !
-!StMethodNode categoriesFor: #reformatSource!operations!private! !
-!StMethodNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
-!StMethodNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StMethodNode categoriesFor: #addNode:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #addReplacement:!public!replacing! !
+!Kernel.StMethodNode categoriesFor: #addReturn!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #addSelfReturn!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #changeSourceSelectors:arguments:!private!replacing! !
+!Kernel.StMethodNode categoriesFor: #clearReplacements!public!replacing! !
+!Kernel.StMethodNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StMethodNode categoriesFor: #initialize!initializing!public! !
+!Kernel.StMethodNode categoriesFor: #map:to:!public!replacing! !
+!Kernel.StMethodNode categoriesFor: #mappingFor:!public!replacing! !
+!Kernel.StMethodNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StMethodNode categoriesFor: #newSource!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #references:!public!testing! !
+!Kernel.StMethodNode categoriesFor: #reformatSource!operations!private! !
+!Kernel.StMethodNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StOptimizedNode methodsFor!
+!Kernel.StOptimizedNode methodsFor!
 
 copyInContext: aDictionary 
 	^self class body: (body copyInContext: aDictionary)!
@@ -1000,25 +1013,12 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	body == aNode ifTrue: [self body: anotherNode]! !
-!StOptimizedNode categoriesFor: #copyInContext:!matching!public! !
-!StOptimizedNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StOptimizedNode categoriesFor: #match:inContext:!matching!public! !
-!StOptimizedNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StOptimizedNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StOptimizedNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StOptimizedNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StOptimizedNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StParseNodeVisitor methodsFor!
-
-visitPatternBlockNode: aRBPatternBlockNode
-	self visitArgumentNodes: aRBPatternBlockNode arguments.
-	self visitNode: aRBPatternBlockNode body!
-
-visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body! !
-!StParseNodeVisitor categoriesFor: #visitPatternBlockNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitPatternWrapperBlockNode:!public!visiting! !
-
-!StProgramNode methodsFor!
+!Kernel.StProgramNode methodsFor!
 
 addReplacement: aStringReplacement
 	parent isNil ifTrue: [^self].
@@ -1041,11 +1041,11 @@ clearReplacements
 copyInContext: aDictionary
 	^self copy!
 
-copyList: matchNodes inContext: aDictionary 
+copyList: matchNodes inContext: aDictionary
 	| newNodes |
 	newNodes := OrderedCollection new.
 	matchNodes do: 
-			[:each | 
+			[:each |
 			| object |
 			object := each copyInContext: aDictionary.
 			newNodes addAll: object].
@@ -1114,7 +1114,7 @@ references: aVariableName
 removeDeadCode
 	self childrenDo: [:each | each removeDeadCode]!
 
-replaceMethodSource: aNode 
+replaceMethodSource: aNode
 	"We are being replaced with aNode -- if possible try to perform an in place edit of the source."
 
 	| method |
@@ -1123,7 +1123,7 @@ replaceMethodSource: aNode
 	aNode parent: self parent.
 	[self replaceSourceWith: aNode] on: Error
 		do: 
-			[:ex | 
+			[:ex |
 			self clearReplacements.
 			ex return]!
 
@@ -1143,10 +1143,10 @@ replaceWith: aNode
 
 selfMessages
 	| searcher |
-	searcher := ParseTreeSearcher new.
+	searcher := Refactory.Browser.ParseTreeSearcher new.
 	searcher matches: 'self `@msg: ``@args'
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				add: aNode selector;
 				yourself].
@@ -1156,39 +1156,39 @@ superMessages
 	| searcher |
 	SuperSearch isNil
 		ifTrue: 
-			[SuperSearch := RBParser parseRewriteExpression: 'super `@msg: ``@args'.
+			[SuperSearch := Refactory.Browser.RBParser parseRewriteExpression: 'super `@msg: ``@args'.
 			SuperSearch
 				selector;
 				isImmutable: true].
-	searcher := ParseTreeSearcher new.
-	searcher addRule: (RBSearchRule searchForTree: SuperSearch
+	searcher := Refactory.Browser.ParseTreeSearcher new.
+	searcher addRule: (Refactory.Browser.RBSearchRule searchForTree: SuperSearch
 				thenDo: 
 					[:aNode :answer |
 					answer
 						add: aNode selector;
 						yourself]).
 	^searcher executeTree: self initialAnswer: Set new! !
-!StProgramNode categoriesFor: #addReplacement:!public!replacing! !
-!StProgramNode categoriesFor: #asReturn!accessing!public! !
-!StProgramNode categoriesFor: #clearReplacements!public!replacing! !
-!StProgramNode categoriesFor: #copyInContext:!matching!public! !
-!StProgramNode categoriesFor: #copyList:inContext:!matching!public! !
-!StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StProgramNode categoriesFor: #mappingFor:!accessing!public! !
-!StProgramNode categoriesFor: #match:inContext:!matching!public! !
-!StProgramNode categoriesFor: #matchList:against:inContext:!matching!public! !
-!StProgramNode categoriesFor: #matchList:index:against:index:inContext:!matching!public! !
-!StProgramNode categoriesFor: #references:!public!testing! !
-!StProgramNode categoriesFor: #removeDeadCode!public!replacing! !
-!StProgramNode categoriesFor: #replaceMethodSource:!public!replacing! !
-!StProgramNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StProgramNode categoriesFor: #replaceSourceFrom:!private!replacing! !
-!StProgramNode categoriesFor: #replaceSourceWith:!private!replacing! !
-!StProgramNode categoriesFor: #replaceWith:!public!replacing! !
-!StProgramNode categoriesFor: #selfMessages!public!querying! !
-!StProgramNode categoriesFor: #superMessages!public!querying! !
+!Kernel.StProgramNode categoriesFor: #addReplacement:!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #asReturn!accessing!public! !
+!Kernel.StProgramNode categoriesFor: #clearReplacements!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StProgramNode categoriesFor: #copyList:inContext:!matching!public! !
+!Kernel.StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StProgramNode categoriesFor: #mappingFor:!accessing!public! !
+!Kernel.StProgramNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StProgramNode categoriesFor: #matchList:against:inContext:!matching!public! !
+!Kernel.StProgramNode categoriesFor: #matchList:index:against:index:inContext:!matching!public! !
+!Kernel.StProgramNode categoriesFor: #references:!public!testing! !
+!Kernel.StProgramNode categoriesFor: #removeDeadCode!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #replaceMethodSource:!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #replaceSourceFrom:!private!replacing! !
+!Kernel.StProgramNode categoriesFor: #replaceSourceWith:!private!replacing! !
+!Kernel.StProgramNode categoriesFor: #replaceWith:!public!replacing! !
+!Kernel.StProgramNode categoriesFor: #selfMessages!public!querying! !
+!Kernel.StProgramNode categoriesFor: #superMessages!public!querying! !
 
-!StReturnNode methodsFor!
+!Kernel.StReturnNode methodsFor!
 
 copyInContext: aDictionary 
 	^(self class new)
@@ -1205,12 +1205,12 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	value == aNode ifTrue: [self value: anotherNode]! !
-!StReturnNode categoriesFor: #copyInContext:!matching!public! !
-!StReturnNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StReturnNode categoriesFor: #match:inContext:!matching!public! !
-!StReturnNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StReturnNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StReturnNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StReturnNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StReturnNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
-!StSequenceNode methodsFor!
+!Kernel.StSequenceNode methodsFor!
 
 addNode: aNode
 	(statements notEmpty and: [statements last isReturn])
@@ -1270,7 +1270,7 @@ addReturn
 addSelfReturn
 	| node |
 	self lastIsReturn ifTrue: [^self].
-	node := RBReturnNode value: (RBVariableNode named: 'self').
+	node := Refactory.Browser.RBReturnNode value: (Refactory.Browser.RBVariableNode named: 'self').
 	self addNode: node!
 
 addTemporariesNamed: aCollection 
@@ -1278,7 +1278,7 @@ addTemporariesNamed: aCollection
 
 addTemporaryNamed: aString 
 	| variableNode |
-	variableNode := RBVariableNode named: aString.
+	variableNode := Refactory.Browser.RBVariableNode named: aString.
 	variableNode parent: self.
 	temporaries := temporaries copyWith: variableNode!
 
@@ -1356,26 +1356,44 @@ replaceNode: aNode withNodes: aCollection
 		do: [:i | newStatements add: (statements at: i)].
 	aCollection do: [:each | each parent: self].
 	statements := newStatements! !
-!StSequenceNode categoriesFor: #addNode:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNode:before:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodeFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodes:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodes:before:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodesFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addReturn!accessing!public! !
-!StSequenceNode categoriesFor: #addSelfReturn!adding nodes!public! !
-!StSequenceNode categoriesFor: #addTemporariesNamed:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addTemporaryNamed:!adding nodes!public! !
-!StSequenceNode categoriesFor: #copyInContext:!matching!public! !
-!StSequenceNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StSequenceNode categoriesFor: #indexOfNode:!helpers!private! !
-!StSequenceNode categoriesFor: #match:inContext:!matching!public! !
-!StSequenceNode categoriesFor: #references:!public!testing! !
-!StSequenceNode categoriesFor: #removeDeadCode!public!replacing! !
-!StSequenceNode categoriesFor: #removeNode:!public!replacing! !
-!StSequenceNode categoriesFor: #removeTemporaryNamed:!accessing!public! !
-!StSequenceNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StSequenceNode categoriesFor: #replaceNode:withNodes:!public!replacing! !
+!Kernel.StSequenceNode categoriesFor: #addNode:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addNode:before:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addNodeFirst:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addNodes:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addNodes:before:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addNodesFirst:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addReturn!accessing!public! !
+!Kernel.StSequenceNode categoriesFor: #addSelfReturn!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addTemporariesNamed:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #addTemporaryNamed:!adding nodes!public! !
+!Kernel.StSequenceNode categoriesFor: #copyInContext:!matching!public! !
+!Kernel.StSequenceNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!Kernel.StSequenceNode categoriesFor: #indexOfNode:!helpers!private! !
+!Kernel.StSequenceNode categoriesFor: #match:inContext:!matching!public! !
+!Kernel.StSequenceNode categoriesFor: #references:!public!testing! !
+!Kernel.StSequenceNode categoriesFor: #removeDeadCode!public!replacing! !
+!Kernel.StSequenceNode categoriesFor: #removeNode:!public!replacing! !
+!Kernel.StSequenceNode categoriesFor: #removeTemporaryNamed:!accessing!public! !
+!Kernel.StSequenceNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!Kernel.StSequenceNode categoriesFor: #replaceNode:withNodes:!public!replacing! !
+
+!Refactory.Browser.RBConfigurableFormatter methodsFor!
+
+visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
+	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+	codeStream nextPut: $`.
+	self bracketWith: '{}' around: [self formatBlock: aRBPatternWrapperBlockNode]! !
+!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+
+!Refactory.Browser.RBFormatter methodsFor!
+
+visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
+	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+	self
+		acceptBlockNode: aRBPatternWrapperBlockNode
+		startBlockString: '`{'
+		endBlockString: '}'! !
+!Refactory.Browser.RBFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 
 "End of package definition"!
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #RefactoringManagerTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringManagerTest guid: (GUID fromString: '{1d4be8fc-d3e1-4c69-aa7d-6b289b8219cc}')!
-RefactoringManagerTest comment: ''!
-!RefactoringManagerTest categoriesForClass!Refactory-Testing! !
-!RefactoringManagerTest methodsFor!
+Refactory.Browser.Tests.RefactoringManagerTest guid: (Core.GUID fromString: '{1d4be8fc-d3e1-4c69-aa7d-6b289b8219cc}')!
+Refactory.Browser.Tests.RefactoringManagerTest comment: ''!
+!Refactory.Browser.Tests.RefactoringManagerTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RefactoringManagerTest methodsFor!
 
 testPrintRefactoringManager
 	Transcript
 		show: RefactoringManager instance printString;
 		cr;
 		flush! !
-!RefactoringManagerTest categoriesFor: #testPrintRefactoringManager!public!tests! !
+!Refactory.Browser.Tests.RefactoringManagerTest categoriesFor: #testPrintRefactoringManager!public!tests! !
 

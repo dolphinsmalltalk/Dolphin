@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactoring subclass: #VariableRefactoring
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.VariableRefactoring'
 	instanceVariableNames: 'class variableName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VariableRefactoring guid: (GUID fromString: '{0ef75a5c-d99d-489e-b05f-2cf5a57d0f2c}')!
-VariableRefactoring isAbstract: true!
-VariableRefactoring comment: ''!
-!VariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!VariableRefactoring methodsFor!
+Refactory.Browser.VariableRefactoring guid: (Core.GUID fromString: '{0ef75a5c-d99d-489e-b05f-2cf5a57d0f2c}')!
+Refactory.Browser.VariableRefactoring isNonInstantiable: true!
+Refactory.Browser.VariableRefactoring comment: ''!
+!Refactory.Browser.VariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.VariableRefactoring methodsFor!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -27,10 +27,10 @@ variable: aVarName class: aClass
 	variableName := aVarName.
 	class := self classObjectFor: aClass.
 ! !
-!VariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!VariableRefactoring categoriesFor: #variable:class:!initialize/release!public! !
+!Refactory.Browser.VariableRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.VariableRefactoring categoriesFor: #variable:class:!initialize/release!public! !
 
-!VariableRefactoring class methodsFor!
+!Refactory.Browser.VariableRefactoring class methodsFor!
 
 model: aRBNamespace variable: aVarName class: aClass 
 	^(self new)
@@ -40,6 +40,6 @@ model: aRBNamespace variable: aVarName class: aClass
 
 variable: aVarName class: aClass
 	^self new variable: aVarName class: aClass! !
-!VariableRefactoring class categoriesFor: #model:variable:class:!instance creation!public! !
-!VariableRefactoring class categoriesFor: #variable:class:!instance creation!public! !
+!Refactory.Browser.VariableRefactoring class categoriesFor: #model:variable:class:!instance creation!public! !
+!Refactory.Browser.VariableRefactoring class categoriesFor: #variable:class:!instance creation!public! !
 

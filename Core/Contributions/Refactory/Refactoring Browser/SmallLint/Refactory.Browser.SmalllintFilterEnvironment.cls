@@ -1,26 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AndEnvironment subclass: #SmalllintFilterEnvironment
+Refactory.Browser.AndEnvironment subclass: #'Refactory.Browser.SmalllintFilterEnvironment'
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintFilterEnvironment guid: (GUID fromString: '{7fcd066a-29bc-4257-8ede-900b16e13492}')!
-SmalllintFilterEnvironment comment: 'SmalllintFilterEnvironment is a special environment that is used to filter out invalid Smalllint results.
+Refactory.Browser.SmalllintFilterEnvironment guid: (Core.GUID fromString: '{7fcd066a-29bc-4257-8ede-900b16e13492}')!
+Refactory.Browser.SmalllintFilterEnvironment comment: 'SmalllintFilterEnvironment is a special environment that is used to filter out invalid Smalllint results.
 
 Instance Variables:
 	lintRuleName	<String>	the name of the lint rule that we are looking at'!
-!SmalllintFilterEnvironment categoriesForClass!Refactory-Environments! !
-!SmalllintFilterEnvironment methodsFor!
+!Refactory.Browser.SmalllintFilterEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.SmalllintFilterEnvironment methodsFor!
 
-addFilterForClass: aBehavior 
+addFilterForClass: aBehavior
 	(BasicLintRule filterFor: lintRuleName) addClass: aBehavior.
 	andedEnvironment environment addClass: aBehavior!
 
-addFilterForClass: aBehavior andSelector: aSymbol 
-	(BasicLintRule filterFor: lintRuleName) addClass: aBehavior
-		selector: aSymbol.
+addFilterForClass: aBehavior andSelector: aSymbol
+	(BasicLintRule filterFor: lintRuleName) addClass: aBehavior selector: aSymbol.
 	andedEnvironment environment addClass: aBehavior selector: aSymbol!
 
 canFilterSelectors
@@ -31,9 +30,9 @@ isForSmalllint
 
 lintRuleName: aString 
 	lintRuleName := aString! !
-!SmalllintFilterEnvironment categoriesFor: #addFilterForClass:!accessing!actions!public! !
-!SmalllintFilterEnvironment categoriesFor: #addFilterForClass:andSelector:!accessing!actions!public! !
-!SmalllintFilterEnvironment categoriesFor: #canFilterSelectors!public!testing! !
-!SmalllintFilterEnvironment categoriesFor: #isForSmalllint!public!testing! !
-!SmalllintFilterEnvironment categoriesFor: #lintRuleName:!accessing!public! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #addFilterForClass:!accessing!actions!public! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #addFilterForClass:andSelector:!accessing!actions!public! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #canFilterSelectors!public!testing! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #isForSmalllint!public!testing! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #lintRuleName:!accessing!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompositeRefactoryChange subclass: #RenameClassChange
+Refactory.Browser.CompositeRefactoryChange subclass: #'Refactory.Browser.RenameClassChange'
 	instanceVariableNames: 'oldName newName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameClassChange guid: (GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
-RenameClassChange comment: ''!
-!RenameClassChange categoriesForClass!Refactory-Change Objects! !
-!RenameClassChange methodsFor!
+Refactory.Browser.RenameClassChange guid: (Core.GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
+Refactory.Browser.RenameClassChange comment: ''!
+!Refactory.Browser.RenameClassChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RenameClassChange methodsFor!
 
 = aRenameClassChange 
 	super = aRenameClassChange ifFalse: [^false].
@@ -19,15 +19,13 @@ RenameClassChange comment: ''!
 changeClass
 	^(oldName asQualifiedReference bindingOrNil ifNil: [newName asQualifiedReference binding]) value!
 
-executeNotifying: aBlock 
+executeNotifying: aBlock
 	| undos |
-	#rbFix. "For Dolphin use the ClassBuilder"
+	#rbFix.	"For Dolphin use the ClassBuilder"
 	ClassBuilder renameClass: self changeClass to: newName.
-	undos := changes collect: 
-					[:each | 
-					(each renameChangesForClass: oldName asSymbol to: newName asSymbol) 
-						executeNotifying: aBlock].
-	^(self copy)
+	undos := changes
+				collect: [:each | (each renameChangesForClass: oldName asSymbol to: newName asSymbol) executeNotifying: aBlock].
+	^self copy
 		changes: undos reverse;
 		rename: newName to: oldName;
 		yourself!
@@ -58,20 +56,20 @@ renameChangesForClass: aClassName to: newClassName
 	oldName asSymbol == aClassName 
 		ifTrue: [change rename: newClassName to: newName].
 	^change! !
-!RenameClassChange categoriesFor: #=!comparing!public! !
-!RenameClassChange categoriesFor: #changeClass!accessing!public! !
-!RenameClassChange categoriesFor: #executeNotifying:!private! !
-!RenameClassChange categoriesFor: #flattenOnto:!private! !
-!RenameClassChange categoriesFor: #newName!private! !
-!RenameClassChange categoriesFor: #oldName!private! !
-!RenameClassChange categoriesFor: #rename:to:!initialize/release!public! !
-!RenameClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RenameClassChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RenameClassChange categoriesFor: #changeClass!accessing!public! !
+!Refactory.Browser.RenameClassChange categoriesFor: #executeNotifying:!private! !
+!Refactory.Browser.RenameClassChange categoriesFor: #flattenOnto:!private! !
+!Refactory.Browser.RenameClassChange categoriesFor: #newName!private! !
+!Refactory.Browser.RenameClassChange categoriesFor: #oldName!private! !
+!Refactory.Browser.RenameClassChange categoriesFor: #rename:to:!initialize/release!public! !
+!Refactory.Browser.RenameClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
 
-!RenameClassChange class methodsFor!
+!Refactory.Browser.RenameClassChange class methodsFor!
 
 rename: oldString to: newString 
 	^(self new)
 		rename: oldString to: newString;
 		yourself! !
-!RenameClassChange class categoriesFor: #rename:to:!instance creation!public! !
+!Refactory.Browser.RenameClassChange class categoriesFor: #rename:to:!instance creation!public! !
 

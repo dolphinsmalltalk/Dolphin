@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #RenameClassVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RenameClassVariableRefactoring'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameClassVariableRefactoring guid: (GUID fromString: '{003765cb-253b-40cb-9a7a-fc0be15648ec}')!
-RenameClassVariableRefactoring comment: ''!
-!RenameClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!RenameClassVariableRefactoring methodsFor!
+Refactory.Browser.RenameClassVariableRefactoring guid: (Core.GUID fromString: '{003765cb-253b-40cb-9a7a-fc0be15648ec}')!
+Refactory.Browser.RenameClassVariableRefactoring comment: ''!
+!Refactory.Browser.RenameClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RenameClassVariableRefactoring methodsFor!
 
 preconditions
 	^(RBCondition isMetaclass: class) not 
@@ -57,13 +57,13 @@ transform
 		renameClassVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
-!RenameClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameClassVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!RenameClassVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
-!RenameClassVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameClassVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
+!Refactory.Browser.RenameClassVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
+!Refactory.Browser.RenameClassVariableRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RenameClassVariableRefactoring categoriesFor: #transform!public!transforming! !
 
-!RenameClassVariableRefactoring class methodsFor!
+!Refactory.Browser.RenameClassVariableRefactoring class methodsFor!
 
 model: aRBNamespace rename: aVarName to: aName in: aClass 
 	^(self new)
@@ -78,6 +78,6 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
-!RenameClassVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
-!RenameClassVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameClassVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameClassVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBEnvironments'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Environments
 Copyright (c) John Brant & Don Roberts.
@@ -11,119 +11,113 @@ Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part
 
 
 package setClassNames: #(
-	#{AndEnvironment}
-	#{BrowserEnvironment}
-	#{BrowserEnvironmentWrapper}
-	#{CategoryEnvironment}
-	#{ClassEnvironment}
-	#{NotEnvironment}
-	#{OrEnvironment}
-	#{ProtocolEnvironment}
-	#{SelectorEnvironment}
-	#{VariableEnvironment}
+	#{Refactory.Browser.AndEnvironment}
+	#{Refactory.Browser.BrowserEnvironment}
+	#{Refactory.Browser.BrowserEnvironmentWrapper}
+	#{Refactory.Browser.CategoryEnvironment}
+	#{Refactory.Browser.ClassEnvironment}
+	#{Refactory.Browser.NotEnvironment}
+	#{Refactory.Browser.OrEnvironment}
+	#{Refactory.Browser.ProtocolEnvironment}
+	#{Refactory.Browser.SelectorEnvironment}
+	#{Refactory.Browser.VariableEnvironment}
 ).
 
 package setMethodNames: #(
-	#(#{Association} #binding)
-	#(#{Association} #isVariableBinding)
-	#(#{Behavior} #isBehavior)
-	#(#{Behavior} #numberSelectors)
-	#(#{Behavior} #selectorsAndMethodsDo:)
-	#(#{ClassDescription} #allSubBehaviorsDo:)
-	#(#{ClassDescription} #allSubBehaviorsPreOrderDo:)
-	#(#{ClassDescription} #subBehaviors)
-	#(#{ClassDescription} #withAllSubBehaviorsDo:)
-	#(#{CompiledCode} #allLiterals)
-	#(#{Metaclass} #soleInstance)
-	#(#{Object} #isBehavior)
-	#(#{Object} #isVariableBinding)
+	#(#{Core.Association} #binding)
+	#(#{Core.Behavior} #isBehavior)
+	#(#{Core.Behavior} #numberSelectors)
+	#(#{Core.Behavior} #selectorsAndMethodsDo:)
+	#(#{Core.ClassDescription} #allSubBehaviorsDo:)
+	#(#{Core.ClassDescription} #allSubBehaviorsPreOrderDo:)
+	#(#{Core.ClassDescription} #subBehaviors)
+	#(#{Core.ClassDescription} #withAllSubBehaviorsDo:)
+	#(#{Core.Metaclass} #soleInstance)
+	#(#{Core.Object} #isBehavior)
+	#(#{Core.Object} #isVariableBinding)
+	#(#{Kernel.CompiledCode} #allLiterals)
+	#(#{Kernel.VariableBinding} #isVariableBinding)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\RBNamespaces'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #BrowserEnvironment
+Core.Object subclass: #'Refactory.Browser.BrowserEnvironment'
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironment subclass: #BrowserEnvironmentWrapper
+Refactory.Browser.BrowserEnvironment subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #AndEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.AndEnvironment'
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #CategoryEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.CategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #ClassEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ClassEnvironment'
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #NotEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.NotEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #OrEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.OrEnvironment'
 	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ProtocolEnvironment'
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #SelectorEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.SelectorEnvironment'
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #VariableEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.VariableEnvironment'
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Association methodsFor!
+!Core.Association methodsFor!
 
 binding
-	^self!
+	^self! !
+!Core.Association categoriesFor: #binding!public!testing! !
 
-isVariableBinding
-	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
-	to #key and #value methods."
-
-	^true! !
-!Association categoriesFor: #binding!public!testing! !
-!Association categoriesFor: #isVariableBinding!public!testing! !
-
-!Behavior methodsFor!
+!Core.Behavior methodsFor!
 
 isBehavior
 	"Answer whether the receiver is a <Behavior>."
@@ -141,11 +135,11 @@ selectorsAndMethodsDo: aDyadicValuable
 	the receiver's method dictionary."
 
 	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]! !
-!Behavior categoriesFor: #isBehavior!public!testing! !
-!Behavior categoriesFor: #numberSelectors!enumerating!public! !
-!Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
+!Core.Behavior categoriesFor: #isBehavior!public!testing! !
+!Core.Behavior categoriesFor: #numberSelectors!enumerating!public! !
+!Core.Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
 allSubBehaviorsDo: operation
 	"Private - Evaluate the monadic valuable argument, operation, for each 
@@ -172,21 +166,12 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
-!ClassDescription categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
-!ClassDescription categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
-!ClassDescription categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
-!ClassDescription categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
+!Core.ClassDescription categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
+!Core.ClassDescription categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
+!Core.ClassDescription categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
+!Core.ClassDescription categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
 
-!CompiledCode methodsFor!
-
-allLiterals
-	"Answer an array of the literals in the receiver."
-
-	#rbFix. "Dolphin uses #literals"
-	^self literals! !
-!CompiledCode categoriesFor: #allLiterals!accessing!private! !
-
-!Metaclass methodsFor!
+!Core.Metaclass methodsFor!
 
 soleInstance
 	"Answer the receiver's singleton instance (the actual class object)."
@@ -194,9 +179,9 @@ soleInstance
 	#rbFix. "Dolphin normally uses #instanceClass"
 	^instanceClass
 ! !
-!Metaclass categoriesFor: #soleInstance!accessing!public! !
+!Core.Metaclass categoriesFor: #soleInstance!accessing!public! !
 
-!Object methodsFor!
+!Core.Object methodsFor!
 
 isBehavior
 	"Answer whether the receiver is a <Behavior>."
@@ -209,8 +194,26 @@ isVariableBinding
 	to #key and #value methods."
 
 	^false! !
-!Object categoriesFor: #isBehavior!public!testing! !
-!Object categoriesFor: #isVariableBinding!public!testing! !
+!Core.Object categoriesFor: #isBehavior!public!testing! !
+!Core.Object categoriesFor: #isVariableBinding!public!testing! !
+
+!Kernel.CompiledCode methodsFor!
+
+allLiterals
+	"Answer an array of the literals in the receiver."
+
+	#rbFix. "Dolphin uses #literals"
+	^self literals! !
+!Kernel.CompiledCode categoriesFor: #allLiterals!accessing!private! !
+
+!Kernel.VariableBinding methodsFor!
+
+isVariableBinding
+	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
+	to #key and #value methods."
+
+	^true! !
+!Kernel.VariableBinding categoriesFor: #isVariableBinding!public!testing! !
 
 "End of package definition"!
 

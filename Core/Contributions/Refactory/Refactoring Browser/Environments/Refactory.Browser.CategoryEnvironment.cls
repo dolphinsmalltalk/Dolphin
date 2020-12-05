@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #CategoryEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.CategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CategoryEnvironment guid: (GUID fromString: '{01ea18f1-d09f-4a63-b569-62a1d8d6c1cd}')!
-CategoryEnvironment comment: 'CategoryEnvironment represents a collection of classes (and all the methods they own) that belong to at least one of a particular set of class categories. 
+Refactory.Browser.CategoryEnvironment guid: (Core.GUID fromString: '{01ea18f1-d09f-4a63-b569-62a1d8d6c1cd}')!
+Refactory.Browser.CategoryEnvironment comment: 'CategoryEnvironment represents a collection of classes (and all the methods they own) that belong to at least one of a particular set of class categories. 
 
 Instance Variables:
 	categories	<Collection of: Symbol>	the category names to browse'!
-!CategoryEnvironment categoriesForClass!Refactory-Environments! !
-!CategoryEnvironment methodsFor!
+!Refactory.Browser.CategoryEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.CategoryEnvironment methodsFor!
 
 categories
 	^categories select: [:each | self includesCategory: each]!
@@ -21,7 +21,7 @@ categories: aCollection
 	categories := aCollection asSet!
 
 classNames
-	^self categories inject: IdentitySet new
+	^self categories inject: Set new
 		into: 
 			[:answer :each |
 			answer
@@ -31,7 +31,11 @@ classNames
 defaultLabel
 	| stream |
 	stream := String new writeStream.
-	categories do: [:each | stream nextPutAll: each; nextPut: $ ].
+	categories do: 
+			[:each |
+			stream
+				nextPutAll: each;
+				nextPut: $\x20].
 	^stream contents!
 
 definesClass: aClass
@@ -63,22 +67,22 @@ storeOn: aStream
 	aStream nextPutAll: ' categories: '.
 	categories asArray storeOn: aStream.
 	aStream nextPut: $)! !
-!CategoryEnvironment categoriesFor: #categories!accessing!public! !
-!CategoryEnvironment categoriesFor: #categories:!initialize/release!public! !
-!CategoryEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!CategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!CategoryEnvironment categoriesFor: #definesClass:!public!testing! !
-!CategoryEnvironment categoriesFor: #includesCategory:!public!testing! !
-!CategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!CategoryEnvironment categoriesFor: #initialize!initialize/release!public! !
-!CategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!CategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!CategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #categories!accessing!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #categories:!initialize/release!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #classNames!accessing/classes!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #postCopy!copying!public! !
+!Refactory.Browser.CategoryEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!CategoryEnvironment class methodsFor!
+!Refactory.Browser.CategoryEnvironment class methodsFor!
 
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection; yourself! !
-!CategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
+!Refactory.Browser.CategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
 

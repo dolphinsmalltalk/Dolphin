@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryClassChange subclass: #RemoveMethodChange
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMethodChange'
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveMethodChange guid: (GUID fromString: '{4789e594-4494-4fee-920c-514289353e57}')!
-RemoveMethodChange comment: ''!
-!RemoveMethodChange categoriesForClass!Refactory-Change Objects! !
-!RemoveMethodChange methodsFor!
+Refactory.Browser.RemoveMethodChange guid: (Core.GUID fromString: '{4789e594-4494-4fee-920c-514289353e57}')!
+Refactory.Browser.RemoveMethodChange comment: ''!
+!Refactory.Browser.RemoveMethodChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RemoveMethodChange methodsFor!
 
 = aRemoveMethodChange 
 	super = aRemoveMethodChange ifFalse: [^false].
@@ -46,22 +46,22 @@ source
 
 	#rbFix. "For common interface with AddMethodChange"
 	^''! !
-!RemoveMethodChange categoriesFor: #=!comparing!public! !
-!RemoveMethodChange categoriesFor: #asUndoOperation!converting!public! !
-!RemoveMethodChange categoriesFor: #changeString!printing!public! !
-!RemoveMethodChange categoriesFor: #hash!comparing!public! !
-!RemoveMethodChange categoriesFor: #primitiveExecute!private! !
-!RemoveMethodChange categoriesFor: #printOn:!printing!public! !
-!RemoveMethodChange categoriesFor: #selector!accessing!private! !
-!RemoveMethodChange categoriesFor: #selector:!initialize/release!public! !
-!RemoveMethodChange categoriesFor: #source!accessing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #primitiveExecute!private! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #selector!accessing!private! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #selector:!initialize/release!public! !
+!Refactory.Browser.RemoveMethodChange categoriesFor: #source!accessing!public! !
 
-!RemoveMethodChange class methodsFor!
+!Refactory.Browser.RemoveMethodChange class methodsFor!
 
 remove: aSymbol from: aClass 
 	^(self new)
 		changeClass: aClass;
 		selector: aSymbol;
 		yourself! !
-!RemoveMethodChange class categoriesFor: #remove:from:!instance creation!public! !
+!Refactory.Browser.RemoveMethodChange class categoriesFor: #remove:from:!instance creation!public! !
 

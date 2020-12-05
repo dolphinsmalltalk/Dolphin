@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #RenameTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameTemporaryTest guid: (GUID fromString: '{04723e90-17c0-4d20-b025-d17029763fab}')!
-RenameTemporaryTest comment: ''!
-!RenameTemporaryTest categoriesForClass!Refactory-Testing! !
-!RenameTemporaryTest methodsFor!
+Refactory.Browser.Tests.RenameTemporaryTest guid: (Core.GUID fromString: '{04723e90-17c0-4d20-b025-d17029763fab}')!
+Refactory.Browser.Tests.RenameTemporaryTest comment: ''!
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RenameTemporaryTest methodsFor!
 
 testBadInterval
-	self shouldFail: (RenameTemporaryRefactoring 
+	self shouldFail: (RenameTemporaryRefactoring
 				renameTemporaryFrom: (self convertInterval: (14 to: 17)
 						for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				to: 'asdf'
@@ -21,27 +21,23 @@ testBadInterval
 
 testBadName
 	self
-		shouldFail: (RenameTemporaryRefactoring 
-					renameTemporaryFrom: (self convertInterval: (15 to: 19)
-							for: (LintRuleTest sourceCodeAt: #openEditor))
+		shouldFail: (RenameTemporaryRefactoring
+					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
 					to: 'name'
 					in: LintRuleTest
 					selector: #openEditor);
-		shouldFail: (RenameTemporaryRefactoring 
-					renameTemporaryFrom: (self convertInterval: (15 to: 19)
-							for: (LintRuleTest sourceCodeAt: #openEditor))
+		shouldFail: (RenameTemporaryRefactoring
+					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
 					to: 'rules'
 					in: LintRuleTest
 					selector: #openEditor);
-		shouldFail: (RenameTemporaryRefactoring 
-					renameTemporaryFrom: (self convertInterval: (15 to: 19)
-							for: (LintRuleTest sourceCodeAt: #openEditor))
+		shouldFail: (RenameTemporaryRefactoring
+					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
 					to: 'DependentFields'
 					in: LintRuleTest
 					selector: #openEditor);
-		shouldFail: (RenameTemporaryRefactoring 
-					renameTemporaryFrom: (self convertInterval: (15 to: 19)
-							for: (LintRuleTest sourceCodeAt: #openEditor))
+		shouldFail: (RenameTemporaryRefactoring
+					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
 					to: 'a b'
 					in: LintRuleTest
 					selector: #openEditor)!
@@ -49,17 +45,16 @@ testBadName
 testModelBadName
 	| class |
 	model := RBNamespace new.
-	class := model classNamed: #Object.
-	class 
-		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
+	class := model classNamed: #'Core.Object'.
+	class compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
 		classified: #(#accessing).
 	self
-		shouldFail: (RenameTemporaryRefactoring 
+		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp3'
 					in: class
 					selector: #aMethod:);
-		shouldFail: (RenameTemporaryRefactoring 
+		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp1'
 					in: class
@@ -73,7 +68,8 @@ testRenameTemporary
 				in: LintRuleTest
 				selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #LintRuleTest) parseTreeFor: #openEditor)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest')
+				parseTreeFor: #openEditor)
 		equals: (RBParser
 				parseMethod: 'openEditor
 								| asdf |
@@ -81,8 +77,8 @@ testRenameTemporary
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
 								SmalllintResultEditor openOn: self label: name')! !
-!RenameTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testBadName!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testModelBadName!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testBadName!failure tests!public! !
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testModelBadName!failure tests!public! !
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
 

@@ -1,32 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #ExtractMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractMethodRefactoring'
 	instanceVariableNames: 'selector extractionInterval extractedParseTree modifiedParseTree parameters needsReturn'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractMethodRefactoring guid: (GUID fromString: '{f5ea0d09-686d-47ef-9a7d-72fe3bb4cbcc}')!
-ExtractMethodRefactoring comment: ''!
-!ExtractMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!ExtractMethodRefactoring methodsFor!
+Refactory.Browser.ExtractMethodRefactoring guid: (Core.GUID fromString: '{f5ea0d09-686d-47ef-9a7d-72fe3bb4cbcc}')!
+Refactory.Browser.ExtractMethodRefactoring comment: ''!
+!Refactory.Browser.ExtractMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ExtractMethodRefactoring methodsFor!
 
-checkAssignments: variableNames 
+checkAssignments: variableNames
 	| node outsideVars removeAssigned readBeforeWritten |
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames select: [:each | (node whoDefines: each) references: each].
 	outsideVars size == 1 ifTrue: [self checkSingleAssignment: outsideVars asArray first].
-	outsideVars size > 1 
+	outsideVars size > 1
 		ifTrue: 
-			[self refactoringError: 'Cannot extract assignment without all references: ' 
+			[self refactoringError: 'Cannot extract assignment without all references: '
 						, outsideVars asSortedCollection asArray displayString].
 	removeAssigned removeAll: outsideVars.
 	readBeforeWritten := RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
 				in: extractedParseTree.
-	readBeforeWritten notEmpty 
+	readBeforeWritten notEmpty
 		ifTrue: 
-			[self refactoringError: 'Cannot extract assignment if read before written: ' 
+			[self refactoringError: 'Cannot extract assignment if read before written: '
 						, readBeforeWritten asSortedCollection asArray displayString].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
 	self createTemporariesInExtractedMethodFor: variableNames!
@@ -46,7 +46,7 @@ checkSelfReturns
 	searcher
 		matches: '^self' do: [:aNode :answer | answer];
 		matches: '^`@anything' do: [:aNode :answer | true].
-	(searcher executeTree: extractedParseTree initialAnswer: false) 
+	(searcher executeTree: extractedParseTree initialAnswer: false)
 		ifTrue: [self placeholderNode asReturn]!
 
 checkSingleAssignment: varName
@@ -103,52 +103,47 @@ extractMethod
 	extractedParseTree := RBParser parseExpression: extractCode
 				onError: [:string :pos | self refactoringError: 'Invalid source to extract'].
 	extractedParseTree isNil ifTrue: [self refactoringError: 'Invalid source to extract'].
-	(extractedParseTree isSequence and: [extractedParseTree statements isEmpty]) 
+	(extractedParseTree isSequence and: [extractedParseTree statements isEmpty])
 		ifTrue: [self refactoringError: 'Select some code to extract'].
 	isSequence := extractedParseTree isSequence or: [extractedParseTree isReturn].
-	extractedParseTree := RBMethodNode 
+	extractedParseTree := RBMethodNode
 				selector: #value
 				arguments: #()
-				body: (extractedParseTree isSequence 
+				body: (extractedParseTree isSequence
 						ifTrue: [extractedParseTree]
-						ifFalse: 
-							[RBSequenceNode temporaries: #() statements: (OrderedCollection with: extractedParseTree)]).
-	extractedParseTree body temporaries notEmpty 
-		ifTrue: [extractedParseTree body temporaries: #()].
+						ifFalse: [RBSequenceNode temporaries: #() statements: (OrderedCollection with: extractedParseTree)]).
+	extractedParseTree body temporaries notEmpty ifTrue: [extractedParseTree body temporaries: #()].
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeFor: selector.
-	parseTree isNil 
-		ifTrue: [self refactoringError: 'Could not parse ' , selector printString].
-	subtree := isSequence 
-				ifTrue: 
-					[ParseTreeSearcher treeMatchingStatements: extractedParseTree body formattedCode
-						in: parseTree]
+	parseTree isNil ifTrue: [self refactoringError: 'Could not parse ' , selector printString].
+	subtree := isSequence
+				ifTrue: [ParseTreeSearcher treeMatchingStatements: extractedParseTree body formattedCode in: parseTree]
 				ifFalse: [ParseTreeSearcher treeMatching: extractCode in: parseTree].
 	subtree isNil ifTrue: [self refactoringError: 'Could not extract code from method'].
 	newCode := self methodDelimiter.
-	isSequence 
+	isSequence
 		ifTrue: 
 			[| stmts |
 			stmts := extractedParseTree body statements.
-			stmts notEmpty 
+			stmts notEmpty
 				ifTrue: 
-					[stmts last isAssignment 
+					[stmts last isAssignment
 						ifTrue: 
 							[| name |
 							name := stmts last variable name.
-							(self shouldExtractAssignmentTo: name) 
+							(self shouldExtractAssignmentTo: name)
 								ifFalse: 
 									[newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
 									stmts at: stmts size put: stmts last value]]]].
-	modifiedParseTree := isSequence 
+	modifiedParseTree := isSequence
 				ifTrue: 
-					[ParseTreeRewriter 
+					[ParseTreeRewriter
 						replaceStatements: subtree formattedCode
 						with: newCode
 						in: parseTree
 						onInterval: extractionInterval]
 				ifFalse: 
-					[ParseTreeRewriter 
+					[ParseTreeRewriter
 						replace: subtree formattedCode
 						with: newCode
 						in: parseTree
@@ -168,17 +163,15 @@ getNewMethodName
 	methodName arguments: parameters.
 	
 	[newMethodName := self requestMethodNameFor: methodName.
-	newMethodName isNil 
-		ifTrue: [^self refactoringAborted: 'Did not extract code'].
+	newMethodName isNil ifTrue: [^self refactoringAborted: 'Did not extract code'].
 	newSelector := newMethodName selector.
-	(self checkMethodName: newSelector in: class) 
+	(self checkMethodName: newSelector in: class)
 		ifFalse: 
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].
-	(class hierarchyDefinesMethod: newSelector asSymbol) 
-		ifTrue: 
-			[(self shouldOverride: newSelector in: class) ifFalse: [newSelector := nil]].
-	newSelector isNil] 
+	(class hierarchyDefinesMethod: newSelector asSymbol)
+		ifTrue: [(self shouldOverride: newSelector in: class) ifFalse: [newSelector := nil]].
+	newSelector isNil]
 			whileTrue: [].
 	parameters := newMethodName arguments asOrderedCollection.
 	^newSelector asSymbol!
@@ -209,13 +202,13 @@ isParseTreeEquivalentTo: aSelector
 methodDelimiter
 	^'#''place.holder.for.method'''!
 
-nameNewMethod: aSymbol 
+nameNewMethod: aSymbol
 	| args newSend |
 	args := parameters collect: [:each | RBVariableNode named: each].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
-	aSymbol argumentCount = 0 
+	aSymbol argumentCount = 0
 		ifTrue: 
-			[modifiedParseTree := ParseTreeRewriter 
+			[modifiedParseTree := ParseTreeRewriter
 						replace: self methodDelimiter
 						with: 'self ' , aSymbol asString
 						in: modifiedParseTree.
@@ -223,21 +216,20 @@ nameNewMethod: aSymbol
 	newSend := WriteStream on: String new.
 	aSymbol keywords with: parameters
 		do: 
-			[:key :arg | 
+			[:key :arg |
 			newSend
 				nextPutAll: key asString;
-				nextPut: $ ;
+				nextPut: $\x20;
 				nextPutAll: arg asString;
-				nextPut: $ ].
-	modifiedParseTree := ParseTreeRewriter 
+				nextPut: $\x20].
+	modifiedParseTree := ParseTreeRewriter
 				replace: self methodDelimiter
 				with: 'self ' , newSend contents
 				in: modifiedParseTree!
 
 placeholderNode
 	| node |
-	node := ParseTreeSearcher treeMatching: self methodDelimiter
-				in: modifiedParseTree.
+	node := ParseTreeSearcher treeMatching: self methodDelimiter in: modifiedParseTree.
 	node isNil ifTrue: [self refactoringError: 'Cannot extract code'].
 	^node!
 
@@ -258,17 +250,15 @@ remainingTemporaries
 		do: [:each | temps remove: each ifAbsent: []].
 	^temps!
 
-reorderParametersToMatch: aSelector 
+reorderParametersToMatch: aSelector
 	| tree dictionary |
 	tree := class parseTreeFor: aSelector.
 	dictionary := Dictionary new.
 	tree body equalTo: extractedParseTree body withMapping: dictionary.
 	parameters := tree arguments collect: 
-					[:each | 
+					[:each |
 					dictionary at: each name
-						ifAbsent: 
-							[self 
-								refactoringError: 'An internal error occured, please report this error.']]!
+						ifAbsent: [self refactoringError: 'An internal error occured, please report this error.']]!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -299,30 +289,30 @@ transform
 					(c compiledMethodAt: selector ifAbsent: []) 
 						ifNotNil: [:m | change package: m owningPackage]]].
 	class compileTree: modifiedParseTree! !
-!ExtractMethodRefactoring categoriesFor: #checkAssignments:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkReturn!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSelfReturns!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSingleAssignment:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSpecialExtractions!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkTemporaries!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #createTemporariesInExtractedMethodFor:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #existingSelector!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!ExtractMethodRefactoring categoriesFor: #extractMethod!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #getExtractedSource!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #isMethodEquivalentTo:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #isParseTreeEquivalentTo:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #methodDelimiter!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #nameNewMethod:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #placeholderNode!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractMethodRefactoring categoriesFor: #remainingTemporaries!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #reorderParametersToMatch:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkAssignments:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkReturn!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSelfReturns!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSingleAssignment:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSpecialExtractions!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkTemporaries!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #createTemporariesInExtractedMethodFor:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #existingSelector!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #extractMethod!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #getExtractedSource!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #isMethodEquivalentTo:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #isParseTreeEquivalentTo:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #methodDelimiter!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #nameNewMethod:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #placeholderNode!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #remainingTemporaries!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #reorderParametersToMatch:!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #transform!public!transforming! !
 
-!ExtractMethodRefactoring class methodsFor!
+!Refactory.Browser.ExtractMethodRefactoring class methodsFor!
 
 extract: anInterval from: aSelector in: aClass 
 	^self new
@@ -337,6 +327,6 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractMethodRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!ExtractMethodRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
 

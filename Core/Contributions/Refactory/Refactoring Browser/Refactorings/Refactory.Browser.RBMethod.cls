@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RBMethod
+Core.Object subclass: #'Refactory.Browser.RBMethod'
 	instanceVariableNames: 'class compiledMethod source selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBMethod guid: (GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
-RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
+Refactory.Browser.RBMethod guid: (Core.GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
+Refactory.Browser.RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
 
 Instance Variables:
 	class	<RBAbstractClass>	where the method is defined
 	compiledMethod	<CompiledCode | nil>	the CompiledMethod object (if we have been compiled)
 	selector	<Symbol>	our name
 	source	<String>	our source'!
-!RBMethod categoriesForClass!Refactory-Model! !
-!RBMethod methodsFor!
+!Refactory.Browser.RBMethod categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBMethod methodsFor!
 
 literal: anObject containsReferenceTo: aSymbol
 	anObject == aSymbol ifTrue: [^true].
@@ -44,12 +44,31 @@ printOn: aStream
 		nextPutAll: '>>';
 		print: self selector!
 
-refersToClassNamed: aSymbol 
+refersToAnySymbol: aCollection
 	| searcher |
 	searcher := ParseTreeSearcher new.
-	searcher matches: aSymbol asString do: [:node :answer | true].
-	^(searcher executeTree: self parseTree initialAnswer: false) 
-		or: [self refersToSymbol: aSymbol]!
+	searcher matches: '`#literal'
+		do: 
+			[:node :answer |
+			answer or: 
+					[| value |
+					value := node value.
+					aCollection anySatisfy: [:each | self literal: value containsReferenceTo: each]]].
+	aCollection do: 
+			[:each |
+			(RBScanner isSelector: each)
+				ifTrue: 
+					[searcher matches: '`@object ' , (ParseTreeSearcher buildSelectorString: each)
+						do: [:node :answer | true]]].
+	^searcher executeTree: self parseTree initialAnswer: false!
+
+refersToClass: anRBClass
+	| searcher names |
+	searcher := ParseTreeSearcher new.
+	#namespaceToDo.	"Bodge to also search for the unqualified name - this might get hits that are not real matches."
+	names := {anRBClass fullName asSymbol. anRBClass unqualifiedName asSymbol}.
+	searcher matchesAnyOf: names do: [:node :answer | true].
+	^(searcher executeTree: self parseTree initialAnswer: false) or: [self refersToAnySymbol: names]!
 
 refersToSymbol: aSymbol
 	| searcher |
@@ -62,19 +81,18 @@ refersToSymbol: aSymbol
 				do: [:node :answer | true]].
 	^searcher executeTree: self parseTree initialAnswer: false!
 
-refersToVariable: aString 
+refersToVariable: aString
 	| searcher tree |
 	tree := self parseTree.
-	((tree defines: aString) or: [tree body defines: aString]) 
-		ifTrue: [^false].
+	((tree defines: aString) or: [tree body defines: aString]) ifTrue: [^false].
 	searcher := ParseTreeSearcher new.
 	searcher
 		matches: aString do: [:node :answer | true];
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
 			do: 
-				[:node :answer | 
+				[:node :answer |
 				answer or: 
-						[((node defines: aString) or: [node body defines: aString]) not 
+						[((node defines: aString) or: [node body defines: aString]) not
 							and: [searcher executeTree: node body initialAnswer: false]]].
 	^searcher executeTree: self parseTree initialAnswer: false!
 
@@ -91,22 +109,23 @@ source
 
 source: aString 
 	source := aString! !
-!RBMethod categoriesFor: #literal:containsReferenceTo:!private! !
-!RBMethod categoriesFor: #method!accessing!public! !
-!RBMethod categoriesFor: #method:!accessing!public! !
-!RBMethod categoriesFor: #modelClass!accessing!public! !
-!RBMethod categoriesFor: #modelClass:!accessing!public! !
-!RBMethod categoriesFor: #parseTree!accessing!public! !
-!RBMethod categoriesFor: #printOn:!printing!public! !
-!RBMethod categoriesFor: #refersToClassNamed:!public!testing! !
-!RBMethod categoriesFor: #refersToSymbol:!public!testing! !
-!RBMethod categoriesFor: #refersToVariable:!public!testing! !
-!RBMethod categoriesFor: #selector!accessing!public! !
-!RBMethod categoriesFor: #selector:!accessing!public! !
-!RBMethod categoriesFor: #source!accessing!public! !
-!RBMethod categoriesFor: #source:!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #literal:containsReferenceTo:!private! !
+!Refactory.Browser.RBMethod categoriesFor: #method!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #method:!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #modelClass!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #modelClass:!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #parseTree!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #refersToAnySymbol:!public!testing! !
+!Refactory.Browser.RBMethod categoriesFor: #refersToClass:!public!testing! !
+!Refactory.Browser.RBMethod categoriesFor: #refersToSymbol:!public!testing! !
+!Refactory.Browser.RBMethod categoriesFor: #refersToVariable:!public!testing! !
+!Refactory.Browser.RBMethod categoriesFor: #selector!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #selector:!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #source!accessing!public! !
+!Refactory.Browser.RBMethod categoriesFor: #source:!accessing!public! !
 
-!RBMethod class methodsFor!
+!Refactory.Browser.RBMethod class methodsFor!
 
 for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol 
 	^(self new)
@@ -121,6 +140,6 @@ for: aRBClass source: aString selector: aSelector
 		selector: aSelector;
 		source: aString;
 		yourself! !
-!RBMethod class categoriesFor: #for:fromMethod:andSelector:!instance creation!public! !
-!RBMethod class categoriesFor: #for:source:selector:!instance creation!public! !
+!Refactory.Browser.RBMethod class categoriesFor: #for:fromMethod:andSelector:!instance creation!public! !
+!Refactory.Browser.RBMethod class categoriesFor: #for:source:selector:!instance creation!public! !
 

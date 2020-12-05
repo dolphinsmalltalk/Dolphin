@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #RenameInstanceVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RenameInstanceVariableRefactoring'
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameInstanceVariableRefactoring guid: (GUID fromString: '{9ad927e1-5ba7-4dcf-bcd0-6555ab567203}')!
-RenameInstanceVariableRefactoring comment: ''!
-!RenameInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!RenameInstanceVariableRefactoring methodsFor!
+Refactory.Browser.RenameInstanceVariableRefactoring guid: (Core.GUID fromString: '{9ad927e1-5ba7-4dcf-bcd0-6555ab567203}')!
+Refactory.Browser.RenameInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RenameInstanceVariableRefactoring methodsFor!
 
 preconditions
 	^(RBCondition isValidInstanceVariableName: newName for: class) 
@@ -54,13 +54,13 @@ transform
 		renameInstanceVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
-!RenameInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameInstanceVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!RenameInstanceVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
-!RenameInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 
-!RenameInstanceVariableRefactoring class methodsFor!
+!Refactory.Browser.RenameInstanceVariableRefactoring class methodsFor!
 
 model: aRBNamespace rename: aVarName to: aName in: aClass 
 	^(self new)
@@ -75,6 +75,6 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
-!RenameInstanceVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
-!RenameInstanceVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
 

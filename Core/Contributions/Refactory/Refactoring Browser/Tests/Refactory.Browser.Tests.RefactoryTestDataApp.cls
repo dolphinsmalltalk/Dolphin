@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RefactoryTestDataApp
+Core.Object subclass: #'Refactory.Browser.Tests.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoryTestDataApp guid: (GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
-RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
-!RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
-!RefactoryTestDataApp methodsFor!
+Refactory.Browser.Tests.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
+Refactory.Browser.Tests.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.RefactoryTestDataApp methodsFor!
 
 == comparand 
 	<primitive: 110>
@@ -91,7 +91,7 @@ collectionProtocol
 	| newCollection |
 	newCollection := OrderedCollection new.
 	(1 to: 10) asOrderedCollection do: 
-			[:each | 
+			[:each |
 			| new |
 			new := each * 2.
 			newCollection add: new].
@@ -246,7 +246,7 @@ minMax
 	^var"!
 
 missingYourself
-	^(OrderedCollection new)
+	^OrderedCollection new
 		add: 1;
 		add: 2;
 		removeFirst!
@@ -405,91 +405,91 @@ yourselfNotUsed
 		printString;
 		printString;
 		yourself! !
-!RefactoryTestDataApp categoriesFor: #==!comparing!public! !
-!RefactoryTestDataApp categoriesFor: #anySatisfy!lint!public! !
-!RefactoryTestDataApp categoriesFor: #asOrderedCollectionNotNeeded!lint!public! !
-!RefactoryTestDataApp categoriesFor: #assignmentInBlock!lint!public! !
-!RefactoryTestDataApp categoriesFor: #assignmentInIfTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #atIfAbsent!lint!public! !
-!RefactoryTestDataApp categoriesFor: #badMessage!lint!public! !
-!RefactoryTestDataApp categoriesFor: #booleanPrecedence!lint!public! !
-!RefactoryTestDataApp categoriesFor: #called:on:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #called:on1:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller1!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller2!inline!public! !
-!RefactoryTestDataApp categoriesFor: #callFoo!public!test! !
-!RefactoryTestDataApp categoriesFor: #callMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #collectionMessagesToExternalObject!lint!public! !
-!RefactoryTestDataApp categoriesFor: #collectionProtocol!lint!public! !
-!RefactoryTestDataApp categoriesFor: #collectSelectNotUsed!lint!public! !
-!RefactoryTestDataApp categoriesFor: #consistencyCheck!lint!public! !
-!RefactoryTestDataApp categoriesFor: #detectAnySatisfy!lint!public! !
-!RefactoryTestDataApp categoriesFor: #endTrueFalse!lint!public! !
-!RefactoryTestDataApp categoriesFor: #equalNotUsed!lint!public! !
-!RefactoryTestDataApp categoriesFor: #equalsTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #exampleCall!public!test! !
-!RefactoryTestDataApp categoriesFor: #extraBlock!lint!public! !
-!RefactoryTestDataApp categoriesFor: #fileBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #foo:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #fullBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #guardingClause!lint!public! !
-!RefactoryTestDataApp categoriesFor: #ifTrueBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #ifTrueReturns!lint!public! !
-!RefactoryTestDataApp categoriesFor: #inlineComponent!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineFailed!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineFoo:!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineJunk!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineLast!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineMax!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineParameterMethod:!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineTemporary!inline!public! !
-!RefactoryTestDataApp categoriesFor: #isLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #justSendsSuper!lint!public! !
-!RefactoryTestDataApp categoriesFor: #literalArrayCharacters!lint!public! !
-!RefactoryTestDataApp categoriesFor: #literalArrayStringsAndSymbols!lint!public! !
-!RefactoryTestDataApp categoriesFor: #longMethods!lint!public! !
-!RefactoryTestDataApp categoriesFor: #minMax!lint!public! !
-!RefactoryTestDataApp categoriesFor: #missingYourself!lint!public! !
-!RefactoryTestDataApp categoriesFor: #modifiesCollection!lint!public! !
-!RefactoryTestDataApp categoriesFor: #moveDefinition!public!test! !
-!RefactoryTestDataApp categoriesFor: #multipleCalls!inline!public! !
-!RefactoryTestDataApp categoriesFor: #noMoveDefinition!public!test! !
-!RefactoryTestDataApp categoriesFor: #precedence!lint!public! !
-!RefactoryTestDataApp categoriesFor: #referencesConditionFor:!accessing!public! !
-!RefactoryTestDataApp categoriesFor: #refersToClass!lint!public! !
-!RefactoryTestDataApp categoriesFor: #release!lint!public! !
-!RefactoryTestDataApp categoriesFor: #rename:two:!public!test! !
-!RefactoryTestDataApp categoriesFor: #renameThisMethod:!public!test! !
-!RefactoryTestDataApp categoriesFor: #returnInEnsure!lint!public! !
-!RefactoryTestDataApp categoriesFor: #returnsBooleanAndOther!lint!public! !
-!RefactoryTestDataApp categoriesFor: #returnsIfTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #searchingLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #selectorNotReferenced!public!test! !
-!RefactoryTestDataApp categoriesFor: #sendInlineParameterMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #sendsDifferentSuper!lint!public! !
-!RefactoryTestDataApp categoriesFor: #sizeCheck!lint!public! !
-!RefactoryTestDataApp categoriesFor: #stringConcatenation!lint!public! !
-!RefactoryTestDataApp categoriesFor: #symbolReference!public!test! !
-!RefactoryTestDataApp categoriesFor: #tempsReadBeforeWritten!lint!public! !
-!RefactoryTestDataApp categoriesFor: #tempVarOverridesInstVar!lint!public! !
-!RefactoryTestDataApp categoriesFor: #testFoo:!public!test! !
-!RefactoryTestDataApp categoriesFor: #testMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #testMethod1!public!test! !
-!RefactoryTestDataApp categoriesFor: #threeElementPoint!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDo!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDoCollect!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDoWithIncrement!lint!public! !
-!RefactoryTestDataApp categoriesFor: #usesAdd!lint!public! !
-!RefactoryTestDataApp categoriesFor: #variableAssignedLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #whileTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #yourselfNotUsed!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #==!comparing!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #anySatisfy!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #asOrderedCollectionNotNeeded!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #assignmentInBlock!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #assignmentInIfTrue!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #atIfAbsent!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #badMessage!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #booleanPrecedence!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #called:on:!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #called:on1:!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #caller!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #caller1!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #caller2!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #callFoo!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #callMethod!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #collectionMessagesToExternalObject!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #collectionProtocol!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #collectSelectNotUsed!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #consistencyCheck!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #detectAnySatisfy!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #endTrueFalse!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #equalNotUsed!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #equalsTrue!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #exampleCall!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #extraBlock!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #fileBlocks!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #foo:!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #fullBlocks!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #guardingClause!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #ifTrueBlocks!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #ifTrueReturns!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineComponent!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineFailed!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineFoo:!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineJunk!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineLast!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineMax!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineMethod!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineParameterMethod:!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #inlineTemporary!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #isLiteral!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #justSendsSuper!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #literalArrayCharacters!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #literalArrayStringsAndSymbols!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #longMethods!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #minMax!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #missingYourself!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #modifiesCollection!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #moveDefinition!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #multipleCalls!inline!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #noMoveDefinition!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #precedence!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #referencesConditionFor:!accessing!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #refersToClass!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #release!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #rename:two:!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #renameThisMethod:!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #returnInEnsure!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #returnsBooleanAndOther!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #returnsIfTrue!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #searchingLiteral!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #selectorNotReferenced!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #sendInlineParameterMethod!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #sendsDifferentSuper!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #sizeCheck!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #stringConcatenation!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #symbolReference!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #tempsReadBeforeWritten!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #tempVarOverridesInstVar!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #testFoo:!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #testMethod!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #testMethod1!public!test! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #threeElementPoint!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #toDo!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #toDoCollect!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #toDoWithIncrement!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #usesAdd!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #variableAssignedLiteral!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #whileTrue!lint!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesFor: #yourselfNotUsed!lint!public! !
 
-!RefactoryTestDataApp class methodsFor!
+!Refactory.Browser.Tests.RefactoryTestDataApp class methodsFor!
 
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
 	^'Test class for Smalllint. Contains lots of smelly code'! !
-!RefactoryTestDataApp class categoriesFor: #comment!accessing!public! !
+!Refactory.Browser.Tests.RefactoryTestDataApp class categoriesFor: #comment!accessing!public! !
 

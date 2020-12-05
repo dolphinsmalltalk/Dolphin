@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryClassChange subclass: #AddClassChange
-	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddClassChange'
+	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames imports category classConstants'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddClassChange guid: (GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
-AddClassChange comment: ''!
-!AddClassChange categoriesForClass!Refactory-Change Objects! !
-!AddClassChange methodsFor!
+Refactory.Browser.AddClassChange guid: (Core.GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
+Refactory.Browser.AddClassChange comment: ''!
+!Refactory.Browser.AddClassChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.AddClassChange methodsFor!
 
 = anAddClassChange 
 	self class = anAddClassChange class ifFalse: [^false].
 	^definition = anAddClassChange definition!
 
 areSubclassCreationMessageArgumentsValid: aMessageNode
-	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode]!
+	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode or: [each isDynamicArray]]!
 
 asUndoOperation
 	| class |
-	class := self changeClassName asQualifiedReference valueOrNil.
-	^class isBehavior 
+	class := classReference valueOrNil.
+	^class isBehavior
 		ifTrue: [self class definition: class definition]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
 
@@ -30,11 +30,16 @@ category
 	^category!
 
 changeClassName
-	className isNil ifTrue: [self fillOutDefinition].
-	^className!
+	classReference ifNil: [self fillOutDefinition].
+	^classReference asString!
 
 changeString
 	^'Define ' , self displayClassName!
+
+classConstants
+	classConstants isNil ifTrue: [self fillOutDefinition].
+	classConstants isString ifTrue: [classConstants := Compiler evaluate: classConstants].
+	^classConstants!
 
 classVariableNames
 	classVariableNames isNil ifTrue: [self fillOutDefinition].
@@ -63,27 +68,37 @@ fillOutDefinition
 	self fillOutDefinitionArguments: parseTree!
 
 fillOutDefinitionArguments: parseTree
-	className := parseTree arguments first value.
-	instanceVariableNames := self namesIn: (parseTree arguments at: 2) value.
-	classVariableNames := self namesIn: (parseTree arguments at: 3) value.
-	poolDictionaryNames := self namesIn: (parseTree arguments at: 4) value.
-	category := parseTree arguments size < 5
-				ifTrue: [#Unknown]
-				ifFalse: [(parseTree arguments at: 5) value asSymbol]!
+	| args keywords pairs |
+	args := parseTree arguments.
+	keywords := parseTree selector keywords.
+	pairs := LookupTable new.
+	keywords with: args do: [:eachKeyword :eachArg | pairs at: eachKeyword put: eachArg].
+	classReference := (pairs at: 'subclass:') value asQualifiedReference.
+	instanceVariableNames := self namesIn: (pairs at: 'instanceVariableNames:') value.
+	classVariableNames := self namesIn: (pairs at: 'classVariableNames:') value.
+	imports := (pairs lookup: 'imports:')
+				ifNil: [(pairs lookup: 'poolDictionaries:') ifNil: [#()] ifNotNil: [:arg | self namesIn: arg value]]
+				ifNotNil: [:arg | arg children collect: [:each | each value]].
+	category := (pairs lookup: 'category:') ifNil: [#Unknown] ifNotNil: [:arg | arg value asSymbol].
+	"We defer evaluating the brace array expression until needed, as mostly it is not"
+	classConstants := (pairs lookup: 'classConstants:')
+				ifNil: [#()]
+				ifNotNil: [:arg | arg formattedCode]!
 
 hash
 	^definition hash!
 
-initialize
-	super initialize.
-	isMeta := false!
+imports
+	imports isNil ifTrue: [self fillOutDefinition].
+	^imports!
 
 instanceVariableNames
 	instanceVariableNames isNil ifTrue: [self fillOutDefinition].
 	^instanceVariableNames!
 
 isValidMessageName: aMessageNode
-	^#(#subclass:instanceVariableNames:classVariableNames:poolDictionaries: 
+	^##(#(
+	#subclass:instanceVariableNames:classVariableNames:poolDictionaries: 
 	#subclass:instanceVariableNames:classVariableNames:poolDictionaries:category: 
 	#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries: 
 	#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
@@ -91,7 +106,13 @@ isValidMessageName: aMessageNode
 	#variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
 	#subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:
 	#variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:
-	#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:) 
+	#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:
+	#subclass:instanceVariableNames:classVariableNames:imports: 
+	#subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:
+	#variableSubclass:instanceVariableNames:classVariableNames:imports: 
+	#variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants: 
+	#variableByteSubclass:instanceVariableNames:classVariableNames:imports: 
+	#variableByteSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:) asSet)
 		includes: aMessageNode selector!
 
 isValidSubclassCreationMessage: aMessageNode
@@ -100,28 +121,13 @@ isValidSubclassCreationMessage: aMessageNode
 	^self areSubclassCreationMessageArgumentsValid: aMessageNode!
 
 namesIn: aString 
-	| names stream |
-	names := OrderedCollection new.
-	stream := ReadStream on: aString.
-	
-	[stream skipSeparators.
-	stream atEnd] whileFalse: 
-				[| nameStream |
-				nameStream := WriteStream on: (Utf8String new: 10).
-				[stream atEnd or: [stream peek isSeparator]] 
-					whileFalse: [nameStream nextPut: stream next].
-				names add: nameStream contents].
-	^names!
+	^aString subStrings!
 
 parseDefinitionError
-	className := #'Unknown Class'.
+	classReference := #{Unknown}.
 	instanceVariableNames := #().
 	classVariableNames := #().
-	poolDictionaryNames := #()!
-
-poolDictionaryNames
-	poolDictionaryNames isNil ifTrue: [self fillOutDefinition].
-	^poolDictionaryNames!
+	imports := #()!
 
 primitiveExecute
 	#rbFix. "rbDmm changed "
@@ -139,36 +145,36 @@ printOn: aStream
 		nextPut: $!!!
 
 superclassName
-	className isNil ifTrue: [self fillOutDefinition].
+	classReference ifNil: [self fillOutDefinition].
 	^superclassName! !
-!AddClassChange categoriesFor: #=!comparing!public! !
-!AddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
-!AddClassChange categoriesFor: #asUndoOperation!converting!public! !
-!AddClassChange categoriesFor: #category!accessing!public! !
-!AddClassChange categoriesFor: #changeClassName!accessing!public! !
-!AddClassChange categoriesFor: #changeString!printing!public! !
-!AddClassChange categoriesFor: #classVariableNames!accessing!public! !
-!AddClassChange categoriesFor: #controller!accessing!private! !
-!AddClassChange categoriesFor: #definingSuperclass!accessing!private! !
-!AddClassChange categoriesFor: #definition!accessing!private! !
-!AddClassChange categoriesFor: #definition:!initialize/release!public! !
-!AddClassChange categoriesFor: #fillOutDefinition!helpers!private! !
-!AddClassChange categoriesFor: #fillOutDefinitionArguments:!helpers!private! !
-!AddClassChange categoriesFor: #hash!comparing!public! !
-!AddClassChange categoriesFor: #initialize!initialize/release!public! !
-!AddClassChange categoriesFor: #instanceVariableNames!accessing!public! !
-!AddClassChange categoriesFor: #isValidMessageName:!public!testing! !
-!AddClassChange categoriesFor: #isValidSubclassCreationMessage:!public!testing! !
-!AddClassChange categoriesFor: #namesIn:!helpers!private! !
-!AddClassChange categoriesFor: #parseDefinitionError!helpers!private! !
-!AddClassChange categoriesFor: #poolDictionaryNames!accessing!public! !
-!AddClassChange categoriesFor: #primitiveExecute!public! !
-!AddClassChange categoriesFor: #printOn:!printing!public! !
-!AddClassChange categoriesFor: #superclassName!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
+!Refactory.Browser.AddClassChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #category!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #changeClassName!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #classConstants!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #classVariableNames!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #controller!accessing!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #definingSuperclass!accessing!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #definition!accessing!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #definition:!initialize/release!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #fillOutDefinition!helpers!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #fillOutDefinitionArguments:!helpers!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #imports!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #instanceVariableNames!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #isValidMessageName:!public!testing! !
+!Refactory.Browser.AddClassChange categoriesFor: #isValidSubclassCreationMessage:!public!testing! !
+!Refactory.Browser.AddClassChange categoriesFor: #namesIn:!helpers!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #parseDefinitionError!helpers!private! !
+!Refactory.Browser.AddClassChange categoriesFor: #primitiveExecute!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #superclassName!accessing!public! !
 
-!AddClassChange class methodsFor!
+!Refactory.Browser.AddClassChange class methodsFor!
 
 definition: aString 
 	^self new definition: aString! !
-!AddClassChange class categoriesFor: #definition:!instance creation!public! !
+!Refactory.Browser.AddClassChange class categoriesFor: #definition:!instance creation!public! !
 

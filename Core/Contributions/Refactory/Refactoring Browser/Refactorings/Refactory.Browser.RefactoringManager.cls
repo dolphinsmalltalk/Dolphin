@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RefactoringManager
+Core.Object subclass: #'Refactory.Browser.RefactoringManager'
 	instanceVariableNames: 'refactorings'
 	classVariableNames: 'Instance'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringManager guid: (GUID fromString: '{91adefd7-2941-4e19-bea0-6541c7033e57}')!
-RefactoringManager comment: ''!
-!RefactoringManager categoriesForClass!Refactory-Refactorings! !
-!RefactoringManager methodsFor!
+Refactory.Browser.RefactoringManager guid: (Core.GUID fromString: '{91adefd7-2941-4e19-bea0-6541c7033e57}')!
+Refactory.Browser.RefactoringManager comment: ''!
+!Refactory.Browser.RefactoringManager categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RefactoringManager methodsFor!
 
-addRefactoring: aRefactoring 
+addRefactoring: aRefactoring
 	RefactoryChangeManager instance performChange: aRefactoring changes.
 	refactorings add: aRefactoring class name!
 
@@ -29,11 +29,11 @@ printOn: aStream
 				nextPutAll: '		';
 				nextPutAll: name;
 				cr]! !
-!RefactoringManager categoriesFor: #addRefactoring:!public!public access! !
-!RefactoringManager categoriesFor: #initialize!initialize/release!public! !
-!RefactoringManager categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RefactoringManager categoriesFor: #addRefactoring:!public!public access! !
+!Refactory.Browser.RefactoringManager categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.RefactoringManager categoriesFor: #printOn:!printing!public! !
 
-!RefactoringManager class methodsFor!
+!Refactory.Browser.RefactoringManager class methodsFor!
 
 instance
 	Instance isNil
@@ -58,10 +58,10 @@ preUnloadActionFor: aParcel
 
 uninitialize
 	self nuke! !
-!RefactoringManager class categoriesFor: #instance!instance creation!public! !
-!RefactoringManager class categoriesFor: #new!instance creation!public! !
-!RefactoringManager class categoriesFor: #nuke!public!public access! !
-!RefactoringManager class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!RefactoringManager class categoriesFor: #preUnloadActionFor:!parcel load/unload/save!public! !
-!RefactoringManager class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #instance!instance creation!public! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #nuke!public!public access! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #preUnloadActionFor:!parcel load/unload/save!public! !
+!Refactory.Browser.RefactoringManager class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

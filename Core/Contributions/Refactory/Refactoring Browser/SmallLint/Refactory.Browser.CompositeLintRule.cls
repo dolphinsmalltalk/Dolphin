@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LintRule subclass: #CompositeLintRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.CompositeLintRule'
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompositeLintRule guid: (GUID fromString: '{ac469ac9-0c11-4be1-90b2-f1a9192e9d98}')!
-CompositeLintRule comment: 'CompositeLintRule groups LintRules into a single rule (composite pattern).
+Refactory.Browser.CompositeLintRule guid: (Core.GUID fromString: '{ac469ac9-0c11-4be1-90b2-f1a9192e9d98}')!
+Refactory.Browser.CompositeLintRule comment: 'CompositeLintRule groups LintRules into a single rule (composite pattern).
 
 Instance Variables:
 	rules	<Collection of: LintRule>	the rules that make up the composite
 
 '!
-!CompositeLintRule categoriesForClass!Refactory-Lint! !
-!CompositeLintRule methodsFor!
+!Refactory.Browser.CompositeLintRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.CompositeLintRule methodsFor!
 
 checkClass: aSmalllintContext 
 	rules do: 
@@ -54,40 +54,39 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!CompositeLintRule categoriesFor: #checkClass:!accessing!public! !
-!CompositeLintRule categoriesFor: #checkMethod:!accessing!public! !
-!CompositeLintRule categoriesFor: #failedRules!accessing!public! !
-!CompositeLintRule categoriesFor: #hasConflicts!public!testing! !
-!CompositeLintRule categoriesFor: #isComposite!public!testing! !
-!CompositeLintRule categoriesFor: #isEmpty!public!testing! !
-!CompositeLintRule categoriesFor: #problemCount!accessing!public! !
-!CompositeLintRule categoriesFor: #resetResult!initialize/release!public! !
-!CompositeLintRule categoriesFor: #rules!accessing!public! !
-!CompositeLintRule categoriesFor: #rules:!initialize/release!public! !
-!CompositeLintRule categoriesFor: #viewResults!helpers!private! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #checkClass:!accessing!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #checkMethod:!accessing!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #failedRules!accessing!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #hasConflicts!public!testing! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #isComposite!public!testing! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #resetResult!initialize/release!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #rules!accessing!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #rules:!initialize/release!public! !
+!Refactory.Browser.CompositeLintRule categoriesFor: #viewResults!helpers!private! !
 
-!CompositeLintRule class methodsFor!
+!Refactory.Browser.CompositeLintRule class methodsFor!
 
 allRules
 	^self ruleFor: self protocol: 'all checks'!
 
 lintChecks
-	^self rules: (BasicLintRule lintProtocols
-				collect: [:each | self ruleFor: BasicLintRule protocol: each])
+	^self
+		rules: (BasicLintRule lintProtocols collect: [:each | self ruleFor: BasicLintRule protocol: each])
 		name: 'Lint checks'!
 
-ruleFor: aClass protocol: aProtocol 
+ruleFor: aClass protocol: aProtocol
 	| allRules |
 	#rbFix.	"Dolphin category names are strings, not symbols, and make use of #capitalized"
 	allRules := aClass withAllSubclasses inject: OrderedCollection new
 				into: 
-					[:sum :each | 
+					[:sum :each |
 					sum
-						addAll: ((BrowserEnvironment new selectorsFor: aProtocol in: each class) 
+						addAll: ((BrowserEnvironment new selectorsFor: aProtocol in: each class)
 									collect: [:selector | each perform: selector]);
 						yourself	"asSymbol"].
-	^self rules: (allRules asSortedCollection: [:a :b | a name <= b name])
-		name: aProtocol capitalized!
+	^self rules: (allRules asSortedCollection: [:a :b | a name <= b name]) name: aProtocol capitalized!
 
 rules: aCollection 
 	^self new rules: aCollection!
@@ -99,10 +98,10 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRule protocol: 'transformations'! !
-!CompositeLintRule class categoriesFor: #allRules!instance creation!public! !
-!CompositeLintRule class categoriesFor: #lintChecks!all checks!public! !
-!CompositeLintRule class categoriesFor: #ruleFor:protocol:!instance creation!public! !
-!CompositeLintRule class categoriesFor: #rules:!instance creation!public! !
-!CompositeLintRule class categoriesFor: #rules:name:!instance creation!public! !
-!CompositeLintRule class categoriesFor: #transformations!all checks!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #allRules!instance creation!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #lintChecks!all checks!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #ruleFor:protocol:!instance creation!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #rules:!instance creation!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #rules:name:!instance creation!public! !
+!Refactory.Browser.CompositeLintRule class categoriesFor: #transformations!all checks!public! !
 

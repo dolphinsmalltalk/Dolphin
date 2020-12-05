@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #RemoveMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.RemoveMethodRefactoring'
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveMethodRefactoring guid: (GUID fromString: '{b0514c20-922f-4ee5-b5bb-e0ebabdf52bd}')!
-RemoveMethodRefactoring comment: ''!
-!RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!RemoveMethodRefactoring methodsFor!
+Refactory.Browser.RemoveMethodRefactoring guid: (Core.GUID fromString: '{b0514c20-922f-4ee5-b5bb-e0ebabdf52bd}')!
+Refactory.Browser.RemoveMethodRefactoring comment: ''!
+!Refactory.Browser.RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RemoveMethodRefactoring methodsFor!
 
 checkReferencesToAnyOf: aSelectorCollection
 	aSelectorCollection do: 
@@ -100,17 +100,17 @@ superclassEquivalentlyDefines: aSelector
 
 transform
 	selectors do: [:each | class removeMethod: each]! !
-!RemoveMethodRefactoring categoriesFor: #checkReferencesToAnyOf:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #checkSuperMethods!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #justSendsSuper:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #removeMethods:from:!initialize/release!public! !
-!RemoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!RemoveMethodRefactoring categoriesFor: #superclassEquivalentlyDefines:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkReferencesToAnyOf:!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkSuperMethods!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #justSendsSuper:!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #removeMethods:from:!initialize/release!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #superclassEquivalentlyDefines:!preconditions!public! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #transform!public!transforming! !
 
-!RemoveMethodRefactoring class methodsFor!
+!Refactory.Browser.RemoveMethodRefactoring class methodsFor!
 
 model: aRBNamespace removeMethods: selectorCollection from: aClass 
 	^(self new)
@@ -120,6 +120,6 @@ model: aRBNamespace removeMethods: selectorCollection from: aClass
 
 removeMethods: selectorCollection from: aClass
 	^self new removeMethods: selectorCollection from: aClass! !
-!RemoveMethodRefactoring class categoriesFor: #model:removeMethods:from:!instance creation!public! !
-!RemoveMethodRefactoring class categoriesFor: #removeMethods:from:!instance creation!public! !
+!Refactory.Browser.RemoveMethodRefactoring class categoriesFor: #model:removeMethods:from:!instance creation!public! !
+!Refactory.Browser.RemoveMethodRefactoring class categoriesFor: #removeMethods:from:!instance creation!public! !
 

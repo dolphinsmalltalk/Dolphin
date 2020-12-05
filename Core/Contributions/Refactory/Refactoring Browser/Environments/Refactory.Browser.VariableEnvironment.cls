@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #VariableEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.VariableEnvironment'
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VariableEnvironment guid: (GUID fromString: '{e9cada30-17fa-4434-96e9-1e962bb36333}')!
-VariableEnvironment comment: 'VariableEnvironment defines a set of methods (and their classes) that read and/or write to any of a set of named instance and class variables. It is used to implement the browse variable references, readers & writers commands in the browsers.
+Refactory.Browser.VariableEnvironment guid: (Core.GUID fromString: '{e9cada30-17fa-4434-96e9-1e962bb36333}')!
+Refactory.Browser.VariableEnvironment comment: 'VariableEnvironment defines a set of methods (and their classes) that read and/or write to any of a set of named instance and class variables. It is used to implement the browse variable references, readers & writers commands in the browsers.
 
 
 Instance Variables:
@@ -21,31 +21,29 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 
 
 '!
-!VariableEnvironment categoriesForClass!Refactory-Environments! !
-!VariableEnvironment methodsFor!
+!Refactory.Browser.VariableEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.VariableEnvironment methodsFor!
 
 accessorMethods
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)!
 
-addClass: aClass classVariable: aSymbol 
-	(classVariables at: aClass name ifAbsentPut: [Set new]) add: aSymbol.
+addClass: aClass classVariable: aSymbol
+	(classVariables at: aClass fullName ifAbsentPut: [Set new]) add: aSymbol.
 	self flushCachesFor: aClass.
 	self addSearchString: aSymbol!
 
-addClass: aClass instanceVariable: aString 
-	(instanceVariables at: aClass name ifAbsentPut: [Set new]) add: aString.
+addClass: aClass instanceVariable: aString
+	(instanceVariables at: aClass fullName ifAbsentPut: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
-addClass: aClass instanceVariableReader: aString 
-	(instanceVariableReaders at: aClass name ifAbsentPut: [Set new]) 
-		add: aString.
+addClass: aClass instanceVariableReader: aString
+	(instanceVariableReaders at: aClass fullName ifAbsentPut: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
-addClass: aClass instanceVariableWriter: aString 
-	(instanceVariableWriters at: aClass name ifAbsentPut: [Set new]) 
-		add: aString.
+addClass: aClass instanceVariableWriter: aString
+	(instanceVariableWriters at: aClass fullName ifAbsentPut: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString!
 
@@ -81,11 +79,14 @@ allClassesDo: aBlock
 			progress value: i * 100 // numClasses]!
 
 classForName: aString
-	| name isMeta |
-	isMeta := aString identityIncludes: $\x20.
-	name := isMeta ifTrue: [aString copyFrom: 1 to: (aString size - 6 max: 1)] ifFalse: [aString].
-	^name asQualifiedReference valueOrNil
-		ifNotNil: [:class | class isMeta ifTrue: [class class] ifFalse: [class]]!
+	| index |
+	index := aString
+				nextIndexOf: $\x20
+				from: 1
+				to: aString size.
+	^(index == 0
+		ifTrue: [BindingReference pathString: aString]
+		ifFalse: [(BindingReference pathString: (aString copyFrom: 1 to: index - 1)) meta]) valueOrNil!
 
 classNamesWithVariables
 	| classNames |
@@ -103,27 +104,26 @@ classVariables
 classVariables: anObject
 	classVariables := anObject!
 
-classVariableSelectorsFor: aClass 
+classVariableSelectorsFor: aClass
 	| selectors classVars nonMetaClass |
 	nonMetaClass := aClass instanceClass.
 	selectors := Set new.
 	classVars := Set new.
 	classVariables keysDo: 
-			[:each | 
+			[:each |
 			| cls |
 			cls := self classForName: each.
-			(cls notNil and: [nonMetaClass includesBehavior: cls]) 
+			(cls notNil and: [nonMetaClass includesBehavior: cls])
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do: 
-			[:each | 
+			[:each |
 			| binding |
 			binding := aClass bindingFor: each.
-			binding notNil 
-				ifTrue: [selectors addAll: (aClass whichSelectorsReferTo: binding)]].
+			binding notNil ifTrue: [selectors addAll: (aClass whichSelectorsReferTo: binding)]].
 	^selectors!
 
-classVariablesFor: aClass 
-	^classVariables at: aClass name ifAbsent: [#()]!
+classVariablesFor: aClass
+	^classVariables at: aClass fullName ifAbsent: [#()]!
 
 computeSelectorCacheFor: aClass 
 	^(self instanceVariableSelectorsFor: aClass)
@@ -135,47 +135,44 @@ copyDictionary: aDictionary
 			special copying for the dictionaries."
 	^aDictionary copy!
 
-environmentForClassVariable: aSymbol in: aClass 
+environmentForClassVariable: aSymbol in: aClass
 	| selectorEnvironment assoc block |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aSymbol.
-	((classVariables at: aClass name ifAbsent: [#()]) includes: aSymbol) 
+	((classVariables at: aClass fullName ifAbsent: [#()]) includes: aSymbol)
 		ifFalse: [^selectorEnvironment].
 	assoc := aClass bindingFor: aSymbol.
 	block := 
-			[:each | 
-			(each whichSelectorsReferTo: assoc) 
-				do: [:sel | selectorEnvironment addClass: each selector: sel]].
+			[:each |
+			(each whichSelectorsReferTo: assoc) do: [:sel | selectorEnvironment addClass: each selector: sel]].
 	aClass withAllSubclasses do: 
-			[:each | 
+			[:each |
 			block
 				value: each;
 				value: each class].
 	^selectorEnvironment!
 
-environmentForInstanceVariable: aString in: aClass 
+environmentForInstanceVariable: aString in: aClass
 	| selectorEnvironment isReader isWriter |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aString.
 	isReader := isWriter := false.
-	((instanceVariables at: aClass name ifAbsent: [#()]) includes: aString) 
+	((instanceVariables at: aClass fullName ifAbsent: [#()]) includes: aString)
 		ifTrue: 
 			[isReader := true.
 			isWriter := true].
-	((instanceVariableWriters at: aClass name ifAbsent: [#()]) 
-		includes: aString) ifTrue: [isWriter := true].
-	((instanceVariableReaders at: aClass name ifAbsent: [#()]) 
-		includes: aString) ifTrue: [isReader := true].
+	((instanceVariableWriters at: aClass fullName ifAbsent: [#()]) includes: aString)
+		ifTrue: [isWriter := true].
+	((instanceVariableReaders at: aClass fullName ifAbsent: [#()]) includes: aString)
+		ifTrue: [isReader := true].
 	aClass withAllSubclasses do: 
-			[:each | 
-			isWriter 
+			[:each |
+			isWriter
 				ifTrue: 
-					[(each whichSelectorsAssign: aString) 
-						do: [:sel | selectorEnvironment addClass: each selector: sel]].
-			isReader 
+					[(each whichSelectorsAssign: aString) do: [:sel | selectorEnvironment addClass: each selector: sel]].
+			isReader
 				ifTrue: 
-					[(each whichSelectorsRead: aString) 
-						do: [:sel | selectorEnvironment addClass: each selector: sel]]].
+					[(each whichSelectorsRead: aString) do: [:sel | selectorEnvironment addClass: each selector: sel]]].
 	^selectorEnvironment!
 
 flushCachesFor: aClass 
@@ -191,11 +188,11 @@ flushCachesFor: aClass
 includesCategory: aCategory 
 	^(self classNamesFor: aCategory) notEmpty!
 
-includesClass: aClass 
+includesClass: aClass
 	| name |
 	#rbFix.	"SW: The *Variable dictionaries are keyed by class name not class"
 	(super includesClass: aClass) ifFalse: [^false].
-	name := aClass name.
+	name := aClass fullName.
 	(instanceVariables includesKey: name) ifTrue: [^true].
 	(classVariables includesKey: name) ifTrue: [^true].
 	^(self selectorCacheFor: aClass) anySatisfy: [:each | self includesSelector: each in: aClass]!
@@ -237,10 +234,10 @@ instanceVariableSelectorsFor: aClass
 		do: [:each | selectors addAll: (aClass whichSelectorsAssign: each)].
 	^selectors!
 
-instanceVariablesFor: aClass 
+instanceVariablesFor: aClass
 	| vars name |
 	vars := Set new.
-	name := aClass name.
+	name := aClass fullName.
 	vars
 		addAll: (instanceVariables at: name ifAbsent: [#()]);
 		addAll: (instanceVariableReaders at: name ifAbsent: [#()]);
@@ -287,153 +284,149 @@ postCopy
 problemCount
 	^self numberVariables!
 
-removeClass: aClass classVariable: aSymbol 
+removeClass: aClass classVariable: aSymbol
 	| vars |
-	vars := classVariables at: aClass name ifAbsent: [Set new].
+	vars := classVariables at: aClass fullName ifAbsent: [Set new].
 	vars remove: aSymbol ifAbsent: [].
-	vars isEmpty ifTrue: [classVariables removeKey: aClass name ifAbsent: []].
+	vars isEmpty ifTrue: [classVariables removeKey: aClass fullName ifAbsent: []].
 	self flushCachesFor: aClass!
 
-removeClass: aClass instanceVariable: aString 
+removeClass: aClass instanceVariable: aString
 	| vars |
-	vars := instanceVariables at: aClass name ifAbsent: [Set new].
+	vars := instanceVariables at: aClass fullName ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariables removeKey: aClass name ifAbsent: []].
+	vars isEmpty ifTrue: [instanceVariables removeKey: aClass fullName ifAbsent: []].
 	self flushCachesFor: aClass!
 
-removeClass: aClass instanceVariableReader: aString 
+removeClass: aClass instanceVariableReader: aString
 	| vars |
-	vars := instanceVariableReaders at: aClass name ifAbsent: [Set new].
+	vars := instanceVariableReaders at: aClass fullName ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariableReaders removeKey: aClass name ifAbsent: []].
+	vars isEmpty ifTrue: [instanceVariableReaders removeKey: aClass fullName ifAbsent: []].
 	self flushCachesFor: aClass!
 
-removeClass: aClass instanceVariableWriter: aString 
+removeClass: aClass instanceVariableWriter: aString
 	| vars |
-	vars := instanceVariableWriters at: aClass name ifAbsent: [Set new].
+	vars := instanceVariableWriters at: aClass fullName ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariableWriters removeKey: aClass name ifAbsent: []].
+	vars isEmpty ifTrue: [instanceVariableWriters removeKey: aClass fullName ifAbsent: []].
 	self flushCachesFor: aClass!
 
 selectorCacheFor: aClass
 	^(selectorCache ifNil: [selectorCache := self lookupTableClass new]) at: aClass
 		ifAbsentPut: [self computeSelectorCacheFor: aClass]!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream
 		nextPut: $(;
-		nextPutAll: self class name;
+		nextPutAll: self class fullName;
 		nextPutAll: ' new '.
-	#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables) 
-		do: 
-			[:each | 
+	#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables) do: 
+			[:each |
 			aStream
 				nextPutAll: each;
 				nextPutAll: ': '.
 			(self perform: each) storeOn: aStream.
 			aStream nextPutAll: '; '].
 	aStream nextPutAll: ' yourself)'! !
-!VariableEnvironment categoriesFor: #accessorMethods!constants!private! !
-!VariableEnvironment categoriesFor: #addClass:classVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariableReader:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariableWriter:!accessing!public! !
-!VariableEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
-!VariableEnvironment categoriesFor: #classForName:!helpers!private! !
-!VariableEnvironment categoriesFor: #classNamesWithVariables!accessing!public! !
-!VariableEnvironment categoriesFor: #classVariables!accessing!private! !
-!VariableEnvironment categoriesFor: #classVariables:!accessing!private! !
-!VariableEnvironment categoriesFor: #classVariableSelectorsFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
-!VariableEnvironment categoriesFor: #computeSelectorCacheFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #copyDictionary:!copying!public! !
-!VariableEnvironment categoriesFor: #environmentForClassVariable:in:!accessing!public! !
-!VariableEnvironment categoriesFor: #environmentForInstanceVariable:in:!accessing!public! !
-!VariableEnvironment categoriesFor: #flushCachesFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #includesCategory:!public!testing! !
-!VariableEnvironment categoriesFor: #includesClass:!public!testing! !
-!VariableEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!VariableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!VariableEnvironment categoriesFor: #initialize!initialize/release!public! !
-!VariableEnvironment categoriesFor: #instanceVariableReaders!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableReaders:!public! !
-!VariableEnvironment categoriesFor: #instanceVariables!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariables:!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableSelectorsFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
-!VariableEnvironment categoriesFor: #instanceVariableWriters!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableWriters:!accessing!private! !
-!VariableEnvironment categoriesFor: #instVarsFor:in:!helpers!private! !
-!VariableEnvironment categoriesFor: #isEmpty!public!testing! !
-!VariableEnvironment categoriesFor: #lookupTableClass!constants!private! !
-!VariableEnvironment categoriesFor: #numberVariables!accessing!public! !
-!VariableEnvironment categoriesFor: #postCopy!copying!public! !
-!VariableEnvironment categoriesFor: #problemCount!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:classVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariableReader:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariableWriter:!accessing!public! !
-!VariableEnvironment categoriesFor: #selectorCacheFor:!accessing!private! !
-!VariableEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #accessorMethods!constants!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:classVariable:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariable:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariableReader:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariableWriter:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classForName:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classNamesWithVariables!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classVariables!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classVariables:!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classVariableSelectorsFor:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #computeSelectorCacheFor:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #copyDictionary:!copying!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #environmentForClassVariable:in:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #environmentForInstanceVariable:in:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #flushCachesFor:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableReaders!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableReaders:!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariables!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariables:!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableSelectorsFor:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableWriters!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableWriters:!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #instVarsFor:in:!helpers!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #lookupTableClass!constants!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #numberVariables!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #postCopy!copying!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:classVariable:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariable:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariableReader:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariableWriter:!accessing!public! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #selectorCacheFor:!accessing!private! !
+!Refactory.Browser.VariableEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!VariableEnvironment class methodsFor!
+!Refactory.Browser.VariableEnvironment class methodsFor!
 
-on: anEnvironment readersOfInstanceVariable: aString in: aClass 
+on: anEnvironment readersOfInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'Readers of ''' , aString , ''' in ' , aClass name;
+		label: 'Readers of ''' , aString , ''' in ' , aClass fullName;
 		addClass: aClass instanceVariableReader: aString;
 		yourself!
 
-on: anEnvironment referencesToClassVariable: aSymbol in: aClass 
+on: anEnvironment referencesToClassVariable: aSymbol in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'References to ''' , aSymbol , ''' in ' , aClass name;
+		label: 'References to ''' , aSymbol , ''' in ' , aClass fullName;
 		addClass: aClass classVariable: aSymbol;
 		yourself!
 
-on: anEnvironment referencesToInstanceVariable: aString in: aClass 
+on: anEnvironment referencesToInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'References to ''' , aString , ''' in ' , aClass name;
+		label: 'References to ''' , aString , ''' in ' , aClass fullName;
 		addClass: aClass instanceVariable: aString;
 		yourself!
 
-on: anEnvironment writersOfInstanceVariable: aString in: aClass 
+on: anEnvironment writersOfInstanceVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'Writers of ''' , aString , ''' in ' , aClass name;
+		label: 'Writers of ''' , aString , ''' in ' , aClass fullName;
 		addClass: aClass instanceVariableWriter: aString;
 		yourself!
 
-readersOfInstanceVariable: aString in: aClass 
-	^self 
+readersOfInstanceVariable: aString in: aClass
+	^self
 		on: BrowserEnvironment new
 		readersOfInstanceVariable: aString
 		in: aClass!
 
-referencesToClassVariable: aSymbol in: aClass 
-	^self 
+referencesToClassVariable: aSymbol in: aClass
+	^self
 		on: BrowserEnvironment new
 		referencesToClassVariable: aSymbol
 		in: aClass!
 
-referencesToInstanceVariable: aString in: aClass 
-	^self 
+referencesToInstanceVariable: aString in: aClass
+	^self
 		on: BrowserEnvironment new
 		referencesToInstanceVariable: aString
 		in: aClass!
 
-writersOfInstanceVariable: aString in: aClass 
-	^self 
+writersOfInstanceVariable: aString in: aClass
+	^self
 		on: BrowserEnvironment new
 		writersOfInstanceVariable: aString
 		in: aClass! !
-!VariableEnvironment class categoriesFor: #on:readersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:referencesToClassVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:referencesToInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:writersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #readersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #referencesToClassVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #referencesToInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #writersOfInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #on:readersOfInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #on:referencesToClassVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #on:referencesToInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #on:writersOfInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #readersOfInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #referencesToClassVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #referencesToInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesFor: #writersOfInstanceVariable:in:!instance creation!public! !
 

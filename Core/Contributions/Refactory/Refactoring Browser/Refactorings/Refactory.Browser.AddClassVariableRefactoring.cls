@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #AddClassVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.AddClassVariableRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddClassVariableRefactoring guid: (GUID fromString: '{b5dcf149-adbd-42de-9205-bcc093e0f2fc}')!
-AddClassVariableRefactoring comment: ''!
-!AddClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!AddClassVariableRefactoring methodsFor!
+Refactory.Browser.AddClassVariableRefactoring guid: (Core.GUID fromString: '{b5dcf149-adbd-42de-9205-bcc093e0f2fc}')!
+Refactory.Browser.AddClassVariableRefactoring comment: ''!
+!Refactory.Browser.AddClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AddClassVariableRefactoring methodsFor!
 
 preconditions
 	^(RBCondition isMetaclass: class) not 
@@ -20,6 +20,6 @@ preconditions
 
 transform
 	class addClassVariable: variableName! !
-!AddClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AddClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.AddClassVariableRefactoring categoriesFor: #transform!public!transforming! !
 

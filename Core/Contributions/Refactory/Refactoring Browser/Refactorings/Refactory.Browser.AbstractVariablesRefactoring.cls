@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactoring subclass: #AbstractVariablesRefactoring
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.AbstractVariablesRefactoring'
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractVariablesRefactoring guid: (GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
-AbstractVariablesRefactoring comment: ''!
-!AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
-!AbstractVariablesRefactoring methodsFor!
+Refactory.Browser.AbstractVariablesRefactoring guid: (Core.GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
+Refactory.Browser.AbstractVariablesRefactoring comment: ''!
+!Refactory.Browser.AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AbstractVariablesRefactoring methodsFor!
 
-abstractClassVariable: aString 
+abstractClassVariable: aString
 	| refactoring rewriter nonMetaClass |
 	nonMetaClass := fromClass nonMetaclass.
-	refactoring := CreateAccessorsForVariableRefactoring 
+	refactoring := CreateAccessorsForVariableRefactoring
 				model: self model
 				variable: aString
 				class: nonMetaClass
 				classVariable: true.
 	self performComponentRefactoring: refactoring.
 	rewriter := ParseTreeRewriter new.
-	fromClass isMeta 
+	fromClass isMeta
 		ifTrue: 
 			[rewriter
 				replace: aString , ' := ``@object'
@@ -30,8 +30,7 @@ abstractClassVariable: aString
 		ifFalse: 
 			[rewriter
 				replace: aString , ' := ``@object'
-					with: ('self class <1s> ``@object' 
-							expandMacrosWith: refactoring setterMethod);
+					with: ('self class <1s> ``@object' expandMacrosWith: refactoring setterMethod);
 				replace: aString with: 'self class ' , refactoring getterMethod].
 	(rewriter executeTree: tree) ifTrue: [tree := rewriter tree]!
 
@@ -44,9 +43,9 @@ abstractClassVariables
 		addAll: classVarWriters.
 	variables do: [:each | self abstractClassVariable: each]!
 
-abstractInstanceVariable: aString 
+abstractInstanceVariable: aString
 	| refactoring rewriter |
-	refactoring := CreateAccessorsForVariableRefactoring 
+	refactoring := CreateAccessorsForVariableRefactoring
 				model: self model
 				variable: aString
 				class: fromClass
@@ -68,14 +67,13 @@ abstractInstanceVariables
 		addAll: instVarWriters.
 	variables do: [:each | self abstractInstanceVariable: each]!
 
-abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName 
+abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName
 	| poolRefactoring |
 	tree := aBRProgramNode.
 	fromClass := self classObjectFor: fromBehavior.
-	toClasses := behaviorCollection 
-				collect: [:each | self classObjectFor: each].
+	toClasses := behaviorCollection collect: [:each | self classObjectFor: each].
 	ignore := aVariableName.
-	poolRefactoring := ExpandReferencedPoolsRefactoring 
+	poolRefactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: tree
 				fromClass: fromClass
@@ -96,8 +94,7 @@ computeVariablesToAbstract
 	classVarWriters := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher
-		matches: '`var := ``@anything'
-			do: [:aNode :answer | self processAssignmentNode: aNode];
+		matches: '`var := ``@anything' do: [:aNode :answer | self processAssignmentNode: aNode];
 		matches: '`var' do: [:aNode :answer | self processReferenceNode: aNode].
 	searcher executeTree: tree.
 	self removeDefinedClassVariables!
@@ -157,23 +154,23 @@ transform
 						expandMacros].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
-!AbstractVariablesRefactoring categoriesFor: #abstractClassVariable:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractClassVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariable:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
-!AbstractVariablesRefactoring categoriesFor: #classVariableNames!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #computeVariablesToAbstract!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #hasVariablesToAbstract!public!testing! !
-!AbstractVariablesRefactoring categoriesFor: #instanceVariableNames!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #parseTree!accessing!public! !
-!AbstractVariablesRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AbstractVariablesRefactoring categoriesFor: #processAssignmentNode:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #processReferenceNode:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #removeDefinedClassVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractClassVariable:!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractClassVariables!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariable:!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariables!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #classVariableNames!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #computeVariablesToAbstract!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #hasVariablesToAbstract!public!testing! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #instanceVariableNames!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #parseTree!accessing!public! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #processAssignmentNode:!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #processReferenceNode:!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #removeDefinedClassVariables!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #transform!public!transforming! !
 
-!AbstractVariablesRefactoring class methodsFor!
+!Refactory.Browser.AbstractVariablesRefactoring class methodsFor!
 
 model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection 
 	^self 
@@ -191,6 +188,6 @@ model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll
 			toAll: behaviorCollection
 			ignoring: aVariableName;
 		yourself! !
-!AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:!instance creation!public! !
-!AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
+!Refactory.Browser.AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:!instance creation!public! !
+!Refactory.Browser.AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
 

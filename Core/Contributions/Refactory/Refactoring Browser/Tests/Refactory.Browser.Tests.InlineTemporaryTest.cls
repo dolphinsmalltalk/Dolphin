@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #InlineTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineTemporaryTest guid: (GUID fromString: '{241fc5f5-5254-43d6-a840-dcd08c4e6b21}')!
-InlineTemporaryTest comment: ''!
-!InlineTemporaryTest categoriesForClass!Refactory-Testing! !
-!InlineTemporaryTest methodsFor!
+Refactory.Browser.Tests.InlineTemporaryTest guid: (Core.GUID fromString: '{241fc5f5-5254-43d6-a840-dcd08c4e6b21}')!
+Refactory.Browser.Tests.InlineTemporaryTest comment: ''!
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.InlineTemporaryTest methodsFor!
 
 testInlineTemporary
 	| refactoring |
@@ -18,7 +18,8 @@ testInlineTemporary
 				from: #inlineMethod
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineMethod)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #inlineMethod)
 		equals: (RBParser
 				parseMethod: 'inlineMethod
 										^self
@@ -27,27 +28,24 @@ testInlineTemporary
 													bar')!
 
 testInlineTemporaryBadInterval
-	self shouldFail: (InlineTemporaryRefactoring 
-				inline: (self convertInterval: (29 to: 100)
-						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
+	self shouldFail: (InlineTemporaryRefactoring
+				inline: (self convertInterval: (29 to: 100) for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				from: #moveDefinition
 				in: RefactoryTestDataApp)!
 
 testInlineTemporaryMutlipleAssignment
-	self shouldFail: (InlineTemporaryRefactoring 
-				inline: (self convertInterval: (60 to: 83)
-						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
+	self shouldFail: (InlineTemporaryRefactoring
+				inline: (self convertInterval: (60 to: 83) for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				from: #moveDefinition
 				in: RefactoryTestDataApp)!
 
 testInlineTemporaryReadBeforeWritten
-	self shouldFail: (InlineTemporaryRefactoring 
-				inline: (self convertInterval: (48 to: 56)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
+	self shouldFail: (InlineTemporaryRefactoring
+				inline: (self convertInterval: (48 to: 56) for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryBadInterval!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryMutlipleAssignment!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryReadBeforeWritten!public!tests! !
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryBadInterval!public!tests! !
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryMutlipleAssignment!public!tests! !
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryReadBeforeWritten!public!tests! !
 

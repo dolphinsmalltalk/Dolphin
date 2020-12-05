@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RBMethodName
+Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBMethodName guid: (GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
-RBMethodName comment: ''!
-!RBMethodName categoriesForClass!Refactory-Support! !
-!RBMethodName methodsFor!
+Refactory.Browser.RBMethodName guid: (Core.GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
+Refactory.Browser.RBMethodName comment: ''!
+!Refactory.Browser.RBMethodName categoriesForClass!Refactory-Support! !
+!Refactory.Browser.RBMethodName methodsFor!
 
 arguments
 	^arguments!
@@ -55,19 +55,19 @@ selectorSymbol
 setSelector: aSymbol arguments: anArray 
 	selector := aSymbol.
 	arguments := anArray! !
-!RBMethodName categoriesFor: #arguments!accessing!public! !
-!RBMethodName categoriesFor: #arguments:!accessing!public! !
-!RBMethodName categoriesFor: #isValid!public!testing! !
-!RBMethodName categoriesFor: #methodClass!accessing!public! !
-!RBMethodName categoriesFor: #moveArgument:before:!accessing!public! !
-!RBMethodName categoriesFor: #postCopy!copying!public! !
-!RBMethodName categoriesFor: #scope!public! !
-!RBMethodName categoriesFor: #selector!accessing!public! !
-!RBMethodName categoriesFor: #selector:!accessing!public! !
-!RBMethodName categoriesFor: #selectorSymbol!public!refactoring! !
-!RBMethodName categoriesFor: #setSelector:arguments:!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #arguments!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #arguments:!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #isValid!public!testing! !
+!Refactory.Browser.RBMethodName categoriesFor: #methodClass!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #moveArgument:before:!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #postCopy!copying!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #scope!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #selector!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #selector:!accessing!public! !
+!Refactory.Browser.RBMethodName categoriesFor: #selectorSymbol!public!refactoring! !
+!Refactory.Browser.RBMethodName categoriesFor: #setSelector:arguments:!public! !
 
-!RBMethodName class methodsFor!
+!Refactory.Browser.RBMethodName class methodsFor!
 
 new
 	^self selector: #'' arguments: #()!
@@ -76,6 +76,6 @@ selector: aSymbol arguments: stringCollection
 	^(self basicNew)
 		setSelector: aSymbol arguments: stringCollection;
 		yourself! !
-!RBMethodName class categoriesFor: #new!instance creation!public! !
-!RBMethodName class categoriesFor: #selector:arguments:!instance creation!public! !
+!Refactory.Browser.RBMethodName class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RBMethodName class categoriesFor: #selector:arguments:!instance creation!public! !
 

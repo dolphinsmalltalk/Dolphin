@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #RBNamespaceTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBNamespaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBNamespaceTest guid: (GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
-RBNamespaceTest comment: ''!
-!RBNamespaceTest categoriesForClass!Refactory-Testing! !
-!RBNamespaceTest methodsFor!
+Refactory.Browser.Tests.RBNamespaceTest guid: (Core.GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
+Refactory.Browser.Tests.RBNamespaceTest comment: ''!
+!Refactory.Browser.Tests.RBNamespaceTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RBNamespaceTest methodsFor!
 
 testAllClassesDo
 	| model classes |
@@ -17,19 +17,20 @@ testAllClassesDo
 	model := RBNamespace new.
 	model allClassesDo: 
 			[:each |
-			each name = #Object ifTrue: [each allSubclasses].
+			each name = #'Core.Object' ifTrue: [each allSubclasses].
 			classes := classes + 1].
 	BrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0!
 
 testDefineClassAfterDeletedChange
-	| st |
+	| st className |
 	st := RBNamespace new.
-	st removeClassNamed: self class name.
-	self deny: (st includesClassNamed: self class name).
+	className := self class fullName.
+	st removeClassNamed: className.
+	self deny: (st includesClassNamed: className).
 	st defineClass: self class definition.
-	self assert: (st includesClassNamed: self class name).
-	self denyIsNil: (st classNamed: self class name)!
+	self assert: (st includesClassNamed: className).
+	self denyIsNil: (st classNamed: className)!
 
 testDefineClassChange
 	| st |
@@ -46,14 +47,12 @@ testDefineClassChange
 testImplementors
 	| st |
 	st := RBNamespace new.
-	self assert: ((st allImplementorsOf: #printString) 
-				includes: (st classNamed: #Object)).
-	(st classNamed: #Object) removeMethod: #printString.
-	self deny: ((st allImplementorsOf: #printString) 
-				includes: (st classNamed: #Object))!
+	self assert: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object')).
+	(st classNamed: #'Core.Object') removeMethod: #printString.
+	self deny: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object'))!
 
 testIncludesClass
-	self assert: (RBNamespace new includesClassNamed: #Object).
+	self assert: (RBNamespace new includesClassNamed: #'Core.Object').
 	self deny: (RBNamespace new includesClassNamed: #Object1).
 	self
 		deny: ((RBNamespace
@@ -94,8 +93,8 @@ testRedefineClassChange
 				classVariableNames: ''A''
 				poolDictionaries: ''OpcodePool''
 				category: ''Refactory-Testing'''.
-	self assert: (st includesClassNamed: #Object).
-	self denyIsNil: (st classNamed: #Object)!
+	self assert: (st includesClassNamed: #'Core.Object').
+	self denyIsNil: (st classNamed: #'Core.Object')!
 
 testReferencesPrintOn
 	| hasFoundObject hasFoundSelf st |
@@ -104,13 +103,11 @@ testReferencesPrintOn
 	st := RBNamespace new.
 	st allReferencesTo: #printOn:
 		do: 
-			[:each | 
-			hasFoundObject := hasFoundObject or: 
-							[each selector = #printStringLimitedTo: 
-								and: [each modelClass = (st classNamed: #Object)]].
-			hasFoundSelf := hasFoundSelf or: 
-							[each selector = #testReferencesPrintOn 
-								and: [each modelClass = (st classNamed: self class name)]]].
+			[:each |
+			hasFoundObject := hasFoundObject
+						or: [each selector = #printStringLimitedTo: and: [each modelClass = (st classNamed: #'Core.Object')]].
+			hasFoundSelf := hasFoundSelf
+						or: [each selector = #testReferencesPrintOn and: [each modelClass = (st classNamed: self class fullName)]]].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf!
 
@@ -119,25 +116,25 @@ testReferencesPrintOnAfterRemove
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	st := RBNamespace new.
-	(st classNamed: #Object) removeMethod: #printString.
+	(st classNamed: #'Core.Object') removeMethod: #printString.
 	st allReferencesTo: #printOn:
 		do: 
-			[:each | 
-			hasFoundObject := hasFoundObject or: 
-							[each selector = #printString 
-								and: [each modelClass = (st classNamed: #Object)]].
+			[:each |
+			hasFoundObject := hasFoundObject
+						or: [each selector = #printString and: [each modelClass = (st classNamed: #'Core.Object')]].
 			hasFoundSelf := hasFoundSelf or: 
-							[each selector = #testReferencesPrintOnAfterRemove 
-								and: [each modelClass = (st classNamed: self class name)]]].
+							[each selector = #testReferencesPrintOnAfterRemove
+								and: [each modelClass = (st classNamed: self class fullName)]]].
 	self deny: hasFoundObject.
 	self assert: hasFoundSelf!
 
 testRemoveClassChange
-	| st |
+	| st className |
 	st := RBNamespace new.
-	st removeClassNamed: self class name.
-	self deny: (st includesClassNamed: self class name).
-	self assertIsNil: (st classNamed: self class name)!
+	className := self class fullName.
+	st removeClassNamed: className.
+	self deny: (st includesClassNamed: className).
+	self assertIsNil: (st classNamed: className)!
 
 testReparentSuperclassChange
 	| st superclass subclasses |
@@ -153,16 +150,16 @@ testRoots
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
-!RBNamespaceTest categoriesFor: #testAllClassesDo!class tests!public! !
-!RBNamespaceTest categoriesFor: #testDefineClassAfterDeletedChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testDefineClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testImplementors!class tests!public! !
-!RBNamespaceTest categoriesFor: #testIncludesClass!class tests!public! !
-!RBNamespaceTest categoriesFor: #testModelImplementorsSenders!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRedefineClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReferencesPrintOn!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterRemove!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRemoveClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReparentSuperclassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRoots!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testAllClassesDo!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassAfterDeletedChange!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassChange!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testImplementors!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testIncludesClass!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testModelImplementorsSenders!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRedefineClassChange!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOn!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterRemove!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRemoveClassChange!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReparentSuperclassChange!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRoots!class tests!public! !
 

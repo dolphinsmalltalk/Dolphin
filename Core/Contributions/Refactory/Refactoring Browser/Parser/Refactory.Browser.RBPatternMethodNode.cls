@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StMethodNode subclass: #RBPatternMethodNode
+Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternMethodNode guid: (GUID fromString: '{6846df75-8a6c-48dc-944d-453103430651}')!
-RBPatternMethodNode comment: 'RBPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
+Refactory.Browser.RBPatternMethodNode guid: (Core.GUID fromString: '{6846df75-8a6c-48dc-944d-453103430651}')!
+Refactory.Browser.RBPatternMethodNode comment: 'RBPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one argument method whereas `@keywords: would match 0 or more arguments)
 
 '!
-!RBPatternMethodNode categoriesForClass!Refactory-Parser! !
-!RBPatternMethodNode methodsFor!
+!Refactory.Browser.RBPatternMethodNode categoriesForClass!Refactory-Parser! !
+!Refactory.Browser.RBPatternMethodNode methodsFor!
 
 copyInContext: aDictionary
 	| selectors |
@@ -82,21 +82,21 @@ matchSelectorAgainst: aNode inContext: aDictionary
 selectorParts: tokenCollection arguments: variableNodes 
 	super selectorParts: tokenCollection arguments: variableNodes.
 	isList := (tokenCollection first value at: 2) == self listCharacter! !
-!RBPatternMethodNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #isPatternNode!public!testing/matching! !
-!RBPatternMethodNode categoriesFor: #isSelectorList!public!testing! !
-!RBPatternMethodNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #matchingClass!constants!public! !
-!RBPatternMethodNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #selectorParts:arguments:!initialize/release!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #copyInContext:!matching!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #isPatternNode!public!testing/matching! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #isSelectorList!public!testing! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #match:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchingClass!constants!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesFor: #selectorParts:arguments:!initialize/release!public! !
 
-!RBPatternMethodNode class methodsFor!
+!Refactory.Browser.RBPatternMethodNode class methodsFor!
 
 selectorParts: tokenCollection arguments: variableNodes 
 	^(tokenCollection anySatisfy: [:each | each isPatternVariable]) 
 		ifTrue: [super selectorParts: tokenCollection arguments: variableNodes]
 		ifFalse: 
 			[RBMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
-!RBPatternMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+!Refactory.Browser.RBPatternMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
 

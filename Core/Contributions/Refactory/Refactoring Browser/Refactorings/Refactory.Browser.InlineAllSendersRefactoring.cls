@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #InlineAllSendersRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineAllSendersRefactoring'
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineAllSendersRefactoring guid: (GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
-InlineAllSendersRefactoring comment: ''!
-!InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !
-!InlineAllSendersRefactoring methodsFor!
+Refactory.Browser.InlineAllSendersRefactoring guid: (Core.GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
+Refactory.Browser.InlineAllSendersRefactoring comment: ''!
+!Refactory.Browser.InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.InlineAllSendersRefactoring methodsFor!
 
 checkInlinedMethods
 	numberReplaced = 0 
 		ifTrue: [self refactoringError: 'Could not inline any senders']!
 
-inlineMessagesInClass: aClass andSelector: aSelector 
+inlineMessagesInClass: aClass andSelector: aSelector
 	| messagesToInline previousCountOfMessages |
 	previousCountOfMessages := 4294967295.	"Some really large
 number > # of initial self sends."
@@ -23,13 +23,13 @@ number > # of initial self sends."
 	[| tree |
 	tree := aClass parseTreeFor: aSelector.
 	messagesToInline := tree isNil ifTrue: [0] ifFalse: [self numberOfSelfSendsIn: tree].
-	messagesToInline > 0 and: [previousCountOfMessages > messagesToInline]] 
+	messagesToInline > 0 and: [previousCountOfMessages > messagesToInline]]
 			whileTrue: 
 				[| node |
 				previousCountOfMessages := messagesToInline.
 				node := self selfSendIn: (aClass parseTreeFor: aSelector).
 				self onError: 
-						[self performComponentRefactoring: (InlineMethodRefactoring 
+						[self performComponentRefactoring: (InlineMethodRefactoring
 									model: self model
 									inline: node sourceInterval
 									inMethod: aSelector
@@ -70,7 +70,7 @@ removeMethod
 						from: class)]
 		do: []!
 
-selfSendIn: aTree 
+selfSendIn: aTree
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: self messagePattern do: [:aNode :answer | ^aNode].
@@ -98,20 +98,20 @@ transform
 		inlineSelfSends;
 		removeMethod;
 		checkInlinedMethods! !
-!InlineAllSendersRefactoring categoriesFor: #checkInlinedMethods!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #inlineMessagesInClass:andSelector:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #inlineSelfSends!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #messagePattern!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #messagesNotReplaced!accessing!public! !
-!InlineAllSendersRefactoring categoriesFor: #numberOfSelfSendsIn:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineAllSendersRefactoring categoriesFor: #removeMethod!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #selfSendIn:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #sendersOf:in:!initialize/release!public! !
-!InlineAllSendersRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineAllSendersRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #checkInlinedMethods!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #inlineMessagesInClass:andSelector:!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #inlineSelfSends!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #messagePattern!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #messagesNotReplaced!accessing!public! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #numberOfSelfSendsIn:!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #removeMethod!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #selfSendIn:!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #sendersOf:in:!initialize/release!public! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #transform!public!transforming! !
 
-!InlineAllSendersRefactoring class methodsFor!
+!Refactory.Browser.InlineAllSendersRefactoring class methodsFor!
 
 model: aRBNamespace sendersOf: aSelector in: aClass 
 	^(self new)
@@ -121,6 +121,6 @@ model: aRBNamespace sendersOf: aSelector in: aClass
 
 sendersOf: aSelector in: aClass 
 	^self new sendersOf: aSelector in: aClass! !
-!InlineAllSendersRefactoring class categoriesFor: #model:sendersOf:in:!instance creation!public! !
-!InlineAllSendersRefactoring class categoriesFor: #sendersOf:in:!instance creation!public! !
+!Refactory.Browser.InlineAllSendersRefactoring class categoriesFor: #model:sendersOf:in:!instance creation!public! !
+!Refactory.Browser.InlineAllSendersRefactoring class categoriesFor: #sendersOf:in:!instance creation!public! !
 

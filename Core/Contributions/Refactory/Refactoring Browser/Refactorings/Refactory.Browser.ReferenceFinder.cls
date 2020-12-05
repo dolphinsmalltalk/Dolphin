@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ReferenceFinder
+Core.Object subclass: #'Refactory.Browser.ReferenceFinder'
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReferenceFinder guid: (GUID fromString: '{bfcfc047-1208-409c-965c-bda23170a192}')!
-ReferenceFinder comment: ''!
-!ReferenceFinder categoriesForClass!Refactory-Browser! !
-!ReferenceFinder methodsFor!
+Refactory.Browser.ReferenceFinder guid: (Core.GUID fromString: '{bfcfc047-1208-409c-965c-bda23170a192}')!
+Refactory.Browser.ReferenceFinder comment: ''!
+!Refactory.Browser.ReferenceFinder categoriesForClass!Refactory-Browser! !
+!Refactory.Browser.ReferenceFinder methodsFor!
 
 addBacklinkFrom: newObject to: anObject 
 	backlinks last at: newObject put: anObject!
@@ -25,7 +25,7 @@ backlinkFor: anObject
 			toObject notNil ifTrue: [^toObject]].
 	^nil!
 
-computePathFor: anObject 
+computePathFor: anObject
 	| path object |
 	path := OrderedCollection new.
 	object := anObject.
@@ -37,7 +37,7 @@ computePathFor: anObject
 find
 	self searchForObject!
 
-findAllPaths: aBlock 
+findAllPaths: aBlock
 	| paths |
 	paths := OrderedCollection new.
 	foundBlock := [:path | paths add: path].
@@ -97,13 +97,11 @@ searchForObject
 	objectsLeft := OrderedCollection new.
 	self addBacklinkLevel.
 	objects do: 
-			[:each | 
+			[:each |
 			| path |
-			(path := self searchVariablesIn: each) notNil 
-				ifTrue: [foundBlock value: path].
-			(path := self searchIndicesIn: each) notNil 
-				ifTrue: [foundBlock value: path]].
-	objectsLeft isEmpty] 
+			(path := self searchVariablesIn: each) notNil ifTrue: [foundBlock value: path].
+			(path := self searchIndicesIn: each) notNil ifTrue: [foundBlock value: path]].
+	objectsLeft isEmpty]
 			whileFalse!
 
 searchIndicesIn: anObject 
@@ -125,33 +123,33 @@ searchVariablesIn: anObject
 				notNil ifTrue: [^path]].
 	^nil!
 
-startFrom: anObject 
+startFrom: anObject
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.
 	objectsLeft := OrderedCollection with: anObject.
 	backlinks last at: anObject put: nil.
 	#rbFix.	"Because an Object will be found on the path Smalltalk->Processor->active Process->obj, we add the active process to the backlinks so it appears that it has already been searched"
 	backlinks last at: Processor activeProcess put: nil! !
-!ReferenceFinder categoriesFor: #addBacklinkFrom:to:!helpers!private! !
-!ReferenceFinder categoriesFor: #addBacklinkLevel!helpers!private! !
-!ReferenceFinder categoriesFor: #backlinkFor:!private! !
-!ReferenceFinder categoriesFor: #computePathFor:!private! !
-!ReferenceFinder categoriesFor: #find!private! !
-!ReferenceFinder categoriesFor: #findAllPaths:!accessing!public! !
-!ReferenceFinder categoriesFor: #findPath:!accessing!public! !
-!ReferenceFinder categoriesFor: #hasSearched:!private! !
-!ReferenceFinder categoriesFor: #identityDictionaryClass!private! !
-!ReferenceFinder categoriesFor: #initialize!initialize/release!private! !
-!ReferenceFinder categoriesFor: #printToDoNotice!private! !
-!ReferenceFinder categoriesFor: #processLinkTo:from:!private! !
-!ReferenceFinder categoriesFor: #searchForObject!private! !
-!ReferenceFinder categoriesFor: #searchIndicesIn:!private! !
-!ReferenceFinder categoriesFor: #searchVariablesIn:!private! !
-!ReferenceFinder categoriesFor: #startFrom:!initialize/release!public! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #addBacklinkFrom:to:!helpers!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #addBacklinkLevel!helpers!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #backlinkFor:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #computePathFor:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #find!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #findAllPaths:!accessing!public! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #findPath:!accessing!public! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #hasSearched:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #identityDictionaryClass!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #initialize!initialize/release!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #printToDoNotice!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #processLinkTo:from:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #searchForObject!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #searchIndicesIn:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #searchVariablesIn:!private! !
+!Refactory.Browser.ReferenceFinder categoriesFor: #startFrom:!initialize/release!public! !
 
-!ReferenceFinder class methodsFor!
+!Refactory.Browser.ReferenceFinder class methodsFor!
 
-findAllPathsTo: anObject 
+findAllPathsTo: anObject
 	"self findAllPathsTo: (Object compiledMethodAt: #printString)"
 
 	^self findAllPathsTo: anObject from: Smalltalk!
@@ -163,7 +161,7 @@ findAllPathsTo: anObject from: fromObject
 		startFrom: fromObject;
 		findAllPaths: [:each | each == anObject]!
 
-findAllPathsToInstanceOf: aBehavior 
+findAllPathsToInstanceOf: aBehavior
 	"self findAllPathsToInstanceOf: RefactoringBrowser"
 
 	^self findAllPathsToInstanceOf: aBehavior from: Smalltalk!
@@ -175,7 +173,7 @@ findAllPathsToInstanceOf: aBehavior from: fromObject
 		startFrom: fromObject;
 		findAllPaths: [:each | each basicClass == aBehavior]!
 
-findPathTo: anObject 
+findPathTo: anObject
 	^self findPathTo: anObject from: Smalltalk!
 
 findPathTo: anObject from: fromObject 
@@ -185,7 +183,7 @@ findPathTo: anObject from: fromObject
 		startFrom: fromObject;
 		findPath: [:each | each == anObject]!
 
-findPathToInstanceOf: aBehavior 
+findPathToInstanceOf: aBehavior
 	^self findPathToInstanceOf: aBehavior from: Smalltalk!
 
 findPathToInstanceOf: aBehavior from: fromObject 
@@ -199,13 +197,13 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!ReferenceFinder class categoriesFor: #findAllPathsTo:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsTo:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathTo:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathTo:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathToInstanceOf:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathToInstanceOf:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsTo:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsTo:from:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:from:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathTo:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathTo:from:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathToInstanceOf:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathToInstanceOf:from:!accessing!public! !
+!Refactory.Browser.ReferenceFinder class categoriesFor: #new!instance creation!public! !
 

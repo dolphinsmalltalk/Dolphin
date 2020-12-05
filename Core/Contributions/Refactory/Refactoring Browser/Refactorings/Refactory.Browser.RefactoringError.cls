@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #RefactoringError
+Core.Error subclass: #'Refactory.Browser.RefactoringError'
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringError guid: (GUID fromString: '{fd7b54c9-922a-4cff-9037-b84f75478283}')!
-RefactoringError comment: ''!
-!RefactoringError categoriesForClass!Refactory-Support! !
-!RefactoringError methodsFor!
+Refactory.Browser.RefactoringError guid: (Core.GUID fromString: '{fd7b54c9-922a-4cff-9037-b84f75478283}')!
+Refactory.Browser.RefactoringError comment: ''!
+!Refactory.Browser.RefactoringError categoriesForClass!Refactory-Support! !
+!Refactory.Browser.RefactoringError methodsFor!
 
 refactoring
 	^refactoring!
 
 refactoring: anObject
 	refactoring := anObject! !
-!RefactoringError categoriesFor: #refactoring!accessing!public! !
-!RefactoringError categoriesFor: #refactoring:!accessing!private! !
+!Refactory.Browser.RefactoringError categoriesFor: #refactoring!accessing!public! !
+!Refactory.Browser.RefactoringError categoriesFor: #refactoring:!accessing!private! !
 
-!RefactoringError class methodsFor!
+!Refactory.Browser.RefactoringError class methodsFor!
 
 refactoring: aRefactoring signal: messageText
 	^(self new)
@@ -30,6 +30,6 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
-!RefactoringError class categoriesFor: #refactoring:signal:!public! !
-!RefactoringError class categoriesFor: #refactoring:signal:with:!public! !
+!Refactory.Browser.RefactoringError class categoriesFor: #refactoring:signal:!public! !
+!Refactory.Browser.RefactoringError class categoriesFor: #refactoring:signal:with:!public! !
 

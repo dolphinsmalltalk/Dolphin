@@ -1,26 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #VariableTypeTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.VariableTypeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VariableTypeTest guid: (GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
-VariableTypeTest comment: ''!
-!VariableTypeTest categoriesForClass!Refactory-Testing! !
-!VariableTypeTest methodsFor!
+Refactory.Browser.Tests.VariableTypeTest guid: (Core.GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
+Refactory.Browser.Tests.VariableTypeTest comment: ''!
+!Refactory.Browser.Tests.VariableTypeTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.VariableTypeTest methodsFor!
 
 testBasicLintRuleTypes
 	| typer types |
 	typer := RefactoryTyper new.
 	types := typer guessTypesFor: 'classBlock' in: BasicLintRuleTest.
 	"self assert: types size = 1."
-	self assert: ([] class withAllSuperclasses 
+	self assert: ([] class withAllSuperclasses
 				anySatisfy: [:each | types includes: (typer model classFor: each)]).
 	types := typer typesFor: 'methodBlock' in: (typer model classFor: BasicLintRuleTest).
 	"self should: [types size = 2]."
-	self assert: ([] class withAllSuperclasses 
+	self assert: ([] class withAllSuperclasses
 				anySatisfy: [:each | types includes: (typer model classFor: each)]).
 	"self should: [types includes: MessageChannel]."
 	typer printString!
@@ -55,8 +55,8 @@ testParseTreeTypes
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
-!VariableTypeTest categoriesFor: #testBasicLintRuleTypes!public!unit tests! !
-!VariableTypeTest categoriesFor: #testCompositeLintRuleTypes!public!tests! !
-!VariableTypeTest categoriesFor: #testLintRuleTypes!public!tests! !
-!VariableTypeTest categoriesFor: #testParseTreeTypes!public!tests! !
+!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testBasicLintRuleTypes!public!unit tests! !
+!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testCompositeLintRuleTypes!public!tests! !
+!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testLintRuleTypes!public!tests! !
+!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testParseTreeTypes!public!tests! !
 

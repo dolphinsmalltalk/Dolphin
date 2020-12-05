@@ -1,86 +1,87 @@
 ﻿| package |
 package := Package name: 'RBTests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AbstractClassVariableTest}
-	#{AbstractInstanceVariableTest}
-	#{AddClassTest}
-	#{AddClassVariableTest}
-	#{AddInstanceVariableTest}
-	#{AddMethodTest}
-	#{AddParameterTest}
-	#{BrowserEnvironmentTest}
-	#{ChildrenToSiblingsTest}
-	#{CreateAccessorsForVariableTest}
-	#{ExtractMethodTest}
-	#{ExtractMethodToComponentTest}
-	#{ExtractToTemporaryTest}
-	#{FormatterTest}
-	#{InlineAllMethodTest}
-	#{InlineMethodFromComponentTest}
-	#{InlineMethodTest}
-	#{InlineParameterTest}
-	#{InlineTemporaryTest}
-	#{MoveMethodTest}
-	#{MoveVariableDefinitionTest}
-	#{ParserTest}
-	#{ProtectInstanceVariableTest}
-	#{PullUpClassVariableTest}
-	#{PushDownClassVariableTest}
-	#{PushDownInstanceVariableTest}
-	#{PushDownMethodTest}
-	#{PushUpInstanceVariableTest}
-	#{PushUpMethodTest}
-	#{RBClassTest}
-	#{RBConditionTest}
-	#{RBMethodTest}
-	#{RBNamespaceTest}
-	#{RefactoringBrowserTest}
-	#{RefactoringManagerTest}
-	#{RefactoringTest}
-	#{ReferenceFinderTest}
-	#{RemoveClassTest}
-	#{RemoveClassVariableTest}
-	#{RemoveInstanceVariableTest}
-	#{RemoveMethodTest}
-	#{RemoveParameterTest}
-	#{RenameClassTest}
-	#{RenameClassVariableTest}
-	#{RenameInstanceVariableTest}
-	#{RenameMethodTest}
-	#{RenameTemporaryTest}
-	#{SmalllintTest}
-	#{TemporaryToInstanceVariableTest}
-	#{VariableEnvironmentTest}
-	#{VariableTypeTest}
+	#{Refactory.Browser.Tests.AbstractClassVariableTest}
+	#{Refactory.Browser.Tests.AbstractInstanceVariableTest}
+	#{Refactory.Browser.Tests.AddClassTest}
+	#{Refactory.Browser.Tests.AddClassVariableTest}
+	#{Refactory.Browser.Tests.AddInstanceVariableTest}
+	#{Refactory.Browser.Tests.AddMethodTest}
+	#{Refactory.Browser.Tests.AddParameterTest}
+	#{Refactory.Browser.Tests.BrowserEnvironmentTest}
+	#{Refactory.Browser.Tests.ChildrenToSiblingsTest}
+	#{Refactory.Browser.Tests.CreateAccessorsForVariableTest}
+	#{Refactory.Browser.Tests.ExtractMethodTest}
+	#{Refactory.Browser.Tests.ExtractMethodToComponentTest}
+	#{Refactory.Browser.Tests.ExtractToTemporaryTest}
+	#{Refactory.Browser.Tests.FormatterTest}
+	#{Refactory.Browser.Tests.InlineAllMethodTest}
+	#{Refactory.Browser.Tests.InlineMethodFromComponentTest}
+	#{Refactory.Browser.Tests.InlineMethodTest}
+	#{Refactory.Browser.Tests.InlineParameterTest}
+	#{Refactory.Browser.Tests.InlineTemporaryTest}
+	#{Refactory.Browser.Tests.MoveMethodTest}
+	#{Refactory.Browser.Tests.MoveVariableDefinitionTest}
+	#{Refactory.Browser.Tests.ParserTest}
+	#{Refactory.Browser.Tests.ProtectInstanceVariableTest}
+	#{Refactory.Browser.Tests.PullUpClassVariableTest}
+	#{Refactory.Browser.Tests.PushDownClassVariableTest}
+	#{Refactory.Browser.Tests.PushDownInstanceVariableTest}
+	#{Refactory.Browser.Tests.PushDownMethodTest}
+	#{Refactory.Browser.Tests.PushUpInstanceVariableTest}
+	#{Refactory.Browser.Tests.PushUpMethodTest}
+	#{Refactory.Browser.Tests.RBClassTest}
+	#{Refactory.Browser.Tests.RBConditionTest}
+	#{Refactory.Browser.Tests.RBMethodTest}
+	#{Refactory.Browser.Tests.RBNamespaceTest}
+	#{Refactory.Browser.Tests.RefactoringBrowserTest}
+	#{Refactory.Browser.Tests.RefactoringManagerTest}
+	#{Refactory.Browser.Tests.RefactoringTest}
+	#{Refactory.Browser.Tests.ReferenceFinderTest}
+	#{Refactory.Browser.Tests.RemoveClassTest}
+	#{Refactory.Browser.Tests.RemoveClassVariableTest}
+	#{Refactory.Browser.Tests.RemoveInstanceVariableTest}
+	#{Refactory.Browser.Tests.RemoveMethodTest}
+	#{Refactory.Browser.Tests.RemoveParameterTest}
+	#{Refactory.Browser.Tests.RenameClassTest}
+	#{Refactory.Browser.Tests.RenameClassVariableTest}
+	#{Refactory.Browser.Tests.RenameInstanceVariableTest}
+	#{Refactory.Browser.Tests.RenameMethodTest}
+	#{Refactory.Browser.Tests.RenameTemporaryTest}
+	#{Refactory.Browser.Tests.SmalllintTest}
+	#{Refactory.Browser.Tests.TemporaryToInstanceVariableTest}
+	#{Refactory.Browser.Tests.VariableEnvironmentTest}
+	#{Refactory.Browser.Tests.VariableTypeTest}
 ).
 
 package setMethodNames: #(
-	#(#{BlockClosure} #isEqualTo:)
-	#(#{ByteArray} #isEqualTo:)
-	#(#{Collection} #isEqualTo:)
-	#(#{CompiledCode} #isEqualTo:)
-	#(#{Interval} #isEqualTo:)
-	#(#{Object} #isEqualTo:)
-	#(#{String} #isEqualTo:)
-	#(#{String} #withCRs)
-	#(#{SystemDictionary} #isEqualTo:)
+	#(#{Core.ByteArray} #isEqualTo:)
+	#(#{Core.Collection} #isEqualTo:)
+	#(#{Core.Interval} #isEqualTo:)
+	#(#{Core.Object} #isEqualTo:)
+	#(#{Core.String} #isEqualTo:)
+	#(#{Core.String} #withCRs)
+	#(#{Kernel.BlockClosure} #isEqualTo:)
+	#(#{Kernel.CompiledCode} #isEqualTo:)
+	#(#{Smalltalk class} #isEqualTo:)
 ).
 
 package setVariableNames: #(
-	#{RBFormatter1}
+	#{Refactory.Browser.RBFormatter1}
 ).
 
 package setAliasVariableNames: #(
-	#{RBFormatter1}
+	#{Refactory.Browser.RBFormatter1}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\Environments\RBEnvironments'
@@ -98,334 +99,327 @@ package!
 
 "Class Definitions"!
 
-TestCase subclass: #RefactoringBrowserTest
+XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RefactoringBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #BrowserEnvironmentTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
 	instanceVariableNames: 'browser universalEnvironment totalSelectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #FormatterTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.FormatterTest'
 	instanceVariableNames: 'settings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #ParserTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ParserTest'
 	instanceVariableNames: 'currentSelector classSearches rewrites'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #RBClassTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBClassTest'
 	instanceVariableNames: 'objectClass newClass messageNodeClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #RBMethodTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #RBNamespaceTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBNamespaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #RefactoringManagerTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #RefactoringTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringTest'
 	instanceVariableNames: 'manager changeSet model'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #ReferenceFinderTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ReferenceFinderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #SmalllintTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.SmalllintTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest subclass: #VariableTypeTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.VariableTypeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentTest subclass: #VariableEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.VariableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AbstractClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AbstractInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AddClassTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddClassTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AddClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AddInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AddMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #AddParameterTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddParameterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #ChildrenToSiblingsTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ChildrenToSiblingsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #CreateAccessorsForVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.CreateAccessorsForVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #ExtractMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #ExtractMethodToComponentTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodToComponentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #ExtractToTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractToTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #InlineAllMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineAllMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #InlineMethodFromComponentTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineMethodFromComponentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #InlineMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #InlineParameterTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineParameterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #InlineTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #MoveMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #MoveVariableDefinitionTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveVariableDefinitionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #ProtectInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ProtectInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PullUpClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PullUpClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PushDownClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PushDownInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PushDownMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PushUpInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushUpInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #PushUpMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushUpMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RBConditionTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RBConditionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RemoveClassTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveClassTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RemoveClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RemoveInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RemoveMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RemoveParameterTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveParameterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RenameClassTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RenameClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RenameInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RenameMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #RenameTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest subclass: #TemporaryToInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.TemporaryToInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Variable Aliases"!
 
-RBFormatter1 := RBConfigurableFormatter!
+Refactory.Browser.RBFormatter1 := Refactory.Browser.RBConfigurableFormatter!
 
 
 "Loose Methods"!
 
-!BlockClosure methodsFor!
-
-isEqualTo: aBlockClosure
-	self class = aBlockClosure class ifFalse: [^false].
-	^self method isEqualTo: aBlockClosure method! !
-!BlockClosure categoriesFor: #isEqualTo:!public!testing! !
-
-!ByteArray methodsFor!
+!Core.ByteArray methodsFor!
 
 isEqualTo: aByteArray
 	^self = aByteArray! !
-!ByteArray categoriesFor: #isEqualTo:!comparing!public! !
+!Core.ByteArray categoriesFor: #isEqualTo:!comparing!public! !
 
-!Collection methodsFor!
+!Core.Collection methodsFor!
 
 isEqualTo: anObject
 	^self class == anObject class and: 
@@ -433,12 +427,43 @@ isEqualTo: anObject
 					[| notFound |
 					notFound := Object new.
 					self allSatisfy: 
-							[:each | 
-							(anObject detect: [:eachOther | each isEqualTo: eachOther]
-								ifNone: [notFound]) ~~ notFound]]]! !
-!Collection categoriesFor: #isEqualTo:!comparing!public! !
+							[:each |
+							(anObject detect: [:eachOther | each isEqualTo: eachOther] ifNone: [notFound]) ~~ notFound]]]! !
+!Core.Collection categoriesFor: #isEqualTo:!comparing!public! !
 
-!CompiledCode methodsFor!
+!Core.Interval methodsFor!
+
+isEqualTo: anObject
+	^self class == anObject class and: [self = anObject]! !
+!Core.Interval categoriesFor: #isEqualTo:!public! !
+
+!Core.Object methodsFor!
+
+isEqualTo: anObject
+	^self = anObject! !
+!Core.Object categoriesFor: #isEqualTo:!public!testing! !
+
+!Core.String methodsFor!
+
+isEqualTo: aString
+	^self = aString!
+
+withCRs
+	| stream |
+	stream := self class writeStream: self size.
+	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
+	^stream contents! !
+!Core.String categoriesFor: #isEqualTo:!comparing!public! !
+!Core.String categoriesFor: #withCRs!converting!public! !
+
+!Kernel.BlockClosure methodsFor!
+
+isEqualTo: aBlockClosure
+	self class = aBlockClosure class ifFalse: [^false].
+	^self method isEqualTo: aBlockClosure method! !
+!Kernel.BlockClosure categoriesFor: #isEqualTo:!public!testing! !
+
+!Kernel.CompiledCode methodsFor!
 
 isEqualTo: aMethod
 	| count |
@@ -460,38 +485,13 @@ isEqualTo: aMethod
 				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
-!CompiledCode categoriesFor: #isEqualTo:!public!testing! !
+!Kernel.CompiledCode categoriesFor: #isEqualTo:!public!testing! !
 
-!Interval methodsFor!
-
-isEqualTo: anObject
-	^self class == anObject class and: [self = anObject]! !
-!Interval categoriesFor: #isEqualTo:!public! !
-
-!Object methodsFor!
-
-isEqualTo: anObject
-	^self = anObject! !
-!Object categoriesFor: #isEqualTo:!public!testing! !
-
-!String methodsFor!
-
-isEqualTo: aString
-	^self = aString!
-
-withCRs
-	| stream |
-	stream := self class writeStream: self size.
-	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
-	^stream contents! !
-!String categoriesFor: #isEqualTo:!comparing!public! !
-!String categoriesFor: #withCRs!converting!public! !
-
-!SystemDictionary methodsFor!
+!Smalltalk class methodsFor!
 
 isEqualTo: aSystemDictionary 
 	^aSystemDictionary == self! !
-!SystemDictionary categoriesFor: #isEqualTo:!public! !
+!Smalltalk class categoriesFor: #isEqualTo:!comparing!public! !
 
 "End of package definition"!
 

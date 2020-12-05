@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactoring subclass: #MethodRefactoring
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.MethodRefactoring'
 	instanceVariableNames: 'class'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodRefactoring guid: (GUID fromString: '{f93954e7-217f-4070-b44d-b7d1f1bc74d3}')!
-MethodRefactoring comment: ''!
-!MethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!MethodRefactoring methodsFor!
+Refactory.Browser.MethodRefactoring guid: (Core.GUID fromString: '{f93954e7-217f-4070-b44d-b7d1f1bc74d3}')!
+Refactory.Browser.MethodRefactoring comment: ''!
+!Refactory.Browser.MethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.MethodRefactoring methodsFor!
 
 buildSelectorString: aSelector
 	aSelector argumentCount = 0 ifTrue: [^aSelector].
@@ -23,13 +23,13 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 	keywords := aSelector keywords.
 	keywords with: anIntegerCollection
 		do: 
-			[:each :i | 
+			[:each :i |
 			stream
 				nextPutAll: each;
 				nextPutAll: ' ``@arg';
 				print: i;
-				nextPut: $ ].
+				nextPut: $\x20].
 	^stream contents! !
-!MethodRefactoring categoriesFor: #buildSelectorString:!private! !
-!MethodRefactoring categoriesFor: #buildSelectorString:withPermuteMap:!private! !
+!Refactory.Browser.MethodRefactoring categoriesFor: #buildSelectorString:!private! !
+!Refactory.Browser.MethodRefactoring categoriesFor: #buildSelectorString:withPermuteMap:!private! !
 

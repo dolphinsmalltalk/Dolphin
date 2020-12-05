@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #MoveMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveMethodRefactoring'
 	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoveMethodRefactoring guid: (GUID fromString: '{12a63bdc-2ded-4523-bc81-881a6bc3f085}')!
-MoveMethodRefactoring comment: ''!
-!MoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!MoveMethodRefactoring methodsFor!
+Refactory.Browser.MoveMethodRefactoring guid: (Core.GUID fromString: '{12a63bdc-2ded-4523-bc81-881a6bc3f085}')!
+Refactory.Browser.MoveMethodRefactoring comment: ''!
+!Refactory.Browser.MoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.MoveMethodRefactoring methodsFor!
 
 abstractVariables
 	self performComponentRefactoring: self abstractVariablesRefactoring.
@@ -48,9 +48,8 @@ checkForSuperReferences
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: 'super `@message: `@args' do: [:aNode :answer | true].
-	(searcher executeTree: parseTree initialAnswer: false) 
-		ifTrue: 
-			[self refactoringError: 'Cannot move the method since it has a super message send.']!
+	(searcher executeTree: parseTree initialAnswer: false)
+		ifTrue: [self refactoringError: 'Cannot move the method since it has a super message send.']!
 
 checkTemporaryVariableNames
 	| varNames |
@@ -83,11 +82,10 @@ compileNewMethods
 
 getAllClassesForGlobalOrClassVariable
 	"rbDmm added for MoveMethodRefactoring>>getClassForGlobalOrClassVariable"
-	
+
 	| baseClass |
-	baseClass := self model classNamed: #Object.
-	^baseClass allSubclasses asSortedCollection: [:x :y | x name < y name].
-	!
+	baseClass := self model classNamed: #'Core.Object'.
+	^baseClass allSubclasses asSortedCollection: [:x :y | x name < y name]!
 
 getArgumentNameForSelf
 	self needsToReplaceSelfReferences ifFalse: [^self].
@@ -115,22 +113,20 @@ getClassesForInstanceVariable
 	typer := RefactoryTyper newFor: self model.
 	typer runOn: definingClass.
 	types := typer typesFor: variable.
-	types isEmpty ifTrue: [types := OrderedCollection with: (self model classNamed: #Object)].
-	moveToClasses := self selectVariableTypesFrom: types
-				selected: (typer guessTypesFor: variable).
+	types isEmpty ifTrue: [types := OrderedCollection with: (self model classNamed: #'Core.Object')].
+	moveToClasses := self selectVariableTypesFrom: types selected: (typer guessTypesFor: variable).
 	#rbFix.	"Use the abort signal rather than an error to avoid annoying message box"
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
 
 getClassesForTemporaryVariable
 	| types |
-	types := RefactoryTyper 
+	types := RefactoryTyper
 				typesFor: variable
 				in: parseTree
 				model: self model.
-	types isEmpty 
-		ifTrue: [types := OrderedCollection with: (self model classNamed: #Object)].
+	types isEmpty ifTrue: [types := OrderedCollection with: (self model classNamed: #'Core.Object')].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
-	#rbFix. "Use the abort signal rather than an error to avoid annoying message box"
+	#rbFix.	"Use the abort signal rather than an error to avoid annoying message box"
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
 
 getClassesToMoveTo
@@ -152,7 +148,7 @@ getClassForGlobalOrClassVariable
 	definingClass isNil
 		ifTrue: 
 			[type := self model classNamed: variable asSymbol.
-			type isNil ifTrue: [type := self model classNamed: #Object]]
+			type isNil ifTrue: [type := self model classNamed: #'Core.Object']]
 		ifFalse: [type := definingClass typeOfClassVariable: variable].
 	moveToClasses := self selectVariableTypesFrom: self getAllClassesForGlobalOrClassVariable
 				selected: {type}.
@@ -190,7 +186,7 @@ getNewMethodName
 		andArguments: (parameters collect: [:each | RBVariableNode named: each]) asArray!
 
 hasOnlySelfReturns
-	^hasOnlySelfReturns isNil 
+	^hasOnlySelfReturns isNil
 		ifTrue: 
 			[| searcher |
 			searcher := ParseTreeSearcher new.
@@ -204,8 +200,7 @@ hasSelfReferences
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: 'self' do: [:aNode :answer | true].
-	self hasOnlySelfReturns 
-		ifTrue: [searcher matches: '^self' do: [:aNode :answer | answer]].
+	self hasOnlySelfReturns ifTrue: [searcher matches: '^self' do: [:aNode :answer | answer]].
 	^searcher executeTree: parseTree initialAnswer: false!
 
 isMovingToArgument
@@ -234,7 +229,7 @@ preconditions
 replaceSelfReferences
 	| replacer |
 	#rbFix.	"If there are no self references, then the selfVariableName is nil causing a DNU if we proceed"
-	selfVariableName isNil 
+	selfVariableName isNil
 		ifTrue: 
 			[self assert: [self needsToReplaceSelfReferences not].
 			^self].
@@ -284,37 +279,37 @@ transform
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
-!MoveMethodRefactoring categoriesFor: #abstractVariables!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #abstractVariablesRefactoring!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #buildParseTree!private! !
-!MoveMethodRefactoring categoriesFor: #checkAssignmentsToVariable!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkForPrimitiveMethod!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkForSuperReferences!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkTemporaryVariableNames!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #compileDelagatorMethod!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #compileNewMethods!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getArgumentNameForSelf!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #hasOnlySelfReturns!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #hasSelfReferences!public!testing! !
-!MoveMethodRefactoring categoriesFor: #isMovingToArgument!public!testing! !
-!MoveMethodRefactoring categoriesFor: #isMovingToInstVar!public!testing! !
-!MoveMethodRefactoring categoriesFor: #needsToReplaceSelfReferences!public!testing! !
-!MoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #replaceSelfReferences!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #replaceVariableReferences!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #selector:class:variable:!initialize/release!public! !
-!MoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!MoveMethodRefactoring categoriesFor: #transform!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #verifyTemporaryVariableDoesNotOverride!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #abstractVariables!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #abstractVariablesRefactoring!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #buildParseTree!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkAssignmentsToVariable!preconditions!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkForPrimitiveMethod!preconditions!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkForSuperReferences!preconditions!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkTemporaryVariableNames!preconditions!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #compileDelagatorMethod!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #compileNewMethods!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!accessing!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getArgumentNameForSelf!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!accessing!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!accessing!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!accessing!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!accessing!private! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #hasOnlySelfReturns!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #hasSelfReferences!public!testing! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #isMovingToArgument!public!testing! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #isMovingToInstVar!public!testing! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #needsToReplaceSelfReferences!public!testing! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #replaceSelfReferences!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #replaceVariableReferences!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #selector:class:variable:!initialize/release!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesFor: #verifyTemporaryVariableDoesNotOverride!public!transforming! !
 
-!MoveMethodRefactoring class methodsFor!
+!Refactory.Browser.MoveMethodRefactoring class methodsFor!
 
 model: aRBNamespace selector: aSymbol class: aClass variable: aVariableName 
 	^(self new)
@@ -330,6 +325,6 @@ selector: aSymbol class: aClass variable: aVariableName
 			class: aClass
 			variable: aVariableName;
 		yourself! !
-!MoveMethodRefactoring class categoriesFor: #model:selector:class:variable:!instance creation!public! !
-!MoveMethodRefactoring class categoriesFor: #selector:class:variable:!instance creation!public! !
+!Refactory.Browser.MoveMethodRefactoring class categoriesFor: #model:selector:class:variable:!instance creation!public! !
+!Refactory.Browser.MoveMethodRefactoring class categoriesFor: #selector:class:variable:!instance creation!public! !
 

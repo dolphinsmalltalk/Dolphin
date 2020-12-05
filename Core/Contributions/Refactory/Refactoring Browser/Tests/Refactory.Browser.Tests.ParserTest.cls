@@ -1,32 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #ParserTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ParserTest'
 	instanceVariableNames: 'currentSelector classSearches rewrites'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
-ParserTest comment: ''!
-!ParserTest categoriesForClass!Refactory-Testing! !
-!ParserTest methodsFor!
+Refactory.Browser.Tests.ParserTest guid: (Core.GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
+Refactory.Browser.Tests.ParserTest comment: ''!
+!Refactory.Browser.Tests.ParserTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ParserTest methodsFor!
 
 buildArgumentSearch
-	self 
+	self
 		createArgumentSearchWith: 'aSmalllintContext'
 		selectors: #(#checkMethod: #checkClass:)
 		inClass: BasicLintRuleTest!
 
 buildMessageSearch
-	self 
+	self
 		createSearchWith: '``@receiver -> ``@arg'
-		selectors: #(superSends superSends)
+		selectors: #(#superSends #superSends)
 		inClass: TransformationRuleTest!
 
 buildMethodArgumentSearch
 	"Two argument methods"
 
-	self 
+	self
 		createMethodSearchWith: '`arg1: `arg1 `arg2: `arg2 | `@temps | `@.Stmts'
 		selectors: #(#subclassOf:overrides: #createMatcherFor:method: #createParseTreeRule:name:)
 		inClass: BasicLintRuleTest class!
@@ -34,13 +34,13 @@ buildMethodArgumentSearch
 buildMethodSearch
 	"Simple forwarders"
 
-	self 
+	self
 		createMethodSearchWith: '`@methodName: `@args ^`@object `@methodName: `@args'
-		selectors: #(#problemCount isEmpty)
+		selectors: #(#problemCount #isEmpty)
 		inClass: TransformationRuleTest!
 
 buildMethodTitleSearch
-	self 
+	self
 		createMethodSearchWith: 'initialize | `@temps | `@.Stmts'
 		selectors: #(#initialize)
 		inClass: BasicLintRuleTest!
@@ -60,7 +60,7 @@ buildSimpleLiteralSearch
 	(classSearches at: BasicLintRuleTest class ifAbsentPut: [Set new]) add: search!
 
 buildSimpleVariableSearch
-	self 
+	self
 		createSearchWith: 'result'
 		selectors: #(#checkClass: #checkMethod: #isEmpty #problemCount #resetResult #resetResult #resetResult #result #result: #resultClass: #viewResults)
 		inClass: BasicLintRuleTest!
@@ -68,7 +68,7 @@ buildSimpleVariableSearch
 buildStatementSearch
 	"Two or more statements"
 
-	self 
+	self
 		createSearchWith: '| `@temps | ``@.Stmts1. ``.Stmt1. ``@.Stmts2. ``.Stmt2. ``@.Stmts3'
 		selectors: #(#checkMethod: #rewriteUsing: #viewResults #superSends)
 		inClass: TransformationRuleTest!
@@ -101,12 +101,12 @@ createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClas
 	search answer: selectorCollection asBag.
 	(classSearches at: aClass ifAbsentPut: [Set new]) add: search!
 
-createSearchWith: aCodeString selectors: selectorCollection inClass: aClass 
+createSearchWith: aCodeString selectors: selectorCollection inClass: aClass
 	| search |
 	search := ParseTreeSearcher new.
 	search matches: aCodeString
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [self error: 'failed'];
 				yourself].
@@ -126,31 +126,30 @@ parseAll
 	"
 
 	| progress errorsPresenter errors |
-	errorsPresenter := ListPresenter show.
+	errorsPresenter := UI.ListPresenter show.
 	errors := errorsPresenter model.
-	progress := ProgressDialog create: ProgressDialog defaultView
+	progress := UI.ProgressDialog create: UI.ProgressDialog defaultView
 				operation: 
-					[:progressIndicator | 
+					[:progressIndicator |
 					| count i |
 					i := 0.
 					count := Smalltalk allClasses size * 2.
 					Smalltalk allBehaviorsDo: 
-							[:each | 
+							[:each |
 							i := i + 1.
-							each compilerClass = Compiler 
+							each compilerClass = Compiler
 								ifTrue: 
 									[progress text: each name.
 									progressIndicator value: i / count * 100.
 									each selectors do: 
-											[:sel | 
+											[:sel |
 											| tree method |
 											method := each compiledMethodAt: sel.
-											[tree := method parseTree] on: SmalltalkParser errorClass
-												do: [:ex | errors add: method -> ex].
-											tree isNil 
+											[tree := method parseTree] on: Kernel.Parser errorClass do: [:ex | errors add: method -> ex].
+											tree isNil
 												ifFalse: 
-													[((Compiler compile: tree formattedCode in: each) 
-														isEqualTo: (Compiler compile: method getSource in: each)) 
+													[((Compiler compile: tree formattedCode in: each)
+														isEqualTo: (Compiler compile: method getSource in: each))
 															ifFalse: [errors add: method -> 'Mismatched parse trees']]]]].
 					errors].
 	^progress showModal!
@@ -210,25 +209,21 @@ testBestNodeFor
 
 testBlockRewrites
 	| rewriter tree |
-	tree := RBParser 
-				parseMethod: 'method: asdf
+	tree := RBParser parseMethod: 'method: asdf
 	<primitive: 1>
 	^asdf + self foo + asdf'.
 	rewriter := ParseTreeRewriter new.
-	rewriter 
+	rewriter
 		replace: 'asdf'
 		with: 'fdsa'
 		when: [:aNode | aNode parent parent isReturn].
-	rewriter replace: 'self foo'
-		withValueFrom: [:aNode | RBVariableNode named: aNode selector asString].
-	rewriter 
+	rewriter replace: 'self foo' withValueFrom: [:aNode | RBVariableNode named: aNode selector asString].
+	rewriter
 		replaceArgument: 'asdf'
 		withValueFrom: [:aNode | RBVariableNode named: 'xxx']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
-	self compare: tree
-		to: (RBParser 
-				parseMethod: 'method: asdf
+	self compare: tree to: (RBParser parseMethod: 'method: asdf
 	<primitive: 1>
 	^asdf +  foo + fdsa')!
 
@@ -243,7 +238,7 @@ testCascadeReplacement
 testComparingTrees
 	| class |
 	class := BasicLintRuleTest class.
-	class selectors 
+	class selectors
 		do: [:each | self compare: (class parseTreeFor: each) to: (class parseTreeFor: each)]!
 
 testCopy
@@ -296,7 +291,7 @@ testEqualToWithMappingAfterRewrite
 	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
 	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def')).
 	"The base case is the following:"
-	self assert: ((RBVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
+	self assert: ((RBVariableNode named: 'foo') equalTo: (Kernel.StParameterNode named: 'foo')
 				withMapping: LookupTable new)!
 
 testEqualToWithMappingRename
@@ -333,7 +328,7 @@ testFormatter
 	| class |
 	class := BasicLintRuleTest class.
 	class selectors do: 
-			[:each | 
+			[:each |
 			self compare: (class parseTreeFor: each)
 				to: (RBParser parseMethod: (class parseTreeFor: each) printString)]!
 
@@ -429,7 +424,7 @@ testMultimatch
 	| rewriter count |
 	count := 0.
 	rewriter := ParseTreeRewriter new.
-	rewriter 
+	rewriter
 		replace: '``@object at: ``@foo'
 		with: '``@object foo: ``@foo'
 		when: [:aNode | (count := count + 1) == 2].
@@ -467,11 +462,9 @@ testPatternCascade
 	rewriter replace: 'self `;messages; foo: 4; `;messages1'
 		with: 'self `;messages1; bar: 4; `;messages'.
 	self compare: (rewriter
-				executeTree: (RBParser 
-							parseExpression: 'self foo; printString; foo: 4; bar. self foo: 4');
+				executeTree: (RBParser parseExpression: 'self foo; printString; foo: 4; bar. self foo: 4');
 				tree)
-		to: (RBParser 
-				parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')!
+		to: (RBParser parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')!
 
 testPatternNodeCopy
 	| tree copy |
@@ -509,7 +502,7 @@ testPrimitives
 	self assert: (Object parseTreeFor: #basicAt:) isPrimitive.
 	#(#('foo ^true' false) #('foo <stdcall: void sleep> ^true' true) #('foo <overlap stdcall: void sleep> ^true' true) #('foo <virtual stdcall: void 1> ^true' true) #(' foo <primitive: 123> ^true' true))
 		do: [:each | self assert: (RBParser parseMethod: each first) isPrimitive equals: each last].
-	self should: [RBParser parseMethod: 'foo <some tag> ^true'] raise: SmalltalkParser errorClass!
+	self should: [RBParser parseMethod: 'foo <some tag> ^true'] raise: Kernel.Parser errorClass!
 
 testQuerying
 	| tree aNode arg1Node bNode |
@@ -570,8 +563,8 @@ testReadBeforeWritten
 			self assert: (read size = 1 and: [read includes: 'read'])]!
 
 testReadBeforeWritten1
-	self 
-		assert: (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (RBParser 
+	self
+		assert: (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (RBParser
 						parseMethod: 'addAll: aCollection 
 	"Answer aCollection, having added all elements
 	 of aCollection to the receiver.
@@ -600,7 +593,7 @@ testReadBeforeWritten1
 						ifFalse: [element == newObject]]
 							whileFalse: 
 								[(hashIndex := hashIndex + 1) > elementsSize ifTrue: [hashIndex := 1]]]].
-	^aCollection')) 
+	^aCollection'))
 				isEmpty!
 
 testReplacingNodes
@@ -620,13 +613,13 @@ testReplacingNodes
 		equals: (RBParser parseMethod: '+ q | q b | self ifTrue: [] ifFalse: [b := c]. q := b. ^q')!
 
 testRewriteMethods
-	#(#('arg1: a arg2: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg1: a arg2: b' 'arg2: a arg1: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg2: b arg2: a' '`arg1: `var1 `arg2: `var2 | `@temps | ``@.stmts. self `arg1: `var1 `arg2: `var2. `@.stmts1' '`arg2: `var1 `arg1: `var2 | `@temps | ``@.stmts. self `arg2: `var2 `arg2: `var1. `@.stmts1') #('arg1: a arg2: b | temp1 temp2 | self stmt1. self arg1: a arg2: b' 'arg1: a arg2: b | temp1 temp2 | [self stmt1] repeat' '`@args: `@vars | `@temps | `@.stmts. self `@args: `@vars' '`@args: `@vars | `@temps | [`@.stmts] repeat') #('+ a | temps | ^self primitiveValue' '- a | temps | ^self primitiveValue' '+ `temp | `@tmps | `@.stmts' '- `temp | `@tmps | `@.stmts') #('a self stmt1. self stmt2' 'a self stmt1. self stmt2' 'b | `@temps | `@.stmts' 'c | `@temps | `@.stmts')) 
+	#(#('arg1: a arg2: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg1: a arg2: b' 'arg2: a arg1: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg2: b arg2: a' '`arg1: `var1 `arg2: `var2 | `@temps | ``@.stmts. self `arg1: `var1 `arg2: `var2. `@.stmts1' '`arg2: `var1 `arg1: `var2 | `@temps | ``@.stmts. self `arg2: `var2 `arg2: `var1. `@.stmts1') #('arg1: a arg2: b | temp1 temp2 | self stmt1. self arg1: a arg2: b' 'arg1: a arg2: b | temp1 temp2 | [self stmt1] repeat' '`@args: `@vars | `@temps | `@.stmts. self `@args: `@vars' '`@args: `@vars | `@temps | [`@.stmts] repeat') #('+ a | temps | ^self primitiveValue' '- a | temps | ^self primitiveValue' '+ `temp | `@tmps | `@.stmts' '- `temp | `@tmps | `@.stmts') #('a self stmt1. self stmt2' 'a self stmt1. self stmt2' 'b | `@temps | `@.stmts' 'c | `@temps | `@.stmts'))
 		do: 
-			[:each | 
+			[:each |
 			| rewrite |
 			rewrite := ParseTreeRewriter new.
 			rewrite replaceMethod: (each at: 3) with: each last.
-			self compare: (RBParser 
+			self compare: (RBParser
 						parseMethod: (rewrite
 								executeTree: (RBParser parseMethod: each first);
 								tree) formattedCode)
@@ -634,25 +627,25 @@ testRewriteMethods
 			rewrite := ParseTreeRewriter new.
 			rewrite replaceTree: (RBParser parseRewriteMethod: (each at: 3))
 				withTree: (RBParser parseRewriteMethod: each last).
-			self compare: (RBParser 
+			self compare: (RBParser
 						parseMethod: (rewrite
 								executeTree: (RBParser parseMethod: each first);
 								tree) formattedCode)
 				to: (RBParser parseMethod: (each at: 2))]!
 
 testRewrites
-	#(#('[:c | |a| a foo1; foo2]' '[:c | |a| b foo1; foo2]' 'a' 'b') #('self foo: 1. bar foo1 foo: 2. (self foo: a) foo: (b foo: c)' 'self bar: 1. bar foo1 bar: 2. (self bar: a) bar: (b bar: c)' '``@rcvr foo: ``@arg1' '``@rcvr bar: ``@arg1') #('3 + 4' '4 + 4' '3' '4') #('a := self a' 'b := self a' 'a' 'b') #('^self at: 1 put: 2' '^self put: 1 put: 2' '^`@rcvr `at: `@arg1 put: `@arg2' '^`@rcvr put: `@arg1 put: `@arg2') #('1 + 2 + 3' '0 + 0 + 0' '`#literal' '0') #('1 + 2 + 3. 3 foo: 4' '3 + (2 + 1). 4 foo: 3' '``@rcvr `msg: ``@arg' '``@arg `msg: ``@rcvr') #('self foo: a bar: b. 1 foo: a bar: b' '2 foo: a bar: b. 1 foo: a bar: b' 'self `@msg: `@args' '2 `@msg: `@args') #('a := b. a := c + d' 'b := a. a := c + d' '`var1 := `var2' '`var2 := `var1') #('^self foo value: 1' 'self return: (self foo value: 1)' '^`@anything' 'self return: `@anything') #('self first; second. self first; second. self a. self b' '2 timesRepeat: [self first; second]. self a. self b' '`.Stmt1. `.Stmt1. `@.stmts' '2 timesRepeat: [`.Stmt1]. `@.stmts') #('[:a | self a: 1 c: 2; b]' '[:a | self d: 2 e: 1; f. self halt]' '`@rcvr `msg1: `@arg1 `msg2: `@arg2; `msg' '`@rcvr d: `@arg2 e: `@arg1; f. self halt') 
-"#('#{Object}' 'Object' '#{Object}' 'Object') #('Smalltalk.Object' 'Smalltalk.Object printString' '`var' '`var printString') #('Smalltalk. Object' 'Smalltalk printString. Object printString' '`var' '`var printString')") 
+	#(#('[:c | |a| a foo1; foo2]' '[:c | |a| b foo1; foo2]' 'a' 'b') #('self foo: 1. bar foo1 foo: 2. (self foo: a) foo: (b foo: c)' 'self bar: 1. bar foo1 bar: 2. (self bar: a) bar: (b bar: c)' '``@rcvr foo: ``@arg1' '``@rcvr bar: ``@arg1') #('3 + 4' '4 + 4' '3' '4') #('a := self a' 'b := self a' 'a' 'b') #('^self at: 1 put: 2' '^self put: 1 put: 2' '^`@rcvr `at: `@arg1 put: `@arg2' '^`@rcvr put: `@arg1 put: `@arg2') #('1 + 2 + 3' '0 + 0 + 0' '`#literal' '0') #('1 + 2 + 3. 3 foo: 4' '3 + (2 + 1). 4 foo: 3' '``@rcvr `msg: ``@arg' '``@arg `msg: ``@rcvr') #('self foo: a bar: b. 1 foo: a bar: b' '2 foo: a bar: b. 1 foo: a bar: b' 'self `@msg: `@args' '2 `@msg: `@args') #('a := b. a := c + d' 'b := a. a := c + d' '`var1 := `var2' '`var2 := `var1') #('^self foo value: 1' 'self return: (self foo value: 1)' '^`@anything' 'self return: `@anything') #('self first; second. self first; second. self a. self b' '2 timesRepeat: [self first; second]. self a. self b' '`.Stmt1. `.Stmt1. `@.stmts' '2 timesRepeat: [`.Stmt1]. `@.stmts') #('[:a | self a: 1 c: 2; b]' '[:a | self d: 2 e: 1; f. self halt]' '`@rcvr `msg1: `@arg1 `msg2: `@arg2; `msg' '`@rcvr d: `@arg2 e: `@arg1; f. self halt'))
 		do: 
-			[:each | 
+			[:each |
 			| rewrite |
 			rewrite := ParseTreeRewriter new.
 			rewrite replace: (each at: 3) with: each last.
-			self compare: (RBParser 
+			self compare: (RBParser
 						parseExpression: (rewrite
 								executeTree: (RBParser parseExpression: each first);
 								tree) formattedCode)
-				to: (RBParser parseExpression: (each at: 2))]!
+				to: (RBParser parseExpression: (each at: 2))]
+	"#('#{Object}' 'Object' '#{Object}' 'Object') #('Smalltalk.Object' 'Smalltalk.Object printString' '`var' '`var printString') #('Smalltalk. Object' 'Smalltalk printString. Object printString' '`var' '`var printString')"!
 
 testSearching
 	| searcher |
@@ -706,8 +699,8 @@ treeWithEverything
 
 verifyParser
 	Smalltalk allBehaviorsDo: 
-			[:each | 
-			each compilerClass = Compiler 
+			[:each |
+			each compilerClass = Compiler
 				ifTrue: [each selectors do: [:sel | self verifySelector: sel inClass: each]]]!
 
 verifySelector: aSelector inClass: aClass
@@ -742,64 +735,64 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
 			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
-!ParserTest categoriesFor: #buildArgumentSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMessageSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodArgumentSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodTitleSearch!accessing!public! !
-!ParserTest categoriesFor: #buildSimpleLiteralSearch!accessing!public! !
-!ParserTest categoriesFor: #buildSimpleVariableSearch!accessing!public! !
-!ParserTest categoriesFor: #buildStatementSearch!accessing!public! !
-!ParserTest categoriesFor: #compare:to:!accessing!public! !
-!ParserTest categoriesFor: #createArgumentSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #createMethodSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #createSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #currentSelector!accessing!public! !
-!ParserTest categoriesFor: #errorSignal!public! !
-!ParserTest categoriesFor: #parseAll!long running!public! !
-!ParserTest categoriesFor: #parseError:!private! !
-!ParserTest categoriesFor: #setUp!accessing!public! !
-!ParserTest categoriesFor: #testAllSearches!public!unit tests! !
-!ParserTest categoriesFor: #testArray!public!unit tests! !
-!ParserTest categoriesFor: #testBestNodeFor!public! !
-!ParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
-!ParserTest categoriesFor: #testCascadeReplacement!public!unit tests! !
-!ParserTest categoriesFor: #testComparingTrees!public!unit tests! !
-!ParserTest categoriesFor: #testCopy!public!unit tests! !
-!ParserTest categoriesFor: #testCreationProtocol!public!unit tests! !
-!ParserTest categoriesFor: #testEquality!public!unit tests! !
-!ParserTest categoriesFor: #testEqualToWithMappingAfterRewrite!public!unit tests! !
-!ParserTest categoriesFor: #testEqualToWithMappingRename!public!unit tests! !
-!ParserTest categoriesFor: #testEquivalentExceptRenaming!public!unit tests! !
-!ParserTest categoriesFor: #testExtendedLiterals!public!unit tests! !
-!ParserTest categoriesFor: #testFormatter!public!unit tests! !
-!ParserTest categoriesFor: #testIntervals!public!unit tests! !
-!ParserTest categoriesFor: #testIsA!public!unit tests! !
-!ParserTest categoriesFor: #testLiteralIntevals!public!unit tests! !
-!ParserTest categoriesFor: #testLiteralMessages!public!unit tests! !
-!ParserTest categoriesFor: #testLiterals!public!unit tests! !
-!ParserTest categoriesFor: #testMethodPatterns!public!unit tests! !
-!ParserTest categoriesFor: #testModifying!public!unit tests! !
-!ParserTest categoriesFor: #testMultimatch!public!unit tests! !
-!ParserTest categoriesFor: #testNodesDo!public!unit tests! !
-!ParserTest categoriesFor: #testNumberParsing!public!unit tests! !
-!ParserTest categoriesFor: #testParserErrors!public!unit tests! !
-!ParserTest categoriesFor: #testParsingLiteralMessages!public!unit tests! !
-!ParserTest categoriesFor: #testPatternCascade!public!unit tests! !
-!ParserTest categoriesFor: #testPatternNodeCopy!public!unit tests! !
-!ParserTest categoriesFor: #testPositions!public!unit tests! !
-!ParserTest categoriesFor: #testPrimitives!public!unit tests! !
-!ParserTest categoriesFor: #testQuerying!public!unit tests! !
-!ParserTest categoriesFor: #testReadBeforeWritten!public!unit tests! !
-!ParserTest categoriesFor: #testReadBeforeWritten1!public!unit tests! !
-!ParserTest categoriesFor: #testReplacingNodes!public!unit tests! !
-!ParserTest categoriesFor: #testRewriteMethods!public!unit tests! !
-!ParserTest categoriesFor: #testRewrites!public!unit tests! !
-!ParserTest categoriesFor: #testSearching!public!unit tests! !
-!ParserTest categoriesFor: #testSmallDictionary!public!unit tests! !
-!ParserTest categoriesFor: #testTokens!public!unit tests! !
-!ParserTest categoriesFor: #treeWithEverything!private! !
-!ParserTest categoriesFor: #verifyParser!long running!public! !
-!ParserTest categoriesFor: #verifySelector:inClass:!private! !
-!ParserTest categoriesFor: #verifyTree:isDeepCopyOf:!private! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildArgumentSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMessageSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodArgumentSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodTitleSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildSimpleLiteralSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildSimpleVariableSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #buildStatementSearch!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #compare:to:!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #createArgumentSearchWith:selectors:inClass:!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #createMethodSearchWith:selectors:inClass:!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #createSearchWith:selectors:inClass:!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #currentSelector!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #errorSignal!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #parseAll!long running!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #parseError:!private! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #setUp!accessing!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testAllSearches!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testArray!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testBestNodeFor!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testCascadeReplacement!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testComparingTrees!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testCopy!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testCreationProtocol!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testEquality!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testEqualToWithMappingAfterRewrite!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testEqualToWithMappingRename!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testEquivalentExceptRenaming!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testExtendedLiterals!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testFormatter!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testIntervals!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testIsA!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiteralIntevals!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiteralMessages!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiterals!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testMethodPatterns!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testModifying!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testMultimatch!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testNodesDo!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testNumberParsing!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testParserErrors!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testParsingLiteralMessages!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testPatternCascade!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testPatternNodeCopy!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testPositions!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testPrimitives!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testQuerying!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testReadBeforeWritten!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testReadBeforeWritten1!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testReplacingNodes!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testRewriteMethods!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testRewrites!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testSearching!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testSmallDictionary!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #testTokens!public!unit tests! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #treeWithEverything!private! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #verifyParser!long running!public! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #verifySelector:inClass:!private! !
+!Refactory.Browser.Tests.ParserTest categoriesFor: #verifyTree:isDeepCopyOf:!private! !
 

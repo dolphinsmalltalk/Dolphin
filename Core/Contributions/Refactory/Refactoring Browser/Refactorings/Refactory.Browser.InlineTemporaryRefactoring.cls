@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #InlineTemporaryRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineTemporaryRefactoring guid: (GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
-InlineTemporaryRefactoring comment: ''!
-!InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
-!InlineTemporaryRefactoring methodsFor!
+Refactory.Browser.InlineTemporaryRefactoring guid: (Core.GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
+Refactory.Browser.InlineTemporaryRefactoring comment: ''!
+!Refactory.Browser.InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.InlineTemporaryRefactoring methodsFor!
 
 checkMultipleAssignments
 	self hasOnlyOneAssignment 
@@ -17,7 +17,7 @@ checkMultipleAssignments
 
 checkReadBeforeWritten
 	(RBReadBeforeWrittenTester isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode) 
+		writtenBeforeReadIn: definingNode)
 			ifFalse: [self refactoringError: 'The variable is possibly read before it is assigned']!
 
 compileMethod
@@ -36,8 +36,7 @@ determineVariableDefinition
 hasOnlyOneAssignment
 	| searcher |
 	searcher := ParseTreeSearcher new.
-	searcher matches: assignmentNode variable name , ' := ``@object'
-		do: [:aNode :answer | answer + 1].
+	searcher matches: assignmentNode variable name , ' := ``@object' do: [:aNode :answer | answer + 1].
 	^(searcher executeTree: definingNode initialAnswer: 0) == 1!
 
 inline: anInterval from: aSelector in: aClass 
@@ -66,8 +65,7 @@ replaceAssignment
 replaceReferences
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
-	rewriter replaceTree: assignmentNode variable
-		withTree: assignmentNode value.
+	rewriter replaceTree: assignmentNode variable withTree: assignmentNode value.
 	definingNode removeTemporaryNamed: assignmentNode variable name.
 	rewriter executeTree: definingNode!
 
@@ -95,22 +93,22 @@ verifySelectedInterval
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
 	self checkReadBeforeWritten! !
-!InlineTemporaryRefactoring categoriesFor: #checkMultipleAssignments!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #checkReadBeforeWritten!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #compileMethod!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #determineAssignmentNode!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #determineVariableDefinition!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #hasOnlyOneAssignment!public!testing! !
-!InlineTemporaryRefactoring categoriesFor: #inline:from:in:!initialize/release!public! !
-!InlineTemporaryRefactoring categoriesFor: #parseMethod!helpers!private! !
-!InlineTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineTemporaryRefactoring categoriesFor: #replaceAssignment!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #replaceReferences!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #checkMultipleAssignments!preconditions!private! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #checkReadBeforeWritten!preconditions!private! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #compileMethod!public!transforming! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #determineAssignmentNode!preconditions!private! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #determineVariableDefinition!preconditions!private! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #hasOnlyOneAssignment!public!testing! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #inline:from:in:!initialize/release!public! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #parseMethod!helpers!private! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #replaceAssignment!public!transforming! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #replaceReferences!public!transforming! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
 
-!InlineTemporaryRefactoring class methodsFor!
+!Refactory.Browser.InlineTemporaryRefactoring class methodsFor!
 
 inline: anInterval from: aSelector in: aClass 
 	^self new 
@@ -125,6 +123,6 @@ model: aRBNamespace inline: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!InlineTemporaryRefactoring class categoriesFor: #inline:from:in:!instance creation!public! !
-!InlineTemporaryRefactoring class categoriesFor: #model:inline:from:in:!instance creation!public! !
+!Refactory.Browser.InlineTemporaryRefactoring class categoriesFor: #inline:from:in:!instance creation!public! !
+!Refactory.Browser.InlineTemporaryRefactoring class categoriesFor: #model:inline:from:in:!instance creation!public! !
 

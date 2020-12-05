@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #AddMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.AddMethodRefactoring'
 	instanceVariableNames: 'protocols source'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddMethodRefactoring guid: (GUID fromString: '{0b0bb59d-7de6-47b2-80aa-a0e9868e6ac4}')!
-AddMethodRefactoring comment: ''!
-!AddMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!AddMethodRefactoring methodsFor!
+Refactory.Browser.AddMethodRefactoring guid: (Core.GUID fromString: '{0b0bb59d-7de6-47b2-80aa-a0e9868e6ac4}')!
+Refactory.Browser.AddMethodRefactoring comment: ''!
+!Refactory.Browser.AddMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AddMethodRefactoring methodsFor!
 
 addMethod: aString toClass: aClass inProtocols: protocolList 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."
@@ -44,12 +44,12 @@ storeOn: aStream
 
 transform
 	class compile: source classified: protocols! !
-!AddMethodRefactoring categoriesFor: #addMethod:toClass:inProtocols:!initialize/release!public! !
-!AddMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AddMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddMethodRefactoring categoriesFor: #addMethod:toClass:inProtocols:!initialize/release!public! !
+!Refactory.Browser.AddMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.AddMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.AddMethodRefactoring categoriesFor: #transform!public!transforming! !
 
-!AddMethodRefactoring class methodsFor!
+!Refactory.Browser.AddMethodRefactoring class methodsFor!
 
 addMethod: aString toClass: aClass inProtocols: protocolList 
 	^self new addMethod: aString
@@ -63,6 +63,6 @@ model: aRBNamespace addMethod: aString toClass: aClass inProtocols: protocolList
 			toClass: aClass
 			inProtocols: protocolList;
 		yourself! !
-!AddMethodRefactoring class categoriesFor: #addMethod:toClass:inProtocols:!instance creation!public! !
-!AddMethodRefactoring class categoriesFor: #model:addMethod:toClass:inProtocols:!instance creation!public! !
+!Refactory.Browser.AddMethodRefactoring class categoriesFor: #addMethod:toClass:inProtocols:!instance creation!public! !
+!Refactory.Browser.AddMethodRefactoring class categoriesFor: #model:addMethod:toClass:inProtocols:!instance creation!public! !
 

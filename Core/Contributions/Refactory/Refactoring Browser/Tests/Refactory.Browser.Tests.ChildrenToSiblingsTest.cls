@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #ChildrenToSiblingsTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ChildrenToSiblingsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChildrenToSiblingsTest guid: (GUID fromString: '{ca54e227-44a3-41c9-aab6-bd11a852bf74}')!
-ChildrenToSiblingsTest comment: ''!
-!ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !
-!ChildrenToSiblingsTest methodsFor!
+Refactory.Browser.Tests.ChildrenToSiblingsTest guid: (Core.GUID fromString: '{ca54e227-44a3-41c9-aab6-bd11a852bf74}')!
+Refactory.Browser.Tests.ChildrenToSiblingsTest comment: ''!
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest methodsFor!
 
 setUp
 	super setUp.
@@ -24,7 +24,7 @@ testBadName
 testExistingName
 	self
 		shouldFail: (ChildrenToSiblingsRefactoring
-					name: #Object
+					name: #'Core.Object'
 					class: LintRuleTest
 					subclasses: {BasicLintRuleTest. CompositeLintRuleTest});
 		shouldFail: (ChildrenToSiblingsRefactoring
@@ -95,10 +95,10 @@ testModelChildrenToSibling
 	self assert: (class metaclass parseTreeFor: #bar)
 		equals: (RBParser parseMethod: 'bar
 							^self printString')! !
-!ChildrenToSiblingsTest categoriesFor: #setUp!public!set up! !
-!ChildrenToSiblingsTest categoriesFor: #testBadName!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testExistingName!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testInvalidSubclass!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testModelChildrenToSibling!public!tests! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #testBadName!failure tests!public! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #testExistingName!failure tests!public! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #testInvalidSubclass!failure tests!public! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #testMetaClassFailure!failure tests!public! !
+!Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesFor: #testModelChildrenToSibling!public!tests! !
 

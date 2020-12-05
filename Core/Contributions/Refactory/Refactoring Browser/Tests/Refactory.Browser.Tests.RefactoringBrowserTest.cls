@@ -1,36 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #RefactoringBrowserTest
+XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RefactoringBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringBrowserTest guid: (GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!
-RefactoringBrowserTest isAbstract: true!
-RefactoringBrowserTest comment: 'SUnitBrowser openOnTestCase: self'!
-!RefactoringBrowserTest categoriesForClass!Refactory-Testing! !
-!RefactoringBrowserTest methodsFor!
+Refactory.Browser.Tests.RefactoringBrowserTest guid: (Core.GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!
+Refactory.Browser.Tests.RefactoringBrowserTest isNonInstantiable: true!
+Refactory.Browser.Tests.RefactoringBrowserTest comment: 'SUnitBrowser openOnTestCase: self'!
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RefactoringBrowserTest methodsFor!
 
-convertInterval: anInterval for: aString 
+convertInterval: anInterval for: aString
 	| startOffset stopOffset index |
 	startOffset := 0.
 	index := 1.
-	
-	[index < (anInterval first + startOffset) 
-		and: [index + startOffset <= aString size]] 
-			whileTrue: 
-				[(aString at: index + startOffset) == Character lf
-					ifTrue: [startOffset := startOffset + 1]
-					ifFalse: [index := index + 1]].
+	[index < (anInterval first + startOffset) and: [index + startOffset <= aString size]] whileTrue: 
+			[(aString at: index + startOffset) == Character lf
+				ifTrue: [startOffset := startOffset + 1]
+				ifFalse: [index := index + 1]].
 	stopOffset := startOffset.
-	
-	[index < (anInterval last + startOffset) 
-		and: [index + stopOffset <= aString size]] 
-			whileTrue: 
-				[(aString at: index + stopOffset) == Character lf
-					ifTrue: [stopOffset := stopOffset + 1]
-					ifFalse: [index := index + 1]].
+	[index < (anInterval last + startOffset) and: [index + stopOffset <= aString size]] whileTrue: 
+			[(aString at: index + stopOffset) == Character lf
+				ifTrue: [stopOffset := stopOffset + 1]
+				ifFalse: [index := index + 1]].
 	^anInterval first + startOffset to: anInterval last + stopOffset!
 
 executeRefactoring: aRefactoring 
@@ -40,21 +34,20 @@ executeRefactoring: aRefactoring
 objectClassVariable
 	^Object classPool keys detect: [:each | true]!
 
-proceedThroughWarning: aBlock 
-	#rbFix. "Use ANSI standard #resume"
-"	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
-	aBlock on: RefactoringWarning do: [:ex | ex resume]
-! !
-!RefactoringBrowserTest categoriesFor: #convertInterval:for:!private! !
-!RefactoringBrowserTest categoriesFor: #executeRefactoring:!private! !
-!RefactoringBrowserTest categoriesFor: #objectClassVariable!private! !
-!RefactoringBrowserTest categoriesFor: #proceedThroughWarning:!private! !
+proceedThroughWarning: aBlock
+	#rbFix.	"Use ANSI standard #resume"
+	"	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
+	aBlock on: RefactoringWarning do: [:ex | ex resume]! !
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #convertInterval:for:!private! !
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #executeRefactoring:!private! !
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #objectClassVariable!private! !
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #proceedThroughWarning:!private! !
 
-!RefactoringBrowserTest class methodsFor!
+!Refactory.Browser.Tests.RefactoringBrowserTest class methodsFor!
 
 shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
-!RefactoringBrowserTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
+!Refactory.Browser.Tests.RefactoringBrowserTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
 

@@ -1,28 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBAbstractClass subclass: #RBMetaclass
+Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBMetaclass guid: (GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
-RBMetaclass comment: 'RBMetaclass represents a Metaclass.
+Refactory.Browser.RBMetaclass guid: (Core.GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
+Refactory.Browser.RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 '!
-!RBMetaclass categoriesForClass!Refactory-Model! !
-!RBMetaclass methodsFor!
+!Refactory.Browser.RBMetaclass categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBMetaclass methodsFor!
 
 allClassVariableNames
 	^self nonMetaclass allClassVariableNames!
 
-allPoolDictionaryNames
-	^self nonMetaclass allPoolDictionaryNames!
+allImports
+	^self nonMetaclass allImports!
 
 directlyDefinesClassVariable: aString 
 	^self nonMetaclass directlyDefinesClassVariable: aString!
 
-directlyDefinesPoolDictionary: aString 
-	^self nonMetaclass directlyDefinesPoolDictionary: aString!
+directlyImportsNamespace: aString
+	^self nonMetaclass directlyImportsNamespace: aString!
+
+fullyQualifiedReference
+	"Answer a <BindingReference> to this class."
+
+	^self soleInstance fullyQualifiedReference meta!
 
 isMeta
 	^true!
@@ -40,24 +45,25 @@ realName: aSymbol
 storeOn: aStream 
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'! !
-!RBMetaclass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBMetaclass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBMetaclass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBMetaclass categoriesFor: #isMeta!public!testing! !
-!RBMetaclass categoriesFor: #metaclass!accessing!public! !
-!RBMetaclass categoriesFor: #printOn:!printing!public! !
-!RBMetaclass categoriesFor: #realName:!initialize/release!public! !
-!RBMetaclass categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #allClassVariableNames!accessing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #allImports!accessing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
+!Refactory.Browser.RBMetaclass categoriesFor: #directlyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBMetaclass categoriesFor: #fullyQualifiedReference!converting!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #isMeta!public!testing! !
+!Refactory.Browser.RBMetaclass categoriesFor: #metaclass!accessing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #realName:!initialize/release!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #storeOn:!printing!public! !
 
-!RBMetaclass class methodsFor!
+!Refactory.Browser.RBMetaclass class methodsFor!
 
 existing: aBehavior
 	| meta class |
 	class := aBehavior instanceClass.
 	meta := class class.
-	^(self named: class name)
+	^(self named: class fullName)
 		realClass: meta;
 		yourself! !
-!RBMetaclass class categoriesFor: #existing:!instance creation!public! !
+!Refactory.Browser.RBMetaclass class categoriesFor: #existing:!instance creation!public! !
 

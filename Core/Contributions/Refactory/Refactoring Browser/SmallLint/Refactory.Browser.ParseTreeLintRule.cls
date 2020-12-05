@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicLintRule subclass: #ParseTreeLintRule
+Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.ParseTreeLintRule'
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ParseTreeLintRule guid: (GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
-ParseTreeLintRule comment: ''!
-!ParseTreeLintRule categoriesForClass!Refactory-Lint! !
-!ParseTreeLintRule methodsFor!
+Refactory.Browser.ParseTreeLintRule guid: (Core.GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
+Refactory.Browser.ParseTreeLintRule comment: ''!
+!Refactory.Browser.ParseTreeLintRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.ParseTreeLintRule methodsFor!
 
 checkMethod: aSmalllintContext 
 	(matcher canMatchMethod: aSmalllintContext compiledMethod) 
@@ -31,12 +31,12 @@ resetResult
 	result
 		label: self name;
 		matcher: matcher! !
-!ParseTreeLintRule categoriesFor: #checkMethod:!accessing!public! !
-!ParseTreeLintRule categoriesFor: #defaultResultClass!private! !
-!ParseTreeLintRule categoriesFor: #matcher:!initialize/release!public! !
-!ParseTreeLintRule categoriesFor: #resetResult!initialize/release!public! !
+!Refactory.Browser.ParseTreeLintRule categoriesFor: #checkMethod:!accessing!public! !
+!Refactory.Browser.ParseTreeLintRule categoriesFor: #defaultResultClass!private! !
+!Refactory.Browser.ParseTreeLintRule categoriesFor: #matcher:!initialize/release!public! !
+!Refactory.Browser.ParseTreeLintRule categoriesFor: #resetResult!initialize/release!public! !
 
-!ParseTreeLintRule class methodsFor!
+!Refactory.Browser.ParseTreeLintRule class methodsFor!
 
 anySatisfy
 	#rbFix.	"Renamed from #contains to equivalent ANSI selector, #anySatisfy"
@@ -132,10 +132,10 @@ consistencyCheck
 				'`@collection at: `@collection size') 
 		name: 'Uses "size = 0", "= nil",  or "at: 1" instead of "isEmpty",  "isNil", or "first"'!
 
-createMatcherFor: codeStrings method: aBoolean 
+createMatcherFor: codeStrings method: aBoolean
 	| matcher |
 	matcher := ParseTreeSearcher new.
-	aBoolean 
+	aBoolean
 		ifTrue: [matcher matchesAnyMethodOf: codeStrings do: [:aNode :answer | aNode]]
 		ifFalse: [matcher matchesAnyOf: codeStrings do: [:aNode :answer | aNode]].
 	^matcher!
@@ -179,29 +179,24 @@ detectAnySatisfy
 endTrueFalse
 	| detector matcher |
 	detector := self new.
-	detector 
-		name: 'Same statements at end of ifTrue:ifFalse: blocks'.
-	matcher := (ParseTreeSearcher new)
-				matchesAnyOf: 	
-					#('`@object 
+	detector name: 'Same statements at end of ifTrue:ifFalse: blocks'.
+	matcher := ParseTreeSearcher new
+				matchesAnyOf: #('`@object 
 								ifTrue: [| `@temps1 | `@.Statements1. `.Statement] 
-								ifFalse: [| `@temps2 | `@.Statements2. `.Statement]' 
-						'`@object 
+								ifFalse: [| `@temps2 | `@.Statements2. `.Statement]' '`@object 
 								ifTrue: [| `@temps1 | `.Statement. `@.Statements1] 
-								ifFalse: [| `@temps2 | `.Statement. `@.Statements2]' 
-						'`@object 
+								ifFalse: [| `@temps2 | `.Statement. `@.Statements2]' '`@object 
 								ifFalse: [| `@temps1 | `@.Statements1. `.Statement] 
-								ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' 
-						'`@object 
+								ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' '`@object 
 								ifFalse: [| `@temps1 | `.Statement. `@.Statements1] 
-								ifTrue: [| `@temps2 | `.Statement. `@.Statement2]') 
+								ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
 					do: 
-						[:aNode :answer | 
-						answer isNil 
+						[:aNode :answer |
+						answer isNil
 							ifTrue: 
 								[| node |
 								node := aNode arguments first body statements last.
-								(node isVariable and: [node = aNode arguments last body statements last]) 
+								(node isVariable and: [node = aNode arguments last body statements last])
 									ifTrue: [nil]
 									ifFalse: [aNode]]
 							ifFalse: [answer]];
@@ -218,16 +213,15 @@ equalsTrue
 	| detector matcher |
 	detector := self new.
 	detector name: 'Unnecessary "= true"'.
-	matcher := (ParseTreeSearcher new)
+	matcher := ParseTreeSearcher new
 				matchesAnyOf: #('true' 'false')
 					do: 
-						[:aNode :answer | 
-						answer isNil 
+						[:aNode :answer |
+						answer isNil
 							ifTrue: 
-								[(aNode parent isMessage 
-									and: [#(#= #== #~= #~~) includes: aNode parent selector]) 
-										ifTrue: [aNode]
-										ifFalse: [nil]]
+								[(aNode parent isMessage and: [#(#= #== #~= #~~) includes: aNode parent selector])
+									ifTrue: [aNode]
+									ifFalse: [nil]]
 							ifFalse: [answer]];
 				yourself.
 	detector matcher: matcher.
@@ -267,22 +261,15 @@ guardingClause
 	detector := self new.
 	detector name: 'Guarding clauses'.
 	matcher := ParseTreeSearcher new.
-	matcher 
-		matchesAnyMethodOf: 	
-			#('`@MethodName: `@args 
+	matcher
+		matchesAnyMethodOf: #('`@MethodName: `@args 
 					| `@temps | 
 					`@.Statements. 
-					`@condition ifTrue: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]' 
-			'`@MethodName: `@args 
+					`@condition ifTrue: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]' '`@MethodName: `@args 
 					| `@temps | 
 					`@.Statements. 
 					`@condition ifFalse: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]')
-		do: 
-			[:aNode :answer | 
-			answer isNil 
-				ifTrue: 
-					[aNode body statements last]
-				ifFalse: [answer]].
+		do: [:aNode :answer | answer isNil ifTrue: [aNode body statements last] ifFalse: [answer]].
 	detector matcher: matcher.
 	^detector!
 
@@ -302,21 +289,17 @@ ifTrueReturns
 	detector := self new.
 	detector name: 'ifTrue:/ifFalse: returns instead of and:/or:''s'.
 	matcher := ParseTreeSearcher new.
-	matcher 
-		matchesAnyOf: 
-			#('| `@temps | ``@.Statements. ``@object ifTrue: [^``@value1]. ^``@value2' 
-			'| `@temps | ``@.Statements. ``@object ifFalse: [^``@value1]. ^``@value2')
+	matcher
+		matchesAnyOf: #('| `@temps | ``@.Statements. ``@object ifTrue: [^``@value1]. ^``@value2' '| `@temps | ``@.Statements. ``@object ifFalse: [^``@value1]. ^``@value2')
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
 					[| node |
-					node := (aNode statements at: aNode statements size - 1) arguments first 
-								body statements 
-								last value.	"``@value1"
+					node := (aNode statements at: aNode statements size - 1) arguments first body statements last value.	"``@value1"
 					((node isLiteralNode and: [#(true false) includes: node value]) or: 
 							[node := aNode statements last value.
-							node isLiteralNode and: [#(true false) includes: node value]]) 
+							node isLiteralNode and: [#(true false) includes: node value]])
 						ifTrue: [aNode]
 						ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -332,10 +315,9 @@ indexOf
 		'(`@collection indexOf: `@object) ~~ 0')
 	name: 'Uses indexOf: instead of includes:'!
 
-isArrayOfCharacters: anArray 
+isArrayOfCharacters: anArray
 	anArray isEmpty ifTrue: [^false].
-	1 to: anArray size
-		do: [:each | (anArray at: each) class == Character ifFalse: [^false]].
+	1 to: anArray size do: [:each | (anArray at: each) class == Character ifFalse: [^false]].
 	^true!
 
 isSearchingLiteralExpression: aMessageNode 
@@ -377,10 +359,10 @@ literalArrayCharacters
 	matcher := ParseTreeSearcher new.
 	matcher matches: '`#literal'
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
-					[(aNode value class == Array and: [self isArrayOfCharacters: aNode value]) 
+					[(aNode value class == Array and: [self isArrayOfCharacters: aNode value])
 						ifTrue: [aNode]
 						ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -392,17 +374,14 @@ minMax
 	detector := self new.
 	detector name: 'Uses ifTrue:/ifFalse: instead of min: or max:'.
 	matcher := ParseTreeSearcher new.
-	matcher 
+	matcher
 		matchesAnyOf: #('(`x `message: `@y) `ifTrue: [`x := `@y]' '(`@x `message: `@y) `ifTrue: [`@x] `ifFalse: [`@y]' '(`@x `message: `@y) `ifTrue: [`v := `@x] `ifFalse: [`v := `@y]')
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
-					[((#(#ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:) 
-						includes: aNode selector) 
-							and: [#(#< #<= #> #>=) includes: aNode receiver selector]) 
-							ifTrue: [aNode]
-							ifFalse: [nil]]
+					[((#(#ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:) includes: aNode selector)
+						and: [#(#< #<= #> #>=) includes: aNode receiver selector]) ifTrue: [aNode] ifFalse: [nil]]
 				ifFalse: [answer]].
 	detector matcher: matcher.
 	^detector!
@@ -416,20 +395,12 @@ modifiesCollection
 	| detector matcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	matcher := (ParseTreeSearcher new)
-				matchesAnyOf: 
-						#('`@object do: [:`each | | `@temps | ``@.Statements]' 
-						'`@object collect: [:`each | | `@temps | ``@.Statements]' 
-						'`@object select: [:`each | | `@temps | ``@.Statements]' 
-						'`@object reject: [:`each | | `@temps | ``@.Statements]' 
-						'`@object inject: `@value into: [:`sum :`each | | `@temps | ``@.Statements]')
+	matcher := ParseTreeSearcher new
+				matchesAnyOf: #('`@object do: [:`each | | `@temps | ``@.Statements]' '`@object collect: [:`each | | `@temps | ``@.Statements]' '`@object select: [:`each | | `@temps | ``@.Statements]' '`@object reject: [:`each | | `@temps | ``@.Statements]' '`@object inject: `@value into: [:`sum :`each | | `@temps | ``@.Statements]')
 					do: 
-						[:aNode :answer | 
-						answer isNil 
-							ifTrue: 
-								[(self modifiesTree: aNode receiver in: aNode arguments last) 
-									ifTrue: [aNode]
-									ifFalse: [nil]]
+						[:aNode :answer |
+						answer isNil
+							ifTrue: [(self modifiesTree: aNode receiver in: aNode arguments last) ifTrue: [aNode] ifFalse: [nil]]
 							ifFalse: [answer]];
 				yourself.
 	detector matcher: matcher.
@@ -461,16 +432,13 @@ returnInEnsure
 	returnMatcher := ParseTreeSearcher new.
 	returnMatcher matches: '^`@object' do: [:aNode :answer | true].
 	matcher := ParseTreeSearcher new.
-	matcher 
-		matchesAnyOf: #('``@rcv ensure: [| `@temps | ``@.Stmts]' 
-						'``@rcv valueNowOrOnUnwindDo: [| `@temps | ``@.Stmts]' 
-						'``@rcv ifCurtailed: [| `@temps | ``@.Stmts]' 
-						'``@rcv valueOnUnwindDo: [| `@temps | ``@.Stmts]')
+	matcher
+		matchesAnyOf: #('``@rcv ensure: [| `@temps | ``@.Stmts]' '``@rcv valueNowOrOnUnwindDo: [| `@temps | ``@.Stmts]' '``@rcv ifCurtailed: [| `@temps | ``@.Stmts]' '``@rcv valueOnUnwindDo: [| `@temps | ``@.Stmts]')
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
-					[(returnMatcher executeTree: aNode arguments first initialAnswer: false) 
+					[(returnMatcher executeTree: aNode arguments first initialAnswer: false)
 						ifTrue: [aNode]
 						ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -488,20 +456,12 @@ searchingLiteral
 	detector := self new.
 	detector name: 'Uses or''s instead of a searching literal'.
 	matcher := ParseTreeSearcher new.
-	matcher 
-		matchesAnyOf: #('``@object = `#literal or: [``@expression]' 
-						'``@object == `#literal or: [``@expression]' 
-						'`#literal = ``@object or: [``@expression]' 
-						'`#literal == ``@object or: [``@expression]' 
-						'``@expression | (``@object = `#literal)' 
-						'``@expression | (``@object == `#literal)' 
-						'``@expression | (`#literal = ``@object)' 
-						'``@expression | (`#literal == ``@object)')
+	matcher
+		matchesAnyOf: #('``@object = `#literal or: [``@expression]' '``@object == `#literal or: [``@expression]' '`#literal = ``@object or: [``@expression]' '`#literal == ``@object or: [``@expression]' '``@expression | (``@object = `#literal)' '``@expression | (``@object == `#literal)' '``@expression | (`#literal = ``@object)' '``@expression | (`#literal == ``@object)')
 		do: 
-			[:aNode :answer | 
-			answer isNil 
-				ifTrue: 
-					[(self isSearchingLiteralExpression: aNode) ifTrue: [aNode] ifFalse: [nil]]
+			[:aNode :answer |
+			answer isNil
+				ifTrue: [(self isSearchingLiteralExpression: aNode) ifTrue: [aNode] ifFalse: [nil]]
 				ifFalse: [answer]].
 	detector matcher: matcher.
 	^detector!
@@ -524,14 +484,14 @@ stringConcatenation
 	matcher := ParseTreeSearcher new.
 	concatenationMatcher := ParseTreeSearcher new.
 	concatenationMatcher matches: '`@receiver , `@argument' do: [:aNode :answer | true].
-	matcher 
+	matcher
 		matchesAnyOf: #('``@collection do: [:`each | | `@temps | ``@.Statements]' '``@collection do: [:`each | | `@temps | ``@.Statements] separatedBy: [| `@temps1 | ``@.Statements1]' '``@number to: ``@endNumber do: [:`i | | `@temps | ``@.Statements]' '``@collection detect: [:`each | | `@temps | ``@.Statements]' '``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [| `@temps1 | ``@.Statements1]' '``@collection select: [:`each | | `@temps | ``@.Statements]' '``@collection inject: ``@value into: [:`each | | `@temps | ``@.Statements]')
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
-					[(aNode arguments 
-						anySatisfy: [:each | each isBlock and: [concatenationMatcher executeTree: each initialAnswer: false]]) 
+					[(aNode arguments
+						anySatisfy: [:each | each isBlock and: [concatenationMatcher executeTree: each initialAnswer: false]])
 							ifTrue: [aNode]
 							ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -542,20 +502,19 @@ threeElementPoint
 	| detector matcher |
 	detector := self new.
 	detector name: 'Possible three element point (e.g., x @ y + q @ r)'.
-	matcher := (ParseTreeSearcher new)
+	matcher := ParseTreeSearcher new
 				matches: '``@x @ ``@y'
 					do: 
-						[:aNode :answer | 
-						answer isNil 
+						[:aNode :answer |
+						answer isNil
 							ifTrue: 
 								[| current |
 								current := aNode parent.
 								
-								[current isNil or: 
-										[current isMessage 
-											and: [current selector == #@ or: [current selector isInfix not]]]] 
+								[current isNil
+									or: [current isMessage and: [current selector == #@ or: [current selector isInfix not]]]]
 										whileFalse: [current := current parent].
-								(current isNil or: [current isMessage and: [current selector isInfix not]]) 
+								(current isNil or: [current isMessage and: [current selector isInfix not]])
 									ifTrue: [nil]
 									ifFalse: [aNode]]
 							ifFalse: [answer]];
@@ -568,18 +527,17 @@ toDo
 	detector := self new.
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
 	matcher := ParseTreeSearcher new.
-	matcher 
-		matches: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]'
+	matcher matches: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]'
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
 					[| varName variableMatcher |
 					varName := aNode arguments last arguments first.	"`each"
 					variableMatcher := ParseTreeSearcher new.
 					variableMatcher matchesTree: varName
 						do: [:node :ans | ans and: [node parent isMessage and: [node parent selector == #at:]]].
-					(variableMatcher executeTree: aNode arguments last body initialAnswer: true) 
+					(variableMatcher executeTree: aNode arguments last body initialAnswer: true)
 						ifTrue: [aNode]
 						ifFalse: [nil]]
 				ifFalse: [answer]].
@@ -679,50 +637,50 @@ whileTrue
 yourselfNotUsed
 	^self createParseTreeRule: #('`{:node | node parent isUsed not} yourself')
 		name: 'Doesn''t use the result of a yourself message'! !
-!ParseTreeLintRule class categoriesFor: #anySatisfy!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #asOrderedCollectionNotNeeded!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #assignmentInBlock!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #assignmentInIfTrue!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #atIfAbsent!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #booleanPrecedence!bugs!public! !
-!ParseTreeLintRule class categoriesFor: #collectionProtocol!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #collectSelectNotUsed!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #consistencyCheck!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #createMatcherFor:method:!helpers!private! !
-!ParseTreeLintRule class categoriesFor: #createParseTreeRule:method:name:!instance creation!public! !
-!ParseTreeLintRule class categoriesFor: #createParseTreeRule:name:!instance creation!public! !
-!ParseTreeLintRule class categoriesFor: #detectAnySatisfy!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #endTrueFalse!public!unnecessary code! !
-!ParseTreeLintRule class categoriesFor: #equalNotUsed!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #equalsTrue!public!unnecessary code! !
-!ParseTreeLintRule class categoriesFor: #extraBlock!public!unnecessary code! !
-!ParseTreeLintRule class categoriesFor: #fileBlocks!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #guardingClause!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #ifTrueBlocks!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #ifTrueReturns!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #indexOf!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #isArrayOfCharacters:!private!testing! !
-!ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:!private!testing! !
-!ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:for:!private!testing! !
-!ParseTreeLintRule class categoriesFor: #literalArrayCharacters!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #minMax!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #missingYourself!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #modifiesCollection!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #modifiesTree:in:!helpers!private! !
-!ParseTreeLintRule class categoriesFor: #precedence!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #returnInEnsure!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #returnsIfTrue!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #searchingLiteral!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #sizeCheck!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #stringConcatenation!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #threeElementPoint!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #toDo!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #toDoCollect!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #toDoWithIncrement!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #unnecessaryAssignment!public!unnecessary code! !
-!ParseTreeLintRule class categoriesFor: #unoptimizedAndOr!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #unoptimizedToDo!miscellaneous!public! !
-!ParseTreeLintRule class categoriesFor: #usesAdd!possible bugs!public! !
-!ParseTreeLintRule class categoriesFor: #whileTrue!intention revealing!public! !
-!ParseTreeLintRule class categoriesFor: #yourselfNotUsed!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #anySatisfy!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #asOrderedCollectionNotNeeded!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #assignmentInBlock!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #assignmentInIfTrue!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #atIfAbsent!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #booleanPrecedence!bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #collectionProtocol!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #collectSelectNotUsed!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #consistencyCheck!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createMatcherFor:method:!helpers!private! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createParseTreeRule:method:name:!instance creation!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createParseTreeRule:name:!instance creation!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #detectAnySatisfy!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #endTrueFalse!public!unnecessary code! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #equalNotUsed!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #equalsTrue!public!unnecessary code! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #extraBlock!public!unnecessary code! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #fileBlocks!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #guardingClause!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #ifTrueBlocks!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #ifTrueReturns!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #indexOf!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isArrayOfCharacters:!private!testing! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:!private!testing! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:for:!private!testing! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #literalArrayCharacters!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #minMax!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #missingYourself!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #modifiesCollection!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #modifiesTree:in:!helpers!private! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #precedence!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #returnInEnsure!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #returnsIfTrue!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #searchingLiteral!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #sizeCheck!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #stringConcatenation!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #threeElementPoint!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDo!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDoCollect!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDoWithIncrement!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unnecessaryAssignment!public!unnecessary code! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unoptimizedAndOr!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unoptimizedToDo!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #usesAdd!possible bugs!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #whileTrue!intention revealing!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesFor: #yourselfNotUsed!miscellaneous!public! !
 

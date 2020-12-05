@@ -1,24 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #ClassEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.ClassEnvironment'
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassEnvironment guid: (GUID fromString: '{6ced2bfc-a2ca-479f-9eef-d74b2baa9d59}')!
-ClassEnvironment comment: 'A ClassEnvironment defines a slice of the system that includes all the classes, methods, resources, etc in a particular set of classes.
+Refactory.Browser.ClassEnvironment guid: (Core.GUID fromString: '{6ced2bfc-a2ca-479f-9eef-d74b2baa9d59}')!
+Refactory.Browser.ClassEnvironment comment: 'A ClassEnvironment defines a slice of the system that includes all the classes, methods, resources, etc in a particular set of classes.
 
 Instance Variables:
 	classes	<Collection of: Symbol>		the class names (not metaclasses)
 	metaClasses	<Collection of: Symbol>	the class names for the metaclasses that are selected'!
-!ClassEnvironment categoriesForClass!Refactory-Environments! !
-!ClassEnvironment methodsFor!
+!Refactory.Browser.ClassEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.ClassEnvironment methodsFor!
 
-addClass: aClass 
+addClass: aClass
 	aClass isMeta
-		ifTrue: [metaClasses add: aClass soleInstance name]
-		ifFalse: [classes add: aClass name]!
+		ifTrue: [metaClasses add: aClass soleInstance fullName]
+		ifFalse: [classes add: aClass fullName]!
 
 classes: aCollection 
 	aCollection do: [:each | self addClass: each]!
@@ -43,7 +43,7 @@ classesDo: aBlock
 				ifDefined: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
 
 classNames
-	^(IdentitySet withAll: classes)
+	^(Set withAll: classes)
 		addAll: metaClasses;
 		yourself!
 
@@ -69,8 +69,8 @@ includesCategory: aCategory
 
 includesClass: aClass
 	^(aClass isMeta
-		ifTrue: [metaClasses includes: aClass soleInstance name]
-		ifFalse: [classes includes: aClass name]) and: [super includesClass: aClass]!
+		ifTrue: [metaClasses includes: aClass soleInstance fullName]
+		ifFalse: [classes includes: aClass fullName]) and: [super includesClass: aClass]!
 
 initialize
 	super initialize.
@@ -91,10 +91,10 @@ postCopy
 problemCount
 	^self numberClasses!
 
-removeClass: aClass 
+removeClass: aClass
 	aClass isMeta
-		ifTrue: [metaClasses remove: aClass soleInstance name ifAbsent: []]
-		ifFalse: [classes remove: aClass name ifAbsent: []]!
+		ifTrue: [metaClasses remove: aClass soleInstance fullName ifAbsent: []]
+		ifFalse: [classes remove: aClass fullName ifAbsent: []]!
 
 selectorsForClass: aClass do: aBlock
 	#rbFix.	"Implement to avoid need for #includesClass: test in loop by performing it up front."
@@ -119,28 +119,28 @@ storeOn: aStream
 				class := each asQualifiedReference valueOrNil.
 				class notNil ifTrue: [sum add: class class].
 				sum])))'! !
-!ClassEnvironment categoriesFor: #addClass:!adding!public! !
-!ClassEnvironment categoriesFor: #classes:!initialize/release!public! !
-!ClassEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!ClassEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!ClassEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!ClassEnvironment categoriesFor: #defaultLabel!constants!private! !
-!ClassEnvironment categoriesFor: #definesClass:!public!testing! !
-!ClassEnvironment categoriesFor: #includesCategory:!public!testing! !
-!ClassEnvironment categoriesFor: #includesClass:!public!testing! !
-!ClassEnvironment categoriesFor: #initialize!initialize/release!public! !
-!ClassEnvironment categoriesFor: #isClassEnvironment!public!testing! !
-!ClassEnvironment categoriesFor: #isEmpty!public!testing! !
-!ClassEnvironment categoriesFor: #postCopy!copying!public! !
-!ClassEnvironment categoriesFor: #problemCount!accessing!public! !
-!ClassEnvironment categoriesFor: #removeClass:!public!removing! !
-!ClassEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!ClassEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #addClass:!adding!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #classes:!initialize/release!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #classNames!accessing/classes!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #isClassEnvironment!public!testing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #postCopy!copying!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #removeClass:!public!removing! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
+!Refactory.Browser.ClassEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!ClassEnvironment class methodsFor!
+!Refactory.Browser.ClassEnvironment class methodsFor!
 
 onEnvironment: anEnvironment classes: aCollection
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself! !
-!ClassEnvironment class categoriesFor: #onEnvironment:classes:!instance creation!public! !
+!Refactory.Browser.ClassEnvironment class categoriesFor: #onEnvironment:classes:!instance creation!public! !
 

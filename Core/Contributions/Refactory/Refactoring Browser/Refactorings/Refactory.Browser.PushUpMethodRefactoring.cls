@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #PushUpMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.PushUpMethodRefactoring'
 	instanceVariableNames: 'removeDuplicates selectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PushUpMethodRefactoring guid: (GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
-PushUpMethodRefactoring comment: ''!
-!PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!PushUpMethodRefactoring methodsFor!
+Refactory.Browser.PushUpMethodRefactoring guid: (Core.GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
+Refactory.Browser.PushUpMethodRefactoring comment: ''!
+!Refactory.Browser.PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.PushUpMethodRefactoring methodsFor!
 
 checkBackReferencesTo: aSelector
 	| definingClass pushUpParseTree |
@@ -222,29 +222,29 @@ transform
 		pushUpMethods;
 		removePushedUpMethods;
 		removeDuplicateMethods! !
-!PushUpMethodRefactoring categoriesFor: #checkBackReferencesTo:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkClassVars!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkClassVarsFor:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkInstVars!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkInstVarsFor:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSiblingSuperSendsFrom:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperclass!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperMessages!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromPushedUpMethods!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromSiblings!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #copyDownMethod:!public! !
-!PushUpMethodRefactoring categoriesFor: #copyDownMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #pushUp:!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #pushUp:from:!initialize/release!public! !
-!PushUpMethodRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removeDuplicateMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removeDuplicatesOf:!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removePushedUpMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!PushUpMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkBackReferencesTo:!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkClassVars!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkClassVarsFor:!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkInstVars!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkInstVarsFor:!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkSiblingSuperSendsFrom:!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkSuperclass!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkSuperMessages!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromPushedUpMethods!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromSiblings!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #copyDownMethod:!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #copyDownMethods!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #pushUp:!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #pushUp:from:!initialize/release!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #pushUpMethods!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #removeDuplicateMethods!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #removeDuplicatesOf:!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #removePushedUpMethods!public!transforming! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.PushUpMethodRefactoring categoriesFor: #transform!public!transforming! !
 
-!PushUpMethodRefactoring class methodsFor!
+!Refactory.Browser.PushUpMethodRefactoring class methodsFor!
 
 model: aRBNamespace pushUp: selectorCollection from: aClass 
 	^(self new)
@@ -254,6 +254,6 @@ model: aRBNamespace pushUp: selectorCollection from: aClass
 
 pushUp: selectorCollection from: aClass 
 	^self new pushUp: selectorCollection from: aClass! !
-!PushUpMethodRefactoring class categoriesFor: #model:pushUp:from:!instance creation!public! !
-!PushUpMethodRefactoring class categoriesFor: #pushUp:from:!instance creation!public! !
+!Refactory.Browser.PushUpMethodRefactoring class categoriesFor: #model:pushUp:from:!instance creation!public! !
+!Refactory.Browser.PushUpMethodRefactoring class categoriesFor: #pushUp:from:!instance creation!public! !
 

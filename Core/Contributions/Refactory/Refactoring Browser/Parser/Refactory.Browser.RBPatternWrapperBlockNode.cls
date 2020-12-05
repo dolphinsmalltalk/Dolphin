@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
+Refactory.Browser.RBPatternBlockNode subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternWrapperBlockNode guid: (GUID fromString: '{9c1e1f14-cb93-4be7-a1dd-a621ba57b12e}')!
-RBPatternWrapperBlockNode comment: ''!
-!RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !
-!RBPatternWrapperBlockNode methodsFor!
+Refactory.Browser.RBPatternWrapperBlockNode guid: (Core.GUID fromString: '{9c1e1f14-cb93-4be7-a1dd-a621ba57b12e}')!
+Refactory.Browser.RBPatternWrapperBlockNode comment: ''!
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !
+!Refactory.Browser.RBPatternWrapperBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitPatternWrapperBlockNode: self!
@@ -37,11 +37,11 @@ wrappedNode
 wrappedNode: aRBProgramNode 
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self! !
-!RBPatternWrapperBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!RBPatternWrapperBlockNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternWrapperBlockNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternWrapperBlockNode categoriesFor: #postCopy!copying!public! !
-!RBPatternWrapperBlockNode categoriesFor: #precedence!accessing!public! !
-!RBPatternWrapperBlockNode categoriesFor: #wrappedNode!accessing!public! !
-!RBPatternWrapperBlockNode categoriesFor: #wrappedNode:!accessing!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #copyInContext:!matching!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #match:inContext:!matching!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #postCopy!copying!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #precedence!accessing!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #wrappedNode!accessing!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #wrappedNode:!accessing!public! !
 

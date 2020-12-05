@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #ProtectInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ProtectInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectInstanceVariableTest guid: (GUID fromString: '{4fadb9c6-abde-452c-90b8-bc1b80b72555}')!
-ProtectInstanceVariableTest comment: ''!
-!ProtectInstanceVariableTest categoriesForClass!Refactory-Testing! !
-!ProtectInstanceVariableTest methodsFor!
+Refactory.Browser.Tests.ProtectInstanceVariableTest guid: (Core.GUID fromString: '{4fadb9c6-abde-452c-90b8-bc1b80b72555}')!
+Refactory.Browser.Tests.ProtectInstanceVariableTest comment: ''!
+!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ProtectInstanceVariableTest methodsFor!
 
 testProtectInstanceVariable
 	| refactoring class |
 	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite' , 'Rule1'
 				class: SubclassOfClassToRename.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #SubclassOfClassToRename.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.SubclassOfClassToRename'.
 	self assert: (class parseTreeFor: #calls1)
 		equals: (RBParser parseMethod: 'calls1
 								^rewriteRule1 := (rewriteRule1 := self calls)').
@@ -28,9 +28,8 @@ testProtectInstanceVariable
 
 testVariableNotDefined
 	| refactoring |
-	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite'
-				class: SubclassOfClassToRename.
+	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite' class: SubclassOfClassToRename.
 	self shouldFail: refactoring! !
-!ProtectInstanceVariableTest categoriesFor: #testProtectInstanceVariable!public!tests! !
-!ProtectInstanceVariableTest categoriesFor: #testVariableNotDefined!failure tests!public! !
+!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesFor: #testProtectInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesFor: #testVariableNotDefined!failure tests!public! !
 

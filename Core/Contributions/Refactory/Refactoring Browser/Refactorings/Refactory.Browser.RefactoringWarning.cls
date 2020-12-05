@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Warning subclass: #RefactoringWarning
+Core.Warning subclass: #'Refactory.Browser.RefactoringWarning'
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringWarning guid: (GUID fromString: '{80575ec0-f0f1-47c6-a7d6-2cb4a3440aaa}')!
-RefactoringWarning comment: ''!
-!RefactoringWarning categoriesForClass!Refactory-Support! !
-!RefactoringWarning methodsFor!
+Refactory.Browser.RefactoringWarning guid: (Core.GUID fromString: '{80575ec0-f0f1-47c6-a7d6-2cb4a3440aaa}')!
+Refactory.Browser.RefactoringWarning comment: ''!
+!Refactory.Browser.RefactoringWarning categoriesForClass!Refactory-Support! !
+!Refactory.Browser.RefactoringWarning methodsFor!
 
 defaultAction
 	"Proceed through warnings"
@@ -21,11 +21,11 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
-!RefactoringWarning categoriesFor: #defaultAction!actions!private! !
-!RefactoringWarning categoriesFor: #refactoring!accessing!public! !
-!RefactoringWarning categoriesFor: #refactoring:!accessing!private! !
+!Refactory.Browser.RefactoringWarning categoriesFor: #defaultAction!actions!private! !
+!Refactory.Browser.RefactoringWarning categoriesFor: #refactoring!accessing!public! !
+!Refactory.Browser.RefactoringWarning categoriesFor: #refactoring:!accessing!private! !
 
-!RefactoringWarning class methodsFor!
+!Refactory.Browser.RefactoringWarning class methodsFor!
 
 refactoring: aRefactoring signal: messageText
 	^(self new)
@@ -36,6 +36,6 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
-!RefactoringWarning class categoriesFor: #refactoring:signal:!public! !
-!RefactoringWarning class categoriesFor: #refactoring:signal:with:!public! !
+!Refactory.Browser.RefactoringWarning class categoriesFor: #refactoring:signal:!public! !
+!Refactory.Browser.RefactoringWarning class categoriesFor: #refactoring:signal:with:!public! !
 

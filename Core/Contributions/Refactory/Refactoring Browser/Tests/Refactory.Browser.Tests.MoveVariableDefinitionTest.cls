@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #MoveVariableDefinitionTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveVariableDefinitionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoveVariableDefinitionTest guid: (GUID fromString: '{dc2344f4-f0f3-4fc5-af74-d852d5d036ae}')!
-MoveVariableDefinitionTest comment: ''!
-!MoveVariableDefinitionTest categoriesForClass!Refactory-Testing! !
-!MoveVariableDefinitionTest methodsFor!
+Refactory.Browser.Tests.MoveVariableDefinitionTest guid: (Core.GUID fromString: '{dc2344f4-f0f3-4fc5-af74-d852d5d036ae}')!
+Refactory.Browser.Tests.MoveVariableDefinitionTest comment: ''!
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest methodsFor!
 
 testMoveDefinition
 	| refactoring |
@@ -19,7 +19,8 @@ testMoveDefinition
 				in: RefactoryTestDataApp
 				selector: #moveDefinition.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #moveDefinition)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #moveDefinition)
 		equals: (RBParser
 				parseMethod: 'moveDefinition
 								^(self collect: 
@@ -41,8 +42,8 @@ testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
 				in: RefactoryTestDataApp
 				selector: #referencesConditionFor:.
 	self executeRefactoring: refactoring.
-	self
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #referencesConditionFor:)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #referencesConditionFor:)
 		equals: (RBParser
 				parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
@@ -57,7 +58,7 @@ testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
 									yourself')!
 
 testNoMoveDefinition
-	self shouldFail: (MoveVariableDefinitionRefactoring 
+	self shouldFail: (MoveVariableDefinitionRefactoring
 				bindTight: (self convertInterval: (21 to: 24)
 						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				in: RefactoryTestDataApp
@@ -66,25 +67,23 @@ testNoMoveDefinition
 testNonExistantName
 	| aRefactoring |
 	self
-		shouldFail: (MoveVariableDefinitionRefactoring 
+		shouldFail: (MoveVariableDefinitionRefactoring
 					bindTight: (1 to: 10)
 					in: LintRuleTest
 					selector: #name1);
-		shouldFail: (MoveVariableDefinitionRefactoring 
-					bindTight: (self convertInterval: (44 to: 54)
-							for: (LintRuleTest sourceCodeAt: #displayName))
+		shouldFail: (MoveVariableDefinitionRefactoring
+					bindTight: (self convertInterval: (44 to: 54) for: (LintRuleTest sourceCodeAt: #displayName))
 					in: LintRuleTest
 					selector: #displayName).
 	"This isn't a test of a non-existant name, but of a move that is already as tightly bound as possible"
-	aRefactoring := MoveVariableDefinitionRefactoring 
-				bindTight: (self convertInterval: (16 to: 25)
-						for: (LintRuleTest sourceCodeAt: #displayName))
+	aRefactoring := MoveVariableDefinitionRefactoring
+				bindTight: (self convertInterval: (16 to: 25) for: (LintRuleTest sourceCodeAt: #displayName))
 				in: LintRuleTest
 				selector: #displayName.
 	self proceedThroughWarning: 
 			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
-!MoveVariableDefinitionTest categoriesFor: #testMoveDefinition!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testNoMoveDefinition!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testNonExistantName!public!tests! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testMoveDefinition!public!tests! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testNoMoveDefinition!public!tests! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testNonExistantName!public!tests! !
 

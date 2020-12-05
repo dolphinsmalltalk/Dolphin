@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #PushDownClassVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.PushDownClassVariableRefactoring'
 	instanceVariableNames: 'destinationClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PushDownClassVariableRefactoring guid: (GUID fromString: '{e2937b6b-aa4b-4464-8c56-b8b005f6c4f9}')!
-PushDownClassVariableRefactoring comment: ''!
-!PushDownClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!PushDownClassVariableRefactoring methodsFor!
+Refactory.Browser.PushDownClassVariableRefactoring guid: (Core.GUID fromString: '{e2937b6b-aa4b-4464-8c56-b8b005f6c4f9}')!
+Refactory.Browser.PushDownClassVariableRefactoring comment: ''!
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.PushDownClassVariableRefactoring methodsFor!
 
 findDestinationClass
 	| classVarName classes |
@@ -60,10 +60,10 @@ transform
 	class removeClassVariable: variableName.
 	destinationClass isNil ifTrue: [^self].
 	destinationClass addClassVariable: variableName! !
-!PushDownClassVariableRefactoring categoriesFor: #findDestinationClass!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalMultipleReferenceError!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalReferenceError:!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalStillReferencedError!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #findDestinationClass!preconditions!public! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalMultipleReferenceError!preconditions!public! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalReferenceError:!preconditions!public! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalStillReferencedError!preconditions!public! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #transform!public!transforming! !
 

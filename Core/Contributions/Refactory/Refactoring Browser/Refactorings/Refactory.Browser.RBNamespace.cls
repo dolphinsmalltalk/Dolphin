@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RBNamespace
+Core.Object subclass: #'Refactory.Browser.RBNamespace'
 	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBNamespace guid: (GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
-RBNamespace comment: ''!
-!RBNamespace categoriesForClass!Refactory-Model! !
-!RBNamespace methodsFor!
+Refactory.Browser.RBNamespace guid: (Core.GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
+Refactory.Browser.RBNamespace comment: ''!
+!Refactory.Browser.RBNamespace categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBNamespace methodsFor!
 
 addChangeToClass: aRBClass
 	^changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}!
@@ -17,15 +17,15 @@ addChangeToClass: aRBClass
 addClassVariable: aString to: aRBClass 
 	^changes addClassVariable: aString to: aRBClass!
 
+addImport: aBindingReference to: aRBClass
+	^changes addImport: aBindingReference to: aRBClass!
+
 addInstanceVariable: aString to: aRBClass 
 	^changes addInstanceVariable: aString to: aRBClass!
 
-addPool: aString to: aRBClass 
-	^changes addPool: aString to: aRBClass!
-
 allClassesDo: aBlock
 	| seen evalBlock |
-	seen := IdentitySet new.
+	seen := Set new.
 	evalBlock := 
 			[:each |
 			seen add: each first name.
@@ -38,7 +38,7 @@ allClassesDo: aBlock
 			[:each |
 			each isMeta
 				ifFalse: 
-					[((seen includes: each name) or: [self hasRemoved: each instanceClass name])
+					[((seen includes: each fullName) or: [self hasRemoved: each instanceClass fullName])
 						ifFalse: 
 							[| class |
 							class := self classFor: each.
@@ -50,24 +50,23 @@ allImplementorsOf: aSelector
 	^implementorsCache at: aSelector
 		ifAbsentPut: [self privateImplementorsOf: aSelector]!
 
-allReferencesTo: aSymbol do: aBlock 
+allReferencesTo: aSymbol do: aBlock
 	(sendersCache at: aSymbol
 		ifAbsentPut: 
 			[| refs |
 			refs := OrderedCollection new.
 			self allClassesDo: 
-					[:each | 
+					[:each |
 					#rbFix.	"Don't include any selectors which should not be visible in the model's environment"
-					refs addAll: ((each whichMethodsReferToSymbol: aSymbol) 
+					refs addAll: ((each whichMethodsReferToSymbol: aSymbol)
 								select: [:eachMethod | environment includesSelector: eachMethod selector in: each])].
-			refs]) 
+			refs])
 			do: aBlock!
 
 allReferencesToClass: aRBClass do: aBlock 
 	self allClassesDo: 
-			[:each | 
-			(each whichSelectorsReferToClass: aRBClass) 
-				do: [:sel | aBlock value: (each methodFor: sel)]]!
+		[:each |
+		(each whichSelectorsReferToClass: aRBClass) do: [:sel | aBlock value: (each methodFor: sel)]]!
 
 changeClass: aRBClass
 	changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}.
@@ -84,26 +83,28 @@ classFor: aBehavior
 	aBehavior isNil ifTrue: [^nil].
 	nonMetaclass := aBehavior instanceClass.
 	^aBehavior isMeta
-		ifTrue: [self metaclassNamed: nonMetaclass name]
-		ifFalse: [self classNamed: nonMetaclass name]!
+		ifTrue: [self metaclassNamed: nonMetaclass fullName]
+		ifFalse: [self classNamed: nonMetaclass fullName]!
 
-classNamed: aSymbol
+classNamed: aString
 	| index |
-	aSymbol isNil ifTrue: [^nil].
-	(self hasRemoved: aSymbol) ifTrue: [^nil].
-	(newClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
-	(changedClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
-	index := aSymbol indexOf: $\x20.
+	aString isNil ifTrue: [^nil].
+	(self hasRemoved: aString) ifTrue: [^nil].
+	(newClasses lookup: aString) ifNotNil: [:behaviors | ^behaviors first].
+	(changedClasses lookup: aString) ifNotNil: [:behaviors | ^behaviors first].
+	index := aString indexOf: $\x20.
 	^index ~~ 0
 		ifTrue: 
-			[(self classNamed: (aSymbol copyFrom: 1 to: index - 1) asSymbol)
+			[(self classNamed: (aString copyFrom: 1 to: index - 1) asSymbol)
 				ifNotNil: [:class | class metaclass]]
 		ifFalse: 
-			[(environment lookup: aSymbol)
+			[(environment lookup: aString)
 				ifNotNil: 
 					[:class |
 					"The environment could be the SystemDictionary, and may return non-Class objects, or a BrowserEnvironment, which won't, so we need to check it is a class"
-					class isBehavior
+					(class isBehavior and: 
+							[aString
+								= ((BindingReference isQualifiedName: aString) ifTrue: [class fullName] ifFalse: [class fullName])])
 						ifTrue: 
 							[| behaviors |
 							behaviors := self createNewClassFor: class.
@@ -126,7 +127,7 @@ createNewClassFor: aBehavior
 	meta := (RBMetaclass existing: aBehavior)
 				model: self;
 				yourself.
-	^changedClasses at: aBehavior instanceClass name put: {nonMeta. meta}!
+	^changedClasses at: aBehavior instanceClass fullName put: {nonMeta. meta}!
 
 defineClass: aString
 	| change newClass newClassName |
@@ -151,16 +152,13 @@ defineClass: aString
 			newClass metaclass superclass: (self classFor: Object class superclass)]
 		ifFalse: [newClass metaclass superclass: newClass superclass metaclass].
 	newClass instanceVariableNames: change instanceVariableNames.
-	newClass classVariableNames: change classVariableNames.
-	newClass poolDictionaryNames: change poolDictionaryNames.
+	newClass classVariableNames: change classVariableNames copy.
+	newClass imports: change imports copy.
 	newClass category: change category.
 	^change!
 
 environment
 	^environment!
-
-environment: aBrowserEnvironment 
-	environment := aBrowserEnvironment!
 
 flushCaches
 	implementorsCache := IdentityDictionary new.
@@ -177,20 +175,21 @@ hasRemoved: aSymbol
 includesClassNamed: aSymbol 
 	^(self classNamed: aSymbol) notNil!
 
-includesGlobal: aSymbol 
+includesGlobal: aSymbol
 	(self hasRemoved: aSymbol) ifTrue: [^false].
 	(self includesClassNamed: aSymbol) ifTrue: [^true].
-	environment at: aSymbol ifAbsent: [^false].
-	^true!
-
-initialize
-	changes := CompositeRefactoryChange new.
-	environment := BrowserEnvironment new.
-	newClasses := IdentityDictionary new.
-	changedClasses := IdentityDictionary new.
-	removedClasses := Set new.
-	implementorsCache := IdentityDictionary new.
-	sendersCache := IdentityDictionary new!
+	#namespaceToDo.	"Hack to get renaming classes working. Probably not the right thing to do."
+	^(BindingReference isQualifiedName: aSymbol)
+		ifTrue: 
+			[| nsBinding names |
+			"We need to establish if any binding found is actually in the namespace at the end of the path."
+			names := BindingReference splitQualifiedName: aSymbol.
+			nsBinding := environment associationAt: ($. join: names allButLast).
+			nsBinding notNil and: 
+					[| ns |
+					ns := nsBinding value.
+					ns class isMeta and: [(ns localBindingFor: names last) notNil]]]
+		ifFalse: [(environment associationAt: aSymbol) notNil]!
 
 metaclassNamed: aSymbol
 	aSymbol isNil ifTrue: [^nil].
@@ -219,19 +218,17 @@ privateImplementorsOf: aSelector
 	| classes |
 	classes := Set new.
 	self allClassesDo: 
-			[:each | 
+			[:each |
 			#rbFix.	"Ignore defining classes where the class/selector pair is not part of the environment"
-			((each directlyDefinesMethod: aSelector) 
-				and: [environment includesSelector: aSelector in: each]) 
-					ifTrue: [classes add: each]].
+			((each directlyDefinesMethod: aSelector) and: [environment includesSelector: aSelector in: each])
+				ifTrue: [classes add: each]].
 	^classes!
 
 removeClass: aRBClass 
 	self removeClassNamed: aRBClass name!
 
-removeClassNamed: aSymbol 
-	(self classNamed: aSymbol) subclasses 
-		do: [:each | self removeClassNamed: each name].
+removeClassNamed: aSymbol
+	(self classNamed: aSymbol) subclasses do: [:each | self removeClassNamed: each fullName].
 	removedClasses
 		add: aSymbol;
 		add: aSymbol , ' class'.
@@ -250,36 +247,33 @@ removeMethod: aSelector from: aRBClass
 	self flushCaches.
 	^changes removeMethod: aSelector from: aRBClass!
 
-renameClass: aRBClass to: aSymbol around: aBlock 
+renameClass: aRBClass to: aSymbol around: aBlock
 	| change value dict |
-
-	change := RenameClassChange rename: aRBClass name to: aSymbol.
+	change := RenameClassChange rename: aRBClass fullName to: aSymbol.
 	self performChange: change around: aBlock.
 	self flushCaches.
-	dict := (newClasses includesKey: aSymbol) 
-				ifTrue: [newClasses]
-				ifFalse: [changedClasses].
+	dict := (newClasses includesKey: aSymbol) ifTrue: [newClasses] ifFalse: [changedClasses].
 	removedClasses
 		add: aRBClass name;
 		add: aRBClass name , ' class'.
-	value := dict at: aRBClass name.
-	dict removeKey: aRBClass name.
+	value := dict at: aRBClass fullName.
+	dict removeKey: aRBClass fullName.
 	dict at: aSymbol put: value.
-	value first name: aSymbol.
-	value last name: aSymbol.
+	value first shortName: aSymbol.
+	value last shortName: aSymbol.
 	value first subclasses do: [:each | each superclass: value first].
 	value last subclasses do: [:each | each superclass: value last].
 	^change!
 
-renameClassVariable: oldName to: newName in: aRBClass around: aBlock 
-	^self performChange: (RenameClassVariableChange 
+renameClassVariable: oldName to: newName in: aRBClass around: aBlock
+	^self performChange: (RenameClassVariableChange
 				rename: oldName
 				to: newName
 				in: aRBClass)
 		around: aBlock!
 
-renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock 
-	^self performChange: (RenameInstanceVariableChange 
+renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock
+	^self performChange: (RenameInstanceVariableChange
 				rename: oldName
 				to: newName
 				in: aRBClass)
@@ -297,73 +291,82 @@ replaceClassNameIn: definitionString to: aSymbol
 	parseTree receiver: (RBVariableNode named: aSymbol).
 	^parseTree formattedCode!
 
+replaceImport: oldBindingReference with: newBindingReference in: aRBClass
+	^changes replaceImport: oldBindingReference with: newBindingReference in: aRBClass!
+
 rootClasses
-	rootClasses isNil 
+	rootClasses isNil
 		ifTrue: 
 			[rootClasses := OrderedCollection new.
 			Class rootsOfTheWorld do: 
-					[:each | 
+					[:each |
 					| class |
 					class := self classFor: each.
-					(class notNil and: [class superclass isNil]) 
-						ifTrue: [rootClasses add: class]]].
+					(class notNil and: [class superclass isNil]) ifTrue: [rootClasses add: class]]].
 	^rootClasses!
+
+setEnvironment: aBrowserEnvironment
+	changes := CompositeRefactoryChange new.
+	environment := aBrowserEnvironment.
+	newClasses := LookupTable new.
+	changedClasses := LookupTable new.
+	removedClasses := Set new.
+	implementorsCache := IdentityDictionary new.
+	sendersCache := IdentityDictionary new!
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
-!RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
-!RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
-!RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
-!RBNamespace categoriesFor: #addPool:to:!changes!private! !
-!RBNamespace categoriesFor: #allClassesDo:!accessing!public! !
-!RBNamespace categoriesFor: #allImplementorsOf:!accessing!public! !
-!RBNamespace categoriesFor: #allReferencesTo:do:!accessing!public! !
-!RBNamespace categoriesFor: #allReferencesToClass:do:!accessing!public! !
-!RBNamespace categoriesFor: #changeClass:!changes!private! !
-!RBNamespace categoriesFor: #changes!accessing!public! !
-!RBNamespace categoriesFor: #changes:!accessing!public! !
-!RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
-!RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
-!RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
-!RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
-!RBNamespace categoriesFor: #defineClass:!changes!public! !
-!RBNamespace categoriesFor: #environment!accessing!public! !
-!RBNamespace categoriesFor: #environment:!accessing!public! !
-!RBNamespace categoriesFor: #flushCaches!changes!private! !
-!RBNamespace categoriesFor: #hasCreatedClassFor:!helpers!private! !
-!RBNamespace categoriesFor: #hasRemoved:!public!testing! !
-!RBNamespace categoriesFor: #includesClassNamed:!public!testing! !
-!RBNamespace categoriesFor: #includesGlobal:!public!testing! !
-!RBNamespace categoriesFor: #initialize!initialize/release!public! !
-!RBNamespace categoriesFor: #metaclassNamed:!accessing/classes!public! !
-!RBNamespace categoriesFor: #name!accessing!public! !
-!RBNamespace categoriesFor: #name:!accessing!public! !
-!RBNamespace categoriesFor: #performChange:around:!changes!private! !
-!RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
-!RBNamespace categoriesFor: #removeClass:!changes!public! !
-!RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
-!RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
-!RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
-!RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
-!RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
-!RBNamespace categoriesFor: #renameClassVariable:to:in:around:!changes!private! !
-!RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
-!RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
-!RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
-!RBNamespace categoriesFor: #rootClasses!accessing!public! !
-!RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #addImport:to:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #allClassesDo:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #allImplementorsOf:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #allReferencesTo:do:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #allReferencesToClass:do:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #changeClass:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #changes!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #changes:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #defineClass:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #environment!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #flushCaches!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #hasCreatedClassFor:!helpers!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #hasRemoved:!public!testing! !
+!Refactory.Browser.RBNamespace categoriesFor: #includesClassNamed:!public!testing! !
+!Refactory.Browser.RBNamespace categoriesFor: #includesGlobal:!public!testing! !
+!Refactory.Browser.RBNamespace categoriesFor: #metaclassNamed:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #name!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #name:!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #performChange:around:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeClass:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #renameClassVariable:to:in:around:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #replaceImport:with:in:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #rootClasses!accessing!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #setEnvironment:!initialize/release!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
 
-!RBNamespace class methodsFor!
+!Refactory.Browser.RBNamespace class methodsFor!
 
 new
-	^(super new)
-		initialize;
-		yourself!
+	^self onEnvironment: BrowserEnvironment new!
 
-onEnvironment: aBrowserEnvironment 
-	^(self new)
-		environment: aBrowserEnvironment;
+onEnvironment: aBrowserEnvironment
+	^self basicNew
+		setEnvironment: aBrowserEnvironment;
 		yourself! !
-!RBNamespace class categoriesFor: #new!instance creation!public! !
-!RBNamespace class categoriesFor: #onEnvironment:!instance creation!public! !
+!Refactory.Browser.RBNamespace class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RBNamespace class categoriesFor: #onEnvironment:!instance creation!public! !
 

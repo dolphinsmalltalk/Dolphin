@@ -1,30 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #RenameClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameClassVariableTest guid: (GUID fromString: '{5d45357d-1056-4b27-b1a1-1df41ee18851}')!
-RenameClassVariableTest comment: ''!
-!RenameClassVariableTest categoriesForClass!Refactory-Testing! !
-!RenameClassVariableTest methodsFor!
+Refactory.Browser.Tests.RenameClassVariableTest guid: (Core.GUID fromString: '{5d45357d-1056-4b27-b1a1-1df41ee18851}')!
+Refactory.Browser.Tests.RenameClassVariableTest comment: ''!
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RenameClassVariableTest methodsFor!
 
 testAlreadyExistingName
-	self shouldFail: (RenameClassVariableRefactoring 
+	self shouldFail: (RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: self objectClassVariable
 				in: TransformationRuleTest)!
 
 testMetaClassFailure
-	self shouldFail: (RenameClassVariableRefactoring 
+	self shouldFail: (RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: #Foo
 				in: TransformationRuleTest class)!
 
 testNonExistantName
-	self shouldFail: (RenameClassVariableRefactoring 
+	self shouldFail: (RenameClassVariableRefactoring
 				rename: #foo
 				to: #newFoo
 				in: BasicLintRuleTest)!
@@ -36,7 +36,7 @@ testRenameClassVar
 				to: #RSR
 				in: TransformationRuleTest.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: TransformationRuleTest fullName.
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
 	self assert: (class metaclass parseTreeFor: #initializeAfterLoad1)
@@ -59,8 +59,8 @@ testRenameClassVar
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')! !
-!RenameClassVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testRenameClassVar!public!tests! !
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testRenameClassVar!public!tests! !
 

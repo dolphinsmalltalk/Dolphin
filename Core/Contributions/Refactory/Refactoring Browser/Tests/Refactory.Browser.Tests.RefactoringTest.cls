@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #RefactoringTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringTest'
 	instanceVariableNames: 'manager changeSet model'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTest guid: (GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
-RefactoringTest isAbstract: true!
-RefactoringTest comment: ''!
-!RefactoringTest categoriesForClass!Refactory-Testing! !
-!RefactoringTest methodsFor!
+Refactory.Browser.Tests.RefactoringTest guid: (Core.GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
+Refactory.Browser.Tests.RefactoringTest isNonInstantiable: true!
+Refactory.Browser.Tests.RefactoringTest comment: ''!
+!Refactory.Browser.Tests.RefactoringTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RefactoringTest methodsFor!
 
-readFile: aString 
+readFile: aString
 	| path |
-	#rbFix. "^aString asFilename contentsOfEntireFile"
-	path := File composePath: (Package manager packageNamed: 'RBTests') path subPath: aString.
+	#rbFix.	"^aString asFilename contentsOfEntireFile"
+	path := File composePath: self class owningPackage path subPath: aString.
 	^(FileStream read: path) contents!
 
 setUp
@@ -80,31 +80,28 @@ setupVariableTypesFor: aRefactoring toReturn: anObject
 	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
 	aRefactoring options: options!
 
-shouldFail: aRefactoring 
-	self proceedThroughWarning: 
-			[self should: [self executeRefactoring: aRefactoring]
-				raise: RefactoringError]!
+shouldFail: aRefactoring
+	self
+		proceedThroughWarning: [self should: [self executeRefactoring: aRefactoring] raise: RefactoringError]!
 
-shouldWarn: aRefactoring 
-	self should: [self executeRefactoring: aRefactoring]
-		raise: RefactoringWarning!
+shouldWarn: aRefactoring
+	self should: [self executeRefactoring: aRefactoring] raise: RefactoringWarning!
 
 tearDown
 	super tearDown.
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance
-		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) 
-			value: manager! !
-!RefactoringTest categoriesFor: #readFile:!public!set up! !
-!RefactoringTest categoriesFor: #setUp!public!set up! !
-!RefactoringTest categoriesFor: #setupImplementorToInlineFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupInlineExpressionFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:withArguments:!public!set up! !
-!RefactoringTest categoriesFor: #setupSelfArgumentNameFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupVariableToMoveToFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupVariableTypesFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #shouldFail:!private! !
-!RefactoringTest categoriesFor: #shouldWarn:!private! !
-!RefactoringTest categoriesFor: #tearDown!public!set up! !
+		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #readFile:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupImplementorToInlineFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupInlineExpressionFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:withArguments:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupSelfArgumentNameFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupVariableToMoveToFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupVariableTypesFor:toReturn:!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #shouldFail:!private! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #shouldWarn:!private! !
+!Refactory.Browser.Tests.RefactoringTest categoriesFor: #tearDown!public!set up! !
 

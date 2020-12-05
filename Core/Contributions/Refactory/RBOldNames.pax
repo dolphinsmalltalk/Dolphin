@@ -1,0 +1,99 @@
+﻿| package |
+package := Package name: 'RBOldNames'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.BasicLintRule}
+	#{Smalltalk.BrowserEnvironment}
+	#{Smalltalk.ChildrenToSiblingsRefactoring}
+	#{Smalltalk.ClassEnvironment}
+	#{Smalltalk.CompositeLintRule}
+	#{Smalltalk.CreateAccessorsForVariableRefactoring}
+	#{Smalltalk.ParseTreeLintRule}
+	#{Smalltalk.ParseTreeSearcher}
+	#{Smalltalk.RBCondition}
+	#{Smalltalk.RBMethodName}
+	#{Smalltalk.RefactoringError}
+	#{Smalltalk.RefactoryChangeManager}
+	#{Smalltalk.RenameClassVariableRefactoring}
+	#{Smalltalk.RenameInstanceVariableRefactoring}
+	#{Smalltalk.RenameMethodRefactoring}
+	#{Smalltalk.SelectorEnvironment}
+	#{Smalltalk.SmalllintChecker}
+	#{Smalltalk.TransformationRule}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.BasicLintRule}
+	#{Smalltalk.BrowserEnvironment}
+	#{Smalltalk.ChildrenToSiblingsRefactoring}
+	#{Smalltalk.ClassEnvironment}
+	#{Smalltalk.CompositeLintRule}
+	#{Smalltalk.CreateAccessorsForVariableRefactoring}
+	#{Smalltalk.ParseTreeLintRule}
+	#{Smalltalk.ParseTreeSearcher}
+	#{Smalltalk.RBCondition}
+	#{Smalltalk.RBMethodName}
+	#{Smalltalk.RefactoringError}
+	#{Smalltalk.RefactoryChangeManager}
+	#{Smalltalk.RenameClassVariableRefactoring}
+	#{Smalltalk.RenameInstanceVariableRefactoring}
+	#{Smalltalk.RenameMethodRefactoring}
+	#{Smalltalk.SelectorEnvironment}
+	#{Smalltalk.SmalllintChecker}
+	#{Smalltalk.TransformationRule}
+).
+
+package setPrerequisites: #(
+	'Refactoring Browser\Change Objects\RBChangeObjects'
+	'Refactoring Browser\Environments\RBEnvironments'
+	'Refactoring Browser\Parser\RBParser'
+	'Refactoring Browser\Refactorings\RBRefactorings'
+	'Refactoring Browser\SmallLint\RBSmallLint'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.BasicLintRule := Refactory.Browser.BasicLintRule!
+
+Smalltalk.BrowserEnvironment := Refactory.Browser.BrowserEnvironment!
+
+Smalltalk.ChildrenToSiblingsRefactoring := Refactory.Browser.ChildrenToSiblingsRefactoring!
+
+Smalltalk.ClassEnvironment := Refactory.Browser.ClassEnvironment!
+
+Smalltalk.CompositeLintRule := Refactory.Browser.CompositeLintRule!
+
+Smalltalk.CreateAccessorsForVariableRefactoring := Refactory.Browser.CreateAccessorsForVariableRefactoring!
+
+Smalltalk.ParseTreeLintRule := Refactory.Browser.ParseTreeLintRule!
+
+Smalltalk.ParseTreeSearcher := Refactory.Browser.ParseTreeSearcher!
+
+Smalltalk.RBCondition := Refactory.Browser.RBCondition!
+
+Smalltalk.RBMethodName := Refactory.Browser.RBMethodName!
+
+Smalltalk.RefactoringError := Refactory.Browser.RefactoringError!
+
+Smalltalk.RefactoryChangeManager := Refactory.Browser.RefactoryChangeManager!
+
+Smalltalk.RenameClassVariableRefactoring := Refactory.Browser.RenameClassVariableRefactoring!
+
+Smalltalk.RenameInstanceVariableRefactoring := Refactory.Browser.RenameInstanceVariableRefactoring!
+
+Smalltalk.RenameMethodRefactoring := Refactory.Browser.RenameMethodRefactoring!
+
+Smalltalk.SelectorEnvironment := Refactory.Browser.SelectorEnvironment!
+
+Smalltalk.SmalllintChecker := Refactory.Browser.SmalllintChecker!
+
+Smalltalk.TransformationRule := Refactory.Browser.TransformationRule!
+
+
+"End of package definition"!
+

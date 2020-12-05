@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #PushDownMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.PushDownMethodRefactoring'
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PushDownMethodRefactoring guid: (GUID fromString: '{3a03ada6-57cd-40af-b730-0fca36de9319}')!
-PushDownMethodRefactoring comment: ''!
-!PushDownMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!PushDownMethodRefactoring methodsFor!
+Refactory.Browser.PushDownMethodRefactoring guid: (Core.GUID fromString: '{3a03ada6-57cd-40af-b730-0fca36de9319}')!
+Refactory.Browser.PushDownMethodRefactoring comment: ''!
+!Refactory.Browser.PushDownMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.PushDownMethodRefactoring methodsFor!
 
 preconditions
 	| condition |
@@ -27,11 +27,11 @@ preconditions
 									errorString: each , ' sends super message that is overridden.')].
 	^condition & (RBCondition isAbstractClass: class)!
 
-pushDown: aSelector 
+pushDown: aSelector
 	| code protocols refactoring package |
 	code := class sourceCodeFor: aSelector.
 	protocols := class protocolsFor: aSelector.
-	refactoring := ExpandReferencedPoolsRefactoring 
+	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
@@ -40,8 +40,8 @@ pushDown: aSelector
 	#rbFix.	"Bodge change objects to maintain package relationship"
 	package := class realClass ifNotNil: [:c | (c compiledMethodAt: aSelector) owningPackageIfLoose].
 	class subclasses do: 
-			[:each | 
-			(each directlyDefinesMethod: aSelector) 
+			[:each |
+			(each directlyDefinesMethod: aSelector)
 				ifFalse: 
 					[| change |
 					change := each compile: code classified: protocols.
@@ -65,13 +65,13 @@ storeOn: aStream
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeMethod: each]! !
-!PushDownMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushDownMethodRefactoring categoriesFor: #pushDown:!public!transforming! !
-!PushDownMethodRefactoring categoriesFor: #pushDown:from:!initialize/release!public! !
-!PushDownMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!PushDownMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #pushDown:!public!transforming! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #pushDown:from:!initialize/release!public! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #transform!public!transforming! !
 
-!PushDownMethodRefactoring class methodsFor!
+!Refactory.Browser.PushDownMethodRefactoring class methodsFor!
 
 model: aRBNamespace pushDown: selectorCollection from: aClass 
 	^(self new)
@@ -81,6 +81,6 @@ model: aRBNamespace pushDown: selectorCollection from: aClass
 
 pushDown: selectorCollection from: aClass 
 	^self new pushDown: selectorCollection from: aClass! !
-!PushDownMethodRefactoring class categoriesFor: #model:pushDown:from:!instance creation!public! !
-!PushDownMethodRefactoring class categoriesFor: #pushDown:from:!instance creation!public! !
+!Refactory.Browser.PushDownMethodRefactoring class categoriesFor: #model:pushDown:from:!instance creation!public! !
+!Refactory.Browser.PushDownMethodRefactoring class categoriesFor: #pushDown:from:!instance creation!public! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RefactoryChange
+Core.Object subclass: #'Refactory.Browser.RefactoryChange'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoryChange guid: (GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
-RefactoryChange isAbstract: true!
-RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
+Refactory.Browser.RefactoryChange guid: (Core.GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
+Refactory.Browser.RefactoryChange isNonInstantiable: true!
+Refactory.Browser.RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
 
 Subclasses must implement the following messages:
 	accessing
@@ -16,15 +16,14 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	class	<Behavior>	the class that is to be changed'!
-!RefactoryChange categoriesForClass!Refactory-Change Objects! !
-!RefactoryChange methodsFor!
+!Refactory.Browser.RefactoryChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RefactoryChange methodsFor!
 
 addClassChangeClass
-	#rbFix. "Replace hard refs to AddClassChange with sends of this message, and use Dolphin specific subclass"
-	^DolphinAddClassChange!
+	^AddClassChange!
 
 addMethodChangeClass
-	#rbFix. "Replace hard refs to AddMethodChange with sends of this message, and use Dolphin specific subclass"
+	#rbFix.	"Replace hard refs to AddMethodChange with sends of this message, and use Dolphin specific subclass"
 	^DolphinAddMethodChange!
 
 changeForClass: aRBClass selector: aSelector 
@@ -74,26 +73,26 @@ renameChangesForClass: aClassName to: newClassName
 	name to perform the compiles."
 
 	self subclassResponsibility! !
-!RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
-!RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
-!RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!RefactoryChange categoriesFor: #changes!accessing!public! !
-!RefactoryChange categoriesFor: #changesSize!accessing!public! !
-!RefactoryChange categoriesFor: #changeString!printing!public! !
-!RefactoryChange categoriesFor: #displayString!printing!public! !
-!RefactoryChange categoriesFor: #execute!performing/changes!public! !
-!RefactoryChange categoriesFor: #executeNotifying:!private! !
-!RefactoryChange categoriesFor: #flattenedChanges!accessing!private! !
-!RefactoryChange categoriesFor: #flattenOnto:!private! !
-!RefactoryChange categoriesFor: #initialize!initialize/release!public! !
-!RefactoryChange categoriesFor: #name!accessing!public! !
-!RefactoryChange categoriesFor: #name:!initialize/release!public! !
-!RefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #changes!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #changesSize!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #displayString!printing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #execute!performing/changes!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #executeNotifying:!private! !
+!Refactory.Browser.RefactoryChange categoriesFor: #flattenedChanges!accessing!private! !
+!Refactory.Browser.RefactoryChange categoriesFor: #flattenOnto:!private! !
+!Refactory.Browser.RefactoryChange categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #name!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #name:!initialize/release!public! !
+!Refactory.Browser.RefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
 
-!RefactoryChange class methodsFor!
+!Refactory.Browser.RefactoryChange class methodsFor!
 
 new
 	^super new initialize! !
-!RefactoryChange class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RefactoryChange class categoriesFor: #new!instance creation!public! !
 

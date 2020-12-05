@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ParseTreeSearcher subclass: #ParseTreeRewriter
+Refactory.Browser.ParseTreeSearcher subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ParseTreeRewriter guid: (GUID fromString: '{e902bffe-805d-4946-b0ea-0e7501c75c73}')!
-ParseTreeRewriter comment: 'ParseTreeRewriter walks over and transforms its BRProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
+Refactory.Browser.ParseTreeRewriter guid: (Core.GUID fromString: '{e902bffe-805d-4946-b0ea-0e7501c75c73}')!
+Refactory.Browser.ParseTreeRewriter comment: 'ParseTreeRewriter walks over and transforms its BRProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 Instance Variables:
 	tree	<BRProgramNode>	the parse tree we''re transforming'!
-!ParseTreeRewriter categoriesForClass!Refactory-ParseTree Matching! !
-!ParseTreeRewriter methodsFor!
+!Refactory.Browser.ParseTreeRewriter categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.ParseTreeRewriter methodsFor!
 
 executeTree: aParseTree
 	answer := false.
@@ -22,76 +22,71 @@ executeTree: aParseTree
 foundMatch
 	answer := true!
 
-lookForMoreMatchesInContext: oldContext 
+lookForMoreMatchesInContext: oldContext
 	oldContext keysAndValuesDo: 
-			[:key :value | 
-			((key isKindOf: String) not and: [key recurseInto]) 
-				ifTrue: 
-					[oldContext at: key put: (value collect: [:each | self visitNode: each])]]!
+			[:key :value |
+			((key isKindOf: String) not and: [key recurseInto])
+				ifTrue: [oldContext at: key put: (value collect: [:each | self visitNode: each])]]!
 
-replace: searchString with: replaceString 
+replace: searchString with: replaceString
 	self addRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
 
-replace: searchString with: replaceString when: aBlock 
-	self addRule: (RBStringReplaceRule 
+replace: searchString with: replaceString when: aBlock
+	self addRule: (RBStringReplaceRule
 				searchFor: searchString
 				replaceWith: replaceString
 				when: aBlock)!
 
-replace: searchString withValueFrom: replaceBlock 
+replace: searchString withValueFrom: replaceBlock
 	self addRule: (RBBlockReplaceRule searchFor: searchString replaceWith: replaceBlock)!
 
-replace: searchString withValueFrom: replaceBlock when: conditionBlock 
-	self addRule: (RBBlockReplaceRule 
+replace: searchString withValueFrom: replaceBlock when: conditionBlock
+	self addRule: (RBBlockReplaceRule
 				searchFor: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)!
 
-replaceArgument: searchString with: replaceString 
-	self 
-		addArgumentRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
+replaceArgument: searchString with: replaceString
+	self addArgumentRule: (RBStringReplaceRule searchFor: searchString replaceWith: replaceString)!
 
-replaceArgument: searchString with: replaceString when: aBlock 
-	self addArgumentRule: (RBStringReplaceRule 
+replaceArgument: searchString with: replaceString when: aBlock
+	self addArgumentRule: (RBStringReplaceRule
 				searchFor: searchString
 				replaceWith: replaceString
 				when: aBlock)!
 
-replaceArgument: searchString withValueFrom: replaceBlock 
-	self 
-		addArgumentRule: (RBBlockReplaceRule searchFor: searchString replaceWith: replaceBlock)!
+replaceArgument: searchString withValueFrom: replaceBlock
+	self addArgumentRule: (RBBlockReplaceRule searchFor: searchString replaceWith: replaceBlock)!
 
-replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock 
-	self addArgumentRule: (RBBlockReplaceRule 
+replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock
+	self addArgumentRule: (RBBlockReplaceRule
 				searchFor: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)!
 
-replaceMethod: searchString with: replaceString 
-	self 
-		addRule: (RBStringReplaceRule searchForMethod: searchString replaceWith: replaceString)!
+replaceMethod: searchString with: replaceString
+	self addRule: (RBStringReplaceRule searchForMethod: searchString replaceWith: replaceString)!
 
-replaceMethod: searchString with: replaceString when: aBlock 
-	self addRule: (RBStringReplaceRule 
+replaceMethod: searchString with: replaceString when: aBlock
+	self addRule: (RBStringReplaceRule
 				searchForMethod: searchString
 				replaceWith: replaceString
 				when: aBlock)!
 
-replaceMethod: searchString withValueFrom: replaceBlock 
-	self 
-		addRule: (RBBlockReplaceRule searchForMethod: searchString replaceWith: replaceBlock)!
+replaceMethod: searchString withValueFrom: replaceBlock
+	self addRule: (RBBlockReplaceRule searchForMethod: searchString replaceWith: replaceBlock)!
 
-replaceMethod: searchString withValueFrom: replaceBlock when: conditionBlock 
-	self addRule: (RBBlockReplaceRule 
+replaceMethod: searchString withValueFrom: replaceBlock when: conditionBlock
+	self addRule: (RBBlockReplaceRule
 				searchForMethod: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)!
 
-replaceTree: searchTree withTree: replaceTree 
+replaceTree: searchTree withTree: replaceTree
 	self addRule: (RBStringReplaceRule searchForTree: searchTree replaceWith: replaceTree)!
 
-replaceTree: searchTree withTree: replaceTree when: aBlock 
-	self addRule: (RBStringReplaceRule 
+replaceTree: searchTree withTree: replaceTree when: aBlock
+	self addRule: (RBStringReplaceRule
 				searchForTree: searchTree
 				replaceWith: replaceTree
 				when: aBlock)!
@@ -163,37 +158,37 @@ visitReturnNode: aReturnNode
 visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each])! !
-!ParseTreeRewriter categoriesFor: #executeTree:!accessing!public! !
-!ParseTreeRewriter categoriesFor: #foundMatch!helpers!private! !
-!ParseTreeRewriter categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
-!ParseTreeRewriter categoriesFor: #replace:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #tree!accessing!public! !
-!ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
-!ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !
-!ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #executeTree:!accessing!public! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #foundMatch!helpers!private! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:with:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:with:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:withValueFrom:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:withValueFrom:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:with:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:with:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #tree!accessing!public! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 
-!ParseTreeRewriter class methodsFor!
+!Refactory.Browser.ParseTreeRewriter class methodsFor!
 
 classVariable: aVarName getter: getMethod setter: setMethod 
 	^self 
@@ -298,15 +293,15 @@ variable: aVarName getter: getMethod setter: setMethod receiver: aString
 		replace: aVarName , ' := ``@object' with: aString , ' ' , setMethod , ' ``@object';
 		replace: aVarName with: aString , ' ' , getMethod.
 	^rewriteRule! !
-!ParseTreeRewriter class categoriesFor: #classVariable:getter:setter:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #removeTemporaryNamed:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #rename:to:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #rename:to:handler:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:in:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:in:onInterval:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:method:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replaceLiteral:with:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replaceStatements:with:in:onInterval:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #variable:getter:setter:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #variable:getter:setter:receiver:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #classVariable:getter:setter:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #removeTemporaryNamed:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #rename:to:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #rename:to:handler:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:in:!accessing!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:in:onInterval:!accessing!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:method:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replaceLiteral:with:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replaceStatements:with:in:onInterval:!accessing!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #variable:getter:setter:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesFor: #variable:getter:setter:receiver:!instance creation!public! !
 

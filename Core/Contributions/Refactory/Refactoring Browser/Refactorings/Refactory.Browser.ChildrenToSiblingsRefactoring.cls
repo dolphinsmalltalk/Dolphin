@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassRefactoring subclass: #ChildrenToSiblingsRefactoring
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ChildrenToSiblingsRefactoring'
 	instanceVariableNames: 'parent subclasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChildrenToSiblingsRefactoring guid: (GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
-ChildrenToSiblingsRefactoring comment: ''!
-!ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !
-!ChildrenToSiblingsRefactoring methodsFor!
+Refactory.Browser.ChildrenToSiblingsRefactoring guid: (Core.GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
+Refactory.Browser.ChildrenToSiblingsRefactoring comment: ''!
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring methodsFor!
 
 abstractSuperclass
 	^self model classNamed: className asSymbol!
@@ -25,17 +25,14 @@ addSuperclass
 changeIsKindOfReferences
 	| replacer |
 	replacer := ParseTreeRewriter new.
-	replacer replace: '``@object isKindOf: ' , parent name
-		with: '``@object isKindOf: ' , className.
+	replacer replace: '``@object isKindOf: ' , parent name with: '``@object isKindOf: ' , className.
 	self convertAllReferencesToClass: parent using: replacer!
 
-computeSubclassSupersOf: aClass 
+computeSubclassSupersOf: aClass
 	| selectors |
 	selectors := Set new.
-	aClass subclasses do: 
-			[:each | 
-			each selectors 
-				do: [:sel | selectors addAll: (each parseTreeFor: sel) superMessages]].
+	aClass subclasses
+		do: [:each | each selectors do: [:sel | selectors addAll: (each parseTreeFor: sel) superMessages]].
 	^selectors!
 
 createSubclassResponsibilityFor: aSelector in: aClass 
@@ -68,8 +65,8 @@ pullUpClassInstanceVariables
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass metaclass.
 	parent metaclass instanceVariableNames do: 
-			[:each | 
-			self performComponentRefactoring: (PullUpInstanceVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (PullUpInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]!
@@ -78,29 +75,28 @@ pullUpClassVariables
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass.
 	parent classVariableNames do: 
-			[:each | 
-			self performComponentRefactoring: (PullUpClassVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (PullUpClassVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]!
+
+pullUpImports
+	"Don't remove the pool variables from the subclass since they might be referenced there."
+
+	| newSuperclass |
+	newSuperclass := self abstractSuperclass.
+	parent imports do: [:each | newSuperclass addImport: each]!
 
 pullUpInstanceVariables
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass.
 	parent instanceVariableNames do: 
-			[:each | 
-			self performComponentRefactoring: (PullUpInstanceVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (PullUpInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]!
-
-pullUpPoolVariables
-	"Don't remove the pool variables from the subclass since they might be referenced there."
-
-	| newSuperclass |
-	newSuperclass := self abstractSuperclass.
-	parent poolDictionaryNames 
-		do: [:each | newSuperclass addPoolDictionary: each]!
 
 pushUp: aSelector in: aClass 
 	| source |
@@ -128,7 +124,7 @@ pushUpVariables
 	self pullUpInstanceVariables.
 	self pullUpClassInstanceVariables.
 	self pullUpClassVariables.
-	self pullUpPoolVariables!
+	self pullUpImports!
 
 reparentSubclasses
 	self model reparentClasses: subclasses to: self abstractSuperclass!
@@ -180,31 +176,31 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
-!ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!accessing!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #addSuperclass!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #changeIsKindOfReferences!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #name:class:subclasses:!initialize/release!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpPoolVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpVariables!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #storeOn:!printing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclasses!accessing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclasses:!accessing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!accessing!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #addSuperclass!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #changeIsKindOfReferences!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #name:class:subclasses:!initialize/release!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private!variables! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private!variables! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpImports!private!variables! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private!variables! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethods!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpVariables!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclasses!accessing!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclasses:!accessing!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!methods!private! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #transform!public!transforming! !
 
-!ChildrenToSiblingsRefactoring class methodsFor!
+!Refactory.Browser.ChildrenToSiblingsRefactoring class methodsFor!
 
 model: aRBNamespace name: aClassName class: aClass subclasses: subclassCollection 
 	^(self new)
@@ -220,6 +216,6 @@ name: aClassName class: aClass subclasses: subclassCollection
 			class: aClass
 			subclasses: subclassCollection;
 		yourself! !
-!ChildrenToSiblingsRefactoring class categoriesFor: #model:name:class:subclasses:!instance creation!public! !
-!ChildrenToSiblingsRefactoring class categoriesFor: #name:class:subclasses:!instance creation!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesFor: #model:name:class:subclasses:!instance creation!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesFor: #name:class:subclasses:!instance creation!public! !
 

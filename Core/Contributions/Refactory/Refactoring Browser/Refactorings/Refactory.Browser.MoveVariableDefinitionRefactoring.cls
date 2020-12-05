@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #MoveVariableDefinitionRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoveVariableDefinitionRefactoring guid: (GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
-MoveVariableDefinitionRefactoring comment: ''!
-!MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !
-!MoveVariableDefinitionRefactoring methodsFor!
+Refactory.Browser.MoveVariableDefinitionRefactoring guid: (Core.GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
+Refactory.Browser.MoveVariableDefinitionRefactoring comment: ''!
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring methodsFor!
 
-checkNodes: sequenceNodes 
-	(sequenceNodes 
-		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
+checkNodes: sequenceNodes
+	(sequenceNodes
+		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
 			ifTrue: [^false].
 	sequenceNodes do: 
-			[:each | 
-			(self usesDirectly: each body) 
+			[:each |
+			(self usesDirectly: each body)
 				ifTrue: [blockNodes add: each]
 				ifFalse: [(self checkNodes: (self subblocksIn: each body)) ifFalse: [blockNodes add: each]]].
 	^true!
@@ -80,14 +80,13 @@ storeOn: aStream
 		nextPutAll: selector.
 	aStream nextPut: $)!
 
-subblocksIn: aParseTree 
+subblocksIn: aParseTree
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: '[:`@blockTemps | | `@temps | `@.Statements]'
 		do: 
-			[:aNode :answer | 
-			(aNode references: name)
-				ifTrue: [answer add: aNode].
+			[:aNode :answer |
+			(aNode references: name) ifTrue: [answer add: aNode].
 			answer].
 	^searcher executeTree: aParseTree initialAnswer: OrderedCollection new!
 
@@ -96,24 +95,23 @@ transform
 	blockNodes do: [:each | each body addTemporaryNamed: name].
 	class compileTree: parseTree!
 
-usesDirectly: aParseTree 
+usesDirectly: aParseTree
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher
-		matches: '[:`@args | | `@temps | `@.Statements]'
-			do: [:aNode :answer | answer];
+		matches: '[:`@args | | `@temps | `@.Statements]' do: [:aNode :answer | answer];
 		matches: name do: [:aNode :answer | true].
 	^searcher executeTree: aParseTree initialAnswer: false! !
-!MoveVariableDefinitionRefactoring categoriesFor: #checkNodes:!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #checkParseTree!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #class:selector:interval:!initialize/release!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #preconditions!preconditions!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #storeOn:!printing!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #subblocksIn:!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #transform!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #usesDirectly:!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #checkNodes:!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #checkParseTree!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #class:selector:interval:!initialize/release!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #subblocksIn:!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #usesDirectly:!public!transforming! !
 
-!MoveVariableDefinitionRefactoring class methodsFor!
+!Refactory.Browser.MoveVariableDefinitionRefactoring class methodsFor!
 
 bindTight: anInterval in: aClass selector: aSelector 
 	^self new
@@ -128,6 +126,6 @@ model: aRBNamespace bindTight: anInterval in: aClass selector: aSelector
 			selector: aSelector
 			interval: anInterval;
 		yourself! !
-!MoveVariableDefinitionRefactoring class categoriesFor: #bindTight:in:selector:!instance creation!public! !
-!MoveVariableDefinitionRefactoring class categoriesFor: #model:bindTight:in:selector:!instance creation!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesFor: #bindTight:in:selector:!instance creation!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesFor: #model:bindTight:in:selector:!instance creation!public! !
 

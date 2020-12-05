@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LintRule subclass: #BasicLintRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.BasicLintRule'
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicLintRule guid: (GUID fromString: '{b3fa342a-eaee-404e-b9a5-c8bc9276f559}')!
-BasicLintRule comment: 'BasicLintRule represents a check on the code.
+Refactory.Browser.BasicLintRule guid: (Core.GUID fromString: '{b3fa342a-eaee-404e-b9a5-c8bc9276f559}')!
+Refactory.Browser.BasicLintRule comment: 'BasicLintRule represents a check on the code.
 
 Instance Variables:
 	classBlock	<BlockClosure>	a block that is evaluated for each class that is checked
@@ -15,8 +15,8 @@ Instance Variables:
 	result	<Object>	some object that represents the results found (it must understand openEditor, isEmpty, problemCount, and copyEmpty). Most of the time, this is a BrowserEnvironment object.
 
 '!
-!BasicLintRule categoriesForClass!Refactory-Lint! !
-!BasicLintRule methodsFor!
+!Refactory.Browser.BasicLintRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.BasicLintRule methodsFor!
 
 defaultResultClass
 	^SelectorEnvironment!
@@ -65,34 +65,32 @@ resultClass: aClass
 
 viewResults
 	^self perform: openSymbol! !
-!BasicLintRule categoriesFor: #defaultResultClass!constants!private! !
-!BasicLintRule categoriesFor: #filteredResult!accessing!public! !
-!BasicLintRule categoriesFor: #initialize!initialize/release!public! !
-!BasicLintRule categoriesFor: #isEmpty!public!testing! !
-!BasicLintRule categoriesFor: #openUsing:!initialize/release!public! !
-!BasicLintRule categoriesFor: #openWithFilters!operations!private! !
-!BasicLintRule categoriesFor: #openWithoutFilters!operations!private! !
-!BasicLintRule categoriesFor: #problemCount!accessing!public! !
-!BasicLintRule categoriesFor: #resetResult!initialize/release!public! !
-!BasicLintRule categoriesFor: #result!accessing!public! !
-!BasicLintRule categoriesFor: #result:!initialize/release!public! !
-!BasicLintRule categoriesFor: #resultClass:!initialize/release!public! !
-!BasicLintRule categoriesFor: #viewResults!helpers!private! !
+!Refactory.Browser.BasicLintRule categoriesFor: #defaultResultClass!constants!private! !
+!Refactory.Browser.BasicLintRule categoriesFor: #filteredResult!accessing!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.BasicLintRule categoriesFor: #openUsing:!initialize/release!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #openWithFilters!operations!private! !
+!Refactory.Browser.BasicLintRule categoriesFor: #openWithoutFilters!operations!private! !
+!Refactory.Browser.BasicLintRule categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #resetResult!initialize/release!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #result!accessing!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #result:!initialize/release!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #resultClass:!initialize/release!public! !
+!Refactory.Browser.BasicLintRule categoriesFor: #viewResults!helpers!private! !
 
-!BasicLintRule class methodsFor!
+!Refactory.Browser.BasicLintRule class methodsFor!
 
 addFilter: anEnvironment for: aString 
 	self filterDictionary at: aString put: anEnvironment copy!
 
 filterDictionary
-	^FilterDictionary isNil 
-		ifTrue: [FilterDictionary := Dictionary new]
-		ifFalse: [FilterDictionary]!
+	^FilterDictionary isNil ifTrue: [FilterDictionary := Dictionary new] ifFalse: [FilterDictionary]!
 
 filterDictionary: aDictionary 
 	FilterDictionary := aDictionary!
 
-filterFor: aName 
+filterFor: aName
 	^self filterDictionary at: aName ifAbsentPut: [SelectorEnvironment new]!
 
 lintProtocols
@@ -116,10 +114,10 @@ storeFiltersOn: aStream
 	aStream
 		tab;
 		nextPutAll: 'yourself))'! !
-!BasicLintRule class categoriesFor: #addFilter:for:!accessing!public! !
-!BasicLintRule class categoriesFor: #filterDictionary!accessing!public! !
-!BasicLintRule class categoriesFor: #filterDictionary:!accessing!public! !
-!BasicLintRule class categoriesFor: #filterFor:!accessing!public! !
-!BasicLintRule class categoriesFor: #lintProtocols!accessing!public! !
-!BasicLintRule class categoriesFor: #storeFiltersOn:!public!storing! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #addFilter:for:!accessing!public! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #filterDictionary!accessing!public! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #filterDictionary:!accessing!public! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #filterFor:!accessing!public! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #lintProtocols!accessing!public! !
+!Refactory.Browser.BasicLintRule class categoriesFor: #storeFiltersOn:!public!storing! !
 

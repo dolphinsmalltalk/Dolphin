@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #FormatterTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.FormatterTest'
 	instanceVariableNames: 'settings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FormatterTest guid: (GUID fromString: '{9edc9b30-32ca-4970-8068-dd559bb18608}')!
-FormatterTest comment: ''!
-!FormatterTest categoriesForClass!Browser-Testing! !
-!FormatterTest methodsFor!
+Refactory.Browser.Tests.FormatterTest guid: (Core.GUID fromString: '{9edc9b30-32ca-4970-8068-dd559bb18608}')!
+Refactory.Browser.Tests.FormatterTest comment: ''!
+!Refactory.Browser.Tests.FormatterTest categoriesForClass!Browser-Testing! !
+!Refactory.Browser.Tests.FormatterTest methodsFor!
 
 runMethodTestFor: method
 	| result tree |
@@ -106,12 +106,12 @@ y := z
 testBlockArguments
 	RBFormatter1 indentString: (String with: Character tab).
 	RBFormatter1 numberOfArgumentsForMultiLine: 2.
-	self 
-		runTestForPairs: #(('self
+	self
+		runTestForPairs: #(#('self
 	at: 1
 	put:
 		[self foo: 2.
-		z := q]') ( 'self
+		z := q]') #('self
 	at: 1
 	put: [self foo]'))!
 
@@ -231,7 +231,7 @@ testPeriodTerminators
 	RBConfigurableFormatter indentString: (String with: Character tab).
 	RBConfigurableFormatter numberOfArgumentsForMultiLine: 2.
 	RBConfigurableFormatter periodsAsTerminators: true.
-	self 
+	self
 		runTestForPairs: #(#('self foo.
 self
 	at: 1
@@ -244,7 +244,7 @@ self
 	RBConfigurableFormatter
 		periodsAsTerminators: false;
 		periodsAtEndOfBlock: true.
-	self 
+	self
 		runTestForPairs: #(#('self foo.
 self
 	at: 1
@@ -257,7 +257,7 @@ self
 	RBConfigurableFormatter
 		periodsAsTerminators: false;
 		periodsAtEndOfMethod: true.
-	self 
+	self
 		runTestForPairs: #(#('self foo.
 self
 	at: 1
@@ -284,31 +284,31 @@ testSmokeTest
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
-!FormatterTest categoriesFor: #runMethodTestFor:!private! !
-!FormatterTest categoriesFor: #runTestForPairs:!private! !
-!FormatterTest categoriesFor: #setUp!public!running! !
-!FormatterTest categoriesFor: #smokeTestAllMethodsOfHierarchy:!public!tests! !
-!FormatterTest categoriesFor: #smokeTestForMethodsOfClasses:!helpers!private! !
-!FormatterTest categoriesFor: #tearDown!public!running! !
-!FormatterTest categoriesFor: #testAllSettingsInitialized!public!unit tests! !
-!FormatterTest categoriesFor: #testAssignments!public!tests! !
-!FormatterTest categoriesFor: #testBeginningNewLines!public!tests! !
-!FormatterTest categoriesFor: #testBinaryMessage!public!tests! !
-!FormatterTest categoriesFor: #testBlock!public!tests! !
-!FormatterTest categoriesFor: #testBlockArguments!public!tests! !
-!FormatterTest categoriesFor: #testCascadeKeywordMessages!public!tests! !
-!FormatterTest categoriesFor: #testCascadeMessages!public!tests! !
-!FormatterTest categoriesFor: #testFormatVariable!public!tests! !
-!FormatterTest categoriesFor: #testIndent!public!tests! !
-!FormatterTest categoriesFor: #testKeywordMessage!public!tests! !
-!FormatterTest categoriesFor: #testLiterals!public!tests! !
-!FormatterTest categoriesFor: #testLongSelectors!public!tests! !
-!FormatterTest categoriesFor: #testMethod!public!tests! !
-!FormatterTest categoriesFor: #testMethodComment!public!tests! !
-!FormatterTest categoriesFor: #testNoNewlineCascadeMessages!public!tests! !
-!FormatterTest categoriesFor: #testPeriodTerminators!public! !
-!FormatterTest categoriesFor: #testReturn!public!tests! !
-!FormatterTest categoriesFor: #testSequence!public!tests! !
-!FormatterTest categoriesFor: #testSmokeTest!public!tests! !
-!FormatterTest categoriesFor: #testUnaryMessage!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #runMethodTestFor:!private! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #runTestForPairs:!private! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #setUp!public!running! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #smokeTestAllMethodsOfHierarchy:!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #smokeTestForMethodsOfClasses:!helpers!private! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #tearDown!public!running! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testAllSettingsInitialized!public!unit tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testAssignments!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBeginningNewLines!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBinaryMessage!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBlock!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBlockArguments!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testCascadeKeywordMessages!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testCascadeMessages!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testFormatVariable!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testIndent!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testKeywordMessage!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testLiterals!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testLongSelectors!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testMethod!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testMethodComment!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testNoNewlineCascadeMessages!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testPeriodTerminators!public! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testReturn!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testSequence!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testSmokeTest!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesFor: #testUnaryMessage!public!tests! !
 

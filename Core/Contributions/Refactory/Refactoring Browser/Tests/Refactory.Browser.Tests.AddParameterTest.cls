@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #AddParameterTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddParameterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddParameterTest guid: (GUID fromString: '{b520d120-f80f-4ce2-b6be-e01706dc902b}')!
-AddParameterTest comment: ''!
-!AddParameterTest categoriesForClass!Refactory-Testing! !
-!AddParameterTest methodsFor!
+Refactory.Browser.Tests.AddParameterTest guid: (Core.GUID fromString: '{b520d120-f80f-4ce2-b6be-e01706dc902b}')!
+Refactory.Browser.Tests.AddParameterTest comment: ''!
+!Refactory.Browser.Tests.AddParameterTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.AddParameterTest methodsFor!
 
 setUp
 	super setUp.
@@ -23,7 +23,7 @@ testAddParameterForTwoArgumentMessage
 				newSelector: #called:bar:on:
 				initializer: '#(1.0)'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #called:bar:on:)
 		equals: (RBParser
 				parseMethod: 'called: anObject bar: aBlock on: anArrayOfFloat
@@ -49,7 +49,7 @@ testAddParameterThatReferencesGlobalAndLiteral
 				newSelector: #testFoo:bar:
 				initializer: 'OrderedCollection new: 5'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (RBParser
 				parseMethod: 'testFoo: anObject bar: anOrderedCollection
@@ -86,7 +86,7 @@ testAddParameterThatReferencesModelGlobal
 				newSelector: #testFoo:bar:
 				initializer: 'Bar new'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (RBParser parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
@@ -102,10 +102,9 @@ testAddParameterThatReferencesSelf
 				newSelector: #testFoo:bar:
 				initializer: 'self printString'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-		equals: (RBParser
-				parseMethod: 'testFoo: anObject bar: aString
+		equals: (RBParser parseMethod: 'testFoo: anObject bar: aString
 
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)
@@ -114,12 +113,12 @@ testAddParameterThatReferencesSelf
 
 testBadInitializationCode
 	self
-		shouldFail: (AddParameterRefactoring 
+		shouldFail: (AddParameterRefactoring
 					addParameterToMethod: #name
 					in: LintRuleTest
 					newSelector: #name:
 					initializer: 'foo:');
-		shouldFail: (AddParameterRefactoring 
+		shouldFail: (AddParameterRefactoring
 					addParameterToMethod: #name
 					in: LintRuleTest
 					newSelector: #name:
@@ -127,8 +126,8 @@ testBadInitializationCode
 
 testModelBadInitializationCode
 	| refactoring |
-	model removeClassNamed: #Refactoring.
-	refactoring := AddParameterRefactoring 
+	model removeClassNamed: #'Refactory.Browser.Refactoring'.
+	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name1
 				in: LintRuleTest
@@ -138,8 +137,8 @@ testModelBadInitializationCode
 
 testModelNonExistantName
 	| refactoring |
-	(model classNamed: #LintRuleTest) removeMethod: #name.
-	refactoring := AddParameterRefactoring 
+	(model classNamed: #'Refactory.Browser.Tests.LintRuleTest') removeMethod: #name.
+	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name
 				in: LintRuleTest
@@ -148,7 +147,7 @@ testModelNonExistantName
 	self shouldFail: refactoring!
 
 testNonExistantName
-	self shouldFail: (AddParameterRefactoring 
+	self shouldFail: (AddParameterRefactoring
 				addParameterToMethod: #name1
 				in: LintRuleTest
 				newSelector: #name1:
@@ -156,31 +155,30 @@ testNonExistantName
 
 testPrimitiveMethods
 	| refactoring |
-	(model classNamed: #Object) 
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
+	(model classNamed: #'Core.Object') compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #foo
 				in: Object
 				newSelector: #foo123124321s:
 				initializer: '1'.
 	self shouldFail: refactoring.
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: #at:
 				in: Object
 				newSelector: #at:foo:
 				initializer: '1'.
-	self shouldFail: refactoring.! !
-!AddParameterTest categoriesFor: #setUp!public!set up! !
-!AddParameterTest categoriesFor: #testAddParameterForTwoArgumentMessage!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesInstanceVariable!public! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesModelGlobal!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesSelf!public!tests! !
-!AddParameterTest categoriesFor: #testBadInitializationCode!failure tests!public! !
-!AddParameterTest categoriesFor: #testModelBadInitializationCode!failure tests!public! !
-!AddParameterTest categoriesFor: #testModelNonExistantName!failure tests!public! !
-!AddParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!AddParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
+	self shouldFail: refactoring! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterForTwoArgumentMessage!public!tests! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesInstanceVariable!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesModelGlobal!public!tests! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesSelf!public!tests! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testBadInitializationCode!failure tests!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testModelBadInitializationCode!failure tests!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testModelNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
 

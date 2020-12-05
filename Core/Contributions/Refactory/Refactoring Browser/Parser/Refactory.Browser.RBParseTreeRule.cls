@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RBParseTreeRule
+Core.Object subclass: #'Refactory.Browser.RBParseTreeRule'
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBParseTreeRule guid: (GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
-RBParseTreeRule comment: ''!
-!RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !
-!RBParseTreeRule methodsFor!
+Refactory.Browser.RBParseTreeRule guid: (Core.GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
+Refactory.Browser.RBParseTreeRule comment: ''!
+!Refactory.Browser.RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.RBParseTreeRule methodsFor!
 
 canMatch: aProgramNode 
 	^true!
@@ -41,16 +41,16 @@ searchString: aString
 
 sentMessages
 	^searchTree sentMessages! !
-!RBParseTreeRule categoriesFor: #canMatch:!matching!public! !
-!RBParseTreeRule categoriesFor: #context!accessing!private! !
-!RBParseTreeRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBParseTreeRule categoriesFor: #methodSearchString:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #owner:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #performOn:!matching!public! !
-!RBParseTreeRule categoriesFor: #searchString:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #canMatch:!matching!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #context!accessing!private! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #foundMatchFor:!matching!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #methodSearchString:!initialize/release!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #owner:!initialize/release!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #performOn:!matching!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #searchString:!initialize/release!public! !
+!Refactory.Browser.RBParseTreeRule categoriesFor: #sentMessages!accessing!public! !
 
-!RBParseTreeRule class methodsFor!
+!Refactory.Browser.RBParseTreeRule class methodsFor!
 
 methodSearch: aString 
 	^(self new)
@@ -66,7 +66,7 @@ search: aString
 	^(self new)
 		searchString: aString;
 		yourself! !
-!RBParseTreeRule class categoriesFor: #methodSearch:!instance creation!public! !
-!RBParseTreeRule class categoriesFor: #new!instance creation!public! !
-!RBParseTreeRule class categoriesFor: #search:!instance creation!public! !
+!Refactory.Browser.RBParseTreeRule class categoriesFor: #methodSearch:!instance creation!public! !
+!Refactory.Browser.RBParseTreeRule class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RBParseTreeRule class categoriesFor: #search:!instance creation!public! !
 

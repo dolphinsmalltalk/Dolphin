@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LintRule subclass: #TransformationRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.TransformationRule'
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TransformationRule guid: (GUID fromString: '{9864c788-a659-4ced-8264-c32a2b4327ec}')!
-TransformationRule comment: 'TransformationRule is a LintRule that transforms code using rewrite rules.
+Refactory.Browser.TransformationRule guid: (Core.GUID fromString: '{9864c788-a659-4ced-8264-c32a2b4327ec}')!
+Refactory.Browser.TransformationRule comment: 'TransformationRule is a LintRule that transforms code using rewrite rules.
 
 Instance Variables:
 	builder	<RefactoryBuilder>	the changes we''ve made
@@ -18,8 +18,8 @@ Class Variables:
 	RecursiveSelfRule	<ParseTreeSearcher>	a rule that checks our rewrites so we don''t make directly recursive methods (e.g., "foo ^self foo")
 
 '!
-!TransformationRule categoriesForClass!Refactory-Lint! !
-!TransformationRule methodsFor!
+!Refactory.Browser.TransformationRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.TransformationRule methodsFor!
 
 changes
 	^changes!
@@ -37,7 +37,7 @@ checkMethod: aSmalllintContext
 						classified: aSmalllintContext protocols]]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self name!
 
@@ -60,12 +60,10 @@ rewriteUsing: searchReplacer
 superSends
 	| rule |
 	rule := ParseTreeRewriter new.
-	rule 
+	rule
 		replace: 'super `@message: ``@args'
 		with: 'self `@message: ``@args'
-		when: 
-			[:aNode | 
-			class withAllSubclasses allSatisfy: [:each | (each includesSelector: aNode selector) not]].
+		when: [:aNode | class withAllSubclasses allSatisfy: [:each | (each includesSelector: aNode selector) not]].
 	self rewriteUsing: rule!
 
 viewResults
@@ -73,18 +71,18 @@ viewResults
 
 	changes inspect.
 	self resetResult! !
-!TransformationRule categoriesFor: #changes!accessing!public! !
-!TransformationRule categoriesFor: #checkMethod:!accessing!public! !
-!TransformationRule categoriesFor: #displayOn:!printing!public! !
-!TransformationRule categoriesFor: #hasConflicts!public!testing! !
-!TransformationRule categoriesFor: #isEmpty!public!testing! !
-!TransformationRule categoriesFor: #problemCount!accessing!public! !
-!TransformationRule categoriesFor: #resetResult!accessing!public! !
-!TransformationRule categoriesFor: #rewriteUsing:!initialize/release!public! !
-!TransformationRule categoriesFor: #superSends!public!rules! !
-!TransformationRule categoriesFor: #viewResults!private! !
+!Refactory.Browser.TransformationRule categoriesFor: #changes!accessing!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #checkMethod:!accessing!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #displayOn:!printing!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #hasConflicts!public!testing! !
+!Refactory.Browser.TransformationRule categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.TransformationRule categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #resetResult!accessing!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #rewriteUsing:!initialize/release!public! !
+!Refactory.Browser.TransformationRule categoriesFor: #superSends!public!rules! !
+!Refactory.Browser.TransformationRule categoriesFor: #viewResults!private! !
 
-!TransformationRule class methodsFor!
+!Refactory.Browser.TransformationRule class methodsFor!
 
 assignmentInIfTrue
 	^self rewrite: #(
@@ -235,10 +233,8 @@ guardClause
 
 initializeRecursiveSelfRule
 	RecursiveSelfRule := ParseTreeSearcher new.
-	RecursiveSelfRule 
-		matchesAnyMethodOf: 
-			#('`@methodName: `@args | `@temps | self `@methodName: `@args1' 
-			'`@methodName: `@args | `@temps | ^self `@methodName: `@args1')
+	RecursiveSelfRule
+		matchesAnyMethodOf: #('`@methodName: `@args | `@temps | self `@methodName: `@args1' '`@methodName: `@args | `@temps | ^self `@methodName: `@args1')
 		do: [:aNode :answer | true].
 	^RecursiveSelfRule!
 
@@ -318,15 +314,15 @@ recursiveSelfRule
 		ifTrue: [self initializeRecursiveSelfRule]
 		ifFalse: [RecursiveSelfRule]!
 
-rewrite: stringArrays methods: aBoolean name: aName 
+rewrite: stringArrays methods: aBoolean name: aName
 	| rewriteRule |
 	rewriteRule := ParseTreeRewriter new.
 	stringArrays do: 
-			[:each | 
-			aBoolean 
+			[:each |
+			aBoolean
 				ifTrue: [rewriteRule replaceMethod: each first with: each last]
 				ifFalse: [rewriteRule replace: each first with: each last]].
-	^(self new)
+	^self new
 		name: aName;
 		rewriteUsing: rewriteRule;
 		yourself!
@@ -401,23 +397,23 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'))
 		methods: false
 		name: 'Move assignment out of ensure: blocks'! !
-!TransformationRule class categoriesFor: #assignmentInIfTrue!public!transformations! !
-!TransformationRule class categoriesFor: #atIfAbsent!public!transformations! !
-!TransformationRule class categoriesFor: #betweenAnd!public!transformations! !
-!TransformationRule class categoriesFor: #braceArrays!public!transformations! !
-!TransformationRule class categoriesFor: #cascadedNextPutAlls!public!transformations! !
-!TransformationRule class categoriesFor: #detectIfNone!public!transformations! !
-!TransformationRule class categoriesFor: #equalNil!public!transformations! !
-!TransformationRule class categoriesFor: #guardClause!public!transformations! !
-!TransformationRule class categoriesFor: #initializeRecursiveSelfRule!accessing!public! !
-!TransformationRule class categoriesFor: #minMax!public!transformations! !
-!TransformationRule class categoriesFor: #notElimination!public!transformations! !
-!TransformationRule class categoriesFor: #notEmpty!public!transformations! !
-!TransformationRule class categoriesFor: #recursiveSelfRule!accessing!public! !
-!TransformationRule class categoriesFor: #rewrite:methods:name:!instance creation!public! !
-!TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
-!TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
-!TransformationRule class categoriesFor: #superSends!public!transformations! !
-!TransformationRule class categoriesFor: #testCaseAsserts!public!transformations! !
-!TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #assignmentInIfTrue!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #atIfAbsent!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #betweenAnd!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #braceArrays!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #cascadedNextPutAlls!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #detectIfNone!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #equalNil!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #guardClause!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #initializeRecursiveSelfRule!accessing!public! !
+!Refactory.Browser.TransformationRule class categoriesFor: #minMax!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #notElimination!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #notEmpty!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #recursiveSelfRule!accessing!public! !
+!Refactory.Browser.TransformationRule class categoriesFor: #rewrite:methods:name:!instance creation!public! !
+!Refactory.Browser.TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #superSends!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #testCaseAsserts!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
 

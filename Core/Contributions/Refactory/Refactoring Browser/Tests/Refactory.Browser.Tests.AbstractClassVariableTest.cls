@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #AbstractClassVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractClassVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractClassVariableTest guid: (GUID fromString: '{38fd1ddb-aa95-40b7-80bb-c8a7ea9dcd59}')!
-AbstractClassVariableTest comment: ''!
-!AbstractClassVariableTest categoriesForClass!Refactory-Testing! !
-!AbstractClassVariableTest methodsFor!
+Refactory.Browser.Tests.AbstractClassVariableTest guid: (Core.GUID fromString: '{38fd1ddb-aa95-40b7-80bb-c8a7ea9dcd59}')!
+Refactory.Browser.Tests.AbstractClassVariableTest comment: ''!
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.AbstractClassVariableTest methodsFor!
 
 setUp
 	super setUp.
@@ -20,7 +20,7 @@ testAbstractClassVariable
 	refactoring := AbstractClassVariableRefactoring variable: 'RecursiveSelfRule'
 				class: TransformationRuleTest.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	meta := class metaclass.
 	self assert: (meta parseTreeFor: #recursiveSelfRule)
 		equals: (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
@@ -48,13 +48,11 @@ testAbstractClassVariable
 												classified: aSmalllintContext protocols]]')!
 
 testInheritedName
-	self 
-		shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields
-				class: BasicLintRuleTest)!
+	self
+		shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields class: BasicLintRuleTest)!
 
 testMetaClassFailure
-	self 
-		shouldFail: (AbstractClassVariableRefactoring variable: #RecursiveSelfRule
+	self shouldFail: (AbstractClassVariableRefactoring variable: #RecursiveSelfRule
 				class: TransformationRuleTest class)!
 
 testModelAbstractClassVariable
@@ -108,13 +106,12 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 		equals: (RBParser parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')!
 
 testNonExistantName
-	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo
-				class: BasicLintRuleTest)! !
-!AbstractClassVariableTest categoriesFor: #setUp!public!set up! !
-!AbstractClassVariableTest categoriesFor: #testAbstractClassVariable!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!AbstractClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariable!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo class: BasicLintRuleTest)! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testAbstractClassVariable!public!tests! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testInheritedName!failure tests!public! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariable!public!tests! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
 

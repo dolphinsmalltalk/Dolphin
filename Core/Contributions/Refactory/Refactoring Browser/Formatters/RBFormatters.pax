@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBFormatters'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Smalltalk Code Reformatters
 Based on the Refactoring Browser formatter (RBFormatter) and configurable formatter (RBConfigurableFormatter), copyright (c) John Brant & Don Roberts.
@@ -11,13 +11,14 @@ Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part
 
 
 package setClassNames: #(
-	#{RBConfigurableFormatter}
-	#{RBFormatter}
-	#{RBSourceFormatter}
+	#{Refactory.Browser.RBConfigurableFormatter}
+	#{Refactory.Browser.RBFormatter}
+	#{Refactory.Browser.RBSourceFormatter}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\RBNamespaces'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
@@ -25,22 +26,22 @@ package!
 
 "Class Definitions"!
 
-StParseNodeVisitor subclass: #RBSourceFormatter
+Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBSourceFormatter'
 	instanceVariableNames: 'codeStream lineStart indent'
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBSourceFormatter subclass: #RBConfigurableFormatter
+Refactory.Browser.RBSourceFormatter subclass: #'Refactory.Browser.RBConfigurableFormatter'
 	instanceVariableNames: 'lookaheadCode originalSource'
 	classVariableNames: 'FormatCommentWithStatements IndentsForKeywords IndentString LineUpBlockBrackets MethodSignatureOnMultipleLines MinimumNewLinesBetweenStatements NewLineAfterCascade NewLineBeforeFirstCascade NewLineBeforeFirstKeyword NewLinesAfterMethodComment NewLinesAfterMethodPattern NewLinesAfterTemporaries NumberOfArgumentsForMultiLine PeriodsAtEndOfBlock RetainBlankLinesBetweenStatements StringFollowingReturn StringInsideBlocks StringInsideParentheses TraditionalBinaryPrecedence UseTraditionalBinaryPrecedenceForParentheses'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBSourceFormatter subclass: #RBFormatter
+Refactory.Browser.RBSourceFormatter subclass: #'Refactory.Browser.RBFormatter'
 	instanceVariableNames: 'firstLineLength'
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
-	poolDictionaries: 'ExtCallArgTypes'
+	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

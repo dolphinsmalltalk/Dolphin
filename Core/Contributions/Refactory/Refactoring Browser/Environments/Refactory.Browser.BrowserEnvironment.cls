@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #BrowserEnvironment
+Core.Object subclass: #'Refactory.Browser.BrowserEnvironment'
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironment guid: (GUID fromString: '{5a20d17b-a65d-4816-8b27-d25d2773698c}')!
-BrowserEnvironment comment: 'BrowserEnvironments represent a selection of the classes/methods in the system. Not only is BrowserEnvironment itself class the superclass of all environments, it also represents the complete image contents (i.e. the selection that includes all classes and methods).
+Refactory.Browser.BrowserEnvironment guid: (Core.GUID fromString: '{5a20d17b-a65d-4816-8b27-d25d2773698c}')!
+Refactory.Browser.BrowserEnvironment comment: 'BrowserEnvironments represent a selection of the classes/methods in the system. Not only is BrowserEnvironment itself class the superclass of all environments, it also represents the complete image contents (i.e. the selection that includes all classes and methods).
 
 Instance Variables:
 	label	<String>	a description of what we''re looking at
 	searchStrings	<Collection of: String>	strings to look for whenever we select a method'!
-!BrowserEnvironment categoriesForClass!Refactory-Environments! !
-!BrowserEnvironment methodsFor!
+!Refactory.Browser.BrowserEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.BrowserEnvironment methodsFor!
 
-& anEnvironment 
+& anEnvironment
 	"If we or anEnvironment includes everything, then just include the other environment (optimization)"
 
 	self isSystem ifTrue: [^anEnvironment].
@@ -30,11 +30,11 @@ Instance Variables:
 	anEnvironment isSystem ifTrue: [^anEnvironment].
 	^OrEnvironment onEnvironment: self or: anEnvironment!
 
-addSearchString: aString 
-	searchStrings isNil ifTrue: 
-			[searchStrings := SortedCollection sortBlock: 
-							[:a :b | 
-							(a indexOf: $: ifAbsent: [a size]) > (b indexOf: $: ifAbsent: [b size])]].
+addSearchString: aString
+	searchStrings isNil
+		ifTrue: 
+			[searchStrings := SortedCollection
+						sortBlock: [:a :b | (a indexOf: $: ifAbsent: [a size]) > (b indexOf: $: ifAbsent: [b size])]].
 	searchStrings add: aString!
 
 allClasses
@@ -51,7 +51,7 @@ associationAt: aKey
 			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [association]]!
 
 at: aKey
-	#rbFix. "Replace #keyNotFoundError: with #errorNotFound"
+	#rbFix.	"Replace #keyNotFoundError: with #errorNotFound"
 	^self at: aKey ifAbsent: [Smalltalk errorNotFound: aKey]!
 
 at: aKey ifAbsent: aBlock
@@ -86,10 +86,8 @@ classes
 	self classesDo: [:each | classes add: each].
 	^classes!
 
-classesAndSelectorsDo: aBlock 
-	self classesDo: 
-			[:class | 
-			self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
+classesAndSelectorsDo: aBlock
+	self classesDo: [:class | self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
 classesDo: aBlock
 	Smalltalk allBehaviorsDo: aBlock!
@@ -97,18 +95,18 @@ classesDo: aBlock
 classNames
 	| classes names |
 	classes := self allClasses.
-	names := IdentitySet new: classes size.
-	classes do: [:each | names add: each name].
+	names := Set new: classes size.
+	classes do: [:each | names add: each fullName].
 	^names!
 
 classNamesFor: aCategoryName
-	#rbFix. "Dolphin class category system not compatible"
-	^((ClassCategory name: aCategoryName) classes select: [:class |
-			class notNil and: [(self includesClass: class)
-					or: [self includesClass: class class]]]) collect: [:e | e name]!
+	#rbFix.	"Dolphin class category system not compatible"
+	^((ClassCategory name: aCategoryName) classes
+		select: [:class | class notNil and: [(self includesClass: class) or: [self includesClass: class class]]])
+			collect: [:e | e fullName]!
 
-classVariablesFor: aClass 
-	^aClass classVarNames!
+classVariablesFor: aClass
+	^aClass classBindingNames!
 
 classVarRefsTo: classVarName in: aClass 
 	^VariableEnvironment 
@@ -136,24 +134,24 @@ filter
 filter: aMonadicValuable 
 	filter := aMonadicValuable!
 
-forCategories: categoryList 
+forCategories: categoryList
 	^CategoryEnvironment onEnvironment: self categories: categoryList!
 
-forClass: aClass protocols: protocolCollection 
-	^ProtocolEnvironment onEnvironment: self
+forClass: aClass protocols: protocolCollection
+	^ProtocolEnvironment
+		onEnvironment: self
 		class: aClass
 		protocols: protocolCollection!
 
-forClass: aClass selectors: selectorCollection 
-	^(SelectorEnvironment 
+forClass: aClass selectors: selectorCollection
+	^(SelectorEnvironment
 		onMethods: selectorCollection
 		forClass: aClass
 		in: self)
-		label: aClass name , '>>#' 
-					, (selectorCollection detect: [:each | true] ifNone: ['']);
+		label: aClass fullName , '>>#' , (selectorCollection detect: [:each | true] ifNone: ['']);
 		yourself!
 
-forClasses: classCollection 
+forClasses: classCollection
 	^ClassEnvironment onEnvironment: self classes: classCollection!
 
 forClassHierarchyOf: aClass
@@ -185,10 +183,10 @@ forMethodsIn: aBrowserEnvironment
 		classesAndSelectorsDo: [:class :selector | env addClass: class selector: selector].
 	^env!
 
-implementorsMatching: aString 
+implementorsMatching: aString
 	^SelectorEnvironment implementorsMatching: aString in: self!
 
-implementorsOf: aSelector 
+implementorsOf: aSelector
 	^SelectorEnvironment implementorsOf: aSelector in: self!
 
 includesCategory: aCategory
@@ -265,7 +263,7 @@ label: aString
 lookup: aKey
 	^(self associationAt: aKey) ifNotNil: [:assoc | assoc value]!
 
-matches: aString 
+matches: aString
 	^SelectorEnvironment matches: aString in: self!
 
 methodsDo: aBlock 
@@ -306,7 +304,7 @@ protocolsFor: aClass
 	^aClass realMethodCategories "organization categories "
 		select: [:each | self includesProtocol: each in: aClass]!
 
-referencesTo: aLiteral 
+referencesTo: aLiteral
 	^SelectorEnvironment referencesTo: aLiteral in: self!
 
 referencesTo: aLiteral in: aClass 
@@ -321,13 +319,12 @@ searchStrings
 searchStrings: aCollection 
 	searchStrings := aCollection!
 
-selectMethods: aBlock 
+selectMethods: aBlock
 	| env |
 	env := SelectorEnvironment onEnvironment: self.
 	self classesAndSelectorsDo: 
-			[:each :sel | 
-			(aBlock value: (each compiledMethodAt: sel)) 
-				ifTrue: [env addClass: each selector: sel]].
+			[:each :sel |
+			(aBlock value: (each compiledMethodAt: sel)) ifTrue: [env addClass: each selector: sel]].
 	^env!
 
 selectorsDo: aMonadicValuable
@@ -349,9 +346,9 @@ selectorsForClass: aClass
 selectorsForClass: aClass do: aBlock
 	aClass selectorsDo: [:each | (self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream
-		nextPutAll: self class name;
+		nextPutAll: self class fullName;
 		nextPutAll: ' new'!
 
 whichCategoryIncludes: aClassName
@@ -369,81 +366,81 @@ whichProtocolsInclude: aSelector in: aClass
 	^(aClass compiledMethodAt: aSelector ifAbsent: []) 
 		ifNil: [#()]
 		ifNotNil: [:method | method realCategories collect: [:each | each name asSymbol]]! !
-!BrowserEnvironment categoriesFor: #&!environments!public! !
-!BrowserEnvironment categoriesFor: #|!environments!public! !
-!BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
-!BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
-!BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
-!BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #at:ifAbsent:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #categories!accessing!public! !
-!BrowserEnvironment categoriesFor: #classes!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classNamesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classVarRefsTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #copyEmpty!copying!public! !
-!BrowserEnvironment categoriesFor: #defaultLabel!constants!private! !
-!BrowserEnvironment categoriesFor: #definesClass:!public!testing! !
-!BrowserEnvironment categoriesFor: #environment!public! !
-!BrowserEnvironment categoriesFor: #filter!accessing!private! !
-!BrowserEnvironment categoriesFor: #filter:!accessing!private! !
-!BrowserEnvironment categoriesFor: #forCategories:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClass:protocols:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClass:selectors:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClasses:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClassHierarchyOf:!environments!public! !
-!BrowserEnvironment categoriesFor: #forMethods:!environments!public! !
-!BrowserEnvironment categoriesFor: #forMethodsIn:!environments!public! !
-!BrowserEnvironment categoriesFor: #implementorsMatching:!environments!public! !
-!BrowserEnvironment categoriesFor: #implementorsOf:!environments!public! !
-!BrowserEnvironment categoriesFor: #includesCategory:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesClass:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesResource:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!BrowserEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #instVarReadersTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #instVarRefsTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #instVarWritersTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #isClassEnvironment!public!testing! !
-!BrowserEnvironment categoriesFor: #isEmpty!public!testing! !
-!BrowserEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
-!BrowserEnvironment categoriesFor: #isSystem!public!testing! !
-!BrowserEnvironment categoriesFor: #keys!accessing/classes!accessing-classes!public! !
-!BrowserEnvironment categoriesFor: #label!accessing!private! !
-!BrowserEnvironment categoriesFor: #label:!initialize/release!public! !
-!BrowserEnvironment categoriesFor: #lookup:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #matches:!environments!public! !
-!BrowserEnvironment categoriesFor: #methodsDo:!public! !
-!BrowserEnvironment categoriesFor: #not!environments!public! !
-!BrowserEnvironment categoriesFor: #notEmpty!public!testing! !
-!BrowserEnvironment categoriesFor: #numberClasses!accessing!public! !
-!BrowserEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!BrowserEnvironment categoriesFor: #printOn:!printing!public! !
-!BrowserEnvironment categoriesFor: #problemCount!accessing!public! !
-!BrowserEnvironment categoriesFor: #protocolsFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #referencesTo:!environments!public! !
-!BrowserEnvironment categoriesFor: #referencesTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #searchStrings!accessing!public! !
-!BrowserEnvironment categoriesFor: #searchStrings:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectMethods:!environments!public! !
-!BrowserEnvironment categoriesFor: #selectorsDo:!enumerating!public! !
-!BrowserEnvironment categoriesFor: #selectorsFor:in:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectorsForClass:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!BrowserEnvironment categoriesFor: #storeOn:!printing!public! !
-!BrowserEnvironment categoriesFor: #whichCategoryIncludes:!accessing!public! !
-!BrowserEnvironment categoriesFor: #whichProtocolIncludes:in:!accessing!public! !
-!BrowserEnvironment categoriesFor: #whichProtocolsInclude:in:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #&!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #|!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #at:ifAbsent:!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #categories!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classes!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classNames!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classNamesFor:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #classVarRefsTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #copyEmpty!copying!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #environment!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #filter!accessing!private! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #filter:!accessing!private! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forCategories:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:protocols:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:selectors:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forClasses:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forClassHierarchyOf:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forMethods:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forMethodsIn:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #implementorsMatching:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #implementorsOf:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #includesResource:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #instVarReadersTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #instVarRefsTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #instVarWritersTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #isClassEnvironment!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #isSystem!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #keys!accessing/classes!accessing-classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #label!accessing!private! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #label:!initialize/release!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #lookup:!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #matches:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #methodsDo:!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #not!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #notEmpty!public!testing! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #numberClasses!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #numberSelectors!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #protocolsFor:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #referencesTo:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #referencesTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #searchStrings!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #searchStrings:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #selectMethods:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #selectorsDo:!enumerating!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #selectorsFor:in:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #selectorsForClass:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #whichCategoryIncludes:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #whichProtocolIncludes:in:!accessing!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #whichProtocolsInclude:in:!accessing!public! !
 
-!BrowserEnvironment class methodsFor!
+!Refactory.Browser.BrowserEnvironment class methodsFor!
 
 new
 	^(super new)
 		initialize;
 		yourself! !
-!BrowserEnvironment class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.BrowserEnvironment class categoriesFor: #new!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBParseTreeRule subclass: #RBSearchRule
+Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBSearchRule'
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBSearchRule guid: (GUID fromString: '{47f7b2b8-bdd2-449f-866d-e373a574dc60}')!
-RBSearchRule comment: ''!
-!RBSearchRule categoriesForClass!Refactory-ParseTree Matching! !
-!RBSearchRule methodsFor!
+Refactory.Browser.RBSearchRule guid: (Core.GUID fromString: '{47f7b2b8-bdd2-449f-866d-e373a574dc60}')!
+Refactory.Browser.RBSearchRule comment: ''!
+!Refactory.Browser.RBSearchRule categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.RBSearchRule methodsFor!
 
 canMatch: aProgramNode 
 	owner answer: (answerBlock value: aProgramNode value: owner answer).
@@ -26,12 +26,12 @@ searchForMethod: aString thenDo: aBlock
 searchForTree: aBRProgramNode thenDo: aBlock 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock! !
-!RBSearchRule categoriesFor: #canMatch:!public!testing! !
-!RBSearchRule categoriesFor: #searchFor:thenDo:!initialize/release!public! !
-!RBSearchRule categoriesFor: #searchForMethod:thenDo:!initialize/release!public! !
-!RBSearchRule categoriesFor: #searchForTree:thenDo:!initialize/release!public! !
+!Refactory.Browser.RBSearchRule categoriesFor: #canMatch:!public!testing! !
+!Refactory.Browser.RBSearchRule categoriesFor: #searchFor:thenDo:!initialize/release!public! !
+!Refactory.Browser.RBSearchRule categoriesFor: #searchForMethod:thenDo:!initialize/release!public! !
+!Refactory.Browser.RBSearchRule categoriesFor: #searchForTree:thenDo:!initialize/release!public! !
 
-!RBSearchRule class methodsFor!
+!Refactory.Browser.RBSearchRule class methodsFor!
 
 searchFor: aString thenDo: aBlock 
 	^self new searchFor: aString thenDo: aBlock!
@@ -41,7 +41,7 @@ searchForMethod: aString thenDo: aBlock
 
 searchForTree: aBRProgramNode thenDo: aBlock 
 	^self new searchForTree: aBRProgramNode thenDo: aBlock! !
-!RBSearchRule class categoriesFor: #searchFor:thenDo:!instance creation!public! !
-!RBSearchRule class categoriesFor: #searchForMethod:thenDo:!instance creation!public! !
-!RBSearchRule class categoriesFor: #searchForTree:thenDo:!instance creation!public! !
+!Refactory.Browser.RBSearchRule class categoriesFor: #searchFor:thenDo:!instance creation!public! !
+!Refactory.Browser.RBSearchRule class categoriesFor: #searchForMethod:thenDo:!instance creation!public! !
+!Refactory.Browser.RBSearchRule class categoriesFor: #searchForTree:thenDo:!instance creation!public! !
 

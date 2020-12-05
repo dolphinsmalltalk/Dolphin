@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ChangeMethodNameRefactoring subclass: #RenameMethodRefactoring
+Refactory.Browser.ChangeMethodNameRefactoring subclass: #'Refactory.Browser.RenameMethodRefactoring'
 	instanceVariableNames: 'hasPermutedArguments'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameMethodRefactoring guid: (GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
-RenameMethodRefactoring comment: ''!
-!RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!RenameMethodRefactoring methodsFor!
+Refactory.Browser.RenameMethodRefactoring guid: (Core.GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
+Refactory.Browser.RenameMethodRefactoring comment: ''!
+!Refactory.Browser.RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RenameMethodRefactoring methodsFor!
 
 hasPermutedArguments
 	^hasPermutedArguments isNil 
@@ -28,13 +28,11 @@ myConditions
 parseTreeRewriter
 	| rewriteRule oldString newString |
 	oldString := self buildSelectorString: oldSelector.
-	newString := self buildSelectorString: newSelector
-				withPermuteMap: permutation.
-	rewriteRule := self hasPermutedArguments 
+	newString := self buildSelectorString: newSelector withPermuteMap: permutation.
+	rewriteRule := self hasPermutedArguments
 				ifTrue: [ParseTreeRewriter new]
 				ifFalse: [ParseTreeRewriter replaceLiteral: oldSelector with: newSelector].
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
+	rewriteRule replace: '``@object ' , oldString with: '``@object ' , newString.
 	^rewriteRule!
 
 preconditions
@@ -59,14 +57,14 @@ storeOn: aStream
 		nextPutAll: ' permuation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)! !
-!RenameMethodRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!RenameMethodRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!RenameMethodRefactoring categoriesFor: #myConditions!preconditions!public! !
-!RenameMethodRefactoring categoriesFor: #parseTreeRewriter!public!transforming! !
-!RenameMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #myConditions!preconditions!public! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #parseTreeRewriter!public!transforming! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameMethodRefactoring categoriesFor: #storeOn:!printing!public! !
 
-!RenameMethodRefactoring class methodsFor!
+!Refactory.Browser.RenameMethodRefactoring class methodsFor!
 
 model: aRBNamespace renameMethod: aSelector in: aClass to: newSelector permutation: aMap 
 	^(self new)
@@ -83,6 +81,6 @@ renameMethod: aSelector in: aClass to: newSelector permutation: aMap
 		in: aClass
 		to: newSelector
 		permutation: aMap! !
-!RenameMethodRefactoring class categoriesFor: #model:renameMethod:in:to:permutation:!instance creation!public! !
-!RenameMethodRefactoring class categoriesFor: #renameMethod:in:to:permutation:!instance creation!public! !
+!Refactory.Browser.RenameMethodRefactoring class categoriesFor: #model:renameMethod:in:to:permutation:!instance creation!public! !
+!Refactory.Browser.RenameMethodRefactoring class categoriesFor: #renameMethod:in:to:permutation:!instance creation!public! !
 

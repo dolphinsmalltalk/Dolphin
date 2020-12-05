@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #TemporaryToInstanceVariableRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.TemporaryToInstanceVariableRefactoring'
 	instanceVariableNames: 'selector temporaryVariableName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TemporaryToInstanceVariableRefactoring guid: (GUID fromString: '{c0ad3ff1-c5d3-48f7-9104-4ee2542c6ba6}')!
-TemporaryToInstanceVariableRefactoring comment: ''!
-!TemporaryToInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!TemporaryToInstanceVariableRefactoring methodsFor!
+Refactory.Browser.TemporaryToInstanceVariableRefactoring guid: (Core.GUID fromString: '{c0ad3ff1-c5d3-48f7-9104-4ee2542c6ba6}')!
+Refactory.Browser.TemporaryToInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring methodsFor!
 
 checkForValidTemporaryVariable
 	| parseTree |
@@ -62,13 +62,13 @@ transform
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	class compileTree: matcher tree classified: protocols! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #checkForValidTemporaryVariable!preconditions!public! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #class:selector:variable:!initialize/release!public! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #checkForValidTemporaryVariable!preconditions!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #class:selector:variable:!initialize/release!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 
-!TemporaryToInstanceVariableRefactoring class methodsFor!
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class methodsFor!
 
 class: aClass selector: aSelector variable: aVariableName 
 	^self new 
@@ -83,6 +83,6 @@ model: aRBNamespace class: aClass selector: aSelector variable: aVariableName
 			selector: aSelector
 			variable: aVariableName;
 		yourself! !
-!TemporaryToInstanceVariableRefactoring class categoriesFor: #class:selector:variable:!instance creation!public! !
-!TemporaryToInstanceVariableRefactoring class categoriesFor: #model:class:selector:variable:!instance creation!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesFor: #class:selector:variable:!instance creation!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesFor: #model:class:selector:variable:!instance creation!public! !
 

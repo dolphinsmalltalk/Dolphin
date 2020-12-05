@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RefactoryTyper
+Core.Object subclass: #'Refactory.Browser.RefactoryTyper'
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoryTyper guid: (GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
-RefactoryTyper comment: ''!
-!RefactoryTyper categoriesForClass!Refactory-Support! !
-!RefactoryTyper methodsFor!
+Refactory.Browser.RefactoryTyper guid: (Core.GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
+Refactory.Browser.RefactoryTyper comment: ''!
+!Refactory.Browser.RefactoryTyper categoriesForClass!Refactory-Support! !
+!Refactory.Browser.RefactoryTyper methodsFor!
 
 collectionNameFor: aString 
 	^'-<1s>-' expandMacrosWith: aString!
@@ -18,7 +18,7 @@ computeEquivalenceClassesForMethodsAndVars
 	| searcher |
 	backpointers := Dictionary new.
 	class instanceVariableNames do: [:each | backpointers at: each put: (Set with: each)].
-	class withAllSubclasses 
+	class withAllSubclasses
 		do: [:sub | sub selectors do: [:each | backpointers at: each put: (Set with: each)]].
 	searcher := ParseTreeSearcher new.
 	searcher matches: '^``@object' do: [:aNode :answer | self processNode: aNode value].
@@ -27,23 +27,22 @@ computeEquivalenceClassesForMethodsAndVars
 computeMessagesSentToVariables
 	| searcher |
 	variableMessages := Dictionary new.
-	class instanceVariableNames 
-		do: [:each | variableMessages at: each put: Set new].
+	class instanceVariableNames do: [:each | variableMessages at: each put: Set new].
 	searcher := ParseTreeSearcher new.
 	class instanceVariableNames do: 
-			[:each | 
+			[:each |
 			| block |
 			block := 
-					[:aNode :answer | 
+					[:aNode :answer |
 					(variableMessages at: each ifAbsentPut: [Set new]) add: aNode selector.
 					self processCollectionMessagesFor: each in: aNode].
 			searcher matches: each , ' `@messageName: ``@args' do: block.
 			(backpointers at: each) do: 
-					[:sel | 
-					sel isSymbol 
+					[:sel |
+					sel isSymbol
 						ifTrue: 
-							[searcher 
-								matches: ('(self <1s>) `@messageName: ``@args' 
+							[searcher
+								matches: ('(self <1s>) `@messageName: ``@args'
 										expandMacrosWith: (ParseTreeSearcher buildSelectorString: sel)) asString
 								do: block]]].
 	searcher answer: variableMessages.
@@ -70,26 +69,24 @@ findTypeFor: selectorCollection
 			self refineTypes: classes
 				with: (selectorLookup at: each ifAbsentPut: [self implementorsOf: each])]!
 
-guessTypeFromAssignment: aNode 
+guessTypeFromAssignment: aNode
 	| type set newType |
 	type := nil.
-	aNode value isAssignment 
+	aNode value isAssignment
 		ifTrue: 
-			[^self guessTypeFromAssignment: (RBAssignmentNode variable: aNode variable
-						value: aNode value value)].
+			[^self guessTypeFromAssignment: (RBAssignmentNode variable: aNode variable value: aNode value value)].
 	aNode value isBlock ifTrue: [type := model classFor: [] class].
 	aNode value isLiteralNode
 		ifTrue: 
 			[aNode value value isNil ifTrue: [^self].
 			type := model classFor: (self typeFor: aNode value value)].
-	aNode value isMessage 
+	aNode value isMessage
 		ifTrue: 
-			[aNode value receiver isVariable 
+			[aNode value receiver isVariable
 				ifTrue: [type := model classNamed: aNode value receiver name asSymbol].
-			aNode value selector == #asValue 
-				ifTrue: [type := model classNamed: #ValueHolder].
-			(#(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) 
-				includes: aNode value selector) ifTrue: [type := model classFor: Boolean]].
+			aNode value selector == #asValue ifTrue: [type := model classNamed: #ValueHolder].
+			(#(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) includes: aNode value selector)
+				ifTrue: [type := model classFor: Boolean]].
 	type isNil ifTrue: [^self].
 	set := variableTypes at: aNode variable name.
 	newType := set detect: [:each | type includesClass: each] ifNone: [nil].
@@ -105,12 +102,12 @@ guessTypesFor: anInstVarName in: aClass
 	^bestGuesses at: anInstVarName
 		ifAbsent: [self typesFor: anInstVarName in: aClass]!
 
-implementorsOf: aSelector 
+implementorsOf: aSelector
 	| classes |
 	classes := OrderedCollection new.
 	model rootClasses do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				implementorsOf: aSelector
 				in: each
 				storeIn: classes].
@@ -166,15 +163,14 @@ printOn: aStream
 				nextPut: $>;
 				cr]!
 
-printType: aClass for: aString on: aStream 
+printType: aClass for: aString on: aStream
 	| name colTypes |
 	colTypes := #().
 	name := self collectionNameFor: aString.
-	(aClass includesClass: (model classFor: Collection)) 
-		ifTrue: [colTypes := self guessTypesFor: name].
+	(aClass includesClass: (model classFor: Collection)) ifTrue: [colTypes := self guessTypesFor: name].
 	colTypes notEmpty ifTrue: [aStream nextPut: $(].
 	aClass printOn: aStream.
-	colTypes notEmpty 
+	colTypes notEmpty
 		ifTrue: 
 			[aStream nextPutAll: ' of: '.
 			colTypes size > 1 ifTrue: [aStream nextPut: $(].
@@ -195,47 +191,46 @@ printTypeFor: aString on: aStream
 				for: aString
 				on: aStream]!
 
-processCollectionFor: key messagesTo: aName in: aBlock 
+processCollectionFor: key messagesTo: aName in: aBlock
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: aName , ' `@message: ``@args'
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			self processCollectionMessagesFor: key in: aNode.
 			answer
 				add: aNode selector;
 				yourself].
 	searcher executeTree: aBlock
-		initialAnswer: (variableMessages at: (self collectionNameFor: key)
-				ifAbsentPut: [Set new])!
+		initialAnswer: (variableMessages at: (self collectionNameFor: key) ifAbsentPut: [Set new])!
 
-processCollectionMessagesFor: variableName in: aParseTree 
+processCollectionMessagesFor: variableName in: aParseTree
 	aParseTree isMessage ifFalse: [^self].
-	(#(#first #at: #last) includes: aParseTree selector) 
+	(#(#first #at: #last) includes: aParseTree selector)
 		ifTrue: 
 			[| parent |
 			parent := aParseTree parent.
 			(parent notNil and: [parent isMessage]) ifFalse: [^self].
 			aParseTree == parent receiver ifFalse: [^self].
-			(variableMessages at: (self collectionNameFor: variableName) ifAbsentPut: [Set new]) 
+			(variableMessages at: (self collectionNameFor: variableName) ifAbsentPut: [Set new])
 				add: parent selector.
 			self processCollectionMessagesFor: (self collectionNameFor: variableName) in: parent].
-	(#(#do: #do:separatedBy: #collect: #reject: #select: #detect: #detect:ifNone:) 
-		includes: aParseTree selector) 
+	(#(#do: #do:separatedBy: #collect: #reject: #select: #detect: #detect:ifNone:)
+		includes: aParseTree selector)
 			ifTrue: 
 				[| block |
 				block := aParseTree arguments first.
 				block isBlock ifFalse: [^self].
-				self 
+				self
 					processCollectionFor: variableName
 					messagesTo: block arguments first name
 					in: block].
-	#inject:into: == aParseTree selector 
+	#inject:into: == aParseTree selector
 		ifTrue: 
 			[| block |
 			block := aParseTree arguments last.
 			block isBlock ifFalse: [^self].
-			self 
+			self
 				processCollectionFor: variableName
 				messagesTo: block arguments last name
 				in: block]!
@@ -257,14 +252,14 @@ processNode: aNode
 						each isBlock
 							ifTrue: [each body statements notEmpty ifTrue: [self processNode: each body statements last]]]]!
 
-refineTypes: aClassCollection with: anotherClassCollection 
+refineTypes: aClassCollection with: anotherClassCollection
 	| classSet |
 	classSet := Set new.
 	aClassCollection do: 
-			[:each | 
+			[:each |
 			anotherClassCollection do: 
-					[:cls | 
-					(cls includesClass: each) 
+					[:cls |
+					(cls includesClass: each)
 						ifTrue: [classSet add: cls]
 						ifFalse: [(each includesClass: cls) ifTrue: [classSet add: each]]]].
 	^classSet!
@@ -274,18 +269,17 @@ refineTypesByLookingAtAssignments
 	needsSearch := false.
 	searcher := ParseTreeSearcher new.
 	variableTypes keysAndValuesDo: 
-			[:key :value | 
-			(key first == $-) 
+			[:key :value |
+			key first == $-
 				ifFalse: 
 					[needsSearch := true.
-					searcher matches: key , ' := ``@object'
-						do: [:aNode :answer | self guessTypeFromAssignment: aNode]]].
+					searcher matches: key , ' := ``@object' do: [:aNode :answer | self guessTypeFromAssignment: aNode]]].
 	needsSearch ifTrue: [self executeSearch: searcher]!
 
 rootClasses
 	^Class rootsOfTheWorld!
 
-runOn: aClass 
+runOn: aClass
 	variableTypes := Dictionary new.
 	variableMessages := Dictionary new.
 	bestGuesses := Dictionary new.
@@ -301,49 +295,47 @@ runOn: aClass
 selectedClass: aClass 
 	class := model classFor: aClass!
 
-typeFor: anObject 
+typeFor: anObject
 	'' class == anObject class ifTrue: [^String].
-	^(#(true false) includes: anObject)
-		ifTrue: [Boolean]
-		ifFalse: [anObject class]!
+	^(#(true false) includes: anObject) ifTrue: [Boolean] ifFalse: [anObject class]!
 
-typesFor: anInstVarName 
+typesFor: anInstVarName
 	^variableTypes at: anInstVarName ifAbsent: [Set new]!
 
-typesFor: anInstVarName in: aClass 
+typesFor: anInstVarName in: aClass
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]! !
-!RefactoryTyper categoriesFor: #collectionNameFor:!printing!public! !
-!RefactoryTyper categoriesFor: #computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #computeMessagesSentToVariables!public!selectors! !
-!RefactoryTyper categoriesFor: #computeTypes!computing types!public! !
-!RefactoryTyper categoriesFor: #executeSearch:!operations!private! !
-!RefactoryTyper categoriesFor: #findTypeFor:!computing types!public! !
-!RefactoryTyper categoriesFor: #guessTypeFromAssignment:!assignments!public! !
-!RefactoryTyper categoriesFor: #guessTypesFor:!accessing!public! !
-!RefactoryTyper categoriesFor: #guessTypesFor:in:!accessing!public! !
-!RefactoryTyper categoriesFor: #implementorsOf:!computing types!public! !
-!RefactoryTyper categoriesFor: #implementorsOf:in:storeIn:!computing types!public! !
-!RefactoryTyper categoriesFor: #initialize!initialize/release!public! !
-!RefactoryTyper categoriesFor: #merge:!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #model!accessing!private! !
-!RefactoryTyper categoriesFor: #model:!accessing!private! !
-!RefactoryTyper categoriesFor: #printOn:!printing!public! !
-!RefactoryTyper categoriesFor: #printType:for:on:!printing!public! !
-!RefactoryTyper categoriesFor: #printTypeFor:on:!printing!public! !
-!RefactoryTyper categoriesFor: #processCollectionFor:messagesTo:in:!public!selectors/collections! !
-!RefactoryTyper categoriesFor: #processCollectionMessagesFor:in:!public!selectors/collections! !
-!RefactoryTyper categoriesFor: #processNode:!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #refineTypes:with:!computing types!public! !
-!RefactoryTyper categoriesFor: #refineTypesByLookingAtAssignments!assignments!public! !
-!RefactoryTyper categoriesFor: #rootClasses!constants!private! !
-!RefactoryTyper categoriesFor: #runOn:!accessing!public! !
-!RefactoryTyper categoriesFor: #selectedClass:!accessing!public! !
-!RefactoryTyper categoriesFor: #typeFor:!assignments!public! !
-!RefactoryTyper categoriesFor: #typesFor:!accessing!public! !
-!RefactoryTyper categoriesFor: #typesFor:in:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #collectionNameFor:!printing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #computeMessagesSentToVariables!public!selectors! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #computeTypes!computing types!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #executeSearch:!operations!private! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #findTypeFor:!computing types!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypeFromAssignment:!assignments!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypesFor:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypesFor:in:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #implementorsOf:!computing types!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #implementorsOf:in:storeIn:!computing types!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #merge:!equivalence classes!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #model!accessing!private! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #model:!accessing!private! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #printType:for:on:!printing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #printTypeFor:on:!printing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #processCollectionFor:messagesTo:in:!public!selectors/collections! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #processCollectionMessagesFor:in:!public!selectors/collections! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #processNode:!equivalence classes!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #refineTypes:with:!computing types!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #refineTypesByLookingAtAssignments!assignments!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #rootClasses!constants!private! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #runOn:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #selectedClass:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #typeFor:!assignments!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #typesFor:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesFor: #typesFor:in:!accessing!public! !
 
-!RefactoryTyper class methodsFor!
+!Refactory.Browser.RefactoryTyper class methodsFor!
 
 new
 	^(super new)
@@ -355,20 +347,20 @@ newFor: aRBNamespace
 		model: aRBNamespace;
 		yourself!
 
-typesFor: variableName in: aParseTree model: aRBNamespace 
+typesFor: variableName in: aParseTree model: aRBNamespace
 	| searcher messages |
 	searcher := ParseTreeSearcher new.
 	searcher matches: variableName , ' `@message: ``@args'
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			answer
 				add: aNode selector;
 				yourself].
 	messages := searcher executeTree: aParseTree initialAnswer: Set new.
-	^(self new)
+	^self new
 		model: aRBNamespace;
 		findTypeFor: messages! !
-!RefactoryTyper class categoriesFor: #new!instance creation!public! !
-!RefactoryTyper class categoriesFor: #newFor:!instance creation!public! !
-!RefactoryTyper class categoriesFor: #typesFor:in:model:!accessing!public! !
+!Refactory.Browser.RefactoryTyper class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RefactoryTyper class categoriesFor: #newFor:!instance creation!public! !
+!Refactory.Browser.RefactoryTyper class categoriesFor: #typesFor:in:model:!accessing!public! !
 

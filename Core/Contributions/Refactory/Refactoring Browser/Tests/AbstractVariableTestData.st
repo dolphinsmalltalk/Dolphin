@@ -1,6 +1,6 @@
-| model |
-(model := RBNamespace 
-			onEnvironment: ((ClassEnvironment onEnvironment: BrowserEnvironment new) 
+﻿| model |
+(model := Refactory.Browser.RBNamespace 
+			onEnvironment: ((Refactory.Browser.ClassEnvironment onEnvironment: Refactory.Browser.BrowserEnvironment new) 
 					classes: (#(#Bar #Foo) inject: OrderedCollection new
 							into: 
 								[:sum :each | 
@@ -17,7 +17,8 @@
 											sum])) 
 						not) 
 		name: 'Test'.
-#('Object subclass: #Foo
+
+#('Core.Object subclass: #Foo
 	instanceVariableNames: ''instVarName1 instVarName2 ''
 	classVariableNames: ''ClassVarName1 ClassVarName2 ''
 	poolDictionaries: ''''

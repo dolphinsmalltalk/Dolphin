@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #NotEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.NotEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NotEnvironment guid: (GUID fromString: '{8aa751c1-7180-4413-8b57-c60fc841bf12}')!
-NotEnvironment comment: 'NotEnvironment is a <BrowserEnvironmentWrapper> which includes all methods in the system that are not in the <BrowserEnvironment> it wraps. NotEnvironments are constructed by sending the #not message to an existing <BrowserEnvironment>.
+Refactory.Browser.NotEnvironment guid: (Core.GUID fromString: '{8aa751c1-7180-4413-8b57-c60fc841bf12}')!
+Refactory.Browser.NotEnvironment comment: 'NotEnvironment is a <BrowserEnvironmentWrapper> which includes all methods in the system that are not in the <BrowserEnvironment> it wraps. NotEnvironments are constructed by sending the #not message to an existing <BrowserEnvironment>.
 
 Note that a NotEnvironment may include classes that are also included in the environment it inverts, because both may include methods of that class if the original environment includes only a slice of methods in the class.'!
-!NotEnvironment categoriesForClass!Refactory-Environments! !
-!NotEnvironment methodsFor!
+!Refactory.Browser.NotEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.NotEnvironment methodsFor!
 
 defaultLabel
 	^'!!(' , environment label , ')'!
@@ -47,13 +47,13 @@ numberSelectors
 storeOn: aStream
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'! !
-!NotEnvironment categoriesFor: #defaultLabel!constants!private! !
-!NotEnvironment categoriesFor: #definesClass:!public!testing! !
-!NotEnvironment categoriesFor: #includesCategory:!public!testing! !
-!NotEnvironment categoriesFor: #includesClass:!public!testing! !
-!NotEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!NotEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!NotEnvironment categoriesFor: #not!environments!public! !
-!NotEnvironment categoriesFor: #numberSelectors!public! !
-!NotEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.NotEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Refactory.Browser.NotEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.NotEnvironment categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.NotEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.NotEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
+!Refactory.Browser.NotEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.NotEnvironment categoriesFor: #not!environments!public! !
+!Refactory.Browser.NotEnvironment categoriesFor: #numberSelectors!public! !
+!Refactory.Browser.NotEnvironment categoriesFor: #storeOn:!printing!public! !
 

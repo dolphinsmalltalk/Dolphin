@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #AbstractInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractInstanceVariableTest guid: (GUID fromString: '{c64428af-5374-4e12-8c73-d6b9ec653c13}')!
-AbstractInstanceVariableTest comment: ''!
-!AbstractInstanceVariableTest categoriesForClass!Refactory-Testing! !
-!AbstractInstanceVariableTest methodsFor!
+Refactory.Browser.Tests.AbstractInstanceVariableTest guid: (Core.GUID fromString: '{c64428af-5374-4e12-8c73-d6b9ec653c13}')!
+Refactory.Browser.Tests.AbstractInstanceVariableTest comment: ''!
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest methodsFor!
 
 setUp
 	super setUp.
@@ -19,7 +19,7 @@ testAbstractInstanceVariable
 	| refactoring class |
 	refactoring := AbstractInstanceVariableRefactoring variable: 'class' class: TransformationRuleTest.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (RBParser parseMethod: 'class: anObject
@@ -101,8 +101,7 @@ testAbstractWithDefaultNamesUsed
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')!
 
 testInheritedName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name'
-				class: BasicLintRuleTest)!
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTest)!
 
 testMetaclassInstanceVariables
 	| refactoring class |
@@ -123,13 +122,12 @@ testMetaclassInstanceVariables
 		equals: (RBParser parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
 
 testNonExistantName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo'
-				class: BasicLintRuleTest)! !
-!AbstractInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractInstanceVariable!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractWithAssignmentUsed!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractWithDefaultNamesUsed!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!AbstractInstanceVariableTest categoriesFor: #testMetaclassInstanceVariables!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTest)! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractWithAssignmentUsed!public!tests! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractWithDefaultNamesUsed!public!tests! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testInheritedName!failure tests!public! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testMetaclassInstanceVariables!public!tests! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
 

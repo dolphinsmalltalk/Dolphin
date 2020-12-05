@@ -1,19 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #AddClassTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddClassTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddClassTest guid: (GUID fromString: '{2113113d-2508-4856-9ae0-868f9af9ac5c}')!
-AddClassTest comment: ''!
-!AddClassTest categoriesForClass!Refactory-Testing! !
-!AddClassTest methodsFor!
+Refactory.Browser.Tests.AddClassTest guid: (Core.GUID fromString: '{2113113d-2508-4856-9ae0-868f9af9ac5c}')!
+Refactory.Browser.Tests.AddClassTest comment: ''!
+!Refactory.Browser.Tests.AddClassTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.AddClassTest methodsFor!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := [Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')]
+				on: CompilerErrorNotification
+				do: [:err | self fail: err description]!
 
 testAddClass
 	| refactoring newClass superClass classTest |
@@ -24,8 +26,8 @@ testAddClass
 				category: #'Refactory-Testing'.
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: #FooTest.
-	superClass := refactoring model classNamed: #RefactoringTest.
-	classTest := refactoring model classNamed: self class name.
+	superClass := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoringTest'.
+	classTest := refactoring model classNamed: self class fullName.
 	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
 	self assert: newClass metaclass superclass equals: superClass metaclass.
@@ -36,8 +38,8 @@ testAddClass
 	self assert: (newClass metaclass subclasses includes: classTest metaclass)!
 
 testExistingName
-	self shouldFail: (AddClassRefactoring 
-				addClass: #Object
+	self shouldFail: (AddClassRefactoring
+				addClass: #'Core.Object'
 				superclass: self class
 				subclasses: #()
 				category: #'Refactory-Testing')!
@@ -50,7 +52,7 @@ testInvalidSubclass
 				category: #'Refactory-Tesing')!
 
 testMetaClassFailure
-	self shouldFail: (AddClassRefactoring 
+	self shouldFail: (AddClassRefactoring
 				addClass: #Foo
 				superclass: self class class
 				subclasses: #()
@@ -79,7 +81,7 @@ testModelAddClass
 
 testModelExistingName
 	| refactoring |
-	refactoring := AddClassRefactoring 
+	refactoring := AddClassRefactoring
 				model: model
 				addClass: #Foo
 				superclass: Object
@@ -96,12 +98,12 @@ testModelInvalidSubclass
 				subclasses: {model classNamed: #Bar}
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring! !
-!AddClassTest categoriesFor: #setUp!public!set up! !
-!AddClassTest categoriesFor: #testAddClass!public!tests! !
-!AddClassTest categoriesFor: #testExistingName!failure tests!public! !
-!AddClassTest categoriesFor: #testInvalidSubclass!failure tests!public! !
-!AddClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!AddClassTest categoriesFor: #testModelAddClass!public!tests! !
-!AddClassTest categoriesFor: #testModelExistingName!failure tests!public! !
-!AddClassTest categoriesFor: #testModelInvalidSubclass!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddClass!public!tests! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testExistingName!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testInvalidSubclass!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelAddClass!public!tests! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelExistingName!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelInvalidSubclass!failure tests!public! !
 

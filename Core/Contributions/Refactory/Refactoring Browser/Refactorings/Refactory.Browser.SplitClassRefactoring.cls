@@ -1,31 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactoring subclass: #SplitClassRefactoring
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.SplitClassRefactoring'
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SplitClassRefactoring guid: (GUID fromString: '{22a704e1-3527-4416-ad61-b066186fc300}')!
-SplitClassRefactoring comment: ''!
-!SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!SplitClassRefactoring methodsFor!
+Refactory.Browser.SplitClassRefactoring guid: (Core.GUID fromString: '{22a704e1-3527-4416-ad61-b066186fc300}')!
+Refactory.Browser.SplitClassRefactoring comment: ''!
+!Refactory.Browser.SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.SplitClassRefactoring methodsFor!
 
-abstractReferenceTo: each 
+abstractReferenceTo: each
 	| setterMethod replacer accessorRef getterMethod |
-	accessorRef := CreateAccessorsForVariableRefactoring 
+	accessorRef := CreateAccessorsForVariableRefactoring
 				variable: each
 				class: newClass
 				classVariable: false.
 	self performComponentRefactoring: accessorRef.
 	getterMethod := accessorRef getterMethod.
 	setterMethod := accessorRef setterMethod.
-	replacer := ParseTreeRewriter 
+	replacer := ParseTreeRewriter
 				variable: each
 				getter: getterMethod
 				setter: setterMethod
 				receiver: referenceVariableName.
-	self 
+	self
 		convertClasses: class withAllSubclasses
 		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: each]
 		using: replacer.
@@ -35,7 +35,7 @@ abstractVariableReferences
 	instanceVariables do: [:each | self abstractReferenceTo: each]!
 
 addClass
-	self performComponentRefactoring: (AddClassRefactoring 
+	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
 				addClass: newClassName
 				superclass: Object
@@ -45,8 +45,8 @@ addClass
 
 addInstanceVariables
 	instanceVariables do: 
-			[:each | 
-			self performComponentRefactoring: (AddInstanceVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (AddInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newClass)]!
@@ -66,8 +66,7 @@ createNewClass
 		addInstanceVariables!
 
 createReference
-	self performComponentRefactoring: (AddInstanceVariableRefactoring 
-				variable: referenceVariableName
+	self performComponentRefactoring: (AddInstanceVariableRefactoring variable: referenceVariableName
 				class: class)!
 
 preconditions
@@ -99,18 +98,18 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
-!SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private!transforming! !
-!SplitClassRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!SplitClassRefactoring categoriesFor: #addClass!private!transforming! !
-!SplitClassRefactoring categoriesFor: #addInstanceVariables!private!transforming! !
-!SplitClassRefactoring categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
-!SplitClassRefactoring categoriesFor: #createNewClass!public!transforming! !
-!SplitClassRefactoring categoriesFor: #createReference!public!transforming! !
-!SplitClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!SplitClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!SplitClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #addClass!private!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #addInstanceVariables!private!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #createNewClass!public!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #createReference!public!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.SplitClassRefactoring categoriesFor: #transform!public!transforming! !
 
-!SplitClassRefactoring class methodsFor!
+!Refactory.Browser.SplitClassRefactoring class methodsFor!
 
 class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable 
 	^(self new)
@@ -128,6 +127,6 @@ model: aRBNamespace class: class instanceVariables: instVars newClassName: class
 			newClassName: className
 			referenceVariableName: newVariable;
 		yourself! !
-!SplitClassRefactoring class categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
-!SplitClassRefactoring class categoriesFor: #model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!Refactory.Browser.SplitClassRefactoring class categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!Refactory.Browser.SplitClassRefactoring class categoriesFor: #model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
 

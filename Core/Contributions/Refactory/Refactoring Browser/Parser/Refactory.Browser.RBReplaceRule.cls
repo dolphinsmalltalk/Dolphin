@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBParseTreeRule subclass: #RBReplaceRule
+Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBReplaceRule'
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBReplaceRule guid: (GUID fromString: '{206caebb-9f38-4bdf-85a6-50261f48360e}')!
-RBReplaceRule isAbstract: true!
-RBReplaceRule comment: ''!
-!RBReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
-!RBReplaceRule methodsFor!
+Refactory.Browser.RBReplaceRule guid: (Core.GUID fromString: '{206caebb-9f38-4bdf-85a6-50261f48360e}')!
+Refactory.Browser.RBReplaceRule isNonInstantiable: true!
+Refactory.Browser.RBReplaceRule comment: ''!
+!Refactory.Browser.RBReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.RBReplaceRule methodsFor!
 
 canMatch: aProgramNode 
 	^verificationBlock value: aProgramNode!
@@ -24,8 +24,8 @@ initialize
 
 replace: aProgramNode with: newNode 
 	aProgramNode replaceMethodSource: newNode! !
-!RBReplaceRule categoriesFor: #canMatch:!matching!public! !
-!RBReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBReplaceRule categoriesFor: #initialize!initialize/release!public! !
-!RBReplaceRule categoriesFor: #replace:with:!matching!public! !
+!Refactory.Browser.RBReplaceRule categoriesFor: #canMatch:!matching!public! !
+!Refactory.Browser.RBReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
+!Refactory.Browser.RBReplaceRule categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.RBReplaceRule categoriesFor: #replace:with:!matching!public! !
 

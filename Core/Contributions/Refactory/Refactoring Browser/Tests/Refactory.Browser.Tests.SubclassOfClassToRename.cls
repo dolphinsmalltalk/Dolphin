@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassToRename subclass: #SubclassOfClassToRename
+Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SubclassOfClassToRename guid: (GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
-SubclassOfClassToRename comment: ''!
-!SubclassOfClassToRename categoriesForClass!Refactory-Test data! !
-!SubclassOfClassToRename methodsFor!
+Refactory.Browser.Tests.SubclassOfClassToRename guid: (Core.GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
+Refactory.Browser.Tests.SubclassOfClassToRename comment: ''!
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.SubclassOfClassToRename methodsFor!
 
 calls
 	^self rewriteRule1: self name , self rewriteRule1!
@@ -31,11 +31,11 @@ rewriteRule1: anObject
 
 symbolReference
 	^#ClassToRename! !
-!SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #name!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #reference!performing!public! !
-!SubclassOfClassToRename categoriesFor: #rewriteRule1!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #rewriteRule1:!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #symbolReference!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #name!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #reference!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1:!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #symbolReference!performing!public! !
 

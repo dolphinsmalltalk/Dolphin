@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryClassChange subclass: #RefactoryVariableChange
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RefactoryVariableChange'
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoryVariableChange guid: (GUID fromString: '{e776f08f-009c-4de7-ae6e-6658922002a0}')!
-RefactoryVariableChange isAbstract: true!
-RefactoryVariableChange comment: ''!
-!RefactoryVariableChange categoriesForClass!Refactory-Change Objects! !
-!RefactoryVariableChange methodsFor!
+Refactory.Browser.RefactoryVariableChange guid: (Core.GUID fromString: '{e776f08f-009c-4de7-ae6e-6658922002a0}')!
+Refactory.Browser.RefactoryVariableChange isNonInstantiable: true!
+Refactory.Browser.RefactoryVariableChange comment: ''!
+!Refactory.Browser.RefactoryVariableChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RefactoryVariableChange methodsFor!
 
 = aRefactoryVariableChange 
 	^super = aRefactoryVariableChange 
@@ -18,9 +18,6 @@ RefactoryVariableChange comment: ''!
 
 changeObject
 	^self variable!
-
-changesFileTemplate
-	^'<1p> <2s> <3p>'!
 
 changeSymbol
 	^self subclassResponsibility!
@@ -45,16 +42,15 @@ primitiveExecute
 
 variable
 	^variable! !
-!RefactoryVariableChange categoriesFor: #=!comparing!public! !
-!RefactoryVariableChange categoriesFor: #changeObject!private! !
-!RefactoryVariableChange categoriesFor: #changesFileTemplate!private! !
-!RefactoryVariableChange categoriesFor: #changeSymbol!constants!private! !
-!RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!public! !
-!RefactoryVariableChange categoriesFor: #hash!comparing!public! !
-!RefactoryVariableChange categoriesFor: #primitiveExecute!private! !
-!RefactoryVariableChange categoriesFor: #variable!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeObject!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeSymbol!constants!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #primitiveExecute!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #variable!private! !
 
-!RefactoryVariableChange class methodsFor!
+!Refactory.Browser.RefactoryVariableChange class methodsFor!
 
 add: aVariable to: aBehavior 
 	"This should only be called on the Add*Change subclasses, 
@@ -67,6 +63,6 @@ remove: aVariable from: aBehavior
 	but is here so we don't need to copy it to all subclasses"
 
 	^self new class: aBehavior variable: aVariable! !
-!RefactoryVariableChange class categoriesFor: #add:to:!instance creation!public! !
-!RefactoryVariableChange class categoriesFor: #remove:from:!instance creation!public! !
+!Refactory.Browser.RefactoryVariableChange class categoriesFor: #add:to:!instance creation!public! !
+!Refactory.Browser.RefactoryVariableChange class categoriesFor: #remove:from:!instance creation!public! !
 

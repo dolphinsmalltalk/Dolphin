@@ -1,46 +1,46 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CompositeRefactoryChange subclass: #RenameVariableChange
-	instanceVariableNames: 'className isMeta oldName newName'
+Refactory.Browser.CompositeRefactoryChange subclass: #'Refactory.Browser.RenameVariableChange'
+	instanceVariableNames: 'oldName newName classReference'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameVariableChange guid: (GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
-RenameVariableChange isAbstract: true!
-RenameVariableChange comment: ''!
-!RenameVariableChange categoriesForClass!Refactory-Change Objects! !
-!RenameVariableChange methodsFor!
+Refactory.Browser.RenameVariableChange guid: (Core.GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
+Refactory.Browser.RenameVariableChange isNonInstantiable: true!
+Refactory.Browser.RenameVariableChange comment: ''!
+!Refactory.Browser.RenameVariableChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RenameVariableChange methodsFor!
 
-= aRenameVariableChange 
+= aRenameVariableChange
 	self class = aRenameVariableChange class ifFalse: [^false].
-	^className = aRenameVariableChange changeClassName and: 
-			[isMeta = aRenameVariableChange isMeta and: 
-					[oldName = aRenameVariableChange oldName 
-						and: [newName = aRenameVariableChange newName]]]!
+	^classReference = aRenameVariableChange classReference
+		and: [oldName = aRenameVariableChange oldName and: [newName = aRenameVariableChange newName]]!
 
 changeClass
-	^self changeClassName asQualifiedReference valueOrNil
-		ifNotNil: [:class | isMeta ifTrue: [class class] ifFalse: [class]]!
+	^classReference valueOrNil!
 
-changeClass: aBehavior 
-	isMeta := aBehavior isMeta.
-	className := aBehavior instanceClass name!
+changeClass: aBehavior
+	classReference := aBehavior fullyQualifiedReference!
 
 changeClassName
-	^className!
+	^classReference asString!
 
 changeClassName: aSymbol 
-	className := aSymbol.
-	isMeta isNil ifTrue: [isMeta := false]!
+	| wasMeta |
+	wasMeta := classReference notNil and: [classReference isMeta].
+	classReference := BindingReference pathString: aSymbol.
+	wasMeta ifTrue: [classReference := classReference meta]
+!
 
 changeString
 	^'Rename ' , oldName , ' to ' , newName!
 
+classReference
+	^classReference!
+
 displayClassName
-	^isMeta 
-		ifTrue: [self changeClassName , ' class']
-		ifFalse: [self changeClassName asString]!
+	^classReference asString!
 
 executeNotifying: aBlock
 	| undo |
@@ -53,11 +53,11 @@ executeNotifying: aBlock
 	^undo!
 
 hash
-	^(self changeClassName hash bitXor: self oldName hash) 
+	^(classReference hash bitXor: self oldName hash) 
 		bitXor: self newName hash!
 
 isMeta
-	^isMeta!
+	^classReference isMeta!
 
 newName
 	^newName!
@@ -76,24 +76,25 @@ printOn: aStream
 
 renameVariable
 	^self subclassResponsibility! !
-!RenameVariableChange categoriesFor: #=!comparing!public! !
-!RenameVariableChange categoriesFor: #changeClass!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClass:!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClassName!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClassName:!accessing!public! !
-!RenameVariableChange categoriesFor: #changeString!printing!public! !
-!RenameVariableChange categoriesFor: #displayClassName!printing!public! !
-!RenameVariableChange categoriesFor: #executeNotifying:!private! !
-!RenameVariableChange categoriesFor: #hash!comparing!public! !
-!RenameVariableChange categoriesFor: #isMeta!private! !
-!RenameVariableChange categoriesFor: #newName!accessing!public! !
-!RenameVariableChange categoriesFor: #newName:!private! !
-!RenameVariableChange categoriesFor: #oldName!accessing!public! !
-!RenameVariableChange categoriesFor: #oldName:!private! !
-!RenameVariableChange categoriesFor: #printOn:!printing!public! !
-!RenameVariableChange categoriesFor: #renameVariable!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #changeClass!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #changeClass:!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #changeClassName!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #changeClassName:!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #classReference!accessing!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #displayClassName!printing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #executeNotifying:!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #isMeta!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #newName!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #newName:!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #oldName!accessing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #oldName:!private! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RenameVariableChange categoriesFor: #renameVariable!private! !
 
-!RenameVariableChange class methodsFor!
+!Refactory.Browser.RenameVariableChange class methodsFor!
 
 rename: oldName to: newName in: aClass 
 	^(self new)
@@ -101,5 +102,5 @@ rename: oldName to: newName in: aClass
 		newName: newName;
 		changeClass: aClass;
 		yourself! !
-!RenameVariableChange class categoriesFor: #rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameVariableChange class categoriesFor: #rename:to:in:!instance creation!public! !
 

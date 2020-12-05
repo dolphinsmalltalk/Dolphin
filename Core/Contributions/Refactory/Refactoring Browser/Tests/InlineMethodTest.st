@@ -1,6 +1,6 @@
-| model |
-(model := RBNamespace 
-			onEnvironment: ((ClassEnvironment onEnvironment: BrowserEnvironment new) 
+﻿| model |
+(model := Refactory.Browser.RBNamespace 
+			onEnvironment: ((Refactory.Browser.ClassEnvironment onEnvironment: Refactory.Browser.BrowserEnvironment new) 
 					classes: (#(#RenameClassVariableChange #VariableCompositeRefactoryChange #RenameInstanceVariableChange #CompositeRefactoryChange #RenameVariableChange #RefactoryChange) 
 							inject: OrderedCollection new
 							into: 

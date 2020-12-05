@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBAbstractCondition subclass: #RBConjunctiveCondition
+Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBConjunctiveCondition'
 	instanceVariableNames: 'left right failed'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBConjunctiveCondition guid: (GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
-RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
+Refactory.Browser.RBConjunctiveCondition guid: (Core.GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
+Refactory.Browser.RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
 
 Instance Variables:
 	failed	<Symbol>	which condition failed (#leftFailed, #rightFailed, or #unknownFailed)
 	left	<AbstractCondition>	the condition on the left side of the and
 	right	<AbstractCondition>	the condition on the right side of the and'!
-!RBConjunctiveCondition categoriesForClass!Refactory-Conditions! !
-!RBConjunctiveCondition methodsFor!
+!Refactory.Browser.RBConjunctiveCondition categoriesForClass!Refactory-Conditions! !
+!Refactory.Browser.RBConjunctiveCondition methodsFor!
 
 check
 	left check
@@ -67,15 +67,15 @@ rightFailed
 
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
-!RBConjunctiveCondition categoriesFor: #check!checking!public! !
-!RBConjunctiveCondition categoriesFor: #errorBlockFor:!private! !
-!RBConjunctiveCondition categoriesFor: #errorMacro!private! !
-!RBConjunctiveCondition categoriesFor: #errorStringFor:!private! !
-!RBConjunctiveCondition categoriesFor: #left:right:!initialize/release!public! !
-!RBConjunctiveCondition categoriesFor: #leftFailed!private! !
-!RBConjunctiveCondition categoriesFor: #longMacro!private! !
-!RBConjunctiveCondition categoriesFor: #neitherFailed!private! !
-!RBConjunctiveCondition categoriesFor: #printOn:!printing!public! !
-!RBConjunctiveCondition categoriesFor: #rightFailed!private! !
-!RBConjunctiveCondition categoriesFor: #unknownFailed!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #check!checking!public! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorBlockFor:!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorMacro!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorStringFor:!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #left:right:!initialize/release!public! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #leftFailed!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #longMacro!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #neitherFailed!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #rightFailed!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesFor: #unknownFailed!private! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBAbstractCondition subclass: #RBCondition
+Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBCondition'
 	instanceVariableNames: 'block type errorBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBCondition guid: (GUID fromString: '{af1642b9-45bf-427d-a24f-812c3271820d}')!
-RBCondition comment: 'Condition represents a condition that must be true for a refactoring to be performed.
+Refactory.Browser.RBCondition guid: (Core.GUID fromString: '{af1642b9-45bf-427d-a24f-812c3271820d}')!
+Refactory.Browser.RBCondition comment: 'Condition represents a condition that must be true for a refactoring to be performed.
 
 Instance Variables:
 	block	<Block>	this is the block that gets evaluated to check the condition
@@ -16,8 +16,8 @@ Instance Variables:
 						with its parameters. Right now this is pretty useless, other than for printing,
 						but in the future, we hope to be able to use this to assert postconditions of
 						refactorings.'!
-!RBCondition categoriesForClass!Refactory-Conditions! !
-!RBCondition methodsFor!
+!Refactory.Browser.RBCondition categoriesForClass!Refactory-Conditions! !
+!Refactory.Browser.RBCondition methodsFor!
 
 check
 	^block value!
@@ -39,14 +39,14 @@ type: aSymbol block: aBlock errorString: aString
 withBlock: aBlock 
 	block := aBlock.
 	type := #(#generic)! !
-!RBCondition categoriesFor: #check!checking!public! !
-!RBCondition categoriesFor: #errorBlock:!initialize/release!public! !
-!RBCondition categoriesFor: #errorBlockFor:!accessing!public! !
-!RBCondition categoriesFor: #printOn:!printing!public! !
-!RBCondition categoriesFor: #type:block:errorString:!initialize/release!public! !
-!RBCondition categoriesFor: #withBlock:!initialize/release!public! !
+!Refactory.Browser.RBCondition categoriesFor: #check!checking!public! !
+!Refactory.Browser.RBCondition categoriesFor: #errorBlock:!initialize/release!public! !
+!Refactory.Browser.RBCondition categoriesFor: #errorBlockFor:!accessing!public! !
+!Refactory.Browser.RBCondition categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBCondition categoriesFor: #type:block:errorString:!initialize/release!public! !
+!Refactory.Browser.RBCondition categoriesFor: #withBlock:!initialize/release!public! !
 
-!RBCondition class methodsFor!
+!Refactory.Browser.RBCondition class methodsFor!
 
 canUnderstand: aSelector in: aClass
 	^self new
@@ -152,6 +152,12 @@ empty
 		block: [true]
 		errorString: 'Empty'!
 
+hasNamespace: aSymbol
+	^self new
+		type: {#hasNamespace. aSymbol}
+		block: [aSymbol asQualifiedReference namespaceBinding notNil]
+		errorString: aSymbol , ' is <1?:not >in an existing namespace'!
+
 hasSubclasses: aClass
 	^self new
 		type: {#hasSubclasses. aClass}
@@ -225,6 +231,12 @@ isMetaclass: anObject
 		block: [anObject isMeta]
 		errorString: anObject printString , ' is <1?:not >a metaclass'!
 
+isNamespace: aSymbol
+	^self new
+		type: {#isNamespace. aSymbol}
+		block: [aSymbol asQualifiedReference namespaceBinding isNil]
+		errorString: aSymbol , ' is <1?:not >a namespace'!
+
 isString: aString
 	"added by DMM  Dolphin's categories are *strings* NOT symbols.
 	need this for RefactoringBrowserShell>>convertToSibling"
@@ -271,16 +283,16 @@ isValidTemporaryVariableName: aString for: aClass
 		block: [self checkInstanceVariableName: aString in: aClass]
 		errorString: aString printString , ' is <1?:not >a valid temporary variable name'!
 
-methodDefiningTemporary: aString in: aClass ignore: aBlock 
+methodDefiningTemporary: aString in: aClass ignore: aBlock
 	| searcher method |
 	searcher := ParseTreeSearcher new.
 	method := nil.	"Shut-up the warning"
 	searcher matches: aString do: [:aNode :answer | ^method].
 	aClass withAllSubclasses do: 
-			[:class | 
+			[:class |
 			class selectors do: 
-					[:each | 
-					(aBlock value: class value: each) 
+					[:each |
+					(aBlock value: class value: each)
 						ifFalse: 
 							[| parseTree |
 							method := class methodFor: each.
@@ -323,41 +335,43 @@ withBlock: aBlock errorString: aString
 	^self new type: #unknown
 		block: aBlock
 		errorString: aString! !
-!RBCondition class categoriesFor: #canUnderstand:in:!instance creation!public! !
-!RBCondition class categoriesFor: #checkClassVarName:in:!public!utilities! !
-!RBCondition class categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
-!RBCondition class categoriesFor: #checkMethodName:in:!public!utilities! !
-!RBCondition class categoriesFor: #definesClassVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesSelector:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesTemporaryVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesTempVar:in:ignoreClass:!instance creation!public! !
-!RBCondition class categoriesFor: #directlyDefinesClassVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #directlyDefinesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #empty!instance creation!public! !
-!RBCondition class categoriesFor: #hasSubclasses:!instance creation!public! !
-!RBCondition class categoriesFor: #hasSuperclass:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:canUnderstand:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:definesVariable:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:referencesInstanceVariable:!instance creation!public! !
-!RBCondition class categoriesFor: #isAbstractClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isEmptyClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isGlobal:in:!instance creation!public! !
-!RBCondition class categoriesFor: #isImmediateSubclass:of:!instance creation!public! !
-!RBCondition class categoriesFor: #isMetaclass:!instance creation!public! !
-!RBCondition class categoriesFor: #isString:!instance creation!public! !
-!RBCondition class categoriesFor: #isSymbol:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidClassName:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidClassVarName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidInstanceVariableName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidMethodName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidTemporaryVariableName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #methodDefiningTemporary:in:ignore:!public!utilities! !
-!RBCondition class categoriesFor: #referencesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #reservedNames!public!utilities! !
-!RBCondition class categoriesFor: #subclassesOf:referToSelector:!instance creation!public! !
-!RBCondition class categoriesFor: #validClassName:!public!utilities! !
-!RBCondition class categoriesFor: #withBlock:!instance creation!public! !
-!RBCondition class categoriesFor: #withBlock:errorString:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #canUnderstand:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #checkClassVarName:in:!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #checkMethodName:in:!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #definesClassVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #definesInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #definesSelector:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #definesTemporaryVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #definesTempVar:in:ignoreClass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #directlyDefinesClassVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #directlyDefinesInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #empty!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hasNamespace:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hasSubclasses:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hasSuperclass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hierarchyOf:canUnderstand:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hierarchyOf:definesVariable:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hierarchyOf:referencesInstanceVariable:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isAbstractClass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isClass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isEmptyClass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isGlobal:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isImmediateSubclass:of:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isMetaclass:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isNamespace:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isString:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isSymbol:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isValidClassName:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isValidClassVarName:for:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isValidInstanceVariableName:for:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isValidMethodName:for:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #isValidTemporaryVariableName:for:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #methodDefiningTemporary:in:ignore:!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #referencesInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #reservedNames!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #subclassesOf:referToSelector:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #validClassName:!public!utilities! !
+!Refactory.Browser.RBCondition class categoriesFor: #withBlock:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #withBlock:errorString:!instance creation!public! !
 

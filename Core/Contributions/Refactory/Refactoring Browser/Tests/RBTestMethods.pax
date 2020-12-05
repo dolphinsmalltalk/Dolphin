@@ -1,90 +1,100 @@
 ﻿| package |
 package := Package name: 'RBTestMethods'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{BasicLintRuleTest}
-	#{ClassToRename}
-	#{CompositeLintRuleTest}
-	#{FooLintRuleTest}
-	#{LintRuleTest}
-	#{RefactoryTestDataApp}
-	#{SubclassOfClassToRename}
-	#{TransformationRuleTest}
+	#{Refactory.Browser.Tests}
+	#{Refactory.Browser.Tests.BasicLintRuleTest}
+	#{Refactory.Browser.Tests.ClassToRename}
+	#{Refactory.Browser.Tests.CompositeLintRuleTest}
+	#{Refactory.Browser.Tests.FooLintRuleTest}
+	#{Refactory.Browser.Tests.LintRuleTest}
+	#{Refactory.Browser.Tests.RefactoryTestDataApp}
+	#{Refactory.Browser.Tests.SubclassOfClassToRename}
+	#{Refactory.Browser.Tests.TransformationRuleTest}
 ).
 
 package setVariableNames: #(
-	#{Smalllint}
-	#{SmalllintResultEditor}
+	#{Refactory.Browser.Smalllint}
+	#{Refactory.Browser.SmalllintResultEditor}
 ).
 
 package setBinaryVariableNames: #(
-	#{Smalllint}
-	#{SmalllintResultEditor}
+	#{Refactory.Browser.Smalllint}
+	#{Refactory.Browser.SmalllintResultEditor}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
+	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
 	'..\SmallLint\RBSmallLint'
+	'..\..\..\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Camp Smalltalk\SUnit\SUnitPreload'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #LintRuleTest
-	instanceVariableNames: 'name foo1'
-	classVariableNames: 'Foo1'
-	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Object subclass: #RefactoryTestDataApp
-	instanceVariableNames: 'temporaryVariable'
-	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LintRuleTest subclass: #BasicLintRuleTest
-	instanceVariableNames: 'classBlock methodBlock result'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LintRuleTest subclass: #CompositeLintRuleTest
-	instanceVariableNames: 'rules'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LintRuleTest subclass: #FooLintRuleTest
+Refactory.Browser subclass: #'Refactory.Browser.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FooLintRuleTest subclass: #TransformationRuleTest
+Core.Object subclass: #'Refactory.Browser.Tests.LintRuleTest'
+	instanceVariableNames: 'name foo1'
+	classVariableNames: 'Foo1'
+	imports: #(#{OS.CRTConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Refactory.Browser.Tests.RefactoryTestDataApp'
+	instanceVariableNames: 'temporaryVariable'
+	classVariableNames: ''
+	imports: #(#{OS.CRTConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.BasicLintRuleTest'
+	instanceVariableNames: 'classBlock methodBlock result'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.CompositeLintRuleTest'
+	instanceVariableNames: 'rules'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.FooLintRuleTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.TransformationRuleTest'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #ClassToRename
+Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'notUsed'
 	classConstants: {}!
-ClassToRename subclass: #SubclassOfClassToRename
+Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

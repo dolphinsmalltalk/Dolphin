@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #ReferenceFinderTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ReferenceFinderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReferenceFinderTest guid: (GUID fromString: '{9403e023-ffa2-4920-af9d-9b80e6055ac8}')!
-ReferenceFinderTest comment: ''!
-!ReferenceFinderTest categoriesForClass!Refactory-Testing! !
-!ReferenceFinderTest methodsFor!
+Refactory.Browser.Tests.ReferenceFinderTest guid: (Core.GUID fromString: '{9403e023-ffa2-4920-af9d-9b80e6055ac8}')!
+Refactory.Browser.Tests.ReferenceFinderTest comment: ''!
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ReferenceFinderTest methodsFor!
 
 testAllPaths
 	| paths |
@@ -48,9 +48,9 @@ testPathToInstance
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
 	self assert: path last class identicalTo: RefactoringManager.
 	self assert: path first identicalTo: Smalltalk! !
-!ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
-!ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
-!ReferenceFinderTest categoriesFor: #testFound!public!tests! !
-!ReferenceFinderTest categoriesFor: #testNotFound!public!tests! !
-!ReferenceFinderTest categoriesFor: #testPathToInstance!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testFound!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testNotFound!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testPathToInstance!public!tests! !
 

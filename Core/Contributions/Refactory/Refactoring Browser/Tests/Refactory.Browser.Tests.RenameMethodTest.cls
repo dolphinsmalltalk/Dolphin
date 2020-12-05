@@ -1,30 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #RenameMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameMethodTest guid: (GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
-RenameMethodTest comment: ''!
-!RenameMethodTest categoriesForClass!Refactory-Testing! !
-!RenameMethodTest methodsFor!
+Refactory.Browser.Tests.RenameMethodTest guid: (Core.GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
+Refactory.Browser.Tests.RenameMethodTest comment: ''!
+!Refactory.Browser.Tests.RenameMethodTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RenameMethodTest methodsFor!
 
 setUp
 	super setUp.
 	model := RBNamespace onEnvironment: (BrowserEnvironment new
-						forClasses: {Object. SmallInteger. OrderedCollection. DefaultSortAlgorithm})!
+						forClasses: {Object. SmallInteger. OrderedCollection. Kernel.DefaultSortAlgorithm})!
 
 testExistingSelector
-	self shouldFail: (RenameMethodRefactoring 
+	self shouldFail: (RenameMethodRefactoring
 				renameMethod: #checkClass:
 				in: BasicLintRuleTest
 				to: #runOnEnvironment:
 				permutation: (1 to: 1))!
 
 testMultipleSelectors
-	self shouldWarn: (RenameMethodRefactoring 
+	self shouldWarn: (RenameMethodRefactoring
 				renameMethod: #checkClass:
 				in: BasicLintRuleTest
 				to: #foo:
@@ -38,7 +38,7 @@ testRenamePermuteArgs
 				to: ('rename:' , 'two:') asSymbol
 				permutation: #(2 1).
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: RefactoryTestDataApp fullName.
 	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol)
 		equals: (RBParser
 				parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
@@ -69,7 +69,7 @@ testRenameTestMethod
 				to: #renameThisMethod2:
 				permutation: (1 to: 1).
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #renameThisMethod2:)
 		equals: (RBParser parseMethod: 'renameThisMethod2: anArg
 	^self').
@@ -89,20 +89,21 @@ testRenameTestMethod1
 				to: #testMethod2
 				permutation: (1 to: 0).
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testMethod2)
 		equals: (RBParser
 				parseMethod: 'testMethod2
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #classBlock:)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+				parseTreeFor: #classBlock:)
 		equals: (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
-!RenameMethodTest categoriesFor: #setUp!public!set up! !
-!RenameMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
-!RenameMethodTest categoriesFor: #testMultipleSelectors!failure tests!public! !
-!RenameMethodTest categoriesFor: #testRenamePermuteArgs!public!tests! !
-!RenameMethodTest categoriesFor: #testRenamePrimitive!public!tests! !
-!RenameMethodTest categoriesFor: #testRenameTestMethod!public!tests! !
-!RenameMethodTest categoriesFor: #testRenameTestMethod1!public!tests! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testMultipleSelectors!failure tests!public! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenamePermuteArgs!public!tests! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenamePrimitive!public!tests! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenameTestMethod!public!tests! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenameTestMethod1!public!tests! !
 

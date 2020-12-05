@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #ChangeMethodNameRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ChangeMethodNameRefactoring'
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChangeMethodNameRefactoring guid: (GUID fromString: '{3f93d212-d92e-4bbb-b225-17bed064896e}')!
-ChangeMethodNameRefactoring isAbstract: true!
-ChangeMethodNameRefactoring comment: 'Abstract superclass for refactorings that change a methods selector, e.g. add/remove parameter and rename.
+Refactory.Browser.ChangeMethodNameRefactoring guid: (Core.GUID fromString: '{3f93d212-d92e-4bbb-b225-17bed064896e}')!
+Refactory.Browser.ChangeMethodNameRefactoring isNonInstantiable: true!
+Refactory.Browser.ChangeMethodNameRefactoring comment: 'Abstract superclass for refactorings that change a methods selector, e.g. add/remove parameter and rename.
 
 Dolphin modifications to this class are:
 	#preconditions 			Cosmetic - includes list of affected classes in warning
 	#renameImplementors		Maintains previous package of loose methods
 	#renameMethod:in:to:permuation:	General change to ensure display string always valid '!
-!ChangeMethodNameRefactoring categoriesForClass!Refactory-Refactorings! !
-!ChangeMethodNameRefactoring methodsFor!
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ChangeMethodNameRefactoring methodsFor!
 
 hasPermutedArguments
 	oldSelector argumentCount = newSelector argumentCount ifFalse: [^true].
@@ -47,40 +47,35 @@ parseTreeRewriter
 	| rewriteRule oldString newString |
 	rewriteRule := ParseTreeRewriter new.
 	oldString := self buildSelectorString: oldSelector.
-	newString := self buildSelectorString: newSelector
-				withPermuteMap: permutation.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
+	newString := self buildSelectorString: newSelector withPermuteMap: permutation.
+	rewriteRule replace: '``@object ' , oldString with: '``@object ' , newString.
 	^rewriteRule!
 
 preconditions
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self myConditions 
-				& (RBCondition definesSelector: oldSelector in: class) 
-					& (RBCondition isValidMethodName: newSelector for: class).
+	conditions := self myConditions & (RBCondition definesSelector: oldSelector in: class)
+				& (RBCondition isValidMethodName: newSelector for: class).
 	conditions := self implementors inject: conditions
-				into: 
-					[:condition :each | 
-					condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not].
-	^conditions 
+				into: [:condition :each | condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not].
+	^conditions
 		& (RBCondition withBlock: 
 					[| definitions |
 					definitions := self implementors.
-					definitions size > 1 
+					definitions size > 1
 						ifTrue: 
 							[| msg |
 							#rbFix.	"Include list of classes (if short) so user can get better idea of effect"
 							msg := String writeStream.
-							definitions size < 30 
+							definitions size < 30
 								ifTrue: 
 									[msg
 										print: oldSelector;
 										nextPutAll: ' is implemented in:';
 										cr.
 									(definitions asSortedCollection: [:a :b | a name < b name]) do: 
-											[:each | 
+											[:each |
 											msg
 												crtab;
 												print: each].
@@ -132,17 +127,17 @@ transform
 	self removeRenamedImplementors
 
 ! !
-!ChangeMethodNameRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!ChangeMethodNameRefactoring categoriesFor: #implementors!accessing!private! !
-!ChangeMethodNameRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!ChangeMethodNameRefactoring categoriesFor: #modifyImplementorParseTree:in:!public! !
-!ChangeMethodNameRefactoring categoriesFor: #myConditions!preconditions!public! !
-!ChangeMethodNameRefactoring categoriesFor: #newSelector!accessing!public! !
-!ChangeMethodNameRefactoring categoriesFor: #parseTreeRewriter!accessing!private! !
-!ChangeMethodNameRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ChangeMethodNameRefactoring categoriesFor: #removeRenamedImplementors!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameImplementors!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameMessageSends!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameMethod:in:to:permutation:!initialize/release!public! !
-!ChangeMethodNameRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #implementors!accessing!private! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #modifyImplementorParseTree:in:!public! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #myConditions!preconditions!public! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #newSelector!accessing!public! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #parseTreeRewriter!accessing!private! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #removeRenamedImplementors!public!transforming! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameImplementors!public!transforming! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameMessageSends!public!transforming! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameMethod:in:to:permutation:!initialize/release!public! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #transform!public!transforming! !
 

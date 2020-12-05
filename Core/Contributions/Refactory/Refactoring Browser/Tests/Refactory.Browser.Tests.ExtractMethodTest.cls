@@ -1,24 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #ExtractMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractMethodTest guid: (GUID fromString: '{e6d6d232-8068-4ed9-97f4-59b812529daf}')!
-ExtractMethodTest comment: ''!
-!ExtractMethodTest categoriesForClass!Refactory-Testing! !
-!ExtractMethodTest methodsFor!
+Refactory.Browser.Tests.ExtractMethodTest guid: (Core.GUID fromString: '{e6d6d232-8068-4ed9-97f4-59b812529daf}')!
+Refactory.Browser.Tests.ExtractMethodTest comment: ''!
+!Refactory.Browser.Tests.ExtractMethodTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ExtractMethodTest methodsFor!
 
 testBadInterval
 	self
-		shouldFail: (ExtractMethodRefactoring 
-					extract: (self convertInterval: (24 to: 30)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (ExtractMethodRefactoring
+					extract: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					from: #testMethod
 					in: RefactoryTestDataApp);
-		shouldFail: (ExtractMethodRefactoring 
+		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (80 to: 147)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
@@ -26,20 +25,19 @@ testBadInterval
 
 testExtractFailure
 	self
-		shouldFail: (ExtractMethodRefactoring 
+		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (80 to: 269)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
 					in: BasicLintRuleTest class);
-		shouldFail: (ExtractMethodRefactoring 
+		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (53 to: 56)
 							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
 					in: BasicLintRuleTest class);
-		shouldFail: (ExtractMethodRefactoring 
+		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (77 to: 222)
-							for: (BasicLintRuleTest class 
-									sourceCodeAt: #subclassResponsibilityNotDefined))
+							for: (BasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
 					from: #subclassResponsibilityNotDefined
 					in: BasicLintRuleTest class)!
 
@@ -51,7 +49,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 				in: LintRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #LintRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	self assert: (class parseTreeFor: #openEditor)
 		equals: (RBParser
 				parseMethod: 'openEditor
@@ -73,7 +71,7 @@ testExtractMethodThatMovesTemporaryVariable
 				in: TransformationRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #superSends)
 		equals: (RBParser parseMethod: 'superSends
 	| rule |
@@ -100,7 +98,7 @@ testExtractMethodThatNeedsArgument
 				in: TransformationRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #TransformationRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (RBParser
 				parseMethod: 'checkMethod: aSmalllintContext 
@@ -123,7 +121,7 @@ testExtractMethodThatNeedsTemporaryVariable
 				in: LintRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #LintRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	self assert: (class parseTreeFor: #displayName)
 		equals: (RBParser
 				parseMethod: 'displayName
@@ -141,7 +139,7 @@ testExtractMethodThatNeedsTemporaryVariable
 testModelExtractMethodWithTemporariesSelected
 	| class refactoring |
 	model := RBNamespace new.
-	class := model classNamed: self class name.
+	class := model classNamed: self class fullName.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value' classified: #(#accessing).
 	refactoring := ExtractMethodRefactoring
 				model: model
@@ -157,7 +155,7 @@ testModelExtractMethodWithTemporariesSelected
 testModelExtractMethodWithTemporaryAssigned
 	| class refactoring |
 	model := RBNamespace new.
-	class := model classNamed: self class name.
+	class := model classNamed: self class fullName.
 	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'
 		classified: #(#accessing).
@@ -176,17 +174,17 @@ testModelExtractMethodWithTemporaryAssigned
 				exceptForVariables: #())!
 
 testNonExistantSelector
-	self shouldFail: (ExtractMethodRefactoring 
+	self shouldFail: (ExtractMethodRefactoring
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!ExtractMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!ExtractMethodTest categoriesFor: #testExtractFailure!failure tests!public! !
-!ExtractMethodTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatMovesTemporaryVariable!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsArgument!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsTemporaryVariable!public!tests! !
-!ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporariesSelected!public!tests! !
-!ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporaryAssigned!public!tests! !
-!ExtractMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testBadInterval!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractFailure!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatMovesTemporaryVariable!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsArgument!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsTemporaryVariable!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporariesSelected!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporaryAssigned!public!tests! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
 

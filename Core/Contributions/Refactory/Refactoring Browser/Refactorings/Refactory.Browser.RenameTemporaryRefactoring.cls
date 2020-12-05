@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #RenameTemporaryRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.RenameTemporaryRefactoring'
 	instanceVariableNames: 'selector interval oldName newName parseTree'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameTemporaryRefactoring guid: (GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
-RenameTemporaryRefactoring comment: ''!
-!RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
-!RenameTemporaryRefactoring methodsFor!
+Refactory.Browser.RenameTemporaryRefactoring guid: (Core.GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
+Refactory.Browser.RenameTemporaryRefactoring comment: ''!
+!Refactory.Browser.RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RenameTemporaryRefactoring methodsFor!
 
 class: aClass selector: aSelector interval: anInterval newName: aString 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."
@@ -38,10 +38,10 @@ preconditions
 						self oldName: (methodSource copyFrom: interval first to: interval last).
 						true])!
 
-renameNode: aParseTree 
-	(aParseTree whoDefines: newName) notNil 
+renameNode: aParseTree
+	(aParseTree whoDefines: newName) notNil
 		ifTrue: [self refactoringError: newName , ' is already defined'].
-	(aParseTree allDefinedVariables includes: newName) 
+	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [self refactoringError: newName , ' is already defined'].
 	(ParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree!
 
@@ -76,14 +76,14 @@ transform
 		ifTrue: [self refactoringError: oldName , ' isn''t defined by the method'].
 	self renameNode: definingNode.
 	class compileTree: parseTree! !
-!RenameTemporaryRefactoring categoriesFor: #class:selector:interval:newName:!initialize/release!public! !
-!RenameTemporaryRefactoring categoriesFor: #oldName:!accessing!private! !
-!RenameTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameTemporaryRefactoring categoriesFor: #renameNode:!public!transforming! !
-!RenameTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameTemporaryRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #class:selector:interval:newName:!initialize/release!public! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #oldName:!accessing!private! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #renameNode:!public!transforming! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #transform!public!transforming! !
 
-!RenameTemporaryRefactoring class methodsFor!
+!Refactory.Browser.RenameTemporaryRefactoring class methodsFor!
 
 model: aRBNamespace renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector 
 	^(self new)
@@ -100,6 +100,6 @@ renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval
 		newName: newName! !
-!RenameTemporaryRefactoring class categoriesFor: #model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
-!RenameTemporaryRefactoring class categoriesFor: #renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!Refactory.Browser.RenameTemporaryRefactoring class categoriesFor: #model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!Refactory.Browser.RenameTemporaryRefactoring class categoriesFor: #renameTemporaryFrom:to:in:selector:!instance creation!public! !
 

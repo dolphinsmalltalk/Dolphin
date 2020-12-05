@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkParser subclass: #RBPatternParser
+Kernel.Parser subclass: #'Refactory.Browser.RBPatternParser'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternParser guid: (GUID fromString: '{efae231d-9476-470e-9bef-e65273b2f157}')!
-RBPatternParser comment: 'RBPatternParser is an extended <SmalltalkParser> that supports the RB''s extended syntax for pattern matching trees. The resulting trees are used as inputs to the <ParseTreeSearcher> and <ParseTreeRewriter> for searching and transforming source code (respectively).
+Refactory.Browser.RBPatternParser guid: (Core.GUID fromString: '{efae231d-9476-470e-9bef-e65273b2f157}')!
+Refactory.Browser.RBPatternParser comment: 'RBPatternParser is an extended <SmalltalkParser> that supports the RB''s extended syntax for pattern matching trees. The resulting trees are used as inputs to the <ParseTreeSearcher> and <ParseTreeRewriter> for searching and transforming source code (respectively).
 '!
-!RBPatternParser categoriesForClass!Refactory-Parser! !
-!RBPatternParser methodsFor!
+!Refactory.Browser.RBPatternParser categoriesForClass!Refactory-Parser! !
+!Refactory.Browser.RBPatternParser methodsFor!
 
 evaluateStatements: anStSequenceNode 
 	^nil!
@@ -74,12 +74,12 @@ parseUnaryMessage
 	self addCommentsTo: node.
 	
 	[currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
-	currentToken isPatternBlock 
+	currentToken isPatternBlock
 		ifTrue: 
 			[node := (self parsePatternBlock: RBPatternWrapperBlockNode)
 						wrappedNode: node;
 						yourself].
-	currentToken isIdentifier] 
+	currentToken isIdentifier]
 			whileTrue: [node := self parseUnaryMessageWith: node].
 	self addCommentsTo: node.
 	^node!
@@ -97,17 +97,17 @@ tempDeclClass
 
 variableNodeClass
 	^RBPatternVariableNode! !
-!RBPatternParser categoriesFor: #evaluateStatements:!parsing!private! !
-!RBPatternParser categoriesFor: #messageNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #methodNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #parameterNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #parseLiteralByteArrayObject!parsing!public! !
-!RBPatternParser categoriesFor: #parsePatternBlock:!parsing!private! !
-!RBPatternParser categoriesFor: #parsePrimitiveLiteral!parsing!public! !
-!RBPatternParser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!RBPatternParser categoriesFor: #parseUnaryMessage!parsing!private! !
-!RBPatternParser categoriesFor: #patchLiteralArrayToken!helpers!public! !
-!RBPatternParser categoriesFor: #scannerClass!accessing!public! !
-!RBPatternParser categoriesFor: #tempDeclClass!parsing!private! !
-!RBPatternParser categoriesFor: #variableNodeClass!constants!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #evaluateStatements:!parsing!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #messageNodeClass!constants!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #methodNodeClass!constants!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parameterNodeClass!constants!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parseLiteralByteArrayObject!parsing!public! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parsePatternBlock:!parsing!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parsePrimitiveLiteral!parsing!public! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parsePrimitiveObject!parsing!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #parseUnaryMessage!parsing!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #patchLiteralArrayToken!helpers!public! !
+!Refactory.Browser.RBPatternParser categoriesFor: #scannerClass!accessing!public! !
+!Refactory.Browser.RBPatternParser categoriesFor: #tempDeclClass!parsing!private! !
+!Refactory.Browser.RBPatternParser categoriesFor: #variableNodeClass!constants!private! !
 

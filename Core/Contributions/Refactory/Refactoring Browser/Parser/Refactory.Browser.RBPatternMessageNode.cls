@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StMessageNode subclass: #RBPatternMessageNode
+Kernel.StMessageNode subclass: #'Refactory.Browser.RBPatternMessageNode'
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBPatternMessageNode guid: (GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
-RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
+Refactory.Browser.RBPatternMessageNode guid: (Core.GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
+Refactory.Browser.RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one argument method whereas `@keywords: would match 0 or more arguments)'!
-!RBPatternMessageNode categoriesForClass!Refactory-Parser! !
-!RBPatternMessageNode methodsFor!
+!Refactory.Browser.RBPatternMessageNode categoriesForClass!Refactory-Parser! !
+!Refactory.Browser.RBPatternMessageNode methodsFor!
 
 copyInContext: aDictionary
 	| selectors |
@@ -103,18 +103,18 @@ sentMessages
 	^(super sentMessages)
 		remove: self selector ifAbsent: [];
 		yourself! !
-!RBPatternMessageNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #isList!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #isPatternNode!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #isSelectorList!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #matchingClass!constants!public! !
-!RBPatternMessageNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #receiver:selectorParts:arguments:!initialize/release!public! !
-!RBPatternMessageNode categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #copyInContext:!matching!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #isList!public!testing/matching! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #isPatternNode!public!testing/matching! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #isSelectorList!public!testing/matching! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #match:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchingClass!constants!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #receiver:selectorParts:arguments:!initialize/release!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesFor: #sentMessages!accessing!public! !
 
-!RBPatternMessageNode class methodsFor!
+!Refactory.Browser.RBPatternMessageNode class methodsFor!
 
 receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes 
 	^(keywordTokens anySatisfy: [:each | each isPatternVariable]) 
@@ -128,5 +128,5 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !
-!RBPatternMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
+!Refactory.Browser.RBPatternMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
 

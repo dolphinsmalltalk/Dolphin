@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryVariableChange subclass: #AddInstanceVariableChange
+Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddInstanceVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddInstanceVariableChange guid: (GUID fromString: '{b6ad3820-2921-48e3-abf0-439da4482d55}')!
-AddInstanceVariableChange comment: ''!
-!AddInstanceVariableChange categoriesForClass!Refactory-Change Objects! !
-!AddInstanceVariableChange methodsFor!
+Refactory.Browser.AddInstanceVariableChange guid: (Core.GUID fromString: '{b6ad3820-2921-48e3-abf0-439da4482d55}')!
+Refactory.Browser.AddInstanceVariableChange comment: ''!
+!Refactory.Browser.AddInstanceVariableChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.AddInstanceVariableChange methodsFor!
 
 asUndoOperation
 	^RemoveInstanceVariableChange remove: variable from: self changeClass!
@@ -27,8 +27,8 @@ printOn: aStream
 		nextPutAll: ' addInstVarNamed: ';
 		nextPutAll: variable;
 		nextPut: $!!! !
-!AddInstanceVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!AddInstanceVariableChange categoriesFor: #changeString!printing!public! !
-!AddInstanceVariableChange categoriesFor: #changeSymbol!private! !
-!AddInstanceVariableChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeSymbol!private! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #printOn:!printing!public! !
 

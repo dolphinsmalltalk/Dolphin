@@ -1,36 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #InlineMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineMethodTest guid: (GUID fromString: '{f70132aa-f38c-4f5d-ad58-1801c2c8f8b1}')!
-InlineMethodTest comment: ''!
-!InlineMethodTest categoriesForClass!Refactory-Testing! !
-!InlineMethodTest methodsFor!
+Refactory.Browser.Tests.InlineMethodTest guid: (Core.GUID fromString: '{f70132aa-f38c-4f5d-ad58-1801c2c8f8b1}')!
+Refactory.Browser.Tests.InlineMethodTest comment: ''!
+!Refactory.Browser.Tests.InlineMethodTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.InlineMethodTest methodsFor!
 
 testBadInterval
 	self
-		shouldFail: (InlineMethodRefactoring 
-					inline: (self convertInterval: (13 to: 23)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (InlineMethodRefactoring
+					inline: (self convertInterval: (13 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp);
-		shouldFail: (InlineMethodRefactoring 
-					inline: (self convertInterval: (14 to: 17)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (InlineMethodRefactoring
+					inline: (self convertInterval: (14 to: 17) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp);
-		shouldFail: (InlineMethodRefactoring 
-					inline: (self convertInterval: (24 to: 30)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (InlineMethodRefactoring
+					inline: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp);
-		shouldFail: (InlineMethodRefactoring 
-					inline: (self convertInterval: (1 to: 30)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (InlineMethodRefactoring
+					inline: (self convertInterval: (1 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp)!
 
@@ -42,7 +38,7 @@ testInlineMethod
 				inMethod: #sentNotImplementedInApplication
 				forClass: BasicLintRuleTest class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model metaclassNamed: #BasicLintRuleTest)
+	self assert: ((refactoring model metaclassNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
 				parseTreeFor: #sentNotImplementedInApplication)
 		equals: (RBParser
 				parseMethod: 'sentNotImplementedInApplication
@@ -92,7 +88,8 @@ testInlineMethod1
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #caller)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #caller)
 		equals: (RBParser
 				parseMethod: 'caller 
 									| anObject anObject1 | 
@@ -111,7 +108,8 @@ testInlineMethod2
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #caller1)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #caller1)
 		equals: (RBParser
 				parseMethod: 'caller1 
 								| anObject each1 anObject1 | 
@@ -131,7 +129,8 @@ testInlineMethod3
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #caller2)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #caller2)
 		equals: (RBParser
 				parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')!
@@ -144,7 +143,8 @@ testInlineMethod4
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineJunk)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #inlineJunk)
 		equals: (RBParser
 				parseMethod: 'inlineJunk
 										| asdf bar1 baz1 asdf1 |
@@ -169,14 +169,15 @@ testInlineMethod5
 				inMethod: #inlineLast
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineLast)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #inlineLast)
 		equals: (RBParser
 				parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
 
 testInlineMethodForSuperSend
 	| refactoring |
-	model := Compiler evaluate: (self readFile: 'InlineMethodTest.st').
+	model := [Compiler evaluate: (self readFile: 'InlineMethodTest.st')] on: CompilerErrorNotification do: [:ex | self fail: ex description].
 	(model classNamed: #RenameVariableChange) removeMethod: #executeNotifying:.
 	refactoring := InlineMethodRefactoring
 				model: model
@@ -201,10 +202,10 @@ testInlineMethodForSuperSend
 testInlineMethodForSuperSendThatAlsoSendsSuper
 	| refactoring |
 	model := Compiler evaluate: (self readFile: 'InlineMethodTest.st').
-	refactoring := InlineMethodRefactoring 
+	refactoring := InlineMethodRefactoring
 				inline: (102 to: 131)
 				inMethod: #executeNotifying:
-				forClass: (model classNamed: #RenameInstanceVariableChange).
+				forClass: (model classNamed: #'Refactory.Browser.RenameInstanceVariableChange').
 	self shouldFail: refactoring!
 
 testInlineRecursiveCascadedMethod
@@ -214,7 +215,8 @@ testInlineRecursiveCascadedMethod
 				inMethod: #inlineMethod
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineMethod)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #inlineMethod)
 		equals: (RBParser
 				parseMethod: 'inlineMethod
 									| temp temp1 |
@@ -225,7 +227,7 @@ testInlineRecursiveCascadedMethod
 
 testModelInlineRecursiveMethod
 	| refactoring class |
-	class := model classNamed: #Object.
+	class := model classNamed: #'Core.Object'.
 	class compile: 'foo self bar. self foo. self bar' classified: #(#accessing).
 	refactoring := InlineMethodRefactoring
 				model: model
@@ -237,44 +239,42 @@ testModelInlineRecursiveMethod
 		equals: (RBParser parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')!
 
 testNonExistantSelector
-	self shouldFail: (InlineMethodRefactoring 
+	self shouldFail: (InlineMethodRefactoring
 				inline: (14 to: 17)
 				inMethod: #checkClass1:
 				forClass: RefactoryTestDataApp)!
 
 testOverriden
-	self shouldWarn: (InlineMethodRefactoring 
-				inline: (self convertInterval: (15 to: 26)
-						for: (LintRuleTest sourceCodeAt: #failedRules))
+	self shouldWarn: (InlineMethodRefactoring
+				inline: (self convertInterval: (15 to: 26) for: (LintRuleTest sourceCodeAt: #failedRules))
 				inMethod: #failedRules
 				forClass: LintRuleTest)!
 
 testPrimitive
-	self shouldFail: (InlineMethodRefactoring 
-				inline: (self convertInterval: (14 to: 23)
-						for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+	self shouldFail: (InlineMethodRefactoring
+				inline: (self convertInterval: (14 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				inMethod: #testMethod
 				forClass: RefactoryTestDataApp)!
 
 testReturn
-	self shouldFail: (InlineMethodRefactoring 
+	self shouldFail: (InlineMethodRefactoring
 				inline: (self convertInterval: (418 to: 485)
 						for: (BasicLintRuleTest class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTest class)! !
-!InlineMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
-!InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
-!InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
-!InlineMethodTest categoriesFor: #testReturn!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testBadInterval!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testReturn!failure tests!public! !
 

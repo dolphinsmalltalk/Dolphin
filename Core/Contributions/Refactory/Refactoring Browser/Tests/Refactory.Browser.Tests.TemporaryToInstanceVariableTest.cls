@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #TemporaryToInstanceVariableTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.TemporaryToInstanceVariableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TemporaryToInstanceVariableTest guid: (GUID fromString: '{92c5ee4b-e4af-4af1-92ed-1a24ab0830bc}')!
-TemporaryToInstanceVariableTest comment: ''!
-!TemporaryToInstanceVariableTest categoriesForClass!Refactory-Testing! !
-!TemporaryToInstanceVariableTest methodsFor!
+Refactory.Browser.Tests.TemporaryToInstanceVariableTest guid: (Core.GUID fromString: '{92c5ee4b-e4af-4af1-92ed-1a24ab0830bc}')!
+Refactory.Browser.Tests.TemporaryToInstanceVariableTest comment: ''!
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest methodsFor!
 
 setUp
 	super setUp.
@@ -17,11 +17,11 @@ setUp
 
 testNonExistantName
 	self
-		shouldFail: (TemporaryToInstanceVariableRefactoring 
+		shouldFail: (TemporaryToInstanceVariableRefactoring
 					class: BasicLintRuleTest
 					selector: #checkClass:
 					variable: 'asdf');
-		shouldFail: (TemporaryToInstanceVariableRefactoring 
+		shouldFail: (TemporaryToInstanceVariableRefactoring
 					class: BasicLintRuleTest
 					selector: #checkClass1:
 					variable: 'aSmalllintContext')!
@@ -29,10 +29,9 @@ testNonExistantName
 testRedefinedTemporary
 	| class |
 	class := model classNamed: #Foo.
-	class 
-		compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
+	class compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
 		classified: #(#accessing).
-	self shouldFail: (TemporaryToInstanceVariableRefactoring 
+	self shouldFail: (TemporaryToInstanceVariableRefactoring
 				class: class
 				selector: #someMethod
 				variable: 'instVarName1')!
@@ -44,7 +43,7 @@ testTemporaryToInstanceVariable
 				selector: #displayName
 				variable: 'nameStream'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #LintRuleTest.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	self assert: (class parseTreeFor: #displayName)
 		equals: (RBParser
 				parseMethod: 'displayName
@@ -56,8 +55,8 @@ testTemporaryToInstanceVariable
 								nameStream nextPut: $).
 								^nameStream contents').
 	self assert: (class directlyDefinesInstanceVariable: 'nameStream')! !
-!TemporaryToInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!TemporaryToInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!TemporaryToInstanceVariableTest categoriesFor: #testRedefinedTemporary!failure tests!public! !
-!TemporaryToInstanceVariableTest categoriesFor: #testTemporaryToInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testRedefinedTemporary!failure tests!public! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testTemporaryToInstanceVariable!public!tests! !
 

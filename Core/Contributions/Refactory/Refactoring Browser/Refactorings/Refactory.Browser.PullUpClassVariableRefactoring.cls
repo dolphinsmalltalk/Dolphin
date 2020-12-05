@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #PullUpClassVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.PullUpClassVariableRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PullUpClassVariableRefactoring guid: (GUID fromString: '{78a67e45-73e9-4f56-b6f1-38e6886593bf}')!
-PullUpClassVariableRefactoring comment: ''!
-!PullUpClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!PullUpClassVariableRefactoring methodsFor!
+Refactory.Browser.PullUpClassVariableRefactoring guid: (Core.GUID fromString: '{78a67e45-73e9-4f56-b6f1-38e6886593bf}')!
+Refactory.Browser.PullUpClassVariableRefactoring comment: ''!
+!Refactory.Browser.PullUpClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.PullUpClassVariableRefactoring methodsFor!
 
 preconditions
 	^(RBCondition isMetaclass: class) not!
@@ -30,7 +30,7 @@ transform
 	subclass := self subclassDefiningVariable.
 	subclass removeClassVariable: variableName.
 	class addClassVariable: variableName! !
-!PullUpClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!accessing!private! !
-!PullUpClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!accessing!private! !
+!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #transform!public!transforming! !
 

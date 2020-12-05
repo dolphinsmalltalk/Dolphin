@@ -1,0 +1,34 @@
+﻿| package |
+package := Package name: 'RBNamespaces'.
+package paxVersion: 2.1;
+	basicComment: 'Define Refactory Browser namespaces'.
+
+
+package setClassNames: #(
+	#{Refactory}
+	#{Refactory.Browser}
+).
+
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.Namespace subclass: #Refactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Core})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory subclass: #'Refactory.Browser'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Kernel private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

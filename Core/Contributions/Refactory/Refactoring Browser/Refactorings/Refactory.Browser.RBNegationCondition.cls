@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBAbstractCondition subclass: #RBNegationCondition
+Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBNegationCondition'
 	instanceVariableNames: 'condition'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBNegationCondition guid: (GUID fromString: '{b9c3d59c-1ad9-483a-91cc-9d03b95a12a6}')!
-RBNegationCondition comment: 'NegationCondition represents negating another condition.
+Refactory.Browser.RBNegationCondition guid: (Core.GUID fromString: '{b9c3d59c-1ad9-483a-91cc-9d03b95a12a6}')!
+Refactory.Browser.RBNegationCondition comment: 'NegationCondition represents negating another condition.
 
 Instance Variables:
 	condition	<AbstractCondition>	the condition that is to be negated'!
-!RBNegationCondition categoriesForClass!Refactory-Conditions! !
-!RBNegationCondition methodsFor!
+!Refactory.Browser.RBNegationCondition categoriesForClass!Refactory-Conditions! !
+!Refactory.Browser.RBNegationCondition methodsFor!
 
 check
 	^condition check not!
@@ -30,15 +30,15 @@ errorStringFor: aBoolean
 printOn: aStream 
 	aStream nextPutAll: 'NOT ';
 		print: condition! !
-!RBNegationCondition categoriesFor: #check!checking!public! !
-!RBNegationCondition categoriesFor: #condition:!initialize/release!public! !
-!RBNegationCondition categoriesFor: #errorBlockFor:!private! !
-!RBNegationCondition categoriesFor: #errorStringFor:!private! !
-!RBNegationCondition categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBNegationCondition categoriesFor: #check!checking!public! !
+!Refactory.Browser.RBNegationCondition categoriesFor: #condition:!initialize/release!public! !
+!Refactory.Browser.RBNegationCondition categoriesFor: #errorBlockFor:!private! !
+!Refactory.Browser.RBNegationCondition categoriesFor: #errorStringFor:!private! !
+!Refactory.Browser.RBNegationCondition categoriesFor: #printOn:!printing!public! !
 
-!RBNegationCondition class methodsFor!
+!Refactory.Browser.RBNegationCondition class methodsFor!
 
 on: aCondition
 	^self new condition: aCondition! !
-!RBNegationCondition class categoriesFor: #on:!instance creation!public! !
+!Refactory.Browser.RBNegationCondition class categoriesFor: #on:!instance creation!public! !
 

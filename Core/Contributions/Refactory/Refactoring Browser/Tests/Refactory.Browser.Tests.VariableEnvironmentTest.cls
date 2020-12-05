@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentTest subclass: #VariableEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.VariableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VariableEnvironmentTest guid: (GUID fromString: '{dd03c304-e6e0-47f2-8f26-e7eef49d29bc}')!
-VariableEnvironmentTest comment: ''!
-!VariableEnvironmentTest categoriesForClass!Refactory-Testing! !
-!VariableEnvironmentTest methodsFor!
+Refactory.Browser.Tests.VariableEnvironmentTest guid: (Core.GUID fromString: '{dd03c304-e6e0-47f2-8f26-e7eef49d29bc}')!
+Refactory.Browser.Tests.VariableEnvironmentTest comment: ''!
+!Refactory.Browser.Tests.VariableEnvironmentTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.VariableEnvironmentTest methodsFor!
 
 testAddRemove
 	| refs |
@@ -42,6 +42,6 @@ testInstVars
 	self universalTestFor: writers.
 	self universalTestFor: readers.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
-!VariableEnvironmentTest categoriesFor: #testAddRemove!public!tests! !
-!VariableEnvironmentTest categoriesFor: #testInstVars!public!tests! !
+!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #testAddRemove!public!tests! !
+!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #testInstVars!public!tests! !
 

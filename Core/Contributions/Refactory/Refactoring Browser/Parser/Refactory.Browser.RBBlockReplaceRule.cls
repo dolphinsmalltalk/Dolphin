@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBReplaceRule subclass: #RBBlockReplaceRule
+Refactory.Browser.RBReplaceRule subclass: #'Refactory.Browser.RBBlockReplaceRule'
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBBlockReplaceRule guid: (GUID fromString: '{66d568a6-5f15-4871-8f69-3a2ced82706f}')!
-RBBlockReplaceRule comment: ''!
-!RBBlockReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
-!RBBlockReplaceRule methodsFor!
+Refactory.Browser.RBBlockReplaceRule guid: (Core.GUID fromString: '{66d568a6-5f15-4871-8f69-3a2ced82706f}')!
+Refactory.Browser.RBBlockReplaceRule comment: ''!
+!Refactory.Browser.RBBlockReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.RBBlockReplaceRule methodsFor!
 
 foundMatchFor: aProgramNode 
 	| newNode |
@@ -44,16 +44,16 @@ searchForTree: aBRProgramNode replaceWith: aBlock
 searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock 
 	self searchForTree: aBRProgramNode replaceWith: replBlock.
 	verificationBlock := verifyBlock! !
-!RBBlockReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBBlockReplaceRule categoriesFor: #initialize!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:when:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:when:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:when:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:when:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:when:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:!initialize/release!public! !
+!Refactory.Browser.RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:when:!initialize/release!public! !
 
-!RBBlockReplaceRule class methodsFor!
+!Refactory.Browser.RBBlockReplaceRule class methodsFor!
 
 searchFor: searchString replaceWith: replaceBlock 
 	^self new searchFor: searchString replaceWith: replaceBlock!
@@ -81,10 +81,10 @@ searchForTree: aRBProgramNode replaceWith: replaceBlock when: aBlock
 		searchForTree: aRBProgramNode
 		replaceWith: replaceBlock
 		when: aBlock! !
-!RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:when:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:when:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:when:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:when:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:when:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:!instance creation!public! !
+!Refactory.Browser.RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:when:!instance creation!public! !
 

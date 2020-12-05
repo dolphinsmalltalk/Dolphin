@@ -1,33 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #RemoveParameterTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveParameterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveParameterTest guid: (GUID fromString: '{e5ff0a30-1644-4902-8240-701881d750fe}')!
-RemoveParameterTest comment: ''!
-!RemoveParameterTest categoriesForClass!Refactory-Testing! !
-!RemoveParameterTest methodsFor!
+Refactory.Browser.Tests.RemoveParameterTest guid: (Core.GUID fromString: '{e5ff0a30-1644-4902-8240-701881d750fe}')!
+Refactory.Browser.Tests.RemoveParameterTest comment: ''!
+!Refactory.Browser.Tests.RemoveParameterTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RemoveParameterTest methodsFor!
 
 testNonExistantName
 	self
-		shouldFail: (RemoveParameterRefactoring 
+		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'asdf'
 					in: BasicLintRuleTest
 					selector: #checkClass:);
-		shouldFail: (RemoveParameterRefactoring 
+		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'aSmalllintContext'
 					in: BasicLintRuleTest
 					selector: #checkClass1:)!
 
 testPrimitiveMethods
 	| refactoring |
-	(model classNamed: #Object) 
-		compile: 'foo123: a <primitive: 100> ^#() primitiveFailed'
+	(model classNamed: #'Core.Object') compile: 'foo123: a <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
-	refactoring := RemoveParameterRefactoring 
+	refactoring := RemoveParameterRefactoring
 				model: model
 				removeParameter: 'a'
 				in: Object
@@ -41,7 +40,7 @@ testRemoveParameter
 				in: RefactoryTestDataApp
 				selector: ('rename' , 'ThisMethod:') asSymbol.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RefactoryTestDataApp.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #renameThisMethod)
 		equals: (RBParser parseMethod: 'renameThisMethod
 								^self').
@@ -49,7 +48,7 @@ testRemoveParameter
 		equals: (RBParser parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
-!RemoveParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RemoveParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
-!RemoveParameterTest categoriesFor: #testRemoveParameter!public!tests! !
+!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
+!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testRemoveParameter!public!tests! !
 

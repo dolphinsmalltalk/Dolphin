@@ -1,31 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #ExtractToTemporaryTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractToTemporaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractToTemporaryTest guid: (GUID fromString: '{1e11f73f-781c-4123-b98b-51d3251e5ae5}')!
-ExtractToTemporaryTest comment: ''!
-!ExtractToTemporaryTest categoriesForClass!Refactory-Testing! !
-!ExtractToTemporaryTest methodsFor!
+Refactory.Browser.Tests.ExtractToTemporaryTest guid: (Core.GUID fromString: '{1e11f73f-781c-4123-b98b-51d3251e5ae5}')!
+Refactory.Browser.Tests.ExtractToTemporaryTest comment: ''!
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest methodsFor!
 
 testBadInterval
 	self
-		shouldFail: (ExtractToTemporaryRefactoring 
-					extract: (self convertInterval: (24 to: 30)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail: (ExtractToTemporaryRefactoring
+					extract: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					to: 'asdf'
 					from: #testMethod
 					in: RefactoryTestDataApp);
-		shouldFail: (ExtractToTemporaryRefactoring 
-					extract: (self convertInterval: (14 to: 105)
-							for: (RefactoryTestDataApp sourceCodeAt: #testMethod1))
+		shouldFail: (ExtractToTemporaryRefactoring
+					extract: (self convertInterval: (14 to: 105) for: (RefactoryTestDataApp sourceCodeAt: #testMethod1))
 					to: 'asdf'
 					from: #testMethod1
 					in: RefactoryTestDataApp);
-		shouldFail: (ExtractToTemporaryRefactoring 
+		shouldFail: (ExtractToTemporaryRefactoring
 					extract: (self convertInterval: (61 to: 101)
 							for: (RefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
 					to: 'asdf'
@@ -33,9 +31,8 @@ testBadInterval
 					in: RefactoryTestDataApp)!
 
 testBadName
-	self shouldFail: (ExtractToTemporaryRefactoring 
-				extract: (self convertInterval: (14 to: 23)
-						for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
+	self shouldFail: (ExtractToTemporaryRefactoring
+				extract: (self convertInterval: (14 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				to: 'a sdf'
 				from: #testMethod
 				in: RefactoryTestDataApp)!
@@ -48,7 +45,8 @@ testExtractToTemporaryForLastStatementInBlock
 				from: #caller2
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #caller2)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #caller2)
 		equals: (RBParser
 				parseMethod: 'caller2
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')!
@@ -62,7 +60,8 @@ testExtractToTemporaryInsideBlock
 				from: #noMoveDefinition
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #noMoveDefinition)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+				parseTreeFor: #noMoveDefinition)
 		equals: (RBParser
 				parseMethod: 'noMoveDefinition
 	| temp |
@@ -73,14 +72,14 @@ testExtractToTemporaryInsideBlock
 		select: [:each | | asdf | asdf := each size. temp := asdf + temp]')!
 
 testNonExistantSelector
-	self shouldFail: (ExtractToTemporaryRefactoring 
+	self shouldFail: (ExtractToTemporaryRefactoring
 				extract: (14 to: 23)
 				to: 'asdf'
 				from: #checkClass1:
 				in: RefactoryTestDataApp)! !
-!ExtractToTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
-!ExtractToTemporaryTest categoriesFor: #testBadName!failure tests!public! !
-!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryForLastStatementInBlock!public!tests! !
-!ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryInsideBlock!public!tests! !
-!ExtractToTemporaryTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testBadName!failure tests!public! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryForLastStatementInBlock!public!tests! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryInsideBlock!public!tests! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testNonExistantSelector!failure tests!public! !
 

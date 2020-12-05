@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RenameVariableChange subclass: #RenameClassVariableChange
+Refactory.Browser.RenameVariableChange subclass: #'Refactory.Browser.RenameClassVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameClassVariableChange guid: (GUID fromString: '{54e09d9c-6f1f-4089-840b-a583b258afac}')!
-RenameClassVariableChange comment: ''!
-!RenameClassVariableChange categoriesForClass!Refactory-Change Objects! !
-!RenameClassVariableChange methodsFor!
+Refactory.Browser.RenameClassVariableChange guid: (Core.GUID fromString: '{54e09d9c-6f1f-4089-840b-a583b258afac}')!
+Refactory.Browser.RenameClassVariableChange comment: ''!
+!Refactory.Browser.RenameClassVariableChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RenameClassVariableChange methodsFor!
 
 renameVariable
 	#rbFix.	"Added to implement this change as a rename, rather than an add, copy value, remove sequence"
 	self changeClass renameClassVar: oldName to: newName! !
-!RenameClassVariableChange categoriesFor: #renameVariable!private! !
+!Refactory.Browser.RenameClassVariableChange categoriesFor: #renameVariable!private! !
 

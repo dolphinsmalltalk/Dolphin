@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AddMethodChange subclass: #DolphinAddMethodChange
+Refactory.Browser.AddMethodChange subclass: #'Refactory.Browser.DolphinAddMethodChange'
 	instanceVariableNames: 'packageName compilationFlags method'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinAddMethodChange guid: (GUID fromString: '{13f8e696-5138-421f-be85-426d5a1a603d}')!
-DolphinAddMethodChange comment: 'DolphinAddMethodChange is a specialised AddMethodChange object that overrides the latters behaviour to support Dolphin''s different compiler interface, to maintain Dolphin''s multiple categories, and to maintain the package of loose methods.'!
-!DolphinAddMethodChange categoriesForClass!Unclassified! !
-!DolphinAddMethodChange methodsFor!
+Refactory.Browser.DolphinAddMethodChange guid: (Core.GUID fromString: '{13f8e696-5138-421f-be85-426d5a1a603d}')!
+Refactory.Browser.DolphinAddMethodChange comment: 'DolphinAddMethodChange is a specialised AddMethodChange object that overrides the latters behaviour to support Dolphin''s different compiler interface, to maintain Dolphin''s multiple categories, and to maintain the package of loose methods.'!
+!Refactory.Browser.DolphinAddMethodChange categoriesForClass!Unclassified! !
+!Refactory.Browser.DolphinAddMethodChange methodsFor!
 
 categories
 	^protocols collect: [:each | each asMethodCategory]!
@@ -37,8 +37,7 @@ compilationFlags: anInteger
 	compilationFlags := anInteger!
 
 currentProtocols
-	^BrowserEnvironment new whichProtocolsInclude: self selector
-		in: self changeClass!
+	^BrowserEnvironment new whichProtocolsInclude: self selector in: self changeClass!
 
 method
 	"Answer the method resulting from the change. This will be nil if the change has not been
@@ -47,8 +46,7 @@ method
 	^method!
 
 package
-	^packageName isNil 
-		ifFalse: [Package manager packageNamed: packageName ifNone: []]!
+	^packageName isNil ifFalse: [Package manager packageNamed: packageName ifNone: []]!
 
 package: aPackage 
 	packageName := aPackage isNil ifFalse: [aPackage name]!
@@ -68,21 +66,21 @@ rememberCurrentPackage
 
 source
 	^source! !
-!DolphinAddMethodChange categoriesFor: #categories!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #changeString!printing!public! !
-!DolphinAddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
-!DolphinAddMethodChange categoriesFor: #class:source:!initialize/release!public! !
-!DolphinAddMethodChange categoriesFor: #compilationFlags!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #compilationFlags:!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #currentProtocols!converting!public! !
-!DolphinAddMethodChange categoriesFor: #method!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #package!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #package:!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!DolphinAddMethodChange categoriesFor: #rememberCurrentPackage!accessing!private! !
-!DolphinAddMethodChange categoriesFor: #source!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #categories!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #class:source:!initialize/release!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #compilationFlags!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #compilationFlags:!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #currentProtocols!converting!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #method!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #package!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #package:!accessing!public! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #primitiveExecute!operations!private! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #rememberCurrentPackage!accessing!private! !
+!Refactory.Browser.DolphinAddMethodChange categoriesFor: #source!accessing!public! !
 
-!DolphinAddMethodChange class methodsFor!
+!Refactory.Browser.DolphinAddMethodChange class methodsFor!
 
 compile: aString in: aClass 
 	^self new class: aClass source: aString!
@@ -104,7 +102,7 @@ compile: aString in: aClass categories: aSequenceableCollection package: aPackag
 		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
 	change package: aPackage.
 	^change! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:categories:!instance creation!public! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:categories:package:!instance creation!public! !
+!Refactory.Browser.DolphinAddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
+!Refactory.Browser.DolphinAddMethodChange class categoriesFor: #compile:in:categories:!instance creation!public! !
+!Refactory.Browser.DolphinAddMethodChange class categoriesFor: #compile:in:categories:package:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #AndEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.AndEnvironment'
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AndEnvironment guid: (GUID fromString: '{43ed7adb-6481-4a93-8ebe-b0861fc1ac52}')!
-AndEnvironment comment: ''!
-!AndEnvironment categoriesForClass!Refactory-Environments! !
-!AndEnvironment methodsFor!
+Refactory.Browser.AndEnvironment guid: (Core.GUID fromString: '{43ed7adb-6481-4a93-8ebe-b0861fc1ac52}')!
+Refactory.Browser.AndEnvironment comment: ''!
+!Refactory.Browser.AndEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.AndEnvironment methodsFor!
 
 andedEnvironment
 	^andedEnvironment!
@@ -73,24 +73,24 @@ storeOn: aStream
 	aStream nextPutAll: ' & '.
 	andedEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!AndEnvironment categoriesFor: #andedEnvironment!accessing!private! !
-!AndEnvironment categoriesFor: #andedEnvironment:!initialize/release!public! !
-!AndEnvironment categoriesFor: #classesDo:!accessing!public! !
-!AndEnvironment categoriesFor: #definesClass:!public!testing! !
-!AndEnvironment categoriesFor: #includesCategory:!public! !
-!AndEnvironment categoriesFor: #includesClass:!public!testing! !
-!AndEnvironment categoriesFor: #includesProtocol:in:!public! !
-!AndEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!AndEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!AndEnvironment categoriesFor: #problemCount!accessing!public! !
-!AndEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!AndEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #andedEnvironment!accessing!private! !
+!Refactory.Browser.AndEnvironment categoriesFor: #andedEnvironment:!initialize/release!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #classesDo:!accessing!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.AndEnvironment categoriesFor: #includesCategory:!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.AndEnvironment categoriesFor: #includesProtocol:in:!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.AndEnvironment categoriesFor: #numberSelectors!accessing!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
+!Refactory.Browser.AndEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!AndEnvironment class methodsFor!
+!Refactory.Browser.AndEnvironment class methodsFor!
 
 onEnvironment: anEnvironment and: anotherEnvironment 
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself! !
-!AndEnvironment class categoriesFor: #onEnvironment:and:!instance creation!public! !
+!Refactory.Browser.AndEnvironment class categoriesFor: #onEnvironment:and:!instance creation!public! !
 

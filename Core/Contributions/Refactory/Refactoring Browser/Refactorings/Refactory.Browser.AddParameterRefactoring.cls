@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ChangeMethodNameRefactoring subclass: #AddParameterRefactoring
+Refactory.Browser.ChangeMethodNameRefactoring subclass: #'Refactory.Browser.AddParameterRefactoring'
 	instanceVariableNames: 'initializer senders'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddParameterRefactoring guid: (GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
-AddParameterRefactoring comment: ''!
-!AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !
-!AddParameterRefactoring methodsFor!
+Refactory.Browser.AddParameterRefactoring guid: (Core.GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
+Refactory.Browser.AddParameterRefactoring comment: ''!
+!Refactory.Browser.AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AddParameterRefactoring methodsFor!
 
 addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init 
 	self 
@@ -29,12 +29,12 @@ checkSendersAccessTo: name
 			[self refactoringError: ('<1s> doesn''t appear to be defined in <2p>' expandMacrosWith: name
 						with: violatorClass)]!
 
-checkVariableReferencesIn: aParseTree 
+checkVariableReferencesIn: aParseTree
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: '`var'
 		do: 
-			[:aNode :answer | 
+			[:aNode :answer |
 			| name |
 			name := aNode name.
 			(aNode whoDefines: name) isNil ifTrue: [self checkSendersAccessTo: name]].
@@ -63,9 +63,9 @@ newSelectorString
 	keywords := newSelector keywords.
 	1 to: keywords size
 		do: 
-			[:i | 
+			[:i |
 			stream nextPutAll: (keywords at: i).
-			i == keywords size 
+			i == keywords size
 				ifTrue: 
 					[stream
 						nextPut: $(;
@@ -75,7 +75,7 @@ newSelectorString
 					[stream
 						nextPutAll: ' ``@arg';
 						print: i].
-			stream nextPut: $ ].
+			stream nextPut: $\x20].
 	^stream contents!
 
 parseTreeRewriter
@@ -83,8 +83,7 @@ parseTreeRewriter
 	rewriteRule := ParseTreeRewriter new.
 	oldString := self buildSelectorString: oldSelector.
 	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
+	rewriteRule replace: '``@object ' , oldString with: '``@object ' , newString.
 	^rewriteRule!
 
 safeVariableNameFor: aClass temporaries: allTempVars 
@@ -98,11 +97,10 @@ safeVariableNameFor: aClass temporaries: allTempVars
 	^newString!
 
 senders
-	senders isNil 
+	senders isNil
 		ifTrue: 
 			[senders := Set new.
-			self model allReferencesTo: oldSelector
-				do: [:each | senders add: each modelClass]].
+			self model allReferencesTo: oldSelector do: [:each | senders add: each modelClass]].
 	^senders!
 
 storeOn: aStream 
@@ -120,9 +118,9 @@ storeOn: aStream
 		nextPutAll: initializer;
 		nextPutAll: ''')'!
 
-suggestedVariableNameIn: aClass 
+suggestedVariableNameIn: aClass
 	#rbFix.	"Added to generate a type specific parameter name based on the initializer rather than always using 'anObject'"
-	^([Compiler evaluate: initializer] on: Error do: [:ex | nil]) 
+	^([Compiler evaluate: initializer] on: Error do: [:ex | nil])
 		ifNil: ['anObject']
 		ifNotNil: [:init | Smalltalk developmentSystem nameForArgument: init]!
 
@@ -137,20 +135,20 @@ verifyInitializationExpression
 			[self 
 				refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
-!AddParameterRefactoring categoriesFor: #addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
-!AddParameterRefactoring categoriesFor: #checkSendersAccessTo:!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #checkVariableReferencesIn:!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!private! !
-!AddParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #newSelectorString!private! !
-!AddParameterRefactoring categoriesFor: #parseTreeRewriter!private! !
-!AddParameterRefactoring categoriesFor: #safeVariableNameFor:temporaries:!private! !
-!AddParameterRefactoring categoriesFor: #senders!private! !
-!AddParameterRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddParameterRefactoring categoriesFor: #suggestedVariableNameIn:!private! !
-!AddParameterRefactoring categoriesFor: #verifyInitializationExpression!preconditions!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #checkSendersAccessTo:!preconditions!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #checkVariableReferencesIn:!preconditions!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #newSelectorString!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #parseTreeRewriter!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #safeVariableNameFor:temporaries:!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #senders!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #suggestedVariableNameIn:!private! !
+!Refactory.Browser.AddParameterRefactoring categoriesFor: #verifyInitializationExpression!preconditions!public! !
 
-!AddParameterRefactoring class methodsFor!
+!Refactory.Browser.AddParameterRefactoring class methodsFor!
 
 addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init 
 	^self new addParameterToMethod: aSelector
@@ -166,6 +164,6 @@ model: aRBNamespace addParameterToMethod: aSelector in: aClass newSelector: newS
 			newSelector: newSelector
 			initializer: init;
 		yourself! !
-!AddParameterRefactoring class categoriesFor: #addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
-!AddParameterRefactoring class categoriesFor: #model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!Refactory.Browser.AddParameterRefactoring class categoriesFor: #addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!Refactory.Browser.AddParameterRefactoring class categoriesFor: #model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
 

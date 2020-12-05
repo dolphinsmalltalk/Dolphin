@@ -1,47 +1,48 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryChange subclass: #RefactoryClassChange
-	instanceVariableNames: 'className isMeta'
+Refactory.Browser.RefactoryChange subclass: #'Refactory.Browser.RefactoryClassChange'
+	instanceVariableNames: 'classReference'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoryClassChange guid: (GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
-RefactoryClassChange isAbstract: true!
-RefactoryClassChange comment: ''!
-!RefactoryClassChange categoriesForClass!Refactory-Change Objects! !
-!RefactoryClassChange methodsFor!
+Refactory.Browser.RefactoryClassChange guid: (Core.GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
+Refactory.Browser.RefactoryClassChange isNonInstantiable: true!
+Refactory.Browser.RefactoryClassChange comment: ''!
+!Refactory.Browser.RefactoryClassChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.RefactoryClassChange methodsFor!
 
 = aRefactoryClassChange 
 	self class = aRefactoryClassChange class ifFalse: [^false].
-	^className = aRefactoryClassChange changeClassName 
-		and: [isMeta = aRefactoryClassChange isMeta]!
+	^classReference = aRefactoryClassChange classReference!
 
 asUndoOperation
 	^self subclassResponsibility!
 
 changeClass
-	^self changeClassName asQualifiedReference valueOrNil
-		ifNotNil: [:class | isMeta ifTrue: [class class] ifFalse: [class]]!
+	^classReference valueOrNil!
 
-changeClass: aBehavior 
-	isMeta := aBehavior isMeta.
-	className := aBehavior instanceClass name!
+changeClass: aBehavior
+	classReference := aBehavior fullyQualifiedReference!
 
 changeClassName
-	^className!
+	^classReference instance asString!
 
 changeClassName: aSymbol 
-	className := aSymbol.
-	isMeta isNil ifTrue: [isMeta := false]!
+	| wasMeta |
+	wasMeta := classReference notNil and: [classReference isMeta].
+	classReference := BindingReference pathString: aSymbol.
+	wasMeta ifTrue: [classReference := classReference meta]
+!
 
 changeString
 	^self displayClassName!
 
+classReference
+	^classReference!
+
 displayClassName
-	^isMeta 
-		ifTrue: [self changeClassName , ' class']
-		ifFalse: [self changeClassName asString]!
+	^classReference asString!
 
 executeNotifying: aBlock 
 	| undo |
@@ -52,10 +53,10 @@ executeNotifying: aBlock
 	^undo!
 
 hash
-	^self changeClassName hash!
+	^classReference hash!
 
 isMeta
-	^isMeta!
+	^classReference isMeta!
 
 methodSourceFor: aSymbol 
 	(self changeClass includesSelector: aSymbol) ifFalse: [^nil].
@@ -68,25 +69,26 @@ printOn: aStream
 	aStream nextPutAll: self displayString!
 
 renameChangesForClass: aClassName to: newClassName 
-	self changeClassName == aClassName 
+	self changeClassName = aClassName 
 		ifTrue: 
 			[^(self copy)
 				changeClassName: newClassName;
 				yourself].
 	^self! !
-!RefactoryClassChange categoriesFor: #=!comparing!public! !
-!RefactoryClassChange categoriesFor: #asUndoOperation!converting!public! !
-!RefactoryClassChange categoriesFor: #changeClass!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClass:!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClassName!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClassName:!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeString!printing!public! !
-!RefactoryClassChange categoriesFor: #displayClassName!printing!public! !
-!RefactoryClassChange categoriesFor: #executeNotifying:!private! !
-!RefactoryClassChange categoriesFor: #hash!comparing!public! !
-!RefactoryClassChange categoriesFor: #isMeta!private! !
-!RefactoryClassChange categoriesFor: #methodSourceFor:!accessing!public! !
-!RefactoryClassChange categoriesFor: #primitiveExecute!private! !
-!RefactoryClassChange categoriesFor: #printOn:!printing!public! !
-!RefactoryClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClass!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClass:!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClassName!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClassName:!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #classReference!accessing!private! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #displayClassName!printing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #executeNotifying:!private! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #isMeta!private! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #methodSourceFor:!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #primitiveExecute!private! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
 

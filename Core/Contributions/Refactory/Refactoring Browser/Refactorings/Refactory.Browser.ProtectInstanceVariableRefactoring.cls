@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #ProtectInstanceVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.ProtectInstanceVariableRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectInstanceVariableRefactoring guid: (GUID fromString: '{5175a912-5f59-47e5-ab30-66893c7043e5}')!
-ProtectInstanceVariableRefactoring comment: ''!
-!ProtectInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!ProtectInstanceVariableRefactoring methodsFor!
+Refactory.Browser.ProtectInstanceVariableRefactoring guid: (Core.GUID fromString: '{5175a912-5f59-47e5-ab30-66893c7043e5}')!
+Refactory.Browser.ProtectInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.ProtectInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring methodsFor!
 
 getterSetterMethods
 	| matcher |
@@ -31,9 +31,9 @@ getterSetterMethods
 				using: matcher].
 	^matcher answer!
 
-inline: aSelector 
+inline: aSelector
 	self onError: 
-			[self performComponentRefactoring: (InlineAllSendersRefactoring 
+			[self performComponentRefactoring: (InlineAllSendersRefactoring
 						model: self model
 						sendersOf: aSelector
 						in: class)]
@@ -45,8 +45,8 @@ preconditions
 transform
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]! !
-!ProtectInstanceVariableRefactoring categoriesFor: #getterSetterMethods!accessing!private! !
-!ProtectInstanceVariableRefactoring categoriesFor: #inline:!public!transforming! !
-!ProtectInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ProtectInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring categoriesFor: #getterSetterMethods!accessing!private! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring categoriesFor: #inline:!public!transforming! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 

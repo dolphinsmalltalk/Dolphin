@@ -1,42 +1,42 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryClassChange subclass: #AddMethodChange
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
 	instanceVariableNames: 'source selector protocols'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddMethodChange guid: (GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
-AddMethodChange isAbstract: true!
-AddMethodChange comment: ''!
-!AddMethodChange categoriesForClass!Refactory-Change Objects! !
-!AddMethodChange methodsFor!
+Refactory.Browser.AddMethodChange guid: (Core.GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
+Refactory.Browser.AddMethodChange isNonInstantiable: true!
+Refactory.Browser.AddMethodChange comment: ''!
+!Refactory.Browser.AddMethodChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.AddMethodChange methodsFor!
 
 = anAddMethodChange 
 	super = anAddMethodChange ifFalse: [^false].
 	^self parseTree = anAddMethodChange parseTree!
 
 asUndoOperation
-	^(self changeClass includesSelector: self selector) 
+	^(self changeClass includesSelector: self selector)
 		ifTrue: 
 			[| oldProtocol |
-			#rbFix. "Extract protocol lookup to #currentProtocols"
+			#rbFix.	"Extract protocol lookup to #currentProtocols"
 			oldProtocol := self currentProtocols.
 			oldProtocol isNil ifTrue: [oldProtocol := #accessing].
 			#rbFix.	"Use 'self class' instead of hard ref to AddMethodChange"
-			^self class 
+			^self class
 				compile: (self methodSourceFor: self selector)
 				in: self changeClass
 				classified: oldProtocol]
 		ifFalse: [RemoveMethodChange remove: selector from: self changeClass]!
 
 changeForClass: aSymbol selector: aSelector 
-	^(isMeta not and: [self selector = aSelector and: [className = aSymbol]])
+	^(self selector = aSelector and: [classReference asString = aSymbol])
 		ifTrue: [self]
 		ifFalse: [nil]!
 
 changeForMetaclass: aSymbol selector: aSelector 
-	^(isMeta and: [self selector = aSelector and: [className = aSymbol]])
+	^(self isMeta and: [self selector = aSelector and: [classReference instance asString = aSymbol]])
 		ifTrue: [self]
 		ifFalse: [nil]!
 
@@ -58,7 +58,7 @@ controller
 	^nil!
 
 currentProtocols
-	#rbFix. "Private - Extracted from #class:source:"
+	#rbFix.	"Private - Extracted from #class:source:"
 	^BrowserEnvironment new whichProtocolIncludes: self selector in: self changeClass!
 
 hash
@@ -98,25 +98,25 @@ selector
 			[selector := RBParser parseMethodPattern: source.
 			selector isNil ifTrue: [selector := #unknown]].
 	^selector! !
-!AddMethodChange categoriesFor: #=!comparing!public! !
-!AddMethodChange categoriesFor: #asUndoOperation!converting!public! !
-!AddMethodChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!AddMethodChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!AddMethodChange categoriesFor: #changeString!printing!public! !
-!AddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
-!AddMethodChange categoriesFor: #class:source:!initialize/release!public! !
-!AddMethodChange categoriesFor: #controller!accessing!private! !
-!AddMethodChange categoriesFor: #currentProtocols!helpers!private! !
-!AddMethodChange categoriesFor: #hash!comparing!public! !
-!AddMethodChange categoriesFor: #parseTree!helpers!private! !
-!AddMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!AddMethodChange categoriesFor: #printOn:!printing!public! !
-!AddMethodChange categoriesFor: #protocol!accessing!public! !
-!AddMethodChange categoriesFor: #protocols!accessing!public! !
-!AddMethodChange categoriesFor: #protocols:!initialize/release!public! !
-!AddMethodChange categoriesFor: #selector!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #changeForClass:selector:!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #class:source:!initialize/release!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #controller!accessing!private! !
+!Refactory.Browser.AddMethodChange categoriesFor: #currentProtocols!helpers!private! !
+!Refactory.Browser.AddMethodChange categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #parseTree!helpers!private! !
+!Refactory.Browser.AddMethodChange categoriesFor: #primitiveExecute!operations!private! !
+!Refactory.Browser.AddMethodChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #protocol!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #protocols!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #protocols:!initialize/release!public! !
+!Refactory.Browser.AddMethodChange categoriesFor: #selector!accessing!public! !
 
-!AddMethodChange class methodsFor!
+!Refactory.Browser.AddMethodChange class methodsFor!
 
 compile: aString in: aClass 
 	^self new class: aClass source: aString!
@@ -126,6 +126,6 @@ compile: aString in: aBehavior classified: aProtocol
 		class: aBehavior
 		protocol: aProtocol
 		source: aString! !
-!AddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
-!AddMethodChange class categoriesFor: #compile:in:classified:!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:classified:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SmalllintChecker
+Core.Object subclass: #'Refactory.Browser.SmalllintChecker'
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintChecker guid: (GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
-SmalllintChecker comment: ''!
-!SmalllintChecker categoriesForClass!Refactory-Lint! !
-!SmalllintChecker methodsFor!
+Refactory.Browser.SmalllintChecker guid: (Core.GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
+Refactory.Browser.SmalllintChecker comment: ''!
+!Refactory.Browser.SmalllintChecker categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.SmalllintChecker methodsFor!
 
 checkClass: aClass 
 	context selectedClass: aClass.
@@ -50,17 +50,17 @@ run
 			[:aClass | 
 			self checkClass: aClass.
 			self checkMethodsForClass: aClass]! !
-!SmalllintChecker categoriesFor: #checkClass:!private! !
-!SmalllintChecker categoriesFor: #checkMethodsForClass:!private! !
-!SmalllintChecker categoriesFor: #context:!accessing!public! !
-!SmalllintChecker categoriesFor: #environment:!accessing!public! !
-!SmalllintChecker categoriesFor: #initialize!initialize/release!public! !
-!SmalllintChecker categoriesFor: #methodBlock:!accessing!public! !
-!SmalllintChecker categoriesFor: #release!initialize/release!public! !
-!SmalllintChecker categoriesFor: #rule:!accessing!public! !
-!SmalllintChecker categoriesFor: #run!actions!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #checkClass:!private! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #checkMethodsForClass:!private! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #context:!accessing!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #environment:!accessing!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #methodBlock:!accessing!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #release!initialize/release!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #rule:!accessing!public! !
+!Refactory.Browser.SmalllintChecker categoriesFor: #run!actions!public! !
 
-!SmalllintChecker class methodsFor!
+!Refactory.Browser.SmalllintChecker class methodsFor!
 
 new
 	^(super new)
@@ -68,7 +68,7 @@ new
 		yourself!
 
 newWithContext
-	^(self new)
+	^self new
 		context: SmalllintContext new;
 		yourself!
 
@@ -78,7 +78,7 @@ runRule: aLintRule onEnvironment: aBrowserEnvironment
 		environment: aBrowserEnvironment;
 		run.
 	^aLintRule! !
-!SmalllintChecker class categoriesFor: #new!instance creation!public! !
-!SmalllintChecker class categoriesFor: #newWithContext!instance creation!public! !
-!SmalllintChecker class categoriesFor: #runRule:onEnvironment:!instance creation!public! !
+!Refactory.Browser.SmalllintChecker class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.SmalllintChecker class categoriesFor: #newWithContext!instance creation!public! !
+!Refactory.Browser.SmalllintChecker class categoriesFor: #runRule:onEnvironment:!instance creation!public! !
 

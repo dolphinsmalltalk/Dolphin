@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassRefactoring subclass: #AddClassRefactoring
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddClassRefactoring'
 	instanceVariableNames: 'category superclass subclasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddClassRefactoring guid: (GUID fromString: '{3623578c-f5f8-44a8-bafa-679532fa3a9a}')!
-AddClassRefactoring comment: ''!
-!AddClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!AddClassRefactoring methodsFor!
+Refactory.Browser.AddClassRefactoring guid: (Core.GUID fromString: '{3623578c-f5f8-44a8-bafa-679532fa3a9a}')!
+Refactory.Browser.AddClassRefactoring comment: ''!
+!Refactory.Browser.AddClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.AddClassRefactoring methodsFor!
 
 addClass: aName superclass: aClass subclasses: aCollection category: aSymbol 
 	self className: aName.
@@ -26,7 +26,7 @@ definitionMessage
 					[superclass isPointers
 						ifTrue: [superclass isVariable ifTrue: ['variableSubclass'] ifFalse: ['subclass']]
 						ifFalse: ['variableByteSubclass']].
-	^'<1p> <2s>: #<3s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
+	^'<1p> <2s>: <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
 		expandMacrosWith: superclass
 		with: classType
 		with: className
@@ -75,13 +75,13 @@ transform
 	(self model)
 		defineClass: self definitionMessage;
 		reparentClasses: subclasses to: (self model classNamed: className asSymbol)! !
-!AddClassRefactoring categoriesFor: #addClass:superclass:subclasses:category:!initialize/release!public! !
-!AddClassRefactoring categoriesFor: #definitionMessage!public!transforming! !
-!AddClassRefactoring categoriesFor: #preconditions!public! !
-!AddClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddClassRefactoring categoriesFor: #addClass:superclass:subclasses:category:!initialize/release!public! !
+!Refactory.Browser.AddClassRefactoring categoriesFor: #definitionMessage!public!transforming! !
+!Refactory.Browser.AddClassRefactoring categoriesFor: #preconditions!public! !
+!Refactory.Browser.AddClassRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.AddClassRefactoring categoriesFor: #transform!public!transforming! !
 
-!AddClassRefactoring class methodsFor!
+!Refactory.Browser.AddClassRefactoring class methodsFor!
 
 addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
 	^self new
@@ -98,6 +98,6 @@ model: aRBNamespace addClass: aName superclass: aClass subclasses: aCollection c
 			subclasses: aCollection
 			category: aSymbol;
 		yourself! !
-!AddClassRefactoring class categoriesFor: #addClass:superclass:subclasses:category:!instance creation!public! !
-!AddClassRefactoring class categoriesFor: #model:addClass:superclass:subclasses:category:!instance creation!public! !
+!Refactory.Browser.AddClassRefactoring class categoriesFor: #addClass:superclass:subclasses:category:!instance creation!public! !
+!Refactory.Browser.AddClassRefactoring class categoriesFor: #model:addClass:superclass:subclasses:category:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #RBConditionTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RBConditionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBConditionTest guid: (GUID fromString: '{d7c6868f-bf84-4580-b4c0-20abbdcdb10e}')!
-RBConditionTest comment: ''!
-!RBConditionTest categoriesForClass!Refactory-Testing! !
-!RBConditionTest methodsFor!
+Refactory.Browser.Tests.RBConditionTest guid: (Core.GUID fromString: '{d7c6868f-bf84-4580-b4c0-20abbdcdb10e}')!
+Refactory.Browser.Tests.RBConditionTest comment: ''!
+!Refactory.Browser.Tests.RBConditionTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RBConditionTest methodsFor!
 
 testConditions
 	| condition newCondition |
@@ -34,5 +34,5 @@ testConditions
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
 	self assert: (condition & condition) errorString equals: 'false OR false'! !
-!RBConditionTest categoriesFor: #testConditions!public!tests! !
+!Refactory.Browser.Tests.RBConditionTest categoriesFor: #testConditions!public!tests! !
 

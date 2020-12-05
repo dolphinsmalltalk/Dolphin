@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #ExtractToTemporaryRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
 	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExtractToTemporaryRefactoring guid: (GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
-ExtractToTemporaryRefactoring comment: ''!
-!ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
-!ExtractToTemporaryRefactoring methodsFor!
+Refactory.Browser.ExtractToTemporaryRefactoring guid: (Core.GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
+Refactory.Browser.ExtractToTemporaryRefactoring comment: ''!
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ExtractToTemporaryRefactoring methodsFor!
 
 checkVariableName
 	(class whoDefinesInstanceVariable: newVariableName) notNil
@@ -105,19 +105,19 @@ verifySelectedInterval
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !
-!ExtractToTemporaryRefactoring categoriesFor: #checkVariableName!preconditions!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #compileNewMethod!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #constructAssignmentFrom:!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #extract:to:from:in:!initialize/release!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #insertTemporary!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #parseTree!accessing!private! !
-!ExtractToTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #selectedSource!accessing!private! !
-!ExtractToTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #checkVariableName!preconditions!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #compileNewMethod!public!transforming! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #constructAssignmentFrom:!public!transforming! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #extract:to:from:in:!initialize/release!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #insertTemporary!public!transforming! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #parseTree!accessing!private! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #selectedSource!accessing!private! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
 
-!ExtractToTemporaryRefactoring class methodsFor!
+!Refactory.Browser.ExtractToTemporaryRefactoring class methodsFor!
 
 extract: anInterval to: aString from: aSelector in: aClass 
 	^self new 
@@ -134,6 +134,6 @@ model: aRBNamespace extract: anInterval to: aString from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractToTemporaryRefactoring class categoriesFor: #extract:to:from:in:!instance creation!public! !
-!ExtractToTemporaryRefactoring class categoriesFor: #model:extract:to:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesFor: #extract:to:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesFor: #model:extract:to:from:in:!instance creation!public! !
 

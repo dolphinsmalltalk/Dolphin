@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicLintRule subclass: #BlockLintRule
+Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.BlockLintRule'
 	instanceVariableNames: 'classBlock methodBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockLintRule guid: (GUID fromString: '{7468dd67-0d2d-4f26-8882-01746170e78a}')!
-BlockLintRule comment: ''!
-!BlockLintRule categoriesForClass!Refactory-Lint! !
-!BlockLintRule methodsFor!
+Refactory.Browser.BlockLintRule guid: (Core.GUID fromString: '{7468dd67-0d2d-4f26-8882-01746170e78a}')!
+Refactory.Browser.BlockLintRule comment: ''!
+!Refactory.Browser.BlockLintRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.BlockLintRule methodsFor!
 
 checkClass: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result!
@@ -31,16 +31,16 @@ methodBlock: aBlock
 undeclaredVariables
 	"Answer the Dictionary holding undeclared global variables."
 
-	#rbFix. "Dolphin does not support forward refs. to undeclared variables"
+	#rbFix.	"Dolphin does not support forward refs. to undeclared variables"
 	^Dictionary new! !
-!BlockLintRule categoriesFor: #checkClass:!accessing!public! !
-!BlockLintRule categoriesFor: #checkMethod:!accessing!public! !
-!BlockLintRule categoriesFor: #classBlock:!initialize/release!public! !
-!BlockLintRule categoriesFor: #initialize!initialize/release!public! !
-!BlockLintRule categoriesFor: #methodBlock:!initialize/release!public! !
-!BlockLintRule categoriesFor: #undeclaredVariables!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #checkClass:!accessing!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #checkMethod:!accessing!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #classBlock:!initialize/release!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #methodBlock:!initialize/release!public! !
+!Refactory.Browser.BlockLintRule categoriesFor: #undeclaredVariables!public! !
 
-!BlockLintRule class methodsFor!
+!Refactory.Browser.BlockLintRule class methodsFor!
 
 abstractClass
 	| detector subclassResponsibilitySymbol |
@@ -49,10 +49,9 @@ abstractClass
 	detector resultClass: ClassEnvironment.
 	subclassResponsibilitySymbol := 'subclassResponsibility' asSymbol.
 	detector classBlock: 
-			[:context :result | 
-			(context selectedClass whichSelectorsReferTo: subclassResponsibilitySymbol) notEmpty 
-				ifTrue: 
-					[(context uses: context selectedClass) ifTrue: [result addClass: context selectedClass]]].
+			[:context :result |
+			(context selectedClass whichSelectorsReferTo: subclassResponsibilitySymbol) notEmpty
+				ifTrue: [(context uses: context selectedClass) ifTrue: [result addClass: context selectedClass]]].
 	^detector!
 
 addRemoveDependents
@@ -61,15 +60,15 @@ addRemoveDependents
 	detector resultClass: ClassEnvironment.
 	detector name: 'Number of addDependent: messages > removeDependent:'.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| count |
 			count := 0.
 			((Set withAll: (context selectedClass whichSelectorsReferTo: #addDependent:))
 				addAll: (context selectedClass whichSelectorsReferTo: #removeDependent:);
 				yourself) do: 
-						[:sel | 
+						[:sel |
 						(context selectedClass compiledMethodAt: sel) messagesDo: 
-								[:each | 
+								[:each |
 								each == #addDependent: ifTrue: [count := count + 1].
 								each == #removeDependent: ifTrue: [count := count - 1]]].
 			count > 0 ifTrue: [result addClass: context selectedClass]].
@@ -106,11 +105,11 @@ classInstVarNotInitialized
 	detector name: 'Has class instance variables but no initialize method'.
 	detector resultClass: ClassEnvironment.
 	detector classBlock: 
-			[:context :result | 
-			context selectedClass isMeta 
+			[:context :result |
+			context selectedClass isMeta
 				ifTrue: 
-					[(context selectedClass instVarNames notEmpty 
-						and: [(context selectedClass includesSelector: #initialize) not]) 
+					[(context selectedClass instVarNames notEmpty
+						and: [(context selectedClass includesSelector: #initialize) not])
 							ifTrue: [result addClass: context selectedClass]]].
 	^detector!
 
@@ -133,10 +132,10 @@ classNotReferenced
 	detector name: 'Class not referenced'.
 	detector resultClass: ClassEnvironment.
 	detector classBlock: 
-			[:context :result | 
-			(context selectedClass isMeta or: [context selectedClass subclasses notEmpty]) 
+			[:context :result |
+			(context selectedClass isMeta or: [context selectedClass subclasses notEmpty])
 				ifFalse: 
-					[((context uses: context selectedClass) or: [context uses: context selectedClass name]) 
+					[((context uses: context selectedClass) or: [context uses: context selectedClass name])
 						ifFalse: 
 							[result
 								addClass: context selectedClass;
@@ -150,15 +149,13 @@ classShouldNotOverride
 collectionCopyEmpty
 	| detector |
 	detector := self new.
-	detector 
-		name: 'Subclass of collection that has instance variable but doesn''t define copyEmpty:'.
+	detector name: 'Subclass of collection that has instance variable but doesn''t define copyEmpty:'.
 	detector resultClass: ClassEnvironment.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			(context selectedClass isVariable and: 
 					[(context selectedClass includesSelector: #copyEmpty:) not and: 
-							[context selectedClass instVarNames notEmpty 
-								and: [context selectedClass inheritsFrom: Collection]]]) 
+							[context selectedClass instVarNames notEmpty and: [context selectedClass inheritsFrom: Collection]]])
 				ifTrue: [result addClass: context selectedClass]].
 	^detector!
 
@@ -167,28 +164,27 @@ collectionMessagesToExternalObject
 	detector := self new.
 	detector name: 'Sends add:/remove: to external collection'.
 	matcher := ParseTreeSearcher new.
-	matcher matchesAnyOf: (#(#add: #remove: #addAll: #removeAll:) 
+	matcher matchesAnyOf: (#(#add: #remove: #addAll: #removeAll:)
 				collect: [:each | ('(`@Object `@message: `@args) <1s> `@Arg' expandMacrosWith: each) asString])
 		do: 
-			[:aNode :answer | 
-			answer isNil 
+			[:aNode :answer |
+			answer isNil
 				ifTrue: 
-					[((aNode receiver selector copyFrom: 1 to: (aNode receiver selector size min: 2)) ~= 'as' 
-						and: 
+					[
+					((aNode receiver selector copyFrom: 1 to: (aNode receiver selector size min: 2)) ~= 'as' and: 
 							[| receiver |
 							receiver := aNode receiver receiver.
 							receiver isVariable not or: 
-									[((#('self' 'super') includes: receiver name) 
-										or: [(smalllintContext selectedClass environment bindingFor: receiver name asSymbol) notNil]) 
-											not]]) 
-							ifTrue: [aNode]
-							ifFalse: [nil]]
+									[((#('self' 'super') includes: receiver name)
+										or: [(smalllintContext selectedClass environment fullBindingFor: receiver name asSymbol) notNil]) not]])
+						ifTrue: [aNode]
+						ifFalse: [nil]]
 				ifFalse: [answer]].
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			smalllintContext := context.
-			((matcher canMatchMethod: context compiledMethod) 
-				and: [(matcher executeTree: context parseTree initialAnswer: nil) notNil]) 
+			((matcher canMatchMethod: context compiledMethod)
+				and: [(matcher executeTree: context parseTree initialAnswer: nil) notNil])
 					ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector!
 
@@ -198,13 +194,13 @@ definesEqualNotHash
 	detector name: 'Defines = but not hash'.
 	detector resultClass: ClassEnvironment.
 	detector classBlock: 
-			[:context :result | 
-			((context selectedClass includesSelector: #=) 
-				and: [(context selectedClass includesSelector: #hash) not]) 
+			[:context :result |
+			((context selectedClass includesSelector: #=)
+				and: [(context selectedClass includesSelector: #hash) not])
 					ifTrue: [result addClass: context selectedClass]].
 	^detector!
 
-doesLiteralArrayContainComma: aLiteral 
+doesLiteralArrayContainComma: aLiteral
 	aLiteral class == Array ifFalse: [^false].
 	(aLiteral includes: #,) ifTrue: [^true].
 	^aLiteral anySatisfy: [:each | self doesLiteralArrayContainComma: each]!
@@ -254,20 +250,19 @@ instVarInSubclasses
 		resultClass: VariableEnvironment;
 		openUsing: #openWithoutFilters.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| subs |
 			subs := context selectedClass subclasses.
-			subs size > 1 
+			subs size > 1
 				ifTrue: 
 					[| sels |
 					sels := Bag new.
 					subs do: [:each | sels addAll: each instVarNames].
 					sels asSet do: 
-							[:val | 
+							[:val |
 							| count |
 							count := sels occurrencesOf: val.
-							count == subs size 
-								ifTrue: [result addClass: context selectedClass instanceVariable: val]]]].
+							count == subs size ifTrue: [result addClass: context selectedClass instanceVariable: val]]]].
 	^detector!
 
 justSendsSuper
@@ -276,9 +271,9 @@ justSendsSuper
 	detector name: 'Method just sends super message'.
 	matcher := ParseTreeSearcher justSendsSuper.
 	detector methodBlock: 
-			[:context :result | 
-			(context parseTree isPrimitive not 
-				and: [matcher executeMethod: context parseTree initialAnswer: false]) 
+			[:context :result |
+			(context parseTree isPrimitive not
+				and: [matcher executeMethod: context parseTree initialAnswer: false])
 					ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector!
 
@@ -300,14 +295,13 @@ longMethods
 	matcher := ParseTreeSearcher new.
 	matcher matches: '`.Stmt'
 		do: 
-			[:aNode :answer | 
-			(aNode children inject: answer
-				into: [:sum :each | matcher executeTree: each initialAnswer: sum]) + 1].
+			[:aNode :answer |
+			(aNode children inject: answer into: [:sum :each | matcher executeTree: each initialAnswer: sum])
+				+ 1].
 	detector methodBlock: 
-			[:context :result | 
-			(matcher executeTree: context parseTree initialAnswer: 0) 
-				>= self longMethodSize 
-					ifTrue: [result addClass: context selectedClass selector: context selector]].
+			[:context :result |
+			(matcher executeTree: context parseTree initialAnswer: 0) >= self longMethodSize
+				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector!
 
 longMethodSize
@@ -324,27 +318,26 @@ missingSubclassResponsibility
 		resultClass: MultiEnvironment;
 		openUsing: #openWithoutFilters.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| subs |
 			subs := context selectedClass subclasses.
-			(subs size > 1 and: [context selectedClass isMeta not]) 
+			(subs size > 1 and: [context selectedClass isMeta not])
 				ifTrue: 
 					[| sels |
 					sels := Bag new.
 					subs do: [:each | sels addAll: each selectors].
 					sels asSet do: 
-							[:each | 
-							((sels occurrencesOf: each) == subs size 
-								and: [(context selectedClass canUnderstand: each) not]) 
-									ifTrue: 
-										[| envName |
-										envName := context selectedClass name , '>>#' , each.
-										subs do: 
-												[:subClass | 
-												result 
-													addClass: subClass
-													selector: each
-													into: envName]]]]].
+							[:each |
+							((sels occurrencesOf: each) == subs size and: [(context selectedClass canUnderstand: each) not])
+								ifTrue: 
+									[| envName |
+									envName := context selectedClass name , '>>#' , each.
+									subs do: 
+											[:subClass |
+											result
+												addClass: subClass
+												selector: each
+												into: envName]]]]].
 	^detector!
 
 onlyReadOrWritten
@@ -399,7 +392,7 @@ refersToClass
 			| method nonMeta |
 			method := context compiledMethod.
 			nonMeta := method methodClass instanceBehavior.
-			(method refersToLiteral: (nonMeta environment bindingFor: nonMeta name))
+			(method refersToLiteral: (nonMeta environment fullBindingFor: nonMeta name))
 				ifTrue: 
 					[result addClass: method methodClass selector: method selector.
 					result addSearchString: nonMeta name]].
@@ -518,9 +511,9 @@ tempsReadBeforeWritten
 	detector := self new.
 	detector name: 'Temporaries read before written'.
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			(RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree) do: 
-					[:each | 
+					[:each |
 					result addClass: context selectedClass selector: context selector.
 					result addSearchString: each]].
 	^detector!
@@ -543,16 +536,16 @@ tempVarOverridesInstVar
 	| detector matcher vars varName |
 	detector := self new.
 	detector name: 'Instance variable overridden by temporary variable'.
-	matcher := (ParseTreeSearcher new)
+	matcher := ParseTreeSearcher new
 				matchesArgument: '`xxxvar'
 					do: [:aNode :answer | answer or: 
 								[varName := aNode name.
 								vars includes: varName]];
 				yourself.
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			vars := context instVarNames.
-			(matcher executeTree: context parseTree initialAnswer: false) 
+			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: 
 					[result addClass: context selectedClass selector: context selector.
 					result addSearchString: varName]].
@@ -585,19 +578,19 @@ unreferencedVariables
 usesTrue
 	| detector trueBinding falseBinding trueClass falseClass |
 	detector := self new.
-	trueBinding := self environment bindingFor: #True.
+	trueBinding := #{True} binding.
 	trueClass := trueBinding value.
-	falseBinding := self environment bindingFor: #False.
+	falseBinding := #{False} binding.
 	falseClass := falseBinding value.
 	detector name: 'Uses True/False instead of true/false'.
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			| method |
 			method := context compiledMethod.
-			((method refersToLiteral: trueClass) or: [method refersToLiteral: falseClass]) 
+			((method refersToLiteral: trueClass) or: [method refersToLiteral: falseClass])
 				ifTrue: 
 					[result addClass: context selectedClass selector: context selector.
-					result searchStrings: #('True' 'False')]].
+					result searchStrings: #(#True #False)]].
 	^detector!
 
 utilityMethods
@@ -636,32 +629,32 @@ variableAssignedLiteral
 		resultClass: VariableEnvironment;
 		openUsing: #openWithoutFilters.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
 			context selectedClass instVarNames do: 
-					[:each | 
+					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0
 						into: 
-							[:sum :class | 
+							[:sum :class |
 							| sels |
 							sels := class whichSelectorsAssign: each.
-							sels size == 1 
+							sels size == 1
 								ifTrue: 
 									[selector := sels asArray first.
 									defClass := class].
-							sum + sels size]) 
-							== 1 
+							sum + sels size])
+							== 1
 							ifTrue: 
 								[| tree searcher |
 								searcher := ParseTreeSearcher new.
 								searcher matches: each , ' := ``@object'
 									do: [:aNode :answer | answer isNil and: [aNode value isLiteral]].
 								tree := defClass parseTreeFor: selector.
-								tree notNil 
+								tree notNil
 									ifTrue: 
-										[(searcher executeTree: tree initialAnswer: nil) == true 
+										[(searcher executeTree: tree initialAnswer: nil) == true
 											ifTrue: [result addClass: context selectedClass instanceVariable: each]]]]].
 	^detector!
 
@@ -693,32 +686,31 @@ variableNotDefined
 variableReferencedOnce
 	| detector |
 	detector := self new.
-	detector 
-		name: 'Variable referenced in only one method and always assigned first'.
+	detector name: 'Variable referenced in only one method and always assigned first'.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
 			context selectedClass instVarNames do: 
-					[:each | 
+					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0
 						into: 
-							[:sum :class | 
+							[:sum :class |
 							| sels |
 							sels := class whichSelectorsAccess: each.
-							sels size == 1 
+							sels size == 1
 								ifTrue: 
 									[selector := sels asArray first.
 									defClass := class].
-							sum + sels size]) 
-							== 1 
+							sum + sels size])
+							== 1
 							ifTrue: 
 								[| tree |
 								tree := defClass parseTreeFor: selector.
-								tree notNil 
+								tree notNil
 									ifTrue: 
-										[(RBReadBeforeWrittenTester isVariable: each writtenBeforeReadIn: tree) 
+										[(RBReadBeforeWrittenTester isVariable: each writtenBeforeReadIn: tree)
 											ifTrue: 
 												[result addClass: defClass selector: selector.
 												result addSearchString: each]]]]].
@@ -736,49 +728,49 @@ vernacularSelector
 
 vernacularSelectors
 	^#(#arse #fart)! !
-!BlockLintRule class categoriesFor: #abstractClass!possible bugs!public! !
-!BlockLintRule class categoriesFor: #addRemoveDependents!possible bugs!public! !
-!BlockLintRule class categoriesFor: #badMessage!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #badSelectors!constants!private! !
-!BlockLintRule class categoriesFor: #classInstVarNotInitialized!possible bugs!public! !
-!BlockLintRule class categoriesFor: #classNameInSelector!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #classNotReferenced!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #classShouldNotOverride!constants!private! !
-!BlockLintRule class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
-!BlockLintRule class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
-!BlockLintRule class categoriesFor: #definesEqualNotHash!possible bugs!public! !
-!BlockLintRule class categoriesFor: #doesLiteralArrayContainComma:!helpers!private! !
-!BlockLintRule class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #fullBlocks!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #implementedNotSent!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #justSendsSuper!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #literalArrayContainsComma!possible bugs!public! !
-!BlockLintRule class categoriesFor: #longMethods!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #longMethodSize!constants!private! !
-!BlockLintRule class categoriesFor: #metaclassShouldNotOverride!constants!private! !
-!BlockLintRule class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
-!BlockLintRule class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #overridesSpecialMessage!bugs!public! !
-!BlockLintRule class categoriesFor: #refersToClass!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
-!BlockLintRule class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
-!BlockLintRule class categoriesFor: #sentNotImplemented!bugs!public! !
-!BlockLintRule class categoriesFor: #subclassOf:overrides:!helpers!private! !
-!BlockLintRule class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
-!BlockLintRule class categoriesFor: #superMessages!constants!private! !
-!BlockLintRule class categoriesFor: #superSends!possible bugs!public! !
-!BlockLintRule class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
-!BlockLintRule class categoriesFor: #tempsUnused!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
-!BlockLintRule class categoriesFor: #undeclaredVariables!accessing!constants!private! !
-!BlockLintRule class categoriesFor: #unreferencedVariables!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #usesTrue!possible bugs!public! !
-!BlockLintRule class categoriesFor: #utilityMethods!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #utilityProtocols!constants!private! !
-!BlockLintRule class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #variableNotDefined!possible bugs!public! !
-!BlockLintRule class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #vernacularSelector!intention revealing!public! !
-!BlockLintRule class categoriesFor: #vernacularSelectors!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #abstractClass!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #addRemoveDependents!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #badMessage!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #badSelectors!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #classInstVarNotInitialized!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #classNameInSelector!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #classNotReferenced!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #classShouldNotOverride!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #definesEqualNotHash!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #doesLiteralArrayContainComma:!helpers!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #fullBlocks!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #implementedNotSent!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #justSendsSuper!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #literalArrayContainsComma!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #longMethods!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #longMethodSize!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #metaclassShouldNotOverride!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #overridesSpecialMessage!bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #refersToClass!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #sentNotImplemented!bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #subclassOf:overrides:!helpers!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #superMessages!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #superSends!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #tempsUnused!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #undeclaredVariables!accessing!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #unreferencedVariables!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #usesTrue!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #utilityMethods!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #utilityProtocols!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #variableNotDefined!possible bugs!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #vernacularSelector!intention revealing!public! !
+!Refactory.Browser.BlockLintRule class categoriesFor: #vernacularSelectors!constants!private! !
 

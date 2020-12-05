@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StParseNodeVisitor subclass: #RBSourceFormatter
+Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBSourceFormatter'
 	instanceVariableNames: 'codeStream lineStart indent'
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBSourceFormatter guid: (GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
-RBSourceFormatter isAbstract: true!
-RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.
+Refactory.Browser.RBSourceFormatter guid: (Core.GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
+Refactory.Browser.RBSourceFormatter isNonInstantiable: true!
+Refactory.Browser.RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.
 
 Instance Variables:
 	codeStream	<PositionableStream>	the stream we are writing our output to
 	lineStart		<Integer>	the position of the character that started the current line. This is used for calculating the line length.
 	indent		<Integer>	how many times are we indenting a new line -- indents are normally tabs but could be any whitespace string
 '!
-!RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
-!RBSourceFormatter methodsFor!
+!Refactory.Browser.RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.RBSourceFormatter methodsFor!
 
 bracketWith: bracketString around: aBlock 
 	bracketString isEmpty ifTrue: [^aBlock value].
@@ -33,10 +33,10 @@ format: aNode
 formatArray: anArrayNode 
 	^self subclassResponsibility!
 
-formatExternalCallName: aStExternalCallNode 
+formatExternalCallName: aStExternalCallNode
 	| name |
 	name := aStExternalCallNode nameOrOrdinal.
-	(name isInteger or: [Symbol isLiteralSymbol: name]) 
+	(name isInteger or: [Symbol isLiteralSymbol: name])
 		ifTrue: [codeStream display: name]
 		ifFalse: [codeStream print: name]!
 
@@ -92,10 +92,12 @@ visitArrayNode: anArrayNode
 	self bracketWith: '{}' around: [self formatArray: anArrayNode]!
 
 visitExternalArgTypeNode: anStExternalArgTypeNode
-	| typeOrdinal |
-	typeOrdinal := anStExternalArgTypeNode typeOrdinal.
-	codeStream
-		nextPutAll: (ExternalDescriptor nameOf: typeOrdinal type: anStExternalArgTypeNode structClass).
+	anStExternalArgTypeNode structClass
+		ifNil: 
+			[| typeOrdinal |
+			typeOrdinal := anStExternalArgTypeNode typeOrdinal.
+			codeStream nextPutAll: (External.Descriptor nameOf: typeOrdinal type: nil)]
+		ifNotNil: [:varNode | codeStream nextPutAll: varNode name].
 	anStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*]!
 
 visitExternalCallNode: aStExternalCallNode
@@ -103,7 +105,7 @@ visitExternalCallNode: aStExternalCallNode
 	aStExternalCallNode isOverlapped ifTrue: [codeStream nextPutAll: 'overlap '].
 	aStExternalCallNode isVirtual ifTrue: [codeStream nextPutAll: 'virtual '].
 	codeStream
-		nextPutAll: (ExternalDescriptor nameOfConvention: aStExternalCallNode callingConvention);
+		nextPutAll: (External.Descriptor nameOfConvention: aStExternalCallNode callingConvention);
 		space.
 	self visitNode: aStExternalCallNode returnType.
 	codeStream space.
@@ -134,37 +136,39 @@ visitPrimitiveNode: anStPrimitiveNode
 visitQualifiedReferenceNode: aQualifiedReferenceNode
 	codeStream
 		nextPutAll: '#{';
-		display: aQualifiedReferenceNode pathString;
-		nextPut: $}!
+		display: aQualifiedReferenceNode pathString.
+	aQualifiedReferenceNode isMeta ifTrue: [codeStream nextPutAll: ' class'].
+	aQualifiedReferenceNode isPrivate ifTrue: [codeStream nextPutAll: ' private'].
+	codeStream nextPut: $}!
 
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
-!RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
-!RBSourceFormatter categoriesFor: #currentLineLength!accessing!private! !
-!RBSourceFormatter categoriesFor: #format:!operations!public! !
-!RBSourceFormatter categoriesFor: #formatArray:!private! !
-!RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatTagFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #indent:!formatting!private! !
-!RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
-!RBSourceFormatter categoriesFor: #initialize!initializing!private! !
-!RBSourceFormatter categoriesFor: #isLineTooLong:!helpers!private! !
-!RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
-!RBSourceFormatter categoriesFor: #newLine!formatting!private! !
-!RBSourceFormatter categoriesFor: #space!formatting!private! !
-!RBSourceFormatter categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
-!RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
-!RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #currentLineLength!accessing!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #format:!operations!public! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatArray:!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatTagFor:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #indent:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #initialize!initializing!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #isLineTooLong:!helpers!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #newLine!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #space!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
-!RBSourceFormatter class methodsFor!
+!Refactory.Browser.RBSourceFormatter class methodsFor!
 
 format: aParseTree 
 	^self format: aParseTree withIndents: 0!
@@ -197,11 +201,11 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
-!RBSourceFormatter class categoriesFor: #format:!public!public interface! !
-!RBSourceFormatter class categoriesFor: #format:withIndents:!public!public interface! !
-!RBSourceFormatter class categoriesFor: #initialize!initializing!public! !
-!RBSourceFormatter class categoriesFor: #maxLineLength!public!settings! !
-!RBSourceFormatter class categoriesFor: #maxLineLength:!public!settings! !
-!RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod!public! !
-!RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod:!public! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #format:!public!public interface! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #format:withIndents:!public!public interface! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #initialize!initializing!public! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #maxLineLength!public!settings! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #maxLineLength:!public!settings! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod!public! !
+!Refactory.Browser.RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod:!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodRefactoring subclass: #InlineMethodRefactoring
+Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineMethodRefactoring'
 	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InlineMethodRefactoring guid: (GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
-InlineMethodRefactoring comment: ''!
-!InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !
-!InlineMethodRefactoring methodsFor!
+Refactory.Browser.InlineMethodRefactoring guid: (Core.GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
+Refactory.Browser.InlineMethodRefactoring comment: ''!
+!Refactory.Browser.InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.InlineMethodRefactoring methodsFor!
 
 addSelfReturn
 	inlineParseTree addSelfReturn!
@@ -49,7 +49,7 @@ findSelectedMessage
 		ifFalse: [self refactoringError: 'Cannot inline non-self messages']!
 
 getOptionImplementorToInline: anOrderedCollection
-	^ChoicePrompter
+	^UI.ChoicePrompter
 		choices: (anOrderedCollection asSortedCollection: [:a :b | a displayString <= b displayString])
 		caption: ('Inline <1p> from...' expandMacrosWith: sourceMessage selector)!
 
@@ -60,11 +60,10 @@ hasMultipleReturns
 	searcher := ParseTreeSearcher new.
 	searcher matches: '^``@object'
 		do: 
-			[:aNode :hasAReturn | 
+			[:aNode :hasAReturn |
 			hasAReturn ifTrue: [^true].
 			true].
-	searcher executeTree: inlineParseTree
-		initialAnswer: inlineParseTree lastIsReturn not.
+	searcher executeTree: inlineParseTree initialAnswer: inlineParseTree lastIsReturn not.
 	^false!
 
 inline: anInterval inMethod: aSelector forClass: aClass 
@@ -153,8 +152,7 @@ normalizeIfTrues
 			with: '| `@temps | ``@.s1. ``@boolean ifTrue: [| `@t1 | ``@.Stmts1. ^`@r1] ifFalse: [``@.s2. ^``@r2]';
 		replace: '| `@temps | ``@.s1. ``@boolean ifFalse: [| `@t1 | ``@.Stmts1. ^`@r1]. ``@.s2. ^``@r2'
 			with: '| `@temps | ``@.s1. ``@boolean ifTrue: [``@.s2. ^``@r2] ifFalse: [| `@t1 | ``@.Stmts1. ^`@r1]'.
-	[rewriter executeTree: inlineParseTree] 
-		whileTrue: [inlineParseTree := rewriter tree]!
+	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]!
 
 normalizeReturns
 	| rewriter |
@@ -176,8 +174,7 @@ normalizeReturns
 			with: '^``@boolean ifTrue: [| `@t1 | `@.Stmts1. ``@r1] ifFalse: [| `@t2 | `@.Stmts2. ``@r2]';
 		replace: '``@boolean ifFalse: [| `@t1 | `@.Stmts1. ^``@r1] ifTrue: [| `@t2 | `@.Stmts2. ^``@r2]'
 			with: '^``@boolean ifFalse: [| `@t1 | `@.Stmts1. ``@r1] ifTrue: [| `@t2 | `@.Stmts2. ``@r2]'.
-	[rewriter executeTree: inlineParseTree] 
-		whileTrue: [inlineParseTree := rewriter tree]!
+	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]!
 
 parseInlineMethod
 	self inlineClass isNil
@@ -222,8 +219,7 @@ removeEmptyIfTrues
 			with: '``@boolean ifTrue: [|`@temps | ``@.Stmts]';
 		replace: '``@boolean ifFalse: [| `@temps | ``@.Stmts] ifTrue: []'
 			with: '``@boolean ifFalse: [|`@temps | ``@.Stmts]'.
-	(rewriter executeTree: sourceParseTree) 
-		ifTrue: [sourceParseTree := rewriter tree]!
+	(rewriter executeTree: sourceParseTree) ifTrue: [sourceParseTree := rewriter tree]!
 
 removeImmediateBlocks
 	| rewriter |
@@ -243,16 +239,15 @@ removeReturns
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
 	rewriter replace: '^``@object' with: '``@object'.
-	(rewriter executeTree: inlineParseTree) 
-		ifTrue: [inlineParseTree := rewriter tree]!
+	(rewriter executeTree: inlineParseTree) ifTrue: [inlineParseTree := rewriter tree]!
 
 renameConflictingTemporaries
 	inlineParseTree allDefinedVariables 
 		do: [:each | self renameConflictingTemporary: each]!
 
-renameConflictingTemporary: aName 
+renameConflictingTemporary: aName
 	| allNames newName index seqNode |
-	allNames := (Set new)
+	allNames := Set new
 				addAll: inlineParseTree allDefinedVariables;
 				yourself.
 	allNames remove: aName ifAbsent: [].
@@ -263,29 +258,27 @@ renameConflictingTemporary: aName
 	newName := aName.
 	index := 0.
 	
-	[(sourceMessage whoDefines: newName) notNil or: 
-			[(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]] 
+	[(sourceMessage whoDefines: newName) notNil
+		or: [(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]]
 			whileTrue: 
 				[index := index + 1.
 				newName := aName , index printString].
 	newName = aName ifFalse: [self renameTemporary: aName to: newName].
 	^newName!
 
-renameTemporary: oldName to: newName 
+renameTemporary: oldName to: newName
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
 	rewriter
 		replace: oldName with: newName;
 		replaceArgument: oldName with: newName.
-	(rewriter executeTree: inlineParseTree) 
-		ifTrue: [inlineParseTree := rewriter tree]!
+	(rewriter executeTree: inlineParseTree) ifTrue: [inlineParseTree := rewriter tree]!
 
-replaceArgument: sourceNode with: replacementNode 
+replaceArgument: sourceNode with: replacementNode
 	| rewriter |
 	rewriter := ParseTreeRewriter new.
 	rewriter replaceTree: sourceNode withTree: replacementNode.
-	(rewriter executeTree: inlineParseTree body) 
-		ifTrue: [inlineParseTree body: rewriter tree]!
+	(rewriter executeTree: inlineParseTree body) ifTrue: [inlineParseTree body: rewriter tree]!
 
 replaceArguments
 	sourceMessage arguments reverse with: inlineParseTree arguments reverse
@@ -349,42 +342,41 @@ writeGuardClauses
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [| `@t1 | `@.Stmts1. ^`@r1] ifFalse: [`@.s2. ^self]';
 		replaceMethod: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]. `@.s2'
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
-	[rewriter executeTree: inlineParseTree] 
-		whileTrue: [inlineParseTree := rewriter tree]! !
-!InlineMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #addTemporary:assignedTo:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #compileMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #getOptionImplementorToInline:!options!private! !
-!InlineMethodRefactoring categoriesFor: #hasMultipleReturns!public!testing! !
-!InlineMethodRefactoring categoriesFor: #inline:inMethod:forClass:!initialize/release!public! !
-!InlineMethodRefactoring categoriesFor: #inlineClass!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #inlineSelector!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #inlineSourceReplacing:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #insertInlinedMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #isOverridden!public! !
-!InlineMethodRefactoring categoriesFor: #isPrimitive!public!testing! !
-!InlineMethodRefactoring categoriesFor: #moveComments!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #normalizeIfTrues!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #normalizeReturns!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #parseInlineMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineMethodRefactoring categoriesFor: #removeEmptyIfTrues!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #removeImmediateBlocks!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #removeReturns!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameConflictingTemporaries!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameConflictingTemporary:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameTemporary:to:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #replaceArgument:with:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #replaceArguments!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #rewriteCascadedMessage!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #rewriteInlinedTree!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineMethodRefactoring categoriesFor: #transform!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #writeGuardClauses!public!transforming! !
+	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #addTemporary:assignedTo:!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #compileMethod!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #getOptionImplementorToInline:!options!private! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #hasMultipleReturns!public!testing! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inline:inMethod:forClass:!initialize/release!public! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineClass!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineSelector!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineSourceReplacing:!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #insertInlinedMethod!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #isOverridden!public! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #isPrimitive!public!testing! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #moveComments!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #normalizeIfTrues!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #normalizeReturns!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #parseInlineMethod!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeEmptyIfTrues!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeImmediateBlocks!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeReturns!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameConflictingTemporaries!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameConflictingTemporary:!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameTemporary:to:!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #replaceArgument:with:!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #replaceArguments!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #rewriteCascadedMessage!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #rewriteInlinedTree!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesFor: #writeGuardClauses!public!transforming! !
 
-!InlineMethodRefactoring class methodsFor!
+!Refactory.Browser.InlineMethodRefactoring class methodsFor!
 
 initialize
 	#rbFix.
@@ -403,7 +395,7 @@ model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass
 			inMethod: aSelector
 			forClass: aClass;
 		yourself! !
-!InlineMethodRefactoring class categoriesFor: #initialize!class initialization!public! !
-!InlineMethodRefactoring class categoriesFor: #inline:inMethod:forClass:!instance creation!public! !
-!InlineMethodRefactoring class categoriesFor: #model:inline:inMethod:forClass:!instance creation!public! !
+!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #initialize!class initialization!public! !
+!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #inline:inMethod:forClass:!instance creation!public! !
+!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #model:inline:inMethod:forClass:!instance creation!public! !
 

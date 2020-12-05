@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #LintRule
+Core.Object subclass: #'Refactory.Browser.LintRule'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LintRule guid: (GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
-LintRule isAbstract: true!
-LintRule comment: 'LintRule is an abstract class that represents some check on the code.
+Refactory.Browser.LintRule guid: (Core.GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
+Refactory.Browser.LintRule isNonInstantiable: true!
+Refactory.Browser.LintRule comment: 'LintRule is an abstract class that represents some check on the code.
 
 Subclasses must implement the following messages:
 	accessing
@@ -23,8 +23,8 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	name	<String>	the display name of the rule'!
-!LintRule categoriesForClass!Refactory-Lint! !
-!LintRule methodsFor!
+!Refactory.Browser.LintRule categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.LintRule methodsFor!
 
 allRules
 	| allRules |
@@ -44,7 +44,7 @@ displayName
 	^nameStream contents!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: self name;
@@ -93,29 +93,29 @@ rules
 
 viewResults
 	self subclassResponsibility! !
-!LintRule categoriesFor: #allRules!accessing!public! !
-!LintRule categoriesFor: #checkClass:!accessing!public! !
-!LintRule categoriesFor: #checkMethod:!accessing!public! !
-!LintRule categoriesFor: #displayName!printing!public! !
-!LintRule categoriesFor: #displayOn:!printing!public! !
-!LintRule categoriesFor: #failedMethodsSorted!accessing!private! !
-!LintRule categoriesFor: #failedRules!private! !
-!LintRule categoriesFor: #hasConflicts!public!testing! !
-!LintRule categoriesFor: #initialize!initialize/release!public! !
-!LintRule categoriesFor: #isComposite!public!testing! !
-!LintRule categoriesFor: #isEmpty!public!testing! !
-!LintRule categoriesFor: #name!accessing!public! !
-!LintRule categoriesFor: #name:!accessing!public! !
-!LintRule categoriesFor: #notEmpty!public!testing! !
-!LintRule categoriesFor: #printOn:!printing!public! !
-!LintRule categoriesFor: #problemCount!accessing!public! !
-!LintRule categoriesFor: #resetResult!initialize/release!public! !
-!LintRule categoriesFor: #rules!accessing!public! !
-!LintRule categoriesFor: #viewResults!private! !
+!Refactory.Browser.LintRule categoriesFor: #allRules!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #checkClass:!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #checkMethod:!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #displayName!printing!public! !
+!Refactory.Browser.LintRule categoriesFor: #displayOn:!printing!public! !
+!Refactory.Browser.LintRule categoriesFor: #failedMethodsSorted!accessing!private! !
+!Refactory.Browser.LintRule categoriesFor: #failedRules!private! !
+!Refactory.Browser.LintRule categoriesFor: #hasConflicts!public!testing! !
+!Refactory.Browser.LintRule categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.LintRule categoriesFor: #isComposite!public!testing! !
+!Refactory.Browser.LintRule categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.LintRule categoriesFor: #name!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #name:!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #notEmpty!public!testing! !
+!Refactory.Browser.LintRule categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.LintRule categoriesFor: #problemCount!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #resetResult!initialize/release!public! !
+!Refactory.Browser.LintRule categoriesFor: #rules!accessing!public! !
+!Refactory.Browser.LintRule categoriesFor: #viewResults!private! !
 
-!LintRule class methodsFor!
+!Refactory.Browser.LintRule class methodsFor!
 
 new
 	^super new initialize! !
-!LintRule class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.LintRule class categoriesFor: #new!instance creation!public! !
 

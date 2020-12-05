@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringBrowserTest subclass: #SmalllintTest
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.SmalllintTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintTest guid: (GUID fromString: '{1c8afe99-7a10-4ecd-a108-0f8f9bb5bdba}')!
-SmalllintTest comment: 'SUnitBrowser openOnTestCase: self'!
-!SmalllintTest categoriesForClass!Refactory-Testing! !
-!SmalllintTest methodsFor!
+Refactory.Browser.Tests.SmalllintTest guid: (Core.GUID fromString: '{1c8afe99-7a10-4ecd-a108-0f8f9bb5bdba}')!
+Refactory.Browser.Tests.SmalllintTest comment: 'SUnitBrowser openOnTestCase: self'!
+!Refactory.Browser.Tests.SmalllintTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.SmalllintTest methodsFor!
 
 blockRuleFor: aSelector 
 	self blockRuleFor: aSelector plusSelectors: #()!
 
-blockRuleFor: aSelector plusSelectors: symbolCollection 
+blockRuleFor: aSelector plusSelectors: symbolCollection
 	| rule returnedEnvironment testSel |
-	#rbFix. "testSelector temp classes with inst. var. of the same name"
+	#rbFix.	"testSelector temp classes with inst. var. of the same name"
 	testSel := aSelector asString copyFrom: 5 to: aSelector size.
 	testSel at: 1 put: testSel first asLowercase.
 	testSel := testSel asSymbol.
@@ -25,8 +25,7 @@ blockRuleFor: aSelector plusSelectors: symbolCollection
 		onEnvironment: self refactoryTestAppEnvironment.
 	returnedEnvironment := SelectorEnvironment new.
 	returnedEnvironment addClass: RefactoryTestDataApp selector: testSel.
-	symbolCollection 
-		do: [:each | returnedEnvironment addClass: RefactoryTestDataApp selector: each].
+	symbolCollection do: [:each | returnedEnvironment addClass: RefactoryTestDataApp selector: each].
 	self checkRule: rule isEqualTo: returnedEnvironment!
 
 checkRule: aLintRule isEqualTo: anEnvironment 
@@ -50,19 +49,17 @@ currentSelector
 parseTreeRuleFor: aSelector 
 	self parseTreeRuleFor: aSelector plusSelectors: #()!
 
-parseTreeRuleFor: aSelector plusSelectors: symbolCollection 
+parseTreeRuleFor: aSelector plusSelectors: symbolCollection
 	| returnedEnvironment testSel rule |
-	#rbFix. "testSelector temp classes with inst. var. of the same name"
+	#rbFix.	"testSelector temp classes with inst. var. of the same name"
 	testSel := aSelector asString copyFrom: 5 to: aSelector size.
 	testSel at: 1 put: testSel first asLowercase.
 	testSel := testSel asSymbol.
-	SmalllintChecker 
-		runRule: (rule := ParseTreeLintRule perform: testSel)
+	SmalllintChecker runRule: (rule := ParseTreeLintRule perform: testSel)
 		onEnvironment: self refactoryTestAppEnvironment.
 	returnedEnvironment := SelectorEnvironment new.
 	returnedEnvironment addClass: RefactoryTestDataApp selector: testSel.
-	symbolCollection 
-		do: [:each | returnedEnvironment addClass: RefactoryTestDataApp selector: each].
+	symbolCollection do: [:each | returnedEnvironment addClass: RefactoryTestDataApp selector: each].
 	self checkRule: rule isEqualTo: returnedEnvironment!
 
 refactoryTestAppEnvironment
@@ -118,8 +115,7 @@ testEqualsTrue
 
 testEquivalentSuperclassMethods
 	| returnedEnvironment rule |
-	SmalllintChecker 
-		runRule: (rule := BlockLintRule equivalentSuperclassMethods)
+	SmalllintChecker runRule: (rule := BlockLintRule equivalentSuperclassMethods)
 		onEnvironment: self refactoryTestAppEnvironment.
 	returnedEnvironment := SelectorEnvironment new.
 	returnedEnvironment addClass: RefactoryTestDataApp selector: #isLiteral.
@@ -172,7 +168,7 @@ testOverridesSpecialMessage
 		onEnvironment: self refactoryTestAppEnvironment.
 	returnedEnvironment := SelectorEnvironment new.
 	returnedEnvironment addClass: RefactoryTestDataApp selector: #==.
-"	returnedEnvironment addClass: RefactoryTestDataApp class selector: #comment."
+	"	returnedEnvironment addClass: RefactoryTestDataApp class selector: #comment."
 	self checkRule: rule isEqualTo: returnedEnvironment!
 
 testPrecedence
@@ -237,60 +233,60 @@ testWhileTrue
 
 testYourselfNotUsed
 	self parseTreeRuleFor: self currentSelector! !
-!SmalllintTest categoriesFor: #blockRuleFor:!public!set up! !
-!SmalllintTest categoriesFor: #blockRuleFor:plusSelectors:!public!set up! !
-!SmalllintTest categoriesFor: #checkRule:isEqualTo:!public!set up! !
-!SmalllintTest categoriesFor: #compare:to:!public!set up! !
-!SmalllintTest categoriesFor: #currentSelector!public!set up! !
-!SmalllintTest categoriesFor: #parseTreeRuleFor:!public!set up! !
-!SmalllintTest categoriesFor: #parseTreeRuleFor:plusSelectors:!public!set up! !
-!SmalllintTest categoriesFor: #refactoryTestAppEnvironment!public!set up! !
-!SmalllintTest categoriesFor: #testAnySatisfy!public!tests! !
-!SmalllintTest categoriesFor: #testAsOrderedCollectionNotNeeded!public!tests! !
-!SmalllintTest categoriesFor: #testAssignmentInBlock!public!tests! !
-!SmalllintTest categoriesFor: #testAssignmentInIfTrue!public!tests! !
-!SmalllintTest categoriesFor: #testAtIfAbsent!public!tests! !
-!SmalllintTest categoriesFor: #testBadMessage!public!tests! !
-!SmalllintTest categoriesFor: #testBooleanPrecedence!public!tests! !
-!SmalllintTest categoriesFor: #testCollectionMessagesToExternalObject!public!tests! !
-!SmalllintTest categoriesFor: #testCollectionProtocol!public!tests! !
-!SmalllintTest categoriesFor: #testCollectSelectNotUsed!public!tests! !
-!SmalllintTest categoriesFor: #testConsistencyCheck!public!tests! !
-!SmalllintTest categoriesFor: #testDetectAnySatisfy!public!tests! !
-!SmalllintTest categoriesFor: #testEndTrueFalse!public!tests! !
-!SmalllintTest categoriesFor: #testEqualNotUsed!public!tests! !
-!SmalllintTest categoriesFor: #testEqualsTrue!public!tests! !
-!SmalllintTest categoriesFor: #testEquivalentSuperclassMethods!public!tests! !
-!SmalllintTest categoriesFor: #testExtraBlock!public!tests! !
-!SmalllintTest categoriesFor: #testFileBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testFullBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testGuardingClause!public!tests! !
-!SmalllintTest categoriesFor: #testIfTrueBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testIfTrueReturns!public!tests! !
-!SmalllintTest categoriesFor: #testJustSendsSuper!public!tests! !
-!SmalllintTest categoriesFor: #testLiteralArrayCharacters!public!tests! !
-!SmalllintTest categoriesFor: #testLongMethods!public!tests! !
-!SmalllintTest categoriesFor: #testMinMax!public!tests! !
-!SmalllintTest categoriesFor: #testMissingYourself!public!tests! !
-!SmalllintTest categoriesFor: #testModifiesCollection!public!tests! !
-!SmalllintTest categoriesFor: #testOverridesSpecialMessage!public!tests! !
-!SmalllintTest categoriesFor: #testPrecedence!public!tests! !
-!SmalllintTest categoriesFor: #testRefersToClass!public!tests! !
-!SmalllintTest categoriesFor: #testReturnInEnsure!public!tests! !
-!SmalllintTest categoriesFor: #testReturnsBooleanAndOther!public!tests! !
-!SmalllintTest categoriesFor: #testReturnsIfTrue!public!tests! !
-!SmalllintTest categoriesFor: #testSearchingLiteral!public!tests! !
-!SmalllintTest categoriesFor: #testSendsDifferentSuper!public!tests! !
-!SmalllintTest categoriesFor: #testSizeCheck!public!tests! !
-!SmalllintTest categoriesFor: #testStringConcatenation!public!tests! !
-!SmalllintTest categoriesFor: #testSuperSends!public!tests! !
-!SmalllintTest categoriesFor: #testTempsReadBeforeWritten!public!tests! !
-!SmalllintTest categoriesFor: #testTempVarOverridesInstVar!public!tests! !
-!SmalllintTest categoriesFor: #testThreeElementPoint!public!tests! !
-!SmalllintTest categoriesFor: #testToDo!public!tests! !
-!SmalllintTest categoriesFor: #testToDoCollect!public!tests! !
-!SmalllintTest categoriesFor: #testToDoWithIncrement!public!tests! !
-!SmalllintTest categoriesFor: #testUsesAdd!public!tests! !
-!SmalllintTest categoriesFor: #testWhileTrue!public!tests! !
-!SmalllintTest categoriesFor: #testYourselfNotUsed!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #blockRuleFor:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #blockRuleFor:plusSelectors:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #checkRule:isEqualTo:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #compare:to:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #currentSelector!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #parseTreeRuleFor:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #parseTreeRuleFor:plusSelectors:!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #refactoryTestAppEnvironment!public!set up! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAnySatisfy!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAsOrderedCollectionNotNeeded!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAssignmentInBlock!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAssignmentInIfTrue!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAtIfAbsent!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testBadMessage!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testBooleanPrecedence!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectionMessagesToExternalObject!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectionProtocol!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectSelectNotUsed!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testConsistencyCheck!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testDetectAnySatisfy!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEndTrueFalse!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEqualNotUsed!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEqualsTrue!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEquivalentSuperclassMethods!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testExtraBlock!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testFileBlocks!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testFullBlocks!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testGuardingClause!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testIfTrueBlocks!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testIfTrueReturns!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testJustSendsSuper!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testLiteralArrayCharacters!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testLongMethods!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testMinMax!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testMissingYourself!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testModifiesCollection!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testOverridesSpecialMessage!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testPrecedence!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testRefersToClass!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnInEnsure!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnsBooleanAndOther!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnsIfTrue!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSearchingLiteral!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSendsDifferentSuper!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSizeCheck!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testStringConcatenation!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSuperSends!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testTempsReadBeforeWritten!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testTempVarOverridesInstVar!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testThreeElementPoint!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDo!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDoCollect!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDoWithIncrement!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testUsesAdd!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testWhileTrue!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testYourselfNotUsed!public!tests! !
 

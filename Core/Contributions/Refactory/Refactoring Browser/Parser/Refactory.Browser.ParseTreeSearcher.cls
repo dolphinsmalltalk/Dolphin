@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StParseNodeVisitor subclass: #ParseTreeSearcher
+Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ParseTreeSearcher guid: (GUID fromString: '{88f9b089-e658-4426-8d0a-f18303952cad}')!
-ParseTreeSearcher comment: 'ParseTreeSearcher walks over a normal source code parse tree using the visitor pattern, and then matches these nodes against the meta-nodes using the match:inContext: methods defined for the meta-nodes.
+Refactory.Browser.ParseTreeSearcher guid: (Core.GUID fromString: '{88f9b089-e658-4426-8d0a-f18303952cad}')!
+Refactory.Browser.ParseTreeSearcher comment: 'ParseTreeSearcher walks over a normal source code parse tree using the visitor pattern, and then matches these nodes against the meta-nodes using the match:inContext: methods defined for the meta-nodes.
 
 Instance Variables:
 	answer	<Object>	the "answer" that is propagated between matches
 	argumentSearches	<Collection of: (Association key: BRProgramNode value: BlockClosure)>	argument searches (search for the BRProgramNode and perform the BlockClosure when its found)
 	context	<BRSmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search, but is created once and reused (efficiency).
 	searches	<Collection of: (Association key: BRProgramNode value: BlockClosure)>	non-argument searches (search for the BRProgramNode and perform the BlockClosure when its found)'!
-!ParseTreeSearcher categoriesForClass!Refactory-ParseTree Matching! !
-!ParseTreeSearcher methodsFor!
+!Refactory.Browser.ParseTreeSearcher categoriesForClass!Refactory-ParseTree Matching! !
+!Refactory.Browser.ParseTreeSearcher methodsFor!
 
 addArgumentRule: aParseTreeRule
 	argumentSearches := argumentSearches asOrderedCollection.
@@ -88,13 +88,13 @@ initialize
 	argumentSearches := #().
 	answer := nil!
 
-lookForMoreMatchesInContext: oldContext 
+lookForMoreMatchesInContext: oldContext
 	oldContext keysAndValuesDo: 
-			[:key :value | 
-			((key isKindOf: String) not and: [key recurseInto]) 
+			[:key :value |
+			((key isKindOf: String) not and: [key recurseInto])
 				ifTrue: [value do: [:each | self visitNode: each]]]!
 
-matches: aString do: aBlock 
+matches: aString do: aBlock
 	self addRule: (RBSearchRule searchFor: aString thenDo: aBlock)!
 
 matchesAnyArgumentOf: stringCollection do: aBlock 
@@ -109,16 +109,16 @@ matchesAnyOf: aStringCollection do: aBlock
 matchesAnyTreeOf: treeCollection do: aBlock 
 	treeCollection do: [:each | self matchesTree: each do: aBlock]!
 
-matchesArgument: aString do: aBlock 
+matchesArgument: aString do: aBlock
 	self addArgumentRule: (RBSearchRule searchFor: aString thenDo: aBlock)!
 
-matchesArgumentTree: aBRProgramNode do: aBlock 
+matchesArgumentTree: aBRProgramNode do: aBlock
 	self addArgumentRule: (RBSearchRule searchForTree: aBRProgramNode thenDo: aBlock)!
 
-matchesMethod: aString do: aBlock 
+matchesMethod: aString do: aBlock
 	self addRule: (RBSearchRule searchForMethod: aString thenDo: aBlock)!
 
-matchesTree: aBRProgramNode do: aBlock 
+matchesTree: aBRProgramNode do: aBlock
 	self addRule: (RBSearchRule searchForTree: aBRProgramNode thenDo: aBlock)!
 
 messages
@@ -168,53 +168,53 @@ visitNode: aNode
 		ifNil: 
 			[super visitNode: aNode.
 			aNode]! !
-!ParseTreeSearcher categoriesFor: #addArgumentRule:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #addArgumentRules:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #addRule:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #addRules:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #answer!accessing!public! !
-!ParseTreeSearcher categoriesFor: #answer:!initialize/release!public! !
-!ParseTreeSearcher categoriesFor: #basicAddArgumentRule:!accessing!private! !
-!ParseTreeSearcher categoriesFor: #basicAddRule:!accessing!private! !
-!ParseTreeSearcher categoriesFor: #basicExecuteTree:!private!searching! !
-!ParseTreeSearcher categoriesFor: #canMatchMethod:!public!testing! !
-!ParseTreeSearcher categoriesFor: #context!accessing!public! !
-!ParseTreeSearcher categoriesFor: #executeMethod:initialAnswer:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #executeTree:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #executeTree:initialAnswer:!accessing!public! !
-!ParseTreeSearcher categoriesFor: #foundMatch!helpers!private! !
-!ParseTreeSearcher categoriesFor: #initialize!initialize/release!public! !
-!ParseTreeSearcher categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
-!ParseTreeSearcher categoriesFor: #matches:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesAnyArgumentOf:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesAnyMethodOf:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesAnyOf:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesAnyTreeOf:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesArgument:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesArgumentTree:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesMethod:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #matchesTree:do:!public!searching! !
-!ParseTreeSearcher categoriesFor: #messages!accessing!public! !
-!ParseTreeSearcher categoriesFor: #performSearches:on:!operations!private! !
-!ParseTreeSearcher categoriesFor: #recusivelySearchInContext!operations!private! !
-!ParseTreeSearcher categoriesFor: #visitArgumentNode:!public!visiting! !
-!ParseTreeSearcher categoriesFor: #visitNode:!public!visiting! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #addArgumentRule:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #addArgumentRules:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #addRule:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #addRules:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #answer!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #answer:!initialize/release!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #basicAddArgumentRule:!accessing!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #basicAddRule:!accessing!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #basicExecuteTree:!private!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #canMatchMethod:!public!testing! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #context!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #executeMethod:initialAnswer:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #executeTree:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #executeTree:initialAnswer:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #foundMatch!helpers!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matches:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesAnyArgumentOf:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesAnyMethodOf:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesAnyOf:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesAnyTreeOf:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesArgument:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesArgumentTree:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesMethod:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #matchesTree:do:!public!searching! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #messages!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #performSearches:on:!operations!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #recusivelySearchInContext!operations!private! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #visitArgumentNode:!public!visiting! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #visitNode:!public!visiting! !
 
-!ParseTreeSearcher class methodsFor!
+!Refactory.Browser.ParseTreeSearcher class methodsFor!
 
-buildSelectorString: aSelector 
+buildSelectorString: aSelector
 	| stream keywords |
 	aSelector argumentCount = 0 ifTrue: [^aSelector].
 	stream := WriteStream on: String new.
 	keywords := aSelector keywords.
 	1 to: keywords size
 		do: 
-			[:i | 
+			[:i |
 			stream
 				nextPutAll: (keywords at: i);
 				nextPutAll: ' ``@arg';
 				nextPutAll: i printString;
-				nextPut: $ ].
+				nextPut: $\x20].
 	^stream contents!
 
 buildSelectorTree: aSelector 
@@ -271,13 +271,13 @@ treeMatchingStatements: aString in: aParseTree
 	notifier matchesTree: tree do: [:aNode :answer | ^RBParser parseExpression: aString].
 	notifier executeTree: aParseTree.
 	^nil! !
-!ParseTreeSearcher class categoriesFor: #buildSelectorString:!helpers!private! !
-!ParseTreeSearcher class categoriesFor: #buildSelectorTree:!helpers!private! !
-!ParseTreeSearcher class categoriesFor: #buildTree:method:!helpers!private! !
-!ParseTreeSearcher class categoriesFor: #getterMethod:!instance creation!public! !
-!ParseTreeSearcher class categoriesFor: #justSendsSuper!instance creation!public! !
-!ParseTreeSearcher class categoriesFor: #returnSetterMethod:!instance creation!public! !
-!ParseTreeSearcher class categoriesFor: #setterMethod:!instance creation!public! !
-!ParseTreeSearcher class categoriesFor: #treeMatching:in:!accessing!public! !
-!ParseTreeSearcher class categoriesFor: #treeMatchingStatements:in:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #buildSelectorString:!helpers!private! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #buildSelectorTree:!helpers!private! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #buildTree:method:!helpers!private! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #getterMethod:!instance creation!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #justSendsSuper!instance creation!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #returnSetterMethod:!instance creation!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #setterMethod:!instance creation!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #treeMatching:in:!accessing!public! !
+!Refactory.Browser.ParseTreeSearcher class categoriesFor: #treeMatchingStatements:in:!accessing!public! !
 

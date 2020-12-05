@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTest subclass: #AddMethodTest
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AddMethodTest guid: (GUID fromString: '{6d550761-f858-4c04-be63-5475fe34219a}')!
-AddMethodTest comment: ''!
-!AddMethodTest categoriesForClass!Refactory-Testing! !
-!AddMethodTest methodsFor!
+Refactory.Browser.Tests.AddMethodTest guid: (Core.GUID fromString: '{6d550761-f858-4c04-be63-5475fe34219a}')!
+Refactory.Browser.Tests.AddMethodTest comment: ''!
+!Refactory.Browser.Tests.AddMethodTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.AddMethodTest methodsFor!
 
 setUp
 	super setUp.
@@ -22,17 +22,18 @@ testAddMethod
 				toClass: BasicLintRuleTest
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #printString1)
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+				parseTreeFor: #printString1)
 		equals: (RBParser parseMethod: 'printString1 ^super printString')!
 
 testBadMethod
-	self shouldFail: (AddMethodRefactoring 
+	self shouldFail: (AddMethodRefactoring
 				addMethod: 'asdf ^super ^printString'
 				toClass: BasicLintRuleTest
 				inProtocols: #(#accessing))!
 
 testExistingSelector
-	self shouldFail: (AddMethodRefactoring 
+	self shouldFail: (AddMethodRefactoring
 				addMethod: 'printString ^super printString'
 				toClass: BasicLintRuleTest
 				inProtocols: #(#accessing))!
@@ -51,7 +52,7 @@ testModelAddMethod
 
 testModelExistingSelector
 	| refactoring |
-	refactoring := AddMethodRefactoring 
+	refactoring := AddMethodRefactoring
 				model: model
 				addMethod: 'classVarName1 ^super printString'
 				toClass: (model classNamed: #Bar)
@@ -60,17 +61,17 @@ testModelExistingSelector
 
 testModelInheritedSelector
 	| refactoring |
-	refactoring := AddMethodRefactoring 
+	refactoring := AddMethodRefactoring
 				model: model
 				addMethod: 'printString ^super printString'
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
 	self shouldFail: refactoring! !
-!AddMethodTest categoriesFor: #setUp!public!set up! !
-!AddMethodTest categoriesFor: #testAddMethod!public!tests! !
-!AddMethodTest categoriesFor: #testBadMethod!failure tests!public! !
-!AddMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
-!AddMethodTest categoriesFor: #testModelAddMethod!public!tests! !
-!AddMethodTest categoriesFor: #testModelExistingSelector!failure tests!public! !
-!AddMethodTest categoriesFor: #testModelInheritedSelector!failure tests!public! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #setUp!public!set up! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testAddMethod!public!tests! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testBadMethod!failure tests!public! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelAddMethod!public!tests! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelExistingSelector!failure tests!public! !
+!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelInheritedSelector!failure tests!public! !
 

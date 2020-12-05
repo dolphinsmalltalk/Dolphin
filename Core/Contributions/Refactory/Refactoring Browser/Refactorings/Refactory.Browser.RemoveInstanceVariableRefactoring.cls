@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VariableRefactoring subclass: #RemoveInstanceVariableRefactoring
+Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RemoveInstanceVariableRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveInstanceVariableRefactoring guid: (GUID fromString: '{d2991219-2de3-407c-b2e8-dff3b51b51db}')!
-RemoveInstanceVariableRefactoring comment: ''!
-!RemoveInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
-!RemoveInstanceVariableRefactoring methodsFor!
+Refactory.Browser.RemoveInstanceVariableRefactoring guid: (Core.GUID fromString: '{d2991219-2de3-407c-b2e8-dff3b51b51db}')!
+Refactory.Browser.RemoveInstanceVariableRefactoring comment: ''!
+!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RemoveInstanceVariableRefactoring methodsFor!
 
 preconditions
 	| references |
@@ -26,6 +26,6 @@ preconditions
 
 transform
 	class removeInstanceVariable: variableName! !
-!RemoveInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
 

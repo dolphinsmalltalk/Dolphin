@@ -1,42 +1,40 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBAbstractClass subclass: #RBClass
-	instanceVariableNames: 'classVariableNames poolDictionaryNames category'
+Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
+	instanceVariableNames: 'classVariableNames imports category classConstants'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBClass guid: (GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
-RBClass comment: 'RBClass represents a Class.
+Refactory.Browser.RBClass guid: (Core.GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
+Refactory.Browser.RBClass comment: 'RBClass represents a Class.
 
 Instance Variables:
 	category	<Symbol>	name of the category that the class should be compiled in
 	classVariableNames	<SequenceableCollection of: Symbol>	class variables defined by the class
 	poolDictionaryNames	<Collection of: Symbol>	pool variables included by the class'!
-!RBClass categoriesForClass!Refactory-Model! !
-!RBClass methodsFor!
+!Refactory.Browser.RBClass categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBClass methodsFor!
 
 addClassVariable: aString 
-	self privateClassVariableNames add: aString asSymbol.
+	self classVariableNames add: aString.
 	model addClassVariable: aString to: self!
 
-addPoolDictionary: aString 
-	self privatePoolDictionaryNames add: aString asSymbol.
-	model addPool: aString to: self!
+addImport: aString
+	| ref |
+	ref := aString asQualifiedReference.
+	imports := self imports copyWith: ref.
+	model addImport: ref to: self!
 
 allClassVariableNames
 	| sprClass |
 	sprClass := self superclass.
-	^sprClass isNil 
+	^sprClass isNil
 		ifTrue: [self classVariableNames]
 		ifFalse: [sprClass allClassVariableNames , self classVariableNames]!
 
-allPoolDictionaryNames
-	| sprClass |
-	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self poolDictionaryNames]
-		ifFalse: [sprClass allPoolDictionaryNames , self poolDictionaryNames]!
+allImports
+	^self superclass ifNil: [self imports] ifNotNil: [:sprClass | sprClass allImports , self imports]!
 
 category
 	^category isNil 
@@ -46,30 +44,53 @@ category
 category: aSymbol 
 	category := aSymbol!
 
+classBindingNames
+	^self classVariableNames , (self classConstants collect: [:each | each key])!
+
+classConstants
+	classConstants
+		ifNil: [self classConstants: (self isDefined ifTrue: [self realClass classConstants] ifFalse: [#()])].
+	^classConstants!
+
+classConstants: aCollectionOfVariableBindings
+	classConstants := aCollectionOfVariableBindings asOrderedCollection!
+
 classVariableNames
-	^self privateClassVariableNames copy!
+	(classVariableNames isNil and: [self isDefined])
+		ifTrue: [self classVariableNames: self realClass classVariableNames].
+	^classVariableNames!
 
 classVariableNames: aCollectionOfStrings 
-	classVariableNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection!
+	classVariableNames := aCollectionOfStrings asOrderedCollection!
 
 definitionString
 	| definitionStream |
-	#rbFix.	"Refactor out definition printing and take account of variable, bytes, class instance variables, etc"
-	definitionStream := WriteStream on: String new.
+	definitionStream := (String writeStream: 256)
+				locale: SmalltalkLocale.Hex;
+				yourself.
 	self printDefinitionOn: definitionStream.
 	^definitionStream contents!
 
 directlyDefinesClassVariable: aString
-	^self privateClassVariableNames includes: aString asSymbol!
+	^self classVariableNames includes: aString!
 
-directlyDefinesPoolDictionary: aString 
-	^self poolDictionaryNames includes: aString asSymbol!
+directlyImportsNamespace: aString
+	^self imports includes: aString asQualifiedReference!
 
-getPoolDictionaryNames
+fullyQualifiedReference
+	^BindingReference pathString: name!
+
+getImports
 	#rbFix.	"Dolphin stores the pool names in its classes, rather than the pools themselves."
-	^self realClass sharedPoolNames
+	^self realClass imports
 	"sharedPools collect: [:each | Smalltalk keyAtValue: each]"!
+
+imports
+	(self isDefined and: [imports isNil]) ifTrue: [self imports: self realClass imports].
+	^imports!
+
+imports: aCollectionOfStrings
+	imports := (aCollectionOfStrings collect: [:each | each asQualifiedReference]) asArray!
 
 isMeta
 	^false!
@@ -85,14 +106,8 @@ kindOfSubclass
 nonMetaclass
 	^self!
 
-poolDictionaryNames
-	^self privatePoolDictionaryNames copy!
-
-poolDictionaryNames: aCollectionOfStrings 
-	poolDictionaryNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection!
-
-printDefinitionOn: puttableStream 
+printDefinitionOn: puttableStream
+	| constants |
 	puttableStream
 		nextPutAll: self superclass name;
 		space;
@@ -101,108 +116,103 @@ printDefinitionOn: puttableStream
 		print: self name;
 		crtab;
 		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariableNames do: 
-			[:each | 
-			puttableStream
-				space;
-				nextPutAll: each].
+	self instanceVariableNames do: [:each | puttableStream nextPutAll: each]
+		separatedBy: [puttableStream space].
 	puttableStream
 		nextPut: $';
 		crtab;
 		nextPutAll: 'classVariableNames: '''.
-	self classVariableNames do: 
-			[:each | 
-			puttableStream
-				space;
-				nextPutAll: each].
+	self classVariableNames do: [:each | puttableStream nextPutAll: each]
+		separatedBy: [puttableStream space].
 	puttableStream
 		nextPut: $';
 		crtab;
-		nextPutAll: 'poolDictionaries: '''.
-	self poolDictionaryNames do: 
-			[:each | 
-			puttableStream
-				space;
-				nextPutAll: each].
-	puttableStream
-		nextPut: $';
+		nextPutAll: 'imports: ';
+		print: self imports;
 		crtab;
 		nextPutAll: 'classInstanceVariableNames: '''.
-	self metaclass instanceVariableNames do: 
-			[:each | 
-			puttableStream
-				space;
-				nextPutAll: each].
-	puttableStream nextPut: $'!
-
-privateClassVariableNames
-	(classVariableNames isNil and: [self isDefined])
-		ifTrue: [self classVariableNames: self realClass classVarNames].
-	^classVariableNames!
-
-privatePoolDictionaryNames
-	(self isDefined and: [poolDictionaryNames isNil]) 
-		ifTrue: 
-			[#rbFix.	"Extract to #getPoolDictionaryName methods"
-			self poolDictionaryNames: self getPoolDictionaryNames].
-	^poolDictionaryNames!
+	self metaclass instanceVariableNames do: [:each | puttableStream nextPutAll: each]
+		separatedBy: [puttableStream space].
+	puttableStream
+		nextPut: $';
+		crtab;
+		nextPutAll: 'classConstants: {'.
+	constants := self classConstants.
+	constants isEmpty
+		ifFalse: 
+			[constants do: 
+					[:each |
+					puttableStream
+						crtab: 2;
+						print: each]
+				separatedBy: [puttableStream nextPut: $.].
+			puttableStream crtab].
+	puttableStream nextPut: $}!
 
 realName: aSymbol 
 	self realClass: aSymbol asQualifiedReference value!
 
-removeClassVariable: aString 
-	self privateClassVariableNames remove: aString asSymbol.
+removeClassVariable: aString
+	self classVariableNames remove: aString ifAbsent: [self classConstants remove: aString].
 	model removeClassVariable: aString from: self!
 
-removePoolDictionary: aString 
-	self privatePoolDictionaryNames remove: aString asSymbol!
+removeImport: aString
+	imports := self imports copyWithout: aString asQualifiedReference!
 
-renameClassVariable: oldName to: newName around: aBlock 
-	self privateClassVariableNames 
-		at: (self privateClassVariableNames indexOf: oldName asSymbol)
-		put: newName asSymbol.
-	model 
+renameClassVariable: oldName to: newName around: aBlock
+	| varNames |
+	varNames := self classVariableNames.
+	varNames at: (varNames indexOf: oldName) put: newName.
+	model
 		renameClassVariable: oldName
 		to: newName
 		in: self
 		around: aBlock!
 
-sharedPools
-	^self allPoolDictionaryNames
-		collect: [:each | each asQualifiedReference valueOrNil ifNil: [Dictionary new]]! !
-!RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
-!RBClass categoriesFor: #addPoolDictionary:!public!variable accessing! !
-!RBClass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBClass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBClass categoriesFor: #category!accessing!public! !
-!RBClass categoriesFor: #category:!accessing!public! !
-!RBClass categoriesFor: #classVariableNames!accessing!public! !
-!RBClass categoriesFor: #classVariableNames:!accessing!public! !
-!RBClass categoriesFor: #definitionString!accessing!public! !
-!RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBClass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBClass categoriesFor: #getPoolDictionaryNames!helpers!private! !
-!RBClass categoriesFor: #isMeta!public!testing! !
-!RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!RBClass categoriesFor: #nonMetaclass!accessing!public! !
-!RBClass categoriesFor: #poolDictionaryNames!accessing!public! !
-!RBClass categoriesFor: #poolDictionaryNames:!accessing!public! !
-!RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
-!RBClass categoriesFor: #privateClassVariableNames!private! !
-!RBClass categoriesFor: #privatePoolDictionaryNames!private! !
-!RBClass categoriesFor: #realName:!initialize/release!public! !
-!RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
-!RBClass categoriesFor: #removePoolDictionary:!public!variable accessing! !
-!RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
-!RBClass categoriesFor: #sharedPools!accessing!public! !
+replaceImport: oldString with: newString
+	| ref |
+	ref := newString asQualifiedReference.
+	self imports replaceAll: oldString asQualifiedReference with: ref.
+	model addImport: ref to: self!
 
-!RBClass class methodsFor!
+unqualifiedName
+	^(BindingReference splitQualifiedName: name) last asSymbol! !
+!Refactory.Browser.RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
+!Refactory.Browser.RBClass categoriesFor: #addImport:!public!variable accessing! !
+!Refactory.Browser.RBClass categoriesFor: #allClassVariableNames!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #allImports!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #category!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #category:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #classBindingNames!public! !
+!Refactory.Browser.RBClass categoriesFor: #classConstants!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #classConstants:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #classVariableNames!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #classVariableNames:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #definitionString!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
+!Refactory.Browser.RBClass categoriesFor: #directlyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBClass categoriesFor: #fullyQualifiedReference!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #getImports!helpers!private! !
+!Refactory.Browser.RBClass categoriesFor: #imports!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #imports:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #isMeta!public!testing! !
+!Refactory.Browser.RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
+!Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
+!Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
+!Refactory.Browser.RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
+!Refactory.Browser.RBClass categoriesFor: #removeImport:!public!variable accessing! !
+!Refactory.Browser.RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
+!Refactory.Browser.RBClass categoriesFor: #replaceImport:with:!private! !
+!Refactory.Browser.RBClass categoriesFor: #unqualifiedName!public! !
+
+!Refactory.Browser.RBClass class methodsFor!
 
 existing: aBehavior
 	| class |
 	class := aBehavior instanceClass.
-	^(self named: class name)
+	^(self named: class fullName asSymbol)
 		realClass: class;
 		yourself! !
-!RBClass class categoriesFor: #existing:!instance creation!public! !
+!Refactory.Browser.RBClass class categoriesFor: #existing:!instance creation!public! !
 

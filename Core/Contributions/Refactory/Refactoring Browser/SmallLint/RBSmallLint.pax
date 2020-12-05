@@ -1,37 +1,38 @@
 ﻿| package |
 package := Package name: 'RBSmallLint'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser SmallLint
 Copyright (c) John Brant & Don Roberts.'.
 
 
 package setClassNames: #(
-	#{BasicLintRule}
-	#{BlockLintRule}
-	#{CompositeLintRule}
-	#{LintRule}
-	#{MultiEnvironment}
-	#{ParseTreeEnvironment}
-	#{ParseTreeLintRule}
-	#{SmalllintChecker}
-	#{SmalllintContext}
-	#{SmalllintFilterEnvironment}
-	#{TransformationRule}
+	#{Refactory.Browser.BasicLintRule}
+	#{Refactory.Browser.BlockLintRule}
+	#{Refactory.Browser.CompositeLintRule}
+	#{Refactory.Browser.LintRule}
+	#{Refactory.Browser.MultiEnvironment}
+	#{Refactory.Browser.ParseTreeEnvironment}
+	#{Refactory.Browser.ParseTreeLintRule}
+	#{Refactory.Browser.SmalllintChecker}
+	#{Refactory.Browser.SmalllintContext}
+	#{Refactory.Browser.SmalllintFilterEnvironment}
+	#{Refactory.Browser.TransformationRule}
 ).
 
 package setMethodNames: #(
-	#(#{Behavior} #instanceBehavior)
-	#(#{CompiledCode} #needsHybridFrame)
-	#(#{CompiledCode} #withAllBlockMethodsDo:)
-	#(#{CompiledMethod} #equivalentTo:)
-	#(#{Metaclass} #instanceBehavior)
+	#(#{Core.Behavior} #instanceBehavior)
+	#(#{Core.Metaclass} #instanceBehavior)
+	#(#{Kernel.CompiledCode} #needsHybridFrame)
+	#(#{Kernel.CompiledCode} #withAllBlockMethodsDo:)
+	#(#{Kernel.CompiledMethod} #equivalentTo:)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
+	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
 ).
@@ -40,94 +41,102 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #LintRule
+Core.Object subclass: #'Refactory.Browser.LintRule'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SmalllintChecker
+Core.Object subclass: #'Refactory.Browser.SmalllintChecker'
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SmalllintContext
+Core.Object subclass: #'Refactory.Browser.SmalllintContext'
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper subclass: #MultiEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.MultiEnvironment'
 	instanceVariableNames: 'environmentDictionaries'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AndEnvironment subclass: #SmalllintFilterEnvironment
+Refactory.Browser.AndEnvironment subclass: #'Refactory.Browser.SmalllintFilterEnvironment'
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectorEnvironment subclass: #ParseTreeEnvironment
+Refactory.Browser.SelectorEnvironment subclass: #'Refactory.Browser.ParseTreeEnvironment'
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LintRule subclass: #BasicLintRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.BasicLintRule'
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LintRule subclass: #CompositeLintRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.CompositeLintRule'
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LintRule subclass: #TransformationRule
+Refactory.Browser.LintRule subclass: #'Refactory.Browser.TransformationRule'
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicLintRule subclass: #BlockLintRule
+Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.BlockLintRule'
 	instanceVariableNames: 'classBlock methodBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicLintRule subclass: #ParseTreeLintRule
+Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.ParseTreeLintRule'
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!Behavior methodsFor!
+!Core.Behavior methodsFor!
 
 instanceBehavior
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self! !
-!Behavior categoriesFor: #instanceBehavior!accessing!public! !
+!Core.Behavior categoriesFor: #instanceBehavior!accessing!public! !
 
-!CompiledCode methodsFor!
+!Core.Metaclass methodsFor!
+
+instanceBehavior
+	"Answer the receiver's singleton instance (the actual class object)."
+
+	^instanceClass! !
+!Core.Metaclass categoriesFor: #instanceBehavior!accessing!public! !
+
+!Kernel.CompiledCode methodsFor!
 
 needsHybridFrame
 	^self needsContext!
 
 withAllBlockMethodsDo: operation
 	operation value: self! !
-!CompiledCode categoriesFor: #needsHybridFrame!private!testing! !
-!CompiledCode categoriesFor: #withAllBlockMethodsDo:!enumerating!private! !
+!Kernel.CompiledCode categoriesFor: #needsHybridFrame!private!testing! !
+!Kernel.CompiledCode categoriesFor: #withAllBlockMethodsDo:!enumerating!private! !
 
-!CompiledMethod methodsFor!
+!Kernel.CompiledMethod methodsFor!
 
 equivalentTo: aCompiledMethod
 	| selfParseTree source |
@@ -138,10 +147,10 @@ equivalentTo: aCompiledMethod
 	self literals = aCompiledMethod literals ifFalse: [^false].
 	source := self getSource.
 	source isNil ifTrue: [^false].
-	selfParseTree := RBParser parseMethod: source onError: [:string :pos | ^false].
+	selfParseTree := Refactory.Browser.RBParser parseMethod: source onError: [:string :pos | ^false].
 	source := aCompiledMethod getSource.
 	source isNil ifTrue: [^false].
-	^selfParseTree equalTo: (RBParser parseMethod: source onError: [:string :pos | ^false])
+	^selfParseTree equalTo: (Refactory.Browser.RBParser parseMethod: source onError: [:string :pos | ^false])
 		exceptForVariables: #()
 	"
 	^self = aCompiledMethod or: [self class == aCompiledMethod class and: [self numArgs == aCompiledMethod numArgs
@@ -156,15 +165,7 @@ equivalentTo: aCompiledMethod
 								in: aCompiledMethod mclass
 								method: aCompiledMethod.
 					selfParseTree = methodParseTree]]]"! !
-!CompiledMethod categoriesFor: #equivalentTo:!public!RefactoringBrowser! !
-
-!Metaclass methodsFor!
-
-instanceBehavior
-	"Answer the receiver's singleton instance (the actual class object)."
-
-	^instanceClass! !
-!Metaclass categoriesFor: #instanceBehavior!accessing!public! !
+!Kernel.CompiledMethod categoriesFor: #equivalentTo:!public!RefactoringBrowser! !
 
 "End of package definition"!
 

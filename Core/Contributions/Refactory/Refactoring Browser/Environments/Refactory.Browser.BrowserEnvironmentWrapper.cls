@@ -1,25 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironment subclass: #BrowserEnvironmentWrapper
+Refactory.Browser.BrowserEnvironment subclass: #'Refactory.Browser.BrowserEnvironmentWrapper'
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrowserEnvironmentWrapper guid: (GUID fromString: '{73290c8c-a79f-4c55-805c-41c6ed19a64b}')!
-BrowserEnvironmentWrapper comment: 'BrowserEnvironmentWrapper is a wrapper for BrowserEnvironments that limits what is shown. While it does not have any #subclassResponsibility methods, it is an abstract class since it doesn''t provide any useful behavior by itself
+Refactory.Browser.BrowserEnvironmentWrapper guid: (Core.GUID fromString: '{73290c8c-a79f-4c55-805c-41c6ed19a64b}')!
+Refactory.Browser.BrowserEnvironmentWrapper comment: 'BrowserEnvironmentWrapper is a wrapper for BrowserEnvironments that limits what is shown. While it does not have any #subclassResponsibility methods, it is an abstract class since it doesn''t provide any useful behavior by itself
 
 Instance Variables:
 	environment	<BrowserEnvironment>	the environment we''re wrapping'!
-!BrowserEnvironmentWrapper categoriesForClass!Refactory-Environments! !
-!BrowserEnvironmentWrapper methodsFor!
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.BrowserEnvironmentWrapper methodsFor!
 
 allClasses
 	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
 
+	"Note the inconsistency with allClassesDo:, which enumerates both class and metaclasses, and might have been better named #allBehaviorsDo:"
+
 	| allClasses |
 	allClasses := Array writeStream: 4096.
-	self allClassesDo: [:each | allClasses nextPut: each].
+	self classesDo: [:each | each isMeta ifFalse: [allClasses nextPut: each]].
 	^allClasses contents!
 
 allClassesDo: aBlock
@@ -58,8 +60,8 @@ classesDo: aBlock
 
 classNames
 	| names |
-	names := IdentitySet new.
-	self classesDo: [:each | names add: each instanceClass name].
+	names := Set new.
+	self classesDo: [:each | names add: each instanceClass fullName].
 	^names!
 
 definesClass: aClass
@@ -108,32 +110,32 @@ progressBlock
 progressBlock: aMonadicValuable 
 	progressBlock := aMonadicValuable!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream
 		nextPutAll: '(';
-		nextPutAll: self class name;
+		nextPutAll: self class fullName;
 		nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPut: $)! !
-!BrowserEnvironmentWrapper categoriesFor: #allClasses!enumerating!public! !
-!BrowserEnvironmentWrapper categoriesFor: #allClassesDo:!enumerating!private! !
-!BrowserEnvironmentWrapper categoriesFor: #classesDo:!accessing/classes!public! !
-!BrowserEnvironmentWrapper categoriesFor: #classNames!accessing/classes!public! !
-!BrowserEnvironmentWrapper categoriesFor: #definesClass:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #environment!accessing!private! !
-!BrowserEnvironmentWrapper categoriesFor: #includesCategory:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesClass:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesProtocol:in:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesSelector:in:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #isEmpty!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #isSystem!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #numberSelectors!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #onEnvironment:!initialize/release!public! !
-!BrowserEnvironmentWrapper categoriesFor: #progressBlock!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #progressBlock:!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #allClasses!enumerating!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #allClassesDo:!enumerating!private! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #classesDo:!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #classNames!accessing/classes!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #definesClass:!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #environment!accessing!private! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesCategory:!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesProtocol:in:!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #isEmpty!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #isSystem!public!testing! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #numberSelectors!accessing!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #onEnvironment:!initialize/release!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #progressBlock!accessing!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #progressBlock:!accessing!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #storeOn:!printing!public! !
 
-!BrowserEnvironmentWrapper class methodsFor!
+!Refactory.Browser.BrowserEnvironmentWrapper class methodsFor!
 
 new
 	^self onEnvironment: BrowserEnvironment new!
@@ -143,6 +145,6 @@ onEnvironment: anEnvironment
 		initialize;
 		onEnvironment: anEnvironment;
 		yourself! !
-!BrowserEnvironmentWrapper class categoriesFor: #new!instance creation!public! !
-!BrowserEnvironmentWrapper class categoriesFor: #onEnvironment:!instance creation!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper class categoriesFor: #onEnvironment:!instance creation!public! !
 

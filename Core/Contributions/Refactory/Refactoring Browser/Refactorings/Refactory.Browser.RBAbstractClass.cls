@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RBAbstractClass
+Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
 	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
 	classVariableNames: 'LookupSuperclass'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBAbstractClass guid: (GUID fromString: '{99469076-f20a-4a7f-91f1-c2d06d948a14}')!
-RBAbstractClass isAbstract: true!
-RBAbstractClass comment: 'RBAbstractClass is an abstract class. It represents classes in the system. Refactorings operate on these objects, producing change objects. These change objects are then performed on the real code.
+Refactory.Browser.RBAbstractClass guid: (Core.GUID fromString: '{99469076-f20a-4a7f-91f1-c2d06d948a14}')!
+Refactory.Browser.RBAbstractClass isNonInstantiable: true!
+Refactory.Browser.RBAbstractClass comment: 'RBAbstractClass is an abstract class. It represents classes in the system. Refactorings operate on these objects, producing change objects. These change objects are then performed on the real code.
 
 Subclasses must implement the following messages:
 	accessing
@@ -34,8 +34,8 @@ Class Variables:
 	LookupSuperclass	<Object>	a special object denoting that our superclass hasn''t been assigned yet
 
 '!
-!RBAbstractClass categoriesForClass!Refactory-Model! !
-!RBAbstractClass methodsFor!
+!Refactory.Browser.RBAbstractClass categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBAbstractClass methodsFor!
 
 = aRBClass 
 	^self class = aRBClass class 
@@ -56,15 +56,15 @@ addSubclass: aRBClass
 allClassVariableNames
 	^self subclassResponsibility!
 
+allImports
+	^self subclassResponsibility!
+
 allInstanceVariableNames
 	| sprClass |
 	sprClass := self superclass.
 	^sprClass isNil 
 		ifTrue: [self instanceVariableNames]
 		ifFalse: [sprClass allInstanceVariableNames , self instanceVariableNames]!
-
-allPoolDictionaryNames
-	^self subclassResponsibility!
 
 allSelectors
 	| class selectors |
@@ -111,15 +111,11 @@ allSuperclassesDo: aMonadicValuable
 	current isNil] 
 			whileFalse: [aMonadicValuable value: current]!
 
-bindingFor: aString 
-	^self realClass classPool associationAt: aString asSymbol
-		ifAbsent: [self realClass classPool associationAt: aString asString ifAbsent: [nil]]!
-
-classBinding
+binding
 	^self name asQualifiedReference binding!
 
-classVarNames
-	^self nonMetaclass classVariableNames!
+bindingFor: aString
+	^self realClass bindingFor: aString!
 
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
@@ -128,11 +124,11 @@ compile: aString
 
 compile: aString classified: aSymbolCollection
 	| change method |
-	change := model 
+	change := model
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := RBMethod 
+	method := RBMethod
 				for: self
 				source: aString
 				selector: change selector.
@@ -163,12 +159,6 @@ definesMethod: aSelector
 	(self directlyDefinesMethod: aSelector) ifTrue: [^true].
 	^self superclass notNil and: [self superclass definesMethod: aSelector]!
 
-definesPoolDictionary: aSymbol 
-	(self directlyDefinesPoolDictionary: aSymbol) ifTrue: [^true].
-	^self inheritsPoolDictionaries and: 
-			[self superclass notNil 
-				and: [self superclass definesPoolDictionary: aSymbol]]!
-
 definesVariable: aVariableName 
 	^(self definesClassVariable: aVariableName) 
 		or: [self definesInstanceVariable: aVariableName]!
@@ -186,19 +176,30 @@ directlyDefinesMethod: aSelector
 			(self realClass includesSelector: aSelector) ifTrue: [^true]].
 	^newMethods notNil and: [newMethods includesKey: aSelector]!
 
-directlyDefinesPoolDictionary: aString 
-	self subclassResponsibility!
-
 directlyDefinesVariable: aVariableName 
 	^(self directlyDefinesClassVariable: aVariableName) 
 		or: [self directlyDefinesInstanceVariable: aVariableName]!
 
-existingMethodsThatReferTo: aSymbol 
+directlyImportsNamespace: aString
+	^self subclassResponsibility!
+
+existingMethodsThatReferTo: anObject
 	| existingMethods |
-	existingMethods := self realClass whichSelectorsReferTo: aSymbol.
+	existingMethods := self realClass whichSelectorsReferTo: anObject.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	^existingMethods 
-		reject: [:each | (self hasRemoved: each) or: [self newMethods includesKey: each]]!
+	^existingMethods reject: [:each | (self hasRemoved: each) or: [self newMethods includesKey: each]]!
+
+existingMethodsThatReferToAnyOf: aCollection
+	| existingMethods |
+	existingMethods := self realClass whichSelectorsReferToAnyOf: aCollection.
+	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
+	^existingMethods reject: [:each | (self hasRemoved: each) or: [self newMethods includesKey: each]]!
+
+fullName
+	^name!
+
+fullyQualifiedReference
+	^self subclassResponsibility!
 
 hash
 	^self name hash bitXor: self class hash!
@@ -218,13 +219,18 @@ hierarchyDefinesMethod: aSelector
 	(self definesMethod: aSelector) ifTrue: [^true].
 	^self subclassRedefines: aSelector!
 
-hierarchyDefinesPoolDictionary: aString 
-	(self definesPoolDictionary: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyDefinesPoolDictionary: aString]!
-
 hierarchyDefinesVariable: aString 
 	(self definesVariable: aString) ifTrue: [^true].
 	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]!
+
+hierarchyImportsNamespace: aString
+	(self importsNamespace: aString) ifTrue: [^true].
+	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aString]!
+
+importsNamespace: aSymbol
+	(self directlyImportsNamespace: aSymbol) ifTrue: [^true].
+	^self inheritsPoolDictionaries
+		and: [self superclass notNil and: [self superclass importsNamespace: aSymbol]]!
 
 includesClass: aRBClass 
 	| currentClass |
@@ -244,7 +250,7 @@ instanceClass
 instanceVariableNames
 	^self privateInstanceVariableNames copy!
 
-instanceVariableNames: aCollectionOfStrings 
+instanceVariableNames: aCollectionOfStrings
 	instanceVariableNames := OrderedCollection withAll: aCollectionOfStrings!
 
 isAbstract
@@ -275,7 +281,7 @@ isVariable
 metaclass
 	^model metaclassNamed: self name!
 
-methodFor: aSelector 
+methodFor: aSelector
 	^self newMethods at: aSelector
 		ifAbsent: 
 			[| compiledMethod class |
@@ -283,10 +289,10 @@ methodFor: aSelector
 			class := self realClass.
 			class isNil ifTrue: [^nil].
 			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [nil].
-			compiledMethod isNil 
+			compiledMethod isNil
 				ifTrue: [nil]
 				ifFalse: 
-					[RBMethod 
+					[RBMethod
 						for: self
 						fromMethod: compiledMethod
 						andSelector: aSelector]]!
@@ -310,12 +316,10 @@ nearestRealClass
 		ifFalse: [self realClass]!
 
 newMethods
-	^newMethods isNil 
-		ifTrue: [newMethods := IdentityDictionary new]
-		ifFalse: [newMethods]!
+	^newMethods isNil ifTrue: [newMethods := IdentityDictionary new] ifFalse: [newMethods]!
 
 nonMetaclass
-	^model classNamed: self name!
+	^model classNamed: self fullName!
 
 parseTreeFor: aSelector 
 	| class |
@@ -330,24 +334,23 @@ printOn: aStream
 	aStream nextPutAll: self name!
 
 privateInstanceVariableNames
-	instanceVariableNames isNil 
+	instanceVariableNames isNil
 		ifTrue: 
-			[self isDefined 
+			[self isDefined
 				ifTrue: [self instanceVariableNames: self realClass instVarNames]
 				ifFalse: [instanceVariableNames := OrderedCollection new]].
 	^instanceVariableNames!
 
-protocolsFor: aSelector 
+protocolsFor: aSelector
 	| change |
-	#rbFix. "Added to support Dolphin's multiple method categories"
-	change := self isMeta 
+	#rbFix.	"Added to support Dolphin's multiple method categories"
+	change := self isMeta
 				ifTrue: [model changes changeForMetaclass: name selector: aSelector]
 				ifFalse: [model changes changeForClass: name selector: aSelector].
-	^change isNil 
+	^change isNil
 		ifTrue: 
-			[self isDefined 
-				ifTrue: 
-					[BrowserEnvironment new whichProtocolsInclude: aSelector in: self realClass]
+			[self isDefined
+				ifTrue: [BrowserEnvironment new whichProtocolsInclude: aSelector in: self realClass]
 				ifFalse: [#(#accessing)]]
 		ifFalse: [change protocols]!
 
@@ -359,9 +362,7 @@ realClass: aClass
 	superclass isNil ifTrue: [superclass := LookupSuperclass]!
 
 removedMethods
-	^removedMethods isNil 
-		ifTrue: [removedMethods := Set new]
-		ifFalse: [removedMethods]!
+	^removedMethods isNil ifTrue: [removedMethods := Set new] ifFalse: [removedMethods]!
 
 removeInstanceVariable: aString 
 	self privateInstanceVariableNames remove: aString.
@@ -389,12 +390,17 @@ selectors
 	| selectors |
 	selectors := Set new.
 	selectors addAll: self newMethods keys.
-	self isDefined 
+	self isDefined
 		ifTrue: 
 			[selectors addAll: self realClass selectors.
-			removedMethods notNil 
-				ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
+			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
 	^selectors!
+
+shortName
+	^name!
+
+shortName: aString
+	name := aString!
 
 soleInstance
 	^self nonMetaclass!
@@ -410,13 +416,13 @@ storeOn: aStream
 
 subclasses
 	#rbFix.	"Dolphin doesn't include Object class as a subclass of class, so we implement #subBehaviors which does"
-	subclasses isNil 
+	subclasses isNil
 		ifTrue: 
 			[#rbFix.	"If the model's environment doesn't include all the subclasses, then the original code ends up with nils in the collection"
 			subclasses := OrderedCollection new.
-			self isDefined 
+			self isDefined
 				ifTrue: 
-					[self realClass subBehaviors 
+					[self realClass subBehaviors
 						do: [:each | (model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
 	^subclasses!
 
@@ -437,55 +443,54 @@ superclass: aRBClass
 	superclass := aRBClass.
 	superclass notNil ifTrue: [superclass addSubclass: self].!
 
-typeOfClassVariable: aSymbol 
-	^model classNamed: #Object!
+typeOfClassVariable: aSymbol
+	^model classNamed: #'Core.Object'!
 
-whichMethodsReferToSymbol: aSymbol 
+whichMethodsReferToSymbol: aSymbol
 	| selectors |
 	selectors := Set new.
-	self newMethods 
-		do: [:each | (each refersToSymbol: aSymbol) ifTrue: [selectors add: each selector]].
+	self newMethods do: [:each | (each refersToSymbol: aSymbol) ifTrue: [selectors add: each selector]].
 	self isDefined ifTrue: [selectors addAll: (self existingMethodsThatReferTo: aSymbol)].
 	^selectors collect: [:sel | self methodFor: sel]!
 
 whichSelectorsReferToClass: aRBClass
 	| selectors |
 	selectors := IdentitySet new.
-	self newMethods
-		do: [:each | (each refersToClassNamed: aRBClass name) ifTrue: [selectors add: each selector]].
+	self newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [selectors add: each selector]].
 	(self isDefined and: [aRBClass isDefined])
 		ifTrue: 
-			[selectors addAll: (self existingMethodsThatReferTo: aRBClass classBinding).
-			selectors addAll: (self existingMethodsThatReferTo: aRBClass name)].
+			[#namespaceToDo.	"Bodge to search for unqualified name symbols"
+			selectors
+				addAll: (self existingMethodsThatReferToAnyOf: {aRBClass binding.
+								aRBClass name asSymbol.
+								aRBClass unqualifiedName asSymbol})].
 	^selectors!
 
-whichSelectorsReferToClassVariable: aString 
+whichSelectorsReferToClassVariable: aString
 	| selectors |
-	#rbFix. "From John Brant, 2001-08-03, supercedes wiki patch"
+	#rbFix.	"From John Brant, 2001-08-03, supercedes wiki patch"
 	selectors := Set new.
-	self newMethods 
+	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	self nonMetaclass isDefined 
+	self nonMetaclass isDefined
 		ifTrue: 
 			[| binding definingClass |
-			definingClass := self nonMetaclass realClass 
-						whichClassDefinesClassVar: aString asString.
-			definingClass notNil 
-				ifTrue: [binding := (model classFor: definingClass) bindingFor: aString].
+			definingClass := self nonMetaclass realClass whichClassDefinesClassVar: aString asString.
+			definingClass notNil ifTrue: [binding := (model classFor: definingClass) bindingFor: aString].
 			binding isNil ifTrue: [^selectors].
-			selectors addAll: ((self realClass whichSelectorsReferTo: binding) 
-						reject: [:each | self hasRemoved: each])].
+			selectors
+				addAll: ((self realClass whichSelectorsReferTo: binding) reject: [:each | self hasRemoved: each])].
 	^selectors!
 
-whichSelectorsReferToInstanceVariable: aString 
+whichSelectorsReferToInstanceVariable: aString
 	| selectors |
 	selectors := Set new.
-	self newMethods 
+	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	self isDefined 
+	self isDefined
 		ifTrue: 
-			[selectors addAll: ((self realClass whichSelectorsAccess: aString) 
-						reject: [:each | self hasRemoved: each])].
+			[selectors
+				addAll: ((self realClass whichSelectorsAccess: aString) reject: [:each | self hasRemoved: each])].
 	^selectors!
 
 whoDefinesClassVariable: aString 
@@ -529,96 +534,100 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
-!RBAbstractClass categoriesFor: #=!comparing!public! !
-!RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #addSubclass:!private! !
-!RBAbstractClass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allInstanceVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allSelectors!method accessing!public! !
-!RBAbstractClass categoriesFor: #allSubclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #allSubclassesBreadthFirstDo:!accessing!public! !
-!RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
-!RBAbstractClass categoriesFor: #bindingFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #classBinding!accessing!public! !
-!RBAbstractClass categoriesFor: #classVarNames!public! !
-!RBAbstractClass categoriesFor: #compile:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compileTree:classified:!method accessing!public! !
-!RBAbstractClass categoriesFor: #definesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #definesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #definesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #definesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #definesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #existingMethodsThatReferTo:!method accessing!public! !
-!RBAbstractClass categoriesFor: #hash!comparing!public! !
-!RBAbstractClass categoriesFor: #hasRemoved:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #includesClass:!public!testing! !
-!RBAbstractClass categoriesFor: #inheritsPoolDictionaries!public!testing! !
-!RBAbstractClass categoriesFor: #instanceClass!accessing!public! !
-!RBAbstractClass categoriesFor: #instanceVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #instanceVariableNames:!accessing!public! !
-!RBAbstractClass categoriesFor: #isAbstract!public!testing! !
-!RBAbstractClass categoriesFor: #isBytes!instance specification-testing!public! !
-!RBAbstractClass categoriesFor: #isDefined!public!testing! !
-!RBAbstractClass categoriesFor: #isMeta!public!testing! !
-!RBAbstractClass categoriesFor: #isPointers!public!testing! !
-!RBAbstractClass categoriesFor: #isVariable!public!testing! !
-!RBAbstractClass categoriesFor: #metaclass!accessing!public! !
-!RBAbstractClass categoriesFor: #methodFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #model!accessing!public! !
-!RBAbstractClass categoriesFor: #model:!initialize/release!public! !
-!RBAbstractClass categoriesFor: #name!accessing!public! !
-!RBAbstractClass categoriesFor: #name:!accessing!public! !
-!RBAbstractClass categoriesFor: #nearestRealClass!accessing!private! !
-!RBAbstractClass categoriesFor: #newMethods!accessing!public! !
-!RBAbstractClass categoriesFor: #nonMetaclass!accessing!public! !
-!RBAbstractClass categoriesFor: #parseTreeFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #primaryInstance!accessing!public! !
-!RBAbstractClass categoriesFor: #printOn:!printing!public! !
-!RBAbstractClass categoriesFor: #privateInstanceVariableNames!accessing!private! !
-!RBAbstractClass categoriesFor: #protocolsFor:!accessing!public! !
-!RBAbstractClass categoriesFor: #realClass!accessing!public! !
-!RBAbstractClass categoriesFor: #realClass:!accessing!public! !
-!RBAbstractClass categoriesFor: #removedMethods!accessing!public! !
-!RBAbstractClass categoriesFor: #removeInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #removeMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #removeSubclass:!accessing!public! !
-!RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #selectors!method accessing!public! !
-!RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
-!RBAbstractClass categoriesFor: #sourceCodeFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #storeOn:!printing!public! !
-!RBAbstractClass categoriesFor: #subclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #subclassRedefines:!public!testing! !
-!RBAbstractClass categoriesFor: #superclass!accessing!public! !
-!RBAbstractClass categoriesFor: #superclass:!accessing!private! !
-!RBAbstractClass categoriesFor: #typeOfClassVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whichMethodsReferToSymbol:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToClass:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToClassVariable:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToInstanceVariable:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whoDefinesClassVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whoDefinesInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whoDefinesMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #withAllSubclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #withAllSuperclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #withAllSuperclassesDo:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #=!comparing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #addSubclass:!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allClassVariableNames!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allImports!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allInstanceVariableNames!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allSelectors!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allSubclasses!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allSubclassesBreadthFirstDo:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #binding!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #bindingFor:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #compile:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:classified:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #definesClassVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #definesInstanceVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #definesMethod:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #definesVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesMethod:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #directlyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferTo:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferToAnyOf:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #fullName!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #fullyQualifiedReference!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hash!comparing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hasRemoved:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesClassVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesInstanceVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesMethod:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesVariable:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #importsNamespace:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #inheritsPoolDictionaries!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #instanceClass!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #instanceVariableNames!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #instanceVariableNames:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isAbstract!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isBytes!instance specification-testing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isDefined!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isMeta!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isPointers!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #isVariable!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #metaclass!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #methodFor:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #model!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #model:!initialize/release!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #name!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #name:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #nearestRealClass!accessing!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #newMethods!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #nonMetaclass!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #parseTreeFor:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #primaryInstance!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #privateInstanceVariableNames!accessing!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #protocolsFor:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #realClass!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #realClass:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #removedMethods!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #removeInstanceVariable:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #removeMethod:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #removeSubclass:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #selectors!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #shortName!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #shortName:!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #sourceCodeFor:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #subclasses!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #subclassRedefines:!public!testing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #superclass!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #superclass:!accessing!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #typeOfClassVariable:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whichMethodsReferToSymbol:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToClass:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToClassVariable:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToInstanceVariable:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesClassVariable:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesInstanceVariable:!public!variable accessing! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesMethod:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSubclasses!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSuperclasses!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSuperclassesDo:!accessing!public! !
 
-!RBAbstractClass class methodsFor!
+!Refactory.Browser.RBAbstractClass class methodsFor!
 
 existing: aBehavior
 	^self subclassResponsibility!
@@ -640,9 +649,9 @@ new
 	"RBClasses must always be #named:"
 
 	^self shouldNotImplement! !
-!RBAbstractClass class categoriesFor: #existing:!instance creation!public! !
-!RBAbstractClass class categoriesFor: #existingNamed:!instance creation!public! !
-!RBAbstractClass class categoriesFor: #initialize!class initialization!public! !
-!RBAbstractClass class categoriesFor: #named:!instance creation!public! !
-!RBAbstractClass class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RBAbstractClass class categoriesFor: #existing:!instance creation!public! !
+!Refactory.Browser.RBAbstractClass class categoriesFor: #existingNamed:!instance creation!public! !
+!Refactory.Browser.RBAbstractClass class categoriesFor: #initialize!class initialization!public! !
+!Refactory.Browser.RBAbstractClass class categoriesFor: #named:!instance creation!public! !
+!Refactory.Browser.RBAbstractClass class categoriesFor: #new!instance creation!public! !
 

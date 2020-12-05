@@ -1,22 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ChangeMethodNameRefactoring subclass: #RemoveParameterRefactoring
+Refactory.Browser.ChangeMethodNameRefactoring subclass: #'Refactory.Browser.RemoveParameterRefactoring'
 	instanceVariableNames: 'parameterIndex argument'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RemoveParameterRefactoring guid: (GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
-RemoveParameterRefactoring comment: ''!
-!RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !
-!RemoveParameterRefactoring methodsFor!
+Refactory.Browser.RemoveParameterRefactoring guid: (Core.GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
+Refactory.Browser.RemoveParameterRefactoring comment: ''!
+!Refactory.Browser.RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RemoveParameterRefactoring methodsFor!
 
 computeNewSelector
 	| keywords stream |
-	oldSelector argumentCount == 0 
-		ifTrue: [self refactoringError: 'This method contains no arguments'].
-	oldSelector isInfix 
-		ifTrue: [self refactoringError: 'Cannot remove parameters of infix selectors'].
+	oldSelector argumentCount == 0 ifTrue: [self refactoringError: 'This method contains no arguments'].
+	oldSelector isInfix ifTrue: [self refactoringError: 'Cannot remove parameters of infix selectors'].
 	keywords := oldSelector keywords asOrderedCollection.
 	keywords size = 1 ifTrue: [^(keywords first copyWithout: $:) asSymbol].
 	keywords removeAtIndex: parameterIndex.
@@ -73,14 +71,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.
 	aStream nextPut: $)! !
-!RemoveParameterRefactoring categoriesFor: #computeNewSelector!private! !
-!RemoveParameterRefactoring categoriesFor: #getNewSelector!public!transforming! !
-!RemoveParameterRefactoring categoriesFor: #hasReferencesToTemporaryIn:!public!transforming! !
-!RemoveParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!RemoveParameterRefactoring categoriesFor: #removeParameter:in:selector:!initialize/release!public! !
-!RemoveParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #computeNewSelector!private! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #getNewSelector!public!transforming! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #hasReferencesToTemporaryIn:!public!transforming! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #removeParameter:in:selector:!initialize/release!public! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #storeOn:!printing!public! !
 
-!RemoveParameterRefactoring class methodsFor!
+!Refactory.Browser.RemoveParameterRefactoring class methodsFor!
 
 model: aRBNamespace removeParameter: aString in: aClass selector: aSelector 
 	^(self new)
@@ -92,6 +90,6 @@ model: aRBNamespace removeParameter: aString in: aClass selector: aSelector
 
 removeParameter: aString in: aClass selector: aSelector
 	^self new removeParameter: aString in: aClass selector: aSelector! !
-!RemoveParameterRefactoring class categoriesFor: #model:removeParameter:in:selector:!instance creation!public! !
-!RemoveParameterRefactoring class categoriesFor: #removeParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.RemoveParameterRefactoring class categoriesFor: #model:removeParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.RemoveParameterRefactoring class categoriesFor: #removeParameter:in:selector:!instance creation!public! !
 
