@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'WinHttp'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk WinHttp Package. 
 
@@ -8,20 +8,22 @@ This package implements a Smalltalk mapping for the Microsoft WinHttp component,
 
 
 package setClassNames: #(
-	#{IWinHttpRequest}
-	#{IWinHttpRequestEvents}
-	#{WinHttpConstants}
+	#{WinHttp}
+	#{WinHttp.IWinHttpRequest}
+	#{WinHttp.IWinHttpRequestEvents}
+	#{WinHttp.WinHttpConstants}
 ).
 
 package setVariableNames: #(
-	#{WinHttpLib}
+	#{WinHttp.WinHttpLib}
 ).
 
 package setBinaryVariableNames: #(
-	#{WinHttpLib}
+	#{WinHttp.WinHttpLib}
 ).
 
 package setPrerequisites: #(
+	'..\..\Deprecated\ActiveX (Deprecated)'
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
@@ -31,7 +33,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #WinHttpConstants
+Kernel.Namespace subclass: #WinHttp
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM private} #{OS private} #{WinHttp.WinHttpConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'WinHttp.WinHttpConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -72,16 +80,16 @@ SharedPool subclass: #WinHttpConstants
 		'WinHttpRequestOption_UrlEscapeDisableQuery' -> 16r8.
 		'WinHttpRequestOption_UserAgentString' -> 16r0
 	}!
-IUnknown subclass: #IWinHttpRequestEvents
+OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttpConstants})
+	imports: #(#{WinHttp.WinHttpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IWinHttpRequest
+OS.COM.IDispatch subclass: #'WinHttp.IWinHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttpConstants})
+	imports: #(#{WinHttp.WinHttpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

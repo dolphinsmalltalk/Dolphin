@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IWinHttpRequest
+OS.COM.IDispatch subclass: #'WinHttp.IWinHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpConstants'
+	imports: #(#{WinHttp.WinHttpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IWinHttpRequest guid: (IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!
-IWinHttpRequest comment: '<IWinHttpRequest> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
+WinHttp.IWinHttpRequest guid: (OS.COM.IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!
+WinHttp.IWinHttpRequest comment: '<IWinHttpRequest> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IWinHttpRequest Interface"
@@ -97,8 +97,8 @@ interface IWinHttpRequest : IDispatch
 		[in]WinHttpRequestAutoLogonPolicy AutoLogonPolicy);
 };
 '!
-!IWinHttpRequest categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
-!IWinHttpRequest methodsFor!
+!WinHttp.IWinHttpRequest categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
+!WinHttp.IWinHttpRequest methodsFor!
 
 abort
 	"Invoke the Abort() method of the COM object.
@@ -517,52 +517,52 @@ WaitForResponse: timeout succeeded: succeeded
 
 	<virtual stdcall: hresult 22 variant varbool*>
 	^self invalidCall: _failureCode! !
-!IWinHttpRequest categoriesFor: #abort!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_ResponseBody:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_ResponseStream:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_ResponseText:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_Status:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #get_StatusText:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #GetResponseHeader:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IWinHttpRequest categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IWinHttpRequest categoriesFor: #open:url:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #open:url:async:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #Open:url:async:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #option:!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #option:value:!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #put_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setAutoLogonPolicy:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetAutoLogonPolicy:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setClientCertificate:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetClientCertificate:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setCredentials:password:flags:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetCredentials:password:flags:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setProxy:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #setProxy:proxyServer:bypassList:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetProxy:proxyServer:bypassList:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setRequestHeader:value:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetRequestHeader:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #setTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
-!IWinHttpRequest categoriesFor: #status!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
-!IWinHttpRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
-!IWinHttpRequest categoriesFor: #WaitForResponse:succeeded:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #abort!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_ResponseBody:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_ResponseStream:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_ResponseText:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_Status:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #get_StatusText:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #GetResponseHeader:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!WinHttp.IWinHttpRequest categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!WinHttp.IWinHttpRequest categoriesFor: #open:url:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #open:url:async:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #Open:url:async:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #option:!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #option:value:!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #put_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setAutoLogonPolicy:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetAutoLogonPolicy:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setClientCertificate:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetClientCertificate:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setCredentials:password:flags:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetCredentials:password:flags:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setProxy:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #setProxy:proxyServer:bypassList:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetProxy:proxyServer:bypassList:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setRequestHeader:value:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetRequestHeader:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #setTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
+!WinHttp.IWinHttpRequest categoriesFor: #status!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
+!WinHttp.IWinHttpRequest categoriesFor: #WaitForResponse:succeeded:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
 
-!IWinHttpRequest class methodsFor!
+!WinHttp.IWinHttpRequest class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (WinHttpRequest) for which the receiver is the default interface."
@@ -613,6 +613,6 @@ defineFunctions
 		defineFunction: #SetAutoLogonPolicy:
 			argumentTypes: 'sdword'
 ! !
-!IWinHttpRequest class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IWinHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!WinHttp.IWinHttpRequest class categoriesFor: #clsid!**auto generated**!constants!private! !
+!WinHttp.IWinHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

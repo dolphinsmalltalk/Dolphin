@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IWinHttpRequestEvents
+OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpConstants'
+	imports: #(#{WinHttp.WinHttpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IWinHttpRequestEvents guid: (IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!
-IWinHttpRequestEvents comment: '<IWinHttpRequestEvents> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
+WinHttp.IWinHttpRequestEvents guid: (OS.COM.IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!
+WinHttp.IWinHttpRequestEvents comment: '<IWinHttpRequestEvents> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IWinHttpRequestEvents Interface"
@@ -40,8 +40,8 @@ interface IWinHttpRequestEvents : IUnknown
 		[in]BSTR ErrorDescription);
 };
 '!
-!IWinHttpRequestEvents categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
-!IWinHttpRequestEvents methodsFor!
+!WinHttp.IWinHttpRequestEvents categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
+!WinHttp.IWinHttpRequestEvents methodsFor!
 
 OnError: errorNumber errorDescription: errorDescription
 	"Invoke the OnError() method of the COM object.
@@ -79,12 +79,12 @@ OnResponseStart: status contentType: contentType
 
 	<virtual stdcall: void 4 sdword bstr>
 	^self invalidCall: _failureCode! !
-!IWinHttpRequestEvents categoriesFor: #OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!IWinHttpRequestEvents categoriesFor: #OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!IWinHttpRequestEvents categoriesFor: #OnResponseFinished!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!IWinHttpRequestEvents categoriesFor: #OnResponseStart:contentType:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!WinHttp.IWinHttpRequestEvents categoriesFor: #OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseFinished!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseStart:contentType:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
 
-!IWinHttpRequestEvents class methodsFor!
+!WinHttp.IWinHttpRequestEvents class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WinHttp.IWinHttpRequestEvents'
@@ -103,5 +103,5 @@ defineFunctions
 			returnType: 'void'
 			argumentTypes: 'sdword bstr'
 ! !
-!IWinHttpRequestEvents class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!WinHttp.IWinHttpRequestEvents class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

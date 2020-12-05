@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #WinHttpConstants
+Kernel.SharedPool subclass: #'WinHttp.WinHttpConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -41,6 +41,6 @@ SharedPool subclass: #WinHttpConstants
 		'WinHttpRequestOption_UrlEscapeDisableQuery' -> 16r8.
 		'WinHttpRequestOption_UserAgentString' -> 16r0
 	}!
-WinHttpConstants guid: (GUID fromString: '{c25f8cb5-09bf-468f-852d-6c0147400e5a}')!
-WinHttpConstants comment: ''!
-!WinHttpConstants categoriesForClass!Unclassified! !
+WinHttp.WinHttpConstants guid: (Core.GUID fromString: '{c25f8cb5-09bf-468f-852d-6c0147400e5a}')!
+WinHttp.WinHttpConstants comment: ''!
+!WinHttp.WinHttpConstants categoriesForClass!Unclassified! !
