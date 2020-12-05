@@ -1,32 +1,35 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOIBodyPart
+OS.COM.IDispatch subclass: #'CDO.IBodyPart'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOIBodyPart guid: (IID fromString: '{cd000021-8b95-11d1-82db-00c04fb1625d}')!
-CDOIBodyPart comment: '<CDOIBodyPart> is a wrapper class for the COM interface ''CDO.IBodyPart'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.IBodyPart guid: (OS.COM.IID fromString: '{cd000021-8b95-11d1-82db-00c04fb1625d}')!
+CDO.IBodyPart comment: '<CDO.IBodyPart> is a wrapper class for the COM interface ''CDO.IBodyPart'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a message body part"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOIBodyPart categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOIBodyPart methodsFor!
+!CDO.IBodyPart categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.IBodyPart methodsFor!
+
+addBodyPart
+	"Answer the <CDO.IBodyPart**> result of invoking the AddBodyPart() method of the COM object.
+	Default values are passed for all optional parameters."
+
+	^self addBodyPart: -1!
 
 addBodyPart: index
-	"Answer the <CDOIBodyPart> result of invoking the COM Object's AddBodyPart() method.
+	"Answer the <CDO.IBodyPart> result of invoking the COM Object's AddBodyPart() method.
 	Helpstring: 'Adds a body part to the object''s BodyParts collection.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		AddBodyPart: index
-		ppPart: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self AddBodyPart: index ppPart: answer.
+	^answer asObject!
 
 AddBodyPart: index ppPart: ppPart
 	"Private - Invoke the AddBodyPart() method of the COM object wrapped by the receiver.
@@ -37,19 +40,17 @@ AddBodyPart: index ppPart: ppPart
 			[out, retval] IBodyPart** ppPart);
 	"
 
-	<virtual stdcall: hresult 23 sdword CDOIBodyPart**>
+	<virtual stdcall: hresult 23 sdword IBodyPart**>
 	^self invalidCall: _failureCode!
 
 bodyParts
-	"Answer the <CDOIBodyParts> value of the 'BodyParts' property of the receiver.
+	"Answer the <IBodyParts> value of the 'BodyParts' property of the receiver.
 	Helpstring: 'The object''s BodyParts collection.'"
 
 	| answer |
-	answer := CDOIBodyParts newPointer.
-	self
-		get_BodyParts: answer.
-	^answer asObject
-!
+	answer := IBodyParts newPointer.
+	self get_BodyParts: answer.
+	^answer asObject!
 
 charset
 	"Answer the <bstr> value of the 'Charset' property of the receiver.
@@ -147,15 +148,13 @@ contentTransferEncoding: pContentTransferEncoding
 !
 
 dataSource
-	"Answer the <CDOIDataSource> value of the 'DataSource' property of the receiver.
+	"Answer the <CDO.IDataSource> value of the 'DataSource' property of the receiver.
 	Helpstring: 'The object''s IDataSource interface.'"
 
 	| answer |
-	answer := CDOIDataSource newPointer.
-	self
-		get_DataSource: answer.
-	^answer asObject
-!
+	answer := IDataSource newPointer.
+	self get_DataSource: answer.
+	^answer asObject!
 
 fields
 	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
@@ -164,9 +163,9 @@ fields
 	this method has been modified to answer a Smalltalk <sequencedReadableCollection>."
 
 	| answer |
-	answer := ADODBFields newPointer.
+	answer := ADODB.Fields newPointer.
 	self get_Fields: answer.
-	^ADOCollection on: answer
+	^ADODB.ADOCollection on: answer
 !
 
 fileName
@@ -188,7 +187,7 @@ get_BodyParts: varBodyParts
 			[out, retval] IBodyParts** varBodyParts);
 	"
 
-	<virtual stdcall: hresult 8 CDOIBodyParts**>
+	<virtual stdcall: hresult 8 IBodyParts**>
 	^self invalidCall: _failureCode!
 
 get_Charset: pCharset
@@ -254,7 +253,7 @@ get_DataSource: varDataSource
 			[out, retval] IDataSource** varDataSource);
 	"
 
-	<virtual stdcall: hresult 17 CDOIDataSource**>
+	<virtual stdcall: hresult 17 IDataSource**>
 	^self invalidCall: _failureCode!
 
 get_Fields: varFields
@@ -265,7 +264,7 @@ get_Fields: varFields
 			[out, retval] Fields** varFields);
 	"
 
-	<virtual stdcall: hresult 13 ADODBFields**>
+	<virtual stdcall: hresult 13 ADODB.Fields**>
 	^self invalidCall: _failureCode!
 
 get_FileName: varFileName
@@ -287,7 +286,7 @@ get_Parent: varParent
 			[out, retval] IBodyPart** varParent);
 	"
 
-	<virtual stdcall: hresult 22 CDOIBodyPart**>
+	<virtual stdcall: hresult 22 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 getDecodedContentStream
@@ -295,7 +294,7 @@ getDecodedContentStream
 	Helpstring: 'Returns a Stream object containing the body part content in decoded format.'"
 
 	| answer |
-	answer := ADODB_Stream newPointer.
+	answer := ADODB._Stream newPointer.
 	self
 		GetDecodedContentStream: answer.
 	^answer asObject
@@ -309,7 +308,7 @@ GetDecodedContentStream: ppStream
 			[out, retval] _Stream** ppStream);
 	"
 
-	<virtual stdcall: hresult 26 ADODB_Stream**>
+	<virtual stdcall: hresult 26 ADODB._Stream**>
 	^self invalidCall: _failureCode!
 
 getEncodedContentStream
@@ -317,7 +316,7 @@ getEncodedContentStream
 	Helpstring: 'Returns a Stream object containing the body part content in encoded format. The encoding method is specified in the ContentTransferEncoding property.'"
 
 	| answer |
-	answer := ADODB_Stream newPointer.
+	answer := ADODB._Stream newPointer.
 	self
 		GetEncodedContentStream: answer.
 	^answer asObject
@@ -331,7 +330,7 @@ GetEncodedContentStream: ppStream
 			[out, retval] _Stream** ppStream);
 	"
 
-	<virtual stdcall: hresult 25 ADODB_Stream**>
+	<virtual stdcall: hresult 25 ADODB._Stream**>
 	^self invalidCall: _failureCode!
 
 getFieldParameter: fieldName parameter: parameter
@@ -389,7 +388,7 @@ getStream
 	Helpstring: 'Returns an ADO Stream object containing the body part in serialized, MIME encoded format.'"
 
 	| answer |
-	answer := ADODB_Stream newPointer.
+	answer := ADODB._Stream newPointer.
 	self
 		GetStream: answer.
 	^answer asObject
@@ -403,7 +402,7 @@ GetStream: ppStream
 			[out, retval] _Stream** ppStream);
 	"
 
-	<virtual stdcall: hresult 27 ADODB_Stream**>
+	<virtual stdcall: hresult 27 ADODB._Stream**>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -417,15 +416,13 @@ isVBCollection
 	^false!
 
 parent
-	"Answer the <CDOIBodyPart> value of the 'Parent' property of the receiver.
+	"Answer the <CDO.IBodyPart> value of the 'Parent' property of the receiver.
 	Helpstring: 'The object''s parent object in the body part hierarchy.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		get_Parent: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self get_Parent: answer.
+	^answer asObject!
 
 put_Charset: pCharset
 	"Private - Set the value of the 'Charset' property of the object wrapped by the 
@@ -497,62 +494,63 @@ SaveToFile: fileName
 
 	<virtual stdcall: hresult 24 bstr>
 	^self invalidCall: _failureCode! !
-!CDOIBodyPart categoriesFor: #addBodyPart:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #bodyParts!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #charset!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #charset:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClass!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClass:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClassName!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClassName:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentMediaType!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentMediaType:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentTransferEncoding!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentTransferEncoding:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #dataSource!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #fields!properties!public! !
-!CDOIBodyPart categoriesFor: #fileName!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getDecodedContentStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getEncodedContentStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getFieldParameter:parameter:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIBodyPart categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIBodyPart categoriesFor: #parent!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
+!CDO.IBodyPart categoriesFor: #addBodyPart!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #addBodyPart:!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #bodyParts!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #charset!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #charset:!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentClass!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentClass:!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentClassName!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentClassName:!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentMediaType!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentMediaType:!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentTransferEncoding!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #contentTransferEncoding:!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #dataSource!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #fields!properties!public! !
+!CDO.IBodyPart categoriesFor: #fileName!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #getDecodedContentStream!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #getEncodedContentStream!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #getFieldParameter:parameter:!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #getInterface:!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #getStream!**auto generated**!methods!public! !
+!CDO.IBodyPart categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.IBodyPart categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IBodyPart categoriesFor: #parent!**auto generated**!properties!public! !
+!CDO.IBodyPart categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+!CDO.IBodyPart categoriesFor: #SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
 
-!CDOIBodyPart class methodsFor!
+!CDO.IBodyPart class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IBodyPart'
-		CDOIBodyPart defineTemplate
+		CDO.IBodyPart defineTemplate
 	"
 
 	self
 		defineFunction: #get_BodyParts:
-			argumentTypes: 'CDOIBodyParts**';
+			argumentTypes: 'IBodyParts**';
 		defineFunction: #get_ContentTransferEncoding:
 			argumentTypes: 'bstr*';
 		defineFunction: #put_ContentTransferEncoding:
@@ -562,7 +560,7 @@ defineFunctions
 		defineFunction: #put_ContentMediaType:
 			argumentTypes: 'bstr';
 		defineFunction: #get_Fields:
-			argumentTypes: 'ADODBFields**';
+			argumentTypes: 'ADODB.Fields**';
 		defineFunction: #get_Charset:
 			argumentTypes: 'bstr*';
 		defineFunction: #put_Charset:
@@ -570,7 +568,7 @@ defineFunctions
 		defineFunction: #get_FileName:
 			argumentTypes: 'bstr*';
 		defineFunction: #get_DataSource:
-			argumentTypes: 'CDOIDataSource**';
+			argumentTypes: 'IDataSource**';
 		defineFunction: #get_ContentClass:
 			argumentTypes: 'bstr*';
 		defineFunction: #put_ContentClass:
@@ -580,17 +578,17 @@ defineFunctions
 		defineFunction: #put_ContentClassName:
 			argumentTypes: 'bstr';
 		defineFunction: #get_Parent:
-			argumentTypes: 'CDOIBodyPart**';
+			argumentTypes: 'IBodyPart**';
 		defineFunction: #AddBodyPart:ppPart:
-			argumentTypes: 'sdword CDOIBodyPart**';
+			argumentTypes: 'sdword IBodyPart**';
 		defineFunction: #SaveToFile:
 			argumentTypes: 'bstr';
 		defineFunction: #GetEncodedContentStream:
-			argumentTypes: 'ADODB_Stream**';
+			argumentTypes: 'ADODB._Stream**';
 		defineFunction: #GetDecodedContentStream:
-			argumentTypes: 'ADODB_Stream**';
+			argumentTypes: 'ADODB._Stream**';
 		defineFunction: #GetStream:
-			argumentTypes: 'ADODB_Stream**';
+			argumentTypes: 'ADODB._Stream**';
 		defineFunction: #GetFieldParameter:Parameter:pbstrValue:
 			argumentTypes: 'bstr bstr bstr*';
 		defineFunction: #GetInterface:ppUnknown:
@@ -599,10 +597,10 @@ defineFunctions
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOIBodyPart initializeTypeLib
+		CDO.IBodyPart initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIBodyPart class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIBodyPart class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IBodyPart class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.IBodyPart class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOIDataSource
+OS.COM.IDispatch subclass: #'CDO.IDataSource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOIDataSource guid: (IID fromString: '{cd000029-8b95-11d1-82db-00c04fb1625d}')!
-CDOIDataSource comment: '<CDOIDataSource> is a wrapper class for the COM interface ''CDO.IDataSource'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.IDataSource guid: (OS.COM.IID fromString: '{cd000029-8b95-11d1-82db-00c04fb1625d}')!
+CDO.IDataSource comment: '<CDO.IDataSource> is a wrapper class for the COM interface ''CDO.IDataSource'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to extract messages from or embed messages into other CDO message body parts"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOIDataSource categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOIDataSource methodsFor!
+!CDO.IDataSource categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.IDataSource methodsFor!
 
 activeConnection
-	"Answer the <ADODB_Connection> value of the 'ActiveConnection' property of the receiver.
+	"Answer the <ADODB._Connection> value of the 'ActiveConnection' property of the receiver.
 	Helpstring: 'Not implemented. Reserved for future use.'"
 
 	| answer |
-	answer := ADODB_Connection newPointer.
+	answer := ADODB._Connection newPointer.
 	self
 		get_ActiveConnection: answer.
 	^answer asObject
@@ -35,7 +35,7 @@ get_ActiveConnection: varActiveConnection
 			[out, retval] _Connection** varActiveConnection);
 	"
 
-	<virtual stdcall: hresult 13 ADODB_Connection**>
+	<virtual stdcall: hresult 13 ADODB._Connection**>
 	^self invalidCall: _failureCode!
 
 get_IsDirty: pIsDirty
@@ -240,32 +240,32 @@ sourceURL
 		get_SourceURL: answer.
 	^answer asObject
 ! !
-!CDOIDataSource categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #isDirty!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #isDirty:!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIDataSource categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIDataSource categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #Save!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #source!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #sourceClass!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #sourceURL!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #activeConnection!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #isDirty!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #isDirty:!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.IDataSource categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IDataSource categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+!CDO.IDataSource categoriesFor: #Save!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+!CDO.IDataSource categoriesFor: #source!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #sourceClass!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesFor: #sourceURL!**auto generated**!properties!public! !
 
-!CDOIDataSource class methodsFor!
+!CDO.IDataSource class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IDataSource'
-		CDOIDataSource defineTemplate
+		CDO.IDataSource defineTemplate
 	"
 
 	self
@@ -280,7 +280,7 @@ defineFunctions
 		defineFunction: #get_SourceURL:
 			argumentTypes: 'bstr*';
 		defineFunction: #get_ActiveConnection:
-			argumentTypes: 'ADODB_Connection**';
+			argumentTypes: 'ADODB._Connection**';
 		defineFunction: #SaveToObject:InterfaceName:
 			argumentTypes: 'IUnknown* bstr';
 		defineFunction: #OpenObject:InterfaceName:
@@ -296,10 +296,10 @@ defineFunctions
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOIDataSource initializeTypeLib
+		CDO.IDataSource initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIDataSource class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIDataSource class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IDataSource class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.IDataSource class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

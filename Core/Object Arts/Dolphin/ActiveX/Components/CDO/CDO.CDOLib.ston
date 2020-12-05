@@ -1,0 +1,12 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 128,
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ '000000cd958bd11182db00c04fb1625d00000000010000000100000008000000' ]
+	},
+	#packageName : 'CDO',
+	#libVariableName : #CDOLib,
+	#constantsPoolName : 'CDOConstants',
+	#aliasMap : LookupTable {
+		#GUID : #GUID
+	}
+}

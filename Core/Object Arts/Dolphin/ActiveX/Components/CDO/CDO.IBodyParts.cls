@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOIBodyParts
+OS.COM.IDispatch subclass: #'CDO.IBodyParts'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOIBodyParts guid: (IID fromString: '{cd000023-8b95-11d1-82db-00c04fb1625d}')!
-CDOIBodyParts comment: '<CDOIBodyParts> is a wrapper class for the COM interface ''CDO.IBodyParts'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.IBodyParts guid: (OS.COM.IID fromString: '{cd000023-8b95-11d1-82db-00c04fb1625d}')!
+CDO.IBodyParts comment: '<CDO.IBodyParts> is a wrapper class for the COM interface ''CDO.IBodyParts'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a collection of BodyPart objects"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOIBodyParts categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOIBodyParts methodsFor!
+!CDO.IBodyParts categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.IBodyParts methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_NewEnum' property of the receiver."
@@ -27,16 +27,13 @@ _newEnum
 !
 
 add: index
-	"Answer the <CDOIBodyPart> result of invoking the COM Object's Add() method.
+	"Answer the <CDO.IBodyPart> result of invoking the COM Object's Add() method.
 	Helpstring: 'Adds a BodyPart object to the collection at the specified index, and returns the newly added object.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		Add: index
-		ppPart: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self Add: index ppPart: answer.
+	^answer asObject!
 
 Add: index ppPart: ppPart
 	"Private - Invoke the Add() method of the COM object wrapped by the receiver.
@@ -47,7 +44,7 @@ Add: index ppPart: ppPart
 			[out, retval] IBodyPart** ppPart);
 	"
 
-	<virtual stdcall: hresult 13 sdword CDOIBodyPart**>
+	<virtual stdcall: hresult 13 sdword IBodyPart**>
 	^self invalidCall: _failureCode!
 
 count
@@ -120,7 +117,7 @@ get_Item: index ppBody: ppBody
 			[out, retval] IBodyPart** ppBody);
 	"
 
-	<virtual stdcall: hresult 9 sdword CDOIBodyPart**>
+	<virtual stdcall: hresult 9 sdword IBodyPart**>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -134,57 +131,54 @@ isVBCollection
 	^true!
 
 item: index
-	"Answer the <CDOIBodyPart> value of the 'Item' property of the receiver.
+	"Answer the <CDO.IBodyPart> value of the 'Item' property of the receiver.
 	Helpstring: 'The specified BodyPart object in the collection.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		get_Item: index
-		ppBody: answer.
-	^answer asObject
-! !
-!CDOIBodyParts categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!CDOIBodyParts categoriesFor: #add:!**auto generated**!methods!public! !
-!CDOIBodyParts categoriesFor: #Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #count!**auto generated**!properties!public! !
-!CDOIBodyParts categoriesFor: #delete:!**auto generated**!methods!public! !
-!CDOIBodyParts categoriesFor: #Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
-!CDOIBodyParts categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIBodyParts categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIBodyParts categoriesFor: #item:!**auto generated**!properties!public! !
+	answer := IBodyPart newPointer.
+	self get_Item: index ppBody: answer.
+	^answer asObject! !
+!CDO.IBodyParts categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!CDO.IBodyParts categoriesFor: #add:!**auto generated**!methods!public! !
+!CDO.IBodyParts categoriesFor: #Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
+!CDO.IBodyParts categoriesFor: #count!**auto generated**!properties!public! !
+!CDO.IBodyParts categoriesFor: #delete:!**auto generated**!methods!public! !
+!CDO.IBodyParts categoriesFor: #Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
+!CDO.IBodyParts categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
+!CDO.IBodyParts categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
+!CDO.IBodyParts categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
+!CDO.IBodyParts categoriesFor: #get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
+!CDO.IBodyParts categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.IBodyParts categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IBodyParts categoriesFor: #item:!**auto generated**!properties!public! !
 
-!CDOIBodyParts class methodsFor!
+!CDO.IBodyParts class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IBodyParts'
-		CDOIBodyParts defineTemplate
+		CDO.IBodyParts defineTemplate
 	"
 
 	self
 		defineFunction: #get_Count:
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Item:ppBody:
-			argumentTypes: 'sdword CDOIBodyPart**';
+			argumentTypes: 'sdword IBodyPart**';
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**';
 		defineFunction: #Delete:
 			argumentTypes: 'variant';
 		defineFunction: #DeleteAll;
 		defineFunction: #Add:ppPart:
-			argumentTypes: 'sdword CDOIBodyPart**'
+			argumentTypes: 'sdword IBodyPart**'
 !
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOIBodyParts initializeTypeLib
+		CDO.IBodyParts initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIBodyParts class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.IBodyParts class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

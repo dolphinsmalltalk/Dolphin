@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOINNTPOnPostEarly
+OS.COM.IDispatch subclass: #'CDO.INNTPOnPostEarly'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOINNTPOnPostEarly guid: (IID fromString: '{cd000033-8b95-11d1-82db-00c04fb1625d}')!
-CDOINNTPOnPostEarly comment: '<CDOINNTPOnPostEarly> is a wrapper class for the COM interface ''CDO.INNTPOnPostEarly'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.INNTPOnPostEarly guid: (OS.COM.IID fromString: '{cd000033-8b95-11d1-82db-00c04fb1625d}')!
+CDO.INNTPOnPostEarly comment: '<CDO.INNTPOnPostEarly> is a wrapper class for the COM interface ''CDO.INNTPOnPostEarly'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating NNTP OnPostEarly event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOINNTPOnPostEarly categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOINNTPOnPostEarly methodsFor!
+!CDO.INNTPOnPostEarly categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.INNTPOnPostEarly methodsFor!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -35,30 +35,30 @@ OnPostEarly: msg EventStatus: eventStatus
 			[in, out] CdoEventStatus* EventStatus);
 	"
 
-	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
+	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDOINNTPOnPostEarly categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOINNTPOnPostEarly categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOINNTPOnPostEarly categoriesFor: #OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
+!CDO.INNTPOnPostEarly categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.INNTPOnPostEarly categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.INNTPOnPostEarly categoriesFor: #OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
 
-!CDOINNTPOnPostEarly class methodsFor!
+!CDO.INNTPOnPostEarly class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.INNTPOnPostEarly'
-		CDOINNTPOnPostEarly defineTemplate
+		CDO.INNTPOnPostEarly defineTemplate
 	"
 
 	self
 		defineFunction: #OnPostEarly:EventStatus:
-			argumentTypes: 'CDOIMessage* sdword*'
+			argumentTypes: 'IMessage* sdword*'
 !
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOINNTPOnPostEarly initializeTypeLib
+		CDO.INNTPOnPostEarly initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOINNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOINNTPOnPostEarly class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.INNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.INNTPOnPostEarly class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

@@ -1,32 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOIDropDirectory
+OS.COM.IDispatch subclass: #'CDO.IDropDirectory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOIDropDirectory guid: (IID fromString: '{cd000024-8b95-11d1-82db-00c04fb1625d}')!
-CDOIDropDirectory comment: '<CDOIDropDirectory> is a wrapper class for the COM interface ''CDO.IDropDirectory'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.IDropDirectory guid: (OS.COM.IID fromString: '{cd000024-8b95-11d1-82db-00c04fb1625d}')!
+CDO.IDropDirectory comment: '<CDO.IDropDirectory> is a wrapper class for the COM interface ''CDO.IDropDirectory'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a collection of messages on the file system"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOIDropDirectory categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOIDropDirectory methodsFor!
+!CDO.IDropDirectory categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.IDropDirectory methodsFor!
 
 getMessages: dirName
-	"Answer the <CDOIMessages> result of invoking the COM Object's GetMessages() method.
+	"Answer the <CDO.IMessages> result of invoking the COM Object's GetMessages() method.
 	Helpstring: 'Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory.'"
 
 	| answer |
-	answer := CDOIMessages newPointer.
-	self
-		GetMessages: dirName
-		Msgs: answer.
-	^answer asObject
-!
+	answer := IMessages newPointer.
+	self GetMessages: dirName Msgs: answer.
+	^answer asObject!
 
 GetMessages: dirName Msgs: msgs
 	"Private - Invoke the GetMessages() method of the COM object wrapped by the receiver.
@@ -37,7 +34,7 @@ GetMessages: dirName Msgs: msgs
 			[out, retval] IMessages** Msgs);
 	"
 
-	<virtual stdcall: hresult 8 bstr CDOIMessages**>
+	<virtual stdcall: hresult 8 bstr IMessages**>
 	^self invalidCall: _failureCode!
 
 isExtensible
@@ -49,12 +46,12 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDOIDropDirectory categoriesFor: #getMessages:!**auto generated**!methods!public! !
-!CDOIDropDirectory categoriesFor: #GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
-!CDOIDropDirectory categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIDropDirectory categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IDropDirectory categoriesFor: #getMessages:!**auto generated**!methods!public! !
+!CDO.IDropDirectory categoriesFor: #GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
+!CDO.IDropDirectory categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.IDropDirectory categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 
-!CDOIDropDirectory class methodsFor!
+!CDO.IDropDirectory class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (DropDirectory) for which the receiver is the default interface.
@@ -65,21 +62,21 @@ clsid
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IDropDirectory'
-		CDOIDropDirectory defineTemplate
+		CDO.IDropDirectory defineTemplate
 	"
 
 	self
 		defineFunction: #GetMessages:Msgs:
-			argumentTypes: 'bstr CDOIMessages**'
+			argumentTypes: 'bstr IMessages**'
 !
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOIDropDirectory initializeTypeLib
+		CDO.IDropDirectory initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIDropDirectory class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOIDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIDropDirectory class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IDropDirectory class categoriesFor: #clsid!**auto generated**!constants!private! !
+!CDO.IDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.IDropDirectory class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

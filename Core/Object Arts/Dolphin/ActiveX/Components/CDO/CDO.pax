@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CDO'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk CDO Package. 
 Copyright (c) Object Arts Ltd, 2000-2002
@@ -11,14 +11,14 @@ The package consists of a set of interface wrapper classes which have been gener
 
 Assuming that you have a default SMTP server installed (which you will have if Outlook Express is installed and set up), then sending an e-mail is extremely simple, for example:
 
-CDOIMessage new.
+CDO.IMessage new.
     from: ''sales@object-arts.com'';
     to: ''billg@microsoft.com'';
     subject: ''Re: Your order'';
     textBody: ''Hi Bill, your order for Dolphin Smalltalk has been dispatched. Enjoy!!''.
     Send
 
-Newsgroup postings can also be made in a similar way. The CDO.Configuration object (see CDOIConfiguration) is used to customise the destination, etc, of the send/post. The configuration is essentially a set of ADOFields which can be treated as name value pairs.
+Newsgroup postings can also be made in a similar way. The CDO.Configuration object (see CDO.IConfiguration) is used to customise the destination, etc, of the send/post. The configuration is essentially a set of ADOFields which can be treated as name value pairs.
 
 The Microsoft documentation on the CDO object model can be found on MSDN.
 
@@ -28,36 +28,36 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{CDOConstants}
-	#{CDOIBodyPart}
-	#{CDOIBodyParts}
-	#{CDOIConfiguration}
-	#{CDOIDataSource}
-	#{CDOIDropDirectory}
-	#{CDOIMessage}
-	#{CDOIMessages}
-	#{CDOINNTPEarlyScriptConnector}
-	#{CDOINNTPFinalScriptConnector}
-	#{CDOINNTPOnPost}
-	#{CDOINNTPOnPostEarly}
-	#{CDOINNTPOnPostFinal}
-	#{CDOINNTPPostScriptConnector}
-	#{CDOISMTPOnArrival}
-	#{CDOISMTPScriptConnector}
+	#{CDO}
+	#{CDO.CDOConstants}
+	#{CDO.IBodyPart}
+	#{CDO.IBodyParts}
+	#{CDO.IConfiguration}
+	#{CDO.IDataSource}
+	#{CDO.IDropDirectory}
+	#{CDO.IMessage}
+	#{CDO.IMessages}
+	#{CDO.INNTPEarlyScriptConnector}
+	#{CDO.INNTPFinalScriptConnector}
+	#{CDO.INNTPOnPost}
+	#{CDO.INNTPOnPostEarly}
+	#{CDO.INNTPOnPostFinal}
+	#{CDO.INNTPPostScriptConnector}
+	#{CDO.ISMTPOnArrival}
+	#{CDO.ISMTPScriptConnector}
 ).
 
 package setVariableNames: #(
-	#{CDOLib}
+	#{CDO.CDOLib}
 ).
 
 package setBinaryVariableNames: #(
-	#{CDOLib}
+	#{CDO.CDOLib}
 ).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\ADO\ADODB'
-	'..\ADO\ADODB (Old Names)'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
 ).
@@ -66,7 +66,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #CDOConstants
+Kernel.Namespace subclass: #CDO
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM private} #{OS private} #{CDO.CDOConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'CDO.CDOConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -169,94 +175,94 @@ SharedPool subclass: #CDOConstants
 		'cdoUTC' -> 16r0.
 		'cdoWellington' -> 16r11
 	}!
-IDispatch subclass: #CDOIBodyPart
+OS.COM.IDispatch subclass: #'CDO.IBodyPart'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIBodyParts
+OS.COM.IDispatch subclass: #'CDO.IBodyParts'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIConfiguration
+OS.COM.IDispatch subclass: #'CDO.IConfiguration'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIDataSource
+OS.COM.IDispatch subclass: #'CDO.IDataSource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIDropDirectory
+OS.COM.IDispatch subclass: #'CDO.IDropDirectory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIMessage
+OS.COM.IDispatch subclass: #'CDO.IMessage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOIMessages
+OS.COM.IDispatch subclass: #'CDO.IMessages'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPEarlyScriptConnector
+OS.COM.IDispatch subclass: #'CDO.INNTPEarlyScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPFinalScriptConnector
+OS.COM.IDispatch subclass: #'CDO.INNTPFinalScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPOnPost
+OS.COM.IDispatch subclass: #'CDO.INNTPOnPost'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPOnPostEarly
+OS.COM.IDispatch subclass: #'CDO.INNTPOnPostEarly'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPOnPostFinal
+OS.COM.IDispatch subclass: #'CDO.INNTPOnPostFinal'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOINNTPPostScriptConnector
+OS.COM.IDispatch subclass: #'CDO.INNTPPostScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOISMTPOnArrival
+OS.COM.IDispatch subclass: #'CDO.ISMTPOnArrival'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #CDOISMTPScriptConnector
+OS.COM.IDispatch subclass: #'CDO.ISMTPScriptConnector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CDOConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

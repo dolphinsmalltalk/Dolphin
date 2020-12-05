@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #CDOConstants
+Kernel.SharedPool subclass: #'CDO.CDOConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -103,6 +103,6 @@ SharedPool subclass: #CDOConstants
 		'cdoUTC' -> 16r0.
 		'cdoWellington' -> 16r11
 	}!
-CDOConstants guid: (GUID fromString: '{c0c51e62-f068-4935-a3d8-53bb9d4bef47}')!
-CDOConstants comment: ''!
-!CDOConstants categoriesForClass!Unclassified! !
+CDO.CDOConstants guid: (Core.GUID fromString: '{c0c51e62-f068-4935-a3d8-53bb9d4bef47}')!
+CDO.CDOConstants comment: ''!
+!CDO.CDOConstants categoriesForClass!Unclassified! !

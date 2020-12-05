@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOINNTPOnPostFinal
+OS.COM.IDispatch subclass: #'CDO.INNTPOnPostFinal'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOINNTPOnPostFinal guid: (IID fromString: '{cd000028-8b95-11d1-82db-00c04fb1625d}')!
-CDOINNTPOnPostFinal comment: '<CDOINNTPOnPostFinal> is a wrapper class for the COM interface ''CDO.INNTPOnPostFinal'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.INNTPOnPostFinal guid: (OS.COM.IID fromString: '{cd000028-8b95-11d1-82db-00c04fb1625d}')!
+CDO.INNTPOnPostFinal comment: '<CDO.INNTPOnPostFinal> is a wrapper class for the COM interface ''CDO.INNTPOnPostFinal'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating NNTP OnPostFinal event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOINNTPOnPostFinal categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOINNTPOnPostFinal methodsFor!
+!CDO.INNTPOnPostFinal categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.INNTPOnPostFinal methodsFor!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -35,30 +35,30 @@ OnPostFinal: msg EventStatus: eventStatus
 			[in, out] CdoEventStatus* EventStatus);
 	"
 
-	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
+	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDOINNTPOnPostFinal categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOINNTPOnPostFinal categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOINNTPOnPostFinal categoriesFor: #OnPostFinal:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostFinal!public! !
+!CDO.INNTPOnPostFinal categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.INNTPOnPostFinal categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.INNTPOnPostFinal categoriesFor: #OnPostFinal:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostFinal!public! !
 
-!CDOINNTPOnPostFinal class methodsFor!
+!CDO.INNTPOnPostFinal class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.INNTPOnPostFinal'
-		CDOINNTPOnPostFinal defineTemplate
+		CDO.INNTPOnPostFinal defineTemplate
 	"
 
 	self
 		defineFunction: #OnPostFinal:EventStatus:
-			argumentTypes: 'CDOIMessage* sdword*'
+			argumentTypes: 'IMessage* sdword*'
 !
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOINNTPOnPostFinal initializeTypeLib
+		CDO.INNTPOnPostFinal initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOINNTPOnPostFinal class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOINNTPOnPostFinal class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.INNTPOnPostFinal class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.INNTPOnPostFinal class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

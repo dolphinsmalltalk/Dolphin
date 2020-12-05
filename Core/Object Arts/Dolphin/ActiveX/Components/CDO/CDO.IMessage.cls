@@ -1,34 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #CDOIMessage
+OS.COM.IDispatch subclass: #'CDO.IMessage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CDOConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CDOIMessage guid: (IID fromString: '{cd000020-8b95-11d1-82db-00c04fb1625d}')!
-CDOIMessage comment: '<CDOIMessage> is a wrapper class for the COM interface ''CDO.IMessage'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+CDO.IMessage guid: (OS.COM.IID fromString: '{cd000020-8b95-11d1-82db-00c04fb1625d}')!
+CDO.IMessage comment: '<CDO.IMessage> is a wrapper class for the COM interface ''CDO.IMessage'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a complete message"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CDOIMessage categoriesForClass!CDO-Interfaces!COM-Interfaces! !
-!CDOIMessage methodsFor!
+!CDO.IMessage categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+!CDO.IMessage methodsFor!
 
 addAttachment: url userName: userName password: password
-	"Answer the <CDOIBodyPart> result of invoking the COM Object's AddAttachment() method.
+	"Answer the <CDO.IBodyPart> result of invoking the COM Object's AddAttachment() method.
 	Helpstring: 'Adds an attachment (BodyPart) to the message.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
+	answer := IBodyPart newPointer.
 	self
 		AddAttachment: url
 		UserName: userName
 		Password: password
 		ppBody: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 AddAttachment: url UserName: userName Password: password ppBody: ppBody
 	"Private - Invoke the AddAttachment() method of the COM object wrapped by the receiver.
@@ -41,15 +40,15 @@ AddAttachment: url UserName: userName Password: password ppBody: ppBody
 			[out, retval] IBodyPart** ppBody);
 	"
 
-	<virtual stdcall: hresult 55 bstr bstr bstr CDOIBodyPart**>
+	<virtual stdcall: hresult 55 bstr bstr bstr IBodyPart**>
 	^self invalidCall: _failureCode!
 
 addRelatedBodyPart: url reference: reference referenceType: referenceType userName: userName password: password
-	"Answer the <CDOIBodyPart> result of invoking the COM Object's AddRelatedBodyPart() method.
+	"Answer the <CDO.IBodyPart> result of invoking the COM Object's AddRelatedBodyPart() method.
 	Helpstring: 'Adds a BodyPart object with content referenced within the text/html portion of the message body.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
+	answer := IBodyPart newPointer.
 	self
 		AddRelatedBodyPart: url
 		Reference: reference
@@ -57,8 +56,7 @@ addRelatedBodyPart: url reference: reference referenceType: referenceType userNa
 		UserName: userName
 		Password: password
 		ppBody: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 AddRelatedBodyPart: url Reference: reference ReferenceType: referenceType UserName: userName Password: password ppBody: ppBody
 	"Private - Invoke the AddRelatedBodyPart() method of the COM object wrapped by the receiver.
@@ -73,19 +71,17 @@ AddRelatedBodyPart: url Reference: reference ReferenceType: referenceType UserNa
 			[out, retval] IBodyPart** ppBody);
 	"
 
-	<virtual stdcall: hresult 54 bstr bstr sdword bstr bstr CDOIBodyPart**>
+	<virtual stdcall: hresult 54 bstr bstr sdword bstr bstr IBodyPart**>
 	^self invalidCall: _failureCode!
 
 attachments
-	"Answer the <CDOIBodyParts> value of the 'Attachments' property of the receiver.
+	"Answer the <CDO.IBodyParts> value of the 'Attachments' property of the receiver.
 	Helpstring: 'The object''s Attachments collection.'"
 
 	| answer |
-	answer := CDOIBodyParts newPointer.
-	self
-		get_Attachments: answer.
-	^answer asObject
-!
+	answer := IBodyParts newPointer.
+	self get_Attachments: answer.
+	^answer asObject!
 
 autoGenerateTextBody
 	"Answer the <varbool> value of the 'AutoGenerateTextBody' property of the receiver.
@@ -126,15 +122,13 @@ bcc: pBCC
 !
 
 bodyPart
-	"Answer the <CDOIBodyPart> value of the 'BodyPart' property of the receiver.
+	"Answer the <CDO.IBodyPart> value of the 'BodyPart' property of the receiver.
 	Helpstring: 'The object''s IBodyPart interface.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		get_BodyPart: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self get_BodyPart: answer.
+	^answer asObject!
 
 cc
 	"Answer the <bstr> value of the 'CC' property of the receiver.
@@ -156,18 +150,16 @@ cc: pCC
 !
 
 configuration
-	"Answer the <CDOIConfiguration> value of the 'Configuration' property of the receiver.
+	"Answer the <CDO.IConfiguration> value of the 'Configuration' property of the receiver.
 	Helpstring: 'The object''s Configuration object.'"
 
 	| answer |
-	answer := CDOIConfiguration newPointer.
-	self
-		get_Configuration: answer.
-	^answer asObject
-!
+	answer := IConfiguration newPointer.
+	self get_Configuration: answer.
+	^answer asObject!
 
 configuration: pConfiguration
-	"Set the 'Configuration' property of the receiver to the <CDOIConfiguration*> value of the argument.
+	"Set the 'Configuration' property of the receiver to the <CDO.IConfiguration*> value of the argument.
 	Helpstring: 'The object''s Configuration object.'"
 
 	self
@@ -189,15 +181,13 @@ CreateMHTMLBody: url Flags: flags UserName: userName Password: password
 	^self invalidCall: _failureCode!
 
 dataSource
-	"Answer the <CDOIDataSource> value of the 'DataSource' property of the receiver.
+	"Answer the <CDO.IDataSource> value of the 'DataSource' property of the receiver.
 	Helpstring: 'The object''s IDataSource interface.'"
 
 	| answer |
-	answer := CDOIDataSource newPointer.
-	self
-		get_DataSource: answer.
-	^answer asObject
-!
+	answer := IDataSource newPointer.
+	self get_DataSource: answer.
+	^answer asObject!
 
 dsnOptions
 	"Answer the <sdword> value of the 'DSNOptions' property of the receiver.
@@ -225,9 +215,9 @@ envelopeFields
 	this method has been modified to answer a Smalltalk <sequencedReadableCollection>."
 
 	| answer |
-	answer := ADODBFields newPointer.
+	answer := ADODB.Fields newPointer.
 	self get_EnvelopeFields: answer.
-	^ADOCollection on: answer
+	^ADODB.ADOCollection on: answer
 
 !
 
@@ -238,9 +228,9 @@ fields
 	this method has been modified to answer a Smalltalk <sequencedReadableCollection>."
 
 	| answer |
-	answer := ADODBFields newPointer.
+	answer := ADODB.Fields newPointer.
 	self get_Fields: answer.
-	^ADOCollection on: answer
+	^ADODB.ADOCollection on: answer
 
 !
 
@@ -264,15 +254,13 @@ followUpTo: pFollowUpTo
 !
 
 forward
-	"Answer the <CDOIMessage> result of invoking the COM Object's Forward() method.
+	"Answer the <CDO.IMessage> result of invoking the COM Object's Forward() method.
 	Helpstring: 'Returns a Message object used to forward a message.'"
 
 	| answer |
-	answer := CDOIMessage newPointer.
-	self
-		Forward: answer.
-	^answer asObject
-!
+	answer := IMessage newPointer.
+	self Forward: answer.
+	^answer asObject!
 
 Forward: ppMsg
 	"Private - Invoke the Forward() method of the COM object wrapped by the receiver.
@@ -282,7 +270,7 @@ Forward: ppMsg
 			[out, retval] IMessage** ppMsg);
 	"
 
-	<virtual stdcall: hresult 57 CDOIMessage**>
+	<virtual stdcall: hresult 57 IMessage**>
 	^self invalidCall: _failureCode!
 
 from
@@ -312,7 +300,7 @@ get_Attachments: varAttachments
 			[out, retval] IBodyParts** varAttachments);
 	"
 
-	<virtual stdcall: hresult 38 CDOIBodyParts**>
+	<virtual stdcall: hresult 38 IBodyParts**>
 	^self invalidCall: _failureCode!
 
 get_AutoGenerateTextBody: pAutoGenerateTextBody
@@ -345,7 +333,7 @@ get_BodyPart: varBodyPart
 			[out, retval] IBodyPart** varBodyPart);
 	"
 
-	<virtual stdcall: hresult 49 CDOIBodyPart**>
+	<virtual stdcall: hresult 49 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 get_CC: pCC
@@ -367,7 +355,7 @@ get_Configuration: pConfiguration
 			[out, retval] IConfiguration** pConfiguration);
 	"
 
-	<virtual stdcall: hresult 41 CDOIConfiguration**>
+	<virtual stdcall: hresult 41 IConfiguration**>
 	^self invalidCall: _failureCode!
 
 get_DataSource: varDataSource
@@ -378,7 +366,7 @@ get_DataSource: varDataSource
 			[out, retval] IDataSource** varDataSource);
 	"
 
-	<virtual stdcall: hresult 50 CDOIDataSource**>
+	<virtual stdcall: hresult 50 IDataSource**>
 	^self invalidCall: _failureCode!
 
 get_DSNOptions: pDSNOptions
@@ -400,7 +388,7 @@ get_EnvelopeFields: varEnvelopeFields
 			[out, retval] Fields** varEnvelopeFields);
 	"
 
-	<virtual stdcall: hresult 46 ADODBFields**>
+	<virtual stdcall: hresult 46 ADODB.Fields**>
 	^self invalidCall: _failureCode!
 
 get_Fields: varFields
@@ -411,7 +399,7 @@ get_Fields: varFields
 			[out, retval] Fields** varFields);
 	"
 
-	<virtual stdcall: hresult 51 ADODBFields**>
+	<virtual stdcall: hresult 51 ADODB.Fields**>
 	^self invalidCall: _failureCode!
 
 get_FollowUpTo: pFollowUpTo
@@ -455,7 +443,7 @@ get_HTMLBodyPart: varHTMLBodyPart
 			[out, retval] IBodyPart** varHTMLBodyPart);
 	"
 
-	<virtual stdcall: hresult 48 CDOIBodyPart**>
+	<virtual stdcall: hresult 48 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 get_Keywords: pKeywords
@@ -587,7 +575,7 @@ get_TextBodyPart: varTextBodyPart
 			[out, retval] IBodyPart** varTextBodyPart);
 	"
 
-	<virtual stdcall: hresult 47 CDOIBodyPart**>
+	<virtual stdcall: hresult 47 IBodyPart**>
 	^self invalidCall: _failureCode!
 
 get_To: pTo
@@ -630,7 +618,7 @@ getStream
 	Helpstring: 'Returns an ADO Stream object containing the message in serialized, RFC 822 format. The message body is encoded using either MIME or UUENCODE as specified by the MIMEFormatted property.'"
 
 	| answer |
-	answer := ADODB_Stream newPointer.
+	answer := ADODB._Stream newPointer.
 	self
 		GetStream: answer.
 	^answer asObject
@@ -644,7 +632,7 @@ GetStream: ppStream
 			[out, retval] _Stream** ppStream);
 	"
 
-	<virtual stdcall: hresult 63 ADODB_Stream**>
+	<virtual stdcall: hresult 63 ADODB._Stream**>
 	^self invalidCall: _failureCode!
 
 htmlBody
@@ -667,15 +655,13 @@ htmlBody: pHTMLBody
 !
 
 htmlBodyPart
-	"Answer the <CDOIBodyPart> value of the 'HTMLBodyPart' property of the receiver.
+	"Answer the <CDO.IBodyPart> value of the 'HTMLBodyPart' property of the receiver.
 	Helpstring: 'Returns the BodyPart object (IBodyPart interface) containing the text/html portion of the message body.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		get_HTMLBodyPart: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self get_HTMLBodyPart: answer.
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -793,15 +779,13 @@ Post
 	^self invalidCall: _failureCode!
 
 postReply
-	"Answer the <CDOIMessage> result of invoking the COM Object's PostReply() method.
+	"Answer the <CDO.IMessage> result of invoking the COM Object's PostReply() method.
 	Helpstring: 'Returns a Message object used to post a reply to the message.'"
 
 	| answer |
-	answer := CDOIMessage newPointer.
-	self
-		PostReply: answer.
-	^answer asObject
-!
+	answer := IMessage newPointer.
+	self PostReply: answer.
+	^answer asObject!
 
 PostReply: ppMsg
 	"Private - Invoke the PostReply() method of the COM object wrapped by the receiver.
@@ -811,7 +795,7 @@ PostReply: ppMsg
 			[out, retval] IMessage** ppMsg);
 	"
 
-	<virtual stdcall: hresult 59 CDOIMessage**>
+	<virtual stdcall: hresult 59 IMessage**>
 	^self invalidCall: _failureCode!
 
 put_AutoGenerateTextBody: pAutoGenerateTextBody
@@ -852,14 +836,14 @@ put_CC: pCC
 
 put_Configuration: pConfiguration
 	"Private - Set the value of the 'Configuration' property of the object wrapped by the 
-	 receiver to the <CDOIConfiguration*> argument, pConfiguration.
+	 receiver to the <CDO.IConfiguration*> argument, pConfiguration.
 	Helpstring: 'The object''s Configuration object.'
 
 		HRESULT __stdcall Configuration(
 			[in] IConfiguration* pConfiguration);
 	"
 
-	<virtual stdcall: hresult 42 CDOIConfiguration*>
+	<virtual stdcall: hresult 42 IConfiguration*>
 	^self invalidCall: _failureCode!
 
 put_DSNOptions: pDSNOptions
@@ -1032,14 +1016,14 @@ put_To: pTo
 
 putref_Configuration: pConfiguration
 	"Private - Set the value of the 'Configuration' property of the object wrapped by the 
-	 receiver to the <CDOIConfiguration*> argument, pConfiguration.
+	 receiver to the <CDO.IConfiguration*> argument, pConfiguration.
 	Helpstring: 'The object''s Configuration object.'
 
 		HRESULT __stdcall Configuration(
 			[in] IConfiguration* pConfiguration);
 	"
 
-	<virtual stdcall: hresult 43 CDOIConfiguration*>
+	<virtual stdcall: hresult 43 IConfiguration*>
 	^self invalidCall: _failureCode!
 
 receivedTime
@@ -1054,15 +1038,13 @@ receivedTime
 !
 
 reply
-	"Answer the <CDOIMessage> result of invoking the COM Object's Reply() method.
+	"Answer the <CDO.IMessage> result of invoking the COM Object's Reply() method.
 	Helpstring: 'Returns a Message object used to reply to the message.'"
 
 	| answer |
-	answer := CDOIMessage newPointer.
-	self
-		Reply: answer.
-	^answer asObject
-!
+	answer := IMessage newPointer.
+	self Reply: answer.
+	^answer asObject!
 
 Reply: ppMsg
 	"Private - Invoke the Reply() method of the COM object wrapped by the receiver.
@@ -1072,19 +1054,17 @@ Reply: ppMsg
 			[out, retval] IMessage** ppMsg);
 	"
 
-	<virtual stdcall: hresult 60 CDOIMessage**>
+	<virtual stdcall: hresult 60 IMessage**>
 	^self invalidCall: _failureCode!
 
 replyAll
-	"Answer the <CDOIMessage> result of invoking the COM Object's ReplyAll() method.
+	"Answer the <CDO.IMessage> result of invoking the COM Object's ReplyAll() method.
 	Helpstring: 'Returns a Message object used to post a reply to all recipients of the message.'"
 
 	| answer |
-	answer := CDOIMessage newPointer.
-	self
-		ReplyAll: answer.
-	^answer asObject
-!
+	answer := IMessage newPointer.
+	self ReplyAll: answer.
+	^answer asObject!
 
 ReplyAll: ppMsg
 	"Private - Invoke the ReplyAll() method of the COM object wrapped by the receiver.
@@ -1094,7 +1074,7 @@ ReplyAll: ppMsg
 			[out, retval] IMessage** ppMsg);
 	"
 
-	<virtual stdcall: hresult 61 CDOIMessage**>
+	<virtual stdcall: hresult 61 IMessage**>
 	^self invalidCall: _failureCode!
 
 replyTo
@@ -1157,7 +1137,7 @@ sentOn
 !
 
 setConfiguration: pConfiguration
-	"Set the 'Configuration' property of the receiver to the <CDOIConfiguration*> value of the argument.
+	"Set the 'Configuration' property of the receiver to the <CDO.IConfiguration*> value of the argument.
 	Helpstring: 'The object''s Configuration object.'"
 
 	self
@@ -1203,15 +1183,13 @@ textBody: pTextBody
 !
 
 textBodyPart
-	"Answer the <CDOIBodyPart> value of the 'TextBodyPart' property of the receiver.
+	"Answer the <CDO.IBodyPart> value of the 'TextBodyPart' property of the receiver.
 	Helpstring: 'Returns the BodyPart object (IBodyPart interface) containing the text/plain part of the message body.'"
 
 	| answer |
-	answer := CDOIBodyPart newPointer.
-	self
-		get_TextBodyPart: answer.
-	^answer asObject
-!
+	answer := IBodyPart newPointer.
+	self get_TextBodyPart: answer.
+	^answer asObject!
 
 to
 	"Answer the <bstr> value of the 'To' property of the receiver.
@@ -1231,121 +1209,121 @@ to: pTo
 	self
 		put_To: pTo
 ! !
-!CDOIMessage categoriesFor: #addAttachment:userName:password:!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #AddAttachment:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #addRelatedBodyPart:reference:referenceType:userName:password:!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #AddRelatedBodyPart:Reference:ReferenceType:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #attachments!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #autoGenerateTextBody!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #autoGenerateTextBody:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #bcc!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #bcc:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #bodyPart!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #cc!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #cc:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #configuration!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #configuration:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #CreateMHTMLBody:Flags:UserName:Password:!**auto generated**!COM Interfaces-IMessage!public! !
-!CDOIMessage categoriesFor: #dataSource!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #dsnOptions!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #dsnOptions:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #envelopeFields!properties!public! !
-!CDOIMessage categoriesFor: #fields!properties!public! !
-!CDOIMessage categoriesFor: #followUpTo!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #followUpTo:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #forward!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #Forward:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #from!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #from:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #get_Attachments:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_BodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_CC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_EnvelopeFields:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_From:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_HTMLBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_ReceivedTime:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_SentOn:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_TextBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #get_To:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #getStream!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #htmlBody!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #htmlBody:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #htmlBodyPart!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIMessage categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIMessage categoriesFor: #keywords!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #keywords:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #mdnRequested!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #mdnRequested:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #mimeFormatted!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #mimeFormatted:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #newsgroups!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #newsgroups:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #organization!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #organization:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #Post!**auto generated**!COM Interfaces-IMessage!public! !
-!CDOIMessage categoriesFor: #postReply!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #PostReply:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_CC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_From:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #put_To:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #putref_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #receivedTime!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #reply!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #Reply:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #replyAll!**auto generated**!methods!public! !
-!CDOIMessage categoriesFor: #ReplyAll:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDOIMessage categoriesFor: #replyTo!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #replyTo:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #Send!**auto generated**!COM Interfaces-IMessage!public! !
-!CDOIMessage categoriesFor: #sender!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #sender:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #sentOn!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #setConfiguration:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #subject!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #subject:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #textBody!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #textBody:!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #textBodyPart!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #to!**auto generated**!properties!public! !
-!CDOIMessage categoriesFor: #to:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #addAttachment:userName:password:!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #AddAttachment:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #addRelatedBodyPart:reference:referenceType:userName:password:!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #AddRelatedBodyPart:Reference:ReferenceType:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #attachments!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #autoGenerateTextBody!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #autoGenerateTextBody:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #bcc!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #bcc:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #bodyPart!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #cc!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #cc:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #configuration!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #configuration:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #CreateMHTMLBody:Flags:UserName:Password:!**auto generated**!COM Interfaces-IMessage!public! !
+!CDO.IMessage categoriesFor: #dataSource!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #dsnOptions!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #dsnOptions:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #envelopeFields!properties!public! !
+!CDO.IMessage categoriesFor: #fields!properties!public! !
+!CDO.IMessage categoriesFor: #followUpTo!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #followUpTo:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #forward!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #Forward:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #from!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #from:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #get_Attachments:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_BodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_CC:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_EnvelopeFields:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_From:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_HTMLBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_ReceivedTime:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_SentOn:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_TextBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #get_To:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #getInterface:!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #getStream!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #htmlBody!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #htmlBody:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #htmlBodyPart!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!CDO.IMessage categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IMessage categoriesFor: #keywords!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #keywords:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #mdnRequested!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #mdnRequested:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #mimeFormatted!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #mimeFormatted:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #newsgroups!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #newsgroups:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #organization!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #organization:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #Post!**auto generated**!COM Interfaces-IMessage!public! !
+!CDO.IMessage categoriesFor: #postReply!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #PostReply:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_CC:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_From:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #put_To:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #putref_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #receivedTime!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #reply!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #Reply:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #replyAll!**auto generated**!methods!public! !
+!CDO.IMessage categoriesFor: #ReplyAll:!**auto generated**!COM Interfaces-IMessage!private! !
+!CDO.IMessage categoriesFor: #replyTo!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #replyTo:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #Send!**auto generated**!COM Interfaces-IMessage!public! !
+!CDO.IMessage categoriesFor: #sender!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #sender:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #sentOn!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #setConfiguration:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #subject!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #subject:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #textBody!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #textBody:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #textBodyPart!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #to!**auto generated**!properties!public! !
+!CDO.IMessage categoriesFor: #to:!**auto generated**!properties!public! !
 
-!CDOIMessage class methodsFor!
+!CDO.IMessage class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Message) for which the receiver is the default interface.
@@ -1356,7 +1334,7 @@ clsid
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'CDO.IMessage'
-		CDOIMessage defineTemplate
+		CDO.IMessage defineTemplate
 	"
 
 	self
@@ -1421,66 +1399,66 @@ defineFunctions
 		defineFunction: #put_HTMLBody:
 			argumentTypes: 'bstr';
 		defineFunction: #get_Attachments:
-			argumentTypes: 'CDOIBodyParts**';
+			argumentTypes: 'IBodyParts**';
 		defineFunction: #get_Sender:
 			argumentTypes: 'bstr*';
 		defineFunction: #put_Sender:
 			argumentTypes: 'bstr';
 		defineFunction: #get_Configuration:
-			argumentTypes: 'CDOIConfiguration**';
+			argumentTypes: 'IConfiguration**';
 		defineFunction: #put_Configuration:
-			argumentTypes: 'CDOIConfiguration*';
+			argumentTypes: 'IConfiguration*';
 		defineFunction: #putref_Configuration:
-			argumentTypes: 'CDOIConfiguration*';
+			argumentTypes: 'IConfiguration*';
 		defineFunction: #get_AutoGenerateTextBody:
 			argumentTypes: 'varbool*';
 		defineFunction: #put_AutoGenerateTextBody:
 			argumentTypes: 'varbool';
 		defineFunction: #get_EnvelopeFields:
-			argumentTypes: 'ADODBFields**';
+			argumentTypes: 'ADODB.Fields**';
 		defineFunction: #get_TextBodyPart:
-			argumentTypes: 'CDOIBodyPart**';
+			argumentTypes: 'IBodyPart**';
 		defineFunction: #get_HTMLBodyPart:
-			argumentTypes: 'CDOIBodyPart**';
+			argumentTypes: 'IBodyPart**';
 		defineFunction: #get_BodyPart:
-			argumentTypes: 'CDOIBodyPart**';
+			argumentTypes: 'IBodyPart**';
 		defineFunction: #get_DataSource:
-			argumentTypes: 'CDOIDataSource**';
+			argumentTypes: 'IDataSource**';
 		defineFunction: #get_Fields:
-			argumentTypes: 'ADODBFields**';
+			argumentTypes: 'ADODB.Fields**';
 		defineFunction: #get_MDNRequested:
 			argumentTypes: 'varbool*';
 		defineFunction: #put_MDNRequested:
 			argumentTypes: 'varbool';
 		defineFunction: #AddRelatedBodyPart:Reference:ReferenceType:UserName:Password:ppBody:
-			argumentTypes: 'bstr bstr sdword bstr bstr CDOIBodyPart**';
+			argumentTypes: 'bstr bstr sdword bstr bstr IBodyPart**';
 		defineFunction: #AddAttachment:UserName:Password:ppBody:
-			argumentTypes: 'bstr bstr bstr CDOIBodyPart**';
+			argumentTypes: 'bstr bstr bstr IBodyPart**';
 		defineFunction: #CreateMHTMLBody:Flags:UserName:Password:
 			argumentTypes: 'bstr sdword bstr bstr';
 		defineFunction: #Forward:
-			argumentTypes: 'CDOIMessage**';
+			argumentTypes: 'IMessage**';
 		defineFunction: #Post;
 		defineFunction: #PostReply:
-			argumentTypes: 'CDOIMessage**';
+			argumentTypes: 'IMessage**';
 		defineFunction: #Reply:
-			argumentTypes: 'CDOIMessage**';
+			argumentTypes: 'IMessage**';
 		defineFunction: #ReplyAll:
-			argumentTypes: 'CDOIMessage**';
+			argumentTypes: 'IMessage**';
 		defineFunction: #Send;
 		defineFunction: #GetStream:
-			argumentTypes: 'ADODB_Stream**';
+			argumentTypes: 'ADODB._Stream**';
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 !
 
 initializeTypeLib
 	"Private - Establish a connection to the receiver's type library.
-		CDOIMessage initializeTypeLib
+		CDO.IMessage initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIMessage class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOIMessage class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIMessage class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDO.IMessage class categoriesFor: #clsid!**auto generated**!constants!private! !
+!CDO.IMessage class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!CDO.IMessage class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 
