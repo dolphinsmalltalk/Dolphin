@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PROCESS_INFORMATION
+OS.Win32Structure subclass: #'OS.PROCESS_INFORMATION'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r8.
@@ -11,10 +11,10 @@ Win32Structure subclass: #PROCESS_INFORMATION
 		'_OffsetOf_hProcess' -> 16r0.
 		'_OffsetOf_hThread' -> 16r4
 	}!
-PROCESS_INFORMATION guid: (GUID fromString: '{f44c9144-2b3f-11d3-8368-7a8b5a000000}')!
-PROCESS_INFORMATION comment: ''!
-!PROCESS_INFORMATION categoriesForClass!External-Data-Structured-Win32! !
-!PROCESS_INFORMATION methodsFor!
+OS.PROCESS_INFORMATION guid: (Core.GUID fromString: '{f44c9144-2b3f-11d3-8368-7a8b5a000000}')!
+OS.PROCESS_INFORMATION comment: ''!
+!OS.PROCESS_INFORMATION categoriesForClass!External-Data-Structured-Win32! !
+!OS.PROCESS_INFORMATION methodsFor!
 
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
@@ -35,12 +35,12 @@ hThread
 	"Answer the <Integer> value of the receiver's 'hThread' field."
 
 	^bytes dwordAtOffset: _OffsetOf_hThread! !
-!PROCESS_INFORMATION categoriesFor: #dwProcessId!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #dwThreadId!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #hProcess!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #hThread!**compiled accessors**!public! !
+!OS.PROCESS_INFORMATION categoriesFor: #dwProcessId!**compiled accessors**!public! !
+!OS.PROCESS_INFORMATION categoriesFor: #dwThreadId!**compiled accessors**!public! !
+!OS.PROCESS_INFORMATION categoriesFor: #hProcess!**compiled accessors**!public! !
+!OS.PROCESS_INFORMATION categoriesFor: #hThread!**compiled accessors**!public! !
 
-!PROCESS_INFORMATION class methodsFor!
+!OS.PROCESS_INFORMATION class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 PROCESS_INFORMATION structure.
@@ -62,6 +62,6 @@ defineFields
 
 getFieldNames
 	^#(#hProcess #hThread #dwProcessId #dwThreadId)! !
-!PROCESS_INFORMATION class categoriesFor: #defineFields!initializing!public! !
-!PROCESS_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PROCESS_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!OS.PROCESS_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
